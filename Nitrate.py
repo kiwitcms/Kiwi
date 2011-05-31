@@ -1,0 +1,431 @@
+"""
+High-level API for the Nitrate test case management system
+
+This module provides a high-level python interface for the nitrate
+module. Connection to the server is handled automatically by the
+Nitrate object which checks user configuration file ~/.nitrate for
+the SERVER variable.
+
+"""
+
+import nitrate, sys, os
+from pprint import pprint
+
+
+class NitrateException(Exception):
+    """ Default Nitrate Exception """
+    pass
+
+
+class Nitrate(object):
+    """
+    General Nitrate Object
+    
+    Takes care of initiating the connection to the Nitrate server,
+    parses user configuration and handles the debugging mode.
+    """
+    _connection = None
+    _debugging = None
+    _settings = None
+    _requests = 0
+
+    def _debug(self, text, data = "nothing"):
+        """ Log text if debugging (pretty print data if provided). """
+
+        # Detect mode if run for the first time
+        if Nitrate._debugging is None:
+            Nitrate._debugging = "--debug" in sys.argv
+
+        # Log the text & pretty print data if available
+        if Nitrate._debugging:
+            sys.stderr.write(text + "\n")
+            # Data itself can be a None, so we use rather "nothing" here
+            if data != "nothing":
+                pprint(data, stream=sys.stderr)
+
+    @property
+    def _config(self):
+        """ User configuration (expected in ~/.nitrate). """
+
+        # Read the config file (unless already done)
+        if Nitrate._settings is None:
+            try:
+                Nitrate._settings = {}
+                path = os.path.expanduser("~/.nitrate")
+                for line in open(path):
+                    name, value = line.strip().split("=")
+                    Nitrate._settings[name] = value
+            except IOError:
+                raise NitrateException("Cannot read the config file %s" % path)
+
+            # We need to know at least the server URL
+            if not "SERVER" in self._settings:
+                raise NitrateException("No SERVER found in the config file")
+
+        # Return the settings
+        return Nitrate._settings
+
+    @property
+    def _server(self):
+        """ Connection to the Nitrate server. """
+
+        # Connect to the server unless already connected
+        if Nitrate._connection is None:
+            self._debug("Contacting server %s" % self._config["SERVER"])
+            Nitrate._connection = nitrate.NitrateKerbXmlrpc(
+                    self._config["SERVER"]).server
+
+        # Return existing connection
+        Nitrate._requests += 1
+        return Nitrate._connection
+
+    def __str__(self):
+        """ Provide a short summary about the connection. """
+
+        return "Nitrate server: %s\nTotal requests handled: %s" % (
+                self._config["SERVER"], self._requests)
+
+
+class Server(Nitrate):
+    """
+    Server object providing direct access to the Nitrate server XMLRPC.
+
+    Usage: Server().TestRun.get(1234)
+    """
+
+    # Dispatch XMLRPC methods to the server
+    def __getattr__(self, name):
+        """ Dispatch XMLRPC methods to the server. """
+        return getattr(self._server, name)
+
+
+class Status(Nitrate):
+    """
+    Test case run status
+    
+    Used for easy converting between status id and name.
+    """
+
+    _statuses = ['PAD', 'IDLE', 'PASSED', 'FAILED', 'RUNNING', 'PAUSED',
+            'BLOCKED', 'ERROR', 'WAIVED']
+
+    def __init__(self, status):
+        """
+        Takes numeric status id (1-8) or status name which is one of:
+        IDLE, PASSED, FAILED, RUNNING, PAUSED, BLOCKED, ERROR, WAIVED
+        """
+        if isinstance(status, int):
+            self._id = status
+        else:
+            try:
+                self._id = self._statuses.index(status)
+            except ValueError:
+                raise NitrateException("Invalid status '%s'" % status)
+
+    def __str__(self):
+        """ Return status name for printing. """
+        return self.name
+
+    def __eq__(self, other):
+        """ Handle correctly status equality. """
+        return self._id == other._id
+
+    def __ne__(self, other):
+        """ Handle correctly status inequality. """
+        return self._id != other._id
+
+    @property
+    def id(self):
+        """ Numeric status id. """
+        return self._id
+
+    @property
+    def name(self):
+        """ Human readable status name. """
+        return self._statuses[self._id]
+
+
+class NitrateMutable(Nitrate):
+    """
+    General class for all mutable Nitrate objects
+
+    Implements default handling of object data access & updates.
+    Provides the update() method which pushes the changes (if any)
+    to the Nitrate server.
+    """
+
+    def __init__(self):
+        # List of available attributes
+        self._fields = []
+        self._modified = False
+        self.data = {}
+
+    def __del__(self):
+        """ Automatically update data upon destruction. """
+        if self._modified:
+            self._update()
+            self._modified = False
+
+    def __getattr__(self, name):
+        """ Supported fields automatically dispatched for getting. """
+        if name in self.__dict__.get("_fields", []):
+            return self.data[name]
+        else:
+            return self.__dict__[name]
+
+    def __setattr__(self, name, value):
+        """ Allow direct field update, note modified state. """
+        if name in self.__dict__.get("_fields", []):
+            if self.data[name] != value:
+                self.data[name] = value
+                self._modified = True
+                self._debug("Updating %s to %s" % (name, value))
+        else:
+            object.__setattr__(self, name, value)
+
+    def _update(self):
+        """ Save data to server (to be implemented by respective class) """
+        raise NitrateException("Data update not implemented")
+
+    def update(self):
+        """ Update the data, if modified, to the Nitrate server """
+        if self._modified:
+            self._update()
+            self._modified = False
+
+
+class TestPlan(NitrateMutable):
+    """
+    Provides 'testruns' and 'testcases' attributes, the latter as
+    the default iterator. Supported fields: name
+    """
+
+    def __init__(self, id):
+        """ Takes numeric plan id. """
+        NitrateMutable.__init__(self)
+        self._fields = "name".split()
+        self.id = id
+        self.data = self._server.TestPlan.get(id)
+        self._debug("TP#%s fetched" % self.id, self.data)
+        self._testruns = None
+        self._testcases = None
+
+    def __iter__(self):
+        """ Provide test case list as the default iterator. """
+        for testcase in self.testcases:
+            yield testcase
+
+    def __str__(self):
+        """ Short test plan summary pro printing. """
+        return "TP#%s - %s (%s cases, %s runs)" % (self.id,
+                self.name, len(self.testcases), len(self.testruns))
+
+    def _update(self):
+        """ Save test plan data to the Nitrate server """
+        hash = {"name": self.data["name"]}
+        self._debug("Updating TP#%s" % self.id, hash)
+        self._server.TestPlan.update(self.id, hash)
+
+
+    @property
+    def testruns(self):
+        """ List of TestRun() objects related to this plan. """
+        if self._testruns is None:
+            self._testruns = [TestRun(hash) for hash in
+                    self._server.TestPlan.get_test_runs(self.id)]
+
+        return self._testruns
+
+    @property
+    def testcases(self):
+        """ List of TestCase() objects related to this plan. """
+        if self._testcases is None:
+            self._testcases = [TestCase(hash) for hash in
+                    self._server.TestPlan.get_test_cases(self.id)]
+
+        return self._testcases
+
+
+class TestRun(NitrateMutable):
+    """
+    Provides 'caseruns' attribute containing all relevant case
+    runs. This is also the default iterator. Other supported
+    fields: summary, notes
+    """
+
+    def __init__(self, data):
+        """ Takes numeric id or test run hash. """
+        NitrateMutable.__init__(self)
+        self._fields = "summary notes".split()
+        # Fetch the data hash from the server if id provided 
+        if isinstance(data, int):
+            self.id = data
+            self.data = self._server.TestRun.get(self.id)
+        # Otherwise just save the already-prepared data hash
+        else:
+            self.id = data["run_id"]
+            self.data = data
+        self._debug("Fetched TR#%s" % self.id, self.data)
+        self._caseruns = None
+
+    def __iter__(self):
+        """ Provide test case run list as the default iterator. """
+        for caserun in self.caseruns:
+            yield caserun
+
+    def __str__(self):
+        """ Short test run summary pro printing. """
+        return "TR#%s - %s (%s cases)" % (
+                self.id, self.summary, len(self.caseruns))
+
+    def _update(self):
+        """ Save test run data to the Nitrate server """
+        # Filter out unsupported None values
+        hash = {}
+        hash["summary"] = self.data["summary"]
+        hash["notes"] = self.data["notes"]
+        self._debug("Updating TR#%s" % self.id, hash)
+        self._server.TestRun.update(self.id, hash)
+
+    @property
+    def caseruns(self):
+        """ List of TestCaseRun() objects related to this run. """
+        if self._caseruns is None:
+            self._caseruns = []
+            # Fetch both test cases & test case runs
+            testcases = self._server.TestRun.get_test_cases(self.id)
+            caseruns = self._server.TestRun.get_test_case_runs(self.id)
+            # Create the CaseRun objects
+            for caserun in caseruns:
+                for testcase in testcases:
+                    if testcase['case_id'] == caserun['case_id']:
+                        self._caseruns.append(TestCaseRun(
+                                testcase = testcase, caserun = caserun))
+
+        return self._caseruns
+
+
+class TestCase(NitrateMutable):
+    """
+    Provides access to the test case fields. Following fields are
+    supported: summary, notes, script and arguments.
+    """
+
+    def __init__(self, data):
+        """ Takes numeric id or test case hash. """
+        super(TestCase, self).__init__()
+        self._fields = "summary notes script arguments".split()
+        # Fetch the data hash from the server if numeric id provided 
+        if isinstance(data, int):
+            self.id = data
+            self.data = self._server.TestCase.get(self.id)
+        # Otherwise just save the already-prepared data hash
+        else:
+            self.id = data["case_id"]
+            self.data = data
+        self._debug("Fetched TC#%s" % self.id, self.data)
+
+    def __str__(self):
+        """ Short test case summary for printing. """
+        return "TC#%s - %s" % (str(self.id).ljust(5), self.summary)
+
+    def _update(self):
+        """ Save test case data to Nitrate server """
+        # Filter out unsupported None values
+        hash = {}
+        for (name, value) in self.data.iteritems():
+            if value is not None:
+                hash[name] = value
+        self._debug("Updating TC#%s" % self.id, hash)
+        self._server.TestCase.update(self.id, hash)
+
+
+class TestCaseRun(NitrateMutable):
+    """
+    Provides access to the case run specific fields. Includes
+    the 'testcase' attribute holding the respective test case
+    object. Supported fields: status, notes
+    """
+
+    def __init__(self, id=None, testcase=None, caserun=None):
+        """ Takes case run id or both test case and case run hashes. """
+        NitrateMutable.__init__(self)
+        self._fields = "notes".split()
+        # Fetch the data hash from the server if id provided 
+        if id is not None:
+            self.data = self._server.TestCaseRun.get(id)
+            self.testcase = TestCase(self.data["case_id"])
+            self.id = id
+        # Otherwise just save the already-prepared data hash
+        else:
+            self.testcase = TestCase(testcase)
+            self.data = caserun
+            self.id = caserun["case_run_id"]
+        self._debug("Fetched CR#%s" % self.id, self.data)
+
+    def __str__(self):
+        """ Short test case summary pro printing. """
+        return "%s - CR#%s - %s" % (self.stat, str(self.id).ljust(6),
+                self.testcase.data["summary"])
+
+    def _update(self):
+        """ Save test case run data to the Nitrate server """
+        # Filter out unsupported None values
+        hash = {}
+        for (name, value) in self.data.iteritems():
+            if value is not None:
+                hash[name] = value
+        # Different name for the status key in update()
+        hash["case_run_status"] = hash["case_run_status_id"]
+        self._debug("Updating CR#%s" % self.id, hash)
+        self._server.TestCaseRun.update(self.id, hash)
+
+    @property
+    def status(self):
+        """ Get case run status object """
+        return Status(self.data["case_run_status_id"])
+
+    @status.setter
+    def status(self, newstatus):
+        """ Set case run status """
+        if self.status != newstatus:
+            self.data["case_run_status_id"] = newstatus.id
+            self._modified = True
+
+    @property
+    def stat(self):
+        """ Short same-width status string (4 chars) """
+        return self.status.name[0:4]
+
+
+class Product(Nitrate): pass
+class Build(Nitrate): pass
+class Tag(Nitrate): pass
+class Bug(Nitrate): pass
+
+
+# Self-test
+if __name__ == "__main__":
+    # Display info about the server
+    print Nitrate()
+
+    # Show test plan summary and list test cases
+    testplan = TestPlan(2214)
+    print "\n", testplan
+    for testcase in testplan:
+        print ' ', testcase
+
+    # For each test run list test cases with their status
+    for testrun in testplan.testruns:
+        print "\n", testrun
+        for caserun in testrun:
+            print ' ', caserun
+
+    # Update test case data / case run status
+    TestPlan(289).name = "Tessst plan"
+    TestRun(6757).notes = "Testing notes"
+    TestCase(46490).script = "/CoreOS/component/example"
+    TestCaseRun(525318).status = Status("PASSED")
+
+    # Display info about the server
+    print Nitrate()
