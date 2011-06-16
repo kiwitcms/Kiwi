@@ -56,10 +56,11 @@ class Nitrate(object):
                     name, value = line.strip().split("=")
                     Nitrate._settings[name] = value
             except IOError:
-                raise NitrateException("Cannot read the config file %s" % path)
+                raise NitrateException(
+                        "Cannot read the config file {0}".format(path))
 
             # We need to know at least the server URL
-            if not "SERVER" in self._settings:
+            if "SERVER" not in self._settings:
                 raise NitrateException("No SERVER found in the config file")
 
         # Return the settings
@@ -71,7 +72,7 @@ class Nitrate(object):
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
-            self._debug("Contacting server %s" % self._config["SERVER"])
+            self._debug("Contacting server {0}".format(self._config["SERVER"]))
             Nitrate._connection = nitrate.NitrateKerbXmlrpc(
                     self._config["SERVER"]).server
 
@@ -82,7 +83,7 @@ class Nitrate(object):
     def __str__(self):
         """ Provide a short summary about the connection. """
 
-        return "Nitrate server: %s\nTotal requests handled: %s" % (
+        return "Nitrate server: {0}\nTotal requests handled: {1}".format(
                 self._config["SERVER"], self._requests)
 
 
@@ -120,7 +121,7 @@ class Status(Nitrate):
             try:
                 self._id = self._statuses.index(status)
             except ValueError:
-                raise NitrateException("Invalid status '%s'" % status)
+                raise NitrateException("Invalid status '{0}'".format(status))
 
     def __str__(self):
         """ Return status name for printing. """
@@ -179,7 +180,7 @@ class NitrateMutable(Nitrate):
             if self.data[name] != value:
                 self.data[name] = value
                 self._modified = True
-                self._debug("Updating %s to %s" % (name, value))
+                self._debug("Updating {0} to {1}".format(name, value))
         else:
             object.__setattr__(self, name, value)
 
@@ -206,7 +207,7 @@ class TestPlan(NitrateMutable):
         self._fields = "name".split()
         self.id = id
         self.data = self._server.TestPlan.get(id)
-        self._debug("TP#%s fetched" % self.id, self.data)
+        self._debug("TP#{0} fetched".format(self.id), self.data)
         self._testruns = None
         self._testcases = None
 
@@ -217,13 +218,13 @@ class TestPlan(NitrateMutable):
 
     def __str__(self):
         """ Short test plan summary pro printing. """
-        return "TP#%s - %s (%s cases, %s runs)" % (self.id,
+        return "TP#{0} - {1} ({2} cases, {3} runs)".format(self.id,
                 self.name, len(self.testcases), len(self.testruns))
 
     def _update(self):
         """ Save test plan data to the Nitrate server """
         hash = {"name": self.data["name"]}
-        self._debug("Updating TP#%s" % self.id, hash)
+        self._debug("Updating TP#{0}".format(self.id), hash)
         self._server.TestPlan.update(self.id, hash)
 
 
@@ -265,7 +266,7 @@ class TestRun(NitrateMutable):
         else:
             self.id = data["run_id"]
             self.data = data
-        self._debug("Fetched TR#%s" % self.id, self.data)
+        self._debug("Fetched TR#{0}".format(self.id), self.data)
         self._caseruns = None
 
     def __iter__(self):
@@ -275,7 +276,7 @@ class TestRun(NitrateMutable):
 
     def __str__(self):
         """ Short test run summary pro printing. """
-        return "TR#%s - %s (%s cases)" % (
+        return "TR#{0} - {1} ({2} cases)".format(
                 self.id, self.summary, len(self.caseruns))
 
     def _update(self):
@@ -284,23 +285,20 @@ class TestRun(NitrateMutable):
         hash = {}
         hash["summary"] = self.data["summary"]
         hash["notes"] = self.data["notes"]
-        self._debug("Updating TR#%s" % self.id, hash)
+        self._debug("Updating TR#{0}".format(self.id), hash)
         self._server.TestRun.update(self.id, hash)
 
     @property
     def caseruns(self):
         """ List of TestCaseRun() objects related to this run. """
         if self._caseruns is None:
-            self._caseruns = []
             # Fetch both test cases & test case runs
             testcases = self._server.TestRun.get_test_cases(self.id)
             caseruns = self._server.TestRun.get_test_case_runs(self.id)
             # Create the CaseRun objects
-            for caserun in caseruns:
-                for testcase in testcases:
-                    if testcase['case_id'] == caserun['case_id']:
-                        self._caseruns.append(TestCaseRun(
-                                testcase = testcase, caserun = caserun))
+            self._caseruns = [TestCaseRun(testcase=testcase, caserun=caserun)
+                    for caserun in caseruns for testcase in testcases
+                    if testcase['case_id'] == caserun['case_id']]
 
         return self._caseruns
 
@@ -323,11 +321,11 @@ class TestCase(NitrateMutable):
         else:
             self.id = data["case_id"]
             self.data = data
-        self._debug("Fetched TC#%s" % self.id, self.data)
+        self._debug("Fetched TC#{0}".format(self.id), self.data)
 
     def __str__(self):
         """ Short test case summary for printing. """
-        return "TC#%s - %s" % (str(self.id).ljust(5), self.summary)
+        return "TC#{0} - {1}".format(str(self.id).ljust(5), self.summary)
 
     def _update(self):
         """ Save test case data to Nitrate server """
@@ -336,7 +334,7 @@ class TestCase(NitrateMutable):
         for (name, value) in self.data.iteritems():
             if value is not None:
                 hash[name] = value
-        self._debug("Updating TC#%s" % self.id, hash)
+        self._debug("Updating TC#{0}".format(self.id), hash)
         self._server.TestCase.update(self.id, hash)
 
 
@@ -361,11 +359,11 @@ class TestCaseRun(NitrateMutable):
             self.testcase = TestCase(testcase)
             self.data = caserun
             self.id = caserun["case_run_id"]
-        self._debug("Fetched CR#%s" % self.id, self.data)
+        self._debug("Fetched CR#{0}".format(self.id), self.data)
 
     def __str__(self):
         """ Short test case summary pro printing. """
-        return "%s - CR#%s - %s" % (self.stat, str(self.id).ljust(6),
+        return "{0} - CR#{1} - {2}".format(self.stat, str(self.id).ljust(6),
                 self.testcase.data["summary"])
 
     def _update(self):
@@ -377,7 +375,7 @@ class TestCaseRun(NitrateMutable):
                 hash[name] = value
         # Different name for the status key in update()
         hash["case_run_status"] = hash["case_run_status_id"]
-        self._debug("Updating CR#%s" % self.id, hash)
+        self._debug("Updating CR#{0}".format(self.id), hash)
         self._server.TestCaseRun.update(self.id, hash)
 
     @property
