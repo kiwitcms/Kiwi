@@ -4,17 +4,14 @@ High-level API for the Nitrate test case management system
 This module provides a high-level python interface for the nitrate
 module. Connection to the server is handled automatically by the
 Nitrate object which checks user configuration file ~/.nitrate for
-the SERVER variable.
+the "url" variable.
 
 """
 
 import nitrate, sys, os
+from nitrate import NitrateError
 from pprint import pprint
-
-
-class NitrateException(Exception):
-    """ Default Nitrate Exception """
-    pass
+from ConfigParser import SafeConfigParser, Error as ConfigParserError
 
 
 class Nitrate(object):
@@ -50,18 +47,17 @@ class Nitrate(object):
         # Read the config file (unless already done)
         if Nitrate._settings is None:
             try:
-                Nitrate._settings = {}
                 path = os.path.expanduser("~/.nitrate")
-                for line in open(path):
-                    name, value = line.strip().split("=")
-                    Nitrate._settings[name] = value
-            except IOError:
-                raise NitrateException(
+                parser = SafeConfigParser()
+                parser.read([path])
+                Nitrate._settings = dict(parser.items("nitrate"))
+            except ConfigParserError:
+                raise NitrateError(
                         "Cannot read the config file {0}".format(path))
 
             # We need to know at least the server URL
-            if "SERVER" not in self._settings:
-                raise NitrateException("No SERVER found in the config file")
+            if "url" not in self._settings:
+                raise NitrateError("No url found in the config file")
 
         # Return the settings
         return Nitrate._settings
@@ -72,9 +68,9 @@ class Nitrate(object):
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
-            self._debug("Contacting server {0}".format(self._config["SERVER"]))
+            self._debug("Contacting server {0}".format(self._config["url"]))
             Nitrate._connection = nitrate.NitrateKerbXmlrpc(
-                    self._config["SERVER"]).server
+                    self._config["url"]).server
 
         # Return existing connection
         Nitrate._requests += 1
@@ -84,7 +80,7 @@ class Nitrate(object):
         """ Provide a short summary about the connection. """
 
         return "Nitrate server: {0}\nTotal requests handled: {1}".format(
-                self._config["SERVER"], self._requests)
+                self._config["url"], self._requests)
 
 
 class Server(Nitrate):
@@ -121,7 +117,7 @@ class Status(Nitrate):
             try:
                 self._id = self._statuses.index(status)
             except ValueError:
-                raise NitrateException("Invalid status '{0}'".format(status))
+                raise NitrateError("Invalid status '{0}'".format(status))
 
     def __str__(self):
         """ Return status name for printing. """
@@ -163,9 +159,7 @@ class NitrateMutable(Nitrate):
 
     def __del__(self):
         """ Automatically update data upon destruction. """
-        if self._modified:
-            self._update()
-            self._modified = False
+        self.update()
 
     def __getattr__(self, name):
         """ Supported fields automatically dispatched for getting. """
@@ -186,7 +180,7 @@ class NitrateMutable(Nitrate):
 
     def _update(self):
         """ Save data to server (to be implemented by respective class) """
-        raise NitrateException("Data update not implemented")
+        raise NitrateError("Data update not implemented")
 
     def update(self):
         """ Update the data, if modified, to the Nitrate server """
