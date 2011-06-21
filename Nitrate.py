@@ -10,8 +10,32 @@ the "url" variable.
 
 import nitrate, sys, os
 from nitrate import NitrateError
-from pprint import pprint
+from pprint import pformat as pretty
 from ConfigParser import SafeConfigParser, Error as ConfigParserError
+import logging as log
+
+
+def setLogLevel(level=None):
+    """
+    Set the default log level
+
+    If the level is not specified environment variable DEBUG is
+    used with the following meaning:
+
+        DEBUG=0 ... Nitrate.log.WARN (default)
+        DEBUG=1 ... Nitrate.log.INFO
+        DEBUG=2 ... Nitrate.log.DEBUG
+    """
+
+    try:
+        if level is None:
+            level = {1: log.INFO, 2: log.DEBUG}[int(os.environ["DEBUG"])]
+    except StandardError:
+        level = log.WARN
+    log.basicConfig(format="[%(levelname)s] %(message)s")
+    log.getLogger().setLevel(level)
+
+setLogLevel()
 
 
 class Nitrate(object):
@@ -22,23 +46,8 @@ class Nitrate(object):
     parses user configuration and handles the debugging mode.
     """
     _connection = None
-    _debugging = None
     _settings = None
     _requests = 0
-
-    def _debug(self, text, data = "nothing"):
-        """ Log text if debugging (pretty print data if provided). """
-
-        # Detect mode if run for the first time
-        if Nitrate._debugging is None:
-            Nitrate._debugging = "--debug" in sys.argv
-
-        # Log the text & pretty print data if available
-        if Nitrate._debugging:
-            sys.stderr.write(text + "\n")
-            # Data itself can be a None, so we use rather "nothing" here
-            if data != "nothing":
-                pprint(data, stream=sys.stderr)
 
     @property
     def _config(self):
@@ -68,7 +77,7 @@ class Nitrate(object):
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
-            self._debug("Contacting server {0}".format(self._config["url"]))
+            log.info("Contacting server {0}".format(self._config["url"]))
             Nitrate._connection = nitrate.NitrateKerbXmlrpc(
                     self._config["url"]).server
 
@@ -174,7 +183,7 @@ class NitrateMutable(Nitrate):
             if self.data[name] != value:
                 self.data[name] = value
                 self._modified = True
-                self._debug("Updating {0} to {1}".format(name, value))
+                log.info("Updating {0} to {1}".format(name, value))
         else:
             object.__setattr__(self, name, value)
 
@@ -201,7 +210,8 @@ class TestPlan(NitrateMutable):
         self._fields = "name".split()
         self.id = id
         self.data = self._server.TestPlan.get(id)
-        self._debug("TP#{0} fetched".format(self.id), self.data)
+        log.info("TP#{0} fetched".format(self.id))
+        log.debug(pretty(self.data))
         self._testruns = None
         self._testcases = None
 
@@ -218,7 +228,8 @@ class TestPlan(NitrateMutable):
     def _update(self):
         """ Save test plan data to the Nitrate server """
         hash = {"name": self.data["name"]}
-        self._debug("Updating TP#{0}".format(self.id), hash)
+        log.info("Updating TP#{0}".format(self.id))
+        log.debug(pretty(hash))
         self._server.TestPlan.update(self.id, hash)
 
 
@@ -260,7 +271,8 @@ class TestRun(NitrateMutable):
         else:
             self.id = data["run_id"]
             self.data = data
-        self._debug("Fetched TR#{0}".format(self.id), self.data)
+        log.info("Fetched TR#{0}".format(self.id))
+        log.debug(pretty(self.data))
         self._caseruns = None
 
     def __iter__(self):
@@ -279,7 +291,8 @@ class TestRun(NitrateMutable):
         hash = {}
         hash["summary"] = self.data["summary"]
         hash["notes"] = self.data["notes"]
-        self._debug("Updating TR#{0}".format(self.id), hash)
+        log.info("Updating TR#{0}".format(self.id))
+        log.debug(pretty(hash))
         self._server.TestRun.update(self.id, hash)
 
     @property
@@ -315,7 +328,8 @@ class TestCase(NitrateMutable):
         else:
             self.id = data["case_id"]
             self.data = data
-        self._debug("Fetched TC#{0}".format(self.id), self.data)
+        log.info("Fetched TC#{0}".format(self.id))
+        log.debug(pretty(self.data))
 
     def __str__(self):
         """ Short test case summary for printing. """
@@ -328,7 +342,8 @@ class TestCase(NitrateMutable):
         for (name, value) in self.data.iteritems():
             if value is not None:
                 hash[name] = value
-        self._debug("Updating TC#{0}".format(self.id), hash)
+        log.info("Updating TC#{0}".format(self.id))
+        log.debug(pretty(hash))
         self._server.TestCase.update(self.id, hash)
 
 
@@ -353,7 +368,8 @@ class TestCaseRun(NitrateMutable):
             self.testcase = TestCase(testcase)
             self.data = caserun
             self.id = caserun["case_run_id"]
-        self._debug("Fetched CR#{0}".format(self.id), self.data)
+        log.info("Fetched CR#{0}".format(self.id))
+        log.debug(pretty(self.data))
 
     def __str__(self):
         """ Short test case summary pro printing. """
@@ -369,7 +385,8 @@ class TestCaseRun(NitrateMutable):
                 hash[name] = value
         # Different name for the status key in update()
         hash["case_run_status"] = hash["case_run_status_id"]
-        self._debug("Updating CR#{0}".format(self.id), hash)
+        log.info("Updating CR#{0}".format(self.id))
+        log.debug(pretty(hash))
         self._server.TestCaseRun.update(self.id, hash)
 
     @property
