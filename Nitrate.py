@@ -92,19 +92,6 @@ class Nitrate(object):
                 self._config["url"], self._requests)
 
 
-class Server(Nitrate):
-    """
-    Server object providing direct access to the Nitrate server XMLRPC.
-
-    Usage: Server().TestRun.get(1234)
-    """
-
-    # Dispatch XMLRPC methods to the server
-    def __getattr__(self, name):
-        """ Dispatch XMLRPC methods to the server. """
-        return getattr(self._server, name)
-
-
 class Status(Nitrate):
     """
     Test case run status
