@@ -138,7 +138,7 @@ class Status(Nitrate):
         return self._statuses[self._id]
 
 
-class NitrateMutable(Nitrate):
+class Mutable(Nitrate):
     """
     General class for all mutable Nitrate objects
 
@@ -185,7 +185,7 @@ class NitrateMutable(Nitrate):
             self._modified = False
 
 
-class TestPlan(NitrateMutable):
+class TestPlan(Mutable):
     """
     Provides 'testruns' and 'testcases' attributes, the latter as
     the default iterator. Supported fields: name
@@ -193,7 +193,7 @@ class TestPlan(NitrateMutable):
 
     def __init__(self, id):
         """ Takes numeric plan id. """
-        NitrateMutable.__init__(self)
+        Mutable.__init__(self)
         self._fields = "name".split()
         self.id = id
         self.data = self._server.TestPlan.get(id)
@@ -239,7 +239,7 @@ class TestPlan(NitrateMutable):
         return self._testcases
 
 
-class TestRun(NitrateMutable):
+class TestRun(Mutable):
     """
     Provides 'caseruns' attribute containing all relevant case
     runs. This is also the default iterator. Other supported
@@ -248,7 +248,7 @@ class TestRun(NitrateMutable):
 
     def __init__(self, data):
         """ Takes numeric id or test run hash. """
-        NitrateMutable.__init__(self)
+        Mutable.__init__(self)
         self._fields = "summary notes".split()
         # Fetch the data hash from the server if id provided 
         if isinstance(data, int):
@@ -297,7 +297,7 @@ class TestRun(NitrateMutable):
         return self._caseruns
 
 
-class TestCase(NitrateMutable):
+class TestCase(Mutable):
     """
     Provides access to the test case fields. Following fields are
     supported: summary, notes, script and arguments.
@@ -334,7 +334,7 @@ class TestCase(NitrateMutable):
         self._server.TestCase.update(self.id, hash)
 
 
-class TestCaseRun(NitrateMutable):
+class TestCaseRun(Mutable):
     """
     Provides access to the case run specific fields. Includes
     the 'testcase' attribute holding the respective test case
@@ -343,7 +343,7 @@ class TestCaseRun(NitrateMutable):
 
     def __init__(self, id=None, testcase=None, caserun=None):
         """ Takes case run id or both test case and case run hashes. """
-        NitrateMutable.__init__(self)
+        Mutable.__init__(self)
         self._fields = "notes".split()
         # Fetch the data hash from the server if id provided 
         if id is not None:
