@@ -13,7 +13,7 @@ Nitrate object which checks ~/.nitrate config file for the url:
 import nitrate, sys, os
 from nitrate import NitrateError
 from pprint import pformat as pretty
-from ConfigParser import SafeConfigParser, Error as ConfigParserError
+import ConfigParser
 import logging as log
 
 
@@ -106,15 +106,9 @@ class Nitrate(object):
     _settings = None
     _requests = 0
 
-    def __init__(self, id=None):
-        """ Initialize object id. """
-        if id is None:
-            self._id = NitrateNone
-        elif isinstance(id, int):
-            self._id = id
-        else:
-            raise NitrateError("Invalid {0} id: {1}".format(
-                    self.__class__.__name__, id))
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Nitrate Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     @property
     def _config(self):
@@ -124,10 +118,10 @@ class Nitrate(object):
         if Nitrate._settings is None:
             try:
                 path = os.path.expanduser("~/.nitrate")
-                parser = SafeConfigParser()
+                parser = ConfigParser.SafeConfigParser()
                 parser.read([path])
                 Nitrate._settings = dict(parser.items("nitrate"))
-            except ConfigParserError:
+            except ConfigParser.Error:
                 raise NitrateError(
                         "Cannot read the config file {0}".format(path))
 
@@ -151,6 +145,27 @@ class Nitrate(object):
         # Return existing connection
         Nitrate._requests += 1
         return Nitrate._connection
+
+    @property
+    def identifier(self):
+        """ Consistent identifier string. """
+        return "{0}#{1}".format(self._prefix, self._id)
+
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Nitrate Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, prefix="ID"):
+        """ Initialize object id and prefix. """
+        self._prefix = prefix
+        if id is None:
+            self._id = NitrateNone
+        elif isinstance(id, int):
+            self._id = id
+        else:
+            raise NitrateError("Invalid {0} id: '{1}'".format(
+                    self.__class__.__name__, id))
 
     def __str__(self):
         """ Short summary about the connection. """
@@ -220,10 +235,78 @@ class Priority(Nitrate):
 
 class Product(Nitrate):
     """ Product. """
-    id = property(_getter("id"), doc="Product id")
-    def __init__(self, id):
-        self._id = id
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Product Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="Product id")
+    name = property(_getter("name"), doc="Product name")
+
+    # Read-write properties
+    version = property(_getter("version"), _setter("version"),
+            doc="Default product version")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Product Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, name=None, version=None):
+        """ Initialize the Product by id or name and (optionally) set the
+        default product version. """
+
+        # Initialize by id
+        if id is not None:
+            self._name = NitrateNone
+        # Initialize by name
+        elif name is not None:
+            self._name = name
+            self._id = NitrateNone
+        else:
+            raise NitrateError("Need id or name to initialize Product")
+        Nitrate.__init__(self, id)
+
+        # Optionally initialize version
+        if version is not None:
+            self._version = Version(product=self, version=version)
+        else:
+            self._version = NitrateNone
+
+    def __str__(self):
+        """ Product name for printing. """
+        if self._version is not NitrateNone:
+            return "{0}, version {1}".format(self.name, self.version)
+        else:
+            return self.name
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Product Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Get the missing product data. """
+
+        # Search by id
+        if self._id is not NitrateNone:
+            try:
+                hash = self._server.Product.filter({'id': self.id})[0]
+                log.info("Fetched product " + self.identifier)
+                log.debug(pretty(hash))
+                self._name = hash["name"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find product for " + self.identifier)
+        # Search by name
+        else:
+            try:
+                hash = self._server.Product.filter({'name': self.name})[0]
+                log.info("Fetched product '{0}'".format(self.name))
+                log.debug(pretty(hash))
+                self._id = hash["id"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find product for '{0}'".format(self.name))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -325,6 +408,83 @@ class User(Nitrate):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Version Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Version(Nitrate):
+    """ Product version. """
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Version Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="Version id")
+    name = property(_getter("name"), doc="Version name")
+    product = property(_getter("product"), doc="Relevant product")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Version Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, product=None, version=None):
+        """ Initialize by version id or product and version. """
+
+        # Initialized by id
+        if id is not None:
+            self._name = self._product = NitrateNone
+        # Initialized by product and version
+        elif product is not None and version is not None:
+            # Detect product format
+            if isinstance(product, Product):
+                self._product = product
+            elif isinstance(product, basestring):
+                self._product = Product(name=product)
+            else:
+                self._product = Product(id=product)
+            self._name = version
+        else:
+            raise NitrateError("Need either version id or both product "
+                    "and version name to initialize the Version object.")
+        Nitrate.__init__(self, id)
+
+    def __str__(self):
+        """ Version name for printing. """
+        return self.name
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Version Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Get the missing version data. """
+
+        # Search by id
+        if self._id is not NitrateNone:
+            try:
+                hash = self._server.Product.filter_versions({'id': self.id})
+                log.info("Fetched version " + self.identifier)
+                log.debug(pretty(hash))
+                self._name = hash[0]["value"]
+                self._product = Product(hash[0]["product_id"])
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find version for " + self.identifier)
+        # Search by product and name
+        else:
+            try:
+                hash = self._server.Product.filter_versions(
+                        {'product': self.product.id, 'value': self.name})
+                log.info("Fetched version '{0}' of '{1}'".format(
+                        self.name, self.product))
+                log.debug(pretty(hash))
+                self._id = hash[0]["id"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find version for '{0}'".format(self.name))
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Mutable Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -338,8 +498,7 @@ class Mutable(Nitrate):
     def __init__(self, id=None, prefix="ID"):
         """ Set up id, prefix and unmodified state. """
         self._modified = False
-        self._prefix = prefix
-        Nitrate.__init__(self, id)
+        Nitrate.__init__(self, id, prefix)
 
     def __del__(self):
         """ Automatically update data upon destruction. """
@@ -354,11 +513,6 @@ class Mutable(Nitrate):
         if self._modified:
             self._update()
             self._modified = False
-
-    @property
-    def identifier(self):
-        """ Consistent identifier string. """
-        return "{0}#{1}".format(self._prefix, self._id)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -476,7 +630,8 @@ class TestPlan(Mutable):
         # Set up attributes
         self._author = User(testplanhash["author_id"])
         self._name = testplanhash["name"]
-        self._product = Product(testplanhash["product_id"])
+        self._product = Product(id=testplanhash["product_id"],
+                version=testplanhash["default_product_version"])
         self._type = PlanType(testplanhash["type_id"])
         if testplanhash["parent_id"] is not None:
             self._parent = TestPlan(testplanhash["parent_id"])
@@ -490,10 +645,11 @@ class TestPlan(Mutable):
         hash = {}
         hash["name"] = self.name
         hash["product"] = self.product.id
-        #hash["default_product_version"] = self.product.version
         hash["type"] = self.type.id
         if self.parent is not None:
             hash["parent"] = self.parent.id
+        # Disabled until BZ#716499 is fixed
+        # TODO hash["default_product_version"] = self.product.version.id
 
         log.info("Updating test plan " + self.identifier)
         log.debug(pretty(hash))
@@ -614,7 +770,23 @@ class TestRun(Mutable):
 
     def _create(self, testplan, summary, build, product, manager, **kwargs):
         """ Create a new test run. """
-        raise NitrateError("To be implemented")
+
+        # Prepare the data
+        hash = {}
+        hash["plan"] = testplan.id
+        # TODO hash["build"] = 1195
+        # TODO hash["manager"] = 2117
+        hash["summary"] = summary
+        hash["product"] = testplan.product.id
+        hash["product_version"] = testplan.product.version.id
+
+        # Submit to the server and initialize
+        log.info("Creating a new test run based on {0}".format(testplan))
+        log.debug(pretty(hash))
+        testrunhash = self._server.TestRun.create(hash)
+        log.debug(pretty(testrunhash))
+        self._id = testrunhash["run_id"]
+        self._get(testrunhash=testrunhash)
 
     def _get(self, testrunhash=None):
         """ Initialize / refresh test run data. Either fetch from the
@@ -630,7 +802,9 @@ class TestRun(Mutable):
         self._build = Build(testrunhash["build_id"])
         self._manager = User(testrunhash["manager_id"])
         self._notes = testrunhash["notes"]
-        # TODO self._product = Product(testrunhash["product_id"])
+        # Disabled until BZ#716233 is fixed
+        #self._product = Product(id=testrunhash["product_id"],
+        #        version=testrunhash["default_product_version"])
         self._status = RunStatus(testrunhash["stop_date"])
         self._summary = testrunhash["summary"]
         self._tester = User(testrunhash["default_tester_id"])
@@ -647,8 +821,8 @@ class TestRun(Mutable):
         hash["estimated_time"] = self.time
         hash["manager"] = self.manager.id
         hash["notes"] = self.notes
-        # TODO hash["product"] = self.product.id
-        # TODO hash["product_version"] = self.product.version
+        hash["product"] = self.product.id
+        hash["product_version"] = self.product.version.id
         # TODO hash["status"] = self.status.id
         hash["summary"] = self.summary
 
