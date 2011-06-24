@@ -190,10 +190,76 @@ class Bug(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class Build(Nitrate):
-    """ Build. """
-    id = property(_getter("id"), doc="Build id")
-    def __init__(self, id):
-        self._id = id
+    """ Product build. """
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Build Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="Build id.")
+    name = property(_getter("name"), doc="Build name.")
+    product = property(_getter("product"), doc="Relevant product.")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Build Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, product=None, build=None):
+        """ Initialize by build id or product and build name. """
+
+        # Initialized by id
+        if id is not None:
+            self._name = self._product = NitrateNone
+        # Initialized by product and build
+        elif product is not None and build is not None:
+            # Detect product format
+            if isinstance(product, Product):
+                self._product = product
+            elif isinstance(product, basestring):
+                self._product = Product(name=product)
+            else:
+                self._product = Product(id=product)
+            self._name = build
+        else:
+            raise NitrateError("Need either build id or both product "
+                    "and build name to initialize the Build object.")
+        Nitrate.__init__(self, id)
+
+    def __str__(self):
+        """ Build name for printing. """
+        return self.name
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Build Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Get the missing build data. """
+
+        # Search by id
+        if self._id is not NitrateNone:
+            try:
+                hash = self._server.Build.get(self.id)
+                log.info("Fetched build " + self.identifier)
+                log.debug(pretty(hash))
+                self._name = hash["name"]
+                self._product = Product(hash["product_id"])
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find build for " + self.identifier)
+        # Search by product and name
+        else:
+            try:
+                hash = self._server.Build.check_build(
+                        self.name, self.product.id)
+                log.info("Fetched build '{0}' of '{1}'".format(
+                        self.name, self.product))
+                log.debug(pretty(hash))
+                self._id = hash["build_id"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find build for '{0}'".format(self.name))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -802,21 +868,21 @@ class TestRun(Mutable):
         self._build = Build(testrunhash["build_id"])
         self._manager = User(testrunhash["manager_id"])
         self._notes = testrunhash["notes"]
-        # Disabled until BZ#716233 is fixed
-        #self._product = Product(id=testrunhash["product_id"],
-        #        version=testrunhash["default_product_version"])
         self._status = RunStatus(testrunhash["stop_date"])
         self._summary = testrunhash["summary"]
         self._tester = User(testrunhash["default_tester_id"])
         self._testplan = TestPlan(testrunhash["plan_id"])
         self._time = testrunhash["estimated_time"]
+        # Work around BZ#716233 (uses build product)
+        self._product = Product(id=self.build.product.id,
+                version=testrunhash["product_version"])
 
     def _update(self):
         """ Save test run data to the server """
 
         # Prepare the update hash
         hash = {}
-        # TODO hash["build"] = self.build.id
+        hash["build"] = self.build.id
         hash["default_tester"] = self.tester.id
         hash["estimated_time"] = self.time
         hash["manager"] = self.manager.id
