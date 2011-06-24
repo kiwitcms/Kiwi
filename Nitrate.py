@@ -153,7 +153,7 @@ class Nitrate(object):
         return Nitrate._connection
 
     def __str__(self):
-        """ Provide a short summary about the connection. """
+        """ Short summary about the connection. """
 
         return "Nitrate server: {0}\nTotal requests handled: {1}".format(
                 self._config["url"], self._requests)
@@ -407,6 +407,12 @@ class TestPlan(Mutable):
                     self._server.TestPlan.get_test_cases(self.id)]
         return self._testcases
 
+    @property
+    def synopsis(self):
+        """ One line test plan overview. """
+        return "{0} - {1} ({2} cases, {3} runs)".format(self.identifier,
+                self.name, len(self.testcases), len(self.testruns))
+
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Special
@@ -446,9 +452,8 @@ class TestPlan(Mutable):
             yield testcase
 
     def __str__(self):
-        """ Short test plan summary pro printing. """
-        return "{0} - {1} ({2} cases, {3} runs)".format(self.identifier,
-                self.name, len(self.testcases), len(self.testruns))
+        """ Test plan id & summary for printing. """
+        return "{0} - {1}".format(self.identifier, self.name)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Methods
@@ -555,6 +560,12 @@ class TestRun(Mutable):
                     for tag in self._server.TestRun.get_tags(self.id)]
         return self._tags
 
+    @property
+    def synopsis(self):
+        """ One-line test run overview. """
+        return "{0} - {1} ({2} cases)".format(
+                self.identifier, self.summary, len(self.caseruns))
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -594,9 +605,8 @@ class TestRun(Mutable):
             yield caserun
 
     def __str__(self):
-        """ Short test run summary pro printing. """
-        return "{0} - {1} ({2} cases)".format(
-                self.identifier, self.summary, len(self.caseruns))
+        """ Test run id & summary for printing. """
+        return "{0} - {1}".format(self.identifier, self.summary)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Methods
@@ -763,7 +773,7 @@ class TestCase(Mutable):
                     "summary, category, product and priority")
 
     def __str__(self):
-        """ Short test case summary for printing. """
+        """ Test case id & summary for printing. """
         return "{0} - {1}".format(self.identifier.ljust(8), self.summary)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -892,7 +902,7 @@ class CaseRun(Mutable):
             raise NitrateError("Need either id or testcase, testrun & build")
 
     def __str__(self):
-        """ Short test case run summary pro printing. """
+        """ Case run id, status & summary for printing. """
         return "{0} - {1} - {2}".format(self.status.shortname,
                 self.identifier.ljust(9), self.testcase.summary)
 
@@ -955,13 +965,13 @@ if __name__ == "__main__":
 
     # Show test plan summary and list test cases
     testplan = TestPlan(289)
-    print "\n", testplan
+    print "\n", testplan.synopsis
     for testcase in testplan:
         print " ", testcase
 
     # For each test run list test cases with their status
     for testrun in testplan.testruns:
-        print "\n", testrun
+        print "\n", testrun.synopsis
         for caserun in testrun:
             print " ", caserun
 
