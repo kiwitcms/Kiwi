@@ -1,10 +1,12 @@
 """
-High-level API for the Nitrate test case management system
+High-level API for the Nitrate test case management system.
 
 This module provides a high-level python interface for the nitrate
 module. Connection to the server is handled automatically by the
-Nitrate object which checks user configuration file ~/.nitrate for
-the "url" variable.
+Nitrate object which checks ~/.nitrate config file for the url:
+
+    [nitrate]
+    url = https://tcms.engineering.redhat.com/xmlrpc/
 
 """
 
@@ -14,6 +16,10 @@ from pprint import pformat as pretty
 from ConfigParser import SafeConfigParser, Error as ConfigParserError
 import logging as log
 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Logging
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def setLogLevel(level=None):
     """
@@ -38,16 +44,77 @@ def setLogLevel(level=None):
 setLogLevel()
 
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Default Getter & Setter
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def _getter(field):
+    """
+    Simple getter factory function. For given field generates
+    getter function which returns self._field.
+    """
+
+    def getter(self):
+        # Initialize the attribute unless already done
+        if getattr(self, "_" + field) is NitrateNone:
+            self._get()
+        # Return self._field
+        return getattr(self, "_" + field)
+
+    return getter
+
+def _setter(field):
+    """
+    Simple setter factory function. For given field returns setter
+    function which updates the self._field and remembers modifed
+    state if the value is changed.
+    """
+
+    def setter(self, value):
+        # Initialize the attribute unless already done
+        if getattr(self, "_" + field) is NitrateNone:
+            self._get()
+        # Update only if changed, remember modified state
+        if getattr(self, "_" + field) != value:
+            setattr(self, "_" + field, value)
+            self._modified = True
+            log.info("Updating {0}'s {1} to '{2}'".format(
+                    self.identifier, field, value))
+
+    return setter
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Nitrate None Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class NitrateNone(object):
+    """ Used for distinguish uninitialized values from regular 'None'. """
+    pass
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Nitrate Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 class Nitrate(object):
     """
-    General Nitrate Object
-    
-    Takes care of initiating the connection to the Nitrate server,
-    parses user configuration and handles the debugging mode.
+    General Nitrate Object. Takes care of initiating the connection to the
+    Nitrate server and parses user configuration.
     """
     _connection = None
     _settings = None
     _requests = 0
+
+    def __init__(self, id=None):
+        """ Initialize object id. """
+        if id is None:
+            self._id = NitrateNone
+        elif isinstance(id, int):
+            self._id = id
+        else:
+            raise NitrateError("Invalid {0} id: {1}".format(
+                    self.__class__.__name__, id))
 
     @property
     def _config(self):
@@ -73,7 +140,7 @@ class Nitrate(object):
 
     @property
     def _server(self):
-        """ Connection to the Nitrate server. """
+        """ Connection to the server. """
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
@@ -92,11 +159,113 @@ class Nitrate(object):
                 self._config["url"], self._requests)
 
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Bug Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Bug(Nitrate):
+    """ Bug. """
+    id = property(_getter("id"), doc="Bug id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Build Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Build(Nitrate):
+    """ Build. """
+    id = property(_getter("id"), doc="Build id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Category Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Category(Nitrate):
+    """ Test case category. """
+    id = property(_getter("id"), doc="Category id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Plan Type Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class PlanType(Nitrate):
+    """ Plan type. """
+    id = property(_getter("id"), doc="Test plan type id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Priority Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Priority(Nitrate):
+    """ Test case priority. """
+    id = property(_getter("id"), doc="Priority id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Product Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Product(Nitrate):
+    """ Product. """
+    id = property(_getter("id"), doc="Product id")
+    def __init__(self, id):
+        self._id = id
+
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Run Status Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class RunStatus(Nitrate):
+    """ Test run status """
+    id = property(_getter("id"), doc="Test run status id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Tag Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Tag(Nitrate):
+    """ Tag. """
+    id = property(_getter("id"), doc="Tag id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Case Status Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class CaseStatus(Nitrate):
+    """ Test case status. """
+    id = property(_getter("id"), doc="Test case status id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Status Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 class Status(Nitrate):
     """
-    Test case run status
-    
-    Used for easy converting between status id and name.
+    Test case run status. Used for easy converting between id and name.
     """
 
     _statuses = ['PAD', 'IDLE', 'PASSED', 'FAILED', 'RUNNING', 'PAUSED',
@@ -137,291 +306,670 @@ class Status(Nitrate):
         """ Human readable status name. """
         return self._statuses[self._id]
 
+    @property
+    def shortname(self):
+        """ Short same-width status string (4 chars) """
+        return self.name[0:4]
+
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  User Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class User(Nitrate):
+    """ User. """
+    id = property(_getter("id"), doc="User id")
+    def __init__(self, id):
+        self._id = id
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Mutable Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class Mutable(Nitrate):
     """
-    General class for all mutable Nitrate objects
-
-    Implements default handling of object data access & updates.
-    Provides the update() method which pushes the changes (if any)
-    to the Nitrate server.
+    General class for all mutable Nitrate objects. Implements default
+    handling of object data access & updates.  Provides the update() method
+    which pushes the changes (if any) to the Nitrate server.
     """
 
-    def __init__(self):
-        # List of available attributes
-        self._fields = []
+    def __init__(self, id=None, prefix="ID"):
+        """ Set up id, prefix and unmodified state. """
         self._modified = False
-        self.data = {}
+        self._prefix = prefix
+        Nitrate.__init__(self, id)
 
     def __del__(self):
         """ Automatically update data upon destruction. """
         self.update()
-
-    def __getattr__(self, name):
-        """ Supported fields automatically dispatched for getting. """
-        if name in self.__dict__.get("_fields", []):
-            return self.data[name]
-        else:
-            return self.__dict__[name]
-
-    def __setattr__(self, name, value):
-        """ Allow direct field update, note modified state. """
-        if name in self.__dict__.get("_fields", []):
-            if self.data[name] != value:
-                self.data[name] = value
-                self._modified = True
-                log.info("Updating {0} to {1}".format(name, value))
-        else:
-            object.__setattr__(self, name, value)
 
     def _update(self):
         """ Save data to server (to be implemented by respective class) """
         raise NitrateError("Data update not implemented")
 
     def update(self):
-        """ Update the data, if modified, to the Nitrate server """
+        """ Update the data, if modified, to the server """
         if self._modified:
             self._update()
             self._modified = False
 
+    @property
+    def identifier(self):
+        """ Consistent identifier string. """
+        return "{0}#{1}".format(self._prefix, self._id)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Test Plan Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class TestPlan(Mutable):
     """
-    Provides 'testruns' and 'testcases' attributes, the latter as
-    the default iterator. Supported fields: name
+    Provides test plan attributes and 'testruns' and 'testcases' properties,
+    the latter as the default iterator.
     """
 
-    def __init__(self, id):
-        """ Takes numeric plan id. """
-        Mutable.__init__(self)
-        self._fields = "name".split()
-        self.id = id
-        self.data = self._server.TestPlan.get(id)
-        log.info("TP#{0} fetched".format(self.id))
-        log.debug(pretty(self.data))
-        self._testruns = None
-        self._testcases = None
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Plan Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __iter__(self):
-        """ Provide test case list as the default iterator. """
-        for testcase in self.testcases:
-            yield testcase
+    # Read-only properties
+    id = property(_getter("id"),
+            doc="Test plan id.")
+    author = property(_getter("author"),
+            doc="Test plan author.")
 
-    def __str__(self):
-        """ Short test plan summary pro printing. """
-        return "TP#{0} - {1} ({2} cases, {3} runs)".format(self.id,
-                self.name, len(self.testcases), len(self.testruns))
-
-    def _update(self):
-        """ Save test plan data to the Nitrate server """
-        hash = {"name": self.data["name"]}
-        log.info("Updating TP#{0}".format(self.id))
-        log.debug(pretty(hash))
-        self._server.TestPlan.update(self.id, hash)
-
+    # Read-write properties
+    name = property(_getter("name"), _setter("name"),
+            doc="Test plan name.")
+    parent = property(_getter("parent"), _setter("parent"),
+            doc="Parent test plan.")
+    product = property(_getter("product"), _setter("product"),
+            doc="Test plan product.")
+    type = property(_getter("type"), _setter("type"),
+            doc="Test plan type.")
 
     @property
     def testruns(self):
         """ List of TestRun() objects related to this plan. """
-        if self._testruns is None:
-            self._testruns = [TestRun(hash) for hash in
+        if self._testruns is NitrateNone:
+            self._testruns = [TestRun(testrunhash=hash) for hash in
                     self._server.TestPlan.get_test_runs(self.id)]
-
         return self._testruns
 
     @property
     def testcases(self):
         """ List of TestCase() objects related to this plan. """
-        if self._testcases is None:
-            self._testcases = [TestCase(hash) for hash in
+        if self._testcases is NitrateNone:
+            self._testcases = [TestCase(testcasehash=hash) for hash in
                     self._server.TestPlan.get_test_cases(self.id)]
-
         return self._testcases
 
 
-class TestRun(Mutable):
-    """
-    Provides 'caseruns' attribute containing all relevant case
-    runs. This is also the default iterator. Other supported
-    fields: summary, notes
-    """
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Plan Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, data):
-        """ Takes numeric id or test run hash. """
-        Mutable.__init__(self)
-        self._fields = "summary notes".split()
-        # Fetch the data hash from the server if id provided 
-        if isinstance(data, int):
-            self.id = data
-            self.data = self._server.TestRun.get(self.id)
-        # Otherwise just save the already-prepared data hash
+    def __init__(self, id=None, name=None, type=None, product=None,
+            **kwargs):
+        """ Initialize an existing test plan (if id provided) or create a new
+        one (based on provided name, type, product)."""
+
+        Mutable.__init__(self, id, prefix="TP")
+
+        # Initialize values to unknown
+        for attr in """id author name parent product type testcases
+                testruns""".split():
+            setattr(self, "_" + attr, NitrateNone)
+
+        # Optionally we can get prepared hash
+        testplanhash = kwargs.get("testplanhash", None)
+
+        # If id provided, initialization happens only when data requested
+        if id:
+            self._id = id
+        # If hash provided, let's initialize the data immediately
+        elif testplanhash:
+            self._id = testplanhash["plan_id"]
+            self._get(testplanhash=testplanhash)
+        # Create a new test plan based on provided name, type and product
+        elif name and type and product:
+            self._create(name=name, type=type, product=product, **kwargs)
         else:
-            self.id = data["run_id"]
-            self.data = data
-        log.info("Fetched TR#{0}".format(self.id))
-        log.debug(pretty(self.data))
-        self._caseruns = None
+            raise NitrateError("Need either id or name, type and product")
 
     def __iter__(self):
-        """ Provide test case run list as the default iterator. """
+        """ Provide test cases as the default iterator. """
+        for testcase in self.testcases:
+            yield testcase
+
+    def __str__(self):
+        """ Short test plan summary pro printing. """
+        return "{0} - {1} ({2} cases, {3} runs)".format(self.identifier,
+                self.name, len(self.testcases), len(self.testruns))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Plan Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _create(self, name, type, product, **kwargs):
+        """ Create a new test plan. """
+        raise NitrateError("To be implemented")
+
+    def _get(self, testplanhash=None):
+        """ Initialize / refresh test plan data. Either fetch from the
+        server or use the provided hash."""
+
+        # Fetch the data hash from the server unless provided
+        if testplanhash is None:
+            testplanhash = self._server.TestPlan.get(self.id)
+            log.info("Fetched test plan " + self.identifier)
+            log.debug(pretty(testplanhash))
+
+        # Set up attributes
+        self._author = User(testplanhash["author_id"])
+        self._name = testplanhash["name"]
+        self._product = Product(testplanhash["product_id"])
+        self._type = PlanType(testplanhash["type_id"])
+        if testplanhash["parent_id"] is not None:
+            self._parent = TestPlan(testplanhash["parent_id"])
+        else:
+            self._parent = None
+
+    def _update(self):
+        """ Save test plan data to the server. """
+
+        # Prepare the update hash
+        hash = {}
+        hash["name"] = self.name
+        hash["product"] = self.product.id
+        #hash["default_product_version"] = self.product.version
+        hash["type"] = self.type.id
+        if self.parent is not None:
+            hash["parent"] = self.parent.id
+
+        log.info("Updating test plan " + self.identifier)
+        log.debug(pretty(hash))
+        self._server.TestPlan.update(self.id, hash)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Test Run Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class TestRun(Mutable):
+    """
+    Provides test run attributes and 'caseruns' property containing all
+    relevant case runs (which is also the default iterator).
+    """
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Run Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"),
+            doc="Test run id.")
+    testplan = property(_getter("testplan"),
+            doc="Test plan related to this test run.")
+
+    # Read-write properties
+    build = property(_getter("build"), _setter("build"),
+            doc="Build relevant for this test run.")
+    manager = property(_getter("manager"), _setter("manager"),
+            doc="Manager responsible for this test run.")
+    notes = property(_getter("notes"), _setter("notes"),
+            doc="Test run notes.")
+    product = property(_getter("product"), _setter("product"),
+            doc="Product relevant for this test run.")
+    status = property(_getter("status"), _setter("status"),
+            doc="Test run status")
+    summary = property(_getter("summary"), _setter("summary"),
+            doc="Test run summary.")
+    tester = property(_getter("tester"), _setter("tester"),
+            doc="Default tester.")
+    time = property(_getter("time"), _setter("time"),
+            doc="Estimated time.")
+
+    @property
+    def caseruns(self):
+        """ List of CaseRun() objects related to this run. """
+        if self._caseruns is NitrateNone:
+            # Fetch both test cases & test case runs
+            testcases = self._server.TestRun.get_test_cases(self.id)
+            caseruns = self._server.TestRun.get_test_case_runs(self.id)
+            # Create the CaseRun objects
+            self._caseruns = [
+                    CaseRun(testcasehash=testcase, caserunhash=caserun)
+                    for caserun in caseruns for testcase in testcases
+                    if testcase["case_id"] == caserun["case_id"]]
+        return self._caseruns
+
+    @property
+    def tags(self):
+        """ Attached tags. """
+        if self._tags is NitrateNone:
+            self._tags = [Tag(tag["tag_id"])
+                    for tag in self._server.TestRun.get_tags(self.id)]
+        return self._tags
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Run Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, testplan=None, summary=None, build=None,
+            product=None, manager=None, **kwargs):
+        """ Initialize an existing test run (if id provided) or create a new
+        one (based on provided plan, summary, build, product and manager)."""
+
+        Mutable.__init__(self, id, prefix="TR")
+
+        # Initialize values to unknown
+        for attr in """id testplan build manager summary product tester time
+                notes status tags caseruns""".split():
+            setattr(self, "_" + attr, NitrateNone)
+
+        # Optionally we can get prepared hash
+        testrunhash = kwargs.get("testrunhash", None)
+
+        # If id provided, initialization happens only when data requested
+        if id:
+            self._id = id
+        # If hash provided, let's initialize the data immediately
+        elif testrunhash:
+            self._id = testrunhash["run_id"]
+            self._get(testrunhash=testrunhash)
+        # Create a new test run based on provided plan, summary, build...
+        elif testplan:
+            self._create(testplan=testplan, summary=summary, build=build,
+                    product=product, manager=manager, **kwargs)
+        else:
+            raise NitrateError("Need either id or test plan")
+
+    def __iter__(self):
+        """ Provide test case runs as the default iterator. """
         for caserun in self.caseruns:
             yield caserun
 
     def __str__(self):
         """ Short test run summary pro printing. """
-        return "TR#{0} - {1} ({2} cases)".format(
-                self.id, self.summary, len(self.caseruns))
+        return "{0} - {1} ({2} cases)".format(
+                self.identifier, self.summary, len(self.caseruns))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Run Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _create(self, testplan, summary, build, product, manager, **kwargs):
+        """ Create a new test run. """
+        raise NitrateError("To be implemented")
+
+    def _get(self, testrunhash=None):
+        """ Initialize / refresh test run data. Either fetch from the
+        server or use the provided hash."""
+
+        # Fetch the data hash from the server unless provided
+        if testrunhash is None:
+            testrunhash = self._server.TestRun.get(self.id)
+        log.info("Fetched test run " + self.identifier)
+        log.debug(pretty(testrunhash))
+
+        # Set up attributes
+        self._build = Build(testrunhash["build_id"])
+        self._manager = User(testrunhash["manager_id"])
+        self._notes = testrunhash["notes"]
+        # TODO self._product = Product(testrunhash["product_id"])
+        self._status = RunStatus(testrunhash["stop_date"])
+        self._summary = testrunhash["summary"]
+        self._tester = User(testrunhash["default_tester_id"])
+        self._testplan = TestPlan(testrunhash["plan_id"])
+        self._time = testrunhash["estimated_time"]
 
     def _update(self):
-        """ Save test run data to the Nitrate server """
-        # Filter out unsupported None values
+        """ Save test run data to the server """
+
+        # Prepare the update hash
         hash = {}
-        hash["summary"] = self.data["summary"]
-        hash["notes"] = self.data["notes"]
-        log.info("Updating TR#{0}".format(self.id))
+        # TODO hash["build"] = self.build.id
+        hash["default_tester"] = self.tester.id
+        hash["estimated_time"] = self.time
+        hash["manager"] = self.manager.id
+        hash["notes"] = self.notes
+        # TODO hash["product"] = self.product.id
+        # TODO hash["product_version"] = self.product.version
+        # TODO hash["status"] = self.status.id
+        hash["summary"] = self.summary
+
+        log.info("Updating test run " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestRun.update(self.id, hash)
 
-    @property
-    def caseruns(self):
-        """ List of TestCaseRun() objects related to this run. """
-        if self._caseruns is None:
-            # Fetch both test cases & test case runs
-            testcases = self._server.TestRun.get_test_cases(self.id)
-            caseruns = self._server.TestRun.get_test_case_runs(self.id)
-            # Create the CaseRun objects
-            self._caseruns = [TestCaseRun(testcase=testcase, caserun=caserun)
-                    for caserun in caseruns for testcase in testcases
-                    if testcase['case_id'] == caserun['case_id']]
 
-        return self._caseruns
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Test Case Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class TestCase(Mutable):
     """
-    Provides access to the test case fields. Following fields are
-    supported: summary, notes, script and arguments.
+    Provides test case attributes and 'testplans' property as the default
+    iterator. Furthermore contains bugs, components and tags properties.
     """
 
-    def __init__(self, data):
-        """ Takes numeric id or test case hash. """
-        super(TestCase, self).__init__()
-        self._fields = "summary notes script arguments".split()
-        # Fetch the data hash from the server if numeric id provided 
-        if isinstance(data, int):
-            self.id = data
-            self.data = self._server.TestCase.get(self.id)
-        # Otherwise just save the already-prepared data hash
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Case Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"),
+            doc="Test case id (read-only).")
+    author = property(_getter("author"),
+            doc="Test case author.")
+
+    # Read-write properties
+    automated = property(_getter("automated"), _setter("automated"),
+            doc="Automation flag.")
+    arguments = property(_getter("arguments"), _setter("arguments"),
+            doc="Test script arguments (used for automation).")
+    category = property(_getter("category"), _setter("category"),
+            doc="Test case category.")
+    notes = property(_getter("notes"), _setter("notes"),
+            doc="Test case notes.")
+    priority = property(_getter("priority"), _setter("priority"),
+            doc="Test case priority.")
+    product = property(_getter("product"), _setter("product"),
+            doc="Test case product.")
+    requirement = property(_getter("requirement"), _setter("requirement"),
+            doc="Test case requirements.")
+    script = property(_getter("script"), _setter("script"),
+            doc="Test script (used for automation).")
+    sortkey = property(_getter("sortkey"), _setter("sortkey"),
+            doc="Sort key.")
+    status = property(_getter("status"), _setter("status"),
+            doc="Current test case status.")
+    summary = property(_getter("summary"), _setter("summary"),
+            doc="Summary describing the test case.")
+    tester = property(_getter("tester"), _setter("tester"),
+            doc="Default tester.")
+    time = property(_getter("time"), _setter("time"),
+            doc="Estimated time.")
+
+    @property
+    def bugs(self):
+        """ Attached bugs. """
+        if self._bugs is NitrateNone:
+            self._bugs = [Bug(bug["bug_id"])
+                    for bug in self._server.TestCase.get_bugs(self.id)]
+        return self._bugs
+
+    @property
+    def components(self):
+        """ Related components. """
+        if self._components is NitrateNone:
+            self._components = [Component(componenthash=hash) for hash in
+                    self._server.TestCase.get_components(self.id)]
+        return self._components
+
+    @property
+    def testplans(self):
+        """ List of TestPlan() objects linked to this test case. """
+        if self._testplans is NitrateNone:
+            self._testplans = [Plan(planhash=hash)
+                    for hash in self._server.TestCase.get_plans(self.id)]
+        return self._testplans
+
+    @property
+    def tags(self):
+        """ Attached tags. """
+        if self._tags is NitrateNone:
+            self._tags = [Tag(tag["tag_id"])
+                    for tag in self._server.TestCase.get_tags(self.id)]
+        return self._tags
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Case Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, summary=None, category=None, product=None,
+            priority=None, **kwargs):
+        """ Initialize an existing test case (if id provided) or create a new
+        one (based on provided summary, category, product and priority)."""
+
+        Mutable.__init__(self, id, prefix="TC")
+
+        # Initialize values to unknown
+        for attr in """product category priority summary status plans
+                components tester time automated sortkey script arguments
+                tags bugs author""".split():
+            setattr(self, "_" + attr, NitrateNone)
+
+        # Optionally we can get prepared hash
+        testcasehash = kwargs.get("testcasehash", None)
+
+        # If id provided, initialization happens only when data requested
+        if id:
+            self._id = id
+        # If hash provided, let's initialize the data immediately
+        elif testcasehash:
+            self._id = testcasehash["case_id"]
+            self._get(testcasehash=testcasehash)
+        # Create a new test case based on case, run and build
+        elif summary and category and product and priority:
+            self._create(summary=summary, category=category, product=product,
+                    priority=priority)
         else:
-            self.id = data["case_id"]
-            self.data = data
-        log.info("Fetched TC#{0}".format(self.id))
-        log.debug(pretty(self.data))
+            raise NitrateError("Need either id or "
+                    "summary, category, product and priority")
 
     def __str__(self):
         """ Short test case summary for printing. """
-        return "TC#{0} - {1}".format(str(self.id).ljust(5), self.summary)
+        return "{0} - {1}".format(self.identifier.ljust(8), self.summary)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Case Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _create(self, summary, category, product, priority, **kwargs):
+        """ Create a new test case. """
+        raise NitrateError("To be implemented")
+
+
+    def _get(self, testcasehash=None):
+        """ Initialize / refresh test case data. Either fetch from the
+        server or use the provided hash."""
+
+        # Fetch the data hash from the server unless provided
+        if testcasehash is None:
+            testcasehash = self._server.TestCase.get(self.id)
+        log.info("Fetched test case " + self.identifier)
+        log.debug(pretty(testcasehash))
+
+        # Set up attributes
+        self._arguments = testcasehash["arguments"]
+        self._author = User(testcasehash["author_id"])
+        self._automated = testcasehash["is_automated"]
+        self._category = Category(testcasehash["category_id"])
+        self._notes = testcasehash["notes"]
+        self._priority = Priority(testcasehash["priority_id"])
+        self._requirement = testcasehash["requirement"]
+        self._script = testcasehash["script"]
+        self._sortkey = testcasehash["sortkey"]
+        self._status = CaseStatus(testcasehash["case_status_id"])
+        self._summary = testcasehash["summary"]
+        self._tester = User(testcasehash["default_tester_id"])
+        self._time = testcasehash["estimated_time"]
 
     def _update(self):
-        """ Save test case data to Nitrate server """
-        # Filter out unsupported None values
+        """ Save test case data to server """
         hash = {}
-        for (name, value) in self.data.iteritems():
-            if value is not None:
-                hash[name] = value
-        log.info("Updating TC#{0}".format(self.id))
+
+        hash["arguments"] = self.arguments
+        hash["case_status"] = self.status.id
+        # TODO hash["category"] = self.category.id
+        hash["default_tester"] = self.tester.id
+        hash["estimated_time"] = self.time
+        hash["is_automated"] = self.automated
+        hash["notes"] = self.notes
+        hash["priority"] = self.priority.id
+        # TODO hash["product"] = self.product.id
+        hash["requirement"] = self.requirement
+        hash["script"] = self.script
+        hash["sortkey"] = self.sortkey
+        hash["summary"] = self.summary
+
+        log.info("Updating test case " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestCase.update(self.id, hash)
 
 
-class TestCaseRun(Mutable):
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Case Run Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class CaseRun(Mutable):
     """
-    Provides access to the case run specific fields. Includes
-    the 'testcase' attribute holding the respective test case
-    object. Supported fields: status, notes
+    Provides case run attributes including the relevant 'testcase' object.
     """
 
-    def __init__(self, id=None, testcase=None, caserun=None):
-        """ Takes case run id or both test case and case run hashes. """
-        Mutable.__init__(self)
-        self._fields = "notes".split()
-        # Fetch the data hash from the server if id provided 
-        if id is not None:
-            self.data = self._server.TestCaseRun.get(id)
-            self.testcase = TestCase(self.data["case_id"])
-            self.id = id
-        # Otherwise just save the already-prepared data hash
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Case Run Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"),
+            doc="Test case run id.")
+    testcase = property(_getter("testcase"),
+            doc = "Test case object.")
+    testrun = property(_getter("testrun"),
+            doc = "Test run object.")
+
+    # Read-write properties
+    assignee = property(_getter("assignee"), _setter("assignee"),
+            doc = "Test case run assignee object.")
+    build = property(_getter("build"), _setter("build"),
+            doc = "Test case run build object.")
+    notes = property(_getter("notes"), _setter("notes"),
+            doc = "Test case run notes (string).")
+    sortkey = property(_getter("sortkey"), _setter("sortkey"),
+            doc = "Test case sort key (int).")
+    status = property(_getter("status"), _setter("status"),
+            doc = "Test case run status object.")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Case Run Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, testcase=None, testrun=None, build=None,
+            **kwargs):
+        """
+        Initialize an existing test case run (if id provided) or create a new
+        test case run (based on provided test case, test run and build).
+        """
+
+        Mutable.__init__(self, id, prefix="CR")
+
+        # Initialize values to unknown
+        for attr in """assignee build notes sortkey status testcase
+                testrun""".split():
+            setattr(self, "_" + attr, NitrateNone)
+
+        # Optionally we can get prepared hashes
+        caserunhash = kwargs.get("caserunhash", None)
+        testcasehash = kwargs.get("testcasehash", None)
+
+        # If id provided, initialization happens only when data requested
+        if id:
+            self._id = id
+        # If hashes provided, let's initialize the data immediately
+        elif caserunhash and testcasehash:
+            self._id = caserunhash["case_run_id"]
+            self._get(caserunhash=caserunhash, testcasehash=testcasehash)
+        # Create a new test case run based on case, run and build
+        elif testcase and testrun and build:
+            self._create(testcase=testcase, testrun=testrun, build=build)
         else:
-            self.testcase = TestCase(testcase)
-            self.data = caserun
-            self.id = caserun["case_run_id"]
-        log.info("Fetched CR#{0}".format(self.id))
-        log.debug(pretty(self.data))
+            raise NitrateError("Need either id or testcase, testrun & build")
 
     def __str__(self):
-        """ Short test case summary pro printing. """
-        return "{0} - CR#{1} - {2}".format(self.stat, str(self.id).ljust(6),
-                self.testcase.data["summary"])
+        """ Short test case run summary pro printing. """
+        return "{0} - {1} - {2}".format(self.status.shortname,
+                self.identifier.ljust(9), self.testcase.summary)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Case Run Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _create(testcase, testrun, build, **kwargs):
+        """ Create a new case run. """
+        raise NitrateError("To be implemented")
+
+    def _get(self, caserunhash=None, testcasehash=None):
+        """ Initialize / refresh test case run data. Either fetch from the
+        server or use the already provided hashes."""
+
+        # Fetch the data hash from the server unless provided
+        if caserunhash is None:
+            caserunhash = self._server.TestCaseRun.get(self.id)
+        log.info("Fetched case run " + self.identifier)
+        log.debug(pretty(caserunhash))
+
+        # Set up attributes
+        self._assignee = User(caserunhash["assignee_id"])
+        self._build = Build(caserunhash["build_id"])
+        self._notes = caserunhash["notes"]
+        self._sortkey = caserunhash["sortkey"]
+        self._status = Status(caserunhash["case_run_status_id"])
+        self._testrun = TestRun(caserunhash["run_id"])
+        if testcasehash:
+            self._testcase = TestCase(testcasehash=testcasehash)
+        else:
+            self._testcase = TestCase(caserunhash["case_id"])
 
     def _update(self):
-        """ Save test case run data to the Nitrate server """
-        # Filter out unsupported None values
+        """ Save test case run data to the server """
+
+        # Prepare the update hash
         hash = {}
-        for (name, value) in self.data.iteritems():
-            if value is not None:
-                hash[name] = value
-        # Different name for the status key in update()
-        hash["case_run_status"] = hash["case_run_status_id"]
-        log.info("Updating CR#{0}".format(self.id))
+        hash["build"] = self.build.id
+        hash["assignee"] = self.assignee.id
+        hash["case_run_status"] = self.status.id
+        hash["notes"] = self.notes
+        hash["sortkey"] = self.sortkey
+
+        # Work around BZ#715596
+        if self.notes is None: hash["notes"] = ""
+
+        log.info("Updating case run " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestCaseRun.update(self.id, hash)
 
-    @property
-    def status(self):
-        """ Get case run status object """
-        return Status(self.data["case_run_status_id"])
 
-    @status.setter
-    def status(self, newstatus):
-        """ Set case run status """
-        if self.status != newstatus:
-            self.data["case_run_status_id"] = newstatus.id
-            self._modified = True
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Self Test
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    @property
-    def stat(self):
-        """ Short same-width status string (4 chars) """
-        return self.status.name[0:4]
-
-
-class Product(Nitrate): pass
-class Build(Nitrate): pass
-class Tag(Nitrate): pass
-class Bug(Nitrate): pass
-
-
-# Self-test
 if __name__ == "__main__":
     # Display info about the server
     print Nitrate()
 
     # Show test plan summary and list test cases
-    testplan = TestPlan(2214)
+    testplan = TestPlan(289)
     print "\n", testplan
     for testcase in testplan:
-        print ' ', testcase
+        print " ", testcase
 
     # For each test run list test cases with their status
     for testrun in testplan.testruns:
         print "\n", testrun
         for caserun in testrun:
-            print ' ', caserun
+            print " ", caserun
 
     # Update test case data / case run status
     TestPlan(289).name = "Tessst plan"
     TestRun(6757).notes = "Testing notes"
     TestCase(46490).script = "/CoreOS/component/example"
-    TestCaseRun(525318).status = Status("PASSED")
+    CaseRun(525318).status = Status("PASSED")
 
     # Display info about the server
-    print Nitrate()
+    print "\n", Nitrate()
