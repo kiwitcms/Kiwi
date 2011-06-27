@@ -468,9 +468,93 @@ class Status(Nitrate):
 
 class User(Nitrate):
     """ User. """
-    id = property(_getter("id"), doc="User id")
-    def __init__(self, id):
-        self._id = id
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  User Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="User id.")
+    login = property(_getter("login"), doc="Login username.")
+    email = property(_getter("email"), doc="User email address.")
+    name = property(_getter("name"), doc="User first name and last name.")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  User Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, login=None, email=None):
+        """ Initialize by user id, login or email. Defaults to the current
+        user if no id, login or email provided. """
+
+        self._name = self._login = self._email = NitrateNone
+
+        # Set login & email if provided
+        if login is not None:
+            self._login = login
+        elif email is not None:
+            self._email = email
+        # Detect login & email if passed as the first parameter
+        elif isinstance(id, basestring):
+            if '@' in id:
+                self._email = id
+            else:
+                self._login = id
+            id = None
+        Nitrate.__init__(self, id, prefix="UID")
+
+    def __str__(self):
+        """ User login for printing. """
+        return self.login
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  User Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Get the missing build data. """
+
+        # Search by id
+        if self._id is not NitrateNone:
+            try:
+                hash = self._server.User.filter({"id": self.id})[0]
+                log.info("Fetched user " + self.identifier)
+                log.debug(pretty(hash))
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find user for " + self.identifier)
+        # Search by login
+        elif self._login is not NitrateNone:
+            try:
+                hash = self._server.User.filter({"username": self.login})[0]
+                log.info("Fetched user for login '{0}'" + self.login)
+                log.debug(pretty(hash))
+            except IndexError:
+                raise NitrateError("No user found for login '{0}'".format(
+                        self.login))
+        # Search by email
+        elif self._email is not NitrateNone:
+            try:
+                hash = self._server.User.filter({"email": self.email})[0]
+                log.info("Fetched user for email '{0}'" + self.email)
+                log.debug(pretty(hash))
+            except IndexError:
+                raise NitrateError("No user found for email '{0}'".format(
+                        self.email))
+        # Otherwise initialize to the current user
+        else:
+            hash = self._server.User.get_me()
+            log.info("Fetched current user")
+            log.debug(pretty(hash))
+
+        # Save values
+        self._id = hash["id"]
+        self._login = hash["username"]
+        self._email = hash["email"]
+        if hash["first_name"] and hash["last_name"]:
+            self._name = hash["first_name"] + " " + hash["last_name"]
+        else:
+            self._name = None
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
