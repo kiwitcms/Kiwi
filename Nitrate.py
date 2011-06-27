@@ -300,6 +300,8 @@ class Priority(Nitrate):
         """
         self._id = priority
         if isinstance(priority, int):
+            if priority < 1 or priority > 5:
+                raise NitrateError("Not a valid Priority id: '{0}'".format(priority))
             self._id = priority
         else:
             try:
@@ -462,6 +464,8 @@ class Status(Nitrate):
         IDLE, PASSED, FAILED, RUNNING, PAUSED, BLOCKED, ERROR, WAIVED
         """
         if isinstance(status, int):
+            if status < 1 or status > 8:
+                raise NitrateError("Not a valid Status id: '{0}'".format(status))
             self._id = status
         else:
             try:
