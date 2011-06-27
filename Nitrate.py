@@ -298,7 +298,7 @@ class Priority(Nitrate):
         Takes numeric priority id (1-5) or priority name which is one of:
         P1, P2, P3, P4, P5
         """
-        self._id = priority
+
         if isinstance(priority, int):
             if priority < 1 or priority > 5:
                 raise NitrateError("Not a valid Priority id: '{0}'".format(priority))
