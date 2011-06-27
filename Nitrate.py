@@ -527,7 +527,7 @@ class User(Nitrate):
         elif self._login is not NitrateNone:
             try:
                 hash = self._server.User.filter({"username": self.login})[0]
-                log.info("Fetched user for login '{0}'" + self.login)
+                log.info("Fetched user for login '{0}'".format(self.login))
                 log.debug(pretty(hash))
             except IndexError:
                 raise NitrateError("No user found for login '{0}'".format(
@@ -876,10 +876,18 @@ class TestRun(Mutable):
     #  Test Run Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, testplan=None, build=None, summary=None,
-            product=None, manager=None, **kwargs):
-        """ Initialize an existing test run (if id provided) or create a new
-        one (based on provided plan, summary, build, product and manager)."""
+    def __init__(self, id=None, testplan=None, **kwargs):
+        """ Initialize an existing test run if id provided, otherwise create
+        a new test run based on specified test plan (id or object, required).
+        Optional parameters have the following defaults:
+
+            build ..... "unspecified"
+            product ... test plan product
+            version ... test plan product version
+            summary ... <test plan name> on <build>
+            notes ..... ""
+            manager ... current user
+            tester .... current user"""
 
         Mutable.__init__(self, id, prefix="TR")
 
@@ -898,12 +906,12 @@ class TestRun(Mutable):
         elif testrunhash:
             self._id = testrunhash["run_id"]
             self._get(testrunhash=testrunhash)
-        # Create a new test run based on provided plan, summary, build...
+        # Create a new test run based on provided plan
         elif testplan:
-            self._create(testplan=testplan, summary=summary, build=build,
-                    product=product, manager=manager, **kwargs)
+            self._create(testplan=testplan, **kwargs)
         else:
-            raise NitrateError("Need either id or test plan")
+            raise NitrateError(
+                    "Need either id or test plan to initialize test run")
 
     def __iter__(self):
         """ Provide test case runs as the default iterator. """
@@ -918,39 +926,49 @@ class TestRun(Mutable):
     #  Test Run Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _create(self, testplan, build=None, summary=None, product=None,
-            manager=None, **kwargs):
-        """
-        Create a new test run. Test plan object is the only required
-        parameter.  Build can be specified as a string or build object.
-        Unspecified parameters are set to the following defaults:
+    def _create(self, testplan, product=None, version=None, build=None,
+            summary=None, notes=None, manager=None, tester=None, **kwargs):
+        """ Create a new test run. """
 
-            build   ... "unspecified"
-            summary ... <test plan name> on <build>
-            product ... test plan product
-            manager ... current user
-        """
+        hash = {}
 
-        # Set the defaults
-        if build is None:
-            build = "unspecified"
-        if summary is None:
-            summary = "{0} on {1}".format(testplan.name, build)
+        # Test plan
+        if isinstance(testplan, int):
+            testplan = TestPlan(testplan)
+        hash["plan"] = testplan.id
+
+        # Product & version
         if product is None:
             product = testplan.product
+        elif isinstance(product, basestring):
+            product = Product(name=product, version=version)
+        hash["product"] = product.id
+        hash["product_version"] = product.version.id
+
+        # Build
+        if build is None:
+            build = "unspecified"
         if isinstance(build, basestring):
             build = Build(build=build, product=product)
-        if manager is None:
-            manager = User()
-
-        # Prepare the data
-        hash = {}
-        hash["plan"] = testplan.id
         hash["build"] = build.id
-        hash["manager"] = manager.id
+
+        # Summary & notes
+        if summary is None:
+            summary = "{0} on {1}".format(testplan.name, build)
+        if notes is None:
+            notes = ""
         hash["summary"] = summary
-        hash["product"] = testplan.product.id
-        hash["product_version"] = testplan.product.version.id
+        hash["notes"] = notes
+
+        # Manager & tester (current user by default)
+        if not isinstance(manager, User):
+            manager = User(manager)
+        if not isinstance(tester, User):
+            tester = User(tester)
+        hash["manager"] = manager.id
+        hash["default_tester"] = tester.id
+
+        # Include all test cases in the test run
         hash["case"] = [case.id for case in testplan]
 
         # Submit to the server and initialize
@@ -961,7 +979,7 @@ class TestRun(Mutable):
         try:
             self._id = testrunhash["run_id"]
         except TypeError:
-            log.error("Creating a new test run based on {0}".format(
+            log.error("Failed to create a new test run based on {0}".format(
                     testplan))
             log.error(pretty(hash))
             log.error(pretty(testrunhash))
