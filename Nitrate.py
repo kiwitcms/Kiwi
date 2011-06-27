@@ -290,9 +290,45 @@ class PlanType(Nitrate):
 
 class Priority(Nitrate):
     """ Test case priority. """
-    id = property(_getter("id"), doc="Priority id")
-    def __init__(self, id):
-        self._id = id
+
+    _priorities = ['P0', 'P1', 'P2', 'P3', 'P4', 'P5']
+
+    def __init__(self, priority):
+        """
+        Takes numeric priority id (1-5) or priority name which is one of:
+        P1, P2, P3, P4, P5
+        """
+        self._id = priority
+        if isinstance(priority, int):
+            self._id = priority
+        else:
+            try:
+                self._id = self._priorities.index(priority)
+            except ValueError:
+                raise NitrateError("Invalid priority '{0}'".format(priority))
+
+    def __str__(self):
+        """ Return priority name for printing. """
+        return self.name
+
+    def __eq__(self, other):
+        """ Handle correctly priority equality. """
+        return self._id == other._id
+
+    def __ne__(self, other):
+        """ Handle correctly priority inequality. """
+        return self._id != other._id
+
+    @property
+    def id(self):
+        """ Numeric priority id. """
+        return self._id
+
+    @property
+    def name(self):
+        """ Human readable priority name. """
+        return self._priorities[self._id]
+
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
