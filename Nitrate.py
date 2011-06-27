@@ -245,7 +245,7 @@ class Build(Nitrate):
                 log.debug(pretty(hash))
                 self._name = hash["name"]
                 self._product = Product(hash["product_id"])
-            except IndexError:
+            except LookupError:
                 raise NitrateError(
                         "Cannot find build for " + self.identifier)
         # Search by product and name
@@ -254,12 +254,12 @@ class Build(Nitrate):
                 hash = self._server.Build.check_build(
                         self.name, self.product.id)
                 log.info("Fetched build '{0}' of '{1}'".format(
-                        self.name, self.product))
+                        self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash["build_id"]
-            except IndexError:
-                raise NitrateError(
-                        "Cannot find build for '{0}'".format(self.name))
+            except LookupError:
+                raise NitrateError("Build '{0}' not found in '{1}'".format(
+                    self.name, self.product.name))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -626,7 +626,7 @@ class Version(Nitrate):
                 hash = self._server.Product.filter_versions(
                         {'product': self.product.id, 'value': self.name})
                 log.info("Fetched version '{0}' of '{1}'".format(
-                        self.name, self.product))
+                        self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash[0]["id"]
             except IndexError:
@@ -876,7 +876,7 @@ class TestRun(Mutable):
     #  Test Run Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, testplan=None, summary=None, build=None,
+    def __init__(self, id=None, testplan=None, build=None, summary=None,
             product=None, manager=None, **kwargs):
         """ Initialize an existing test run (if id provided) or create a new
         one (based on provided plan, summary, build, product and manager)."""
@@ -918,24 +918,54 @@ class TestRun(Mutable):
     #  Test Run Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _create(self, testplan, summary, build, product, manager, **kwargs):
-        """ Create a new test run. """
+    def _create(self, testplan, build=None, summary=None, product=None,
+            manager=None, **kwargs):
+        """
+        Create a new test run. Test plan object is the only required
+        parameter.  Build can be specified as a string or build object.
+        Unspecified parameters are set to the following defaults:
+
+            build   ... "unspecified"
+            summary ... <test plan name> on <build>
+            product ... test plan product
+            manager ... current user
+        """
+
+        # Set the defaults
+        if build is None:
+            build = "unspecified"
+        if summary is None:
+            summary = "{0} on {1}".format(testplan.name, build)
+        if product is None:
+            product = testplan.product
+        if isinstance(build, basestring):
+            build = Build(build=build, product=product)
+        if manager is None:
+            manager = User()
 
         # Prepare the data
         hash = {}
         hash["plan"] = testplan.id
-        # TODO hash["build"] = 1195
-        # TODO hash["manager"] = 2117
+        hash["build"] = build.id
+        hash["manager"] = manager.id
         hash["summary"] = summary
         hash["product"] = testplan.product.id
         hash["product_version"] = testplan.product.version.id
+        hash["case"] = [case.id for case in testplan]
 
         # Submit to the server and initialize
         log.info("Creating a new test run based on {0}".format(testplan))
         log.debug(pretty(hash))
         testrunhash = self._server.TestRun.create(hash)
         log.debug(pretty(testrunhash))
-        self._id = testrunhash["run_id"]
+        try:
+            self._id = testrunhash["run_id"]
+        except TypeError:
+            log.error("Creating a new test run based on {0}".format(
+                    testplan))
+            log.error(pretty(hash))
+            log.error(pretty(testrunhash))
+            raise NitrateError("Failed to create test run")
         self._get(testrunhash=testrunhash)
 
     def _get(self, testrunhash=None):
