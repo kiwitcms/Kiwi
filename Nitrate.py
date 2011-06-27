@@ -441,9 +441,45 @@ class Tag(Nitrate):
 
 class CaseStatus(Nitrate):
     """ Test case status. """
-    id = property(_getter("id"), doc="Test case status id")
-    def __init__(self, id):
-        self._id = id
+
+    _casestatuses = ['PAD', 'PROPOSED', 'CONFIRMED', 'DISABLED', 'NEED_UPDATE']
+
+    def __init__(self, casestatus):
+        """
+        Takes numeric status id (1-4) or status name which is one of:
+        PROPOSED, CONFIRMED, DISABLED, NEED_UPDATE
+        """
+        if isinstance(casestatus, int):
+            if casestatus < 1 or casestatus > 4:
+                raise NitrateError("Not a valid casestatus id: '{0}'".format(casestatus))
+            self._id = casestatus
+        else:
+            try:
+                self._id = self._casestatuses.index(casestatus)
+            except ValueError:
+                raise NitrateError("Invalid casestatus '{0}'".format(casestatus))
+
+    def __str__(self):
+        """ Return casestatus name for printing. """
+        return self.name
+
+    def __eq__(self, other):
+        """ Handle correctly casestatus equality. """
+        return self._id == other._id
+
+    def __ne__(self, other):
+        """ Handle correctly casestatus inequality. """
+        return self._id != other._id
+
+    @property
+    def id(self):
+        """ Numeric casestatus id. """
+        return self._id
+
+    @property
+    def name(self):
+        """ Human readable casestatus name. """
+        return self._casestatuses[self._id]
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
