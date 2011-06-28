@@ -1340,8 +1340,11 @@ class TestCase(Mutable):
         self._sortkey = testcasehash["sortkey"]
         self._status = CaseStatus(testcasehash["case_status_id"])
         self._summary = testcasehash["summary"]
-        self._tester = User(testcasehash["default_tester_id"])
         self._time = testcasehash["estimated_time"]
+        if testcasehash["default_tester_id"] is not None:
+            self._tester = User(testcasehash["default_tester_id"])
+        else:
+            self._tester = None
 
     def _update(self):
         """ Save test case data to server """
@@ -1350,7 +1353,6 @@ class TestCase(Mutable):
         hash["arguments"] = self.arguments
         hash["case_status"] = self.status.id
         # TODO hash["category"] = self.category.id
-        hash["default_tester"] = self.tester.id
         hash["estimated_time"] = self.time
         hash["is_automated"] = self.automated
         hash["notes"] = self.notes
@@ -1360,6 +1362,8 @@ class TestCase(Mutable):
         hash["script"] = self.script
         hash["sortkey"] = self.sortkey
         hash["summary"] = self.summary
+        if self.tester:
+            hash["default_tester"] = self.tester.id
 
         log.info("Updating test case " + self.identifier)
         log.debug(pretty(hash))
