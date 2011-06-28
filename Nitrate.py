@@ -335,9 +335,53 @@ class Category(Nitrate):
 
 class PlanType(Nitrate):
     """ Plan type. """
-    id = property(_getter("id"), doc="Test plan type id")
-    def __init__(self, id):
-        self._id = id
+
+    _plantypes = ['Null', 'Unit', 'Integration', 'Function', 'System',
+                    'Acceptance', 'Installation', 'Performance', 'Product',
+                    'Interoperability', 'Smoke', 'Regression', 'NotExist',
+                    'i18n/l10n', 'Load', 'Sanity', 'Functionality', 'Stress',
+                    'Stability', 'Density', 'Benchmark', 'testtest', 'test11',
+                    'Place Holder', 'Recovery']
+
+    def __init__(self, plantype):
+        """
+        Takes numeric Test Plan Type id or name
+        """
+
+        if isinstance(plantype, int):
+            if plantype < 1 or plantype > 25 or plantype == 12:
+                raise NitrateError(
+                    "Not a valid Test Plan Type id: '{0}'".format(plantype))
+            self._id = plantype
+        else:
+            try:
+                self._id = self._plantypes.index(plantype)
+            except ValueError:
+                raise NitrateError(
+                    "Invalid Test Plan type '{0}'".format(plantype))
+
+    def __str__(self):
+        """ Return TestPlan type for printing. """
+        return self.name
+
+    def __eq__(self, other):
+        """ Handle correctly TestPlan type equality. """
+        return self._id == other._id
+
+    def __ne__(self, other):
+        """ Handle correctly TestPlan type inequality. """
+        return self._id != other._id
+
+    @property
+    def id(self):
+        """ Numeric TestPlan type id. """
+        return self._id
+
+    @property
+    def name(self):
+        """ Human readable TestPlan type name. """
+        return self._plantypes[self._id]
+
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
