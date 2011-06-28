@@ -47,6 +47,43 @@ setLogLevel()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Caching
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def setCacheLevel(level=None):
+    """
+    Set the caching level.
+
+    If the level parameter is not specified environment variable CACHE
+    is inspected instead.  There are three levels available:
+
+        0 ... Write any changes to objects immediately to the server
+        1 ... Changes pushed only by update() or upon destruction
+        2 ... Any loaded object is saved for possible future use
+        3 ... Where possible, pre-fetch all available values
+
+    By default cache level 2 is used. That is any changes to objects are
+    pushed to the server only upon destruction or when explicitly
+    requested with the update() method.  Also, any object already loaded
+    from the server is kept in local cache so that future references to
+    that object are faster.
+    """
+
+    global _cache
+    if level is None:
+        try:
+            _cache = int(os.environ["CACHE"])
+        except StandardError:
+            _cache = 2
+    elif level >= 0 and level <= 3:
+        _cache = level
+    else:
+        raise NitrateError("Invalid cache level '{0}'".format(level))
+
+setCacheLevel()
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Default Getter & Setter
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -80,12 +117,17 @@ def _setter(field):
         # Initialize the attribute unless already done
         if getattr(self, "_" + field) is NitrateNone:
             self._get()
-        # Update only if changed, remember modified state
+        # Update only if changed
         if getattr(self, "_" + field) != value:
             setattr(self, "_" + field, value)
-            self._modified = True
             log.info("Updating {0}'s {1} to '{2}'".format(
                     self.identifier, field, value))
+            # Remember modified state if caching
+            if _cache:
+                self._modified = True
+            # Save the changes immediately otherwise
+            else:
+                self._update()
 
     return setter
 
