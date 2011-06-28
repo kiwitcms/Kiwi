@@ -50,6 +50,11 @@ setLogLevel()
 #  Caching
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+CACHE_NONE = 0
+CACHE_CHANGES = 1
+CACHE_OBJECTS = 2
+CACHE_ALL = 3
+
 def setCacheLevel(level=None):
     """
     Set the caching level.
@@ -57,13 +62,13 @@ def setCacheLevel(level=None):
     If the level parameter is not specified environment variable CACHE
     is inspected instead.  There are three levels available:
 
-        0 ... Write any changes to objects immediately to the server
-        1 ... Changes pushed only by update() or upon destruction
-        2 ... Any loaded object is saved for possible future use
-        3 ... Where possible, pre-fetch all available values
+        CACHE_NONE ...... Write object changes immediately to the server
+        CACHE_CHANGES ... Changes pushed only by update() or upon destruction
+        CACHE_OBJECTS ... Any loaded object is saved for possible future use
+        CACHE_ALL ....... Where possible, pre-fetch all available objects
 
-    By default cache level 2 is used. That is any changes to objects are
-    pushed to the server only upon destruction or when explicitly
+    By default CACHE_OBJECTS is used. That means any changes to objects
+    are pushed to the server only upon destruction or when explicitly
     requested with the update() method.  Also, any object already loaded
     from the server is kept in local cache so that future references to
     that object are faster.
@@ -74,11 +79,12 @@ def setCacheLevel(level=None):
         try:
             _cache = int(os.environ["CACHE"])
         except StandardError:
-            _cache = 2
+            _cache = CACHE_OBJECTS
     elif level >= 0 and level <= 3:
         _cache = level
     else:
         raise NitrateError("Invalid cache level '{0}'".format(level))
+    log.info("Caching on level {0}".format(_cache))
 
 setCacheLevel()
 
@@ -604,6 +610,9 @@ class Status(Nitrate):
 class User(Nitrate):
     """ User. """
 
+    # Local cache of User objects indexed by user id
+    _users = {}
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -618,26 +627,39 @@ class User(Nitrate):
     #  User Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    def __new__(cls, id=None, login=None, email=None):
+        """ Create a new object, handle caching if enabled. """
+        id, login, email = cls._parse(id, login, email)
+        if _cache >= CACHE_OBJECTS and id is not None:
+            # Search the cache
+            if id in User._users:
+                log.debug("Using cached user UID#{0}".format(id))
+                return User._users[id]
+            # Not cached yet, create a new one and cache
+            else:
+                log.debug("Caching user UID#{0}".format(id))
+                new = Nitrate.__new__(cls)
+                User._users[id] = new
+                return new
+        else:
+            return Nitrate.__new__(cls)
+
     def __init__(self, id=None, login=None, email=None):
         """ Initialize by user id, login or email.
 
         Defaults to the current user if no id, login or email provided.
         """
+        # If we are a cached-already object no init is necessary
+        if getattr(self, "_id", None) is not None:
+            return
 
+        # Initialize values
         self._name = self._login = self._email = NitrateNone
-
-        # Set login & email if provided
+        id, login, email = self._parse(id, login, email)
         if login is not None:
             self._login = login
         elif email is not None:
             self._email = email
-        # Detect login & email if passed as the first parameter
-        elif isinstance(id, basestring):
-            if '@' in id:
-                self._email = id
-            else:
-                self._login = id
-            id = None
         Nitrate.__init__(self, id, prefix="UID")
 
     def __str__(self):
@@ -647,6 +669,17 @@ class User(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    @staticmethod
+    def _parse(id, login, email):
+        """ Detect login & email if passed as the first parameter. """
+        if isinstance(id, basestring):
+            if '@' in id:
+                email = id
+            else:
+                login = id
+            id = None
+        return id, login, email
 
     def _get(self):
         """ Fetch user data from the server. """
