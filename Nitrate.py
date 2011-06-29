@@ -671,10 +671,16 @@ class User(Nitrate):
     #  User Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __new__(cls, id=None, login=None, email=None):
+    def __new__(cls, id=None, login=None, email=None, hash=None):
         """ Create a new object, handle caching if enabled. """
         id, login, email = cls._parse(id, login, email)
-        if _cache >= CACHE_OBJECTS and id is not None:
+        # Fetch all users if in CACHE_ALL level and the cache is still empty
+        if hash is None and _cache == CACHE_ALL and not User._users:
+            log.info("Caching all users")
+            for hash in Nitrate()._server.User.filter({}):
+                user = User(hash=hash)
+                User._users[user.id] = user
+        if hash is None and _cache >= CACHE_OBJECTS and id is not None:
             # Search the cache
             if id in User._users:
                 log.debug("Using cached user UID#{0}".format(id))
@@ -688,10 +694,11 @@ class User(Nitrate):
         else:
             return Nitrate.__new__(cls)
 
-    def __init__(self, id=None, login=None, email=None):
+    def __init__(self, id=None, login=None, email=None, hash=None):
         """ Initialize by user id, login or email.
 
         Defaults to the current user if no id, login or email provided.
+        If xmlrpc hash provided, data are initilized directly from it.
         """
         # If we are a cached-already object no init is necessary
         if getattr(self, "_id", None) is not None:
@@ -700,11 +707,13 @@ class User(Nitrate):
         # Initialize values
         self._name = self._login = self._email = NitrateNone
         id, login, email = self._parse(id, login, email)
-        if login is not None:
+        Nitrate.__init__(self, id, prefix="UID")
+        if hash is not None:
+            self._get(hash=hash)
+        elif login is not None:
             self._login = login
         elif email is not None:
             self._email = email
-        Nitrate.__init__(self, id, prefix="UID")
 
     def __str__(self):
         """ User login for printing. """
@@ -725,41 +734,43 @@ class User(Nitrate):
             id = None
         return id, login, email
 
-    def _get(self):
+    def _get(self, hash=None):
         """ Fetch user data from the server. """
 
-        # Search by id
-        if self._id is not NitrateNone:
-            try:
-                hash = self._server.User.filter({"id": self.id})[0]
-                log.info("Fetched user " + self.identifier)
+        if hash is None:
+            # Search by id
+            if self._id is not NitrateNone:
+                try:
+                    hash = self._server.User.filter({"id": self.id})[0]
+                    log.info("Fetched user " + self.identifier)
+                    log.debug(pretty(hash))
+                except IndexError:
+                    raise NitrateError(
+                            "Cannot find user for " + self.identifier)
+            # Search by login
+            elif self._login is not NitrateNone:
+                try:
+                    hash = self._server.User.filter(
+                            {"username": self.login})[0]
+                    log.info("Fetched user for login '{0}'".format(self.login))
+                    log.debug(pretty(hash))
+                except IndexError:
+                    raise NitrateError("No user found for login '{0}'".format(
+                            self.login))
+            # Search by email
+            elif self._email is not NitrateNone:
+                try:
+                    hash = self._server.User.filter({"email": self.email})[0]
+                    log.info("Fetched user for email '{0}'" + self.email)
+                    log.debug(pretty(hash))
+                except IndexError:
+                    raise NitrateError("No user found for email '{0}'".format(
+                            self.email))
+            # Otherwise initialize to the current user
+            else:
+                hash = self._server.User.get_me()
+                log.info("Fetched current user")
                 log.debug(pretty(hash))
-            except IndexError:
-                raise NitrateError(
-                        "Cannot find user for " + self.identifier)
-        # Search by login
-        elif self._login is not NitrateNone:
-            try:
-                hash = self._server.User.filter({"username": self.login})[0]
-                log.info("Fetched user for login '{0}'".format(self.login))
-                log.debug(pretty(hash))
-            except IndexError:
-                raise NitrateError("No user found for login '{0}'".format(
-                        self.login))
-        # Search by email
-        elif self._email is not NitrateNone:
-            try:
-                hash = self._server.User.filter({"email": self.email})[0]
-                log.info("Fetched user for email '{0}'" + self.email)
-                log.debug(pretty(hash))
-            except IndexError:
-                raise NitrateError("No user found for email '{0}'".format(
-                        self.email))
-        # Otherwise initialize to the current user
-        else:
-            hash = self._server.User.get_me()
-            log.info("Fetched current user")
-            log.debug(pretty(hash))
 
         # Save values
         self._id = hash["id"]
