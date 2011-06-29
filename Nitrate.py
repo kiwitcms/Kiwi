@@ -167,6 +167,13 @@ class Nitrate(object):
     #  Nitrate Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    id = property(_getter("id"), doc="Object identifier.")
+
+    @property
+    def identifier(self):
+        """ Consistent identifier string. """
+        return "{0}#{1}".format(self._prefix, self._id)
+
     @property
     def _config(self):
         """ User configuration (expected in ~/.nitrate). """
@@ -203,12 +210,6 @@ class Nitrate(object):
         Nitrate._requests += 1
         return Nitrate._connection
 
-    @property
-    def identifier(self):
-        """ Consistent identifier string. """
-        return "{0}#{1}".format(self._prefix, self._id)
-
-
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Nitrate Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -228,6 +229,22 @@ class Nitrate(object):
         """ Short summary about the connection. """
         return "Nitrate server: {0}\nTotal requests handled: {1}".format(
                 self._config["url"], self._requests)
+
+    def __eq__(self, other):
+        """ Handle object equality based on its id. """
+        return self.id == other.id
+
+    def __ne__(self, other):
+        """ Handle object inequality based on its id. """
+        return self.id != other.id
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Nitrate Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Fetch object data from the server. """
+        raise NitrateError("To be implemented by respective class")
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -364,14 +381,6 @@ class PlanType(Nitrate):
         """ Return TestPlan type for printing. """
         return self.name
 
-    def __eq__(self, other):
-        """ Handle correctly TestPlan type equality. """
-        return self._id == other._id
-
-    def __ne__(self, other):
-        """ Handle correctly TestPlan type inequality. """
-        return self._id != other._id
-
     @property
     def id(self):
         """ Numeric TestPlan type id. """
@@ -413,14 +422,6 @@ class Priority(Nitrate):
     def __str__(self):
         """ Return priority name for printing. """
         return self.name
-
-    def __eq__(self, other):
-        """ Handle correctly priority equality. """
-        return self._id == other._id
-
-    def __ne__(self, other):
-        """ Handle correctly priority inequality. """
-        return self._id != other._id
 
     @property
     def id(self):
@@ -569,14 +570,6 @@ class CaseStatus(Nitrate):
         """ Return casestatus name for printing. """
         return self.name
 
-    def __eq__(self, other):
-        """ Handle correctly casestatus equality. """
-        return self._id == other._id
-
-    def __ne__(self, other):
-        """ Handle correctly casestatus inequality. """
-        return self._id != other._id
-
     @property
     def id(self):
         """ Numeric casestatus id. """
@@ -621,14 +614,6 @@ class Status(Nitrate):
     def __str__(self):
         """ Return status name for printing. """
         return self.name
-
-    def __eq__(self, other):
-        """ Handle correctly status equality. """
-        return self._id == other._id
-
-    def __ne__(self, other):
-        """ Handle correctly status inequality. """
-        return self._id != other._id
 
     @property
     def id(self):
