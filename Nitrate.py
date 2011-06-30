@@ -530,17 +530,6 @@ class RunStatus(Nitrate):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Tag Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-class Tag(Nitrate):
-    """ Tag. """
-    id = property(_getter("id"), doc="Tag id")
-    def __init__(self, id):
-        self._id = id
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Case Status Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -864,7 +853,10 @@ class Mutable(Nitrate):
 
     def __del__(self):
         """ Automatically update data upon destruction. """
-        self.update()
+        try:
+            self.update()
+        except:
+            log.exception("Failed to update {0}".format(self))
 
     def _update(self):
         """ Save data to server (to be implemented by respective class) """
@@ -875,6 +867,122 @@ class Mutable(Nitrate):
         if self._modified:
             self._update()
             self._modified = False
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Tags Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Tags(Mutable):
+    """ Tag list for test plan, test run or test case objects. """
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Tags Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    id = property(_getter("id"), doc="Tagged object id.")
+
+    @property
+    def _tags(self):
+        """ Set representation of the tags. """
+        if self._current is NitrateNone:
+            self._get()
+        return self._current
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Tags Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, object):
+        """ Initialize tags for specified object. """
+        Mutable.__init__(self, object.id)
+        self._class = object.__class__
+        self._identifier = object.identifier
+        self._current = NitrateNone
+        self._original = NitrateNone
+
+    def __iter__(self):
+        """ Tag iterator. """
+        for tag in self._tags:
+            yield tag
+
+    def __contains__(self, tag):
+        """ Tag 'in' operator. """
+        return tag in self._tags
+
+    def __str__(self):
+        """ Display tags as list for printing. """
+        return "{0}'s tags: {1}".format(self._identifier,
+                ", ".join(sorted(self._tags)) or "[NoTags]")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Tags Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def add(self, tag):
+        """ Add a tag, mark as modified. """
+        if tag not in self._tags:
+            self._tags.add(tag)
+            if _cache:
+                self._modified = True
+            else:
+                self._update()
+
+    def remove(self, tag):
+        """ Remove a tag, mark as modified. """
+        if tag in self._tags:
+            self._tags.remove(tag)
+            if _cache:
+                self._modified = True
+            else:
+                self._update()
+
+    def _get(self):
+        """ Initialize / refresh object tags from the server. """
+        # Use the respective XMLRPC call to get the tags
+        if self._class is TestPlan:
+            hash = self._server.TestPlan.get_tags(self.id)
+        elif self._class is TestRun:
+            hash = self._server.TestRun.get_tags(self.id)
+        elif self._class is TestCase:
+            hash = self._server.TestCase.get_tags(self.id)
+        else:
+            raise NitrateError("Not tag support for {0}".format(self._class))
+        log.info("Fetched tags for {0}".format(self._identifier))
+        log.debug(pretty(hash))
+
+        # Save the tag list as set, note the initial state
+        self._current = set([tag["name"] for tag in hash])
+        self._original = set(self._tags)
+
+    def _update(self):
+        """ Save tag changes to the server. """
+        # Added tags
+        added = self._current - self._original
+        if added:
+            log.info("Tagging {0} with '{1}'".format(
+                    self._identifier, ", ".join(added)))
+            if self._class is TestPlan:
+                self._server.TestPlan.add_tag(self.id, list(added))
+            elif self._class is TestRun:
+                self._server.TestRun.add_tag(self.id, list(added))
+            elif self._class is TestCase:
+                self._server.TestCase.add_tag(self.id, list(added))
+
+        # Removed tags
+        removed = self._original - self._current
+        if removed:
+            log.info("Untagging {0} of '{1}'".format(
+                    self._identifier, ", ".join(removed)))
+            if self._class is TestPlan:
+                self._server.TestPlan.remove_tag(self.id, list(removed))
+            elif self._class is TestRun:
+                self._server.TestRun.remove_tag(self.id, list(removed))
+            elif self._class is TestCase:
+                self._server.TestCase.remove_tag(self.id, list(removed))
+
+        # Save the current state as the original (for future updates)
+        self._original = set(self._current)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -898,6 +1006,8 @@ class TestPlan(Mutable):
             doc="Test plan id.")
     author = property(_getter("author"),
             doc="Test plan author.")
+    tags = property(_getter("tags"),
+            doc="Attached tags.")
 
     # Read-write properties
     name = property(_getter("name"), _setter("name"),
@@ -948,7 +1058,7 @@ class TestPlan(Mutable):
 
         # Initialize values to unknown
         for attr in """id author name parent product type testcases
-                testruns""".split():
+                testruns tags""".split():
             setattr(self, "_" + attr, NitrateNone)
 
         # Optionally we can get prepared hash
@@ -1006,6 +1116,7 @@ class TestPlan(Mutable):
             self._parent = TestPlan(testplanhash["parent_id"])
         else:
             self._parent = None
+        self._tags = Tags(self)
 
     def _update(self):
         """ Save test plan data to the server. """
@@ -1046,6 +1157,8 @@ class TestRun(Mutable):
             doc="Test run id.")
     testplan = property(_getter("testplan"),
             doc="Test plan related to this test run.")
+    tags = property(_getter("tags"),
+            doc="Attached tags.")
 
     # Read-write properties
     build = property(_getter("build"), _setter("build"),
@@ -1080,14 +1193,6 @@ class TestRun(Mutable):
         return self._caseruns
 
     @property
-    def tags(self):
-        """ Attached tags. """
-        if self._tags is NitrateNone:
-            self._tags = [Tag(tag["tag_id"])
-                    for tag in self._server.TestRun.get_tags(self.id)]
-        return self._tags
-
-    @property
     def synopsis(self):
         """ One-line test run overview. """
         return "{0} - {1} ({2} cases)".format(
@@ -1110,7 +1215,11 @@ class TestRun(Mutable):
             summary ... <test plan name> on <build>
             notes ..... ""
             manager ... current user
-            tester .... current user"""
+            tester .... current user
+            tags ...... None
+
+        Tags should be provided as a list of tag names.
+        """
 
         Mutable.__init__(self, id, prefix="TR")
 
@@ -1150,7 +1259,8 @@ class TestRun(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _create(self, testplan, product=None, version=None, build=None,
-            summary=None, notes=None, manager=None, tester=None, **kwargs):
+            summary=None, notes=None, manager=None, tester=None, tags=None,
+            **kwargs):
         """ Create a new test run. """
 
         hash = {}
@@ -1191,8 +1301,9 @@ class TestRun(Mutable):
         hash["manager"] = manager.id
         hash["default_tester"] = tester.id
 
-        # Include all test cases in the test run
+        # Include all test cases and tag with supplied tags
         hash["case"] = [case.id for case in testplan]
+        if tags: hash["tag"] = ",".join(tags)
 
         # Submit to the server and initialize
         log.info("Creating a new test run based on {0}".format(testplan))
@@ -1233,9 +1344,10 @@ class TestRun(Mutable):
         # Work around BZ#716233 (uses build product)
         self._product = Product(id=self.build.product.id,
                 version=testrunhash["product_version"])
+        self._tags = Tags(self)
 
     def _update(self):
-        """ Save test run data to the server """
+        """ Save test run data to the server. """
 
         # Prepare the update hash
         hash = {}
@@ -1276,6 +1388,8 @@ class TestCase(Mutable):
             doc="Test case id (read-only).")
     author = property(_getter("author"),
             doc="Test case author.")
+    tags = property(_getter("tags"),
+            doc="Attached tags.")
 
     # Read-write properties
     automated = property(_getter("automated"), _setter("automated"),
@@ -1328,14 +1442,6 @@ class TestCase(Mutable):
             self._testplans = [Plan(planhash=hash)
                     for hash in self._server.TestCase.get_plans(self.id)]
         return self._testplans
-
-    @property
-    def tags(self):
-        """ Attached tags. """
-        if self._tags is NitrateNone:
-            self._tags = [Tag(tag["tag_id"])
-                    for tag in self._server.TestCase.get_tags(self.id)]
-        return self._tags
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Special
@@ -1413,6 +1519,7 @@ class TestCase(Mutable):
         self._sortkey = testcasehash["sortkey"]
         self._status = CaseStatus(testcasehash["case_status_id"])
         self._summary = testcasehash["summary"]
+        self._tags = Tags(self)
         self._time = testcasehash["estimated_time"]
         if testcasehash["default_tester_id"] is not None:
             self._tester = User(testcasehash["default_tester_id"])
@@ -1597,6 +1704,7 @@ if __name__ == "__main__":
     TestRun(6757).notes = "Testing notes"
     TestCase(46490).script = "/CoreOS/component/example"
     CaseRun(525318).status = Status("PASSED")
+    TestRun(6757).tags.add("TestTag")
 
     # Display info about the server
     print "\n", Nitrate()
