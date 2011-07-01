@@ -90,6 +90,72 @@ setCacheLevel()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Coloring
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+COLOR_ON = 1
+COLOR_OFF = 0
+COLOR_AUTO = 2
+
+def setColorMode(mode=None):
+    """
+    Set the coloring mode.
+
+    If enabled, some objects (like case run Status) are printed in color
+    to easily spot failures, errors and so on. By default the feature is
+    enabled when script is attached to a terminal. Possible values are:
+
+        COLOR_ON ..... coloring enabled
+        COLOR_OFF .... coloring disabled
+        COLOR_AUTO ... enabled if terminal detected (default)
+
+    Environment variable COLOR can be used to set up the coloring to the
+    desired mode without modifying code.
+    """
+
+    global _color
+
+    if mode is None:
+        try:
+            mode = int(os.environ["COLOR"])
+        except StandardError:
+            mode = COLOR_AUTO
+    elif mode < 0 or mode > 2:
+        raise NitrateError("Invalid color mode '{0}'".format(mode))
+
+    if mode == COLOR_AUTO:
+        _color = sys.stdout.isatty()
+    else:
+        _color = mode == 1
+    log.info("Coloring {0}".format(_color and "enabled" or "disabled"))
+
+def color(text, color=None, background=None, light=False):
+    """ Return text in desired color if coloring enabled. """
+
+    colors = {"black": 30, "red": 31, "green": 32, "yellow": 33,
+            "blue": 34, "magenta": 35, "cyan": 36, "white": 37}
+
+    # Prepare colors (strip 'light' if present in color)
+    if color and color.startswith("light"):
+        light = True
+        color = color[5:]
+    color = color and ";{0}".format(colors[color]) or ""
+    background = background and ";{0}".format(colors[background] + 10) or ""
+    light = light and 1 or 0
+
+    # Starting and finishing sequence
+    start = "\033[{0}{1}{2}m".format(light , color, background)
+    finish = "\033[1;m"
+
+    if _color:
+        return "".join([start, text, finish])
+    else:
+        return text
+
+setColorMode()
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Default Getter & Setter
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -589,6 +655,9 @@ class Status(Nitrate):
     _statuses = ['PAD', 'IDLE', 'PASSED', 'FAILED', 'RUNNING', 'PAUSED',
             'BLOCKED', 'ERROR', 'WAIVED']
 
+    _colors = [None, "blue", "lightgreen", "lightred", "green", "yellow",
+            "red", "magenta", "lightcyan"]
+
     def __init__(self, status):
         """
         Takes numeric status id (1-8) or status name which is one of:
@@ -615,15 +684,19 @@ class Status(Nitrate):
         return self._id
 
     @property
+    def _name(self):
+        """ Status name, plain without coloring. """
+        return self._statuses[self.id]
+
+    @property
     def name(self):
         """ Human readable status name. """
-        return self._statuses[self._id]
+        return color(self._name, color=self._colors[self.id])
 
     @property
     def shortname(self):
         """ Short same-width status string (4 chars) """
-        return self.name[0:4]
-
+        return color(self._name[0:4], color=self._colors[self.id])
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
