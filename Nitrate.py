@@ -313,8 +313,9 @@ class Build(Nitrate):
         # Search by id
         if self._id is not NitrateNone:
             try:
+                log.info("Fetching build " + self.identifier)
                 hash = self._server.Build.get(self.id)
-                log.info("Fetched build " + self.identifier)
+                log.debug("Intializing build " + self.identifier)
                 log.debug(pretty(hash))
                 self._name = hash["name"]
                 self._product = Product(hash["product_id"])
@@ -324,9 +325,11 @@ class Build(Nitrate):
         # Search by product and name
         else:
             try:
+                log.info("Fetching build '{0}' of '{1}'".format(
+                        self.name, self.product.name))
                 hash = self._server.Build.check_build(
                         self.name, self.product.id)
-                log.info("Fetched build '{0}' of '{1}'".format(
+                log.debug("Initializing build '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash["build_id"]
@@ -499,8 +502,9 @@ class Product(Nitrate):
         # Search by id
         if self._id is not NitrateNone:
             try:
+                log.info("Fetching product " + self.identifier)
                 hash = self._server.Product.filter({'id': self.id})[0]
-                log.info("Fetched product " + self.identifier)
+                log.debug("Initializing product " + self.identifier)
                 log.debug(pretty(hash))
                 self._name = hash["name"]
             except IndexError:
@@ -509,8 +513,9 @@ class Product(Nitrate):
         # Search by name
         else:
             try:
+                log.info("Fetching product '{0}'".format(self.name))
                 hash = self._server.Product.filter({'name': self.name})[0]
-                log.info("Fetched product '{0}'".format(self.name))
+                log.debug("Initializing product '{0}'".format(self.name))
                 log.debug(pretty(hash))
                 self._id = hash["id"]
             except IndexError:
@@ -715,38 +720,37 @@ class User(Nitrate):
             # Search by id
             if self._id is not NitrateNone:
                 try:
+                    log.info("Fetching user " + self.identifier)
                     hash = self._server.User.filter({"id": self.id})[0]
-                    log.info("Fetched user " + self.identifier)
-                    log.debug(pretty(hash))
                 except IndexError:
                     raise NitrateError(
                             "Cannot find user for " + self.identifier)
             # Search by login
             elif self._login is not NitrateNone:
                 try:
+                    log.info(
+                            "Fetching user for login '{0}'".format(self.login))
                     hash = self._server.User.filter(
                             {"username": self.login})[0]
-                    log.info("Fetched user for login '{0}'".format(self.login))
-                    log.debug(pretty(hash))
                 except IndexError:
                     raise NitrateError("No user found for login '{0}'".format(
                             self.login))
             # Search by email
             elif self._email is not NitrateNone:
                 try:
+                    log.info("Fetching user for email '{0}'" + self.email)
                     hash = self._server.User.filter({"email": self.email})[0]
-                    log.info("Fetched user for email '{0}'" + self.email)
-                    log.debug(pretty(hash))
                 except IndexError:
                     raise NitrateError("No user found for email '{0}'".format(
                             self.email))
             # Otherwise initialize to the current user
             else:
+                log.info("Fetching the current user")
                 hash = self._server.User.get_me()
-                log.info("Fetched current user")
-                log.debug(pretty(hash))
 
         # Save values
+        log.debug("Initializing user UID#{0}".format(hash["id"]))
+        log.debug(pretty(hash))
         self._id = hash["id"]
         self._login = hash["username"]
         self._email = hash["email"]
@@ -811,8 +815,9 @@ class Version(Nitrate):
         # Search by id
         if self._id is not NitrateNone:
             try:
+                log.info("Fetching version " + self.identifier)
                 hash = self._server.Product.filter_versions({'id': self.id})
-                log.info("Fetched version " + self.identifier)
+                log.debug("Initializing version " + self.identifier)
                 log.debug(pretty(hash))
                 self._name = hash[0]["value"]
                 self._product = Product(hash[0]["product_id"])
@@ -822,9 +827,11 @@ class Version(Nitrate):
         # Search by product and name
         else:
             try:
+                log.info("Fetching version '{0}' of '{1}'".format(
+                        self.name, self.product.name))
                 hash = self._server.Product.filter_versions(
                         {'product': self.product.id, 'value': self.name})
-                log.info("Fetched version '{0}' of '{1}'".format(
+                log.debug("Initializing version '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash[0]["id"]
@@ -939,6 +946,7 @@ class Tags(Mutable):
 
     def _get(self):
         """ Initialize / refresh object tags from the server. """
+        log.info("Fetching tags for {0}".format(self._identifier))
         # Use the respective XMLRPC call to get the tags
         if self._class is TestPlan:
             hash = self._server.TestPlan.get_tags(self.id)
@@ -948,7 +956,6 @@ class Tags(Mutable):
             hash = self._server.TestCase.get_tags(self.id)
         else:
             raise NitrateError("Not tag support for {0}".format(self._class))
-        log.info("Fetched tags for {0}".format(self._identifier))
         log.debug(pretty(hash))
 
         # Save the tag list as set, note the initial state
@@ -1102,9 +1109,10 @@ class TestPlan(Mutable):
 
         # Fetch the data hash from the server unless provided
         if testplanhash is None:
+            log.info("Fetching test plan " + self.identifier)
             testplanhash = self._server.TestPlan.get(self.id)
-            log.info("Fetched test plan " + self.identifier)
-            log.debug(pretty(testplanhash))
+        log.debug("Initializing test plan " + self.identifier)
+        log.debug(pretty(testplanhash))
 
         # Set up attributes
         self._author = User(testplanhash["author_id"])
@@ -1183,7 +1191,9 @@ class TestRun(Mutable):
         """ List of CaseRun() objects related to this run. """
         if self._caseruns is NitrateNone:
             # Fetch both test cases & test case runs
+            log.info("Fetching {0}'s test cases".format(self.identifier))
             testcases = self._server.TestRun.get_test_cases(self.id)
+            log.info("Fetching {0}'s case runs".format(self.identifier))
             caseruns = self._server.TestRun.get_test_case_runs(self.id)
             # Create the CaseRun objects
             self._caseruns = [
@@ -1328,8 +1338,9 @@ class TestRun(Mutable):
 
         # Fetch the data hash from the server unless provided
         if testrunhash is None:
+            log.info("Fetching test run " + self.identifier)
             testrunhash = self._server.TestRun.get(self.id)
-        log.info("Fetched test run " + self.identifier)
+        log.debug("Initializing test run " + self.identifier)
         log.debug(pretty(testrunhash))
 
         # Set up attributes
@@ -1503,8 +1514,9 @@ class TestCase(Mutable):
 
         # Fetch the data hash from the server unless provided
         if testcasehash is None:
+            log.info("Fetching test case " + self.identifier)
             testcasehash = self._server.TestCase.get(self.id)
-        log.info("Fetched test case " + self.identifier)
+        log.debug("Initializing test case " + self.identifier)
         log.debug(pretty(testcasehash))
 
         # Set up attributes
@@ -1644,8 +1656,9 @@ class CaseRun(Mutable):
 
         # Fetch the data hash from the server unless provided
         if caserunhash is None:
+            log.info("Fetching case run " + self.identifier)
             caserunhash = self._server.TestCaseRun.get(self.id)
-        log.info("Fetched case run " + self.identifier)
+        log.debug("Initializing case run " + self.identifier)
         log.debug(pretty(caserunhash))
 
         # Set up attributes
