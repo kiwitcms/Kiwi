@@ -1628,7 +1628,7 @@ class TestCase(Mutable):
         hash["sortkey"] = self.sortkey
         hash["summary"] = self.summary
         if self.tester:
-            hash["default_tester"] = self.tester.id
+            hash["default_tester"] = self.tester.login
 
         log.info("Updating test case " + self.identifier)
         log.debug(pretty(hash))
