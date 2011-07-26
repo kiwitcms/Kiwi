@@ -289,8 +289,11 @@ class Nitrate(object):
         elif isinstance(id, int):
             self._id = id
         else:
-            raise NitrateError("Invalid {0} id: '{1}'".format(
-                    self.__class__.__name__, id))
+            try:
+                self._id = int(id)
+            except ValueError:
+                raise NitrateError("Invalid {0} id: '{1}'".format(
+                        self.__class__.__name__, id))
 
     def __str__(self):
         """ Short summary about the connection. """
@@ -1273,7 +1276,7 @@ class TestRun(Mutable):
             self._caseruns = [
                     CaseRun(testcasehash=testcase, caserunhash=caserun)
                     for caserun in caseruns for testcase in testcases
-                    if testcase["case_id"] == caserun["case_id"]]
+                    if int(testcase["case_id"]) == int(caserun["case_id"])]
         return self._caseruns
 
     @property
