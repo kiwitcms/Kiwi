@@ -1496,8 +1496,8 @@ class TestCase(Mutable):
             doc="Test case requirements.")
     script = property(_getter("script"), _setter("script"),
             doc="Test script (used for automation).")
-    sortkey = property(_getter("sortkey"), _setter("sortkey"),
-            doc="Sort key.")
+    # XXX sortkey = property(_getter("sortkey"), _setter("sortkey"),
+    #        doc="Sort key.")
     status = property(_getter("status"), _setter("status"),
             doc="Current test case status.")
     summary = property(_getter("summary"), _setter("summary"),
@@ -1605,7 +1605,7 @@ class TestCase(Mutable):
         self._priority = Priority(testcasehash["priority_id"])
         self._requirement = testcasehash["requirement"]
         self._script = testcasehash["script"]
-        self._sortkey = testcasehash["sortkey"]
+        # XXX self._sortkey = testcasehash["sortkey"]
         self._status = CaseStatus(testcasehash["case_status_id"])
         self._summary = testcasehash["summary"]
         self._tags = Tags(self)
@@ -1629,7 +1629,7 @@ class TestCase(Mutable):
         # TODO hash["product"] = self.product.id
         hash["requirement"] = self.requirement
         hash["script"] = self.script
-        hash["sortkey"] = self.sortkey
+        # XXX hash["sortkey"] = self.sortkey
         hash["summary"] = self.summary
         if self.tester:
             hash["default_tester"] = self.tester.login
