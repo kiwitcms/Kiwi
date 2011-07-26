@@ -16,6 +16,7 @@ import ConfigParser
 import logging as log
 from pprint import pformat as pretty
 
+sys.path.append("/usr/share/qa-tools")
 from nitrate import NitrateError, NitrateKerbXmlrpc
 
 
