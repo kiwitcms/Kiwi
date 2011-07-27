@@ -404,9 +404,85 @@ class Build(Nitrate):
 
 class Category(Nitrate):
     """ Test case category. """
-    id = property(_getter("id"), doc="Category id")
-    def __init__(self, id):
-        self._id = id
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Category Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="Category id.")
+    name = property(_getter("name"), doc="Category name.")
+    product = property(_getter("product"), doc="Relevant product.")
+    description = property(_getter("description"), doc="Category description.")
+
+    @property
+    def synopsis(self):
+        """ Short category summary (including product info). """
+        return "{0}, {1}".format(self.name, self.product)
+
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Category Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, id=None, product=None, category=None):
+        """ Initialize by category id or product and category name. """
+
+        # Initialized by id
+        if id is not None:
+            self._name = self._product = NitrateNone
+        # Initialized by product and category
+        elif product is not None and category is not None:
+            # Detect product format
+            if isinstance(product, Product):
+                self._product = product
+            elif isinstance(product, basestring):
+                self._product = Product(name=product)
+            else:
+                self._product = Product(id=product)
+            self._name = category
+        else:
+            raise NitrateError("Need either category id or both product "
+                    "and category name to initialize the Category object.")
+        Nitrate.__init__(self, id)
+
+    def __str__(self):
+        """ Category name for printing. """
+        return self.name
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Category Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Get the missing category data. """
+
+        # Search by id
+        if self._id is not NitrateNone:
+            try:
+                log.info("Fetching category " + self.identifier)
+                hash = self._server.Product.get_category(self.id)
+                log.debug("Intializing category " + self.identifier)
+                log.debug(pretty(hash))
+                self._name = hash["name"]
+                self._product = Product(hash["product_id"])
+            except LookupError:
+                raise NitrateError(
+                        "Cannot find category for " + self.identifier)
+        # Search by product and name
+        else:
+            try:
+                log.info("Fetching category '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                hash = self._server.Product.check_category(
+                        self.name, self.product.id)
+                log.debug("Initializing category '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                log.debug(pretty(hash))
+                self._id = hash["id"]
+            except LookupError:
+                raise NitrateError("Category '{0}' not found in '{1}'".format(
+                    self.name, self.product.name))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1685,6 +1761,14 @@ class TestCase(Mutable):
     bugs = property(_getter("bugs"),
             doc="Attached bugs.")
 
+    @property
+    def synopsis(self):
+        """ Short summary about the test case. """
+        plans = len(self.testplans)
+        return "{0} ({1}, {2}, {3}, {4} {5})".format(
+                self, self.category, self.priority, self.status,
+                plans, "test plan" if plans == 1 else "test plans")
+
     # Read-write properties
     automated = property(_getter("automated"), _setter("automated"),
             doc="Automation flag.")
@@ -1725,7 +1809,7 @@ class TestCase(Mutable):
     def testplans(self):
         """ List of TestPlan() objects linked to this test case. """
         if self._testplans is NitrateNone:
-            self._testplans = [Plan(planhash=hash)
+            self._testplans = [TestPlan(testplanhash=hash)
                     for hash in self._server.TestCase.get_plans(self.id)]
         return self._testplans
 
@@ -1747,7 +1831,7 @@ class TestCase(Mutable):
         # Initialize values to unknown
         for attr in """product category priority summary status plans
                 components tester time automated sortkey script arguments
-                tags bugs author""".split():
+                tags testplans bugs author""".split():
             setattr(self, "_" + attr, NitrateNone)
 
         # Optionally we can get prepared hash
@@ -1820,12 +1904,12 @@ class TestCase(Mutable):
 
         hash["arguments"] = self.arguments
         hash["case_status"] = self.status.id
-        # TODO hash["category"] = self.category.id
+        hash["category"] = self.category.id
         hash["estimated_time"] = self.time
         hash["is_automated"] = self.automated
         hash["notes"] = self.notes
         hash["priority"] = self.priority.id
-        # TODO hash["product"] = self.product.id
+        hash["product"] = self.category.product.id
         hash["requirement"] = self.requirement
         hash["script"] = self.script
         # XXX hash["sortkey"] = self.sortkey
