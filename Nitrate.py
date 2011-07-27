@@ -11,6 +11,7 @@ Nitrate object which checks ~/.nitrate config file for the url:
 """
 
 import os
+import re
 import sys
 import ConfigParser
 import logging as log
@@ -665,9 +666,46 @@ class Product(Nitrate):
 
 class RunStatus(Nitrate):
     """ Test run status. """
-    id = property(_getter("id"), doc="Test run status id")
-    def __init__(self, id):
-        self._id = id
+
+    _statuses = ['RUNNING', 'FINISHED']
+
+    def __init__(self, status):
+        """
+        Takes numeric status id, status name or stop date.
+
+        A 'None' value is considered to be a 'no stop date' running:
+
+        0 ... RUNNING  ... 'None'
+        1 ... FINISHED ... '2011-07-27 15:14'
+        """
+        if isinstance(status, int):
+            if status not in [0, 1]:
+                raise NitrateError(
+                        "Not a valid run status id: '{0}'".format(status))
+            self._id = status
+        else:
+            # Running or no stop date
+            if status == "RUNNING" or status == "None" or status is None:
+                self._id = 0
+            # Finished or some stop date
+            elif status == "FINISHED" or re.match("^[-0-9: ]+$", status):
+                self._id = 1
+            else:
+                raise NitrateError("Invalid run status '{0}'".format(status))
+
+    def __str__(self):
+        """ Return run status name for printing. """
+        return self.name
+
+    @property
+    def id(self):
+        """ Numeric runstatus id. """
+        return self._id
+
+    @property
+    def name(self):
+        """ Human readable runstatus name. """
+        return self._statuses[self._id]
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1779,7 +1817,7 @@ class TestRun(Mutable):
         hash["notes"] = self.notes
         hash["product"] = self.product.id
         hash["product_version"] = self.product.version.id
-        # TODO hash["status"] = self.status.id
+        hash["status"] = self.status.id
         hash["summary"] = self.summary
 
         log.info("Updating test run " + self.identifier)
@@ -2134,6 +2172,7 @@ if __name__ == "__main__":
     TestCase(46490).script = "/CoreOS/component/example"
     CaseRun(525318).status = Status("PASSED")
     TestRun(6757).tags.add("TestTag")
+    TestRun(6757).status = RunStatus("FINISHED")
 
     # Display info about the server
     print "\n", Nitrate()
