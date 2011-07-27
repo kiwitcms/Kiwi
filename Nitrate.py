@@ -494,11 +494,11 @@ class PlanType(Nitrate):
     """ Plan type. """
 
     _plantypes = ['Null', 'Unit', 'Integration', 'Function', 'System',
-                    'Acceptance', 'Installation', 'Performance', 'Product',
-                    'Interoperability', 'Smoke', 'Regression', 'NotExist',
-                    'i18n/l10n', 'Load', 'Sanity', 'Functionality', 'Stress',
-                    'Stability', 'Density', 'Benchmark', 'testtest', 'test11',
-                    'Place Holder', 'Recovery', 'Component', 'General', 'Release']
+            'Acceptance', 'Installation', 'Performance', 'Product',
+            'Interoperability', 'Smoke', 'Regression', 'NotExist', 'i18n/l10n',
+            'Load', 'Sanity', 'Functionality', 'Stress', 'Stability',
+            'Density', 'Benchmark', 'testtest', 'test11', 'Place Holder',
+            'Recovery', 'Component', 'General', 'Release']
 
     def __init__(self, plantype):
         """
