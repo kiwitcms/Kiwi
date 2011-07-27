@@ -497,7 +497,7 @@ class PlanType(Nitrate):
                     'Interoperability', 'Smoke', 'Regression', 'NotExist',
                     'i18n/l10n', 'Load', 'Sanity', 'Functionality', 'Stress',
                     'Stability', 'Density', 'Benchmark', 'testtest', 'test11',
-                    'Place Holder', 'Recovery']
+                    'Place Holder', 'Recovery', 'Component', 'General', 'Release']
 
     def __init__(self, plantype):
         """
@@ -505,7 +505,7 @@ class PlanType(Nitrate):
         """
 
         if isinstance(plantype, int):
-            if plantype < 1 or plantype > 25 or plantype == 12:
+            if plantype < 1 or plantype > 28 or plantype == 12:
                 raise NitrateError(
                     "Not a valid Test Plan Type id: '{0}'".format(plantype))
             self._id = plantype
@@ -1410,12 +1410,19 @@ class TestPlan(Mutable):
     #  Test Plan Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, name=None, type=None, product=None,
-            **kwargs):
+    def __init__(self, id=None, name=None, product=None, version=None,
+            type=None, **kwargs):
+
         """ Initialize a test plan or create a new one.
 
-        Provide id to initialize an existing plan, name, type and
-        product to create a new plan.
+        Provide id to initialize an existing plan, name, product, version
+        and type to create a new plan.
+        Other parameters are optional and have following defaults:
+
+            document .... ""
+            parent ...... None
+            is_active ... 1
+
         """
 
         Mutable.__init__(self, id, prefix="TP")
@@ -1437,9 +1444,9 @@ class TestPlan(Mutable):
             self._get(testplanhash=testplanhash)
         # Create a new test plan based on provided name, type and product
         elif name and type and product:
-            self._create(name=name, type=type, product=product, **kwargs)
+            self._create(name=name, product=product, version=version, type=type, **kwargs)
         else:
-            raise NitrateError("Need either id or name, type and product")
+            raise NitrateError("Need either id or name, product, version and type")
 
     def __iter__(self):
         """ Provide test cases as the default iterator. """
@@ -1454,9 +1461,55 @@ class TestPlan(Mutable):
     #  Test Plan Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _create(self, name, type, product, **kwargs):
+    def _create(self, name, product, version, type, **kwargs):
+
         """ Create a new test plan. """
-        raise NitrateError("To be implemented")
+
+        hash = {}
+
+        # Name
+        if name is None:
+            raise NitrateError("Name required for creating new test plan")
+        hash["name"] = name
+
+        # Product and Version
+        if product is None:
+            raise NitrateError("Product required for creating new test plan")
+        elif isinstance(product, basestring):
+            product = Product(name=product, version=version)
+        hash["product"] = product.id
+
+        if version is None:
+            raise NitrateError("Version required for creating new test plan")
+        hash["default_product_version"] = product.version.id
+
+        # Type
+        if type is None:
+            raise NitrateError("Type required for creating new test plan")
+        elif isinstance(type, basestring):
+            type = PlanType(type)
+        hash["type"] = type.id
+
+        # Document - if not explicitly specified, put empty text
+        hash["text"] = kwargs.get("document", " ")
+
+        # Workaround for BZ#725995
+        hash["is_active"] = "1"
+
+        # Submit
+        log.info("Creating a new test plan")
+        log.debug(pretty(hash))
+        testplanhash = self._server.TestPlan.create(hash)
+        log.debug(pretty(testplanhash))
+        try:
+            self._id = testplanhash["plan_id"]
+        except TypeError:
+            log.error("Failed to create a new test plan")
+            log.error(pretty(hash))
+            log.error(pretty(testplanhash))
+            raise NitrateError("Failed to create test plan")
+        self._get(testplanhash=testplanhash)
+        log.info("Successfully created {0}".format(self))
 
     def _get(self, testplanhash=None):
         """ Initialize / refresh test plan data.
