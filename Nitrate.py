@@ -1450,16 +1450,14 @@ class TestPlan(Mutable):
 
     def __init__(self, id=None, name=None, product=None, version=None,
             type=None, **kwargs):
+        """
+        Initialize a test plan or create a new one.
 
-        """ Initialize a test plan or create a new one.
+        Provide id to initialize an existing test plan or name, product,
+        version and type to create a new plan. Other parameters are optional.
 
-        Provide id to initialize an existing plan, name, product, version
-        and type to create a new plan.
-        Other parameters are optional and have following defaults:
-
-            document .... ""
-            parent ...... None
-            is_active ... 1
+            document .... Test plan document (default: '')
+            parent ...... Parent test plan (object or id, default: None)
 
         """
 
@@ -1482,9 +1480,11 @@ class TestPlan(Mutable):
             self._get(testplanhash=testplanhash)
         # Create a new test plan based on provided name, type and product
         elif name and type and product:
-            self._create(name=name, product=product, version=version, type=type, **kwargs)
+            self._create(name=name, product=product, version=version,
+                    type=type, **kwargs)
         else:
-            raise NitrateError("Need either id or name, product, version and type")
+            raise NitrateError(
+                    "Need either id or name, product, version and type")
 
     def __iter__(self):
         """ Provide test cases as the default iterator. """
@@ -1527,6 +1527,13 @@ class TestPlan(Mutable):
         elif isinstance(type, basestring):
             type = PlanType(type)
         hash["type"] = type.id
+
+        # Parent
+        parent = kwargs.get("parent")
+        if parent is not None:
+            if isinstance(parent, int):
+                parent = TestPlan(parent)
+            hash["parent"] = parent.id
 
         # Document - if not explicitly specified, put empty text
         hash["text"] = kwargs.get("document", " ")
