@@ -1584,8 +1584,7 @@ class TestPlan(Mutable):
         hash["type"] = self.type.id
         if self.parent is not None:
             hash["parent"] = self.parent.id
-        # Disabled until BZ#716499 is fixed
-        # TODO hash["default_product_version"] = self.product.version.id
+        hash["default_product_version"] = self.product.version.id
 
         log.info("Updating test plan " + self.identifier)
         log.debug(pretty(hash))
