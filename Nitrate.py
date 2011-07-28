@@ -2038,15 +2038,16 @@ class TestCase(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __init__(self, id=None, summary=None, category=None, product=None,
-            priority=None, **kwargs):
+            **kwargs):
         """ Initialize a test case or create a new one.
 
         Initialize an existing test case (if id provided) or create a
-        new one (based on provided summary, category, product and
-        priority).
-        Other optional parameters supported are:
-            tester ... tester login name
-            script ... test path
+        new one (based on provided summary, category and product. Other
+        optional parameters supported are:
+
+            priority ... priority object, id or name (default: P3)
+            tester ..... user object or login (default: None)
+            script ..... test path (default: None)
 
         """
 
@@ -2068,13 +2069,10 @@ class TestCase(Mutable):
         elif testcasehash:
             self._id = int(testcasehash["case_id"])
             self._get(testcasehash=testcasehash)
-        # Create a new test case based on case, run and build
-        elif summary and category and product and priority:
-            self._create(summary=summary, category=category, product=product,
-                    priority=priority, **kwargs)
+        # Create a new test case based on summary, category & product
         else:
-            raise NitrateError("Need either id or "
-                    "summary, category, product and priority")
+            self._create(summary=summary, category=category, product=product,
+                    **kwargs)
 
     def __str__(self):
         """ Test case id & summary for printing. """
@@ -2084,34 +2082,35 @@ class TestCase(Mutable):
     #  Test Case Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _create(self, summary, category, product, priority, **kwargs):
+    def _create(self, summary, category, product, **kwargs):
         """ Create a new test case. """
 
         hash = {}
 
         # Summary
         if summary is None:
-            raise NitrateError("Summary required for creating new test case")
+            raise NitrateError("Summary required to create a new test case")
         hash["summary"] = summary
 
         # Product
         if product is None:
-            raise NitrateError("Product required for creating new test case")
+            raise NitrateError("Product required to create a new test case")
         elif isinstance(product, basestring):
             product = Product(name=product)
         hash["product"] = product.id
 
         # Category
         if category is None:
-            raise NitrateError("Category required for creating new test case")
+            raise NitrateError("Category required to create a new test case")
         elif isinstance(category, basestring):
-            category = Category(category=category,product=product)
+            category = Category(category=category, product=product)
         hash["category"] = category.id
 
         # Priority
+        priority = kwargs.get("priority")
         if priority is None:
-            raise NitrateError("Priority required for creating new test case")
-        elif isinstance(priority, basestring):
+            priority = Priority("P3")
+        elif not isinstance(priority, Priority):
             priority = Priority(priority)
         hash["priority"] = priority.id
 
@@ -2126,7 +2125,7 @@ class TestCase(Mutable):
         hash["script"] = kwargs.get("script")
 
         # Submit
-        log.info("Creating new test case")
+        log.info("Creating a new test case")
         log.debug(pretty(hash))
         testcasehash = self._server.TestCase.create(hash)
         log.debug(pretty(testcasehash))
