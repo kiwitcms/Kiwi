@@ -207,6 +207,20 @@ def _setter(field):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Various Utilities
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def _listed(items, quote=""):
+    """ Convert provided iterable into a nice, human readable list. """
+    items = ["{0}{1}{0}".format(quote, item) for item in items]
+
+    if len(items) < 2:
+        return "".join(items)
+    else:
+        return ", ".join(items[0:-2] + [" and ".join(items[-2:])])
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Nitrate None Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -309,6 +323,10 @@ class Nitrate(object):
     def __ne__(self, other):
         """ Handle object inequality based on its id. """
         return self.id != other.id
+
+    def __hash__(self):
+        """ Use object id as the default hash. """
+        return self.id
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Nitrate Methods
@@ -1058,6 +1076,126 @@ class Mutable(Nitrate):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Container Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Container(Mutable):
+    """
+    General container class for handling sets of objects.
+
+    Provides the add() and remove() methods for adding and removing
+    objects and the internal _add() and _remove() which perform the
+    actual update to the server (implemented by respective class).
+    """
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Container Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    id = property(_getter("id"), doc="Related object id.")
+
+    @property
+    def _items(self):
+        """ Set representation containing the items. """
+        if self._current is NitrateNone:
+            self._get()
+        return self._current
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Container Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __init__(self, object):
+        """ Initialize container for specified object. """
+        Mutable.__init__(self, object.id)
+        self._class = object.__class__
+        self._identifier = object.identifier
+        self._current = NitrateNone
+        self._original = NitrateNone
+
+    def __iter__(self):
+        """ Container iterator. """
+        for item in self._items:
+            yield item
+
+    def __contains__(self, item):
+        """ Container 'in' operator. """
+        return item in self._items
+
+    def __str__(self):
+        """ Display items as a list for printing. """
+        if self._items:
+            # List of identifiers
+            try:
+                return _listed(sorted(
+                    [item.identifier for item in self._items]))
+            # If no identifiers, just join strings
+            except AttributeError:
+                return _listed(self._items, quote="'")
+        else:
+            return "[None]"
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Container Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def add(self, items):
+        """ Add an item or a list of items to the container. """
+
+        # Convert to set representation
+        if isinstance(items, list):
+            items = set(items)
+        else:
+            items = set([items])
+
+        # If there are any new items
+        if items - self._items:
+            self._items.update(items)
+            if _cache:
+                self._modified = True
+            else:
+                self._update()
+
+    def remove(self, items):
+        """ Remove an item or a list of items from the container. """
+
+        # Convert to set representation
+        if isinstance(items, list):
+            items = set(items)
+        else:
+            items = set([items])
+
+        # If there are any new items
+        if items.intersection(self._items):
+            self._items.difference_update(items)
+            if _cache:
+                self._modified = True
+            else:
+                self._update()
+
+    def _add(self, items):
+        """ Add provided items to the server. """
+        raise NitrateError("To be implemented by respective class.")
+
+    def _remove(self, items):
+        """ Remove provided items from the server. """
+        raise NitrateError("To be implemented by respective class.")
+
+    def _update(self):
+        """ Update container changes to the server. """
+        # Added items
+        added = self._current - self._original
+        if added: self._add(added)
+
+        # Removed items
+        removed = self._original - self._current
+        if removed: self._remove(removed)
+
+        # Save the current state as the original (for future updates)
+        self._original = set(self._current)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Bug Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1272,119 +1410,87 @@ class Bugs(Mutable):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Tags Class
+#  Plan Tags Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class Tags(Mutable):
-    """ Tag list for test plan, test run or test case objects. """
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Tags Properties
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    id = property(_getter("id"), doc="Tagged object id.")
-
-    @property
-    def _tags(self):
-        """ Set representation of the tags. """
-        if self._current is NitrateNone:
-            self._get()
-        return self._current
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Tags Special
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def __init__(self, object):
-        """ Initialize tags for specified object. """
-        Mutable.__init__(self, object.id)
-        self._class = object.__class__
-        self._identifier = object.identifier
-        self._current = NitrateNone
-        self._original = NitrateNone
-
-    def __iter__(self):
-        """ Tag iterator. """
-        for tag in self._tags:
-            yield tag
-
-    def __contains__(self, tag):
-        """ Tag 'in' operator. """
-        return tag in self._tags
-
-    def __str__(self):
-        """ Display tags as list for printing. """
-        return "{0}'s tags: {1}".format(self._identifier,
-                ", ".join(sorted(self._tags)) or "[NoTags]")
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Tags Methods
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def add(self, tag):
-        """ Add a tag, mark as modified. """
-        if tag not in self._tags:
-            self._tags.add(tag)
-            if _cache:
-                self._modified = True
-            else:
-                self._update()
-
-    def remove(self, tag):
-        """ Remove a tag, mark as modified. """
-        if tag in self._tags:
-            self._tags.remove(tag)
-            if _cache:
-                self._modified = True
-            else:
-                self._update()
+class PlanTags(Container):
+    """ Test plan tags. """
 
     def _get(self):
-        """ Initialize / refresh object tags from the server. """
+        """ Fetch currently attached tags from the server. """
         log.info("Fetching tags for {0}".format(self._identifier))
-        # Use the respective XMLRPC call to get the tags
-        if self._class is TestPlan:
-            hash = self._server.TestPlan.get_tags(self.id)
-        elif self._class is TestRun:
-            hash = self._server.TestRun.get_tags(self.id)
-        elif self._class is TestCase:
-            hash = self._server.TestCase.get_tags(self.id)
-        else:
-            raise NitrateError("Not tag support for {0}".format(self._class))
+        hash = self._server.TestPlan.get_tags(self.id)
         log.debug(pretty(hash))
-
-        # Save the tag list as set, note the initial state
         self._current = set([tag["name"] for tag in hash])
-        self._original = set(self._tags)
-
-    def _update(self):
-        """ Save tag changes to the server. """
-        # Added tags
-        added = self._current - self._original
-        if added:
-            log.info("Tagging {0} with '{1}'".format(
-                    self._identifier, ", ".join(added)))
-            if self._class is TestPlan:
-                self._server.TestPlan.add_tag(self.id, list(added))
-            elif self._class is TestRun:
-                self._server.TestRun.add_tag(self.id, list(added))
-            elif self._class is TestCase:
-                self._server.TestCase.add_tag(self.id, list(added))
-
-        # Removed tags
-        removed = self._original - self._current
-        if removed:
-            log.info("Untagging {0} of '{1}'".format(
-                    self._identifier, ", ".join(removed)))
-            if self._class is TestPlan:
-                self._server.TestPlan.remove_tag(self.id, list(removed))
-            elif self._class is TestRun:
-                self._server.TestRun.remove_tag(self.id, list(removed))
-            elif self._class is TestCase:
-                self._server.TestCase.remove_tag(self.id, list(removed))
-
-        # Save the current state as the original (for future updates)
         self._original = set(self._current)
+
+    def _add(self, tags):
+        """ Attach provided tags to the test plan. """
+        log.info("Tagging {0} with {1}".format(
+                self._identifier, _listed(tags, quote="'")))
+        self._server.TestPlan.add_tag(self.id, list(tags))
+
+    def _remove(self, tags):
+        """ Detach provided tags from the test plan. """
+        log.info("Untagging {0} of {1}".format(
+                self._identifier, _listed(tags, quote="'")))
+        self._server.TestPlan.remove_tag(self.id, list(tags))
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Run Tags Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class RunTags(Container):
+    """ Test run tags. """
+
+    def _get(self):
+        """ Fetch currently attached tags from the server. """
+        log.info("Fetching tags for {0}".format(self._identifier))
+        hash = self._server.TestRun.get_tags(self.id)
+        log.debug(pretty(hash))
+        self._current = set([tag["name"] for tag in hash])
+        self._original = set(self._current)
+
+    def _add(self, tags):
+        """ Attach provided tags to the test run. """
+        log.info("Tagging {0} with {1}".format(
+                self._identifier, _listed(tags, quote="'")))
+        self._server.TestRun.add_tag(self.id, list(tags))
+
+    def _remove(self, tags):
+        """ Detach provided tags from the test run. """
+        log.info("Untagging {0} of {1}".format(
+                self._identifier, _listed(tags, quote="'")))
+        self._server.TestRun.remove_tag(self.id, list(tags))
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Case Tags Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class CaseTags(Container):
+    """ Test case tags. """
+
+    def _get(self):
+        """ Fetch currently attached tags from the server. """
+        log.info("Fetching tags for {0}".format(self._identifier))
+        hash = self._server.TestCase.get_tags(self.id)
+        log.debug(pretty(hash))
+        self._current = set([tag["name"] for tag in hash])
+        self._original = set(self._current)
+
+    def _add(self, tags):
+        """ Attach provided tags to the test case. """
+        log.info("Tagging {0} with {1}".format(
+                self._identifier, _listed(tags, quote="'")))
+        self._server.TestCase.add_tag(self.id, list(tags))
+
+    def _remove(self, tags):
+        """ Detach provided tags from the test case. """
+        log.info("Untagging {0} of {1}".format(
+                self._identifier, _listed(tags, quote="'")))
+        self._server.TestCase.remove_tag(self.id, list(tags))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1410,6 +1516,8 @@ class TestPlan(Mutable):
             doc="Test plan author.")
     tags = property(_getter("tags"),
             doc="Attached tags.")
+    testcases = property(_getter("testcases"),
+            doc="Test cases linked to this plan.")
 
     # Read-write properties
     name = property(_getter("name"), _setter("name"),
@@ -1428,14 +1536,6 @@ class TestPlan(Mutable):
             self._testruns = [TestRun(testrunhash=hash) for hash in
                     self._server.TestPlan.get_test_runs(self.id)]
         return self._testruns
-
-    @property
-    def testcases(self):
-        """ List of TestCase() objects related to this plan. """
-        if self._testcases is NitrateNone:
-            self._testcases = [TestCase(testcasehash=hash) for hash in
-                    self._server.TestPlan.get_test_cases(self.id)]
-        return self._testcases
 
     @property
     def synopsis(self):
@@ -1476,7 +1576,7 @@ class TestPlan(Mutable):
             self._id = id
         # If hash provided, let's initialize the data immediately
         elif testplanhash:
-            self._id = testplanhash["plan_id"]
+            self._id = int(testplanhash["plan_id"])
             self._get(testplanhash=testplanhash)
         # Create a new test plan based on provided name, type and product
         elif name and type and product:
@@ -1579,7 +1679,8 @@ class TestPlan(Mutable):
             self._parent = TestPlan(testplanhash["parent_id"])
         else:
             self._parent = None
-        self._tags = Tags(self)
+        self._tags = PlanTags(self)
+        self._testcases = TestCases(self)
 
     def _update(self):
         """ Save test plan data to the server. """
@@ -1596,6 +1697,34 @@ class TestPlan(Mutable):
         log.info("Updating test plan " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestPlan.update(self.id, hash)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Test Plans Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class TestPlans(Container):
+    """ Test plans linked to a test case. """
+
+    def _get(self):
+        """ Fetch currently linked test plans from the server. """
+        log.info("Fetching {0}'s plans".format(self._identifier))
+        self._current = set([TestPlan(testplanhash=hash)
+                    for hash in self._server.TestCase.get_plans(self.id)])
+        self._original = set(self._current)
+
+    def _add(self, plans):
+        """ Link provided plans to the test case. """
+        log.info("Linking {1} to {0}".format(self._identifier,
+                    _listed([plan.identifier for plan in plans])))
+        self._server.TestCase.link_plan(self.id, [plan.id for plan in plans])
+
+    def _remove(self, plans):
+        """ Unlink provided plans from the test case. """
+        for plan in plans:
+            log.info("Unlinking {0} from {1}".format(
+                    plan.identifier, self._identifier))
+            self._server.TestCase.unlink_plan(self.id, plan.id)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1809,7 +1938,7 @@ class TestRun(Mutable):
         # Work around BZ#716233 (uses build product)
         self._product = Product(id=self.build.product.id,
                 version=testrunhash["product_version"])
-        self._tags = Tags(self)
+        self._tags = RunTags(self)
 
     def _update(self):
         """ Save test run data to the server. """
@@ -1857,6 +1986,8 @@ class TestCase(Mutable):
             doc="Attached tags.")
     bugs = property(_getter("bugs"),
             doc="Attached bugs.")
+    testplans = property(_getter("testplans"),
+            doc="Test plans linked to this test case.")
 
     @property
     def synopsis(self):
@@ -1902,14 +2033,6 @@ class TestCase(Mutable):
                     self._server.TestCase.get_components(self.id)]
         return self._components
 
-    @property
-    def testplans(self):
-        """ List of TestPlan() objects linked to this test case. """
-        if self._testplans is NitrateNone:
-            self._testplans = [TestPlan(testplanhash=hash)
-                    for hash in self._server.TestCase.get_plans(self.id)]
-        return self._testplans
-
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1939,7 +2062,7 @@ class TestCase(Mutable):
             self._id = id
         # If hash provided, let's initialize the data immediately
         elif testcasehash:
-            self._id = testcasehash["case_id"]
+            self._id = int(testcasehash["case_id"])
             self._get(testcasehash=testcasehash)
         # Create a new test case based on case, run and build
         elif summary and category and product and priority:
@@ -1987,13 +2110,14 @@ class TestCase(Mutable):
         # XXX self._sortkey = testcasehash["sortkey"]
         self._status = CaseStatus(testcasehash["case_status_id"])
         self._summary = testcasehash["summary"]
-        self._tags = Tags(self)
+        self._tags = CaseTags(self)
         self._time = testcasehash["estimated_time"]
         if testcasehash["default_tester_id"] is not None:
             self._tester = User(testcasehash["default_tester_id"])
         else:
             self._tester = None
         self._bugs = Bugs(self)
+        self._testplans = TestPlans(self)
 
     def _update(self):
         """ Save test case data to server """
@@ -2017,6 +2141,34 @@ class TestCase(Mutable):
         log.info("Updating test case " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestCase.update(self.id, hash)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Test Cases Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class TestCases(Container):
+    """ Test cases linked to a test plan. """
+
+    def _get(self):
+        """ Fetch currently linked test cases from the server. """
+        log.info("Fetching {0}'s cases".format(self._identifier))
+        self._current = set([TestCase(testcasehash=hash) for hash in
+                self._server.TestPlan.get_test_cases(self.id)])
+        self._original = set(self._current)
+
+    def _add(self, cases):
+        """ Link provided cases to the test plan. """
+        log.info("Linking {1} to {0}".format(self._identifier,
+                    _listed([case.identifier for case in cases])))
+        self._server.TestCase.link_plan([case.id for case in cases], self.id)
+
+    def _remove(self, cases):
+        """ Unlink provided cases from the test plan. """
+        for case in cases:
+            log.info("Unlinking {0} from {1}".format(
+                    case.identifier, self._identifier))
+            self._server.TestCase.unlink_plan(case.id, self.id)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
