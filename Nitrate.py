@@ -2269,13 +2269,11 @@ class CaseRun(Mutable):
     #  Case Run Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, testcase=None, testrun=None, build=None,
-            **kwargs):
+    def __init__(self, id=None, testcase=None, testrun=None, **kwargs):
         """ Initialize a test case run or create a new one.
 
         Initialize an existing test case run (if id provided) or create
-        a new test case run (based on provided test case, test run and
-        build).
+        a new test case run (based on provided test case and test run).
         """
 
         Mutable.__init__(self, id, prefix="CR")
@@ -2296,9 +2294,9 @@ class CaseRun(Mutable):
         elif caserunhash and testcasehash:
             self._id = caserunhash["case_run_id"]
             self._get(caserunhash=caserunhash, testcasehash=testcasehash)
-        # Create a new test case run based on case, run and build
-        elif testcase and testrun and build:
-            self._create(testcase=testcase, testrun=testrun, build=build)
+        # Create a new test case run based on case and run
+        elif testcase and testrun:
+            self._create(testcase=testcase, testrun=testrun, **kwargs)
         else:
             raise NitrateError("Need either id or testcase, testrun & build")
 
@@ -2311,9 +2309,44 @@ class CaseRun(Mutable):
     #  Case Run Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _create(testcase, testrun, build, **kwargs):
+    def _create(self, testcase, testrun, **kwargs):
         """ Create a new case run. """
-        raise NitrateError("To be implemented")
+
+        hash = {}
+
+        # TestCase
+        if testcase is None:
+            raise NitrateError("Case ID required for new case run")
+        elif isinstance(testcase, basestring):
+            testcase = TestCase(testcase)
+        hash["case"] = testcase.id
+
+        # TestRun
+        if testrun is None:
+            raise NitrateError("Run ID required for new case run")
+        elif isinstance(testrun, basestring):
+            testrun = TestRun(testrun)
+        hash["run"] = testrun.id
+
+        # Build is required by XMLRPC
+        build = testrun.build
+        hash["build"] = build.id
+
+        # Submit
+        log.info("Creating new case run")
+        log.debug(pretty(hash))
+        caserunhash = self._server.TestCaseRun.create(hash)
+        log.debug(pretty(caserunhash))
+        try:
+            self._id = caserunhash["case_run_id"]
+        except TypeError:
+            log.error("Failed to create new case run")
+            log.error(pretty(hash))
+            log.error(pretty(caserunhash))
+            raise NitrateError("Failed to create case run")
+        self._get(caserunhash=caserunhash)
+        log.info("Successfully created {0}".format(self))
+
 
     def _get(self, caserunhash=None, testcasehash=None):
         """ Initialize / refresh test case run data.
