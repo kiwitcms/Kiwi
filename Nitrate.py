@@ -2044,6 +2044,10 @@ class TestCase(Mutable):
         Initialize an existing test case (if id provided) or create a
         new one (based on provided summary, category, product and
         priority).
+        Other optional parameters supported are:
+            tester ... tester login name
+            script ... test path
+
         """
 
         Mutable.__init__(self, id, prefix="TC")
@@ -2067,7 +2071,7 @@ class TestCase(Mutable):
         # Create a new test case based on case, run and build
         elif summary and category and product and priority:
             self._create(summary=summary, category=category, product=product,
-                    priority=priority)
+                    priority=priority, **kwargs)
         else:
             raise NitrateError("Need either id or "
                     "summary, category, product and priority")
@@ -2082,7 +2086,59 @@ class TestCase(Mutable):
 
     def _create(self, summary, category, product, priority, **kwargs):
         """ Create a new test case. """
-        raise NitrateError("To be implemented")
+
+        hash = {}
+
+        # Summary
+        if summary is None:
+            raise NitrateError("Summary required for creating new test case")
+        hash["summary"] = summary
+
+        # Product
+        if product is None:
+            raise NitrateError("Product required for creating new test case")
+        elif isinstance(product, basestring):
+            product = Product(name=product)
+        hash["product"] = product.id
+
+        # Category
+        if category is None:
+            raise NitrateError("Category required for creating new test case")
+        elif isinstance(category, basestring):
+            category = Category(category=category,product=product)
+        hash["category"] = category.id
+
+        # Priority
+        if priority is None:
+            raise NitrateError("Priority required for creating new test case")
+        elif isinstance(priority, basestring):
+            priority = Priority(priority)
+        hash["priority"] = priority.id
+
+        # User
+        tester = kwargs.get("tester")
+        if tester:
+            if isinstance(tester, basestring):
+                tester = User(login=tester)
+            hash["default_tester"] = tester.login
+
+        # Script
+        hash["script"] = kwargs.get("script")
+
+        # Submit
+        log.info("Creating new test case")
+        log.debug(pretty(hash))
+        testcasehash = self._server.TestCase.create(hash)
+        log.debug(pretty(testcasehash))
+        try:
+            self._id = testcasehash["case_id"]
+        except TypeError:
+            log.error("Failed to create a new test case")
+            log.error(pretty(hash))
+            log.error(pretty(testplanhash))
+            raise NitrateError("Failed to create test case")
+        self._get(testcasehash=testcasehash)
+        log.info("Successfully created {0}".format(self))
 
 
     def _get(self, testcasehash=None):
