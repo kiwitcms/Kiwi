@@ -13,6 +13,7 @@ Nitrate object which checks ~/.nitrate config file for the url:
 import os
 import re
 import sys
+import unittest
 import ConfigParser
 import logging as log
 from pprint import pformat as pretty
@@ -2396,29 +2397,65 @@ class CaseRun(Mutable):
 #  Self Test
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+class testTestCase(unittest.TestCase):
+    def testCreateInvalid(self):
+        """ Create a new test case (missing required parameters) """
+        self.assertRaises(NitrateError, TestCase, summary="Test case summary")
+
+    def testCreateValid(self):
+        """ Create a new test case (valid) """
+        case = TestCase(summary="Test case summary",
+                product="Red Hat Enterprise Linux 6", category="Sanity")
+        self.assertTrue(isinstance(case, TestCase), "Check created instance")
+        self.assertEqual(case.summary, "Test case summary")
+        self.assertEqual(case.priority, Priority("P3"))
+
+    def testFetchExisting(self):
+        """ Fetch an existing test case """
+        new = TestCase(summary="Test case summary",
+                product="Red Hat Enterprise Linux 6", category="Sanity")
+        case = TestCase(new.id)
+        self.assertTrue(isinstance(case, TestCase), "Check the instance")
+        self.assertEqual(case.summary, "Test case summary")
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Main
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if __name__ == "__main__":
-    # Display info about the server
-    print Nitrate()
 
-    # Show test plan summary and list test cases
-    testplan = TestPlan(289)
-    print "\n", testplan.synopsis
-    for testcase in testplan:
-        print " ", testcase
+    # The full self-test against the test server if url provided
+    if len(sys.argv) == 2 and "http" in sys.argv[1]:
+        import __main__
+        Nitrate._settings = {'url': sys.argv[1] }
+        suite = unittest.TestLoader().loadTestsFromModule(__main__)
+        unittest.TextTestRunner(verbosity=3).run(suite)
 
-    # For each test run list test cases with their status
-    for testrun in testplan.testruns:
-        print "\n", testrun.synopsis
-        for caserun in testrun:
-            print " ", caserun
+    # Otherwise just quick check against the default server
+    else:
+        # Display info about the server
+        print Nitrate()
 
-    # Update test case data / case run status
-    TestPlan(289).name = "Tessst plan"
-    TestRun(6757).notes = "Testing notes"
-    TestCase(46490).script = "/CoreOS/component/example"
-    CaseRun(525318).status = Status("PASSED")
-    TestRun(6757).tags.add("TestTag")
-    TestRun(6757).status = RunStatus("FINISHED")
+        # Show test plan summary and list test cases
+        testplan = TestPlan(289)
+        print "\n", testplan.synopsis
+        for testcase in testplan:
+            print " ", testcase
 
-    # Display info about the server
-    print "\n", Nitrate()
+        # For each test run list test cases with their status
+        for testrun in testplan.testruns:
+            print "\n", testrun.synopsis
+            for caserun in testrun:
+                print " ", caserun
+
+        # Update test case data / case run status
+        TestPlan(289).name = "Tessst plan"
+        TestRun(6757).notes = "Testing notes"
+        TestCase(46490).script = "/CoreOS/component/example"
+        CaseRun(525318).status = Status("PASSED")
+        TestRun(6757).tags.add("TestTag")
+        TestRun(6757).status = RunStatus("FINISHED")
+
+        # Display info about the server
+        print "\n", Nitrate()
