@@ -1123,6 +1123,10 @@ class Container(Mutable):
         """ Container 'in' operator. """
         return item in self._items
 
+    def __len__(self):
+        """ Number of container items. """
+        return len(self._items)
+
     def __str__(self):
         """ Display items as a list for printing. """
         if self._items:
