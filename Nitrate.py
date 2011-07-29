@@ -13,6 +13,7 @@ Nitrate object which checks ~/.nitrate config file for the url:
 import os
 import re
 import sys
+import types
 import unittest
 import ConfigParser
 import logging as log
@@ -2202,6 +2203,33 @@ class TestCase(Mutable):
         log.debug(pretty(hash))
         self._server.TestCase.update(self.id, hash)
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Case Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def testCreateInvalid(self):
+            """ Create a new test case (missing required parameters) """
+            self.assertRaises(
+                    NitrateError, TestCase, summary="Test case summary")
+
+        def testCreateValid(self):
+            """ Create a new test case (valid) """
+            case = TestCase(summary="Test case summary",
+                    product="Red Hat Enterprise Linux 6", category="Sanity")
+            self.assertTrue(
+                    isinstance(case, TestCase), "Check created instance")
+            self.assertEqual(case.summary, "Test case summary")
+            self.assertEqual(case.priority, Priority("P3"))
+
+        def testFetchExisting(self):
+            """ Fetch an existing test case """
+            new = TestCase(summary="Test case summary",
+                    product="Red Hat Enterprise Linux 6", category="Sanity")
+            case = TestCase(new.id)
+            self.assertTrue(isinstance(case, TestCase), "Check the instance")
+            self.assertEqual(case.summary, "Test case summary")
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Test Cases Class
@@ -2401,26 +2429,24 @@ class CaseRun(Mutable):
 #  Self Test
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class testTestCase(unittest.TestCase):
-    def testCreateInvalid(self):
-        """ Create a new test case (missing required parameters) """
-        self.assertRaises(NitrateError, TestCase, summary="Test case summary")
+def _test(url):
+    """ Run tests for all classes. """
 
-    def testCreateValid(self):
-        """ Create a new test case (valid) """
-        case = TestCase(summary="Test case summary",
-                product="Red Hat Enterprise Linux 6", category="Sanity")
-        self.assertTrue(isinstance(case, TestCase), "Check created instance")
-        self.assertEqual(case.summary, "Test case summary")
-        self.assertEqual(case.priority, Priority("P3"))
+    import __main__
+    Nitrate._settings = {'url': url }
 
-    def testFetchExisting(self):
-        """ Fetch an existing test case """
-        new = TestCase(summary="Test case summary",
-                product="Red Hat Enterprise Linux 6", category="Sanity")
-        case = TestCase(new.id)
-        self.assertTrue(isinstance(case, TestCase), "Check the instance")
-        self.assertEqual(case.summary, "Test case summary")
+    # Walk through all module classes
+    for name in dir(__main__):
+        object = getattr(__main__, name)
+        # Pick Nitrate classes only
+        if (isinstance(object, (type, types.ClassType)) and
+                issubclass(object, Nitrate)):
+            # Run the _test class if found
+            test = getattr(object, "_test", None)
+            if test is not None:
+                print "\n{0}\n{1}".format(object.__name__, 70 * "~")
+                suite = unittest.TestLoader().loadTestsFromTestCase(test)
+                unittest.TextTestRunner(verbosity=2).run(suite)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2431,10 +2457,7 @@ if __name__ == "__main__":
 
     # The full self-test against the test server if url provided
     if len(sys.argv) == 2 and "http" in sys.argv[1]:
-        import __main__
-        Nitrate._settings = {'url': sys.argv[1] }
-        suite = unittest.TestLoader().loadTestsFromModule(__main__)
-        unittest.TextTestRunner(verbosity=3).run(suite)
+        _test(sys.argv[1])
 
     # Otherwise just quick check against the default server
     else:
