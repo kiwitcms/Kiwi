@@ -2146,7 +2146,7 @@ class TestCase(Mutable):
 
     def __str__(self):
         """ Test case id & summary for printing. """
-        return "{0} - {1}".format(self.identifier.ljust(8), self.summary)
+        return "{0} - {1}".format(self.identifier.ljust(9), self.summary)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Methods
