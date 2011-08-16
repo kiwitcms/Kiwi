@@ -2461,7 +2461,7 @@ class CaseRun(Mutable):
         self._assignee = User(caserunhash["assignee_id"])
         self._build = Build(caserunhash["build_id"])
         self._notes = caserunhash["notes"]
-        self._sortkey = caserunhash["sortkey"]
+        self._sortkey = int(caserunhash["sortkey"])
         self._status = Status(caserunhash["case_run_status_id"])
         self._testrun = TestRun(caserunhash["run_id"])
         if testcasehash:
