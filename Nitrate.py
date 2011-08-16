@@ -426,6 +426,9 @@ class Build(Nitrate):
 class Category(Nitrate):
     """ Test case category. """
 
+    # Local cache of Category objects indexed by category id
+    _categories = {}
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Category Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -441,13 +444,32 @@ class Category(Nitrate):
         """ Short category summary (including product info). """
         return "{0}, {1}".format(self.name, self.product)
 
-
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Category Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    def __new__(cls, id=None, product=None, category=None):
+        """ Create a new object, handle caching if enabled. """
+        if _cache >= CACHE_OBJECTS and id is not None:
+            # Search the cache
+            if id in Category._categories:
+                log.debug("Using cached category ID#{0}".format(id))
+                return Category._categories[id]
+            # Not cached yet, create a new one and cache
+            else:
+                log.debug("Caching category ID#{0}".format(id))
+                new = Nitrate.__new__(cls)
+                Category._categories[id] = new
+                return new
+        else:
+            return Nitrate.__new__(cls)
+
     def __init__(self, id=None, product=None, category=None):
         """ Initialize by category id or product and category name. """
+
+        # If we are a cached-already object no init is necessary
+        if getattr(self, "_id", None) is not None:
+            return
 
         # Initialized by id
         if id is not None:
@@ -504,6 +526,48 @@ class Category(Nitrate):
             except LookupError:
                 raise NitrateError("Category '{0}' not found in '{1}'".format(
                     self.name, self.product.name))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Category Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+
+        def testCachingOn(self):
+            """ Category caching on """
+            # Enable cache, remember current number of requests
+            cache = _cache
+            setCacheLevel(CACHE_OBJECTS)
+            requests = Nitrate._requests
+            # The first round (fetch category data from server)
+            category = Category(1)
+            self.assertTrue(isinstance(category.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            del category
+            # The second round (there should be no more requests)
+            category = Category(1)
+            self.assertTrue(isinstance(category.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            # Restore cache level
+            setCacheLevel(cache)
+
+        def testCachingOff(self):
+            """ Category caching off """
+            # Enable cache, remember current number of requests
+            cache = _cache
+            setCacheLevel(CACHE_NONE)
+            requests = Nitrate._requests
+            # The first round (fetch category data from server)
+            category = Category(1)
+            self.assertTrue(isinstance(category.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            del category
+            # The second round (there should be another request)
+            category = Category(1)
+            self.assertTrue(isinstance(category.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 2)
+            # Restore cache level
+            setCacheLevel(cache)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
