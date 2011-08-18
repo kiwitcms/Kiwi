@@ -212,7 +212,7 @@ def _setter(field):
 #  Various Utilities
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def _listed(items, quote=""):
+def listed(items, quote=""):
     """ Convert provided iterable into a nice, human readable list. """
     items = ["{0}{1}{0}".format(quote, item) for item in items]
 
@@ -1197,11 +1197,11 @@ class Container(Mutable):
         if self._items:
             # List of identifiers
             try:
-                return _listed(sorted(
+                return listed(sorted(
                     [item.identifier for item in self._items]))
             # If no identifiers, just join strings
             except AttributeError:
-                return _listed(self._items, quote="'")
+                return listed(self._items, quote="'")
         else:
             return "[None]"
 
@@ -1497,13 +1497,13 @@ class PlanTags(Container):
     def _add(self, tags):
         """ Attach provided tags to the test plan. """
         log.info("Tagging {0} with {1}".format(
-                self._identifier, _listed(tags, quote="'")))
+                self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.add_tag(self.id, list(tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test plan. """
         log.info("Untagging {0} of {1}".format(
-                self._identifier, _listed(tags, quote="'")))
+                self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.remove_tag(self.id, list(tags))
 
 
@@ -1525,13 +1525,13 @@ class RunTags(Container):
     def _add(self, tags):
         """ Attach provided tags to the test run. """
         log.info("Tagging {0} with {1}".format(
-                self._identifier, _listed(tags, quote="'")))
+                self._identifier, listed(tags, quote="'")))
         self._server.TestRun.add_tag(self.id, list(tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test run. """
         log.info("Untagging {0} of {1}".format(
-                self._identifier, _listed(tags, quote="'")))
+                self._identifier, listed(tags, quote="'")))
         self._server.TestRun.remove_tag(self.id, list(tags))
 
 
@@ -1553,13 +1553,13 @@ class CaseTags(Container):
     def _add(self, tags):
         """ Attach provided tags to the test case. """
         log.info("Tagging {0} with {1}".format(
-                self._identifier, _listed(tags, quote="'")))
+                self._identifier, listed(tags, quote="'")))
         self._server.TestCase.add_tag(self.id, list(tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test case. """
         log.info("Untagging {0} of {1}".format(
-                self._identifier, _listed(tags, quote="'")))
+                self._identifier, listed(tags, quote="'")))
         self._server.TestCase.remove_tag(self.id, list(tags))
 
 
@@ -1789,7 +1789,7 @@ class TestPlans(Container):
     def _add(self, plans):
         """ Link provided plans to the test case. """
         log.info("Linking {1} to {0}".format(self._identifier,
-                    _listed([plan.identifier for plan in plans])))
+                    listed([plan.identifier for plan in plans])))
         self._server.TestCase.link_plan(self.id, [plan.id for plan in plans])
 
     def _remove(self, plans):
@@ -2315,7 +2315,7 @@ class TestCases(Container):
     def _add(self, cases):
         """ Link provided cases to the test plan. """
         log.info("Linking {1} to {0}".format(self._identifier,
-                    _listed([case.identifier for case in cases])))
+                    listed([case.identifier for case in cases])))
         self._server.TestCase.link_plan([case.id for case in cases], self.id)
 
     def _remove(self, cases):
