@@ -8,6 +8,22 @@ Nitrate object which checks ~/.nitrate config file for the url:
     [nitrate]
     url = https://tcms.engineering.redhat.com/xmlrpc/
 
+
+Search support
+~~~~~~~~~~~~~~
+
+Multiple Nitrate classes provide the static method 'search' which takes
+the search query in the Django QuerySet format which gives an easy
+access to the foreign keys and basic search operators. For example:
+
+    Product.search(name="Red Hat Enterprise Linux 6")
+    TestPlan.search(name__contains="python")
+    TestRun.search(manager__email='login@example.com'):
+    TestCase.search(script__startswith='/CoreOS/python')
+
+For the complete list of available operators see Django documentation:
+https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups
+
 """
 
 import os
@@ -713,6 +729,12 @@ class Product(Nitrate):
         else:
             return self.name
 
+    @staticmethod
+    def search(**query):
+        """ Search for products. """
+        return [Product(hash["id"])
+                for hash in Nitrate()._server.Product.filter(dict(query))]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Product Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -742,6 +764,17 @@ class Product(Nitrate):
             except IndexError:
                 raise NitrateError(
                         "Cannot find product for '{0}'".format(self.name))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Product Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def testSearch(self):
+            """ Product search """
+            products = Product.search(name="Red Hat Enterprise Linux 6")
+            self.assertEqual(len(products), 1, "Single product returned")
+            self.assertEqual(products[0].id, 60)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -962,6 +995,12 @@ class User(Nitrate):
     def __str__(self):
         """ User login for printing. """
         return self.login
+
+    @staticmethod
+    def search(**query):
+        """ Search for users. """
+        return [User(hash=hash)
+                for hash in Nitrate()._server.User.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Methods
@@ -1665,6 +1704,12 @@ class TestPlan(Mutable):
         """ Test plan id & summary for printing. """
         return "{0} - {1}".format(self.identifier, self.name)
 
+    @staticmethod
+    def search(**query):
+        """ Search for test plans. """
+        return [TestPlan(testplanhash=hash)
+                for hash in Nitrate()._server.TestPlan.filter(dict(query))]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1920,6 +1965,12 @@ class TestRun(Mutable):
         """ Test run id & summary for printing. """
         return "{0} - {1}".format(self.identifier, self.summary)
 
+    @staticmethod
+    def search(**query):
+        """ Search for test runs. """
+        return [TestRun(testrunhash=hash)
+                for hash in Nitrate()._server.TestRun.filter(dict(query))]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2150,6 +2201,12 @@ class TestCase(Mutable):
     def __str__(self):
         """ Test case id & summary for printing. """
         return "{0} - {1}".format(self.identifier.ljust(9), self.summary)
+
+    @staticmethod
+    def search(**query):
+        """ Search for test cases. """
+        return [TestCase(testcasehash=hash)
+                for hash in Nitrate()._server.TestCase.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Methods
@@ -2403,6 +2460,12 @@ class CaseRun(Mutable):
         """ Case run id, status & summary for printing. """
         return "{0} - {1} - {2}".format(self.status.shortname,
                 self.identifier.ljust(9), self.testcase.summary)
+
+    @staticmethod
+    def search(**query):
+        """ Search for case runs. """
+        return [CaseRun(caserunhash=hash)
+                for hash in Nitrate()._server.TestCaseRun.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Case Run Methods
