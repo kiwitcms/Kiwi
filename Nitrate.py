@@ -1738,6 +1738,9 @@ class TestPlan(Mutable):
             testplanhash = self._server.TestPlan.get(self.id)
         log.debug("Initializing test plan " + self.identifier)
         log.debug(pretty(testplanhash))
+        if not "plan_id" in testplanhash:
+            log.error(pretty(testplanhash))
+            raise NitrateError("Failed to initialize " + self.identifier)
 
         # Set up attributes
         self._author = User(testplanhash["author_id"])
