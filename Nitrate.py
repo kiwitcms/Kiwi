@@ -1876,8 +1876,6 @@ class TestRun(Mutable):
             doc="Manager responsible for this test run.")
     notes = property(_getter("notes"), _setter("notes"),
             doc="Test run notes.")
-    product = property(_getter("product"), _setter("product"),
-            doc="Product relevant for this test run.")
     status = property(_getter("status"), _setter("status"),
             doc="Test run status")
     summary = property(_getter("summary"), _setter("summary"),
@@ -1921,8 +1919,8 @@ class TestRun(Mutable):
         parameters are optional and have the following defaults:
 
             build ..... "unspecified"
-            product ... test plan product
-            version ... test plan product version
+            product ... test run product
+            version ... test run product version
             summary ... <test plan name> on <build>
             notes ..... ""
             manager ... current user
@@ -2059,9 +2057,6 @@ class TestRun(Mutable):
         self._tester = User(testrunhash["default_tester_id"])
         self._testplan = TestPlan(testrunhash["plan_id"])
         self._time = testrunhash["estimated_time"]
-        # Work around BZ#716233 (uses build product)
-        self._product = Product(id=self.build.product.id,
-                version=testrunhash["product_version"])
         self._tags = RunTags(self)
 
     def _update(self):
@@ -2074,8 +2069,8 @@ class TestRun(Mutable):
         hash["estimated_time"] = self.time
         hash["manager"] = self.manager.id
         hash["notes"] = self.notes
-        hash["product"] = self.product.id
-        hash["product_version"] = self.product.version.id
+        # This is required until BZ#731982 is fixed
+        hash["product"] = self.build.product.id
         hash["status"] = self.status.id
         hash["summary"] = self.summary
 
