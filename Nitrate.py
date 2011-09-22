@@ -2,11 +2,42 @@
 High-level API for the Nitrate test case management system.
 
 This module provides a high-level python interface for the nitrate
-module. Connection to the server is handled automatically by the
-Nitrate object which checks ~/.nitrate config file for the url:
+module. Handles connection to the server automatically, allows to set
+custom level of logging and data caching. Supports results coloring.
+
+
+Config file
+~~~~~~~~~~~
+
+To be able to contact the nitrate server a minimal user configuration
+file ~/.nitrate has to be provided in the user home directory:
 
     [nitrate]
-    url = https://tcms.engineering.redhat.com/xmlrpc/
+    url = https://nitrate.server/xmlrpc/
+
+
+Test suite
+~~~~~~~~~~~
+
+For running the unit test suite additional sections are required. These
+contain url of the test server and the data about objects to be tested:
+
+    [test]
+    url = https://test.server/xmlrpc/
+
+    [product]
+    id = 60
+    name = Red Hat Enterprise Linux 6
+
+    [testcase]
+    id = 1234
+    summary = Test case summary
+    category = Sanity
+
+To exercise the whole test suite just run "python Nitrate.py". To test
+only subset of tests pick the desired classes on the command line:
+
+    python Nitrate.py TestCase
 
 
 Search support
@@ -248,6 +279,53 @@ class NitrateNone(object):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Config Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Config(object):
+    """ User configuration. """
+
+    # Config path
+    path = os.path.expanduser("~/.nitrate")
+
+    # Minimal config example
+    example = ("Please, provide at least a minimal config file {0}:\n"
+                "[nitrate]\n"
+                "url = http://nitrate.server/xmlrpc".format(path))
+
+    def __init__(self):
+        """ Initialize the configuration """
+
+        # Trivial class for sections
+        class Section(object): pass
+
+        # Parse the config
+        try:
+            parser = ConfigParser.SafeConfigParser()
+            parser.read([self.path])
+            for section in parser.sections():
+                # Create a new section object for each section
+                setattr(self, section, Section())
+                # Set its attributes to section contents (converting ints)
+                for name, value in parser.items(section):
+                    try:
+                        setattr(getattr(self, section), name, int(value))
+                    except ValueError:
+                        setattr(getattr(self, section), name, value)
+        except ConfigParser.Error:
+            log.error(self.example)
+            raise NitrateError(
+                    "Cannot read the config file")
+
+        # Make sure the server URL is set
+        try:
+            self.nitrate.url is not None
+        except AttributeError:
+            log.error(self.example)
+            raise NitrateError("No url found in the config file")
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Nitrate Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -280,18 +358,7 @@ class Nitrate(object):
 
         # Read the config file (unless already done)
         if Nitrate._settings is None:
-            try:
-                path = os.path.expanduser("~/.nitrate")
-                parser = ConfigParser.SafeConfigParser()
-                parser.read([path])
-                Nitrate._settings = dict(parser.items("nitrate"))
-            except ConfigParser.Error:
-                raise NitrateError(
-                        "Cannot read the config file {0}".format(path))
-
-            # We need to know at least the server URL
-            if "url" not in self._settings:
-                raise NitrateError("No url found in the config file")
+            Nitrate._settings = Config()
 
         # Return the settings
         return Nitrate._settings
@@ -302,9 +369,9 @@ class Nitrate(object):
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
-            log.info("Contacting server {0}".format(self._config["url"]))
+            log.info("Contacting server {0}".format(self._config.nitrate.url))
             Nitrate._connection = NitrateKerbXmlrpc(
-                    self._config["url"]).server
+                    self._config.nitrate.url).server
 
         # Return existing connection
         Nitrate._requests += 1
@@ -331,7 +398,7 @@ class Nitrate(object):
     def __str__(self):
         """ Short summary about the connection. """
         return "Nitrate server: {0}\nTotal requests handled: {1}".format(
-                self._config["url"], self._requests)
+                self._config.nitrate.url, self._requests)
 
     def __eq__(self, other):
         """ Handle object equality based on its id. """
@@ -770,11 +837,27 @@ class Product(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test product from the config """
+            self.product = Nitrate()._config.product
+
+        def testGetById(self):
+            """ Get product by id """
+            product = Product(self.product.id)
+            self.assertTrue(isinstance(product, Product), "Check the instance")
+            self.assertEqual(product.name, self.product.name)
+
+        def testGetByName(self):
+            """ Get product by name """
+            product = Product(name=self.product.name)
+            self.assertTrue(isinstance(product, Product), "Check the instance")
+            self.assertEqual(product.id, self.product.id)
+
         def testSearch(self):
             """ Product search """
-            products = Product.search(name="Red Hat Enterprise Linux 6")
+            products = Product.search(name=self.product.name)
             self.assertEqual(len(products), 1, "Single product returned")
-            self.assertEqual(products[0].id, 60)
+            self.assertEqual(products[0].id, self.product.id)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2327,6 +2410,10 @@ class TestCase(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test case from the config """
+            self.testcase = Nitrate()._config.testcase
+
         def testCreateInvalid(self):
             """ Create a new test case (missing required parameters) """
             self.assertRaises(
@@ -2341,13 +2428,12 @@ class TestCase(Mutable):
             self.assertEqual(case.summary, "Test case summary")
             self.assertEqual(case.priority, Priority("P3"))
 
-        def testFetchExisting(self):
-            """ Fetch an existing test case """
-            new = TestCase(summary="Test case summary",
-                    product="Red Hat Enterprise Linux 6", category="Sanity")
-            case = TestCase(new.id)
-            self.assertTrue(isinstance(case, TestCase), "Check the instance")
-            self.assertEqual(case.summary, "Test case summary")
+        def testGetById(self):
+            """ Fetch an existing test case by id """
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(isinstance(testcase, TestCase))
+            self.assertEqual(testcase.summary, self.testcase.summary)
+            self.assertEqual(testcase.category.name, self.testcase.category)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2554,60 +2640,26 @@ class CaseRun(Mutable):
 #  Self Test
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def _test(url):
-    """ Run tests for all classes. """
+if __name__ == "__main__":
+    """ Perform the module self-test if run directly. """
 
-    import __main__
-    Nitrate._settings = {'url': url }
+    # Override the server url with the testing instance
+    try:
+        Nitrate()._config.nitrate.url = Nitrate()._config.test.url
+        print "Testing against {0}".format(Nitrate()._config.nitrate.url)
+    except AttributeError:
+        raise NitrateError("No test server provided in the config file")
 
     # Walk through all module classes
+    import __main__
     for name in dir(__main__):
         object = getattr(__main__, name)
         # Pick Nitrate classes only
         if (isinstance(object, (type, types.ClassType)) and
                 issubclass(object, Nitrate)):
-            # Run the _test class if found
+            # Run the _test class if found & selected on command line
             test = getattr(object, "_test", None)
-            if test is not None:
+            if test and (object.__name__ in sys.argv[1:] or not sys.argv[1:]):
                 print "\n{0}\n{1}".format(object.__name__, 70 * "~")
                 suite = unittest.TestLoader().loadTestsFromTestCase(test)
                 unittest.TextTestRunner(verbosity=2).run(suite)
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Main
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-if __name__ == "__main__":
-
-    # The full self-test against the test server if url provided
-    if len(sys.argv) == 2 and "http" in sys.argv[1]:
-        _test(sys.argv[1])
-
-    # Otherwise just quick check against the default server
-    else:
-        # Display info about the server
-        print Nitrate()
-
-        # Show test plan summary and list test cases
-        testplan = TestPlan(289)
-        print "\n", testplan.synopsis
-        for testcase in testplan:
-            print " ", testcase
-
-        # For each test run list test cases with their status
-        for testrun in testplan.testruns:
-            print "\n", testrun.synopsis
-            for caserun in testrun:
-                print " ", caserun
-
-        # Update test case data / case run status
-        TestPlan(289).name = "Tessst plan"
-        TestRun(6757).notes = "Testing notes"
-        TestCase(46490).script = "/CoreOS/component/example"
-        CaseRun(525318).status = Status("PASSED")
-        TestRun(6757).tags.add("TestTag")
-        TestRun(6757).status = RunStatus("FINISHED")
-
-        # Display info about the server
-        print "\n", Nitrate()
