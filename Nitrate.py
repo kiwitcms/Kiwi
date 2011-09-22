@@ -19,8 +19,9 @@ file ~/.nitrate has to be provided in the user home directory:
 Test suite
 ~~~~~~~~~~~
 
-For running the unit test suite additional sections are required. These
-contain url of the test server and the data about objects to be tested:
+For running the unit test suite additional sections are required in the
+configuration file. These contain the url of the test server and the
+data of existing objects to be tested, for example:
 
     [test]
     url = https://test.server/xmlrpc/
@@ -28,6 +29,14 @@ contain url of the test server and the data about objects to be tested:
     [product]
     id = 60
     name = Red Hat Enterprise Linux 6
+
+    [testplan]
+    id = 1234
+    name = Test plan
+    type = Function
+    product = Red Hat Enterprise Linux 6
+    version = 6.1
+    active = True
 
     [testcase]
     id = 1234
@@ -306,12 +315,13 @@ class Config(object):
             for section in parser.sections():
                 # Create a new section object for each section
                 setattr(self, section, Section())
-                # Set its attributes to section contents (converting ints)
+                # Set its attributes to section contents (adjust types)
                 for name, value in parser.items(section):
-                    try:
-                        setattr(getattr(self, section), name, int(value))
-                    except ValueError:
-                        setattr(getattr(self, section), name, value)
+                    try: value = int(value)
+                    except: pass
+                    if value == "True": value = True
+                    if value == "False": value = False
+                    setattr(getattr(self, section), name, value)
         except ConfigParser.Error:
             log.error(self.example)
             raise NitrateError(
@@ -1720,6 +1730,8 @@ class TestPlan(Mutable):
             doc="Test plan product.")
     type = property(_getter("type"), _setter("type"),
             doc="Test plan type.")
+    active = property(_getter("active"), _setter("active"),
+            doc="Test plan flag. True if active, False if inactive.")
 
     @property
     def testruns(self):
@@ -1757,7 +1769,7 @@ class TestPlan(Mutable):
 
         # Initialize values to unknown
         for attr in """id author name parent product type testcases
-                testruns tags""".split():
+                testruns tags active""".split():
             setattr(self, "_" + attr, NitrateNone)
 
         # Optionally we can get prepared hash
@@ -1876,6 +1888,7 @@ class TestPlan(Mutable):
         self._product = Product(id=testplanhash["product_id"],
                 version=testplanhash["default_product_version"])
         self._type = PlanType(testplanhash["type_id"])
+        self._active = testplanhash["is_active"] in ["True", True]
         if testplanhash["parent_id"] is not None:
             self._parent = TestPlan(testplanhash["parent_id"])
         else:
@@ -1891,6 +1904,7 @@ class TestPlan(Mutable):
         hash["name"] = self.name
         hash["product"] = self.product.id
         hash["type"] = self.type.id
+        hash["is_active"] = self.active
         if self.parent is not None:
             hash["parent"] = self.parent.id
         hash["default_product_version"] = self.product.version.id
@@ -1898,6 +1912,54 @@ class TestPlan(Mutable):
         log.info("Updating test plan " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestPlan.update(self.id, hash)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Plan Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+
+        def testCreateInvalid(self):
+            """ Create a new test plan (missing required parameters) """
+            self.assertRaises(NitrateError, TestPlan, name="Test plan")
+
+        def testCreateValid(self):
+            """ Create a new test plan (valid). """
+            testplan = TestPlan(name="Test plan", type=self.testplan.type,
+                    product=self.testplan.product,
+                    version=self.testplan.version)
+            self.assertTrue(isinstance(testplan, TestPlan))
+            self.assertEqual(testplan.name, "Test plan")
+
+        def testGetById(self):
+            """ Fetch an existing test plan by id """
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(isinstance(testplan, TestPlan))
+            self.assertEqual(testplan.name, self.testplan.name)
+            self.assertEqual(testplan.type.name, self.testplan.type)
+            self.assertEqual(testplan.product.name, self.testplan.product)
+
+        def testActiveFlag(self):
+            """ Test read & write access to the 'active' flag """
+            # Original value
+            testplan = TestPlan(self.testplan.id)
+            self.assertEqual(testplan.active, self.testplan.active)
+            # XXX Disabled because of BZ#740558
+            #testplan.active = not testplan.active
+            #testplan.update()
+            #del testplan
+            ## Negated value
+            #testplan = TestPlan(self.testplan.id)
+            #self.assertEqual(testplan.active, not self.testplan.active)
+            #testplan.active = not testplan.active
+            #testplan.update()
+            #del testplan
+            ## Back to the original value
+            #testplan = TestPlan(self.testplan.id)
+            #self.assertEqual(testplan.active, self.testplan.active)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
