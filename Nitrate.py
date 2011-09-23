@@ -36,7 +36,7 @@ data of existing objects to be tested, for example:
     type = Function
     product = Red Hat Enterprise Linux 6
     version = 6.1
-    active = True
+    status = ENABLED
 
     [testcase]
     id = 1234
@@ -868,6 +868,50 @@ class Product(Nitrate):
             products = Product.search(name=self.product.name)
             self.assertEqual(len(products), 1, "Single product returned")
             self.assertEqual(products[0].id, self.product.id)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Plan Status Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class PlanStatus(Nitrate):
+    """ Test plan status (is_active field). """
+
+    _statuses = ["DISABLED", "ENABLED"]
+    _colors = ["red", "green"]
+
+    def __init__(self, status):
+        """
+        Takes bool, numeric status id or status name.
+
+        0 ... False ... DISABLED
+        1 ... True .... ENABLED
+        """
+
+        if isinstance(status, int):
+            if not status in [0, 1]:
+                raise NitrateError(
+                        "Not a valid plan status id: '{0}'".format(status))
+            self._id = status
+        else:
+            try:
+                self._id = self._statuses.index(status)
+            except ValueError:
+                raise NitrateError("Invalid plan status '{0}'".format(status))
+
+    def __str__(self):
+        """ Return plan status name for printing. """
+        return self.name
+
+    @property
+    def id(self):
+        """ Numeric plan status id. """
+        return self._id
+
+    @property
+    def name(self):
+        """ Human readable plan status name. """
+        return color(self._statuses[self.id], color=self._colors[self.id])
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1730,8 +1774,8 @@ class TestPlan(Mutable):
             doc="Test plan product.")
     type = property(_getter("type"), _setter("type"),
             doc="Test plan type.")
-    active = property(_getter("active"), _setter("active"),
-            doc="Test plan flag. True if active, False if inactive.")
+    status = property(_getter("status"), _setter("status"),
+            doc="Test plan status.")
 
     @property
     def testruns(self):
@@ -1769,7 +1813,7 @@ class TestPlan(Mutable):
 
         # Initialize values to unknown
         for attr in """id author name parent product type testcases
-                testruns tags active""".split():
+                testruns tags status""".split():
             setattr(self, "_" + attr, NitrateNone)
 
         # Optionally we can get prepared hash
@@ -1888,7 +1932,7 @@ class TestPlan(Mutable):
         self._product = Product(id=testplanhash["product_id"],
                 version=testplanhash["default_product_version"])
         self._type = PlanType(testplanhash["type_id"])
-        self._active = testplanhash["is_active"] in ["True", True]
+        self._status = PlanStatus(testplanhash["is_active"] in ["True", True])
         if testplanhash["parent_id"] is not None:
             self._parent = TestPlan(testplanhash["parent_id"])
         else:
@@ -1904,7 +1948,7 @@ class TestPlan(Mutable):
         hash["name"] = self.name
         hash["product"] = self.product.id
         hash["type"] = self.type.id
-        hash["is_active"] = self.active
+        hash["is_active"] = self.status.id == 1
         if self.parent is not None:
             hash["parent"] = self.parent.id
         hash["default_product_version"] = self.product.version.id
@@ -1927,7 +1971,7 @@ class TestPlan(Mutable):
             self.assertRaises(NitrateError, TestPlan, name="Test plan")
 
         def testCreateValid(self):
-            """ Create a new test plan (valid). """
+            """ Create a new test plan (valid) """
             testplan = TestPlan(name="Test plan", type=self.testplan.type,
                     product=self.testplan.product,
                     version=self.testplan.version)
@@ -1942,24 +1986,27 @@ class TestPlan(Mutable):
             self.assertEqual(testplan.type.name, self.testplan.type)
             self.assertEqual(testplan.product.name, self.testplan.product)
 
-        def testActiveFlag(self):
-            """ Test read & write access to the 'active' flag """
-            # Original value
+        def testStatus(self):
+            """ Test read/write access to the test plan status """
+            # Prepare original and negated status
+            original = PlanStatus(self.testplan.status)
+            negated = PlanStatus(not original.id)
+            # Test original value
             testplan = TestPlan(self.testplan.id)
-            self.assertEqual(testplan.active, self.testplan.active)
+            self.assertEqual(testplan.status, original)
+            testplan.status = negated
+            testplan.update()
+            del testplan
+            # Test negated value
+            testplan = TestPlan(self.testplan.id)
             # XXX Disabled because of BZ#740558
-            #testplan.active = not testplan.active
-            #testplan.update()
-            #del testplan
-            ## Negated value
-            #testplan = TestPlan(self.testplan.id)
-            #self.assertEqual(testplan.active, not self.testplan.active)
-            #testplan.active = not testplan.active
-            #testplan.update()
-            #del testplan
-            ## Back to the original value
-            #testplan = TestPlan(self.testplan.id)
-            #self.assertEqual(testplan.active, self.testplan.active)
+            #self.assertEqual(testplan.status, negated)
+            testplan.status = original
+            testplan.update()
+            del testplan
+            # Back to the original value
+            testplan = TestPlan(self.testplan.id)
+            self.assertEqual(testplan.status, original)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
