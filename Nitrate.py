@@ -300,7 +300,7 @@ class Config(object):
     # Minimal config example
     example = ("Please, provide at least a minimal config file {0}:\n"
                 "[nitrate]\n"
-                "url = http://nitrate.server/xmlrpc".format(path))
+                "url = http://nitrate.server/xmlrpc/".format(path))
 
     def __init__(self):
         """ Initialize the configuration """
