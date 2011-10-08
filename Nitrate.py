@@ -169,7 +169,7 @@ def setCacheLevel(level=None):
         _cache = level
     else:
         raise NitrateError("Invalid cache level '{0}'".format(level))
-    log.info("Caching on level {0}".format(_cache))
+    log.debug("Caching on level {0}".format(_cache))
 
 setCacheLevel()
 
@@ -212,7 +212,7 @@ def setColorMode(mode=None):
         _color = sys.stdout.isatty()
     else:
         _color = mode == 1
-    log.info("Coloring {0}".format(_color and "enabled" or "disabled"))
+    log.debug("Coloring {0}".format(_color and "enabled" or "disabled"))
 
 def color(text, color=None, background=None, light=False):
     """ Return text in desired color if coloring enabled. """
