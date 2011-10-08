@@ -9,11 +9,47 @@ custom level of logging and data caching. Supports results coloring.
 Config file
 ~~~~~~~~~~~
 
-To be able to contact the nitrate server a minimal user configuration
+To be able to contact the Nitrate server a minimal user configuration
 file ~/.nitrate has to be provided in the user home directory:
 
     [nitrate]
     url = https://nitrate.server/xmlrpc/
+
+Logging
+~~~~~~~
+
+Standard log methods from the python 'logging' module are available
+under the short name 'log', for example:
+
+    log.debug(message)
+    log.info(message)
+    log.warn(message)
+    log.error(message)
+
+By default, messages of level WARN and up are only displayed. This can
+be controlled by setting the current log level. See setLogLevel() for
+more details. In addition, you can easily display info messages using:
+
+    info(message)
+
+which prints provided message (to the standard error output) always,
+regardless the current log level.
+
+
+Search support
+~~~~~~~~~~~~~~
+
+Multiple Nitrate classes provide the static method 'search' which takes
+the search query in the Django QuerySet format which gives an easy
+access to the foreign keys and basic search operators. For example:
+
+    Product.search(name="Red Hat Enterprise Linux 6")
+    TestPlan.search(name__contains="python")
+    TestRun.search(manager__email='login@example.com'):
+    TestCase.search(script__startswith='/CoreOS/python')
+
+For the complete list of available operators see Django documentation:
+https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups
 
 
 Test suite
@@ -47,22 +83,6 @@ To exercise the whole test suite just run "python Nitrate.py". To test
 only subset of tests pick the desired classes on the command line:
 
     python Nitrate.py TestCase
-
-
-Search support
-~~~~~~~~~~~~~~
-
-Multiple Nitrate classes provide the static method 'search' which takes
-the search query in the Django QuerySet format which gives an easy
-access to the foreign keys and basic search operators. For example:
-
-    Product.search(name="Red Hat Enterprise Linux 6")
-    TestPlan.search(name__contains="python")
-    TestRun.search(manager__email='login@example.com'):
-    TestCase.search(script__startswith='/CoreOS/python')
-
-For the complete list of available operators see Django documentation:
-https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups
 
 """
 
@@ -104,6 +124,11 @@ def setLogLevel(level=None):
     log.getLogger().setLevel(level)
 
 setLogLevel()
+
+def info(message):
+    """ Log provided info message to the standard error output """
+
+    sys.stderr.write(message + "\n")
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
