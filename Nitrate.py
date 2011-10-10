@@ -2742,7 +2742,10 @@ class CaseRun(Mutable):
         self._assignee = User(caserunhash["assignee_id"])
         self._build = Build(caserunhash["build_id"])
         self._notes = caserunhash["notes"]
-        self._sortkey = int(caserunhash["sortkey"])
+        if caserunhash["sortkey"] is not None:
+            self._sortkey = int(caserunhash["sortkey"])
+        else:
+            self._sortkey = None
         self._status = Status(caserunhash["case_run_status_id"])
         self._testrun = TestRun(caserunhash["run_id"])
         if testcasehash:
