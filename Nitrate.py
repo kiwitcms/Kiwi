@@ -91,6 +91,7 @@ import re
 import sys
 import types
 import unittest
+import xmlrpclib
 import ConfigParser
 import logging as log
 from pprint import pformat as pretty
@@ -2580,8 +2581,15 @@ class TestCases(Container):
     def _get(self):
         """ Fetch currently linked test cases from the server. """
         log.info("Fetching {0}'s cases".format(self._identifier))
-        self._current = set([TestCase(testcasehash=hash) for hash in
-                self._server.TestPlan.get_test_cases(self.id)])
+        try:
+            self._current = set([TestCase(testcasehash=hash) for hash in
+                    self._server.TestPlan.get_test_cases(self.id)])
+        # Work around BZ#725726 (attempt to fetch test cases by ids)
+        except xmlrpclib.Fault:
+            log.warning("Failed to fetch {0}'s cases, "
+                    "trying again using ids".format(self._identifier))
+            self._current = set([TestCase(id) for id in
+                    self._server.TestPlan.get(self.id)["case"]])
         self._original = set(self._current)
 
     def _add(self, cases):
