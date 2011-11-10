@@ -74,6 +74,10 @@ data of existing objects to be tested, for example:
     version = 6.1
     status = ENABLED
 
+    [testrun]
+    id = 6757
+    summary = Test Run Summary
+
     [testcase]
     id = 1234
     summary = Test case summary
@@ -1708,6 +1712,42 @@ class PlanTags(Container):
                 self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.remove_tag(self.id, list(tags))
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Plan Tags Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+
+        def testTagging1(self):
+            """ Untagging a test plan """
+            # Remove tag and check
+            testplan = TestPlan(self.testplan.id)
+            testplan.tags.remove("TestTag")
+            testplan.update()
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue("TestTag" not in testplan.tags)
+
+        def testTagging2(self):
+            """ Tagging a test plan """
+            # Add tag and check
+            testplan = TestPlan(self.testplan.id)
+            testplan.tags.add("TestTag")
+            testplan.update()
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue("TestTag" in testplan.tags)
+
+        def testTagging3(self):
+            """ Untagging a test plan """
+            # Remove tag and check
+            testplan = TestPlan(self.testplan.id)
+            testplan.tags.remove("TestTag")
+            testplan.update()
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue("TestTag" not in testplan.tags)
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Run Tags Class
@@ -1736,6 +1776,42 @@ class RunTags(Container):
                 self._identifier, listed(tags, quote="'")))
         self._server.TestRun.remove_tag(self.id, list(tags))
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Run Tags Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test run from the config """
+            self.testrun = Nitrate()._config.testrun
+
+        def testTagging1(self):
+            """ Untagging a test run """
+            # Remove tag and check
+            testrun = TestRun(self.testrun.id)
+            testrun.tags.remove("TestTag")
+            testrun.update()
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue("TestTag" not in testrun.tags)
+
+        def testTagging2(self):
+            """ Tagging a test run """
+            # Add tag and check
+            testrun = TestRun(self.testrun.id)
+            testrun.tags.add("TestTag")
+            testrun.update()
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue("TestTag" not in testrun.tags)
+
+        def testTagging3(self):
+            """ Untagging a test run """
+            # Remove tag and check
+            testrun = TestRun(self.testrun.id)
+            testrun.tags.remove("TestTag")
+            testrun.update()
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue("TestTag" not in testrun.tags)
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Case Tags Class
@@ -1763,6 +1839,42 @@ class CaseTags(Container):
         log.info("Untagging {0} of {1}".format(
                 self._identifier, listed(tags, quote="'")))
         self._server.TestCase.remove_tag(self.id, list(tags))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Case Tags Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test case from the config """
+            self.testcase = Nitrate()._config.testcase
+
+        def testTagging1(self):
+            """ Untagging a test case """
+            # Remove tag and check
+            testcase = TestCase(self.testcase.id)
+            testcase.tags.remove("TestTag")
+            testcase.update()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue("TestTag" not in testcase.tags)
+
+        def testTagging2(self):
+            """ Tagging a test case """
+            # Add tag and check
+            testcase = TestCase(self.testcase.id)
+            testcase.tags.add("TestTag")
+            testcase.update()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue("TestTag" in testcase.tags)
+
+        def testTagging3(self):
+            """ Untagging a test case """
+            # Remove tag and check
+            testcase = TestCase(self.testcase.id)
+            testcase.tags.remove("TestTag")
+            testcase.update()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue("TestTag" not in testcase.tags)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1963,6 +2075,8 @@ class TestPlan(Mutable):
             self._parent = TestPlan(testplanhash["parent_id"])
         else:
             self._parent = None
+
+        # Initialize containers
         self._tags = PlanTags(self)
         self._testcases = TestCases(self)
 
@@ -1982,6 +2096,18 @@ class TestPlan(Mutable):
         log.info("Updating test plan " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestPlan.update(self.id, hash)
+
+    def update(self):
+        """ Update self and containers, if modified, to the server """
+
+        # Update containers (if initialized)
+        if self._tags is not NitrateNone:
+            self.tags.update()
+        if self._testcases is not NitrateNone:
+            self.testcases.update()
+
+        # Update self (if modified)
+        Mutable.update(self)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Self Test
@@ -2275,6 +2401,8 @@ class TestRun(Mutable):
         self._tester = User(testrunhash["default_tester_id"])
         self._testplan = TestPlan(testrunhash["plan_id"])
         self._time = testrunhash["estimated_time"]
+
+        # Initialize containers
         self._tags = RunTags(self)
 
     def _update(self):
@@ -2295,6 +2423,16 @@ class TestRun(Mutable):
         log.info("Updating test run " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestRun.update(self.id, hash)
+
+    def update(self):
+        """ Update self and containers, if modified, to the server """
+
+        # Update containers (if initialized)
+        if self._tags is not NitrateNone:
+            self.tags.update()
+
+        # Update self (if modified)
+        Mutable.update(self)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2508,13 +2646,15 @@ class TestCase(Mutable):
         # XXX self._sortkey = testcasehash["sortkey"]
         self._status = CaseStatus(testcasehash["case_status_id"])
         self._summary = testcasehash["summary"]
-        self._tags = CaseTags(self)
         self._time = testcasehash["estimated_time"]
         if testcasehash["default_tester_id"] is not None:
             self._tester = User(testcasehash["default_tester_id"])
         else:
             self._tester = None
+
+        # Initialize containers
         self._bugs = Bugs(self)
+        self._tags = CaseTags(self)
         self._testplans = TestPlans(self)
 
     def _update(self):
@@ -2539,6 +2679,21 @@ class TestCase(Mutable):
         log.info("Updating test case " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestCase.update(self.id, hash)
+
+    def update(self):
+        """ Update self and containers, if modified, to the server """
+
+        # Update containers (if initialized)
+        if self._bugs is not NitrateNone:
+            self.bugs.update()
+        if self._tags is not NitrateNone:
+            self.tags.update()
+        if self._testplans is not NitrateNone:
+            self.testplans.update()
+
+        # Update self (if modified)
+        Mutable.update(self)
+
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Self Test
@@ -2760,6 +2915,8 @@ class CaseRun(Mutable):
             self._testcase = TestCase(testcasehash=testcasehash)
         else:
             self._testcase = TestCase(caserunhash["case_id"])
+
+        # Initialize containers
         self._bugs = Bugs(self)
 
     def _update(self):
@@ -2779,6 +2936,16 @@ class CaseRun(Mutable):
         log.info("Updating case run " + self.identifier)
         log.debug(pretty(hash))
         self._server.TestCaseRun.update(self.id, hash)
+
+    def update(self):
+        """ Update self and containers, if modified, to the server """
+
+        # Update containers (if initialized)
+        if self._bugs is not NitrateNone:
+            self.bugs.update()
+
+        # Update self (if modified)
+        Mutable.update(self)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
