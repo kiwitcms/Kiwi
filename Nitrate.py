@@ -447,6 +447,7 @@ class Nitrate(object):
 
     def __ne__(self, other):
         """ Handle object inequality based on its id. """
+        if not isinstance(other, Nitrate): return True
         return self.id != other.id
 
     def __hash__(self):
@@ -2378,6 +2379,7 @@ class TestRun(Mutable):
             log.error(pretty(testrunhash))
             raise NitrateError("Failed to create test run")
         self._get(testrunhash=testrunhash)
+        log.info("Successfully created {0}".format(self))
 
     def _get(self, testrunhash=None):
         """ Initialize / refresh test run data.
