@@ -2361,8 +2361,9 @@ class TestRun(Mutable):
         hash["manager"] = manager.id
         hash["default_tester"] = tester.id
 
-        # Include all test cases and tag with supplied tags
-        hash["case"] = [case.id for case in testplan]
+        # Include all CONFIRMED test cases and tag with supplied tags
+        hash["case"] = [case.id for case in testplan
+                if case.status == CaseStatus("CONFIRMED")]
         if tags: hash["tag"] = ",".join(tags)
 
         # Submit to the server and initialize
@@ -2435,6 +2436,41 @@ class TestRun(Mutable):
 
         # Update self (if modified)
         Mutable.update(self)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Run Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+            self.testcase = Nitrate()._config.testcase
+
+        def testCreateInvalid(self):
+            """ Create a new test run (missing required parameters) """
+            self.assertRaises(NitrateError, TestRun, summary="Test run")
+
+        def testCreateValid(self):
+            """ Create a new test run (valid) """
+            testrun = TestRun(summary="Test run", testplan=self.testplan.id)
+            self.assertTrue(isinstance(testrun, TestRun))
+            self.assertEqual(testrun.summary, "Test run")
+
+        def testDisabledCasesOmitted(self):
+            """ Disabled test cases should be omitted """
+            # Prepare disabled test case
+            testcase = TestCase(self.testcase.id)
+            original = testcase.status
+            testcase.status = CaseStatus("DISABLED")
+            testcase.update()
+            # Create the test run, make sure the test case is not there
+            testrun = TestRun(testplan=self.testplan.id)
+            self.assertTrue(testcase.id not in
+                    [caserun.testcase.id for caserun in testrun])
+            # Restore the original status
+            testcase.status = original
+            testcase.update()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
