@@ -1802,7 +1802,7 @@ class RunTags(Container):
             testrun.tags.add("TestTag")
             testrun.update()
             testrun = TestRun(self.testrun.id)
-            self.assertTrue("TestTag" not in testrun.tags)
+            self.assertTrue("TestTag" in testrun.tags)
 
         def testTagging3(self):
             """ Untagging a test run """
