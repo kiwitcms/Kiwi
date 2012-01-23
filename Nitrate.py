@@ -934,6 +934,10 @@ class PlanStatus(Nitrate):
         """ Return plan status name for printing. """
         return self.name
 
+    def __nonzero__(self):
+        """ Boolean status representation """
+        return self._id != 0
+
     @property
     def id(self):
         """ Numeric plan status id. """
