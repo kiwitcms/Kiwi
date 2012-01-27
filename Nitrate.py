@@ -96,6 +96,7 @@ import sys
 import types
 import unittest
 import xmlrpclib
+import unicodedata
 import ConfigParser
 import logging as log
 from pprint import pformat as pretty
@@ -307,6 +308,11 @@ def listed(items, quote=""):
     else:
         return ", ".join(items[0:-2] + [" and ".join(items[-2:])])
 
+def ascii(text):
+    """ Transliterate special unicode characters into pure ascii. """
+    if not isinstance(text, unicode): text = unicode(text)
+    return unicodedata.normalize('NFKD', text).encode('ascii','ignore')
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Nitrate None Class
@@ -434,10 +440,13 @@ class Nitrate(object):
             except ValueError:
                 raise NitrateError("Invalid {0} id: '{1}'".format(
                         self.__class__.__name__, id))
-
     def __str__(self):
+        """ Provide ascii string representation. """
+        return ascii(self.__unicode__())
+
+    def __unicode__(self):
         """ Short summary about the connection. """
-        return "Nitrate server: {0}\nTotal requests handled: {1}".format(
+        return u"Nitrate server: {0}\nTotal requests handled: {1}".format(
                 self._config.nitrate.url, self._requests)
 
     def __eq__(self, other):
@@ -504,7 +513,7 @@ class Build(Nitrate):
                     "and build name to initialize the Build object.")
         Nitrate.__init__(self, id)
 
-    def __str__(self):
+    def __unicode__(self):
         """ Build name for printing. """
         return self.name
 
@@ -613,7 +622,7 @@ class Category(Nitrate):
                     "and category name to initialize the Category object.")
         Nitrate.__init__(self, id)
 
-    def __str__(self):
+    def __unicode__(self):
         """ Category name for printing. """
         return self.name
 
@@ -725,7 +734,7 @@ class PlanType(Nitrate):
                 raise NitrateError(
                     "Invalid Test Plan type '{0}'".format(plantype))
 
-    def __str__(self):
+    def __unicode__(self):
         """ Return TestPlan type for printing. """
         return self.name
 
@@ -767,7 +776,7 @@ class Priority(Nitrate):
             except ValueError:
                 raise NitrateError("Invalid priority '{0}'".format(priority))
 
-    def __str__(self):
+    def __unicode__(self):
         """ Return priority name for printing. """
         return self.name
 
@@ -830,10 +839,10 @@ class Product(Nitrate):
         else:
             self._version = NitrateNone
 
-    def __str__(self):
+    def __unicode__(self):
         """ Product name for printing. """
         if self._version is not NitrateNone:
-            return "{0}, version {1}".format(self.name, self.version)
+            return u"{0}, version {1}".format(self.name, self.version)
         else:
             return self.name
 
@@ -930,7 +939,7 @@ class PlanStatus(Nitrate):
             except ValueError:
                 raise NitrateError("Invalid plan status '{0}'".format(status))
 
-    def __str__(self):
+    def __unicode__(self):
         """ Return plan status name for printing. """
         return self.name
 
@@ -982,7 +991,7 @@ class RunStatus(Nitrate):
             else:
                 raise NitrateError("Invalid run status '{0}'".format(status))
 
-    def __str__(self):
+    def __unicode__(self):
         """ Return run status name for printing. """
         return self.name
 
@@ -1023,7 +1032,7 @@ class CaseStatus(Nitrate):
                 raise NitrateError(
                         "Invalid casestatus '{0}'".format(casestatus))
 
-    def __str__(self):
+    def __unicode__(self):
         """ Return casestatus name for printing. """
         return self.name
 
@@ -1071,7 +1080,7 @@ class Status(Nitrate):
             except ValueError:
                 raise NitrateError("Invalid status '{0}'".format(status))
 
-    def __str__(self):
+    def __unicode__(self):
         """ Return status name for printing. """
         return self.name
 
@@ -1164,9 +1173,9 @@ class User(Nitrate):
         elif email is not None:
             self._email = email
 
-    def __str__(self):
+    def __unicode__(self):
         """ User login for printing. """
-        return self.login
+        return self.name
 
     @staticmethod
     def search(**query):
@@ -1277,7 +1286,7 @@ class Version(Nitrate):
                     "and version name to initialize the Version object.")
         Nitrate.__init__(self, id)
 
-    def __str__(self):
+    def __unicode__(self):
         """ Version name for printing. """
         return self.name
 
@@ -1403,7 +1412,7 @@ class Container(Mutable):
         """ Number of container items. """
         return len(self._items)
 
-    def __str__(self):
+    def __unicode__(self):
         """ Display items as a list for printing. """
         if self._items:
             # List of identifiers
@@ -1551,9 +1560,9 @@ class Bug(Nitrate):
                 # Or test cases are identical
                 or self.testcase == other.testcase))
 
-    def __str__(self):
+    def __unicode__(self):
         """ Bug name for printing. """
-        return "BZ#{0}".format(self.bug)
+        return u"BZ#{0}".format(self.bug)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Bug Methods
@@ -1618,7 +1627,7 @@ class Bugs(Mutable):
         bug = bug.attach(self._object)
         return bug in self._bugs
 
-    def __str__(self):
+    def __unicode__(self):
         """ Display bugs as list for printing. """
         return ", ".join(sorted([str(bug) for bug in self]))
 
@@ -1982,9 +1991,9 @@ class TestPlan(Mutable):
         for testcase in self.testcases:
             yield testcase
 
-    def __str__(self):
+    def __unicode__(self):
         """ Test plan id & summary for printing. """
-        return "{0} - {1}".format(self.identifier, self.name)
+        return u"{0} - {1}".format(self.identifier, self.name)
 
     @staticmethod
     def search(**query):
@@ -2308,9 +2317,9 @@ class TestRun(Mutable):
         for caserun in self.caseruns:
             yield caserun
 
-    def __str__(self):
+    def __unicode__(self):
         """ Test run id & summary for printing. """
-        return "{0} - {1}".format(self.identifier, self.summary)
+        return u"{0} - {1}".format(self.identifier, self.summary)
 
     @staticmethod
     def search(**query):
@@ -2591,9 +2600,9 @@ class TestCase(Mutable):
             self._create(summary=summary, category=category, product=product,
                     **kwargs)
 
-    def __str__(self):
+    def __unicode__(self):
         """ Test case id & summary for printing. """
-        return "{0} - {1}".format(self.identifier.ljust(9), self.summary)
+        return u"{0} - {1}".format(self.identifier.ljust(9), self.summary)
 
     @staticmethod
     def search(**query):
@@ -2876,9 +2885,9 @@ class CaseRun(Mutable):
         else:
             raise NitrateError("Need either id or testcase, testrun & build")
 
-    def __str__(self):
+    def __unicode__(self):
         """ Case run id, status & summary for printing. """
-        return "{0} - {1} - {2}".format(self.status.shortname,
+        return u"{0} - {1} - {2}".format(self.status.shortname,
                 self.identifier.ljust(9), self.testcase.summary)
 
     @staticmethod
