@@ -391,6 +391,9 @@ class Nitrate(object):
         """ Use object id as the default hash. """
         return self.id
 
+    def __repr__(self):
+        return "{0}({1})".format(self.__class__.__name__, self.id)
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Nitrate Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
