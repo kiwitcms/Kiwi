@@ -2587,6 +2587,28 @@ class TestCase(Mutable):
         # Script
         hash["script"] = kwargs.get("script")
 
+        # Case Status
+        status = kwargs.get("status")
+        if status:
+            if isinstance(status, basestring):
+                status = CaseStatus(status)
+            hash["case_status"] = status.id
+
+        # Automated
+        automated  = kwargs.get("automated")
+        if automated is not None:
+            hash["is_automated"] = automated
+
+        # Estimated time
+        time = kwargs.get("time")
+        if time is not None:
+            hash["estimated_time"] = time
+
+        # Notes
+        notes = kwargs.get("notes")
+        if notes:
+            hash["notes"] = notes
+
         # Submit
         log.info("Creating a new test case")
         log.debug(pretty(hash))
