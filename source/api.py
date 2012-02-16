@@ -1630,7 +1630,10 @@ class Components(Container):
 
     def __unicode__(self):
         """ The list of linked components' names """
-        return listed(sorted([component.name for component in self]))
+        if self._items:
+            return listed(sorted([component.name for component in self]))
+        else:
+            return "[None]"
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Components Methods
