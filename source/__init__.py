@@ -86,6 +86,11 @@ data of existing objects to be tested, for example:
     id = 60
     name = Red Hat Enterprise Linux 6
 
+    [component]
+    id = 123
+    name = wget
+    product = Red Hat Enterprise Linux 6
+
     [testplan]
     id = 1234
     name = Test plan

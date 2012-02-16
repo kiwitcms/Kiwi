@@ -401,6 +401,7 @@ class Nitrate(object):
         return self.id
 
     def __repr__(self):
+        """ Provide Object(id) representation. """
         return "{0}({1})".format(self.__class__.__name__, self.id)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -469,7 +470,7 @@ class Build(Nitrate):
             try:
                 log.info("Fetching build " + self.identifier)
                 hash = self._server.Build.get(self.id)
-                log.debug("Intializing build " + self.identifier)
+                log.debug("Initializing build " + self.identifier)
                 log.debug(pretty(hash))
                 self._name = hash["name"]
                 self._product = Product(hash["product_id"])
@@ -578,7 +579,7 @@ class Category(Nitrate):
             try:
                 log.info("Fetching category " + self.identifier)
                 hash = self._server.Product.get_category(self.id)
-                log.debug("Intializing category " + self.identifier)
+                log.debug("Initializing category " + self.identifier)
                 log.debug(pretty(hash))
                 self._name = hash["name"]
                 self._product = Product(hash["product_id"])
@@ -1423,6 +1424,271 @@ class Container(Mutable):
 
         # Save the current state as the original (for future updates)
         self._original = set(self._current)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Component Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Component(Nitrate):
+    """ Test case component. """
+
+    # Local cache of Component objects indexed by component id
+    _components = {}
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Component Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="Component id.")
+    name = property(_getter("name"), doc="Component name.")
+    product = property(_getter("product"), doc="Relevant product.")
+
+    @property
+    def synopsis(self):
+        """ Short component summary (including product info). """
+        return "{0}, {1}".format(self.name, self.product)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Component Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __new__(cls, id=None, name=None, product=None, **kwargs):
+        """ Create a new object, handle caching if enabled. """
+        if _cache >= CACHE_OBJECTS and id is not None:
+            # Search the cache
+            if id in Component._components:
+                log.debug("Using cached component ID#{0}".format(id))
+                return Component._components[id]
+            # Not cached yet, create a new one and cache
+            else:
+                log.debug("Caching component ID#{0}".format(id))
+                new = Nitrate.__new__(cls)
+                Component._components[id] = new
+                return new
+        else:
+            return Nitrate.__new__(cls)
+
+    def __init__(self, id=None, name=None, product=None, **kwargs):
+        """ Initialize by component id or product and component name. """
+
+        # If we are a cached-already object no init is necessary
+        if getattr(self, "_id", None) is not None:
+            return
+
+        # Prepare attributes, check component hash, initialize
+        self._attributes = ["name", "product"]
+        componenthash = kwargs.get("componenthash")
+        if componenthash:
+            id = componenthash["id"]
+        Nitrate.__init__(self, id)
+
+        # If hash provided, let's initialize the data immediately
+        if componenthash:
+            self._get(componenthash=componenthash)
+        # Initialized by product and component
+        elif product and name:
+            # Detect product format
+            if isinstance(product, Product):
+                self._product = product
+            elif isinstance(product, basestring):
+                self._product = Product(name=product)
+            else:
+                self._product = Product(id=product)
+            self._name = name
+        # Otherwise the id must provided
+        elif id is None:
+            raise NitrateError("Need either component id or both product "
+                    "and component name to initialize the Component object.")
+
+    def __unicode__(self):
+        """ Component name for printing. """
+        return self.name
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Component Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self, componenthash=None):
+        """ Get the missing component data. """
+
+        # Search by component id or use prepared component hash
+        if self._id is not NitrateNone:
+            try:
+                if not componenthash:
+                    log.info("Fetching component " + self.identifier)
+                    componenthash = self._server.Product.get_component(self.id)
+                log.debug("Initializing component " + self.identifier)
+                log.debug(pretty(componenthash))
+                self._name = componenthash["name"]
+                self._product = Product(componenthash["product_id"])
+            except LookupError:
+                raise NitrateError(
+                        "Cannot find component for " + self.identifier)
+        # Search by product and component name
+        else:
+            try:
+                log.info("Fetching component '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                componenthash = self._server.Product.check_component(
+                        self.name, self.product.id)
+                log.debug("Initializing component '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                log.debug(pretty(componenthash))
+                self._id = componenthash["id"]
+            except LookupError:
+                raise NitrateError("Component '{0}' not found in '{1}'".format(
+                    self.name, self.product.name))
+
+    @staticmethod
+    def search(**query):
+        """ Search for components. """
+        return [Component(componenthash=hash) for hash in
+                Nitrate()._server.Product.filter_components(dict(query))]
+
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Component Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up component from the config """
+            self.component = Nitrate()._config.component
+
+        def testFetchById(self):
+            """ Fetch component by id """
+            component = Component(self.component.id)
+            self.assertTrue(isinstance(component, Component))
+            self.assertEqual(component.name, self.component.name)
+            self.assertEqual(component.product.name, self.component.product)
+
+        def testFetchByName(self):
+            """ Fetch component by name and product """
+            component = Component(
+                    name=self.component.name, product=self.component.product)
+            self.assertTrue(isinstance(component, Component))
+            self.assertEqual(component.id, self.component.id)
+
+        def testSearchByName(self):
+            """ Search for component by name """
+            components = Component.search(name=self.component.name)
+            self.assertTrue(components[0].name == self.component.name)
+
+        def testCachingOn(self):
+            """ Component caching on """
+            # Enable cache, remember current number of requests
+            cache = _cache
+            setCacheLevel(CACHE_OBJECTS)
+            requests = Nitrate._requests
+            # The first round (fetch component data from server)
+            component = Component(self.component.id)
+            self.assertTrue(isinstance(component.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            del component
+            # The second round (there should be no more requests)
+            component = Component(self.component.id)
+            self.assertTrue(isinstance(component.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            # Restore cache level
+            setCacheLevel(cache)
+
+        def testCachingOff(self):
+            """ Component caching off """
+            # Enable cache, remember current number of requests
+            cache = _cache
+            setCacheLevel(CACHE_NONE)
+            requests = Nitrate._requests
+            # The first round (fetch component data from server)
+            component = Component(self.component.id)
+            self.assertTrue(isinstance(component.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            del component
+            # The second round (there should be another request)
+            component = Component(self.component.id)
+            self.assertTrue(isinstance(component.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 2)
+            # Restore cache level
+            setCacheLevel(cache)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#   Components Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Components(Container):
+    """ Components linked to a test case. """
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Components Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __unicode__(self):
+        """ The list of linked components' names """
+        return listed(sorted([component.name for component in self]))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Components Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Fetch currently linked components from the server. """
+        log.info("Fetching {0}'s components".format(self._identifier))
+        self._current = set([Component(componenthash=hash)
+                for hash in self._server.TestCase.get_components(self.id)])
+        self._original = set(self._current)
+
+    def _add(self, components):
+        """ Link provided components to the test case. """
+        log.info("Linking {1} to {0}".format(self._identifier,
+                    listed([component.name for component in components])))
+        self._server.TestCase.add_component(
+                self.id, [component.id for component in components])
+
+    def _remove(self, components):
+        """ Unlink provided components from the test case. """
+        for component in components:
+            log.info("Unlinking {0} from {1}".format(
+                    component.name, self._identifier))
+            self._server.TestCase.remove_component(self.id, component.id)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Components Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up component from the config """
+            self.component = Nitrate()._config.component
+            self.testcase = Nitrate()._config.testcase
+
+        def testLinkComponent1(self):
+            """ Linking a component to a test case """
+            testcase = TestCase(self.testcase.id)
+            component = Component(self.component.id)
+            testcase.components.add(component)
+            testcase.update()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(component in testcase.components)
+
+        def testLinkComponent2(self):
+            """ Unlinking a component from a test case """
+            testcase = TestCase(self.testcase.id)
+            component = Component(self.component.id)
+            testcase.components.remove(component)
+            testcase.update()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(component not in testcase.components)
+
+        def testLinkComponent3(self):
+            """ Linking a component to a test case """
+            testcase = TestCase(self.testcase.id)
+            component = Component(self.component.id)
+            testcase.components.add(component)
+            testcase.update()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(component in testcase.components)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2444,6 +2710,8 @@ class TestCase(Mutable):
             doc="Attached bugs.")
     testplans = property(_getter("testplans"),
             doc="Test plans linked to this test case.")
+    components = property(_getter("components"),
+            doc="Components related to this test case.")
 
     @property
     def synopsis(self):
@@ -2480,14 +2748,6 @@ class TestCase(Mutable):
             doc="Default tester.")
     time = property(_getter("time"), _setter("time"),
             doc="Estimated time.")
-
-    @property
-    def components(self):
-        """ Related components. """
-        if self._components is NitrateNone:
-            self._components = [Component(componenthash=hash) for hash in
-                    self._server.TestCase.get_components(self.id)]
-        return self._components
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Special
@@ -2651,6 +2911,7 @@ class TestCase(Mutable):
         self._bugs = Bugs(self)
         self._tags = CaseTags(self)
         self._testplans = TestPlans(self)
+        self._components = Components(self)
 
     def _update(self):
         """ Save test case data to server """
@@ -2685,6 +2946,8 @@ class TestCase(Mutable):
             self.tags.update()
         if self._testplans is not NitrateNone:
             self.testplans.update()
+        if self._components is not NitrateNone:
+            self._components.update()
 
         # Update self (if modified)
         Mutable.update(self)
