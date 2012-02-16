@@ -1404,6 +1404,10 @@ class Container(Mutable):
             else:
                 self._update()
 
+    def clear(self):
+        """ Remove all items from the container. """
+        self.remove(list(self._items))
+
     def _add(self, items):
         """ Add provided items to the server. """
         raise NitrateError("To be implemented by respective class.")
