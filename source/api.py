@@ -356,8 +356,16 @@ class Nitrate(object):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __init__(self, id=None, prefix="ID"):
-        """ Initialize object id and prefix. """
+        """ Initialize the object id, prefix and internal attributes. """
+        # Set up prefix and internal attributes
         self._prefix = prefix
+        try:
+            for attr in self._attributes:
+                setattr(self, "_" + attr, NitrateNone)
+        except AttributeError:
+            self._attributes = []
+
+        # Check and set the object id
         if id is None:
             self._id = NitrateNone
         elif isinstance(id, int):
@@ -368,6 +376,7 @@ class Nitrate(object):
             except ValueError:
                 raise NitrateError("Invalid {0} id: '{1}'".format(
                         self.__class__.__name__, id))
+
     def __str__(self):
         """ Provide ascii string representation. """
         return ascii(self.__unicode__())
@@ -1892,30 +1901,25 @@ class TestPlan(Mutable):
 
         """
 
+        # Prepare attributes, check test plan hash, initialize
+        self._attributes = """author name parent product status tags
+                testcases testruns type""".split()
+        testplanhash = kwargs.get("testplanhash")
+        if testplanhash:
+            id = testplanhash["plan_id"]
         Mutable.__init__(self, id, prefix="TP")
 
-        # Initialize values to unknown
-        for attr in """id author name parent product type testcases
-                testruns tags status""".split():
-            setattr(self, "_" + attr, NitrateNone)
-
-        # Optionally we can get prepared hash
-        testplanhash = kwargs.get("testplanhash", None)
-
-        # If id provided, initialization happens only when data requested
-        if id:
-            self._id = id
         # If hash provided, let's initialize the data immediately
-        elif testplanhash:
-            self._id = int(testplanhash["plan_id"])
+        if testplanhash:
             self._get(testplanhash=testplanhash)
-        # Create a new test plan based on provided name, type and product
+        # Create a new test plan if name, type and product provided
         elif name and type and product:
             self._create(name=name, product=product, version=version,
                     type=type, **kwargs)
-        else:
-            raise NitrateError(
-                    "Need either id or name, product, version and type")
+        # Otherwise the id must be provided
+        elif not id:
+            raise NitrateError("Need either id or name, product, version "
+                    "and type to initialize the test plan")
 
     def __iter__(self):
         """ Provide test cases as the default iterator. """
@@ -2219,29 +2223,24 @@ class TestRun(Mutable):
         Tags should be provided as a list of tag names.
         """
 
+        # Prepare attributes, check test run hash, initialize
+        self._attributes = """build caseruns manager notes product
+                status summary tags tester testplan time """.split()
+        testrunhash = kwargs.get("testrunhash")
+        if testrunhash:
+            id = testrunhash["run_id"]
         Mutable.__init__(self, id, prefix="TR")
 
-        # Initialize values to unknown
-        for attr in """id testplan build manager summary product tester time
-                notes status tags caseruns""".split():
-            setattr(self, "_" + attr, NitrateNone)
-
-        # Optionally we can get prepared hash
-        testrunhash = kwargs.get("testrunhash", None)
-
-        # If id provided, initialization happens only when data requested
-        if id:
-            self._id = id
         # If hash provided, let's initialize the data immediately
-        elif testrunhash:
-            self._id = testrunhash["run_id"]
+        if testrunhash:
             self._get(testrunhash=testrunhash)
         # Create a new test run based on provided plan
         elif testplan:
             self._create(testplan=testplan, **kwargs)
-        else:
+        # Otherwise the id must be provided
+        elif not id:
             raise NitrateError(
-                    "Need either id or test plan to initialize test run")
+                    "Need either id or test plan to initialize the test run")
 
     def __iter__(self):
         """ Provide test case runs as the default iterator. """
@@ -2508,28 +2507,26 @@ class TestCase(Mutable):
 
         """
 
+        # Prepare attributes, check test case hash, initialize
+        self._attributes = """arguments author automated bugs category
+                components plans priority product script sortkey status
+                summary tags tester testplans time""".split()
+        testcasehash = kwargs.get("testcasehash")
+        if testcasehash:
+            id = testcasehash["case_id"]
         Mutable.__init__(self, id, prefix="TC")
 
-        # Initialize values to unknown
-        for attr in """product category priority summary status plans
-                components tester time automated sortkey script arguments
-                tags testplans bugs author""".split():
-            setattr(self, "_" + attr, NitrateNone)
-
-        # Optionally we can get prepared hash
-        testcasehash = kwargs.get("testcasehash", None)
-
-        # If id provided, initialization happens only when data requested
-        if id:
-            self._id = id
         # If hash provided, let's initialize the data immediately
-        elif testcasehash:
-            self._id = int(testcasehash["case_id"])
+        if testcasehash:
             self._get(testcasehash=testcasehash)
         # Create a new test case based on summary, category & product
-        else:
+        elif summary and category and product:
             self._create(summary=summary, category=category, product=product,
                     **kwargs)
+        # Otherwise the id must be provided
+        elif not id:
+            raise NitrateError("Need either id or summary, category "
+                    "and product to initialize the test case")
 
     def __unicode__(self):
         """ Test case id & summary for printing. """
@@ -2551,21 +2548,15 @@ class TestCase(Mutable):
         hash = {}
 
         # Summary
-        if summary is None:
-            raise NitrateError("Summary required to create a new test case")
         hash["summary"] = summary
 
         # Product
-        if product is None:
-            raise NitrateError("Product required to create a new test case")
-        elif isinstance(product, basestring):
+        if isinstance(product, basestring):
             product = Product(name=product)
         hash["product"] = product.id
 
         # Category
-        if category is None:
-            raise NitrateError("Category required to create a new test case")
-        elif isinstance(category, basestring):
+        if isinstance(category, basestring):
             category = Category(category=category, product=product)
         hash["category"] = category.id
 
@@ -2729,6 +2720,18 @@ class TestCase(Mutable):
             self.assertEqual(testcase.summary, self.testcase.summary)
             self.assertEqual(testcase.category.name, self.testcase.category)
 
+        def testGetByStringId(self):
+            """ Fetch an existing test case by id (provided as string) """
+            testcase = TestCase(str(self.testcase.id))
+            self.assertTrue(testcase.id, int)
+            self.assertTrue(isinstance(testcase, TestCase))
+            self.assertEqual(testcase.summary, self.testcase.summary)
+            self.assertEqual(testcase.category.name, self.testcase.category)
+
+        def testGetByInvalidId(self):
+            """ Fetch an existing test case by id (invalid id) """
+            self.assertRaises(NitrateError, TestCase, 'invalid-id')
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Test Cases Class
@@ -2814,29 +2817,25 @@ class CaseRun(Mutable):
         a new test case run (based on provided test case and test run).
         """
 
-        Mutable.__init__(self, id, prefix="CR")
-
-        # Initialize values to unknown
-        for attr in """assignee bugs build notes sortkey status testcase
-                testrun""".split():
-            setattr(self, "_" + attr, NitrateNone)
-
-        # Optionally we can get prepared hashes
+        # Prepare attributes, check data hashes, initialize
+        self._attributes = """assignee bugs build notes sortkey status
+                testcase testrun""".split()
         caserunhash = kwargs.get("caserunhash", None)
         testcasehash = kwargs.get("testcasehash", None)
+        if caserunhash:
+            id = caserunhash["case_run_id"]
+        Mutable.__init__(self, id, prefix="CR")
 
-        # If id provided, initialization happens only when data requested
-        if id:
-            self._id = id
         # If hashes provided, let's initialize the data immediately
-        elif caserunhash and testcasehash:
-            self._id = caserunhash["case_run_id"]
+        if caserunhash and testcasehash:
             self._get(caserunhash=caserunhash, testcasehash=testcasehash)
         # Create a new test case run based on case and run
         elif testcase and testrun:
             self._create(testcase=testcase, testrun=testrun, **kwargs)
-        else:
-            raise NitrateError("Need either id or testcase, testrun & build")
+        # Otherwise the id must be provided
+        elif not id:
+            raise NitrateError("Need either id or testcase, testrun and build "
+                    "to initialize the case run")
 
     def __unicode__(self):
         """ Case run id, status & summary for printing. """
