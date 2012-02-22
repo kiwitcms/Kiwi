@@ -40,7 +40,7 @@ install -m 644 documentation/*.1.gz %{buildroot}%{_mandir}/man1
 
 %files
 %defattr(-,root,root,-)
-%{_mandir}/man1
+%{_mandir}/man1/*
 %{_bindir}/nitrate
 %{python_sitelib}
 %doc COPYING README examples
