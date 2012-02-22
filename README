@@ -1,15 +1,27 @@
 
+======================
+    python-nitrate
+======================
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Python API for the Nitrate test case management system
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+:Manual section: 1
+:Manual group: User Commands
+:Date: February 2012
+
+
+DESCRIPTION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 python-nitrate is a Python interface to the Nitrate test case
 management system. The package consists of a high-level Python
 module (provides natural object interface), a low-level driver
 (allows to directly access Nitrate's xmlrpc API) and a command
 line interpreter (useful for fast debugging and experimenting).
 
-Features
+
+FEATURES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Among the most essential python-nitrate features are:
 
@@ -22,34 +34,34 @@ Among the most essential python-nitrate features are:
 The main motivation was to hide unnecessary implementation details
 wherever possible so that using the API is as concise as possible.
 
-Initialize or create an object:
-
-    testcase = TestCase(1234)
-    testrun = TestRun(testplan=<plan>, summary=<summary>)
-
-Default iterators provided for all container objects:
-
-    for case in TestRun(1234):
-        if case.automated:
-            case.status = Status("RUNNING")
-
-Linking case to a plan is as simple as adding an item to a set:
-
-    testplan.testcases.add(testcase)
-
-However, it's still possible to use the low-level driver when a
-specific features is not implemented yet or not efficient enough:
-
-    testcasehash = Nitrate()._server.TestCase.get(46490)
-
 Scripts importing python-nitrate can make use of several useful
 helper functions including info() for logging to stderr, listed()
 which converts list into nice human readable form, color() for
 coloring and of course log.{debug,info,warn,error} for logging.
 
 
-Examples
+EXAMPLES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initialize or create an object::
+
+    testcase = TestCase(1234)
+    testrun = TestRun(testplan=<plan>, summary=<summary>)
+
+Default iterators provided for all container objects::
+
+    for case in TestRun(1234)::
+        if case.automated:
+            case.status = Status("RUNNING")
+
+Linking case to a plan is as simple as adding an item to a set::
+
+    testplan.testcases.add(testcase)
+
+However, it's still possible to use the low-level driver when a
+specific features is not implemented yet or not efficient enough::
+
+    testcasehash = Nitrate()._server.TestCase.get(46490)
+
 For a quick start you can get some inspiration in the examples
 directory. The 'matrix.py' script demonstrates how to easily
 display a matrix view of the test run results for a specific test
@@ -57,14 +69,7 @@ plan. The 'create.py' script gives a broader overview covering
 object creation, attribute setting, adjusting logs and caching.
 
 
-Documentation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-For a short introduction see the manual page. For more detailed
-and most up-to-date description of all available nitrate module
-features see Python online documentation using 'pydoc nitrate'.
-
-
-Test Suite
+TEST SUITE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The high-level interface has an integrated test suite, which can
 be easily run against a stage server instance. For this a couple
@@ -73,21 +78,50 @@ so that we can check valid results. For detailed information about
 what data has to be prepared see the module documentation.
 
 
-Links
+LINKS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-python-nitrate project page:
-https://fedorahosted.org/python-nitrate/
+Project page:
+http://psss.fedorapeople.org/python-nitrate/
 
 Nitrate test case management system:
 https://fedorahosted.org/nitrate/
 
 
-Enjoy!
+SEE ALSO
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For more detailed and most up-to-date description of all available
+nitrate module features see the Python online documentation::
+
+    pydoc nitrate
+    pydoc nitrate.xmlrpc
+
+
+AUTHORS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+High-level Python module:
+Petr Šplíchal <psplicha@redhat.com>,
+Zbyšek Mráz <zmraz@redhat.com>.
+
+Low-level XMLRPC driver:
+Airald Hapairai,
+David Malcolm <dmalcolm@redhat.com>,
+Will Woods <wwoods@redhat.com>,
+Bill Peck <bpeck@redhat.com>,
+Chenxiong Qi <cqi@redhat.com>,
+Tang Chaobin <ctang@redhat.com>,
+Yuguang Wang <yuwang@redhat.com>
+and Xuqing Kuang <xuqingkuang@gmail.com>.
+
 Hope, the library will save you time and bring some joy when
 writing scripts interacting with the Nitrate server. Looking
 forward to your feedback, comments, suggestions and patches ;-)
 
 
-Petr Šplíchal
-<psplicha@redhat.com>
+COPYRIGHT
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Copyright (c) 2012 Red Hat, Inc. All rights reserved.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
