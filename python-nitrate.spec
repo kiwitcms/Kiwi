@@ -25,28 +25,26 @@ line interpreter (useful for fast debugging and experimenting).
 %setup -q
 
 %build
-gzip -c documentation/nitrate.man > documentation/nitrate.1.gz
-chmod 644 examples/*
 
 %clean
 rm -rf %{buildroot}
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}%{python_sitelib}/nitrate
-install -m 644 source/*.py %{buildroot}%{python_sitelib}/nitrate
 mkdir -p %{buildroot}%{_bindir}
-install source/nitrate %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man1
+mkdir -p %{buildroot}%{python_sitelib}/nitrate
+install -m 755 source/nitrate %{buildroot}%{_bindir}
+install -m 644 source/*.py %{buildroot}%{python_sitelib}/nitrate
 install -m 644 documentation/*.1.gz %{buildroot}%{_mandir}/man1
 
 %files
 %defattr(-,root,root,-)
-%{_mandir}/man1/*
+%{_mandir}/man1
 %{_bindir}/nitrate
-%{python_sitelib}/*
+%{python_sitelib}
 %doc COPYING README examples
 
 %changelog
-* Wed Feb 23 2012 Petr Splichal <psplicha@redhat.com> 0.7-1
+* Wed Feb 22 2012 Petr Splichal <psplicha@redhat.com> 0.7-1
 - Initial packaging.
