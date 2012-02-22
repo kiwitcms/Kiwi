@@ -1,4 +1,3 @@
-#!/usr/bin/python
 """
 Use this class to access Nitrate via XML-RPC
 This code is based on http://landfill.bugzilla.org/testopia2/testopia/contrib/drivers/python/testopia.py
