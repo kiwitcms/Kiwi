@@ -8,7 +8,6 @@ License: LGPLv2
 
 URL: http://psss.fedorapeople.org/python-nitrate/
 Source0: http://psss.fedorapeople.org/python-nitrate/%{name}-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch: noarch
 BuildRequires: python-devel
@@ -26,11 +25,7 @@ line interpreter (useful for fast debugging and experimenting).
 
 %build
 
-%clean
-rm -rf %{buildroot}
-
 %install
-rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man1
 mkdir -p %{buildroot}%{python_sitelib}/nitrate
@@ -39,7 +34,6 @@ install -m 644 source/*.py %{buildroot}%{python_sitelib}/nitrate
 install -m 644 documentation/*.1.gz %{buildroot}%{_mandir}/man1
 
 %files
-%defattr(-,root,root,-)
 %{_mandir}/man1/*
 %{_bindir}/nitrate
 %{python_sitelib}
