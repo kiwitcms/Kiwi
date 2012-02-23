@@ -49,7 +49,7 @@ Initialize or create an object::
 
 Default iterators provided for all container objects::
 
-    for case in TestRun(1234)::
+    for case in TestRun(1234):
         if case.automated:
             case.status = Status("RUNNING")
 
@@ -83,7 +83,13 @@ LINKS
 Project page:
 http://psss.fedorapeople.org/python-nitrate/
 
-Nitrate test case management system:
+Git repo:
+http://fedorapeople.org/gitweb?p=psss/public_git/python-nitrate
+
+File bugs:
+https://bugzilla.redhat.com/enter_bug.cgi?product=Fedora
+
+Nitrate:
 https://fedorahosted.org/nitrate/
 
 
@@ -99,22 +105,17 @@ nitrate module features see the Python online documentation::
 AUTHORS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 High-level Python module:
-Petr Šplíchal <psplicha@redhat.com>,
-Zbyšek Mráz <zmraz@redhat.com>.
+Petr Šplíchal and Zbyšek Mráz.
 
 Low-level XMLRPC driver:
-Airald Hapairai,
-David Malcolm <dmalcolm@redhat.com>,
-Will Woods <wwoods@redhat.com>,
-Bill Peck <bpeck@redhat.com>,
-Chenxiong Qi <cqi@redhat.com>,
-Tang Chaobin <ctang@redhat.com>,
-Yuguang Wang <yuwang@redhat.com>
-and Xuqing Kuang <xuqingkuang@gmail.com>.
+Airald Hapairai, David Malcolm, Will Woods, Bill Peck, Chenxiong
+Qi, Tang Chaobin, Yuguang Wang and Xuqing Kuang.
 
 Hope, the library will save you time and bring some joy when
 writing scripts interacting with the Nitrate server. Looking
 forward to your feedback, comments, suggestions and patches ;-)
+
+Petr Šplíchal <psplicha@redhat.com>
 
 
 COPYRIGHT
