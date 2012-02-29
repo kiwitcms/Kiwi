@@ -1,6 +1,6 @@
 Name: python-nitrate
-Version: 0.7
-Release: 2%{?dist}
+Version: 0.8
+Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
 Group: Development/Languages
@@ -40,8 +40,13 @@ install -pm 644 documentation/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
-* Wed Feb 22 2012 Petr Splichal <psplicha@redhat.com> - 0.7-2
+* Wed Feb 29 2012 Petr Šplíchal <psplicha@redhat.com> - 0.8-0
+- New method clear() for cleaning containers
+- Component and Components class implementation
+- Improved object initialization and id check
+
+* Wed Feb 22 2012 Petr Šplíchal <psplicha@redhat.com> - 0.7-2
 - Fix url, directory ownership and preserve timestamps.
 
-* Wed Feb 22 2012 Petr Splichal <psplicha@redhat.com> 0.7-1
+* Wed Feb 22 2012 Petr Šplíchal <psplicha@redhat.com> 0.7-1
 - Initial packaging.
