@@ -5,6 +5,7 @@ PUSH_URL = fedorapeople.org:public_html/python-nitrate
 
 PACKAGE = python-nitrate-$(VERSION)
 DOCS = $(TMP)/$(PACKAGE)/documentation
+EXAMPLES = $(TMP)/$(PACKAGE)/examples
 CSS = --stylesheet=style.css --link-stylesheet
 FILES = COPYING README \
 		Makefile python-nitrate.spec \
@@ -32,12 +33,16 @@ srpm: tarball
 packages: rpm srpm
 
 push: packages
+	# Documentation
+	scp $(DOCS)/*.{css,html} $(PUSH_URL)
+	# Examples
+	scp $(EXAMPLES)/*.py $(PUSH_URL)/examples
+	# Archives & rpms
 	scp python-nitrate.spec \
 		$(TMP)/SRPMS/$(PACKAGE)* \
 		$(TMP)/RPMS/noarch/$(PACKAGE)* \
 		$(TMP)/SOURCES/$(PACKAGE).tar.bz2 \
-		$(DOCS)/*.{css,html} \
-		$(PUSH_URL)
+		$(PUSH_URL)/download
 
 clean:
 	rm -rf $(TMP)

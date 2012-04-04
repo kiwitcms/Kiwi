@@ -69,6 +69,15 @@ plan. The 'create.py' script gives a broader overview covering
 object creation, attribute setting, adjusting logs and caching.
 
 
+CONFIGURATION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To be able to contact the Nitrate server a minimal user config
+file ~/.nitrate has to be provided in the user home directory::
+
+    [nitrate]
+    url = https://nitrate.server/xmlrpc/
+
+
 TEST SUITE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The high-level interface has an integrated test suite, which can
@@ -82,6 +91,15 @@ LINKS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Project page:
 http://psss.fedorapeople.org/python-nitrate/
+
+Interpreter:
+http://psss.fedorapeople.org/python-nitrate/nitrate.html
+
+Examples:
+http://psss.fedorapeople.org/python-nitrate/examples/
+
+Download:
+http://psss.fedorapeople.org/python-nitrate/download/
 
 Git repo:
 http://fedorapeople.org/gitweb?p=psss/public_git/python-nitrate
