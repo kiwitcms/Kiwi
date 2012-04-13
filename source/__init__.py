@@ -126,7 +126,7 @@ __all__ = """
         TestCase CaseStatus
         CaseRun Status
 
-        ascii color listed
+        ascii color listed pretty
         log info setLogLevel
         setCacheLevel CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_ALL
         setColorMode COLOR_ON COLOR_OFF COLOR_AUTO
