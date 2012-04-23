@@ -247,7 +247,7 @@ def ascii(text):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class NitrateNone(object):
-    """ Used for distinguish uninitialized values from regular 'None'. """
+    """ Used for distinguishing uninitialized values from regular 'None'. """
     pass
 
 
