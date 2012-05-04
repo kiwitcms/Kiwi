@@ -2976,6 +2976,12 @@ class TestCase(Mutable):
         else:
             self._tester = None
 
+        # Empty script or arguments to be handled same as None
+        if self._script == "":
+            self._script = None
+        if self._arguments == "":
+            self._arguments = None
+
         # Initialize containers
         self._bugs = Bugs(self)
         self._tags = CaseTags(self)
