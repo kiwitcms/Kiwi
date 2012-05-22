@@ -2792,11 +2792,15 @@ class TestCase(Mutable):
 
     # Read-write properties
     automated = property(_getter("automated"), _setter("automated"),
-            doc="Automation flag.")
+            doc="Automation flag. True if the test case is automated.")
+    autoproposed = property(_getter("autoproposed"), _setter("autoproposed"),
+            doc="True if the test case is proposed for automation.")
     arguments = property(_getter("arguments"), _setter("arguments"),
             doc="Test script arguments (used for automation).")
     category = property(_getter("category"), _setter("category"),
             doc="Test case category.")
+    manual = property(_getter("manual"), _setter("manual"),
+            doc="Manual flag. True if the test case is manual.")
     notes = property(_getter("notes"), _setter("notes"),
             doc="Test case notes.")
     priority = property(_getter("priority"), _setter("priority"),
@@ -2830,16 +2834,18 @@ class TestCase(Mutable):
         new one (based on provided summary, category and product. Other
         optional parameters supported are:
 
-            priority ... priority object, id or name (default: P3)
-            tester ..... user object or login (default: None)
-            script ..... test path (default: None)
-
+            automated ...... automation flag (default: True)
+            autoproposed ... proposed for automation (default: False)
+            manual ......... manual flag (default: False)
+            priority ....... priority object, id or name (default: P3)
+            script ......... test path (default: None)
+            tester ......... user object or login (default: None)
         """
 
         # Prepare attributes, check test case hash, initialize
-        self._attributes = """arguments author automated bugs category
-                components plans priority product script sortkey status
-                summary tags tester testplans time""".split()
+        self._attributes = """arguments author automated autoproposed bugs
+                category components manual plans priority product script
+                sortkey status summary tags tester testplans time""".split()
         testcasehash = kwargs.get("testcasehash")
         if testcasehash:
             id = testcasehash["case_id"]
@@ -2914,10 +2920,17 @@ class TestCase(Mutable):
                 status = CaseStatus(status)
             hash["case_status"] = status.id
 
-        # Automated
-        automated  = kwargs.get("automated")
-        if automated is not None:
-            hash["is_automated"] = automated
+        # Manual, automated and autoproposed
+        automated = kwargs.get("automated", True)
+        autoproposed = kwargs.get("autoproposed", False)
+        manual = kwargs.get("manual", False)
+        if automated and manual:
+            hash["is_automated"] = 2
+        elif automated:
+            hash["is_automated"] = 1
+        else:
+            hash["is_automated"] = 0
+        hash["is_automated_proposed"] = autoproposed
 
         # Estimated time
         time = kwargs.get("time")
@@ -2961,7 +2974,6 @@ class TestCase(Mutable):
         # Set up attributes
         self._arguments = testcasehash["arguments"]
         self._author = User(testcasehash["author_id"])
-        self._automated = testcasehash["is_automated"]
         self._category = Category(testcasehash["category_id"])
         self._notes = testcasehash["notes"]
         self._priority = Priority(testcasehash["priority_id"])
@@ -2975,6 +2987,11 @@ class TestCase(Mutable):
             self._tester = User(testcasehash["default_tester_id"])
         else:
             self._tester = None
+
+        # Handle manual, automated and autoproposed
+        self._automated = testcasehash["is_automated"] in [1, 2]
+        self._manual = testcasehash["is_automated"] in [0, 2]
+        self._autoproposed = testcasehash["is_automated_proposed"]
 
         # Empty script or arguments to be handled same as None
         if self._script == "":
@@ -2996,7 +3013,13 @@ class TestCase(Mutable):
         hash["case_status"] = self.status.id
         hash["category"] = self.category.id
         hash["estimated_time"] = self.time
-        hash["is_automated"] = self.automated
+        if self.automated and self.manual:
+            hash["is_automated"] = 2
+        elif self.automated:
+            hash["is_automated"] = 1
+        else:
+            hash["is_automated"] = 0
+        hash["is_automated_proposed"] = self.autoproposed
         hash["notes"] = self.notes
         hash["priority"] = self.priority.id
         hash["product"] = self.category.product.id
@@ -3069,6 +3092,27 @@ class TestCase(Mutable):
         def testGetByInvalidId(self):
             """ Fetch an existing test case by id (invalid id) """
             self.assertRaises(NitrateError, TestCase, 'invalid-id')
+
+        def testAutomationFlags(self):
+            """ Check automated, autoproposed and manual flags """
+            # Both automated and manual
+            for automated in [False, True]:
+                for manual in [False, True]:
+                    # Unsupported combination
+                    if not automated and not manual:
+                        continue
+                    for autoproposed in [False, True]:
+                        # Fetch and update
+                        testcase = TestCase(self.testcase.id)
+                        testcase.automated = automated
+                        testcase.manual = manual
+                        testcase.autoproposed = autoproposed
+                        testcase.update()
+                        # Reload and check
+                        testcase = TestCase(self.testcase.id)
+                        self.assertEqual(testcase.automated, automated)
+                        self.assertEqual(testcase.autoproposed, autoproposed)
+                        self.assertEqual(testcase.manual, manual)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
