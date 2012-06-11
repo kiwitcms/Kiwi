@@ -2512,6 +2512,8 @@ class TestRun(Mutable):
             doc="Default tester.")
     time = property(_getter("time"), _setter("time"),
             doc="Estimated time.")
+    errata = property(_getter("errata"), _setter("errata"),
+            doc="Errata related to this test run.")
 
     @property
     def caseruns(self):
@@ -2547,6 +2549,7 @@ class TestRun(Mutable):
         parameters are optional and have the following defaults:
 
             build ..... "unspecified"
+            errata..... related errata
             product ... test run product
             version ... test run product version
             summary ... <test plan name> on <build>
@@ -2559,7 +2562,7 @@ class TestRun(Mutable):
         """
 
         # Prepare attributes, check test run hash, initialize
-        self._attributes = """build caseruns manager notes product
+        self._attributes = """build caseruns errata manager notes product
                 status summary tags tester testplan time """.split()
         testrunhash = kwargs.get("testrunhash")
         if testrunhash:
@@ -2598,7 +2601,7 @@ class TestRun(Mutable):
 
     def _create(self, testplan, product=None, version=None, build=None,
             summary=None, notes=None, manager=None, tester=None, tags=None,
-            **kwargs):
+            errata=None, **kwargs):
         """ Create a new test run. """
 
         hash = {}
@@ -2682,6 +2685,7 @@ class TestRun(Mutable):
         self._tester = User(testrunhash["default_tester_id"])
         self._testplan = TestPlan(testrunhash["plan_id"])
         self._time = testrunhash["estimated_time"]
+        self._errata = testrunhash["errata_id"]
 
         # Initialize containers
         self._tags = RunTags(self)
@@ -2696,6 +2700,7 @@ class TestRun(Mutable):
         hash["estimated_time"] = self.time
         hash["manager"] = self.manager.id
         hash["notes"] = self.notes
+        hash["errata"] = self.errata
         # This is required until BZ#731982 is fixed
         hash["product"] = self.build.product.id
         hash["status"] = self.status.id
@@ -2724,6 +2729,7 @@ class TestRun(Mutable):
             """ Set up test plan from the config """
             self.testplan = Nitrate()._config.testplan
             self.testcase = Nitrate()._config.testcase
+            self.testrun = Nitrate()._config.testrun
 
         def testCreateInvalid(self):
             """ Create a new test run (missing required parameters) """
@@ -2734,6 +2740,14 @@ class TestRun(Mutable):
             testrun = TestRun(summary="Test run", testplan=self.testplan.id)
             self.assertTrue(isinstance(testrun, TestRun))
             self.assertEqual(testrun.summary, "Test run")
+
+        def testErrata(self):
+            """ Set, get and change errata """
+            testrun = TestRun(self.testrun.id)
+            testrun.errata = 12345
+            self.assertEqual(testrun.errata, 12345)
+            testrun.errata = 12233
+            self.assertEqual(testrun.errata, 12233)
 
         def testDisabledCasesOmitted(self):
             """ Disabled test cases should be omitted """
