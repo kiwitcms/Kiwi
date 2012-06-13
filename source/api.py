@@ -2619,12 +2619,13 @@ class TestRun(Mutable):
         hash["product"] = product.id
         hash["product_version"] = product.version.id
 
-        # Build
+        # Build & errata
         if build is None:
             build = "unspecified"
         if isinstance(build, basestring):
             build = Build(build=build, product=product)
         hash["build"] = build.id
+        hash["errata_id"] = errata
 
         # Summary & notes
         if summary is None:
@@ -2740,6 +2741,14 @@ class TestRun(Mutable):
             testrun = TestRun(summary="Test run", testplan=self.testplan.id)
             self.assertTrue(isinstance(testrun, TestRun))
             self.assertEqual(testrun.summary, "Test run")
+
+        def testCreateOptionalFields(self):
+            """ Create a new test run, including optional fields """
+            testrun = TestRun(
+                    summary="Test run", testplan=self.testplan.id, errata=1234)
+            self.assertTrue(isinstance(testrun, TestRun))
+            self.assertEqual(testrun.summary, "Test run")
+            self.assertEqual(testrun.errata, 1234)
 
         def testErrata(self):
             """ Set, get and change errata """
