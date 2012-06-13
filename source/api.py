@@ -2700,7 +2700,7 @@ class TestRun(Mutable):
         hash["estimated_time"] = self.time
         hash["manager"] = self.manager.id
         hash["notes"] = self.notes
-        hash["errata"] = self.errata
+        hash["errata_id"] = self.errata
         # This is required until BZ#731982 is fixed
         hash["product"] = self.build.product.id
         hash["status"] = self.status.id
@@ -2743,11 +2743,14 @@ class TestRun(Mutable):
 
         def testErrata(self):
             """ Set, get and change errata """
-            testrun = TestRun(self.testrun.id)
-            testrun.errata = 12345
-            self.assertEqual(testrun.errata, 12345)
-            testrun.errata = 12233
-            self.assertEqual(testrun.errata, 12233)
+            for errata in [111, 222, 333]:
+                # Update the errata field, push to the server
+                testrun = TestRun(self.testrun.id)
+                testrun.errata = errata
+                testrun.update()
+                # Fetch the test run again, check for correct errata
+                testrun = TestRun(self.testrun.id)
+                self.assertEqual(testrun.errata, errata)
 
         def testDisabledCasesOmitted(self):
             """ Disabled test cases should be omitted """
