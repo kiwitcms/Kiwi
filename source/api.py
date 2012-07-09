@@ -2870,7 +2870,7 @@ class TestCase(Mutable):
 
         # Prepare attributes, check test case hash, initialize
         self._attributes = """arguments author automated autoproposed bugs
-                category components manual plans priority product script
+                category components manual notes plans priority product script
                 sortkey status summary tags tester testplans time""".split()
         testcasehash = kwargs.get("testcasehash")
         if testcasehash:
