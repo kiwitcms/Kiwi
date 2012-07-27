@@ -2825,6 +2825,8 @@ class TestCase(Mutable):
             doc="Test script arguments (used for automation).")
     category = property(_getter("category"), _setter("category"),
             doc="Test case category.")
+    link = property(_getter("link"), _setter("link"),
+            doc="Test case reference link.")
     manual = property(_getter("manual"), _setter("manual"),
             doc="Manual flag. True if the test case is manual.")
     notes = property(_getter("notes"), _setter("notes"),
@@ -2870,8 +2872,9 @@ class TestCase(Mutable):
 
         # Prepare attributes, check test case hash, initialize
         self._attributes = """arguments author automated autoproposed bugs
-                category components manual notes plans priority product script
-                sortkey status summary tags tester testplans time""".split()
+                category components link manual notes plans priority product
+                script sortkey status summary tags tester testplans
+                time""".split()
         testcasehash = kwargs.get("testcasehash")
         if testcasehash:
             id = testcasehash["case_id"]
@@ -3001,6 +3004,7 @@ class TestCase(Mutable):
         self._arguments = testcasehash["arguments"]
         self._author = User(testcasehash["author_id"])
         self._category = Category(testcasehash["category_id"])
+        self._link = testcasehash["extra_link"]
         self._notes = testcasehash["notes"]
         self._priority = Priority(testcasehash["priority_id"])
         self._requirement = testcasehash["requirement"]
@@ -3046,6 +3050,7 @@ class TestCase(Mutable):
         else:
             hash["is_automated"] = 0
         hash["is_automated_proposed"] = self.autoproposed
+        hash["extra_link"] = self.link
         hash["notes"] = self.notes
         hash["priority"] = self.priority.id
         hash["product"] = self.category.product.id
@@ -3118,6 +3123,15 @@ class TestCase(Mutable):
         def testGetByInvalidId(self):
             """ Fetch an existing test case by id (invalid id) """
             self.assertRaises(NitrateError, TestCase, 'invalid-id')
+
+        def testReferenceLink(self):
+            """ Fetch and update test case reference link """
+            for url in ["http://first.host.com/", "http://second.host.com/"]:
+                testcase = TestCase(self.testcase.id)
+                testcase.link = url
+                testcase.update()
+                testcase = TestCase(self.testcase.id)
+                self.assertEqual(testcase.link, url)
 
         def testAutomationFlags(self):
             """ Check automated, autoproposed and manual flags """
