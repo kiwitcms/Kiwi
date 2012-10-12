@@ -212,7 +212,7 @@ def _setter(field):
         # Update only if changed
         if getattr(self, "_" + field) != value:
             setattr(self, "_" + field, value)
-            log.info("Updating {0}'s {1} to '{2}'".format(
+            log.info(u"Updating {0}'s {1} to '{2}'".format(
                     self.identifier, field, value))
             # Remember modified state if caching
             if _cache:
