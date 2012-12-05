@@ -1,7 +1,13 @@
 
 TMP = $(CURDIR)/tmp
 VERSION = $(shell grep ^Version python-nitrate.spec | sed 's/.* //')
+
+# Push files to the production web only when in the master branch
+ifeq "$(shell git rev-parse --abbrev-ref HEAD)" "master"
 PUSH_URL = fedorapeople.org:public_html/python-nitrate
+else
+PUSH_URL = fedorapeople.org:public_html/python-nitrate/testing
+endif
 
 PACKAGE = python-nitrate-$(VERSION)
 DOCS = $(TMP)/$(PACKAGE)/documentation
