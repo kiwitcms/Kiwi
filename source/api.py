@@ -319,6 +319,14 @@ class Config(object):
         # Trivial class for sections
         class Section(object): pass
 
+        # Try system settings when the config does not exist in user directory
+        if not os.path.exists(self.path):
+            log.debug("User config file not found, trying /etc/nitrate.conf")
+            self.path = "/etc/nitrate.conf"
+        if not os.path.exists(self.path):
+            log.error(self.example)
+            raise NitrateError("No config file found")
+
         # Parse the config
         try:
             parser = ConfigParser.SafeConfigParser()

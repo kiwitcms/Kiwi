@@ -35,6 +35,9 @@ file ~/.nitrate has to be provided in the user home directory:
     [nitrate]
     url = https://nitrate.server/xmlrpc/
 
+It's also possible to provide system-wide config in /etc/nitrate.conf.
+
+
 Logging
 ~~~~~~~
 
