@@ -53,7 +53,11 @@ more details. In addition, you can easily display info messages using:
     info(message)
 
 which prints provided message (to the standard error output) always,
-regardless the current log level.
+regardless the current log level. To get a brief overview about current
+status use 'print Nitrate()' which gives a short summary like this:
+
+    Nitrate server: https://nitrate.server/xmlrpc/
+    Total requests handled: 0
 
 
 Search support
