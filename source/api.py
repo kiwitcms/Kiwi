@@ -95,6 +95,7 @@ def setCacheLevel(level=None):
     that object are faster.
     """
 
+    global _cache
     if level is None:
         try:
             _cache = int(os.environ["CACHE"])
@@ -135,6 +136,7 @@ def setColorMode(mode=None):
     desired mode without modifying code.
     """
 
+    global _color
     if mode is None:
         try:
             mode = int(os.environ["COLOR"])
