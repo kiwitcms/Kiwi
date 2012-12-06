@@ -398,7 +398,7 @@ class Nitrate(object):
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
-            log.info("Contacting server {0}".format(self._config.nitrate.url))
+            log.info(u"Contacting server {0}".format(self._config.nitrate.url))
             Nitrate._connection = NitrateKerbXmlrpc(
                     self._config.nitrate.url).server
 
@@ -555,11 +555,11 @@ class Build(Nitrate):
         # Search by product and name
         else:
             try:
-                log.info("Fetching build '{0}' of '{1}'".format(
+                log.info(u"Fetching build '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 hash = self._server.Build.check_build(
                         self.name, self.product.id)
-                log.debug("Initializing build '{0}' of '{1}'".format(
+                log.debug(u"Initializing build '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash["build_id"]
@@ -664,11 +664,11 @@ class Category(Nitrate):
         # Search by product and name
         else:
             try:
-                log.info("Fetching category '{0}' of '{1}'".format(
+                log.info(u"Fetching category '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 hash = self._server.Product.check_category(
                         self.name, self.product.id)
-                log.debug("Initializing category '{0}' of '{1}'".format(
+                log.debug(u"Initializing category '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash["id"]
@@ -889,9 +889,9 @@ class Product(Nitrate):
         # Search by name
         else:
             try:
-                log.info("Fetching product '{0}'".format(self.name))
+                log.info(u"Fetching product '{0}'".format(self.name))
                 hash = self._server.Product.filter({'name': self.name})[0]
-                log.debug("Initializing product '{0}'".format(self.name))
+                log.debug(u"Initializing product '{0}'".format(self.name))
                 log.debug(pretty(hash))
                 self._id = hash["id"]
             except IndexError:
@@ -1340,11 +1340,11 @@ class Version(Nitrate):
         # Search by product and name
         else:
             try:
-                log.info("Fetching version '{0}' of '{1}'".format(
+                log.info(u"Fetching version '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 hash = self._server.Product.filter_versions(
                         {'product': self.product.id, 'value': self.name})
-                log.debug("Initializing version '{0}' of '{1}'".format(
+                log.debug(u"Initializing version '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash[0]["id"]
@@ -1376,7 +1376,7 @@ class Mutable(Nitrate):
         try:
             self.update()
         except:
-            log.exception("Failed to update {0}".format(self))
+            log.exception(u"Failed to update {0}".format(self))
 
     def _update(self):
         """ Save data to server (to be implemented by respective class) """
@@ -1620,11 +1620,11 @@ class Component(Nitrate):
         # Search by product and component name
         else:
             try:
-                log.info("Fetching component '{0}' of '{1}'".format(
+                log.info(u"Fetching component '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 componenthash = self._server.Product.check_component(
                         self.name, self.product.id)
-                log.debug("Initializing component '{0}' of '{1}'".format(
+                log.debug(u"Initializing component '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 log.debug(pretty(componenthash))
                 self._id = componenthash["id"]
@@ -1735,7 +1735,7 @@ class Components(Container):
 
     def _add(self, components):
         """ Link provided components to the test case. """
-        log.info("Linking {1} to {0}".format(self._identifier,
+        log.info(u"Linking {1} to {0}".format(self._identifier,
                     listed([component.name for component in components])))
         self._server.TestCase.add_component(
                 self.id, [component.id for component in components])
@@ -1743,7 +1743,7 @@ class Components(Container):
     def _remove(self, components):
         """ Unlink provided components from the test case. """
         for component in components:
-            log.info("Unlinking {0} from {1}".format(
+            log.info(u"Unlinking {0} from {1}".format(
                     component.name, self._identifier))
             self._server.TestCase.remove_component(self.id, component.id)
 
@@ -1944,7 +1944,7 @@ class Bugs(Mutable):
                     bug, self._object.identifier))
         # Attach the bug
         else:
-            log.info("Attaching bug {0} to {1}".format(
+            log.info(u"Attaching bug {0} to {1}".format(
                     bug, self._object.identifier))
             hash = {"bug_id": bug.bug, "bug_system_id": bug.system}
             if isinstance(self._object, TestCase):
@@ -1963,13 +1963,13 @@ class Bugs(Mutable):
         # Nothing to do if not attached
         bug = bug.attach(self._object)
         if bug not in self:
-            log.info("{0} not attached to {1}, doing nothing".format(
+            log.info(u"{0} not attached to {1}, doing nothing".format(
                     bug, self._object.identifier))
         # Detach the bug
         else:
             # Fetch the complete bug object (including the internal id)
             bug = [bugg for bugg in self if bugg == bug][0]
-            log.info("Detaching {0}".format(self.synopsis))
+            log.info(u"Detaching {0}".format(self.synopsis))
             if isinstance(self._object, TestCase):
                 self._server.TestCase.detach_bug(self.id, bug.id)
             elif isinstance(self._object, CaseRun):
@@ -2016,13 +2016,13 @@ class PlanTags(Container):
 
     def _add(self, tags):
         """ Attach provided tags to the test plan. """
-        log.info("Tagging {0} with {1}".format(
+        log.info(u"Tagging {0} with {1}".format(
                 self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.add_tag(self.id, list(tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test plan. """
-        log.info("Untagging {0} of {1}".format(
+        log.info(u"Untagging {0} of {1}".format(
                 self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.remove_tag(self.id, list(tags))
 
@@ -2080,13 +2080,13 @@ class RunTags(Container):
 
     def _add(self, tags):
         """ Attach provided tags to the test run. """
-        log.info("Tagging {0} with {1}".format(
+        log.info(u"Tagging {0} with {1}".format(
                 self._identifier, listed(tags, quote="'")))
         self._server.TestRun.add_tag(self.id, list(tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test run. """
-        log.info("Untagging {0} of {1}".format(
+        log.info(u"Untagging {0} of {1}".format(
                 self._identifier, listed(tags, quote="'")))
         self._server.TestRun.remove_tag(self.id, list(tags))
 
@@ -2144,13 +2144,13 @@ class CaseTags(Container):
 
     def _add(self, tags):
         """ Attach provided tags to the test case. """
-        log.info("Tagging {0} with {1}".format(
+        log.info(u"Tagging {0} with {1}".format(
                 self._identifier, listed(tags, quote="'")))
         self._server.TestCase.add_tag(self.id, list(tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test case. """
-        log.info("Untagging {0} of {1}".format(
+        log.info(u"Untagging {0} of {1}".format(
                 self._identifier, listed(tags, quote="'")))
         self._server.TestCase.remove_tag(self.id, list(tags))
 
@@ -2355,7 +2355,7 @@ class TestPlan(Mutable):
             log.error(pretty(testplanhash))
             raise NitrateError("Failed to create test plan")
         self._get(testplanhash=testplanhash)
-        log.info("Successfully created {0}".format(self))
+        log.info(u"Successfully created {0}".format(self))
 
     def _get(self, testplanhash=None):
         """ Initialize / refresh test plan data.
@@ -2674,20 +2674,20 @@ class TestRun(Mutable):
         if tags: hash["tag"] = ",".join(tags)
 
         # Submit to the server and initialize
-        log.info("Creating a new test run based on {0}".format(testplan))
+        log.info(u"Creating a new test run based on {0}".format(testplan))
         log.debug(pretty(hash))
         testrunhash = self._server.TestRun.create(hash)
         log.debug(pretty(testrunhash))
         try:
             self._id = testrunhash["run_id"]
         except TypeError:
-            log.error("Failed to create a new test run based on {0}".format(
+            log.error(u"Failed to create a new test run based on {0}".format(
                     testplan))
             log.error(pretty(hash))
             log.error(pretty(testrunhash))
             raise NitrateError("Failed to create test run")
         self._get(testrunhash=testrunhash)
-        log.info("Successfully created {0}".format(self))
+        log.info(u"Successfully created {0}".format(self))
 
     def _get(self, testrunhash=None):
         """ Initialize / refresh test run data.
@@ -3009,7 +3009,7 @@ class TestCase(Mutable):
             log.error(pretty(testcasehash))
             raise NitrateError("Failed to create test case")
         self._get(testcasehash=testcasehash)
-        log.info("Successfully created {0}".format(self))
+        log.info(u"Successfully created {0}".format(self))
 
 
     def _get(self, testcasehash=None):
@@ -3335,7 +3335,7 @@ class CaseRun(Mutable):
             log.error(pretty(caserunhash))
             raise NitrateError("Failed to create case run")
         self._get(caserunhash=caserunhash)
-        log.info("Successfully created {0}".format(self))
+        log.info(u"Successfully created {0}".format(self))
 
 
     def _get(self, caserunhash=None, testcasehash=None):
