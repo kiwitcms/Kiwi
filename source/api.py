@@ -2986,7 +2986,7 @@ class TestCase(Mutable):
         except TypeError:
             log.error("Failed to create a new test case")
             log.error(pretty(hash))
-            log.error(pretty(testplanhash))
+            log.error(pretty(testcasehash))
             raise NitrateError("Failed to create test case")
         self._get(testcasehash=testcasehash)
         log.info("Successfully created {0}".format(self))
