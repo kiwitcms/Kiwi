@@ -51,4 +51,4 @@ push: packages
 		$(PUSH_URL)/download
 
 clean:
-	rm -rf $(TMP)
+	rm -rf $(TMP) source/*.pyc
