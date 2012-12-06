@@ -799,46 +799,133 @@ class Category(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 class PlanType(Nitrate):
-    """ Plan type. """
+    """ Plan type """
 
-    _plantypes = ['Null', 'Unit', 'Integration', 'Function', 'System',
-            'Acceptance', 'Installation', 'Performance', 'Product',
-            'Interoperability', 'Smoke', 'Regression', 'NotExist', 'i18n/l10n',
-            'Load', 'Sanity', 'Functionality', 'Stress', 'Stability',
-            'Density', 'Benchmark', 'testtest', 'test11', 'Place Holder',
-            'Recovery', 'Component', 'General', 'Release']
+    # Local cache of PlanType objects indexed by plan type id
+    _plantypes = {}
 
-    def __init__(self, plantype):
-        """
-        Takes numeric Test Plan Type id or name
-        """
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  PlanType Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        if isinstance(plantype, int):
-            if plantype < 1 or plantype > 28 or plantype == 12:
-                raise NitrateError(
-                    "Not a valid Test Plan Type id: '{0}'".format(plantype))
-            self._id = plantype
+    # Read-only properties
+    id = property(_getter("id"), doc="Test plan type id")
+    name = property(_getter("name"), doc="Test plan type name")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  PlanType Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __new__(cls, id=None, name=None):
+        """ Create a new object, handle caching if enabled. """
+        if _cache_level >= CACHE_OBJECTS and id is not None:
+            # Search the cache
+            if id in PlanType._plantypes:
+                log.debug("Using cached plantype ID#{0}".format(id))
+                return PlanType._plantypes[id]
+            # Not cached yet, create a new one and cache
+            else:
+                log.debug("Caching plantype ID#{0}".format(id))
+                new = Nitrate.__new__(cls)
+                PlanType._plantypes[id] = new
+                return new
         else:
-            try:
-                self._id = self._plantypes.index(plantype)
-            except ValueError:
-                raise NitrateError(
-                    "Invalid Test Plan type '{0}'".format(plantype))
+            return Nitrate.__new__(cls)
+
+    def __init__(self, id=None, name=None):
+        """ Initialize by test plan type id or name """
+
+        # If we are a cached-already object no init is necessary
+        if getattr(self, "_id", None) is not None:
+            return
+
+        # Initialized by id
+        if id is not None:
+            self._name = NitrateNone
+        # Initialized by name
+        elif name is not None:
+            self._name = name
+        else:
+            raise NitrateError(
+                    "Need either id or name to initialize the PlanType object")
+        Nitrate.__init__(self, id)
 
     def __unicode__(self):
-        """ Return TestPlan type for printing. """
+        """ PlanType name for printing """
         return self.name
 
-    @property
-    def id(self):
-        """ Numeric TestPlan type id. """
-        return self._id
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  PlanType Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    @property
-    def name(self):
-        """ Human readable TestPlan type name. """
-        return self._plantypes[self._id]
+    def _get(self):
+        """ Get the missing test plan type data """
 
+        # Search by id
+        if self._id is not NitrateNone:
+            try:
+                log.info("Fetching test plan type " + self.identifier)
+                hash = self._server.TestPlan.get_plan_type(self.id)
+                log.debug("Initializing test plan type " + self.identifier)
+                log.debug(pretty(hash))
+                self._name = hash["name"]
+            except xmlrpclib.Fault:
+                raise NitrateError(
+                        "Cannot find test plan type for " + self.identifier)
+        # Search by name
+        else:
+            try:
+                log.info(u"Fetching test plan type '{0}'".format(self.name))
+                hash = self._server.TestPlan.check_plan_type(self.name)
+                log.debug(u"Initializing test plan type '{0}'".format(
+                        self.name))
+                log.debug(pretty(hash))
+                self._id = hash["id"]
+            except xmlrpclib.Fault:
+                raise NitrateError("PlanType '{0}' not found".format(
+                        self.name))
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  PlanType Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+
+        def testCachingOn(self):
+            """ PlanType caching on """
+            # Enable cache, remember current number of requests
+            original = get_cache_level()
+            set_cache_level(CACHE_OBJECTS)
+            requests = Nitrate._requests
+            # The first round (fetch plantype data from server)
+            plantype = PlanType(1)
+            self.assertTrue(isinstance(plantype.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            del plantype
+            # The second round (there should be no more requests)
+            plantype = PlanType(1)
+            self.assertTrue(isinstance(plantype.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            # Restore cache level
+            set_cache_level(original)
+
+        def testCachingOff(self):
+            """ PlanType caching off """
+            # Disable cache, remember current number of requests
+            original = get_cache_level()
+            set_cache_level(CACHE_NONE)
+            requests = Nitrate._requests
+            # The first round (fetch plantype data from server)
+            plantype = PlanType(1)
+            self.assertTrue(isinstance(plantype.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 1)
+            del plantype
+            # The second round (there should be another request)
+            plantype = PlanType(1)
+            self.assertTrue(isinstance(plantype.name, basestring))
+            self.assertEqual(Nitrate._requests, requests + 2)
+            # Restore cache level
+            set_cache_level(original)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
