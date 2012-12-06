@@ -1191,7 +1191,7 @@ class User(Nitrate):
 
     def __unicode__(self):
         """ User login for printing. """
-        return self.name
+        return self.name if self.name is not None else u"No Name"
 
     @staticmethod
     def search(**query):
@@ -1259,6 +1259,18 @@ class User(Nitrate):
             self._name = hash["first_name"] + " " + hash["last_name"]
         else:
             self._name = None
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  User Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def test_no_name(self):
+            """ User with no name set in preferences """
+            user = User()
+            user._name = None
+            self.assertEqual(unicode(user), u"No Name")
+            self.assertEqual(str(user), "No Name")
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
