@@ -137,5 +137,6 @@ __all__ = """
         log info setLogLevel
         setCacheLevel CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_ALL
         setColorMode COLOR_ON COLOR_OFF COLOR_AUTO
+        set_log_level set_cache_level set_color_mode
         """.split()
 

@@ -37,9 +37,11 @@ from xmlrpc import NitrateError, NitrateKerbXmlrpc
 #  Logging
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def setLogLevel(level=None):
+_log_level = log.WARN
+
+def set_log_level(level=None):
     """
-    Set the default log level.
+    Set the default log level
 
     If the level is not specified environment variable DEBUG is used
     with the following meaning:
@@ -47,22 +49,42 @@ def setLogLevel(level=None):
         DEBUG=0 ... Nitrate.log.WARN (default)
         DEBUG=1 ... Nitrate.log.INFO
         DEBUG=2 ... Nitrate.log.DEBUG
+        DEBUG=3 ... Nitrate.log.NOTSET (log all messages)
     """
 
-    try:
-        if level is None:
-            level = {1: log.INFO, 2: log.DEBUG}[int(os.environ["DEBUG"])]
-    except StandardError:
-        level = log.WARN
+    global _log_level
+    mapping = {
+            0: log.WARN,
+            1: log.INFO,
+            2: log.DEBUG,
+            3: log.NOTSET,
+            }
+    # If level specified, use given
+    if level is not None:
+        _log_level = level
+    # Otherwise attempt to detect from the environment
+    else:
+        try:
+            _log_level = mapping[int(os.environ["DEBUG"])]
+        except StandardError:
+            _log_level = log.WARN
     log.basicConfig(format="[%(levelname)s] %(message)s")
-    log.getLogger().setLevel(level)
+    log.getLogger().setLevel(_log_level)
 
-setLogLevel()
+def get_log_level():
+    """ Get the current log level """
+    return _log_level
+
+def setLogLevel(level=None):
+    """ Deprecated, use set_log_level() instead """
+    log.warn("Deprecated call setLogLevel(), use set_log_level() instead")
+    set_log_level(level)
 
 def info(message):
     """ Log provided info message to the standard error output """
-
     sys.stderr.write(message + "\n")
+
+set_log_level()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,11 +96,11 @@ CACHE_CHANGES = 1
 CACHE_OBJECTS = 2
 CACHE_ALL = 3
 
-_cache = CACHE_OBJECTS
+_cache_level = CACHE_OBJECTS
 
-def setCacheLevel(level=None):
+def set_cache_level(level=None):
     """
-    Set the caching level.
+    Set the caching level
 
     If the level parameter is not specified environment variable CACHE
     is inspected instead.  There are three levels available:
@@ -95,19 +117,28 @@ def setCacheLevel(level=None):
     that object are faster.
     """
 
-    global _cache
+    global _cache_level
     if level is None:
         try:
-            _cache = int(os.environ["CACHE"])
+            _cache_level = int(os.environ["CACHE"])
         except StandardError:
-            _cache = CACHE_OBJECTS
+            _cache_level = CACHE_OBJECTS
     elif level >= 0 and level <= 3:
-        _cache = level
+        _cache_level = level
     else:
         raise NitrateError("Invalid cache level '{0}'".format(level))
-    log.debug("Caching on level {0}".format(_cache))
+    log.debug("Caching on level {0}".format(_cache_level))
 
-setCacheLevel()
+def get_cache_level():
+    """ Get the current caching level """
+    return _cache_level
+
+def setCacheLevel(level=None):
+    """ Deprecated, use set_cache_level() instead """
+    log.warn("Deprecated call setCacheLevel(), use set_cache_level() instead")
+    set_cache_level(level)
+
+set_cache_level()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,11 +149,12 @@ COLOR_ON = 1
 COLOR_OFF = 0
 COLOR_AUTO = 2
 
-_color = COLOR_AUTO
+_color_mode = COLOR_AUTO
+_color = True
 
-def setColorMode(mode=None):
+def set_color_mode(mode=None):
     """
-    Set the coloring mode.
+    Set the coloring mode
 
     If enabled, some objects (like case run Status) are printed in color
     to easily spot failures, errors and so on. By default the feature is
@@ -137,6 +169,7 @@ def setColorMode(mode=None):
     """
 
     global _color
+    global _color_mode
     if mode is None:
         try:
             mode = int(os.environ["COLOR"])
@@ -144,6 +177,7 @@ def setColorMode(mode=None):
             mode = COLOR_AUTO
     elif mode < 0 or mode > 2:
         raise NitrateError("Invalid color mode '{0}'".format(mode))
+    _color_mode = mode
 
     if mode == COLOR_AUTO:
         _color = sys.stdout.isatty()
@@ -151,8 +185,17 @@ def setColorMode(mode=None):
         _color = mode == 1
     log.debug("Coloring {0}".format(_color and "enabled" or "disabled"))
 
+def get_color_mode():
+    """ Get the current color mode """
+    return _color_mode
+
+def setColorMode(mode=None):
+    """ Deprecated, use set_color_mode() instead """
+    log.warn("Deprecated call setColorMode(), use set_color_mode() instead")
+    set_color_mode(mode)
+
 def color(text, color=None, background=None, light=False):
-    """ Return text in desired color if coloring enabled. """
+    """ Return text in desired color if coloring enabled """
 
     colors = {"black": 30, "red": 31, "green": 32, "yellow": 33,
             "blue": 34, "magenta": 35, "cyan": 36, "white": 37}
@@ -174,7 +217,7 @@ def color(text, color=None, background=None, light=False):
     else:
         return text
 
-setColorMode()
+set_color_mode()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -217,7 +260,7 @@ def _setter(field):
             log.info(u"Updating {0}'s {1} to '{2}'".format(
                     self.identifier, field, value))
             # Remember modified state if caching
-            if _cache:
+            if _cache_level != CACHE_NONE:
                 self._modified = True
             # Save the changes immediately otherwise
             else:
@@ -489,6 +532,36 @@ class Utils(Nitrate):
             self.assertEqual(listed(range(6), 'category'), "6 categories")
             self.assertEqual(listed(7, "leaf", "leaves"), "7 leaves")
 
+        def test_get_set_log_level(self):
+            """ Get & set the logging level """
+            global _log_level
+            original = _log_level
+            for level in [log.DEBUG, log.WARN, log.ERROR]:
+                set_log_level(level)
+                self.assertEqual(_log_level, level)
+                self.assertEqual(get_log_level(), level)
+            _log_level = original
+
+        def test_get_set_cache_level(self):
+            """ Get & set the caching level """
+            global _cache_level
+            original = _cache_level
+            for level in [CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS]:
+                set_cache_level(level)
+                self.assertEqual(_cache_level, level)
+                self.assertEqual(get_cache_level(), level)
+            _cache_level = original
+
+        def test_get_set_color_mode(self):
+            """ Get & set the color mode """
+            global _color_mode
+            original = _color_mode
+            for mode in [COLOR_ON, COLOR_OFF, COLOR_AUTO]:
+                set_color_mode(mode)
+                self.assertEqual(_color_mode, mode)
+                self.assertEqual(get_color_mode(), mode)
+            _color_mode = original
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Build Class
@@ -601,7 +674,7 @@ class Category(Nitrate):
 
     def __new__(cls, id=None, product=None, category=None):
         """ Create a new object, handle caching if enabled. """
-        if _cache >= CACHE_OBJECTS and id is not None:
+        if _cache_level >= CACHE_OBJECTS and id is not None:
             # Search the cache
             if id in Category._categories:
                 log.debug("Using cached category ID#{0}".format(id))
@@ -687,8 +760,8 @@ class Category(Nitrate):
         def testCachingOn(self):
             """ Category caching on """
             # Enable cache, remember current number of requests
-            cache = _cache
-            setCacheLevel(CACHE_OBJECTS)
+            original = get_cache_level()
+            set_cache_level(CACHE_OBJECTS)
             requests = Nitrate._requests
             # The first round (fetch category data from server)
             category = Category(1)
@@ -700,13 +773,13 @@ class Category(Nitrate):
             self.assertTrue(isinstance(category.name, basestring))
             self.assertEqual(Nitrate._requests, requests + 1)
             # Restore cache level
-            setCacheLevel(cache)
+            set_cache_level(original)
 
         def testCachingOff(self):
             """ Category caching off """
             # Enable cache, remember current number of requests
-            cache = _cache
-            setCacheLevel(CACHE_NONE)
+            original = get_cache_level()
+            set_cache_level(CACHE_NONE)
             requests = Nitrate._requests
             # The first round (fetch category data from server)
             category = Category(1)
@@ -718,7 +791,7 @@ class Category(Nitrate):
             self.assertTrue(isinstance(category.name, basestring))
             self.assertEqual(Nitrate._requests, requests + 2)
             # Restore cache level
-            setCacheLevel(cache)
+            set_cache_level(original)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1151,12 +1224,12 @@ class User(Nitrate):
         """ Create a new object, handle caching if enabled. """
         id, login, email = cls._parse(id, login, email)
         # Fetch all users if in CACHE_ALL level and the cache is still empty
-        if hash is None and _cache == CACHE_ALL and not User._users:
+        if hash is None and _cache_level == CACHE_ALL and not User._users:
             log.info("Caching all users")
             for hash in Nitrate()._server.User.filter({}):
                 user = User(hash=hash)
                 User._users[user.id] = user
-        if hash is None and _cache >= CACHE_OBJECTS and id is not None:
+        if hash is None and _cache_level >= CACHE_OBJECTS and id is not None:
             # Search the cache
             if id in User._users:
                 log.debug("Using cached user UID#{0}".format(id))
@@ -1471,7 +1544,7 @@ class Container(Mutable):
         # If there are any new items
         if items - self._items:
             self._items.update(items)
-            if _cache:
+            if _cache_level != CACHE_NONE:
                 self._modified = True
             else:
                 self._update()
@@ -1488,7 +1561,7 @@ class Container(Mutable):
         # If there are any new items
         if items.intersection(self._items):
             self._items.difference_update(items)
-            if _cache:
+            if _cache_level != CACHE_NONE:
                 self._modified = True
             else:
                 self._update()
@@ -1549,7 +1622,7 @@ class Component(Nitrate):
 
     def __new__(cls, id=None, name=None, product=None, **kwargs):
         """ Create a new object, handle caching if enabled. """
-        if _cache >= CACHE_OBJECTS and id is not None:
+        if _cache_level >= CACHE_OBJECTS and id is not None:
             # Search the cache
             if id in Component._components:
                 log.debug("Using cached component ID#{0}".format(id))
@@ -1672,8 +1745,8 @@ class Component(Nitrate):
         def testCachingOn(self):
             """ Component caching on """
             # Enable cache, remember current number of requests
-            cache = _cache
-            setCacheLevel(CACHE_OBJECTS)
+            original = get_cache_level()
+            set_cache_level(CACHE_OBJECTS)
             requests = Nitrate._requests
             # The first round (fetch component data from server)
             component = Component(self.component.id)
@@ -1685,13 +1758,13 @@ class Component(Nitrate):
             self.assertTrue(isinstance(component.name, basestring))
             self.assertEqual(Nitrate._requests, requests + 1)
             # Restore cache level
-            setCacheLevel(cache)
+            set_cache_level(original)
 
         def testCachingOff(self):
             """ Component caching off """
             # Enable cache, remember current number of requests
-            cache = _cache
-            setCacheLevel(CACHE_NONE)
+            original = get_cache_level()
+            set_cache_level(CACHE_NONE)
             requests = Nitrate._requests
             # The first round (fetch component data from server)
             component = Component(self.component.id)
@@ -1703,7 +1776,7 @@ class Component(Nitrate):
             self.assertTrue(isinstance(component.name, basestring))
             self.assertEqual(Nitrate._requests, requests + 2)
             # Restore cache level
-            setCacheLevel(cache)
+            set_cache_level(original)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
