@@ -74,6 +74,8 @@ CACHE_CHANGES = 1
 CACHE_OBJECTS = 2
 CACHE_ALL = 3
 
+_cache = CACHE_OBJECTS
+
 def setCacheLevel(level=None):
     """
     Set the caching level.
@@ -93,7 +95,6 @@ def setCacheLevel(level=None):
     that object are faster.
     """
 
-    global _cache
     if level is None:
         try:
             _cache = int(os.environ["CACHE"])
@@ -116,6 +117,8 @@ COLOR_ON = 1
 COLOR_OFF = 0
 COLOR_AUTO = 2
 
+_color = COLOR_AUTO
+
 def setColorMode(mode=None):
     """
     Set the coloring mode.
@@ -131,8 +134,6 @@ def setColorMode(mode=None):
     Environment variable COLOR can be used to set up the coloring to the
     desired mode without modifying code.
     """
-
-    global _color
 
     if mode is None:
         try:
