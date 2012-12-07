@@ -2751,17 +2751,20 @@ class TestRun(Mutable):
         a new test run based on specified test plan (required). Other
         parameters are optional and have the following defaults:
 
-            build ..... "unspecified"
-            errata..... related errata
-            product ... test run product
-            version ... test run product version
-            summary ... <test plan name> on <build>
-            notes ..... ""
-            manager ... current user
-            tester .... current user
-            tags ...... None
+            build ....... "unspecified"
+            errata....... related errata
+            product ..... test run product
+            version ..... test run product version
+            summary ..... <test plan name> on <build>
+            notes ....... ""
+            manager ..... current user
+            tester ...... current user
+            tags ........ None
+            testcases ... test cases to be included
 
-        Tags should be provided as a list of tag names.
+        Tags should be provided as a list of tag names. Test cases can
+        be provided as a list of test case objects or a list of ids. By
+        default all CONFIRMED test cases are linked to the created run.
         """
 
         # Prepare attributes, check test run hash, initialize
@@ -2804,7 +2807,7 @@ class TestRun(Mutable):
 
     def _create(self, testplan, product=None, version=None, build=None,
             summary=None, notes=None, manager=None, tester=None, tags=None,
-            errata=None, **kwargs):
+            errata=None, testcases=None, **kwargs):
         """ Create a new test run. """
 
         hash = {}
@@ -2846,9 +2849,17 @@ class TestRun(Mutable):
         hash["manager"] = manager.id
         hash["default_tester"] = tester.id
 
-        # Include all CONFIRMED test cases and tag with supplied tags
-        hash["case"] = [case.id for case in testplan
-                if case.status == CaseStatus("CONFIRMED")]
+        # Prepare the list of test cases to be included in the test run
+        # If testcases parameter is non-empty only selected cases will
+        # be added, otherwise all CONFIRMED cases will be linked.
+        if testcases is not None:
+            hash["case"] = [case.id if isinstance(case, TestCase) else case
+                    for case in testcases]
+        else:
+            hash["case"] = [case.id for case in testplan
+                    if case.status == CaseStatus("CONFIRMED")]
+
+        # Tag with supplied tags
         if tags: hash["tag"] = ",".join(tags)
 
         # Submit to the server and initialize
@@ -2978,6 +2989,23 @@ class TestRun(Mutable):
             # Restore the original status
             testcase.status = original
             testcase.update()
+
+        def test_include_only_selected_cases(self):
+            """ Include only selected test cases in the new run """
+            testcase = TestCase(self.testcase.id)
+            testplan = TestPlan(self.testplan.id)
+            # No test case should be linked
+            testrun = TestRun(testplan=testplan, testcases=[])
+            self.assertTrue(testcase.id not in
+                    [caserun.testcase.id for caserun in testrun])
+            # Select test case by test case object
+            testrun = TestRun(testplan=testplan, testcases=[testcase])
+            self.assertTrue(testcase.id in
+                    [caserun.testcase.id for caserun in testrun])
+            # Select test case by id
+            testrun = TestRun(testplan=testplan, testcases=[testcase.id])
+            self.assertTrue(testcase.id in
+                    [caserun.testcase.id for caserun in testrun])
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
