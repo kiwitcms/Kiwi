@@ -2400,6 +2400,8 @@ class TestPlan(Mutable):
             doc="Test plan name.")
     parent = property(_getter("parent"), _setter("parent"),
             doc="Parent test plan.")
+    children = property(_getter("children"), _setter("children"),
+            doc="Child test plans.")
     product = property(_getter("product"), _setter("product"),
             doc="Test plan product.")
     type = property(_getter("type"), _setter("type"),
@@ -2440,7 +2442,7 @@ class TestPlan(Mutable):
         """
 
         # Prepare attributes, check test plan hash, initialize
-        self._attributes = """author name parent product status tags
+        self._attributes = """author children name parent product status tags
                 testcases testruns type""".split()
         testplanhash = kwargs.get("testplanhash")
         if testplanhash:
@@ -2566,6 +2568,7 @@ class TestPlan(Mutable):
         # Initialize containers
         self._tags = PlanTags(self)
         self._testcases = TestCases(self)
+        self._children = ChildPlans(self)
 
     def _update(self):
         """ Save test plan data to the server. """
@@ -2592,6 +2595,8 @@ class TestPlan(Mutable):
             self.tags.update()
         if self._testcases is not NitrateNone:
             self.testcases.update()
+        if self._children is not NitrateNone:
+            self.children.update()
 
         # Update self (if modified)
         Mutable.update(self)
@@ -3419,6 +3424,64 @@ class TestCases(Container):
             log.info("Unlinking {0} from {1}".format(
                     case.identifier, self._identifier))
             self._server.TestCase.unlink_plan(case.id, self.id)
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Child Plans
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class ChildPlans(Container):
+    """ Child test plans of a parent plan """
+
+    def _get(self):
+        """ Find all child test plans """
+        log.info("Fetching {0}'s child plans".format(self._identifier))
+        self._current = set(TestPlan.search(parent=self.id))
+        self._original = set(self._current)
+
+    def _add(self, plans):
+        """ Set self as parent of given test plans """
+        log.info("Setting {1} as parent of {0}".format(self._identifier,
+                listed([plan.identifier for plan in plans])))
+        for plan in plans:
+            plan.parent = TestPlan(self.id)
+            plan.update()
+
+    def _remove(self, plans):
+        """ Remove self as parent of given test plans """
+        log.info("Removing {1} as parent of {0}".format(self._identifier,
+                listed([plan.identifier for plan in plans])))
+        for plan in plans:
+            plan.parent = None
+            plan.update()
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Child Plans Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+
+        def test_add_and_remove_child_plan(self):
+            """ Add and remove child test plan """
+            parent = TestPlan(self.testplan.id)
+            # Create a new separate plan, make sure it's not child
+            child = TestPlan(name="Child test plan", type=parent.type,
+                    product=parent.product, version=parent.product.version)
+            self.assertTrue(child not in parent.children)
+            # Add the new test plan to the children, reload, check
+            parent.children.add(child)
+            parent.update()
+            parent = TestPlan(parent.id)
+            self.assertTrue(child in parent.children)
+            # Remove the child again, update, reload, check
+            # FIXME Currently disabled because if BZ#885232
+            #parent.children.remove(child)
+            #parent.update()
+            #parent = TestPlan(parent.id)
+            #self.assertTrue(child not in parent.children)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
