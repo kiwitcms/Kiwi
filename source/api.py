@@ -733,7 +733,7 @@ class Category(Nitrate):
                 log.debug(pretty(hash))
                 self._name = hash["name"]
                 self._product = Product(hash["product_id"])
-            except LookupError:
+            except xmlrpclib.Fault:
                 raise NitrateError(
                         "Cannot find category for " + self.identifier)
         # Search by product and name
@@ -747,7 +747,7 @@ class Category(Nitrate):
                         self.name, self.product.name))
                 log.debug(pretty(hash))
                 self._id = hash["id"]
-            except LookupError:
+            except xmlrpclib.Fault:
                 raise NitrateError("Category '{0}' not found in '{1}'".format(
                     self.name, self.product.name))
 
@@ -756,6 +756,10 @@ class Category(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     class _test(unittest.TestCase):
+
+        def setUp(self):
+            """ Set up test product from the config """
+            self.product = Nitrate()._config.product
 
         def testCachingOn(self):
             """ Category caching on """
@@ -792,6 +796,12 @@ class Category(Nitrate):
             self.assertEqual(Nitrate._requests, requests + 2)
             # Restore cache level
             set_cache_level(original)
+
+        def test_invalid_category(self):
+            """ Invalid category should raise exception """
+            def fun():
+                Category(category="Bad Category", product=self.product.name).id
+            self.assertRaises(NitrateError, fun)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -926,6 +936,12 @@ class PlanType(Nitrate):
             self.assertEqual(Nitrate._requests, requests + 2)
             # Restore cache level
             set_cache_level(original)
+
+        def test_invalid_type(self):
+            """ Invalid test plan type should raise exception """
+            def fun():
+                PlanType(name="Bad Plan Type").id
+            self.assertRaises(NitrateError, fun)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
