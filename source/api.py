@@ -1883,14 +1883,14 @@ class Component(Nitrate):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#   Components Class
+#   Case Components Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class Components(Container):
+class CaseComponents(Container):
     """ Components linked to a test case. """
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Components Special
+    #  Case Components Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __unicode__(self):
@@ -1901,7 +1901,7 @@ class Components(Container):
             return "[None]"
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Components Methods
+    #  Case Components Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _get(self):
@@ -1926,7 +1926,7 @@ class Components(Container):
             self._server.TestCase.remove_component(self.id, component.id)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Components Self Test
+    #  Case Components Self Test
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     class _test(unittest.TestCase):
@@ -3269,7 +3269,7 @@ class TestCase(Mutable):
         self._bugs = Bugs(self)
         self._tags = CaseTags(self)
         self._testplans = TestPlans(self)
-        self._components = Components(self)
+        self._components = CaseComponents(self)
 
     def _update(self):
         """ Save test case data to server """
