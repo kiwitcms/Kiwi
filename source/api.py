@@ -763,6 +763,8 @@ class Category(Nitrate):
 
         def testCachingOn(self):
             """ Category caching on """
+            # Make sure the cache is empty
+            Category._categories = {}
             # Enable cache, remember current number of requests
             original = get_cache_level()
             set_cache_level(CACHE_OBJECTS)
@@ -903,6 +905,8 @@ class PlanType(Nitrate):
 
         def testCachingOn(self):
             """ PlanType caching on """
+            # Make sure the cache is empty
+            PlanType._plantypes = {}
             # Enable cache, remember current number of requests
             original = get_cache_level()
             set_cache_level(CACHE_OBJECTS)
@@ -1847,6 +1851,8 @@ class Component(Nitrate):
 
         def testCachingOn(self):
             """ Component caching on """
+            # Make sure the cache is empty
+            Component._components = {}
             # Enable cache, remember current number of requests
             original = get_cache_level()
             set_cache_level(CACHE_OBJECTS)
