@@ -328,6 +328,10 @@ def listed(items, singular=None, plural=None, max=None, quote=""):
     else:
         return ", ".join(items[0:-2] + [" and ".join(items[-2:])])
 
+def unlisted(text):
+    """ Convert human readable list into python list """
+    return re.split("\s*,\s*|\s+and\s+|\s+", text)
+
 def ascii(text):
     """ Transliterate special unicode characters into pure ascii. """
     if not isinstance(text, unicode): text = unicode(text)
@@ -531,6 +535,12 @@ class Utils(Nitrate):
                     "0, 1, 2 and 2 more numbers")
             self.assertEqual(listed(range(6), 'category'), "6 categories")
             self.assertEqual(listed(7, "leaf", "leaves"), "7 leaves")
+
+        def test_unlisted(self):
+            """ Function unlisted() sanity """
+            self.assertEqual(unlisted("1, 2 and 3"), ["1", "2", "3"])
+            self.assertEqual(unlisted("1, 2, 3"), ["1", "2", "3"])
+            self.assertEqual(unlisted("1 2 3"), ["1", "2", "3"])
 
         def test_get_set_log_level(self):
             """ Get & set the logging level """
