@@ -2506,7 +2506,7 @@ class TestPlan(Mutable):
         if type is None:
             raise NitrateError("Type required for creating new test plan")
         elif isinstance(type, basestring):
-            type = PlanType(type)
+            type = PlanType(name=type)
         hash["type"] = type.id
 
         # Parent
