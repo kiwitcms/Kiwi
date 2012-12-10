@@ -69,6 +69,9 @@ install -pm 644 documentation/*.1.gz %{buildroot}%{_mandir}/man1
 - Empty script or arguments to be handled same as None
 - Smarter implementation of the listed() function
 
+* Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.8-1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Wed Feb 29 2012 Petr Šplíchal <psplicha@redhat.com> - 0.8-0
 - New method clear() for cleaning containers
 - Component and Components class implementation
