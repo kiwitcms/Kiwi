@@ -3120,6 +3120,7 @@ class TestCase(Mutable):
             priority ....... priority object, id or name (default: P3)
             script ......... test path (default: None)
             tester ......... user object or login (default: None)
+            link ........... reference link
         """
 
         # Prepare attributes, check test case hash, initialize
@@ -3191,8 +3192,9 @@ class TestCase(Mutable):
                 tester = User(login=tester)
             hash["default_tester"] = tester.login
 
-        # Script
+        # Script & reference link
         hash["script"] = kwargs.get("script")
+        hash["extra_link"] = kwargs.get("link")
 
         # Case Status
         status = kwargs.get("status")
@@ -3356,6 +3358,49 @@ class TestCase(Mutable):
                     isinstance(case, TestCase), "Check created instance")
             self.assertEqual(case.summary, "Test case summary")
             self.assertEqual(case.priority, Priority("P3"))
+            self.assertEqual(str(case.category), "Sanity")
+
+        def testCreateValidWithOptionalFields(self):
+            """ Create a new test case, include optional fields """
+            # High-priority automated security-related test case
+            case = TestCase(
+                    summary="High-priority automated test case",
+                    product=self.testcase.product,
+                    category="Security",
+                    automated=True,
+                    manual=False,
+                    autoproposed=False,
+                    priority=Priority("P1"),
+                    script="/path/to/test/script",
+                    link="http://example.com/test-case-link")
+            self.assertTrue(
+                    isinstance(case, TestCase), "Check created instance")
+            self.assertEqual(case.summary, "High-priority automated test case")
+            self.assertEqual(case.script, "/path/to/test/script")
+            self.assertEqual(case.link, "http://example.com/test-case-link")
+            self.assertEqual(case.priority, Priority("P1"))
+            self.assertTrue(case.automated)
+            self.assertFalse(case.autoproposed)
+            self.assertFalse(case.manual)
+            # Low-priority manual sanity test case
+            case = TestCase(
+                    summary="Low-priority manual test case",
+                    product=self.testcase.product,
+                    category="Sanity",
+                    manual=True,
+                    autoproposed=True,
+                    automated=False,
+                    priority=Priority("P5"),
+                    link="http://example.com/another-case-link")
+            self.assertTrue(
+                    isinstance(case, TestCase), "Check created instance")
+            self.assertEqual(case.summary, "Low-priority manual test case")
+            self.assertEqual(case.script, None)
+            self.assertEqual(case.link, "http://example.com/another-case-link")
+            self.assertEqual(case.priority, Priority("P5"))
+            self.assertTrue(case.manual)
+            self.assertTrue(case.autoproposed)
+            self.assertFalse(case.automated)
 
         def testGetById(self):
             """ Fetch an existing test case by id """

@@ -113,6 +113,7 @@ data of existing objects to be tested, for example:
     [testcase]
     id = 1234
     summary = Test case summary
+    product = Red Hat Enterprise Linux 6
     category = Sanity
 
 To exercise the whole test suite just run "python nitrate.py". To test
