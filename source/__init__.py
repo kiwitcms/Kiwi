@@ -106,6 +106,10 @@ data of existing objects to be tested, for example:
     version = 6.1
     status = ENABLED
 
+    [plantype]
+    id = 1
+    name = General
+
     [testrun]
     id = 6757
     summary = Test Run Summary

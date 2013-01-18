@@ -861,6 +861,10 @@ class PlanType(Nitrate):
         if getattr(self, "_id", None) is not None:
             return
 
+        # Allow initialization by string e.g. PlanType("General")
+        if isinstance(id, basestring):
+            name = id
+            id = None
         # Initialized by id
         if id is not None:
             self._name = NitrateNone
@@ -912,6 +916,9 @@ class PlanType(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up plan type from the config """
+            self.plantype = Nitrate()._config.plantype
 
         def testCachingOn(self):
             """ PlanType caching on """
@@ -956,6 +963,18 @@ class PlanType(Nitrate):
             def fun():
                 PlanType(name="Bad Plan Type").id
             self.assertRaises(NitrateError, fun)
+
+        def test_valid_type(self):
+            """ Valid test plan type initialization """
+            # Initialize by id
+            plantype = PlanType(self.plantype.id)
+            self.assertEqual(plantype.name, self.plantype.name)
+            # Initialize by name (explicit)
+            plantype = PlanType(name=self.plantype.name)
+            self.assertEqual(plantype.id, self.plantype.id)
+            # Initialize by name (autodetection)
+            plantype = PlanType(self.plantype.name)
+            self.assertEqual(plantype.id, self.plantype.id)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
