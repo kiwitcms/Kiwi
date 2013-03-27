@@ -24,6 +24,7 @@ import os
 import re
 import sys
 import types
+import optparse
 import unittest
 import xmlrpclib
 import unicodedata
@@ -3761,6 +3762,14 @@ if __name__ == "__main__":
     except AttributeError:
         raise NitrateError("No test server provided in the config file")
 
+    # Parse options
+    parser = optparse.OptionParser(
+            usage="python nitrate.api [--performance] [class [...]]")
+    parser.add_option("--performance",
+            action="store_true",
+            help="Run performance tests")
+    (options, arguments) = parser.parse_args()
+
     # Walk through all module classes
     import __main__
     for name in dir(__main__):
@@ -3770,7 +3779,14 @@ if __name__ == "__main__":
                 issubclass(object, Nitrate)):
             # Run the _test class if found & selected on command line
             test = getattr(object, "_test", None)
-            if test and (object.__name__ in sys.argv[1:] or not sys.argv[1:]):
-                print "\n{0}\n{1}".format(object.__name__, 70 * "~")
+            if test and (object.__name__ in arguments or not arguments):
                 suite = unittest.TestLoader().loadTestsFromTestCase(test)
+                # Filter only performance test cases when --performance given
+                suite = [case for case in suite
+                        if "performance" in str(case)
+                        or not options.performance]
+                if not suite:
+                    continue
+                suite = unittest.TestSuite(suite)
+                print "\n{0}\n{1}".format(object.__name__, 70 * "~")
                 unittest.TextTestRunner(verbosity=2).run(suite)
