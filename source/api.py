@@ -81,9 +81,9 @@ def setLogLevel(level=None):
     log.warn("Deprecated call setLogLevel(), use set_log_level() instead")
     set_log_level(level)
 
-def info(message):
+def info(message, newline=True):
     """ Log provided info message to the standard error output """
-    sys.stderr.write(message + "\n")
+    sys.stderr.write(message + ("\n" if newline else ""))
 
 set_log_level()
 
