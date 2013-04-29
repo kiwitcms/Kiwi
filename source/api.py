@@ -341,6 +341,20 @@ def ascii(text):
     if not isinstance(text, unicode): text = unicode(text)
     return unicodedata.normalize('NFKD', text).encode('ascii','ignore')
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  MultiCall methods
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def multicall_start():
+    """ Enter MultiCall mode and queue following xmlrpc calls """
+    Nitrate._multicall_proxy = xmlrpclib.MultiCall(Nitrate()._server)
+
+def multicall_end():
+    """ Execute xmlrpc call queue and exit MultiCall mode """
+    response = Nitrate._multicall_proxy()
+    Nitrate._multicall_proxy = None
+    Nitrate._requests += 1
+    return response
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Internal Utilities
@@ -430,6 +444,7 @@ class Nitrate(object):
     _connection = None
     _settings = None
     _requests = 0
+    _multicall_proxy = None
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Nitrate Properties
@@ -466,6 +481,19 @@ class Nitrate(object):
         # Return existing connection
         Nitrate._requests += 1
         return Nitrate._connection
+
+    @property
+    def _multicall(self):
+        """
+        Enqueue xmlrpc calls if MultiCall enabled otherwise send directly
+
+        If MultiCall mode enabled, put xmlrpc calls to the queue, otherwise
+        send them directly to server.
+        """
+        if Nitrate._multicall_proxy is not None:
+            return self._multicall_proxy
+        else:
+            return self._server
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Nitrate Special
@@ -2754,7 +2782,7 @@ class TestPlan(Mutable):
 
         log.info("Updating test plan " + self.identifier)
         log.debug(pretty(hash))
-        self._server.TestPlan.update(self.id, hash)
+        self._multicall.TestPlan.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -3097,7 +3125,7 @@ class TestRun(Mutable):
 
         log.info("Updating test run " + self.identifier)
         log.debug(pretty(hash))
-        self._server.TestRun.update(self.id, hash)
+        self._multicall.TestRun.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -3470,7 +3498,7 @@ class TestCase(Mutable):
 
         log.info("Updating test case " + self.identifier)
         log.debug(pretty(hash))
-        self._server.TestCase.update(self.id, hash)
+        self._multicall.TestCase.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -3896,7 +3924,7 @@ class CaseRun(Mutable):
 
         log.info("Updating case run " + self.identifier)
         log.debug(pretty(hash))
-        self._server.TestCaseRun.update(self.id, hash)
+        self._multicall.TestCaseRun.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -3918,7 +3946,7 @@ class CaseRun(Mutable):
             self.performance = Nitrate()._config.performance
 
         def test_performance_update_caseruns(self):
-            """ Updating multiple CaseRuns from a TestRun
+            """ Updating multiple CaseRun statuses (MultiCall off)
 
             Test for fetching caserun states and updating them focusing
             on the updating part. The performance issue is isolated
@@ -3929,6 +3957,21 @@ class CaseRun(Mutable):
                 log.info("{0} {1}".format(caserun.id, caserun.status))
                 caserun.status = Status(random.randint(1,8))
                 caserun.update()
+            _print_time(time.time() - start_time)
+
+        def test_performance_update_caseruns_multicall(self):
+            """ Updating multiple CaseRun statuses (MultiCall on)
+
+            Test for fetching caserun states and updating them focusing
+            on the updating part with MultiCall.
+            """
+            multicall_start()
+            start_time = time.time()
+            for caserun in TestRun(self.performance.testrun):
+                log.debug("{0} {1}".format(caserun.id, caserun.status))
+                caserun.status = Status(random.randint(1,8))
+                caserun.update()
+            multicall_end()
             _print_time(time.time() - start_time)
 
         def test_performance_testcases_in_caseruns(self):

@@ -63,6 +63,25 @@ status use 'print Nitrate()' which gives a short summary like this:
     Total requests handled: 0
 
 
+MultiCall support
+~~~~~~~~~~~~~~~~~
+
+MultiCall feature is used to encapsulate multiple calls to a remote
+server into a single request. If enabled, TestPlan, TestRun, TestCase
+and CaseRun objects will use MultiCall for updating their states (thus
+speeding up the process). Example usage:
+
+    multicall_start()
+        for caserun in TestRun(12345):
+            caserun.status = Status("IDLE")
+            caserun.update()
+    multicall_end()
+
+When multicall_start() is called, update queries are not sent
+immediately to server. Instead, they are queued and after
+multicall_end() is called, all queries are sent to server in a batch.
+
+
 Search support
 ~~~~~~~~~~~~~~
 
@@ -158,4 +177,5 @@ __all__ = """
         setColorMode COLOR_ON COLOR_OFF COLOR_AUTO
         set_log_level set_cache_level set_color_mode
         get_log_level get_cache_level get_color_mode
+        multicall_start multicall_end
         """.split()
