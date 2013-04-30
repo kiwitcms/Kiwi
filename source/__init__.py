@@ -125,6 +125,20 @@ only subset of tests pick the desired classes on the command line:
 
     python -m nitrate.api TestCase
 
+
+Performance tests
+~~~~~~~~~~~~~~~~~~
+
+For running the performance test suite an additional section containing
+information about the test bed is required:
+
+    [performance]
+    testplan = 1234
+    testrun = 12345
+
+Use the test-bed-prepare.py script attached in the test directory to
+prepare the structure of test plans, test runs and test cases. To run
+the performance test suite use --performance command line option.
 """
 
 from api import *

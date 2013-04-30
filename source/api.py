@@ -23,9 +23,12 @@
 import os
 import re
 import sys
+import time
 import types
+import random
 import optparse
 import unittest
+import datetime
 import xmlrpclib
 import unicodedata
 import ConfigParser
@@ -338,6 +341,14 @@ def ascii(text):
     if not isinstance(text, unicode): text = unicode(text)
     return unicodedata.normalize('NFKD', text).encode('ascii','ignore')
 
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Internal Utilities
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def _print_time(elapsed_time):
+    converted_time = str(datetime.timedelta(seconds=elapsed_time)).split('.')
+    sys.stderr.write("{0} ... ".format(converted_time[0]))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Nitrate None Class
@@ -2376,6 +2387,7 @@ class CaseTags(Container):
         def setUp(self):
             """ Set up test case from the config """
             self.testcase = Nitrate()._config.testcase
+            self.performance = Nitrate()._config.performance
 
         def testTagging1(self):
             """ Untagging a test case """
@@ -2403,6 +2415,18 @@ class CaseTags(Container):
             testcase.update()
             testcase = TestCase(self.testcase.id)
             self.assertTrue("TestTag" not in testcase.tags)
+
+        def test_performance_testcase_tags(self):
+            """ Checking tags of test cases
+
+            Test checks tags from a test cases present in a test plan.
+            The problem in this case is separate fetching of tag names
+            for every test case (one query per case).
+            """
+            start_time = time.time()
+            for case in TestPlan(self.performance.testplan):
+                log.info("{0}: {1}".format(case, case.tags))
+            _print_time(time.time() - start_time)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3364,6 +3388,7 @@ class TestCase(Mutable):
         def setUp(self):
             """ Set up test case from the config """
             self.testcase = Nitrate()._config.testcase
+            self.performance = Nitrate()._config.performance
 
         def testCreateInvalid(self):
             """ Create a new test case (missing required parameters) """
@@ -3470,6 +3495,33 @@ class TestCase(Mutable):
                         self.assertEqual(testcase.automated, automated)
                         self.assertEqual(testcase.autoproposed, autoproposed)
                         self.assertEqual(testcase.manual, manual)
+
+        def test_performance_testcases_and_testers(self):
+            """ Checking test cases and their default testers
+
+            Test checks all test cases linked to specified test plan and
+            displays the result with their testers. The slowdown here is
+            fetching users from the database (one by one).
+            """
+            start_time = time.time()
+            for testcase in TestPlan(self.performance.testplan):
+                log.info("{0}: {1}".format(testcase.tester, testcase))
+            _print_time(time.time() - start_time)
+
+        def test_performance_testcases_and_testplans(self):
+            """ Checking test plans linked to test cases
+
+            Test checks test cases and plans which contain these test
+            cases.  The main problem is fetching the same test plans
+            multiple times if they contain more than one test case in
+            the set.
+            """
+            start_time = time.time()
+            for testcase in TestPlan(self.performance.testplan):
+                log.info("{0} is in test plans:".format(testcase))
+                for testplan in testcase.testplans:
+                    log.info("  {0}".format(testplan.name))
+            _print_time(time.time() - start_time)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3746,6 +3798,49 @@ class CaseRun(Mutable):
 
         # Update self (if modified)
         Mutable.update(self)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Case Runs Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up performance test configuration from the config """
+            self.performance = Nitrate()._config.performance
+
+        def test_performance_update_caseruns(self):
+            """ Updating multiple CaseRuns from a TestRun
+
+            Test for fetching caserun states and updating them focusing
+            on the updating part. The performance issue is isolated
+            CaseRun state update.
+            """
+            start_time = time.time()
+            for caserun in TestRun(self.performance.testrun):
+                log.info("{0} {1}".format(caserun.id, caserun.status))
+                caserun.status = Status(random.randint(1,8))
+                caserun.update()
+            _print_time(time.time() - start_time)
+
+        def test_performance_testcases_in_caseruns(self):
+            """ Checking CaseRuns in TestRuns in TestPlans
+
+            Test for checking test cases that test run contains in
+            specified test plan(s) that are children of a master
+            test plan. The delay is caused by repeatedly fetched testcases
+            connected to case runs (although some of them may have already
+            been fetched).
+            """
+            start_time = time.time()
+            for testplan in TestPlan(self.performance.testplan).children:
+                log.info("{0}".format(testplan.name))
+                for testrun in testplan.testruns:
+                    log.info("  {0} {1} {2}".format(
+                            testrun, testrun.manager, testrun.status))
+                    for caserun in testrun.caseruns:
+                        log.info("    {0} {1} {2}".format(
+                                caserun, caserun.testcase, caserun.status))
+            _print_time(time.time() - start_time)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
