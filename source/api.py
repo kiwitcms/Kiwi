@@ -2223,6 +2223,103 @@ class Bugs(Mutable):
         # Currently no caching for bugs, changes applied immediately
         pass
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Tag Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Tag(Nitrate):
+    """ Tag Class """
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Tag Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="Tag id")
+    name = property(_getter("name"), doc="Tag name")
+
+    # Local cache for Tag
+    _cache = {}
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Tag Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __new__(cls, id=None, name=None, **kwargs):
+        """ Create a new object, handle caching if enabled. """
+        if _cache_level >= CACHE_OBJECTS and isinstance(id, int):
+            # Search the cache
+            if id in Tag._cache:
+                log.debug("Using cached tag ID#{0}".format(id))
+                return Tag._cache[id]
+            # Not cached yet, create a new one and cache
+            else:
+                log.debug("Caching tag ID#{0}".format(id))
+                new = Nitrate.__new__(cls)
+                Tag._cache[id] = new
+                return new
+        else:
+            return Nitrate.__new__(cls)
+
+    def __init__(self, id=None, name=None):
+        """ Initialize by tag id or tag name """
+
+        # If we are a cached-already object no init is necessary
+        if getattr(self, "_id", None) is not None:
+            return
+
+        # Initialized by name
+        if isinstance(id, basestring):
+            name = id
+            id = None
+        # Initialized by id
+        if id is not None:
+            self._name = NitrateNone
+        elif name is not None:
+            self._name = name
+        else:
+            raise NitrateError("Need either tag id or tag name "
+                    "to initialize the Tag object.")
+        Nitrate.__init__(self, id)
+
+    def __unicode__(self):
+        """ Tag name for printing. """
+        return self.name
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Tag Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _get(self):
+        """ Fetch tag data from the server. """
+
+        # Search by id
+        if self._id is not NitrateNone:
+            try:
+                log.info("Fetching tag " + self.identifier)
+                hash = self._server.Tag.get_tags({'ids': [self.id]})
+                log.debug("Initializing tag " + self.identifier)
+                log.debug(pretty(hash))
+                self._name = hash[0]["name"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find tag for {0}".format(self.identifier))
+        # Search by tag name
+        else:
+            try:
+                log.info(u"Fetching tag '{0}'".format(self.name))
+                hash = self._server.Tag.get_tags(
+                        {'names': [self.name]})
+                # Problem if name is not found
+                log.debug(u"Initializing tag '{0}'".format(
+                        self.name))
+                log.debug(pretty(hash))
+                self._id = hash[0]["id"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find tag for '{0}'".format(self.name))
+                self._id = None
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Plan Tags Class
@@ -2236,20 +2333,24 @@ class PlanTags(Container):
         log.info("Fetching tags for {0}".format(self._identifier))
         hash = self._server.TestPlan.get_tags(self.id)
         log.debug(pretty(hash))
-        self._current = set([tag["name"] for tag in hash])
+        self._current = set([Tag(tag["id"]) for tag in hash])
         self._original = set(self._current)
 
     def _add(self, tags):
         """ Attach provided tags to the test plan. """
         log.info(u"Tagging {0} with {1}".format(
                 self._identifier, listed(tags, quote="'")))
-        self._server.TestPlan.add_tag(self.id, list(tags))
+        self._server.TestPlan.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test plan. """
         log.info(u"Untagging {0} of {1}".format(
                 self._identifier, listed(tags, quote="'")))
-        self._server.TestPlan.remove_tag(self.id, list(tags))
+        self._server.TestPlan.remove_tag(self.id, list(tag.name for tag in tags))
+
+    # Print unicode list of tags
+    def __unicode__(self):
+        return listed(self._items, quote="'")
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Plan Tags Self Test
@@ -2264,28 +2365,28 @@ class PlanTags(Container):
             """ Untagging a test plan """
             # Remove tag and check
             testplan = TestPlan(self.testplan.id)
-            testplan.tags.remove("TestTag")
+            testplan.tags.remove(Tag("TestTag"))
             testplan.update()
             testplan = TestPlan(self.testplan.id)
-            self.assertTrue("TestTag" not in testplan.tags)
+            self.assertTrue(Tag("TestTag") not in testplan.tags)
 
         def testTagging2(self):
             """ Tagging a test plan """
             # Add tag and check
             testplan = TestPlan(self.testplan.id)
-            testplan.tags.add("TestTag")
+            testplan.tags.add(Tag("TestTag"))
             testplan.update()
             testplan = TestPlan(self.testplan.id)
-            self.assertTrue("TestTag" in testplan.tags)
+            self.assertTrue(Tag("TestTag") in testplan.tags)
 
         def testTagging3(self):
             """ Untagging a test plan """
             # Remove tag and check
             testplan = TestPlan(self.testplan.id)
-            testplan.tags.remove("TestTag")
+            testplan.tags.remove(Tag("TestTag"))
             testplan.update()
             testplan = TestPlan(self.testplan.id)
-            self.assertTrue("TestTag" not in testplan.tags)
+            self.assertTrue(Tag("TestTag") not in testplan.tags)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2300,20 +2401,24 @@ class RunTags(Container):
         log.info("Fetching tags for {0}".format(self._identifier))
         hash = self._server.TestRun.get_tags(self.id)
         log.debug(pretty(hash))
-        self._current = set([tag["name"] for tag in hash])
+        self._current = set([Tag(tag["id"]) for tag in hash])
         self._original = set(self._current)
 
     def _add(self, tags):
         """ Attach provided tags to the test run. """
         log.info(u"Tagging {0} with {1}".format(
                 self._identifier, listed(tags, quote="'")))
-        self._server.TestRun.add_tag(self.id, list(tags))
+        self._server.TestRun.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test run. """
         log.info(u"Untagging {0} of {1}".format(
                 self._identifier, listed(tags, quote="'")))
-        self._server.TestRun.remove_tag(self.id, list(tags))
+        self._server.TestRun.remove_tag(self.id, list(tag.name for tag in tags))
+
+    # Print unicode list of tags
+    def __unicode__(self):
+        return listed(self._items, quote="'")
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Run Tags Self Test
@@ -2328,28 +2433,28 @@ class RunTags(Container):
             """ Untagging a test run """
             # Remove tag and check
             testrun = TestRun(self.testrun.id)
-            testrun.tags.remove("TestTag")
+            testrun.tags.remove(Tag("TestTag"))
             testrun.update()
             testrun = TestRun(self.testrun.id)
-            self.assertTrue("TestTag" not in testrun.tags)
+            self.assertTrue(Tag("TestTag") not in testrun.tags)
 
         def testTagging2(self):
             """ Tagging a test run """
             # Add tag and check
             testrun = TestRun(self.testrun.id)
-            testrun.tags.add("TestTag")
+            testrun.tags.add(Tag("TestTag"))
             testrun.update()
             testrun = TestRun(self.testrun.id)
-            self.assertTrue("TestTag" in testrun.tags)
+            self.assertTrue(Tag("TestTag") in testrun.tags)
 
         def testTagging3(self):
             """ Untagging a test run """
             # Remove tag and check
             testrun = TestRun(self.testrun.id)
-            testrun.tags.remove("TestTag")
+            testrun.tags.remove(Tag("TestTag"))
             testrun.update()
             testrun = TestRun(self.testrun.id)
-            self.assertTrue("TestTag" not in testrun.tags)
+            self.assertTrue(Tag("TestTag") not in testrun.tags)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2364,20 +2469,24 @@ class CaseTags(Container):
         log.info("Fetching tags for {0}".format(self._identifier))
         hash = self._server.TestCase.get_tags(self.id)
         log.debug(pretty(hash))
-        self._current = set([tag["name"] for tag in hash])
+        self._current = set([Tag(tag["id"]) for tag in hash])
         self._original = set(self._current)
 
     def _add(self, tags):
         """ Attach provided tags to the test case. """
         log.info(u"Tagging {0} with {1}".format(
                 self._identifier, listed(tags, quote="'")))
-        self._server.TestCase.add_tag(self.id, list(tags))
+        self._server.TestCase.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test case. """
         log.info(u"Untagging {0} of {1}".format(
                 self._identifier, listed(tags, quote="'")))
-        self._server.TestCase.remove_tag(self.id, list(tags))
+        self._server.TestCase.remove_tag(self.id, list(tag.name for tag in tags))
+
+    # Print unicode list of tags
+    def __unicode__(self):
+        return listed(self._items, quote="'")
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Case Tags Self Test
@@ -2393,28 +2502,28 @@ class CaseTags(Container):
             """ Untagging a test case """
             # Remove tag and check
             testcase = TestCase(self.testcase.id)
-            testcase.tags.remove("TestTag")
+            testcase.tags.remove(Tag("TestTag"))
             testcase.update()
             testcase = TestCase(self.testcase.id)
-            self.assertTrue("TestTag" not in testcase.tags)
+            self.assertTrue(Tag("TestTag") not in testcase.tags)
 
         def testTagging2(self):
             """ Tagging a test case """
             # Add tag and check
             testcase = TestCase(self.testcase.id)
-            testcase.tags.add("TestTag")
+            testcase.tags.add(Tag("TestTag"))
             testcase.update()
             testcase = TestCase(self.testcase.id)
-            self.assertTrue("TestTag" in testcase.tags)
+            self.assertTrue(Tag("TestTag") in testcase.tags)
 
         def testTagging3(self):
             """ Untagging a test case """
             # Remove tag and check
             testcase = TestCase(self.testcase.id)
-            testcase.tags.remove("TestTag")
+            testcase.tags.remove(Tag("TestTag"))
             testcase.update()
             testcase = TestCase(self.testcase.id)
-            self.assertTrue("TestTag" not in testcase.tags)
+            self.assertTrue(Tag("TestTag") not in testcase.tags)
 
         def test_performance_testcase_tags(self):
             """ Checking tags of test cases

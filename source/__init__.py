@@ -146,7 +146,7 @@ from api import *
 __all__ = """
         Nitrate Mutable
         Product Version Build
-        Category Priority User Bug
+        Category Priority User Bug Tag
         TestPlan PlanType PlanStatus
         TestRun RunStatus
         TestCase CaseStatus
@@ -159,4 +159,3 @@ __all__ = """
         set_log_level set_cache_level set_color_mode
         get_log_level get_cache_level get_color_mode
         """.split()
-

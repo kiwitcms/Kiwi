@@ -17,7 +17,7 @@ CATEGORY = nitrate.Category(category="Regression", product=PRODUCT)
 CASESTATUS = nitrate.CaseStatus("CONFIRMED")
 BUILD = nitrate.Build(product=PRODUCT, build="unspecified")
 
-TAGS = ["tag{0}".format(id) for id in range(100)]
+TAGS = [nitrate.Tag(id) for id in range(3000, 3200)]
 TESTERS = [nitrate.User(id) for id in range(1000, 1050)]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
