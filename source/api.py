@@ -4030,8 +4030,10 @@ if __name__ == "__main__":
                 suite = unittest.TestLoader().loadTestsFromTestCase(test)
                 # Filter only performance test cases when --performance given
                 suite = [case for case in suite
-                        if "performance" in str(case)
-                        or not options.performance]
+                        if options.performance
+                        and "performance" in str(case)
+                        or not options.performance
+                        and "performance" not in str(case)]
                 if not suite:
                     continue
                 suite = unittest.TestSuite(suite)
