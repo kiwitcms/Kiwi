@@ -2205,13 +2205,16 @@ class Container(Mutable):
     #  Container Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, object):
+    def __init__(self, object, inset=None):
         """ Initialize container for specified object. """
         Mutable.__init__(self, object.id)
         self._class = object.__class__
         self._identifier = object.identifier
-        self._current = NitrateNone
-        self._original = NitrateNone
+        if inset is not None:
+            self._current = set(inset)
+            self._original = set(inset)
+        else:
+            self._init()
 
     def __iter__(self):
         """ Container iterator. """
@@ -2242,6 +2245,11 @@ class Container(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Container Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _init(self):
+        """ Set all object attributes to NitrateNone """
+        self._current = NitrateNone
+        self._original = NitrateNone
 
     def add(self, items):
         """ Add an item or a list of items to the container. """
@@ -2902,7 +2910,6 @@ class Tag(Nitrate):
                 except IndexError:
                     raise NitrateError(
                             "Cannot find tag for '{0}'".format(self.name))
-                    self._id = None
         else:
             hash = inject
             # Save values
@@ -2927,7 +2934,7 @@ class PlanTags(Container):
         """ Fetch currently attached tags from the server. """
         log.info("Fetching tags for {0}".format(self._identifier))
         injects = self._server.TestPlan.get_tags(self.id)
-        log.debug(pretty(hash))
+        log.debug(pretty(injects))
         self._current = set([Tag(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -2996,7 +3003,7 @@ class RunTags(Container):
         """ Fetch currently attached tags from the server. """
         log.info("Fetching tags for {0}".format(self._identifier))
         injects = self._server.TestRun.get_tags(self.id)
-        log.debug(pretty(hash))
+        log.debug(pretty(injects))
         self._current = set([Tag(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -3065,7 +3072,7 @@ class CaseTags(Container):
         """ Fetch currently attached tags from the server. """
         log.info("Fetching tags for {0}".format(self._identifier))
         injects = self._server.TestCase.get_tags(self.id)
-        log.debug(pretty(hash))
+        log.debug(pretty(injects))
         self._current = set([Tag(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -3361,7 +3368,11 @@ class TestPlan(Mutable):
             self._parent = None
 
         # Initialize containers
-        self._tags = PlanTags(self)
+        if get_cache_level() >= CACHE_PERSISTENT:
+            self._tags = PlanTags(self, inset=[
+                    Tag(tag) for tag in hash["tag"]])
+        else:
+            self._tags = PlanTags(self)
         self._testcases = TestCases(self)
         self._children = ChildPlans(self)
 
@@ -3770,7 +3781,11 @@ class TestRun(Mutable):
         self._errata = testrunhash["errata_id"]
 
         # Initialize containers
-        self._tags = RunTags(self)
+        if get_cache_level() >= CACHE_PERSISTENT:
+            self._tags = RunTags(self, inset=[
+                    Tag(tag) for tag in testrunhash["tag"]])
+        else:
+            self._tags = RunTags(self)
 
         if get_cache_level() >= CACHE_OBJECTS:
             self._time_cached = datetime.datetime.now()
@@ -4184,7 +4199,11 @@ class TestCase(Mutable):
 
         # Initialize containers
         self._bugs = Bugs(self)
-        self._tags = CaseTags(self)
+        if get_cache_level() >= CACHE_PERSISTENT:
+            self._tags = CaseTags(self, inset=[
+                    Tag(tag) for tag in testcasehash["tag"]])
+        else:
+            self._tags = CaseTags(self)
         self._testplans = TestPlans(self)
         self._components = CaseComponents(self)
 
