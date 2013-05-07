@@ -82,6 +82,61 @@ immediately to server. Instead, they are queued and after
 multicall_end() is called, all queries are sent to server in a batch.
 
 
+Caching support
+~~~~~~~~~~~~~~~
+
+In order to save calls to server and time, caching support has been
+implemented. Every class that handles objects has its own cache and it
+is used to save already initialized (fetched) objects from server.
+Immutable classes are automatically fetched from server after
+initialization, the rest will be fetched from server upon request.
+
+Methods that manipulate caching levels:
+
+    get_cache_level()
+    set_cache_level()
+
+Currently, there are four types (levels) of caching:
+
+    CACHE_NONE ......... no caching at all, changes applied immediately
+    CACHE_CHANGES ...... cache only local updates of instance attributes
+    CACHE_OBJECTS ...... caching of objects for further use (default)
+    CACHE_PERSISTENT ... persistent caching of objects into a local file
+
+By default CACHE_OBJECTS is used. That means any changes to objects are
+pushed to the server only when explicitly requested with the update()
+method. Also, any object already loaded from the server is kept in
+memory cache so that future references to that object are faster.
+
+Persistent cache (local proxy) further speeds up module performance. It
+allows class caches to be stored in a file, load caches from a file, and
+clear caches. This performance improvement is very helpful mainly for
+immutable classes (for example User), where all users can be imported in
+the beginning of a script and a lot of connections can be saved. To
+activate this feature specify cache level and file name in the config:
+
+    [cache]
+    level = 3
+    file = /home/user/.cache/nitrate
+
+Cache expiration is a way how to prevent using probably obsoleted object
+(for example caserun). Every class has its own default expiration time,
+which can be adjusted in the config file (use lower case class names):
+
+    [expiration]
+    caserun = 60
+    testcase = 600
+
+Expiration time is given in seconds. In addition, there are two special
+values which can be used:
+
+    NEVER_CACHE .... no caching of certain class objects
+    NEVER_EXPIRE ... cached objects never expire
+
+Default expiration is set to 30 days for immutable classes and to 1 hour
+for the rest.
+
+
 Search support
 ~~~~~~~~~~~~~~
 
@@ -169,11 +224,12 @@ __all__ = """
         TestPlan PlanType PlanStatus
         TestRun RunStatus
         TestCase CaseStatus
-        CaseRun Status
+        CaseRun Status Cache
 
         ascii color listed pretty
         log info setLogLevel
-        setCacheLevel CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_ALL
+        setCacheLevel CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_PERSISTENT
+        NEVER_EXPIRE NEVER_CACHE
         setColorMode COLOR_ON COLOR_OFF COLOR_AUTO
         set_log_level set_cache_level set_color_mode
         get_log_level get_cache_level get_color_mode
