@@ -2205,16 +2205,23 @@ class Container(Mutable):
     #  Container Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    def __new__(cls, object, inset=None):
+        """ Create new container objects based on the object id """
+        return super(Container, cls).__new__(cls, object.id)
+
     def __init__(self, object, inset=None):
         """ Initialize container for specified object. """
+        # If we are a cached-already object no init is necessary
+        if getattr(self, "_id", None) is not None:
+            return
+        # Initialize attributes, save container object class and id
+        self._init()
         Mutable.__init__(self, object.id)
         self._class = object.__class__
         self._identifier = object.identifier
+        # Initialize directly if initial set provided
         if inset is not None:
-            self._current = set(inset)
-            self._original = set(inset)
-        else:
-            self._init()
+            self._get(inset)
 
     def __iter__(self):
         """ Container iterator. """
@@ -2250,6 +2257,22 @@ class Container(Mutable):
         """ Set all object attributes to NitrateNone """
         self._current = NitrateNone
         self._original = NitrateNone
+
+    def _get(self, inset=None):
+        """ Save cache timestamp and initialize from inset if given """
+        # Create copies of the initial set (if given)
+        if inset is not None:
+            log.debug("Initializing {0} for {1} from the inset".format(
+                    self.__class__.__name__, self._identifier))
+            log.debug(pretty(inset))
+            self._current = set(inset)
+            self._original = set(inset)
+        # Save timestamp and cache into container class
+        if get_cache_level() >= CACHE_OBJECTS:
+            self._time_cached = datetime.datetime.now()
+            self.__class__._cache[self._id] = self
+        # Return True if the data are already initialized
+        return inset is not None
 
     def add(self, items):
         """ Add an item or a list of items to the container. """
@@ -2521,6 +2544,8 @@ class Component(Nitrate):
 class CaseComponents(Container):
     """ Components linked to a test case. """
 
+    _cache = {}
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Case Components Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2536,11 +2561,14 @@ class CaseComponents(Container):
     #  Case Components Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _get(self):
-        """ Fetch currently linked components from the server. """
+    def _get(self, inset=None):
+        """ Fetch currently linked components from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._get(self, inset):
+            return
         log.info("Fetching {0}'s components".format(self._identifier))
-        self._current = set([Component(hash)
-                for hash in self._server.TestCase.get_components(self.id)])
+        self._current = set([Component(inject)
+                for inject in self._server.TestCase.get_components(self.id)])
         self._original = set(self._current)
 
     def _add(self, components):
@@ -2930,8 +2958,13 @@ class Tag(Nitrate):
 class PlanTags(Container):
     """ Test plan tags. """
 
-    def _get(self):
+    _cache = {}
+
+    def _get(self, inset=None):
         """ Fetch currently attached tags from the server. """
+        # If data initialized from the inset ---> we're done
+        if Container._get(self, inset):
+            return
         log.info("Fetching tags for {0}".format(self._identifier))
         injects = self._server.TestPlan.get_tags(self.id)
         log.debug(pretty(injects))
@@ -2999,8 +3032,13 @@ class PlanTags(Container):
 class RunTags(Container):
     """ Test run tags. """
 
-    def _get(self):
-        """ Fetch currently attached tags from the server. """
+    _cache = {}
+
+    def _get(self, inset=None):
+        """ Fetch currently attached tags from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._get(self, inset):
+            return
         log.info("Fetching tags for {0}".format(self._identifier))
         injects = self._server.TestRun.get_tags(self.id)
         log.debug(pretty(injects))
@@ -3068,8 +3106,13 @@ class RunTags(Container):
 class CaseTags(Container):
     """ Test case tags. """
 
-    def _get(self):
-        """ Fetch currently attached tags from the server. """
+    _cache = {}
+
+    def _get(self, inset=None):
+        """ Fetch currently attached tags from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._get(self, inset):
+            return
         log.info("Fetching tags for {0}".format(self._identifier))
         injects = self._server.TestCase.get_tags(self.id)
         log.debug(pretty(injects))
@@ -3498,8 +3541,13 @@ class TestPlan(Mutable):
 class TestPlans(Container):
     """ Test plans linked to a test case. """
 
-    def _get(self):
-        """ Fetch currently linked test plans from the server. """
+    _cache = {}
+
+    def _get(self, inset=None):
+        """ Fetch currently attached tags from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._get(self, inset):
+            return
         log.info("Fetching {0}'s plans".format(self._identifier))
         self._current = set([TestPlan(hash)
                     for hash in self._server.TestCase.get_plans(self.id)])
@@ -4428,8 +4476,13 @@ class TestCase(Mutable):
 class TestCases(Container):
     """ Test cases linked to a test plan. """
 
-    def _get(self):
-        """ Fetch currently linked test cases from the server. """
+    _cache = {}
+
+    def _get(self, inset=None):
+        """ Fetch currently linked test cases from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._get(self, inset):
+            return
         log.info("Fetching {0}'s cases".format(self._identifier))
         try:
             # Initialize tags from plan
@@ -4466,8 +4519,13 @@ class TestCases(Container):
 class ChildPlans(Container):
     """ Child test plans of a parent plan """
 
-    def _get(self):
+    _cache = {}
+
+    def _get(self, inset=None):
         """ Find all child test plans """
+        # If data initialized from the inset ---> we're done
+        if Container._get(self, inset):
+            return
         log.info("Fetching {0}'s child plans".format(self._identifier))
         self._current = set(TestPlan.search(parent=self.id))
         self._original = set(self._current)
@@ -4810,8 +4868,9 @@ class Cache(Nitrate):
     """
 
     # List of classes with persistent cache support
-    _classes = [Build, CaseRun, Category, Component, PlanType, Product,
-            Tag, TestCase, TestPlan, TestRun, User, Version]
+    _classes = [Build, CaseComponents, CaseRun, CaseTags, Category, Component,
+            ChildPlans, PlanTags, PlanType, Product, RunTags, Tag, TestCase,
+            TestCases, TestPlan, TestPlans, TestRun, User, Version]
 
     @staticmethod
     def save():
