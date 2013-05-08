@@ -69,10 +69,10 @@ def set_log_level(level=None):
     If the level is not specified environment variable DEBUG is used
     with the following meaning:
 
-        DEBUG=0 ... Nitrate.log.WARN (default)
-        DEBUG=1 ... Nitrate.log.INFO
-        DEBUG=2 ... Nitrate.log.DEBUG
-        DEBUG=3 ... Nitrate.log.NOTSET (log all messages)
+        DEBUG=0 ... nitrate.log.WARN (default)
+        DEBUG=1 ... nitrate.log.INFO
+        DEBUG=2 ... nitrate.log.DEBUG
+        DEBUG=3 ... nitrate.log.NOTSET (log all messages)
     """
 
     global _log_level
@@ -552,17 +552,17 @@ class Nitrate(object):
         # Search the cache for ID
         try:
             temp = cls._cache_lookup(id, **kwargs)
-            log.debug("Using cached object {0} {1}".format(
+            log.log(5, "Using cached object {0} {1}".format(
                     cls.__name__, temp.id))
             return temp
         except KeyError:
             # Object not cached yet, create a new one and cache it
             new = super(Nitrate, cls).__new__(cls)
             if isinstance(id, int):
-                log.debug("Caching {0} {1}".format(cls.__name__, id))
+                log.log(5, "Caching {0} {1}".format(cls.__name__, id))
                 cls._cache[id] = new
             else:
-                log.debug("Caching {0} object".format(cls.__name__))
+                log.log(5, "Caching {0} object".format(cls.__name__))
             return new
 
     def __init__(self, id=None, prefix="ID"):

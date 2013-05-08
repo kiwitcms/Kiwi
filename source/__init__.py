@@ -49,8 +49,13 @@ under the short name 'log', for example:
     log.warn(message)
     log.error(message)
 
+When logging an information that is causing a lot of noise it's a good
+idea to use custom log level lower then log.DEBUG (0-9) in this way:
+
+    log.log(level, message)
+
 By default, messages of level WARN and up are only displayed. This can
-be controlled by setting the current log level. See setLogLevel() for
+be controlled by setting the current log level. See set_log_level() for
 more details. In addition, you can easily display info messages using:
 
     info(message)
