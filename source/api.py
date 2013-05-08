@@ -30,6 +30,7 @@ import pickle
 import atexit
 import random
 import optparse
+import tempfile
 import unittest
 import datetime
 import xmlrpclib
@@ -4902,11 +4903,24 @@ class Cache(Nitrate):
             TestCases, TestPlans]
     _classes = _immutable + _mutable + _containers
 
+    # File path to the cache
+    _filename = None
+
     @staticmethod
-    def setup():
-        """ Initialize user-defined expiration times from the config """
+    def setup(filename=None):
+        """ Set cache filename and initialize expiration times """
+        # Detect cache filename, argument first, then config
+        if filename is not None:
+            Cache._filename = filename
+        else:
+            try:
+                Cache._filename = Nitrate()._config.cache.file
+            except AttributeError:
+                log.warn("Persistent caching off "
+                        "(cache filename not found in the config)")
+
+        # Initialize user-defined expiration times from the config
         for klass in Cache._classes:
-            # Attempt to read the expiration value from the config
             try:
                 expiration = getattr(
                         Nitrate()._config.expiration, klass.__name__.lower())
@@ -4932,7 +4946,7 @@ class Cache(Nitrate):
         """ Save caches to specified file """
 
         # Nothing to do when persistent caching is off
-        if get_cache_level() < CACHE_PERSISTENT:
+        if not Cache._filename or get_cache_level() < CACHE_PERSISTENT:
             return
 
         # Clear expired items and gather all caches into a single object
@@ -4948,15 +4962,12 @@ class Cache(Nitrate):
 
         # Dump the cache object into file
         try:
-            filename = Nitrate()._config.cache.file
-            output_file = gzip.open(filename, 'wb')
-            log.debug("Saving persistent cache into {0}".format(filename))
+            output_file = gzip.open(Cache._filename, 'wb')
+            log.debug("Saving persistent cache into {0}".format(
+                    Cache._filename))
             pickle.dump(data, output_file)
             output_file.close()
             log.debug("Persistent cache successfully saved")
-        except AttributeError:
-            log.warn("Skipping cache dump (no cache file given in config)")
-            return
         except IOError, error:
             log.error("Failed to save persistent cache ({0})".format(error))
 
@@ -4965,18 +4976,18 @@ class Cache(Nitrate):
         """ Load caches from specified file """
 
         # Nothing to do when persistent caching is off
-        if get_cache_level() < CACHE_PERSISTENT:
+        if not Cache._filename or get_cache_level() < CACHE_PERSISTENT:
             return
 
         # Load the saved cache from file
         try:
-            filename = Nitrate()._config.cache.file
-            log.debug("Loading persistent cache from {0}".format(filename))
-            input_file = gzip.open(filename, 'rb')
+            log.debug("Loading persistent cache from {0}".format(
+                    Cache._filename))
+            input_file = gzip.open(Cache._filename, 'rb')
             data = pickle.load(input_file)
             input_file.close()
-        except AttributeError:
-            log.warn("Skipping cache load (no cache file given in config)")
+        except EOFError:
+            log.warn("Cache file empty, will fill it upon exit")
             return
         except IOError, error:
             if error.errno == 2:
@@ -4984,7 +4995,7 @@ class Cache(Nitrate):
                 return
             else:
                 log.error("Failed to load the cache ({0})".format(error))
-                log.error("Cache file: {0}".format(filename))
+                log.error("Cache file: {0}".format(Cache._filename))
                 log.warn("Going on but switching to CACHE_OBJECTS level")
                 set_cache_level(CACHE_OBJECTS)
                 return
@@ -5048,18 +5059,24 @@ class Cache(Nitrate):
                    str(current_class._expiration).rjust(25))
         return result
 
-# Setup up expiration times and load cache on module import
-Cache.setup()
-Cache.load()
-# Save the cache at script exit
-atexit.register(Cache.save)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Cache Setup
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if __name__ != "__main__":
+    # Setup up expiration times and load cache on module import
+    Cache.setup()
+    Cache.load()
+    # Register callback to save the cache upon script exit
+    atexit.register(Cache.save)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Self Test
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if __name__ == "__main__":
+else:
     """ Perform the module self-test if run directly. """
 
     # Override the server url with the testing instance
@@ -5068,6 +5085,11 @@ if __name__ == "__main__":
         print "Testing against {0}".format(Nitrate()._config.nitrate.url)
     except AttributeError:
         raise NitrateError("No test server provided in the config file")
+
+    # Use temporary cache file for testing
+    temporary_cache = tempfile.NamedTemporaryFile()
+    Cache.setup(temporary_cache.name)
+    Cache.load()
 
     # Parse options
     parser = optparse.OptionParser(
@@ -5098,4 +5120,9 @@ if __name__ == "__main__":
                     continue
                 suite = unittest.TestSuite(suite)
                 print "\n{0}\n{1}".format(object.__name__, 70 * "~")
+                log_level = get_log_level()
                 unittest.TextTestRunner(verbosity=2).run(suite)
+                set_log_level(log_level)
+
+    # Save cache
+    Cache.save()
