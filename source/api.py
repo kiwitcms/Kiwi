@@ -60,6 +60,13 @@ COLOR_AUTO = 2
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Logging
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#  Recommended debug levels:
+#
+#  log.info(msg) ..... high-level info, useful for tracking the progress
+#  log.debug(msg) .... low-level info with details useful for investigation
+#  log.log(5, msg) ... stuff related to caching and object initialization
+#  log.log(3, msg) ... data communicated to or from the xmlrpc server
 
 _log_level = log.WARN
 
@@ -784,7 +791,7 @@ class Build(Nitrate):
                     log.info("Fetching build " + self.identifier)
                     hash = self._server.Build.get(self.id)
                     log.debug("Initializing build " + self.identifier)
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._name = hash["name"]
                     self._product = Product(hash["product_id"])
                 except LookupError:
@@ -799,7 +806,7 @@ class Build(Nitrate):
                             self.name, self.product.id)
                     log.debug(u"Initializing build '{0}' of '{1}'".format(
                             self.name, self.product.name))
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._id = hash["build_id"]
                 except LookupError:
                     raise NitrateError("Build '{0}' not found in '{1}'".format(
@@ -807,7 +814,7 @@ class Build(Nitrate):
         else:
             # Save values
             log.debug("Initializing Build ID#{0}".format(inject["id"]))
-            log.debug(pretty(inject))
+            log.log(3, pretty(inject))
             self._id = inject["id"]
             self._name = inject["name"]
             self._product = inject["product"]
@@ -948,7 +955,7 @@ class Category(Nitrate):
                     log.info("Fetching category " + self.identifier)
                     hash = self._server.Product.get_category(self.id)
                     log.debug("Initializing category " + self.identifier)
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._name = hash["name"]
                     self._product = Product(hash["product_id"])
                 except xmlrpclib.Fault:
@@ -963,7 +970,7 @@ class Category(Nitrate):
                             self.name, self.product.id)
                     log.debug(u"Initializing category '{0}' of '{1}'".format(
                             self.name, self.product.name))
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._id = hash["id"]
                 except xmlrpclib.Fault:
                     raise NitrateError("Category '{0}' not found in"
@@ -971,7 +978,7 @@ class Category(Nitrate):
         else:
             # Save values
             log.debug("Initializing Category ID#{0}".format(inject["id"]))
-            log.debug(pretty(inject))
+            log.log(3, pretty(inject))
             self._id = inject["id"]
             self._name = inject["name"]
             self._product = inject["product"]
@@ -1127,7 +1134,7 @@ class PlanType(Nitrate):
                     log.info("Fetching test plan type " + self.identifier)
                     hash = self._server.TestPlan.get_plan_type(self.id)
                     log.debug("Initializing test plan type " + self.identifier)
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._name = hash["name"]
                 except xmlrpclib.Fault:
                     raise NitrateError("Cannot find test plan type for "
@@ -1140,7 +1147,7 @@ class PlanType(Nitrate):
                     hash = self._server.TestPlan.check_plan_type(self.name)
                     log.debug(u"Initializing test plan type '{0}'".format(
                             self.name))
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._id = hash["id"]
                 except xmlrpclib.Fault:
                     raise NitrateError("PlanType '{0}' not found".format(
@@ -1148,7 +1155,7 @@ class PlanType(Nitrate):
         else:
             # Save values
             log.debug("Initializing PlanType ID#{0}".format(inject["id"]))
-            log.debug(pretty(inject))
+            log.log(3, pretty(inject))
             self._id = inject["id"]
             self._name = inject["name"]
 
@@ -1426,7 +1433,7 @@ class Product(Nitrate):
                     log.info("Fetching product " + self.identifier)
                     hash = self._server.Product.filter({'id': self.id})[0]
                     log.debug("Initializing product " + self.identifier)
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._name = hash["name"]
                 except IndexError:
                     raise NitrateError(
@@ -1437,7 +1444,7 @@ class Product(Nitrate):
                     log.info(u"Fetching product '{0}'".format(self.name))
                     hash = self._server.Product.filter({'name': self.name})[0]
                     log.debug(u"Initializing product '{0}'".format(self.name))
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._id = hash["id"]
                 except IndexError:
                     raise NitrateError(
@@ -1445,7 +1452,7 @@ class Product(Nitrate):
         else:
             # Save values
             log.debug("Initializing Product ID#{0}".format(inject["id"]))
-            log.debug(pretty(inject))
+            log.log(3, pretty(inject))
             self._id = inject["id"]
             self._name = inject["name"]
 
@@ -1873,7 +1880,7 @@ class User(Nitrate):
 
         # Save values
         log.debug("Initializing user UID#{0}".format(inject["id"]))
-        log.debug(pretty(inject))
+        log.log(3, pretty(inject))
         self._id = inject["id"]
         self._login = inject["username"]
         self._email = inject["email"]
@@ -2095,7 +2102,7 @@ class Version(Nitrate):
                     hash = self._server.Product.filter_versions(
                             {'id': self.id})
                     log.debug("Initializing version " + self.identifier)
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._name = hash[0]["value"]
                     self._product = Product(hash[0]["product_id"])
                 except IndexError:
@@ -2110,7 +2117,7 @@ class Version(Nitrate):
                             {'product': self.product.id, 'value': self.name})
                     log.debug(u"Initializing version '{0}' of '{1}'".format(
                             self.name, self.product.name))
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._id = hash[0]["id"]
                 except IndexError:
                     raise NitrateError(
@@ -2119,7 +2126,7 @@ class Version(Nitrate):
             hash = inject
             # Save values
             log.debug("Initializing Version ID#{0}".format(hash["id"]))
-            log.debug(pretty(hash))
+            log.log(3, pretty(hash))
             self._id = hash["id"]
             self._name = hash["name"]
             self._product = hash["product"]
@@ -2469,7 +2476,7 @@ class Component(Nitrate):
                     log.info("Fetching component " + self.identifier)
                     componenthash = self._server.Product.get_component(self.id)
                     log.debug("Initializing component " + self.identifier)
-                    log.debug(pretty(componenthash))
+                    log.log(3, pretty(componenthash))
                     self._name = componenthash["name"]
                     self._product = Product(componenthash["product_id"])
                 except LookupError:
@@ -2484,7 +2491,7 @@ class Component(Nitrate):
                             self.name, self.product.id)
                     log.debug(u"Initializing component '{0}' of '{1}'".format(
                             self.name, self.product.name))
-                    log.debug(pretty(componenthash))
+                    log.log(3, pretty(componenthash))
                     self._id = componenthash["id"]
                 except LookupError:
                     raise NitrateError("Component '{0}' not found in"
@@ -2492,7 +2499,7 @@ class Component(Nitrate):
         else:
             componenthash = inject
             self._id = componenthash["id"]
-            log.debug(pretty(componenthash))
+            log.log(3, pretty(componenthash))
             self._name = componenthash["name"]
             self._product = Product(componenthash["product_id"])
 
@@ -2829,11 +2836,11 @@ class Bugs(Mutable):
             hash = {"bug_id": bug.bug, "bug_system_id": bug.system}
             if isinstance(self._object, TestCase):
                 hash["case_id"] = self.id
-                log.debug(pretty(hash))
+                log.log(3, pretty(hash))
                 self._server.TestCase.attach_bug(hash)
             elif isinstance(self._object, CaseRun):
                 hash["case_run_id"] = self.id
-                log.debug(pretty(hash))
+                log.log(3, pretty(hash))
                 self._server.TestCaseRun.attach_bug(hash)
             # Append the bug to the list
             self._current.append(bug)
@@ -2868,7 +2875,7 @@ class Bugs(Mutable):
         else:
             raise NitrateError("No bug support for {0}".format(
                     self._object.__class__))
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
 
         # Save as a Bug object list
         self._current = [Bug(hash=bug) for bug in hash]
@@ -2956,7 +2963,7 @@ class Tag(Nitrate):
                     log.info("Fetching tag " + self.identifier)
                     hash = self._server.Tag.get_tags({'ids': [self.id]})
                     log.debug("Initializing tag " + self.identifier)
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._name = hash[0]["name"]
                 except IndexError:
                     raise NitrateError(
@@ -2970,7 +2977,7 @@ class Tag(Nitrate):
                     # Problem if name is not found
                     log.debug(u"Initializing tag '{0}'".format(
                             self.name))
-                    log.debug(pretty(hash))
+                    log.log(3, pretty(hash))
                     self._id = hash[0]["id"]
                 except IndexError:
                     raise NitrateError(
@@ -2979,7 +2986,7 @@ class Tag(Nitrate):
             hash = inject
             # Save values
             log.debug("Initializing Tag ID#{0}".format(hash["id"]))
-            log.debug(pretty(hash))
+            log.log(3, pretty(hash))
             self._id = hash["id"]
             self._name = hash["name"]
 
@@ -3404,9 +3411,9 @@ class TestPlan(Mutable):
 
         # Submit
         log.info("Creating a new test plan")
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         inject = self._server.TestPlan.create(hash)
-        log.debug(pretty(inject))
+        log.log(3, pretty(inject))
         try:
             self._id = inject["plan_id"]
         except TypeError:
@@ -3430,7 +3437,7 @@ class TestPlan(Mutable):
         else:
             hash = inject
         log.debug("Initializing test plan " + self.identifier)
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         if not "plan_id" in hash:
             log.error(pretty(hash))
             raise NitrateError("Failed to initialize " + self.identifier)
@@ -3474,7 +3481,7 @@ class TestPlan(Mutable):
         hash["default_product_version"] = self.product.version.id
 
         log.info("Updating test plan " + self.identifier)
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         self._multicall.TestPlan.update(self.id, hash)
 
     def update(self):
@@ -3825,9 +3832,9 @@ class TestRun(Mutable):
 
         # Submit to the server and initialize
         log.info(u"Creating a new test run based on {0}".format(testplan))
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         testrunhash = self._server.TestRun.create(hash)
-        log.debug(pretty(testrunhash))
+        log.log(3, pretty(testrunhash))
         try:
             self._id = testrunhash["run_id"]
         except TypeError:
@@ -3852,7 +3859,7 @@ class TestRun(Mutable):
         else:
             testrunhash = inject
         log.debug("Initializing test run " + self.identifier)
-        log.debug(pretty(testrunhash))
+        log.log(3, pretty(testrunhash))
 
         # Set up attributes
         self._build = Build(testrunhash["build_id"])
@@ -3894,7 +3901,7 @@ class TestRun(Mutable):
         hash["summary"] = self.summary
 
         log.info("Updating test run " + self.identifier)
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         self._multicall.TestRun.update(self.id, hash)
 
     def update(self):
@@ -4224,9 +4231,9 @@ class TestCase(Mutable):
 
         # Submit
         log.info("Creating a new test case")
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         testcasehash = self._server.TestCase.create(hash)
-        log.debug(pretty(testcasehash))
+        log.log(3, pretty(testcasehash))
         try:
             self._id = testcasehash["case_id"]
         except TypeError:
@@ -4251,7 +4258,7 @@ class TestCase(Mutable):
         else:
             testcasehash = inject
         log.debug("Initializing test case " + self.identifier)
-        log.debug(pretty(testcasehash))
+        log.log(3, pretty(testcasehash))
 
         # Set up attributes
         self._arguments = testcasehash["arguments"]
@@ -4323,7 +4330,7 @@ class TestCase(Mutable):
             hash["default_tester"] = self.tester.login
 
         log.info("Updating test case " + self.identifier)
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         self._multicall.TestCase.update(self.id, hash)
 
     def update(self):
@@ -4752,9 +4759,9 @@ class CaseRun(Mutable):
 
         # Submit
         log.info("Creating new case run")
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         caserunhash = self._server.TestCaseRun.create(hash)
-        log.debug(pretty(caserunhash))
+        log.log(3, pretty(caserunhash))
         try:
             self._id = caserunhash["case_run_id"]
         except TypeError:
@@ -4779,7 +4786,7 @@ class CaseRun(Mutable):
         else:
             caserunhash = caseruninject
         log.debug("Initializing case run " + self.identifier)
-        log.debug(pretty(caserunhash))
+        log.log(3, pretty(caserunhash))
 
         # Set up attributes
         self._assignee = User(caserunhash["assignee_id"])
@@ -4820,7 +4827,7 @@ class CaseRun(Mutable):
         if self.notes is None: hash["notes"] = ""
 
         log.info("Updating case run " + self.identifier)
-        log.debug(pretty(hash))
+        log.log(3, pretty(hash))
         self._multicall.TestCaseRun.update(self.id, hash)
 
     def update(self):
