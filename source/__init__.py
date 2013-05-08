@@ -134,7 +134,8 @@ values which can be used:
     NEVER_EXPIRE ... cached objects never expire
 
 Default expiration is set to 30 days for immutable classes and to 1 hour
-for the rest.
+for the rest with the exception of PlanType which is cached for ever and
+CaseRun which is cached never.
 
 
 Search support

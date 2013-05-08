@@ -41,6 +41,22 @@ from xmlrpc import NitrateError, NitrateKerbXmlrpc
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Global Constants
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+NEVER_CACHE = datetime.timedelta(seconds=0)
+NEVER_EXPIRE = datetime.timedelta(days=365000)
+
+CACHE_NONE = 0
+CACHE_CHANGES = 1
+CACHE_OBJECTS = 2
+CACHE_PERSISTENT = 3
+
+COLOR_ON = 1
+COLOR_OFF = 0
+COLOR_AUTO = 2
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Logging
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -154,11 +170,6 @@ class Config(object):
 #  Caching
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-CACHE_NONE = 0
-CACHE_CHANGES = 1
-CACHE_OBJECTS = 2
-CACHE_PERSISTENT = 3
-
 _cache_level = CACHE_OBJECTS
 
 def set_cache_level(level=None):
@@ -202,10 +213,6 @@ set_cache_level()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Coloring
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-COLOR_ON = 1
-COLOR_OFF = 0
-COLOR_AUTO = 2
 
 _color_mode = COLOR_AUTO
 _color = True
@@ -1026,6 +1033,9 @@ class PlanType(Nitrate):
 
     # Local cache of PlanType objects indexed by plan type id
     _cache = {}
+
+    # By default we cache PlanType objects for ever
+    _expiration = NEVER_EXPIRE
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  PlanType Properties
@@ -4587,7 +4597,8 @@ class CaseRun(Mutable):
     the relevant 'testcase' object.
     """
 
-    # Local cache of CaseRun
+    # By default we do not cache CaseRun objects at all
+    _expiration = NEVER_CACHE
     _cache = {}
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4855,9 +4866,6 @@ class CaseRun(Mutable):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Cache Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-NEVER_CACHE = datetime.timedelta(seconds=0)
-NEVER_EXPIRE = datetime.timedelta(days=365000)
 
 class Cache(Nitrate):
     """
