@@ -451,6 +451,7 @@ class Nitrate(object):
     _requests = 0
     _time_cached = None
     _multicall_proxy = None
+    _identifier_width = 0
 
     # Default expiration for immutable objects is 1 month
     _expiration = datetime.timedelta(days=30)
@@ -464,7 +465,8 @@ class Nitrate(object):
     @property
     def identifier(self):
         """ Consistent identifier string. """
-        return "{0}#{1}".format(self._prefix, self._id)
+        return "{0}#{1}".format(
+                self._prefix, str(self._id).rjust(self._identifier_width, "0"))
 
     @property
     def _config(self):
@@ -3208,8 +3210,8 @@ class TestPlan(Mutable):
     properties, the latter as the default iterator.
     """
 
-    # Local cache of TestPlan
     _cache = {}
+    _identifier_width = 5
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Properties
@@ -3589,8 +3591,8 @@ class TestRun(Mutable):
     relevant case runs (which is also the default iterator).
     """
 
-    # Local cache of TestRun
     _cache = {}
+    _identifier_width = 6
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Properties
@@ -3986,8 +3988,8 @@ class TestCase(Mutable):
     properties.
     """
 
-    # Local cache of TestCase
     _cache = {}
+    _identifier_width = 7
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Properties
@@ -4110,7 +4112,7 @@ class TestCase(Mutable):
 
     def __unicode__(self):
         """ Test case id & summary for printing. """
-        return u"{0} - {1}".format(self.identifier.ljust(9), self.summary)
+        return u"{0} - {1}".format(self.identifier, self.summary)
 
     @staticmethod
     def search(**query):
@@ -4597,6 +4599,8 @@ class CaseRun(Mutable):
     the relevant 'testcase' object.
     """
 
+    _identifier_width = 8
+
     # By default we do not cache CaseRun objects at all
     _expiration = NEVER_CACHE
     _cache = {}
@@ -4679,8 +4683,8 @@ class CaseRun(Mutable):
 
     def __unicode__(self):
         """ Case run id, status & summary for printing. """
-        return u"{0} - {1} - {2}".format(self.status.shortname,
-                self.identifier.ljust(9), self.testcase.summary)
+        return u"{0} - {1} - {2}".format(
+                self.status.shortname, self.identifier, self.testcase.summary)
 
     @staticmethod
     def search(**query):
