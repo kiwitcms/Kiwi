@@ -2169,13 +2169,6 @@ class Mutable(Nitrate):
         self._modified = False
         Nitrate.__init__(self, id, prefix)
 
-    def __del__(self):
-        """ Automatically update data upon destruction. """
-        try:
-            self.update()
-        except:
-            log.exception(u"Failed to update {0}".format(self))
-
     def _update(self):
         """ Save data to server (to be implemented by respective class) """
         raise NitrateError("Data update not implemented")
@@ -2185,6 +2178,9 @@ class Mutable(Nitrate):
         if self._modified:
             self._update()
             self._modified = False
+            # Update the cache timestamp when caching enabled
+            if get_cache_level() >= CACHE_OBJECTS:
+                self._time_cached = datetime.datetime.now()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5010,7 +5006,7 @@ class Cache(Nitrate):
 
     @staticmethod
     def clear():
-        """ Clear caches in all classes """
+        """ Completely wipe out caches of all classes """
         for current_class in Cache._classes:
             for current_object in current_class._cache.itervalues():
                 current_object._init()
@@ -5019,12 +5015,21 @@ class Cache(Nitrate):
 
     @staticmethod
     def expire():
-        """ Delete and unlink every expired entry in cache """
+        """
+        Remove all out-of-date objects from the cache
+
+        All expired objects are wiped out as well as those mutable
+        objects which are in modified state (hold different information
+        from what is on the server a thus could cause inconsistencies).
+        """
+
         for current_class in Cache._classes:
             expired = []
             for id, current_object in current_class._cache.iteritems():
-                # Check if object is expired
-                if current_object._is_expired:
+                # Check if object is expired or modified
+                if (current_object._is_expired or
+                        isinstance(current_object, Mutable) and
+                        current_object._modified):
                     # Set all attributes to NitrateNone
                     current_object._init()
                     current_object._time_cached = None
