@@ -2345,6 +2345,25 @@ class Container(Mutable):
         # Save the current state as the original (for future updates)
         self._original = set(self._current)
 
+    def _sleep(self):
+        """ Prepare container items for caching """
+        # When restoring the container from the cache, unpickling failed
+        # because of trying to construct set() of objects which were not
+        # fully rebuild yet (__hash__ failed because of missing self._id).
+        # So we need to convert containers into list of ids before the
+        # cache dump and instantiate the objects back after cache restore.
+        if self._current is NitrateNone: return
+        self._original = [item.id for item in self._original]
+        self._current = [item.id for item in self._current]
+
+    def _wake(self):
+        """ Restore container object after loading from cache """
+        if self._current is NitrateNone: return
+        log.log(5, "{0} container for {1} waking up".format(
+                self.__class__.__name__, self._identifier))
+        self._original = [self._class(id) for id in self._original]
+        self._current = [self._class(id) for id in self._current]
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Component Class
@@ -4880,75 +4899,114 @@ class Cache(Nitrate):
     """
 
     # List of classes with persistent cache support
-    _classes = [Build, CaseComponents, CaseRun, CaseTags, Category, Component,
-            ChildPlans, PlanTags, PlanType, Product, RunTags, Tag, TestCase,
-            TestCases, TestPlan, TestPlans, TestRun, User, Version]
+    _immutable = [Build, Version, Category, Component, PlanType, Product, Tag,
+            User]
+    _mutable = [TestCase, TestPlan, TestRun, CaseRun]
+    _containers = [CaseComponents, CaseTags, PlanTags, RunTags, ChildPlans,
+            TestCases, TestPlans]
+    _classes = _immutable + _mutable + _containers
+
+    @staticmethod
+    def setup():
+        """ Initialize user-defined expiration times from the config """
+        for klass in Cache._classes:
+            # Attempt to read the expiration value from the config
+            try:
+                expiration = getattr(
+                        Nitrate()._config.expiration, klass.__name__.lower())
+            except AttributeError:
+                continue
+            # Convert from seconds, handle special values
+            if isinstance(expiration, int):
+                expiration = datetime.timedelta(seconds=expiration)
+            elif expiration == "NEVER_EXPIRE":
+                expiration = NEVER_EXPIRE
+            elif expiration == "NEVER_CACHE":
+                expiration = NEVER_CACHE
+            # Give warning for invalid expiration values
+            if isinstance(expiration, datetime.timedelta):
+                klass._expiration = expiration
+                log.debug("User defined expiration for {0}: {1}".format(
+                        klass.__name__, expiration))
+            else:
+                log.warn("Invalid expiration time '{0}'".format(expiration))
 
     @staticmethod
     def save():
         """ Save caches to specified file """
 
+        # Nothing to do when persistent caching is off
         if get_cache_level() < CACHE_PERSISTENT:
-            log.debug("Cache not saved (caching level PERSISTENT not set)")
             return
 
-        try:
-            # Open file to cache classes
-            output_file = gzip.open(Nitrate()._config.cache.file, 'wb')
-        except AttributeError:
-            log.debug("Cache not saved (file path not provided)")
-            return
-
-        output = {}
+        # Clear expired items and gather all caches into a single object
         Cache.expire()
+        log.debug("Cache dump stats:\n" + Cache.stats().strip())
+        data = {}
         for current_class in Cache._classes:
-            output[current_class.__name__] = current_class._cache
-        # Dump caches to file
-        pickle.dump(output, output_file)
-        output_file.close()
+            # Put container classes into id-sleep
+            if issubclass(current_class, Container):
+                for container in current_class._cache.itervalues():
+                    container._sleep()
+            data[current_class.__name__] = current_class._cache
+
+        # Dump the cache object into file
+        try:
+            filename = Nitrate()._config.cache.file
+            output_file = gzip.open(filename, 'wb')
+            log.debug("Saving persistent cache into {0}".format(filename))
+            pickle.dump(data, output_file)
+            output_file.close()
+            log.debug("Persistent cache successfully saved")
+        except AttributeError:
+            log.warn("Skipping cache dump (no cache file given in config)")
+            return
+        except IOError, error:
+            log.error("Failed to save persistent cache ({0})".format(error))
 
     @staticmethod
     def load():
         """ Load caches from specified file """
+
+        # Nothing to do when persistent caching is off
         if get_cache_level() < CACHE_PERSISTENT:
-            log.debug("Cache not loaded (caching level PERSISTENT not set)")
             return
 
+        # Load the saved cache from file
         try:
-            # Open file to cache classes
-            input_file = gzip.open(Nitrate()._config.cache.file, 'rb')
+            filename = Nitrate()._config.cache.file
+            log.debug("Loading persistent cache from {0}".format(filename))
+            input_file = gzip.open(filename, 'rb')
+            data = pickle.load(input_file)
+            input_file.close()
         except AttributeError:
-            log.debug("Cache not loaded (file path not provided)")
+            log.warn("Skipping cache load (no cache file given in config)")
             return
-        except IOError:
-            log.warn("Cache not loaded (file does not exist)")
-            return
+        except IOError, error:
+            if error.errno == 2:
+                log.warn("Cache file not found, will create one on exit")
+                return
+            else:
+                log.error("Failed to load the cache ({0})".format(error))
+                log.error("Cache file: {0}".format(filename))
+                log.warn("Going on but switching to CACHE_OBJECTS level")
+                set_cache_level(CACHE_OBJECTS)
+                return
 
-        # Load caches from file
-        data = pickle.load(input_file)
-        for current_class in Cache._classes:
+        # Restore cache for immutable & mutable classes first
+        for current_class in Cache._immutable + Cache._mutable:
+            log.log(5, "Loading cache for {0}".format(current_class.__name__))
             current_class._cache = data[current_class.__name__]
-            # Initialize user-defined expiration from the config
-            try:
-                expiration = getattr(Nitrate()._config.expiration,
-                        current_class.__name__.lower())
-                if isinstance(expiration, int):
-                    expiration = datetime.timedelta(seconds=expiration)
-                elif expiration == "NEVER_EXPIRE":
-                    expiration = NEVER_EXPIRE
-                elif expiration == "NEVER_CACHE":
-                    expiration = NEVER_CACHE
-
-                if isinstance(expiration, datetime.timedelta):
-                    current_class._expiration = expiration
-                else:
-                    log.warn("Invalid expiration time '{0}'".format(
-                            expiration))
-            except AttributeError:
-                pass
-
+        # Containers to be loaded last (to prevent object duplicates)
+        for current_class in Cache._containers:
+            log.log(5, "Loading cache for {0}".format(current_class.__name__))
+            current_class._cache = data[current_class.__name__]
+            # Wake up container objects from the id-sleep
+            for container in current_class._cache.itervalues():
+                container._wake()
+        # Clear expired items and give a short summary for debugging
         Cache.expire()
-        input_file.close()
+        log.debug("Cache restore stats:\n" + Cache.stats().strip())
 
     @staticmethod
     def clear():
@@ -4978,15 +5036,17 @@ class Cache(Nitrate):
     def stats():
         """ Return short stats about cached objects and expiration time """
         result = "class        objects               expiration\n"
-        for current_class in Cache._classes:
+        for current_class in sorted(Cache._classes, key=lambda x: x.__name__):
             result += "{0}{1}{2}\n".format(
                    current_class.__name__.ljust(15),
                    str(len(set(current_class._cache.itervalues()))).rjust(5),
                    str(current_class._expiration).rjust(25))
         return result
 
-# Load persistent cache on module import and save at script exit
+# Setup up expiration times and load cache on module import
+Cache.setup()
 Cache.load()
+# Save the cache at script exit
 atexit.register(Cache.save)
 
 
