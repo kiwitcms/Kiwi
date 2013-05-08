@@ -409,13 +409,22 @@ def ascii(text):
 
 def multicall_start():
     """ Enter MultiCall mode and queue following xmlrpc calls """
+    log.info("Starting multicall session, gathering updates...")
     Nitrate._multicall_proxy = xmlrpclib.MultiCall(Nitrate()._server)
 
 def multicall_end():
     """ Execute xmlrpc call queue and exit MultiCall mode """
+    log.info("Ending multicall session, sending to the server...")
     response = Nitrate._multicall_proxy()
+    log.log(3, "Server response:")
+    entries = 0
+    for entry in response:
+        log.log(3, pretty(entry))
+        entries += 1
     Nitrate._multicall_proxy = None
     Nitrate._requests += 1
+    log.info("Multicall session finished, {0} completed".format(
+            listed(entries, "update")))
     return response
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5047,6 +5056,28 @@ class Cache(Nitrate):
                     expired.append(id)
             for id in expired:
                 del current_class._cache[id]
+
+    @staticmethod
+    def update():
+        """
+        Update all modified mutable objects in the cache
+
+        This method uses MultiCall to perform the update which can
+        significantly speed up things when compared to updating each
+        individual object separately.
+        """
+        for klass in Cache._mutable + Cache._containers:
+            modified = [mutable for mutable in klass._cache.itervalues()
+                    if mutable._modified]
+            if not modified:
+                continue
+            log.info("Found {0} in the {1} cache, updating...".format(
+                    listed(modified, "modified object"),
+                    klass.__name__))
+            multicall_start()
+            for mutable in modified:
+                mutable.update()
+            multicall_end()
 
     @staticmethod
     def stats():
