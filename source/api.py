@@ -410,6 +410,11 @@ def ascii(text):
     if not isinstance(text, unicode): text = unicode(text)
     return unicodedata.normalize('NFKD', text).encode('ascii','ignore')
 
+def header(text, width=70):
+    """ Print a simple header (text with tilde underline) """
+    return "\n{0}\n{1}".format(text, width * "~")
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  MultiCall methods
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

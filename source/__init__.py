@@ -232,7 +232,7 @@ __all__ = """
         TestCase CaseStatus
         CaseRun Status Cache
 
-        ascii color listed pretty
+        ascii color listed pretty header
         log info setLogLevel
         setCacheLevel CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_PERSISTENT
         NEVER_EXPIRE NEVER_CACHE
