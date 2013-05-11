@@ -377,6 +377,8 @@ def listed(items, singular=None, plural=None, max=None, quote=""):
     if singular is not None and plural is None:
         if singular.endswith("y"):
             plural = singular[:-1] + "ies"
+        elif singular.endswith("s"):
+            plural = singular + "es"
         else:
             plural = singular + "s"
     # Convert to strings and optionally quote each item
