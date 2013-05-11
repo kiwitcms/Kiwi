@@ -5059,9 +5059,19 @@ class Cache(Nitrate):
         log.debug("Cache restore stats:\n" + Cache.stats().strip())
 
     @staticmethod
-    def clear():
-        """ Completely wipe out caches of all classes """
+    def clear(classes=None):
+        """
+        Completely wipe out cache of all (or selected) classes
+
+        Accepts class or a list of classes.
+        """
+        # Convert single class into a list
+        if isinstance(classes, type):
+            classes = [classes]
+        # For each class re-initialize objects and remove from index
         for current_class in Cache._classes:
+            if classes is not None and (current_class not in classes):
+                continue
             for current_object in current_class._cache.itervalues():
                 current_object._init()
                 current_object._fetched = None
