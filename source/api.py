@@ -5166,6 +5166,7 @@ else:
 
     # Walk through all module classes
     import __main__
+    results = {}
     for name in dir(__main__):
         object = getattr(__main__, name)
         # Pick Nitrate classes only
@@ -5184,10 +5185,22 @@ else:
                 if not suite:
                     continue
                 suite = unittest.TestSuite(suite)
-                print "\n{0}\n{1}".format(object.__name__, 70 * "~")
+                print header(object.__name__)
                 log_level = get_log_level()
-                unittest.TextTestRunner(verbosity=2).run(suite)
+                results[object.__name__] = unittest.TextTestRunner(
+                            verbosity=2).run(suite)
                 set_log_level(log_level)
 
+    # Check for failed tests and give a short test summary
+    failures = sum([len(result.failures) for result in results.itervalues()])
+    testsrun = sum([result.testsRun for result in results.itervalues()])
+    print header("Summary")
+    print "{0} tested".format(listed(results, "class"))
+    print "{0} passed".format(listed(testsrun - failures, "test"))
+    print "{0} failed".format(listed(failures, "test"))
+    if failures:
+        print "Failures in: {0}".format(listed([name
+                for name, result in results.iteritems()
+                if not result.wasSuccessful()]))
     # Save cache
     Cache.save()
