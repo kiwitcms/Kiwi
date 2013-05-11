@@ -4963,7 +4963,7 @@ class Cache(Nitrate):
                         "(cache filename not found in the config)")
 
         # Initialize user-defined expiration times from the config
-        for klass in Cache._classes:
+        for klass in Cache._classes + [Nitrate, Mutable, Container]:
             try:
                 expiration = getattr(
                         Nitrate()._config.expiration, klass.__name__.lower())
