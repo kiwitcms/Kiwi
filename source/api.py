@@ -5164,7 +5164,6 @@ else:
     # Use temporary cache file for testing
     temporary_cache = tempfile.NamedTemporaryFile()
     Cache.setup(temporary_cache.name)
-    Cache.load()
 
     # Parse options
     parser = optparse.OptionParser(
