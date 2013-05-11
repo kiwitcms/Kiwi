@@ -481,6 +481,9 @@ class Nitrate(object):
     # Default expiration for immutable objects is 1 month
     _expiration = datetime.timedelta(days=30)
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = []
+
     _connection = None
     _settings = None
     _requests = 0
@@ -652,8 +655,12 @@ class Nitrate(object):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _init(self):
-        """ Set all object attributes to NitrateNone """
-        raise NitrateError("To be implemented by respective class")
+        """ Set all object attributes to NitrateNone, reset fetch timestamp """
+        # Each class is expected to have a list of attributes defined
+        for attribute in self._attributes:
+            setattr(self, "_" + attribute, NitrateNone)
+        # And reset the fetch timestamp
+        self._fetched = None
 
     def _fetch(self):
         """ Fetch object data from the server. """
@@ -728,6 +735,9 @@ class Build(Nitrate):
     # Local cache of Build
     _cache = {}
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name", "product"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Build Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -799,10 +809,6 @@ class Build(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Build Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = self._product = NitrateNone
 
     def _fetch(self, inject=None):
         """ Get the missing build data. """
@@ -886,6 +892,9 @@ class Category(Nitrate):
     # Local cache of Category objects indexed by category id
     _cache = {}
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name", "product", "description"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Category Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -962,10 +971,6 @@ class Category(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Category Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = self._product = self._description = NitrateNone
 
     def _fetch(self, inject=None):
         """ Get the missing category data. """
@@ -1078,6 +1083,9 @@ class PlanType(Nitrate):
     # By default we cache PlanType objects for ever
     _expiration = NEVER_EXPIRE
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  PlanType Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1141,10 +1149,6 @@ class PlanType(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  PlanType Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = NitrateNone
 
     def _fetch(self, inject=None):
         """ Get the missing test plan type data """
@@ -1345,6 +1349,9 @@ class Product(Nitrate):
     # Local cache of Product
     _cache = {}
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name", "version"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Product Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1440,10 +1447,6 @@ class Product(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Product Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = self._version = NitrateNone
 
     def _fetch(self, inject=None):
         """ Fetch product data from the server. """
@@ -1775,6 +1778,9 @@ class User(Nitrate):
     # Local cache of User objects indexed by user id
     _cache = {}
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name", "login", "email"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1847,10 +1853,6 @@ class User(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = self._login = self._email = NitrateNone
 
     @staticmethod
     def _parse(id, login, email):
@@ -2037,6 +2039,9 @@ class Version(Nitrate):
     # Local cache of Version
     _cache = {}
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name", "product"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Version Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2108,10 +2113,6 @@ class Version(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Version Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = self._product = NitrateNone
 
     def _fetch(self, inject=None):
         """ Fetch version data from the server. """
@@ -2234,6 +2235,9 @@ class Container(Mutable):
     actual update to the server (implemented by respective class).
     """
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["current", "original"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Container Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2301,11 +2305,6 @@ class Container(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Container Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._current = NitrateNone
-        self._original = NitrateNone
 
     def _fetch(self, inset=None):
         """ Save cache timestamp and initialize from inset if given """
@@ -2412,6 +2411,9 @@ class Component(Nitrate):
     # Local cache of Component objects indexed by component id
     _cache = {}
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name", "product"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Component Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2485,10 +2487,6 @@ class Component(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Component Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = self._product = NitrateNone
 
     def _fetch(self, inject=None):
         """ Get the missing component data. """
@@ -2698,6 +2696,9 @@ class CaseComponents(Container):
 class Bug(Nitrate):
     """ Bug related to a test case or a case run. """
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["bug", "system", "testcase", "caserun"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Bug Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2774,10 +2775,6 @@ class Bug(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Bug Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self.bug = self.system = self.testcase = self.caserun = NitrateNone
 
     def _fetch(self):
         """ Fetch bug info from the server. """
@@ -2916,6 +2913,9 @@ class Bugs(Mutable):
 class Tag(Nitrate):
     """ Tag Class """
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["name"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Tag Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2972,10 +2972,6 @@ class Tag(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Tag Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        self._name = NitrateNone
 
     def _fetch(self, inject=None):
         """ Fetch tag data from the server. """
@@ -3269,6 +3265,10 @@ class TestPlan(Mutable):
     _cache = {}
     _identifier_width = 5
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["author", "children", "name", "parent", "product",
+            "status", "tags", "testcases", "testruns", "type"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3384,12 +3384,6 @@ class TestPlan(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        for attr in """author children name parent product status tags
-                testcases testruns type""".split():
-            setattr(self, "_" + attr, NitrateNone)
 
     def _create(self, name, product, version, type, **kwargs):
 
@@ -3650,6 +3644,11 @@ class TestRun(Mutable):
     _cache = {}
     _identifier_width = 6
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = [ "build", "caseruns", "errata", "manager", "notes",
+            "product", "status", "summary", "tags", "tester", "testplan",
+            "time"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3790,12 +3789,6 @@ class TestRun(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        for attr in """build caseruns errata manager notes product
-                status summary tags tester testplan time""".split():
-            setattr(self, "_" + attr, NitrateNone)
 
     def _create(self, testplan, product=None, version=None, build=None,
             summary=None, notes=None, manager=None, tester=None, tags=None,
@@ -4047,6 +4040,12 @@ class TestCase(Mutable):
     _cache = {}
     _identifier_width = 7
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["arguments", "author", "automated", "autoproposed", "bugs",
+            "category", "components", "link", "manual", "notes", "plans",
+            "priority", "product", "script", "sortkey", "status", "summary",
+            "tags", "tester", "testplans", "time"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4182,13 +4181,6 @@ class TestCase(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        for attr in """arguments author automated autoproposed bugs category
-                components link manual notes plans priority product script
-                sortkey status summary tags tester testplans time""".split():
-            setattr(self, "_" + attr, NitrateNone)
 
     def _create(self, summary, category, product, **kwargs):
         """ Create a new test case. """
@@ -4664,6 +4656,10 @@ class CaseRun(Mutable):
     _expiration = NEVER_CACHE
     _cache = {}
 
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["assignee", "bugs", "build", "notes", "sortkey", "status",
+            "testcase", "testrun"]
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Case Run Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4754,12 +4750,6 @@ class CaseRun(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Case Run Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _init(self):
-        """ Set all object attributes to NitrateNone """
-        for attr in """assignee bugs build notes sortkey status testcase
-                testrun""".split():
-            setattr(self, "_" + attr, NitrateNone)
 
     def _create(self, testcase, testrun, **kwargs):
         """ Create a new case run. """
@@ -5073,8 +5063,8 @@ class Cache(Nitrate):
             if classes is not None and (current_class not in classes):
                 continue
             for current_object in current_class._cache.itervalues():
+                # Reset the object to the initial state
                 current_object._init()
-                current_object._fetched = None
             current_class._cache = {}
 
     @staticmethod
@@ -5094,9 +5084,8 @@ class Cache(Nitrate):
                 if (current_object._is_expired or
                         isinstance(current_object, Mutable) and
                         current_object._modified):
-                    # Set all attributes to NitrateNone
+                    # Reset the object to the initial state
                     current_object._init()
-                    current_object._fetched = None
                     expired.append(id)
             for id in expired:
                 del current_class._cache[id]
