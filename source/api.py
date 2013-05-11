@@ -5202,11 +5202,13 @@ else:
 
     # Check for failed tests and give a short test summary
     failures = sum([len(result.failures) for result in results.itervalues()])
+    errors = sum([len(result.errors) for result in results.itervalues()])
     testsrun = sum([result.testsRun for result in results.itervalues()])
     print header("Summary")
     print "{0} tested".format(listed(results, "class"))
-    print "{0} passed".format(listed(testsrun - failures, "test"))
+    print "{0} passed".format(listed(testsrun - failures - errors, "test"))
     print "{0} failed".format(listed(failures, "test"))
+    print "{0} found".format(listed(errors, "error"))
     if failures:
         print "Failures in: {0}".format(listed([name
                 for name, result in results.iteritems()
