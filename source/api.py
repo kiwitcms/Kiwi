@@ -175,50 +175,6 @@ class Config(object):
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Caching
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-_cache_level = CACHE_OBJECTS
-
-def set_cache_level(level=None):
-    """
-    Set the caching level
-
-    If the level parameter is not specified environment variable CACHE
-    and configuration section [cache] are inspected. There are four cache
-    levels available. See module documentation for detailed description.
-    """
-
-    global _cache_level
-    if level is None:
-        # Attempt to detect the level from the environment
-        try:
-            _cache_level = int(os.environ["CACHE"])
-        except StandardError:
-            # Inspect the [cache] sectin of the config file
-            try:
-                _cache_level = Config().cache.level
-            except AttributeError:
-                _cache_level = CACHE_OBJECTS
-    elif level >= 0 and level <= 3:
-        _cache_level = level
-    else:
-        raise NitrateError("Invalid cache level '{0}'".format(level))
-    log.debug("Caching on level {0}".format(_cache_level))
-
-def get_cache_level():
-    """ Get the current caching level """
-    return _cache_level
-
-def setCacheLevel(level=None):
-    """ Deprecated, use set_cache_level() instead """
-    log.warn("Deprecated call setCacheLevel(), use set_cache_level() instead")
-    set_cache_level(level)
-
-set_cache_level()
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Coloring
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -302,6 +258,50 @@ def setColorMode(mode=None):
     set_color_mode(mode)
 
 set_color_mode()
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Caching
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+_cache_level = CACHE_OBJECTS
+
+def set_cache_level(level=None):
+    """
+    Set the caching level
+
+    If the level parameter is not specified environment variable CACHE
+    and configuration section [cache] are inspected. There are four cache
+    levels available. See module documentation for detailed description.
+    """
+
+    global _cache_level
+    if level is None:
+        # Attempt to detect the level from the environment
+        try:
+            _cache_level = int(os.environ["CACHE"])
+        except StandardError:
+            # Inspect the [cache] sectin of the config file
+            try:
+                _cache_level = Config().cache.level
+            except AttributeError:
+                _cache_level = CACHE_OBJECTS
+    elif level >= 0 and level <= 3:
+        _cache_level = level
+    else:
+        raise NitrateError("Invalid cache level '{0}'".format(level))
+    log.debug("Caching on level {0}".format(_cache_level))
+
+def get_cache_level():
+    """ Get the current caching level """
+    return _cache_level
+
+def setCacheLevel(level=None):
+    """ Deprecated, use set_cache_level() instead """
+    log.warn("Deprecated call setCacheLevel(), use set_cache_level() instead")
+    set_cache_level(level)
+
+set_cache_level()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
