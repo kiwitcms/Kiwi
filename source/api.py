@@ -99,7 +99,7 @@ def set_log_level(level=None):
             _log_level = mapping[int(os.environ["DEBUG"])]
         except StandardError:
             _log_level = log.WARN
-    log.basicConfig(format="[%(levelname)s] %(message)s")
+    log.basicConfig(format="%(levelname)s %(message)s")
     log.getLogger().setLevel(_log_level)
 
 def get_log_level():
@@ -225,6 +225,29 @@ set_cache_level()
 _color_mode = COLOR_AUTO
 _color = True
 
+def color(text, color=None, background=None, light=False):
+    """ Return text in desired color if coloring enabled """
+
+    colors = {"black": 30, "red": 31, "green": 32, "yellow": 33,
+            "blue": 34, "magenta": 35, "cyan": 36, "white": 37}
+
+    # Prepare colors (strip 'light' if present in color)
+    if color and color.startswith("light"):
+        light = True
+        color = color[5:]
+    color = color and ";{0}".format(colors[color]) or ""
+    background = background and ";{0}".format(colors[background] + 10) or ""
+    light = light and 1 or 0
+
+    # Starting and finishing sequence
+    start = "\033[{0}{1}{2}m".format(light , color, background)
+    finish = "\033[1;m"
+
+    if _color:
+        return "".join([start, text, finish])
+    else:
+        return text
+
 def set_color_mode(mode=None):
     """
     Set the coloring mode
@@ -256,6 +279,17 @@ def set_color_mode(mode=None):
         _color = sys.stdout.isatty()
     else:
         _color = mode == 1
+
+    # Color log level names
+    template = " {0} " if _color else "[{0}]"
+    log.addLevelName(log.ERROR,
+            color(template.format("ERROR"), "lightwhite", "red"))
+    log.addLevelName(log.WARN,
+            color(template.format("WARN"), "lightwhite", "yellow"))
+    log.addLevelName(log.INFO,
+            color(template.format("INFO"), "lightwhite", "blue"))
+    log.addLevelName(log.DEBUG,
+            color(template.format("DEBUG"), "lightwhite", "green"))
     log.debug("Coloring {0}".format(_color and "enabled" or "disabled"))
 
 def get_color_mode():
@@ -266,29 +300,6 @@ def setColorMode(mode=None):
     """ Deprecated, use set_color_mode() instead """
     log.warn("Deprecated call setColorMode(), use set_color_mode() instead")
     set_color_mode(mode)
-
-def color(text, color=None, background=None, light=False):
-    """ Return text in desired color if coloring enabled """
-
-    colors = {"black": 30, "red": 31, "green": 32, "yellow": 33,
-            "blue": 34, "magenta": 35, "cyan": 36, "white": 37}
-
-    # Prepare colors (strip 'light' if present in color)
-    if color and color.startswith("light"):
-        light = True
-        color = color[5:]
-    color = color and ";{0}".format(colors[color]) or ""
-    background = background and ";{0}".format(colors[background] + 10) or ""
-    light = light and 1 or 0
-
-    # Starting and finishing sequence
-    start = "\033[{0}{1}{2}m".format(light , color, background)
-    finish = "\033[1;m"
-
-    if _color:
-        return "".join([start, text, finish])
-    else:
-        return text
 
 set_color_mode()
 
