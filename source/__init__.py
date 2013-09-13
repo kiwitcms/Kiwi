@@ -35,6 +35,14 @@ file ~/.nitrate has to be provided in the user home directory:
     [nitrate]
     url = https://nitrate.server/xmlrpc/
 
+In that case Kerberos will be used for authentication. If username and
+password are provided plain authentication will be used instead. E.g.
+
+    [nitrate]
+    url = https://nitrate.server/xmlrpc/
+    username = login
+    password = secret
+
 It's also possible to provide system-wide config in /etc/nitrate.conf.
 
 

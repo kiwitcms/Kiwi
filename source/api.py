@@ -38,7 +38,7 @@ import unicodedata
 import ConfigParser
 import logging as log
 from pprint import pformat as pretty
-from xmlrpc import NitrateError, NitrateKerbXmlrpc
+from xmlrpc import NitrateError, NitrateKerbXmlrpc, NitrateXmlrpc
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -530,9 +530,18 @@ class Nitrate(object):
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
-            log.info(u"Contacting server {0}".format(self._config.nitrate.url))
-            Nitrate._connection = NitrateKerbXmlrpc(
-                    self._config.nitrate.url).server
+            log.debug(u"Contacting server {0}".format(
+                    self._config.nitrate.url))
+            # Plain authentication if username & password given
+            try:
+                Nitrate._connection = NitrateXmlrpc(
+                        self._config.nitrate.username,
+                        self._config.nitrate.password,
+                        self._config.nitrate.url).server
+            # Kerberos otherwise
+            except AttributeError:
+                Nitrate._connection = NitrateKerbXmlrpc(
+                        self._config.nitrate.url).server
 
         # Return existing connection
         Nitrate._requests += 1
@@ -5154,9 +5163,9 @@ if __name__ != "__main__":
 else:
     """ Perform the module self-test if run directly. """
 
-    # Override the server url with the testing instance
+    # Override the server config with the testing instance
     try:
-        Nitrate()._config.nitrate.url = Nitrate()._config.test.url
+        Nitrate()._config.nitrate = Nitrate()._config.test
         print "Testing against {0}".format(Nitrate()._config.nitrate.url)
     except AttributeError:
         raise NitrateError("No test server provided in the config file")
