@@ -65,8 +65,8 @@ COLOR_AUTO = 2
 #
 #  log.info(msg) ..... high-level info, useful for tracking the progress
 #  log.debug(msg) .... low-level info with details useful for investigation
-#  log.log(5, msg) ... stuff related to caching and object initialization
-#  log.log(3, msg) ... data communicated to or from the xmlrpc server
+#  log.cache(msg) .... stuff related to caching and object initialization
+#  log.xmlrpc(msg) ... data communicated to or from the xmlrpc server
 
 _log_level = log.WARN
 
@@ -246,6 +246,10 @@ def set_color_mode(mode=None):
             color(template.format("INFO"), "lightwhite", "blue"))
     log.addLevelName(log.DEBUG,
             color(template.format("DEBUG"), "lightwhite", "green"))
+    log.addLevelName(5,
+            color(template.format("CACHE"), "lightwhite", "cyan"))
+    log.addLevelName(3,
+            color(template.format("XMLRPC"), "lightwhite", "magenta"))
     log.debug("Coloring {0}".format(_color and "enabled" or "disabled"))
 
 def get_color_mode():
@@ -258,6 +262,10 @@ def setColorMode(mode=None):
     set_color_mode(mode)
 
 set_color_mode()
+
+# Additional logging methods for cache and xmlrpc
+log.cache = lambda message: log.log(5, message)
+log.xmlrpc = lambda message: log.log(3, message)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -441,10 +449,10 @@ def multicall_end():
     """ Execute xmlrpc call queue and exit MultiCall mode """
     log.info("Ending multicall session, sending to the server...")
     response = Nitrate._multicall_proxy()
-    log.log(3, "Server response:")
+    log.xmlrpc("Server response:")
     entries = 0
     for entry in response:
-        log.log(3, pretty(entry))
+        log.xmlrpc(pretty(entry))
         entries += 1
     Nitrate._multicall_proxy = None
     Nitrate._requests += 1
@@ -1925,7 +1933,7 @@ class User(Nitrate):
 
         # Save values
         log.debug("Initializing user UID#{0}".format(inject["id"]))
-        log.log(3, pretty(inject))
+        log.xmlrpc(pretty(inject))
         self._id = inject["id"]
         self._login = inject["username"]
         self._email = inject["email"]
@@ -2414,8 +2422,9 @@ class Container(Mutable):
 
     def _wake(self):
         """ Restore container object after loading from cache """
+        # See _sleep() method above for explanation why this is necessary
         if self._current is NitrateNone: return
-        log.log(5, "{0} container for {1} waking up".format(
+        log.cache("Waking up {0} for {1}".format(
                 self.__class__.__name__, self._identifier))
         self._original = [self._class(id) for id in self._original]
         self._current = [self._class(id) for id in self._current]
@@ -2877,11 +2886,11 @@ class Bugs(Mutable):
             hash = {"bug_id": bug.bug, "bug_system_id": bug.system}
             if isinstance(self._object, TestCase):
                 hash["case_id"] = self.id
-                log.log(3, pretty(hash))
+                log.xmlrpc(pretty(hash))
                 self._server.TestCase.attach_bug(hash)
             elif isinstance(self._object, CaseRun):
                 hash["case_run_id"] = self.id
-                log.log(3, pretty(hash))
+                log.xmlrpc(pretty(hash))
                 self._server.TestCaseRun.attach_bug(hash)
             # Append the bug to the list
             self._current.append(bug)
@@ -2916,7 +2925,7 @@ class Bugs(Mutable):
         else:
             raise NitrateError("No bug support for {0}".format(
                     self._object.__class__))
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
 
         # Save as a Bug object list
         self._current = [Bug(hash=bug) for bug in hash]
@@ -3449,9 +3458,9 @@ class TestPlan(Mutable):
 
         # Submit
         log.info("Creating a new test plan")
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
         inject = self._server.TestPlan.create(hash)
-        log.log(3, pretty(inject))
+        log.xmlrpc(pretty(inject))
         try:
             self._id = inject["plan_id"]
         except TypeError:
@@ -3519,7 +3528,7 @@ class TestPlan(Mutable):
         hash["default_product_version"] = self.product.version.id
 
         log.info("Updating test plan " + self.identifier)
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
         self._multicall.TestPlan.update(self.id, hash)
 
     def update(self):
@@ -3869,9 +3878,9 @@ class TestRun(Mutable):
 
         # Submit to the server and initialize
         log.info(u"Creating a new test run based on {0}".format(testplan))
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
         testrunhash = self._server.TestRun.create(hash)
-        log.log(3, pretty(testrunhash))
+        log.xmlrpc(pretty(testrunhash))
         try:
             self._id = testrunhash["run_id"]
         except TypeError:
@@ -3938,7 +3947,7 @@ class TestRun(Mutable):
         hash["summary"] = self.summary
 
         log.info("Updating test run " + self.identifier)
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
         self._multicall.TestRun.update(self.id, hash)
 
     def update(self):
@@ -4270,9 +4279,9 @@ class TestCase(Mutable):
 
         # Submit
         log.info("Creating a new test case")
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
         testcasehash = self._server.TestCase.create(hash)
-        log.log(3, pretty(testcasehash))
+        log.xmlrpc(pretty(testcasehash))
         try:
             self._id = testcasehash["case_id"]
         except TypeError:
@@ -4369,7 +4378,7 @@ class TestCase(Mutable):
             hash["default_tester"] = self.tester.login
 
         log.info("Updating test case " + self.identifier)
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
         self._multicall.TestCase.update(self.id, hash)
 
     def update(self):
@@ -4864,7 +4873,7 @@ class CaseRun(Mutable):
         if self.notes is None: hash["notes"] = ""
 
         log.info("Updating case run " + self.identifier)
-        log.log(3, pretty(hash))
+        log.xmlrpc(pretty(hash))
         self._multicall.TestCaseRun.update(self.id, hash)
 
     def update(self):
@@ -5055,11 +5064,11 @@ class Cache(Nitrate):
 
         # Restore cache for immutable & mutable classes first
         for current_class in Cache._immutable + Cache._mutable:
-            log.log(5, "Loading cache for {0}".format(current_class.__name__))
+            log.cache("Loading cache for {0}".format(current_class.__name__))
             current_class._cache = data[current_class.__name__]
         # Containers to be loaded last (to prevent object duplicates)
         for current_class in Cache._containers:
-            log.log(5, "Loading cache for {0}".format(current_class.__name__))
+            log.cache("Loading cache for {0}".format(current_class.__name__))
             current_class._cache = data[current_class.__name__]
             # Wake up container objects from the id-sleep
             for container in current_class._cache.itervalues():
