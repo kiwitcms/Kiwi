@@ -233,7 +233,7 @@ from api import *
 
 __all__ = """
         Nitrate Mutable
-        Product Version Build
+        Product Version Build Component
         Category Priority User Bug Tag
         TestPlan PlanType PlanStatus
         TestRun RunStatus
