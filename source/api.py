@@ -557,14 +557,14 @@ class Nitrate(object):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
         # ID check
         if isinstance(id, int) or isinstance(id, basestring):
-            return cls._cache[id]
+            return cls._cache[id], id
 
-        # Check dictionary (only ID so far)
+        # Check injet (initial object dictionary) for id
         if isinstance(id, dict):
-            return cls._cache[id['id']]
+            return cls._cache[id['id']], id["id"]
 
         raise KeyError
 
@@ -581,7 +581,7 @@ class Nitrate(object):
         if isinstance(id, Nitrate):
             return id._fetched is not None
         # Check for presence in cache, make sure the object is fetched
-        if isinstance(id, int):
+        if isinstance(id, int) or isinstance(id, basestring):
             return id in cls._cache and cls._cache[id]._fetched is not None
         # Run recursively for each given id/object if list given
         if isinstance(id, list) or isinstance(id, set):
@@ -594,6 +594,32 @@ class Nitrate(object):
         """ Check if cached object has expired """
         return self._fetched is None or (
                 datetime.datetime.now() - self._fetched) > self._expiration
+
+    def _is_initialized(self, id_or_inject, **kwargs):
+        """
+        Check whether the object is initialized, handle names & injects
+
+        Takes object id or inject (initial object dict), detects which
+        of them was given, checks whether the object has already been
+        initialized and returns tuple: (id, name, inject, initialized).
+        """
+        id = name = inject = None
+        # Initial object dict
+        if isinstance(id_or_inject, dict):
+            inject = id_or_inject
+        # Object identified by name
+        elif isinstance(id_or_inject, basestring):
+            name =  id_or_inject
+        # Regular object id
+        else:
+            id = id_or_inject
+        # Initialized objects have the self._id attribute set
+        if self._id is None:
+            return id, name, inject, False
+        # If inject given, fetch data from it (unless already fetched)
+        if inject is not None and not self._fetched:
+            self._fetch(inject, **kwargs)
+        return id, name, inject, True
 
     @property
     def _multicall(self):
@@ -612,32 +638,38 @@ class Nitrate(object):
     #  Nitrate Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __new__(cls, id=None, **kwargs):
+    def __new__(cls, id=None, *args, **kwargs):
         """ Create a new object, handle caching if enabled. """
 
         if _cache_level < CACHE_OBJECTS or cls not in Cache._classes:
             return super(Nitrate, cls).__new__(cls)
 
-        # Search the cache for ID
+        # Look up cached object by id (or other arguments in kwargs)
         try:
-            temp = cls._cache_lookup(id, **kwargs)
-            log.log(5, "Using cached object {0} {1}".format(
-                    cls.__name__, temp.id))
-            return temp
+            # If found, we get instance and key by which it was found
+            instance, key = cls._cache_lookup(id, **kwargs)
+            if isinstance(key, int):
+                log.cache("Using cached {0} ID#{1}".format(cls.__name__, key))
+            else:
+                log.cache("Using cached {0} '{1}'".format(cls.__name__, key))
+            return instance
+        # Object not cached yet, create a new one and cache it
         except KeyError:
-            # Object not cached yet, create a new one and cache it
             new = super(Nitrate, cls).__new__(cls)
             if isinstance(id, int):
-                log.log(5, "Caching {0} {1}".format(cls.__name__, id))
+                log.cache("Caching {0} ID#{1}".format(cls.__name__, id))
                 cls._cache[id] = new
-            else:
-                log.log(5, "Caching {0} object".format(cls.__name__))
+            elif isinstance(id, basestring) or "name" in kwargs:
+                log.cache("Caching {0} '{1}'".format(
+                        cls.__name__, (id or kwargs.get("name"))))
             return new
 
     def __init__(self, id=None, prefix="ID"):
         """ Initialize the object id, prefix and internal attributes. """
-        # Set up prefix and internal attributes
+        # Set up the prefix
         self._prefix = prefix
+        # Initialize internal attributes and reset the fetch timestamp
+        self._init()
 
         # Check and set the object id
         if id is None:
@@ -675,8 +707,15 @@ class Nitrate(object):
         return self.id
 
     def __repr__(self):
-        """ Provide Object(id) representation. """
-        return "{0}({1})".format(self.__class__.__name__, self.id)
+        """ Object(id) or Object('name') representation. """
+        # Use the object id by default, name (if available) otherwise
+        if self._id is not NitrateNone:
+            id = self._id
+        elif getattr(self, "_name", NitrateNone) is not NitrateNone:
+            id = "'{0}'".format(self._name)
+        else:
+            id = "<unknown>"
+        return "{0}({1})".format(self.__class__.__name__, id)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Nitrate Methods
@@ -696,6 +735,17 @@ class Nitrate(object):
         # Here we just save the timestamp when data were fetched.
         self._fetched = datetime.datetime.now()
 
+    def _index(self, *keys):
+        """ Index self into the class cache if caching enabled """
+        # Skip indexing completely when caching off
+        if get_cache_level < CACHE_OBJECTS:
+            return
+        # Index by ID
+        if self._id is not NitrateNone:
+            self.__class__._cache[self._id] = self
+        # Index each given key
+        for key in keys:
+            self.__class__._cache[key] = self
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Utils Class
@@ -777,15 +827,15 @@ class Build(Nitrate):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
 
         # Name and product check
-        if 'product' in kwargs and 'build' in kwargs:
+        if "product" in kwargs and ("name" in kwargs or "build" in kwargs):
             product = kwargs.get("product")
             if isinstance(product, Product):
                 product = product.name
-            name = kwargs.get("build")
-            return cls._cache[name+')('+product]
+            name = kwargs.get("name", kwargs.get("build"))
+            return cls._cache["{0}---in---{1}".format(name, product)], name
 
         return super(Build, cls)._cache_lookup(id, **kwargs)
 
@@ -793,42 +843,36 @@ class Build(Nitrate):
     #  Build Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, product=None, build=None):
+    def __init__(self, id=None, name=None, product=None, **kwargs):
         """ Initialize by build id or product and build name. """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
+        # Backward compatibility for 'build' argument (now called 'name')
+        name = name if name is not None else kwargs.get("build")
 
-        self._init()
-        # Initialized by dictionary
-        if isinstance(id, dict):
-            inject = id
-            id = None
-        else:
-            inject = None
-        # Initialized by id
-        if id is not None:
-            self._name = self._product = NitrateNone
-        # Initialized by product and build
-        elif product is not None and build is not None:
+        # Initialize (unless already done)
+        id, ignore, inject, initialized = self._is_initialized(id or name)
+        if initialized: return
+        Nitrate.__init__(self, id)
+
+        # If inject given, fetch build data from it
+        if inject:
+            self._fetch(inject)
+        # Initialized by build name and product
+        elif name is not None and product is not None:
+            self._name = name
             # Detect product format
             if isinstance(product, Product):
                 self._product = product
-            elif isinstance(product, basestring):
-                self._product = Product(name=product)
             else:
-                self._product = Product(id=product)
-            self._name = build
-        elif inject is not None:
-            pass
-        else:
-            raise NitrateError("Need either build id or both product "
-                    "and build name to initialize the Build object.")
-        Nitrate.__init__(self, id)
-        # Create entries in cache that reference the same object
-        if inject is not None or get_cache_level() >= CACHE_OBJECTS:
-            self._fetch(inject)
+                self._product = Product(product)
+            # Index by name-product (only when the product name is known)
+            if self.product._name is not NitrateNone:
+                self._index("{0}---in---{1}".format(
+                        self.name, self.product.name))
+        # Otherwise just check that the id was provided
+        elif not id:
+            raise NitrateError("Need either build id or both build name "
+                    "and product to initialize the Build object.")
 
     def __unicode__(self):
         """ Build name for printing. """
@@ -841,44 +885,40 @@ class Build(Nitrate):
     def _fetch(self, inject=None):
         """ Get the missing build data. """
         Nitrate._fetch(self)
-        if inject is None:
-            # Search by id
-            if self._id is not NitrateNone:
-                try:
-                    log.info("Fetching build " + self.identifier)
-                    hash = self._server.Build.get(self.id)
-                    log.debug("Initializing build " + self.identifier)
-                    log.log(3, pretty(hash))
-                    self._name = hash["name"]
-                    self._product = Product(hash["product_id"])
-                except LookupError:
-                    raise NitrateError(
-                            "Cannot find build for " + self.identifier)
-            # Search by product and name
-            else:
-                try:
-                    log.info(u"Fetching build '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    hash = self._server.Build.check_build(
-                            self.name, self.product.id)
-                    log.debug(u"Initializing build '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    log.log(3, pretty(hash))
-                    self._id = hash["build_id"]
-                except LookupError:
-                    raise NitrateError("Build '{0}' not found in '{1}'".format(
-                        self.name, self.product.name))
+        # Directly fetch from the initial object dict
+        if inject is not None:
+            log.info("Processing build ID#{0} inject".format(
+                    inject["build_id"]))
+        # Search by build id
+        elif self._id is not NitrateNone:
+            try:
+                log.info("Fetching build " + self.identifier)
+                inject = self._server.Build.get(self.id)
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError(
+                        "Cannot find build for " + self.identifier)
+        # Search by build name and product
         else:
-            # Save values
-            log.debug("Initializing Build ID#{0}".format(inject["id"]))
-            log.log(3, pretty(inject))
-            self._id = inject["id"]
-            self._name = inject["name"]
-            self._product = inject["product"]
+            try:
+                log.info(u"Fetching build '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                inject = self._server.Build.check_build(
+                        self.name, self.product.id)
+                self._id = inject["build_id"]
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError("Build '{0}' not found in '{1}'".format(
+                    self.name, self.product.name))
 
-        if get_cache_level() >= CACHE_OBJECTS:
-            for key in [self.id, self.name+')('+self.product.name]:
-                Build._cache[key] = self
+        # Initialize data from the inject and index into cache
+        log.debug("Initializing Build ID#{0}".format(inject["build_id"]))
+        log.xmlrpc(pretty(inject))
+        self._id = inject["build_id"]
+        self._name = inject["name"]
+        self._product = Product(
+                {"id": inject["product_id"], "name": inject["product"]})
+        self._index("{0}---in---{1}".format(self.name, self.product.name))
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Build Self Test
@@ -886,28 +926,51 @@ class Build(Nitrate):
 
     class _test(unittest.TestCase):
         def setUp(self):
-            """ Set up test case from the config """
+            """ Clear cache, save cache level and initialize test data """
+            self.product = Nitrate()._config.product
             self.build = Nitrate()._config.build
+            self.requests = Nitrate._requests
+            self.cache_level = get_cache_level()
+            Cache.clear()
 
-        def testBuildCaching(self):
-            """ Test caching in Build class """
-            requests = Nitrate._requests
-            # Turn off caching
+        def tierDown(self):
+            """ Restore cache level """
+            set_cache_level(self.cache_level)
+
+        def test_fetch_by_id(self):
+            """ Fetch by id """
+            build = Build(self.build.id)
+            self.assertEqual(build.name, self.build.name)
+
+        def test_fetch_by_name_and_product(self):
+            """ Fetch by name and product """
+            # Named arguments
+            build = Build(name=self.build.name, product=self.product.name)
+            self.assertEqual(build.id, self.build.id)
+            # Backward compatibility
+            build = Build(build=self.build.name, product=self.product.name)
+            self.assertEqual(build.id, self.build.id)
+
+        def test_cache_none(self):
+            """ Cache none """
             set_cache_level(CACHE_NONE)
-            build = Build(self.build.id)
-            log.info(build.name)
-            build = Build(self.build.id)
-            log.info(build.name)
-            self.assertEqual(Nitrate._requests, requests + 2)
-            # Turn on caching
-            Build._cache = {}
+            build1 = Build(self.build.id)
+            self.assertEqual(build1.name, self.build.name)
+            build2 = Build(self.build.id)
+            self.assertEqual(build2.name, self.build.name)
+            self.assertEqual(build1, build2)
+            self.assertEqual(Nitrate._requests, self.requests + 2)
+
+        def test_cache_objects(self):
+            """ Cache objects """
             set_cache_level(CACHE_OBJECTS)
-            build = Build(self.build.id)
-            log.info(build.name)
-            build = Build(self.build.id)
-            log.info(build.name)
-            # + 2 requests because of fething Build and Product
-            self.assertEqual(Nitrate._requests, requests + 4)
+            build1 = Build(self.build.id)
+            self.assertEqual(build1.name, self.build.name)
+            build2 = Build(self.build.id)
+            self.assertEqual(build2.name, self.build.name)
+            self.assertEqual(build1, build2)
+            self.assertEqual(id(build1), id(build2))
+            self.assertEqual(Nitrate._requests, self.requests + 1)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -940,15 +1003,15 @@ class Category(Nitrate):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
 
         # Name and product check
-        if 'product' in kwargs and 'category' in kwargs:
+        if "product" in kwargs and ("name" in kwargs or "category" in kwargs):
             product = kwargs.get("product")
             if isinstance(product, Product):
                 product = product.name
-            name = kwargs.get("category")
-            return cls._cache[name+')('+product]
+            name = kwargs.get("name", kwargs.get("category"))
+            return cls._cache["{0}---in---{1}".format(name, product)], name
 
         return super(Category, cls)._cache_lookup(id, **kwargs)
 
@@ -956,41 +1019,36 @@ class Category(Nitrate):
     #  Category Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, product=None, category=None):
-        """ Initialize by category id or product and category name. """
+    def __init__(self, id=None, name=None, product=None, **kwargs):
+        """ Initialize by category id or category name and product """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
+        # Backward compatibility for 'category' argument (now called 'name')
+        name = name if name is not None else kwargs.get("category")
 
-        self._init()
-        # Init by initial object dict
-        if isinstance(id, dict):
-            inject = id
-            id = None
-        else:
-            inject = None
-        # Initialized by id
-        if id is not None:
-            self._name = self._product = NitrateNone
-        # Initialized by product and category
-        elif product is not None and category is not None:
+        # Initialize (unless already done)
+        id, ignore, inject, initialized = self._is_initialized(id or name)
+        if initialized: return
+        Nitrate.__init__(self, id)
+
+        # If inject given, fetch tag data from it
+        if inject:
+            self._fetch(inject)
+        # Initialized by category name and product
+        elif name is not None and product is not None:
+            self._name = name
             # Detect product format
             if isinstance(product, Product):
                 self._product = product
-            elif isinstance(product, basestring):
-                self._product = Product(name=product)
             else:
-                self._product = Product(id=product)
-            self._name = category
-        elif inject is not None:
-            pass
-        else:
-            raise NitrateError("Need either category id or both product "
-                    "and category name to initialize the Category object.")
-        Nitrate.__init__(self, id)
-        if inject is not None or get_cache_level() >= CACHE_OBJECTS:
-            self._fetch(inject)
+                self._product = Product(product)
+            # Index by name-product (only when the product name is known)
+            if self.product._name is not NitrateNone:
+                self._index("{0}---in---{1}".format(
+                        self.name, self.product.name))
+        # Otherwise just check that the id was provided
+        elif not id:
+            raise NitrateError("Need either category id or both category "
+                    "name and product to initialize the Category object.")
 
     def __unicode__(self):
         """ Category name for printing. """
@@ -1004,44 +1062,38 @@ class Category(Nitrate):
         """ Get the missing category data. """
         Nitrate._fetch(self)
 
-        if inject is None:
-            # Search by id
-            if self._id is not NitrateNone:
-                try:
-                    log.info("Fetching category " + self.identifier)
-                    hash = self._server.Product.get_category(self.id)
-                    log.debug("Initializing category " + self.identifier)
-                    log.log(3, pretty(hash))
-                    self._name = hash["name"]
-                    self._product = Product(hash["product_id"])
-                except xmlrpclib.Fault:
-                    raise NitrateError(
-                            "Cannot find category for " + self.identifier)
-            # Search by product and name
-            else:
-                try:
-                    log.info(u"Fetching category '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    hash = self._server.Product.check_category(
-                            self.name, self.product.id)
-                    log.debug(u"Initializing category '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    log.log(3, pretty(hash))
-                    self._id = hash["id"]
-                except xmlrpclib.Fault:
-                    raise NitrateError("Category '{0}' not found in"
-                           " '{1}'".format(self.name, self.product.name))
+        # Directly fetch from the initial object dict
+        if inject is not None:
+            log.info("Processing category ID#{0} inject".format(inject["id"]))
+        # Search by category id
+        elif self._id is not NitrateNone:
+            try:
+                log.info("Fetching category {0}".format(self.identifier))
+                inject = self._server.Product.get_category(self.id)
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError(
+                        "Cannot find category for " + self.identifier)
+        # Search by category name and product
         else:
-            # Save values
-            log.debug("Initializing Category ID#{0}".format(inject["id"]))
-            log.log(3, pretty(inject))
-            self._id = inject["id"]
-            self._name = inject["name"]
-            self._product = inject["product"]
+            try:
+                log.info(u"Fetching category '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                inject = self._server.Product.check_category(
+                        self.name, self.product.id)
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError("Category '{0}' not found in"
+                        " '{1}'".format(self.name, self.product.name))
 
-        if get_cache_level() >= CACHE_OBJECTS:
-            for key in [self.id, self.name+')('+self.product.name]:
-                Category._cache[key] = self
+        # Initialize data from the inject and index into cache
+        log.debug("Initializing category ID#{0}".format(inject["id"]))
+        log.xmlrpc(pretty(inject))
+        self._id = inject["id"]
+        self._name = inject["name"]
+        self._product = Product(
+                {"id": inject["product_id"], "name": inject["product"]})
+        self._index("{0}---in---{1}".format(self.name, self.product.name))
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Category Self Test
@@ -1050,52 +1102,65 @@ class Category(Nitrate):
     class _test(unittest.TestCase):
 
         def setUp(self):
-            """ Set up test product from the config """
+            """ Clear cache, save cache level and initialize test data """
+            Cache.clear()
+            self.cache_level = get_cache_level()
             self.product = Nitrate()._config.product
+            self.category = Nitrate()._config.category
+            self.requests = Nitrate._requests
 
-        def testCachingOn(self):
-            """ Category caching on """
-            # Make sure the cache is empty
-            Category._categories = {}
-            # Enable cache, remember current number of requests
-            original = get_cache_level()
+        def tierDown(self):
+            """ Restore cache level """
+            set_cache_level(self.cache_level)
+
+        def test_fetch_by_id(self):
+            """ Fetch by id """
+            category = Category(self.category.id)
+            self.assertEqual(category.name, self.category.name)
+
+        def test_fetch_by_name_and_product(self):
+            """ Fetch by name and product """
+            # Named arguments
+            category = Category(
+                    name=self.category.name, product=self.product.name)
+            self.assertEqual(category.id, self.category.id)
+            # Backward compatibility
+            category = Category(
+                    category=self.category.name, product=self.product.name)
+            self.assertEqual(category.id, self.category.id)
+
+        def test_cache_objects(self):
+            """ Cache objects """
             set_cache_level(CACHE_OBJECTS)
-            requests = Nitrate._requests
             # The first round (fetch category data from server)
-            category = Category(1)
-            self.assertTrue(isinstance(category.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 2)
-            del category
+            category = Category(self.category.id)
+            self.assertEqual(category.name, self.category.name)
+            self.assertEqual(Nitrate._requests, self.requests + 1)
             # The second round (there should be no more requests)
-            category = Category(1)
-            self.assertTrue(isinstance(category.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 2)
-            # Restore cache level
-            set_cache_level(original)
+            category = Category(self.category.id)
+            self.assertEqual(category.name, self.category.name)
+            self.assertEqual(Nitrate._requests, self.requests + 1)
 
-        def testCachingOff(self):
-            """ Category caching off """
-            # Enable cache, remember current number of requests
-            original = get_cache_level()
+        def test_cache_none(self):
+            """ Cache none """
             set_cache_level(CACHE_NONE)
-            requests = Nitrate._requests
             # The first round (fetch category data from server)
-            category = Category(1)
-            self.assertTrue(isinstance(category.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 1)
-            del category
+            category = Category(self.category.id)
+            self.assertEqual(category.name, self.category.name)
+            self.assertEqual(Nitrate._requests, self.requests + 1)
             # The second round (there should be another request)
-            category = Category(1)
-            self.assertTrue(isinstance(category.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 2)
-            # Restore cache level
-            set_cache_level(original)
+            category = Category(self.category.id)
+            self.assertEqual(category.name, self.category.name)
+            self.assertEqual(Nitrate._requests, self.requests + 2)
 
         def test_invalid_category(self):
             """ Invalid category should raise exception """
             def fun():
-                Category(category="Bad Category", product=self.product.name).id
+                Category(category="Bad", product=self.product.name).id
+            original_log_level = get_log_level()
+            set_log_level(log.CRITICAL)
             self.assertRaises(NitrateError, fun)
+            set_log_level(original_log_level)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1115,163 +1180,117 @@ class PlanType(Nitrate):
     _attributes = ["name"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  PlanType Properties
+    #  Plan Type Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     # Read-only properties
     id = property(_getter("id"), doc="Test plan type id")
     name = property(_getter("name"), doc="Test plan type name")
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Plan Type Decorated
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
-        if 'name' in kwargs:
-            return cls._cache[kwargs.get("name")]
-
+        """ Look up cached objects, return found instance and search key """
+        # Search cache by plan type name
+        if "name" in kwargs:
+            return cls._cache[kwargs["name"]], kwargs["name"]
+        # Othewise perform default search by id
         return super(PlanType, cls)._cache_lookup(id, **kwargs)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  PlanType Special
+    #  Plan Type Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __init__(self, id=None, name=None):
         """ Initialize by test plan type id or name """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
-
-        self._init()
-        # Initialization by initial object dict
-        if isinstance(id, dict):
-            inject = id
-            id = None
-        else:
-            inject = None
-        # Allow initialization by string e.g. PlanType("General")
-        if isinstance(id, basestring):
-            name = id
-            id = None
-        # Initialized by id
-        if id is not None:
-            self._name = NitrateNone
-            name = None
-        # Initialized by name
-        elif name is not None:
-            self._name = name
-            self._id = NitrateNone
-        elif inject is not None:
-            pass
-        else:
-            raise NitrateError(
-                    "Need either id or name to initialize the PlanType object")
+        # Initialize (unless already done)
+        id, name, inject, initialized = self._is_initialized(id or name)
+        if initialized: return
         Nitrate.__init__(self, id)
 
-        if inject is not None or get_cache_level() >= CACHE_OBJECTS:
+        # If inject given, fetch data from it
+        if inject:
             self._fetch(inject)
+        # Initialize by name
+        elif name is not None:
+            self._name = name
+            self._index(name)
+        # Otherwise just check that the test plan type id was provided
+        elif not id:
+            raise NitrateError(
+                    "Need either id or name to initialize the PlanType object")
 
     def __unicode__(self):
         """ PlanType name for printing """
         return self.name
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  PlanType Methods
+    #  Plan Type Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _fetch(self, inject=None):
         """ Get the missing test plan type data """
         Nitrate._fetch(self)
 
-        if inject is None:
-            # Search by id
-            if self._id is not NitrateNone:
-                try:
-                    log.info("Fetching test plan type " + self.identifier)
-                    hash = self._server.TestPlan.get_plan_type(self.id)
-                    log.debug("Initializing test plan type " + self.identifier)
-                    log.log(3, pretty(hash))
-                    self._name = hash["name"]
-                except xmlrpclib.Fault:
-                    raise NitrateError("Cannot find test plan type for "
-                                    + self.identifier)
-            # Search by name
-            else:
-                try:
-                    log.info(u"Fetching test plan type '{0}'".format(
-                            self.name))
-                    hash = self._server.TestPlan.check_plan_type(self.name)
-                    log.debug(u"Initializing test plan type '{0}'".format(
-                            self.name))
-                    log.log(3, pretty(hash))
-                    self._id = hash["id"]
-                except xmlrpclib.Fault:
-                    raise NitrateError("PlanType '{0}' not found".format(
-                            self.name))
+        # Directly fetch from the initial object dict
+        if inject is not None:
+            log.info("Processing PlanType ID#{0} inject".format(inject["id"]))
+        # Search by test plan type id
+        elif self._id is not NitrateNone:
+            try:
+                log.info("Fetching test plan type " + self.identifier)
+                inject = self._server.TestPlan.get_plan_type(self.id)
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError(
+                        "Cannot find test plan type for " + self.identifier)
+        # Search by test plan type name
         else:
-            # Save values
-            log.debug("Initializing PlanType ID#{0}".format(inject["id"]))
-            log.log(3, pretty(inject))
-            self._id = inject["id"]
-            self._name = inject["name"]
-
-        if get_cache_level() >= CACHE_OBJECTS:
-            PlanType._cache[self.id] = PlanType._cache[self.name] = self
+            try:
+                log.info(u"Fetching test plan type '{0}'".format(self.name))
+                inject = self._server.TestPlan.check_plan_type(self.name)
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError("PlanType '{0}' not found".format(
+                        self.name))
+        # Initialize data from the inject and index into cache
+        log.debug("Initializing PlanType ID#{0}".format(inject["id"]))
+        log.xmlrpc(pretty(inject))
+        self._id = inject["id"]
+        self._name = inject["name"]
+        self._index(self.name)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  PlanType Self Test
+    #  Plan Type Self Test
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     class _test(unittest.TestCase):
         def setUp(self):
-            """ Set up plan type from the config """
+            """ Clear cache, save cache level and initialize test data """
+            Cache.clear()
+            self.original_cache_level = get_cache_level()
             self.plantype = Nitrate()._config.plantype
+            self.requests = Nitrate._requests
 
-        def testCachingOn(self):
-            """ PlanType caching on """
-            # Make sure the cache is empty
-            PlanType._cache = {}
-            # Enable cache, remember current number of requests
-            original = get_cache_level()
-            set_cache_level(CACHE_OBJECTS)
-            requests = Nitrate._requests
-            # The first round (fetch plantype data from server)
-            plantype = PlanType(1)
-            self.assertTrue(isinstance(plantype.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 1)
-            del plantype
-            # The second round (there should be no more requests)
-            plantype = PlanType(1)
-            self.assertTrue(isinstance(plantype.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 1)
-            # Restore cache level
-            set_cache_level(original)
-
-        def testCachingOff(self):
-            """ PlanType caching off """
-            # Disable cache, remember current number of requests
-            original = get_cache_level()
-            set_cache_level(CACHE_NONE)
-            requests = Nitrate._requests
-            # The first round (fetch plantype data from server)
-            plantype = PlanType(1)
-            self.assertTrue(isinstance(plantype.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 1)
-            del plantype
-            # The second round (there should be another request)
-            plantype = PlanType(1)
-            self.assertTrue(isinstance(plantype.name, basestring))
-            self.assertEqual(Nitrate._requests, requests + 2)
-            # Restore cache level
-            set_cache_level(original)
+        def tierDown(self):
+            """ Restore cache level """
+            set_cache_level(self.original_cache_level)
 
         def test_invalid_type(self):
-            """ Invalid test plan type should raise exception """
+            """ Invalid plan type should raise exception """
             def fun():
                 PlanType(name="Bad Plan Type").id
+            original_log_level = get_log_level()
+            set_log_level(log.CRITICAL)
             self.assertRaises(NitrateError, fun)
+            set_log_level(original_log_level)
 
         def test_valid_type(self):
-            """ Valid test plan type initialization """
+            """ Valid plan type initialization """
             # Initialize by id
             plantype = PlanType(self.plantype.id)
             self.assertEqual(plantype.name, self.plantype.name)
@@ -1282,47 +1301,43 @@ class PlanType(Nitrate):
             plantype = PlanType(self.plantype.name)
             self.assertEqual(plantype.id, self.plantype.id)
 
-        def testPlanTypeAdvancedCachingID(self):
-            """ Test advanced caching in PlanType class (init by ID) """
-            requests = Nitrate._requests
-            # Turn off caching
-            set_cache_level(CACHE_NONE)
-            plantype = PlanType(self.plantype.id)
-            log.info(plantype.name)
-            plantype2 = PlanType(self.plantype.name)
-            log.info(plantype2.id)
-            self.assertEqual(Nitrate._requests, requests + 2)
-            self.assertNotEqual(id(plantype), id(plantype2))
-            # Turn on caching
-            PlanType._cache = {}
+        def test_cache_objects(self):
+            """ Cache objects """
             set_cache_level(CACHE_OBJECTS)
-            plantype = PlanType(self.plantype.id)
-            log.info(plantype.name)
-            plantype2 = PlanType(self.plantype.name)
-            log.info(plantype2.id)
-            self.assertEqual(Nitrate._requests, requests + 3)
-            self.assertEqual(id(plantype), id(plantype2))
+            # The first round (fetch plantype data from server)
+            plantype1 = PlanType(self.plantype.id)
+            self.assertTrue(isinstance(plantype1.name, basestring))
+            self.assertEqual(Nitrate._requests, self.requests + 1)
+            # The second round (there should be no more requests)
+            plantype2 = PlanType(self.plantype.id)
+            self.assertTrue(isinstance(plantype2.name, basestring))
+            self.assertEqual(Nitrate._requests, self.requests + 1)
+            # The third round (fetching by plan type name)
+            plantype3 = PlanType(self.plantype.name)
+            self.assertTrue(isinstance(plantype3.id, int))
+            self.assertEqual(Nitrate._requests, self.requests + 1)
+            # All plan types should point to the same object
+            self.assertEqual(id(plantype1), id(plantype2))
+            self.assertEqual(id(plantype1), id(plantype3))
 
-        def testPlanTypeAdvancedCachingName(self):
-            """ Test advanced caching in PlanType class (init by name) """
-            requests = Nitrate._requests
-            # Turn off caching
+        def test_cache_none(self):
+            """ Cache none """
             set_cache_level(CACHE_NONE)
-            plantype = PlanType(self.plantype.name)
-            log.info(plantype.id)
+            # The first round (fetch plantype data from server)
+            plantype1 = PlanType(self.plantype.id)
+            self.assertTrue(isinstance(plantype1.name, basestring))
+            self.assertEqual(Nitrate._requests, self.requests + 1)
+            # The second round (there should be another request)
             plantype2 = PlanType(self.plantype.id)
-            log.info(plantype2.name)
-            self.assertEqual(Nitrate._requests, requests + 2)
-            self.assertNotEqual(id(plantype), id(plantype2))
-            # Turn on caching
-            PlanType._cache = {}
-            set_cache_level(CACHE_OBJECTS)
-            plantype = PlanType(self.plantype.name)
-            log.info(plantype.id)
-            plantype2 = PlanType(self.plantype.id)
-            log.info(plantype2.name)
-            self.assertEqual(Nitrate._requests, requests + 3)
-            self.assertEqual(id(plantype), id(plantype2))
+            self.assertTrue(isinstance(plantype2.name, basestring))
+            self.assertEqual(Nitrate._requests, self.requests + 2)
+            # The third round (fetching by plan type name)
+            plantype3 = PlanType(self.plantype.name)
+            self.assertTrue(isinstance(plantype3.id, int))
+            self.assertEqual(Nitrate._requests, self.requests + 3)
+            # Plan types should be different objects in memory
+            self.assertNotEqual(id(plantype1), id(plantype2))
+            self.assertNotEqual(id(plantype1), id(plantype3))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1394,15 +1409,17 @@ class Product(Nitrate):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
         try:
             if 'version' in kwargs and cls._cache[id].version is NitrateNone:
                 raise KeyError
         except AttributeError:
             pass
 
-        if 'name' in kwargs:
-            return cls._cache[kwargs.get("name")]
+        # Search the cache by product name
+        if "name" in kwargs:
+            name = kwargs.get("name")
+            return cls._cache[name], name
 
         return super(Product, cls)._cache_lookup(id, **kwargs)
 
@@ -1411,53 +1428,32 @@ class Product(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __init__(self, id=None, name=None, version=None):
-        """ Initialize the Product.
+        """
+        Initialize the Product
 
         One of id or name parameters must be provided. Optional version
         argument sets the default product version.
         """
-        Nitrate._fetch(self)
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
+        # Initialize (unless already done)
+        id, name, inject, initialized = self._is_initialized(id or name)
+        if initialized: return
+        Nitrate.__init__(self, id)
 
-        self._init()
-        # Init by initial object dict
-        if isinstance(id, dict):
-            inject = id
-            id = None
-        else:
-            inject = None
-        # Init by name (in id)
-        if isinstance(id, basestring):
-            name = id
-            id = None
-        # Initialize by id
-        if id is not None:
-            self._name = NitrateNone
-            name = None
+        # If inject given, fetch test case data from it
+        if inject:
+            self._fetch(inject)
         # Initialize by name
         elif name is not None:
             self._name = name
-            self._id = NitrateNone
-        elif inject is not None:
-            pass
-        else:
+            self._index(name)
+        # Otherwise just check that the product id was provided
+        elif not id:
             raise NitrateError("Need id or name to initialize Product")
-        Nitrate.__init__(self, id)
-
-        if inject is not None or get_cache_level() >= CACHE_OBJECTS:
-            self._fetch(inject)
 
         # Optionally initialize version
         if version is not None:
             self._version = Version(product=self, version=version)
-        else:
-            self._version = NitrateNone
-
-        if get_cache_level() >= CACHE_OBJECTS:
-            Product._cache[self.id] = Product._cache[self.name] = self
 
     def __unicode__(self):
         """ Product name for printing. """
@@ -1478,36 +1474,38 @@ class Product(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch product data from the server. """
+        Nitrate._fetch(self)
 
-        if inject is None:
-            # Search by id
-            if self._id is not NitrateNone:
-                try:
-                    log.info("Fetching product " + self.identifier)
-                    hash = self._server.Product.filter({'id': self.id})[0]
-                    log.debug("Initializing product " + self.identifier)
-                    log.log(3, pretty(hash))
-                    self._name = hash["name"]
-                except IndexError:
-                    raise NitrateError(
-                            "Cannot find product for " + self.identifier)
-            # Search by name
-            else:
-                try:
-                    log.info(u"Fetching product '{0}'".format(self.name))
-                    hash = self._server.Product.filter({'name': self.name})[0]
-                    log.debug(u"Initializing product '{0}'".format(self.name))
-                    log.log(3, pretty(hash))
-                    self._id = hash["id"]
-                except IndexError:
-                    raise NitrateError(
-                            "Cannot find product for '{0}'".format(self.name))
-        else:
-            # Save values
+        # Directly fetch from the initial object dict
+        if inject is not None:
             log.debug("Initializing Product ID#{0}".format(inject["id"]))
-            log.log(3, pretty(inject))
+            log.xmlrpc(pretty(inject))
             self._id = inject["id"]
             self._name = inject["name"]
+        # Search by product id
+        elif self._id is not NitrateNone:
+            try:
+                log.info("Fetching product " + self.identifier)
+                hash = self._server.Product.filter({'id': self.id})[0]
+                log.debug("Initializing product " + self.identifier)
+                log.xmlrpc(pretty(hash))
+                self._name = hash["name"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find product for " + self.identifier)
+        # Search by product name
+        else:
+            try:
+                log.info(u"Fetching product '{0}'".format(self.name))
+                hash = self._server.Product.filter({'name': self.name})[0]
+                log.debug(u"Initializing product '{0}'".format(self.name))
+                log.xmlrpc(pretty(hash))
+                self._id = hash["id"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find product for '{0}'".format(self.name))
+        # Index the fetched object into cache
+        self._index(self.name)
 
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1557,7 +1555,7 @@ class Product(Nitrate):
             self.assertEqual(Nitrate._requests, requests + 3)
 
         def testProductAdvancedCachingID(self):
-            """ Test advanced caching in Product class (init by ID) """
+            """ Advanced caching (init by ID) """
             requests = Nitrate._requests
             Product._cache = {}
             # Turn off caching
@@ -1579,7 +1577,7 @@ class Product(Nitrate):
             self.assertEqual(id(product), id(product2))
 
         def testProductAdvancedCachingName(self):
-            """ Test advanced caching in Product class (init by name) """
+            """ Advanced caching (init by name) """
             requests = Nitrate._requests
             Product._cache = {}
             # Turn off caching
@@ -1819,58 +1817,23 @@ class User(Nitrate):
     email = property(_getter("email"), doc="User email address.")
     name = property(_getter("name"), doc="User first name and last name.")
 
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  User Decorated
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
         # Return current user
         if id is None and 'login' not in kwargs and 'email' not in kwargs:
-            return cls._cache["i-am-current-user"]
-
-        if 'login' in kwargs:
-            return cls._cache[kwargs.get("login")]
-
-        if 'email' in kwargs:
-            return cls._cache[kwargs.get("email")]
-
+            return cls._cache["i-am-current-user"], "current user"
+        # Search by login & email
+        if "login" in kwargs:
+            return cls._cache[kwargs["login"]], kwargs["login"]
+        if "email" in kwargs:
+            return cls._cache[kwargs["email"]], kwargs["email"]
+        # Default search by id
         return super(User, cls)._cache_lookup(id, **kwargs)
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  User Special
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def __init__(self, id=None, login=None, email=None):
-        """ Initialize by user id, login or email.
-
-        Defaults to the current user if no id, login or email provided.
-        If xmlrpc initial object dict provided, data are initilized
-        directly from it.
-        """
-
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
-
-        # Initialize values
-        self._init()
-        id, login, email = self._parse(id, login, email)
-        # Init by initial object dict
-        if isinstance(id, dict):
-            inject = id
-            id = None
-        else:
-            inject = None
-        Nitrate.__init__(self, id, prefix="UID")
-        if login is not None:
-            self._login = login
-        elif email is not None:
-            self._email = email
-
-        if inject is not None or get_cache_level() >= CACHE_OBJECTS:
-            self._fetch(inject)
-
-    def __unicode__(self):
-        """ User login for printing. """
-        return self.name if self.name is not None else u"No Name"
 
     @staticmethod
     def search(**query):
@@ -1879,19 +1842,51 @@ class User(Nitrate):
                 for hash in Nitrate()._server.User.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  User Methods
+    #  User Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    @staticmethod
-    def _parse(id, login, email):
-        """ Detect login & email if passed as the first parameter. """
-        if isinstance(id, basestring):
-            if '@' in id:
-                email = id
+    def __new__(cls, id=None, *args, **kwargs):
+        """ Create a new object, handle caching if enabled """
+        # Convert login or email into name for better logging
+        if "login" in kwargs or "email" in kwargs:
+            name = kwargs.get("login", kwargs.get("email"))
+            return Nitrate.__new__(cls, id=id, name=name, *args, **kwargs)
+        else:
+            return Nitrate.__new__(cls, id=id, *args, **kwargs)
+
+    def __init__(self, id=None, login=None, email=None):
+        """
+        Initialize by user id, login or email
+
+        Defaults to the current user if no id, login or email provided.
+        If xmlrpc initial object dict provided as the first argument,
+        data are initialized directly from it.
+        """
+
+        # Initialize (unless already done)
+        id, name, inject, initialized = self._is_initialized(
+                id or login or email)
+        if initialized: return
+        Nitrate.__init__(self, id, prefix="UID")
+
+        # If inject given, fetch data from it
+        if inject:
+            self._fetch(inject)
+        # Otherwise initialize by login or email
+        elif name is not None:
+            if "@" in name:
+                self._email = name
             else:
-                login = id
-            id = None
-        return id, login, email
+                self._login = name
+            self._index(name)
+
+    def __unicode__(self):
+        """ User login for printing. """
+        return self.name if self.name is not None else u"No Name"
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  User Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _fetch(self, inject=None):
         """ Fetch user data from the server. """
@@ -1919,7 +1914,8 @@ class User(Nitrate):
             # Search by email
             elif self._email is not NitrateNone:
                 try:
-                    log.info("Fetching user for email '{0}'" + self.email)
+                    log.info("Fetching user for email '{0}'".format(
+                            self.email))
                     inject = self._server.User.filter({"email": self.email})[0]
                 except IndexError:
                     raise NitrateError("No user found for email '{0}'".format(
@@ -1928,10 +1924,9 @@ class User(Nitrate):
             else:
                 log.info("Fetching the current user")
                 inject = self._server.User.get_me()
-                if get_cache_level() >= CACHE_OBJECTS:
-                    User._cache["i-am-current-user"] = self
+                self._index("i-am-current-user")
 
-        # Save values
+        # Initialize data from the inject and index into cache
         log.debug("Initializing user UID#{0}".format(inject["id"]))
         log.xmlrpc(pretty(inject))
         self._id = inject["id"]
@@ -1941,10 +1936,7 @@ class User(Nitrate):
             self._name = inject["first_name"] + " " + inject["last_name"]
         else:
             self._name = None
-
-        if get_cache_level() >= CACHE_OBJECTS:
-            for key in [self.id, self.email, self.login]:
-                User._cache[key] = self
+        self._index(self.login, self.email)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Self Test
@@ -1952,8 +1944,15 @@ class User(Nitrate):
 
     class _test(unittest.TestCase):
         def setUp(self):
-            """ Set up user from the config """
+            """ Clear cache, save cache level and initialize test data """
+            Cache.clear()
+            self.original_cache_level = get_cache_level()
             self.user = Nitrate()._config.user
+            self.requests = Nitrate._requests
+
+        def tierDown(self):
+            """ Restore cache level """
+            set_cache_level(self.original_cache_level)
 
         def test_no_name(self):
             """ User with no name set in preferences """
@@ -1962,99 +1961,76 @@ class User(Nitrate):
             self.assertEqual(unicode(user), u"No Name")
             self.assertEqual(str(user), "No Name")
 
-        def testUserCaching(self):
-            """ Test caching in User class """
-            requests = Nitrate._requests
-            # Turn off caching
-            set_cache_level(CACHE_NONE)
-            user = User(self.user.id)
-            log.info(user.login)
-            user = User(self.user.id)
-            log.info(user.login)
-            self.assertEqual(Nitrate._requests, requests + 2)
-            # Turn on caching
-            User._cache = {}
-            set_cache_level(CACHE_OBJECTS)
-            user = User(self.user.id)
-            log.info(user.login)
-            user = User(self.user.id)
-            log.info(user.login)
-            self.assertEqual(Nitrate._requests, requests + 3)
+        def test_current_user(self):
+            """ Current user available & sane """
+            user = User()
+            for data in [user.login, user.email, user.name]:
+                self.assertTrue(isinstance(data, basestring))
+            self.assertTrue(isinstance(user.id, int))
 
-        def testUserAdvancedCachingID(self):
-            """ Test advanced caching in User class (init by ID) """
-            requests = Nitrate._requests
-            # Turn off caching
+        def test_cache_none(self):
+            """ Cache none """
             set_cache_level(CACHE_NONE)
-            user = User(self.user.id)
-            log.info(user.name)
+            # Initialize the same user by id, login and email
+            user1 = User(self.user.id)
+            log.info(user1.name)
             user2 = User(self.user.login)
             log.info(user2.name)
             user3 = User(self.user.email)
             log.info(user3.name)
-            self.assertEqual(Nitrate._requests, requests + 3)
-            self.assertNotEqual(id(user), id(user2), id(user3))
-            # Turn on caching
-            User._cache = {}
-            set_cache_level(CACHE_OBJECTS)
-            user = User(self.user.id)
-            log.info(user.name)
-            user2 = User(self.user.login)
-            log.info(user2.name)
-            user3 = User(self.user.email)
-            log.info(user3.name)
-            self.assertEqual(Nitrate._requests, requests + 4)
-            self.assertEqual(id(user), id(user2), id(user3))
+            # Three requests to the server should be performed
+            self.assertEqual(Nitrate._requests, self.requests + 3)
+            # User data should be the same
+            for user in [user1, user2, user3]:
+                self.assertEqual(user.id, self.user.id)
+                self.assertEqual(user.login, self.user.login)
+                self.assertEqual(user.email, self.user.email)
+            # Users should be different objects in memory
+            self.assertNotEqual(id(user1), id(user2))
+            self.assertNotEqual(id(user1), id(user3))
 
-        def testUserAdvancedCachingLogin(self):
-            """ Test advanced caching in User class (init by login) """
-            requests = Nitrate._requests
-            # Turn off caching
-            set_cache_level(CACHE_NONE)
-            user = User(self.user.login)
-            log.info(user.name)
-            user2 = User(self.user.id)
-            log.info(user2.name)
-            user3 = User(self.user.email)
-            log.info(user3.name)
-            self.assertEqual(Nitrate._requests, requests + 3)
-            self.assertNotEqual(id(user), id(user2), id(user3))
-            # Turn on caching
-            User._cache = {}
+        def test_cache_objects(self):
+            """ Cache objects """
             set_cache_level(CACHE_OBJECTS)
-            user = User(self.user.login)
-            log.info(user.name)
-            user2 = User(self.user.id)
+            # Initialize the same user by id, login and email
+            user1 = User(self.user.id)
+            log.info(user1.name)
+            user2 = User(self.user.login)
             log.info(user2.name)
             user3 = User(self.user.email)
             log.info(user3.name)
-            self.assertEqual(Nitrate._requests, requests + 4)
-            self.assertEqual(id(user), id(user2), id(user3))
+            # Single request to the server should be performed
+            self.assertEqual(Nitrate._requests, self.requests + 1)
+            # All users objects should be identical
+            self.assertEqual(id(user1), id(user2))
+            self.assertEqual(id(user1), id(user3))
 
-        def testUserAdvancedCachingEmail(self):
-            """ Test advanced caching in User class (init by email) """
-            requests = Nitrate._requests
-            # Turn off caching
-            set_cache_level(CACHE_NONE)
-            user = User(self.user.email)
-            log.info(user.name)
+        def test_initialization_by_id(self):
+            """ Initializate by id """
+            user = User(self.user.id)
+            self.assertEqual(user.id, self.user.id)
+            self.assertEqual(user.login, self.user.login)
+            self.assertEqual(user.email, self.user.email)
+
+        def test_initialization_by_login(self):
+            """ Initializate by login """
+            # Check both explicit parameter and autodetection
+            user1 = User(login=self.user.login)
             user2 = User(self.user.login)
-            log.info(user2.name)
-            user3 = User(self.user.id)
-            log.info(user3.name)
-            self.assertEqual(Nitrate._requests, requests + 3)
-            self.assertNotEqual(id(user), id(user2), id(user3))
-            # Turn on caching
-            User._cache = {}
-            set_cache_level(CACHE_OBJECTS)
-            user = User(self.user.email)
-            log.info(user.name)
-            user2 = User(self.user.login)
-            log.info(user2.name)
-            user3 = User(self.user.id)
-            log.info(user3.name)
-            self.assertEqual(Nitrate._requests, requests + 4)
-            self.assertEqual(id(user), id(user2), id(user3))
+            for user in [user1, user2]:
+                self.assertEqual(user.id, self.user.id)
+                self.assertEqual(user.login, self.user.login)
+                self.assertEqual(user.email, self.user.email)
+
+        def test_initialization_by_email(self):
+            """ Initializate by email """
+            # Check both explicit parameter and autodetection
+            user1 = User(email=self.user.email)
+            user2 = User(self.user.email)
+            for user in [user1, user2]:
+                self.assertEqual(user.id, self.user.id)
+                self.assertEqual(user.login, self.user.login)
+                self.assertEqual(user.email, self.user.email)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2081,58 +2057,53 @@ class Version(Nitrate):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
 
-        # Name and product check
-        if 'product' in kwargs and 'version' in kwargs:
+        # Search cache byt name and product
+        if "product" in kwargs and ("version" in kwargs or "name" in kwargs):
             product = kwargs.get("product")
             if isinstance(product, Product):
                 product = product.name
-            name = kwargs.get("version")
-            return cls._cache[name+')('+product]
+            name = kwargs.get("name", kwargs.get("version"))
+            return cls._cache["{0}---in---{1}".format(name, product)], name
 
+        # Default search by id otherwise
         return super(Version, cls)._cache_lookup(id, **kwargs)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Version Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, product=None, version=None):
+    def __init__(self, id=None, name=None, product=None, **kwargs):
         """ Initialize by version id or product and version. """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
+        # Backward compatibility for 'version' argument (now called 'name')
+        name = name if name is not None else kwargs.get("version")
 
-        self._init()
-        # Init by initial object dict
-        if isinstance(id, dict):
-            inject = id
-            id = None
-        else:
-            inject = None
-        # Initialized by id
-        if id is not None:
-            self._name = self._product = NitrateNone
-        # Initialized by product and version
-        elif product is not None and version is not None:
-            # Detect product format
-            if isinstance(product, Product):
-                self._product = product
-            elif isinstance(product, basestring):
-                self._product = Product(name=product)
-            else:
-                self._product = Product(id=product)
-            self._name = version
-        elif inject is not None:
-            pass
-        else:
-            raise NitrateError("Need either version id or both product "
-                    "and version name to initialize the Version object.")
+        # Initialize (unless already done)
+        id, ignore, inject, initialized = self._is_initialized(id)
+        if initialized: return
         Nitrate.__init__(self, id)
 
-        if inject is not None or get_cache_level() >= CACHE_OBJECTS:
+        # If inject given, fetch tag data from it
+        if inject:
             self._fetch(inject)
+        # Initialize by version name and product
+        elif name is not None and product is not None:
+            self._name = name
+            # Convert product into object if necessary
+            if isinstance(product, Product):
+                self._product = product
+            else:
+                self._product = Product(product)
+            # Index by name/product (but only when the product name is known)
+            if self.product._name is not NitrateNone:
+                self._index("{0}---in---{1}".format(
+                        self.name, self.product.name))
+        # Otherwise just make sure the version id was provided
+        elif not id:
+            raise NitrateError("Need either version id or both product "
+                    "and version name to initialize the Version object.")
 
     def __unicode__(self):
         """ Version name for printing. """
@@ -2146,46 +2117,41 @@ class Version(Nitrate):
         """ Fetch version data from the server. """
         Nitrate._fetch(self)
 
-        if inject is None:
-            # Search by id
-            if self._id is not NitrateNone:
-                try:
-                    log.info("Fetching version " + self.identifier)
-                    hash = self._server.Product.filter_versions(
-                            {'id': self.id})
-                    log.debug("Initializing version " + self.identifier)
-                    log.log(3, pretty(hash))
-                    self._name = hash[0]["value"]
-                    self._product = Product(hash[0]["product_id"])
-                except IndexError:
-                    raise NitrateError(
-                            "Cannot find version for " + self.identifier)
-            # Search by product and name
-            else:
-                try:
-                    log.info(u"Fetching version '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    hash = self._server.Product.filter_versions(
-                            {'product': self.product.id, 'value': self.name})
-                    log.debug(u"Initializing version '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    log.log(3, pretty(hash))
-                    self._id = hash[0]["id"]
-                except IndexError:
-                    raise NitrateError(
-                            "Cannot find version for '{0}'".format(self.name))
+        # Directly fetch from the initial object dict
+        if inject is not None:
+            log.debug("Initializing Version ID#{0}".format(inject["id"]))
+            log.xmlrpc(pretty(inject))
+            self._id = inject["id"]
+            self._name = inject["name"]
+            self._product = inject["product"]
+        # Search by version id
+        if self._id is not NitrateNone:
+            try:
+                log.info("Fetching version " + self.identifier)
+                inject = self._server.Product.filter_versions({'id': self.id})
+                log.debug("Initializing version " + self.identifier)
+                log.xmlrpc(pretty(inject))
+                self._name = inject[0]["value"]
+                self._product = Product(inject[0]["product_id"])
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find version for " + self.identifier)
+        # Search by product and name
         else:
-            hash = inject
-            # Save values
-            log.debug("Initializing Version ID#{0}".format(hash["id"]))
-            log.log(3, pretty(hash))
-            self._id = hash["id"]
-            self._name = hash["name"]
-            self._product = hash["product"]
-
-        if get_cache_level() >= CACHE_OBJECTS:
-            for key in [self.id, self.name+')('+self.product.name]:
-                Version._cache[key] = self
+            try:
+                log.info(u"Fetching version '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                inject = self._server.Product.filter_versions(
+                        {'product': self.product.id, 'value': self.name})
+                log.debug(u"Initializing version '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                log.xmlrpc(pretty(inject))
+                self._id = inject[0]["id"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find version for '{0}'".format(self.name))
+        # Index into cache by version name and product
+        self._index("{0}---in---{1}".format(self.name, self.product.name))
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Version Self Test
@@ -2194,26 +2160,51 @@ class Version(Nitrate):
     class _test(unittest.TestCase):
         def setUp(self):
             """ Set up version from the config """
+            Cache.clear()
+            self.cache_level = get_cache_level()
             self.version = Nitrate()._config.version
+            self.product = Nitrate()._config.product
+            self.requests = Nitrate._requests
 
-        def testVersionCaching(self):
-            """ Test caching in Version class """
-            requests = Nitrate._requests
-            # Turn off caching
+        def tierDown(self):
+            """ Restore cache level """
+            set_cache_level(self.cache_level)
+
+        def test_fetch_by_id(self):
+            """ Fetch by id """
+            version = Version(self.version.id)
+            self.assertEqual(version.name, self.version.name)
+
+        def test_fetch_by_name_and_product(self):
+            """ Fetch by name and product """
+            # Named arguments
+            version = Version(
+                    name=self.version.name, product=self.product.name)
+            self.assertEqual(version.id, self.version.id)
+            # Backward compatibility
+            version = Version(
+                    version=self.version.name, product=self.product.name)
+            self.assertEqual(version.id, self.version.id)
+
+        def test_cache_none(self):
+            """ Cache none """
             set_cache_level(CACHE_NONE)
             version = Version(self.version.id)
             log.info(version.name)
             version = Version(self.version.id)
             log.info(version.name)
-            self.assertEqual(Nitrate._requests, requests + 2)
-            # Turn on caching
-            Version._cache = {}
+            # Fetches both version and product twice ---> 4 requests
+            self.assertEqual(Nitrate._requests, self.requests + 4)
+
+        def test_cache_objects(self):
+            """ Cache objects """
             set_cache_level(CACHE_OBJECTS)
             version = Version(self.version.id)
             log.info(version.name)
             version = Version(self.version.id)
             log.info(version.name)
-            self.assertEqual(Nitrate._requests, requests + 4)
+            # Should fetch version and product once ---> 2 requests
+            self.assertEqual(Nitrate._requests, self.requests + 2)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2266,6 +2257,9 @@ class Container(Mutable):
     # List of all object attributes (used for init & expiration)
     _attributes = ["current", "original"]
 
+    # Class of objects to be contained (defined in each container)
+    _class = None
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Container Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2292,13 +2286,12 @@ class Container(Mutable):
 
     def __init__(self, object, inset=None):
         """ Initialize container for specified object. """
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
+        # Initialize (unless already done)
+        if self._id is not None:
             return
-        # Initialize attributes, save container object class and id
-        self._init()
+        #FIXME ---> to be deleted?
+        #self._init()
         Mutable.__init__(self, object.id)
-        self._class = object.__class__
         self._identifier = object.identifier
         # Initialize directly if initial set provided
         if inset is not None:
@@ -2437,7 +2430,8 @@ class Container(Mutable):
 class Component(Nitrate):
     """ Test case component. """
 
-    # Local cache of Component objects indexed by component id
+    # Local cache of Component objects indexed by component id plus
+    # additionaly by name-in-product pairs
     _cache = {}
 
     # List of all object attributes (used for init & expiration)
@@ -2459,7 +2453,7 @@ class Component(Nitrate):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
 
         # Name and product check
         if 'product' in kwargs and 'name' in kwargs:
@@ -2467,7 +2461,7 @@ class Component(Nitrate):
             if isinstance(product, Product):
                 product = product.name
             name = kwargs.get("name")
-            return cls._cache[name+')('+product]
+            return cls._cache["{0}---in---{1}".format(name, product)], name
 
         return super(Component, cls)._cache_lookup(id, **kwargs)
 
@@ -2476,35 +2470,29 @@ class Component(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __init__(self, id=None, name=None, product=None, **kwargs):
-        """ Initialize by component id or product and component name. """
+        """ Initialize by component id or component name and product """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
-
-        # Prepare attributes, check component hash, initialize
-        self._init()
-        if isinstance(id, dict):
-            inject = id
-            id = inject["id"]
-        else:
-            inject = None
+        # Initialize (unless already done)
+        id, ignore, inject, initialized = self._is_initialized(id)
+        if initialized: return
         Nitrate.__init__(self, id)
 
-        # If hash provided, let's initialize the data immediately
-        if inject is not None:
+        # If inject given, fetch component data from it
+        if inject:
             self._fetch(inject)
-        # Initialized by product and component
-        elif product and name:
+        # Initialized by product and component name
+        elif name is not None and product is not None:
             # Detect product format
             if isinstance(product, Product):
                 self._product = product
-            elif isinstance(product, basestring):
-                self._product = Product(name=product)
             else:
-                self._product = Product(id=product)
+                self._product = Product(product)
             self._name = name
-        # Otherwise the id must provided
+            # Index by name-product (only when the product name is known)
+            if self.product._name is not NitrateNone:
+                self._index("{0}---in---{1}".format(
+                        self.name, self.product.name))
+        # Otherwise just check that the id was provided
         elif id is None:
             raise NitrateError("Need either component id or both product "
                     "and component name to initialize the Component object.")
@@ -2518,46 +2506,41 @@ class Component(Nitrate):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _fetch(self, inject=None):
-        """ Get the missing component data. """
+        """ Get the missing component data """
         Nitrate._fetch(self)
 
-        if not inject:
-            # Search by component id or use prepared component hash
-            if self._id is not NitrateNone:
-                try:
-                    log.info("Fetching component " + self.identifier)
-                    componenthash = self._server.Product.get_component(self.id)
-                    log.debug("Initializing component " + self.identifier)
-                    log.log(3, pretty(componenthash))
-                    self._name = componenthash["name"]
-                    self._product = Product(componenthash["product_id"])
-                except LookupError:
-                    raise NitrateError(
-                            "Cannot find component for " + self.identifier)
-            # Search by product and component name
-            else:
-                try:
-                    log.info(u"Fetching component '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    componenthash = self._server.Product.check_component(
-                            self.name, self.product.id)
-                    log.debug(u"Initializing component '{0}' of '{1}'".format(
-                            self.name, self.product.name))
-                    log.log(3, pretty(componenthash))
-                    self._id = componenthash["id"]
-                except LookupError:
-                    raise NitrateError("Component '{0}' not found in"
-                           " '{1}'".format(self.name, self.product.name))
+        # Directly fetch from the initial object dict
+        if inject is not None:
+            log.info("Processing component ID#{0} inject".format(inject["id"]))
+        # Search by component id
+        elif self._id is not NitrateNone:
+            try:
+                log.info("Fetching component " + self.identifier)
+                inject = self._server.Product.get_component(self.id)
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError(
+                        "Cannot find component for " + self.identifier)
+        # Search by component name and product
         else:
-            componenthash = inject
-            self._id = componenthash["id"]
-            log.log(3, pretty(componenthash))
-            self._name = componenthash["name"]
-            self._product = Product(componenthash["product_id"])
+            try:
+                log.info(u"Fetching component '{0}' of '{1}'".format(
+                        self.name, self.product.name))
+                inject = self._server.Product.check_component(
+                        self.name, self.product.id)
+            except xmlrpclib.Fault, error:
+                log.error(error)
+                raise NitrateError("Component '{0}' not found in"
+                        " '{1}'".format(self.name, self.product.name))
 
-        if get_cache_level() >= CACHE_OBJECTS:
-            for key in [self.id, self.name+')('+self.product.name]:
-                Component._cache[key] = self
+        # Initialize data from the inject and index into cache
+        log.debug("Initializing component ID#{0}".format(inject["id"]))
+        log.xmlrpc(pretty(inject))
+        self._id = inject["id"]
+        self._name = inject["name"]
+        self._product = Product(
+                {"id": inject["product_id"], "name": inject["product"]})
+        self._index("{0}---in---{1}".format(self.name, self.product.name))
 
     @staticmethod
     def search(**query):
@@ -2639,7 +2622,10 @@ class Component(Nitrate):
 class CaseComponents(Container):
     """ Components linked to a test case. """
 
+    # Local cache indexed by corresponding test case id
     _cache = {}
+    # Class of contained objects
+    _class = Component
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Case Components Special
@@ -2963,36 +2949,22 @@ class Tag(Nitrate):
     def __init__(self, id=None, name=None):
         """ Initialize by tag id or tag name """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
-
-        self._init()
-        # Initialized by initial object dict
-        if isinstance(id, dict):
-            inject = id
-            id = None
-        else:
-            inject = None
-        # Initialized by name
-        if isinstance(id, basestring):
-            name = id
-            id = None
-        # Initialized by id
-        if id is not None:
-            self._name = NitrateNone
-        elif name is not None:
-            self._name = name
-        # Init by inject
-        elif inject is not None:
-            pass
-        else:
-            raise NitrateError("Need either tag id or tag name "
-                    "to initialize the Tag object.")
+        # Initialize (unless already done)
+        id, name, inject, initialized = self._is_initialized(id or name)
+        if initialized: return
         Nitrate.__init__(self, id)
 
-        if inject is not None or get_cache_level() >= CACHE_OBJECTS:
+        # If inject given, fetch tag data from it
+        if inject:
             self._fetch(inject)
+        # Initialize by name
+        elif name is not None:
+            self._name = name
+            self._index(name)
+        # Otherwise just check that the tag name or id was provided
+        elif not id:
+            raise NitrateError("Need either tag id or tag name "
+                    "to initialize the Tag object.")
 
     def __unicode__(self):
         """ Tag name for printing. """
@@ -3006,43 +2978,36 @@ class Tag(Nitrate):
         """ Fetch tag data from the server. """
         Nitrate._fetch(self)
 
-        if inject is None:
-            # Search by id
-            if self._id is not NitrateNone:
-                try:
-                    log.info("Fetching tag " + self.identifier)
-                    hash = self._server.Tag.get_tags({'ids': [self.id]})
-                    log.debug("Initializing tag " + self.identifier)
-                    log.log(3, pretty(hash))
-                    self._name = hash[0]["name"]
-                except IndexError:
-                    raise NitrateError(
-                            "Cannot find tag for {0}".format(self.identifier))
-            # Search by tag name
-            else:
-                try:
-                    log.info(u"Fetching tag '{0}'".format(self.name))
-                    hash = self._server.Tag.get_tags(
-                            {'names': [self.name]})
-                    # Problem if name is not found
-                    log.debug(u"Initializing tag '{0}'".format(
-                            self.name))
-                    log.log(3, pretty(hash))
-                    self._id = hash[0]["id"]
-                except IndexError:
-                    raise NitrateError(
-                            "Cannot find tag for '{0}'".format(self.name))
+        # Directly fetch from the initial object dict
+        if inject is not None:
+            log.debug("Initializing Tag ID#{0}".format(inject["id"]))
+            log.xmlrpc(pretty(inject))
+            self._id = inject["id"]
+            self._name = inject["name"]
+        # Search by tag id
+        elif self._id is not NitrateNone:
+            try:
+                log.info("Fetching tag " + self.identifier)
+                inject = self._server.Tag.get_tags({'ids': [self.id]})
+                log.debug("Initializing tag " + self.identifier)
+                log.xmlrpc(pretty(inject))
+                self._name = inject[0]["name"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find tag for {0}".format(self.identifier))
+        # Search by tag name
         else:
-            hash = inject
-            # Save values
-            log.debug("Initializing Tag ID#{0}".format(hash["id"]))
-            log.log(3, pretty(hash))
-            self._id = hash["id"]
-            self._name = hash["name"]
-
-        if get_cache_level() >= CACHE_OBJECTS:
-            Tag._cache[self.id] = Tag._cache[self.name] = self
-
+            try:
+                log.info(u"Fetching tag '{0}'".format(self.name))
+                inject = self._server.Tag.get_tags({'names': [self.name]})
+                log.debug(u"Initializing tag '{0}'".format(self.name))
+                log.xmlrpc(pretty(inject))
+                self._id = inject[0]["id"]
+            except IndexError:
+                raise NitrateError(
+                        "Cannot find tag '{0}'".format(self.name))
+        # Index the fetched object into cache
+        self._index(self.name)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Plan Tags Class
@@ -3052,6 +3017,9 @@ class PlanTags(Container):
     """ Test plan tags. """
 
     _cache = {}
+
+    # Class of contained objects
+    _class = Tag
 
     def _fetch(self, inset=None):
         """ Fetch currently attached tags from the server. """
@@ -3096,6 +3064,11 @@ class PlanTags(Container):
             testplan = TestPlan(self.testplan.id)
             testplan.tags.remove(Tag("TestTag"))
             testplan.update()
+            # Check cache content
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(Tag("TestTag") not in testplan.tags)
+            # Check server content
+            Cache.clear()
             testplan = TestPlan(self.testplan.id)
             self.assertTrue(Tag("TestTag") not in testplan.tags)
 
@@ -3105,6 +3078,11 @@ class PlanTags(Container):
             testplan = TestPlan(self.testplan.id)
             testplan.tags.add(Tag("TestTag"))
             testplan.update()
+            # Check cache content
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(Tag("TestTag") in testplan.tags)
+            # Check server content
+            Cache.clear()
             testplan = TestPlan(self.testplan.id)
             self.assertTrue(Tag("TestTag") in testplan.tags)
 
@@ -3114,6 +3092,11 @@ class PlanTags(Container):
             testplan = TestPlan(self.testplan.id)
             testplan.tags.remove(Tag("TestTag"))
             testplan.update()
+            # Check cache content
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(Tag("TestTag") not in testplan.tags)
+            # Check server content
+            Cache.clear()
             testplan = TestPlan(self.testplan.id)
             self.assertTrue(Tag("TestTag") not in testplan.tags)
 
@@ -3126,6 +3109,9 @@ class RunTags(Container):
     """ Test run tags. """
 
     _cache = {}
+
+    # Class of contained objects
+    _class = Tag
 
     def _fetch(self, inset=None):
         """ Fetch currently attached tags from the server """
@@ -3170,6 +3156,11 @@ class RunTags(Container):
             testrun = TestRun(self.testrun.id)
             testrun.tags.remove(Tag("TestTag"))
             testrun.update()
+            # Check cache content
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue(Tag("TestTag") not in testrun.tags)
+            # Check server content
+            Cache.clear()
             testrun = TestRun(self.testrun.id)
             self.assertTrue(Tag("TestTag") not in testrun.tags)
 
@@ -3179,6 +3170,11 @@ class RunTags(Container):
             testrun = TestRun(self.testrun.id)
             testrun.tags.add(Tag("TestTag"))
             testrun.update()
+            # Check cache content
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue(Tag("TestTag") in testrun.tags)
+            # Check server content
+            Cache.clear()
             testrun = TestRun(self.testrun.id)
             self.assertTrue(Tag("TestTag") in testrun.tags)
 
@@ -3188,6 +3184,11 @@ class RunTags(Container):
             testrun = TestRun(self.testrun.id)
             testrun.tags.remove(Tag("TestTag"))
             testrun.update()
+            # Check cache content
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue(Tag("TestTag") not in testrun.tags)
+            # Check server content
+            Cache.clear()
             testrun = TestRun(self.testrun.id)
             self.assertTrue(Tag("TestTag") not in testrun.tags)
 
@@ -3200,6 +3201,9 @@ class CaseTags(Container):
     """ Test case tags. """
 
     _cache = {}
+
+    # Class of contained objects
+    _class = Tag
 
     def _fetch(self, inset=None):
         """ Fetch currently attached tags from the server """
@@ -3245,6 +3249,11 @@ class CaseTags(Container):
             testcase = TestCase(self.testcase.id)
             testcase.tags.remove(Tag("TestTag"))
             testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(Tag("TestTag") not in testcase.tags)
+            # Check server content
+            Cache.clear()
             testcase = TestCase(self.testcase.id)
             self.assertTrue(Tag("TestTag") not in testcase.tags)
 
@@ -3254,6 +3263,11 @@ class CaseTags(Container):
             testcase = TestCase(self.testcase.id)
             testcase.tags.add(Tag("TestTag"))
             testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(Tag("TestTag") in testcase.tags)
+            # Check server content
+            Cache.clear()
             testcase = TestCase(self.testcase.id)
             self.assertTrue(Tag("TestTag") in testcase.tags)
 
@@ -3263,6 +3277,11 @@ class CaseTags(Container):
             testcase = TestCase(self.testcase.id)
             testcase.tags.remove(Tag("TestTag"))
             testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(Tag("TestTag") not in testcase.tags)
+            # Check server content
+            Cache.clear()
             testcase = TestCase(self.testcase.id)
             self.assertTrue(Tag("TestTag") not in testcase.tags)
 
@@ -3342,14 +3361,14 @@ class TestPlan(Mutable):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
         # ID check
         if isinstance(id, int):
-            return cls._cache[id]
+            return cls._cache[id], id
 
         # Check dictionary (only ID so far)
         if isinstance(id, dict):
-            return cls._cache[id['plan_id']]
+            return cls._cache[id["plan_id"]], id["plan_id"]
 
         raise KeyError
 
@@ -3370,27 +3389,19 @@ class TestPlan(Mutable):
 
         """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
-
-        # Prepare attributes, check test plan hash, initialize
-        self._init()
-        if isinstance(id, dict):
-            inject = id
-            id = inject["plan_id"]
-        else:
-            inject = None
+        # Initialize (unless already done)
+        id, ignore, inject, initialized = self._is_initialized(id)
+        if initialized: return
         Mutable.__init__(self, id, prefix="TP")
 
-        # If hash provided, let's initialize the data immediately
+        # If inject given, fetch test case data from it
         if inject:
             self._fetch(inject)
         # Create a new test plan if name, type and product provided
         elif name and type and product:
             self._create(name=name, product=product, version=version,
                     type=type, **kwargs)
-        # Otherwise the id must be provided
+        # Otherwise just check that the test plan id was provided
         elif not id:
             raise NitrateError("Need either id or name, product, version "
                     "and type to initialize the test plan")
@@ -3481,38 +3492,40 @@ class TestPlan(Mutable):
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test plan " + self.identifier)
-            hash = self._server.TestPlan.get(self.id)
+            inject = self._server.TestPlan.get(self.id)
+        # Otherwise just initialize the id from inject
         else:
-            hash = inject
+            self._id = inject["plan_id"]
         log.debug("Initializing test plan " + self.identifier)
-        log.log(3, pretty(hash))
-        if not "plan_id" in hash:
-            log.error(pretty(hash))
+        log.xmlrpc(pretty(inject))
+        if not "plan_id" in inject:
+            log.error(pretty(inject))
             raise NitrateError("Failed to initialize " + self.identifier)
 
         # Set up attributes
-        self._author = User(hash["author_id"])
-        self._name = hash["name"]
-        self._product = Product(id=hash["product_id"],
-                version=hash["default_product_version"])
-        self._type = PlanType(hash["type_id"])
-        self._status = PlanStatus(hash["is_active"] in ["True", True])
-        if hash["parent_id"] is not None:
-            self._parent = TestPlan(hash["parent_id"])
+        self._author = User(inject["author_id"])
+        self._name = inject["name"]
+        self._product = Product(id=inject["product_id"],
+                version=inject["default_product_version"])
+        self._type = PlanType(inject["type_id"])
+        self._status = PlanStatus(inject["is_active"] in ["True", True])
+        if inject["parent_id"] is not None:
+            self._parent = TestPlan(inject["parent_id"])
         else:
             self._parent = None
 
         # Initialize containers
-        if get_cache_level() >= CACHE_PERSISTENT:
-            self._tags = PlanTags(self, inset=[
-                    Tag(tag) for tag in hash["tag"]])
+        self._testcases = PlanCases(self)
+        self._children = ChildPlans(self)
+        # If all tags are cached, initialize them directly from the inject
+        if Tag._is_cached(inject["tag"]):
+            self._tags = PlanTags(
+                    self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
             self._tags = PlanTags(self)
-        self._testcases = TestCases(self)
-        self._children = ChildPlans(self)
 
-        if get_cache_level() >= CACHE_OBJECTS:
-            TestPlan._cache[self._id] = self
+        # Index the fetched object into cache
+        self._index()
 
     def _update(self):
         """ Save test plan data to the server. """
@@ -3553,12 +3566,19 @@ class TestPlan(Mutable):
         def setUp(self):
             """ Set up test plan from the config """
             self.testplan = Nitrate()._config.testplan
+            self.requests = Nitrate._requests
+            self.cache_level = get_cache_level()
+            Cache.clear()
 
-        def testCreateInvalid(self):
+        def tierDown(self):
+            """ Restore cache level """
+            set_cache_level(self.cache_level)
+
+        def test_create_invalid(self):
             """ Create a new test plan (missing required parameters) """
             self.assertRaises(NitrateError, TestPlan, name="Test plan")
 
-        def testCreateValid(self):
+        def test_create_valid(self):
             """ Create a new test plan (valid) """
             testplan = TestPlan(name="Test plan", type=self.testplan.type,
                     product=self.testplan.product,
@@ -3566,7 +3586,7 @@ class TestPlan(Mutable):
             self.assertTrue(isinstance(testplan, TestPlan))
             self.assertEqual(testplan.name, "Test plan")
 
-        def testGetById(self):
+        def test_get_by_id(self):
             """ Fetch an existing test plan by id """
             testplan = TestPlan(self.testplan.id)
             self.assertTrue(isinstance(testplan, TestPlan))
@@ -3574,7 +3594,7 @@ class TestPlan(Mutable):
             self.assertEqual(testplan.type.name, self.testplan.type)
             self.assertEqual(testplan.product.name, self.testplan.product)
 
-        def testStatus(self):
+        def test_plan_status(self):
             """ Test read/write access to the test plan status """
             # Prepare original and negated status
             original = PlanStatus(self.testplan.status)
@@ -3587,8 +3607,7 @@ class TestPlan(Mutable):
             del testplan
             # Test negated value
             testplan = TestPlan(self.testplan.id)
-            # XXX Disabled because of BZ#740558
-            #self.assertEqual(testplan.status, negated)
+            self.assertEqual(testplan.status, negated)
             testplan.status = original
             testplan.update()
             del testplan
@@ -3596,43 +3615,54 @@ class TestPlan(Mutable):
             testplan = TestPlan(self.testplan.id)
             self.assertEqual(testplan.status, original)
 
-        def testFetchTestCases(self):
-            """ Test fetches all test cases in a plan """
-            TestPlan._cache = {}
-            requests = Nitrate._requests
-            testplan = TestPlan(self.testplan.id)
-            log.info(testplan.testcases)
-            self.assertEqual(Nitrate._requests, requests + 1)
-
-        def testTestPlanCaching(self):
-            """ Test caching in TestPlan class """
-            TestPlan._cache = {}
-            requests = Nitrate._requests
-            # Turn off caching
+        def test_cache_none(self):
+            """ Cache none """
+            # Fetch test plan twice ---> two requests
             set_cache_level(CACHE_NONE)
             testplan = TestPlan(self.testplan.id)
-            log.info(testplan.name)
+            self.assertEqual(testplan.name, self.testplan.name)
             testplan = TestPlan(self.testplan.id)
-            log.info(testplan.name)
-            self.assertEqual(Nitrate._requests, requests + 2)
-            # Turn on caching
-            TestPlan._cache = {}
+            self.assertEqual(testplan.name, self.testplan.name)
+            self.assertEqual(Nitrate._requests, self.requests + 2)
+
+        def test_cache_objects(self):
+            """ Cache objects """
+            # Fetch test plan twice --->  just one request
             set_cache_level(CACHE_OBJECTS)
             testplan = TestPlan(self.testplan.id)
-            log.info(testplan.name)
+            self.assertEqual(testplan.name, self.testplan.name)
             testplan = TestPlan(self.testplan.id)
-            log.info(testplan.name)
-            self.assertEqual(Nitrate._requests, requests + 3)
+            self.assertEqual(testplan.name, self.testplan.name)
+            # For now, two requests because of fetching the product
+            self.assertEqual(Nitrate._requests, self.requests + 2)
 
+        def test_cache_persistent(self):
+            """ Cache persistent """
+            set_cache_level(CACHE_PERSISTENT)
+            # Fetch the test plan (populate the cache)
+            testplan = TestPlan(self.testplan.id)
+            log.debug(testplan.name)
+            # Save, clear & load cache
+            Cache.save()
+            Cache.clear()
+            Cache.load()
+            requests = Nitrate._requests
+            # Fetch once again ---> no additional request
+            testplan = TestPlan(self.testplan.id)
+            self.assertEqual(testplan.name, self.testplan.name)
+            self.assertEqual(Nitrate._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Test Plans Class
+#  Case Plans Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class TestPlans(Container):
+class CasePlans(Container):
     """ Test plans linked to a test case. """
 
     _cache = {}
+
+    # Class of contained objects
+    _class = TestPlan
 
     def _fetch(self, inset=None):
         """ Fetch currently attached tags from the server """
@@ -3738,14 +3768,14 @@ class TestRun(Mutable):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
         # ID check
         if isinstance(id, int):
-            return cls._cache[id]
+            return cls._cache[id], id
 
         # Check dictionary (only ID so far)
         if isinstance(id, dict):
-            return cls._cache[id['run_id']]
+            return cls._cache[id["run_id"]], id["run_id"]
 
         raise KeyError
 
@@ -3776,26 +3806,18 @@ class TestRun(Mutable):
         default all CONFIRMED test cases are linked to the created run.
         """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
-
-        # Prepare attributes, check test run hash, initialize
-        self._init()
-        if isinstance(id, dict):
-            inject = id
-            id = inject["run_id"]
-        else:
-            inject = None
+        # Initialize (unless already done)
+        id, name, inject, initialized = self._is_initialized(id)
+        if initialized: return
         Mutable.__init__(self, id, prefix="TR")
 
-        # If hash provided, let's initialize the data immediately
+        # If inject given, fetch test case data from it
         if inject:
             self._fetch(inject)
         # Create a new test run based on provided plan
         elif testplan:
             self._create(testplan=testplan, **kwargs)
-        # Otherwise the id must be provided
+        # Otherwise just check that the test run id was provided
         elif not id:
             raise NitrateError(
                     "Need either id or test plan to initialize the test run")
@@ -3901,34 +3923,34 @@ class TestRun(Mutable):
 
         # Fetch the data hash from the server unless provided
         if inject is None:
-            log.info("Fetching test run " + self.identifier)
-            testrunhash = self._server.TestRun.get(self.id)
+            log.info("Fetching test run {0}".format(self.identifier))
+            inject = self._server.TestRun.get(self.id)
         else:
-            testrunhash = inject
-        log.debug("Initializing test run " + self.identifier)
-        log.log(3, pretty(testrunhash))
+            self._id = inject["run_id"]
+        log.debug("Initializing test run {0}".format(self.identifier))
+        log.xmlrpc(pretty(inject))
 
         # Set up attributes
-        self._build = Build(testrunhash["build_id"])
-        self._manager = User(testrunhash["manager_id"])
-        self._notes = testrunhash["notes"]
-        self._status = RunStatus(testrunhash["stop_date"])
-        self._summary = testrunhash["summary"]
-        self._tester = User(testrunhash["default_tester_id"])
-        self._testplan = TestPlan(testrunhash["plan_id"])
-        self._time = testrunhash["estimated_time"]
-        self._errata = testrunhash["errata_id"]
+        self._build = Build(inject["build_id"])
+        self._manager = User(inject["manager_id"])
+        self._notes = inject["notes"]
+        self._status = RunStatus(inject["stop_date"])
+        self._summary = inject["summary"]
+        self._tester = User(inject["default_tester_id"])
+        self._testplan = TestPlan(inject["plan_id"])
+        self._time = inject["estimated_time"]
+        self._errata = inject["errata_id"]
 
         # Initialize containers
-        if get_cache_level() >= CACHE_PERSISTENT:
-            self._tags = RunTags(self, inset=[
-                    Tag(tag) for tag in testrunhash["tag"]])
+        # If all tags are cached, initialize them directly from the inject
+        if Tag._is_cached(inject["tag"]):
+            self._tags = RunTags(
+                    self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
             self._tags = RunTags(self)
 
-        if get_cache_level() >= CACHE_OBJECTS:
-            TestRun._cache[self._id] = self
-
+        # Index the fetched object into cache
+        self._index()
 
     def _update(self):
         """ Save test run data to the server. """
@@ -4137,14 +4159,14 @@ class TestCase(Mutable):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
         # ID check
         if isinstance(id, int):
-            return cls._cache[id]
+            return cls._cache[id], id
 
         # Check dictionary (only ID so far)
         if isinstance(id, dict):
-            return cls._cache[id['case_id']]
+            return cls._cache[id["case_id"]], id["case_id"]
 
         raise KeyError
 
@@ -4169,30 +4191,19 @@ class TestCase(Mutable):
             link ........... reference link
         """
 
-        # Detect initial object dict
-        if isinstance(id, dict):
-            inject = id
-            id = inject["case_id"]
-        else:
-            inject = None
-
-        # Initialization is not necessary for existing objects
-        if self._id is not None:
-            # But perhaps data are still not fetched
-            if inject is not None and not self._fetched:
-                self._fetch(inject)
-            return
-
-        # Initialize attributes, fetch if inject provided
-        self._init()
+        # Initialize (unless already done)
+        id, name, inject, initialized = self._is_initialized(id)
+        if initialized: return
         Mutable.__init__(self, id, prefix="TC")
+
+        # If inject given, fetch test case data from it
         if inject:
             self._fetch(inject)
         # Create a new test case based on summary, category & product
         elif summary and category and product:
             self._create(summary=summary, category=category, product=product,
                     **kwargs)
-        # Otherwise the id must be provided
+        # Otherwise just check that the test case id was provided
         elif not id:
             raise NitrateError("Need either id or summary, category "
                     "and product to initialize the test case")
@@ -4303,34 +4314,34 @@ class TestCase(Mutable):
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test case " + self.identifier)
-            testcasehash = self._server.TestCase.get(self.id)
+            inject = self._server.TestCase.get(self.id)
         else:
-            testcasehash = inject
+            self._id = inject["case_id"]
         log.debug("Initializing test case " + self.identifier)
-        log.log(3, pretty(testcasehash))
+        log.xmlrpc(pretty(inject))
 
         # Set up attributes
-        self._arguments = testcasehash["arguments"]
-        self._author = User(testcasehash["author_id"])
-        self._category = Category(testcasehash["category_id"])
-        self._link = testcasehash["extra_link"]
-        self._notes = testcasehash["notes"]
-        self._priority = Priority(testcasehash["priority_id"])
-        self._requirement = testcasehash["requirement"]
-        self._script = testcasehash["script"]
-        # XXX self._sortkey = testcasehash["sortkey"]
-        self._status = CaseStatus(testcasehash["case_status_id"])
-        self._summary = testcasehash["summary"]
-        self._time = testcasehash["estimated_time"]
-        if testcasehash["default_tester_id"] is not None:
-            self._tester = User(testcasehash["default_tester_id"])
+        self._arguments = inject["arguments"]
+        self._author = User(inject["author_id"])
+        self._category = Category(inject["category_id"])
+        self._link = inject["extra_link"]
+        self._notes = inject["notes"]
+        self._priority = Priority(inject["priority_id"])
+        self._requirement = inject["requirement"]
+        self._script = inject["script"]
+        # XXX self._sortkey = inject["sortkey"]
+        self._status = CaseStatus(inject["case_status_id"])
+        self._summary = inject["summary"]
+        self._time = inject["estimated_time"]
+        if inject["default_tester_id"] is not None:
+            self._tester = User(inject["default_tester_id"])
         else:
             self._tester = None
 
         # Handle manual, automated and autoproposed
-        self._automated = testcasehash["is_automated"] in [1, 2]
-        self._manual = testcasehash["is_automated"] in [0, 2]
-        self._autoproposed = testcasehash["is_automated_proposed"]
+        self._automated = inject["is_automated"] in [1, 2]
+        self._manual = inject["is_automated"] in [0, 2]
+        self._autoproposed = inject["is_automated_proposed"]
 
         # Empty script or arguments to be handled same as None
         if self._script == "":
@@ -4340,16 +4351,17 @@ class TestCase(Mutable):
 
         # Initialize containers
         self._bugs = Bugs(self)
-        if get_cache_level() >= CACHE_PERSISTENT:
-            self._tags = CaseTags(self, inset=[
-                    Tag(tag) for tag in testcasehash["tag"]])
+        self._testplans = CasePlans(self)
+        self._components = CaseComponents(self)
+        # If all tags are cached, initialize them directly from the inject
+        if Tag._is_cached(inject["tag"]):
+            self._tags = CaseTags(
+                    self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
             self._tags = CaseTags(self)
-        self._testplans = TestPlans(self)
-        self._components = CaseComponents(self)
 
-        if get_cache_level() >= CACHE_OBJECTS:
-            TestCase._cache[self.id] = self
+        # Index the fetched object into cache
+        self._index()
 
     def _update(self):
         """ Save test case data to server """
@@ -4472,14 +4484,6 @@ class TestCase(Mutable):
             self.assertEqual(testcase.summary, self.testcase.summary)
             self.assertEqual(testcase.category.name, self.testcase.category)
 
-        def testGetByStringId(self):
-            """ Fetch an existing test case by id (provided as string) """
-            testcase = TestCase(str(self.testcase.id))
-            self.assertTrue(testcase.id, int)
-            self.assertTrue(isinstance(testcase, TestCase))
-            self.assertEqual(testcase.summary, self.testcase.summary)
-            self.assertEqual(testcase.category.name, self.testcase.category)
-
         def testGetByInvalidId(self):
             """ Fetch an existing test case by id (invalid id) """
             self.assertRaises(NitrateError, TestCase, 'invalid-id')
@@ -4565,10 +4569,13 @@ class TestCase(Mutable):
 #  Test Cases Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class TestCases(Container):
+class PlanCases(Container):
     """ Test cases linked to a test plan. """
 
     _cache = {}
+
+    # Class of contained objects
+    _class = TestCase
 
     def _fetch(self, inset=None):
         """ Fetch currently linked test cases from the server """
@@ -4612,6 +4619,9 @@ class ChildPlans(Container):
     """ Child test plans of a parent plan """
 
     _cache = {}
+
+    # Class of contained objects
+    _class = TestPlan
 
     def _fetch(self, inset=None):
         """ Find all child test plans """
@@ -4717,14 +4727,14 @@ class CaseRun(Mutable):
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
-        """ Check if object with id is already in cache """
+        """ Look up cached objects, return found instance and search key """
         # ID check
         if isinstance(id, int):
-            return cls._cache[id]
+            return cls._cache[id], id
 
         # Check dictionary (only ID so far)
         if isinstance(id, dict):
-            return cls._cache[id['case_run_id']]
+            return cls._cache[id["case_run_id"]], id["case_run_id"]
 
         raise KeyError
 
@@ -4739,30 +4749,20 @@ class CaseRun(Mutable):
         a new test case run (based on provided test case and test run).
         """
 
-        # If we are a cached-already object no init is necessary
-        if getattr(self, "_id", None) is not None:
-            return
-
-        # Prepare attributes, check data hashes, initialize
-        self._init()
-        caseruninject = kwargs.get("caseruninject", None)
-        testcaseinject = kwargs.get("testcaseinject", None)
-        if isinstance(id, dict):
-            caseruninject = id
-        if caseruninject:
-            id = caseruninject["case_run_id"]
+        # Initialize (unless already done)
+        id, name, inject, initialized = self._is_initialized(id, **kwargs)
+        if initialized: return
         Mutable.__init__(self, id, prefix="CR")
 
-        # If initial object dict provided, let's initialize the data
-        if caseruninject and testcaseinject:
-            self._fetch(caseruninject=caseruninject,
-                    testcaseinject=testcaseinject)
+        # If inject given, fetch test case run data from it
+        if inject:
+            self._fetch(inject, **kwargs)
         # Create a new test case run based on case and run
         elif testcase and testrun:
             self._create(testcase=testcase, testrun=testrun, **kwargs)
-        # Otherwise the id must be provided
+        # Otherwise just check that the test case run id was provided
         elif not id:
-            raise NitrateError("Need either id or testcase, testrun and build "
+            raise NitrateError("Need either id or testcase and testrun "
                     "to initialize the case run")
 
     def __unicode__(self):
@@ -4805,58 +4805,60 @@ class CaseRun(Mutable):
 
         # Submit
         log.info("Creating new case run")
-        log.log(3, pretty(hash))
-        caserunhash = self._server.TestCaseRun.create(hash)
-        log.log(3, pretty(caserunhash))
+        log.xmlrpc(pretty(hash))
+        inject = self._server.TestCaseRun.create(hash)
+        log.xmlrpc(pretty(inject))
         try:
-            self._id = caserunhash["case_run_id"]
+            self._id = inject["case_run_id"]
         except TypeError:
             log.error("Failed to create new case run")
             log.error(pretty(hash))
-            log.error(pretty(caserunhash))
+            log.error(pretty(inject))
             raise NitrateError("Failed to create case run")
-        self._fetch(caseruninject=caserunhash)
+        self._fetch(inject)
         log.info(u"Successfully created {0}".format(self))
 
 
-    def _fetch(self, caseruninject=None, testcaseinject=None):
+    def _fetch(self, inject=None, **kwargs):
         """ Initialize / refresh test case run data.
 
         Either fetch them from the server or use the supplied hashes.
         """
         Nitrate._fetch(self)
 
-        # Fetch the data hash from the server unless provided
-        if caseruninject is None:
-            log.info("Fetching case run " + self.identifier)
-            caserunhash = self._server.TestCaseRun.get(self.id)
+        # Fetch the data from the server unless inject provided
+        if inject is None:
+            log.info("Fetching case run {0}".format(self.identifier))
+            inject = self._server.TestCaseRun.get(self.id)
         else:
-            caserunhash = caseruninject
-        log.debug("Initializing case run " + self.identifier)
-        log.log(3, pretty(caserunhash))
+            self._id = inject["case_run_id"]
+        log.debug("Initializing case run {0}".format(self.identifier))
+        log.xmlrpc(pretty(inject))
 
         # Set up attributes
-        self._assignee = User(caserunhash["assignee_id"])
-        self._build = Build(caserunhash["build_id"])
-        self._notes = caserunhash["notes"]
-        if caserunhash["sortkey"] is not None:
-            self._sortkey = int(caserunhash["sortkey"])
+        self._assignee = User(inject["assignee_id"])
+        self._build = Build(inject["build_id"])
+        self._notes = inject["notes"]
+        if inject["sortkey"] is not None:
+            self._sortkey = int(inject["sortkey"])
         else:
             self._sortkey = None
-        self._status = Status(caserunhash["case_run_status_id"])
-        self._testrun = TestRun(caserunhash["run_id"])
+        self._status = Status(inject["case_run_status_id"])
+        self._testrun = TestRun(inject["run_id"])
+        # Initialize attached test case (from dict, object or id)
+        testcaseinject = kwargs.get("testcaseinject", None)
         if testcaseinject and isinstance(testcaseinject, dict):
             self._testcase = TestCase(testcaseinject)
         elif testcaseinject and isinstance(testcaseinject, TestCase):
             self._testcase = testcaseinject
         else:
-            self._testcase = TestCase(caserunhash["case_id"])
+            self._testcase = TestCase(inject["case_id"])
 
         # Initialize containers
         self._bugs = Bugs(self)
 
-        if get_cache_level() >= CACHE_OBJECTS:
-            CaseRun._cache[self._id] = self
+        # Index the fetched object into cache
+        self._index()
 
     def _update(self):
         """ Save test case run data to the server. """
@@ -4962,7 +4964,7 @@ class Cache(Nitrate):
             User]
     _mutable = [TestCase, TestPlan, TestRun, CaseRun]
     _containers = [CaseComponents, CaseTags, PlanTags, RunTags, ChildPlans,
-            TestCases, TestPlans]
+            PlanCases, CasePlans]
     _classes = _immutable + _mutable + _containers
 
     # File path to the cache
@@ -5104,6 +5106,7 @@ class Cache(Nitrate):
         All expired objects are wiped out as well as those mutable
         objects which are in modified state (hold different information
         from what is on the server a thus could cause inconsistencies).
+        Also all uninitialized objects are removed from the cache.
         """
 
         for current_class in Cache._classes:
@@ -5111,6 +5114,7 @@ class Cache(Nitrate):
             for id, current_object in current_class._cache.iteritems():
                 # Check if object is expired or modified
                 if (current_object._is_expired or
+                        current_object._id is NitrateNone or
                         isinstance(current_object, Mutable) and
                         current_object._modified):
                     # Reset the object to the initial state
