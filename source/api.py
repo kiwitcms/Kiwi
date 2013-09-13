@@ -394,7 +394,7 @@ def listed(items, singular=None, plural=None, max=None, quote=""):
         more = ""
     # Set the default plural form
     if singular is not None and plural is None:
-        if singular.endswith("y"):
+        if singular.endswith("y") and not singular.endswith("ay"):
             plural = singular[:-1] + "ies"
         elif singular.endswith("s"):
             plural = singular + "es"
@@ -425,6 +425,22 @@ def listed(items, singular=None, plural=None, max=None, quote=""):
 def unlisted(text):
     """ Convert human readable list into python list """
     return re.split("\s*,\s*|\s+and\s+|\s+", text)
+
+def human(time):
+    """ Convert timedelta into a human readable format """
+    count = {}
+    count["year"] = time.days / 365
+    count["month"] = (time.days - 365 * count["year"]) / 30
+    count["day"] = 0 if count["year"] > 0 else time.days % 30
+    count["hour"] = time.seconds / 3600
+    count["minute"] = (time.seconds - 3600 * count["hour"]) / 60
+    count["second"] = (
+            time.seconds - 3600 * count["hour"] - 60 * count["minute"])
+    return listed([
+            listed(count[period], period)
+            for period in ["year", "month", "day", "hour", "minute", "second"]
+            if count[period] > 0
+            or time.seconds == time.days == 0 and period == "second"])
 
 def ascii(text):
     """ Transliterate special unicode characters into pure ascii. """
@@ -5148,12 +5164,12 @@ class Cache(Nitrate):
     @staticmethod
     def stats():
         """ Return short stats about cached objects and expiration time """
-        result = "class        objects               expiration\n"
+        result = "class          objects       expiration\n"
         for current_class in sorted(Cache._classes, key=lambda x: x.__name__):
-            result += "{0}{1}{2}\n".format(
+            result += "{0}{1}       {2}\n".format(
                    current_class.__name__.ljust(15),
-                   str(len(set(current_class._cache.itervalues()))).rjust(5),
-                   str(current_class._expiration).rjust(25))
+                   str(len(set(current_class._cache.itervalues()))).rjust(7),
+                   human(current_class._expiration))
         return result
 
 
