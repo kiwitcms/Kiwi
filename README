@@ -123,7 +123,8 @@ nitrate module features see the Python online documentation::
 AUTHORS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 High-level Python module:
-Petr Šplíchal, Zbyšek Mráz, Martin Kyral and Lukáš Zachar.
+Petr Šplíchal, Zbyšek Mráz, Martin Kyral, Lukáš Zachar and Filip
+Holec.
 
 Low-level XMLRPC driver:
 Airald Hapairai, David Malcolm, Will Woods, Bill Peck, Chenxiong
