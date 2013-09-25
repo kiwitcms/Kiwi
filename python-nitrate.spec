@@ -1,5 +1,5 @@
 Name: python-nitrate
-Version: 0.9
+Version: 0.10
 Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
