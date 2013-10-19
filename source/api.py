@@ -4109,9 +4109,9 @@ class TestCase(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["arguments", "author", "automated", "autoproposed", "bugs",
-            "category", "components", "link", "manual", "notes", "plans",
-            "priority", "product", "script", "sortkey", "status", "summary",
-            "tags", "tester", "testplans", "time"]
+            "category", "components", "created", "link", "manual", "notes",
+            "plans", "priority", "product", "script", "sortkey", "status",
+            "summary", "tags", "tester", "testplans", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Properties
@@ -4122,6 +4122,8 @@ class TestCase(Mutable):
             doc="Test case id (read-only).")
     author = property(_getter("author"),
             doc="Test case author.")
+    created = property(_getter("created"),
+            doc="Test case creation date (datetime).")
     tags = property(_getter("tags"),
             doc="Attached tags.")
     bugs = property(_getter("bugs"),
@@ -4340,6 +4342,8 @@ class TestCase(Mutable):
         self._arguments = inject["arguments"]
         self._author = User(inject["author_id"])
         self._category = Category(inject["category_id"])
+        self._created = datetime.datetime.strptime(
+                inject["create_date"], "%Y-%m-%d %H:%M:%S")
         self._link = inject["extra_link"]
         self._notes = inject["notes"]
         self._priority = Priority(inject["priority_id"])
@@ -4499,6 +4503,9 @@ class TestCase(Mutable):
             self.assertTrue(isinstance(testcase, TestCase))
             self.assertEqual(testcase.summary, self.testcase.summary)
             self.assertEqual(testcase.category.name, self.testcase.category)
+            created = datetime.datetime.strptime(
+                    self.testcase.created, "%Y-%m-%d %H:%M:%S")
+            self.assertEqual(testcase.created, created)
 
         def testGetByInvalidId(self):
             """ Fetch an existing test case by id (invalid id) """
