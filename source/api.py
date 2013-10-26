@@ -2069,13 +2069,13 @@ class Version(Nitrate):
     # Read-only properties
     id = property(_getter("id"), doc="Version id")
     name = property(_getter("name"), doc="Version name")
-    product = property(_getter("product"), doc="Relevant product")
+    product = property(_getter("product"), doc="Version product")
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
         """ Look up cached objects, return found instance and search key """
 
-        # Search cache byt name and product
+        # Search cache by the version name and product
         if "product" in kwargs and ("version" in kwargs or "name" in kwargs):
             product = kwargs.get("product")
             if isinstance(product, Product):
@@ -2135,39 +2135,38 @@ class Version(Nitrate):
 
         # Directly fetch from the initial object dict
         if inject is not None:
-            log.debug("Initializing Version ID#{0}".format(inject["id"]))
-            log.xmlrpc(pretty(inject))
-            self._id = inject["id"]
-            self._name = inject["name"]
-            self._product = inject["product"]
+            log.debug("Processing Version ID#{0} inject".format(inject["id"]))
         # Search by version id
-        if self._id is not NitrateNone:
+        elif self._id is not NitrateNone:
             try:
-                log.info("Fetching version " + self.identifier)
-                inject = self._server.Product.filter_versions({'id': self.id})
-                log.debug("Initializing version " + self.identifier)
-                log.xmlrpc(pretty(inject))
-                self._name = inject[0]["value"]
-                self._product = Product(inject[0]["product_id"])
+                log.info("Fetching version {0}".format(self.identifier))
+                inject = self._server.Product.filter_versions(
+                        {'id': self.id})[0]
             except IndexError:
                 raise NitrateError(
-                        "Cannot find version for " + self.identifier)
+                        "Cannot find version for {0}".format(self.identifier))
         # Search by product and name
         else:
             try:
                 log.info(u"Fetching version '{0}' of '{1}'".format(
                         self.name, self.product.name))
                 inject = self._server.Product.filter_versions(
-                        {'product': self.product.id, 'value': self.name})
-                log.debug(u"Initializing version '{0}' of '{1}'".format(
-                        self.name, self.product.name))
-                log.xmlrpc(pretty(inject))
-                self._id = inject[0]["id"]
+                        {'product': self.product.id, 'value': self.name})[0]
             except IndexError:
                 raise NitrateError(
                         "Cannot find version for '{0}'".format(self.name))
-        # Index into cache by version name and product
-        self._index("{0}---in---{1}".format(self.name, self.product.name))
+        # Initialize data from the inject and index into cache
+        log.debug("Initializing Version ID#{0}".format(inject["id"]))
+        log.xmlrpc(pretty(inject))
+        self._id = inject["id"]
+        self._name = inject["value"]
+        self._product = Product(inject["product_id"])
+        # Index by product name & version name (if product is cached)
+        if self.product._name is not NitrateNone:
+            self._index("{0}---in---{1}".format(self.name, self.product.name))
+        # Otherwise index by id only
+        else:
+            self._index()
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Version Self Test
@@ -2206,21 +2205,37 @@ class Version(Nitrate):
             """ Cache none """
             set_cache_level(CACHE_NONE)
             version = Version(self.version.id)
-            log.info(version.name)
+            self.assertEqual(version.name, self.version.name)
             version = Version(self.version.id)
-            log.info(version.name)
-            # Fetches both version and product twice ---> 4 requests
-            self.assertEqual(Nitrate._requests, self.requests + 4)
+            self.assertEqual(version.name, self.version.name)
+            # Fetches the version twice ---> 2 requests
+            self.assertEqual(Nitrate._requests, self.requests + 2)
 
         def test_cache_objects(self):
             """ Cache objects """
             set_cache_level(CACHE_OBJECTS)
             version = Version(self.version.id)
-            log.info(version.name)
+            self.assertEqual(version.name, self.version.name)
             version = Version(self.version.id)
-            log.info(version.name)
-            # Should fetch version and product once ---> 2 requests
-            self.assertEqual(Nitrate._requests, self.requests + 2)
+            self.assertEqual(version.name, self.version.name)
+            # Should fetch version just once ---> 1 request
+            self.assertEqual(Nitrate._requests, self.requests + 1)
+
+        def test_cache_persistent(self):
+            """ Cache persistent """
+            set_cache_level(CACHE_PERSISTENT)
+            # Fetch the version (populate the cache)
+            version = Version(self.version.id)
+            self.assertEqual(version.name, self.version.name)
+            # Save, clear & load cache
+            Cache.save()
+            Cache.clear()
+            Cache.load()
+            requests = Nitrate._requests
+            # Fetch once again ---> no additional request
+            version = Version(self.version.id)
+            self.assertEqual(version.name, self.version.name)
+            self.assertEqual(Nitrate._requests, requests)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
