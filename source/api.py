@@ -5218,6 +5218,11 @@ else:
             help="Run performance tests")
     (options, arguments) = parser.parse_args()
 
+    # Custom test result class
+    class ShortResult(unittest.TextTestResult):
+        def getDescription(self, test):
+            return test.shortDescription() or str(test)
+
     # Walk through all module classes
     import __main__
     results = {}
@@ -5242,7 +5247,7 @@ else:
                 print header(object.__name__)
                 log_level = get_log_level()
                 results[object.__name__] = unittest.TextTestRunner(
-                            verbosity=2).run(suite)
+                            verbosity=2, resultclass=ShortResult).run(suite)
                 set_log_level(log_level)
 
     # Check for failed tests and give a short test summary
