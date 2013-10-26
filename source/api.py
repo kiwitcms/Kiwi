@@ -1409,7 +1409,7 @@ class Product(Nitrate):
     _cache = {}
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["name", "version"]
+    _attributes = ["name"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Product Properties
@@ -1419,19 +1419,9 @@ class Product(Nitrate):
     id = property(_getter("id"), doc="Product id")
     name = property(_getter("name"), doc="Product name")
 
-    # Read-write properties
-    version = property(_getter("version"), _setter("version"),
-            doc="Default product version")
-
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
         """ Look up cached objects, return found instance and search key """
-        try:
-            if 'version' in kwargs and cls._cache[id].version is NitrateNone:
-                raise KeyError
-        except AttributeError:
-            pass
-
         # Search the cache by product name
         if "name" in kwargs:
             name = kwargs.get("name")
@@ -1443,12 +1433,16 @@ class Product(Nitrate):
     #  Product Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, name=None, version=None):
+    def __init__(self, id=None, name=None):
         """
-        Initialize the Product
+        Initialize the Product by id or name
 
-        One of id or name parameters must be provided. Optional version
-        argument sets the default product version.
+        Examples:
+
+        Product(60)
+        Product(id=60)
+        Product("Red Hat Enterprise Linux 6")
+        Product(name="Red Hat Enterprise Linux 6")
         """
 
         # Initialize (unless already done)
@@ -1467,16 +1461,9 @@ class Product(Nitrate):
         elif not id:
             raise NitrateError("Need id or name to initialize Product")
 
-        # Optionally initialize version
-        if version is not None:
-            self._version = Version(product=self, version=version)
-
     def __unicode__(self):
         """ Product name for printing. """
-        if self._version is not NitrateNone:
-            return u"{0}, version {1}".format(self.name, self.version)
-        else:
-            return self.name
+        return self.name
 
     @staticmethod
     def search(**query):
@@ -3346,7 +3333,7 @@ class TestPlan(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["author", "children", "name", "parent", "product",
-            "status", "tags", "testcases", "testruns", "type"]
+            "status", "tags", "testcases", "testruns", "type", "version"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Properties
@@ -3375,6 +3362,8 @@ class TestPlan(Mutable):
             doc="Test plan type.")
     status = property(_getter("status"), _setter("status"),
             doc="Test plan status.")
+    version = property(_getter("version"), _setter("version"),
+            doc="Default product version.")
 
     @property
     def testruns(self):
@@ -3418,6 +3407,7 @@ class TestPlan(Mutable):
             document .... Test plan document (default: '')
             parent ...... Parent test plan (object or id, default: None)
 
+        Product, version and type can be provided as id, name or object.
         """
 
         # Initialize (unless already done)
@@ -3428,13 +3418,14 @@ class TestPlan(Mutable):
         # If inject given, fetch test case data from it
         if inject:
             self._fetch(inject)
-        # Create a new test plan if name, type and product provided
-        elif name and type and product:
+        # Create a new test plan if name, type, product and version provided
+        elif name and type and product and version:
             self._create(name=name, product=product, version=version,
                     type=type, **kwargs)
         # Otherwise just check that the test plan id was provided
         elif not id:
-            raise NitrateError("Need either id or name, product, version "
+            raise NitrateError(
+                    "Need either id or name, product, version "
                     "and type to initialize the test plan")
 
     def __iter__(self):
@@ -3457,7 +3448,6 @@ class TestPlan(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _create(self, name, product, version, type, **kwargs):
-
         """ Create a new test plan. """
 
         hash = {}
@@ -3467,22 +3457,27 @@ class TestPlan(Mutable):
             raise NitrateError("Name required for creating new test plan")
         hash["name"] = name
 
-        # Product and Version
+        # Product
         if product is None:
             raise NitrateError("Product required for creating new test plan")
-        elif isinstance(product, basestring):
-            product = Product(name=product, version=version)
+        elif isinstance(product, (int, basestring)):
+            product = Product(product)
         hash["product"] = product.id
 
+        # Version
         if version is None:
             raise NitrateError("Version required for creating new test plan")
-        hash["default_product_version"] = product.version.id
+        elif isinstance(version, int):
+            version = Version(version)
+        elif isinstance(version, basestring):
+            version = Version(name=version, product=product)
+        hash["default_product_version"] = version.id
 
         # Type
         if type is None:
             raise NitrateError("Type required for creating new test plan")
-        elif isinstance(type, basestring):
-            type = PlanType(name=type)
+        elif isinstance(type, (int, basestring)):
+            type = PlanType(type)
         hash["type"] = type.id
 
         # Parent
@@ -3536,8 +3531,13 @@ class TestPlan(Mutable):
         # Set up attributes
         self._author = User(inject["author_id"])
         self._name = inject["name"]
-        self._product = Product(id=inject["product_id"],
-                version=inject["default_product_version"])
+        self._product = Product({
+                "id": inject["product_id"],
+                "name": inject["product"]})
+        self._version = Version({
+                "id": inject["product_version_id"],
+                "value": inject["product_version"],
+                "product_id": inject["product_id"]})
         self._type = PlanType(inject["type_id"])
         self._status = PlanStatus(inject["is_active"] in ["True", True])
         if inject["parent_id"] is not None:
@@ -3569,7 +3569,7 @@ class TestPlan(Mutable):
         hash["is_active"] = self.status.id == 1
         if self.parent is not None:
             hash["parent"] = self.parent.id
-        hash["default_product_version"] = self.product.version.id
+        hash["default_product_version"] = self.version.id
 
         log.info("Updating test plan " + self.identifier)
         log.xmlrpc(pretty(hash))
@@ -3611,7 +3611,9 @@ class TestPlan(Mutable):
 
         def test_create_valid(self):
             """ Create a new test plan (valid) """
-            testplan = TestPlan(name="Test plan", type=self.testplan.type,
+            testplan = TestPlan(
+                    name="Test plan",
+                    type=self.testplan.type,
                     product=self.testplan.product,
                     version=self.testplan.version)
             self.assertTrue(isinstance(testplan, TestPlan))
@@ -3624,6 +3626,7 @@ class TestPlan(Mutable):
             self.assertEqual(testplan.name, self.testplan.name)
             self.assertEqual(testplan.type.name, self.testplan.type)
             self.assertEqual(testplan.product.name, self.testplan.product)
+            self.assertEqual(testplan.version.name, self.testplan.version)
 
         def test_plan_status(self):
             """ Test read/write access to the test plan status """
@@ -3664,8 +3667,7 @@ class TestPlan(Mutable):
             self.assertEqual(testplan.name, self.testplan.name)
             testplan = TestPlan(self.testplan.id)
             self.assertEqual(testplan.name, self.testplan.name)
-            # For now, two requests because of fetching the product
-            self.assertEqual(Nitrate._requests, self.requests + 2)
+            self.assertEqual(Nitrate._requests, self.requests + 1)
 
         def test_cache_persistent(self):
             """ Cache persistent """
