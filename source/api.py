@@ -3332,7 +3332,7 @@ class TestPlan(Mutable):
     _identifier_width = 5
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["author", "children", "name", "parent", "product",
+    _attributes = ["author", "children", "name", "owner", "parent", "product",
             "status", "tags", "testcases", "testruns", "type", "version"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3352,6 +3352,8 @@ class TestPlan(Mutable):
     # Read-write properties
     name = property(_getter("name"), _setter("name"),
             doc="Test plan name.")
+    owner = property(_getter("owner"), _setter("owner"),
+            doc="Test plan owner.")
     parent = property(_getter("parent"), _setter("parent"),
             doc="Parent test plan.")
     children = property(_getter("children"), _setter("children"),
@@ -3530,6 +3532,10 @@ class TestPlan(Mutable):
 
         # Set up attributes
         self._author = User(inject["author_id"])
+        if inject["owner_id"] is not None:
+            self._owner = User(inject["owner_id"])
+        else:
+            self._owner = None
         self._name = inject["name"]
         self._product = Product({
                 "id": inject["product_id"],
@@ -3570,6 +3576,8 @@ class TestPlan(Mutable):
         if self.parent is not None:
             hash["parent"] = self.parent.id
         hash["default_product_version"] = self.version.id
+        if self.owner is not None:
+            hash["owner"] = self.owner.id
 
         log.info("Updating test plan " + self.identifier)
         log.xmlrpc(pretty(hash))
@@ -3627,6 +3635,7 @@ class TestPlan(Mutable):
             self.assertEqual(testplan.type.name, self.testplan.type)
             self.assertEqual(testplan.product.name, self.testplan.product)
             self.assertEqual(testplan.version.name, self.testplan.version)
+            self.assertEqual(testplan.owner.login, self.testplan.owner)
 
         def test_plan_status(self):
             """ Test read/write access to the test plan status """

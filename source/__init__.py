@@ -193,6 +193,7 @@ data of existing objects to be tested, for example:
     product = Red Hat Enterprise Linux 6
     version = 6.1
     status = ENABLED
+    owner = login
 
     [plantype]
     id = 1
