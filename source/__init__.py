@@ -100,9 +100,11 @@ Caching support
 
 In order to save calls to server and time, caching support has been
 implemented. Every class that handles objects has its own cache and it
-is used to save already initialized (fetched) objects from server.
-Immutable classes are automatically fetched from server after
-initialization, the rest will be fetched from server upon request.
+is used to save already initialized (fetched) objects from server. Thus
+synchronizing the modified data with the server has to be explicitly
+requested by the update() method when caching functionality is enabled:
+
+    object.update()
 
 Methods that manipulate caching levels:
 
