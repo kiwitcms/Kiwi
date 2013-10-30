@@ -3746,9 +3746,9 @@ class TestRun(Mutable):
     _identifier_width = 6
 
     # List of all object attributes (used for init & expiration)
-    _attributes = [ "build", "caseruns", "errata", "manager", "notes",
-            "product", "status", "summary", "tags", "tester", "testplan",
-            "time"]
+    _attributes = ["build", "caseruns", "errata", "finished", "manager",
+            "notes", "product", "started", "status", "summary", "tags",
+            "tester", "testplan", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Properties
@@ -3761,6 +3761,10 @@ class TestRun(Mutable):
             doc="Test plan related to this test run.")
     tags = property(_getter("tags"),
             doc="Attached tags.")
+    started = property(_getter("started"),
+            doc="Timestamp when the test run was started (datetime).")
+    finished = property(_getter("finished"),
+            doc="Timestamp when the test run was finished (datetime).")
 
     # Read-write properties
     build = property(_getter("build"), _setter("build"),
@@ -3982,6 +3986,16 @@ class TestRun(Mutable):
         self._testplan = TestPlan(inject["plan_id"])
         self._time = inject["estimated_time"]
         self._errata = inject["errata_id"]
+        try:
+            self._started = datetime.datetime.strptime(
+                    inject["start_date"], "%Y-%m-%d %H:%M:%S")
+        except TypeError:
+            self._started = None
+        try:
+            self._finished = datetime.datetime.strptime(
+                    inject["stop_date"], "%Y-%m-%d %H:%M:%S")
+        except TypeError:
+            self._finished = None
 
         # Initialize containers
         # If all tags are cached, initialize them directly from the inject
@@ -4052,6 +4066,14 @@ class TestRun(Mutable):
             self.assertTrue(isinstance(testrun, TestRun))
             self.assertEqual(testrun.summary, "Test run")
             self.assertEqual(testrun.errata, 1234)
+
+        def testGetById(self):
+            """ Fetch an existing test run by id """
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue(isinstance(testrun, TestRun))
+            self.assertEqual(testrun.summary, self.testrun.summary)
+            self.assertEqual(str(testrun.started), self.testrun.started)
+            self.assertEqual(str(testrun.finished), self.testrun.finished)
 
         def testErrata(self):
             """ Set, get and change errata """

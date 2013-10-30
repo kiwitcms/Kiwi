@@ -204,6 +204,8 @@ data of existing objects to be tested, for example:
     [testrun]
     id = 6757
     summary = Test Run Summary
+    started = 2012-12-12 12:12:12
+    finished = None
 
     [testcase]
     id = 1234
