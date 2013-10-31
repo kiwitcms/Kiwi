@@ -2270,6 +2270,26 @@ class Container(Mutable):
     Provides the add() and remove() methods for adding and removing
     objects and the internal _add() and _remove() which perform the
     actual update to the server (implemented by respective class).
+
+    Container overview (objects contained are listed in brackets):
+
+    TestPlan.tags = PlanTags([Tag]) ......................... done
+    TestPlan.components = PlanComponents([Component]) ....... implement
+    TestPlan.children = ChildPlans([TestPlan]) .............. done
+    TestPlan.testcases = PlanCases([TestCase]) .............. done
+    TestPlan.testruns = PlanRuns([TestRun]) ................. rewrite
+    TestPlan.caseplans = PlanCasePlans([CasePlan]) .......... implement
+
+    TestRun.tags = RunTags([Tag]) ........................... done
+    TestRun.caseruns = RunCaseRuns([CaseRun]) ............... rewrite
+    TestRun.testcases = RunCases([TestCase]) ................ implement
+
+    TestCase.tags = CaseTags([Tag]) ......................... done
+    TestCase.components = CaseComponents([Component]) ....... done
+    TestCase.testplans = CasePlans([TestPlan]) .............. done
+    TestCase.testruns = CaseRuns([TestRun]) ................. needed?
+    TestCase.caseruns = CaseCaseRuns([CaseRun]) ............. needed?
+    TestCase.caseplans = CaseCasePlans[CasePlan]() .......... needed?
     """
 
     # List of all object attributes (used for init & expiration)
