@@ -3922,10 +3922,16 @@ class TestRun(Mutable):
         # Product & version
         if product is None:
             product = testplan.product
-        elif isinstance(product, basestring):
-            product = Product(name=product, version=version)
+        elif not isinstance(product, Product):
+            product = Product(product)
         hash["product"] = product.id
-        hash["product_version"] = product.version.id
+        if version is None:
+            version = testplan.version
+        elif isinstance(version, int):
+            version = Version(version)
+        else:
+            version = Version(name=version, product=product)
+        hash["product_version"] = version.id
 
         # Build & errata
         if build is None:
@@ -4753,7 +4759,7 @@ class ChildPlans(Container):
             parent = TestPlan(self.testplan.id)
             # Create a new separate plan, make sure it's not child
             child = TestPlan(name="Child test plan", type=parent.type,
-                    product=parent.product, version=parent.product.version)
+                    product=parent.product, version=parent.version)
             self.assertTrue(child not in parent.children)
             # Add the new test plan to the children, reload, check
             parent.children.add(child)
