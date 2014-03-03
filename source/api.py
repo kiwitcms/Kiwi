@@ -29,6 +29,7 @@ import types
 import pickle
 import atexit
 import random
+import logging
 import optparse
 import tempfile
 import unittest
@@ -36,7 +37,6 @@ import datetime
 import xmlrpclib
 import unicodedata
 import ConfigParser
-import logging as log
 from pprint import pformat as pretty
 from xmlrpc import NitrateError, NitrateKerbXmlrpc, NitrateXmlrpc
 
@@ -57,6 +57,18 @@ COLOR_ON = 1
 COLOR_OFF = 0
 COLOR_AUTO = 2
 
+LOGGING_CACHE = 7
+LOGGING_XMLRPC = 3
+LOGGING_ALL = 1
+LOGGING_COLORS = {
+        logging.ERROR: "red",
+        logging.WARN: "yellow",
+        logging.INFO: "blue",
+        logging.DEBUG: "green",
+        LOGGING_CACHE: "cyan",
+        LOGGING_XMLRPC: "magenta",
+        }
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Logging
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,7 +80,50 @@ COLOR_AUTO = 2
 #  log.cache(msg) .... stuff related to caching and object initialization
 #  log.xmlrpc(msg) ... data communicated to or from the xmlrpc server
 
-_log_level = log.WARN
+# Global logger and current log level
+log = None
+_log_level = logging.WARN
+
+class ColoredFormatter(logging.Formatter):
+    """ Custom color formatter for logging """
+    def format(self, record):
+        # Handle custom log level names
+        if record.levelno == LOGGING_XMLRPC:
+            levelname = "XMLRPC"
+        elif record.levelno == LOGGING_CACHE:
+            levelname = "CACHE"
+        else:
+            levelname = record.levelname
+        # Map log level to appropriate color
+        try:
+            colour = LOGGING_COLORS[record.levelno]
+        except:
+            colour = "black"
+        # Color the log level, use brackets when coloring off
+        if _color:
+            level = color(" " + levelname + " ", "lightwhite", colour)
+        else:
+            level = "[{0}]".format(levelname)
+        return "{0} {1}".format(level, record.getMessage())
+
+def _create_logger():
+    """ Create nitrate logger """
+    global log
+    # Create logger, handler and formatter
+    log = logging.getLogger('nitrate')
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.NOTSET)
+    handler.setFormatter(ColoredFormatter())
+    log.addHandler(handler)
+    # Save log levels in the logger itself (backward compatibility)
+    for level in "CRITICAL DEBUG ERROR FATAL INFO NOTSET WARN WARNING".split():
+        setattr(log, level, getattr(logging, level))
+    # Additional logging constants and methods for cache and xmlrpc
+    log.XMLRPC = LOGGING_XMLRPC
+    log.CACHE = LOGGING_CACHE
+    log.ALL = LOGGING_ALL
+    log.cache = lambda message: log.log(LOGGING_CACHE, message)
+    log.xmlrpc = lambda message: log.log(LOGGING_XMLRPC, message)
 
 def set_log_level(level=None):
     """
@@ -80,15 +135,19 @@ def set_log_level(level=None):
         DEBUG=0 ... nitrate.log.WARN (default)
         DEBUG=1 ... nitrate.log.INFO
         DEBUG=2 ... nitrate.log.DEBUG
-        DEBUG=3 ... nitrate.log.NOTSET (log all messages)
+        DEBUG=3 ... nitrate.log.CACHE
+        DEBUG=4 ... nitrate.log.XMLRPC
+        DEBUG=5 ... nitrate.log.ALL (log all messages)
     """
 
     global _log_level
     mapping = {
-            0: log.WARN,
-            1: log.INFO,
-            2: log.DEBUG,
-            3: log.NOTSET,
+            0: logging.WARN,
+            1: logging.INFO,
+            2: logging.DEBUG,
+            3: LOGGING_CACHE,
+            4: LOGGING_XMLRPC,
+            5: LOGGING_ALL,
             }
     # If level specified, use given
     if level is not None:
@@ -98,9 +157,10 @@ def set_log_level(level=None):
         try:
             _log_level = mapping[int(os.environ["DEBUG"])]
         except StandardError:
-            _log_level = log.WARN
-    log.basicConfig(format="%(levelname)s %(message)s")
-    log.getLogger().setLevel(_log_level)
+            _log_level = logging.WARN
+    if log is None:
+        _create_logger()
+    log.setLevel(_log_level)
 
 def get_log_level():
     """ Get the current log level """
@@ -236,20 +296,6 @@ def set_color_mode(mode=None):
     else:
         _color = mode == 1
 
-    # Color log level names
-    template = " {0} " if _color else "[{0}]"
-    log.addLevelName(log.ERROR,
-            color(template.format("ERROR"), "lightwhite", "red"))
-    log.addLevelName(log.WARN,
-            color(template.format("WARN"), "lightwhite", "yellow"))
-    log.addLevelName(log.INFO,
-            color(template.format("INFO"), "lightwhite", "blue"))
-    log.addLevelName(log.DEBUG,
-            color(template.format("DEBUG"), "lightwhite", "green"))
-    log.addLevelName(5,
-            color(template.format("CACHE"), "lightwhite", "cyan"))
-    log.addLevelName(3,
-            color(template.format("XMLRPC"), "lightwhite", "magenta"))
     log.debug("Coloring {0}".format(_color and "enabled" or "disabled"))
 
 def get_color_mode():
@@ -262,11 +308,6 @@ def setColorMode(mode=None):
     set_color_mode(mode)
 
 set_color_mode()
-
-# Additional logging methods for cache and xmlrpc
-log.cache = lambda message: log.log(5, message)
-log.xmlrpc = lambda message: log.log(3, message)
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Caching
@@ -5112,7 +5153,7 @@ class Cache(Nitrate):
 
         # Clear expired items and gather all caches into a single object
         Cache.expire()
-        log.debug("Cache dump stats:\n" + Cache.stats().strip())
+        log.cache("Cache dump stats:\n" + Cache.stats().strip())
         data = {}
         for current_class in Cache._classes:
             # Put container classes into id-sleep
@@ -5174,7 +5215,7 @@ class Cache(Nitrate):
                 container._wake()
         # Clear expired items and give a short summary for debugging
         Cache.expire()
-        log.debug("Cache restore stats:\n" + Cache.stats().strip())
+        log.cache("Cache restore stats:\n" + Cache.stats().strip())
 
     @staticmethod
     def clear(classes=None):
