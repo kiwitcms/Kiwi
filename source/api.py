@@ -46,7 +46,7 @@ from xmlrpc import NitrateError, NitrateKerbXmlrpc, NitrateXmlrpc
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 NEVER_CACHE = datetime.timedelta(seconds=0)
-NEVER_EXPIRE = datetime.timedelta(days=365000)
+NEVER_EXPIRE = datetime.timedelta(days=365)
 
 CACHE_NONE = 0
 CACHE_CHANGES = 1
