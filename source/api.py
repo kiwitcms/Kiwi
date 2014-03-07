@@ -575,8 +575,9 @@ class Nitrate(object):
     @property
     def identifier(self):
         """ Consistent identifier string. """
+        id = self._id if self._id is not None else "UNKNOWN"
         return "{0}#{1}".format(
-                self._prefix, str(self._id).rjust(self._identifier_width, "0"))
+                self._prefix, str(id).rjust(self._identifier_width, "0"))
 
     @property
     def _config(self):
