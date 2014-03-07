@@ -2499,8 +2499,8 @@ class Container(Mutable):
         if self._current is NitrateNone: return
         log.cache("Waking up {0} for {1}".format(
                 self.__class__.__name__, self._identifier))
-        self._original = [self._class(id) for id in self._original]
-        self._current = [self._class(id) for id in self._current]
+        self._original = set([self._class(id) for id in self._original])
+        self._current = set([self._class(id) for id in self._current])
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
