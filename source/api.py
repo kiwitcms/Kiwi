@@ -2331,7 +2331,10 @@ class Container(Mutable):
     TestCase.testplans = CasePlans([TestPlan]) .............. done
     TestCase.testruns = CaseRuns([TestRun]) ................. needed?
     TestCase.caseruns = CaseCaseRuns([CaseRun]) ............. needed?
-    TestCase.caseplans = CaseCasePlans[CasePlan]() .......... needed?
+    TestCase.caseplans = CaseCasePlans([CasePlan]) .......... needed?
+    TestCase.bugs = CaseBugs([Bug]) ......................... done
+
+    CaseRun.bugs = CaseRunBugs([Bug]) ....................... done
     """
 
     # List of all object attributes (used for init & expiration)
@@ -2783,7 +2786,6 @@ class CaseComponents(Container):
             testcase = TestCase(self.testcase.id)
             self.assertTrue(component in testcase.components)
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Bug Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2791,8 +2793,15 @@ class CaseComponents(Container):
 class Bug(Nitrate):
     """ Bug related to a test case or a case run. """
 
+    # Local cache of Bug objects indexed by internal bug id
+    _cache = {}
+
     # List of all object attributes (used for init & expiration)
     _attributes = ["bug", "system", "testcase", "caserun"]
+
+    # Prefixes for bug systems, identifier width
+    _prefixes = {1: "BZ"}
+    _identifier_width = 7
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Bug Properties
@@ -2807,7 +2816,7 @@ class Bug(Nitrate):
 
     @property
     def synopsis(self):
-        """ Short summary about the bug. """
+        """ Short summary about the bug """
         # Summary in the form: BUG#123456 (BZ#123, TC#456, CR#789)
         return "{0} ({1})".format(self.identifier, ", ".join([str(self)] +
                 [obj.identifier for obj in (self.testcase, self.caserun)
@@ -2817,189 +2826,275 @@ class Bug(Nitrate):
     #  Bug Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, bug=None, system=1, testcase=None, caserun=None,
-            hash=None):
+    def __init__(self, id=None, bug=None, system=1, **kwargs):
         """
-        Initialize the bug.
+        Initialize the bug
 
-        Provide external bug id, optionally bug system (Bugzilla by default)
-        and related testcase and/or caserun object or provide complete hash.
+        Provide external bug id, optionally bug system (Bugzilla by default).
         """
 
-        # Initialize id & values
-        if bug is not None:
+        # Initialize (unless already done)
+        id, ignore, inject, initialized = self._is_initialized(id)
+        if initialized: return
+        Nitrate.__init__(self, id, prefix="BUG")
+
+        # If inject given, fetch bug data from it
+        if inject:
+            self._fetch(inject)
+        # Initialized by bug id and system id
+        elif bug is not None and system is not None:
             self._bug = bug
             self._system = system
-            self._testcase = testcase
-            self._caserun = caserun
-            Nitrate.__init__(self, 0, prefix="BUG")
-            self._id = "UNKNOWN"
-        else:
-            self._bug = int(hash["bug_id"])
-            self._system = int(hash["bug_system_id"])
-            self._testcase = self._caserun = None
-            if hash["case_id"] is not None:
-                self._testcase = TestCase(hash["case_id"])
-            if hash["case_run_id"] is not None:
-                self._caserun = CaseRun(hash["case_run_id"])
-
-            Nitrate.__init__(self, hash["id"], prefix="BUG")
+        # Otherwise just check that the id was provided
+        elif id is None:
+            raise NitrateError("Need bug id to initialize the Bug object.")
 
     def __eq__(self, other):
-        """ Custom bug comparation.
-
-        Primarily decided by id. If not set, compares by bug id, bug system,
-        related testcase and caserun.
         """
-        if self.id != "UNKNOWN" and other.id != "UNKNOWN":
+        Custom bug comparison
+
+        Primarily decided by id. If unknown, compares by bug id & bug system.
+        """
+        # Decide by internal id
+        if self._id is not NitrateNone and other._id is not NitrateNone:
             return self.id == other.id
-        return (
-                # Bug, system and case run must be equal
-                self.bug == other.bug and
-                self.system == other.system and
-                self.caserun == other.caserun and
-                # And either both case runs are defined
-                (self.caserun is not None and other.caserun is not None
-                # Or test cases are identical
-                or self.testcase == other.testcase))
+        # Compare external id and bug system id
+        return self.bug == other.bug and self.system == other.system
 
     def __unicode__(self):
         """ Bug name for printing. """
-        return u"BZ#{0}".format(self.bug)
+        try:
+            prefix = self._prefixes[self.system]
+        except KeyError:
+            prefix = "BZ"
+        return u"{0}#{1}".format(prefix, str(self.bug).rjust(
+                self._identifier_width, "0"))
+
+    def __hash__(self):
+        """ Construct the uniqe hash from bug id and bug system id """
+        return self.system * 1000000000000 + self.bug
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Bug Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _fetch(self):
-        """ Fetch bug info from the server. """
+    def _fetch(self, inject=None):
+        """ Fetch bug info from the server """
+        Nitrate._fetch(self)
         # No direct xmlrpc function for fetching so far
-        pass
-
-    def attach(self, object):
-        """ Attach bug to the provided test case / case run object. """
-        if isinstance(object, TestCase):
-            return Bug(bug=self.bug, system=self.system, testcase=object)
-        elif isinstance(object, CaseRun):
-            return Bug(bug=self.bug, system=self.system, caserun=object)
-
+        if inject is None:
+            raise NotImplementedError("Direct bug fetching not implemented")
+        # Process provided inject
+        self._id = int(inject["id"])
+        self._bug = int(inject["bug_id"])
+        self._system = int(inject["bug_system_id"])
+        self._testcase = TestCase(int(inject["case_id"]))
+        if inject["case_run_id"] is not None:
+            self._caserun = CaseRun(int(inject["case_run_id"]))
+        # Index the fetched object into cache
+        self._index()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Bugs Class
+#  Case Bugs Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class Bugs(Mutable):
-    """ Relevant bug list for test case and case run objects. """
+class CaseBugs(Container):
+    """ Bugs attached to a test case """
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Bugs Properties
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # Local cache of bugs attached to a test case
+    _cache = {}
 
-    id = property(_getter("id"), doc="Related object id.")
+    # Class of contained objects
+    _class = Bug
 
-    @property
-    def _bugs(self):
-        """ Actual list of bug objects. """
-        if self._current is NitrateNone:
-            self._fetch()
-        return self._current
+    def _fetch(self, inset=None):
+        """ Fetch currently attached bugs from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._fetch(self, inset):
+            return
+        log.info("Fetching bugs for {0}".format(self._identifier))
+        injects = self._server.TestCase.get_bugs(self.id)
+        log.xmlrpc(pretty(injects))
+        self._current = set([Bug(inject) for inject in injects])
+        self._original = set(self._current)
 
-    @property
-    def synopsis(self):
-        """ Short summary about object's bugs. """
-        return "{0}'s bugs: {1}".format(self._object.identifier,
-                str(self) or "[NoBugs]")
+    def _add(self, bugs):
+        """ Attach provided bugs to the test case """
+        log.info(u"Attaching {0} to {1}".format(
+                listed(bugs), self._identifier))
+        data = [{
+                "bug_id": bug.bug,
+                "bug_system_id": bug.system,
+                "case_id": self.id} for bug in bugs]
+        log.xmlrpc(pretty(data))
+        self._server.TestCase.attach_bug(data)
+        # Fetch again the whole bug list (to get the internal id)
+        self._fetch()
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Bugs Special
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def _remove(self, bugs):
+        """ Detach provided bugs from the test case """
+        log.info(u"Detaching {0} from {1}".format(
+                listed(bugs), self._identifier))
+        data = [bug.bug for bug in bugs]
+        log.xmlrpc(pretty(data))
+        self._server.TestCase.detach_bug(self.id, data)
 
-    def __init__(self, object):
-        """ Initialize bugs for specified object. """
-        Mutable.__init__(self, object.id)
-        self._object = object
-        self._current = NitrateNone
-
-    def __iter__(self):
-        """ Bug iterator. """
-        for bug in self._bugs:
-            yield bug
-
-    def __contains__(self, bug):
-        """ Custom 'in' operator. """
-        bug = bug.attach(self._object)
-        return bug in self._bugs
-
+    # Print unicode list of bugs
     def __unicode__(self):
-        """ Display bugs as list for printing. """
-        return ", ".join(sorted([str(bug) for bug in self]))
+        return listed(self._items)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Bugs Methods
+    #  Case Bugs Self Test
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def add(self, bug):
-        """ Add a bug, unless already attached. """
-        # Nothing to do if already attached
-        bug = bug.attach(self._object)
-        if bug in self:
-            log.info("{0} already attached to {1}, doing nothing".format(
-                    bug, self._object.identifier))
-        # Attach the bug
-        else:
-            log.info(u"Attaching bug {0} to {1}".format(
-                    bug, self._object.identifier))
-            hash = {"bug_id": bug.bug, "bug_system_id": bug.system}
-            if isinstance(self._object, TestCase):
-                hash["case_id"] = self.id
-                log.xmlrpc(pretty(hash))
-                self._server.TestCase.attach_bug(hash)
-            elif isinstance(self._object, CaseRun):
-                hash["case_run_id"] = self.id
-                log.xmlrpc(pretty(hash))
-                self._server.TestCaseRun.attach_bug(hash)
-            # Append the bug to the list
-            self._current.append(bug)
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test case from the config """
+            self.testcase = Nitrate()._config.testcase
+            self.bug = Bug(bug=1234)
 
-    def remove(self, bug):
-        """ Remove a bug, if already attached. """
-        # Nothing to do if not attached
-        bug = bug.attach(self._object)
-        if bug not in self:
-            log.info(u"{0} not attached to {1}, doing nothing".format(
-                    bug, self._object.identifier))
-        # Detach the bug
-        else:
-            # Fetch the complete bug object (including the internal id)
-            bug = [bugg for bugg in self if bugg == bug][0]
-            log.info(u"Detaching {0}".format(self.synopsis))
-            if isinstance(self._object, TestCase):
-                self._server.TestCase.detach_bug(self.id, bug.id)
-            elif isinstance(self._object, CaseRun):
-                self._server.TestCaseRun.detach_bug(self.id, bug.id)
-            # Remove the bug from the list
-            self._current = [bugg for bugg in self if bugg != bug]
+        def test_bugging1(self):
+            """ Detaching bug from a test case """
+            # Detach bug and check
+            testcase = TestCase(self.testcase.id)
+            testcase.bugs.remove(self.bug)
+            testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(self.bug not in testcase.bugs)
+            # Check server content
+            Cache.clear()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(self.bug not in testcase.bugs)
 
-    def _fetch(self):
-        """ Initialize / refresh bugs from the server. """
-        log.info("Fetching bugs for {0}".format(self._object.identifier))
-        # Use the respective XMLRPC call to get the bugs
-        if isinstance(self._object, TestCase):
-            hash = self._server.TestCase.get_bugs(self.id)
-        elif isinstance(self._object, CaseRun):
-            hash = self._server.TestCaseRun.get_bugs(self.id)
-        else:
-            raise NitrateError("No bug support for {0}".format(
-                    self._object.__class__))
-        log.xmlrpc(pretty(hash))
+        def test_bugging2(self):
+            """ Attaching bug to a test case """
+            # Attach bug and check
+            testcase = TestCase(self.testcase.id)
+            testcase.bugs.add(self.bug)
+            testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(self.bug in testcase.bugs)
+            # Check server content
+            Cache.clear()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(self.bug in testcase.bugs)
 
-        # Save as a Bug object list
-        self._current = [Bug(hash=bug) for bug in hash]
+        def test_bugging3(self):
+            """ Detaching bug from a test case """
+            # Detach bug and check
+            testcase = TestCase(self.testcase.id)
+            testcase.bugs.remove(self.bug)
+            testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(self.bug not in testcase.bugs)
+            # Check server content
+            Cache.clear()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(self.bug not in testcase.bugs)
 
-    def _update(self):
-        """ Save bug changes to the server. """
-        # Currently no caching for bugs, changes applied immediately
-        pass
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Case Run Bugs Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class CaseRunBugs(Container):
+    """ Bugs attached to a test case run """
+
+    # Local cache of bugs attached to a test case
+    _cache = {}
+
+    # Class of contained objects
+    _class = Bug
+
+    def _fetch(self, inset=None):
+        """ Fetch currently attached bugs from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._fetch(self, inset):
+            return
+        log.info("Fetching bugs for {0}".format(self._identifier))
+        injects = self._server.TestCaseRun.get_bugs(self.id)
+        log.xmlrpc(pretty(injects))
+        self._current = set([Bug(inject) for inject in injects])
+        self._original = set(self._current)
+
+    def _add(self, bugs):
+        """ Attach provided bugs to the test case """
+        log.info(u"Attaching {0} to {1}".format(
+                listed(bugs), self._identifier))
+        data = [{
+                "bug_id": bug.bug,
+                "bug_system_id": bug.system,
+                "case_run_id": self.id} for bug in bugs]
+        log.xmlrpc(pretty(data))
+        self._server.TestCaseRun.attach_bug(data)
+        # Fetch again the whole bug list (to get the internal id)
+        self._fetch()
+
+    def _remove(self, bugs):
+        """ Detach provided bugs from the test case """
+        log.info(u"Detaching {0} from {1}".format(
+                listed(bugs), self._identifier))
+        data = [bug.bug for bug in bugs]
+        log.xmlrpc(pretty(data))
+        self._server.TestCaseRun.detach_bug(self.id, data)
+
+    # Print unicode list of bugs
+    def __unicode__(self):
+        return listed(self._items)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Case Run Bugs Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test case from the config """
+            self.caserun = Nitrate()._config.caserun
+            self.bug = Bug(bug=1234)
+
+        def test_bugging1(self):
+            """ Detaching bug from a test case run """
+            # Detach bug and check
+            caserun = CaseRun(self.caserun.id)
+            caserun.bugs.remove(self.bug)
+            caserun.update()
+            # Check cache content
+            caserun = CaseRun(self.caserun.id)
+            self.assertTrue(self.bug not in caserun.bugs)
+            # Check server content
+            Cache.clear()
+            caserun = CaseRun(self.caserun.id)
+            self.assertTrue(self.bug not in caserun.bugs)
+
+        def test_bugging2(self):
+            """ Attaching bug to a test case run """
+            # Attach bug and check
+            caserun = CaseRun(self.caserun.id)
+            caserun.bugs.add(self.bug)
+            caserun.update()
+            # Check cache content
+            caserun = CaseRun(self.caserun.id)
+            self.assertTrue(self.bug in caserun.bugs)
+            # Check server content
+            Cache.clear()
+            caserun = CaseRun(self.caserun.id)
+            self.assertTrue(self.bug in caserun.bugs)
+
+        def test_bugging3(self):
+            """ Detaching bug from a test case run """
+            # Detach bug and check
+            caserun = CaseRun(self.caserun.id)
+            caserun.bugs.remove(self.bug)
+            caserun.update()
+            # Check cache content
+            caserun = CaseRun(self.caserun.id)
+            self.assertTrue(self.bug not in caserun.bugs)
+            # Check server content
+            Cache.clear()
+            caserun = CaseRun(self.caserun.id)
+            self.assertTrue(self.bug not in caserun.bugs)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Tag Class
@@ -4486,7 +4581,7 @@ class TestCase(Mutable):
             self._arguments = None
 
         # Initialize containers
-        self._bugs = Bugs(self)
+        self._bugs = CaseBugs(self)
         self._testplans = CasePlans(self)
         self._components = CaseComponents(self)
         # If all tags are cached, initialize them directly from the inject
@@ -4994,7 +5089,7 @@ class CaseRun(Mutable):
             self._testcase = TestCase(inject["case_id"])
 
         # Initialize containers
-        self._bugs = Bugs(self)
+        self._bugs = CaseRunBugs(self)
 
         # Index the fetched object into cache
         self._index()
@@ -5099,11 +5194,11 @@ class Cache(Nitrate):
     """
 
     # List of classes with persistent cache support
-    _immutable = [Build, Version, Category, Component, PlanType, Product, Tag,
-            User]
+    _immutable = [Bug, Build, Version, Category, Component, PlanType, Product,
+            Tag, User]
     _mutable = [TestCase, TestPlan, TestRun, CaseRun]
-    _containers = [CaseComponents, CaseTags, PlanTags, RunTags, ChildPlans,
-            PlanCases, CasePlans]
+    _containers = [CaseBugs, CaseRunBugs, CaseComponents, CaseTags,
+            PlanTags, RunTags, ChildPlans, PlanCases, CasePlans]
     _classes = _immutable + _mutable + _containers
 
     # File path to the cache

@@ -214,6 +214,10 @@ data of existing objects to be tested, for example:
     category = Sanity
     created = 2012-12-12 12:12:12
 
+    [caserun]
+    id = 123456
+    status = PASSED
+
 To exercise the whole test suite just run "python nitrate.py". To test
 only subset of tests pick the desired classes on the command line:
 
