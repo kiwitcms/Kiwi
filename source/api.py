@@ -5205,12 +5205,24 @@ class Cache(Nitrate):
 
         # Restore cache for immutable & mutable classes first
         for current_class in Cache._immutable + Cache._mutable:
-            log.cache("Loading cache for {0}".format(current_class.__name__))
-            current_class._cache = data[current_class.__name__]
+            try:
+                log.cache("Loading cache for {0}".format(
+                        current_class.__name__))
+                current_class._cache = data[current_class.__name__]
+            except KeyError:
+                log.cache("Failed to load cache for {0}, starting "
+                        "with empty".format(current_class.__name__))
+                current_class._cache = {}
         # Containers to be loaded last (to prevent object duplicates)
         for current_class in Cache._containers:
-            log.cache("Loading cache for {0}".format(current_class.__name__))
-            current_class._cache = data[current_class.__name__]
+            try:
+                log.cache("Loading cache for {0}".format(
+                        current_class.__name__))
+                current_class._cache = data[current_class.__name__]
+            except KeyError:
+                log.cache("Failed to load cache for {0}, starting "
+                        "with empty".format(current_class.__name__))
+                current_class._cache = {}
             # Wake up container objects from the id-sleep
             for container in current_class._cache.itervalues():
                 container._wake()
