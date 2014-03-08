@@ -5456,6 +5456,7 @@ class Cache(Nitrate):
 
         Accepts class or a list of classes.
         """
+        log.debug("Completely wiping out object cache in memory")
         # Convert single class into a list
         if isinstance(classes, type):
             classes = [classes]
@@ -5482,11 +5483,28 @@ class Cache(Nitrate):
         for current_class in Cache._classes:
             expired = []
             for id, current_object in current_class._cache.iteritems():
-                # Check if object is expired or modified
-                if (current_object._is_expired or
-                        current_object._id is NitrateNone or
-                        isinstance(current_object, Mutable) and
+                expire = False
+                # Check if object is uninitialized
+                if (current_object._id is NitrateNone or
+                        current_object._fetched is None):
+                    log.cache("Wiping uninitialized {0} {1} from cache".format(
+                            current_object.__class__.__name__,
+                            current_object.identifier))
+                    expire = True
+                # Check if object is expired
+                elif current_object._is_expired:
+                    log.cache("Wiping expired {0} {1} from cache".format(
+                            current_object.__class__.__name__,
+                            current_object.identifier))
+                    expire = True
+                # Check if object is modified
+                elif (isinstance(current_object, Mutable) and
                         current_object._modified):
+                    log.cache("Wiping modified {0} {1} from cache".format(
+                            current_object.__class__.__name__,
+                            current_object.identifier))
+                    expire = True
+                if expire:
                     # Reset the object to the initial state
                     current_object._init()
                     expired.append(id)
