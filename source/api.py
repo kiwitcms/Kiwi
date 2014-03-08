@@ -2319,7 +2319,7 @@ class Container(Mutable):
     TestPlan.components = PlanComponents[Component] ....... done
     TestPlan.children = ChildPlans[TestPlan] .............. done
     TestPlan.testcases = PlanCases[TestCase] .............. done
-    TestPlan.testruns = PlanRuns[TestRun] ................. rewrite
+    TestPlan.testruns = PlanRuns[TestRun] ................. done
     TestPlan.caseplans = PlanCasePlans[CasePlan] .......... implement
 
     TestRun.tags = RunTags[Tag] ........................... done
@@ -3628,6 +3628,8 @@ class TestPlan(Mutable):
             doc="Attached tags.")
     testcases = property(_getter("testcases"),
             doc="Test cases linked to this plan.")
+    testruns = property(_getter("testruns"),
+            doc="Test runs related to this plan.")
 
     # Read-write properties
     name = property(_getter("name"), _setter("name"),
@@ -3644,14 +3646,6 @@ class TestPlan(Mutable):
             doc="Test plan status.")
     version = property(_getter("version"), _setter("version"),
             doc="Default product version.")
-
-    @property
-    def testruns(self):
-        """ List of TestRun() objects related to this plan. """
-        if self._testruns is NitrateNone:
-            self._testruns = [TestRun(hash) for hash in
-                    self._server.TestPlan.get_test_runs(self.id)]
-        return self._testruns
 
     @property
     def synopsis(self):
@@ -3831,6 +3825,7 @@ class TestPlan(Mutable):
 
         # Initialize containers
         self._testcases = PlanCases(self)
+        self._testruns = PlanRuns(self)
         self._components = PlanComponents(self)
         self._children = ChildPlans(self)
         # If all tags are cached, initialize them directly from the inject
@@ -3870,6 +3865,8 @@ class TestPlan(Mutable):
             self.tags.update()
         if self._testcases is not NitrateNone:
             self.testcases.update()
+        if self._testruns is not NitrateNone:
+            self.testruns.update()
         if self._components is not NitrateNone:
             self.components.update()
         if self._children is not NitrateNone:
@@ -4245,6 +4242,9 @@ class TestRun(Mutable):
             log.error(pretty(testrunhash))
             raise NitrateError("Failed to create test run")
         self._fetch(testrunhash)
+        # Add newly created test run to testplan.testruns container
+        if PlanRuns._is_cached(testplan.testruns):
+            testplan.testruns._fetch(list(testplan.testruns) + [self])
         log.info(u"Successfully created {0}".format(self))
 
     def _fetch(self, inject=None):
@@ -4425,6 +4425,80 @@ class TestRun(Mutable):
             log.info(testrun.summary)
             self.assertEqual(Nitrate._requests, requests + 3)
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Plan Runs Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class PlanRuns(Container):
+    """ Test runs related to a test plan """
+
+    # Local cache of test runs for a test plan
+    _cache = {}
+
+    # Class of contained objects
+    _class = TestRun
+
+    def _fetch(self, inset=None):
+        """ Fetch test runs from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._fetch(self, inset):
+            return
+        log.info("Fetching testruns for {0}".format(self._identifier))
+        injects = self._server.TestPlan.get_test_runs(self.id)
+        log.xmlrpc(pretty(injects))
+        self._current = set([TestRun(inject) for inject in injects])
+        self._original = set(self._current)
+
+    def _add(self, testruns):
+        """ New test runs are created using TestRun() constructor """
+        raise NitrateError(
+                "Use TestRun(testplan=X) for creating a new test run")
+
+    def _remove(self, testruns):
+        """ Currently no support for removing test runs from test plans """
+        raise NitrateError("Sorry, no support for removing test runs yet")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Test Run Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+            self.testrun = Nitrate()._config.testrun
+
+        def test_inclusion(self):
+            """ Test run included in the container"""
+            testplan = TestPlan(self.testplan.id)
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue(testrun in testplan.testruns)
+            # Everything should be kept in the persistent cache
+            if _cache_level >= CACHE_PERSISTENT:
+                Cache.save()
+                Cache.clear()
+                Cache.load()
+                requests = Nitrate._requests
+                testplan = TestPlan(self.testplan.id)
+                testrun = TestRun(self.testrun.id)
+                self.assertTrue(testrun in testplan.testruns)
+                self.assertEqual(requests, Nitrate._requests)
+
+        def test_new_test_run(self):
+            """ New test runs should be linked """
+            testplan = TestPlan(self.testplan.id)
+            testrun = TestRun(testplan=testplan)
+            self.assertTrue(testrun in testplan.testruns)
+            # Everything should be kept in the persistent cache
+            if _cache_level >= CACHE_PERSISTENT:
+                Cache.save()
+                Cache.clear()
+                Cache.load()
+                requests = Nitrate._requests
+                testplan = TestPlan(self.testplan.id)
+                testrun = TestRun(self.testrun.id)
+                self.assertTrue(testrun in testplan.testruns)
+                self.assertEqual(requests, Nitrate._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Test Case Class
@@ -5321,7 +5395,7 @@ class Cache(Nitrate):
     _immutable = [Bug, Build, Version, Category, Component, PlanType, Product,
             Tag, User]
     _mutable = [TestCase, TestPlan, TestRun, CaseRun]
-    _containers = [CaseBugs, CaseRunBugs, CaseComponents, CaseTags,
+    _containers = [CaseBugs, CaseRunBugs, CaseComponents, CaseTags, PlanRuns,
             PlanTags, RunTags, ChildPlans, PlanCases, CasePlans]
     _classes = _immutable + _mutable + _containers
 
