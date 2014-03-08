@@ -3620,6 +3620,10 @@ class TestPlan(Mutable):
             doc="Test plan id.")
     author = property(_getter("author"),
             doc="Test plan author.")
+    children = property(_getter("children"),
+            doc="Child test plans.")
+    components = property(_getter("components"),
+            doc="Relevant components.")
     tags = property(_getter("tags"),
             doc="Attached tags.")
     testcases = property(_getter("testcases"),
@@ -3632,8 +3636,6 @@ class TestPlan(Mutable):
             doc="Test plan owner.")
     parent = property(_getter("parent"), _setter("parent"),
             doc="Parent test plan.")
-    children = property(_getter("children"), _setter("children"),
-            doc="Child test plans.")
     product = property(_getter("product"), _setter("product"),
             doc="Test plan product.")
     type = property(_getter("type"), _setter("type"),
@@ -3642,8 +3644,6 @@ class TestPlan(Mutable):
             doc="Test plan status.")
     version = property(_getter("version"), _setter("version"),
             doc="Default product version.")
-    components = property(_getter("components"), _setter("components"),
-            doc="Relevant components.")
 
     @property
     def testruns(self):
