@@ -2316,7 +2316,7 @@ class Container(Mutable):
     Container overview (objects contained are listed in brackets):
 
     TestPlan.tags = PlanTags[Tag] ......................... done
-    TestPlan.components = PlanComponents[Component] ....... implement
+    TestPlan.components = PlanComponents[Component] ....... done
     TestPlan.children = ChildPlans[TestPlan] .............. done
     TestPlan.testcases = PlanCases[TestCase] .............. done
     TestPlan.testruns = PlanRuns[TestRun] ................. rewrite
@@ -2739,8 +2739,9 @@ class CaseComponents(Container):
         """ Link provided components to the test case. """
         log.info(u"Linking {1} to {0}".format(self._identifier,
                     listed([component.name for component in components])))
-        self._server.TestCase.add_component(
-                self.id, [component.id for component in components])
+        data = [component.id for component in components]
+        log.xmlrpc(data)
+        self._server.TestCase.add_component(self.id, data)
 
     def _remove(self, components):
         """ Unlink provided components from the test case. """
@@ -2759,32 +2760,149 @@ class CaseComponents(Container):
             self.component = Nitrate()._config.component
             self.testcase = Nitrate()._config.testcase
 
-        def testLinkComponent1(self):
-            """ Linking a component to a test case """
-            testcase = TestCase(self.testcase.id)
-            component = Component(self.component.id)
-            testcase.components.add(component)
-            testcase.update()
-            testcase = TestCase(self.testcase.id)
-            self.assertTrue(component in testcase.components)
-
-        def testLinkComponent2(self):
+        def test1(self):
             """ Unlinking a component from a test case """
             testcase = TestCase(self.testcase.id)
             component = Component(self.component.id)
             testcase.components.remove(component)
             testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(component not in testcase.components)
+            # Check server content
+            Cache.clear()
             testcase = TestCase(self.testcase.id)
             self.assertTrue(component not in testcase.components)
 
-        def testLinkComponent3(self):
+        def test2(self):
             """ Linking a component to a test case """
             testcase = TestCase(self.testcase.id)
             component = Component(self.component.id)
             testcase.components.add(component)
             testcase.update()
+            # Check cache content
             testcase = TestCase(self.testcase.id)
             self.assertTrue(component in testcase.components)
+            # Check server content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(component in testcase.components)
+
+        def test3(self):
+            """ Unlinking a component from a test case """
+            testcase = TestCase(self.testcase.id)
+            component = Component(self.component.id)
+            testcase.components.remove(component)
+            testcase.update()
+            # Check cache content
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(component not in testcase.components)
+            # Check server content
+            Cache.clear()
+            testcase = TestCase(self.testcase.id)
+            self.assertTrue(component not in testcase.components)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#   Plan Components Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class PlanComponents(Container):
+    """ Components linked to a test plan """
+
+    # Local cache indexed by corresponding test plan id
+    _cache = {}
+    # Class of contained objects
+    _class = Component
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Plan Components Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __unicode__(self):
+        """ The list of linked components' names """
+        if self._items:
+            return listed(sorted([component.name for component in self]))
+        else:
+            return "[None]"
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Plan Components Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _fetch(self, inset=None):
+        """ Fetch currently linked components from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._fetch(self, inset):
+            return
+        log.info("Fetching {0}'s components".format(self._identifier))
+        self._current = set([Component(inject)
+                for inject in self._server.TestPlan.get_components(self.id)])
+        self._original = set(self._current)
+
+    def _add(self, components):
+        """ Link provided components to the test plan """
+        log.info(u"Linking {1} to {0}".format(self._identifier,
+                    listed([component.name for component in components])))
+        data = [component.id for component in components]
+        log.xmlrpc(data)
+        self._server.TestPlan.add_component(self.id, data)
+
+    def _remove(self, components):
+        """ Unlink provided components from the test plan """
+        for component in components:
+            log.info(u"Unlinking {0} from {1}".format(
+                    component.name, self._identifier))
+            self._server.TestPlan.remove_component(self.id, component.id)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Plan Components Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up component from the config """
+            self.component = Nitrate()._config.component
+            self.testplan = Nitrate()._config.testplan
+
+        def test1(self):
+            """ Unlinking a component from a  test plan """
+            testplan = TestPlan(self.testplan.id)
+            component = Component(self.component.id)
+            testplan.components.remove(component)
+            testplan.update()
+            # Check cache content
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(component not in testplan.components)
+            # Check server content
+            Cache.clear()
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(component not in testplan.components)
+
+        def test2(self):
+            """ Linking a component to a  test plan """
+            testplan = TestPlan(self.testplan.id)
+            component = Component(self.component.id)
+            testplan.components.add(component)
+            testplan.update()
+            # Check cache content
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(component in testplan.components)
+            # Check server content
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(component in testplan.components)
+
+        def test3(self):
+            """ Unlinking a component from a  test plan """
+            testplan = TestPlan(self.testplan.id)
+            component = Component(self.component.id)
+            testplan.components.remove(component)
+            testplan.update()
+            # Check cache content
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(component not in testplan.components)
+            # Check server content
+            Cache.clear()
+            testplan = TestPlan(self.testplan.id)
+            self.assertTrue(component not in testplan.components)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Bug Class
@@ -3489,8 +3607,9 @@ class TestPlan(Mutable):
     _identifier_width = 5
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["author", "children", "name", "owner", "parent", "product",
-            "status", "tags", "testcases", "testruns", "type", "version"]
+    _attributes = ["author", "children", "components", "name", "owner",
+            "parent", "product", "status", "tags", "testcases", "testruns",
+            "type", "version"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Properties
@@ -3523,6 +3642,8 @@ class TestPlan(Mutable):
             doc="Test plan status.")
     version = property(_getter("version"), _setter("version"),
             doc="Default product version.")
+    components = property(_getter("components"), _setter("components"),
+            doc="Relevant components.")
 
     @property
     def testruns(self):
@@ -3710,6 +3831,7 @@ class TestPlan(Mutable):
 
         # Initialize containers
         self._testcases = PlanCases(self)
+        self._components = PlanComponents(self)
         self._children = ChildPlans(self)
         # If all tags are cached, initialize them directly from the inject
         if Tag._is_cached(inject["tag"]):
@@ -3748,6 +3870,8 @@ class TestPlan(Mutable):
             self.tags.update()
         if self._testcases is not NitrateNone:
             self.testcases.update()
+        if self._components is not NitrateNone:
+            self.components.update()
         if self._children is not NitrateNone:
             self.children.update()
 
