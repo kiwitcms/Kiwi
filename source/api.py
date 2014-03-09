@@ -5409,6 +5409,10 @@ class Cache(Nitrate):
     @staticmethod
     def setup(filename=None):
         """ Set cache filename and initialize expiration times """
+        # Nothing to do when persistent caching is off
+        if get_cache_level() < CACHE_PERSISTENT:
+            return
+
         # Detect cache filename, argument first, then config
         if filename is not None:
             Cache._filename = filename
@@ -5534,10 +5538,12 @@ class Cache(Nitrate):
 
         Accepts class or a list of classes.
         """
-        log.debug("Completely wiping out object cache in memory")
         # Convert single class into a list
         if isinstance(classes, type):
             classes = [classes]
+        log.cache("Wiping out {0} memory cache".format(
+                "all objects'" if classes == None else listed(
+                    [klass.__name__ for klass in classes])))
         # For each class re-initialize objects and remove from index
         for current_class in Cache._classes:
             if classes is not None and (current_class not in classes):
