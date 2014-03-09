@@ -752,6 +752,9 @@ class Nitrate(object):
 
     def __eq__(self, other):
         """ Objects are compared based on their id. """
+        # Special handling for comparison with None
+        if other is None:
+            return False
         # We can only compare objects of the same type
         if self.__class__ != other.__class__:
             raise NitrateError("Cannot compare '{0}' with '{1}'".format(
