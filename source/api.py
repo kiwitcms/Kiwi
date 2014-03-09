@@ -2371,11 +2371,13 @@ class Container(Mutable):
         """ Initialize container for specified object. """
         # Initialize (unless already done)
         if self._id is not None:
+            # Initialized but not fetched ---> fetch from the inset if given
+            if inset is not None and not self._is_cached(self):
+                self._fetch(inset)
             return
-        #FIXME ---> to be deleted?
-        #self._init()
         Mutable.__init__(self, object.id)
         self._identifier = object.identifier
+        self._object = object
         # Initialize directly if initial set provided
         if inset is not None:
             self._fetch(inset)
