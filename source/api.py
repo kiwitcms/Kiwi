@@ -2325,8 +2325,8 @@ class Container(Mutable):
     TestPlan.caseplans = PlanCasePlans[CasePlan] .......... implement
 
     TestRun.tags = RunTags[Tag] ........................... done
-    TestRun.caseruns = RunCaseRuns[CaseRun] ............... rewrite
-    TestRun.testcases = RunCases[TestCase] ................ implement
+    TestRun.caseruns = RunCaseRuns[CaseRun] ............... done
+    TestRun.testcases = RunCases[TestCase] ................ done
 
     TestCase.tags = CaseTags[Tag] ......................... done
     TestCase.components = CaseComponents[Component] ....... done
@@ -4030,7 +4030,7 @@ class TestRun(Mutable):
     # List of all object attributes (used for init & expiration)
     _attributes = ["build", "caseruns", "errata", "finished", "manager",
             "notes", "product", "started", "status", "summary", "tags",
-            "tester", "testplan", "time"]
+            "tester", "testcases", "testplan", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Run Properties
@@ -4047,6 +4047,12 @@ class TestRun(Mutable):
             doc="Timestamp when the test run was started (datetime).")
     finished = property(_getter("finished"),
             doc="Timestamp when the test run was finished (datetime).")
+    caseruns = property(_getter("caseruns"),
+            doc="CaseRun objects related to this test run.")
+    testcases = property(_getter("testcases"),
+            doc="""TestCase objects related to this test run\n
+            Supports common container methods add(), remove() and clear()
+            for adding and removing testcases to/from the test run.""")
 
     # Read-write properties
     build = property(_getter("build"), _setter("build"),
@@ -4065,28 +4071,6 @@ class TestRun(Mutable):
             doc="Estimated time.")
     errata = property(_getter("errata"), _setter("errata"),
             doc="Errata related to this test run.")
-
-    @property
-    def caseruns(self):
-        """ List of CaseRun() objects related to this run. """
-        if self._caseruns is NitrateNone:
-            # Fetch both test cases & test case runs
-            log.info("Fetching {0}'s case runs".format(self.identifier))
-            caseruns = self._server.TestRun.get_test_case_runs(self.id)
-            testcaseids = [caserun['case_id'] for caserun in caseruns]
-            if not TestCase._is_cached(testcaseids):
-                # Fetch test cases only if not all cached
-                log.info("Fetching {0}'s test cases".format(self.identifier))
-                testcases = self._server.TestRun.get_test_cases(self.id)
-                testcases = [TestCase(inject) for inject in testcases]
-            else:
-                testcases = [TestCase(inject) for inject in testcaseids]
-            # Create from objects (using caching)
-            self._caseruns = [
-                    CaseRun(caserun, testcaseinject=testcase)
-                    for caserun in caseruns for testcase in testcases
-                    if int(testcase.id) == int(caserun["case_id"])]
-        return self._caseruns
 
     @property
     def synopsis(self):
@@ -4289,6 +4273,8 @@ class TestRun(Mutable):
             self._finished = None
 
         # Initialize containers
+        self._caseruns = RunCaseRuns(self)
+        self._testcases = RunCases(self)
         # If all tags are cached, initialize them directly from the inject
         if Tag._is_cached(inject["tag"]):
             self._tags = RunTags(
@@ -4325,6 +4311,10 @@ class TestRun(Mutable):
         # Update containers (if initialized)
         if self._tags is not NitrateNone:
             self.tags.update()
+        if self._caseruns is not NitrateNone:
+            self._caseruns.update()
+        if self._testcases is not NitrateNone:
+            self._testcases.update()
 
         # Update self (if modified)
         Mutable.update(self)
@@ -5254,6 +5244,11 @@ class CaseRun(Mutable):
         self._fetch(inject)
         log.info(u"Successfully created {0}".format(self))
 
+        # And finally add to testcases and caseruns containers
+        self.testrun.testcases._fetch(
+                [self.testcase] + list(self.testrun.testcases))
+        self.testrun.caseruns._fetch(
+                [self] + list(self.testrun.caseruns))
 
     def _fetch(self, inject=None, **kwargs):
         """ Initialize / refresh test case run data.
@@ -5382,6 +5377,183 @@ class CaseRun(Mutable):
                                 caserun, caserun.testcase, caserun.status))
             _print_time(time.time() - start_time)
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  RunCases Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class RunCases(Container):
+    """ Test case objects related to a test run """
+
+    # Local cache of test cases for a test run
+    _cache = {}
+
+    # Class of contained objects
+    _class = TestCase
+
+    def _fetch(self, inset=None):
+        """ Fetch test run cases from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._fetch(self, inset): return
+        # Fetch attached test cases from the server
+        log.info("Fetching {0}'s test cases".format(self._identifier))
+        injects = self._server.TestRun.get_test_cases(self.id)
+        self._current = set([TestCase(inject) for inject in injects])
+        self._original = set(self._current)
+
+    def _add(self, testcases):
+        """ Add given test cases to the test run """
+        # Short info about the action
+        identifiers = [testcase.identifier for testcase in testcases]
+        log.info("Adding {0} to {1}".format(
+                listed(identifiers, "testcase", max=3),
+                self._object.identifier))
+        # Prepare data and push
+        data = [testcase.id for testcase in testcases]
+        log.xmlrpc(pretty(data))
+        self._server.TestRun.add_cases(self.id, data)
+        # RunCaseRuns will need update ---> erase current data
+        self._object.caseruns._init()
+
+    def _remove(self, testcases):
+        """ Remove given test cases from the test run """
+        # Short info about the action
+        identifiers = [testcase.identifier for testcase in testcases]
+        log.info("Removing {0} from {1}".format(
+                listed(identifiers, "testcase", max=3),
+                self._object.identifier))
+        data = [testcase.id for testcase in testcases]
+        log.xmlrpc(pretty(data))
+        self._server.TestRun.remove_cases(self.id, data)
+        # RunCaseRuns will need update ---> erase current data
+        self._object.caseruns._init()
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  RunCases Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+            self.testrun = Nitrate()._config.testrun
+            self.testcase = Nitrate()._config.testcase
+
+        def test_present(self):
+            """ Check test case presence """
+            testcase = TestCase(self.testcase.id)
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue(testcase in testrun.testcases)
+            self.assertTrue(testcase in
+                    [caserun.testcase for caserun in testrun.caseruns])
+
+        def test_add_remove(self):
+            """ Add and remove test case """
+            # Create a new test run, make sure our test case is there
+            testcase = TestCase(self.testcase.id)
+            testrun = TestRun(testplan=self.testplan.id)
+            self.assertTrue(testcase in testrun.testcases)
+            # Remove and check it's not either in testcases or caseruns
+            testrun.testcases.remove(testcase)
+            testrun.update()
+            self.assertTrue(testcase not in testrun.testcases)
+            self.assertTrue(testcase not in
+                    [caserun.testcase for caserun in testrun.caseruns])
+            # Now make sure the same data reached the server as well
+            if _cache_level >= CACHE_OBJECTS:
+                Cache.clear([RunCases, RunCaseRuns])
+            testrun = TestRun(testrun.id)
+            self.assertTrue(testcase not in testrun.testcases)
+            self.assertTrue(testcase not in
+                    [caserun.testcase for caserun in testrun.caseruns])
+            # Add back and check it's in both testcases or caseruns
+            testrun.testcases.add(testcase)
+            testrun.update()
+            self.assertTrue(testcase in testrun.testcases)
+            self.assertTrue(testcase in
+                    [caserun.testcase for caserun in testrun.caseruns])
+            # Again make sure the same data reached the server as well
+            if _cache_level >= CACHE_OBJECTS:
+                Cache.clear([RunCases, RunCaseRuns])
+            testrun = TestRun(testrun.id)
+            self.assertTrue(testcase in testrun.testcases)
+            self.assertTrue(testcase in
+                    [caserun.testcase for caserun in testrun.caseruns])
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  RunCaseRuns Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class RunCaseRuns(Container):
+    """ Test case run objects related to a test run """
+
+    # Local cache of test case runs for a test run
+    _cache = {}
+
+    # Class of contained objects
+    _class = CaseRun
+
+    def _fetch(self, inset=None):
+        """ Fetch case runs from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._fetch(self, inset): return
+        # Fetch test case runs from the server
+        log.info("Fetching {0}'s case runs".format(self._identifier))
+        injects = self._server.TestRun.get_test_case_runs(self.id)
+        # Feed the TestRun.testcases container with the initial object
+        # set if all cases are already cached (saving unnecesary fetch)
+        testcaseids = [inject["case_id"] for inject in injects]
+        if (not RunCases._is_cached(self._object.testcases) and
+                TestCase._is_cached(testcaseids)):
+            self._object.testcases._fetch([TestCase(id) for id in testcaseids])
+        # And finally create the initial object set
+        self._current = set([CaseRun(inject, testcaseinject=testcase)
+                for inject in injects
+                for testcase in self._object.testcases
+                if int(inject["case_id"]) == testcase.id])
+        self._original = set(self._current)
+
+    def _add(self, caseruns):
+        """ Adding supported by CaseRun() or TestRun.testcases.add() """
+        raise NitrateError(
+                "Use TestRun.testcases.add([testcases]) to add new test cases")
+
+    def _remove(self, caseruns):
+        """ Removing supported by TestRun.testcases.remove() """
+        raise NitrateError(
+                "Use TestRun.testcases.remove([testcases]) to remove cases")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  RunCaseRuns Self Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+            self.testrun = Nitrate()._config.testrun
+            self.caserun = Nitrate()._config.caserun
+
+        def test_present(self):
+            """ Check case run presence """
+            caserun = CaseRun(self.caserun.id)
+            testrun = TestRun(self.testrun.id)
+            self.assertTrue(caserun in testrun)
+
+        def test_cases_fetched_just_once(self):
+            """ Test cases are fetched just once """
+            # This test is relevant when caching is turned on
+            if _cache_level < CACHE_OBJECTS: return
+            Cache.clear()
+            testplan = TestPlan(self.testplan.id)
+            testrun = TestRun(self.testrun.id)
+            # Make sure plan, run and cases are fetched
+            text = "{0}{1}{2}".format(testplan, testrun, listed(
+                    [testcase for testcase in testplan]))
+            # Now fetching case runs should be a single query to the
+            # server because all test cases have already been fetched
+            requests = Nitrate._requests
+            statuses = listed([caserun.status for caserun in testrun])
+            self.assertEqual(Nitrate._requests, requests + 1)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Cache Class
@@ -5400,7 +5572,8 @@ class Cache(Nitrate):
             Tag, User]
     _mutable = [TestCase, TestPlan, TestRun, CaseRun]
     _containers = [CaseBugs, CaseRunBugs, CaseComponents, CaseTags, PlanRuns,
-            PlanTags, RunTags, ChildPlans, PlanCases, CasePlans]
+            PlanTags, RunCases, RunCaseRuns, RunTags, ChildPlans, PlanCases,
+            CasePlans]
     _classes = _immutable + _mutable + _containers
 
     # File path to the cache
