@@ -751,14 +751,16 @@ class Nitrate(object):
                 self._config.nitrate.url, self._requests)
 
     def __eq__(self, other):
-        """ Handle object equality based on its id. """
-        if not isinstance(other, Nitrate): return False
+        """ Objects are compared based on their id. """
+        # We can only compare objects of the same type
+        if self.__class__ != other.__class__:
+            raise NitrateError("Cannot compare '{0}' with '{1}'".format(
+                self.__class__.__name__, other.__class__.__name__))
         return self.id == other.id
 
     def __ne__(self, other):
-        """ Handle object inequality based on its id. """
-        if not isinstance(other, Nitrate): return True
-        return self.id != other.id
+        """ Objects are compared based on their id. """
+        return not(self == other)
 
     def __hash__(self):
         """ Use object id as the default hash. """
