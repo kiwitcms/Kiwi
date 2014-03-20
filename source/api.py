@@ -4516,8 +4516,8 @@ class TestCase(Mutable):
     # List of all object attributes (used for init & expiration)
     _attributes = ["arguments", "author", "automated", "autoproposed", "bugs",
             "category", "components", "created", "link", "manual", "notes",
-            "plans", "priority", "product", "script", "sortkey", "status",
-            "summary", "tags", "tester", "testplans", "time"]
+            "plans", "priority", "script", "sortkey", "status", "summary",
+            "tags", "tester", "testplans", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Case Properties
@@ -4564,8 +4564,6 @@ class TestCase(Mutable):
             doc="Test case notes.")
     priority = property(_getter("priority"), _setter("priority"),
             doc="Test case priority.")
-    product = property(_getter("product"), _setter("product"),
-            doc="Test case product.")
     requirement = property(_getter("requirement"), _setter("requirement"),
             doc="Test case requirements.")
     script = property(_getter("script"), _setter("script"),
@@ -4598,14 +4596,14 @@ class TestCase(Mutable):
     #  Test Case Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __init__(self, id=None, summary=None, category=None, product=None,
-            **kwargs):
+    def __init__(self, id=None, summary=None, category=None, **kwargs):
         """ Initialize a test case or create a new one.
 
         Initialize an existing test case (if id provided) or create a
-        new one (based on provided summary, category and product. Other
-        optional parameters supported are:
+        new one (based on provided summary and category. Other optional
+        parameters supported are:
 
+            product ........ product (default: category.product)
             automated ...... automation flag (default: True)
             autoproposed ... proposed for automation (default: False)
             manual ......... manual flag (default: False)
@@ -4613,6 +4611,15 @@ class TestCase(Mutable):
             script ......... test path (default: None)
             tester ......... user object or login (default: None)
             link ........... reference link
+
+        Examples:
+
+            existing = TestCase(1234)
+            sanity = Category(name="Sanity", product="Fedora")
+            new = TestCase(summary="Test", category=sanity)
+            new = TestCase(summary="Test", category="Sanity", product="Fedora")
+
+        Note: When providing category by name specify product as well.
         """
 
         # Initialize (unless already done)
@@ -4623,14 +4630,13 @@ class TestCase(Mutable):
         # If inject given, fetch test case data from it
         if inject:
             self._fetch(inject)
-        # Create a new test case based on summary, category & product
-        elif summary and category and product:
-            self._create(summary=summary, category=category, product=product,
-                    **kwargs)
+        # Create a new test case based on summary and category
+        elif summary and category:
+            self._create(summary=summary, category=category, **kwargs)
         # Otherwise just check that the test case id was provided
         elif not id:
-            raise NitrateError("Need either id or summary, category "
-                    "and product to initialize the test case")
+            raise NitrateError("Need either id or both summary and category "
+                    "to initialize the test case")
 
     def __unicode__(self):
         """ Test case id & summary for printing. """
@@ -4646,7 +4652,7 @@ class TestCase(Mutable):
     #  Test Case Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def _create(self, summary, category, product, **kwargs):
+    def _create(self, summary, category, **kwargs):
         """ Create a new test case. """
 
         hash = {}
@@ -4654,15 +4660,18 @@ class TestCase(Mutable):
         # Summary
         hash["summary"] = summary
 
-        # Product
-        if isinstance(product, basestring):
-            product = Product(name=product)
-        hash["product"] = product.id
-
-        # Category
+        # If category provided as text, we need product as well
+        product = kwargs.get("product")
+        if isinstance(category, basestring) and not kwargs.get("product"):
+            raise NitrateError(
+                    "Need product when category specified by name")
+        # Category & Product
         if isinstance(category, basestring):
             category = Category(category=category, product=product)
+        elif not isinstance(category, Category):
+            raise NitrateError("Invalid category '{0}'".format(category))
         hash["category"] = category.id
+        hash["product"] = category.product.id
 
         # Priority
         priority = kwargs.get("priority")
