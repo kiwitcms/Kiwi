@@ -24,6 +24,7 @@ import os
 import re
 import sys
 import gzip
+import math
 import time
 import types
 import pickle
@@ -467,6 +468,25 @@ def unlisted(text):
     """ Convert human readable list into python list """
     return re.split("\s*,\s*|\s+and\s+|\s+", text)
 
+def sliced(loaf, max):
+    """
+    Slice loafs into slices of maximum width
+
+    Accepts large list (loaf) and cuts it into small lists of roughly
+    even size (slices) less than max. Then yields each slice.
+    """
+    # Nothing to slice when the loaf is empty
+    if not loaf:
+        yield []
+        return
+    # Count necessary number of slices and the optimal slice width
+    slices = math.ceil(1.0 * len(loaf) / max)
+    width = int(math.ceil(len(loaf) / slices))
+    # Yield individual slices
+    while loaf:
+        slice, loaf = loaf[0:width], loaf[width:]
+        yield slice
+
 def human(time):
     """ Convert timedelta into a human readable format """
     count = {}
@@ -836,6 +856,15 @@ class Utils(Nitrate):
             self.assertEqual(unlisted("1, 2 and 3"), ["1", "2", "3"])
             self.assertEqual(unlisted("1, 2, 3"), ["1", "2", "3"])
             self.assertEqual(unlisted("1 2 3"), ["1", "2", "3"])
+
+        def test_sliced(self):
+            """ Function sliced() sanity """
+            loaf = range(9)
+            self.assertEqual(list(sliced(loaf, 9)), [loaf])
+            self.assertEqual(
+                    list(sliced(loaf, 5)), [[0, 1, 2, 3, 4], [5, 6, 7, 8]])
+            self.assertEqual(
+                    list(sliced(loaf, 3)), [[0, 1, 2], [3, 4, 5], [6, 7, 8]])
 
         def test_get_set_log_level(self):
             """ Get & set the logging level """
