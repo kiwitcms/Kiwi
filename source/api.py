@@ -4609,8 +4609,10 @@ class TestCase(Mutable):
             manual ......... manual flag (default: False)
             priority ....... priority object, id or name (default: P3)
             script ......... test path (default: None)
+            arguments ...... script arguments (default: None)
+            requirement .... requirement (default: None)
             tester ......... user object or login (default: None)
-            link ........... reference link
+            link ........... reference link (default: None)
 
         Examples:
 
@@ -4688,8 +4690,10 @@ class TestCase(Mutable):
                 tester = User(login=tester)
             hash["default_tester"] = tester.login
 
-        # Script & reference link
+        # Script, arguments, requirement & reference link
         hash["script"] = kwargs.get("script")
+        hash["arguments"] = kwargs.get("arguments")
+        hash["requirement"] = kwargs.get("requirement")
         hash["extra_link"] = kwargs.get("link")
 
         # Case Status
@@ -4882,11 +4886,15 @@ class TestCase(Mutable):
                     autoproposed=False,
                     priority=Priority("P1"),
                     script="/path/to/test/script",
+                    arguments="SOME_ARGUMENT=42",
+                    requirement="dependency",
                     link="http://example.com/test-case-link")
             self.assertTrue(
                     isinstance(case, TestCase), "Check created instance")
             self.assertEqual(case.summary, "High-priority automated test case")
             self.assertEqual(case.script, "/path/to/test/script")
+            self.assertEqual(case.arguments, "SOME_ARGUMENT=42")
+            self.assertEqual(case.requirement, "dependency")
             self.assertEqual(case.link, "http://example.com/test-case-link")
             self.assertEqual(case.priority, Priority("P1"))
             self.assertTrue(case.automated)
