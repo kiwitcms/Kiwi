@@ -70,6 +70,9 @@ LOGGING_COLORS = {
         LOGGING_XMLRPC: "magenta",
         }
 
+# Max number of objects updated by multicall at once when using Cache.update()
+MULTICALL_MAX = 10
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Logging
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5842,7 +5845,11 @@ class Cache(Nitrate):
         This method uses MultiCall to perform the update which can
         significantly speed up things when compared to updating each
         individual object separately.
-        """
+
+        Note: The update is done in batches. The maximum number of objects
+        updated at once is controlled by the global variable MULTICALL_MAX,
+        by default set to 10 object per session."""
+
         for klass in Cache._mutable + Cache._containers:
             modified = [mutable for mutable in klass._cache.itervalues()
                     if mutable._modified]
@@ -5851,10 +5858,11 @@ class Cache(Nitrate):
             log.info("Found {0} in the {1} cache, updating...".format(
                     listed(modified, "modified object"),
                     klass.__name__))
-            multicall_start()
-            for mutable in modified:
-                mutable.update()
-            multicall_end()
+            for slice in sliced(modified, MULTICALL_MAX):
+                multicall_start()
+                for mutable in slice:
+                    mutable.update()
+                multicall_end()
 
     @staticmethod
     def stats():
