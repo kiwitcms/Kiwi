@@ -792,11 +792,13 @@ class Nitrate(object):
         # And reset the fetch timestamp
         self._fetched = None
 
-    def _fetch(self):
+    def _fetch(self, inject=None):
         """ Fetch object data from the server. """
         # This is to be implemented by respective class.
         # Here we just save the timestamp when data were fetched.
         self._fetched = datetime.datetime.now()
+        # Store the initial object dict for possible future use
+        self._inject = inject
 
     def _index(self, *keys):
         """ Index self into the class cache if caching enabled """
@@ -947,7 +949,7 @@ class Build(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing build data. """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
         # Directly fetch from the initial object dict
         if inject is not None:
             log.info("Processing build ID#{0} inject".format(
@@ -977,6 +979,7 @@ class Build(Nitrate):
         # Initialize data from the inject and index into cache
         log.debug("Initializing Build ID#{0}".format(inject["build_id"]))
         log.xmlrpc(pretty(inject))
+        self._inject = inject
         self._id = inject["build_id"]
         self._name = inject["name"]
         self._product = Product(
@@ -1123,7 +1126,7 @@ class Category(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing category data. """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -1152,6 +1155,7 @@ class Category(Nitrate):
         # Initialize data from the inject and index into cache
         log.debug("Initializing category ID#{0}".format(inject["id"]))
         log.xmlrpc(pretty(inject))
+        self._inject = inject
         self._id = inject["id"]
         self._name = inject["name"]
         self._product = Product(
@@ -1297,7 +1301,7 @@ class PlanType(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing test plan type data """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -1323,6 +1327,7 @@ class PlanType(Nitrate):
         # Initialize data from the inject and index into cache
         log.debug("Initializing PlanType ID#{0}".format(inject["id"]))
         log.xmlrpc(pretty(inject))
+        self._inject = inject
         self._id = inject["id"]
         self._name = inject["name"]
         self._index(self.name)
@@ -1524,7 +1529,7 @@ class Product(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch product data from the server. """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -1536,10 +1541,11 @@ class Product(Nitrate):
         elif self._id is not NitrateNone:
             try:
                 log.info("Fetching product " + self.identifier)
-                hash = self._server.Product.filter({'id': self.id})[0]
+                inject = self._server.Product.filter({'id': self.id})[0]
                 log.debug("Initializing product " + self.identifier)
-                log.xmlrpc(pretty(hash))
-                self._name = hash["name"]
+                log.xmlrpc(pretty(inject))
+                self._inject = inject
+                self._name = inject["name"]
             except IndexError:
                 raise NitrateError(
                         "Cannot find product for " + self.identifier)
@@ -1547,10 +1553,11 @@ class Product(Nitrate):
         else:
             try:
                 log.info(u"Fetching product '{0}'".format(self.name))
-                hash = self._server.Product.filter({'name': self.name})[0]
+                inject = self._server.Product.filter({'name': self.name})[0]
                 log.debug(u"Initializing product '{0}'".format(self.name))
-                log.xmlrpc(pretty(hash))
-                self._id = hash["id"]
+                log.xmlrpc(pretty(inject))
+                self._inject = inject
+                self._id = inject["id"]
             except IndexError:
                 raise NitrateError(
                         "Cannot find product for '{0}'".format(self.name))
@@ -1940,7 +1947,7 @@ class User(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch user data from the server. """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         if inject is None:
             # Search by id
@@ -1979,6 +1986,7 @@ class User(Nitrate):
         # Initialize data from the inject and index into cache
         log.debug("Initializing user UID#{0}".format(inject["id"]))
         log.xmlrpc(pretty(inject))
+        self._inject = inject
         self._id = inject["id"]
         self._login = inject["username"]
         self._email = inject["email"]
@@ -2165,7 +2173,7 @@ class Version(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch version data from the server. """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -2192,6 +2200,7 @@ class Version(Nitrate):
         # Initialize data from the inject and index into cache
         log.debug("Initializing Version ID#{0}".format(inject["id"]))
         log.xmlrpc(pretty(inject))
+        self._inject = inject
         self._id = inject["id"]
         self._name = inject["value"]
         self._product = Product(inject["product_id"])
@@ -2597,7 +2606,7 @@ class Component(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing component data """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -2626,6 +2635,7 @@ class Component(Nitrate):
         # Initialize data from the inject and index into cache
         log.debug("Initializing component ID#{0}".format(inject["id"]))
         log.xmlrpc(pretty(inject))
+        self._inject = inject
         self._id = inject["id"]
         self._name = inject["name"]
         self._product = Product(
@@ -3005,7 +3015,7 @@ class Bug(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch bug info from the server """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
         # No direct xmlrpc function for fetching so far
         if inject is None:
             raise NotImplementedError("Direct bug fetching not implemented")
@@ -3276,7 +3286,7 @@ class Tag(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch tag data from the server. """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -3291,6 +3301,7 @@ class Tag(Nitrate):
                 inject = self._server.Tag.get_tags({'ids': [self.id]})
                 log.debug("Initializing tag " + self.identifier)
                 log.xmlrpc(pretty(inject))
+                self._inject = inject
                 self._name = inject[0]["name"]
             except IndexError:
                 raise NitrateError(
@@ -3302,6 +3313,7 @@ class Tag(Nitrate):
                 inject = self._server.Tag.get_tags({'names': [self.name]})
                 log.debug(u"Initializing tag '{0}'".format(self.name))
                 log.xmlrpc(pretty(inject))
+                self._inject = inject
                 self._id = inject[0]["id"]
             except IndexError:
                 raise NitrateError(
@@ -3794,12 +3806,13 @@ class TestPlan(Mutable):
 
         Either fetch them from the server or use provided hash.
         """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test plan " + self.identifier)
             inject = self._server.TestPlan.get(self.id)
+            self._inject = inject
         # Otherwise just initialize the id from inject
         else:
             self._id = inject["plan_id"]
@@ -4243,12 +4256,13 @@ class TestRun(Mutable):
 
         Either fetch them from the server or use the provided hash.
         """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test run {0}".format(self.identifier))
             inject = self._server.TestRun.get(self.id)
+            self._inject = inject
         else:
             self._id = inject["run_id"]
         log.debug("Initializing test run {0}".format(self.identifier))
@@ -4746,12 +4760,13 @@ class TestCase(Mutable):
 
         Either fetch them from the server or use provided hash.
         """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test case " + self.identifier)
             inject = self._server.TestCase.get(self.id)
+            self._inject = inject
         else:
             self._id = inject["case_id"]
         log.debug("Initializing test case " + self.identifier)
@@ -5275,12 +5290,13 @@ class CaseRun(Mutable):
 
         Either fetch them from the server or use the supplied hashes.
         """
-        Nitrate._fetch(self)
+        Nitrate._fetch(self, inject)
 
         # Fetch the data from the server unless inject provided
         if inject is None:
             log.info("Fetching case run {0}".format(self.identifier))
             inject = self._server.TestCaseRun.get(self.id)
+            self._inject = inject
         else:
             self._id = inject["case_run_id"]
         log.debug("Initializing case run {0}".format(self.identifier))
