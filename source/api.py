@@ -4647,6 +4647,7 @@ class TestCase(Mutable):
         parameters supported are:
 
             product ........ product (default: category.product)
+            status ......... test case status (default: PROPOSED)
             automated ...... automation flag (default: True)
             autoproposed ... proposed for automation (default: False)
             manual ......... manual flag (default: False)
