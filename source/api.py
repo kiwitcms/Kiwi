@@ -3704,9 +3704,9 @@ class TestPlan(Mutable):
     _identifier_width = 5
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["author", "children", "components", "name", "owner",
-            "parent", "product", "status", "tags", "testcases", "testruns",
-            "type", "version"]
+    _attributes = ["author", "caseplans" "children", "components", "name",
+            "owner", "parent", "product", "status", "tags", "testcases",
+            "testruns", "type", "version"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Properties
@@ -3725,6 +3725,8 @@ class TestPlan(Mutable):
             doc="Attached tags.")
     testcases = property(_getter("testcases"),
             doc="Test cases linked to this plan.")
+    caseplans = property(_getter("caseplans"),
+            doc="Test case plan objects related to this plan.")
     testruns = property(_getter("testruns"),
             doc="Test runs related to this plan.")
 
@@ -3923,6 +3925,7 @@ class TestPlan(Mutable):
 
         # Initialize containers
         self._testcases = PlanCases(self)
+        self._caseplans = PlanCasePlans(self)
         self._testruns = PlanRuns(self)
         self._components = PlanComponents(self)
         self._children = ChildPlans(self)
@@ -3963,6 +3966,8 @@ class TestPlan(Mutable):
             self.tags.update()
         if self._testcases is not NitrateNone:
             self.testcases.update()
+        if self._caseplans is not NitrateNone:
+            self.caseplans.update()
         if self._testruns is not NitrateNone:
             self.testruns.update()
         if self._components is not NitrateNone:
@@ -3972,6 +3977,25 @@ class TestPlan(Mutable):
 
         # Update self (if modified)
         Mutable.update(self)
+
+    def sortkey(self, testcase, sortkey=None):
+        """ Get or set sortkey for given test case """
+        # Make sure the test case we got belongs to the test plan
+        if testcase not in self.testcases:
+            raise NitrateError("Test case {0} not in test plan {1}".format(
+                testcase.identifier, self.identifier))
+        # Pick the correct CasePlan object
+        try:
+            caseplan = [caseplan for caseplan in self.caseplans
+                    if caseplan.testcase == testcase][0]
+        except KeyError:
+            raise NitrateError("No CasePlan for {0} in {1} found".format(
+                    testcase.identifier, self.identifier))
+        # Modify the sortkey if requested
+        if sortkey is not None:
+            caseplan.sortkey = sortkey
+        # And finally return the current value
+        return caseplan.sortkey
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Test Plan Self Test
@@ -5123,33 +5147,46 @@ class PlanCases(Container):
         if Container._fetch(self, inset):
             return
         log.info("Fetching {0}'s cases".format(self._identifier))
-        try:
-            # Initialize tags from plan
-            for tag in self._server.TestPlan.get_all_cases_tags(self.id):
-                Tag(tag)
-            self._current = set([TestCase(hash) for hash in
-                    self._server.TestPlan.get_test_cases(self.id)])
-        # Work around BZ#725726 (attempt to fetch test cases by ids)
-        except xmlrpclib.Fault:
-            log.warning("Failed to fetch {0}'s cases, "
-                    "trying again using ids".format(self._identifier))
-            self._current = set([TestCase(id) for id in
-                    self._server.TestPlan.get(self.id)["case"]])
+        # Fetch test cases from the server
+        injects = self._server.TestPlan.get_test_cases(self.id)
+        log.xmlrpc("Fetched {0}".format(listed(injects, "inject")))
+        self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
+        # Initialize case plans if not already cached
+        if not PlanCasePlans._is_cached(self._object.caseplans):
+            inset = [CasePlan({
+                    # Fake our own internal id from testplan & testcase
+                    "id": _idify([self._object.id, inject["case_id"]]),
+                    "case_id": inject["case_id"],
+                    "plan_id": self._object.id,
+                    "sortkey": inject["sortkey"]
+                    }) for inject in injects]
+            self._object.caseplans._fetch(inset)
 
     def _add(self, cases):
         """ Link provided cases to the test plan. """
+        # Link provided cases on the server
         log.info("Linking {1} to {0}".format(self._identifier,
                     listed([case.identifier for case in cases])))
         self._server.TestCase.link_plan([case.id for case in cases], self.id)
+        # Add corresponding CasePlan objects to the PlanCasePlans container
+        if PlanCasePlans._is_cached(self._object.caseplans):
+            self._object.caseplans.add([
+                    CasePlan(testcase=case, testplan=self._object)
+                    for case in cases])
 
     def _remove(self, cases):
         """ Unlink provided cases from the test plan. """
+        # Unlink provided cases on the server
         for case in cases:
             log.info("Unlinking {0} from {1}".format(
                     case.identifier, self._identifier))
             self._server.TestCase.unlink_plan(case.id, self.id)
-
+        # Add corresponding CasePlan objects from the PlanCasePlans container
+        if PlanCasePlans._is_cached(self._object.caseplans):
+            self._object.caseplans.remove([
+                    CasePlan(testcase=case, testplan=self._object)
+                    for case in cases])
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Child Plans
@@ -5671,6 +5708,268 @@ class RunCaseRuns(Container):
             self.assertEqual(Nitrate._requests, requests + 1)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  CasePlan Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class CasePlan(Mutable):
+    """
+    Test case plan object
+
+    Used mainly for storing different test case sortkey for different
+    test plans.
+    """
+
+    # Identifier width and local cache
+    _identifier_width = 12
+    _cache = {}
+    # List of all object attributes (used for init & expiration)
+    _attributes = ["testcase", "testplan", "sortkey"]
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  CasePlan Properties
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Read-only properties
+    id = property(_getter("id"), doc="Case plan id (internal fake)")
+    testcase = property(_getter("testcase"), doc="Test case object.")
+    testplan = property(_getter("testplan"), doc="Test plan object.")
+
+    # Read-write properties
+    sortkey = property(_getter("sortkey"), _setter("sortkey"),
+            doc="Test case plan sort key (int).")
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  CasePlan Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __new__(cls, id=None, *args, **kwargs):
+        """ Create a new object, handle caching if enabled. """
+        # Parse our internal fake id if both testcase and testplan given
+        id = CasePlan._fake_id(
+                id, kwargs.get("testcase"), kwargs.get("testplan"))
+        return super(CasePlan, cls).__new__(cls, id, *args, **kwargs)
+
+    def __init__(self, id=None, testcase=None, testplan=None, **kwargs):
+        """
+        Initialize a test case plan
+
+        Provide internal fake id or both test case and test plan.
+        """
+        # Prepare fake internal id if both testcase and testplan given
+        id = CasePlan._fake_id(id, testcase, testplan)
+        # Initialize (unless already done)
+        id, ignore, inject, initialized = self._is_initialized(id, **kwargs)
+        if initialized: return
+        Mutable.__init__(self, id, prefix="CP")
+        # If inject given, fetch test case plan data from it
+        if inject:
+            self._fetch(inject, **kwargs)
+        # Otherwise just make sure all requested parameter were given
+        elif not id and (testcase is None or testplan is None):
+            raise NitrateError("Need either internal id or both test case "
+                    "and test plan to initialize the CasePlan object")
+
+    def __unicode__(self):
+        """ Test case, test plan and sortkey for printing """
+        return u"{0} in {1} with sortkey {2}".format(
+                self.testcase.identifier,
+                self.testplan.identifier,
+                self.sortkey)
+
+    @staticmethod
+    def _fake_id(id, testcase, testplan):
+        """ Prepare internal fake id from testcase and testplan """
+        # Nothing to do when id provided
+        if id is not None:
+            return id
+        # Extract ids if objects given
+        if isinstance(testcase, TestCase):
+            testcase = testcase.id
+        if isinstance(testplan, TestPlan):
+            testplan = testplan.id
+        # Idify if both testcase and testplan provided
+        if testcase is not None and testplan is not None:
+            return _idify([testplan, testcase])
+        return None
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  CasePlan Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _fetch(self, inject=None, **kwargs):
+        """ Initialize / refresh test case plan data """
+        Nitrate._fetch(self, inject)
+
+        # Fetch data from the server if no inject given
+        if inject is None:
+            log.info("Fetching case plan {0}".format(self.identifier))
+            testplan, testcase = _idify(self.id)
+            inject = self._server.TestCasePlan.get(testcase, testplan)
+            self._inject = inject
+        # Use our internal fake id instead of the server one
+        self._id = _idify([inject["plan_id"], inject["case_id"]])
+        log.debug("Initializing case plan {0}".format(self.identifier))
+        log.xmlrpc(pretty(inject))
+
+        # Set up attributes
+        self._testcase = TestCase(inject["case_id"])
+        self._testplan = TestPlan(inject["plan_id"])
+        self._sortkey = inject["sortkey"]
+
+        # Index the fetched object into cache
+        self._index()
+
+    def _update(self, proxy=None):
+        """ Save test case plan data to the server """
+        log.info("Updating case plan {0}".format(self.identifier))
+        log.xmlrpc("{0}, {1}, {2}".format(
+                self.testcase.id, self.testplan.id, self.sortkey))
+        # Use custom proxy if given
+        if proxy is None:
+            proxy = self._multicall
+        proxy.TestCasePlan.update(
+                self.testcase.id, self.testplan.id, self.sortkey)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  CasePlan Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+            self.testcase = Nitrate()._config.testcase
+        def test_sortkey_update(self):
+            """ Sort key update """
+            testcase = self.testcase.id
+            testplan = self.testplan.id
+            for sortkey in [100, 200, 300]:
+                # Update the sortkey
+                caseplan = CasePlan(testcase=testcase, testplan=testplan)
+                caseplan.sortkey = sortkey
+                caseplan.update()
+                self.assertEqual(caseplan.sortkey, sortkey)
+                # Check the cache content
+                if get_cache_level() < CACHE_OBJECTS: continue
+                requests = Nitrate._requests
+                caseplan = CasePlan(testcase=testcase, testplan=testplan)
+                self.assertEqual(caseplan.sortkey, sortkey)
+                self.assertEqual(requests, Nitrate._requests)
+                # Check persistent cache
+                if get_cache_level() < CACHE_PERSISTENT: continue
+                Cache.save()
+                Cache.clear()
+                Cache.load()
+                caseplan = CasePlan(testcase=testcase, testplan=testplan)
+                self.assertEqual(caseplan.sortkey, sortkey)
+                self.assertEqual(requests, Nitrate._requests)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  PlanCasePlans Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class PlanCasePlans(Container):
+    """ Test case plan objects related to a test plan """
+
+    # Local cache & class of contained objects
+    _cache = {}
+    _class = CasePlan
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  PlanCasePlans Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def _fetch(self, inset=None):
+        """ Fetch case plans from the server """
+        # If data initialized from the inset ---> we're done
+        if Container._fetch(self, inset): return
+
+        # Fetch test case plans from the server using multicall
+        log.info("Fetching case plans for {0}".format(self._identifier))
+        multicall = xmlrpclib.MultiCall(self._server)
+        for testcase in self._object.testcases:
+            multicall.TestCasePlan.get(testcase.id, self._object.id)
+        injects = [inject for inject in multicall()]
+        log.xmlrpc(pretty(injects))
+
+        # And finally create the initial object set
+        self._current = set([CasePlan(inject) for inject in injects])
+        self._original = set(self._current)
+
+    def _add(self, caseplans):
+        """ Test case linking is handled by PlanCases class """
+        # Nothing to do on our side
+        pass
+
+    def _remove(self, caseplans):
+        """ Test case unlinking is handled by PlanCases class """
+        # Nothing to do on our side
+        pass
+
+    def add(self, caseplans):
+        """ Add case plans to the container """
+        # The method is used just for sync with PlanCases, we never add
+        # CasePlans to the server, thus we never get modified
+        super(PlanCasePlans, self).add(caseplans)
+        self._modified = False
+
+    def remove(self, caseplans):
+        """ Remove case plans from the container """
+        # The method is used just for sync with PlanCases, we never remove
+        # CasePlans to the server, thus we never get modified
+        super(PlanCasePlans, self).remove(caseplans)
+        self._modified = False
+
+    def update(self):
+        """ Update case plans with modified sortkey """
+        modified = [caseplan for caseplan in self if caseplan._modified]
+        # Nothing to do if there are no sortkey changes
+        if not modified: return
+        # Update all modified caseplans in a single multicall
+        log.info("Updating {0}'s case plans".format(self._identifier))
+        multicall = xmlrpclib.MultiCall(self._server)
+        for caseplan in modified:
+            caseplan._update(multicall)
+            caseplan._modified = False
+        multicall()
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  PlanCasePlans Test
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    class _test(unittest.TestCase):
+        def setUp(self):
+            """ Set up test plan from the config """
+            self.testplan = Nitrate()._config.testplan
+            self.testcase = Nitrate()._config.testcase
+        def test_sortkey_update(self):
+            """ Get/set sortkey using the TestPlan.sortkey() method """
+            testcase = TestCase(self.testcase.id)
+            testplan = TestPlan(self.testplan.id)
+            for sortkey in [100, 200, 300]:
+                # Compare current sortkey value
+                caseplan = CasePlan(testcase=testcase, testplan=testplan)
+                self.assertEqual(testplan.sortkey(testcase), caseplan.sortkey)
+                # Update the sortkey
+                testplan.sortkey(testcase, sortkey)
+                testplan.update()
+                self.assertEqual(testplan.sortkey(testcase), sortkey)
+                # Check the cache content
+                if get_cache_level() < CACHE_OBJECTS: continue
+                requests = Nitrate._requests
+                testplan = TestPlan(self.testplan.id)
+                self.assertEqual(testplan.sortkey(testcase), sortkey)
+                self.assertEqual(requests, Nitrate._requests)
+                # Check persistent cache
+                if get_cache_level() < CACHE_PERSISTENT: continue
+                Cache.save()
+                Cache.clear()
+                Cache.load()
+                testplan = TestPlan(self.testplan.id)
+                self.assertEqual(testplan.sortkey(testcase), sortkey)
+                self.assertEqual(requests, Nitrate._requests)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Cache Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -5685,10 +5984,10 @@ class Cache(Nitrate):
     # List of classes with persistent cache support
     _immutable = [Bug, Build, Version, Category, Component, PlanType, Product,
             Tag, User]
-    _mutable = [TestCase, TestPlan, TestRun, CaseRun]
-    _containers = [CaseBugs, CaseRunBugs, CaseComponents, CaseTags, PlanRuns,
-            PlanTags, RunCases, RunCaseRuns, RunTags, ChildPlans, PlanCases,
-            CasePlans]
+    _mutable = [TestCase, TestPlan, TestRun, CaseRun, CasePlan]
+    _containers = [CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
+            ChildPlans, PlanCasePlans, PlanCases, PlanRuns, PlanTags, RunCases,
+            RunCaseRuns, RunTags]
     _classes = _immutable + _mutable + _containers
 
     # File path to the cache
