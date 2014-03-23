@@ -515,6 +515,40 @@ def header(text, width=70):
     """ Print a simple header (text with tilde underline) """
     return "\n{0}\n{1}".format(text, width * "~")
 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Internal Utilities
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Maximum id value (used for idifying)
+_MAX_ID = 1000000000
+
+def _idify(id):
+    """
+    Pack/unpack multiple ids into/from a single id
+
+    List of ids is converted into a single id. Single id is converted
+    into list of original ids. For example:
+
+        _idify([1, 2]) ---> 1000000002
+        _idify(1000000002) ---> [1, 2]
+
+    This is used for indexing by fake internal id.
+    """
+    if isinstance(id, list):
+        result = 0
+        for value in id:
+            result = result * _MAX_ID + value
+        return result
+    elif isinstance(id, int):
+        result = []
+        while id > 0:
+            remainder = id % _MAX_ID
+            id = id / _MAX_ID
+            result.append(int(remainder))
+        result.reverse()
+        return result
+    else:
+        raise NitrateError("Invalid id for idifying: '{0}'".format(id))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  MultiCall methods
@@ -3039,7 +3073,7 @@ class Bug(Nitrate):
 
     def __hash__(self):
         """ Construct the uniqe hash from bug id and bug system id """
-        return self.system * 1000000000000 + self.bug
+        return _idify([self.system, self.bug])
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Bug Methods
