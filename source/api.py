@@ -2518,7 +2518,13 @@ class Container(Mutable):
             items = set([items])
 
         # If there are any new items
-        if items - self._items:
+        add_items = items - self._items
+        if add_items:
+            log.info("Adding {0} to {1}'s {2}".format(
+                    listed([item.identifier for item in add_items],
+                        self._class.__name__, max=10),
+                    self._object.identifier,
+                    self.__class__.__name__))
             self._items.update(items)
             if _cache_level != CACHE_NONE:
                 self._modified = True
@@ -2534,8 +2540,14 @@ class Container(Mutable):
         else:
             items = set([items])
 
-        # If there are any new items
-        if items.intersection(self._items):
+        # If there are any items to be removed
+        remove_items = items.intersection(self._items)
+        if remove_items:
+            log.info("Removing {0} from {1}'s {2}".format(
+                    listed([item.identifier for item in remove_items],
+                        self._class.__name__, max=10),
+                    self._object.identifier,
+                    self.__class__.__name__))
             self._items.difference_update(items)
             if _cache_level != CACHE_NONE:
                 self._modified = True
