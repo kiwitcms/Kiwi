@@ -860,7 +860,7 @@ class Nitrate(object):
     def _index(self, *keys):
         """ Index self into the class cache if caching enabled """
         # Skip indexing completely when caching off
-        if get_cache_level < CACHE_OBJECTS:
+        if get_cache_level() < CACHE_OBJECTS:
             return
         # Index by ID
         if self._id is not NitrateNone:
