@@ -5188,6 +5188,12 @@ class PlanCases(Container):
                     CasePlan(testcase=case, testplan=self._object)
                     for case in cases])
 
+    def __iter__(self):
+        """ Iterate over all included test cases ordered by sortkey """
+        for testcase in sorted(
+                self._items, key=lambda x: self._object.sortkey(x)):
+            yield testcase
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Child Plans
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5579,6 +5585,11 @@ class RunCases(Container):
         # RunCaseRuns will need update ---> erase current data
         self._object.caseruns._init()
 
+    def __iter__(self):
+        """ Iterate over all included test cases ordered by sortkey """
+        for caserun in sorted(self._object.caseruns, key=lambda x: x.sortkey):
+            yield caserun.testcase
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  RunCases Self Test
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5660,7 +5671,7 @@ class RunCaseRuns(Container):
         # And finally create the initial object set
         self._current = set([CaseRun(inject, testcaseinject=testcase)
                 for inject in injects
-                for testcase in self._object.testcases
+                for testcase in self._object.testcases._items
                 if int(inject["case_id"]) == testcase.id])
         self._original = set(self._current)
 
@@ -5673,6 +5684,11 @@ class RunCaseRuns(Container):
         """ Removing supported by TestRun.testcases.remove() """
         raise NitrateError(
                 "Use TestRun.testcases.remove([testcases]) to remove cases")
+
+    def __iter__(self):
+        """ Iterate over all included case runs ordered by sortkey """
+        for caserun in sorted(self._items, key=lambda x: x.sortkey):
+            yield caserun
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  RunCaseRuns Self Test
@@ -5887,7 +5903,7 @@ class PlanCasePlans(Container):
         # Fetch test case plans from the server using multicall
         log.info("Fetching case plans for {0}".format(self._identifier))
         multicall = xmlrpclib.MultiCall(self._server)
-        for testcase in self._object.testcases:
+        for testcase in self._object.testcases._items:
             multicall.TestCasePlan.get(testcase.id, self._object.id)
         injects = [inject for inject in multicall()]
         log.xmlrpc(pretty(injects))
