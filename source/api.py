@@ -3400,10 +3400,36 @@ class Tag(Nitrate):
         self._index(self.name)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  TagContainer Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class TagContainer(Container):
+    """ Tag container with support for string tags """
+
+    def __contains__(self, tag):
+        """ Tag 'in' operator """
+        tag = Tag(tag) if isinstance(tag, basestring) else tag
+        return tag in self._items
+
+    def add(self, tags):
+        """ Add a tag or a list of tags """
+        tags = [tags] if not isinstance(tags, list) else tags
+        tags = [Tag(tag) if isinstance(tag, basestring) else tag
+                for tag in tags]
+        super(TagContainer, self).add(tags)
+
+    def remove(self, tags):
+        """ Remove a tag or a list of tags """
+        tags = [tags] if not isinstance(tags, list) else tags
+        tags = [Tag(tag) if isinstance(tag, basestring) else tag
+                for tag in tags]
+        super(TagContainer, self).remove(tags)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Plan Tags Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class PlanTags(Container):
+class PlanTags(TagContainer):
     """ Test plan tags. """
 
     _cache = {}
@@ -3495,7 +3521,7 @@ class PlanTags(Container):
 #  Run Tags Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class RunTags(Container):
+class RunTags(TagContainer):
     """ Test run tags. """
 
     _cache = {}
@@ -3587,7 +3613,7 @@ class RunTags(Container):
 #  Case Tags Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class CaseTags(Container):
+class CaseTags(TagContainer):
     """ Test case tags. """
 
     _cache = {}
@@ -3674,6 +3700,18 @@ class CaseTags(Container):
             Cache.clear()
             testcase = TestCase(self.testcase.id)
             self.assertTrue(Tag("TestTag") not in testcase.tags)
+
+        def test_string_tags(self):
+            """ Support for string tags """
+            testcase = TestCase(self.testcase.id)
+            # Add string tag
+            testcase.tags.add("TestTag")
+            testcase.update()
+            self.assertTrue("TestTag" in testcase.tags)
+            # Remove string tag
+            testcase.tags.remove("TestTag")
+            testcase.update()
+            self.assertTrue("TestTag" not in testcase.tags)
 
         def test_performance_testcase_tags(self):
             """ Checking tags of test cases
