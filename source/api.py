@@ -2400,7 +2400,7 @@ class Container(Mutable):
     TestPlan.children = ChildPlans[TestPlan] .............. done
     TestPlan.testcases = PlanCases[TestCase] .............. done
     TestPlan.testruns = PlanRuns[TestRun] ................. done
-    TestPlan.caseplans = PlanCasePlans[CasePlan] .......... implement
+    TestPlan.caseplans = PlanCasePlans[CasePlan] .......... done
 
     TestRun.tags = RunTags[Tag] ........................... done
     TestRun.caseruns = RunCaseRuns[CaseRun] ............... done
