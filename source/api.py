@@ -4124,10 +4124,12 @@ class CasePlans(Container):
 
     def _remove(self, plans):
         """ Unlink provided plans from the test case. """
+        multicall = xmlrpclib.MultiCall(self._server)
         for plan in plans:
             log.info("Unlinking {0} from {1}".format(
                     plan.identifier, self._identifier))
-            self._server.TestCase.unlink_plan(self.id, plan.id)
+            multicall.TestCase.unlink_plan(self.id, plan.id)
+        multicall()
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5178,10 +5180,12 @@ class PlanCases(Container):
     def _remove(self, cases):
         """ Unlink provided cases from the test plan. """
         # Unlink provided cases on the server
+        multicall = xmlrpclib.MultiCall(self._server)
         for case in cases:
             log.info("Unlinking {0} from {1}".format(
                     case.identifier, self._identifier))
-            self._server.TestCase.unlink_plan(case.id, self.id)
+            multicall.TestCase.unlink_plan(case.id, self.id)
+        multicall()
         # Add corresponding CasePlan objects from the PlanCasePlans container
         if PlanCasePlans._is_cached(self._object.caseplans):
             self._object.caseplans.remove([
