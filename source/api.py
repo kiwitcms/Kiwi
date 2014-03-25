@@ -6048,8 +6048,10 @@ class Cache(Nitrate):
             RunCaseRuns, RunTags]
     _classes = _immutable + _mutable + _containers
 
-    # File path to the cache
+    # File path to the cache and open mode (read-only or read-write)
     _filename = None
+    _lock = None
+    _mode = None
 
     @staticmethod
     def setup(filename=None):
@@ -6067,6 +6069,7 @@ class Cache(Nitrate):
             except AttributeError:
                 log.warn("Persistent caching off "
                         "(cache filename not found in the config)")
+        Cache._lock = Cache._filename + ".lock"
 
         # Initialize user-defined expiration times from the config
         for klass in Cache._classes + [Nitrate, Mutable, Container]:
@@ -6177,6 +6180,41 @@ class Cache(Nitrate):
         log.cache("Cache restore stats:\n" + Cache.stats().strip())
 
     @staticmethod
+    def enter():
+        """ Perform setup, create lock, load the cache """
+        # Setup the cache
+        Cache.setup()
+        # Check for existing cache lock, set mode appropriately
+        try:
+            lock = open(Cache._lock)
+            log.cache("Found lock {0}, opening read-only".format(Cache._lock))
+            lock.close()
+            Cache._mode = "read-only"
+        except IOError:
+            log.cache("Creating cache lock {0}".format(Cache._lock))
+            lock = open(Cache._lock, "w")
+            lock.write("{0}\n".format(os.getpid()))
+            lock.close()
+            Cache._mode = "read-write"
+        # And finally load the cache
+        Cache.load()
+
+    @staticmethod
+    def exit():
+        """ Save the cache and remove the lock """
+        if Cache._mode == "read-only":
+            log.cache("Skipping persistent cache save in read-only mode")
+            return
+        # Save the cache and remove the lock
+        Cache.save()
+        try:
+            log.cache("Removing cache lock {0}".format(Cache._lock))
+            os.remove(Cache._lock)
+        except OSError, error:
+            log.error("Failed to remove the cache lock {0} ({1})".format(
+                    Cache._lock, error))
+
+    @staticmethod
     def clear(classes=None):
         """
         Completely wipe out cache of all (or selected) classes
@@ -6285,10 +6323,9 @@ class Cache(Nitrate):
 
 if __name__ != "__main__":
     # Setup up expiration times and load cache on module import
-    Cache.setup()
-    Cache.load()
+    Cache.enter()
     # Register callback to save the cache upon script exit
-    atexit.register(Cache.save)
+    atexit.register(Cache.exit)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
