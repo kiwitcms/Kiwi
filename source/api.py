@@ -32,6 +32,7 @@ import atexit
 import random
 import logging
 import optparse
+import psycopg2
 import tempfile
 import unittest
 import datetime
@@ -72,6 +73,18 @@ LOGGING_COLORS = {
 
 # Max number of objects updated by multicall at once when using Cache.update()
 MULTICALL_MAX = 10
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Exceptions
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class TeiidError(NitrateError):
+    """ General Teiid Error """
+    pass
+
+class TeiidNotConfigured(TeiidError):
+    """ Teiid not configured """
+    pass
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Logging
@@ -583,6 +596,80 @@ def _print_time(elapsed_time):
     sys.stderr.write("{0} ... ".format(converted_time[0]))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Teiid Class
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Teiid(object):
+    """ Teiid interface for Nitrate """
+
+    def __init__(self, config):
+        """ Initialize the connection if Teiid configured """
+        # Fetch connection data from the config, bail out if missing
+        try:
+            database = config.teiid.database
+            user = config.teiid.user
+            password = config.teiid.password
+            host = config.teiid.host
+            port = config.teiid.port
+        except AttributeError:
+            log.debug("Teiid not configured, skipping db connection")
+            self.connection = None
+            return
+        # Initialize the connection
+        log.debug("Connecting as {0} to database {1} at {2}:{3}".format(
+                user, database, host, port))
+        try:
+            self.connection = psycopg2.connect(database=database,
+                    user=user, password=password, host=host, port=port)
+        except psycopg2.DatabaseError, error:
+            log.error("Teiid connect error: {0}".format(error))
+            raise TeiidError("Failed to connect to the Teiid instance")
+        self.connection.set_isolation_level(0)
+
+    def cursor(self):
+        """ Create and return a new cursor """
+        if self.connection is None:
+            raise TeiidNotConfigured("Teiid is not configured")
+        return self.connection.cursor()
+
+    def query(self, query):
+        """ Execute sql query, return the dictified result """
+        # Prepare the cursor, execute the query
+        cursor = self.cursor()
+        cursor.execute(query)
+        # Parse columns, fetch rows
+        columns = [desc[0] for desc in cursor.description]
+        rows = cursor.fetchall()
+        # Convert longs into ints and dictify the table
+        rows = [[int(item) if isinstance(item, long) else item
+                for item in row] for row in rows]
+        return [dict(zip(columns, row)) for row in rows]
+
+    def run_case_runs(self, testrun):
+        """ Fetch case runs for given test run """
+        return self.query("""
+                SELECT case_run_id, case_id, assignee_id, build_id, notes,
+                        sortkey, case_run_status_id, run_id
+                FROM test_case_runs
+                WHERE run_id = {0}
+                """.format(testrun))
+
+    def run_cases(self, testrun):
+        """ Fetch test cases for given test run """
+        return self.query("""
+                SELECT arguments, author_id, test_cases.case_id,
+                        case_status_id, category_id, creation_date as
+                        create_date, default_tester_id, estimated_time,
+                        extra_link, isautomated as is_automated,
+                        is_automated_proposed, test_cases.notes, priority_id,
+                        requirement, script, sortkey, summary
+                FROM test_cases
+                JOIN test_case_runs
+                ON test_cases.case_id = test_case_runs.case_id
+                WHERE run_id = {0}
+                """.format(testrun))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Nitrate None Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -618,6 +705,7 @@ class Nitrate(object):
     _attributes = []
 
     _connection = None
+    _teiid_instance = None
     _settings = None
     _requests = 0
     _multicall_proxy = None
@@ -669,6 +757,15 @@ class Nitrate(object):
         # Return existing connection
         Nitrate._requests += 1
         return Nitrate._connection
+
+    @property
+    def _teiid(self):
+        """ Connection to the Teiid instance """
+        # Create the instance unless already exist
+        if Nitrate._teiid_instance is None:
+            Nitrate._teiid_instance = Teiid(self._config)
+        # Return the instance
+        return Nitrate._teiid_instance
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
@@ -3968,7 +4065,7 @@ class TestPlan(Mutable):
         self._components = PlanComponents(self)
         self._children = ChildPlans(self)
         # If all tags are cached, initialize them directly from the inject
-        if Tag._is_cached(inject["tag"]):
+        if "tag" in inject and Tag._is_cached(inject["tag"]):
             self._tags = PlanTags(
                     self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
@@ -4435,7 +4532,7 @@ class TestRun(Mutable):
         self._caseruns = RunCaseRuns(self)
         self._testcases = RunCases(self)
         # If all tags are cached, initialize them directly from the inject
-        if Tag._is_cached(inject["tag"]):
+        if "tag" in inject and Tag._is_cached(inject["tag"]):
             self._tags = RunTags(
                     self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
@@ -4919,8 +5016,11 @@ class TestCase(Mutable):
         self._arguments = inject["arguments"]
         self._author = User(inject["author_id"])
         self._category = Category(inject["category_id"])
-        self._created = datetime.datetime.strptime(
-                inject["create_date"], "%Y-%m-%d %H:%M:%S")
+        if isinstance(inject["create_date"], basestring):
+            self._created = datetime.datetime.strptime(
+                    inject["create_date"], "%Y-%m-%d %H:%M:%S")
+        else:
+            self._created = inject["create_date"]
         self._link = inject["extra_link"]
         self._notes = inject["notes"]
         self._priority = Priority(inject["priority_id"])
@@ -4951,7 +5051,7 @@ class TestCase(Mutable):
         self._testplans = CasePlans(self)
         self._components = CaseComponents(self)
         # If all tags are cached, initialize them directly from the inject
-        if Tag._is_cached(inject["tag"]):
+        if "tag" in inject and Tag._is_cached(inject["tag"]):
             self._tags = CaseTags(
                     self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
@@ -5596,7 +5696,10 @@ class RunCases(Container):
         if Container._fetch(self, inset): return
         # Fetch attached test cases from the server
         log.info("Fetching {0}'s test cases".format(self._identifier))
-        injects = self._server.TestRun.get_test_cases(self.id)
+        try:
+            injects = self._teiid.run_cases(self.id)
+        except TeiidNotConfigured:
+            injects = self._server.TestRun.get_test_cases(self.id)
         self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -5703,7 +5806,10 @@ class RunCaseRuns(Container):
         if Container._fetch(self, inset): return
         # Fetch test case runs from the server
         log.info("Fetching {0}'s case runs".format(self._identifier))
-        injects = self._server.TestRun.get_test_case_runs(self.id)
+        try:
+            injects = self._teiid.run_case_runs(self.id)
+        except TeiidNotConfigured:
+            injects = self._server.TestRun.get_test_case_runs(self.id)
         # Feed the TestRun.testcases container with the initial object
         # set if all cases are already cached (saving unnecesary fetch)
         testcaseids = [inject["case_id"] for inject in injects]

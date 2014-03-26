@@ -44,6 +44,15 @@ password are provided plain authentication will be used instead. E.g.
     password = secret
 
 It's also possible to provide system-wide config in /etc/nitrate.conf.
+For enhanced query performance it's possible to use a Teiid instance.
+Use the following config example to enable access via psycopg2 module:
+
+    [teiid]
+    user = username
+    password = password
+    database = public
+    host = host.example.com
+    port = 5432
 
 
 Logging
