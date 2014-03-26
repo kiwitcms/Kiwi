@@ -3049,6 +3049,9 @@ class PlanComponents(Container):
     #  Plan Components Self Test
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    '''
+    Disabled until BZ#866974 is fixed.
+
     class _test(unittest.TestCase):
         def setUp(self):
             """ Set up component from the config """
@@ -3095,6 +3098,7 @@ class PlanComponents(Container):
             Cache.clear()
             testplan = TestPlan(self.testplan.id)
             self.assertTrue(component not in testplan.components)
+    '''
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Bug Class
