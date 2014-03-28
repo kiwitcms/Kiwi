@@ -6292,6 +6292,9 @@ class Cache(Nitrate):
     @staticmethod
     def enter():
         """ Perform setup, create lock, load the cache """
+        # Nothing to do when persistent caching is off
+        if get_cache_level() < CACHE_PERSISTENT:
+            return
         # Setup the cache
         Cache.setup()
         # Check for existing cache lock, set mode appropriately
@@ -6312,6 +6315,10 @@ class Cache(Nitrate):
     @staticmethod
     def exit():
         """ Save the cache and remove the lock """
+        # Nothing to do when persistent caching is off
+        if get_cache_level() < CACHE_PERSISTENT:
+            return
+        # Skip cache save in read-only mode
         if Cache._mode == "read-only":
             log.cache("Skipping persistent cache save in read-only mode")
             return
