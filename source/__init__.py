@@ -27,28 +27,33 @@ custom level of logging and data caching. Supports results coloring.
 
 Synopsis:
 
+    Minimal config file ~/.nitrate::
+
+        [nitrate]
+        url = https://nitrate.server/xmlrpc/
+
     Initialize or create an object::
 
         testcase = TestCase(1234)
         testrun = TestRun(testplan=<plan>, summary=<summary>)
 
-    Default iterators provided for all container objects::
+    Iterate over all container objects::
 
         for case in TestRun(1234):
             if case.automated:
                 case.status = Status("RUNNING")
                 case.update()
 
-    Linking case to a plan is as simple as adding an item to a set::
+    Link test case to a test plan::
 
         testplan.testcases.add(testcase)
         testplan.update()
 
-For details see pydoc documentation for individual python modules:
+For details see pydoc documentation for individual modules:
 
     nitrate.base ......... Nitrate class, search support
     nitrate.cache ........ Persistent cache, multicall support
-    nitrate.config ....... Configuration, logging, coloring & caching
+    nitrate.config ....... Configuration, logging, coloring, caching
     nitrate.containers ... Container classes implementation
     nitrate.immutable .... Immutable Nitrate objects
     nitrate.mutable ...... Mutable Nitrate objects
