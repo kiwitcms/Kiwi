@@ -293,12 +293,12 @@ class Nitrate(object):
 
     def __new__(cls, id=None, *args, **kwargs):
         """ Create a new object, handle caching if enabled """
-
         # No caching when turned of or class does not support it
         if (config.get_cache_level() < config.CACHE_OBJECTS or
                 getattr(cls, "_cache", None) is None):
             return super(Nitrate, cls).__new__(cls)
-
+        # Make sure that cache has been initialized
+        Cache()
         # Look up cached object by id (or other arguments in kwargs)
         try:
             # If found, we get instance and key by which it was found
@@ -408,3 +408,6 @@ class Nitrate(object):
         # Index each given key
         for key in keys:
             self.__class__._cache[key] = self
+
+# We need to import cache only here because of cyclic import
+from nitrate.cache import Cache

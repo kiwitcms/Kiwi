@@ -104,8 +104,6 @@ from nitrate.immutable import *
 from nitrate.mutable import *
 from nitrate.containers import *
 
-config = Config()
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Constants
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -192,7 +190,7 @@ class BuildTests(unittest.TestCase):
         self.build = config.build
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
-        Cache.clear()
+        cache.clear()
 
     def tearDown(self):
         """ Restore cache level """
@@ -241,7 +239,7 @@ class CategoryTests(unittest.TestCase):
 
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        Cache.clear()
+        cache.clear()
         self.cache_level = get_cache_level()
         self.product = config.product
         self.category = config.category
@@ -307,7 +305,7 @@ class CategoryTests(unittest.TestCase):
 class PlanTypeTests(unittest.TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        Cache.clear()
+        cache.clear()
         self.original_cache_level = get_cache_level()
         self.plantype = config.plantype
         self.requests = Nitrate._requests
@@ -472,7 +470,7 @@ class ProductTests(unittest.TestCase):
 class UserTests(unittest.TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        Cache.clear()
+        cache.clear()
         self.original_cache_level = get_cache_level()
         self.user = config.user
         self.requests = Nitrate._requests
@@ -566,7 +564,7 @@ class UserTests(unittest.TestCase):
 class VersionTests(unittest.TestCase):
     def setUp(self):
         """ Set up version from the config """
-        Cache.clear()
+        cache.clear()
         self.cache_level = get_cache_level()
         self.version = config.version
         self.product = config.product
@@ -619,9 +617,9 @@ class VersionTests(unittest.TestCase):
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
         # Save, clear & load cache
-        Cache.save()
-        Cache.clear()
-        Cache.load()
+        cache.save()
+        cache.clear()
+        cache.load()
         requests = Nitrate._requests
         # Fetch once again ---> no additional request
         version = Version(self.version.id)
@@ -703,7 +701,7 @@ class TestPlanTests(unittest.TestCase):
         self.testplan = config.testplan
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
-        Cache.clear()
+        cache.clear()
 
     def tierDown(self):
         """ Restore cache level """
@@ -781,9 +779,9 @@ class TestPlanTests(unittest.TestCase):
         testplan = TestPlan(self.testplan.id)
         log.debug(testplan.name)
         # Save, clear & load cache
-        Cache.save()
-        Cache.clear()
-        Cache.load()
+        cache.save()
+        cache.clear()
+        cache.load()
         requests = Nitrate._requests
         # Fetch once again ---> no additional request
         testplan = TestPlan(self.testplan.id)
@@ -1136,9 +1134,9 @@ class CasePlanTests(unittest.TestCase):
             self.assertEqual(requests, Nitrate._requests)
             # Check persistent cache
             if get_cache_level() < CACHE_PERSISTENT: continue
-            Cache.save()
-            Cache.clear()
-            Cache.load()
+            cache.save()
+            cache.clear()
+            cache.load()
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
             self.assertEqual(caseplan.sortkey, sortkey)
             self.assertEqual(requests, Nitrate._requests)
@@ -1163,7 +1161,7 @@ class CaseComponentsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component not in testcase.components)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component not in testcase.components)
 
@@ -1190,7 +1188,7 @@ class CaseComponentsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component not in testcase.components)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component not in testcase.components)
 
@@ -1217,7 +1215,7 @@ class PlanComponentsTests(unittest.TestCase):
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(component not in testplan.components)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(component not in testplan.components)
 
@@ -1244,7 +1242,7 @@ class PlanComponentsTests(unittest.TestCase):
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(component not in testplan.components)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(component not in testplan.components)
 '''
@@ -1269,7 +1267,7 @@ class CaseBugsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug not in testcase.bugs)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug not in testcase.bugs)
 
@@ -1283,7 +1281,7 @@ class CaseBugsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug in testcase.bugs)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug in testcase.bugs)
 
@@ -1297,7 +1295,7 @@ class CaseBugsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug not in testcase.bugs)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug not in testcase.bugs)
 
@@ -1321,7 +1319,7 @@ class CaseRunBugsTests(unittest.TestCase):
         caserun = CaseRun(self.caserun.id)
         self.assertTrue(self.bug not in caserun.bugs)
         # Check server content
-        Cache.clear()
+        cache.clear()
         caserun = CaseRun(self.caserun.id)
         self.assertTrue(self.bug not in caserun.bugs)
 
@@ -1335,7 +1333,7 @@ class CaseRunBugsTests(unittest.TestCase):
         caserun = CaseRun(self.caserun.id)
         self.assertTrue(self.bug in caserun.bugs)
         # Check server content
-        Cache.clear()
+        cache.clear()
         caserun = CaseRun(self.caserun.id)
         self.assertTrue(self.bug in caserun.bugs)
 
@@ -1349,7 +1347,7 @@ class CaseRunBugsTests(unittest.TestCase):
         caserun = CaseRun(self.caserun.id)
         self.assertTrue(self.bug not in caserun.bugs)
         # Check server content
-        Cache.clear()
+        cache.clear()
         caserun = CaseRun(self.caserun.id)
         self.assertTrue(self.bug not in caserun.bugs)
 
@@ -1372,7 +1370,7 @@ class PlanTagsTests(unittest.TestCase):
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
 
@@ -1386,7 +1384,7 @@ class PlanTagsTests(unittest.TestCase):
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(Tag("TestTag") in testplan.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(Tag("TestTag") in testplan.tags)
 
@@ -1400,7 +1398,7 @@ class PlanTagsTests(unittest.TestCase):
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testplan = TestPlan(self.testplan.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
 
@@ -1423,7 +1421,7 @@ class RunTagsTests(unittest.TestCase):
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") not in testrun.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") not in testrun.tags)
 
@@ -1437,7 +1435,7 @@ class RunTagsTests(unittest.TestCase):
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") in testrun.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") in testrun.tags)
 
@@ -1451,7 +1449,7 @@ class RunTagsTests(unittest.TestCase):
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") not in testrun.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") not in testrun.tags)
 
@@ -1475,7 +1473,7 @@ class CaseTagsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") not in testcase.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") not in testcase.tags)
 
@@ -1489,7 +1487,7 @@ class CaseTagsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") in testcase.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") in testcase.tags)
 
@@ -1503,7 +1501,7 @@ class CaseTagsTests(unittest.TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") not in testcase.tags)
         # Check server content
-        Cache.clear()
+        cache.clear()
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") not in testcase.tags)
 
@@ -1576,9 +1574,9 @@ class PlanRunsTests(unittest.TestCase):
         self.assertTrue(testrun in testplan.testruns)
         # Everything should be kept in the persistent cache
         if get_cache_level() >= CACHE_PERSISTENT:
-            Cache.save()
-            Cache.clear()
-            Cache.load()
+            cache.save()
+            cache.clear()
+            cache.load()
             requests = Nitrate._requests
             testplan = TestPlan(self.testplan.id)
             testrun = TestRun(self.testrun.id)
@@ -1592,9 +1590,9 @@ class PlanRunsTests(unittest.TestCase):
         self.assertTrue(testrun in testplan.testruns)
         # Everything should be kept in the persistent cache
         if get_cache_level() >= CACHE_PERSISTENT:
-            Cache.save()
-            Cache.clear()
-            Cache.load()
+            cache.save()
+            cache.clear()
+            cache.load()
             requests = Nitrate._requests
             testplan = TestPlan(self.testplan.id)
             testrun = TestRun(self.testrun.id)
@@ -1630,9 +1628,9 @@ class PlanCasePlansTests(unittest.TestCase):
             self.assertEqual(requests, Nitrate._requests)
             # Check persistent cache
             if get_cache_level() < CACHE_PERSISTENT: continue
-            Cache.save()
-            Cache.clear()
-            Cache.load()
+            cache.save()
+            cache.clear()
+            cache.load()
             testplan = TestPlan(self.testplan.id)
             self.assertEqual(testplan.sortkey(testcase), sortkey)
             self.assertEqual(requests, Nitrate._requests)
@@ -1670,7 +1668,7 @@ class RunCasesTests(unittest.TestCase):
                 [caserun.testcase for caserun in testrun.caseruns])
         # Now make sure the same data reached the server as well
         if get_cache_level() >= CACHE_OBJECTS:
-            Cache.clear([RunCases, RunCaseRuns])
+            cache.clear([RunCases, RunCaseRuns])
         testrun = TestRun(testrun.id)
         self.assertTrue(testcase not in testrun.testcases)
         self.assertTrue(testcase not in
@@ -1683,7 +1681,7 @@ class RunCasesTests(unittest.TestCase):
                 [caserun.testcase for caserun in testrun.caseruns])
         # Again make sure the same data reached the server as well
         if get_cache_level() >= CACHE_OBJECTS:
-            Cache.clear([RunCases, RunCaseRuns])
+            cache.clear([RunCases, RunCaseRuns])
         testrun = TestRun(testrun.id)
         self.assertTrue(testcase in testrun.testcases)
         self.assertTrue(testcase in
@@ -1710,7 +1708,7 @@ class RunCaseRunsTests(unittest.TestCase):
         """ Test cases are fetched just once """
         # This test is relevant when caching is turned on
         if get_cache_level() < CACHE_OBJECTS: return
-        Cache.clear()
+        cache.clear()
         testplan = TestPlan(self.testplan.id)
         testrun = TestRun(self.testrun.id)
         # Make sure plan, run and cases are fetched
@@ -1728,15 +1726,16 @@ class RunCaseRunsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     # Override the server config with the testing instance
+    config = Config()
     try:
-        Config().nitrate = Config().test
-        print "Testing against {0}".format(Config().nitrate.url)
+        config.nitrate = config.test
+        print "Testing against {0}".format(config.nitrate.url)
     except AttributeError:
         raise NitrateError("No test server provided in the config file")
 
     # Use temporary cache file for testing
     temporary_cache = tempfile.NamedTemporaryFile()
-    Cache.setup(temporary_cache.name)
+    cache = Cache(temporary_cache.name)
 
     # Parse options
     parser = optparse.OptionParser(
@@ -1796,5 +1795,3 @@ if __name__ == "__main__":
         print "Failures in: {0}".format(listed([name
                 for name, result in results.iteritems()
                 if not result.wasSuccessful()]))
-    # Save cache
-    Cache.save()

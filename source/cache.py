@@ -105,7 +105,6 @@ import pickle
 import atexit
 import datetime
 import xmlrpclib
-import nitrate.base as base
 import nitrate.immutable as immutable
 import nitrate.mutable as mutable
 import nitrate.containers as containers
@@ -113,7 +112,7 @@ import nitrate.config as config
 
 from nitrate.config import log, get_cache_level, set_cache_level
 from nitrate.utils import pretty, listed, sliced, human
-from nitrate.base import NitrateNone
+from nitrate.base import Nitrate, NitrateNone
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  MultiCall methods
@@ -122,19 +121,19 @@ from nitrate.base import NitrateNone
 def multicall_start():
     """ Enter MultiCall mode and queue following xmlrpc calls """
     log.info("Starting multicall session, gathering updates...")
-    base.Nitrate._multicall_proxy = xmlrpclib.MultiCall(base.Nitrate()._server)
+    Nitrate._multicall_proxy = xmlrpclib.MultiCall(Nitrate()._server)
 
 def multicall_end():
     """ Execute xmlrpc call queue and exit MultiCall mode """
     log.info("Ending multicall session, sending to the server...")
-    response = base.Nitrate._multicall_proxy()
+    response = Nitrate._multicall_proxy()
     log.xmlrpc("Server response:")
     entries = 0
     for entry in response:
         log.xmlrpc(pretty(entry))
         entries += 1
-    base.Nitrate._multicall_proxy = None
-    base.Nitrate._requests += 1
+    Nitrate._multicall_proxy = None
+    Nitrate._requests += 1
     log.info("Multicall session finished, {0} completed".format(
             listed(entries, "update")))
     return response
@@ -164,13 +163,37 @@ class Cache(object):
             containers.RunCases, containers.RunCaseRuns, containers.RunTags]
     _classes = _immutable + _mutable + _containers
 
-    # File path to the cache and open mode (read-only or read-write)
+    # File path, lock and open mode (read-only or read-write)
     _filename = None
     _lock = None
     _mode = None
+    # Single cache instance
+    _instance = None
 
-    @staticmethod
-    def setup(filename=None):
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Cache Special
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def __new__(cls, *args, **kwargs):
+        """ Make sure we create a single instance only """
+        if not cls._instance:
+            cls._instance = super(Cache, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
+    def __init__(self, filename=None):
+        """ Initialize and load the cache, set up the exit method """
+        # Nothing to do if we're already initialized
+        if self._filename is not None:
+            return
+        # Load the cache and register the exit method
+        self.enter(filename)
+        atexit.register(self.exit)
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    #  Cache Methods
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def setup(self, filename=None):
         """ Set cache filename and initialize expiration times """
         # Nothing to do when persistent caching is off
         if get_cache_level() < config.CACHE_PERSISTENT:
@@ -178,17 +201,17 @@ class Cache(object):
 
         # Detect cache filename, argument first, then config
         if filename is not None:
-            Cache._filename = filename
+            self._filename = filename
         else:
             try:
-                Cache._filename = config.Config().cache.file
+                self._filename = config.Config().cache.file
             except AttributeError:
                 log.warn("Persistent caching off "
                         "(cache filename not found in the config)")
-        Cache._lock = Cache._filename + ".lock"
+        self._lock = "{0}.lock".format(self._filename)
 
         # Initialize user-defined expiration times from the config
-        for klass in Cache._classes + [base.Nitrate, mutable.Mutable,
+        for klass in self._classes + [Nitrate, mutable.Mutable,
                 containers.Container]:
             try:
                 expiration = getattr(
@@ -210,19 +233,18 @@ class Cache(object):
             else:
                 log.warn("Invalid expiration time '{0}'".format(expiration))
 
-    @staticmethod
-    def save():
+    def save(self):
         """ Save caches to specified file """
 
         # Nothing to do when persistent caching is off
-        if not Cache._filename or get_cache_level() < config.CACHE_PERSISTENT:
+        if not self._filename or get_cache_level() < config.CACHE_PERSISTENT:
             return
 
         # Clear expired items and gather all caches into a single object
-        Cache.expire()
-        log.cache("Cache dump stats:\n" + Cache.stats().strip())
+        self.expire()
+        log.cache("Cache dump stats:\n" + self.stats().strip())
         data = {}
-        for current_class in Cache._classes:
+        for current_class in self._classes:
             # Put container classes into id-sleep
             if issubclass(current_class, containers.Container):
                 for container in current_class._cache.itervalues():
@@ -231,32 +253,31 @@ class Cache(object):
 
         # Dump the cache object into file
         try:
-            output_file = gzip.open(Cache._filename, 'wb')
+            output_file = gzip.open(self._filename, 'wb')
             log.debug("Saving persistent cache into {0}".format(
-                    Cache._filename))
+                    self._filename))
             pickle.dump(data, output_file)
             output_file.close()
             log.debug("Persistent cache successfully saved")
         except IOError, error:
             log.error("Failed to save persistent cache ({0})".format(error))
 
-    @staticmethod
-    def load():
+    def load(self):
         """ Load caches from specified file """
 
         # Nothing to do when persistent caching is off
-        if not Cache._filename or get_cache_level() < config.CACHE_PERSISTENT:
+        if not self._filename or get_cache_level() < config.CACHE_PERSISTENT:
             return
 
         # Load the saved cache from file
         try:
             log.debug("Loading persistent cache from {0}".format(
-                    Cache._filename))
-            input_file = gzip.open(Cache._filename, 'rb')
+                    self._filename))
+            input_file = gzip.open(self._filename, 'rb')
             data = pickle.load(input_file)
             input_file.close()
         except EOFError:
-            log.warn("Cache file empty, will fill it upon exit")
+            log.cache("Cache file empty, will fill it upon exit")
             return
         except IOError, error:
             if error.errno == 2:
@@ -264,13 +285,13 @@ class Cache(object):
                 return
             else:
                 log.error("Failed to load the cache ({0})".format(error))
-                log.error("Cache file: {0}".format(Cache._filename))
+                log.error("Cache file: {0}".format(self._filename))
                 log.warn("Going on but switching to CACHE_OBJECTS level")
                 set_cache_level(config.CACHE_OBJECTS)
                 return
 
         # Restore cache for immutable & mutable classes first
-        for current_class in Cache._immutable + Cache._mutable:
+        for current_class in self._immutable + self._mutable:
             try:
                 log.cache("Loading cache for {0}".format(
                         current_class.__name__))
@@ -280,7 +301,7 @@ class Cache(object):
                         "with empty".format(current_class.__name__))
                 current_class._cache = {}
         # Containers to be loaded last (to prevent object duplicates)
-        for current_class in Cache._containers:
+        for current_class in self._containers:
             try:
                 log.cache("Loading cache for {0}".format(
                         current_class.__name__))
@@ -293,53 +314,50 @@ class Cache(object):
             for container in current_class._cache.itervalues():
                 container._wake()
         # Clear expired items and give a short summary for debugging
-        Cache.expire()
-        log.cache("Cache restore stats:\n" + Cache.stats().strip())
+        self.expire()
+        log.cache("Cache restore stats:\n" + self.stats().strip())
 
-    @staticmethod
-    def enter():
+    def enter(self, filename=None):
         """ Perform setup, create lock, load the cache """
         # Nothing to do when persistent caching is off
         if get_cache_level() < config.CACHE_PERSISTENT:
             return
         # Setup the cache
-        Cache.setup()
+        self.setup(filename)
         # Check for existing cache lock, set mode appropriately
         try:
-            lock = open(Cache._lock)
-            log.cache("Found lock {0}, opening read-only".format(Cache._lock))
+            lock = open(self._lock)
+            log.cache("Found lock {0}, opening read-only".format(self._lock))
             lock.close()
-            Cache._mode = "read-only"
+            self._mode = "read-only"
         except IOError:
-            log.cache("Creating cache lock {0}".format(Cache._lock))
-            lock = open(Cache._lock, "w")
+            log.cache("Creating cache lock {0}".format(self._lock))
+            lock = open(self._lock, "w")
             lock.write("{0}\n".format(os.getpid()))
             lock.close()
-            Cache._mode = "read-write"
+            self._mode = "read-write"
         # And finally load the cache
-        Cache.load()
+        self.load()
 
-    @staticmethod
-    def exit():
+    def exit(self):
         """ Save the cache and remove the lock """
         # Nothing to do when persistent caching is off
         if get_cache_level() < config.CACHE_PERSISTENT:
             return
         # Skip cache save in read-only mode
-        if Cache._mode == "read-only":
+        if self._mode == "read-only":
             log.cache("Skipping persistent cache save in read-only mode")
             return
         # Save the cache and remove the lock
-        Cache.save()
+        self.save()
         try:
-            log.cache("Removing cache lock {0}".format(Cache._lock))
-            os.remove(Cache._lock)
+            log.cache("Removing cache lock {0}".format(self._lock))
+            os.remove(self._lock)
         except OSError, error:
             log.error("Failed to remove the cache lock {0} ({1})".format(
-                    Cache._lock, error))
+                    self._lock, error))
 
-    @staticmethod
-    def clear(classes=None):
+    def clear(self, classes=None):
         """
         Completely wipe out cache of all (or selected) classes
 
@@ -352,7 +370,7 @@ class Cache(object):
                 "all objects'" if classes == None else listed(
                     [klass.__name__ for klass in classes])))
         # For each class re-initialize objects and remove from index
-        for current_class in Cache._classes:
+        for current_class in self._classes:
             if classes is not None and (current_class not in classes):
                 continue
             for current_object in current_class._cache.itervalues():
@@ -360,8 +378,7 @@ class Cache(object):
                 current_object._init()
             current_class._cache = {}
 
-    @staticmethod
-    def expire():
+    def expire(self):
         """
         Remove all out-of-date objects from the cache
 
@@ -371,7 +388,7 @@ class Cache(object):
         Also all uninitialized objects are removed from the cache.
         """
 
-        for current_class in Cache._classes:
+        for current_class in self._classes:
             expired = []
             for id, current_object in current_class._cache.iteritems():
                 expire = False
@@ -402,8 +419,7 @@ class Cache(object):
             for id in expired:
                 del current_class._cache[id]
 
-    @staticmethod
-    def update():
+    def update(self):
         """
         Update all modified mutable objects in the cache
 
@@ -415,7 +431,7 @@ class Cache(object):
         updated at once is controlled by the global variable MULTICALL_MAX,
         by default set to 10 object per session."""
 
-        for klass in Cache._mutable + Cache._containers:
+        for klass in self._mutable + self._containers:
             modified = [mutable for mutable in klass._cache.itervalues()
                     if mutable._modified]
             if not modified:
@@ -429,22 +445,12 @@ class Cache(object):
                     mutable.update()
                 multicall_end()
 
-    @staticmethod
-    def stats():
+    def stats(self):
         """ Return short stats about cached objects and expiration time """
         result = "class          objects       expiration\n"
-        for current_class in sorted(Cache._classes, key=lambda x: x.__name__):
+        for current_class in sorted(self._classes, key=lambda x: x.__name__):
             result += "{0}{1}       {2}\n".format(
                    current_class.__name__.ljust(15),
                    str(len(set(current_class._cache.itervalues()))).rjust(7),
                    human(current_class._expiration))
         return result
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Cache Setup
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# Setup up expiration times and load cache on module import
-Cache.enter()
-# Register callback to save the cache upon script exit
-atexit.register(Cache.exit)
