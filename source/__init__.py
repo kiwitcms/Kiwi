@@ -75,6 +75,8 @@ from nitrate.utils import (
 from nitrate.config import (
         Config,
         Logging, get_log_level, set_log_level, log,
+        LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_XMLRPC,
+        LOG_TEIID, LOG_ALL,
 
         Coloring, get_color_mode, set_color_mode,
         COLOR_ON, COLOR_OFF, COLOR_AUTO,
@@ -101,6 +103,8 @@ __all__ = """
 
         Config
         Logging get_log_level set_log_level log
+        LOG_ERROR LOG_WARN LOG_INFO LOG_DEBUG LOG_CACHE LOG_XMLRPC
+        LOG_TEIID LOG_ALL
 
         Coloring get_color_mode set_color_mode
         COLOR_ON COLOR_OFF COLOR_AUTO

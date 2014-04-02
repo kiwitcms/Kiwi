@@ -92,6 +92,15 @@ COLOR_ON = 1
 COLOR_OFF = 0
 COLOR_AUTO = 2
 
+LOG_ERROR = logging.ERROR
+LOG_WARN = logging.WARN
+LOG_INFO = logging.INFO
+LOG_DEBUG = logging.DEBUG
+LOG_CACHE = 7
+LOG_XMLRPC = 5
+LOG_TEIID = 3
+LOG_ALL = 1
+
 # Max number of objects updated by multicall at once when using Cache.update()
 MULTICALL_MAX = 10
 
@@ -119,41 +128,41 @@ log = None
 class Logging(object):
     """ Logging Configuration """
 
-    # Additional log level
-    CACHE = 7
-    XMLRPC = 3
-    ALL = 1
     # Color mapping
     COLORS = {
-            logging.ERROR: "red",
-            logging.WARN: "yellow",
-            logging.INFO: "blue",
-            logging.DEBUG: "green",
-            CACHE: "cyan",
-            XMLRPC: "magenta",
+            LOG_ERROR: "red",
+            LOG_WARN: "yellow",
+            LOG_INFO: "blue",
+            LOG_DEBUG: "green",
+            LOG_CACHE: "cyan",
+            LOG_XMLRPC: "magenta",
+            LOG_TEIID: "magenta",
             }
     # Environment variable mapping
     MAPPING = {
-            0: logging.WARN,
-            1: logging.INFO,
-            2: logging.DEBUG,
-            3: CACHE,
-            4: XMLRPC,
-            5: ALL,
+            0: LOG_WARN,
+            1: LOG_INFO,
+            2: LOG_DEBUG,
+            3: LOG_CACHE,
+            4: LOG_XMLRPC,
+            5: LOG_TEIID,
+            6: LOG_ALL,
             }
     # All levels
     LEVELS = "CRITICAL DEBUG ERROR FATAL INFO NOTSET WARN WARNING".split()
 
     # Default log level is WARN
-    _level = logging.WARN
+    _level = LOG_WARN
 
     class ColoredFormatter(logging.Formatter):
         """ Custom color formatter for logging """
         def format(self, record):
             # Handle custom log level names
-            if record.levelno == Logging.XMLRPC:
+            if record.levelno == LOG_TEIID:
+                levelname = "TEIID"
+            elif record.levelno == LOG_XMLRPC:
                 levelname = "XMLRPC"
-            elif record.levelno == Logging.CACHE:
+            elif record.levelno == LOG_CACHE:
                 levelname = "CACHE"
             else:
                 levelname = record.levelname
@@ -182,11 +191,12 @@ class Logging(object):
         for level in Logging.LEVELS:
             setattr(logger, level, getattr(logging, level))
         # Additional logging constants and methods for cache and xmlrpc
-        logger.XMLRPC = Logging.XMLRPC
-        logger.CACHE = Logging.CACHE
-        logger.ALL = Logging.ALL
-        logger.cache = lambda message: logger.log(Logging.CACHE, message)
-        logger.xmlrpc = lambda message: logger.log(Logging.XMLRPC, message)
+        logger.XMLRPC = LOG_XMLRPC
+        logger.CACHE = LOG_CACHE
+        logger.ALL = LOG_ALL
+        logger.cache = lambda message: logger.log(LOG_CACHE, message)
+        logger.xmlrpc = lambda message: logger.log(LOG_XMLRPC, message)
+        logger.teiid = lambda message: logger.log(LOG_TEIID, message)
         return logger
 
     @staticmethod
@@ -197,12 +207,13 @@ class Logging(object):
         If the level is not specified environment variable DEBUG is used
         with the following meaning:
 
-            DEBUG=0 ... nitrate.log.WARN (default)
-            DEBUG=1 ... nitrate.log.INFO
-            DEBUG=2 ... nitrate.log.DEBUG
-            DEBUG=3 ... nitrate.log.CACHE
-            DEBUG=4 ... nitrate.log.XMLRPC
-            DEBUG=5 ... nitrate.log.ALL (log all messages)
+            DEBUG=0 ... LOG_WARN (default)
+            DEBUG=1 ... LOG_INFO
+            DEBUG=2 ... LOG_DEBUG
+            DEBUG=3 ... LOG_CACHE
+            DEBUG=4 ... LOG_XMLRPC
+            DEBUG=5 ... LOG_TEIID
+            DEBUG=6 ... LOG_ALL (log all messages)
         """
 
         # If level specified, use given
