@@ -581,7 +581,7 @@ class PlanStatus(Nitrate):
     def name(self):
         """ Human readable plan status name """
         return color(self._statuses[self.id], color=self._colors[self.id],
-                enabled=config.Coloring.enabled())
+                enabled=config.Coloring().enabled())
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -724,13 +724,13 @@ class Status(Nitrate):
     def name(self):
         """ Human readable status name """
         return color(self._name, color=self._colors[self.id],
-                enabled=config.Coloring.enabled())
+                enabled=config.Coloring().enabled())
 
     @property
     def shortname(self):
         """ Short same-width status string (4 chars) """
         return color(self._name[0:4], color=self._colors[self.id],
-                enabled=config.Coloring.enabled())
+                enabled=config.Coloring().enabled())
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

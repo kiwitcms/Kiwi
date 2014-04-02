@@ -167,7 +167,7 @@ class Logging(object):
             except KeyError:
                 colour = "black"
             # Color the log level, use brackets when coloring off
-            if Coloring.enabled():
+            if Coloring().enabled():
                 level = color(" " + levelname + " ", "lightwhite", colour)
             else:
                 level = "[{0}]".format(levelname)
@@ -227,10 +227,8 @@ class Logging(object):
         """ Get the current log level """
         return Logging._level
 
-# TODO necessary if???
-if log is None:
-    log = Logging._create_logger()
-
+# Create the logger and detect the log level
+log = Logging._create_logger()
 set_log_level = Logging.set
 get_log_level = Logging.get
 set_log_level()
@@ -315,27 +313,30 @@ class Coloring(object):
 
     # Default color mode is auto-detected from the terminal presence
     _mode = None
+    MODES = ["COLOR_OFF", "COLOR_ON", "COLOR_AUTO"]
+    # We need only a single config instance
+    _instance = None
 
-    @staticmethod
-    def set(mode=None):
-        """
-        Set the coloring mode
+    def __new__(cls, *args, **kwargs):
+        """ Make sure we create a single instance only """
+        if not cls._instance:
+            cls._instance = super(Coloring, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
 
-        If enabled, some objects (like case run Status) are printed in color
-        to easily spot failures, errors and so on. By default the feature is
-        enabled when script is attached to a terminal. Possible values are:
+    def __init__(self, mode=None):
+        """ Initialize the coloring mode """
+        # Nothing to do if already initialized
+        if self._mode is not None:
+            return
+        # Set the mode
+        self.set(mode)
 
-            COLOR=0 ... COLOR_OFF .... coloring disabled
-            COLOR=1 ... COLOR_ON ..... coloring enabled
-            COLOR=2 ... COLOR_AUTO ... if terminal attached (default)
-
-        Environment variable COLOR can be used to set up the coloring to the
-        desired mode without modifying code.
-        """
+    def set(self, mode=None):
+        """ Set the coloring mode """
         # Detect from the environment if no mode given (only once)
         if mode is None:
             # Nothing to do if already detected
-            if Coloring._mode is not None:
+            if self._mode is not None:
                 return
             # Detect from the environment variable COLOR
             try:
@@ -344,26 +345,42 @@ class Coloring(object):
                 mode = COLOR_AUTO
         elif mode < 0 or mode > 2:
             raise NitrateError("Invalid color mode '{0}'".format(mode))
-        Coloring._mode = mode
-        log.debug("Coloring {0}".format(
-                "enabled" if Coloring.enabled() else "disabled"))
+        self._mode = mode
+        log.debug("Coloring {0} ({1})".format(
+                "enabled" if self.enabled() else "disabled",
+                self.MODES[self._mode]))
 
-    @staticmethod
-    def get():
+    def get(self):
         """ Get the current color mode """
-        return Coloring._mode
+        return self._mode
 
-    @staticmethod
-    def enabled():
+    def enabled(self):
         """ True if coloring is currently enabled """
         # In auto-detection mode color enabled when terminal attached
-        if Coloring._mode == COLOR_AUTO:
+        if self._mode == COLOR_AUTO:
             return sys.stdout.isatty()
-        return Coloring._mode == COLOR_ON
+        return self._mode == COLOR_ON
 
-set_color_mode = Coloring.set
-get_color_mode = Coloring.get
-set_color_mode()
+def set_color_mode(mode):
+    """
+    Set the coloring mode
+
+    If enabled, some objects (like case run Status) are printed in color
+    to easily spot failures, errors and so on. By default the feature is
+    enabled when script is attached to a terminal. Possible values are:
+
+        COLOR=0 ... COLOR_OFF .... coloring disabled
+        COLOR=1 ... COLOR_ON ..... coloring enabled
+        COLOR=2 ... COLOR_AUTO ... if terminal attached (default)
+
+    Environment variable COLOR can be used to set up the coloring to the
+    desired mode without modifying code.
+    """
+    Coloring().set(mode)
+
+def get_color_mode():
+    """ Get the current coloring mode """
+    return Coloring().get()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Caching Configuration
@@ -372,50 +389,73 @@ set_color_mode()
 class Caching(object):
     """ Caching level configuration """
 
+    # Current caching level and the list of all levels
     _level = None
+    LEVELS = "CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_PERSISTENT".split()
 
-    @staticmethod
-    def set(level=None):
-        """
-        Set the caching level
+    # We need only a single config instance
+    _instance = None
 
-        If the level parameter is not specified environment variable CACHE
-        and configuration section [cache] are inspected. There are four cache
-        levels available.
+    def __new__(cls, *args, **kwargs):
+        """ Make sure we create a single instance only """
+        if not cls._instance:
+            cls._instance = super(Caching, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
 
-            CACHE=0 ... CACHE_NONE
-            CACHE=1 ... CACHE_CHANGES
-            CACHE=2 ... CACHE_OBJECTS
-            CACHE=3 ... CACHE_PERSISTENT
+    def __init__(self, level=None):
+        """ Initialize the caching level """
+        # Nothing to do if already initialized
+        if self._level is not None:
+            return
+        # Set the level
+        self.set(level)
 
-        See nitrate.cache module documentation for detailed description
-        of the caching mechanism.
-        """
+    def set(self, level=None):
+        """ Set the caching level """
         # Setup from the environment or config file (performed only once)
         if level is None:
             # Default cache level already detected, nothing to do
-            if Caching._level is not None:
+            if self._level is not None:
                 return
             # Attempt to detect the level from the environment
             try:
-                Caching._level = int(os.environ["CACHE"])
+                self._level = int(os.environ["CACHE"])
             except StandardError:
                 # Inspect the [cache] section of the config file
                 try:
-                    Caching._level = Config().cache.level
+                    self._level = Config().cache.level
+                # Use default if no cache section or no config file
                 except AttributeError:
-                    Caching._level = CACHE_OBJECTS
-        elif level >= 0 and level <= 3:
-            Caching._level = level
+                    self._level = CACHE_OBJECTS
+        elif level >= CACHE_NONE and level <= CACHE_PERSISTENT:
+            self._level = level
         else:
             raise NitrateError("Invalid cache level '{0}'".format(level))
-        log.debug("Caching on level {0}".format(Caching._level))
+        log.debug("Caching on level {0} ({1})".format(
+                self._level, self.LEVELS[self._level]))
 
-    @staticmethod
-    def get():
+    def get(self):
         """ Get the current caching level """
-        return Caching._level
+        return self._level
 
-set_cache_level = Caching.set
-get_cache_level = Caching.get
-set_cache_level()
+def set_cache_level(level):
+    """
+    Set the caching level
+
+    If the level parameter is not specified environment variable CACHE
+    and configuration section [cache] are inspected. There are four cache
+    levels available.
+
+        CACHE=0 ... CACHE_NONE
+        CACHE=1 ... CACHE_CHANGES
+        CACHE=2 ... CACHE_OBJECTS
+        CACHE=3 ... CACHE_PERSISTENT
+
+    See nitrate.cache module documentation for detailed description
+    of the caching mechanism.
+    """
+    Caching().set(level)
+
+def get_cache_level():
+    """ Get the current caching level """
+    return Caching().get()

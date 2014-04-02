@@ -163,21 +163,21 @@ class UtilsTests(unittest.TestCase):
 
     def test_get_set_cache_level(self):
         """ Get & set the caching level """
-        original = Caching.get()
+        original = Caching().get()
         for level in [CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS]:
             set_cache_level(level)
-            self.assertEqual(Caching.get(), level)
+            self.assertEqual(Caching().get(), level)
             self.assertEqual(get_cache_level(), level)
-        Caching.set(original)
+        Caching().set(original)
 
     def test_get_set_color_mode(self):
         """ Get & set the color mode """
-        original = Coloring.get()
+        original = Coloring().get()
         for mode in [COLOR_ON, COLOR_OFF, COLOR_AUTO]:
             set_color_mode(mode)
-            self.assertEqual(Coloring.get(), mode)
+            self.assertEqual(Coloring().get(), mode)
             self.assertEqual(get_color_mode(), mode)
-        Coloring.set(original)
+        Coloring().set(original)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Build
