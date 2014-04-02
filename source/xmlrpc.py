@@ -1,4 +1,6 @@
 """
+XMLRPC driver
+
 Use this class to access Nitrate via XML-RPC
 This code is based on http://landfill.bugzilla.org/testopia2/testopia/contrib/drivers/python/testopia.py
 and https://fedorahosted.org/python-bugzilla/browser/bugzilla/base.py
