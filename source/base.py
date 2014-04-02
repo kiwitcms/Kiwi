@@ -43,7 +43,7 @@ import nitrate.utils as utils
 import nitrate.xmlrpc as xmlrpc
 import nitrate.teiid as teiid
 
-from nitrate.config import log
+from nitrate.config import log, Config
 from nitrate.xmlrpc import NitrateError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -159,7 +159,6 @@ class Nitrate(object):
 
     _connection = None
     _teiid_instance = None
-    _settings = None
     _requests = 0
     _multicall_proxy = None
     _identifier_width = 0
@@ -178,34 +177,23 @@ class Nitrate(object):
                 self._prefix, str(id).rjust(self._identifier_width, "0"))
 
     @property
-    def _config(self):
-        """ User configuration (expected in ~/.nitrate) """
-
-        # Read the config file (unless already done)
-        if Nitrate._settings is None:
-            Nitrate._settings = config.Config()
-
-        # Return the settings
-        return Nitrate._settings
-
-    @property
     def _server(self):
         """ Connection to the server """
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
             log.debug(u"Contacting server {0}".format(
-                    self._config.nitrate.url))
+                    Config().nitrate.url))
             # Plain authentication if username & password given
             try:
                 Nitrate._connection = xmlrpc.NitrateXmlrpc(
-                        self._config.nitrate.username,
-                        self._config.nitrate.password,
-                        self._config.nitrate.url).server
+                        Config().nitrate.username,
+                        Config().nitrate.password,
+                        Config().nitrate.url).server
             # Kerberos otherwise
             except AttributeError:
                 Nitrate._connection = xmlrpc.NitrateKerbXmlrpc(
-                        self._config.nitrate.url).server
+                        Config().nitrate.url).server
 
         # Return existing connection
         Nitrate._requests += 1
@@ -216,7 +204,7 @@ class Nitrate(object):
         """ Connection to the Teiid instance """
         # Create the instance unless already exist
         if Nitrate._teiid_instance is None:
-            Nitrate._teiid_instance = teiid.Teiid(self._config)
+            Nitrate._teiid_instance = teiid.Teiid()
         # Return the instance
         return Nitrate._teiid_instance
 
@@ -357,7 +345,7 @@ class Nitrate(object):
     def __unicode__(self):
         """ Short summary about the connection """
         return u"Nitrate server: {0}\nTotal requests handled: {1}".format(
-                self._config.nitrate.url, self._requests)
+                Config().nitrate.url, self._requests)
 
     def __eq__(self, other):
         """ Objects are compared based on their id """

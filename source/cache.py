@@ -181,7 +181,7 @@ class Cache(object):
             Cache._filename = filename
         else:
             try:
-                Cache._filename = base.Nitrate()._config.cache.file
+                Cache._filename = config.Config().cache.file
             except AttributeError:
                 log.warn("Persistent caching off "
                         "(cache filename not found in the config)")
@@ -192,8 +192,7 @@ class Cache(object):
                 containers.Container]:
             try:
                 expiration = getattr(
-                        base.Nitrate()._config.expiration,
-                        klass.__name__.lower())
+                        config.Config().expiration, klass.__name__.lower())
             except AttributeError:
                 continue
             # Convert from seconds, handle special values

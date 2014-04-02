@@ -104,6 +104,8 @@ from nitrate.immutable import *
 from nitrate.mutable import *
 from nitrate.containers import *
 
+config = Config()
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Internal Utilities
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,8 +181,8 @@ class UtilsTests(unittest.TestCase):
 class BuildTests(unittest.TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        self.product = Nitrate()._config.product
-        self.build = Nitrate()._config.build
+        self.product = config.product
+        self.build = config.build
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
         Cache.clear()
@@ -234,8 +236,8 @@ class CategoryTests(unittest.TestCase):
         """ Clear cache, save cache level and initialize test data """
         Cache.clear()
         self.cache_level = get_cache_level()
-        self.product = Nitrate()._config.product
-        self.category = Nitrate()._config.category
+        self.product = config.product
+        self.category = config.category
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -300,7 +302,7 @@ class PlanTypeTests(unittest.TestCase):
         """ Clear cache, save cache level and initialize test data """
         Cache.clear()
         self.original_cache_level = get_cache_level()
-        self.plantype = Nitrate()._config.plantype
+        self.plantype = config.plantype
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -373,7 +375,7 @@ class PlanTypeTests(unittest.TestCase):
 class ProductTests(unittest.TestCase):
     def setUp(self):
         """ Set up test product from the config """
-        self.product = Nitrate()._config.product
+        self.product = config.product
 
     def testGetById(self):
         """ Get product by id """
@@ -465,7 +467,7 @@ class UserTests(unittest.TestCase):
         """ Clear cache, save cache level and initialize test data """
         Cache.clear()
         self.original_cache_level = get_cache_level()
-        self.user = Nitrate()._config.user
+        self.user = config.user
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -559,8 +561,8 @@ class VersionTests(unittest.TestCase):
         """ Set up version from the config """
         Cache.clear()
         self.cache_level = get_cache_level()
-        self.version = Nitrate()._config.version
-        self.product = Nitrate()._config.product
+        self.version = config.version
+        self.product = config.product
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -626,7 +628,7 @@ class VersionTests(unittest.TestCase):
 class ComponentTests(unittest.TestCase):
     def setUp(self):
         """ Set up component from the config """
-        self.component = Nitrate()._config.component
+        self.component = config.component
 
     def testFetchById(self):
         """ Fetch component by id """
@@ -691,7 +693,7 @@ class ComponentTests(unittest.TestCase):
 class TestPlanTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
+        self.testplan = config.testplan
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
         Cache.clear()
@@ -788,9 +790,9 @@ class TestPlanTests(unittest.TestCase):
 class TestRunTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
-        self.testcase = Nitrate()._config.testcase
-        self.testrun = Nitrate()._config.testrun
+        self.testplan = config.testplan
+        self.testcase = config.testcase
+        self.testrun = config.testrun
 
     def testCreateInvalid(self):
         """ Create a new test run (missing required parameters) """
@@ -888,8 +890,8 @@ class TestRunTests(unittest.TestCase):
 class TestCaseTests(unittest.TestCase):
     def setUp(self):
         """ Set up test case from the config """
-        self.testcase = Nitrate()._config.testcase
-        self.performance = Nitrate()._config.performance
+        self.testcase = config.testcase
+        self.performance = config.performance
 
     def testCreateInvalid(self):
         """ Create a new test case (missing required parameters) """
@@ -1049,7 +1051,7 @@ class TestCaseTests(unittest.TestCase):
 class CaseRunsTests(unittest.TestCase):
     def setUp(self):
         """ Set up performance test configuration from the config """
-        self.performance = Nitrate()._config.performance
+        self.performance = config.performance
 
     def test_performance_update_caseruns(self):
         """ Updating multiple CaseRun statuses (MultiCall off)
@@ -1107,8 +1109,8 @@ class CaseRunsTests(unittest.TestCase):
 class CasePlanTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
-        self.testcase = Nitrate()._config.testcase
+        self.testplan = config.testplan
+        self.testcase = config.testcase
     def test_sortkey_update(self):
         """ Sort key update """
         testcase = self.testcase.id
@@ -1134,25 +1136,6 @@ class CasePlanTests(unittest.TestCase):
             self.assertEqual(caseplan.sortkey, sortkey)
             self.assertEqual(requests, Nitrate._requests)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseComponents
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1160,8 +1143,8 @@ class CasePlanTests(unittest.TestCase):
 class CaseComponentsTests(unittest.TestCase):
     def setUp(self):
         """ Set up component from the config """
-        self.component = Nitrate()._config.component
-        self.testcase = Nitrate()._config.testcase
+        self.component = config.component
+        self.testcase = config.testcase
 
     def test1(self):
         """ Unlinking a component from a test case """
@@ -1214,8 +1197,8 @@ Disabled until BZ#866974 is fixed.
 class PlanComponentsTests(unittest.TestCase):
     def setUp(self):
         """ Set up component from the config """
-        self.component = Nitrate()._config.component
-        self.testplan = Nitrate()._config.testplan
+        self.component = config.component
+        self.testplan = config.testplan
 
     def test1(self):
         """ Unlinking a component from a  test plan """
@@ -1266,7 +1249,7 @@ class PlanComponentsTests(unittest.TestCase):
 class CaseBugsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test case from the config """
-        self.testcase = Nitrate()._config.testcase
+        self.testcase = config.testcase
         self.bug = Bug(bug=1234)
 
     def test_bugging1(self):
@@ -1318,7 +1301,7 @@ class CaseBugsTests(unittest.TestCase):
 class CaseRunBugsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test case from the config """
-        self.caserun = Nitrate()._config.caserun
+        self.caserun = config.caserun
         self.bug = Bug(bug=1234)
 
     def test_bugging1(self):
@@ -1370,7 +1353,7 @@ class CaseRunBugsTests(unittest.TestCase):
 class PlanTagsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
+        self.testplan = config.testplan
 
     def testTagging1(self):
         """ Untagging a test plan """
@@ -1421,7 +1404,7 @@ class PlanTagsTests(unittest.TestCase):
 class RunTagsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test run from the config """
-        self.testrun = Nitrate()._config.testrun
+        self.testrun = config.testrun
 
     def testTagging1(self):
         """ Untagging a test run """
@@ -1472,8 +1455,8 @@ class RunTagsTests(unittest.TestCase):
 class CaseTagsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test case from the config """
-        self.testcase = Nitrate()._config.testcase
-        self.performance = Nitrate()._config.performance
+        self.testcase = config.testcase
+        self.performance = config.performance
 
     def testTagging1(self):
         """ Untagging a test case """
@@ -1548,7 +1531,7 @@ class CaseTagsTests(unittest.TestCase):
 class ChildPlansTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
+        self.testplan = config.testplan
 
     def test_add_and_remove_child_plan(self):
         """ Add and remove child test plan """
@@ -1576,8 +1559,8 @@ class ChildPlansTests(unittest.TestCase):
 class PlanRunsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
-        self.testrun = Nitrate()._config.testrun
+        self.testplan = config.testplan
+        self.testrun = config.testrun
 
     def test_inclusion(self):
         """ Test run included in the container"""
@@ -1618,8 +1601,8 @@ class PlanRunsTests(unittest.TestCase):
 class PlanCasePlansTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
-        self.testcase = Nitrate()._config.testcase
+        self.testplan = config.testplan
+        self.testcase = config.testcase
     def test_sortkey_update(self):
         """ Get/set sortkey using the TestPlan.sortkey() method """
         testcase = TestCase(self.testcase.id)
@@ -1654,9 +1637,9 @@ class PlanCasePlansTests(unittest.TestCase):
 class RunCasesTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
-        self.testrun = Nitrate()._config.testrun
-        self.testcase = Nitrate()._config.testcase
+        self.testplan = config.testplan
+        self.testrun = config.testrun
+        self.testcase = config.testcase
 
     def test_present(self):
         """ Check test case presence """
@@ -1706,9 +1689,9 @@ class RunCasesTests(unittest.TestCase):
 class RunCaseRunsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = Nitrate()._config.testplan
-        self.testrun = Nitrate()._config.testrun
-        self.caserun = Nitrate()._config.caserun
+        self.testplan = config.testplan
+        self.testrun = config.testrun
+        self.caserun = config.caserun
 
     def test_present(self):
         """ Check case run presence """

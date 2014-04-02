@@ -34,7 +34,7 @@ Use the following config snippet to enable access via psycopg2 module:
 
 import psycopg2
 
-from nitrate.config import log
+from nitrate.config import log, Config
 from nitrate.xmlrpc import NitrateError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,9 +56,10 @@ class TeiidNotConfigured(TeiidError):
 class Teiid(object):
     """ Teiid interface for Nitrate """
 
-    def __init__(self, config):
+    def __init__(self):
         """ Initialize the connection if Teiid configured """
         # Fetch connection data from the config, bail out if missing
+        config = Config()
         try:
             database = config.teiid.database
             user = config.teiid.user
