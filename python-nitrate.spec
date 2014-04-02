@@ -1,5 +1,5 @@
 Name: python-nitrate
-Version: 0.12
+Version: 0.13
 Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
@@ -40,6 +40,22 @@ install -pm 644 documentation/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Thu Apr 03 2014 Petr Šplíchal <psplicha@redhat.com> 0.13-0
+- Give a summary of expired items for easier debugging
+- Wake up only containers with already cached items
+- New log.all() method for super-detailed logging
+- Use singletons for Coloring and Caching configuration
+- Use a single Cache instance for persistent cache handling
+- Include minimal config example in the synopsis
+- Use custom concise test results for python 2.7+ only
+- New log level for Teiid, global constants for all levels
+- Explicitly mention cache levels for environment variable
+- Use Config class directly rather than through Nitrate
+- Teiid requires python-psycopg2 for db connection
+- Refactored the huge api module into several modules
+- Explicitly mention the update() method in examples
+- Ignore enter() and exit() when persistent caching off
+
 * Wed Mar 26 2014 Petr Šplíchal <psplicha@redhat.com> 0.12-0
 - Disable PlanComponents test until BZ#866974 is fixed.
 - Support for fetching data from a Teiid instance
