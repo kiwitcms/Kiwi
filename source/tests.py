@@ -107,6 +107,13 @@ from nitrate.containers import *
 config = Config()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Constants
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Since python 2.7 the test suite results are too verbose
+VERBOSE_UNITTEST = sys.version_info >= (2, 7)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Internal Utilities
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1739,10 +1746,11 @@ if __name__ == "__main__":
             help="Run performance tests")
     (options, arguments) = parser.parse_args()
 
-    # Custom test result class
-    class ShortResult(unittest.TextTestResult):
-        def getDescription(self, test):
-            return test.shortDescription() or str(test)
+    # Custom (more concise) test result class for python 2.7 and newer
+    if VERBOSE_UNITTEST:
+        class ShortResult(unittest.TextTestResult):
+            def getDescription(self, test):
+                return test.shortDescription() or str(test)
 
     # Walk through all unit test classes
     import __main__
@@ -1768,8 +1776,11 @@ if __name__ == "__main__":
         suite = unittest.TestSuite(suite)
         print header(name)
         log_level = get_log_level()
-        results[name] = unittest.TextTestRunner(
-                    verbosity=2, resultclass=ShortResult).run(suite)
+        if VERBOSE_UNITTEST:
+            results[name] = unittest.TextTestRunner(
+                        verbosity=2, resultclass=ShortResult).run(suite)
+        else:
+            results[name] = unittest.TextTestRunner(verbosity=2).run(suite)
         set_log_level(log_level)
 
     # Check for failed tests and give a short test summary
@@ -1777,7 +1788,7 @@ if __name__ == "__main__":
     errors = sum([len(result.errors) for result in results.itervalues()])
     testsrun = sum([result.testsRun for result in results.itervalues()])
     print header("Summary")
-    print "{0} tested".format(listed(results, "class"))
+    print "{0} tested".format(listed(results, "class", "classes"))
     print "{0} passed".format(listed(testsrun - failures - errors, "test"))
     print "{0} failed".format(listed(failures, "test"))
     print "{0} found".format(listed(errors, "error"))
