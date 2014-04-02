@@ -52,6 +52,8 @@ added for logging cache handling details and xmlrpc communication:
     log.debug(message)
     log.cache(message)
     log.xmlrpc(message)
+    log.teiid(message)
+    log.all(message)
 
 By default, messages of level WARN and up are only displayed. This can
 be controlled by setting the current log level. See set_log_level() for
@@ -153,7 +155,9 @@ class Logging(object):
         """ Custom color formatter for logging """
         def format(self, record):
             # Handle custom log level names
-            if record.levelno == LOG_TEIID:
+            if record.levelno == LOG_ALL:
+                levelname = "ALL"
+            elif record.levelno == LOG_TEIID:
                 levelname = "TEIID"
             elif record.levelno == LOG_XMLRPC:
                 levelname = "XMLRPC"
@@ -192,6 +196,7 @@ class Logging(object):
         logger.cache = lambda message: logger.log(LOG_CACHE, message)
         logger.xmlrpc = lambda message: logger.log(LOG_XMLRPC, message)
         logger.teiid = lambda message: logger.log(LOG_TEIID, message)
+        logger.all = lambda message: logger.log(LOG_ALL, message)
         return logger
 
     @staticmethod

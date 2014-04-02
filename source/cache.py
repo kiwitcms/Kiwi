@@ -395,20 +395,20 @@ class Cache(object):
                 # Check if object is uninitialized
                 if (current_object._id is NitrateNone or
                         current_object._fetched is None):
-                    log.cache("Wiping uninitialized {0} {1} from cache".format(
+                    log.all("Wiping uninitialized {0} {1} from cache".format(
                             current_object.__class__.__name__,
                             current_object.identifier))
                     expire = True
                 # Check if object is expired
                 elif current_object._is_expired:
-                    log.cache("Wiping expired {0} {1} from cache".format(
+                    log.all("Wiping expired {0} {1} from cache".format(
                             current_object.__class__.__name__,
                             current_object.identifier))
                     expire = True
                 # Check if object is modified
                 elif (isinstance(current_object, mutable.Mutable) and
                         current_object._modified):
-                    log.cache("Wiping modified {0} {1} from cache".format(
+                    log.all("Wiping modified {0} {1} from cache".format(
                             current_object.__class__.__name__,
                             current_object.identifier))
                     expire = True
