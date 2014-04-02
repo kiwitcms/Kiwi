@@ -416,8 +416,14 @@ class Cache(object):
                     # Reset the object to the initial state
                     current_object._init()
                     expired.append(id)
+            before = len(current_class._cache)
             for id in expired:
                 del current_class._cache[id]
+            after = len(current_class._cache)
+            if before != after:
+                log.cache("Wiped {0} from the {1} cache".format(
+                        listed(before - after, "expired object"),
+                        current_class.__name__))
 
     def update(self):
         """
