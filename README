@@ -52,15 +52,17 @@ Default iterators provided for all container objects::
     for case in TestRun(1234):
         if case.automated:
             case.status = Status("RUNNING")
+            case.update()
 
 Linking case to a plan is as simple as adding an item to a set::
 
     testplan.testcases.add(testcase)
+    testplan.update()
 
 However, it's still possible to use the low-level driver when a
 specific features is not implemented yet or not efficient enough::
 
-    testcasehash = Nitrate()._server.TestCase.get(46490)
+    inject = Nitrate()._server.TestCase.get(46490)
 
 For a quick start you can get some inspiration in the examples
 directory. The 'matrix.py' script demonstrates how to easily
