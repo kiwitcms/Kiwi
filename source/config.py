@@ -375,7 +375,15 @@ class Caching(object):
 
         If the level parameter is not specified environment variable CACHE
         and configuration section [cache] are inspected. There are four cache
-        levels available. See module documentation for detailed description.
+        levels available.
+
+            CACHE=0 ... CACHE_NONE
+            CACHE=1 ... CACHE_CHANGES
+            CACHE=2 ... CACHE_OBJECTS
+            CACHE=3 ... CACHE_PERSISTENT
+
+        See nitrate.cache module documentation for detailed description
+        of the caching mechanism.
         """
         # Setup from the environment or config file (performed only once)
         if level is None:
