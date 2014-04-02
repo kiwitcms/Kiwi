@@ -259,10 +259,15 @@ class Container(Mutable):
         """ Restore container object after loading from cache """
         # See _sleep() method above for explanation why this is necessary
         if self._current is NitrateNone: return
-        log.cache("Waking up {0} for {1}".format(
-                self.__class__.__name__, self._identifier))
-        self._original = set([self._class(id) for id in self._original])
-        self._current = set([self._class(id) for id in self._current])
+        if self._class._is_cached(list(self._original)):
+            log.cache("Waking up {0} for {1}".format(
+                    self.__class__.__name__, self._identifier))
+            self._original = set([self._class(id) for id in self._original])
+            self._current = set([self._class(id) for id in self._current])
+        else:
+            log.cache("Skipping wake up of {0} for {1}".format(
+                    self.__class__.__name__, self._identifier))
+            self._init()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   Case Components Class
