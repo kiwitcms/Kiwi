@@ -80,18 +80,7 @@ from nitrate.utils import color
 #  Constants
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-NEVER_CACHE = datetime.timedelta(seconds=0)
-NEVER_EXPIRE = datetime.timedelta(days=365)
-
-CACHE_NONE = 0
-CACHE_CHANGES = 1
-CACHE_OBJECTS = 2
-CACHE_PERSISTENT = 3
-
-COLOR_ON = 1
-COLOR_OFF = 0
-COLOR_AUTO = 2
-
+# Logging
 LOG_ERROR = logging.ERROR
 LOG_WARN = logging.WARN
 LOG_INFO = logging.INFO
@@ -101,18 +90,24 @@ LOG_XMLRPC = 5
 LOG_TEIID = 3
 LOG_ALL = 1
 
+# Coloring
+COLOR_ON = 1
+COLOR_OFF = 0
+COLOR_AUTO = 2
+
+# Caching
+NEVER_CACHE = datetime.timedelta(seconds=0)
+NEVER_EXPIRE = datetime.timedelta(days=365)
+CACHE_NONE = 0
+CACHE_CHANGES = 1
+CACHE_OBJECTS = 2
+CACHE_PERSISTENT = 3
+
 # Max number of objects updated by multicall at once when using Cache.update()
 MULTICALL_MAX = 10
 
 # Maximum id value (used for idifying)
 _MAX_ID = 1000000000
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Global Variables
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# Custom logger
-log = None
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Logging Configuration
