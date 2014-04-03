@@ -31,7 +31,7 @@ mkdir -p %{buildroot}%{_mandir}/man1
 mkdir -p %{buildroot}%{python_sitelib}/nitrate
 install -pm 755 source/nitrate %{buildroot}%{_bindir}
 install -pm 644 source/*.py %{buildroot}%{python_sitelib}/nitrate
-install -pm 644 documentation/*.1.gz %{buildroot}%{_mandir}/man1
+install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 
 %files
 %{_mandir}/man1/*

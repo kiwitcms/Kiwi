@@ -10,12 +10,12 @@ PUSH_URL = fedorapeople.org:public_html/python-nitrate/testing
 endif
 
 PACKAGE = python-nitrate-$(VERSION)
-DOCS = $(TMP)/$(PACKAGE)/documentation
+DOCS = $(TMP)/$(PACKAGE)/docs
 EXAMPLES = $(TMP)/$(PACKAGE)/examples
 CSS = --stylesheet=style.css --link-stylesheet
 FILES = COPYING README \
 		Makefile python-nitrate.spec \
-		documentation examples source
+		docs examples source
 
 all: push clean
 
