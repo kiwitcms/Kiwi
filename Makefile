@@ -24,6 +24,8 @@ build:
 	cp -a $(FILES) $(TMP)/$(PACKAGE)
 	rst2man README | gzip > $(DOCS)/python-nitrate.1.gz
 	rst2html README $(CSS) > $(DOCS)/index.html
+	rst2man $(DOCS)/notes.rst | gzip > $(DOCS)/nitrate-notes.1.gz
+	rst2html $(DOCS)/notes.rst $(CSS) > $(DOCS)/notes.html
 	rst2man $(DOCS)/nitrate.rst | gzip > $(DOCS)/nitrate.1.gz
 	rst2html $(DOCS)/nitrate.rst $(CSS) > $(DOCS)/nitrate.html
 
