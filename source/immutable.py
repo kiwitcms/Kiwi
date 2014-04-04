@@ -1283,6 +1283,11 @@ class Tag(Nitrate):
         """ Tag name for printing """
         return self.name
 
+    def __hash__(self):
+        """ Use tag name for hashing """
+        # This is necessary until BZ#1084301 is fixed
+        return hash(self.name)
+
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Tag Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -692,6 +692,50 @@ class ComponentTests(unittest.TestCase):
         set_cache_level(original)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Tag
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class TagTests(unittest.TestCase):
+    def setUp(self):
+        """ Set up component from the config """
+        self.tag = config.tag
+
+    def test_fetch_by_id(self):
+        """ Fetch component by id """
+        tag = Tag(self.tag.id)
+        self.assertTrue(isinstance(tag, Tag))
+        self.assertEqual(tag.name, self.tag.name)
+
+    def test_fetch_by_name(self):
+        """ Fetch tag by name """
+        for tag in [Tag(name=self.tag.name), Tag(self.tag.name)]:
+            self.assertTrue(isinstance(tag, Tag))
+            self.assertEqual(tag.id, self.tag.id)
+
+    def test_caching(self):
+        """ Tag caching """
+        # First fetch
+        cache.clear()
+        tag = Tag(self.tag.id)
+        self.assertEqual(tag.name, self.tag.name)
+        # Object caching
+        if get_cache_level() < CACHE_OBJECTS:
+            return
+        requests = Nitrate._requests
+        tag = Tag(self.tag.id)
+        self.assertEqual(tag.name, self.tag.name)
+        self.assertEqual(requests, Nitrate._requests)
+        # Persistent caching
+        if get_cache_level() < CACHE_PERSISTENT:
+            return
+        cache.save()
+        cache.clear()
+        cache.load()
+        tag = Tag(self.tag.id)
+        self.assertEqual(tag.name, self.tag.name)
+        self.assertEqual(requests, Nitrate._requests)
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestPlan
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
