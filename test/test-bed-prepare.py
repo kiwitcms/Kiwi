@@ -10,7 +10,7 @@ import optparse
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 MASTER_TESTPLAN_NAME = "Master Test Plan"
-PRODUCT = nitrate.Product(name="RHEL Tests", version="unspecified")
+PRODUCT = nitrate.Product(name="RHEL Tests")
 VERSION = nitrate.Version(product=PRODUCT, version="unspecified")
 PLANTYPE = nitrate.PlanType(name="Function")
 CATEGORY = nitrate.Category(category="Regression", product=PRODUCT)
