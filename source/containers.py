@@ -62,7 +62,7 @@ import nitrate.config as config
 import nitrate.teiid as teiid
 
 from nitrate.config import log
-from nitrate.utils import pretty, listed
+from nitrate.utils import pretty, listed, sliced
 from nitrate.base import Nitrate, NitrateNone, _getter, _idify
 from nitrate.immutable import Component, Bug, Tag
 from nitrate.xmlrpc import NitrateError
@@ -901,6 +901,20 @@ class RunCaseRuns(Container):
         """ Iterate over all included case runs ordered by sortkey """
         for caserun in sorted(self._items, key=lambda x: x.sortkey):
             yield caserun
+
+    def update(self):
+        """ Update modified case runs in multicall batches """
+        # Check for modified case runs
+        modified = [caserun for caserun in self if caserun._modified]
+        if not modified: return
+        log.info("Updating {0}'s case runs".format(self._identifier))
+        # Update modified caseruns in slices
+        for slice in sliced(modified, config.MULTICALL_MAX):
+            multicall = xmlrpclib.MultiCall(self._server)
+            for caserun in slice:
+                caserun._update(multicall)
+                caserun._modified = False
+            multicall()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanCasePlans Class

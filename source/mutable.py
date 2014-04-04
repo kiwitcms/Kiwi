@@ -1229,7 +1229,7 @@ class CaseRun(Mutable):
         # Index the fetched object into cache
         self._index()
 
-    def _update(self):
+    def _update(self, proxy=None):
         """ Save test case run data to the server """
 
         # Prepare the update hash
@@ -1239,13 +1239,14 @@ class CaseRun(Mutable):
         hash["case_run_status"] = self.status.id
         hash["notes"] = self.notes
         hash["sortkey"] = self.sortkey
-
         # Work around BZ#715596
         if self.notes is None: hash["notes"] = ""
-
         log.info("Updating case run " + self.identifier)
         log.xmlrpc(pretty(hash))
-        self._multicall.TestCaseRun.update(self.id, hash)
+        # Use custom proxy if given
+        if proxy is None:
+            proxy = self._multicall
+        proxy.TestCaseRun.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
