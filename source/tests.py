@@ -28,14 +28,39 @@ data of existing objects to be tested, for example:
     [test]
     url = https://test.server/xmlrpc/
 
+    [user]
+    id = 1234
+    login = username
+    email = username@example.com
+
     [product]
     id = 60
     name = Red Hat Enterprise Linux 6
+
+    [version]
+    id = 1234
+    name = 6.0
+
+    [build]
+    id = 12345
+    name = RHEL6.6-20140404
 
     [component]
     id = 123
     name = wget
     product = Red Hat Enterprise Linux 6
+
+    [category]
+    id = 123
+    name = Integration
+
+    [plantype]
+    id = 1
+    name = General
+
+    [tag]
+    id = 1234
+    name = TestTag
 
     [testplan]
     id = 1234
@@ -45,10 +70,6 @@ data of existing objects to be tested, for example:
     version = 6.1
     status = ENABLED
     owner = login
-
-    [plantype]
-    id = 1
-    name = General
 
     [testrun]
     id = 6757
@@ -67,10 +88,10 @@ data of existing objects to be tested, for example:
     id = 123456
     status = PASSED
 
-To exercise the whole test suite just run "python nitrate.py". To test
+To exercise the whole test suite run "python -m nitrate.tests". To test
 only subset of tests pick the desired classes on the command line:
 
-    python -m nitrate.api TestCase
+    python -m nitrate.tests TestCase
 
 
 Performance tests
