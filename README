@@ -118,11 +118,28 @@ https://fedorahosted.org/nitrate/
 
 SEE ALSO
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Manual pages covering command line interpreter and release notes::
+
+    nitrate
+    nitrate-notes
+
 For more detailed and most up-to-date description of all available
 nitrate module features see the Python online documentation::
 
     pydoc nitrate
-    pydoc nitrate.xmlrpc
+
+For area-specific details see respective module documentation::
+
+    nitrate.base ......... Nitrate class, search support
+    nitrate.cache ........ Persistent cache, multicall support
+    nitrate.config ....... Configuration, logging, coloring, caching
+    nitrate.containers ... Container classes implementation
+    nitrate.immutable .... Immutable Nitrate objects
+    nitrate.mutable ...... Mutable Nitrate objects
+    nitrate.teiid ........ Teiid support
+    nitrate.tests ........ Test suite
+    nitrate.utils ........ Utilities
+    nitrate.xmlrpc ....... XMLRPC driver
 
 
 AUTHORS

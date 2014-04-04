@@ -45,6 +45,7 @@ file ~/.nitrate has to be provided in the user home directory::
 SEE ALSO
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 python-nitrate
+nitrate-notes
 
 
 AUTHOR
