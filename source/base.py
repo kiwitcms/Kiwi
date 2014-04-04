@@ -340,7 +340,7 @@ class Nitrate(object):
 
     def __str__(self):
         """ Provide ascii string representation """
-        return utils.ascii(self.__unicode__())
+        return utils.ascii(unicode(self))
 
     def __unicode__(self):
         """ Short summary about the connection """
