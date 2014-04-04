@@ -97,6 +97,16 @@ speeding up the process). Example usage:
 When multicall_start() is called, update queries are not sent
 immediately to server. Instead, they are queued and after
 multicall_end() is called, all queries are sent to server in a batch.
+
+It's also possible to modify desired objects first and then ask the
+Cache object instance to perform the update for you:
+
+    for caserun in TestRun(12345):
+        caserun.status = Status("RUNNING")
+    Cache().update()
+
+If run in this way, changes will be pushed to the server in MultiCall
+batches, size of which is controlled by nitrate.config.MULTICALL_MAX.
 """
 
 import os
