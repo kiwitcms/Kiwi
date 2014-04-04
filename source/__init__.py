@@ -70,7 +70,10 @@ from nitrate.immutable import (
         Priority, Product, RunStatus, Status, Tag, User, Version)
 from nitrate.mutable import (
         Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
-from nitrate.containers import Container
+from nitrate.containers import (
+        Container, CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
+        ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
+        PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer)
 
 # Various useful utilities
 from nitrate.utils import (
@@ -103,6 +106,10 @@ __all__ = """
         Bug Build CaseStatus Category Component PlanStatus PlanType
         Priority Product RunStatus Status Tag User Version
         TestPlan TestRun TestCase CaseRun CasePlan
+
+        CaseBugs CaseComponents CasePlans CaseRunBugs CaseTags
+        ChildPlans PlanCasePlans PlanCases PlanComponents PlanRuns
+        PlanTags RunCaseRuns RunCases RunTags TagContainer
 
         ascii color header human info listed pretty sliced unlisted
 
