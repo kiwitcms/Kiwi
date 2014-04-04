@@ -337,7 +337,7 @@ class Cache(object):
         # Check for existing cache lock, set mode appropriately
         try:
             lock = open(self._lock)
-            log.cache("Found lock {0}, opening read-only".format(self._lock))
+            log.warn("Found lock {0}, opening read-only".format(self._lock))
             lock.close()
             self._mode = "read-only"
         except IOError:
