@@ -371,18 +371,26 @@ class Cache(object):
         """
         Completely wipe out cache of all (or selected) classes
 
-        Accepts class or a list of classes.
+        Accepts class or a list of classes. Clears all given classes
+        and their subclasses. For example Cache().clear(Mutable) will
+        empty cache of all mutable objects.
         """
-        # Convert single class into a list
-        if isinstance(classes, type):
-            classes = [classes]
-        log.cache("Wiping out {0} memory cache".format(
-                "all objects'" if classes == None else listed(
-                    [klass.__name__ for klass in classes])))
+        # Wipe everything
+        if classes == None:
+            log.cache("Wiping out all objects memory cache")
+            classes = self._classes
+        # Wipe selected classes only
+        else:
+            # Convert single class into a list
+            if isinstance(classes, type):
+                classes = [classes]
+            # Prepare the list of given classes and their subclasses
+            classes = [cls for cls in self._classes
+                if any([issubclass(cls, klass) for klass in classes])]
+            log.cache("Wiping out {0} memory cache".format(
+                    listed([klass.__name__ for klass in classes])))
         # For each class re-initialize objects and remove from index
-        for current_class in self._classes:
-            if classes is not None and (current_class not in classes):
-                continue
+        for current_class in classes:
             for current_object in current_class._cache.itervalues():
                 # Reset the object to the initial state
                 current_object._init()
