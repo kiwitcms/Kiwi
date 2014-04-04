@@ -1,5 +1,5 @@
 Name: python-nitrate
-Version: 0.13
+Version: 0.14
 Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
@@ -40,6 +40,21 @@ install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Fri Apr 04 2014 Petr Šplíchal <psplicha@redhat.com> 0.14-0
+- Allow wiping cache of subclasses of given class
+- Update TestRun's CaseRuns in MultiCall batches
+- Import all containers into the main nitrate module
+- Remove version from test-bed-prepare Product init
+- Display warn message about locked persistent cache
+- Document batch updates using Cache().update()
+- Summary of new features added to release notes
+- Add reference to release notes and individual module docs
+- Custom formatter should return unicode messages
+- Updated the create.py simple example code
+- Test suite documentation update
+- Use tag name for hashing to allow creating new tags
+- Initial version of the release notes
+
 * Thu Apr 03 2014 Petr Šplíchal <psplicha@redhat.com> 0.13-0
 - Give a summary of expired items for easier debugging
 - Wake up only containers with already cached items
