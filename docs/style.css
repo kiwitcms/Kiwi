@@ -41,6 +41,7 @@ blockquote {
 pre {
     margin-left: 3em;
     color: #777;
+    font-size: 111%;
 }
 
 table.docinfo {
