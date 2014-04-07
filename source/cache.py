@@ -430,6 +430,14 @@ class Cache(object):
                             current_object.__class__.__name__,
                             current_object.identifier))
                     expire = True
+                # Expire containers with uncached items
+                elif (isinstance(current_object, containers.Container) and
+                        not current_object._class._is_cached(
+                            current_object._current)):
+                    log.all("Wiping {0} {1} with uncached items".format(
+                            current_object.__class__.__name__,
+                            current_object.identifier))
+                    expire = True
                 if expire:
                     # Reset the object to the initial state
                     current_object._init()
