@@ -99,8 +99,9 @@ class Container(Mutable):
         """ Set representation containing the items """
         if self._current is NitrateNone:
             self._fetch()
-        # Fetch the whole container if there are some uncached items
-        if not self._class._is_cached(self._current):
+        # Fetch the whole container if there are uncached items (except when
+        # the container is modified otherwise we would lose local changes).
+        if not self._modified and not self._class._is_cached(self._current):
             self._fetch()
         return self._current
 

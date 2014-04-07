@@ -1527,6 +1527,7 @@ class CaseTagsTests(unittest.TestCase):
         """ Set up test case from the config """
         self.testcase = config.testcase
         self.performance = config.performance
+        self.tag = config.tag
 
     def testTagging1(self):
         """ Untagging a test case """
@@ -1581,6 +1582,20 @@ class CaseTagsTests(unittest.TestCase):
         testcase.tags.remove("TestTag")
         testcase.update()
         self.assertTrue("TestTag" not in testcase.tags)
+
+    def test_tagging_with_uncached_tag_by_name(self):
+        """ Tagging with uncached tag by name """
+        # This tests BZ#1084563, where adding an uncached tag to the container
+        # caused the _items() method to fetch the original container content
+        # from the server despite the container has been in modified state
+        # Make sure the tag is not there
+        testcase = TestCase(self.testcase.id)
+        testcase.tags.remove(self.tag.name)
+        testcase.update()
+        cache.clear()
+        # Add tag by name, then immediately check whether it's present
+        testcase.tags.add(self.tag.name)
+        self.assertTrue(self.tag.name in testcase.tags)
 
     def test_performance_testcase_tags(self):
         """ Checking tags of test cases
