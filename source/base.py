@@ -172,7 +172,16 @@ class Nitrate(object):
     @property
     def identifier(self):
         """ Consistent identifier string """
-        id = self._id if self._id not in [None, NitrateNone] else "UNKNOWN"
+        # Use id if known
+        if self._id not in [None, NitrateNone]:
+            id = self._id
+        # When unknown use 'ID#UNKNOWN' or 'ID#UNKNOWN (name)'
+        else:
+            name = getattr(self, "_name", None)
+            if name not in [None, NitrateNone]:
+                id = "UNKNOWN ({0})".format(name)
+            else:
+                id = "UNKNOWN"
         return "{0}#{1}".format(
                 self._prefix, str(id).rjust(self._identifier_width, "0"))
 
