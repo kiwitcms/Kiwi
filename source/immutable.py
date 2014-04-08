@@ -138,6 +138,11 @@ class Build(Nitrate):
                 log.error(error)
                 raise NitrateError("Build '{0}' not found in '{1}'".format(
                     self.name, self.product.name))
+            except KeyError:
+                if "args" in inject:
+                    log.debug(inject["args"])
+                raise NitrateError("Build '{0}' not found in '{1}'".format(
+                    self.name, self.product.name))
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing Build ID#{0}".format(inject["build_id"]))

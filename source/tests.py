@@ -231,6 +231,16 @@ class BuildTests(unittest.TestCase):
         build = Build(build=self.build.name, product=self.product.name)
         self.assertEqual(build.id, self.build.id)
 
+    def test_invalid_build_id(self):
+        """ Invalid build id should raise exception """
+        fun = lambda: Build(-1).name
+        self.assertRaises(NitrateError, fun)
+
+    def test_invalid_build_name(self):
+        """ Invalid build name should raise exception """
+        fun = lambda: Build(name="bbbad-bbbuild", product=self.product.name).id
+        self.assertRaises(NitrateError, fun)
+
     def test_cache_none(self):
         """ Cache none """
         set_cache_level(CACHE_NONE)
