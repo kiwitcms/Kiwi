@@ -252,9 +252,9 @@ class TestPlan(Mutable):
         try:
             self._id = inject["plan_id"]
         except TypeError:
-            log.error("Failed to create a new test plan")
-            log.error(pretty(hash))
-            log.error(pretty(inject))
+            log.debug("Failed to create a new test plan")
+            log.xmlrpc(pretty(hash))
+            log.xmlrpc(pretty(inject))
             raise NitrateError("Failed to create test plan")
         self._fetch(inject)
         log.info(u"Successfully created {0}".format(self))
@@ -277,7 +277,7 @@ class TestPlan(Mutable):
         log.debug("Initializing test plan " + self.identifier)
         log.xmlrpc(pretty(inject))
         if not "plan_id" in inject:
-            log.error(pretty(inject))
+            log.xmlrpc(pretty(inject))
             raise NitrateError("Failed to initialize " + self.identifier)
 
         # Set up attributes
@@ -587,10 +587,10 @@ class TestRun(Mutable):
         try:
             self._id = testrunhash["run_id"]
         except TypeError:
-            log.error(u"Failed to create a new test run based on {0}".format(
+            log.debug(u"Failed to create a new test run based on {0}".format(
                     testplan))
-            log.error(pretty(hash))
-            log.error(pretty(testrunhash))
+            log.xmlrpc(pretty(hash))
+            log.xmlrpc(pretty(testrunhash))
             raise NitrateError("Failed to create test run")
         self._fetch(testrunhash)
         # Add newly created test run to testplan.testruns container
@@ -920,9 +920,9 @@ class TestCase(Mutable):
         try:
             self._id = testcasehash["case_id"]
         except TypeError:
-            log.error("Failed to create a new test case")
-            log.error(pretty(hash))
-            log.error(pretty(testcasehash))
+            log.debug("Failed to create a new test case")
+            log.xmlrpc(pretty(hash))
+            log.xmlrpc(pretty(testcasehash))
             raise NitrateError("Failed to create test case")
         self._fetch(testcasehash)
         log.info(u"Successfully created {0}".format(self))
@@ -1174,9 +1174,9 @@ class CaseRun(Mutable):
         try:
             self._id = inject["case_run_id"]
         except TypeError:
-            log.error("Failed to create new case run")
-            log.error(pretty(hash))
-            log.error(pretty(inject))
+            log.debug("Failed to create new case run")
+            log.xmlrpc(pretty(hash))
+            log.xmlrpc(pretty(inject))
             raise NitrateError("Failed to create case run")
         self._fetch(inject)
         log.info(u"Successfully created {0}".format(self))
