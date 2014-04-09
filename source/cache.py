@@ -137,10 +137,10 @@ def multicall_end():
     """ Execute xmlrpc call queue and exit MultiCall mode """
     log.info("Ending multicall session, sending to the server...")
     response = Nitrate._multicall_proxy()
-    log.xmlrpc("Server response:")
+    log.data("Server response:")
     entries = 0
     for entry in response:
-        log.xmlrpc(pretty(entry))
+        log.data(pretty(entry))
         entries += 1
     Nitrate._multicall_proxy = None
     Nitrate._requests += 1

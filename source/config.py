@@ -46,14 +46,13 @@ Standard log methods from the python 'logging' module are available
 under the short name 'log'. In addition two special levels have been
 added for logging cache handling details and xmlrpc communication:
 
-    log.error(message)
-    log.warn(message)
-    log.info(message)
-    log.debug(message)
-    log.cache(message)
-    log.xmlrpc(message)
-    log.teiid(message)
-    log.all(message)
+    log.error(msg) .... fatal issues which prevent task completion
+    log.warn(msg) ..... non-fatal problems, not blocking execution
+    log.info(msg) ..... high-level info, useful for progress tracking
+    log.debug(msg) .... low-level details useful for investigation
+    log.cache(msg) .... cache-related stuff and object initialization
+    log.data(msg) ..... data sent to/from the xmlrpc/teiid server
+    log.all(msg) ...... any other possibly useful debugging details
 
 By default, messages of level WARN and up are only displayed. This can
 be controlled by setting the current log level. See set_log_level() for
@@ -88,8 +87,7 @@ LOG_WARN = logging.WARN
 LOG_INFO = logging.INFO
 LOG_DEBUG = logging.DEBUG
 LOG_CACHE = 7
-LOG_XMLRPC = 5
-LOG_TEIID = 3
+LOG_DATA = 4
 LOG_ALL = 1
 
 # Coloring
@@ -114,13 +112,6 @@ _MAX_ID = 1000000000
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Logging Configuration
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-#  Recommended debug levels:
-#
-#  log.info(msg) ..... high-level info, useful for tracking the progress
-#  log.debug(msg) .... low-level info with details useful for investigation
-#  log.cache(msg) .... stuff related to caching and object initialization
-#  log.xmlrpc(msg) ... data communicated to or from the xmlrpc server
 
 class Logging(object):
     """ Logging Configuration """
@@ -132,8 +123,7 @@ class Logging(object):
             LOG_INFO: "blue",
             LOG_DEBUG: "green",
             LOG_CACHE: "cyan",
-            LOG_XMLRPC: "magenta",
-            LOG_TEIID: "magenta",
+            LOG_DATA: "magenta",
             }
     # Environment variable mapping
     MAPPING = {
@@ -141,9 +131,8 @@ class Logging(object):
             1: LOG_INFO,
             2: LOG_DEBUG,
             3: LOG_CACHE,
-            4: LOG_XMLRPC,
-            5: LOG_TEIID,
-            6: LOG_ALL,
+            4: LOG_DATA,
+            5: LOG_ALL,
             }
     # All levels
     LEVELS = "CRITICAL DEBUG ERROR FATAL INFO NOTSET WARN WARNING".split()
@@ -157,10 +146,8 @@ class Logging(object):
             # Handle custom log level names
             if record.levelno == LOG_ALL:
                 levelname = "ALL"
-            elif record.levelno == LOG_TEIID:
-                levelname = "TEIID"
-            elif record.levelno == LOG_XMLRPC:
-                levelname = "XMLRPC"
+            elif record.levelno == LOG_DATA:
+                levelname = "DATA"
             elif record.levelno == LOG_CACHE:
                 levelname = "CACHE"
             else:
@@ -190,12 +177,11 @@ class Logging(object):
         for level in Logging.LEVELS:
             setattr(logger, level, getattr(logging, level))
         # Additional logging constants and methods for cache and xmlrpc
-        logger.XMLRPC = LOG_XMLRPC
+        logger.DATA = LOG_DATA
         logger.CACHE = LOG_CACHE
         logger.ALL = LOG_ALL
         logger.cache = lambda message: logger.log(LOG_CACHE, message)
-        logger.xmlrpc = lambda message: logger.log(LOG_XMLRPC, message)
-        logger.teiid = lambda message: logger.log(LOG_TEIID, message)
+        logger.data = lambda message: logger.log(LOG_DATA, message)
         logger.all = lambda message: logger.log(LOG_ALL, message)
         return logger
 
@@ -211,9 +197,8 @@ class Logging(object):
             DEBUG=1 ... LOG_INFO
             DEBUG=2 ... LOG_DEBUG
             DEBUG=3 ... LOG_CACHE
-            DEBUG=4 ... LOG_XMLRPC
-            DEBUG=5 ... LOG_TEIID
-            DEBUG=6 ... LOG_ALL (log all messages)
+            DEBUG=4 ... LOG_DATA
+            DEBUG=5 ... LOG_ALL (log all messages)
         """
 
         # If level specified, use given

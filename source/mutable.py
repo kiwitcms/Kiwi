@@ -246,15 +246,15 @@ class TestPlan(Mutable):
 
         # Submit
         log.info("Creating a new test plan")
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         inject = self._server.TestPlan.create(hash)
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         try:
             self._id = inject["plan_id"]
         except TypeError:
             log.debug("Failed to create a new test plan")
-            log.xmlrpc(pretty(hash))
-            log.xmlrpc(pretty(inject))
+            log.data(pretty(hash))
+            log.data(pretty(inject))
             raise NitrateError("Failed to create test plan")
         self._fetch(inject)
         log.info(u"Successfully created {0}".format(self))
@@ -275,9 +275,9 @@ class TestPlan(Mutable):
         else:
             self._id = inject["plan_id"]
         log.debug("Initializing test plan " + self.identifier)
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         if not "plan_id" in inject:
-            log.xmlrpc(pretty(inject))
+            log.data(pretty(inject))
             raise NitrateError("Failed to initialize " + self.identifier)
 
         # Set up attributes
@@ -333,7 +333,7 @@ class TestPlan(Mutable):
             hash["owner"] = self.owner.id
 
         log.info("Updating test plan " + self.identifier)
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         self._multicall.TestPlan.update(self.id, hash)
 
     def update(self):
@@ -581,16 +581,16 @@ class TestRun(Mutable):
 
         # Submit to the server and initialize
         log.info(u"Creating a new test run based on {0}".format(testplan))
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         testrunhash = self._server.TestRun.create(hash)
-        log.xmlrpc(pretty(testrunhash))
+        log.data(pretty(testrunhash))
         try:
             self._id = testrunhash["run_id"]
         except TypeError:
             log.debug(u"Failed to create a new test run based on {0}".format(
                     testplan))
-            log.xmlrpc(pretty(hash))
-            log.xmlrpc(pretty(testrunhash))
+            log.data(pretty(hash))
+            log.data(pretty(testrunhash))
             raise NitrateError("Failed to create test run")
         self._fetch(testrunhash)
         # Add newly created test run to testplan.testruns container
@@ -613,7 +613,7 @@ class TestRun(Mutable):
         else:
             self._id = inject["run_id"]
         log.debug("Initializing test run {0}".format(self.identifier))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
 
         # Set up attributes
         self._build = Build(inject["build_id"])
@@ -666,7 +666,7 @@ class TestRun(Mutable):
         hash["summary"] = self.summary
 
         log.info("Updating test run " + self.identifier)
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         self._multicall.TestRun.update(self.id, hash)
 
     def update(self):
@@ -914,15 +914,15 @@ class TestCase(Mutable):
 
         # Submit
         log.info("Creating a new test case")
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         testcasehash = self._server.TestCase.create(hash)
-        log.xmlrpc(pretty(testcasehash))
+        log.data(pretty(testcasehash))
         try:
             self._id = testcasehash["case_id"]
         except TypeError:
             log.debug("Failed to create a new test case")
-            log.xmlrpc(pretty(hash))
-            log.xmlrpc(pretty(testcasehash))
+            log.data(pretty(hash))
+            log.data(pretty(testcasehash))
             raise NitrateError("Failed to create test case")
         self._fetch(testcasehash)
         log.info(u"Successfully created {0}".format(self))
@@ -943,7 +943,7 @@ class TestCase(Mutable):
         else:
             self._id = inject["case_id"]
         log.debug("Initializing test case " + self.identifier)
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
 
         # Set up attributes
         self._arguments = inject["arguments"]
@@ -1020,7 +1020,7 @@ class TestCase(Mutable):
             hash["default_tester"] = self.tester.login
 
         log.info("Updating test case " + self.identifier)
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         self._multicall.TestCase.update(self.id, hash)
 
     def update(self):
@@ -1168,15 +1168,15 @@ class CaseRun(Mutable):
 
         # Submit
         log.info("Creating new case run")
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         inject = self._server.TestCaseRun.create(hash)
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         try:
             self._id = inject["case_run_id"]
         except TypeError:
             log.debug("Failed to create new case run")
-            log.xmlrpc(pretty(hash))
-            log.xmlrpc(pretty(inject))
+            log.data(pretty(hash))
+            log.data(pretty(inject))
             raise NitrateError("Failed to create case run")
         self._fetch(inject)
         log.info(u"Successfully created {0}".format(self))
@@ -1202,7 +1202,7 @@ class CaseRun(Mutable):
         else:
             self._id = inject["case_run_id"]
         log.debug("Initializing case run {0}".format(self.identifier))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
 
         # Set up attributes
         self._assignee = User(inject["assignee_id"])
@@ -1242,7 +1242,7 @@ class CaseRun(Mutable):
         # Work around BZ#715596
         if self.notes is None: hash["notes"] = ""
         log.info("Updating case run " + self.identifier)
-        log.xmlrpc(pretty(hash))
+        log.data(pretty(hash))
         # Use custom proxy if given
         if proxy is None:
             proxy = self._multicall
@@ -1360,7 +1360,7 @@ class CasePlan(Mutable):
         # Use our internal fake id instead of the server one
         self._id = _idify([inject["plan_id"], inject["case_id"]])
         log.debug("Initializing case plan {0}".format(self.identifier))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
 
         # Set up attributes
         self._testcase = TestCase(inject["case_id"])
@@ -1373,7 +1373,7 @@ class CasePlan(Mutable):
     def _update(self, proxy=None):
         """ Save test case plan data to the server """
         log.info("Updating case plan {0}".format(self.identifier))
-        log.xmlrpc("{0}, {1}, {2}".format(
+        log.data("{0}, {1}, {2}".format(
                 self.testcase.id, self.testplan.id, self.sortkey))
         # Use custom proxy if given
         if proxy is None:

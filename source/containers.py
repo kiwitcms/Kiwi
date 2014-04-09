@@ -312,7 +312,7 @@ class CaseComponents(Container):
         log.info(u"Linking {1} to {0}".format(self._identifier,
                     listed([component.name for component in components])))
         data = [component.id for component in components]
-        log.xmlrpc(data)
+        log.data(data)
         self._server.TestCase.add_component(self.id, data)
 
     def _remove(self, components):
@@ -364,7 +364,7 @@ class PlanComponents(Container):
         log.info(u"Linking {1} to {0}".format(self._identifier,
                     listed([component.name for component in components])))
         data = [component.id for component in components]
-        log.xmlrpc(data)
+        log.data(data)
         self._server.TestPlan.add_component(self.id, data)
 
     def _remove(self, components):
@@ -394,7 +394,7 @@ class CaseBugs(Container):
             return
         log.info("Fetching bugs for {0}".format(self._identifier))
         injects = self._server.TestCase.get_bugs(self.id)
-        log.xmlrpc(pretty(injects))
+        log.data(pretty(injects))
         self._current = set([Bug(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -406,7 +406,7 @@ class CaseBugs(Container):
                 "bug_id": bug.bug,
                 "bug_system_id": bug.system,
                 "case_id": self.id} for bug in bugs]
-        log.xmlrpc(pretty(data))
+        log.data(pretty(data))
         self._server.TestCase.attach_bug(data)
         # Fetch again the whole bug list (to get the internal id)
         self._fetch()
@@ -416,7 +416,7 @@ class CaseBugs(Container):
         log.info(u"Detaching {0} from {1}".format(
                 listed(bugs), self._identifier))
         data = [bug.bug for bug in bugs]
-        log.xmlrpc(pretty(data))
+        log.data(pretty(data))
         self._server.TestCase.detach_bug(self.id, data)
 
     # Print unicode list of bugs
@@ -443,7 +443,7 @@ class CaseRunBugs(Container):
             return
         log.info("Fetching bugs for {0}".format(self._identifier))
         injects = self._server.TestCaseRun.get_bugs(self.id)
-        log.xmlrpc(pretty(injects))
+        log.data(pretty(injects))
         self._current = set([Bug(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -455,7 +455,7 @@ class CaseRunBugs(Container):
                 "bug_id": bug.bug,
                 "bug_system_id": bug.system,
                 "case_run_id": self.id} for bug in bugs]
-        log.xmlrpc(pretty(data))
+        log.data(pretty(data))
         self._server.TestCaseRun.attach_bug(data)
         # Fetch again the whole bug list (to get the internal id)
         self._fetch()
@@ -465,7 +465,7 @@ class CaseRunBugs(Container):
         log.info(u"Detaching {0} from {1}".format(
                 listed(bugs), self._identifier))
         data = [bug.bug for bug in bugs]
-        log.xmlrpc(pretty(data))
+        log.data(pretty(data))
         self._server.TestCaseRun.detach_bug(self.id, data)
 
     # Print unicode list of bugs
@@ -677,7 +677,7 @@ class PlanRuns(Container):
             return
         log.info("Fetching testruns for {0}".format(self._identifier))
         injects = self._server.TestPlan.get_test_runs(self.id)
-        log.xmlrpc(pretty(injects))
+        log.data(pretty(injects))
         self._current = set([TestRun(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -717,7 +717,7 @@ class PlanCases(Container):
         # Fetch test cases from the server
         log.info("Fetching {0}'s cases".format(self._identifier))
         injects = self._server.TestPlan.get_test_cases(self.id)
-        log.xmlrpc("Fetched {0}".format(listed(injects, "inject")))
+        log.data("Fetched {0}".format(listed(injects, "inject")))
         self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
         # Initialize case plans if not already cached
@@ -836,7 +836,7 @@ class RunCases(Container):
                 self._object.identifier))
         # Prepare data and push
         data = [testcase.id for testcase in testcases]
-        log.xmlrpc(pretty(data))
+        log.data(pretty(data))
         self._server.TestRun.add_cases(self.id, data)
         # RunCaseRuns will need update ---> erase current data
         self._object.caseruns._init()
@@ -849,7 +849,7 @@ class RunCases(Container):
                 listed(identifiers, "testcase", max=3),
                 self._object.identifier))
         data = [testcase.id for testcase in testcases]
-        log.xmlrpc(pretty(data))
+        log.data(pretty(data))
         self._server.TestRun.remove_cases(self.id, data)
         # RunCaseRuns will need update ---> erase current data
         self._object.caseruns._init()
@@ -950,7 +950,7 @@ class PlanCasePlans(Container):
         for testcase in self._object.testcases._items:
             multicall.TestCasePlan.get(testcase.id, self._object.id)
         injects = [inject for inject in multicall()]
-        log.xmlrpc(pretty(injects))
+        log.data(pretty(injects))
 
         # And finally create the initial object set
         self._current = set([CasePlan(inject) for inject in injects])

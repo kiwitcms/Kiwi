@@ -146,7 +146,7 @@ class Build(Nitrate):
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing Build ID#{0}".format(inject["build_id"]))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         self._inject = inject
         self._id = inject["build_id"]
         self._name = inject["name"]
@@ -270,7 +270,7 @@ class Category(Nitrate):
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing category ID#{0}".format(inject["id"]))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         self._inject = inject
         self._id = inject["id"]
         self._name = inject["name"]
@@ -375,7 +375,7 @@ class PlanType(Nitrate):
                         self.name))
         # Initialize data from the inject and index into cache
         log.debug("Initializing PlanType ID#{0}".format(inject["id"]))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         self._inject = inject
         self._id = inject["id"]
         self._name = inject["name"]
@@ -508,7 +508,7 @@ class Product(Nitrate):
         # Directly fetch from the initial object dict
         if inject is not None:
             log.debug("Initializing Product ID#{0}".format(inject["id"]))
-            log.xmlrpc(pretty(inject))
+            log.data(pretty(inject))
             self._id = inject["id"]
             self._name = inject["name"]
         # Search by product id
@@ -517,7 +517,7 @@ class Product(Nitrate):
                 log.info("Fetching product " + self.identifier)
                 inject = self._server.Product.filter({'id': self.id})[0]
                 log.debug("Initializing product " + self.identifier)
-                log.xmlrpc(pretty(inject))
+                log.data(pretty(inject))
                 self._inject = inject
                 self._name = inject["name"]
             except IndexError:
@@ -529,7 +529,7 @@ class Product(Nitrate):
                 log.info(u"Fetching product '{0}'".format(self.name))
                 inject = self._server.Product.filter({'name': self.name})[0]
                 log.debug(u"Initializing product '{0}'".format(self.name))
-                log.xmlrpc(pretty(inject))
+                log.data(pretty(inject))
                 self._inject = inject
                 self._id = inject["id"]
             except IndexError:
@@ -872,7 +872,7 @@ class User(Nitrate):
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing user UID#{0}".format(inject["id"]))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         self._inject = inject
         self._id = inject["id"]
         self._login = inject["username"]
@@ -992,7 +992,7 @@ class Version(Nitrate):
                         "Cannot find version for '{0}'".format(self.name))
         # Initialize data from the inject and index into cache
         log.debug("Initializing Version ID#{0}".format(inject["id"]))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         self._inject = inject
         self._id = inject["id"]
         self._name = inject["value"]
@@ -1116,7 +1116,7 @@ class Component(Nitrate):
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing component ID#{0}".format(inject["id"]))
-        log.xmlrpc(pretty(inject))
+        log.data(pretty(inject))
         self._inject = inject
         self._id = inject["id"]
         self._name = inject["name"]
@@ -1304,7 +1304,7 @@ class Tag(Nitrate):
         # Directly fetch from the initial object dict
         if inject is not None:
             log.debug("Initializing Tag ID#{0}".format(inject["id"]))
-            log.xmlrpc(pretty(inject))
+            log.data(pretty(inject))
             self._id = inject["id"]
             self._name = inject["name"]
         # Search by tag id
@@ -1313,7 +1313,7 @@ class Tag(Nitrate):
                 log.info("Fetching tag " + self.identifier)
                 inject = self._server.Tag.get_tags({'ids': [self.id]})
                 log.debug("Initializing tag " + self.identifier)
-                log.xmlrpc(pretty(inject))
+                log.data(pretty(inject))
                 self._inject = inject
                 self._name = inject[0]["name"]
             except IndexError:
@@ -1325,7 +1325,7 @@ class Tag(Nitrate):
                 log.info(u"Fetching tag '{0}'".format(self.name))
                 inject = self._server.Tag.get_tags({'names': [self.name]})
                 log.debug(u"Initializing tag '{0}'".format(self.name))
-                log.xmlrpc(pretty(inject))
+                log.data(pretty(inject))
                 self._inject = inject
                 self._id = inject[0]["id"]
             except IndexError:
