@@ -1,5 +1,5 @@
 Name: python-nitrate
-Version: 0.14
+Version: 0.15
 Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
@@ -40,6 +40,16 @@ install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Wed Apr 09 2014 Petr Šplíchal <psplicha@redhat.com> 0.15-0
+- Single LOG_DATA level for data-related logs, docs cleanup
+- Initialize all plan-case tags in CACHE_OBJECTS level
+- Do not use log.error during object creation/init
+- Raise exception when invalid Build name given
+- Added link to the Copr repository
+- Use object name for identifier if id is unknown
+- Containers with uncached items should expire as well
+- No all-items fetching for modified containers [BZ#1084563]
+
 * Fri Apr 04 2014 Petr Šplíchal <psplicha@redhat.com> 0.14-0
 - Allow wiping cache of subclasses of given class
 - Update TestRun's CaseRuns in MultiCall batches
