@@ -1,5 +1,5 @@
 Name: python-nitrate
-Version: 0.15
+Version: 1.0
 Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
@@ -40,6 +40,10 @@ install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Fri Apr 11 2014 Petr Šplíchal <psplicha@redhat.com> 1.0-0
+- New stable version, see release notes for the list of changes
+- http://psss.fedorapeople.org/python-nitrate/notes.html
+
 * Wed Apr 09 2014 Petr Šplíchal <psplicha@redhat.com> 0.15-0
 - Single LOG_DATA level for data-related logs, docs cleanup
 - Initialize all plan-case tags in CACHE_OBJECTS level
