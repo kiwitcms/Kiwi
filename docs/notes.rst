@@ -103,3 +103,9 @@ directly available in the main module::
 
     − setCacheLevel(CACHE_PERSISTENT)
     + set_cache_level(CACHE_PERSISTENT)
+
+Utility function color() does not reflect the current color mode
+automatically. Instead, new parameter 'enabled' should be used to
+disable the coloring when desired, for example::
+
+    color("txt", color="red", enabled=config.Coloring().enabled())
