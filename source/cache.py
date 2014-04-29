@@ -114,6 +114,7 @@ import gzip
 import pickle
 import atexit
 import datetime
+import tempfile
 import xmlrpclib
 import nitrate.immutable as immutable
 import nitrate.mutable as mutable
@@ -263,11 +264,18 @@ class Cache(object):
 
         # Dump the cache object into file
         try:
-            output_file = gzip.open(self._filename, 'wb')
+            # Use temporary file to minimize the time during which
+            # the real cache is inconsistent
+            output_file = tempfile.NamedTemporaryFile(
+                    mode="wb", delete=False, prefix="nitrate-cache.",
+                    dir=os.path.dirname(self._filename))
+            log.cache("Temporary cache file: {0}".format(output_file.name))
+            output_file = gzip.open(output_file.name, "wb")
             log.debug("Saving persistent cache into {0}".format(
                     self._filename))
             pickle.dump(data, output_file)
             output_file.close()
+            os.rename(output_file.name, self._filename)
             log.debug("Persistent cache successfully saved")
         except IOError, error:
             log.error("Failed to save persistent cache ({0})".format(error))
