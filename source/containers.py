@@ -134,6 +134,15 @@ class Container(Mutable):
         for item in self._items:
             yield item
 
+    def __getitem__(self, index):
+        """ Indexing support """
+        if isinstance(index, int):
+            return list(self)[index]
+        elif isinstance(index, slice):
+            return list(self)[index.start:index.stop:index.step]
+        else:
+            raise IndexError("Invalid index '{0}'".format(index))
+
     def __contains__(self, item):
         """ Container 'in' operator """
         return item in self._items
