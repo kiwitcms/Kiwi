@@ -700,6 +700,11 @@ class PlanRuns(Container):
         """ Currently no support for removing test runs from test plans """
         raise NitrateError("Sorry, no support for removing test runs yet")
 
+    def __iter__(self):
+        """ Iterate over test runs ordered by their id/creation """
+        for testrun in sorted(self._items, key=lambda x: x.id):
+            yield testrun
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Test Cases Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
