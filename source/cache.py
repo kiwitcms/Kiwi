@@ -111,6 +111,7 @@ batches, size of which is controlled by nitrate.config.MULTICALL_MAX.
 
 import os
 import gzip
+import zlib
 import pickle
 import atexit
 import datetime
@@ -297,15 +298,15 @@ class Cache(object):
         except EOFError:
             log.cache("Cache file empty, will fill it upon exit")
             return
-        except IOError, error:
-            if error.errno == 2:
+        except (IOError, zlib.error), error:
+            if getattr(error, "errno", None) == 2:
                 log.warn("Cache file not found, will create one on exit")
                 return
             else:
                 log.error("Failed to load the cache ({0})".format(error))
-                log.error("Cache file: {0}".format(self._filename))
-                log.warn("Going on but switching to CACHE_OBJECTS level")
+                log.warn("Going on but switching to the CACHE_OBJECTS level")
                 set_cache_level(config.CACHE_OBJECTS)
+                self.unlock()
                 return
 
         # Restore cache for immutable & mutable classes first
@@ -335,19 +336,14 @@ class Cache(object):
         self.expire()
         log.cache("Cache restore stats:\n" + self.stats().strip())
 
-    def enter(self, filename=None):
-        """ Perform setup, create lock, load the cache """
-        # Nothing to do when persistent caching is off
-        if get_cache_level() < config.CACHE_PERSISTENT:
-            return
-        # Setup the cache
-        self.setup(filename)
-        # Check for existing cache lock, set mode appropriately
+    def lock(self):
+        """ Create the cache lock unless exists, set mode appropriately """
         try:
+            # Attempt to extract the PID from the lock file
             lock = open(self._lock)
             pid = lock.readline().strip()
             lock.close()
-            # Make sure the lock PID is sane (otherwise ignore it)
+            # Make sure the PID is sane (otherwise ignore it)
             try:
                 pid = int(pid)
             except ValueError:
@@ -365,7 +361,28 @@ class Cache(object):
             lock.write("{0}\n".format(os.getpid()))
             lock.close()
             self._mode = "read-write"
-        # And finally load the cache
+
+    def unlock(self):
+        """ Remove the cache lock """
+        # Nothing to do when in read-only mode
+        if self._mode == "read-only":
+            return
+        try:
+            log.cache("Removing cache lock {0}".format(self._lock))
+            os.remove(self._lock)
+        except OSError, error:
+            log.error("Failed to remove the cache lock {0} ({1})".format(
+                    self._lock, error))
+
+    def enter(self, filename=None):
+        """ Perform setup, create lock, load the cache """
+        # Nothing to do when persistent caching is off
+        if get_cache_level() < config.CACHE_PERSISTENT:
+            return
+        # Setup the cache
+        self.setup(filename)
+        # Create the lock and load the cache
+        self.lock()
         self.load()
 
     def exit(self):
@@ -379,12 +396,7 @@ class Cache(object):
             return
         # Save the cache and remove the lock
         self.save()
-        try:
-            log.cache("Removing cache lock {0}".format(self._lock))
-            os.remove(self._lock)
-        except OSError, error:
-            log.error("Failed to remove the cache lock {0} ({1})".format(
-                    self._lock, error))
+        self.unlock()
 
     def clear(self, classes=None):
         """
