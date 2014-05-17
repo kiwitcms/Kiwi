@@ -114,7 +114,8 @@ class Teiid(object):
         return self.query("""
                 SELECT arguments, author_id, test_cases.case_id,
                         case_status_id, category_id, creation_date as
-                        create_date, default_tester_id, estimated_time,
+                        create_date, default_tester_id,
+                        concat('', estimated_time) as estimated_time,
                         extra_link, isautomated as is_automated,
                         is_automated_proposed, test_cases.notes, priority_id,
                         requirement, script, sortkey, summary

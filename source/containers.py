@@ -57,6 +57,7 @@ Container overview (objects contained are listed in brackets):
     CaseRun.bugs = CaseRunBugs[Bug] ....................... done
 """
 
+import psycopg2
 import xmlrpclib
 import nitrate.config as config
 import nitrate.teiid as teiid
@@ -824,6 +825,9 @@ class RunCases(Container):
             injects = self._teiid.run_cases(self.id)
         except teiid.TeiidNotConfigured:
             injects = self._server.TestRun.get_test_cases(self.id)
+        except psycopg2.DatabaseError, error:
+            log.debug("Failed to fetch data from Teiid: {0}".format(error))
+            injects = self._server.TestRun.get_test_cases(self.id)
         self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -881,6 +885,9 @@ class RunCaseRuns(Container):
         try:
             injects = self._teiid.run_case_runs(self.id)
         except teiid.TeiidNotConfigured:
+            injects = self._server.TestRun.get_test_case_runs(self.id)
+        except psycopg2.DatabaseError, error:
+            log.debug("Failed to fetch data from Teiid: {0}".format(error))
             injects = self._server.TestRun.get_test_case_runs(self.id)
         # Feed the TestRun.testcases container with the initial object
         # set if all cases are already cached (saving unnecesary fetch)
