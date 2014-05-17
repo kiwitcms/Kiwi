@@ -700,9 +700,10 @@ class TestCase(Mutable):
     _identifier_width = 7
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["arguments", "author", "automated", "autoproposed", "bugs",
-            "category", "components", "created", "link", "manual", "notes",
-            "plans", "priority", "script", "sortkey", "status", "summary",
+    _attributes = ["action", "arguments", "author", "automated",
+            "autoproposed", "breakdown", "bugs", "category", "components",
+            "created", "effect", "link", "manual", "notes", "plans",
+            "priority", "script", "setup", "sortkey", "status", "summary",
             "tags", "tester", "testplans", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -724,6 +725,14 @@ class TestCase(Mutable):
             doc="Test plans linked to this test case.")
     components = property(_getter("components"),
             doc="Components related to this test case.")
+    setup = property(_getter("setup"),
+            doc="Setup steps to prepare the machine for the test case.")
+    action = property(_getter("action"),
+            doc="Actions to be performed.")
+    effect = property(_getter("effect"),
+            doc="Expected Results to be measured.")
+    breakdown = property(_getter("breakdown"),
+            doc="Breakdown steps to return machine to original state.")
 
     @property
     def synopsis(self):
@@ -1003,6 +1012,13 @@ class TestCase(Mutable):
             self._script = None
         if self._arguments == "":
             self._arguments = None
+
+        # Test case documentation
+        for attribute in ["setup", "action", "effect", "breakdown"]:
+            if "text" in inject:
+                setattr(self, "_" + attribute, inject["text"][attribute])
+            else:
+                setattr(self, "_" + attribute, None)
 
         # Initialize containers
         self._bugs = CaseBugs(self)
