@@ -1,5 +1,5 @@
 Name: python-nitrate
-Version: 1.0
+Version: 1.1
 Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
@@ -40,6 +40,16 @@ install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Sat May 17 2014 Petr Šplíchal <psplicha@redhat.com> 1.1-0
+- TestCase.{setup,action,effect,breakdown} attributes [BZ#1089039]
+- Map automated/manual when searching test cases [BZ#1092464]
+- Iterate over PlanRuns sorted by id/creation
+- Indexing support for containers
+- Separate methods for locking, handle corrupted cache
+- Limit cache writing window (chance of corruption) [BZ#1091404]
+- Ignore malformed and stale cache locks [BZ#1091404]
+- Workaround Teiid problem with converting time [BZ#1093054]
+
 * Fri Apr 11 2014 Petr Šplíchal <psplicha@redhat.com> 1.0-0
 - New stable version, see release notes for the list of changes
 - http://psss.fedorapeople.org/python-nitrate/notes.html
