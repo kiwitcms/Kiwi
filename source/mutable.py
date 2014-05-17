@@ -834,8 +834,33 @@ class TestCase(Mutable):
     @staticmethod
     def search(**query):
         """ Search for test cases """
-        return [TestCase(hash)
-                for hash in Nitrate()._server.TestCase.filter(dict(query))]
+        # Special handling for automated & manual attributes
+        manual = automated = None
+        if "automated" in query:
+            automated = query["automated"]
+            del query["automated"]
+        if "manual" in query:
+            manual = query["manual"]
+            del query["manual"]
+        # Map to appropriate value of 'is_automated' attribute
+        if manual is not None or automated is not None:
+            if automated == False and manual == False:
+                raise NitrateError("Invalid search "
+                        "('manual' and 'automated' cannot be both False)")
+            elif automated == False:
+                query["is_automated"] = 0
+            elif manual == False:
+                query["is_automated"] = 1
+            elif automated == True and manual == True:
+                query["is_automated"] = 2
+            elif automated == True:
+                query["is_automated__in"] = [1, 2]
+            elif manual == True:
+                query["is_automated__in"] = [0, 2]
+        log.debug("Searching for test cases")
+        log.data(pretty(query))
+        return [TestCase(inject)
+                for inject in Nitrate()._server.TestCase.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TestCase Methods
