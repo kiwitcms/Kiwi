@@ -337,8 +337,19 @@ class Cache(object):
         # Check for existing cache lock, set mode appropriately
         try:
             lock = open(self._lock)
-            log.warn("Found lock {0}, opening read-only".format(self._lock))
+            pid = lock.readline().strip()
             lock.close()
+            # Make sure the lock PID is sane (otherwise ignore it)
+            try:
+                pid = int(pid)
+            except ValueError:
+                log.warn("Malformed cache lock ({0}), ignoring".format(pid))
+                raise IOError
+            # Check that the process is still running
+            if not os.path.exists("/proc/{0}".format(pid)):
+                log.cache("Breaking stale lock (process {0} dead)".format(pid))
+                raise IOError
+            log.info("Found lock {0}, opening read-only".format(self._lock))
             self._mode = "read-only"
         except IOError:
             log.cache("Creating cache lock {0}".format(self._lock))
