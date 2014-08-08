@@ -1,0 +1,27 @@
+# Nitrate server
+[nitrate]
+url = https://nitrate.server/xmlrpc/
+
+# Plain text authentication
+#username = login
+#password = xxxxx
+
+# Teiid support
+#[teiid]
+#database = name
+#user = login
+#password = xxxxx
+#host = teiid.server.com
+#port = 5432
+
+# Cache level and persistent cache file
+#[cache]
+#level = 3
+#file = /home/user/.cache/nitrate
+
+# Expiration times (in seconds)
+#[expiration]
+#caserun = 0
+#mutable = 3600
+#nitrate = 2592000
+#plantype = NEVER_EXPIRE
