@@ -855,7 +855,19 @@ class RunCases(Container):
         # Prepare data and push
         data = [testcase.id for testcase in testcases]
         log.data(pretty(data))
-        self._server.TestRun.add_cases(self.id, data)
+        try:
+            self._server.TestRun.add_cases(self.id, data)
+        # Handle duplicate entry errors by adding test cases one by one
+        except xmlrpclib.Fault, error:
+            if not "Duplicate entry" in unicode(error):
+                raise
+            log.warn(error)
+            for id in data:
+                try:
+                    self._server.TestRun.add_cases(self.id, id)
+                except xmlrpclib.Fault:
+                    pass
+
         # RunCaseRuns will need update ---> erase current data
         self._object.caseruns._init()
 
