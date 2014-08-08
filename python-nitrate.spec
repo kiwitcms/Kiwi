@@ -1,5 +1,5 @@
 Name: python-nitrate
-Version: 1.1
+Version: 1.2
 Release: 0%{?dist}
 
 Summary: Python API for the Nitrate test case management system
@@ -40,6 +40,11 @@ install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Fri Aug 08 2014 Petr Šplíchal <psplicha@redhat.com> 1.2-0
+- Include example config in documentation [BZ#1098818]
+- Handle duplicate entry errors gracefully [BZ#1112521]
+- Added Aleš Zelinka to the list of contributors
+
 * Sat May 17 2014 Petr Šplíchal <psplicha@redhat.com> 1.1-0
 - TestCase.{setup,action,effect,breakdown} attributes [BZ#1089039]
 - Map automated/manual when searching test cases [BZ#1092464]
