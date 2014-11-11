@@ -562,7 +562,8 @@ class PlanStatus(Nitrate):
             if not status in [0, 1]:
                 raise NitrateError(
                         "Not a valid plan status id: '{0}'".format(status))
-            self._id = status
+            # Save id (and convert possible bool to int)
+            self._id = int(status)
         else:
             try:
                 self._id = self._statuses.index(status)
