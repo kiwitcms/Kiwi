@@ -1,0 +1,6 @@
+*.pyc
+*.swp
+tcms/settings/local.py
+dist
+env.sh
+docs/target/
