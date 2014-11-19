@@ -1,0 +1,192 @@
+{% load extra_filters %}
+<form id="id_form_case_runs">
+<div class="mixbar"> 
+	<span class="tit" style='float:left'>Cases: {{ test_case_runs_count }}</span>
+	<ul class="btnBlue btnBlueFilter" id="showFilterBtn">
+		<li class="btnBlueL"></li>
+		<li class="btnBlueC"><a title="Click to show filter case-run options" id='filter_case_run'>Show filter options</a></li>
+		<li class="btnBlueR"></li>
+	</ul>
+	<div class='right_float tit'>
+		<input id="id_check_box_auto_blinddown" type="checkbox" />
+		<label for="id_check_box_auto_blinddown" title="Automatically display next text case">Automatically</label>
+		<input id="id_check_box_highlight" type="checkbox" />
+		<label for="id_check_box_highlight" title="Highlight my assigned runs">Highlight</label>
+	</div>
+	<div>
+		<div class="btnBlueCaserun">
+			<span>Cases</span>
+			<ul>
+				{% if perms.testruns.add_testcaserun %}
+				<li><a href="{% url "add-cases-to-run" test_run.run_id %}" class="addBlue9">Add</a></li>
+				{% endif %}
+				{% if perms.testruns.delete_testcaserun %}
+				<li><a href="#" title="Remove selected cases form this test run" data-param="{{ test_run.run_id }}" class="removeBlue9 js-del-case">Remove</a></li>
+				{% endif %}
+				{% if perms.testruns.change_testcaserun %}
+				<li><a id="id_sort" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes" href="#" class="reorderBlue9">Re-order</a></li>
+				<li><a href="#" title="Update the IDLE case runs to newest case text" href="javascript:void(0)" data-param="{% url 'tcms.testruns.views.update_case_run_text' test_run.pk %}" class="updateBlue9 js-update-case">Update</a></li>
+				{% endif %}
+				{% if perms.testruns.change_testcaserun %}
+				<li><a href="#" title="Assignee this case(s) to other people" class="assigneeBlue9 js-change-assignee">Assignee</a></li>
+				{% endif %}
+			</ul>
+		</div>
+		<div class="btnBlueCaserun">
+			<span>Status</span>
+			<ul class="statusOptions">
+				{% for tcrs in test_case_run_status %}
+				<li><a value="{{ tcrs.pk }}" href="#" class="{{ tcrs|lower }}Blue9">{{ tcrs }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="btnBlueCaserun">
+			<span>Bugs</span>
+			<ul>
+				<li><a href="javascript:void(0);" class="addBlue9 js-add-bugs">Add</a></li>
+				<li><a href="javascript:void(0);" class="removeBlue9 js-remove-bugs">Remove</a></li>
+			</ul>
+		</div>
+		<div class="btnBlueCaserun">
+			<span>Comment</span>
+			<ul>
+				<li><a href="#" class="addBlue9 js-show-commentdialog">Add</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+</form>
+<form id="id_filter" action="." method="get" style='display:none'>
+	<div style="border:1px solid #235D9F; margin:2px; padding:8px; background:#DEEAF7;">
+		<input type="hidden" name="order_by" value="{{ REQUEST_CONTENTS.order_by }}" />
+		<div class="leftlistinfo">
+			<div class="listinfo">
+				<span class="title"><label for="id_summary">Summary&nbsp;:</label></span>
+				<input id="id_summary" type="text" name="case__summary__icontains" value="{{ REQUEST_CONTENTS.case__summary__icontains }}" />
+			</div>
+			<div class="listinfo">
+				<span class="title"><label for="id_default_tester">Default tester&nbsp;:</label></span>
+				<input id="id_default_tester" type="text" name="tested_by__email__startswith" value="{{ REQUEST_CONTENTS.tested_by__email__startswith }}" />
+			</div>
+			<div class="listinfo">
+				<span class="title"><label for="id_assignee">Assignee&nbsp;:</label></span>
+				<input id="id_assignee" type="text" name="assignee__email__startswith" value="{{ REQUEST_CONTENTS.assignee__email__startswith }}" />
+			</div>
+			<div class="listinfo">
+				<span class="title"><label for="id_is_automated">Automated&nbsp;:</label></span>
+				<select id="id_is_automated" name="case__is_automated">
+					<option value="">--------</option>
+										<option value="0">Manual</option>
+										<option value="1">Auto</option>
+				</select>
+			</div>
+		</div>
+		<div class="rightlistinfo">
+			<div class="listinfo">
+				<span class="title"><label for="id_bug">Bug&nbsp;:</label></span>
+				<input id="id_bug" type="text" name="case_run_bug__bug_id__in" value="{{ REQUEST_CONTENTS.case_run_bug__bug_id__in }}" />
+				<span class='grey'>You can type multiple bugs by comma.</span>
+			</div>
+			<div class="listinfo">
+				<span class="title"><label for="id_case_run_status">Status&nbsp;:</label></span>
+				<select id="id_case_run_status" name="case_run_status__pk">
+					<option value="">--------</option>
+					{% for case_run_status in test_case_run_status %}
+					<option value="{{ case_run_status.pk }}" {% ifequal case_run_status.pk REQUEST_CONTENTS.case_run_status__pk|smart_int %}selected="selected"{% endifequal %}>{{ case_run_status }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="listinfo">
+				<span class="title"><label for="id_priority">Priority&nbsp;:</label></span>
+				<select id="id_priority" name="case__priority__pk">
+					<option value="">--------</option>
+					{% for priority in priorities %}
+					<option value="{{ priority.pk }}" {% ifequal priority.pk REQUEST_CONTENTS.case__priority__pk|smart_int %}selected="selected"{% endifequal %}>{{ priority }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="listinfo">
+				<span class="title"><label for="id_tags">Tag&nbsp;:</label></span>
+				<input id="id_tag" type="text" name="case__tag__name" value="{{ REQUEST_CONTENTS.case_tag__name }}" />
+			</div>
+		</div>
+		<div class='clear'></div>
+		<div class='button_box2'>
+		<input type="submit" value='Search' />
+		<input type="reset" value='Reset' />
+	</div>
+	</div>
+</form>
+
+<div class="mixbar fixed">
+	<div class="tit" style="width: 50px; float: left; height: 100%; margin: 0px; text-align: center;">Tags:</div>
+	<div style="margin-left: 50px; line-height:22px;" class="taglist">
+		{% for tag in case_own_tags %}
+		{{ tag }}&nbsp;&nbsp;<span class="grey">-</span>&nbsp;&nbsp;
+		{% empty %}
+		<span class="grey">No tags in cases</span>
+		{% endfor %}
+	</div>
+</div>
+
+{% include "run/table_caseruns.html" %}
+
+<div id="addlink_dialog" title="Add Test Log">
+	<p>All these fields are required.</p>
+	<form>
+		<fieldset style="padding:0; border:0; margin-top:25px;">
+			<label for="testlog_name" style="display:block">Name <span style="color:red">*</span> (64 characters at most)</label>
+			<input type="text" id="testlog_name" name="testlog_name" size="64"
+				class="text ui-widget-content ui-corner-all"
+				style="margin-bottom:12px; width:95%; padding: .4em; display:block"/>
+			<label for="testlog_url" style="display:block">URL <span style="color:red">*</span></label>
+			<textarea id="testlog_url" name="testlog_url" rows="3"
+				class="text ui-widget-content ui-corner-all"
+				style="width:95%; display:block"></textarea>
+		</fieldset>
+	</form>
+</div>
+{% verbatim %}
+	<script id="add_issue_form_template" type="text/x-handlebars-template">
+		<form id="add_issue_form">
+			<input type="hidden" name="a" value="add">
+				{{#each hiddenFields}}
+					<input type="hidden" name="{{ this.name }}" value="{{ this.value }}">
+				{{/each}}
+			<div class="bug_type" id="id_bug_type">Issue Tracker</div>
+			<select name="bug_system_id" id="bug_system_id">
+				<option value="1" selected="selected" data-tab="bug-system-bugzilla">Bugzilla</option>
+				<option value="2" data-tab="bug-system-jira">JIRA</option>
+			</select>
+			</br>
+			<div id="bug-system-bugzilla" style="line-height:30px;">
+				<div class="bug_id">Bug ID</div>
+					<input type="text" name="bug_id">
+					</br>
+					<input type="checkbox" name="bz_external_track" value="bz_external_track">&nbsp;
+					<span class="use_bz_external_track">Check to add Test Cases to BZ</span>
+			</div>
+			<div id="bug-system-jira" style="display:none;line-height:30px;">
+				<div class="bug_id">Issue Key</div>
+				<input type="text" name="bug_id">
+			</div>
+			</br></br>
+			<div>
+				<input type="submit" value="Add">
+				<input type="button" value="Cancel" class="js-cancel-button" >
+			</div>
+		</form>
+	</script>
+	<script id="batch_add_comment_to_caseruns_template" type="text/x-handlebars-template">
+		<ul>
+			<li><b>Comments: </b></li>
+			<li><textarea name="comments" id="commentText" style="width:100%;height:100px;"></textarea></li>
+			<li>
+				<button id="btnComment">Confirm</button>
+				<button id="btnCancelComment">Cancel</button>
+				<span id="commentsErr"></span>
+			</li>
+		</ul>
+	</script>
+{% endverbatim %}

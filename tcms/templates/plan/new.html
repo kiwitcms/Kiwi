@@ -1,0 +1,119 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Create new test plan{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tinymce/jscripts/tiny_mce/tiny_mce.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
+</script>
+{% endblock %}
+
+{% block contents %}
+
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> New Test Plan
+	</div>
+	<form method="post" action="{% url "tcms.testplans.views.new" %}" enctype="multipart/form-data">
+		<h2>Create New Test Plan</h2>
+		<div class="Detailform border-1" >
+			<table class="editor" cellspan="0" cellspacing="0">
+				<tr>
+					<td width="20%" valign="top"><label class="lab strong" for="id_title">Plan Name</label><span >{{ form.attrib.errors }}</span></td>
+					<td width="80%">
+						<span class="name summary">{{ form.name }}</span>
+						<div >{{ form.name.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="20%" valign="top"><label class="lab strong" for="id_product_id">Product</label></td>
+					<td>
+						<span class="name" >{{ form.product }}</span>
+						<span >{{ form.product.errors }}</span>
+                        <a id="add_id_product" href="{{ ADMIN_PREFIX }}/management/product/add/" class="addlink" >
+							Add Product
+						</a>
+						<span class="grey">After Add and Refresh page</span>
+                        
+					</td>
+				</tr>
+				<tr>
+					<td width="20%" valign="top"><label class="lab strong" for="id_version_id">Product Version</label></td>
+					<td>
+						<span>{{ form.product_version }}</span>
+						<span >{{ form.product_version.errors }}</span>
+                        <a id="add_id_product_version" href="{{ ADMIN_PREFIX }}/management/version/add/" class="addlink" >
+							Add Product Version
+						</a>
+						<span class="grey">After Add and Refresh page</span>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><label class="lab strong" for="id_type_id">Type</label></td>
+					<td >
+						<span class="name"> {{ form.type }} </span>
+						<div > {{ form.type.errors }} </div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><label class="lab" for="id_parent">Parent ID</label></td>
+					<td >
+						<span class="name">{{ form.parent }}</span>
+						<div>{{ form.parent.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><label class="lab" for="id_summary">Plan Document: </label></td>
+					<td>
+						<div class="mec">{{ form.text }}</div>
+						<div >{{ form.text.errors }}</div>
+						<span>Or upload a plan document</span>
+						{{ form.upload_plan_text }}
+						<span class="grey">Html, Plain text or ODT is acceptable.</span> 
+						<div >{{ form.upload_plan_text.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><label class="lab" for="id_env_group_id">Environment Group</label></td>
+					<td colspan="3">
+						<span class="name">{{ form.env_group }}{{ form.env_group.errors }}</span>
+						<span>
+							<a class="system_help" href="#" title="" id="env_group_help_link">What is environment group?</a>
+							<div id="env_group_help" class="system_info" style="display:none">
+								<p>
+									Environment Group represent group of environment properties and all values of these properties. <br/>
+									TCMS uses environment variables to define the test hardware setup. The Environment Group is the top level container object, it contains one or more Properties, each having a range of values. Properties can belong to more than one group.
+									<br/>
+									Then when creating test run , you can set one value of each property under this environment group as environment of run testing.
+									<br/>
+									<a href="#" class="right-action" title="close the tip" id="env_group_help_close">Close</a>
+								</p>
+
+							</div>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><label class="lab" for="id_extra_link">Reference Link:</label></td>
+					<td>
+						<div class="name summary">{{ form.extra_link }}</div>
+						<div >{{ form.extra_link.errors }}</div>
+					</td>
+				</tr>
+			</table>
+			<div class="submit-row" >
+				<input type="submit" value="Create test plan" />
+				<input type="button" value="Cancel" class="js-cancel-button" />
+			</div>
+		</div> 
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% load comments %}
+{% load redhat_urlize %}
+<td id="id_case_text_{{ forloop.counter }}" colspan="12">
+	<table class="case_detail">
+		<tr>
+			<td valign="top">
+				<h4>Setup:</h4>
+				<div class="content">{{ test_case_text.setup|safe }}</div>
+			</td>
+			<td class="" valign="top">
+				<h4>Breakdown:</h4>
+				<div class="content">{{ test_case_text.breakdown|safe }}</div>
+			</td>
+			<td valign="top" rowspan="2" width="200">
+				<h4><span class="title strong">Attachment:</span></h4>
+				<ul class="ul-no-format">
+					{% for attachment_file in attachments %}
+					<li>
+						<a href="{% url "tcms.core.files.check_file" attachment_file.attachment_id %}">
+							{{ attachment_file.file_name }}
+						</a>
+					</li>
+					{% empty %}
+					<li class="grey">No attachment found</li>
+					{% endfor %}
+				</ul>
+				<h4><span class="title strong">Component:</span></h4>
+				<ul class="ul-no-format">
+					{% for component in components %}
+					<li id="display_component" >{{ component.name }}</li>
+					{% empty %}
+					<li class="grey">No component found</li>
+					{% endfor %}
+				</ul>
+				<h4><span class="title strong">Tag:</span></h4>
+				<ul class="ul-no-format">
+					{% for tag in tags %}
+					<li>{{ tag }}</li>
+					{% empty %}
+					<li class="grey">No tag found</li>
+					{% endfor %}
+				</ul>
+				<h4><span class="title strong">bug:</span></h4>
+				<ul class="ul-no-format">
+					{% for bug in test_case.get_bugs %}
+					<li>
+						<a href="{{ bug.get_absolute_url }}">{{ bug }}</a>
+						{% if bug.case_run_id %}
+						<span class="grey"> - From Run</span>
+						<a href="{% url "tcms.testruns.views.get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
+						{% endif %}
+					</li>
+					{% empty %}
+					<li class="grey">No bug found</li>
+					{% endfor %}
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td class="" valign="top">
+				<h4>Actions:</h4>
+				<div class="content">{{ test_case_text.action|safe }}</div>
+			</td>
+			<td class="" valign="top">
+				<h4>Expected Results:</h4>
+				<div class="content">{{ test_case_text.effect|safe }}</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="border:none; background:none">
+				<h4>Comments:</h4>
+				<ul class="comment ul-no-format">
+				{% for comment in case_comments %}
+					<li>
+						{% ifequal comment.user.pk user.pk %}
+						<form action="{% url "tcms.core.contrib.comments.views.delete" %}" method="get" class="form_comment">
+							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
+							<input type="hidden" name="object_pk" value="{{ test_case.pk }}" />
+							<span class="strong">#{{ forloop.counter }}</span>
+							<span class="strong">{{ comment.user.email }}</span>
+							<span class="grey">{{ comment.submit_date }}</span>
+							<br/>
+							{{ comment.comment|redhat_urlize|linebreaksbr }}
+							<input class='commentdelete sprites' value='Delete Comment' type='submit' /> 
+						</form>
+						{% else %}
+						<span class="strong">#{{ forloop.counter }}</span>
+						<span class="strong">{{ comment.user.email }}</span>
+						<span class="grey">{{ comment.submit_date }}</span>
+						<br/>
+						{{ comment.comment|redhat_urlize|linebreaksbr }}
+						{% endifequal %}
+					</li>
+				{% endfor %}
+				<ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" style='border:none;background:transparent'>
+				<form class="update_form" method="POST">
+					{% get_comment_form for test_case as comment_form %}
+					{{ comment_form.comment }}
+					{{ comment_form.content_type }}
+					{{ comment_form.object_pk }}
+					{{ comment_form.timestamp }}
+					{{ comment_form.security_hash }}
+					{{ comment_form.name }}
+					{{ comment_form.email }}
+					{{ comment_form.url }}
+					<br/>
+					<input type="submit" class="submit-post margin-top" value='Add Comment'>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="row">
+				{% include 'case/get_details_case_log.html' %}
+			</td>
+		</tr>
+	</table>
+</td>
+

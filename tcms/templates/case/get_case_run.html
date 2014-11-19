@@ -1,0 +1,24 @@
+{% if test_case_runs %}
+<table class="list" id="id_table_cases" cellspacing="0" cellspan="0">
+<tbody>
+{% for plan in case_run_plans %}
+	<tr id="{{ plan.pk }}">
+		<td class="plan_expandable listGroupBlue" colspan="12">
+		<img class="blind_icon collapse" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
+		<input type="hidden" name="case" value="{{ test_case.pk }}" />
+		Plan:<span style="padding:0 0 0 6px;"><a href="{{ plan.get_absolute_url }}">[{{ plan.pk }}] {{ plan.name }}</a></span>
+		</td>
+	</tr>
+	<tr class="case_run_list hide" style="display:none;">
+		<td colspan="12">
+		<div id="id_loading_{{ plan.pk }}" class="ajax_loading"></div>
+		</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<div class="list">
+	<span class="prompt-message"><center>No test cases</center></span>
+</div>
+{% endif %}

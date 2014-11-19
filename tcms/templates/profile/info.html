@@ -1,0 +1,127 @@
+{% extends "tcms_base.html" %}
+{% load redhat_urlize %}
+
+{% block subtitle %}Profile - {{ user_profile.user.username }}{% endblock %}
+
+{% block custom_stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/profiles.js"></script>
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble profile_tab">
+		<ul>
+			<li class="profile_tab_active"><a href="{% url "tcms.profiles.views.profile" user.username %}">Basic Information</a></li>
+			{% ifequal user_profile.user user %}
+			<li><a href="{% url "tcms.profiles.views.bookmark" user.username %}">Bookmarks</a></li>
+			<li><a href="{% url "tcms.profiles.views.recent" user.username %}">Recent</a></li>
+			{% endifequal %}
+		</ul>
+	</div>
+
+		
+		{% ifequal user_profile.user user %}
+		<form action="." method="post">
+			{% csrf_token %}
+			{% if message %}
+				{{ message }}
+			{% endif %}
+			<table id="basic_info" cellpadding="0" cellspacing="0" class="table_style">
+				<tr>
+					<td class="left_title sprites login_info">Username</td>
+					<td>
+						<input type="hidden" name="user" value="{{ user.pk }}" />
+						{% if AUTH_BACKEND.can_register %}
+						{{ form.username }}
+						<a href="{% url "django.contrib.auth.views.password_change" %}">Change password</a>
+						{% else %}
+						{{ user_profile.user.username }}
+						<input type="hidden" name="username" value="{{ user_profile.user.username }}" />
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td class="left_title sprites username">Name</td>
+					<td>
+						{{ form.first_name }}
+						{{ form.last_name }}
+					</td>
+				</tr>
+				<tr>
+					<td class="left_title sprites email">Email</td>
+					<td>
+						{% if AUTH_BACKEND.can_register %}
+						{{ form.email }}
+						{% else %}
+						{{ user_profile.user.email }}
+						<input type="hidden" name="email" value="{{ user_profile.user.email }}" />
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td class="left_title sprites">Phone number</td>
+					<td>{{ form.phone_number }}</td>
+				</tr>
+				<tr>
+					<td class="left_title sprites">IM</td>
+					<td>{{ form.im_type_id }}{{ form.im }}</td>
+				</tr>
+				<tr>
+					<td class="left_title sprites">Web</td>
+					<td>{{ form.url }}</td>
+				</tr>
+				<tr>
+					<td class="left_title sprites">Address</td>
+					<td>{{ form.address }}</td>
+				</tr>
+				<tr>
+					<td class="left_title sprites">Notes</td>
+					<td>{{ form.notes }}</td>
+				</tr>
+				<tr>
+					<td>{{ form.errors }}</td>
+					<td><input type="submit" value="Save Change" class="clear" /></td>
+			</table>
+		</form>
+		{% else %}
+		<table id="basic_info" cellpadding="0" cellspacing="0" class="table_style">
+			<tr>
+				<td class="left_title sprites login_info">Username</td>
+				<td>{{ user_profile.user.username }}</td>
+			</tr>
+			<tr>
+				<td class="left_title sprites username">Name</td>
+				<td>{{ user_profile.user.first_name|default:'<span class="grey">First name</span>' }} {{ user_profile.user.last_name|default:'<span class="grey">Last name</span>' }}</td>
+			</tr>
+			<tr>
+				<td class="left_title sprites email">Email</td>
+				<td><a href='mailto:{{ user_profile.user.email }}'>{{ user_profile.user.email }}</a></td>
+			</tr>
+			<tr>
+				<td class="left_title sprites">Phone number</td>
+				<td>{{ user_profile.phone_numer|default:'<span class="grey">None</span>' }}</td>
+			</tr>
+			<tr>
+				<td class="left_title sprites">IM</td>
+				<td>{{ user_profile.get_im|default:'<span class="grey">None</span>' }}</td>
+			</tr>
+			<tr>
+				<td class="left_title sprites">Web</td>
+				<td>{{ user_profile.url|default:'<span class="grey">None</span>' }}</td>
+			</tr>
+			<tr>
+				<td class="left_title sprites">Address</td>
+				<td>{{ user_profile.address|default:'<span class="grey">None</span>' }}</td>
+			</tr>
+			<tr>
+				<td class="left_title sprites">Notes</td>
+				<td>{{ user_profile.notes|redhat_urlize|linebreaksbr|default:'<span class="grey">None</span>' }}</td>
+		</table>
+		{% endifequal %}
+	</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+Index: controls.js
+Stolen from: https://prototype.lighthouseapp.com/projects/8887/tickets/23-ajax-autocompleter-parameters-must-be-a-string
+===================================================================
+--- controls.js	(revision 2795)
++++ controls.js	(working copy)
+@@ -360,9 +360,13 @@
+     this.options.parameters = this.options.callback ?
+       this.options.callback(this.element, entry) : entry;
+ 
+-    if(this.options.defaultParams)
+-      this.options.parameters += '&' + this.options.defaultParams;
+-
++    if(this.options.defaultParams) {
++      if(Object.isString(this.options.defaultParams))
++        this.options.parameters += '&' + this.options.defaultParams;
++      else
++        this.options.parameters += '&' + Object.toQueryString(this.options.defaultParams);
++    }
++    
+     new Ajax.Request(this.url, this.options);
+   },

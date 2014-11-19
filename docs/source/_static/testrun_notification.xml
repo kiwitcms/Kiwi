@@ -1,0 +1,23 @@
+ new test run has been created for you.
+
+ ### Links ###
+ Test run: http://example.com/run/23228/
+
+
+ ### Basic run information ###
+ Summary: Test run for dummy testing plan on Unknown environment
+
+ Managed: username.
+ Default tester: username.
+
+ Product: TCMS
+ Product version: 3.8.1
+ Build: TCMS-3.0.3-1.svn2841
+
+ Estimated time: 0:00:00
+
+ Notes:
+
+
+ ### Test plan information ###
+ Test Plan: dummy testing plan

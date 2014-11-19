@@ -1,0 +1,89 @@
+{% if not is_ajax %}
+<ul id="env_area">
+	{% for run_env_value in test_run.env_value.select_related.all %}
+	<li>
+		<form class="js-run-env" id="id_form_value_{{ run_env_value.pk }}">
+			<span class="lab">
+				<input type="hidden" value="{{ run_env_value.property_id }}" name="env_property_id"/>
+				<input type="hidden" value="{{ run_env_value.pk }}" name="current_run_env"/>
+		{{ run_env_value.property }}:
+
+				<span id="id_env_value_{{ run_env_value.pk }}" style="display:">{{ run_env_value.value }}</span>
+				<select style="display:none" name="env_value_id" id="id_select_value_{{ run_env_value.pk }}">
+					<option value="{{ run_env_value.pk }}" selected="True"></option>
+				</select>
+				<input type="button" value="Submit" name="submit" id="id_submit_value_{{ run_env_value.pk }}" class="js-env-submit" style="display:none" data-params='["{{ test_run.run_id }}", "{{ run_env_value.pk }}", "id_env_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'/>
+			</span>
+			<span class="action_property">
+				{% if perms.testruns.change_tcmsenvrunvaluemap %}
+					<a href="javascript:void(0)" class="js-edit-property" data-params='["id_env_value_{{ run_env_value.pk }}", "id_select_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'>
+						<img src="{{ STATIC_URL }}images/icon_changelink.gif" title="Edit this value"/>
+					</a>
+				{% endif %}
+				{% if perms.testruns.delete_tcmsenvrunvaluemap %}
+					<a href="javascript:void(0)">
+						<img src="{{ STATIC_URL }}images/remove_small.png" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
+					</a>
+				{% endif %}
+			</span>
+		</form>
+	</li>
+	{% endfor %}
+</ul>
+{% if perms.testruns.add_tcmsenvrunvaluemap %}
+<div>
+	<a class="addlink js-add-property" href="javascript:void(0)" data-params='["{{ test_run.run_id }}", "{{env_group.id}}"]'>Add Property</a>
+</div>
+{% endif %}
+{% for env_group in testplan.env_group.all %}
+<input type="hidden" name="env_group_id" value="{{ env_group.id }}"/>
+{% endfor%}
+{% verbatim %}
+	<script id="add_property_template" type="text/x-handlebars-template">
+		<div class="add_env_content">
+			<div class="add_env_close js-close-button" ></div>
+			<div class="env_title" id="id_title_group"></div>
+			<div class="add_env_box">Property<br/><br/>
+				<select id="id_add_env_property"></select>
+			</div>
+			<div class="add_env_box">Value<br/><br/>
+				<select id="id_add_env_value"></select>
+			</div>
+			<div class="add_env_button">
+				<input type="button" value="Add" id="id_env_add"/>
+				<input type="button" value="Cancel" class="js-cancel-button" />
+			</div>
+		</div>
+	</script>
+{% endverbatim %}
+{% else %}
+{% for run_env_value in test_run.env_value.select_related.all %}
+<li>
+	<form class="js-run-env" id="id_form_value_{{ run_env_value.pk }}">
+		<span class="lab">
+			<input type="hidden" value="{{ run_env_value.property_id }}" name="env_property_id"/>
+			<input type="hidden" value="{{ run_env_value.pk }}" name="current_run_env"/>
+	{{ run_env_value.property }}:
+
+			<span id="id_env_value_{{ run_env_value.pk }}" style="display:">{{ run_env_value.value }}</span>
+			<select style="display:none" name="env_value_id" id="id_select_value_{{ run_env_value.pk }}">
+				<option value="{{ run_env_value.pk }}" selected="True"></option>
+			</select>
+			<input type="button" value="Submit" name="submit" id="id_submit_value_{{ run_env_value.pk }}" class="js-env-submit" style="display:none" data-params='["{{ test_run.run_id }}", "{{ run_env_value.pk }}", "id_env_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'/>
+		</span>
+		<span class="action_property">
+			{% if perms.testruns.change_tcmsenvrunvaluemap %}
+				<a href="javascript:void(0)" class="js-edit-property" data-params='["id_env_value_{{ run_env_value.pk }}", "id_select_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'>
+					<img src="{{ STATIC_URL }}images/icon_changelink.gif" title="Edit this value"/>
+				</a>
+			{% endif %}
+			{% if perms.testruns.delete_tcmsenvrunvaluemap %}
+				<a href="javascript:void(0)">
+					<img src="{{ STATIC_URL }}images/remove_small.png" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
+				</a>
+			{% endif %}
+		</span>
+	</form>
+</li>
+{% endfor %}
+{% endif %}

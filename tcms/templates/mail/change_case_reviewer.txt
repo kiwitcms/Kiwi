@@ -1,0 +1,7 @@
+You have been assigned as the reviewer of the following Test Cases by {{ user }}.
+
+
+### Test cases information ###
+{% for test_case in test_cases %}
+[{{ test_case.pk }}] {{ test_case }} - {{ test_case.get_url }}
+{% endfor %}

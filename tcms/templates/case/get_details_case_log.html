@@ -1,0 +1,17 @@
+{% if logs %}
+<h4 onclick='jQ(this).next().toggle()' class='cursor_pointer'>Change Log
+	<span class='log_grey'>Click to show the detail information</span>
+</h4>
+
+<ul style='display:none'>
+	{% for log in logs %}
+	<li>[{{ log.date }}] - [{{ log.who__username }}] - {{ log.action }}</li>
+	{% endfor %}
+</ul>
+{% else %}
+<h4>Change Log</h4>
+<ul>
+<li class="grey">No log recorded.</li>
+</ul>
+{% endif %}
+

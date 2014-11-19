@@ -1,0 +1,34 @@
+<form id="plans_form">
+	<div id="contentTab" class="mixbar">
+		{#<span class="tit">{{ test_plans.count }} Plans</span>#}
+		<span>
+			{% if perms.testplans.add_testplan %}
+			<input type="button" title="Create new test plan" value="New Test Plan" class="js-new-plan" data-param="{% url 'tcms.testplans.views.new' %}" />
+			<input type="button" value="Clone" title="clone selected test plans." class="js-clone-plan" data-param="{% url 'tcms.testplans.views.clone' %}" />
+			{% endif %}
+			<input type="button" id="plan_list_printable"
+                   disabled="disabled" value="Printable copy"
+                   title="Create the printable copy for selected plans." data-param="{% url 'tcms.testplans.views.printable' %}" />
+			<input type="button" value="Export" title="Export the cases for selected plans." class="js-export-cases" data-param="{% url 'tcms.testplans.views.export' %}" />
+		</span>
+	</div>
+	<table id="testplans_table" class="list border-bottom" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">
+		<thead>
+			<tr>
+				<th width="20" class="nosort"><input id="id_check_all_plans" type="checkbox" title="Select all/Select none" /></th>
+				<th class="number nosort widthID" title="Sort by plan ID">ID</th>
+				<th class="text nosort" title="Sort by plan name">Name</th>
+				<th width="100" class="text nosort" title="Sort by author">Author</th>
+				<th width="100" class="text nosort" title="Sort by owner">Owner</th>
+				<th width="180" class="text nosort" title="Sort by product name" id="col_product_head">Product</th>
+				<th width="120" class="nosort" title="Sort by product version" style="display:none" id="col_product_version_head"><span></span>Product Version</th>
+				<th width="140" class="text nosort" title="Sort by plan type">Type</th>
+				<th width="50" class="number nosort" title="Sort by number of test cases">Cases</th>
+				<th width="40" class="number nosort" title="Sort by number of test runs">Runs</th>
+				<th class="nosort" width="80"><span></span>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</form>

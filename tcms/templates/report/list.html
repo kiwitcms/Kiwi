@@ -1,0 +1,48 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Reporting{% endblock %}
+
+{% block custom_stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/report.js"></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.Report.List.on_load);
+</script>
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> Reporting
+	</div>
+	<h1>Product</h1>
+	<div class="Detailform border-1">
+		<table class="list" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th>Product</th>
+				<th>Plans</th>
+				<th>Runs</th>
+				<th>Cases</th>
+			</tr>
+			{% for product in products %}
+			<tr class="{% cycle 'even' 'odd' %}">
+				<td>
+					{% if product.plans_count %}
+					<a href="{% url "tcms.report.views.overview" product.id %}">{{ product }}</a>
+					{% else %}
+					{{ product }}
+					{% endif %}
+				</td>
+				<td>{{ product.plans_count }}</td>
+				<td>{{ product.runs_count }}</td>
+				<td>{{ product.cases_count }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div><!--content over -->
+{% endblock %}

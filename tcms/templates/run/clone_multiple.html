@@ -1,0 +1,92 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Clone test runs{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
+</script>
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.testplans.views.all" %}">Test Runs</a>
+		>> Clone mulitple
+	</div>
+
+	<form action="{% url "tcms.testruns.views.clone" %}" method="post">
+		<div class="boxnotype">
+        	<div class="boxtitle">The runs you have choosed</div>
+				{{ clone_form.run }}
+			</div>
+        <div class="Detailform border-1">
+			
+			<table class="editor" cellspan="0" cellspacing="0">
+				<tr>
+					<td width="15%"><label for="">Product</label></td>
+					<td>
+						{{ clone_form.product }}
+					</td>
+				</tr>
+				<tr>
+					<td><label>Product Version</label></td>
+					<td>{{ clone_form.product_version }}</td>
+				</tr>
+				<tr>
+					<td><label class="strong" for="id_build_id">Build </label></td>
+					<td>
+						{{ clone_form.build }}
+						<div class="errors">{{ clone_form.build.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="id_manager">Run Manager </label></td>
+					<td>
+						{{ clone_form.manager }}
+						{{ clone_form.update_manager }}
+						{{ clone_form.update_manager.label }}
+						<div class="errors">{{ clone_form.manager.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="id_default_tester">Default Tester</label></td>
+					<td>
+						{{ clone_form.default_tester }}
+						{{ clone_form.update_default_tester }}
+						{{ clone_form.update_default_tester.label }}
+						<div class="errors">{{ clone_form.default_tester.errors }}</div>
+					</td>
+				</tr>
+                	<td colspan="2">
+                    	<ul class="clone_multiple_option">
+                        	<li>{{ clone_form.update_case_text }}{{ clone_form.update_case_text.label }}</li>
+                        	<li>{{ clone_form.clone_cc }}{{ clone_form.clone_cc.label }}</li>
+                        	<li>{{ clone_form.clone_tag }}{{ clone_form.clone_tag.label }}</li>
+                        </div>
+                    </td>
+                </tr>
+			</table>
+			<!--<div class="options">
+				<p>{{ clone_form.update_case_text }}{{ clone_form.update_case_text.label }}</p>
+				<p>{{ clone_form.clone_cc }}{{ clone_form.clone_cc.label }}</p>
+				<p>{{ clone_form.clone_tag }}{{ clone_form.clone_tag.label }}</p>
+			</div>-->
+		</div>
+		<div class="errors">
+			{{ clone_form.errors }}
+		</div>
+        <div class="clone_multiple_button">
+		<input type="submit" name="submit" value="Clone" />
+		<input type="reset" value="Reset" />
+		<input type="button" value="Cancel" class="js-cancel-button"/>
+        </div>
+	</form>
+</div>
+{% endblock %}

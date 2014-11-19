@@ -1,0 +1,34 @@
+{
+    "sEcho": {{sEcho}},
+    "iTotalRecords": {{iTotalRecords}},
+    "iTotalDisplayRecords": {{iTotalDisplayRecords}},
+    "aaData":[
+    {% for test_run in querySet %}
+    [
+        "<input type='checkbox' name='run' value='{{ test_run.pk }}' class='run_selector'>",
+        "<a href='{% url "tcms.testruns.views.get" test_run.run_id %}' >{{ test_run.run_id }}</a>",
+        "<a href='{% url "tcms.testruns.views.get" test_run.run_id %}' >{{ test_run.summary }}</a>",
+        "<a href='{% url "tcms.profiles.views.profile" test_run.manager.username %}'>{{ test_run.manager }}</a>",
+        {% if test_run.default_tester_id %}
+            "<a href='{% url "tcms.profiles.views.profile" test_run.default_tester.username %}'>{{test_run.default_tester}}</a>"
+        {% else %}
+            "{{test_run.default_tester}}"
+        {% endif %},
+        "{{test_run.plan}}",
+        "{{test_run.build.product}}",
+        "{{test_run.product_version}}",
+        "{{test_run.env_groups}}",
+        "{{test_run.total_num_caseruns}}",
+        {% if test_run.stop_date %}
+            "<span class='pauselink'>Finished</span>"
+        {% else %}
+            "<span class='runninglink'>Running</span>"
+        {% endif %},
+        "<a href='#statistics' class='btn-statistics' run='{{test_run.run_id}}'>calculate</a><div class='progress-bar' style='display: none;'><div class='progress-inner'><div class='progress-failed'></div></div><div class='percent'></div></div>"
+        ]
+    {% if not forloop.last %}
+    ,
+    {% endif %}
+    {% endfor %}
+    ]
+}

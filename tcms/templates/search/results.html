@@ -1,0 +1,44 @@
+{% extends "tcms_base.html" %}
+{% block subtitle %}Advanced Search Results{% endblock %}
+{% block custom_stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables_themeroller.css" />
+{% endblock %}
+{% block custom_javascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/testrun_actions.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/advance_search.js"></script>
+{% endblock %}
+
+{% block contents %}
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="/advance-search/">Advanced Search</a>
+		>> Search Results
+	</div>
+	<div class="queries">
+		<ul>
+		{% for k, v in queries.iteritems %}
+			<li><label>{{ k|title }}:</label>{{ v|safe }};</li>
+		{% endfor %}
+			<li class="clear"></li>
+		</ul>
+		<p></p>
+	</div>
+	<h2 class="clear">Search Results<span style="font-weight:normal; font-size:12px; padding:0 0 0 15px;">Time cost: {{ time_cost }} sec(s).</span></h2>
+
+	{% if test_plans %}
+		{% include "search/plans.html" %}
+	{% endif %}
+
+	{% if test_cases %}
+		{% include "search/cases.html" %}
+	{% endif %}
+
+	{% if test_runs %}
+		{% include "search/runs.html" %}
+	{% endif %}
+
+{% endblock %}
+

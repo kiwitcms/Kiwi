@@ -1,0 +1,26 @@
+<table class="list border-bottom" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+            <th class="widthID">ID</th>
+            <th width="25%">Summary</th>
+            <th width="15%">Dependencies</th>
+            <th width="15%">Action</th>
+    </tr>
+    <tr class="{% cycle 'even' 'odd' %}">
+            <td><a href="">{{ case.depend.id }} 1112</a></td>
+            <td><a href="">{{ case.depend.name }} Dummy case</a></td>
+            <td>Depends On /Blocks</td>
+            <td>
+                <input type="button"  class="actions remove" value="remove"/>
+            </td>
+    </tr>
+</table>
+<div class="mixbar">
+    <lable name="" for="" id="" class="tit">Add another Case dependencies</lable>
+    <select id="" name="">
+            <option>Depends on</option>
+            <option>Blocks</option>
+    </select>
+    <input type="text"/>
+    <input type="submit" name="" value="add" />
+    <span class="grey"> Please input ID of test case here.</span>
+</div>

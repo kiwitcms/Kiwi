@@ -1,0 +1,239 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}{{ test_plan.name }}{% endblock %}
+
+{% block custom_stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables_themeroller.css" />
+{% endblock %}
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tablednd.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.dataTables.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/deleconfirm.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectFilter2.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectBox.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/calendar.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/DateTimeShortcuts.js"></script>
+
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestPlans.Details.on_load);
+
+Nitrate.TestPlans.Instance = {
+	pk: {{ test_plan.pk }},
+	fields: {
+		name: '{{ test_plan.name }}',
+		product_id: {{ test_plan.product_id }},
+		author_id: {{ test_plan.author_id }},
+		parent: {{ test_plan.parent.pk|default:'null' }}
+	},
+	extras: {
+		num_cases: {{ test_plan.case.count }},
+		num_runs: {{ test_plan.run.count }},
+		num_children: {{ test_plan.child_set.count }},
+		get_url_path: '{{ test_plan.get_url_path }}'
+	}
+}
+</script>
+{% endblock %}
+
+{% block content_type %}
+	<input type="hidden" name="content_type" value="testplans.testplan" />
+	<input type="hidden" name="object_pk" value="{{ test_plan.pk }}" />
+	<input type="hidden" name="name" value="{{ test_plan.name }}" />
+	{# <input type="hidden" name="description" value="{{ test_plan.latest_text.plan_text }}" /> #}
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> {{ test_plan.plan_id }}: {{ test_plan.name }}
+	</div>
+	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
+	<div class="control">
+		<span id="id_buttons" class="button">
+			<input id="btn_edit" type="button" value="Edit Plan " title="Edit test plan" data-param="{% url 'tcms.testplans.views.edit' test_plan.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
+			<input id="btn_clone" type="button" value="Clone Plan" title="Clone this plan to other product" data-params='["{% url "tcms.testplans.views.clone" %}", {{ test_plan.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
+			{% if test_plan.is_active %}
+			<input id="btn_disable" type="button" value="Disable Plan " title="Disabled this plan" {% if not perms.testplans.change_testplan %}disabled="true"{% endif %}>
+			{% else %}
+			<input id="btn_enable" type="button" value="Enable Plan " title="Enabled this plan" {% if not perms.testplans.change_testplan %}disabled="true"{% endif %}>
+			{% endif %}
+			<input id="btn_export" type="button" value="Export All Cases "
+                   title="Export all cases to XML file"
+                   data-params='["{% url "tcms.testplans.views.export" %}", {{ test_plan.pk }}]'>
+			<input id="btn_print" type="button" value="Print Plan "
+                   title="Print Plan"
+                   data-params='["{% url "tcms.testplans.views.printable" %}", {{ test_plan.pk }}]'>
+			{% comment %}
+			<span class="right-action">
+				<img src="{{ STATIC_URL }}images/icon_printer.png" width="16px">
+				<a href="{% url "tcms.testplans.views.printable" %}?plan={{ test_plan.pk }}">Print Plan</a>
+			</span>
+            {% endcomment %}
+		</span>
+	</div>
+	<h2 id="display_title" class="{% ifequal test_plan.is_active 0 %}line-through{% endifequal %}">
+		{{ test_plan.name }}
+	</h2>
+	<div class="listinfo_content">
+		<div class="leftlistinfo">
+			<div class="listinfo">
+				<div class="title grey">Author&nbsp;:</div>
+				<div id="display_author"  class="name " > <a href="{% url "tcms.profiles.views.profile" test_plan.author.username %}">{{ test_plan.author }}</a></div>
+			</div>
+			{% comment %}
+            <div class="listinfo">
+				<div class="title grey">Doc Author/Manager&nbsp;:</div>
+				<div id="display_author"  class="name" ><a href="{% url "tcms.profiles.views.profile" test_plan.latest_text.author.username|default:"unknown" %}">{{ test_plan.latest_text.author }}</a></div>
+			</div>
+            {% endcomment %}
+			<div class="listinfo">
+				<div class="title grey">Owner&nbsp;:</div>
+				<div id="display_author"  class="name" >
+				{% if test_plan.owner %}
+				<a href="{% url "tcms.profiles.views.profile" test_plan.owner.username|default:"unknown" %}">{{ test_plan.owner }}</a>
+				{% else %}
+				{{ test_plan.owner }}
+				{% endif %}
+				</div>
+			</div>
+			<div class="listinfo">
+				<div class="title grey">Product&nbsp;:</div>
+				<div id="display_product"  class="name "><a href="{% url "tcms.testplans.views.all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&is_active=on&product={{ test_plan.product_id }}&product_version=&env_group=&create_date__gte=&create_date__lte=" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
+			</div>
+			<div class="listinfo">
+				<div class="title grey">Version&nbsp;:</div>
+				<div id="display_product_version"  class="name ">{{ test_plan.product_version.value }}</div>
+			</div>
+			<div class="listinfo">
+				<div class="title grey">Plan Type&nbsp;:</div>
+				<div id="display_type"  class="name ">{{ test_plan.type.name }}</div>
+			</div>
+		 </div>
+		<div class="rightlistinfo">
+			<div class="listinfo">
+				<div class="title grey">Environment Group&nbsp;:</div>
+				<div class="name">
+					{% for env_group in test_plan.env_group.all %}
+					<span class="blue strong"><a href="{% url "tcms.testplans.views.all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&product=&product_version=&env_group={{ env_group.id }}&create_date__gte=&create_date__lte=" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
+					{% endfor %}
+				</div>
+				<div id="display_summary" >
+					{% for env_property in env_properties %}
+					{{ env_property.property.name }},
+					{% endfor %}
+				</div>
+			</div>
+			<div class="listinfo">
+				<div class="title grey">Reference Link&nbsp;:</div>
+				<div class="name">
+					{% if test_plan.extra_link %}
+					<a href="{{ test_plan.extra_link }}">{{ test_plan.extra_link }}</a>
+					{% else %}
+					None
+					{% endif %}
+				</div>
+			</div>
+			<div class="listinfo">
+				<div class="title grey">Create Time&nbsp;:</div>
+				<div class="name ">{{test_plan.create_date}}</div>
+				
+			</div>
+			<div class="listinfo">
+				<div class="title grey">Parent&nbsp;:</div>
+				<div class="name ">
+				{% if test_plan.parent.pk %}
+					<a href="{{ test_plan.parent.get_absolute_url }}">{{ test_plan.parent.pk }}</a>
+				{% else %}
+					None
+				{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div id="plan_detail">
+		<div class="Detailform border-1">
+			<ul id="contentTab" class="content_tab">
+				<li id="tab_document" class="tab">
+					<a href="#document" title="document">Document</a>
+				</li>
+				<li id="tab_testcases" class="tab tab_focus">
+					<a href="#testcases" title="testcases">Cases (<span id='run_case_count' class="js-testcases-count">{{ test_plan.run_case.count }}</span>/<span id='case_count'>{{ test_plan.case.count }}</span>)</a>
+				</li>
+				<li id="tab_reviewcases" class="tab">
+					<a href="#reviewcases" title="reviewcases">Reviewing Cases (<span id='review_case_count' class="js-reviewcases-count">{{ test_plan.review_case.count }}</span>)</a>
+				</li>
+				<li id="tab_testruns"  class="tab">
+					<a href="#testruns" title="testruns">Runs (<span id='run_count'>{{ test_plan.run.count }}</span>)</a>
+				</li>
+				<li id="tab_components"	 class="tab">
+					<a href="#components" title="components">Default Components (<span id='component_count'>{{ test_plan.component.count }}</span>)</a>
+				</li>
+				<li id="tab_attachment" class="tab">
+					<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>{{ test_plan.attachment.count }}</span>)</a>
+				</li>
+				<li id="tab_tag" class="tab">
+					<a href="#tag" title="tag">Tags (<span id='tag_count'>{{ test_plan.tag.count }}</span>)</a>
+				</li>
+				<li id="tab_log" class="tab">
+					<a href="#log" title="log">Log</a>
+				</li>
+				<li id="tab_treeview" class="tab">
+					<a href="#treeview" title="treeview">Tree View</a>
+				</li>
+			</ul>
+			<div id="document" class="tab_list" style="display:none">
+				{% include "plan/get_docs.html" %}
+			</div>
+			<div id="attachment" class="tab_list" style="display:none">
+				{% include "plan/get_attachments.html" %}
+			</div>
+			<div id="testruns" class="tab_list" style="display:none;">
+				{% include "plan/get_runs.html" %}
+			</div>
+			<div id="components" class="tab_list" style="display:none;">
+				<div class="ajax_loading"></div>
+			</div>
+			<div id="log" class="tab_list" style="display:none;">
+				{% include "plan/get_log.html" %}
+			</div>
+			<div id="treeview" class="tab_list" style="display:none;">
+				{% include "plan/get_treeview.html" %}
+			</div>
+			<div id="reviewcases" class="tab_list" style="display:none">
+				<div class="ajax_loading"></div>
+			</div>
+			<div id="testcases" class="tab_list">
+				<div class="ajax_loading"></div>
+			</div>
+			<div id="tag" class="tab_list" style="display:none">
+				<div class="ajax_loading"></div>
+			</div>
+		</div>
+	</div>
+	<div class="popup" id="id_import_case_zone" {% if xml_form.xml_file.errors %}{% else %}style="display:none;"{% endif %}>
+		<div class="submit-row">
+			<input type="button" value="x" class="js-close-zone" >
+		</div>
+		<form action="{% url "tcms.testplans.views.cases" test_plan.plan_id %}" method="POST" enctype="multipart/form-data">
+			<div  class="right-bar" >
+				<label class="errors" id="import-error">{{ xml_form.xml_file.errors }}</label>	
+				{{ xml_form.a }}
+				<label><b>Import XML File:</b></label>
+				{{ xml_form.xml_file }}
+				<input type="submit" value="Import" />
+				<br/>
+				<label class="grey">{{ xml_form.xml_file.help_text }}</label>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

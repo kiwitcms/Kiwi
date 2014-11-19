@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Language" content="en-us" />
+		<meta name="robots" content="NONE,NOARCHIVE" />
+		<title>XML-RPC Service</title>
+	</head>
+	<body style="font-size: small;">
+		<h1>Nitrate XML-RPC Service<sup><font size="3" color="grey">(Beta)</font></sup></h1>
+		<p>You need to invoke it using an XML-RPC Client!</p>
+        <p><a href="http://psss.fedorapeople.org/python-nitrate/">python-nitrate</a> is a Python interface to the Nitrate test case management system.</p>
+		<h2>Changes from testopia</h2>
+		<ul>
+			<li>
+				<b>[Model].filter</b>
+				- The 'filter' method is the replacement of list method in testopia.<br />
+				It's a full featured wrapper of the 'filter' method of Django QuerySet.<br />
+				<br />
+				It have following star features:<br />
+				<ul>
+					<li>
+						<b>Relationship</b>
+						- For example to get all of test cases belong to 'RHEL 5'<br />
+						We use the category path for recommend:<br />
+						<pre>>>> TestCase.filter({'category__product__name': 'Red Hat Enterprise Linux 5'})</pre>
+					</li>
+					<li>
+						<b>Field lookups</b>
+						- For example to get all test cases with summary starts with 'test':<br />
+						<pre>>>> TestCase.filter({'summary__startswith': 'test'})</pre>
+						Access <a href="http://docs.djangoproject.com/en/dev/ref/models/querysets/#id7">this URL</a> for more information.
+					</li>
+				</ul>
+				<br />
+			</li>
+			<li><b>[Model].filter_count</b> - See [Model].filter.</li>
+			<li>
+				<b>Multiple operations</b>
+				- In Nitrate, most of functions are change to support multiple operations, <br />
+				including add_bug, remove_bug, add_tag, remove_tag
+			</li>
+			<li>
+				<b>Argument and response changes</b>
+				- Most of the function argument are compatible with testopia, <br />
+				exclude some special function that not supported or deprecated.<br />
+				And the response changes to hash not a array of hash, not just a array only.
+			</li>
+		</ul>
+
+		<h2>How to handle ForeignKey arguments</h2>
+
+		<p>In addition to the basic types such as Integers, Strings, Boolean, there is a relationship type called ForeignKey.</p>
+		<p>The syntax of using ForeignKey in our XMLRPC API is quite simple:</p>
+		<pre>foreignkey + '__' + fieldname + '__' + query_syntax.</pre>
+
+		<p>Taking TestCase.filter() for example, if the query is based on a default_tester's username starts with 'John', the syntax will look like this:</p>
+		<pre>TestCase.filter({'user__username__startswith': 'John'})</pre>
+
+		<p>In which case, the foreignkey is 'user', fieldname is 'username', and query_syntax is 'startswith', they are joined together using double underscores '__'.</p>
+
+		<p>For all the XMLRPC API, we have listed the available ForeignKey, however, for the available foreignkey field names that can be used in a query, please check out Nitrate source code on <a href="https://fedorahosted.org/nitrate/browser/trunk/nitrate/tcms" target="_blank">fedora</a>. The definitions are located in files named 'models.py'; for a detailed query syntax documentation, please check out the Django documentation:</p>
+		<a href="https://docs.djangoproject.com/en/1.2/topics/db/queries/#field-lookups" target="_blank">https://docs.djangoproject.com/en/1.2/topics/db/queries/#field-lookups</a>
+
+		
+		<h2>Available methods</h2>
+		<ul>
+			{% for method in method_list %}
+			{% if method.name != 'system.multicall' %}
+			<li><a href="#{{ method.name|lower }}">{{ method.name|escape }}</a></li>
+			{% endif %}
+			{% endfor %}
+		</ul>
+		
+		<h2>Descriptions</h2>
+		{% for method in method_list %}
+		{% if method.name != 'system.multicall' %}
+		<h3><a name="{{ method.name|lower }}">{{ method.name|escape }}</a></h3>
+		{% ifnotequal method.signature "signatures not supported" %}
+		<strong>Signature: </strong>{{ method.signature|escape }}<br />
+		{% endifnotequal %}
+		<pre>{% for line in method.help %}{{ line|escape }}<br />{% endfor %}</pre>
+		{% endif %}
+		{% endfor %}
+	</body>
+</html>

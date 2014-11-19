@@ -1,0 +1,184 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}{{ test_plan }}{% endblock %}
+
+{% block custom_stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+<style>
+#tab_testcases{ padding-left:5px;}
+#tab_testruns {padding-left:5px;}
+.display_summary textarea{
+	background:red;
+}
+</style>
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tinymce/jscripts/tiny_mce/tiny_mce.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
+</script>
+{% endblock %}
+
+{% block content_type %}
+	<input type="hidden" name="content_type" value="testplans.testplan" />
+	<input type="hidden" name="object_pk" value="{{ test_plan.pk }}" />
+	<input type="hidden" name="name" value="{{ test_plan.name }}" />
+	<input type="hidden" name="description" value="{{ test_plan.latext_text.plan_text }}" />
+{% endblock %}
+
+{% block contents %}
+
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan }}</a>
+		>> Edit
+	</div>
+	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
+	<div class="control">
+		<span class="right-bar">
+			<a href="{% url "tcms.testplans.views.text_history" test_plan.plan_id %}" class="historylink">
+				Edit History
+			</a>
+		</span>
+	</div>
+	<form action="{% url "tcms.testplans.views.edit" test_plan.plan_id %}" method="post" enctype="multipart/form-data">
+		<div id="" class="Detailform border-1">
+			<table class="editor" cellspacing="0">
+				<tr>
+					<td width="20%"><label class="lab strong" id="title_id">Plan Name</label></td>
+					<td>
+						<span class="name summary">{{ form.name }}</span>
+						<span class="errors">{{ form.name.errors }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label clas"strong">{{ form.is_active.label }}</label>
+					</td>
+					<td>
+						<span>{{ form.is_active }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td><label class="lab">Author</label></td>
+					<td>
+						<span id="display_author"  class="name " > <a href="mailto:{{ test_plan.author.email }}">{{ test_plan.author.email }}</a></span>
+					</td>
+				</tr>
+				<tr>
+					<td><label class="lab">Owner</label></td>
+					<td>
+						<span class="name " />{{ form.owner }}</span>
+						<span class="errors">{{ form.owner.errors }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="lab">Product</label>
+					</td>
+					<td>
+						<span class="name summary">{{ form.product }}</span>
+						<span class="errors">{{ form.product.errors }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="lab">Product Version</label>
+					</td>
+					<td>
+						<span class="name summary">{{ form.product_version }}</span>
+						<span class="errors">{{ form.product_version.errors }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="lab strong">Plan Type</label>
+					</td>
+					<td>
+						<div class="name">{{ form.type }}</div>
+						<div class="errors">{{ form.type.errors }}</div>
+					</td>
+				</tr>
+                <tr>
+                    <td>
+                        <label class="lab">Parent ID</label>
+                    </td>
+                    <td>
+                        <div class="name">{{ form.parent }}</div>
+                        <div class="errors">{{ form.parent.errors }}</div>
+                    </td>
+                </tr>
+				<tr>
+					<td><label class="lab strong">Plan Document</label></td>
+					<td>
+						<div id="display_summary"  class="mec">
+							{{ form.text }}
+						</div>
+                        <div >{{ form.text.errors }}</div>
+                        <span>Or upload a plan document</span>
+                        {{ form.upload_plan_text }}
+                        <span class="grey">Html, Plain text or ODT is acceptable.</span>
+                        <div >{{ form.upload_plan_text.errors }}</div>
+						<div class="errors">{{ form.text.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label class="lab strong">Environment Group</label></td>
+					<td>
+						{{ form.env_group }}
+						<span>
+							<a class="system_help" href="#" title="" id="env_group_help_link">What is environment group?</a>
+							<div id="env_group_help" class="system_info" style="display:none">
+								<p>
+									Environment Group represent group of environment properties and all values of these properties. <br/>
+									TCMS uses environment variables to define the test hardware setup. The Environment Group is the top level container object, it contains one or more Properties, each having a range of values. Properties can belong to more than one group.
+									<br/>
+									Then when creating test run , you can set one value of each property under this environment group as environment of run testing.
+									<br/>
+									<a href="#" class="right-action" title="close the tip" id="env_group_help_close">Close</a>
+								</p>
+
+							</div>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td><label class="lab">Reference Link</label></td>
+					<td>
+						<div class="name summary">{{ form.extra_link }}</div>
+						<div class="errors">{{ form.extra_link.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+				    <td><label>Notification include</label></td>
+				    <td>
+				        <div>{{ form.auto_to_plan_owner }}{{ form.auto_to_plan_owner.label }}{{ form.auto_to_plan_owner.errors }}</div>
+				        <div>{{ form.auto_to_plan_author }}{{ form.auto_to_plan_author.label }}{{ form.auto_to_plan_author.errors }}</div>
+				        <div>{{ form.auto_to_case_owner }}{{ form.auto_to_case_owner.label }}{{ form.auto_to_case_owner.errors }}</div>
+				        <div>{{ form.auto_to_case_default_tester }}{{ form.auto_to_case_default_tester.label }}{{ form.auto_to_case_default_tester.errors }}</div>
+				    </td>
+				</tr>
+				<tr>
+				    <td><label>Notification Trigger</label></td>
+				    <td>
+				       
+				       <div>{{ form.notify_on_plan_update }}{{ form.notify_on_plan_update.label }}{{ form.notify_on_plan_update.errors }}</div>
+				       <div>{{ form.notify_on_plan_delete }}{{ form.notify_on_plan_delete.label }}{{ form.notify_on_plan_delete.errors }}</div>
+				       <div>{{ form.notify_on_case_update }}{{ form.notify_on_case_update.label }}{{ form.notify_on_case_update.errors }}</div>
+				    </td>
+				</tr>
+			</table>
+			<div class="submit-row" id="control_box">
+				<input type="submit" value="Save" />
+				<input type="reset" value="Reset" />
+				<input type="button" value="Back" class="js-back-button" data-param="{{ test_plan.get_absolute_url }}" />
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

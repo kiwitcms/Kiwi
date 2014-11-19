@@ -1,0 +1,26 @@
+{% extends "tcms_base.html" %}
+{% load i18n %}
+{% block breadcrumbs %}
+    <div class="sprites crumble">
+        <a href="{% url "tcms.core.views.index" %}">Home</a>
+        >> <a href="/admin/">Admin</a>
+        >>{{ title }}
+    </div>
+{% endblock %}
+{% block subtitle %}{{ title }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'Django administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block custom_javascript %}
+	<script type="text/javascript" src="/admin/jsi18n/"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectFilter2.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectBox.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/RelatedObjectLookups.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/calendar.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/DateTimeShortcuts.js"></script>
+{% endblock %}

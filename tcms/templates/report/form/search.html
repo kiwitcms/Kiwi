@@ -1,0 +1,45 @@
+<div class="leftlistinfo">
+    <div class="listinfo">
+        <div class="title">{{ form.product.label }}&nbsp;:</div>
+        <div class="listinfo_input">
+            {{ form.product }}
+        </div>
+    </div>
+    <div class="listinfo">
+        <div class="title">{{ form.build_run__product_version.label }}&nbsp;:</div>
+        <div class="listinfo_input">
+            {{ form.build_run__product_version }}
+        </div>
+    </div>
+    <div class="listinfo">
+        <div class="title">{{ form.testcaserun__case__category.label }}&nbsp;:</div>
+        <div class="listinfo_input">
+            {{ form.testcaserun__case__category }}
+        </div>
+    </div>
+    <div class="listinfo">
+        <div class="title">{{ form.testcaserun__case__component.label }}&nbsp;:</div>
+        <div class="listinfo_input">
+            {{ form.testcaserun__case__component }}
+        </div>
+    </div>
+
+</div>
+<div class="rightlistinfo">
+    <div class="listinfo">
+        <div class="title">{{ form.build_run__plan__name__icontains.label }}&nbsp;:</div>
+        <div class="listinfo_input">
+            {{ form.build_run__plan__name__icontains }}
+        </div>
+    </div>
+    <div class="listinfo">
+        <div class="title">{{ form.pk__in.label }}&nbsp;:</div>
+        <div class="listinfo_input">
+            {{ form.pk__in }}
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="errors">
+    {{ form.errors }}
+</div>

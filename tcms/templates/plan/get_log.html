@@ -1,0 +1,14 @@
+<table class="list"  class="list" cellpadding="0" cellspacing="0" border="0">
+	<tbody>
+		<tr >
+			<td colspan="3"><span class="system_help">Change Log of removing test case.</span></td>
+		</tr>
+		{% for log in test_plan.log %}
+		<tr class="{% cycle 'even' 'odd'%}">
+			<td width="20%">{{ log.date }}</td>
+			<td width="10%">{{ log.who }}</td>
+			<td width="70%">{{ log }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

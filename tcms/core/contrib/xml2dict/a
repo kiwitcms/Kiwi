@@ -1,0 +1,11 @@
+<myscheduler:patients
+xmlns:myscheduler="http://cs.sfsu.edu/csc867/myscheduler"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://cs.sfsu.edu/csc867/myscheduler myscheduler.xsd ">
+  <myscheduler:user id="12444223" username="msales" password="utn29oad">
+      <myscheduler:firstName>Marcello</myscheduler:firstName>
+          <myscheduler:lastName>Sales</myscheduler:lastName>
+              <myscheduler:email>msales@sfsu.edu</myscheduler:email>
+                </myscheduler:user>
+
+                </myscheduler:patients>

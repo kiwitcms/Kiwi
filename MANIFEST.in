@@ -1,0 +1,8 @@
+include AUTHORS ChangeLog README.rst LICENSE VERSION.txt
+include nitrate.spec Makefile
+recursive-include tcms/templates *
+recursive-include tcms/core/lib/djangotinymce/tinymce/templates *
+recursive-include tcms/static *
+recursive-include contrib *
+recursive-include docs *
+recursive-include requirements *

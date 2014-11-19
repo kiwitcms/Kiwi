@@ -1,0 +1,216 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Edit test case - {{ test_case.summary }}{% endblock %}
+
+{% block custom_stylesheet %}
+<style type="text/css">
+#testcase_cc_list {
+	margin-top: 3px;
+}
+
+#id_cc_list {
+	width: 100%;
+}
+</style>
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tinymce/jscripts/tiny_mce/tiny_mce.js'></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectFilter2.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectBox.js"></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
+</script>
+{% endblock %}
+
+{% block content_type %}
+	<input type="hidden" name="content_type" value="testcases.testcase" />
+	<input type="hidden" name="object_pk" value="{{ test_case.pk }}" />
+	<input type="hidden" name="name" value="{{ test_case.summary }}" />
+	<input type="hidden" name="description" value="{{ test_case.notes }}" />
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		{% if test_plan %}
+		>>Plan: <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
+		>>Case: <a href="{% url "tcms.testcases.views.get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
+		{% else %}
+		>> Case:<a href="{% url "tcms.testcases.views.get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
+		{% endif %}
+		>> Edit
+	</div>
+  
+	
+	<span class="right-action">
+		<a href="{% url "tcms.testcases.views.text_history" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="historylink">
+			Edit History
+		</a>
+	</span>
+	<form action="{% url "tcms.testcases.views.edit" test_case.case_id %}" method="post">
+		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}">
+		<div class="Detailform border-1" >
+			<fieldset class="no-border background-light-grey">
+				<div class="editor-side">
+					<div class="data_row">
+						<label id="item_title">Summary</label>
+						<div id="form_title" class="name summary" tabindex="1">{{ form.summary }}</div>
+					</div>
+					<div class="data_row">
+						<label>Product</label>
+						<div>{{ form.product }}</div>
+					</div>
+					<div class="data_row">
+						<label>Category</label>
+						<span id="form_category" >{{ form.category }}</span><a href="{{ ADMIN_PREFIX }}/testcases/testcasecategory/add/" class="addlink" id="id_addt_product_casecategory" target="_blank">Add Category</a><span class="grey">After Add and Refresh page</span>
+					</div>
+					<div class="data_row">
+						<label>Default Tester</label>
+						<span >{{ form.default_tester }}</span>
+						<div class="errors">{{ form.default_tester.errors }}</div>
+					</div>
+					
+					<div class="data_row">
+						<label>Estimated Time</label>
+						<div id="form_estimated_time" >
+							<span id="form_estimated_time">{{ form.estimated_time }}</span>
+							<span class="grey">(eg. 3d 4h 30m)</span>
+							<div class="errors">{{ form.estimated_time.errors }}</div>
+						</div>
+					</div>
+					<div class="data_row">
+						<label >Status</label>
+						<span id="form_status" >{{ form.case_status }}</span>
+					</div>
+					<div class="data_row">
+						<label >Arguments</label>
+						<span id="form_arguments" >{{ form.arguments }}</span>
+						<div class="errors">{{ form.arguments.errors }}</div>
+					</div>
+					<div class="data_row">
+                        <label >Reference Link</label>
+                        <span id="form_extra_link" >{{ form.extra_link }}</span>
+                    </div>
+					<div class="data_row">
+						<label >Notes</label>
+						<span id="form_notes" >{{ form.notes }}</span>
+						<div class="errors">{{ form.notes.errors }}</div>
+					</div>
+					
+				</div>
+				<div class="editor-side">
+					{% if testplan %}
+					<div class="data_row">
+						<label >Product </label>
+						<div id="display_product">{{ testplan.product }}</div>
+					</div>
+					<div class="data_row">
+						<label>Plan</label>
+						<p>{{ testplan.name }}</p>
+					</div>
+					{% endif %}
+					<div class="data_row">
+						<label>Author</label>
+						<div class="name">{{ test_case.author }}</div>
+					</div>
+					<div class="data_row">
+						<label >Last Editor</label>
+						<div id="display_editor">{{ test_case.latest_text.author.email }}</div>
+					</div>
+					<div class="data_row">
+						<label >Created</label>
+						<div class="name">{{ test_case.create_date }}</div>
+					</div>
+					<div class="data_row">
+						<label >Last Modified</label>
+						<div id="display_modify_date" >{{ test_case.latest_text.create_date }}</div>
+					</div>
+					
+					
+					<div class="data_row">
+						<label>Automated</label>
+							{{ form.is_automated }}
+							<div class="automatedlist">
+							{{ form.is_automated_proposed }}
+							{{ form.is_automated_proposed.label }}
+							</div>
+						<div class="errors">
+							{{ form.is_automated.errors }}
+							{{ form.is_automated_proposed.errors }}
+						</div>
+					</div>
+					<div class="data_row">
+						<label >Requirement</label>
+						<div id="form_requirement"  >{{ form.requirement }}</div>
+					</div>
+					<div class="data_row">
+						<label >Script</label>
+						<div id="form_script" >{{ form.script }}</div>
+					</div>
+					<div class="data_row">
+						<label >Alias</label>
+						<div  >{{ form.alias }}</div>
+					</div>
+					<div class="data_row">
+						<label>Priority</label>
+						<span id="form_priority" >{{ form.priority }}</span>
+					</div>
+					<div class="data_row">
+						<label>Tags</label>
+						{{ form.tag }}
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="no-border background-light-grey">
+				<div class="editor-side">
+					<h4 class="strong">Setup</h4>
+					<div class="form" id="form_setup">{{ form.setup }}</div>
+					<h4 class="strong">Actions</h4>
+					<div class="form" id="form_action">{{ form.action }}</div>
+				</div>
+				<div class="editor-side">
+					<h4 class="strong">Break down</h4>
+					<div class="" id="form_breakdown">{{ form.breakdown }}</div>
+					<h4 class="strong">Expected Results</h4>
+					<div class="" id="form_effect">{{ form.effect }}</div>
+				</div>
+			</fieldset>
+			<fieldset class="no-border notification">
+				<label class="strong">Send new case instance after editing <label class="grey">(The author of this case will receive the notification by default)</label>:</label>
+				<div>
+					{{ notify_form.notify_on_case_update }}{{ notify_form.notify_on_case_update.label }}
+					{{ notify_form.notify_on_case_delete }}{{ notify_form.notify_on_case_delete.label }}
+					{{ notify_form.author }}{{ notify_form.author.label }}
+					{{ notify_form.default_tester_of_case }}{{ notify_form.default_tester_of_case.label }}
+					{{ notify_form.managers_of_runs }}{{ notify_form.managers_of_runs.label }}
+					{{ notify_form.default_testers_of_runs }}{{ notify_form.default_testers_of_runs.label }}
+					{{ notify_form.assignees_of_case_runs }}{{ notify_form.assignees_of_case_runs.label }}
+					<br />
+				</div>
+				<div id="testcase_cc">
+					<label for="id_cc_list">{{ notify_form.cc_list.label }} ({% if notify_form.cc_list.required %}<span style="color:red">*</span>{% else %}optional{% endif %})</label>
+					{{ notify_form.cc_list }}
+					<span>{{ notify_form.cc_list.help_text }}</span>
+				</div>
+			</fieldset>
+			<div id="control_box" class="submit-row">
+				<div class="errors">{{ form.errors }}{{ notify_form.errors }}</div>
+				<input type="submit" value="Save"/>
+				<input type="submit" name="_continue" value="Save and continue editing"/>
+				{% if test_plan %}
+				<input type="submit" name="_returntoplan" value="Save and return to plan" />
+				<input type="submit" name="_continuenext" value="Save and edit next case"/>
+				{% endif %}
+				<input type="reset" value="Reset" />
+				<input type="button" value="Back" class="js-back-button" />
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}
+

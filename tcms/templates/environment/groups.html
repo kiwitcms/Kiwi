@@ -1,0 +1,107 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Environment groups{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/management_actions.js"></script>
+<script type="text/javascript">
+	Nitrate.Management.Environment.Param = {
+		'add_group': '{% url "tcms.management.views.environment_groups" %}',
+		'edit_group': '{% url "tcms.management.views.environment_group_edit" %}',
+		'delete_group': '{% url "tcms.management.views.environment_groups" %}'
+	};
+
+	Nitrate.Utils.after_page_load(Nitrate.Management.Environment.on_load);
+</script>
+
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a> 
+		>> Environment Groups
+	</div>
+	<div class="mixbar">
+		<form method="get" action="{% url "tcms.management.views.environment_groups" %}" id="changelist-search">
+			<input type="hidden" name="action" value="search">
+            <label for="searchbar"><img alt="Search" height="20px" src="{{ STATIC_URL }}images/search.png"/></label>
+			<input type="text" id="searchbar" value="{{ REQUEST_CONTENTS.name }}" name="name" size="40"/>
+			<input type="submit" value="Search environment group"/>
+		</form>
+	</div>
+	<h2>Environment Groups</h2>
+	{% if perms.management.add_tcmsenvgroup %}
+	<div class="control">
+		<a href="#" class="addlink js-add-env-group">Add new group</a>
+	</div>
+	{% endif %}
+	<table cellspan="0" cellspacing="0" border="0"  class="manage" width="98%">
+		<thead>
+			<tr class="titlelink">
+				<th width="15%">Groups</th>
+				<th width="15%">Author</th>
+				<th width="15%">Last Modified</th>
+				<th>Properties</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for env in environments %}
+			<tr class="{% cycle odd even %} js-env-group" id="{{ env.id }}" data-params='[{{env.id}}, "{{env.name}}"]'>
+				<th align="center" height="26px">
+					<label class=" {% if env.is_active %}{% else %}disable line-through{% endif %}">
+						{% if perms.management.change_tcmsenvgroup %}
+						<a href="{% url "tcms.management.views.environment_group_edit" %}?id={{ env.id }}" >
+							{{ env.name }}
+						</a>
+						{% else %}
+						{{ env.name }}
+						{% endif %}
+					</label>
+				</th>
+				<td>
+					{{ env.manager.email }}
+				</td>
+				<td>
+					{{ env.modified_by.email}}
+				</td>
+				<td class="env_properties">
+					<ul class="ul-no-format">
+						{% for property in env.properties %}
+						<li>{{ property.property__name }}</li>
+						{% endfor %}
+					</ul>
+				</td>
+				<td align="center">
+					{% if perms.management.change_tcmsenvgroup %}
+					<a href="{% url "tcms.management.views.environment_group_edit" %}?id={{ env.id }}" class="editlink">Edit</a>
+					<a href="?id={{ env.id }}&action=modify&status=0" class="disablelink {% if env.is_active %}{% else %}hidden{% endif %}">Disable</a>
+					<a href="?id={{ env.id }}&action=modify&status=1" class="enablelink {% if env.is_active %}hidden{% endif %} ">Enable</a>
+					<a href="#" class="editlink js-del-env-group">Delete</a>
+					<a href="#viewhistroy{{ env.id }}" class="loglink" name="viewhistroy{{ env.id }}">View edit history</a>
+					{% else %}
+					{% endif %}
+				</td>
+			</tr>
+			<tr style="display:none">
+				<td colspan="5">
+					{% for log in env.another_logs %}
+					<div class="envlog">
+                    	<div class="envlog_time">{{ log.date }}</div>
+                        <div class="envlog_who">{{ log.who__username }}</div>
+                        <div class="envlog_content">{{ log.action }}</div>
+                    </div>
+                    <div class="clear"></div>
+					{% endfor %}
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+

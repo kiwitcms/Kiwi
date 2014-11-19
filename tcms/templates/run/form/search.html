@@ -1,0 +1,56 @@
+<div class="leftlistinfo">
+	<div class="listinfo">
+		<div class="title"><label for="id_summary">Run Summary&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.summary }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_product_id">Product&nbsp;:</label></div> 
+		<div class="listinfo_input">{{ search_form.product }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_env_group_id">Environment Group&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.env_group }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_people_type">Owner&nbsp;:</label></div>
+		<div class="listinfo_input name_short">
+			{{ search_form.people_type }}
+			{% if REQUEST_CONTENTS.people %}
+			<input id="id_search_people" type="text" name="people" value="{{ REQUEST_CONTENTS.people }}" />
+			{% else %}
+			{% if REQUEST_CONTENTS.manager %}
+			<input id="id_search_people" type="text" name="people" value="{{ REQUEST_CONTENTS.manager }}" />
+			{% else %}
+			<input id="id_search_people" type="text" name="people" value="{{ REQUEST_CONTENTS.default_tester }}" />
+			{% endif %}
+			{% endif %}
+		</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_caserun_assignee">Case Run Assignee&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.case_run__assignee }}</div>
+	</div>
+</div>
+<div class="rightlistinfo">
+	<div class="listinfo">
+		<div class="title"><label for="id_plan">Plan&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.plan }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_version_id">Product Version&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.product_version }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_build_id">Build&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.build }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_status">Status&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.status }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title"><label for="id_tag">Tag&nbsp;:</label></div>
+		<div class="listinfo_input">{{ search_form.tag__name__in }}</div>
+	</div>
+</div>
+<div class="clear"></div>

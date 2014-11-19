@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE testopia SYSTEM "testopia.dtd" [
+<!ENTITY testopia_lt "<">
+<!ENTITY testopia_gt ">">
+]>
+<testopia version="1.1">
+    
+    
+    
+    
+    <testcase author="example@mail.com" priority="P1" automated="" status="CONFIRMED">
+        <summary>dummy test cases no.2</summary>
+        <categoryname>Functional</categoryname>
+        
+        <defaulttester>example@mail.com</defaulttester>
+        <notes></notes>
+        <testplan_reference type="Xml_description">dummy testing plan</testplan_reference>
+        <action></action>
+        <expectedresults></expectedresults>
+        <setup></setup>
+        <breakdown></breakdown>
+        
+        <tag>Hello TCMS</tag>
+        
+        <tag>test</tag>
+        
+        <tag>App Crud</tag>
+        
+    </testcase>
+    
+    
+    
+    
+</testopia>

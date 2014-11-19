@@ -1,0 +1,170 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}{{ test_run.summary }}{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+	<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
+	<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/RelatedObjectLookups.js"></script>
+	<script type="text/javascript">
+	Nitrate.Utils.after_page_load(Nitrate.TestRuns.Edit.on_load);
+	</script>
+{% endblock %}
+
+{% block content_type %}
+	<input type="hidden" name="content_type" value="testruns.testrun" />
+	<input type="hidden" name="object_pk" value="{{ test_run.pk }}" />
+	<input type="hidden" name="name" value="{{ test_run.name }}" />
+	<input type="hidden" name="description" value="{{ test_run.notes }}" />
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<!-- Store some values for easier javascript acccess -->
+	<div id="tcms_values" class="hidden">
+		<input id="value_run_id" type="hidden" name="run_id" value="{{ test_run.run_id }}" />
+		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_run.product_id }}" />
+	</div>
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		{% if request.REQUEST.from_plan %}
+		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{{ test_run.plan.get_absolute_url }}">Test Plan :{{ test_run.plan.plan_id }}: {{ test_run.plan }}</a>
+		{% else %}
+		>> <a href="{% url "tcms.testruns.views.all" %}">Test Runs</a>
+		{% endif %}
+		>> <a href="{% url "tcms.testruns.views.get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run }}</a> >>Edit
+	</div>
+	<h2>Edit Test Run</h2>
+	<form action="{% url "tcms.testruns.views.edit" test_run.run_id %}" method="post">
+	<div class="Detailform border-1">
+		<table border="0" cellspacing="1" cellpadding="0" class="editor" >
+			<tr>
+				<td width="20%"><label class="strong">Summary</label></td>
+				<td>
+					<span class="summary">{{ form.summary }}</span>
+					<span class="errors">{{ form.summary.errors }}</span>
+				</td>	
+			</tr>
+			<tr>
+				<td><label>Test Plan</label></td>
+				<td>{{ test_run.plan }}</td>
+			</tr>
+			<tr>
+				<td><label>Product</label></td>
+				<td>{{ form.product }}</td>
+			</tr>
+			<tr>
+				<td><label>Product Version</label></td>
+				<td>
+					 {{ form.product_version }}
+					 <a href="{{ ADMIN_PREFIX }}/management/version/add/" class="addlink" id="add_id_product_version">Add Product Version</a>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Build </label></td>
+				<td>
+					{{ form.build }} 
+					<a href="{{ ADMIN_PREFIX }}/management/testbuild/add/" class="addlink" id="add_id_build">Add Build</a></td>
+			</tr>
+			<tr>
+				<td><label>Errata </label></td>
+				<td>{{ form.errata_id }}</td>
+			</tr>
+			<tr>
+				<td><label>Manager</label></td>
+				{% ifequal test_run.manager user %}
+				<td>{{ form.manager }}</td>
+				<td class="errors">{{ form.manager.errors }}</td>
+				{% else %}
+				{% ifequal test_run.plan.author user %}
+				<td>{{ form.manager }}</td>
+				<td class="errors">{{ form.manager.errors }}</td>
+				{% else %}
+				<td>
+					{{ test_run.manager }}
+					<input type="hidden" name="manager" value="{{ test_run.manager }}" />
+				</td>
+				{% endifequal %}
+				{% endifequal %}
+			 </tr>
+			<tr>
+				<td><label>Default Tester</label></td>
+				<td>{{ form.default_tester }}<span class="errors">{{ form.default_tester.errors }}</span></td>
+				
+			</tr>
+			<tr>
+				<td><label class="strong">Estimated Time</label></td>
+				<td>
+					<div class="time">
+						{{ form.estimated_time }}
+					</div> 
+				</td>
+			</tr>
+			<tr>
+				<td><label>Started at</label></td>
+				<td>{{ test_run.start_date }}</td>
+			</tr>
+			<tr>
+				<td><label>Finished at</label></td>
+				<td>{{ test_run.stop_date }}</td>
+			</tr>
+			<tr>
+				<td><label class="strong">Enviroment</label></td>
+				<td>
+					<ul class="ul-no-format">
+						{% for value in test_run.value.all %}
+						<li>
+							<label>{{ value.value.property }}: </span>{{ value.value }}
+						</li>
+						{% empty %}
+						<div class="system_help">
+							<p>
+								Environment group must be set for this test plan (<b>{{ test_run.plan.product }}</b>:
+								<b>{{ test_run.product_version }}</b>:
+								<b><a href="{{ test_run.plan.get_absolute_url }}">{{ test_run.plan }}</a></b>
+								) before you will be able to select environments for this test run.If you do not have permission to edit this plan,
+								please contact the author of this plan, mailto
+								<a href="mailto:{{ testplan.author.email }}">{{ test_run.plan.author.email }}</a>
+							</p>
+						</div>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Notes</label></td>
+				<td class="note">{{ form.notes }}<span class="errors">{{ form.notes.errors }}</span></td>
+			</tr>
+			<tr>
+				<td><label>{{ form.finished.label }}</span></td>
+				<td class="note">
+					{{ form.finished }}
+					<span class="system_help">Check to finish this test run directly.</span>
+				</td>
+			</tr>
+			<tr>
+				<td><label>{{ form.auto_update_run_status.label }}</span></td>
+				<td class="note">
+					{{ form.auto_update_run_status }}
+					<span class="system_help">{{form.auto_update_run_status.help_text}}</span>
+				</td>
+			</tr>
+		</table>
+		<div id="errors">
+			{{ form.errors }}
+		</div>
+		<div id="control_box" class="submit-row">
+			<input type="submit" value="Save" />
+			<input type="reset" value="Reset" />
+			<input type="button" value="Back" onclick="window.location.href='{% url "tcms.testruns.views.get" test_run.run_id %}'" />
+		</div>
+	</div>
+	</form>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}TCMS >> 404 (Page not found){% endblock %}
+
+{% block contents %}
+<div class="error_404_500">
+	<img src="{{ STATIC_URL }}images/404.png" width="" height="" alt="">
+	<div class="radius error_content">
+		<ul>
+			<li>Sorry, this URL in not found in system.</li>
+			<li>1.please check your URL , try it again;</li>
+			<li>2.this system is not completed, this page is in creation.</li>
+			<li>  <a href="javascript:history.go(-1)">GO BACK</a></li>
+		</ul>
+	</div>
+</div>
+<div class='clear'></div>
+{% endblock %}

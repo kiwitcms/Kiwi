@@ -1,0 +1,9 @@
+-r base.txt
+django-debug-toolbar==0.11.0
+Sphinx>=1.1.2
+flake8
+South>=0.8.2
+epydoc==3.0.1
+django-nose
+django-coverage
+coverage

@@ -1,0 +1,68 @@
+<form id="id_tag_form">
+	<table class="list" cellpadding="0" cellspacing="0" border="0">
+		<thead>
+			<tr>
+				<th>Tag</th>
+				<th>Plans</th>
+				<th>Cases</th>
+				<th>Runs</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody id='tag' count='{{tags.count}}'>
+			{% for tag in tags %}
+			<tr class="{% cycle 'even' 'odd'%} js-one-tag" data-param="{{ tag }}">
+				<td><span class="tagvalue">{{ tag }}</span></td>
+				<td><a href="{% url "tcms.testplans.views.all" %}?action=search&tag__name__in={{ tag }}" title="{{ tag.num_plans }} plans tagged {{ tag }}">{{ tag.num_plans }}</a></td>
+				<td><a href="{% url "tcms.testcases.views.search" %}?a=search&tag__name__in={{ tag }}"  title="{{ tag.num_cases }} cases tagged {{ tag }}">{{ tag.num_cases }}</a></td>
+				<td><a href="{% url "tcms.testruns.views.all" %}?action=search&tag__name__in={{ tag }}"  title="{{ tag.num_runs }} runs tagged {{ tag }}">{{ tag.num_runs }}</a></td>
+				{% if object.plan_id and perms.testplans.delete_testplantag %}
+				<td><a href="#tag" class="remove js-remove-tag" title="remmove tag from this plan" >Remove</a>
+				<a href="#tag" class="edit js-edit-tag" title="edit tag" >Edit</a>
+				</td>
+				{% else %}
+				{% if object.case_id and perms.testcases.delete_testcasetag %}
+				<td><a href="#tag" class="remove js-remove-tag" title="remmove tag from this case" >Remove</a>
+				<a href="#tag" class="edit js-edit-tag" title="edit tag" >Edit</a>
+				</td>
+				{% else %}
+				<td><span class="disabled grey">Remove</span></td>
+				{% endif %}
+				{% endif %}
+			</tr>
+			{% empty %}
+			<tr>
+				<td colspan="5" align="center"><span class="grey">No tag found</span></td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td colspan="5" align="center" style="padding:0">
+				{% if perms.management.add_testtag %}
+				<div class="addtag">
+						<span class="tit">Add Tag</span>
+						<input type="hidden" name="a" value="add">
+						{% if object.plan_id %}<input type="hidden" name="plan" value="{{ object.plan_id }}" />{% endif %}
+						{% if object.case_id %}<input type="hidden" name="case" value="{{ object.case_id }}" />{% endif %}
+						{% if object.run_id %}<input type="hidden" name="run" value="{{ object.run_id }}" />{% endif %}
+						<input id="id_tags" type="text" name="tags" />
+						<a href="#tag" class="addlink" id="js-add-tag" >Add</a>
+						<div id="id_tags_autocomplete"></div>
+						{# <div id="ajax_indicator" class="ajax_loading" style="display:none;"></div> #}
+				</div>
+				{% endif %}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+<script type="text/javascript">
+	jQ('.js-remove-tag').bind('click', function() {
+		removeTag(jQ('#tag')[0], jQ(this).parents('.js-one-tag').attr('data-param'));
+	});
+	jQ('.js-edit-tag').bind('click', function() {
+		editTag(jQ('#tag')[0], jQ(this).parents('.js-one-tag').attr('data-param'));
+	});
+	jQ('#js-add-tag').bind('click', function() {
+		addTag(jQ('#tag')[0]);
+	});
+</script>

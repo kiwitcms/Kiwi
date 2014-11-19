@@ -1,0 +1,55 @@
+<table id='testplans_table' count='{{ test_plans.count }}' class="list" cellpadding="0" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th class="widthID">ID</th>
+            <th >Name</th>
+            <th width="150">Author</th>
+            <th width="100">Type</th>
+            <th width="200">Product</th>
+            <th width="100">Version</th>
+            <th width="100">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for test_plan in test_plans %}
+        <tr class="{% cycle 'even' 'odd' %}">
+            <td><a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}</a></td>
+            <td><a href="{{ test_plan.get_absolute_url }}">{{ test_plan.name }}</a></td>
+            <td>{{ test_plan.author.email }}</td>
+            <td>{{ test_plan.type }}</td>
+            <td>{{ test_plan.product }}</td>
+            <td>{{ test_plan.product_version }}</td>
+            <td>
+                {% if perms.testcases.delete_testcaseplan %}
+                <input type="button" class="remove js-remove-plan" value="Remove" id="id_removeplan_fromcase" data-params='[{{ test_plan.plan_id }}, {{ test_case.case_id }}]'/>
+                {% else %}
+                <label class="grey">None</label>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No plan found for this case.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+	{% if perms.testcases.add_testcaseplan %}
+	<tfoot>
+        <tr>
+            <td colspan="7" style="padding:0;">
+                <form id="id_plan_form" method="get">
+                    <div class="addtag">
+                        <span class="tit">Add into another Plan</span>
+                        <input type="text" size="20" name="pk__in" />
+                        <input type="submit" value="Add" class="add" />	 <span class="grey">Please input the plan ID, multiple plans can be split with comma.</span>
+                    </div>
+                </form>
+            </td>
+        </tr>
+	</tfoot>
+	{% endif %}
+</table>
+{% if message %}
+<div id="message" class="hidden">{{ message }}</div>
+{% endif %}
+

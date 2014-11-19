@@ -1,0 +1,14 @@
+xml2dict
+Thunder Chen<nkchenz@gmail.com>
+2007.9.1
+http://code.google.com/p/xml2dict/
+
+python > 2.5, need xml.etree.ElementTree
+
+import xml2dict
+r = xml2dict.parse('filename')
+r = xml2dcit.fromstring('string')
+
+then you use something like this:
+r.result
+r.result.data

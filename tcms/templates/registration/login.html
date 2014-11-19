@@ -1,0 +1,42 @@
+{% extends "tcms_base.html" %}
+{% block subtitle %}Nitrate{% endblock %}
+{% block custom_stylesheet %}
+{% endblock %}
+{% block custom_javascript %}
+	<script type="text/javascript" src='{{ STATIC_URL }}js/index.js'></script>
+	<script type="text/javascript" src='{{ STATIC_URL }}js/footer_at_the_end.js'></script>
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div id="index" >
+		<br clear="all">
+		<div class="login radius">
+			<form id="id_login_form" action="{% url "django.contrib.auth.views.login" %}" method="POST">
+				{% csrf_token %}
+				{% if SETTINGS.MOTD_LOGIN %}
+				<div class="cc">{{ SETTINGS.MOTD_LOGIN|safe}}</div>
+				{% endif %}
+				{% if SETTINGS.WELCOME_MESSAGE %}<h3>{{ SETTINGS.WELCOME_MESSAGE }}</h3>{% endif %}
+				<table border="0" cellpadding="10" cellspacing="10" class="login_table">
+					{{ form.as_table }}
+					<tr style="display:none">
+						<td id="login_info" colspan="2"></td>
+					</tr>
+                    <tr>
+                    	<td></td>
+						<td ><a href="{% url "django.contrib.auth.views.password_reset" %}">Forget the password</a></td>
+					</tr>
+					<tr>
+                    	<td>&nbsp;</td>
+						<td  class="submit">
+							<input type="hidden" name="next" value="{{ next }}" />
+							<input type="submit" value="Login" class="loginbutton sprites" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

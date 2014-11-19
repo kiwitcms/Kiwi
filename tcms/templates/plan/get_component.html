@@ -1,0 +1,42 @@
+<form id="id_form_plan_components" action="{% url "tcms.testplans.views.component" %}" method="post">
+	<div class="mixbar actions">
+		<div class='marginLeft fixed'>
+			{% if perms.testplans.change_testplancomponent %}
+				<input type="hidden" name="plan" value="{{ test_plan.pk }}" />
+				<input id="js-update-components" class="component icon_plan left_float" type="button" value="Update components" >
+				<input class="delete icon_plan left_float" type="submit" name="a" value="Remove" />
+			{% endif %}
+		</div>
+	</div>
+	<table class="list" cellpadding="0" cellspacing="0">
+		<thead>
+			<tr>
+				<th class="table_width_checkbox">
+					<input id="id_checkbox_all_component" type="checkbox" />
+				</th>
+				<th>Component</th>
+				<th>Product</th>
+				<th class="table_width_action">Action</th>
+			</tr>
+		</thead>
+		<tbody id="component" count='{{ test_plan.component.count }}'>
+			{% for component in test_plan.component.all %}
+			<tr class="{% cycle 'odd' 'even' %}">
+				<td><input type="checkbox" name="component" value="{{ component.pk }}" {% if perms.testplans.change_testplancomponent %}{% else %}disabled{% endif %}/></td>
+				<td>{{ component }}</a></td>
+				<td>{{ component.product }}</td>
+				<td>
+					{% if perms.testplans.delete_testplancomponent %}
+					<a class="link_remove_plan_component" href="javascript:void(0)">Remove</a>
+					{% else %}
+					<label class="grey">None</label>
+					{% endif %}
+				</td>
+			</tr>
+			{% empty %}
+			<tr><td colspan="4" align="center"><span class="grey">No component defined.</span></td></tr>
+			{% endfor %}
+			
+		</tbody>
+	</table>
+</form>

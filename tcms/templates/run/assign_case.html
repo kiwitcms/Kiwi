@@ -1,0 +1,124 @@
+{% extends "tcms_base.html" %}
+
+{% load ifin %}
+
+{% block subtitle %}Assign new test run{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
+</script>
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		&gt;&gt; <a href="{% url "tcms.testplans.views.all" %}">...</a>
+		&gt;&gt; <a href="{{ test_run.plan.get_absolute_url }}">...</a>
+		&gt;&gt; <a href="{% url "tcms.testruns.views.get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run.summary }}</a>
+		&gt;&gt; Add test case
+	</div>
+	<h2 id="display_title"><a href="{% url "tcms.testruns.views.get" test_run.run_id %}">{{ test_run.summary }}</a></h2>
+	<table class="runsDetail" border="0" width="66%" cellspacing="0" cellpadding="0">
+		<tr class="cell">
+			<td class="lab">Build</td>
+			<td id="display_build">{{ test_run.build }}</td>
+		</tr>
+		<tr class="cell">
+			<td class="lab">Manager</td>
+			<td class="name"><a href="mailto:{{ test_run.manager.email }}">{{ test_run.manager.email }}</a></td>
+		</tr>
+		<tr class="cell">
+			<td class="lab">Test Plan</td>
+			<td><a href="{{ test_run.plan.get_absolute_url }}">{{ test_run.plan.name }}</a></td>
+			<td class="lab">All Confirmed Cases</td>
+			<td><a>{{ confirmed_cases_count }}</a></td>
+		</tr>
+		<tr class="cell">
+			<td></td>
+			<td></td>
+			<td class="lab"><span>Test Cases in Run</span></td>
+			<td>{{ test_case_runs_count }}</td>
+		</tr>
+	</table>
+	<form action="{% url "add-cases-to-run" test_run.run_id %}" method="post">
+		<div class="Detailform border-1" id="testcases_selected">
+			<div class="mixbar">
+				<span class="tit"><b>Cases in this Run: {{ test_case_runs_count }}</b></span>
+				<input id="id_checkbox_plan_sortkey" type="checkbox" name="_use_plan_sortkey" />
+				<label for="id_checkbox_plan_sortkey" title="Uncheck it will set the sortkey to 0">Use the sortkey stored in plan</label>
+				<input type="submit" value="Update" title="Update the cases in this run"/>
+				<input type="reset" value="Reset" title="Reset to the original cases "/>
+				<span class="right-action">	
+					<a class="helplink js-how-assign-case" id="" title="view the help information about assigning case">How to Assign case?</a>
+				</span>
+			</div>
+			<div class="Detailform system_info border-1" id="help_assign" style="display:none">
+				<div class="Detailform-variety_1">
+					<p>
+						The table below list all the confirmed test cases of plan {{ test_run.plan }}, check the checkbox to add cases into test run. Remember to update at last. 
+						<span class="right-action">
+							<a href="#" class="js-close-how-assign" >X</a>
+						</span>
+					</p>
+				</div>
+			</div>
+			<table id="id_table_cases" class="list" cellpadding="0" cellspacing="0" border="0" >
+				<thead>
+					<tr>
+						<th class="nosort" align="left" width="20px"><input id="id_check_all_button" type="checkbox" /></th>
+						<th class="nosort" align="left" width="20px"></th>
+						<th class="sortcol widthID" align="left" width="50px">ID</th>
+						<th class="sortcol">Test Case Summary</th>
+						<th class="sortcol" width="130">Author</th>
+						<th class="sortcol" width="150">Created Date</th>
+						<th class="sortcol" width="150">Category</th>
+						<th class="sortcol"  width="70">Priority</th>
+						<th class="sortcol"  width="70">Selected</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for test_case in confirmed_cases %}
+					<tr id="row_{{ forloop.counter }}" class="{% cycle 'odd' 'even' %} selection_row">
+						<td align="left">
+							{# Hide the check box when it is in the exist_case_runs, and remove it from form submitation #}
+							<input type="checkbox" name="case"  {% ifin test_case.case_id exist_case_run_ids %}value="{{ test_case.case_id }}" disabled="true"  checked="true"{% else %}value="{{ test_case.case_id }}"{% endifin %} />
+						</td>
+						<td>
+							<a id="blind_link_{{ forloop.counter }}" class="blind_link js-toggle-button" data-param="{{ forloop.counter }}" href="javascript:void(0);">
+								<img id="blind_icon_{{ forloop.counter }}" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
+							</a>
+						</td>
+						<td>
+							<a href="{% url "tcms.testcases.views.get" test_case.case_id %}">{{ test_case.case_id }}</a>
+						</td>
+						<td class="js-case-summary" data-param="{{ forloop.counter }}" >
+							<a id="link_{{ forloop.counter }}" class="blind_title_link" href="javascript:void(0);">
+								{{ test_case.summary }}
+							</a>
+						</td>
+						<td>{{ test_case.author_username }}</td>
+						<td>{{ test_case.creation_date }}</td>
+						<td>{{ test_case.category_name }}</td>
+						<td>{{ test_case.priority_value }}</td>
+						<td></td>
+					</tr>
+					<tr class="hide"  id="hidenRow_{{ forloop.counter }}" class="Detailform border-1" style="display: none;">
+						<td colspan="9" id="id_case_text_{{ forloop.counter }}">
+							<div class="ajax_loading"></div>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</form>
+</div>
+{% endblock %}

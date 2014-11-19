@@ -1,0 +1,24 @@
+{% load extra_filters %}A new test review has been created for you.
+
+### Links ###
+Test run: {{ test_review.get_url }}
+Test plan: {{ test_review.plan.get_url }}
+
+### Basic run information ###
+Summary: {{ test_review.summary }}
+
+Author: {{ test_review.author }}.
+{% if test_review.default_reviewer.count %}Default tester: {% for dvr in test_review.default_reviewer.all %}{{ dvr }}{% endfor %}.{% endif %}
+
+Product: {{ test_review.build.product }}
+Build: {{ test_review.build }}
+{% if test_run.notes %}
+Notes:
+{{ test_run.notes }}
+{% endif %}
+### Test plan information ###
+Test Plan: {{ test_review.plan }}
+
+### Test Cases information ###
+{% for trc in test_review.review_case.select_related %}* {{ trc.case.summary }}
+{% endfor %}

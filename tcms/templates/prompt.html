@@ -1,0 +1,38 @@
+{% extends "tcms_base.html" %}
+
+{% load extra_filters %}
+
+{% block subtitle %}{{ type|upper }} - {{ info }}{% endblock %}
+
+{% block custom_stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestPlans.List.on_load);
+</script>
+{% endblock %}
+
+{% block contents %}
+
+<!--creat plan(button)-->
+<div id="content">
+	<div class="Detailform" >
+	<div class="system_info prompt-message  {{ type }} border-1 " style="padding:0px; position:relative; width:600px; height:240px; background:#F8F8F8; margin:90px auto 50px auto; -moz-box-shadow:0 0 5px 5px #EEEEEE; -moz-border-radius:5px; border:1px solid #D6D6D6;">
+        <img src="{{ STATIC_URL }}images/ico32_information.png" style="position:absolute; top:-33px; left:265px;" />
+		<p style="font-size:24px; font-weight:bold; margin:0; padding: 70px 0 30px 0; color:#000000; height:32px; line-height:32px; text-align:center; ">{{ info|safe }}</p>
+		<div style=" text-align:center; font-size:14px;">
+			{% if next %}
+				<a href="{{ next }}">Continue</a>
+				{% else %}
+				<input type="button" value="Return" onclick="javascript:history.go(-1)" style="padding-left:10px; padding-right:10px; cursor:pointer;" />
+			{% endif %}
+		</div>
+	</div>
+	</div>
+</div>
+
+{% endblock %}
+

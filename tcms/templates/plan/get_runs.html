@@ -1,0 +1,95 @@
+<div>
+	<form id="run_filter">
+	<div class="leftlistinfo">
+		<div class="listinfo">
+			<div class="title">ID&nbsp;:</div>
+		 	<div class="listinfo_input"><input type="text" name="run_id"></div>
+			<div class="listinfo">
+				<div class="title">Summary&nbsp;:</div>
+			 	<div class="listinfo_input"><input type="text" name="summary__icontains"/></div>
+			</div>
+			<div class="listinfo">
+				<div class="title">Build&nbsp;:</div>
+			 	<div class="listinfo_input">
+					<select name="build">
+						<option value="">--</option>
+						{% for build in test_plan.product.build.all %}
+						<option value="{{build.build_id}}">{{build.name}}</option>
+						{% endfor %}
+					</select>
+			 	</div>
+			</div>
+			<div class="listinfo">
+				<div class="title">Manager&nbsp;:</div>
+				<div class="listinfo_input"><input type="text" name="manager__username__iexact"/></div>
+			</div>
+			<div class="listinfo">
+				<div class="title"></div>
+				<div class="listinfo_input"><button id="reload_runs">Reload</button></div>
+				<input type="hidden" name="page_num" id="js-page-num" value="1"/>
+				<input type="hidden" name="plan" value="{{test_plan.pk}}"/>
+			</div>
+		</div>
+	</div>
+	<div class="rightlistinfo">
+		<div class="listinfo">
+			<div class="title">Default Tester&nbsp;:</div>
+		 	<div class="listinfo_input"><input type="text" name="default_tester__username__iexact"/></div>
+			<div class="listinfo">
+				<div class="title">Started Since&nbsp;:</div>
+			 	<div class="listinfo_input"> <input type="text" name="start_date__gt" class="vDateField"/> </div>
+			</div>
+			<div class="listinfo">
+				<div class="title">Items Per Page&nbsp;:</div>
+				<div class="listinfo_input">
+					<select name="page_size" id="js-page-size">
+						<option value="20">20</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+
+<form id='id_form_run' action="{% url "tcms.testruns.views.clone" %}" method="get">
+	<input type="hidden" name="from_plan" value="{{ test_plan.pk }}" />
+	<input type="hidden" name="product" value="{{ test_plan.product.pk }}" />
+	<input type="hidden" name="product_version" value="{{ test_plan.product_version_id }}" />
+	{% if perms.testruns.add_testrun %}
+	<div class="mixbar actions">
+		<div class='marginLeft fixed'>
+			<span id="box_select_rest" style="display:none;" class="tips left_float">
+				<input type="checkbox" name="filter_str"/>
+				Also select all runs not yet shown below
+			</span>
+			<input class="clone icon_plan left_float" type="submit"
+				value="Clone" title="clone selected test runs"/>
+			<input class="progress icon_plan" type="button"
+				value="Calculate progress of selected runs" id="btn_selected_progress"
+				title="calculate progress of selected test runs"/>
+		</div>
+	</div>
+	{% endif %}
+	<table class="list" id="testruns_table" cellpadding="0" cellspacing="0" border="0" data-param="{{test_plan.pk}}">
+		<thead>
+			<tr>
+				<th class="nosort" width="30"><input id="id_check_all_runs" type="checkbox" title="Select all/Select none"/></th>
+				<th align="left" class="nosort widthID">ID</th>
+				<th align="left" class="nosort">Test Run Summary</th>
+				<th align="left" class="nosort" width="80" >Manager</th>
+				<th align="left" class="nosort" width="120" >Default Tester</th>
+				<th align="left" class="nosort" width="150" >Start date</th>
+				<th align="left" class="nosort" width="130" >Build</th>
+				<th align="center" class="nosort" width="70" >Status</th>
+				<th align="left" class="nosort" width="50" >Cases</th>
+				<th align="left" class="nosort" width="110" >Failure</th>
+				<th align="left" class="nosort" width="110" >Success</th>
+			</tr>
+		</thead>
+		<tbody id="testruns_body"></tbody>
+	</table>
+	<div id="img_loading_runs" class="ajax_loading" style="display:none;"></div>
+</form>

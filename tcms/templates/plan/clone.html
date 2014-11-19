@@ -1,0 +1,106 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Clone Plan{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/index.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
+</script>
+{% endblock %}
+
+{% block contents %}
+
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		{% ifequal testplans|length 1 %}
+		>> <a href="{{ testplans.0.get_absolute_url }}">{{ testplans.0.plan_id }}: {{ testplans.0.name }}</a> 
+		>> Clone Plan
+		{% else %}
+		>> Clone plans
+		{% endifequal %}
+	</div>
+	<h2>Clone Test Plan</h2>
+	<p class="help">
+		select different product 
+	</p>
+	<div class="Detailform border-1">
+		<form action="{% url "tcms.testplans.views.clone" %}" method="post">
+			{% for testplan in testplans %}
+			<input type="hidden" name="plan" value="{{ testplan.pk }}" />
+			{% endfor %}
+			<table	class="editor" cellspacing="0" cellspan="0"> 
+				<tr>
+					{% ifequal testplans|length 1 %}
+					<td width="20%" ><label class="strong" for="id_name">New Plan Name</label> </td>
+					<td class="name" >{{ clone_form.name }}</td>
+					{% else %}
+					<td width="20%" >
+						<label class="strong">Plans</label>
+						<span class="help">Note:Can't change plan name when clone multiple plans, you can edit them after cloned.</span>
+					 </td>
+					<td class="name" >
+						<ul class="ul-no-format">
+							{% for testplan in testplans %}
+							<li>
+								<span class="lab-50">{{ testplan.plan_id }}</span>
+								<span class="lab-100">{{ testplan.type }}</span>
+								<span>
+									<a href="{{ test_plan.get_absolute_url }}" title="{{ testplan.name }} ({{ testplan.author.email }})">
+									 {{ testplan.name }}
+									</a>
+								</span>
+							</li>
+							{% endfor %}
+						</ul>
+					</td>
+					{% endifequal %}
+				</tr>
+				<tr >
+					<td><label class="strong" for="id_product_id">Copy to Product</label></td>
+					<td>{{ clone_form.product }}</td>
+				</tr>
+				<tr>
+					<td><label class="strong" for="id_version_id">Product Version</label></td>
+					<td>
+						{{ clone_form.product_version }}
+						<span class="errors">{{ clone_form.product_version.errors }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td><label class="strong">Copy Settings</label> </td>
+					<td>
+						<ul class="ul-no-format">
+							<li>{{ clone_form.set_parent }}{{ clone_form.set_parent.label }} ({{ clone_form.set_parent.help_text }})</li>
+							<li>{{ clone_form.keep_orignal_author }}{{ clone_form.keep_orignal_author.label }} ({{ clone_form.keep_orignal_author.help_text }})</li>
+							<li>{{ clone_form.copy_texts }}{{ clone_form.copy_texts.label }} ({{ clone_form.copy_texts.help_text }})</li>
+							<li>{{ clone_form.copy_attachements }}{{ clone_form.copy_attachements.label }} ({{ clone_form.copy_attachements.help_text }})</li>
+							<li>{{ clone_form.copy_environment_group }}{{ clone_form.copy_environment_group.label }} ({{ clone_form.copy_environment_group.help_text }})</li>
+							<li>
+								<fieldset class="choose">
+									<legend>{{ clone_form.link_testcases }}Copy {{ clone_form.link_testcases.label }}</legend>
+									<ul id="id_clone_case_zone" style="display:block ;list-style-type:none;">
+										<li>{{ clone_form.copy_testcases }}{{ clone_form.copy_testcases.label }} ({{ clone_form.copy_testcases.help_text }})</li>
+										<li>{{ clone_form.maintain_case_orignal_author }}{{ clone_form.maintain_case_orignal_author.label }} ({{ clone_form.maintain_case_orignal_author.help_text }})</li>
+										<li>{{ clone_form.keep_case_default_tester }}{{ clone_form.keep_case_default_tester.label }} ({{ clone_form.keep_case_default_tester.help_text }})</li>
+									</ul>
+								</fieldset>
+							</li>
+						</ul>	
+					</td>
+				</tr>
+			</table>
+			<div class="submit-row">
+				<input type="submit" name="submit" value="Clone" />
+				<input type="button" value="Cancel" class="js-cancel-button" />
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

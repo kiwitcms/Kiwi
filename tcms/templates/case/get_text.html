@@ -1,0 +1,31 @@
+<table width="100%">
+	<tr>
+		<td colspan="2">
+			<span class="right-bar">
+				<a href="{% url "tcms.testcases.views.text_history" test_case.case_id %}?from_plan={{ testplan.plan_id }}" class="historylink">
+					View edit history(Current in version {{ test_case_text.case_text_version }})
+				</a>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" >
+			<h4>Setup:</h4>
+			<div class="casedoc">{{ test_case_text.setup|safe }}</div>
+		</td>
+		<td valign="top" >
+			<h4>Breakdown:</h4>
+			<div class="casedoc">{{ test_case_text.breakdown|safe }}</div>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<h4>Actions:</h4>
+			<div class="casedoc">{{ test_case_text.action|safe }}</div>
+		</td>
+		<td valign="top" >
+			<h4>Expected Results:</h4>
+			<div class="casedoc">{{ test_case_text.effect|safe }}</div>
+		</td>
+	</tr>
+</table>

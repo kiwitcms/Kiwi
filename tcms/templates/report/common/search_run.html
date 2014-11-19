@@ -1,0 +1,61 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}CaseRun Report{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/advance_search.js"></script>
+<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/calendar.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/DateTimeShortcuts.js"></script>
+{% endblock %}
+
+{% block contents %}
+<div class="itemSearch">
+	<form action="{% url "testing-report" %}" method="get">
+	<h2>Testing Report</h2>
+		<div class="leftlistinfo">
+			<div class="listinfo">
+				<div class="title"><label for="id_name">Product&nbsp;:</label></div>
+				<div class="listinfo_input">{{ run_form.r_product }}</div>
+			</div>
+			<div class="listinfo">
+				<div class="title"><label for="r_build">Build&nbsp;:</label></div>
+				<div class="listinfo_input">{{ run_form.r_build }}</div>
+			</div>
+			<div class="listinfo">
+				<div class="title"><label for="id_name">Execute Date&nbsp;:</label></div>
+				<div class="listinfo_input">
+					{{ run_form.r_created_since }}
+				</div>
+			</div>
+			<div class="listinfo">
+				<div class="title"></div>
+				<div class="listinfo_input">
+					{{ run_form.r_created_before }}
+				</div>
+			</div>
+		</div>
+		<div class="rightlistinfo">
+			<div class="listinfo">
+				<div class="title"><label for="r_version">Version&nbsp;:</label></div>
+				<div class="listinfo_input">{{ run_form.r_version }}</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="leftlistinfo">
+			<div class="listinfo">
+				<div class="title"><label for="id_name">Report Type&nbsp;:</label></div>
+			<div class="listinfo_input">{{ run_form.report_type }}</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+    {% if errors %}<div>{{ errors }}</div>{% endif %}
+	<div class="bottom">
+		<input type="submit" class="left_float" value="Generate Report" size="7">
+	</div>
+	<div class="clear"></div>
+	</form>
+</div>
+{% block report %}{% endblock %}
+{% endblock %}

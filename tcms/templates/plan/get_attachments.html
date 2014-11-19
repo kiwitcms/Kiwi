@@ -1,0 +1,30 @@
+<div class="mixbar">
+	<span class="tit">Add attachment</span>
+	{% if perms.management.add_testattachment %}
+	<a href="{% url "tcms.testplans.views.attachment" test_plan.plan_id %}" class="addlink">add</a>
+	{% endif %}
+</div>
+<table class="list" cellspacing="0" cellspan="0" width="100%">
+	<thead>
+		<tr>
+			<th align="left">File name</th>
+			<th align="left" width="10%">Submitter</th>
+			<th align="left" width="20%">Create date</th>
+			<th align="left" width="20%">Mimetype</th>
+			<th align="left" width="10%">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for attachment in test_plan.attachment.all %}
+		<tr id="{{ attachment.attachment_id }}" class="{% cycle 'odd' 'even' %}">
+			<td><a href="{% url "tcms.core.files.check_file" attachment.attachment_id %}">{{ attachment.file_name }}</a></td>
+			<td>{{ attachment.submitter }}</td>
+			<td>{{ attachment.create_date }}</td>
+			<td>{{ attachment.mime_type }}</td>
+			<td><a href="{% url "tcms.core.files.check_file" attachment.attachment_id %}">View</a> | <a class="js-del-attach" data-params="[{{attachment.attachment_id}}, {{test_plan.plan_id}}]" href="#">Delete</a></td>
+		</tr>
+		{% empty %}
+		<tr><td colspan="5" align="center"><span class="grey">No attachments</span></td></tr>
+		{% endfor %}
+	</tbody>
+</table>

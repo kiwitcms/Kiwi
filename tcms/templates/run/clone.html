@@ -1,0 +1,203 @@
+{% extends "tcms_base.html" %}
+
+{% load split_as_option %}
+
+{% block subtitle %}Clone test run - {{ test_run.summary }}{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
+</script>
+{% endblock %}
+
+{% block content_type %}
+	<input type="hidden" name="content_type" value="testruns.testrun" />
+	<input type="hidden" name="object_pk" value="{{ test_run.pk }}" />
+	<input type="hidden" name="name" value="{{ test_run.name }}" />
+	<input type="hidden" name="description" value="{{ test_run.notes }}" />
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div id="tcms_values" class="hidden">
+		<input id="value_module" type="hidden" name="module" value="{{ module }}" />
+		<input id="value_sub_module" type="hidden" name="sub_module" value="{{ sub_module }}" />
+	</div>
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.testplans.views.all" %}">...</a>
+		>> <a href="{{ test_run.plan.get_absolute_url }}">...</a>
+		>> <a href="{% url "tcms.testruns.views.get" test_run.run_id %}">{{ test_run.summary }}</a>
+		>> Clone
+	</div>
+	<h2>Clone Test Run - {{ test_run.summary }}</h2>
+	<form action="{% url "tcms.testruns.views.new" %}" method="post">
+		<input type="hidden" id="id_plan_id" name="from_plan" value="{{ test_run.plan_id }}" />
+		<input type="hidden" id="id_product_id" name="product_id" value="{{ test_run.plan.product_id }}" />
+		<input type="hidden" name="do" value="clone_run" />
+		<input type="hidden" name="orig_run_id" value="{{ test_run.run_id }}" />
+		{# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
+		<input type="hidden" name="POSTING_TO_CREATE" value="YES" />
+		
+		<div class="Detailform border-1">
+			<table class="editor" cellspan="0" cellspacing="0">
+				<tr>
+					<td width="15%"><label class="strong" for="id_summary">Summary</label></td>
+					<td>
+						<span class="summary">{{ clone_form.summary }}</span>
+						<div class="errors">{{ clone_form.summary.errors }}</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="15%"><label for="">Product</label></td>
+					<td>
+						{{ clone_form.product }}
+					</td>
+				</tr>
+				<tr>
+					<td><label>Product Version</label></td>
+					<td>{{ clone_form.product_version }}<span class="errors">{{ clone_form.product_version.errors }}</span>
+						<a href="{{ ADMIN_PREFIX }}/management/version/add/" class="addlink" id="add_id_product_version">Add Product Version</a>
+					</td>
+				</tr>
+				<tr>
+					<td><label class="strong" for="id_build_id">Build </label></td>
+					<td>{{ clone_form.build }}<span class="errors">{{ clone_form.build.errors }}</span>
+						<a href="{{ ADMIN_PREFIX }}/management/testbuild/add/" class="addlink" id="add_id_build">Add Build</a>
+					</td>
+				</tr>
+				<tr>
+					<td><label for="id_errata_id">Errata</label></td>
+					<td>{{ clone_form.errata_id }}</td>
+				</tr>
+				<tr>
+					<td><label for="id_manager">Run Manager </label></td>
+					<td>{{ clone_form.manager }}<div class="errors">{{ clone_form.manager.errors }}</div></td>
+				</tr>
+				<tr>
+					<td><label for="id_default_tester">Default Tester</label></td>
+					<td>{{ clone_form.default_tester }} <div class="errors">{{ clone_form.default_tester.errors }}</div></td>
+				</tr>
+				<tr>
+				    <td><label for="id_auto_update_run_status">Set Status Automatically</label></td>
+				    <td>{{ clone_form.auto_update_run_status }} <span class="system_help">{{ clone_form.auto_update_run_status.help_text }}</span>
+				</tr>
+				<tr>
+					<td><label class="strong" for="id_estimated_time">Estimated Time</label></td>
+					<td>
+						<div class="time">
+							{{ clone_form.estimated_time }}
+						</div> 
+					</td>
+				</tr>
+				<tr>
+					<td><label for="id_notes">Notes</label></td>
+					<td>{{ clone_form.notes }}</td>
+				</tr>
+				<tr>
+					<td><label>Environment</label></td>
+					<td>
+						{% for env_value in test_run.env_value.all %}
+						<ul class="ul-no-format">
+							<li style="clear:both">
+								<input class="lab-50" type="checkbox" name="select_property_id_{{ env_value.property_id }}" checked value="on">
+								<label class="lab-100">{{ env_value.property.name }}</label>
+                                <input type="hidden" name="env_property_id" value="{{ env_value.property_id }}">
+								<select name="select_property_value_{{ env_value.property_id }}">
+									{% for value in env_value.property.value.all %}
+									<option value="{{ value.id }}" {% ifequal value.id env_value.id %}selected="true"{% endifequal %}>{{ value.value }}</option>
+									{% endfor %}
+								</select>
+							</li>
+						</ul>
+						{% empty%}
+						<div class="system_help">
+							<p>There is no more environment properties in this run.</p>
+						</div>
+						{% endfor %}
+					</td>
+				</tr>
+            <tr>
+                <td>
+                    <label>Clone Setting</label>
+                </td>
+                <td>
+                    {{ clone_form.keep_status }} {{ clone_form.keep_status.label }}&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ clone_form.keep_assignee }} {{ clone_form.keep_assignee.label }}
+                </td>
+            </tr>
+			</table>
+			<div class="submit-row ">
+				{{ clone_form.errors }}
+				<input type="submit" name="" value="Save">
+				<input type="button" name="cancel" value="cancel" class="js-cancel-button" >
+			</div>
+		</div>
+	</div>
+	
+	<input type="hidden" name="testcases" value="testcases" />
+	<div class="Detailform border-1" id="testcases_selected">
+		<div class="mixbar">
+			<span class="title"><b>Selected cases {{ test_run.case_run.count }}:</b></span>
+			<table id="testcases" class="list" cellpadding="0" cellspacing="0" border="0" >
+				<thead>
+					<tr>
+						<th align="left" width="4%"></th>
+						<th class="number widthID" align="left">ID</th>
+						<th class="text" align="left" width="26%">Test Case Summary</th>
+						<th class="text" align="left" width="20%">Author</th>
+						<th class="date-iso" align="left" width="20%">Created Date</th>
+						<th class="text" align="left" width="8%">Status</th>
+						<th class="text" align="left" width="8%">Category</th>
+						<th class="text" align="left" width="8%">Priority</th>
+						<th class="sortable" align="left" width="10%">Sortkey</th>
+						<th class="nosort" align="left" width="10%">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for case_run in cases_run.all %}
+					<tr class="{% cycle 'odd' 'even' %} js-one-case" id="row_{{ forloop.counter }}">
+						<td>
+							<a id="blind_link_{{ forloop.counter }}" class="blind_link" href="javascript:toggleTestCaseContents('{{ forloop.counter }}')">
+								<img id="blind_icon_{{ forloop.counter }}" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
+							</a>
+						</td>
+						<td>
+							<a href="{% url "tcms.testcases.views.get" case_run.case_id %}">{{ case_run.case_id }}</a>
+							<input type="hidden" name="case" value="{{ case_run.case_id }}">
+                            <input type="hidden" name="case_run_id" value="{{ case_run.case_run_id }}">
+						</td>
+						<td>
+							<a id="link_{{ forloop.counter }}" class="blind_title_link" href="javascript:toggleTestCaseContents('{{ forloop.counter }}')">
+								{{ case_run.case.summary }}
+							</a>
+						</td>
+						<td>{{ case_run.case.author.email }}</td>
+						<td>{{ case_run.case.create_date }}</td>
+						<td>{{ case_run.case.case_status }}</td>
+						<td>{{ case_run.case.category }}</td>
+						<td>{{ case_run.case.priority }}</td>
+						<td>{{ case_run.sortkey }}</td>
+						<td> 
+							<a class="deletelink js-remove-button" href="javascript:void(0);" >
+								remove
+							</a>
+						</td>
+					</tr>
+					<tr class="hide" id="hidenRow_{{ forloop.counter }}" class="Detailform border-1" style="display: none;">
+						<td id="id_case_text_{{ forloop.counter }}" style="display: none;">
+							<div class="ajax_loading">
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</form>
+	{% endblock %}

@@ -1,0 +1,28 @@
+{% load extra_filters %}Test run {{ test_run.pk }} has been updated for you.
+
+### Links ###
+Test run: {{ test_run.get_url }}
+{# Test plan: {{ test_run.plan.get_url }} #}
+
+### Basic run information ###
+Summary: {{ test_run.summary }}
+
+Managed: {{ test_run.manager }}.
+Default tester: {{ test_run.default_tester }}.
+
+Product: {{ test_run.build.product }}
+Product version: {{ test_run.product_version }}
+Build: {{ test_run.build }}
+
+Estimated time: {{ test_run.estimated_time }}
+
+Notes:
+{{ test_run.notes }}
+
+### Test plan information ###
+Test Plan: {{ test_run.plan }}
+{% comment %}
+### Test cases information ###
+{% for tcr in test_run.case_run.select_related.all %}* {{ tcr.case.summary }}
+{% endfor %}
+{% endcomment %}

@@ -1,0 +1,1 @@
+ALTER TABLE `test_case_bug_systems` DROP `validate_reg_exp`;

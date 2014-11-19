@@ -1,0 +1,240 @@
+{% load comments %}
+{% load redhat_urlize %}
+<td colspan="14" style="padding:10px;">
+	<div class="caserunDetail">
+		<div class="caserunInfo">
+			<div class="container" style="min-height:190px;">
+				{# {% get_comment_list for test_case_run as case_run_comments %} #}
+				<h4 style="padding-bottom:3px;">Comments</h4>
+				{% if perms.comments.add_comment %}
+				<form class="update_form" method="POST">
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						{% get_comment_form for test_case_run as comment_form %}
+						<tr>
+							<td>
+								{{ comment_form.comment }}
+								{{ comment_form.content_type }}
+								{{ comment_form.object_pk }}
+								{{ comment_form.timestamp }}
+								{{ comment_form.security_hash }}
+								{{ comment_form.name }}
+								{{ comment_form.email }}
+								{{ comment_form.url }}
+							</td>
+						</tr>
+						<tr>
+							<td style="padding:5px 9px 10px 9px;">
+								<input type="hidden" name="type" value="html" />
+								<input type="hidden" name="field" value="case_run_status" />
+								<input type="hidden" name="case_id" value="{{ test_case_run.case_id }}" />
+								<input type="hidden" name="assignee" value="{{ test_case_run.assignee_id }}" />
+								<input type="hidden" name="tested_by" value="{{ test_case_run.tested_by_id }}" />
+								<input type="hidden" name="value" value="" />
+								{% if perms.testruns.change_testcaserun %}
+								{% for status in test_case_run_status %}
+								<input type="submit" class="btn btn_{{ status.name.lower }} btn_status js-status-button" title="{{ status.name }}" value="" crs_id="{{ status.pk }}" {% ifequal status.pk test_case_run.case_run_status_id %}disabled="True"{% endifequal %} data-formvalue="{{ status.pk }}" />
+								{% endfor %}
+								{% endif %}
+								<input type="submit" class="submit-post" value="Submit">
+							</td>
+						</tr>
+					</table>
+				</form>
+				{% endif %}
+				<h4 class="borderB">Comments History ({{ comments_count }}):
+				{% ifequal comments_count 0 %}
+					<span>[ <a id="showText" href="javascript:void(0);">Show All</a> ]</span>
+				{% else %}
+					<span>[ <a id="showText" class="js-show-comments" data-param="comment{{ test_case_run.pk }}" href="javascript:void(0);">Show All</a> ]</span>
+				{% endifequal %}
+				</h4>
+				<ul class="comment" id="comment{{ test_case_run.pk }}" style="display:none;">
+					{% for comment in caserun_comments %}
+					<li>
+						<span>#{{ forloop.counter }}</span>
+						<span>{{ comment.user__email }}</span>
+						<span>{{ comment.submit_date }}</span>
+						<div>
+						{{ comment.comment|redhat_urlize|linebreaksbr }}
+						<br>
+						{% if perms.comments.can_moderate %}
+						{% ifequal comment.user__pk request.user.pk %}
+						<form action="{% url "tcms.core.contrib.comments.views.delete" %}" method="get" class="form_comment" style="display:inline;">
+							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
+							<input type="hidden" name="object_pk" value="{{ test_case_run.case_id }}" />
+							<input class='commentdelete sprites' value='' type='submit' title="Remove Comment" /> 
+						</form>
+						{% endifequal %}
+						{% endif %}
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div style="padding: 5px 9px 15px 18px;">
+				<h4>Test Case Run Detail Information</h4>
+				<div><span class="detail_title"><span class="detail_title">Run Date:</span>{{ test_case_run.close_date }}</div>
+				<div><span class="detail_title">Build:</span>{{ test_case_run.build }} <span class="detail_title marginLeft">Text Version:</span>{{ test_case_run.case_text_version }}</div>
+				{% if test_case_run.notes %}
+				<div><div class="detail_title">Notes</div>{{ test_case_run.notes|redhat_urlize|linebreaksbr }}</div>
+				{% endif %}	
+			</div>
+			<div class="container">
+				<h4 class="borderB">bug
+					<span>
+						[ <a href="{% url "tcms.testruns.views.bug" test_case_run.pk %}?a=file" target="_blank" class="buglink" title="File a bug on bugzilla">File</a>&nbsp;|&nbsp;
+						{% if perms.testcases.add_testcasebug %}
+						<a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Add</a>
+						{% endif %} ]
+					</span>
+				</h4>
+				<ul class="ul-no-format">
+					{% for bug_id, bugs in grouped_case_bugs %}
+						<li>
+							<table cellpadding="3" cellspacing="0" border="0">
+								<tr>
+									<td><a href="{{ bugs.0.get_url }}">{{ bug_id }}</a></td>
+								<td>
+								{% for bug in bugs %}
+								    {% if bug.case_run_id %}
+								        <span class="grey">From Run</span><a href="{% url "tcms.testruns.views.get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
+								        {% ifequal bug.case_run_id test_case_run.pk %}
+								        <a href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'><img width="9" height="9" title="remove this bug" src="{{ STATIC_URL }}images/remove_small.png"></a>
+								        {% endifequal %}
+								    {% else %}
+								        <span class="grey">From Case</span>
+								        <a href="{% url "tcms.testcases.views.get" bug.case_id %}">{{ bug.case_id }}</a>
+								    {% endif %}
+								{% endfor %}
+								</td>
+								</tr>
+							</table>
+						</li>
+					{% empty %}
+					<li class="grey">No bug found</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="container" style="min-height:50px;">
+				{% if caserun_logs %}
+				<h4 class="borderB">Change Log<span>[ <a href="javascript:void(0);" class="js-show-changelog" data-param="changeLog{{ test_case_run.pk }}">Show All</a> ]</span></h4>
+				<ul id="changeLog{{test_case_run.pk}}" style="display:none;">
+					{% for log in caserun_logs %}
+					<li><span>{{ log.date }}</span><span>{{ log.who__username }}</span><br />{{ log.action }}</li>
+					{% endfor %}
+				</ul>
+				{% else %}
+				<h4 class="borderB">Change Log</h4>
+				<ul><li class="grey">No log recorded.</li></ul>
+				{% endif %}
+			</div>
+		</div>
+		<div class="caseInfo">
+			<table cellpadding="0" cellspacing="0" border="0" width="100%">
+				<tr>
+					<td>
+						<div class="container">
+							<h4>Setup</h4>
+							<div class="content">{{ test_case_text.setup|safe }}</div>
+						</div>
+					</td>
+					<td style="width:5px;"></td>
+					<td>
+						<div class="container">
+							<h4>Breakdown</h4>
+							<div class="content">{{ test_case_text.breakdown|safe }}</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="container">
+							<h4>Actions</h4>
+							<div class="content">{{ test_case_text.action|safe }}</div>
+						</div>
+						
+					</td>
+					<td style="width:5px;"></td>
+					<td>
+						<div class="container">
+							<h4>Expected Results</h4>
+							<div class="content">{{ test_case_text.effect|safe }}</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div class="container">
+				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
+					<tr>
+						<td>
+							<h4 class="borderB">
+								Attachment
+								<span>[
+								{% if perms.management.add_testattachment %}
+								<a href="{% url "tcms.testcases.views.attachment" test_case_run.case_id %}?from_plan={{ testrun.plan_id }}" target="_blank">Add</a>
+								{% endif %}
+								]</span>
+							</h4>
+							<ul class="ul-no-format">
+								{% for attachment_file in test_case.attachment.all %}
+								<li>
+									<a href="{% url "tcms.core.files.check_file" attachment_file.attachment_id %}">
+										{{ attachment_file.file_name }}
+									</a>
+								</li>
+								{% empty %}
+								<li class="grey">No attachment found</li>
+								{% endfor %}
+							</ul>
+						</td>
+						<td style="width:24px;"></td>
+						<td>
+							<h4 class="borderB">Component</h4>
+							<ul class="ul-no-format">
+								{% for component in test_case.component.all %}
+								<li>{{ component.name }}</li>
+								{% empty %}
+								<li class="grey">No component found</li>
+								{% endfor %}
+							</ul>
+						</td>
+						<td style="width:24px;"></td>
+						<td>
+							<h4 class="borderB">Tag:</h4>
+							<ul class="ul-no-format">
+								{% for tag in test_case.tag.all %}
+								<li>{{ tag }}</li>
+								{% empty %}
+								<li class="grey">No tag found</li>
+								{% endfor %}
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="container">
+				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
+					<tr>
+						<td>
+							<h4 class="borderB">Test Log <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Add</a>]</span></h4>
+							<div class="content">
+									<ul class="ul-format">
+										{% for link in test_case_run.links.all %}
+										<li>
+											<a href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape }}</a>
+											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
+											<a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
+												<img title="Remove this log" src="{{ STATIC_URL }}images/remove_small.png" />
+											</a>
+										</li>
+										{% endfor %}
+									</ul>
+							 </div>
+							</td>
+						</tr>
+					</table>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</td>

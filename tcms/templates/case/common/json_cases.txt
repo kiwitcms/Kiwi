@@ -1,0 +1,29 @@
+{
+    "sEcho": {{sEcho}},
+    "iTotalRecords": {{iTotalRecords}},
+    "iTotalDisplayRecords": {{iTotalDisplayRecords}},
+    "aaData":[
+        {% for test_case in querySet %}
+        [
+            "<img class='expand blind_icon' src='{{ STATIC_URL }}images/t1.gif' border='0' alt=''>",
+            "<input type='checkbox' name='case' value='{{ test_case.case_id }}'>",
+            "<a href='{% url "tcms.testcases.views.get" test_case.case_id %}'>{{ test_case.case_id }}</a>",
+            "<a id='link_{{ test_case.case_id }}' href='{% url "tcms.testcases.views.get" test_case.case_id %}'>{{ test_case.summary }}</a>",
+            "<a href='{% url "tcms.profiles.views.profile" test_case.author.username %}'>{{ test_case.author }}</a>",
+            {% if test_case.default_tester_id %}
+                "<a href='{% url "tcms.profiles.views.profile" test_case.default_tester.username %}'>{{ test_case.default_tester }}</a>"
+            {% else %}
+                "None"
+            {% endif %},
+            "{{ test_case.get_is_automated_status }}",
+            "{{ test_case.case_status }}",
+            "{{ test_case.category }}",
+            "{{ test_case.priority }}",
+            "{{ test_case.create_date }}"
+        ]
+        {% if not forloop.last %}
+        ,
+        {% endif %}
+        {% endfor %}
+    ]
+}

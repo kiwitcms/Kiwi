@@ -1,0 +1,55 @@
+<input type="hidden" name="a" value="search" />
+<input type="hidden" name="from_plan" value="{{ test_plan.pk }}" />
+
+<div class="leftlistinfo">
+	<div class="listinfo">
+		<div class="title">Case&nbsp;:</div>
+	 	<div class="listinfo_input">{{ search_form.summary }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Author&nbsp;:</div>
+	 	<div class="listinfo_input">{{ search_form.author }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Tester&nbsp;:</div>
+	 	<div class="listinfo_input">{{ search_form.default_tester }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Priority&nbsp;:</div>
+		<div class="listinfo_input">{{ search_form.priority }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Automated&nbsp;:</div>
+		<div class="listinfo_input">
+			{{ search_form.is_automated }}
+			<div class="automatedlist">
+				{{ search_form.is_automated_proposed }}
+				<label>{{ search_form.is_automated_proposed.label }}</label>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="rightlistinfo">
+	<div class="listinfo">
+		<div class="title">Category&nbsp;:</div>
+		<div class="listinfo_input">{{ search_form.category }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Status&nbsp;:</div>
+		<div class="listinfo_input">{{ search_form.case_status }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Component&nbsp;:</div>
+		<div class="listinfo_input">{{ search_form.component }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Tag&nbsp;:</div>
+		<div class="listinfo_input">{{ search_form.tag__name__in }}</div>
+	</div>
+	<div class="listinfo">
+		<div class="title">Items per page&nbsp;:</div>
+		<div class="listinfo_input">{{ search_form.items_per_page }}</div>
+	</div>
+</div>
+<div class="setinput">{{ search_form.errors }}</div>
+<div class="clear"></div>

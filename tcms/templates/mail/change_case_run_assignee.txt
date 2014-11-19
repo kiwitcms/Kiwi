@@ -1,0 +1,10 @@
+### Links ###
+Test run: {{ test_run.get_url }}
+
+### Info ###
+The assignee of case run in test run {{ test_run.pk }}: {{ test_run.summary }}
+has been changed: Following is the new status:
+
+### Test case runs information ###
+{% for test_case_run in test_case_runs %}
+* {{ test_case_run.pk }}: {{ test_case_run.case.summary }} - {{ test_case_run.assignee }}{% endfor %}

@@ -1,0 +1,36 @@
+<div class="cell">
+	<label class="sd" for="id_pk__in">ID</label>
+	{{ search_form.pk__in }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_product_id">Product</label>
+	{{ search_form.product }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_version_id">Product Version</label>
+	{{ search_form.product_version }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_type_id">Plan Type</label>
+	{{ search_form.type }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_env_group_id">Environment Group</label>
+	{{ search_form.env_group }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_author_id">Plan Author</label>
+	{{ search_form.author__email__startswith }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_tag_id">Tag</label>
+	{{ search_form.tag__name__in }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_name_id">Plan Summary</label>
+	{{ search_form.name__icontains }}
+</div>
+<div class="cell">
+	<label class="sd" for="id_is_active_id">Active</label>
+	{{ search_form.is_active }}
+</div>

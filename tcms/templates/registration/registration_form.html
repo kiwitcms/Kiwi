@@ -1,0 +1,37 @@
+{% extends "tcms_base.html" %}
+{% block subtitle %}Nitrate{% endblock %}
+{% block custom_stylesheet %}
+{% endblock %}
+{% block custom_javascript %}
+	<script type="text/javascript" src='{{ STATIC_URL }}js/index.js'></script>
+	<script type="text/javascript" src='{{ STATIC_URL }}js/footer_at_the_end.js'></script>
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div id="index" >
+		<br clear="all">
+		<div class="login radius">
+			<form id="id_register_form" action="{% url "tcms.core.contrib.auth.views.register" %}" method="POST">
+				{% if SETTINGS.MOTD_LOGIN %}
+				<div class="cc">{{ SETTINGS.MOTD_LOGIN|safe}}</div>
+				{% endif %}
+				{% if SETTINGS.WELCOME_MESSAGE %}<h3>{{ SETTINGS.WELCOME_MESSAGE }}</h3>{% endif %}
+				<table border="0" cellpadding="10" cellspacing="10" class="login_table">
+					{{ form.as_table }}
+					<tr>
+						<td id="login_info" colspan="2" style="display:none;"></td>
+					</tr>
+					<tr><td></td>
+						<td  class="submit">
+							<input type="hidden" name="next" value="{{ REQUEST_CONTENTS.next }}" />
+							<input type="submit" value="Register" class="loginbutton sprites"/>
+							<!--<input type="reset" />-->
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

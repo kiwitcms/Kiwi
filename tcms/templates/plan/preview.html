@@ -1,0 +1,50 @@
+{% for test_plan in test_plans %}
+<div class="listinfo_content">
+        <div class="listinfo">
+			<input id="id_preview_plan_{{ test_plan.pk }}" type="checkbox" name="plan_id" value="{{ test_plan.pk }}" checked />
+			<label for="id_preview_plan_{{ test_plan.pk }}">[{{ test_plan.pk }}] {{ test_plan.name }}</label>
+		</div>
+		<div class="listinfo">
+			<div class="title">Author</div>
+			<div id="display_author"><a href="mailto:{{ test_plan.author.email }}">{{ test_plan.author.email }}</a></div>
+		</div>
+		<div class="listinfo">
+			<div class="title">Product</div>
+			<div id="display_product">{{ test_plan.product }}</div>
+		</div>
+		<div class="listinfo">
+			<div class="title">Version</div>
+			<div id="display_product_version">{{ test_plan.product_version }}</div>
+		</div>
+		<div class="listinfo">
+			<div class="title">Plan Type</div>
+			<div id="display_type">{{ test_plan.type.name }}</div>
+		</div>
+		<div class="listinfo">
+			<div class="title">Parent</div>
+			<div id="display_type">{{ test_plan.parent.pk }}</div>
+		</div>
+		<div class="listinfo">
+			<div class="title">Reference Link</div>
+			<div>
+				{% if test_plan.extra_link %}
+				<a href="{{ test_plan.extra_link }}">{{ test_plan.extra_link }}</a>
+				{% else %}
+				None
+				{% endif %}
+			</div>
+		</div>
+		<div class="listinfo">
+			<div class="title">Document</div>
+			<div class="contenttext">
+				{{ test_plan.latest_text.plan_text|safe }}
+			</div>
+		</div>
+        <div class="clear"></div>
+</div>
+{% if not forloop.last %}
+<hr />
+{% endif %}
+{% empty %}
+{"msg":"The plan you specific does not exist in database."}
+{% endfor %}

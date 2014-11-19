@@ -1,0 +1,5 @@
+<ul>
+	{% for log in object.log %}
+	<li>[{{ log.date }}] - [{{ log.who }}] - {{ log }}</li>
+	{% endfor %}
+</ul>

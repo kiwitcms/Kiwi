@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Printable copy of test plans</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Language" content="utf-8" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+	{% block custom_stylesheet %}{% endblock %}
+	<style TYPE="text/css">
+	div.thick-line { background-color: rgb(0, 0, 0);  width: 100%; height: 0.2ex; }
+	div.thin-line  { background-color: rgb(0, 0, 0);  width: 100%; height: 0.1ex; }
+	div.case-stage { width:25%; float:left; white-space:normal; }
+	div.case-stage pre{white-space:normal; padding-right:10px;}
+	div.plan_title { width: 100%; clear: left;}
+	</style>
+</head>
+<body>
+	<!-- Title area -->
+	{% for test_plan in test_plans %}
+	<div class="plan_title">
+		{% if not forloop.first %}
+		<hr />
+		{% endif %}
+		<div>
+			<h1>[{{ test_plan.pk }}] <b>{{ test_plan.name }}</b></h1>
+		</div>
+		<div class="thick-line"></div>
+		<div class="contents">
+			<h3>Contents</h3>
+			<div>
+				<ol>
+					{% for test_case in test_plan.result_set %}
+					<li>[{{ test_case.case_id }}] {{ test_case.summary }}</li>
+					{% endfor %}
+				</ol>
+			</div>
+		</div>
+		<div>
+			<h2 id="plan_document">Test Plan Document</h2>
+			<div class="thick-line"></div>
+			{{ test_plan.latest_text.plan_text|safe }}
+		</div>
+		<div>
+			<h2 id="plan_cases">Test Cases</h2>
+			<div class="thick-line"></div>
+			{{ test_plan.summary|safe }}
+			{% for test_case in test_plan.result_set %}
+			<div style="clear: left">
+				<h3>[{{ test_case.case_id }}] {{ test_case.summary }}</h3>
+				<div class="thin-line"></div>
+				<div class="case-stage">
+					<h4>Set up</h4>
+					{{ test_case.setup|safe }}
+				</div>
+				<div class="case-stage">
+					<h4>Actions</h4>
+					{{ test_case.action|safe }}
+				</div>
+				<div class="case-stage">
+					<h4>Expected Results</h4>
+					{{ test_case.effect|safe }}
+				</div>
+				<div class="case-stage">
+					<h4>Breakdown</h4>
+					{{ test_case.breakdown|safe }}
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endfor %}
+</body>

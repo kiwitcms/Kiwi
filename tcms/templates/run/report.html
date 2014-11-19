@@ -1,0 +1,160 @@
+{% load comments %}
+{% load redhat_urlize %}
+{% load extra_filters %}
+{% load report_tags %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>{{ testrun.summary }}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Language" content="utf-8" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="all" />
+</head>
+<body>
+	<div class="report_title">
+	Test Log Report
+	<div class="report_sub_title"><a href='{% url "tcms.testruns.views.get" test_run.run_id %}'>[{{ test_run.run_id }}] {{ test_run.summary }}</a></div></div>
+	<div class="report_content">
+	<div id="content">
+		<div class="listinfo_content" style="float:left; width:95%">
+			<div class="leftlistinfo">
+				<div class="listinfo">
+					<span class="title">Test Plan:</span>{{ test_run.plan.plan_id }}:{{ test_run.plan.name }}
+				</div>
+				<div class="listinfo">
+					<span class="title">Product Version:</span>{{ test_run.product_version }}
+				</div>
+				<div class="listinfo">
+					<span class="title">Manager:</span>{{ test_run.manager.email }}
+				</div>
+				<div class="listinfo">
+					<span class="title">Estimated Time:</span>{{ test_run.estimated_time|timedelta2string }}
+				</div>
+				
+				<div class="listinfo">
+					<span class="title">Environment:</span>
+					<div class="linotype">
+							<ul>
+							{% for run_env_value in test_run.env_value.select_related.all %}
+							<li>
+								<span class="lab" >{{ run_env_value.property }}: </span>{{ run_env_value.value }}
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="rightlistinfo">
+				<div class="listinfo">
+					<span class="title">Product:</span>{{ test_run.build.product }}
+				</div>
+				<div class="listinfo">
+					<span class="title">Build:</span>{{ test_run.build }}
+				</div>
+				<div class="listinfo">
+					<span class="title">Default Tester:</span>
+					{% if test_run.default_tester_id %}{{ test_run.default_tester.email }}{% else %}{{ test_run.default_tester }}{% endif %}
+				</div>
+				<div class="listinfo">
+					<span class="title">Started at:</span>{{ test_run.start_date }}
+				</div>
+				<div class="listinfo">
+					<span class="title">Finished at:</span>{{ test_run.stop_date }}
+				</div>
+			</div>
+			<div class="listinfo">
+				<span class="title">Note:</span>{{ test_run.notes|redhat_urlize|linebreaksbr }}
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+		<div class="table_noborder">
+			Manual Cases<span class="red">{{ mode_stats.manual|percentage:test_case_runs_count }}({{ mode_stats.manual }}/{{ test_case_runs_count }})</span>
+			Automated Cases<span class="red">{{ mode_stats.automated|percentage:test_case_runs_count }}({{ mode_stats.automated }}/{{ test_case_runs_count }})</span>
+			Manual/Automated Cases<span class="red">{{ mode_stats.manual_automated|percentage:test_case_runs_count }}({{ mode_stats.manual_automated }}/{{ test_case_runs_count }})</span></td>
+		</div>
+
+		{% if test_case_runs %}
+		<table class="list border-1" cellpadding="0" cellspacing="0">
+			<tr>
+				<th class="widthID">Case-Run ID</th>
+				<th class="widthID">Case ID</th>
+				<th>Summary</th>
+				<th width="100">Mode</th>
+				<th width="100">Tested by</th>
+				<th width="150">Category</th>
+				<th width="100">Status</th>
+				<th width="160" height="25px">Closed at</th>
+			</tr>
+			{% for test_case_run in test_case_runs %}
+			<tr>
+				<td>{{ test_case_run.case_run_id }}</td>
+				<td>{{ test_case_run.case_id }}</td>
+				<td>{{ test_case_run.case.summary }}</td>
+				<td>{{ test_case_run.case.get_is_automated_status }}</td>
+				<td>{{ test_case_run.tested_by.username }}</td>
+				<td>{{ test_case_run.case.category.name }}</td>
+				<td><span class="highlight">{{ test_case_run.case_run_status.name|upper }}</span></td>
+				<td>{{ test_case_run.close_date }}</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" colspan="8" class='hide'>
+					{% if test_case_run.bugs %}
+					<span class='notes_title'>Bugs ID:</span>
+					{% for bug in test_case_run.bugs %}
+					<a href="{{ bug.bug_url }}">{{ bug.bug_id }}</a>
+					{% endfor %}
+					{% endif %}
+
+					{% if test_case_run.user_comments %}
+					<h4 style='padding:0px;margin:0px'>Comments</h4>
+					<span class="notes" >
+						<ul style="margin-left:10px;" class='comment'>
+							{% for comment in test_case_run.user_comments %}
+							<li><b>{{ comment.user }}</b><span class='grey' style='margin-left:5px'>[{{ comment.submit_date }}]</span>	<br />{{ comment.comment|redhat_urlize|linebreaksbr }}</li>
+							{% endfor %}
+						</ul>
+					</span> 
+					{% endif %}
+
+					</td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+
+		<h3>Total: {{ test_case_runs_count }}</h3>
+		<h3>Pending test cases: {{ summary_stats.idle }}</h3>
+		<h3>Test run completed: {{ summary_stats.complete|percentage:test_case_runs_count }}</h3>
+
+		{% if test_case_run_bugs %}
+		<hr style="margin:40px auto 20px;"/>
+		<h2><a name="buglist" style="cursor:default; text-decoration:none">Bug List:</a></h2>
+
+		<table	class="list border-1" cellpadding="0" cellspacing="0">
+			<tr>
+				<th width="150px">Bug ID</th>
+				<th>Bug Url</th>
+			</tr>
+			{% for bug, bug_url in test_case_run_bugs %}
+			<tr>
+				<td>{{ bug }}</td>
+				<td><a href="{{ bug_url }}" target="_blank">{{ bug_url }}</a></td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td>View all bugs(Bugzilla)</td>
+				<td><a href="{{ bugzilla_url }}" target="_blank">{{ bugzilla_url }}</a></td>
+			</tr>
+			<tr>
+				<td>View all bugs(JIRA)</td>
+				<td><a href="{{ jira_url }}" target="_blank">{{ jira_url }}</a></td>
+		  </tr>
+		</table>
+		{% endif %}
+	</div>
+	</div>
+</body>
+</html>

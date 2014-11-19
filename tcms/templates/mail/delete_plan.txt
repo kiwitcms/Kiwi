@@ -1,0 +1,7 @@
+TestPlan [{{plan.name}}] has been deleted.
+
+-- 
+
+------- You are receiving this mail because: -------
+You have subscribed to the changes of this TestCase
+You are related to this TestCase

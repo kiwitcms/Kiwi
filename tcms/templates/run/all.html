@@ -1,0 +1,67 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Test runs{% endblock %}
+
+{% block custom_stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables_themeroller.css" />
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.dataTables.js"></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
+<script type="text/javascript" src='{{ STATIC_URL }}js/management_actions.js'></script>
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
+</script>
+{% endblock %}
+
+{% block contents %}
+
+
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		{% if query_result %}
+		>> <a href="{% url "tcms.testruns.views.all" %}">Test Runs</a> >> Search result
+		{% else %}
+		>> Test Runs
+		{% endif %}
+	</div>
+	<form action="{% url "tcms.testruns.views.all" %}" method="get">
+		<div id="itemSearch" class="itemSearch">
+			<input type="hidden" name="action" value="search" />
+			<div>
+				<h2>Search Run</h2>
+				{% include 'run/form/search.html' %}
+			</div>
+			<div class="bottom">
+				<input type="submit" size="7" value="Search" class="left_float" />
+				<input type="reset" size="7"  value="Reset" class="left_float" />
+				<div class="allSearch">
+					<a href="?summary=&plan=&product_id=&env_group_id=&manager=&status=">View All Runs</a><span>|</span><a href="/advance-search/">Advanced Search</a>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</form>
+	<form id='runs_form'>
+	{% if REQUEST_CONTENTS.items %}
+	<div id="contentTab" class="mixbar">
+		{# <span class="tit">{{ test_runs.count }} Test Runs</span> #}
+		<span class="tit"><a href="{% url "tcms.testruns.views.all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
+		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param='{% url "tcms.testruns.views.clone" %}' />
+		<input class="progress" type="button"
+				value="Calculate Progress" id="btn_selected_progress"
+				title="calculate progress of selected test runs"/>
+	</div>
+	{% include "run/common/run_filtered.html" %}
+	
+	{% else %}
+	{% if query_result %}
+	<span class="prompt-message"><center>No test runs found</center></span>
+	{% endif %}
+	</form>
+	{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,200 @@
+{% load comments %}
+{% load testcase_tags %}
+<form id="js-review-cases-nav-form" action="{% url "tcms.testcases.views.all" %}" method="get">
+	<input type="hidden" name="template_type" value="review_case" />
+	<input type="hidden" name="case_sort_by" value="{{ REQUEST_CONTENTS.case_sort_by }}" />
+	<input type="hidden" name="plan" value="{{ REQUEST_CONTENTS.from_plan }}" />
+	<input type="hidden" name="from_plan" value="{{ REQUEST_CONTENTS.from_plan }}" />
+	<input type="hidden" name="template_type" value="{{ REQUEST_CONTENTS.template_type }}" />
+	<input type="hidden" name="new_case_status_id" />
+	<input type="hidden" name="new_priority_id" />
+	<div class="tab_navigation actions">
+		<div class='toolbar'>
+			<ul>
+				<li>
+					{% if perms.testcases.add_testcase %}
+					<span id="js-review-case-menu" class='sprites toolbar_case icon_plan' data-params='["{% url "tcms.testcases.views.new" %}", {{ test_plan.plan_id }}]'>Case</span>
+					{% else %}
+					<span class='sprites toolbar_case icon_plan'>Case</span>
+					{% endif %}
+					<ul>
+						{% if perms.testcases.add_testcase %}
+						<li><input id="js-review-new-case" class="add_new icon_plan" type="button" value="Write new case" data-params='["{% url "tcms.testcases.views.new" %}", {{ test_plan.plan_id }}]'/></li>
+						<li><input id="js-review-import-case" type="button" class="import icon_plan" value="Import cases from XML" /></li>
+						<li><input id="js-review-add-case-to-plan" type="button" class="search icon_plan" value="Add cases from other plans" data-param="{% url "tcms.testplans.views.cases" test_plan.plan_id %}" /></li>
+						{% else %}
+						<li><input class="add_new icon_plan" type="button" disabled="true" value="Write new case"/></li>
+						<li><input type="button" class="import icon_plan" disabled="true" value="Import cases from XML"	/></li>
+						<li><input type="button" class="search icon_plan" disabled="true" value="Add cases from other plans"	 /></li>
+						{% endif %}
+						<li><input type="button" id="js-review-export-case" class="export icon_plan" title="Export selected cases into XML file" value="Export" data-param="{% url "tcms.testcases.views.export" %}" /></li>
+						<li><input type="button" id="js-review-print-case" class="print_view icon_plan" value="Print"  title="print view of selected cases" data-param="{% url "tcms.testcases.views.printable" %}" /></li>
+						{% if perms.testcases.add_testcase %}
+						<li><input type="button" id="js-review-clone-case" class="clone icon_plan" value="Clone" title="Clone selected cases to another test plan" data-param="{% url "tcms.testcases.views.clone" %}" /></li>
+						{% else %}
+						<li><input type="button" class="clone icon_plan" value="Clone" title="Clone selected cases to another test plan" disabled="true"/></li>
+						{% endif %}
+						{% if perms.testcases.delete_testcaseplan %}
+						<li><input type="button" id="js-review-remove-case" class="delete icon_plan" value="Remove" title="Remove selected cases from this plan" /></li>
+						{% else %}
+						<li><input type="button" class="delete icon_plan" value="Remove" title="Remove selected cases from this plan" disabled="true"/></li>
+						{% endif %}
+						{% if perms.testcases.change_testcase %}
+						<li><input type="button" class="sort_list icon_plan" value="Set Sort Number" title="Set sort number of selected cases from this plan"/></li>
+						{% else %}
+						<li><input type="button" class="sort_list icon_plan" value="Set Sort Number" title="Set sort number of selected cases from this plan" disabled="true"/></li>
+						{% endif %}
+					</ul>
+				</li>
+				<li>
+					{% if perms.testcases.add_testcasetag %}
+					<span class='sprites toolbar_tag icon_plan'>Tag</span>
+					{% else %}
+					<span class='sprites toolbar_tag_disabled icon_plan'>Tag</span>
+					{% endif %}
+					<ul>
+						{% if perms.testcases.add_testcasetag %}
+						<li><input type="button" value="Add Tag" class="tag_add sprites icon_plan" /></li>
+						{% else %} 
+						<li><input type="button" value="Add Tag" class="tag_add_disabled sprites icon_plan" disabled="disabled" /></li>
+						{% endif %}
+						{% if perms.testcases.delete_testcasetag %}
+						<li><input type="button" value="Remove Tag" class="tag_delete sprites icon_plan" /></li>
+						{% else %}
+						<li><input type="button" value="Remove Tag" class="tag_delete_disabled sprites icon_plan" disabled="disabled" /></li>
+						{% endif %}
+					</ul>
+				</li>
+				{% if perms.testcases.change_testcase %}
+				<li><input type="button" value="Automated" title="change automated" class="btn_automated automated sprites icon_plan" /></li>
+				<li><input type="button" value="Reviewer" title="change reviewer" class="btn_reviewer assignee sprites icon_plan" /></li>
+				<li><input type="button" value="Component" class="btn_component sprites component icon_plan" /></li>
+				<li><span class='sprites toolbar_status icon_plan'>Status</span>
+					<ul>
+						{% for cs in case_status %}
+						<li><input type='button' value='Set {{ cs }}' class='btn_case_status {{ cs|lower }} icon_plan js-review-status-item' data-param="{{ cs.pk }}" /></li>
+						{% endfor %}
+					</ul>
+				</li>
+				<li><input type="button" value="Category" class="btn_category sprites category icon_plan" /></li>
+				<li><span class='sprites toolbar_priority icon_plan'>Priority</span>
+					<ul>
+						{% for priority in priorities %}
+						<li><input type='button' value='Set {{ priority }}' class='btn_case_priority {{ priority|lower }} icon_plan js-review-priority-item' data-param="{{ priority.pk }}" /></li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% else %}
+				<li><input type="button" value="Automated" title="change automated" class="btn_automated automated_disabled sprites icon_plan" disabled="Trues" /></li>
+				<li><input type="button" value="Reviewer" title="change reviewer" class="btn_reviewer assigneedisable sprites icon_plan" disabled /></li>
+				<li><input id="id_batch_component" type="button" value="Component" class="btn_component sprites component_disabled icon_plan" disabled="disabled"/></li>
+				{% endif %}
+			</ul>
+			
+			<span class="reorder_case">
+				<a class="btn_filter filtercase" title="Click to show filter options">Show Filter Options</a>
+				{% if perms.testcases.change_testcase %}
+				<a class="btn_sort sortlink" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes">Re-order Cases</a>
+				{% endif %}
+			</span>
+
+		</div>
+		<div class="mixbar fixed">
+			<div class="tit" style="width: 50px; float: left; height: 100%; margin: 0px; text-align: center;">Tags:</div >
+			<div  style="margin-left: 50px; line-height:22px;" class="taglist">
+				{% for tag in case_own_tags %}
+				<a href="#testcases">{{ tag.tag_name }}</a>&nbsp;&nbsp;<span class="grey">-</span>&nbsp;&nbsp;
+				{% empty %}
+				<span class="grey">No tags in cases</span>
+				{% endfor %}
+			</div >
+		</div>
+	</div>
+	<div class="list_filter" {% ifnotequal REQUEST_CONTENTS.a 'search' %} style="display:none;" {% endifnotequal %}>
+		{% include 'case/form/filter.html' %}
+		<div class="submit-row bottom">
+			<span class="tit"><span class="js-number-of-loaded-cases">{{ total_cases_count }}</span> Cases</span>
+			<input type="submit" value="Filter cases" />
+		</div>
+	</div>
+</form>
+<div class="js-cases-select-all" display="display:none">
+	<input type="checkbox" id="reviewingcases-select-all" name="reviewingcases-select-all" checked />
+	<label for="reviewingcases-select-all">Also select all cases that are not yet shown below.</label>
+</div>
+<table class="list js-cases-list" cellpadding="1" cellspacing="0" border="0">
+	<thead data-param="{{ test_plan.plan_id }}">
+		<tr>
+			<th class="nosort" align="left" width="18px">
+				<a id="review_id_blind_all_link" class="blind_all_link">
+				    <!--Here add function toggleAllCases to t1.gif-->
+					<img src="{{ STATIC_URL }}images/t1.gif" border="0" alt="" class="collapse-all" title='Expand all cases'>
+				</a>
+			</th>
+			<th class="nosort" align="left" width="20px">
+				<input type="checkbox" value="all" checked />
+			</th>
+			<th align="left" class="widthID">
+				<a title="Sort by case ID" href="#testcases" class="js-review-case-field" data-param="case_id">
+					ID
+				</a>
+			</th>
+			<th align="left">
+				<a title="Sort by Summary" href="#testcases" class="js-review-case-field" data-param="summary">
+					Test Case Summary
+				</a>
+			</th>
+			<th align="left" width="90px">
+				<a title="Sort by Author" href="#testcases" class="js-review-case-field" data-param="author">
+					Author
+				</a>
+			</th>
+			<th align="left" width="110px">
+				<a title="Sort by Reviewer" href="#testcases" class="js-review-case-field" data-param="default_tester">
+					Reviewer
+				</a>
+			</th>
+			<th align="left" width="160px">
+				<a title="Sort by automated" href="#testcases" class="js-review-case-field" data-param="is_automated">
+					Automated
+				</a>
+			</th>
+			<th align="left" width="130px">
+				<a title="Sort by status" href="#testcases" class="js-review-case-field" data-param="case_status">
+					Status
+				</a>
+			</th>
+			<th align="left" width="100px">
+				<a title="Sort by categoty" href="#testcases" class="js-review-case-field" data-param="category__name">
+					Category
+				</a>
+			</th>
+			<th align="left" width="60px">
+				<a title="Sort by prority" href="#testcases" class="js-review-case-field" data-param="priority">
+					Priority
+				</a>
+			</th>
+			<th align="left" width="80px" style="display:none">Text version</th>
+			<th align="left" width="40px">
+				<a title="Sort by sortkey" href="#testcases" class="js-review-case-field" data-param="sortkey">
+					Sort
+				</a>
+			</th>
+			<th align="left" width="80px">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% include 'plan/cases_rows.html' %}
+	</tbody>
+</table>
+<div id="img_loading_reviewcases" class="ajax_loading" style="display:none"></div>
+<div class="cases-pagination show-more-cases">
+	<!-- There is a fixed size of page, 20 cases per page by default. After cases
+			 is loaded for the first time, Load More will load cases from the second
+			 page, and then the page index will be change to next page. -->
+	<a href="javascript:void(0)" class="load-more js-load-more" data-page-index="2" data-criterias="{{ search_criterias }}">Show more</a>
+	<span class="js-loading-progress">
+		(<span class="js-remaining-cases-count" data-cases-count="{{ total_cases_count|default:"0" }}">0</span> cases left)
+	</span>
+	<span class="js-nomore-msg" style="display:none">All cases have been loaded.</span>
+</div>

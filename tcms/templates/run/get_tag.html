@@ -1,0 +1,8 @@
+{% for tag in object.tag.all %}
+<li>
+	{{ tag }}
+	{% if perms.testruns.delete_testruntag %}
+	<a href="javascript:void(0)" class="js-remove-tag" data-params='["{{ object.run_id }}", "{{ tag }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
+	{% endif %}
+</li>
+{% endfor %}

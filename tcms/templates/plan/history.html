@@ -1,0 +1,58 @@
+{% extends "tcms_base.html" %}
+
+{% block subtitle %}Plan History{% endblock %}
+
+{% block custom_stylesheet %}
+{% endblock %}
+
+{% block custom_javascript %}
+<script type="text/javascript" src='{{ STATIC_URL }}js/testplan_actions.js'></script>
+{% endblock %}
+
+{% block content_type %}
+	<input type="hidden" name="content_type" value="testplans.testplan" />
+	<input type="hidden" name="object_pk" value="{{ testplan.pk }}" />
+	<input type="hidden" name="name" value="{{ testplan.name }}" />
+{% endblock %}
+
+{% block contents %}
+<div id="content">
+	<div class="sprites crumble">
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{{ testplan.get_absolute_url }}">{{ testplan.plan_id }}: {{ testplan.name }}</a>
+		>> Edit History
+	</div>
+	<h2>{{ testplan.name }}</h2>
+	<div class="Detailform border-1" >
+	<table cellpadding="0" cellspacing="0" class="list">
+		<tr class="titlelink">
+			<th width="5%">Text Version</th>
+			<th width="12%">Modified Date</th>
+			<th width="15%">Changed By</th>
+			<th width="78%">Document Preview</th>
+		</tr>
+		{% for plan_text in test_plan_texts %}
+		<tr class="{% cycle 'even' 'odd' %}">
+			<td><a href="{% url "tcms.testplans.views.text_history" testplan.plan_id %}?plan_text_version={{ plan_text.plan_text_version }}">{{ plan_text.plan_text_version }}</a></td>
+			<td>{{ plan_text.create_date }}</td>
+			<td>{{ plan_text.author.email }}</td>
+			<td>
+				{{ plan_text.plan_text|striptags|truncatewords:"10" }}
+			</td>
+		</tr>
+		{% ifequal plan_text.plan_text_version select_plan_text_version %}
+		<tr class="hide">
+			<td>
+			<td colspan="3">
+					<div class="content-wrap">
+					{{ plan_text.plan_text|safe }}
+					</div>
+			</td>
+		</tr>
+		{% endifequal %}
+		{% endfor %}
+	</table>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+<div class="leftlistinfo">
+    <div class="listinfo">
+        <div class="title"><label for="id_name">Plan Name&nbsp;:</label></div>
+        <div class="listinfo_input">{{ search_plan_form.name__icontains }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_author">Author&nbsp;:</label></div>
+        <div class="listinfo_input">{{ search_plan_form.author__email__startswith }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_owner">Owner&nbsp;:</label></div>
+        <div class="listinfo_input">{{ search_plan_form.owner__username__startswith }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_type_id">Plan Type&nbsp;:</label></div>
+        <div class="listinfo_input">{{ search_plan_form.type }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_tag">Tag&nbsp;:</label></div>
+        <div class="listinfo_input">  {{ search_plan_form.tag__name__in }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_case__default_tester__username__startswith">Case Default Tester&nbsp;:</label></div>
+        <div class="listinfo_input">  {{ search_plan_form.case__default_tester__username__startswith }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_is_active">Active&nbsp;:</label></div>
+        <div class="listinfo_input">
+	    <ul>
+		<li>{{ search_plan_form.is_active }} <span class="grey">Uncheck will search active and inactive plans</span></li>
+	    </ul>
+	</div>
+    </div>
+</div>
+<div class="rightlistinfo">
+    <div class="listinfo">
+        <div class="title"><label for="id_product_id">Product&nbsp;:</label></div>
+        <div class="listinfo_input">{{ search_plan_form.product }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_version_id">Product Version&nbsp;:</label></div>
+        <div class="listinfo_input"> {{ search_plan_form.product_version }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_env_group_id">Environment Group&nbsp;:</label></div>
+        <div class="listinfo_input">{{ search_plan_form.env_group }}</div>
+    </div>
+    
+    <div class="listinfo">
+        <div class="title"><label for="id_creation_date_start">Created after&nbsp;:</label></div>
+        <div class="listinfo_input" id=creation_sdate>{{ search_plan_form.create_date__gte }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title"><label for="id_creation_date">Created before&nbsp;:</label></div>
+        <div class="listinfo_input" id=creation_sdate>{{ search_plan_form.create_date__lte }}</div>
+    </div>
+    <div class="listinfo">
+        <div class="title">{{ search_plan_form.errors }}</div>
+    </div>
+</div>
+<div class="clear"></div>
