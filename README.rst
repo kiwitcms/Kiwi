@@ -14,7 +14,7 @@ Dependencies
 
 - Python >= 2.6
 - Django = 1.5.5
-- MySQL-python >= 1.2.3
+- MySQL-python == 1.2.5
 - Kobo
 - python-kerberos
 - python-qpid
