@@ -23,6 +23,11 @@ Dependencies
 
 See also requirements/base.txt and requirements/devel.txt
 
+Documentation
+-------------
+
+http://nitrate.readthedocs.org/
+
 Installation
 ------------
 
