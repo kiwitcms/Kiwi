@@ -7,8 +7,8 @@ Get source code
 The Nitrate source code is availabel at: https://git.fedorahosted.org/cgit/nitrate.git/?h=development
 You can get the latest changes with git easily::
 
-    git clone git://git.fedorahosted.org/nitrate.git
-    git checkout --track origin/development
+    git clone https://github.com/Nitrate/Nitrate.git
+    git checkout --track origin/develop
 
 Install dependencies
 --------------------
