@@ -94,7 +94,7 @@ class TestCaseStatus(TCMSActionModel):
 
 class TestCaseCategory(TCMSActionModel):
     id = models.AutoField(db_column='category_id', primary_key=True)
-    name = models.CharField(max_length=720)
+    name = models.CharField(max_length=255)
     product = models.ForeignKey('management.Product', related_name="category")
     description = models.TextField(blank=True)
 
