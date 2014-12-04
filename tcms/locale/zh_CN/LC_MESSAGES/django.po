@@ -1,0 +1,281 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-04 18:19+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: core/contrib/auth/forms.py:22 profiles/forms.py:71
+msgid "A user with that email already exists."
+msgstr ""
+
+#: core/contrib/comments/forms.py:12
+msgid "Name"
+msgstr ""
+
+#: core/contrib/comments/forms.py:16
+msgid "Email address"
+msgstr ""
+
+#: core/contrib/comments/forms.py:19
+msgid "URL"
+msgstr ""
+
+#: core/contrib/comments/forms.py:23
+msgid "Comment"
+msgstr ""
+
+#: core/forms/fields.py:55
+msgid "Enter a valid estimated time. e.g. 12h45m"
+msgstr ""
+
+#: profiles/forms.py:26
+msgid "Username"
+msgstr ""
+
+#: profiles/forms.py:28
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: profiles/forms.py:31
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr ""
+
+#: profiles/forms.py:36
+msgid "E-mail"
+msgstr ""
+
+#: profiles/forms.py:80
+msgid "User error."
+msgstr ""
+
+#: profiles/forms.py:100
+msgid "A user with that username already exists."
+msgstr ""
+
+#: templates/menu.html:5
+msgid "HOME"
+msgstr "首页"
+
+#: templates/menu.html:9
+msgid "PLANNING"
+msgstr "测试计划"
+
+#: templates/menu.html:28
+msgid "TESTING"
+msgstr "测试执行"
+
+#: templates/menu.html:50
+msgid "ENVIRONMENT"
+msgstr "环境"
+
+#: templates/menu.html:62
+msgid "REPORTING"
+msgstr "报表"
+
+#: templates/menu.html:78
+msgid "ADMIN"
+msgstr "系统管理"
+
+#: templates/admin/base_site.html:13
+msgid "Django administration"
+msgstr ""
+
+#: templates/admin/change_form.html:18 templates/admin/change_list.html:9
+#: templates/admin/delete_confirmation.html:9
+#: templates/admin/object_history.html:9
+#: templates/admin/auth/user/change_password.html:14
+#: templates/registration/password_change_done.html:4
+#: templates/registration/password_change_form.html:5
+msgid "Home"
+msgstr ""
+
+#: templates/admin/change_form.html:21 templates/admin/index.html:34
+msgid "Add"
+msgstr ""
+
+#: templates/admin/change_list.html:29
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: templates/admin/change_list.html:40
+msgid "Filter"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:13
+msgid "Delete"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:19
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:26
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
+"All of the following related items will be deleted:"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:31
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: templates/admin/filter.html:2
+#, python-format
+msgid " By %(filter_title)s "
+msgstr ""
+
+#: templates/admin/index.html:23
+#, python-format
+msgid "Models available in the %(name)s application."
+msgstr ""
+
+#: templates/admin/index.html:24
+#, python-format
+msgid "%(name)s"
+msgstr ""
+
+#: templates/admin/index.html:40
+msgid "Change"
+msgstr ""
+
+#: templates/admin/index.html:51
+msgid "You don't have permission to edit anything."
+msgstr ""
+
+#: templates/admin/index.html:59
+msgid "Recent Actions"
+msgstr ""
+
+#: templates/admin/index.html:60
+msgid "My Actions"
+msgstr ""
+
+#: templates/admin/index.html:64
+msgid "None available"
+msgstr ""
+
+#: templates/admin/object_history.html:13
+msgid "History"
+msgstr ""
+
+#: templates/admin/object_history.html:25
+msgid "Date/time"
+msgstr ""
+
+#: templates/admin/object_history.html:26
+msgid "User"
+msgstr ""
+
+#: templates/admin/object_history.html:27
+msgid "Action"
+msgstr ""
+
+#: templates/admin/object_history.html:33
+msgid "DATETIME_FORMAT"
+msgstr ""
+
+#: templates/admin/object_history.html:41
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:18
+#: templates/admin/auth/user/change_password.html:51
+#: templates/registration/password_change_done.html:3
+#: templates/registration/password_change_form.html:4
+msgid "Change password"
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:27
+#: templates/registration/password_change_form.html:17
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/admin/auth/user/change_password.html:31
+#, python-format
+msgid "Enter a new password for the user <strong>%(username)s</strong>."
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:38
+msgid "Password"
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:44
+#: templates/registration/password_change_form.html:35
+msgid "Password (again)"
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:45
+msgid "Enter the same password as above, for verification."
+msgstr ""
+
+#: templates/registration/password_change_done.html:3
+#: templates/registration/password_change_form.html:4
+msgid "Documentation"
+msgstr ""
+
+#: templates/registration/password_change_done.html:3
+#: templates/registration/password_change_form.html:4
+msgid "Log out"
+msgstr ""
+
+#: templates/registration/password_change_done.html:4
+#: templates/registration/password_change_form.html:5
+#: templates/registration/password_change_form.html:7
+#: templates/registration/password_change_form.html:20
+msgid "Password change"
+msgstr ""
+
+#: templates/registration/password_change_done.html:6
+#: templates/registration/password_change_done.html:11
+msgid "Password change successful"
+msgstr ""
+
+#: templates/registration/password_change_done.html:13
+msgid "Your password was changed."
+msgstr ""
+
+#: templates/registration/password_change_form.html:21
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: templates/registration/password_change_form.html:25
+msgid "Old password"
+msgstr ""
+
+#: templates/registration/password_change_form.html:30
+msgid "New password"
+msgstr ""
+
+#: templates/registration/password_change_form.html:42
+msgid "Change my password"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:21
+msgid "E-mail address:"
+msgstr ""

@@ -120,8 +120,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'tcms.core.middleware.CsrfDisableMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -506,3 +507,7 @@ TINYMCE_DEFAULT_CONFIG = {
                         "Header 3=header3;"
                         "Table Row=tableRow1",
 }
+
+LOCALE_PATHS = (
+    os.path.join(TCMS_ROOT_PATH, 'locale'),
+)
