@@ -4,7 +4,7 @@
 # Documentation, define build_doc 1
 
 Name:           nitrate
-Version:        3.8.11
+Version:        3.8.12
 Release:        1%{?dist}
 Summary:        Test Case Management System
 
@@ -167,6 +167,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+
+* Thu Dec 4 2014 Jian Chen <jianchen@redhat.com> 3.8.12-1
+- Refine documents.
 
 * Wed Oct 15 2014 Jian Chen <jianchen@redhat.com> 3.8.11-1
 - Write unittest for xmlrpc methods.
