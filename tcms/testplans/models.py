@@ -313,7 +313,6 @@ class TestPlanPermissionsRegexp(models.Model):
 class TestPlanAttachment(models.Model):
     attachment = models.ForeignKey(
         'management.TestAttachment',
-        primary_key=True
     )
     plan = models.ForeignKey(TestPlan)
 
