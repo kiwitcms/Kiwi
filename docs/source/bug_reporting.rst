@@ -1,5 +1,5 @@
-Report a Bug
-============
+Report an Issue
+===============
 
 Security Issues
 ---------------
@@ -13,7 +13,7 @@ this page and follow the security process instead.
 General Issues
 --------------
 
-We use Github issues to manage various kinds of bugs. If you have any good
+We use Github issues to manage various kinds of issues. If you have any good
 idea, or catch a bug, please do `create an issue`_ with much details so that
 everybody from community could understand and get involved into the discussion
 easily. Also, an issue with much details can help developers to know the
@@ -40,3 +40,26 @@ contributor guidelines, especially the first point: "Discuss any large changes
 on the mailing list first. Post patches early and listen to feedback." Few
 development experiences are more discouraging than spending a bunch of time
 writing a patch only to have someone point out a better approach on list.
+
+Template of a successful bug report
+-----------------------------------
+
+::
+
+   Description of problem:
+
+   Version-Release number of selected component (if applicable):
+
+   How reproducible:
+
+   Steps to Reproduce:
+   1.
+   2.
+   3.
+
+   Actual results:
+
+   Expected results:
+
+
+   Additional info:
