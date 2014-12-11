@@ -31,9 +31,13 @@ http://nitrate.readthedocs.org/
 Installation
 ------------
 
-See also docs/sources/deployment.rst
+See also `Installation in RHEL`_
+
+.. _Installation in RHEL:  http://nitrate.readthedocs.org/en/latest/installing_in_rhel.html
 
 Contribution
 ------------
 
-See also docs/sources/contribution.rst
+See also Contribution_
+
+.. Contribution: http://nitrate.readthedocs.org/en/latest/contribution.html
