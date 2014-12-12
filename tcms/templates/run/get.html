@@ -1,5 +1,4 @@
 {% extends "tcms_base.html" %}
-{% load redhat_urlize %}
 {% load extra_filters %} 
 
 {% block subtitle %}{{ test_run.summary }}{% endblock %}
@@ -131,7 +130,7 @@ jQ(function() {
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Note&nbsp;:</div>
-				<div class="name" style="max-width:500px;">{{ test_run.notes|redhat_urlize|linebreaksbr }}</div>
+				<div class="name" style="max-width:500px;">{{ test_run.notes|urlize|linebreaksbr }}</div>
 				<div class="clear"></div>
 			</div>
 		</div>
