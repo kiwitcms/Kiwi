@@ -138,12 +138,11 @@ why this commit fixes or provides new feature.
 The length of summary line should be limited within range 70-75. The remaining
 text should be wrapped at 79 character.
 
-Update bug status
-~~~~~~~~~~~~~~~~~
+The last thing is don't forget add issue number in summary. For example,
 
-After making pull request successfully, you have to change bug's status to
-``MODIFIED``.
+::
 
+    fix #1 improve testcase loading performance
 
 Review & Acceptance
 ~~~~~~~~~~~~~~~~~~~
