@@ -8,8 +8,9 @@ from django.utils import simplejson as json
 
 from forms import AddLinkReferenceForm, BasicValidationForm
 from models import create_link, LinkReference
-from responses import HttpJSONResponse, HttpJSONResponseBadRequest, \
-    HttpJSONResponseServerError
+from tcms.core.responses import HttpJSONResponse
+from tcms.core.responses import HttpJSONResponseBadRequest
+from tcms.core.responses import HttpJSONResponseServerError
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))

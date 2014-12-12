@@ -2,12 +2,13 @@
 
 import unittest
 
+from django import http
 from django_nose.testcases import FastFixtureTestCase
 
-from tcms.testcases.models import TestCase
+from tcms.core import responses
 from tcms.core.db import GroupByResult
-
 from tcms.core.utils import string_to_list
+from tcms.testcases.models import TestCase
 
 
 class TestUtilsFunctions(unittest.TestCase):
@@ -254,3 +255,22 @@ class GroupByResultLevelTest(TestCase):
         level_node = self.levels_groupby_result['build_1']['plan_2']
         value_leaf_count = level_node.leaf_values_count(value_in_row=True)
         self.assertEqual(value_leaf_count, 2)
+
+
+class VariousResponsesTest(TestCase):
+    '''Test HttpJSONResponse'''
+
+    def test_json_response(self):
+        response = responses.HttpJSONResponse('{}')
+        self.assert_(isinstance(response, http.HttpResponse))
+        self.assertEqual(response['Content-Type'], 'application/json')
+
+    def test_json_response_badrequest(self):
+        response = responses.HttpJSONResponseBadRequest('{}')
+        self.assert_(isinstance(response, http.HttpResponseBadRequest))
+        self.assertEqual(response['Content-Type'], 'application/json')
+
+    def test_json_response_servererror(self):
+        response = responses.HttpJSONResponseServerError('{}')
+        self.assert_(isinstance(response, http.HttpResponseServerError))
+        self.assertEqual(response['Content-Type'], 'application/json')
