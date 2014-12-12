@@ -1,5 +1,4 @@
 {% load comments %}
-{% load redhat_urlize %}
 
 {% get_comment_list for object as comment_list %}
 <ul class="ul-no-format comment">
@@ -14,7 +13,7 @@
 			</form>
 			{% endifequal %}
 			<br/>
-			<pre>{{ comment.comment|redhat_urlize|linebreaksbr }}</pre>
+			<pre>{{ comment.comment|urlize|linebreaksbr }}</pre>
 		</li>
 		{% endfor %}
 </ul>

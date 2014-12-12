@@ -20,13 +20,12 @@ Installation
 Get source code
 ~~~~~~~~~~~~~~~
 
-The Nitrate source code is available at:
-https://git.fedorahosted.org/cgit/nitrate.git/?h=development
+The Nitrate source code is available at:https://github.com/Nitrate/Nitrate
 
 You can get the latest changes with git easily::
 
-  git clone git://git.fedorahosted.org/nitrate.git
-  git checkout --track origin/development
+  git clone https://github.com/Nitrate/Nitrate.git
+  git checkout --track [a proper tag or branch]
 
 Install dependencies
 ~~~~~~~~~~~~~~~~~~~~
@@ -121,18 +120,16 @@ as expected. Run following command::
 Then try to use web browser to open ``http://localhost:8000/`` to verify the
 working status of this web service.
 
-Deployment
-----------
 
 Install Apache & mod_wsgi
----------------------------
+-------------------------
 
 Install httpd & mod_wsgi::
 
     sudo yum install httpd mod_wsgi
 
 Create upload dir
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 Create upload dir and change dir own & group to apache::
 
@@ -150,9 +147,7 @@ Run following command to collect static files::
 
     sudo django-admin.py collectstatic --settings=tcms.settings.product
 
-Reference:
-
-https://docs.djangoproject.com/en/1.5/howto/static-files/deployment/
+Reference: https://docs.djangoproject.com/en/1.5/howto/static-files/deployment/
 
 
 Deploy with Apache

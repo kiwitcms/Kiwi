@@ -1,5 +1,4 @@
 {% load comments %}
-{% load redhat_urlize %}
 <table class="table_noborder" cellpadding="0" cellspacing="0" border="0" width="100%" id="id_table_cases" >
 	<tr>
 		<th align="left" class="sortcol sortdesc" width="60" >Case ID</th>
@@ -33,7 +32,7 @@
 		</tr>
 		{% for comment in comments %}
 		<tr class="border-bottom">
-			<td valign="top" colspan="7">{{ comment.comment|redhat_urlize|linebreaksbr }}<span class="grey">[{{ comment.username }} {{ comment.submit_date }}]</span></td>
+			<td valign="top" colspan="7">{{ comment.comment|urlize|linebreaksbr }}<span class="grey">[{{ comment.username }} {{ comment.submit_date }}]</span></td>
 		</tr>
 		{% endfor %}
 	{% endif %}

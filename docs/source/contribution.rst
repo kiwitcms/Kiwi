@@ -16,13 +16,12 @@ Testing
 Testing, testing, and testing. Testing is the most important way to ensure the
 high quality of Nitrate to serve the community. There are many areas to test,
 such as the features, documentation, translation, and others you may
-focus on. Once you find a problem, please do search it in the `Bugzilla`_ to
+focus on. Once you find a problem, please do search it in the `Issues`_ to
 see whether it has been reported by other people and the discussion on it. If
-no one reported there yet, you are encouraged to file a bug with detailed and
-descriptive comment to give a clear description. Fortunately, Bugzilla gives
-you a template to help you writing a good bug report.
+no one reported there yet, you are encouraged to file one with detailed and
+descriptive comment to give a clear description.
 
-.. _Bugzilla: https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&list_id=2866751&product=TCMS&query_format=advanced
+.. _Issue: https://github.com/Nitrate/Nitrate/issues
 
 
 Documentation
@@ -84,10 +83,10 @@ For example, I have forked project and then I can clone to my local by issuing
     git clone https://github.com/my_username/Nitrate.git
 
 
-Confirm the problem in Bugzilla
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Confirm the problem
+~~~~~~~~~~~~~~~~~~~
 
-#. Before making any changes to the code, you should search in Bugzilla to see
+#. Before making any changes to the code, you should search in Issues to see
    whether someone else is working on the issue you want to fix. This is
    helpful to avoid duplicated work of you. Also, this is a good chance to
    communicate with the owner to share what you are thinking of.

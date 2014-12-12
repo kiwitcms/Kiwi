@@ -1,5 +1,4 @@
 {% load comments %}
-{% load redhat_urlize %}
 {% load extra_filters %}
 {% load report_tags %}
 
@@ -65,7 +64,7 @@
 				</div>
 			</div>
 			<div class="listinfo">
-				<span class="title">Note:</span>{{ test_run.notes|redhat_urlize|linebreaksbr }}
+				<span class="title">Note:</span>{{ test_run.notes|urlize|linebreaksbr }}
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -113,7 +112,7 @@
 					<span class="notes" >
 						<ul style="margin-left:10px;" class='comment'>
 							{% for comment in test_case_run.user_comments %}
-							<li><b>{{ comment.user }}</b><span class='grey' style='margin-left:5px'>[{{ comment.submit_date }}]</span>	<br />{{ comment.comment|redhat_urlize|linebreaksbr }}</li>
+							<li><b>{{ comment.user }}</b><span class='grey' style='margin-left:5px'>[{{ comment.submit_date }}]</span>	<br />{{ comment.comment|urlize|linebreaksbr }}</li>
 							{% endfor %}
 						</ul>
 					</span> 

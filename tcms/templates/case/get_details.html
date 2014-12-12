@@ -1,5 +1,4 @@
 {% load comments %}
-{% load redhat_urlize %}
 
 <td id="id_case_text_{{ forloop.counter }}" colspan="12">
 	<table class="case_detail">
@@ -70,7 +69,7 @@
 		<tr>
 			<td colspan='3'>
 				<h4>Notes:</h4>
-				<div class="content">{{ test_case.notes|redhat_urlize|linebreaksbr }}</div>
+				<div class="content">{{ test_case.notes|urlize|linebreaksbr }}</div>
 			</td>
 		</tr>
 		<tr>
@@ -83,7 +82,7 @@
 						<span class="strong">{{ comment.user.email }}</span>
 						<span class="grey">{{ comment.submit_date }}</span>
 						<br/>
-						{{ comment.comment|redhat_urlize|linebreaksbr }}
+						{{ comment.comment|urlize|linebreaksbr }}
 					</li>
 					{% endfor %}
 				<ul>

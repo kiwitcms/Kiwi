@@ -4,11 +4,11 @@ Setting up a development environment on Fedora
 Get source code
 ---------------
 
-The Nitrate source code is availabel at: https://git.fedorahosted.org/cgit/nitrate.git/?h=development
+The Nitrate source code is available at: https://github.com/Nitrate/Nitrate
+
 You can get the latest changes with git easily::
 
-    git clone git://git.fedorahosted.org/nitrate.git
-    git checkout --track origin/development
+    git clone https://github.com/Nitrate/Nitrate.git
 
 Install dependencies
 --------------------
@@ -62,4 +62,4 @@ You're now ready to start the server::
 
     python manage.py runserver
 
- Now you can open http://localhost:8000/ and should be presented with your brand new nitrate homepage!
+Now, open http://127.0.0.1:8000/ and should be presented with your brand new Nitrate homepage!
