@@ -23,8 +23,8 @@ from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.views import Prompt
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
-from tcms.testcases.actions import CategoryActions
-from tcms.testcases.actions import ComponentActions
+from tcms.testcases import actions
+from tcms.testcases import sqls
 from tcms.testcases.models import TestCase, TestCaseStatus, \
     TestCaseAttachment, TestCasePlan
 from tcms.management.models import Priority, TestTag
@@ -36,13 +36,6 @@ from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
     SearchCaseForm, CaseFilterForm, EditCaseForm, CaseNotifyForm, \
     CloneCaseForm, CaseBugForm, CaseTagForm
 from tcms.testplans.forms import SearchPlanForm
-from tcms.testcases.sqls import (TC_PRINTABLE_CASE_TEXTS,
-                                 TC_EXPORT_ALL_CASE_TAGS,
-                                 TC_EXPORT_ALL_CASES_COMPONENTS,
-                                 TC_EXPORT_ALL_CASES_META,
-                                 TC_EXPORT_ALL_CASE_TEXTS,
-                                 GET_TAGS_FROM_CASES,
-                                 GET_TAGS_FROM_CASES_FROM_PLAN)
 from tcms.utils.dict_utils import create_group_by_dict as create_dict
 from fields import CC_LIST_DEFAULT_DELIMITER
 
@@ -543,12 +536,12 @@ def get_tags_from_cases(case_ids, plan_id=None):
     '''
     case_id_list = ', '.join((str(item) for item in case_ids))
     if plan_id:
-        sql = GET_TAGS_FROM_CASES_FROM_PLAN.format(
+        sql = sqls.GET_TAGS_FROM_CASES_FROM_PLAN.format(
             case_id_list if case_id_list else '0')
 
         rows = SQLExecution(sql, (plan_id,)).rows
     else:
-        sql = GET_TAGS_FROM_CASES.format(
+        sql = sqls.GET_TAGS_FROM_CASES.format(
             case_id_list if case_id_list else '0')
 
         rows = SQLExecution(sql).rows
@@ -1105,7 +1098,7 @@ def get(request, case_id, template_name='case/get.html'):
     logs = TCMSLogModel.get_logs_for_model(TestCase, log_id)
 
     logs = itertools.groupby(logs, lambda l: l.date)
-    logs = [(day, list(actions)) for day, actions in logs]
+    logs = [(day, list(log_actions)) for day, log_actions in logs]
     # Get the specific test plan
     plan_id_from_request = request.GET.get('from_plan')
     if plan_id_from_request:
@@ -1210,7 +1203,7 @@ def printable(request, template_name='case/printable.html'):
 
     repeat = len(case_pks)
     params_sql = ','.join(itertools.repeat('%s', repeat))
-    sql = TC_PRINTABLE_CASE_TEXTS % (params_sql, params_sql)
+    sql = sqls.TC_PRINTABLE_CASE_TEXTS % (params_sql, params_sql)
     tcs = SQLExecution(sql, case_pks * 2).rows
 
     context_data = {
@@ -1250,14 +1243,15 @@ def generator_proxy(case_pks):
     key_func = lambda data: data['case_id']
     param_sql = ','.join(itertools.repeat('%s', len(case_pks)))
 
-    metas = SQLExecution(TC_EXPORT_ALL_CASES_META % param_sql,
+    metas = SQLExecution(sqls.TC_EXPORT_ALL_CASES_META % param_sql,
                          case_pks).rows
-    compoment_dict = create_dict(TC_EXPORT_ALL_CASES_COMPONENTS % param_sql,
-                                 case_pks, key_func)
-    tag_dict = create_dict(TC_EXPORT_ALL_CASE_TAGS % param_sql,
+    compoment_dict = create_dict(
+        sqls.TC_EXPORT_ALL_CASES_COMPONENTS % param_sql,
+        case_pks, key_func)
+    tag_dict = create_dict(sqls.TC_EXPORT_ALL_CASE_TAGS % param_sql,
                            case_pks, key_func)
 
-    sql = TC_EXPORT_ALL_CASE_TEXTS % (param_sql, param_sql)
+    sql = sqls.TC_EXPORT_ALL_CASE_TEXTS % (param_sql, param_sql)
     plan_text_dict = create_dict(sql, case_pks * 2, key_func)
 
     for meta in metas:
@@ -1444,10 +1438,10 @@ def edit(request, case_id, template_name='case/edit.html'):
             'cc_list': CC_LIST_DEFAULT_DELIMITER.join(
                 tc.emailing.get_cc_list()),
         })
+        default_tester = tc.default_tester_id and tc.default_tester.email or None
         form = EditCaseForm(initial={
             'summary': tc.summary,
-            'default_tester':
-                tc.default_tester_id and tc.default_tester.email or None,
+            'default_tester': default_tester,
             'requirement': tc.requirement,
             'is_automated': tc.get_is_automated_form_value(),
             'is_automated_proposed': tc.is_automated_proposed,
@@ -1772,7 +1766,7 @@ def component(request):
     """
     # FIXME: It will update product/category/component at one time so far.
     # We may disconnect the component from case product in future.
-    cas = ComponentActions(request)
+    cas = actions.ComponentActions(request)
     action = request.REQUEST.get('a', 'render_form')
     func = getattr(cas, action.lower())
     return func()
@@ -1785,7 +1779,7 @@ def category(request):
     """
     # FIXME: It will update product/category/component at one time so far.
     # We may disconnect the component from case product in future.
-    cas = CategoryActions(request)
+    cas = actions.CategoryActions(request)
     func = getattr(cas, request.REQUEST.get('a', 'render_form').lower())
     return func()
 
