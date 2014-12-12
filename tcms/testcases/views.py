@@ -19,6 +19,7 @@ from django.views.generic.base import TemplateView
 from tcms.core import forms
 from tcms.core.db import SQLExecution
 from tcms.core.logs.models import TCMSLogModel
+from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.views import Prompt
 from tcms.search import remove_from_request_path
@@ -789,8 +790,7 @@ def ajax_response(request, querySet, testplan, columnIndexNameMap,
             jsonString = render_to_string(jsonTemplatePath, locals(),
                                           context_instance=RequestContext(
                                               request))
-            response = HttpResponse(jsonString,
-                                    mimetype="application/javascript")
+            response = HttpJSONResponse(jsonString)
         except Exception, e:
             print e
     else:
@@ -811,8 +811,7 @@ def ajax_response(request, querySet, testplan, columnIndexNameMap,
                 {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
                  'iTotalDisplayRecords': iTotalDisplayRecords,
                  'sColumns': sColumns})
-            response = HttpResponse(simplejson.dumps(response_dict),
-                                    mimetype='application/javascript')
+            response = HttpJSONResponse(simplejson.dumps(response_dict))
             # prevent from caching datatables result
             #    add_never_cache_headers(response)
     return response

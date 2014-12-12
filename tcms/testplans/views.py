@@ -19,6 +19,7 @@ from django.template.loader import render_to_string
 from django.utils.simplejson import dumps as json_dumps
 
 from tcms.core.views import Prompt
+from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus, \
     TestCaseCategory
@@ -464,8 +465,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
             jsonString = render_to_string(jsonTemplatePath, locals(),
                                           context_instance=RequestContext(
                                               request))
-            response = HttpResponse(jsonString,
-                                    mimetype="application/javascript")
+            response = HttpJSONResponse(jsonString)
         except Exception, e:
             print e
     else:
@@ -486,8 +486,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
                 {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
                  'iTotalDisplayRecords': iTotalDisplayRecords,
                  'sColumns': sColumns})
-            response = HttpResponse(json_dumps(response_dict),
-                                    mimetype='application/javascript')
+            response = HttpJSONResponse(json_dumps(response_dict))
             # prevent from caching datatables result
             # add_never_cache_headers(response)
 
