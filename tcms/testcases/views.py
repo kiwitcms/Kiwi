@@ -24,6 +24,7 @@ from tcms.core.views import Prompt
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
+from tcms.testcases import data
 from tcms.testcases import sqls
 from tcms.testcases.models import TestCase, TestCaseStatus, \
     TestCaseAttachment, TestCasePlan
@@ -817,36 +818,7 @@ def ajax_response(request, querySet, testplan, columnIndexNameMap,
     return response
 
 
-class TestCaseViewDataMixin(object):
-    '''Mixin class to get view data of test case'''
-
-    def get_case_contenttype(self):
-        return ContentType.objects.get_for_model(TestCase)
-
-    def get_case_logs(self, testcase):
-        ct = self.get_case_contenttype()
-        logs = TCMSLogModel.objects.filter(content_type=ct,
-                                           object_pk=testcase.pk,
-                                           site=settings.SITE_ID)
-        logs = logs.values('date', 'who__username', 'action')
-        return logs.order_by('date')
-
-    def get_case_comments(self, case):
-        '''Get a case' comments'''
-        ct = self.get_case_contenttype()
-        comments = Comment.objects.filter(content_type=ct,
-                                          object_pk=case.pk,
-                                          site=settings.SITE_ID,
-                                          is_removed=False)
-        comments = comments.select_related('user').only('submit_date',
-                                                        'user__email',
-                                                        'user__username',
-                                                        'comment')
-        comments.order_by('pk')
-        return comments
-
-
-class SimpleTestCaseView(TemplateView, TestCaseViewDataMixin):
+class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
     '''Simple read-only TestCase View used in TestPlan page'''
 
     template_name = 'case/get_details.html'
@@ -955,30 +927,7 @@ class TestCaseCaseRunListPaneView(TemplateView):
         return data
 
 
-class TestCaseRunViewDataMixin(object):
-    '''Mixin class to get view data of test case run'''
-
-    def get_caserun_contenttype(self):
-        return ContentType.objects.get_for_model(TestCaseRun)
-
-    def get_caserun_logs(self, caserun):
-        caserun_ct = self.get_caserun_contenttype()
-        logs = TCMSLogModel.objects.filter(content_type=caserun_ct,
-                                           object_pk=caserun.pk,
-                                           site_id=settings.SITE_ID)
-        return logs.values('date', 'who__username', 'action')
-
-    def get_caserun_comments(self, caserun):
-        caserun_ct = self.get_caserun_contenttype()
-        comments = Comment.objects.filter(content_type=caserun_ct,
-                                          object_pk=caserun.pk,
-                                          site_id=settings.SITE_ID,
-                                          is_removed=False)
-        return comments.values('user__email', 'submit_date', 'comment',
-                               'pk', 'user__pk')
-
-
-class TestCaseSimpleCaseRunView(TemplateView, TestCaseRunViewDataMixin):
+class TestCaseSimpleCaseRunView(TemplateView, data.TestCaseRunViewDataMixin):
     '''Display caserun information in Case Runs tab in case page
 
     This view only shows notes, comments and logs simply. So, call it simple.
@@ -1020,8 +969,8 @@ class TestCaseSimpleCaseRunView(TemplateView, TestCaseRunViewDataMixin):
 
 
 class TestCaseCaseRunDetailPanelView(TemplateView,
-                                     TestCaseViewDataMixin,
-                                     TestCaseRunViewDataMixin):
+                                     data.TestCaseViewDataMixin,
+                                     data.TestCaseRunViewDataMixin):
     '''Display case run detail in run page'''
 
     template_name = 'case/get_details_case_run.html'
