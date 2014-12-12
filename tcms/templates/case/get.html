@@ -1,6 +1,5 @@
 {% extends "tcms_base.html" %}
 
-{% load redhat_urlize %}
 {% load extra_filters %}
 
 {% block subtitle %}Test case - {{ test_case.case_id }}: {{ test_case.summary }}{% endblock %}
@@ -167,7 +166,7 @@ Nitrate.TestCases.Instance = {
 			<div class="clear"></div>
 			<div class="listinfo">
 				<div class="title grey">Notes&nbsp;:</div>
-				<div class="name" style="max-width:800px;"><span id="display_priority" >{{ test_case.notes|redhat_urlize|linebreaksbr }}</span></div>
+				<div class="name" style="max-width:800px;"><span id="display_priority" >{{ test_case.notes|urlize|linebreaksbr }}</span></div>
 			</div>
 		</fieldset>
 	</div>

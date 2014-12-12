@@ -1,5 +1,4 @@
 {% extends "tcms_base.html" %}
-{% load redhat_urlize %}
 
 {% block subtitle %}Profile - {{ user_profile.user.username }}{% endblock %}
 
@@ -119,7 +118,7 @@
 			</tr>
 			<tr>
 				<td class="left_title sprites">Notes</td>
-				<td>{{ user_profile.notes|redhat_urlize|linebreaksbr|default:'<span class="grey">None</span>' }}</td>
+				<td>{{ user_profile.notes|urlize|linebreaksbr|default:'<span class="grey">None</span>' }}</td>
 		</table>
 		{% endifequal %}
 	</div>
