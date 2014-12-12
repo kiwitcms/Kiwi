@@ -6,6 +6,7 @@
 .gitignore
 .idea
 .tags
+TAGS
 build/
 dist/
 docs/guide/target
