@@ -78,8 +78,8 @@ class Product(TCMSActionModel):
         s = ProductXMLRPCSerializer(model_class=cls, queryset=qs)
         return s.serialize_queryset()
 
-    def save(self):
-        super(Product, self).save()
+    def save(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
         self.category.get_or_create(name='--default--')
         self.version.get_or_create(value='unspecified')
         self.build.get_or_create(name='unspecified')

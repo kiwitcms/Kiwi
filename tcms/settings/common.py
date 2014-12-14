@@ -502,3 +502,5 @@ TINYMCE_DEFAULT_CONFIG = {
 LOCALE_PATHS = (
     os.path.join(TCMS_ROOT_PATH, 'locale'),
 )
+
+TESTOPIA_XML_VERSION = '1.1'

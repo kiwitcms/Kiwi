@@ -46,7 +46,8 @@ endif
 
 .PHONY: test
 test:
-	@./manage.py test --settings=tcms.settings.test $(TEST_TARGET)
+	@./manage.py test --settings=tcms.settings.test \
+		--pattern test_*.py --exclude TestCase --exclude TestPlan $(TEST_TARGET)
 
 
 .PHONY: check

@@ -16,11 +16,11 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404, render_to_response
-from uuslug import slugify
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
+from uuslug import slugify
 
 from tcms.core.views import Prompt
 from tcms.core.responses import HttpJSONResponse
@@ -141,6 +141,7 @@ def new(request, template_name='plan/new.html'):
                               context_instance=RequestContext(request))
 
 
+@require_GET
 @user_passes_test(lambda u: u.has_perm('testplans.delete_testplan'))
 def delete(request, plan_id):
     '''Delete testplan'''
@@ -917,15 +918,21 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 def text_history(request, plan_id, template_name='plan/history.html'):
     '''View test plan text history'''
     SUB_MODULE_NAME = 'plans'
+    REQ = request.REQUEST
 
     tp = get_object_or_404(TestPlan, plan_id=int(plan_id))
-    tptxts = tp.text.all()
+    tptxts = tp.text.select_related('author').only('plan',
+                                                   'create_date',
+                                                   'plan_text',
+                                                   'plan_text_version',
+                                                   'author__email')
+    selected_plan_text_version = int(REQ.get('plan_text_version', 0))
     context_data = {
         'module': MODULE_NAME,
         'sub_module': SUB_MODULE_NAME,
         'testplan': tp,
         'test_plan_texts': tptxts,
-        'select_plan_text_version': int(request.GET.get('plan_text_version', 0)),
+        'select_plan_text_version': selected_plan_text_version,
     }
     return render_to_response(template_name, context_data,
                               context_instance=RequestContext(request))
@@ -1068,11 +1075,11 @@ def cases(request, plan_id):
                         # Start to create the objects
                         tc = TestCase.objects.create(
                             is_automated=case['is_automated'],
-                            script=None,
-                            arguments=None,
+                            script='',
+                            arguments='',
                             summary=case['summary'],
-                            requirement=None,
-                            alias=None,
+                            requirement='',
+                            alias='',
                             estimated_time=0,
                             case_status_id=case['case_status_id'],
                             category_id=category.id,
