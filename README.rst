@@ -40,4 +40,25 @@ Contribution
 
 See also Contribution_
 
-.. Contribution: http://nitrate.readthedocs.org/en/latest/contribution.html
+.. _Contribution: http://nitrate.readthedocs.org/en/latest/contribution.html
+
+Bug Reports
+-----------
+
+`File a New Bug Report`_
+
+.. _File a New Bug Report: http://nitrate.readthedocs.org/en/latest/bug_reporting.html
+
+Mailing Lists
+-------------
+
+`nitrate-devel at lists.fedorahosted.org`_
+
+.. _nitrate-devel at lists.fedorahosted.org: mailto:nitrate-devel@lists.fedorahosted.org
+
+IRC
+---
+
+`#nitrate on irc.freenode.org`_
+
+.. _#nitrate on irc.freenode.org: irc://irc.freenode.org/nitrate
