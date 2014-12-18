@@ -14,15 +14,93 @@ from tcms.testcases.models import TestCaseStatus
 from models import TestPlan, TestPlanType
 
 
+MIMETYPE_HTML = 'text/html'
+MIMETYPE_PLAIN = 'text/plain'
+MIMETYPE_OCTET_STREAM = 'application/octet-stream'
+MIMETYPE_OPENDOCUMENT = 'application/vnd.oasis.opendocument.text'
+
+
+class UploadedFile(object):
+    '''Base class for all classes representing a concrete uploaded file'''
+
+    def __init__(self, uploaded_file):
+        self.uploaded_file = uploaded_file
+
+    def get_content(self):
+        raise NotImplementedError('Must be implemented in subclass.')
+
+
+class UploadedPlainTextFile(UploadedFile):
+    '''Represent an uploaded plain text file'''
+
+    def get_content(self):
+        return '<pre>{0}</pre>'.format(self.uploaded_file.read())
+
+
+class UploadedHTMLFile(UploadedFile):
+    '''Represent an uploaded HTML file
+
+    While uploading an HTML file, several tags, attributee have to be deleted,
+    because they would break Nitrate internal JavaScript features and styles
+    and make some features unusable. Especially to the JavaScript surrounded by
+    SCRIPT or referenced from unknown external resources, security issue must
+    be considered.
+
+    Currently, tags SCRIPT, STYLE AND LINK are removed. And attributes class,
+    style and id are removed.
+    '''
+
+    def get_content(self):
+        from bs4 import BeautifulSoup
+        from itertools import chain
+
+        soup = BeautifulSoup(self.uploaded_file.read())
+        remove_tag = lambda tag: tag.extract()
+        find_all = soup.body.find_all
+
+        map(remove_tag, chain(find_all('script'),
+                              find_all('style'),
+                              find_all('link')))
+
+        for tag in soup.body.find_all():
+            pop = tag.attrs.pop
+            pop('class', None)
+            pop('CLASS', None)
+            pop('style', None)
+            pop('STYLE', None)
+            pop('id', None)
+            pop('ID', None)
+
+        return unicode(soup.body)
+
+
+class UploadedODTFile(UploadedFile):
+    '''Represent an uploaded ODT file'''
+
+    def get_content(self):
+        generatecss = True
+        embedable = True
+        odhandler = ODF2XHTML(generatecss, embedable)
+
+        doc = load(self.uploaded_file)
+        return odhandler.odf2xhtml(doc)
+
 
 # =========== Plan Fields ==============
 
 class PlanFileField(forms.FileField):
+    VALID_CONTENT_TYPES = (MIMETYPE_HTML,
+                           MIMETYPE_PLAIN,
+                           MIMETYPE_OCTET_STREAM,
+                           MIMETYPE_OPENDOCUMENT)
+    ODT_CONTENT_TYPES = (MIMETYPE_OCTET_STREAM, MIMETYPE_OPENDOCUMENT)
+
     default_error_messages = {
         'invalid_file_type': 'The file you uploaded is not a correct, '
                              'Html/Plain text/ODT file.',
         'unexcept_odf_error': 'Unable to analyse the file or the file you '
                               'upload is not Open Document.',
+        'unexpected_html_error': 'Invalid HTML document.',
     }
 
     def clean(self, data, initial=None):
@@ -32,42 +110,26 @@ class PlanFileField(forms.FileField):
         elif not data and initial:
             return initial
 
-        # Detemine the file type, raise error if the file type is not correct
-        if not (data.content_type == 'text/html'
-                or data.content_type == 'text/plain'
-                or data.content_type == 'application/octet-stream'
-                or data.content_type ==
-                'application/vnd.oasis.opendocument.text'):
+        if data.content_type not in self.VALID_CONTENT_TYPES:
             raise forms.ValidationError(
                 self.error_messages['invalid_file_type'])
 
-        # Process the ODF file
-        if data.content_type == 'application/octet-stream' \
-                or data.content_type == \
-                'application/vnd.oasis.opendocument.text':
-            generatecss = True
-            embedable = True
-            odhandler = ODF2XHTML(generatecss, embedable)
-
+        if data.content_type in self.ODT_CONTENT_TYPES:
             try:
-                doc = load(data)
-                plan_text = odhandler.odf2xhtml(doc)
-            except Exception:
+                return UploadedODTFile(data).get_content()
+            except:
                 raise forms.ValidationError(
                     self.error_messages['unexcept_odf_error'])
 
-            return plan_text
+        if data.content_type == MIMETYPE_HTML:
+            try:
+                return UploadedHTMLFile(data).get_content()
+            except:
+                raise forms.ValidationError(
+                    self.error_messages['unexpected_html_error'])
 
-        # We need to get a file object. We might have a path or we might
-        # have to read the data into memory.
-        if hasattr(data, 'temporary_file_path'):
-            plan_text = data.temporary_file_path()
-        elif hasattr(data, 'read'):
-            plan_text = data.read()
-        else:
-            plan_text = data['content']
-
-        return plan_text
+        if data.content_type == MIMETYPE_PLAIN:
+            return UploadedPlainTextFile(data).get_content()
 
 
 class CasePlanXMLField(forms.FileField):
