@@ -4,7 +4,7 @@
 # Documentation, define build_doc 1
 
 Name:           nitrate
-Version:        3.8.12
+Version:        3.8.13
 Release:        1%{?dist}
 Summary:        Test Case Management System
 
@@ -28,7 +28,8 @@ Requires:       mod_auth_kerb
 Requires:       mod_ssl
 Requires:       mod_wsgi >= 3.2
 Requires:       MySQL-python == 1.2.5
-Requires:       odfpy = 0.9.6
+Requires:       odfpy >= 0.9.6
+Requires:       python-beautifulsoup4 >= 4.1.1
 Requires:       python-kerberos
 Requires:       python-qpid
 Requires:       w3m
@@ -167,6 +168,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+
+* Thu Dec 18 2014 Chenxiong Qi <cqi@redhat.com> 3.8.13-1
+- Bug fix 1174111
 
 * Thu Dec 4 2014 Jian Chen <jianchen@redhat.com> 3.8.12-1
 - Refine documents.

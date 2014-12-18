@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+3.8.13-1 (Dec 18 2014)
+----------------------
+
+- Bug 1174111 [Test Plan]Test Plan doesn't recognize some scripts content when
+  edit plan to upload html files.
+
 3.8.12-1 (Dec 4 2014)
 ---------------------
 

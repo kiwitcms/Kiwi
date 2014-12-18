@@ -6,6 +6,7 @@ django-uuslug==1.0.0
 https://wadofstuff.googlecode.com/files/wadofstuff-django-serializers-1.1.0.tar.gz#egg=wadofstuff-django-serializers
 django-celery>=3.1.10
 https://git.fedorahosted.org/cgit/kobo.git/snapshot/kobo-0.2.1.tar.gz#egg=kobo
-odfpy==0.9.6
+odfpy>=0.9.6
 django-pagination==1.0.7
 django-tinymce==1.5.1
+beautifulsoup4>=4.1.1
