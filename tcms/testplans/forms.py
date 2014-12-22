@@ -54,7 +54,7 @@ class UploadedHTMLFile(UploadedFile):
         from bs4 import BeautifulSoup
         from itertools import chain
 
-        soup = BeautifulSoup(self.uploaded_file.read())
+        soup = BeautifulSoup(self.uploaded_file.read(), 'html.parser')
         remove_tag = lambda tag: tag.extract()
         find_all = soup.body.find_all
 
