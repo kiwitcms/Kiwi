@@ -4,7 +4,7 @@
 # Documentation, define build_doc 1
 
 Name:           nitrate
-Version:        3.8.13
+Version:        3.8.14
 Release:        1%{?dist}
 Summary:        Test Case Management System
 
@@ -168,6 +168,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Dec 22 2014 Chenxiong Qi <cqi@redhat.com> 3.8.14-1
+* Specify html.parser explicitly to parse HTML document
 
 * Thu Dec 18 2014 Chenxiong Qi <cqi@redhat.com> 3.8.13-1
 - Bug fix 1174111
