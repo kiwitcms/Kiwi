@@ -239,11 +239,9 @@
 						<div class="title"><label>Priority&nbsp;:</label></div>
 						<div class="listinfo_input">
 							<ul>
-								<li><input type="checkbox" name="cs_priority" value="1" /><span>P1</span></li>
-								<li><input type="checkbox" name="cs_priority" value="2" /><span>P2</span></li>
-								<li><input type="checkbox" name="cs_priority" value="3" /><span>P3</span></li>
-								<li><input type="checkbox" name="cs_priority" value="4" /><span>P4</span></li>
-								<li><input type="checkbox" name="cs_priority" value="5" /><span>P5</span></li>
+								{% for priority in priorities.iterator %}
+								<li><input type="checkbox" name="cs_priority" value="{{ priority.pk }}" /><span>{{ priority.value }}</span></li>
+								{% endfor %}
 							</ul>
 						</div>
 					</div>
