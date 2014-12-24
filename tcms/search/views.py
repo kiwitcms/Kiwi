@@ -16,6 +16,7 @@ from django.core.paginator import PageNotAnInteger
 
 from tcms.core.helpers.cache import cached_entities
 from tcms.core.utils.raw_sql import RawSQL
+from tcms.management.models import Priority
 from tcms.search.forms import CaseForm, RunForm, PlanForm
 from tcms.search.order import order_targets
 from tcms.search.query import SmartDjangoQuery
@@ -44,6 +45,7 @@ def advance_search(request, tmpl='search/advanced_search.html'):
             (p.pk, p.name) for p in cached_entities('product')
         ]
         PLAN_TYPE_CHOICES = cached_entities('testplantype')
+        priorities = Priority.objects.filter(is_active=True).order_by('value')
         errors = fmt_errors(errors)
         return render(request, tmpl, context=locals())
 
