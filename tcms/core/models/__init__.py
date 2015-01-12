@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save, post_delete, pre_save
 
 from fields import BlobValueWrapper, BlobField
 from base import TCMSContentTypeBaseModel
 from base import UrlMixin
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.core.logs.views import TCMSLog
-
+from tcms.testruns import signals as run_watchers
 
 User._meta.ordering = ['username']
 
@@ -45,3 +46,17 @@ class TCMSActionModel(models.Model, UrlMixin):
         log.make(who=who, action=action)
 
         return log
+
+    def clean(self):
+        strip_types = (models.CharField,
+                       models.TextField,
+                       models.URLField,
+                       models.EmailField,
+                       models.IPAddressField,
+                       models.GenericIPAddressField,
+                       models.SlugField)
+
+        for field in self._meta.fields:
+            if isinstance(field, strip_types):
+                value = getattr(self, field.name)
+                setattr(self, field.name, value.replace('\t', ' ').replace('\n', ' ').replace('\r', ' '))
