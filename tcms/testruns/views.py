@@ -552,7 +552,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
         jsonString = render_to_string(jsonTemplatePath, locals(),
                                       context_instance=RequestContext(
                                           request))
-        response = HttpResponse(jsonString, mimetype="application/javascript")
+        response = HttpJSONResponse(jsonString)
     else:
         aaData = []
         a = querySet.values()
@@ -571,8 +571,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
                 {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
                  'iTotalDisplayRecords': iTotalDisplayRecords,
                  'sColumns': sColumns})
-            response = HttpResponse(simplejson.dumps(response_dict),
-                                    mimetype='application/javascript')
+            response = HttpJSONResponse(simplejson.dumps(response_dict))
             #    prevent from caching datatables result
             #    add_never_cache_headers(response)
     return response
@@ -923,9 +922,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
         def ajax_response(self, response=None):
             if not response:
                 response = self.default_ajax_response
-
-            return HttpResponse(simplejson.dumps(response),
-                                mimetype='application/json')
+            return HttpJSONResponse(simplejson.dumps(response))
 
         def file(self):
             rh_bz = Bugzilla(settings.BUGZILLA_URL)

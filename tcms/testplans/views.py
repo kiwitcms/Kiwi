@@ -19,11 +19,11 @@ from django.template.loader import render_to_string
 from django.utils.simplejson import dumps as json_dumps
 
 from tcms.core.views import Prompt
+from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus, \
     TestCaseCategory
-from tcms.management.models import TCMSEnvGroup, \
-    Component
+from tcms.management.models import TCMSEnvGroup,  Component
 from tcms.testplans.models import TestPlan, TestPlanComponent
 from tcms.testruns.models import TestRun, TestCaseRun
 from tcms.core.models import TCMSLog
@@ -32,14 +32,10 @@ from tcms.search import remove_from_request_path
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.forms import NewPlanForm, EditPlanForm, ClonePlanForm, \
     ImportCasesViaXMLForm, SearchPlanForm, PlanComponentForm
-from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
 from tcms.core.db import SQLExecution
-from tcms.testplans.sqls import (TP_PRINTABLE_CASE_TEXTS,
-                                 TP_EXPORT_ALL_CASES_META,
-                                 TP_EXPORT_ALL_CASES_COMPONENTS,
-                                 TP_EXPORT_ALL_CASE_TAGS,
-                                 TP_EXPORT_ALL_CASE_TEXTS)
 from tcms.core.utils.checksum import checksum
+from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
+from tcms.testplans import sqls
 from tcms.utils.dict_utils import create_group_by_dict as create_dict
 
 MODULE_NAME = "testplans"
@@ -469,8 +465,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
             jsonString = render_to_string(jsonTemplatePath, locals(),
                                           context_instance=RequestContext(
                                               request))
-            response = HttpResponse(jsonString,
-                                    mimetype="application/javascript")
+            response = HttpJSONResponse(jsonString)
         except Exception, e:
             print e
     else:
@@ -491,8 +486,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
                 {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
                  'iTotalDisplayRecords': iTotalDisplayRecords,
                  'sColumns': sColumns})
-            response = HttpResponse(json_dumps(response_dict),
-                                    mimetype='application/javascript')
+            response = HttpJSONResponse(json_dumps(response_dict))
             # prevent from caching datatables result
             # add_never_cache_headers(response)
 
@@ -1354,7 +1348,7 @@ def printable(request, template_name='plan/printable.html'):
     def plan_generator():
         repeat = len(plan_pks)
         params_sql = ','.join(itertools.repeat('%s', repeat))
-        sql = TP_PRINTABLE_CASE_TEXTS % (params_sql, params_sql)
+        sql = sqls.TP_PRINTABLE_CASE_TEXTS % (params_sql, params_sql)
         result_set = SQLExecution(sql, plan_pks * 2)
         group_data = itertools.groupby(result_set.rows,
                                        lambda data: data['plan_id'])
@@ -1398,16 +1392,17 @@ def export(request, template_name='plan/export.xml'):
 def generator_proxy(plan_pks):
     key_func = lambda data: (data['plan_id'], data['case_id'])
     params_sql = ','.join(itertools.repeat('%s', len(plan_pks)))
-    metas = SQLExecution(TP_EXPORT_ALL_CASES_META % params_sql,
+    metas = SQLExecution(sqls.TP_EXPORT_ALL_CASES_META % params_sql,
                          plan_pks).rows
-    compoment_dict = create_dict(TP_EXPORT_ALL_CASES_COMPONENTS % params_sql,
-                                 plan_pks,
-                                 key_func)
-    tag_dict = create_dict(TP_EXPORT_ALL_CASE_TAGS % params_sql,
+    compoment_dict = create_dict(
+        sqls.TP_EXPORT_ALL_CASES_COMPONENTS % params_sql,
+        plan_pks,
+        key_func)
+    tag_dict = create_dict(sqls.TP_EXPORT_ALL_CASE_TAGS % params_sql,
                            plan_pks,
                            key_func)
 
-    sql = TP_EXPORT_ALL_CASE_TEXTS % (params_sql, params_sql)
+    sql = sqls.TP_EXPORT_ALL_CASE_TEXTS % (params_sql, params_sql)
     plan_text_dict = create_dict(sql, plan_pks * 2, key_func)
 
     for meta in metas:
