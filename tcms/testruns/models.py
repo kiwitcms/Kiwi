@@ -4,7 +4,7 @@ import datetime
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models.signals import post_save, post_delete,pre_save
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.contrib.contenttypes import generic
 from django.conf import settings
 

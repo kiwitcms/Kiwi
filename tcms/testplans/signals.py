@@ -14,3 +14,8 @@ def on_plan_delete(sender, instance, **kwargs):
     # email this deletion
     if instance.emailing.notify_on_plan_delete:
         email.email_plan_deletion(instance)
+
+
+def pre_save_clean(sender, **kwargs):
+    instance = kwargs['instance']
+    instance.clean()

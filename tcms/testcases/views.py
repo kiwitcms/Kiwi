@@ -1386,7 +1386,8 @@ def edit(request, case_id, template_name='case/edit.html'):
             'cc_list': CC_LIST_DEFAULT_DELIMITER.join(
                 tc.emailing.get_cc_list()),
         })
-        default_tester = tc.default_tester_id and tc.default_tester.email or None
+        default_tester = tc.default_tester_id and tc.default_tester.\
+            email or None
         form = EditCaseForm(initial={
             'summary': tc.summary,
             'default_tester': default_tester,

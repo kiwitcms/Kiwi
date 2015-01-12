@@ -41,7 +41,7 @@ from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, \
-TCMSEnvRunValueMap
+    TCMSEnvRunValueMap
 from tcms.management.models import Priority, TCMSEnvValue, TestTag
 from tcms.testcases.views import get_selected_testcases
 from tcms.testruns.data import get_run_bug_ids
@@ -49,7 +49,7 @@ from tcms.testruns.data import stats_caseruns_status
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testcases.forms import CaseBugForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, \
-RunCloneForm, MulitpleRunsCloneForm, PlanFilterRunForm
+    RunCloneForm, MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.helpers.serializer import TCR2File
 from tcms.testruns.sqls import GET_CONFIRMED_CASES
 

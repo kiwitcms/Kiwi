@@ -12,10 +12,8 @@ from tcms.management.models import Component, Product, Version, TCMSEnvGroup, \
     Priority, TestTag
 from tcms.testcases.models import TestCaseStatus
 from models import TestPlan, TestPlanType
+# ===========Plan Fields==============
 
-
-
-# =========== Plan Fields ==============
 
 class PlanFileField(forms.FileField):
     default_error_messages = {
