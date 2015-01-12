@@ -3,7 +3,6 @@ import itertools
 import time
 import datetime
 import urllib
-
 import re
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
@@ -26,6 +25,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
 from tcms.core.db import SQLExecution
+from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils import clean_request
 from tcms.core.utils.bugtrackers import Bugzilla
 from tcms.core.utils.raw_sql import RawSQL
@@ -41,7 +41,7 @@ from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, \
-    TCMSEnvRunValueMap
+TCMSEnvRunValueMap
 from tcms.management.models import Priority, TCMSEnvValue, TestTag
 from tcms.testcases.views import get_selected_testcases
 from tcms.testruns.data import get_run_bug_ids
@@ -49,7 +49,7 @@ from tcms.testruns.data import stats_caseruns_status
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testcases.forms import CaseBugForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, \
-    RunCloneForm, MulitpleRunsCloneForm, PlanFilterRunForm
+RunCloneForm, MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.helpers.serializer import TCR2File
 from tcms.testruns.sqls import GET_CONFIRMED_CASES
 
