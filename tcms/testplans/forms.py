@@ -74,6 +74,7 @@ class UploadedHTMLFile(UploadedFile):
         return unicode(soup.body)
 
 
+
 class UploadedODTFile(UploadedFile):
     '''Represent an uploaded ODT file'''
 
@@ -85,8 +86,6 @@ class UploadedODTFile(UploadedFile):
         doc = load(self.uploaded_file)
         return odhandler.odf2xhtml(doc)
 
-
-# =========== Plan Fields ==============
 
 class PlanFileField(forms.FileField):
     VALID_CONTENT_TYPES = (MIMETYPE_HTML,

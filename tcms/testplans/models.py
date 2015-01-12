@@ -4,7 +4,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_save
 from uuslug import slugify
 
 from tcms.management.models import TCMSEnvPlanMap, Version
@@ -379,6 +379,7 @@ if register_model:
 def _listen():
     post_save.connect(plan_watchers.on_plan_save, TestPlan)
     post_delete.connect(plan_watchers.on_plan_delete, TestPlan)
+    pre_save.connect(plan_watchers.pre_save_clean, TestPlan)
 
 
 if settings.LISTENING_MODEL_SIGNAL:

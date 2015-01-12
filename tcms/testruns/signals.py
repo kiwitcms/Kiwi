@@ -69,7 +69,7 @@ def post_update_handler(sender, **kwargs):
     tr.update_completion_status(is_auto_updated=True)
 
 
-def pre_save_clean(sender,**kwargs):
+def pre_save_clean(sender, **kwargs):
     instance = kwargs['instance']
     instance.clean()
 
