@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models, transaction
 from django.db.models import ObjectDoesNotExist
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete,pre_save
 from django.contrib.contenttypes import generic
 
 from tcms.core.models import TCMSActionModel
@@ -845,7 +845,7 @@ def _listen():
     # case save/delete listen for email notify
     post_save.connect(case_watchers.on_case_save, TestCase)
     post_delete.connect(case_watchers.on_case_delete, TestCase)
-
+    pre_save.connect(case_watchers.pre_save_clean, TestCase)
 
 if settings.LISTENING_MODEL_SIGNAL:
     _listen()
