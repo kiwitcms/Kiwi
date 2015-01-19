@@ -119,7 +119,7 @@ def update(request, values=None, id=None):
     >>> User.update({'password': 'foo', 'old_password': '123'}, 2206)
     """
     if id:
-        user_being_updated= User.objects.get(pk=id)
+        user_being_updated = User.objects.get(pk=id)
     else:
         user_being_updated = request.user
 

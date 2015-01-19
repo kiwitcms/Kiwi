@@ -103,7 +103,7 @@ install:
 
 ################## Code style section by following PEP8 #####################
 # Check code convention based on flake8
-FLAKE8_EXCLUDE=.git,__pycache__,tcms/settings,sqls.py,urls.py,manage.py,wsgi.py
+FLAKE8_EXCLUDE=.git,__pycache__,tcms/settings,*sqls.py,urls.py,manage.py,wsgi.py,*tests*,*settings.py,*raw_sql.py,*xml2dict*
 ifeq ($(strip $(TARGET)),)
 	CHECK_TARGET=tcms
 else

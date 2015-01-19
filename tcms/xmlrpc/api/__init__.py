@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from auth import *
-from build import *
-from env import *
-from product import *
-from tag import *
-from testcaserun import *
-from testcase import *
-from testcaseplan import *
-from testrun import *
-from user import *
-from version import *
+from auth import *  # NOQA
+from build import *  # NOQA
+from env import *  # NOQA
+from product import *  # NOQA
+from tag import *  # NOQA
+from testcaserun import *  # NOQA
+from testcase import *  # NOQA
+from testcaseplan import *  # NOQA
+from testrun import *  # NOQA
+from user import *  # NOQA
+from version import *  # NOQA

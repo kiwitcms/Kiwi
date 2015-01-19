@@ -274,13 +274,13 @@ def get(request, plan_id):
     # add this extra field. But, now that's it.
     response['default_product_version'] = response['product_version']
 
-    #get the xmlrpc tags
+    # get the xmlrpc tags
     tag_ids = tp.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     tags = TestTag.to_xmlrpc(query)
-    #cut 'id' attribute off, only leave 'name' here
+    # cut 'id' attribute off, only leave 'name' here
     tags_without_id = map(lambda x: x["name"], tags)
-    #replace tag_id list in the serialize return data
+    # replace tag_id list in the serialize return data
     response["tag"] = tags_without_id
     return response
 
@@ -782,7 +782,7 @@ def import_case_via_XML(request, plan_id, values):
                     setup=case['setup'],
                     breakdown=case['breakdown'], )
 
-        #handle tags
+        # handle tags
         if case['tags']:
             for tag in case['tags']:
                 tc.add_tag(tag=tag)
