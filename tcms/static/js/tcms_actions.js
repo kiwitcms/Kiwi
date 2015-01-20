@@ -337,7 +337,7 @@ function set_up_choices(element, values, allow_blank) {
 
   if (!element.multiple) {
     // Process the single select box
-    selected_ids.push(element.value);
+    selected_ids.push(parseInt(element.value));
   } else {
     // Process the select box with multiple attribute
     for (var i = 0; (node = element.options[i]); i++) {
