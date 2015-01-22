@@ -69,6 +69,11 @@ def post_update_handler(sender, **kwargs):
     tr.update_completion_status(is_auto_updated=True)
 
 
+def pre_save_clean(sender, **kwargs):
+    instance = kwargs['instance']
+    instance.clean()
+
+
 # new testrun created info for qpid
 def qpid_run_created(sender, *args, **kwargs):
     tr = kwargs['instance']

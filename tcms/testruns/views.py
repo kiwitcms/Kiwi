@@ -3,7 +3,6 @@ import itertools
 import time
 import datetime
 import urllib
-
 import re
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
@@ -26,6 +25,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
 from tcms.core.db import SQLExecution
+from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils import clean_request
 from tcms.core.utils.bugtrackers import Bugzilla
 from tcms.core.utils.raw_sql import RawSQL
