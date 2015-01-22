@@ -110,7 +110,7 @@ def sum_orm_queries(plans, cases, runs, target):
             'num_cases': RawSQL.num_cases,
             'num_runs': RawSQL.num_runs,
             'num_children': RawSQL.num_plans,
-            })
+        })
         return plans
     if target == 'case':
         if not plans and not runs:
@@ -146,7 +146,7 @@ def render_results(request, results, time_cost, queries,
         'time_cost': time_cost,
         'queries': queries,
         'query_url': query_url,
-        }
+    }
     return render_to_response(tmpl, context_data,
                               context_instance=RequestContext(request))
 

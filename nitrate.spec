@@ -178,7 +178,7 @@ rm -rf $RPM_BUILD_ROOT
 - Bug 1133912 - Script injection in notes field
 - Bug 1134166 - [test plan] when user remove tag at reviewing case tag in test plan detail page, system returns 500 error
 
-* Mon Aug 19 2014 Chenxiong Qi <cqi@redhat.com> 3.8.10-1
+* Tue Aug 19 2014 Chenxiong Qi <cqi@redhat.com> 3.8.10-1
 - Bug 1039495 - [test run][export to xml]If a case related many bugs in a run, when export the run to xml, the file only show the latest bug for this case.
 - Bug 1129058 - [TestPlan |Add cases ] The browser has no response and is in dead after selecting all the selected cases
 - Bug 1130903 - [xmlrpc]User can not filter case via estimated_time when invoke TestCase.filter_count method.
@@ -238,7 +238,7 @@ rm -rf $RPM_BUILD_ROOT
 * Mon Aug 11 2014 Chenxiong Qi <cqi@redhat.com> 3.8.9-3
 - Hotfix XMLRPC backward-compatibility broken
 
-* Thu Aug 01 2014 Jian Chen <jianchen@redhat.com> 3.8.9-2
+* Fri Aug 01 2014 Jian Chen <jianchen@redhat.com> 3.8.9-2
 - TCMS-538 Solve inconsistent data of product_version field in production database.
 
 * Thu Jul 17 2014 Jian Chen <jianchen@redhat.com> 3.8.9-1
@@ -295,7 +295,7 @@ rm -rf $RPM_BUILD_ROOT
 - 1036538 [advance search]printable copy, test cases is null even if select cases/plan from advance search list
 - 1036678 [Print plan]No cases information in print view page
 
-* Tue Dec 4 2013 Chenxiong Qi <cqi@redhat.com> - 3.8.5-4
+* Wed Dec 4 2013 Chenxiong Qi <cqi@redhat.com> - 3.8.5-4
 - 1036028 [Test plan] Unable to calculate all run progress even if I select "Also select the rest XX page(s)"
 - 1036598 [Add tag]"6932 undefined" warning when add tag without select "Also select cases that are not shown below, yet."
 - 1036538 [advance search]printable copy, test cases is null even if select cases/plan from advance search list
@@ -308,13 +308,13 @@ rm -rf $RPM_BUILD_ROOT
 - 1036042 [RFE]Suggest change the description of "Also select cases that are not shown below, yet." in test plan
 - 1035956 [test plan]Unable to create new test run or add cases to existing run
 
-* Tue Nov 28 2013 Chenxiong Qi <cqi@redhat.com> - 3.8.5-3
+* Thu Nov 28 2013 Chenxiong Qi <cqi@redhat.com> - 3.8.5-3
 - Bug 1028863 - [Testplan][Runs] In 'Runs' label of a Test plan, not input any thing in 'Items Per Page' then search, the site have no responce
 - Bug 1028921 - [TestPlan][Cases] It is better if the select all function can select all the cases which are filtered
 - Bug 1032897 - Test runs of a Test plan a displayed incorrectly
 - Bug 1032969 - Missing progress bar on test run search result
 
-* Tue Nov 13 2013 Chenxiong Qi <cqi@redhat.com> - 3.8.5-2
+* Wed Nov 13 2013 Chenxiong Qi <cqi@redhat.com> - 3.8.5-2
 - Using a separated file to track all database changes
 
 * Tue Nov 12 2013 Chenxiong Qi <cqi@redhat.com> - 3.8.5-1
@@ -328,21 +328,21 @@ rm -rf $RPM_BUILD_ROOT
 - Bug 1025657 - [Cases] Python error page is shown if input full-width characters in 'Default Tester' when add/edit a case
 - Bug 1024680 - [Home][Basic Information] The Python error page is shown if Name is invalid in Basic Information
 
-*Tue Sep 17 2013 Jian Chen <jianchen@redhat.com> - 3.8.4
+* Tue Sep 17 2013 Jian Chen <jianchen@redhat.com> - 3.8.4
 - Add a column with number of comments into Case Runs table
 - Several Bug Fixes (Refer to ChangeLog)
 
-* Fri Jul 25 2013 Chaobin Tang <ctang@redhat.com> - 3.8.2
+* Thu Jul 25 2013 Chaobin Tang <ctang@redhat.com> - 3.8.2
 - XMLRPC API (Refer to ChangeLog)
 
-*Fri Jul 11 2011 Chaobin Tang <ctang@redhat.com> - 3.5
+*Mon Jul 11 2011 Chaobin Tang <ctang@redhat.com> - 3.5
 - Usability Improvements (Refer to ChangeLog)
 
-*Fri Mar 3 2011 Chaobin Tang <ctang@redhat.com> - 3.4.1
+*Thu Mar 3 2011 Chaobin Tang <ctang@redhat.com> - 3.4.1
 - Testing Report Implementation
 - Several Bug Fixes (Refer to ChangeLog)
 
-*Fri Mar 3 2011 Chaobin Tang <ctang@redhat.com> - 3.4
+*Thu Mar 3 2011 Chaobin Tang <ctang@redhat.com> - 3.4
 - Advance Search Implementation
 - Several Bug Fixes (Refer to ChangeLog)
 
@@ -357,7 +357,7 @@ rm -rf $RPM_BUILD_ROOT
 - Include apache QPID support
 - Completed global signal processor
 
-* Thu Dec 1 2010 Xuqing Kuang <xkuang@redhat.com> - 3.2-4
+* Wed Dec 1 2010 Xuqing Kuang <xkuang@redhat.com> - 3.2-4
 - Upstream released new version
 
 * Tue Nov 30 2010 Xuqing Kuang <xkuang@redhat.com> - 3.2-3
@@ -386,7 +386,7 @@ rm -rf $RPM_BUILD_ROOT
 * Thu Aug 12 2010 Xuqing Kuang <xkuang@redhat.com> - 3.1.0-1
 - Upstream released new version
 
-* Fri Aug 2 2010 Xuqing Kuang <xkuang@redhat.com> - 3.0.4-3
+* Mon Aug 2 2010 Xuqing Kuang <xkuang@redhat.com> - 3.0.4-3
 - Upstream released new version
 
 * Fri Jul 30 2010 Xuqing Kuang <xkuang@redhat.com> - 3.0.4-2
@@ -510,7 +510,7 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Oct 21 2009 Xuqing Kuang <xkuang@redhat.com> - 1.0-5.svn2042.RC
 - Upstream released new version
 
-* Wed Oct 16 2009 Xuqing Kuang <xkuang@redhat.com> - 2.0-4.svn2006.RC
+* Fri Oct 16 2009 Xuqing Kuang <xkuang@redhat.com> - 2.0-4.svn2006.RC
 - Upstream released new version
 
 * Wed Oct 14 2009 Xuqing Kuang <xkuang@redhat.com> - 2.0-3.svn1971
@@ -519,7 +519,7 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Sep 30 2009 Xuqing Kuang <xkuang@redhat.com> - 2.0-2.svn1938
 - Upstream released new version
 
-* Tue Sep 23 2009 Xuqing Kuang <xkuang@redhat.com> - 2.0-2.svn1898
+* Wed Sep 23 2009 Xuqing Kuang <xkuang@redhat.com> - 2.0-2.svn1898
 - Upstream released new version
 
 * Tue Sep 15 2009 Xuqing Kuang <xkuang@redhat.com> - 2.0-1.svn1863
