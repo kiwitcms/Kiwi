@@ -902,7 +902,7 @@ def clone(request, template_name='plan/clone.html'):
                 'link_testcases': True,
                 'copy_testcases': False,
                 'maintain_case_orignal_author': True,
-                'keep_case_default_tester': True,
+                'keep_case_default_tester': False,
                 'name': 'Copy of %s' % tps[0].name
             })
             clone_form.populate(product_id=tps[0].product.id)

@@ -1647,8 +1647,8 @@ def clone(request, template_name='case/clone.html'):
         clone_form = CloneCaseForm(initial={
             'case': selected_cases,
             'copy_case': False,
-            'maintain_case_orignal_author': True,
-            'maintain_case_orignal_default_tester': True,
+            'maintain_case_orignal_author': False,
+            'maintain_case_orignal_default_tester': False,
             'copy_component': True,
             'copy_attachment': True,
         })
