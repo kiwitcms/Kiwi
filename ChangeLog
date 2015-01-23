@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+3.8.15-1 (Jan 23 2014)
+----------------------
+
+- add whitespace filter in plan/case/run text field
+
 3.8.14-1 (Dec 22 2014)
 ----------------------
 

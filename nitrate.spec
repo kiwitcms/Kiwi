@@ -4,7 +4,7 @@
 # Documentation, define build_doc 1
 
 Name:           nitrate
-Version:        3.8.14
+Version:        3.8.15
 Release:        1%{?dist}
 Summary:        Test Case Management System
 
@@ -168,6 +168,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Jan 23 2015 Jian Chen	<jianchen@redhat.com> 3.8.15-1
+* Add whitespace filter in plan/case/run text field.
+
 * Mon Dec 22 2014 Chenxiong Qi <cqi@redhat.com> 3.8.14-1
 * Specify html.parser explicitly to parse HTML document
 
