@@ -1,7 +1,12 @@
 Change Log
 ==========
 
-3.8.15-1 (Jan 23 2014)
+3.8.16-1 (Feb 11 2015)
+----------------------
+
+- revert whitespace filter in run/testcaserun notes field
+
+3.8.15-1 (Jan 23 2015)
 ----------------------
 
 - add whitespace filter in plan/case/run text field

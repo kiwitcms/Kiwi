@@ -4,7 +4,7 @@
 # Documentation, define build_doc 1
 
 Name:           nitrate
-Version:        3.8.15
+Version:        3.8.16
 Release:        1%{?dist}
 Summary:        Test Case Management System
 
@@ -168,6 +168,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Feb 11 2015 Jian Chen	<jianchen@redhat.com> 3.8.16-1
+* Revert whitespace filter in run/testcaserun notes field
+
 * Fri Jan 23 2015 Jian Chen	<jianchen@redhat.com> 3.8.15-1
 * Add whitespace filter in plan/case/run text field.
 
