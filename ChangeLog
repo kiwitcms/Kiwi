@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+3.8.17-1 (Feb 11 2015)
+----------------------
+
+- ignore empty string in white space character escape
+
 3.8.16-1 (Feb 11 2015)
 ----------------------
 
