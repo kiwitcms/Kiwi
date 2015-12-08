@@ -1,0 +1,5 @@
+source/version.py
+.ropeproject
+dist
+nitrate.egg-info/
+*~
