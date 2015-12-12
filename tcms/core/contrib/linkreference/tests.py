@@ -5,9 +5,9 @@ import unittest
 from django.http import HttpResponse
 
 from forms import TargetCharField
-from responses import (HttpJSONResponse,
-                       HttpJSONResponseBadRequest,
-                       HttpJSONResponseServerError)
+from tcms.core.responses import (HttpJSONResponse,
+                                 HttpJSONResponseBadRequest,
+                                 HttpJSONResponseServerError)
 
 
 class TestCustomResponses(unittest.TestCase):
