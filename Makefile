@@ -115,6 +115,13 @@ flake8:
 
 ################## Code style section by following PEP8 #####################
 
+initial-data:
+	@./manage.py dumpdata  --settings=tcms.settings.devel --indent=2 \
+		testcases.TestCaseStatus \
+		testcases.TestCaseBugSystem \
+		testruns.TestCaseRunStatus \
+		management.Priority > contrib/sql/initial_data.json
+
 help:
 	@echo 'Usage make [command]'
 	@echo ''
@@ -135,6 +142,7 @@ help:
 	@echo '  install          - Run command: python setup.py install'
 	@echo '  refresh-tags     - Refresh tags using ctags'
 	@echo '  refresh-etags    - Refresh tags using ctags for Emacs specifically'
+	@echo '  initial-data     - Make initial data from current connected database'
 	@echo '  help             - Show this help message and exit'
 
 refresh-tags:
