@@ -9,7 +9,7 @@ TEMPLATE_DEBUG = DEBUG
 # Database settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'nitrate',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'nitrate',
@@ -33,12 +33,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }
 
-# local.py can be used to override settings like database for development env.
-# local.py is ignored by git.
-try:
-    from local import *
-except ImportError:
-    pass
-
 # For local development
 ENABLE_ASYNC_EMAIL = False
+
+FIXTURE_DIRS = os.path.join(TCMS_ROOT_PATH, 'fixtures')
