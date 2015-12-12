@@ -529,7 +529,8 @@ class TestCaseRunStatus(TCMSActionModel):
         cache.clear()
 
         result = super(self.__class__, self).save(*args, **kwargs)
-        cache.delete(self.cache_key_names)
+        if self.cache_key_names in cache:
+            del cache[self.cache_key_names]
         return result
 
 
