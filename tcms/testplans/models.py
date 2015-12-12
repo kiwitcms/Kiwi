@@ -4,6 +4,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.db.models import Max
 from django.db.models.signals import post_save, post_delete, pre_save
 from uuslug import slugify
 
@@ -248,16 +249,13 @@ class TestPlan(TCMSActionModel):
         '''
         Get case sortkey.
         '''
-        if self.case.exists():
-            max_sk = max(TestCasePlan.objects.filter(
-                plan=self, case__in=self.case.all()).
-                values_list('sortkey', flat=True))
-            if max_sk:
-                return max_sk + 10
-            else:
-                return None
-        else:
+        result = TestCasePlan.objects.filter(
+            plan=self).aggregate(Max('sortkey'))
+        sortkey = result['sortkey__max']
+        if sortkey is None:
             return None
+        else:
+            return sortkey + 10
 
     def _get_email_conf(self):
         try:
