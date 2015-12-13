@@ -10,50 +10,44 @@ You can get the latest changes with git easily::
 
     git clone https://github.com/Nitrate/Nitrate.git
 
-Install dependencies
---------------------
+Setup virtualenv
+----------------
 
-Install devel packages that should be installed first::
+Install devel packages::
 
     sudo yum install gcc python-devel mysql-devel krb5-devel libxml2-devel libxslt-devel
 
+Create a virtual environment for Nitrate::
+
+    virtualenv ~/virtualenvs/nitrate
+
 Install dependencies from ``requirements/devel.txt``::
 
-    sudo pip install -r requirements/devel.txt
+    . ~/virtualenvs/nitrate/bin/activate
+    pip install -r requirements/devel.txt
 
 Initialize database
 -------------------
 
-Database is required by Nitrate (and all of Django apps). Django ORM supports
-many database backends, we recommend you to use MySQL.
+Currently, MySQL is only be supported, either mysql or mariadb is okay for
+running Nitrate.
 
-Create database and user for nitrate in mysql::
+Create database and user::
 
-    mysql> create database nitrate;
-    mysql> GRANT all privileges on nitrate.* to nitrate@'%' identified by 'password';
+    mysql -uroot
+    create database nitrate character set utf8;
+    GRANT all privileges on nitrate.* to nitrate@'%' identified by 'nitrate';
 
-Update settings/devel.py::
+For convenience for development, user, password and database name are already
+set in `tcms/settings/devel.py` with default value. Each of them is `nirrate`.
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'nitrate',                      # Or path to database file if using sqlite3.
-            # The following settings are not used with sqlite3:
-            'USER': 'nitrate',
-            'PASSWORD': 'password',
-            'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-            'PORT': '',                      # Set to empty string for default.
-        }
-    }
+Load database schema::
 
-Create tables through syncdb & migrate and create super user if needed::
-
-    django-admin.py syncdb --settings=tcms.settings.devel
-    django-admin.py migrate --settings=tcms.settings.devel
+    mysql -uroot nitrate < contrib/sql/nitrate_db_setup.sql
 
 Load initial data::
- 
-    django-admin.py loaddata --settings=tcms.settings.devel
+
+    ./manage.py loaddata contrib/sql/initial_data.json
 
 Let's run nitrate
 -----------------
