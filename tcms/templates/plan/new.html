@@ -38,11 +38,10 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 					<td>
 						<span class="name" >{{ form.product }}</span>
 						<span >{{ form.product.errors }}</span>
-                        <a id="add_id_product" href="{{ ADMIN_PREFIX }}/management/product/add/" class="addlink" >
+              <a id="add_id_product" href="{{ ADMIN_PREFIX }}/management/product/add/" class="addlink" >
 							Add Product
 						</a>
 						<span class="grey">After Add and Refresh page</span>
-                        
 					</td>
 				</tr>
 				<tr>
@@ -77,7 +76,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 						<div >{{ form.text.errors }}</div>
 						<span>Or upload a plan document</span>
 						{{ form.upload_plan_text }}
-						<span class="grey">Html, Plain text or ODT is acceptable.</span> 
+						<span class="grey">Html, Plain text or ODT is acceptable.</span>
 						<div >{{ form.upload_plan_text.errors }}</div>
 					</td>
 				</tr>
@@ -113,7 +112,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 				<input type="submit" value="Create test plan" />
 				<input type="button" value="Cancel" class="js-cancel-button" />
 			</div>
-		</div> 
+		</div>
 	</form>
 </div>
 {% endblock %}
