@@ -10,12 +10,12 @@ from tcms.management.models import TestBuild
 
 
 class ClassificationAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'pk')
+    search_fields = ('name', 'id')
     list_display = ('id', 'name', 'description')
 
 
 class ProductsAdmin(admin.ModelAdmin):
-    search_fields = (('name', 'pk'),)
+    search_fields = ('name', 'id')
     list_display = ('id', 'name', 'classification', 'description')
     list_filter = ('id', 'name', 'classification')
     exclude = ('milestone_url', 'default_milestone', 'vote_super_user',
@@ -23,7 +23,7 @@ class ProductsAdmin(admin.ModelAdmin):
 
 
 class PriorityAdmin(admin.ModelAdmin):
-    search_fields = (('value', 'pk',))
+    search_fields = ('value', 'id')
     list_display = ('id', 'value', 'sortkey', 'is_active')
     list_filter = ('is_active', )
 
@@ -35,7 +35,7 @@ class MilestoneAdmin(admin.ModelAdmin):
 
 
 class ComponentAdmin(admin.ModelAdmin):
-    search_fields = (('name', 'pk'),)
+    search_fields = ('name', 'id')
     list_display = ('id', 'name', 'product', 'initial_owner', 'description')
     list_filter = ('product',)
 
@@ -45,20 +45,20 @@ class ComponentAdmin(admin.ModelAdmin):
 
 
 class VersionAdmin(admin.ModelAdmin):
-    search_fields = (('value', 'pk'),)
+    search_fields = ('value', 'id')
     list_display = ('id', 'product', 'value')
     list_filter = ('product',)
 
 
 class BuildAdmin(admin.ModelAdmin):
-    search_fields = (('name', 'pk'),)
+    search_fields = ('name', 'build_id')
     list_display = ('build_id', 'name', 'product', 'is_active')
     list_filter = ('product',)
     exclude = ('milestone',)
 
 
 class AttachmentAdmin(admin.ModelAdmin):
-    search_fields = (('file_name', 'pk'),)
+    search_fields = ('file_name', 'attachment_id')
     list_display = ('attachment_id', 'file_name', 'submitter', 'description',
                     'create_date', 'mime_type')
 
