@@ -57,6 +57,8 @@ class TCMSActionModel(models.Model, UrlMixin):
                        models.SlugField)
 
         for field in self._meta.fields:
-            if isinstance(field, strip_types):
+            # TODO: hardcode 'notes' here
+            if not (field.name is 'notes') and isinstance(field, strip_types):
                 value = getattr(self, field.name)
-                setattr(self, field.name, value.replace('\t', ' ').replace('\n', ' ').replace('\r', ' '))
+                if value:
+                    setattr(self, field.name, value.replace('\t', ' ').replace('\n', ' ').replace('\r', ' '))

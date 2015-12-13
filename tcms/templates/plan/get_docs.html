@@ -10,20 +10,20 @@
 	</div>
 	<div class="listinfo_doc">
 		<span class="title">Version:</span><span class='left_float'>{{ test_plan.latest_text.plan_text_version }}</span>
-    </div>
+	</div>
 	<div class='clear'></div>
-    <div class="listinfo_doc">
-    	<span class="title">Last Editor:</span>{{ test_plan.latest_text.author.email }}
-    </div>
+	<div class="listinfo_doc">
+		<span class="title">Last Editor:</span>{{ test_plan.latest_text.author.email }}
+	</div>
 	<div id="display_summary" class="listinfo_doc">
-    	<div class="title">Summary:</div>
+		<div class="title">Summary:</div>
 		<div class="summary">{{ test_plan.latest_text.plan_text|safe }}</div>
 	</div>
 	{% else %}
 	<div id="display_summary" class="listinfo_doc">
-    	<div class="title">Summary:</div>
+		<div class="title">Summary:</div>
 		<span style="color: #666">The document for this plan hasn't been written yet.</span>
 	</div>
 	{% endif %}
-    <div class="clear"></div>
+	<div class="clear"></div>
 </div>

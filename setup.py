@@ -3,6 +3,7 @@
 import os
 from setuptools import setup, find_packages
 
+
 def get_version():
     return open('VERSION.txt', 'r').read().strip('\r\n')
 
@@ -18,7 +19,8 @@ def get_files_below(path):
     # We have been invoked from "build".
     # The files we need are in "build/tcms/static"
     # The paths must be relative to "tcms"
-    # Therefore we add a "tcms" to os.walk, and strip off the leading "tcms" at the end:
+    # Therefore we add a "tcms" to os.walk, and strip off the leading "tcms" at
+    # the end:
     for (dirpath, dirnames, filenames) in os.walk(os.path.join('tcms', path)):
         for filename in filenames:
             # strip off leading "tcms/" string from each path:
@@ -29,7 +31,9 @@ def get_package_data():
     # annoyingly, it appears that package_data has to list filenames; it can't
     # cope with directories, so we have to figure this out for it:
     result = {
-        '': [] + list(get_files_below('../templates')) + list(get_files_below('../static')) + list(get_files_below('../docs')),
+        '': [] + list(get_files_below('../templates'))
+               + list(get_files_below('../static'))
+               + list(get_files_below('../docs')),
     }
     return result
 

@@ -1,6 +1,37 @@
 Change Log
 ==========
 
+3.8.17-1 (Feb 11 2015)
+----------------------
+
+- ignore empty string in white space character escape
+
+3.8.16-1 (Feb 11 2015)
+----------------------
+
+- revert whitespace filter in run/testcaserun notes field
+
+3.8.15-1 (Jan 23 2015)
+----------------------
+
+- add whitespace filter in plan/case/run text field
+
+3.8.14-1 (Dec 22 2014)
+----------------------
+
+- Specify html.parser explicitly to parse HTML document
+
+3.8.13-1 (Dec 18 2014)
+----------------------
+
+- Bug 1174111 [Test Plan]Test Plan doesn't recognize some scripts content when
+  edit plan to upload html files.
+
+3.8.12-1 (Dec 4 2014)
+---------------------
+
+- Refine documents
+
 3.8.11-1 (Oct 15 2014)
 ----------------------
 
