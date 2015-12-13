@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, post_delete, pre_save
 
-from fields import BlobValueWrapper, BlobField
-from base import TCMSContentTypeBaseModel
+from base import TCMSContentTypeBaseModel  # noqa
 from base import UrlMixin
-from tcms.xmlrpc.serializer import XMLRPCSerializer
+from fields import BlobValueWrapper, BlobField  # noqa
 from tcms.core.logs.views import TCMSLog
-from tcms.testruns import signals as run_watchers
+from tcms.testruns import signals as run_watchers  # noqa
+from tcms.xmlrpc.serializer import XMLRPCSerializer
 
 User._meta.ordering = ['username']
 

@@ -23,7 +23,7 @@ from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus, \
     TestCaseCategory
-from tcms.management.models import TCMSEnvGroup,  Component
+from tcms.management.models import TCMSEnvGroup, Component
 from tcms.testplans.models import TestPlan, TestPlanComponent
 from tcms.testruns.models import TestRun, TestCaseRun
 from tcms.core.models import TCMSLog

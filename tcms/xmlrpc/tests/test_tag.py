@@ -54,7 +54,7 @@ class TestTag(FastFixtureTestCase):
             test_tag = tag.get_tags(None, {
                 'ids': [1]
             })
-        except Fault as f:
+        except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             print test_tag
@@ -67,7 +67,7 @@ class TestTag(FastFixtureTestCase):
             test_tag = tag.get_tags(None, {
                 'ids': [4, 5, 6]
             })
-        except Fault as f:
+        except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(test_tag)
@@ -84,7 +84,7 @@ class TestTag(FastFixtureTestCase):
             test_tag = tag.get_tags(None, {
                 'names': ['QWER']
             })
-        except Fault as f:
+        except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(test_tag)
@@ -95,7 +95,7 @@ class TestTag(FastFixtureTestCase):
             test_tag = tag.get_tags(None, {
                 'names': ['R1', 'R2', 'R3']
             })
-        except Fault as f:
+        except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(test_tag)

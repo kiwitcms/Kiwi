@@ -14,7 +14,6 @@ from tcms.management.models import Component
 from tcms.management.models import Priority
 from tcms.management.models import Product
 from tcms.management.models import TestTag
-from tcms.management.models import TestTag
 from tcms.management.models import Version
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
@@ -138,7 +137,7 @@ class TestAddComponent(FastFixtureTestCase):
 
     def test_ids_in_array(self):
         try:
-            XmlrpcTestPlan.add_component(self.http_req, [1,2])
+            XmlrpcTestPlan.add_component(self.http_req, [1, 2])
         except Fault as e:
             self.assertEqual(e.faultCode, 400)
 
@@ -335,7 +334,7 @@ class TestUpdate(FastFixtureTestCase):
     '''TODO: '''
 
 
-################# Section for testing testplan.import_case_via_XML ########
+# ################ Section for testing testplan.import_case_via_XML ########
 
 xml_single_case = '''
 <testcase author="%(author)s" priority="%(priority)s"
@@ -631,7 +630,7 @@ class TestCleanXMLFile(unittest.TestCase):
                           xml_file_with_wrong_version)
 
 
-################# End of testing testplan.import_case_via_XML #############
+# ################ End of testing testplan.import_case_via_XML #############
 
 
 class TestTestPlan(FastFixtureTestCase):

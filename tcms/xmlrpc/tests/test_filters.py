@@ -51,11 +51,6 @@ class TestFaultCode(TestCase):
             self.fail(AssertMessage.SHOULD_RAISE_EXCEPTION)
 
     def test_400(self):
-        from django.db.models import FieldDoesNotExist
-        from django.core.exceptions import FieldError
-        from django.core.exceptions import ValidationError
-        from django.core.exceptions import MultipleObjectsReturned
-
         exceptions = [v for k, v in locals().iteritems() if k != 'self']
         exceptions.extend((TypeError, ValueError))
 

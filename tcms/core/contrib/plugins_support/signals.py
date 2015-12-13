@@ -60,7 +60,7 @@ def register_model(model, sp=None):
     if model in REGISTERED_MODELS:
         return
     for parent in model._meta.parents.keys():
-        register_model(parent, cls)
+        register_model(parent, cls)  # noqa
     if sp is None:
         sp = GlobalSignalProcessor
     signals.post_init.connect(initial_signal_handler, sender=model)

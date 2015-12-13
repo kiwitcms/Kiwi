@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-from itertools import imap
-
-
 def string_to_list(strs, spliter=','):
     """Convert the string to list"""
     if isinstance(strs, list):

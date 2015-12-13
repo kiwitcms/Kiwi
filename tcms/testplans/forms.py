@@ -75,7 +75,6 @@ class UploadedHTMLFile(UploadedFile):
         return unicode(soup.body)
 
 
-
 class UploadedODTFile(UploadedFile):
     '''Represent an uploaded ODT file'''
 

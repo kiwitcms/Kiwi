@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import Q
 from django.dispatch import Signal
 from django.http import Http404
 from django.http import HttpResponse

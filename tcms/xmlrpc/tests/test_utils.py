@@ -142,7 +142,7 @@ class TestXMLRPCUtils(TestCase):
     def test_pre_process_ids_with_string(self):
         try:
             U.pre_process_ids(["a", "b"])
-        except ValueError as e:
+        except ValueError:
             pass
         except Exception:
             self.fail("Unexcept error occurs.")
@@ -151,7 +151,7 @@ class TestXMLRPCUtils(TestCase):
 
         try:
             U.pre_process_ids("1@2@3@4")
-        except ValueError as e:
+        except ValueError:
             pass
         except Exception:
             self.fail("Unexcept error occurs.")

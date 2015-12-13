@@ -254,7 +254,7 @@ class TestCaseRunCreate(TestCase):
 
     def test_create_with_no_perm(self):
         try:
-            tcr = testcaserun.create(self.staff_request, {
+            testcaserun.create(self.staff_request, {
                 "run": 1,
                 "build": 1,
                 "case": 3,

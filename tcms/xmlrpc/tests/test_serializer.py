@@ -39,7 +39,7 @@ class TestXMLSerializer(FastFixtureTestCase):
         self.assertEqual(self.testcase.arguments, result['arguments'])
 
 
-#################### Mock serializer classes for testing ####################
+# ################### Mock serializer classes for testing ####################
 
 
 class MockTestPlanSerializer(QuerySetBasedXMLRPCSerializer):
@@ -83,7 +83,7 @@ class MockProductSerializer(QuerySetBasedXMLRPCSerializer):
     '''Empty definition to test some method's default behavior'''
 
 
-#################### Mock serializer classes for testing ####################
+# ################### Mock serializer classes for testing ####################
 
 
 class TestQuerySetBasedSerializer(FastFixtureTestCase):
@@ -192,7 +192,7 @@ class TestQuerySetBasedSerializer(FastFixtureTestCase):
         expected_values.sort()
         self.assertEqual(expected_values, result)
 
-    ######## Test cases for extra_fields #######
+    # ####### Test cases for extra_fields #######
 
     def test_get_extra_fields(self):
         extra_fields = self.plan_serializer.get_extra_fields()
@@ -217,7 +217,7 @@ class TestQuerySetBasedSerializer(FastFixtureTestCase):
         self.case_serializer._handle_extra_fields(test_data)
         self.assertEqual(test_data, serialize_result)
 
-    ######## Test cases for core serialization method #######
+    # ####### Test cases for core serialization method #######
 
     def test_serialize_queryset(self):
         serialize_result = self.plan_serializer.serialize_queryset()

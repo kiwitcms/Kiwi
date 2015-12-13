@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse
 from django.utils import simplejson
 
 from tcms.core.response import HttpJSONResponse

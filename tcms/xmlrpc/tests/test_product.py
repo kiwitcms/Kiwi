@@ -849,7 +849,7 @@ class TestAddVersion(TestCase):
                 "product": "StarCraft",
                 "value": "New Version 2"
             })
-        except Fault as f:
+        except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertEqual(prod['value'], "New Version 2")
