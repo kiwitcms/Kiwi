@@ -82,7 +82,7 @@ class TestPlan(Mutable):
     _identifier_width = 5
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["author", "caseplans" "children", "components", "name",
+    _attributes = ["author", "caseplans", "children", "components", "name",
             "owner", "parent", "product", "status", "tags", "testcases",
             "testruns", "type", "version"]
 
