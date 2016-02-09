@@ -796,6 +796,11 @@ class TestPlanTests(unittest.TestCase):
         self.assertTrue(isinstance(testplan, TestPlan))
         self.assertEqual(testplan.name, "Test plan")
 
+    def test_fetch_nonexistent(self):
+        """ Fetch non-existent test plan """
+        with self.assertRaises(NitrateError):
+            TestPlan(-1).name
+
     def test_get_by_id(self):
         """ Fetch an existing test plan by id """
         testplan = TestPlan(self.testplan.id)
@@ -891,6 +896,11 @@ class TestRunTests(unittest.TestCase):
         self.assertTrue(isinstance(testrun, TestRun))
         self.assertEqual(testrun.summary, "Test run")
         self.assertEqual(testrun.errata, 1234)
+
+    def test_fetch_nonexistent(self):
+        """ Fetch non-existent test run """
+        with self.assertRaises(NitrateError):
+            TestRun(-1).notes
 
     def testGetById(self):
         """ Fetch an existing test run by id """
@@ -1033,6 +1043,11 @@ class TestCaseTests(unittest.TestCase):
         self.assertTrue(case.manual)
         self.assertTrue(case.autoproposed)
         self.assertFalse(case.automated)
+
+    def test_fetch_nonexistent(self):
+        """ Fetch non-existent test case """
+        with self.assertRaises(NitrateError):
+            TestCase(-1).summary
 
     def testGetById(self):
         """ Fetch an existing test case by id """

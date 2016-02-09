@@ -23,6 +23,7 @@ Mutable Nitrate objects
 """
 
 import datetime
+import xmlrpclib
 import nitrate.config as config
 
 from nitrate.config import log
@@ -273,9 +274,10 @@ class TestPlan(Mutable):
                 inject = self._server.TestPlan.get(self.id)
                 if not inject:
                     raise ValueError("No data fetched")
-            except:
-                log.debug("Failed to fetch test plan")
-                raise NitrateError("No data fetched or test plan does not exist")
+            except (xmlrpclib.Fault, ValueError) as error:
+                log.debug(error)
+                raise NitrateError(
+                    "Failed to fetch test plan TP#{0}".format(self.id))
             self._inject = inject
         # Otherwise just initialize the id from inject
         else:
@@ -618,9 +620,10 @@ class TestRun(Mutable):
                 inject = self._server.TestRun.get(self.id)
                 if not inject:
                     raise ValueError("No data fetched")
-            except:
-                log.debug("Failed to fetch test run")
-                raise NitrateError("No data fetched or test run does not exist")
+            except (xmlrpclib.Fault, ValueError) as error:
+                log.debug(error)
+                raise NitrateError(
+                    "Failed to fetch test run TR#{0}".format(self.id))
             self._inject = inject
         else:
             self._id = inject["run_id"]
@@ -988,9 +991,10 @@ class TestCase(Mutable):
                 inject = self._server.TestCase.get(self.id)
                 if not inject:
                     raise ValueError("No data fetched")
-            except:
-                log.debug("Failed to fetch test case")
-                raise NitrateError("No data fetched or test case does not exist")
+            except (xmlrpclib.Fault, ValueError) as error:
+                log.debug(error)
+                raise NitrateError(
+                    "Failed to fetch test case TC#{0}".format(self.id))
             self._inject = inject
         else:
             self._id = inject["case_id"]
