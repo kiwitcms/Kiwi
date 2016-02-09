@@ -40,6 +40,12 @@ srpm: tarball
 
 packages: rpm srpm
 
+# Python packaging
+wheel:
+	python setup.py bdist_wheel
+upload: wheel
+	twine upload dist/*.whl
+
 push: packages
 	# Documentation
 	scp $(DOCS)/*.{css,html} $(PUSH_URL)
@@ -53,4 +59,4 @@ push: packages
 		$(PUSH_URL)/download
 
 clean:
-	rm -rf $(TMP) source/*.pyc
+	rm -rf $(TMP) build dist nitrate.egg-info source/*.pyc

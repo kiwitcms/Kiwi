@@ -71,6 +71,22 @@ plan. The 'create.py' script gives a broader overview covering
 object creation, attribute setting, adjusting logs and caching.
 
 
+INSTALLATION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install directly from Fedora/Copr repository using yum or dnf::
+
+    yum install python-nitrate
+
+or use PIP (sudo required if not in a virtualenv)::
+
+    pip install nitrate
+
+Note that for successfull pip installation several extra
+dependencies are necessary::
+
+    yum install gcc krb5-devel python-devel postgresql-devel
+
+
 CONFIGURATION
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To be able to contact the Nitrate server a minimal user config
@@ -149,7 +165,7 @@ AUTHORS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 High-level Python module:
 Petr Šplíchal, Zbyšek Mráz, Martin Kyral, Lukáš Zachar, Filip
-Holec and Aleš Zelinka.
+Holec, Aleš Zelinka and Miroslav Vadkerti.
 
 Low-level XMLRPC driver:
 Airald Hapairai, David Malcolm, Will Woods, Bill Peck, Chenxiong
