@@ -269,7 +269,13 @@ class TestPlan(Mutable):
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test plan " + self.identifier)
-            inject = self._server.TestPlan.get(self.id)
+            try:
+                inject = self._server.TestPlan.get(self.id)
+                if not inject:
+                    raise ValueError("No data fetched")
+            except:
+                log.debug("Failed to fetch test plan")
+                raise NitrateError("No data fetched or test plan does not exist")
             self._inject = inject
         # Otherwise just initialize the id from inject
         else:
@@ -608,7 +614,13 @@ class TestRun(Mutable):
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test run {0}".format(self.identifier))
-            inject = self._server.TestRun.get(self.id)
+            try:
+                inject = self._server.TestRun.get(self.id)
+                if not inject:
+                    raise ValueError("No data fetched")
+            except:
+                log.debug("Failed to fetch test run")
+                raise NitrateError("No data fetched or test run does not exist")
             self._inject = inject
         else:
             self._id = inject["run_id"]
@@ -972,7 +984,13 @@ class TestCase(Mutable):
         # Fetch the data hash from the server unless provided
         if inject is None:
             log.info("Fetching test case " + self.identifier)
-            inject = self._server.TestCase.get(self.id)
+            try:
+                inject = self._server.TestCase.get(self.id)
+                if not inject:
+                    raise ValueError("No data fetched")
+            except:
+                log.debug("Failed to fetch test case")
+                raise NitrateError("No data fetched or test case does not exist")
             self._inject = inject
         else:
             self._id = inject["case_id"]
