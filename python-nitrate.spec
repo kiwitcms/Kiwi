@@ -1,6 +1,6 @@
 Name: python-nitrate
-Version: 1.2
-Release: 0%{?dist}
+Version: 1.3
+Release: 1%{?dist}
 
 Summary: Python API for the Nitrate test case management system
 Group: Development/Languages
@@ -40,6 +40,13 @@ install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Tue Feb 09 2016 Petr Šplíchal <psplicha@redhat.com> 1.3-1
+- Package nitrate for PyPI, several adjustments, docs update
+- Better handle non-existent objects [BZ#1204028]
+- Correctly handle no caseplan found [BZ#1171671]
+- Typo fix in the TestPlan's _attributes [BZ#1304295]
+- Make sure that PlanStatus id type is int
+
 * Fri Aug 08 2014 Petr Šplíchal <psplicha@redhat.com> 1.2-0
 - Include example config in documentation [BZ#1098818]
 - Handle duplicate entry errors gracefully [BZ#1112521]
