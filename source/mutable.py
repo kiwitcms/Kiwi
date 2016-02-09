@@ -366,7 +366,7 @@ class TestPlan(Mutable):
         try:
             caseplan = [caseplan for caseplan in self.caseplans
                     if caseplan.testcase == testcase][0]
-        except KeyError:
+        except LookupError:
             raise NitrateError("No CasePlan for {0} in {1} found".format(
                     testcase.identifier, self.identifier))
         # Modify the sortkey if requested
