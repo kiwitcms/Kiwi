@@ -18,7 +18,8 @@ BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools
 
-Requires:       Django = 1.5.5
+Requires:       Django = 1.8.14
+Requires:       django-contrib-comments = 1.6.2
 Requires:       django-celery >= 3.1.10
 Requires:       django-pagination = 1.0.7
 Requires:       django-tinymce = 2.4.0
@@ -33,7 +34,6 @@ Requires:       python-beautifulsoup4 >= 4.1.1
 Requires:       python-kerberos
 Requires:       python-qpid
 Requires:       w3m
-Requires:       wadofstuff-django-serializers >= 1.1.0
 
 %description
 Nitrate is a tool for tracking testing being done on a product.

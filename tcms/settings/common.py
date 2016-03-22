@@ -230,13 +230,6 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
-# FIXME: Is this serializer necessary? If no, remove it.
-# wadofstuff serializer settings
-# http://code.google.com/p/wadofstuff/wiki/DjangoFullSerializers
-# SERIALIZATION_MODULES = {
-#     'json': 'wadofstuff.django.serializers.json',
-# }
-
 # Needed by django.core.context_processors.debug:
 # See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-core-context-processors-debug
 INTERNAL_IPS = ('127.0.0.1', )
