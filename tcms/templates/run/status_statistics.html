@@ -23,8 +23,8 @@
 	</ul>
 	<div class="clear"></div>
 	<ul>
-		<li style="background:url(../../static/images/btn_bg_report.png) no-repeat; height:25px; line-height:25px; width:57px; padding-left:30px; margin-right:15px;"><a href="{% url "run-report" test_run.run_id %}" title="report of test caserun">Report</a></li>
-		<li style="background:url(../../static/images/btn_bg_showbug.png) no-repeat; height:25px; line-height:25px; width:133px; padding-left:30px;">
+		<li style="background:url({{ STATIC_URL }}images/btn_bg_report.png) no-repeat; height:25px; line-height:25px; width:57px; padding-left:30px; margin-right:15px;"><a href="{% url "run-report" test_run.run_id %}" title="report of test caserun">Report</a></li>
+		<li style="background:url({{ STATIC_URL }}images/btn_bg_showbug.png) no-repeat; height:25px; line-height:25px; width:133px; padding-left:30px;">
 		{% ifnotequal test_case_run_bugs_count 0 %}
 			<span id="total_run_bug_count"><a href="{% url "run-report" test_run.run_id %}#buglist" title="Show All Bugs">Bugs [{{ test_case_run_bugs_count }}]</a></span>
 		{% else %}
