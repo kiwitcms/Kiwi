@@ -5,10 +5,7 @@ import kerberos
 from django.conf import settings
 
 
-try:
-    from django.core.validators import email_re
-except ImportError:  # Django 1.1.1 compatible
-    from django.forms.fields import email_re
+from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.backends import ModelBackend, RemoteUserBackend
 
@@ -34,13 +31,14 @@ class EmailBackend(ModelBackend):
     can_logout = True
 
     def authenticate(self, username=None, password=None):
-        # If username is an email address, then try to pull it up
-        if email_re.search(username):
+        try:
+            # If username is an email address, then try to pull it up
+            validate_email(username)
             try:
                 user = User.objects.get(email=username)
             except User.DoesNotExist:
                 return None
-        else:
+        except ValidationError:
             # We have a non-email address username we should try username
             try:
                 user = User.objects.get(username=username)
@@ -73,7 +71,8 @@ class BugzillaBackend(ModelBackend):
     def authenticate(self, username=None, password=None):
         server = xmlrpclib.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
 
-        if email_re.search(username):
+        try:
+            validate_email(username)
             try:
                 server.bugzilla.login(username, password)
             except xmlrpclib.Fault:
@@ -90,7 +89,7 @@ class BugzillaBackend(ModelBackend):
                 )
 
                 user.set_unusable_password(password)
-        else:
+        except ValidationError:
             return None
 
         if user.check_password(password):

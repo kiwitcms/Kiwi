@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.http import HttpResponse
-from django.utils import simplejson
+import json
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.contrib import comments
-from django.contrib.comments import signals
+import django_comments
+from django_comments import signals
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import permission_required
 
@@ -60,7 +60,7 @@ def post(request, template_name='comments/comments.html'):
         raise
 
     # Construct the comment form
-    form = comments.get_form()(target, data=data)
+    form = django_comments.get_form()(target, data=data)
     if not form.is_valid():
         context_data = {
             'object': target,
@@ -107,7 +107,7 @@ def delete(request, next=None):
     from django.conf import settings
 
     ajax_response = {'rc': 0, 'response': 'ok'}
-    comments_s = comments.get_model().objects.filter(
+    comments_s = django_comments.get_model().objects.filter(
         pk__in=request.REQUEST.getlist('comment_id'),
         site__pk=settings.SITE_ID,
         is_removed=False,
@@ -117,7 +117,7 @@ def delete(request, next=None):
     if not comments_s:
         if request.is_ajax():
             ajax_response = {'rc': 1, 'response': 'Object does not exist.'}
-            return HttpResponse(simplejson.dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         raise ObjectDoesNotExist()
 
@@ -125,10 +125,10 @@ def delete(request, next=None):
     # Flag the comment as deleted instead of actually deleting it.
     for comment in comments_s:
         if comment.user == request.user:
-            flag, created = comments.models.CommentFlag.objects.get_or_create(
+            flag, created = django_comments.models.CommentFlag.objects.get_or_create(
                 comment=comment,
                 user=request.user,
-                flag=comments.models.CommentFlag.MODERATOR_DELETION
+                flag=django_comments.models.CommentFlag.MODERATOR_DELETION
             )
             comment.is_removed = True
             comment.save()
@@ -140,7 +140,7 @@ def delete(request, next=None):
                 request=request,
             )
 
-    return HttpResponse(simplejson.dumps(ajax_response))
+    return HttpResponse(json.dumps(ajax_response))
 
 
-delete = permission_required("comments.can_moderate")(delete)
+delete = permission_required("django_comments.can_moderate")(delete)

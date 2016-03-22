@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models, transaction
 from django.db.models import ObjectDoesNotExist
 from django.db.models.signals import post_save, post_delete, pre_save
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes import fields
 
 from tcms.core.models import TCMSActionModel
 from tcms.core.models import TCMSContentTypeBaseModel
@@ -112,8 +112,7 @@ class TestCase(TCMSActionModel):
     create_date = models.DateTimeField(db_column='creation_date',
                                        auto_now_add=True)
     is_automated = models.IntegerField(db_column='isautomated',
-                                       default=0,
-                                       max_length=4)
+                                       default=0)
     is_automated_proposed = models.BooleanField(default=False)
     script = models.TextField(blank=True)
     arguments = models.TextField(blank=True)
@@ -125,8 +124,7 @@ class TestCase(TCMSActionModel):
     requirement = models.CharField(max_length=255, blank=True)
     alias = models.CharField(max_length=255, blank=True)
     estimated_time = DurationField(db_column='estimated_time',
-                                   default=0,
-                                   max_length=11)
+                                   default=0)
     notes = models.TextField(blank=True)
 
     case_status = models.ForeignKey(TestCaseStatus)
@@ -590,7 +588,7 @@ class TestCase(TCMSActionModel):
 
 class TestCaseText(TCMSActionModel):
     case = models.ForeignKey(TestCase, related_name='text')
-    case_text_version = models.IntegerField(max_length=9)
+    case_text_version = models.IntegerField()
     author = models.ForeignKey('auth.User', db_column='who')
     create_date = models.DateTimeField(db_column='creation_ts',
                                        auto_now_add=True)
@@ -623,7 +621,7 @@ class TestCaseText(TCMSActionModel):
 class TestCasePlan(models.Model):
     plan = models.ForeignKey('testplans.TestPlan')
     case = models.ForeignKey(TestCase)
-    sortkey = models.IntegerField(max_length=11, null=True, blank=True)
+    sortkey = models.IntegerField(null=True, blank=True)
 
     # TODO: create FOREIGN KEY constraint on plan_id and case_id individually
     # in database.
@@ -634,9 +632,7 @@ class TestCasePlan(models.Model):
 
 
 class TestCaseAttachment(models.Model):
-    attachment = models.ForeignKey(
-        'management.TestAttachment', primary_key=True
-    )
+    attachment = models.OneToOneField('management.TestAttachment')
     case = models.ForeignKey(
         TestCase, default=None, related_name='case_attachment'
     )
@@ -770,7 +766,7 @@ class TestCaseEmailSettings(models.Model):
     auto_to_run_tester = models.BooleanField(default=False)
     auto_to_case_run_assignee = models.BooleanField(default=False)
 
-    cc_list = generic.GenericRelation(Contact, object_id_field='object_pk')
+    cc_list = fields.GenericRelation(Contact, object_id_field='object_pk')
 
     class Meta:
         pass

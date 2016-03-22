@@ -160,7 +160,7 @@ class Comment(object):
     def add(self):
         import time
         from django.contrib import comments
-        from django.contrib.comments import signals
+        from django_comments import signals
         from django.db import models
 
         comment_form = comments.get_form()

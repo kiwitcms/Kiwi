@@ -63,9 +63,8 @@ class Product(TCMSActionModel):
     vote_super_user = models.IntegerField(db_column='votesperuser',
                                           null=True, default=True)
     max_vote_super_bug = models.IntegerField(db_column='maxvotesperbug',
-                                             max_length=6,
                                              default=10000)
-    votes_to_confirm = models.BooleanField(db_column='votestoconfirm')
+    votes_to_confirm = models.BooleanField(db_column='votestoconfirm', default=False)
     default_milestone = models.CharField(db_column='defaultmilestone',
                                          max_length=20,
                                          default='---')
@@ -124,7 +123,7 @@ class Product(TCMSActionModel):
 class Priority(TCMSActionModel):
     id = models.AutoField(max_length=5, primary_key=True)
     value = models.CharField(unique=True, max_length=64)
-    sortkey = models.IntegerField(max_length=6, default=0)
+    sortkey = models.IntegerField(default=0)
     is_active = models.BooleanField(db_column='isactive', default=True)
 
     class Meta:
@@ -356,7 +355,7 @@ class TestEnvironmentProperty(models.Model):
 
 
 class TestEnvironmentMap(models.Model):
-    environment = models.ForeignKey(TestEnvironment, primary_key=True)
+    environment = models.OneToOneField(TestEnvironment)
     property = models.ForeignKey(TestEnvironmentProperty)
     element = models.ForeignKey(TestEnvironmentElement)
     value_selected = models.TextField(blank=True)
@@ -428,7 +427,7 @@ class TestAttachment(models.Model):
 
 
 class TestAttachmentData(models.Model):
-    attachment = models.ForeignKey(TestAttachment, primary_key=True)
+    attachment = models.OneToOneField(TestAttachment)
     contents = BlobField(blank=True)
 
     class Meta:

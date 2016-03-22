@@ -577,6 +577,7 @@ class CaseBugForm(forms.ModelForm):
 
     class Meta:
         model = TestCaseBug
+        fields = '__all__'
 
 
 class CaseComponentForm(forms.Form):

@@ -10,9 +10,9 @@ class Profiles(models.Model):
     cryptpassword = models.CharField(max_length=128, blank=True)
     realname = models.CharField(max_length=255)
     disabledtext = models.TextField()
-    disable_mail = models.IntegerField(max_length=4, default=0)
-    mybugslink = models.IntegerField(max_length=4)
-    extern_id = models.IntegerField(max_length=4, blank=True)
+    disable_mail = models.IntegerField(default=0)
+    mybugslink = models.IntegerField()
+    extern_id = models.IntegerField(blank=True)
 
     class Meta:
         db_table = u'profiles'
@@ -57,7 +57,7 @@ class Groups(models.Model):
 
 
 class UserGroupMap(models.Model):
-    user = models.ForeignKey(Profiles, primary_key=True)  # user_id
+    user = models.OneToOneField(Profiles)  # user_id
     # (actually has two primary keys)
     group = models.ForeignKey(Groups)  # group_id
     isbless = models.IntegerField(default=0)
@@ -73,12 +73,11 @@ class UserGroupMap(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.ForeignKey('auth.User', unique=True, related_name='profile')
+    user = models.OneToOneField('auth.User', related_name='profile')
     phone_number = models.CharField(blank=True, default='', max_length=128)
     url = models.URLField(blank=True, default='')
     im = models.CharField(blank=True, default='', max_length=128)
-    im_type_id = models.IntegerField(blank=True, default=1, max_length=4,
-                                     null=True)
+    im_type_id = models.IntegerField(blank=True, default=1, null=True)
     address = models.TextField(blank=True, default='')
     notes = models.TextField(blank=True, default='')
 

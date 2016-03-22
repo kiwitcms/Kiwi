@@ -146,13 +146,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
-    'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
+    'django_comments',
     'djcelery',
     'kobo.django.xmlrpc',
     'kombu.transport.django',
@@ -231,12 +231,6 @@ CACHES = {
 }
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
-
-# wadofstuff serializer settings
-# http://code.google.com/p/wadofstuff/wiki/DjangoFullSerializers
-SERIALIZATION_MODULES = {
-    'json': 'wadofstuff.django.serializers.json',
-}
 
 # Needed by django.core.context_processors.debug:
 # See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-core-context-processors-debug
