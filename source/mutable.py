@@ -635,6 +635,7 @@ class TestRun(Mutable):
         self._manager = User(inject["manager_id"])
         self._notes = inject["notes"]
         self._status = RunStatus(inject["stop_date"])
+        self._old_status = self._status
         self._summary = inject["summary"]
         self._tester = User(inject["default_tester_id"])
         self._testplan = TestPlan(inject["plan_id"])
@@ -677,8 +678,14 @@ class TestRun(Mutable):
         hash["errata_id"] = self.errata
         # This is required until BZ#731982 is fixed
         hash["product"] = self.build.product.id
-        hash["status"] = self.status.id
         hash["summary"] = self.summary
+
+        # Update status field only if its value has changed. This is to avoid
+        # updating the 'Finished at' field, which is done automatically by
+        # Nitrate even when "switching" from 'Finished' to 'Finished'.
+        if self._status != self._old_status:
+            self._old_status = self._status
+            hash["status"] = self.status.id
 
         log.info("Updating test run " + self.identifier)
         log.data(pretty(hash))
