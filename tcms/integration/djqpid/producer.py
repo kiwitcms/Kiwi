@@ -13,10 +13,10 @@ from tcms.integration.djqpid.utils import refresh_HTTP_credential_cache
 
 
 errlog = sys.stderr
-write_errlog = lambda log_content: errlog.write(log_content + os.linesep)
 
-errlog_write = lambda log_content: errlog.write(log_content)
-errlog_writeline = lambda log_content: errlog.write(log_content + os.linesep)
+
+def errlog_writeline(log_content):
+    errlog.write(log_content + os.linesep)
 
 
 class Producer(object):

@@ -377,8 +377,8 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
                         user_email = request.REQUEST[
                             'author__email__startswith']
                         tps = TestPlan.objects.filter(
-                            Q(author__email__startswith=user_email)
-                            | Q(owner__email__startswith=user_email)). \
+                            Q(author__email__startswith=user_email) |
+                            Q(owner__email__startswith=user_email)). \
                             distinct()
             else:
                 tps = TestPlan.list(search_form.cleaned_data)
@@ -749,8 +749,8 @@ def clone(request, template_name='plan/clone.html'):
             for tp in tps:
                 tp_dest = TestPlan.objects.create(
                     product=clone_form.cleaned_data['product'],
-                    author=clone_form.cleaned_data['keep_orignal_author']
-                    and tp.author or request.user,
+                    author=clone_form.cleaned_data['keep_orignal_author'] and
+                    tp.author or request.user,
                     type=tp.type,
                     product_version=clone_form.cleaned_data['product_version'],
                     name=len(tps) == 1 and clone_form.cleaned_data[
@@ -758,8 +758,8 @@ def clone(request, template_name='plan/clone.html'):
                     create_date=tp.create_date,
                     is_active=tp.is_active,
                     extra_link=tp.extra_link,
-                    parent=clone_form.cleaned_data['set_parent']
-                    and tp or None,
+                    parent=clone_form.cleaned_data['set_parent'] and
+                    tp or None,
                 )
 
                 # Copy the plan documents
@@ -1390,7 +1390,9 @@ def export(request, template_name='plan/export.xml'):
 
 
 def generator_proxy(plan_pks):
-    key_func = lambda data: (data['plan_id'], data['case_id'])
+    def key_func(data):
+        return (data['plan_id'], data['case_id'])
+
     params_sql = ','.join(itertools.repeat('%s', len(plan_pks)))
     metas = SQLExecution(sqls.TP_EXPORT_ALL_CASES_META % params_sql,
                          plan_pks).rows

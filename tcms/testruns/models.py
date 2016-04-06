@@ -120,8 +120,8 @@ class TestRun(TCMSActionModel):
 
         if query.get('people_id'):
             q = q.filter(
-                Q(manager__id=query['people_id'])
-                | Q(default_tester__id=query['people_id'])
+                Q(manager__id=query['people_id']) |
+                Q(default_tester__id=query['people_id'])
             )
 
         if query.get('people'):
@@ -131,8 +131,8 @@ class TestRun(TCMSActionModel):
                 q = q.filter(manager=query['people'])
             else:
                 q = q.filter(
-                    Q(manager=query['people'])
-                    | Q(default_tester=query['people'])
+                    Q(manager=query['people']) |
+                    Q(default_tester=query['people'])
                 )
 
         if query.get('manager'):

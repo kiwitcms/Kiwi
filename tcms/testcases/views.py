@@ -1188,7 +1188,9 @@ def export(request, template_name='case/export.xml'):
 
 
 def generator_proxy(case_pks):
-    key_func = lambda data: data['case_id']
+    def key_func(data):
+        return data['case_id']
+
     param_sql = ','.join(itertools.repeat('%s', len(case_pks)))
 
     metas = SQLExecution(sqls.TC_EXPORT_ALL_CASES_META % param_sql,
@@ -1506,11 +1508,11 @@ def clone(request, template_name='case/clone.html'):
                         priority=tc_src.priority,
                         notes=tc_src.notes,
                         author=clone_form.cleaned_data[
-                            'maintain_case_orignal_author']
-                        and tc_src.author or request.user,
+                            'maintain_case_orignal_author'] and
+                        tc_src.author or request.user,
                         default_tester=clone_form.cleaned_data[
-                            'maintain_case_orignal_default_tester']
-                        and tc_src.author or request.user,
+                            'maintain_case_orignal_default_tester'] and
+                        tc_src.author or request.user,
                     )
 
                     for tp in clone_form.cleaned_data['plan']:
@@ -1529,8 +1531,8 @@ def clone(request, template_name='case/clone.html'):
 
                     tc_dest.add_text(
                         author=clone_form.cleaned_data[
-                            'maintain_case_orignal_author']
-                        and tc_src.author or request.user,
+                            'maintain_case_orignal_author'] and
+                        tc_src.author or request.user,
                         create_date=tc_src.latest_text().create_date,
                         action=tc_src.latest_text().action,
                         effect=tc_src.latest_text().effect,

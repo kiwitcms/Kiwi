@@ -233,9 +233,9 @@ class TestCase(TCMSActionModel):
 
         if query.get('search'):
             q = q.filter(
-                Q(pk__icontains=query['search'])
-                | Q(summary__icontains=query['search'])
-                | Q(author__email__startswith=query['search'])
+                Q(pk__icontains=query['search']) |
+                Q(summary__icontains=query['search']) |
+                Q(author__email__startswith=query['search'])
             )
 
         if query.get('summary'):
@@ -243,21 +243,21 @@ class TestCase(TCMSActionModel):
 
         if query.get('author'):
             q = q.filter(
-                Q(author__first_name__startswith=query['author'])
-                | Q(author__last_name__startswith=query['author'])
-                | Q(author__username__icontains=query['author'])
-                | Q(author__email__startswith=query['author'])
+                Q(author__first_name__startswith=query['author']) |
+                Q(author__last_name__startswith=query['author']) |
+                Q(author__username__icontains=query['author']) |
+                Q(author__email__startswith=query['author'])
             )
 
         if query.get('default_tester'):
             q = q.filter(
                 Q(default_tester__first_name__startswith=query[
-                    'default_tester'])
-                | Q(default_tester__last_name__startswith=query[
-                    'default_tester'])
-                | Q(default_tester__username__icontains=query[
-                    'default_tester'])
-                | Q(default_tester__email__startswith=query[
+                    'default_tester']) |
+                Q(default_tester__last_name__startswith=query[
+                    'default_tester']) |
+                Q(default_tester__username__icontains=query[
+                    'default_tester']) |
+                Q(default_tester__email__startswith=query[
                     'default_tester'])
             )
 
@@ -419,8 +419,8 @@ class TestCase(TCMSActionModel):
                     action_checksum=action_checksum or new_action_checksum,
                     effect_checksum=effect_checksum or new_effect_checksum,
                     setup_checksum=setup_checksum or new_setup_checksum,
-                    breakdown_checksum=breakdown_checksum
-                    or new_breakdown_checksum)
+                    breakdown_checksum=breakdown_checksum or
+                    new_breakdown_checksum)
             except:
                 raise
         else:

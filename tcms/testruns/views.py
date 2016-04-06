@@ -114,8 +114,8 @@ def new(request, template_name='run/new.html'):
 
             tr = TestRun.objects.create(
                 product_version=form.cleaned_data['product_version'],
-                plan_text_version=tp.latest_text()
-                and tp.latest_text().plan_text_version or 0,
+                plan_text_version=tp.latest_text() and
+                tp.latest_text().plan_text_version or 0,
                 stop_date=None,
                 summary=form.cleaned_data.get('summary'),
                 notes=form.cleaned_data.get('notes'),
@@ -295,8 +295,8 @@ def all(request, template_name='run/all.html'):
 
     if request.REQUEST.get('manager'):
         if request.user.is_authenticated() \
-                and (request.REQUEST.get('people') == request.user.username
-                     or request.REQUEST.get('people') == request.user.email):
+                and (request.REQUEST.get('people') == request.user.username or
+                     request.REQUEST.get('people') == request.user.email):
             SUB_MODULE_NAME = "my_runs"
 
     # Initial the values will be use if it's not a search
@@ -1365,8 +1365,8 @@ def cc(request, run_id):
 
         try:
             user = User.objects.get(
-                Q(username=request.REQUEST['user'])
-                | Q(email=request.REQUEST['user'])
+                Q(username=request.REQUEST['user']) |
+                Q(email=request.REQUEST['user'])
             )
         except ObjectDoesNotExist:
             context_data = {
@@ -1461,9 +1461,7 @@ def env_value(request):
 
         def has_no_perm(self, perm):
             if not self.request.user.has_perm(
-                'testruns.'
-                + perm
-                    + '_tcmsenvrunvaluemap'):
+                    'testruns.' + perm + '_tcmsenvrunvaluemap'):
                 return {'rc': 1, 'response': 'Permission deined - %s' % perm}
 
             return False

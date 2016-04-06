@@ -252,7 +252,8 @@ class GroupByResult(object):
 # TODO: enhance method get_groupby_result to support multiple fields in GROUP
 # BY clause.
 
-
+# TODO: key_conv and value_name are not used, maybe the rest as well.
+# we should probably remove them
 def get_groupby_result(sql, params,
                        key_name=None, key_conv=None,
                        value_name=None,
@@ -292,15 +293,16 @@ def get_groupby_result(sql, params,
     @return: mapping between GROUP BY field and the total count
     @rtype: dict
     '''
+    def _key_conv(value):
+        if key_conv is not None:
+            if not hasattr(key_conv, '__call__'):
+                raise ValueError('key_conv is not a callable object')
+            return key_conv(value)
+        else:
+            return value
 
     _key_name = 'groupby_field' if key_name is None else str(key_name)
     _value_name = 'total_count' if value_name is None else str(value_name)
-    if key_conv is not None:
-        if not hasattr(key_conv, '__call__'):
-            raise ValueError('key_conv is not a callable object')
-        _key_conv = key_conv
-    else:
-        _key_conv = lambda value: value
 
     _rollup_name = None
     if with_rollup:

@@ -17,9 +17,16 @@ from tcms.core.forms.widgets import SECONDS_PER_MIN
 
 # ## Data format conversion functions ###
 
-do_nothing = lambda value: value
-to_str = lambda value: value if value is None else str(value)
-encode_utf8 = lambda value: value if value is None else value.encode('utf-8')
+def do_nothing(value):
+    return value
+
+
+def to_str(value):
+    return value if value is None else str(value)
+
+
+def encode_utf8(value):
+    return value if value is None else value.encode('utf-8')
 
 
 def int_to_str(value):

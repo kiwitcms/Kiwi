@@ -52,11 +52,13 @@ class UploadedHTMLFile(UploadedFile):
     '''
 
     def get_content(self):
+        def remove_tag(tag):
+            return tag.extract()
+
         from bs4 import BeautifulSoup
         from itertools import chain
 
         soup = BeautifulSoup(self.uploaded_file.read(), 'html.parser')
-        remove_tag = lambda tag: tag.extract()
         find_all = soup.body.find_all
 
         map(remove_tag, chain(find_all('script'),

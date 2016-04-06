@@ -98,11 +98,12 @@ class TCR2File(object):
                          u'category="%s" status="%s" summary="%s" ' \
                          u'scripts="%s" automated="%s">'
 
-        write_loglink = lambda link: write_to_output(
-            u'<loglink name="%s" url="%s" />' %
-            (link.name, link.url))
-        write_bug = lambda bug: write_to_output(
-            u'<bug id="%s" />' % bug.bug_id)
+        def write_loglink(link):
+            return write_to_output(
+                u'<loglink name="%s" url="%s" />' % (link.name, link.url))
+
+        def write_bug(bug):
+            return write_to_output(u'<bug id="%s" />' % bug.bug_id)
 
         write_to_output(u'<%s>' % self.root)
         for tcr in self.tcrs.iterator():

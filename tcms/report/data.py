@@ -38,10 +38,18 @@ __all__ = (
     'TestingReportCaseRunsData',
 )
 
-models_to_pks = lambda models: workaround_single_value_for_in_clause(
-    [model.pk for model in models])
-model_to_pk = lambda model: model.pk
-do_nothing = lambda value: value
+
+def models_to_pks(models):
+    return workaround_single_value_for_in_clause(
+        [model.pk for model in models])
+
+
+def model_to_pk(model):
+    return model.pk
+
+
+def do_nothing(value):
+    return value
 
 
 def overview_view_get_running_runs_count(product_id):
