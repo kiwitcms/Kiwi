@@ -4,12 +4,12 @@
 Define forms for each request for validating request arguments
 '''
 
-__all__ = ('BasicValidationForm', 'AddLinkReferenceForm', )
-
 from django import forms
 
 from tcms.testruns.models import TestCaseRun
 from tcms.core.forms.fields import StripURLField
+
+__all__ = ('BasicValidationForm', 'AddLinkReferenceForm', )
 
 LINKREF_TARGET = {
     'TestCaseRun': TestCaseRun,

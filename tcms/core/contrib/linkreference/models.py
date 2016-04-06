@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-__all__ = ('create_link', 'LinkReference', )
-
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from tcms.core.models import TCMSContentTypeBaseModel
+
+__all__ = ('create_link', 'LinkReference', )
 
 
 def create_link(name, url, link_to):

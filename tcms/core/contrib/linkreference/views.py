@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-__all__ = ('add', 'get', 'remove', )
-
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_GET, require_POST
 from django.utils import simplejson as json
@@ -11,6 +9,8 @@ from models import create_link, LinkReference
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.responses import HttpJSONResponseBadRequest
 from tcms.core.responses import HttpJSONResponseServerError
+
+__all__ = ('add', 'get', 'remove', )
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
