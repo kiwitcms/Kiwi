@@ -3,7 +3,7 @@ from tcms.settings.devel import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/nitrate.test.sqlite',
+        'NAME': '',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',

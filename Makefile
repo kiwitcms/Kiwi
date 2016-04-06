@@ -4,10 +4,16 @@ SPECFILE=nitrate.spec
 # branch. If you want to distribute TCMS upon a specific branch, checkout to it
 # first, and then issue make.
 BUILD_BRANCH=$(shell git branch | grep "^\*" | sed -e "s/\* //")
+RPM_BINARY=$(shell which rpm2 2>/dev/null)
 
-NAME=$(shell rpm -q --qf "%{NAME}\n" --specfile $(SPECFILE)|head -n1)
-VERSION=$(shell rpm -q --qf "%{VERSION}\n" --specfile $(SPECFILE)|head -n1)
-RELEASE=$(shell rpm -q --qf "%{RELEASE}\n" --specfile $(SPECFILE)|head -n1)
+NAME=$(shell cat $(SPECFILE) | grep Name: | cut -f2 -d: | tr -d ' ')
+VERSION=$(shell cat $(SPECFILE) | grep Version: | cut -f2 -d: | tr -d ' ')
+ifneq ($(RPM_BINARY),)
+	RELEASE=$(shell rpm -q --qf "%{RELEASE}\n" --specfile $(SPECFILE)|head -n1)
+else
+# will not evaluate %{?dist}
+	RELEASE=$(shell cat $(SPECFILE) | grep Release: | cut -f2 -d: | tr -d ' ')
+endif
 
 SRPM=$(NAME)-$(VERSION)-$(RELEASE).src.rpm
 TARBALL=nitrate-$(VERSION).tar.bz2
