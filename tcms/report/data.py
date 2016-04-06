@@ -212,7 +212,7 @@ class CustomReportData(object):
              '(test_builds.build_id = test_runs.build_id)',
              'INNER JOIN test_plans ON '
              '(test_runs.plan_id = test_plans.plan_id)'),
-            'test_plans.name LIKE %s', lambda s: '%{0}%'.format(s)),
+            'test_plans.name LIKE %%%s%%', do_nothing),
 
         'testcaserun__case__category': SQLQueryInfo(
             ('INNER JOIN test_runs ON '
@@ -864,7 +864,9 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
 
     def walk_status_matrix_rows(self, root_matrix):
         '''Walk status matrix row by row'''
-        sort_key = lambda item: item[0].pk
+        def sort_key(item):
+            return item[0].pk
+
         prev_build = None
         prev_plan = None
 
