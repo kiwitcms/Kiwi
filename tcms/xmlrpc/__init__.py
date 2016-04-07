@@ -7,6 +7,8 @@ Only the arguments are different.
 See https://wiki.mozilla.org/Testopia:Documentation:XMLRPC for testopia docs.
 """
 
+from tcms.xmlrpc.filters import autowrap_xmlrpc_apis
+
 __all__ = (
     'auth', 'build', 'testcase', 'testcaserun', 'testcaseplan', 'testopia',
     'testplan', 'testrun', 'user', 'version', 'tag',
@@ -19,5 +21,4 @@ def get_version():
     return XMLRPC_VERSION
 
 
-from tcms.xmlrpc.filters import autowrap_xmlrpc_apis  # noqa
 autowrap_xmlrpc_apis(__path__, __package__)
