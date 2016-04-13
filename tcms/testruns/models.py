@@ -654,7 +654,7 @@ class TestRunTag(models.Model):
 
 
 class TestRunCC(models.Model):
-    run = models.OneToOneField(TestRun)
+    run = models.OneToOneField(TestRun, primary_key=True)
     user = models.ForeignKey('auth.User', db_column='who')
 
     class Meta:
