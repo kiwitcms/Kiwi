@@ -1,6 +1,6 @@
 Name: python-nitrate
 Version: 1.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Summary: Python API for the Nitrate test case management system
 Group: Development/Languages
@@ -40,6 +40,9 @@ install -pm 644 docs/*.1.gz %{buildroot}%{_mandir}/man1
 %doc COPYING README examples
 
 %changelog
+* Tue May 10 2016 Martin Frodl <mfrodl@redhat.com> 1.3-2
+- Removed obsolete project page links
+
 * Tue Feb 09 2016 Petr Šplíchal <psplicha@redhat.com> 1.3-1
 - Package nitrate for PyPI, several adjustments, docs update
 - Better handle non-existent objects [BZ#1204028]
