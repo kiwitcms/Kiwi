@@ -108,31 +108,19 @@ what data has to be prepared see the module documentation.
 LINKS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Project page:
-http://psss.fedorapeople.org/python-nitrate/
-
-Interpreter:
-http://psss.fedorapeople.org/python-nitrate/nitrate.html
-
-Release notes:
-http://psss.fedorapeople.org/python-nitrate/notes.html
-
-Examples:
-http://psss.fedorapeople.org/python-nitrate/examples/
+https://github.com/psss/python-nitrate
 
 Download:
-http://psss.fedorapeople.org/python-nitrate/download/
+https://github.com/psss/python-nitrate/releases
 
 Copr repo:
 http://copr.fedoraproject.org/coprs/psss/python-nitrate/
-
-Git repo:
-https://github.com/psss/python-nitrate
 
 PyPI:
 https://pypi.python.org/pypi/nitrate
 
 File bugs:
-https://bugzilla.redhat.com/enter_bug.cgi?product=Fedora
+https://bugzilla.redhat.com/enter_bug.cgi?product=Fedora&component=python-nitrate
 
 Nitrate:
 https://fedorahosted.org/nitrate/
