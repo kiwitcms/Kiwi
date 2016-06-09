@@ -17,6 +17,7 @@ Contents
 
    about.rst
    set_dev_env.rst
+   set_dev_env_with_vagrant.rst
    installing_in_rhel.rst
    tutorial.rst
    contribution.rst
