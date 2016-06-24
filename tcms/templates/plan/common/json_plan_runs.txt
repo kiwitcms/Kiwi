@@ -1,29 +1,26 @@
 {
-    "sEcho": {{sEcho}},
-    "iTotalRecords": {{iTotalRecords}},
-    "iTotalDisplayRecords": {{iTotalDisplayRecords}},
-    "aaData":[
-    {% for test_run in querySet %}
-    [
-        "<input type='checkbox' name='run' value='{{ test_run.pk }}' class='run_selector'>",
-        "<a href='{% url "tcms.testruns.views.get" test_run.run_id %}' >{{ test_run.run_id }}</a>",
-        "<a href='{% url "tcms.testruns.views.get" test_run.run_id %}' >{{ test_run.summary }}</a>",
-        "<a href='{% url "tcms.profiles.views.profile" test_run.manager.username %}'>{{ test_run.manager }}</a>",
-        {% if test_run.default_tester_id %}
-            "<a href='{% url "tcms.profiles.views.profile" test_run.default_tester.username %}'>{{test_run.default_tester}}</a>"
-        {% else %}
-            "{{test_run.default_tester}}"
-        {% endif %},
-        "{{test_run.start_date}}",
-        "{{test_run.build}}",
-        "{% if test_run.stop_date %}Finished{% else %}Running{% endif %}",
-        "{{test_run.total_num_caseruns}}",
-        "<a href='#statistics' class='btn-statistics' run='{{test_run.run_id}}' status='failed_case_run_percent'>calculate</a><div class='progress-bar' style='width:100px; display:none;'><div class='percent'></div><div class='progress-failed'></div></div>",
-        "<a href='#statistics' class='btn-statistics' run='{{test_run.run_id}}' status='passed_case_run_percent'>calculate</a><div class='progress-bar' style='width:100px; display:none;'><div class='percent'></div><div class='progress-inner'></div></div>"
-        ]
-    {% if not forloop.last %}
-    ,
-    {% endif %}
-    {% endfor %}
-    ]
+	"sEcho": {{sEcho}},
+	"iTotalRecords": {{iTotalRecords}},
+	"iTotalDisplayRecords": {{iTotalDisplayRecords}},
+	"aaData": [
+		{% for run in runs %}
+		[
+			"<input type='checkbox' name='run' value='{{ run.pk }}' class='run_selector'>",
+			"<a href='{% url "tcms.testruns.views.get" run.run_id %}' >{{ run.run_id }}</a>",
+			"<a href='{% url "tcms.testruns.views.get" run.run_id %}' >{{ run.summary }}</a>",
+			"<a href='{% url "tcms.profiles.views.profile" run.manager.username %}'>{{ run.manager }}</a>",
+			{% if run.default_tester_id %}
+				"<a href='{% url "tcms.profiles.views.profile" run.default_tester.username %}'>{{ run.default_tester }}</a>"
+			{% else %}
+				"{{ run.default_tester }}"
+			{% endif %},
+			"{{ run.start_date }}",
+			"{{ run.build }}",
+			"{% if run.stop_date %}Finished{% else %}Running{% endif %}",
+			"{{ run.nitrate_stats.cases }}",
+			"<div style='width: 100px;' class='progress-bar'><div class='percent'>{{ run.nitrate_stats.failure_percent|floatformat:2 }}%</div><div class='progress-failed' style='width: {{ run.nitrate_stats.failure_percent|floatformat:2 }}px;'></div></div>",
+			"<div style='width: 100px;' class='progress-bar'><div class='percent'>{{ run.nitrate_stats.success_percent|floatformat:2 }}%</div><div class='progress-inner' style='width: {{ run.nitrate_stats.success_percent|floatformat:2 }}px;'></div></div>"
+		]{% if not forloop.last %},{% endif %}
+        {% endfor %}
+	]
 }

@@ -15,8 +15,8 @@ urlpatterns = patterns('tcms.testplans.views',
                        url(r'^(?P<plan_id>\d+)/cases/$', 'cases'),
                        )
 
-urlpatterns += patterns('tcms.testruns.views',
-                        url(r'^(?P<plan_id>\d+)/runs/$',
-                            'load_runs_of_one_plan',
-                            name='load_runs_of_one_plan_url'),
-                        )
+urlpatterns += patterns(
+    'tcms.testruns.views',
+    url(r'^(?P<plan_id>\d+)/runs/$', 'load_runs_of_one_plan',
+        name='load_runs_of_one_plan_url'),
+    )

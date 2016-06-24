@@ -29,5 +29,4 @@ urlpatterns = patterns(
     url(r'^(?P<run_id>\d+)/cc/$', 'cc'),
     url(r'^(?P<run_id>\d+)/update/$', 'update_case_run_text'),
     url(r'^(?P<run_id>\d+)/export/$', 'export'),
-    url(r'^(?P<run_id>\d+)/percent/$', 'caserun_of_the_status_in_percentage'),
 )

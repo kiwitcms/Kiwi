@@ -337,7 +337,7 @@ class PlanFilterRunForm(forms.Form):
         required=False
     )
     manager__username__iexact = UserField(required=False)
-    plan = forms.CharField(required=True)
+    plan = forms.IntegerField(required=True)
     run_id = forms.CharField(required=False)
     start_date__gt = forms.DateTimeField(required=False)
     summary__icontains = forms.CharField(required=False)

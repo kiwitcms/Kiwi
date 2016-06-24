@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+
 import itertools
 import time
 import datetime
 import urllib
 import re
+
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
@@ -370,28 +372,20 @@ def run_queryset_from_querystring(querystring):
     return trs
 
 
+def magic_convert(queryset, key_name, value_name):
+    return dict(((row[key_name], row[value_name]) for row in queryset))
+
+
 def load_runs_of_one_plan(request, plan_id,
                           template_name='plan/common/json_plan_runs.txt'):
-    '''A dedicated view to return a set of runs of a plan.
+    """A dedicated view to return a set of runs of a plan
 
-    This view is used in a plan detail page, for the contained
-    testrun tab. It replaces the original solution, with a paginated
-    resultset in return, serves as a performance healing.
-    Also, in order for user to locate the data, it accepts
-    field lookup parameters collected from the filter panel
+    This view is used in a plan detail page, for the contained testrun tab. It
+    replaces the original solution, with a paginated resultset in return,
+    serves as a performance healing. Also, in order for user to locate the
+    data, it accepts field lookup parameters collected from the filter panel
     in the UI.
-    '''
-    tp = TestPlan.objects.get(plan_id=plan_id)
-    form = PlanFilterRunForm(request.REQUEST)
-    if form.is_valid():
-        queryset = \
-            tp.run.filter(**form.cleaned_data).\
-            select_related('build',
-                           'manager',
-                           'default_tester').order_by('-pk')
-    else:
-        queryset = TestRun.objects.none()
-
+    """
     column_index_name_map = {0: '',
                              1: 'run_id',
                              2: 'summary',
@@ -401,180 +395,249 @@ def load_runs_of_one_plan(request, plan_id,
                              6: 'build__name',
                              7: 'stop_date',
                              8: 'total_num_caseruns',
-                             9: 'total_num_caseruns',
-                             10: 'stop_date'}
-    return ajax_response(request,
-                         queryset,
-                         column_index_name_map,
-                         jsonTemplatePath=template_name)
+                             9: 'failure_caseruns_percent',
+                             10: 'successful_caseruns_percent',
+                             }
+
+    tp = TestPlan.objects.get(plan_id=plan_id)
+    form = PlanFilterRunForm(request.REQUEST)
+
+    if form.is_valid():
+        queryset = tp.run.filter(**form.cleaned_data)
+        queryset = queryset.select_related(
+            'build', 'manager', 'default_tester').order_by('-pk')
+
+        total_records = total_display_records = queryset.count()
+
+        queryset = sort_queryset(request, queryset, column_index_name_map)
+        queryset = datatable_paginate(request, queryset)
+
+        # Get associated statistics data
+        run_filters = dict(('run__{0}'.format(key), value)
+                           for key, value in form.cleaned_data.iteritems())
+
+        qs = TestCaseRun.objects \
+            .filter(case_run_status=TestCaseRunStatus.id_failed(),
+                    **run_filters) \
+            .values('run', 'case_run_status') \
+            .annotate(count=Count('pk')).order_by('run', 'case_run_status')
+        failure_subtotal = magic_convert(qs,
+                                         key_name='run', value_name='count')
+
+        qs = TestCaseRun.objects \
+            .filter(case_run_status=TestCaseRunStatus.id_passed(),
+                    **run_filters) \
+            .values('run', 'case_run_status') \
+            .annotate(count=Count('pk')).order_by('run', 'case_run_status')
+        success_subtotal = magic_convert(qs,
+                                         key_name='run', value_name='count')
+
+        qs = TestCaseRun.objects.filter(**run_filters).values('run') \
+            .annotate(count=Count('case')).order_by('run')
+        cases_subtotal = magic_convert(qs,
+                                       key_name='run', value_name='count')
+
+        for run in queryset:
+            run_id = run.pk
+            cases_count = cases_subtotal.get(run_id, 0)
+            if cases_count:
+                failure_percent = failure_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
+                success_percent = success_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
+            else:
+                failure_percent = success_percent = 0
+            run.nitrate_stats = {
+                'cases': cases_count,
+                'failure_percent': failure_percent,
+                'success_percent': success_percent,
+            }
+    else:
+        queryset = TestRun.objects.none()
+        total_records = total_display_records = queryset.count()
+
+    context = {
+        'sEcho': int(request.GET.get('sEcho', 0)),
+        'iTotalRecords': total_records,
+        'iTotalDisplayRecords': total_display_records,
+        'runs': queryset,
+    }
+    json_data = render_to_string(template_name, context,
+                                 context_instance=RequestContext(request))
+    return HttpJSONResponse(json_data)
 
 
 def ajax_search(request, template_name='run/common/json_runs.txt'):
-    '''Read the test runs from database and display them.'''
-    # If it's a search
-    if request.REQUEST.items():
-        search_form = SearchRunForm(request.REQUEST)
+    """Response request to search test runs from Search Runs"""
+    column_index_name_map = {0: '',
+                             1: 'run_id',
+                             2: 'summary',
+                             3: 'manager__username',
+                             4: 'default_tester__username',
+                             5: 'plan',
+                             6: 'build__product__name',
+                             7: 'product_version',
+                             8: 'env_groups',
+                             9: 'total_num_caseruns',
+                             10: 'stop_date',
+                             11: 'completed',
+                             }
 
-        if request.REQUEST.get('product'):
-            search_form.populate(product_id=request.REQUEST['product'])
-        else:
-            search_form.populate()
+    search_form = SearchRunForm(request.REQUEST)
+    if request.REQUEST.get('product'):
+        search_form.populate(product_id=request.REQUEST['product'])
+    else:
+        search_form.populate()
 
-        if search_form.is_valid():
-            # It's a search here.
-            trs = TestRun.list(search_form.cleaned_data)
-            trs = trs.select_related(
-                'manager',
-                'default_tester',
-                'build', 'plan',
-                'build__product__name').only('run_id',
-                                             'summary',
-                                             'manager__username',
-                                             'default_tester__id',
-                                             'default_tester__username',
-                                             'plan__name',
-                                             'build__product__name',
-                                             'stop_date',
-                                             'product_version__value')
+    if search_form.is_valid():
+        trs = TestRun.list(search_form.cleaned_data)
+        trs = trs.select_related(
+            'manager',
+            'default_tester',
+            'build',
+            'plan',
+            'build__product__name').only('run_id',
+                                         'summary',
+                                         'manager__username',
+                                         'default_tester__id',
+                                         'default_tester__username',
+                                         'plan__name',
+                                         'build__product__name',
+                                         'stop_date',
+                                         'product_version__value')
 
-            # Further optimize by adding caserun attributes:
-            trs = trs.extra(
-                select={'env_groups': RawSQL.environment_group_for_run, },
-            )
-        else:
-            trs = TestRun.objects.none()
+        # Further optimize by adding caserun attributes:
+        trs = trs.extra(
+            select={'env_groups': RawSQL.environment_group_for_run},
+        )
+
+        total_records = total_display_records = trs.count()
+
+        trs = sort_queryset(request, trs, column_index_name_map)
+        trs = datatable_paginate(request, trs)
+
+        # Get associated statistics data
+        run_ids = [run.pk for run in trs]
+        qs = TestCaseRun.objects \
+            .filter(case_run_status=TestCaseRunStatus.id_failed(), run__in=run_ids) \
+            .values('run', 'case_run_status') \
+            .annotate(count=Count('pk')) \
+            .order_by('run', 'case_run_status')
+        failure_subtotal = magic_convert(qs, key_name='run', value_name='count')
+
+        completed_status_ids = TestCaseRunStatus._get_completed_status_ids()
+        qs = TestCaseRun.objects \
+            .filter(case_run_status__in=completed_status_ids, run__in=run_ids) \
+            .values('run', 'case_run_status') \
+            .annotate(count=Count('pk')) \
+            .order_by('run', 'case_run_status')
+        completed_subtotal = dict((
+            (run_id, sum((item['count'] for item in stats_rows)))
+            for run_id, stats_rows
+            in itertools.groupby(qs.iterator(), key=lambda row: row['run'])))
+
+        qs = TestCaseRun.objects.filter(run__in=run_ids).values('run').annotate(cases_count=Count('case'))
+        cases_subtotal = magic_convert(qs, key_name='run', value_name='cases_count')
+
+        for run in trs:
+            run_id = run.pk
+            cases_count = cases_subtotal.get(run_id, 0)
+            if cases_count:
+                completed_percent = completed_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
+                failure_percent = failure_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
+            else:
+                completed_percent = failure_percent = 0
+            run.nitrate_stats = {
+                'cases': cases_count,
+                'completed_percent': completed_percent,
+                'failure_percent': failure_percent,
+            }
     else:
         trs = TestRun.objects.none()
+        total_records = total_display_records = trs.count()
 
     # columnIndexNameMap is required for correct sorting behavior, 5 should
     # be product, but we use run.build.product
-    columnIndexNameMap = {0: '',
-                          1: 'run_id',
-                          2: 'summary',
-                          3: 'manager__username',
-                          4: 'default_tester__username',
-                          5: 'plan',
-                          6: 'build__product__name',
-                          7: 'product_version',
-                          8: 'env_groups',
-                          9: 'total_num_caseruns',
-                          10: 'stop_date',
-                          11: 'completed'}
-    return ajax_response(request, trs, columnIndexNameMap,
-                         jsonTemplatePath='run/common/json_runs.txt')
+    context = {
+        'sEcho': int(request.GET.get('sEcho', 0)),
+        'iTotalRecords': total_records,
+        'iTotalDisplayRecords': total_display_records,
+        'runs': trs,
+    }
+    json_data = render_to_string(template_name, context,
+                                 context_instance=RequestContext(request))
+    return HttpJSONResponse(json_data)
 
 
-def ajax_response(request, querySet, columnIndexNameMap,
-                  jsonTemplatePath='run/common/json_runs.txt', *args):
-    '''
-    json template for the ajax request for searching runs.
-    '''
+def datatable_paginate(request, queryset):
+    """Paginate queryset
 
-    # Get the number of columns
-    cols = int(request.GET.get('iColumns', 0))
+    DataTable sends request with pagination information that is extracted and
+    used to paginate queried queryset.
+    """
+    DEFAULT_PAGE_SIZE = 10
+    MAX_SIZE_PER_PAGE = 100
+
     # Safety measure. If someone messes with iDisplayLength manually,
     # we clip it to the max value of 100.
-    iDisplayLength = min(int(request.GET.get('iDisplayLength', 10)),
-                         100)
+    display_length = min(int(request.GET.get('iDisplayLength',
+                                             DEFAULT_PAGE_SIZE)),
+                         MAX_SIZE_PER_PAGE)
     # Where the data starts from (page)
-    startRecord = int(request.GET.get('iDisplayStart', 0))
+    start_record = int(request.GET.get('iDisplayStart', 0))
     # where the data ends (end of page)
-    endRecord = startRecord + iDisplayLength
+    end_record = start_record + display_length
 
-    # Pass sColumns
-    keys = columnIndexNameMap.keys()
-    keys.sort()
-    colitems = [columnIndexNameMap[key] for key in keys]
-    sColumns = ",".join(map(str, colitems))
+    return queryset[start_record:end_record]
 
-    # Ordering data
-    iSortingCols = int(request.GET.get('iSortingCols', 0))
-    asortingCols = []
 
-    bsort_by_case_num = False
-    bdesc_on_case_num = False
-    bsort_by_status = False
-    bdesc_on_status = False
-    bsort_by_completed = False
-    bdesc_on_completed = False
-    if iSortingCols:
-        for sortedColIndex in range(0, iSortingCols):
-            sortedColID = int(
-                request.GET.get('iSortCol_' + str(sortedColIndex), 0))
-            # make sure the column is sortable first
-            if request.GET.get('bSortable_%s' % sortedColID,
-                               'false') == 'true':
-                sortedColName = columnIndexNameMap[sortedColID]
-                sortingDirection = request.GET.get(
-                    'sSortDir_' + str(sortedColIndex), 'asc')
-                if sortedColName == 'total_num_caseruns':
-                    bsort_by_case_num = True
-                    if sortingDirection == 'desc':
-                        bdesc_on_case_num = True
-                elif sortedColName == 'stop_date':
-                    bsort_by_status = True
-                    if sortingDirection == 'desc':
-                        bdesc_on_status = True
-                elif sortedColName == 'completed':
-                    bsort_by_completed = True
-                    if sortingDirection == 'desc':
-                        bdesc_on_completed = True
-                else:
-                    if sortingDirection == 'desc':
-                        sortedColName = '-' + sortedColName
-                    asortingCols.append(sortedColName)
-        if len(asortingCols):
-            querySet = querySet.order_by(*asortingCols)
+def get_sorting_cols(request, index_column_name_mapping):
+    """Find sorting column and sort direction for each of them
 
-    # count how many records match the final criteria
-    iTotalRecords = iTotalDisplayRecords = querySet.count()
-    # add custom column sort
-    if bsort_by_case_num:
-        querySet = sorted(querySet, key=lambda p: p.total_num_caseruns,
-                          reverse=bdesc_on_case_num)
-    if bsort_by_status:
-        querySet = sorted(querySet, key=lambda p: (p.stop_date and 1 or 0),
-                          reverse=bdesc_on_status)
-    if bsort_by_completed:
-        querySet = sorted(
-            querySet,
-            key=lambda p:
-            (p.completed_case_run_percent * 10000 - p.failed_case_run_percent),
-            reverse=bdesc_on_completed)
-    # get the slice
-    querySet = querySet[startRecord:endRecord]
+    This works on top of parameters passed along with HTTP request by
+    DataTable.
 
-    sEcho = int(request.GET.get('sEcho', 0))  # required echo response
+    :param HTTPRequest request: request object containing sorting information
+    passed by DataTable.
+    :param dict index_column_name_mapping: a mapping from column index to
+    column name. This is passed by a method that is calling this method.
+    :return: sequence of column names sort on. Sort direction will be prefixed
+    if desc is specified by DataTable. If there is no sorting columns found,
+    an empty sequence is returned, that is safe to pass to QuerySet that will
+    not cause Django to generate ORDER BY clause.
+    :rtype: list
+    """
+    get = request.GET.get
 
-    if jsonTemplatePath:
-        # prepare the JSON with the response, consider using :
-        # from django.template.defaultfilters import escapejs
-        jsonString = render_to_string(jsonTemplatePath, locals(),
-                                      context_instance=RequestContext(
-                                          request))
-        response = HttpJSONResponse(jsonString)
-    else:
-        aaData = []
-        a = querySet.values()
-        for row in a:
-            rowkeys = row.keys()
-            rowvalues = row.values()
-            rowlist = []
-            for col in range(0, len(colitems)):
-                for idx, val in enumerate(rowkeys):
-                    if val == colitems[col]:
-                        rowlist.append(str(rowvalues[idx]))
-            aaData.append(rowlist)
-            response_dict = {}
-            response_dict.update({'aaData': aaData})
-            response_dict.update(
-                {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
-                 'iTotalDisplayRecords': iTotalDisplayRecords,
-                 'sColumns': sColumns})
-            response = HttpJSONResponse(simplejson.dumps(response_dict))
-            #    prevent from caching datatables result
-            #    add_never_cache_headers(response)
-    return response
+    iSortingCols = int(get('iSortingCols', 0))
+    if not iSortingCols:
+        return []
+
+    mapping = ((int(get('iSortCol_{0}'.format(sorting_col_index))),
+                get('sSortDir_{0}'.format(sorting_col_index)))
+               for sorting_col_index in range(0, iSortingCols)
+               if get('bSortable_{0}'.format(
+                   get('iSortCol_{0}'.format(sorting_col_index)))) == u'true')
+
+    return ['{0}{1}'.format('-' if sSortDir_N == 'desc' else '',
+                            index_column_name_mapping[iSortCol_N])
+            for iSortCol_N, sSortDir_N in mapping]
+
+
+def sort_queryset(request, queryset, index_column_name_mapping):
+    """Sort queryset on specified column by DataTable
+
+    Each time an AJAX request from DataTable to sort on a particular column,
+    a set of variable are sent together within the HTTP request. All of them
+    are used to determine which column queryset is sorted on, which columns are
+    sortable (that is defined by JavaScript code in client side), which
+    direction to sort the column that is ASC or DESC.
+
+    :param dict index_column_name_mapping: a mapping from column index to
+    column name, that is used to find and construct the sequence of columns to
+    sort on and the sort direction. This mapping must be as same as the column
+    definitions in client side.
+    """
+    sorting_cols = get_sorting_cols(request, index_column_name_mapping)
+    return queryset.order_by(*sorting_cols)
 
 
 def open_run_get_case_runs(request, run):
@@ -1622,28 +1685,3 @@ def get_caseruns_of_runs(runs, kwargs=None):
     if status:
         caseruns = caseruns.filter(case_run_status__name__iexact=status)
     return caseruns
-
-
-def caserun_of_the_status_in_percentage(request, run_id):
-    '''View calculates the statistics of one run.
-
-    Part of the lazy-loading optimization.
-
-    For one TestRun, aggregating its TestCaseRuns
-    in a given status or multiple statuses is useful
-    for users to gain statistical knowledge of the
-    testing progress.
-
-    This view is called by AJAX requests.
-    '''
-    data = request.REQUEST
-
-    try:
-        status = data.get('status')
-        assert (status in TestRun.PERCENTAGES)
-    except AssertionError:
-        raise Http404
-    else:
-        run = get_object_or_404(TestRun, pk=run_id)
-        percent = getattr(run, status)
-        return HttpResponse(simplejson.dumps({'percent': percent}))

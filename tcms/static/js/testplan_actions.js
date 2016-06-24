@@ -2582,6 +2582,9 @@ function expandCurrentPlan(element) {
   }
 }
 
+/*
+ * Handle events within Runs tab in a plan page.
+ */
 Nitrate.TestPlans.Runs = {
   'bind': function () {
     // Bind everything.
@@ -2589,16 +2592,11 @@ Nitrate.TestPlans.Runs = {
     jQ('#show_more_runs').live('click', that.showMore);
     jQ('#reload_runs').live('click', that.reload);
     jQ('#tab_testruns').live('click', that.initializaRunTab);
-    jQ('.btn-statistics').live('click', that.percent);
-    jQ('#btn_selected_progress').live('click', that.showPercentageOfSelectedRuns);
     jQ('.run_selector').live('change', that.reactsToRunSelection);
     jQ('#id_check_all_runs').live('change', that.reactsToAllRunSelectorChange);
   },
   'makeUrlFromPlanId': function (planId) {
     return '/plan/' + planId + '/runs/';
-  },
-  'makePercentUrlFromRunId': function (runId) {
-    return '/run/' + runId + '/percent/';
   },
   'render': function (data, textStatus, jqXHR) {
     var tbody = jQ('#testruns_body');
@@ -2623,105 +2621,28 @@ Nitrate.TestPlans.Runs = {
         var url = that.makeUrlFromPlanId(jQ('#testruns_table').data('param'));
         jQ('#testruns_table').dataTable({
           "aoColumnDefs":[
-            { "bSortable":false, "aTargets":['nosort'] },
+            { "bSortable": false, "aTargets":[0, 8, 9, 10] },
             { "sType": "numeric", "aTargets": [1, 6, 8, 9, 10 ] },
             { "sType": "date", "aTargets": [5] }
           ],
-          "sDom": 't<"cases-pagination show-more-cases js-custom-paging">',
-          "oLanguage": { "sEmptyTable": "No test run was found in this plan." },
-          "fnInitComplete": function(oSettings, json) {
-            jQ('.js-custom-paging').insertAfter(jQ('#img_loading_runs'));
-          },
+          'bSort': true,
+          'bProcessing': true,
+          'bFilter': false,
+          "bLengthChange": false,
+          "oLanguage": {"sEmptyTable": "No test run was found in this plan."},
           "bServerSide": true,
           "sAjaxSource": url,
-          "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-            jQ('#img_loading_runs').show();
-            if (!jQ('#testruns_body').children().length) {
-              jQ('#js-page-num').val('1');
-            }
-            if (jQ('#js-page-num').val() === '1') {
-              jQ('#js-page-size').data('param', window.parseInt(jQ('#js-page-size').val()));
-            }
-            var displayLength = jQ('#js-page-size').data('param');
-            var displayStart = (window.parseInt(jQ('#js-page-num').val())- 1) * displayLength;
+          "iDisplayLength": 20,
+          "sPaginationType": "full_numbers",
+          "fnServerParams": function(aoData) {
             var params = jQ("#run_filter").serializeArray();
             params.forEach(function(param) {
               aoData.push(param);
             });
-            aoData.forEach(function(param) {
-              if (param.name === 'iDisplayStart') {
-                param.value = displayStart;
-              }
-              if (param.name === 'iDisplayLength') {
-                param.value = displayLength;
-              }
-            });
-            oSettings.jqXHR = jQ.ajax({
-              "dataType": 'json',
-              "type": "GET",
-              "url": sSource,
-              "data": aoData,
-              "success": function(data, textStatus, jqXHR) {
-                var startPositon = this.url.indexOf('iDisplayStart') + 14;
-                var endPosition = this.url.indexOf('&' , startPositon);
-                var displayStart = window.parseInt(this.url.slice(startPositon, endPosition));
-                if (displayStart === 0) {
-                  that.filter();
-                  fnCallback(data);
-                } else {
-                  data.aaData.forEach(function(rowData) {
-                    var newRow = '';
-                    rowData.forEach(function(tdData) {
-                      newRow += '<td>' + tdData + '</td>';
-                    });
-                    newRow = '<tr>' + newRow + '</tr>';
-                    var tbody = jQ('#testruns_table').children('tbody');
-                    tbody.append(newRow);
-                    var newestRow = tbody.children(':last');
-                    if (newestRow.prev().hasClass('odd')) {
-                      newestRow.addClass('even');
-                    } else {
-                      newestRow.addClass('odd');
-                    }
-                  });
-                  if (jQ('#id_check_all_runs').attr('checked')
-                    && jQ('#box_select_rest').find(':checkbox').attr('checked')) {
-                    jQ('#testruns_table').find('.run_selector').attr('checked', true);
-                  }
-                }
-                var total = data.iTotalRecords;
-                var available = jQ('#testruns_table').children('tbody').children().length;
-                var displayLength = jQ('#js-page-size').data('param');
-                var showMoreLink = jQ('#show_more_runs');
-                if (total - available === 0) {
-                  jQ('#show_more_runs').text('End');
-                  showMoreLink.data('ended', true);
-                } else {
-                  var localPageNum = window.parseInt(jQ('#js-page-num').val());
-                  jQ('#js-page-num').val(++localPageNum);
-                  showMoreLink.text('Show More (' + Math.ceil((total - available)/displayLength) + ' pages left)');
-                  showMoreLink.data('ended', false)
-                }
-                jQ('#img_loading_runs').hide();
-              }
-            });
-          },
-          "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-            if (jQ('#id_check_all_runs').attr('checked')
-                && jQ('#box_select_rest').find(':checkbox').attr('checked')) {
-              jQ(nRow).find('td:eq(0) .run_selector').attr('checked', true);
-            }
           }
         });
       }
-      jQ('.js-custom-paging').html('<div><a href="#show_more_runs" id="show_more_runs">Show More</a></div>');
     }
-  },
-  'showLoading': function () {
-    jQ('#img_loading_runs').show();
-  },
-  'hideLoading': function () {
-    jQ('#img_loading_runs').hide();
   },
   'reactsToRunSelection': function () {
     var that = Nitrate.TestPlans.Runs;
@@ -2772,58 +2693,12 @@ Nitrate.TestPlans.Runs = {
     box.find('input:checkbox').val(queryString);
     return queryString;
   },
-  'showMore': function () {
-    if (!jQ(this).data('ended')) {
-      jQ('#testruns_table').dataTable().fnPageChange('next');
-    }
-
-    return false;
-  },
   'reload': function () {
     jQ('#testruns_body').children().remove();
     jQ('#js-page-num').val('1');
     jQ('#testruns_table').dataTable().fnDraw();
 
     return false;
-  },
-  'percent': function (clicked) {
-    var that = Nitrate.TestPlans.Runs;
-    var target = jQ(clicked.target);
-    var runId = target.attr('run');
-    var url = that.makePercentUrlFromRunId(runId)
-    var status = target.attr('status');
-    var request = jQ.ajax(url, {
-        'dataType': 'json',
-        'data': {'status': status},
-        'beforeSend': function () {
-          target.text('calculating ...');
-        }
-      });
-    request.done(function (data, textStatus, jqXHR) {
-      // display the result
-      var percentage = data['percent'];
-      // locate the <tr> with runID
-      var link = jQ('a[status='+status+'][run='+runId+']');
-      // update the percentage with status name
-      var bar = link.next();
-      var slots = bar.children();
-      jQ(slots[0]).text(percentage + '%');
-      jQ(slots[1]).css({'width': percentage+'px'});
-      target.hide(); // hide the button link
-      bar.show(); // show the progress bar
-    });
-    return false;
-  },
-  'showPercentageOfSelectedRuns': function () {
-    var checkedBoxes = jQ('.run_selector:checked');
-    checkedBoxes.each(function (index, box) {
-      jQ(box).parent().parent().find('.btn-statistics').each(function (index, elem) {
-        var clickable = jQ(elem);
-        if (clickable.css('display') != 'none') {
-          clickable.trigger('click');
-        }
-      });
-    });
   }
 };
 

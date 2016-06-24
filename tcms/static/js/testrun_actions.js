@@ -13,8 +13,6 @@ Nitrate.TestRuns.List.on_load = function() {
   bind_build_selector_to_product(true, jQ('#id_product')[0]);
 
   Nitrate.Utils.enableShiftSelectOnCheckbox('run_selector');
-  jQ('.btn-statistics').live('click', Nitrate.TestRuns.Progress.percent);
-  jQ('#btn_selected_progress').live('click', Nitrate.TestRuns.Progress.showPercentageOfSelectedRuns);
 
   if (jQ('#testruns_table').length) {
     jQ('#id_check_all_runs').bind('click',function(e) {
@@ -49,7 +47,7 @@ Nitrate.TestRuns.List.on_load = function() {
       "aaSorting": [[ 1, "desc" ]],
       "bProcessing": true,
       "bServerSide": true,
-      "sAjaxSource": "/runs/ajax/"+this.window.location.search,
+      "sAjaxSource": "/runs/ajax/" + this.window.location.search,
       "aoColumns": [
         {"bSortable": false },
         {"sType": "numeric"},
@@ -60,7 +58,7 @@ Nitrate.TestRuns.List.on_load = function() {
         null,
         null,
         null,
-        {"sType": "numeric"},
+        {"sType": "numeric", "bSortable": false},
         null,
         {"bSortable": false }
       ],
@@ -426,52 +424,6 @@ Nitrate.TestRuns.AssignCase.on_load = function() {
   jQ('.js-toggle-button, .js-case-summary').bind('click', function() {
     toggleTestCaseContents(jQ(this).data('param'));
   });
-};
-
-Nitrate.TestRuns.Progress = {
-  /*
-   * This is a run-search page specific
-   * js callback to lazy-load the testrun progress.
-   */
-  'percent': function (e) {
-    var target = jQ(e.target);
-    var tr = target.parent().parent();
-    var url = '/run/' + target.attr('run') + '/percent/';
-    jQ.ajax(url, {
-      dataType: 'json',
-      data: {'status': 'completed_case_run_percent'},
-      beforeSend: function () {
-        target.text('calculating ...');
-      },
-      success: function (data) {
-        var percent = data.percent;
-        tr.find('.percent').html(percent + '%');
-        tr.find('.progress-inner').css({'width': percent});
-      }
-    });
-    jQ.ajax(url, {
-      dataType: 'json',
-      data: {'status': 'failed_case_run_percent'},
-      success: function (data) {
-        var percent = data.percent;
-        tr.find('.progress-failed').css({'width': percent});
-        target.hide();
-        tr.find('.progress-bar').show();
-      }
-    });
-    return false;
-  },
-  'showPercentageOfSelectedRuns': function () {
-    var checkedBoxes = jQ('.run_selector:checked');
-    checkedBoxes.each(function (index, box) {
-      jQ(box).parent().parent().find('.btn-statistics').each(function (index, elem) {
-        var clickable = jQ(elem);
-        if (clickable.css('display') != 'none') {
-          clickable.trigger('click');
-        }
-      });
-    });
-  }
 };
 
 var updateCaseRunStatus = function(e) {

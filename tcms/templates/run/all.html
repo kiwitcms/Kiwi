@@ -51,12 +51,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 		{# <span class="tit">{{ test_runs.count }} Test Runs</span> #}
 		<span class="tit"><a href="{% url "tcms.testruns.views.all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
 		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param='{% url "tcms.testruns.views.clone" %}' />
-		<input class="progress" type="button"
-				value="Calculate Progress" id="btn_selected_progress"
-				title="calculate progress of selected test runs"/>
 	</div>
 	{% include "run/common/run_filtered.html" %}
-	
 	{% else %}
 	{% if query_result %}
 	<span class="prompt-message"><center>No test runs found</center></span>

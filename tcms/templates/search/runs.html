@@ -10,10 +10,6 @@
 	<div id="contentTab" class="mixbar">
 		<span class="tit"><a href="{% url "tcms.testruns.views.all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
 		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param="{% url "tcms.testruns.views.clone" %}" />
-		
-		<input class="progress" type="button"
-				value="Calculate Progress" id="btn_selected_progress"
-				title="calculate progress of selected test runs"/>
 		<span class="right-action">{% paginate %}</span>
 	</div>
 	{% include "run/common/run_advance_filtered.html" %}

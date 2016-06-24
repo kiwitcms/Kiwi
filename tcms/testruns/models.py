@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 import datetime
 
+from django.conf import settings
+from django.contrib.contenttypes import generic
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_save, post_delete, pre_save
-from django.contrib.contenttypes import generic
-from django.conf import settings
 
-from tcms.testcases.models import TestCaseBug, TestCaseText, NoneText
-from tcms.testruns import signals as run_watchers
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.db import SQLExecution
-from tcms.core.models import TCMSActionModel
 from tcms.core.models.fields import DurationField
+from tcms.core.models import TCMSActionModel
+from tcms.core.utils import is_int
 from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
+from tcms.testcases.models import TestCaseBug, TestCaseText, NoneText
+from tcms.testruns import signals as run_watchers
 from tcms.testruns.sqls import GET_BUG_COUNT
 
 try:
@@ -81,82 +83,42 @@ class TestRun(TCMSActionModel):
 
     @classmethod
     def list(cls, query):
-        from django.db.models import Q
+        conditions = []
 
-        q = cls.objects
+        mapping = {
+            'search': lambda value: Q(run_id__icontains=value) | Q(summary__icontains=value),
+            'summary': lambda value: Q(summary__icontains=value),
+            'product': lambda value: Q(build__product=value),
+            'product_version': lambda value: Q(product_version=value),
+            'plan': lambda value: Q(plan__plan_id=int(value)) if is_int(value) else Q(plan__name__icontains=value),
+            'build': lambda value: lambda value: Q(build=value),
+            'env_group': lambda value: Q(plan__env_group=value),
+            'people_id': lambda value: Q(manager__id=value) | Q(default_tester__id=value),
+            'manager': lambda value: Q(manager=value),
+            'default_tester': lambda value: Q(default_tester=value),
+            'tag__name__in': lambda value: Q(tag__name__in=value),
+            'case_run__assignee': lambda value: Q(case_run__assignee=value),
+            'status': lambda value: {
+                'running': Q(stop_date__isnull=True),
+                'finished': Q(stop_date__isnull=False),
+            }[value.lower()],
+            'people': lambda value: {
+                'default_tester': Q(default_tester=value),
+                'manager': Q(manager=value),
+                None: Q(manager=value) | Q(default_tester=value),
+            }[query.get('people_type')],
+        }
 
-        if query.get('search'):
-            q = q.filter(
-                Q(run_id__icontains=query['search']) |
-                Q(summary__icontains=query['search'])
-            )
+        conditions = [mapping[key](value) for key, value in query.iteritems()
+                      if value and key in mapping]
 
-        if query.get('summary'):
-            q = q.filter(summary__icontains=query['summary'])
+        runs = cls.objects.filter(*conditions)
 
-        if query.get('product'):
-            q = q.filter(build__product=query['product'])
+        value = query.get('sortby')
+        if value:
+            runs = runs.order_by(value)
 
-        if query.get('product_version'):
-            q = q.filter(product_version=query['product_version'])
-
-        plan_str = query.get('plan')
-        if plan_str:
-            try:
-                # Is it an integer?  If so treat as a plan_id:
-                plan_id = int(plan_str)
-                q = q.filter(plan__plan_id=plan_id)
-            except ValueError:
-                # Not an integer - treat plan_str as a plan name:
-                q = q.filter(plan__name__icontains=plan_str)
-        del plan_str
-
-        if query.get('build'):
-            q = q.filter(build=query['build'])
-
-        # New environment search
-        if query.get('env_group'):
-            q = q.filter(plan__env_group=query['env_group'])
-
-        if query.get('people_id'):
-            q = q.filter(
-                Q(manager__id=query['people_id']) |
-                Q(default_tester__id=query['people_id'])
-            )
-
-        if query.get('people'):
-            if query.get('people_type') == 'default_tester':
-                q = q.filter(default_tester=query['people'])
-            elif query.get('people_type') == 'manager':
-                q = q.filter(manager=query['people'])
-            else:
-                q = q.filter(
-                    Q(manager=query['people']) |
-                    Q(default_tester=query['people'])
-                )
-
-        if query.get('manager'):
-            q = q.filter(manager=query['manager'])
-
-        if query.get('default_tester'):
-            q = q.filter(default_tester=query['default_tester'])
-
-        if query.get('sortby'):
-            q = q.order_by(query.get('sortby'))
-
-        if query.get('status'):
-            if query.get('status').lower() == 'running':
-                q = q.filter(stop_date__isnull=True)
-            if query.get('status').lower() == 'finished':
-                q = q.filter(stop_date__isnull=False)
-
-        if query.get('tag__name__in'):
-            q = q.filter(tag__name__in=query['tag__name__in'])
-
-        if query.get('case_run__assignee'):
-            q = q.filter(case_run__assignee=query['case_run__assignee'])
-
-        return q.distinct()
+        return runs.distinct()
 
     def belong_to(self, user):
         if self.manager == user or self.plan.author == user:
@@ -247,10 +209,8 @@ class TestRun(TCMSActionModel):
         )
 
     def add_env_value(self, env_value):
-        return TCMSEnvRunValueMap.objects.get_or_create(
-            run=self,
-            value=env_value,
-        )
+        return TCMSEnvRunValueMap.objects.get_or_create(run=self,
+                                                        value=env_value)
 
     def remove_tag(self, tag):
         cursor = connection.writer_cursor
