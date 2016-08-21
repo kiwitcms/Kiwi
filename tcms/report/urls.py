@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import include, url, patterns
+from django.conf.urls import url, patterns
 from django.views.generic.base import RedirectView
 
 from .views import CustomDetailReport

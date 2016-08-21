@@ -13,8 +13,7 @@ urlpatterns = patterns(
     url(r'^(?P<run_id>\d+)/delete/$', 'delete'),
     url(r'^(?P<run_id>\d+)/edit/$', 'edit'),
 
-    url(r'^(?P<run_id>\d+)/report/$',
-        TestRunReportView.as_view(),
+    url(r'^(?P<run_id>\d+)/report/$', TestRunReportView.as_view(),
         name='run-report'),
 
     url(r'^(?P<run_id>\d+)/ordercase/$', 'order_case'),
@@ -22,8 +21,7 @@ urlpatterns = patterns(
     url(r'^(?P<run_id>\d+)/ordercaserun/$', 'order_case'),
     url(r'^(?P<run_id>\d+)/removecaserun/$', 'remove_case_run'),
 
-    url(r'^(?P<run_id>\d+)/assigncase/$',
-        AddCasesToRunView.as_view(),
+    url(r'^(?P<run_id>\d+)/assigncase/$', AddCasesToRunView.as_view(),
         name='add-cases-to-run'),
 
     url(r'^(?P<run_id>\d+)/cc/$', 'cc'),

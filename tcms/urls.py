@@ -79,7 +79,7 @@ urlpatterns = patterns('',
     (r'^linkref/remove/(?P<link_id>\d+)/$', 'tcms.core.contrib.linkreference.views.remove'),
 
     # Management zone
-    #(r'^management/$', 'tcms.management.views.index'),
+    # (r'^management/$', 'tcms.management.views.index'),
     (r'^environment/groups/$', 'tcms.management.views.environment_groups'),
     (r'^environment/group/edit/$', 'tcms.management.views.environment_group_edit'),
     (r'^environment/properties/$', 'tcms.management.views.environment_properties'),
@@ -93,8 +93,8 @@ urlpatterns = patterns('',
     # Advance search
     url(r'^advance-search/$', 'tcms.search.advance_search', name='advance_search'),
 
-    #Using admin js without admin permission
-    #refer: https://docs.djangoproject.com/en/1.6/topics/i18n/translation/#module-django.views.i18n
+    # Using admin js without admin permission
+    # refer: https://docs.djangoproject.com/en/1.6/topics/i18n/translation/#module-django.views.i18n
     (r'^jsi18n/$', 'django.views.i18n.javascript_catalog',
      {'packages': ('django.conf', 'django.contrib.admin')}),
 )
@@ -102,7 +102,8 @@ urlpatterns = patterns('',
 # Debug zone
 
 if settings.DEBUG:
-    urlpatterns += patterns('tcms.core.utils.test_template',
+    urlpatterns += patterns(
+        'tcms.core.utils.test_template',
         (r'^tt/(?P<template_name>.*)', 'test_template'),
     )
 
