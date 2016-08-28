@@ -2,11 +2,14 @@
 
 {% block subtitle %}Add new case{% endblock %}
 
+{% block extra_head %}
+{{ form.media }}
+{% endblock %}
+
 {% block custom_stylesheet %}
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tinymce/jscripts/tiny_mce/tiny_mce.js'></script>
 <script type="text/javascript" src='{{ STATIC_URL }}js/testplan_actions.js'></script>
 <script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
 <script type="text/javascript" src="/jsi18n/"></script>
@@ -31,7 +34,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 		{% endif %}
 		>> Create new case
 	</div>
-	
 	<form action="{% url "tcms.testcases.views.new" %}{% if test_plan %}?from_plan={{ test_plan.plan_id }}{% endif %}" method="POST">
 		{% if test_plan %}
 		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}" />
@@ -48,7 +50,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 							<div class="errors">
 								{{ form.summary.errors }}
 							</div>
-					
 					</div>
 					<div class="data_row">
 						<label class="lab strong">Component</label>
@@ -58,8 +59,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 					<div class="data_row">
 						<label class="lab strong">Category</label>
 						{{ form.category }}
-						
-                        <a href="{{ ADMIN_PREFIX }}/testcases/testcasecategory/add/" class="addlink" id="id_addt_product_casecategory" target="_blank">Add Category</a><span class="grey">After Add and Refresh page</span><span class="errors">{{ form.category.errors }}</span>
+						<a href="{{ ADMIN_PREFIX }}/testcases/testcasecategory/add/" class="addlink" id="id_addt_product_casecategory" target="_blank">Add Category</a><span class="grey">After Add and Refresh page</span><span class="errors">{{ form.category.errors }}</span>
 					</div>
 				</div>
 				<div class="editor-side">

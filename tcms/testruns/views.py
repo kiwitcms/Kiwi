@@ -1,58 +1,59 @@
 # -*- coding: utf-8 -*-
 
-import itertools
-import time
 import datetime
-import urllib
+import itertools
+import json
 import re
+import time
+import urllib
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.comments.models import Comment
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.db.models import Q
 from django.db.models import Count
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils import simplejson
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_http_methods
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
+from django_comments.models import Comment
+
 from tcms.core.db import SQLExecution
+from tcms.core.exceptions import NitrateException
 from tcms.core.responses import HttpJSONResponse
-from tcms.core.utils import clean_request
 from tcms.core.utils.bugtrackers import Bugzilla
+from tcms.core.utils import clean_request
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.core.utils.validations import validate_bug_id
-from tcms.core.exceptions import NitrateException
 from tcms.core.views import Prompt
-from tcms.search import remove_from_request_path
+from tcms.management.models import Priority, TCMSEnvValue, TestTag
 from tcms.search.forms import RunForm
+from tcms.search import remove_from_request_path
 from tcms.search.order import order_run_queryset
 from tcms.search.query import SmartDjangoQuery
+from tcms.testcases.forms import CaseBugForm
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
-from tcms.testplans.models import TestPlan
-from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, \
-    TCMSEnvRunValueMap
-from tcms.management.models import Priority, TCMSEnvValue, TestTag
 from tcms.testcases.views import get_selected_testcases
+from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import stats_caseruns_status
 from tcms.testruns.data import TestCaseRunDataMixin
-from tcms.testcases.forms import CaseBugForm
-from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, \
-    RunCloneForm, MulitpleRunsCloneForm, PlanFilterRunForm
+from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
+from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
 from tcms.testruns.helpers.serializer import TCR2File
+from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TCMSEnvRunValueMap
 from tcms.testruns.sqls import GET_CONFIRMED_CASES
 
 
@@ -296,9 +297,9 @@ def all(request, template_name='run/all.html'):
     # need here. All of it will be removed in the furture.
 
     if request.REQUEST.get('manager'):
+        people = request.REQUEST.get('people')
         if request.user.is_authenticated() \
-                and (request.REQUEST.get('people') == request.user.username or
-                     request.REQUEST.get('people') == request.user.email):
+                and (people == request.user.username or people == request.user.email):
             SUB_MODULE_NAME = "my_runs"
 
     # Initial the values will be use if it's not a search
@@ -733,8 +734,7 @@ def get(request, run_id, template_name='run/get.html'):
     # 7. get tags
     # Get the list of testcases belong to the run
     tcs = [tcr.case_id for tcr in tcrs]
-    ttags = TestTag.objects.filter(testcase__in=tcs).values_list('name',
-                                                                 flat=True)
+    ttags = TestTag.objects.filter(cases__in=tcs).values_list('name', flat=True)
     ttags = list(set(ttags.iterator()))
     ttags.sort()
 
@@ -985,7 +985,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
         def ajax_response(self, response=None):
             if not response:
                 response = self.default_ajax_response
-            return HttpJSONResponse(simplejson.dumps(response))
+            return HttpJSONResponse(json.dumps(response))
 
         def file(self):
             rh_bz = Bugzilla(settings.BUGZILLA_URL)
@@ -1088,6 +1088,7 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
                                   context_instance=RequestContext(request))
 
 
+@require_http_methods(['GET', 'POST'])
 def clone(request, template_name='run/clone.html'):
     '''Clone test run to another build'''
     SUB_MODULE_NAME = "runs"
@@ -1523,8 +1524,7 @@ def env_value(request):
             self.trs = trs
 
         def has_no_perm(self, perm):
-            if not self.request.user.has_perm(
-                    'testruns.' + perm + '_tcmsenvrunvaluemap'):
+            if not self.request.user.has_perm('testruns.' + perm + '_tcmsenvrunvaluemap'):
                 return {'rc': 1, 'response': 'Permission deined - %s' % perm}
 
             return False
@@ -1536,11 +1536,10 @@ def env_value(request):
             chk_perm = self.has_no_perm('add')
 
             if chk_perm:
-                return HttpResponse(simplejson.dumps(chk_perm))
+                return HttpResponse(json.dumps(chk_perm))
 
             try:
-                value = self.get_env_value(request.REQUEST.get(
-                    'env_value_id'))
+                value = self.get_env_value(request.REQUEST.get('env_value_id'))
                 for tr in self.trs:
                     o, c = tr.add_env_value(env_value=value)
 
@@ -1549,24 +1548,22 @@ def env_value(request):
                             'rc': 1,
                             'response': 'The value is exist for this run'
                         }
-            except ObjectDoesNotExist, errors:
+            except ObjectDoesNotExist as errors:
                 self.ajax_response = {'rc': 1, 'response': errors}
             except:
                 raise
 
             fragment = render_to_response("run/get_environment.html",
-                                          {"test_run": self.trs[0],
-                                           "is_ajax": True},
-                                          context_instance=RequestContext(
-                                              request))
+                                          {"test_run": self.trs[0], "is_ajax": True},
+                                          context_instance=RequestContext(request))
             self.ajax_response.update({"fragment": fragment.content})
-            return HttpResponse(simplejson.dumps(self.ajax_response))
+            return HttpResponse(json.dumps(self.ajax_response))
 
         # FIXME Deprecated
         def add_mulitple(self):
             chk_perm = self.has_no_perm('add')
             if chk_perm:
-                return HttpResponse(simplejson.dumps(chk_perm))
+                return HttpResponse(json.dumps(chk_perm))
 
             # Write the values into tcms_env_run_value_map table
             for key, value in self.request.REQUEST.items():
@@ -1579,26 +1576,21 @@ def env_value(request):
                     except ValueError:
                         raise
 
-                    if request.REQUEST.get(
-                            'select_property_value_%s' % property_id):
+                    if request.REQUEST.get('select_property_value_%s' % property_id):
                         try:
                             value_id = int(request.REQUEST.get(
-                                'select_property_value_%s' % property_id)
-                            )
+                                'select_property_value_%s' % property_id))
                         except ValueError:
                             raise
 
                         for tr in self.trs:
-                            TCMSEnvRunValueMap.objects.create(
-                                run=tr,
-                                value_id=value_id,
-                            )
-            return HttpResponse(simplejson.dumps(self.ajax_response))
+                            TCMSEnvRunValueMap.objects.create(run=tr, value_id=value_id)
+            return HttpResponse(json.dumps(self.ajax_response))
 
         def remove(self):
             chk_perm = self.has_no_perm('delete')
             if chk_perm:
-                return HttpResponse(simplejson.dumps(chk_perm))
+                return HttpResponse(json.dumps(chk_perm))
 
             try:
                 for tr in self.trs:
@@ -1608,12 +1600,12 @@ def env_value(request):
             except:
                 pass
 
-            return HttpResponse(simplejson.dumps(self.ajax_response))
+            return HttpResponse(json.dumps(self.ajax_response))
 
         def change(self):
             chk_perm = self.has_no_perm('change')
             if chk_perm:
-                return HttpResponse(simplejson.dumps(chk_perm))
+                return HttpResponse(json.dumps(chk_perm))
 
             try:
                 for tr in self.trs:
@@ -1627,13 +1619,13 @@ def env_value(request):
             except:
                 raise
 
-            return HttpResponse(simplejson.dumps(self.ajax_response))
+            return HttpResponse(json.dumps(self.ajax_response))
 
     run_env_actions = RunEnvActions(request, trs)
 
     if not request.REQUEST.get('a') in run_env_actions.__all__:
         ajax_response = {'rc': 1, 'response': 'Unrecognizable actions'}
-        return HttpResponse(simplejson.dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     func = getattr(run_env_actions, request.REQUEST['a'])
 

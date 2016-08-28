@@ -10,6 +10,7 @@ from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.views.decorators.http import require_GET
 
 from tcms.core.helpers.cache import cached_entities
 from tcms.core.utils.raw_sql import RawSQL
@@ -21,10 +22,9 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 
 
+@require_GET
 def advance_search(request, tmpl='search/advanced_search.html'):
-    '''
-    View of /advance-search/
-    '''
+    """View of /advance-search/"""
     errors = None
     data = request.GET
     target = data.get('target')
@@ -125,17 +125,14 @@ def sum_orm_queries(plans, cases, runs, target):
         return cases
 
 
-def render_results(request, results, time_cost, queries,
-                   tmpl='search/results.html'):
-    '''
-    Using a SQL "in" query and PKs as the arguments.
-    '''
+def render_results(request, results, time_cost, queries, tmpl='search/results.html'):
+    """Using a SQL "in" query and PKs as the arguments"""
     klasses = {
         'plan': {'class': TestPlan, 'result_key': 'test_plans'},
         'case': {'class': TestCase, 'result_key': 'test_cases'},
         'run': {'class': TestRun, 'result_key': 'test_runs'}
     }
-    asc = bool(request.REQUEST.get('asc', None))
+    asc = bool(request.GET.get('asc', None))
     query_url = remove_from_request_path(request, 'order_by')
     if asc:
         query_url = remove_from_request_path(query_url, 'asc')
@@ -147,8 +144,7 @@ def render_results(request, results, time_cost, queries,
         'queries': queries,
         'query_url': query_url,
     }
-    return render_to_response(tmpl, context_data,
-                              context_instance=RequestContext(request))
+    return render_to_response(tmpl, context_data, context_instance=RequestContext(request))
 
 
 def remove_from_request_path(request, name):

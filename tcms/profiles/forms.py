@@ -39,6 +39,7 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         if 'url' in kwargs:

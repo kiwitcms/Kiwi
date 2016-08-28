@@ -4,11 +4,8 @@ import kerberos
 
 from django.conf import settings
 
-
-try:
-    from django.core.validators import email_re
-except ImportError:  # Django 1.1.1 compatible
-    from django.forms.fields import email_re
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.backends import ModelBackend, RemoteUserBackend
 
@@ -35,17 +32,19 @@ class EmailBackend(ModelBackend):
 
     def authenticate(self, username=None, password=None):
         # If username is an email address, then try to pull it up
-        if email_re.search(username):
-            try:
-                user = User.objects.get(email=username)
-            except User.DoesNotExist:
-                return None
-        else:
-            # We have a non-email address username we should try username
+        try:
+            validate_email(username)
+        except ValidationError:
             try:
                 user = User.objects.get(username=username)
             except User.DoesNotExist:
                 return None
+        else:
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                return None
+
         if user.check_password(password):
             return user
 
@@ -73,7 +72,11 @@ class BugzillaBackend(ModelBackend):
     def authenticate(self, username=None, password=None):
         server = xmlrpclib.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
 
-        if email_re.search(username):
+        try:
+            validate_email(username)
+        except ValidationError:
+            return None
+        else:
             try:
                 server.bugzilla.login(username, password)
             except xmlrpclib.Fault:
@@ -90,8 +93,6 @@ class BugzillaBackend(ModelBackend):
                 )
 
                 user.set_unusable_password(password)
-        else:
-            return None
 
         if user.check_password(password):
             return user

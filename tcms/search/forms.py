@@ -100,20 +100,14 @@ class PlanForm(forms.Form):
 
 
 class CaseForm(forms.Form):
-    STATUS_CHOICE = [
-        (s.pk, s.name) for s in cached_entities('TestCaseStatus')
-    ]
-    PRIORITY_CHOICE = [
-        (p.pk, p.value) for p in cached_entities('Priority')
-    ]
     cs_id = LooseCF()
     cs_summary = LooseCF()
     cs_authors = LooseCF()
     cs_tester = LooseCF()
     cs_tags = LooseCF()
     cs_bugs = LooseBugF()
-    cs_status = LooseMF(choices=STATUS_CHOICE)
-    cs_priority = LooseMF(choices=PRIORITY_CHOICE)
+    cs_status = LooseMF()
+    cs_priority = LooseMF()
     cs_auto = LooseCF()
     cs_proposed = LooseCF()
     cs_script = LooseCF()
@@ -146,6 +140,12 @@ class CaseForm(forms.Form):
         return get_choice(self.cleaned_data['cs_tester'])
 
     def populate(self, data):
+        status_choice = [(s.pk, s.name) for s in cached_entities('TestCaseStatus')]
+        self.fields['cs_status'].choices = status_choice
+
+        priority_choice = [(p.pk, p.value) for p in cached_entities('Priority')]
+        self.fields['cs_priority'].choices = priority_choice
+
         prod_pks = data.getlist('cs_product')
         prod_pks = [k for k in prod_pks if k]
         if prod_pks:

@@ -398,6 +398,12 @@ function getBuildsByProductId(allow_blank, product_field, build_field, is_active
   }
 
   var product_id = jQ(product_field).val();
+  no_product_is_selected = product_id === '' || product_id === null;
+  if (no_product_is_selected) {
+    jQ(build_field).html('<option value="">---------</option>');
+    return false;
+  }
+
   var is_active = '';
   if (jQ('#value_sub_module').length) {
     if (jQ('#value_sub_module').val() === "new_run") {
@@ -407,11 +413,6 @@ function getBuildsByProductId(allow_blank, product_field, build_field, is_active
 
   if (is_active) {
     is_active = true;
-  }
-
-  if (product_id === "") {
-    jQ(build_field).html('<option value="">---------</option>');
-    return false;
   }
 
   var success = function(t) {

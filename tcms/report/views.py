@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import Http404
@@ -284,13 +285,13 @@ class CustomReport(TemplateView):
         return super(CustomReport, self).get(request)
 
     def _get_search_form(self):
-        req = self.request.REQUEST
+        req = self.request.GET
         form = self.form_class(req)
         form.populate(product_id=req.get('product'))
         return form
 
     def _do_search(self):
-        return self.request.REQUEST.get('a', '').lower() == 'search'
+        return self.request.GET.get('a', '').lower() == 'search'
 
     def _report_data_context(self):
         form = self._get_search_form()
@@ -509,7 +510,7 @@ class TestingReportBase(TemplateView):
         queries = self.request.GET
 
         if queries:
-            form = self._get_form(self.request.REQUEST)
+            form = self._get_form(self.request.GET)
 
             if form.is_valid():
                 queries = form.cleaned_data
@@ -615,7 +616,7 @@ class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
     def get_context_data(self, **kwargs):
         data = super(TestingReportCaseRuns, self).get_context_data(**kwargs)
 
-        query_args = self.request.REQUEST
+        query_args = self.request.GET
         form = self._get_form(query_args)
 
         if form.is_valid():

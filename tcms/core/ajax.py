@@ -6,6 +6,7 @@ Most of these functions are use for Ajax.
 """
 import datetime
 import sys
+import json
 
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -16,7 +17,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils import simplejson
+from django.views.decorators.http import require_GET
 
 from tcms.management.models import Component, TestBuild, Version
 from tcms.management.models import Priority
@@ -55,6 +56,7 @@ def strip_parameters(request, skip_parameters):
     return parameters
 
 
+@require_GET
 def info(request):
     """Ajax responsor for misc information"""
 
@@ -74,7 +76,7 @@ def info(request):
 
             query = {
                 'product_id': self.product_id,
-                'is_active': self.request.REQUEST.get('is_active')
+                'is_active': self.request.GET.get('is_active')
             }
             return TestBuild.list(query)
 
@@ -101,7 +103,7 @@ def info(request):
         def env_properties(self):
             from tcms.management.models import TCMSEnvGroup, TCMSEnvProperty
 
-            if self.request.REQUEST.get('env_group_id'):
+            if self.request.GET.get('env_group_id'):
                 env_group = TCMSEnvGroup.objects.get(
                     id=self.request.REQUEST['env_group_id']
                 )
@@ -113,7 +115,7 @@ def info(request):
             from tcms.management.models import TCMSEnvValue
 
             return TCMSEnvValue.objects.filter(
-                property__id=self.request.REQUEST.get('env_property_id')
+                property__id=self.request.GET.get('env_property_id')
             )
 
         def tags(self):
@@ -124,8 +126,7 @@ def info(request):
             if query.get('name__startswith'):
                 seq = get_string_combinations(query['name__startswith'])
                 tags = tags.filter(eval(
-                    '|'.join(
-                        ["Q(name__startswith = '%s')" % item for item in seq])
+                    '|'.join(["Q(name__startswith = '%s')" % item for item in seq])
                 ))
                 del query['name__startswith']
 
@@ -143,24 +144,23 @@ def info(request):
 
             return Version.objects.filter(product__id=self.product_id)
 
-    objects = Objects(request=request,
-                      product_id=request.REQUEST.get('product_id'))
-    obj = getattr(objects, request.REQUEST.get('info_type'), None)
+    objects = Objects(request=request, product_id=request.GET['product_id'])
+    obj = getattr(objects, request.GET['info_type'], None)
 
     if obj:
-        if request.REQUEST.get('format') == 'ulli':
-            field = request.REQUEST.get('field', 'name')
+        if request.GET.get('format') == 'ulli':
+            field = request.GET.get('field', 'name')
             response_str = '<ul>'
             for o in obj():
                 response_str += '<li>' + getattr(o, field, None) + '</li>'
             response_str += '</ul>'
             return HttpResponse(response_str)
 
+        # import pdb; pdb.set_trace()
         return HttpResponse(serializers.serialize(
-            request.REQUEST.get('format', 'json'),
+            request.GET.get('format', 'json'),
             obj(),
-            fields=('name', 'value'),
-            excludes=('password',)
+            fields=('name', 'value')
         ))
 
     return HttpResponse('Unrecognizable infotype')
@@ -279,8 +279,7 @@ def tag(request, template_name="management/get_tag.html"):
         func = getattr(tag_actions, q_action)
         response = func()
         if not response[0]:
-            return HttpResponse(
-                simplejson.dumps({'response': response, 'rc': 1}))
+            return HttpResponse(json.dumps({'response': response, 'rc': 1}))
 
     del q_tag, q_action
 
@@ -294,7 +293,7 @@ def tag(request, template_name="management/get_tag.html"):
                 serializers.serialize(request.REQUEST['t'], response[1])
             )
 
-        return HttpResponse(simplejson.dumps({'response': 'ok'}))
+        return HttpResponse(json.dumps({'response': 'ok'}))
 
     # Response the single operation
     if len(obj) == 1:
@@ -368,11 +367,11 @@ def get_value_by_type(val, v_type):
 
 def say_no(error_msg):
     ajax_response = {'rc': 1, 'response': error_msg}
-    return HttpResponse(simplejson.dumps(ajax_response))
+    return HttpResponse(json.dumps(ajax_response))
 
 
 def say_yes():
-    return HttpResponse(simplejson.dumps({'rc': 0, 'response': 'ok'}))
+    return HttpResponse(json.dumps({'rc': 0, 'response': 'ok'}))
 
 
 # Deprecated. Not flexible.
@@ -581,9 +580,7 @@ def update_case_run_status(request):
                 pass
         targets.update(close_date=now, tested_by=request.user)
 
-    return HttpResponse(simplejson.dumps({
-        'rc': 0, 'response': 'ok',
-    }))
+    return HttpResponse(json.dumps({'rc': 0, 'response': 'ok'}))
 
 
 # Deprecated. Remove this dead code.
@@ -667,7 +664,7 @@ def update_case_status(request):
     # substraction, which saves one SQL query.
     review_case_count = plan.review_case.count()
     return HttpResponse(
-        simplejson.dumps({
+        json.dumps({
             'rc': 0, 'response': 'ok',
             'run_case_count': run_case_count,
             'case_count': case_count,
@@ -788,7 +785,7 @@ class TestCaseUpdateActions(object):
         review_case_count = plan.review_case.count()
 
         return HttpResponse(
-            simplejson.dumps({
+            json.dumps({
                 'rc': 0, 'response': 'ok',
                 'run_case_count': run_case_count,
                 'case_count': case_count,
@@ -966,7 +963,7 @@ def get_prod_related_obj_json(request):
         res = get_prod_related_objs(p_pks, target)
     else:
         res = []
-    return HttpResponse(simplejson.dumps(res))
+    return HttpResponse(json.dumps(res))
 
 
 def objects_update(objects, **kwargs):
