@@ -144,7 +144,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS ChangeLog README.rst LICENSE VERSION.txt
+%doc AUTHORS CHANGELOG.rst README.rst LICENSE VERSION.txt
 %{python_sitelib}/tcms/
 %{python_sitelib}/nitrate-%{version}-py*.egg-info/
 %{_datadir}/%{name}

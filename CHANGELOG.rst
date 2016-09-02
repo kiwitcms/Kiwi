@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+3.9 (Unreleased)
+----------------
+
+- Remove raw SQL migrations and initial schema and data
+- Add migration for django_comments
+- Upgrade Django to 1.8.14
+
 3.8.17-1 (Feb 11 2015)
 ----------------------
 
