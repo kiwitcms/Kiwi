@@ -33,3 +33,5 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # For local development
 ENABLE_ASYNC_EMAIL = False
+
+FILE_UPLOAD_DIR = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')
