@@ -109,16 +109,12 @@ class TestCaseCategory(TCMSActionModel):
 
 class TestCase(TCMSActionModel):
     case_id = models.AutoField(max_length=10, primary_key=True)
-    create_date = models.DateTimeField(db_column='creation_date',
-                                       auto_now_add=True)
+    create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
     is_automated = models.IntegerField(db_column='isautomated', default=0)
     is_automated_proposed = models.BooleanField(default=False)
     script = models.TextField(blank=True)
     arguments = models.TextField(blank=True)
-    extra_link = models.CharField(max_length=1024,
-                                  default=None,
-                                  blank=True,
-                                  null=True)
+    extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
     summary = models.CharField(max_length=255, blank=True)
     requirement = models.CharField(max_length=255, blank=True)
     alias = models.CharField(max_length=255, blank=True)
@@ -126,10 +122,8 @@ class TestCase(TCMSActionModel):
     notes = models.TextField(blank=True)
 
     case_status = models.ForeignKey(TestCaseStatus)
-    category = models.ForeignKey(TestCaseCategory,
-                                 related_name='category_case')
-    priority = models.ForeignKey('management.Priority',
-                                 related_name='priority_case')
+    category = models.ForeignKey(TestCaseCategory, related_name='category_case')
+    priority = models.ForeignKey('management.Priority', related_name='priority_case')
     author = models.ForeignKey('auth.User', related_name='cases_as_author')
     default_tester = models.ForeignKey('auth.User',
                                        related_name='cases_as_default_tester',
@@ -501,44 +495,32 @@ class TestCase(TCMSActionModel):
         return self.latest_text()
 
     def latest_text(self, text_required=True):
-        try:
-            text = self.text
-            if not text_required:
-                text = text.defer('action', 'effect', 'setup', 'breakdown')
-            return text.order_by('-case_text_version')[0]
-        except IndexError:
-            return NoneText
+        text = self.text
+        if not text_required:
+            text = text.defer('action', 'effect', 'setup', 'breakdown')
+        qs = text.order_by('-case_text_version')[0:1]
+        return NoneText if len(qs) == 0 else qs[0]
 
     def latest_text_version(self):
-        try:
-            return self.text.order_by('-case_text_version'). \
-                only('case_text_version')[0].case_text_version
-        except IndexError:
-            return 0
+        qs = self.text.order_by('-case_text_version').only('case_text_version')[0:1]
+        return 0 if len(qs) == 0 else qs[0].case_text_version
 
     def text_exist(self):
-        try:
-            return self.text.exists()
-        except IndexError:
-            return False
-        except ObjectDoesNotExist:
-            return False
+        return self.text.exists()
 
     def text_checksum(self):
-        try:
-            text = self.text.order_by('-case_text_version').only(
-                'action_checksum',
-                'effect_checksum',
-                'setup_checksum',
-                'breakdown_checksum')[0]
-            return text.action_checksum, \
-                text.effect_checksum, \
-                text.setup_checksum, \
-                text.breakdown_checksum
-        except IndexError:
+        qs = self.text.order_by('-case_text_version').only('action_checksum',
+                                                           'effect_checksum',
+                                                           'setup_checksum',
+                                                           'breakdown_checksum')[0:1]
+        if len(qs) == 0:
             return None, None, None, None
-        except ObjectDoesNotExist:
-            return None, None, None, None
+        else:
+            text = qs[0]
+            return (text.action_checksum,
+                    text.effect_checksum,
+                    text.setup_checksum,
+                    text.breakdown_checksum)
 
     def mail(self, template, subject, context={}, to=[], request=None):
         from tcms.core.utils.mailto import mailto
