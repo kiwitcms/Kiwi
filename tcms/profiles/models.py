@@ -74,6 +74,9 @@ class UserProfile(models.Model):
             if self.im_type_id == c[0]:
                 return '[%s] %s' % (c[1], self.im)
 
+    @classmethod
+    def get_user_profile(cls, user):
+        return cls.objects.get(user=user)
 
 #
 # TCMS Bookmarks in profile models

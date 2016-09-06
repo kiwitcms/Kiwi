@@ -196,9 +196,6 @@ TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
 
 COMMENTS_APP = 'tcms.core.contrib.comments'  # 'nitrate_comments'
 
-# Define the custom profile models
-AUTH_PROFILE_MODULE = 'profiles.UserProfile'
-
 #
 # XML-RPC interface settings
 #
