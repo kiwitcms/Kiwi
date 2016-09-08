@@ -1494,8 +1494,13 @@ function onTestCaseStatusChange(options) {
       'hashable': true
     });
     postdata.a = 'update';
-    postdata.target_field = 'case_status';
-    postdata.new_value = status_pk;
+
+    var update_status_data = {
+      'from_plan': postdata.from_plan,
+      'case': postdata.case,
+      'target_field': 'case_status',
+      'new_value': status_pk
+    };
 
     var afterStatusChangedCallback = function(response) {
       var returnobj = jQ.parseJSON(response.responseText);
@@ -1515,8 +1520,8 @@ function onTestCaseStatusChange(options) {
 
     jQ.ajax({
       'type': 'POST',
-      'url': '/ajax/update/cases-case-status/',
-      'data': postdata,
+      'url': '/ajax/update/case-status/',
+      'data': update_status_data,
       'traditional': true,
       'success': function (data, textStatus, jqXHR) {
         afterStatusChangedCallback(jqXHR);

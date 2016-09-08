@@ -306,16 +306,13 @@ class TestCase(TCMSActionModel):
         return cls.list(query)
 
     @classmethod
-    def mail_scene(cls, objects, field=None, value=None, ctype=None,
-                   object_pk=None):
+    def mail_scene(cls, objects, field=None, value=None, ctype=None, object_pk=None):
         tcs = objects.select_related()
         scence_templates = {
             'reviewer': {
                 'template_name': 'mail/change_case_reviewer.txt',
-                'subject': 'You have been speicific to be the reviewer of '
-                           'cases',
-                'to_mail': list(
-                    set(tcs.values_list('reviewer__email', flat=True))),
+                'subject': 'You have been speicific to be the reviewer of cases',
+                'to_mail': list(set(tcs.values_list('reviewer__email', flat=True))),
                 'context': {'test_cases': tcs},
             }
         }

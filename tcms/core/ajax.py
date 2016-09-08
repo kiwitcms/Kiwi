@@ -8,6 +8,7 @@ import datetime
 import sys
 import json
 
+from django import http
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
@@ -583,97 +584,11 @@ def update_case_run_status(request):
     return HttpResponse(json.dumps({'rc': 0, 'response': 'ok'}))
 
 
-# Deprecated. Remove this dead code.
-def update_case_status(request):
-    '''
-    Update Test Case Status, return Plan's case count in json for update
-    in real-time.
-    '''
-    data = request.REQUEST.copy()
-    plan_id = data.get('plan_id')
-    ctype = data.get("content_type")
-    vtype = data.get('value_type', 'str')
-    object_pk_str = data.get("object_pk")
-    field = data.get('field')
-    value = data.get('value')
-
-    object_pk = [int(a) for a in object_pk_str.split(',')]
-
-    if not field or not value or not object_pk or not ctype:
-        return say_no(
-            'Following fields are required - content_type, '
-            'object_pk, field and value.')
-
-    # Convert the value type
-    # FIXME: Django bug here: update() keywords must be strings
-    field = str(field)
-
-    value, error = get_value_by_type(value, vtype)
-    if error:
-        return say_no(error)
-    has_perms = check_permission(request, ctype)
-    if not has_perms:
-        return say_no('Permission Dinied.')
-
-    model = models.get_model(*ctype.split(".", 1))
-    targets = model._default_manager.filter(pk__in=object_pk)
-
-    if not targets:
-        return say_no('No record found')
-    if not hasattr(targets[0], field):
-        return say_no('%s has no field %s' % (ctype, field))
-
-    if hasattr(targets[0], 'log_action'):
-        for t in targets:
-            try:
-                t.log_action(
-                    who=request.user,
-                    action='Field %s changed from %s to %s.' % (
-                        field, getattr(t, field), value
-                    )
-                )
-            except (AttributeError, User.DoesNotExist):
-                pass
-    targets.update(**{field: value})
-
-    if hasattr(model, 'mail_scene'):
-        from tcms.core.utils.mailto import mailto
-
-        mail_context = model.mail_scene(
-            objects=targets, field=field, value=value, ctype=ctype,
-            object_pk=object_pk,
-        )
-        if mail_context:
-            mail_context['context']['user'] = request.user
-            try:
-                mailto(**mail_context)
-            except:
-                pass
-
-    try:
-        plan = TestPlan.objects.get(plan_id=plan_id)
-    except Exception:
-        return say_no("No plan record found.")
-    # Initial the case counter
-    confirm_status_name = 'CONFIRMED'
-    plan.run_case = plan.case.filter(case_status__name=confirm_status_name)
-    plan.review_case = plan.case.exclude(case_status__name=confirm_status_name)
-    run_case_count = plan.run_case.count()
-    case_count = plan.case.count()
-    # FIXME: why not calculate review_case_count or run_case_count by using
-    # substraction, which saves one SQL query.
-    review_case_count = plan.review_case.count()
-    return HttpResponse(
-        json.dumps({
-            'rc': 0, 'response': 'ok',
-            'run_case_count': run_case_count,
-            'case_count': case_count,
-            'review_case_count': review_case_count
-        })
-    )
+class ModelUpdateActions(object):
+    """Abstract class defining interfaces to update a model properties"""
 
 
-class TestCaseUpdateActions(object):
+class TestCaseUpdateActions(ModelUpdateActions):
     '''Actions to update each possible proprety of TestCases
 
     Define your own method named _update_[property name] to hold specific
@@ -691,19 +606,18 @@ class TestCaseUpdateActions(object):
         return getattr(self, '_update_%s' % self.target_field, None)
 
     def update(self):
+        has_perms = check_permission(self.request, self.ctype)
+        if not has_perms:
+            return say_no("You don't have enough permission to update TestCases.")
+
         action = self.get_update_action()
         if action is not None:
-            has_perms = check_permission(self.request, self.ctype)
-            if not has_perms:
-                return say_no('You don\'t have enough permission to update '
-                              'TestCases.')
             try:
                 resp = action()
                 self._sendmail()
-            except ObjectDoesNotExist, err:
+            except ObjectDoesNotExist as err:
                 return say_no(err.message)
             except Exception:
-                raise
                 # TODO: besides this message to users, what happening should be
                 # recorded in the system log.
                 return say_no('Update failed. Please try again or request '
@@ -715,7 +629,9 @@ class TestCaseUpdateActions(object):
         return say_no('Not know what to update.')
 
     def get_update_targets(self):
-        self._update_objects = get_selected_testcases(self.request)
+        """Get selected cases to update their properties"""
+        case_ids = map(int, self.request.POST.getlist('case'))
+        self._update_objects = TestCase.objects.filter(pk__in=case_ids)
         return self._update_objects
 
     def get_plan(self, pk_enough=True):
@@ -742,24 +658,19 @@ class TestCaseUpdateActions(object):
         if not exists:
             raise ObjectDoesNotExist('The priority you specified to change '
                                      'does not exist.')
-        self.get_update_targets().update(
-            **{str(self.target_field): self.new_value})
+        self.get_update_targets().update(**{str(self.target_field): self.new_value})
 
     def _update_default_tester(self):
-        user_pk = User.objects.filter(
-            username=self.new_value).values_list('pk', flat=True)
+        user_pk = User.objects.filter(username=self.new_value).values_list('pk', flat=True)
         if not user_pk:
             raise ObjectDoesNotExist('Your input is not found.')
-        self.get_update_targets().update(**{
-            str(self.target_field): user_pk[0]
-        })
+        self.get_update_targets().update(**{str(self.target_field): user_pk[0]})
 
     def _update_case_status(self):
         exists = TestCaseStatus.objects.filter(pk=self.new_value).exists()
         if not exists:
             raise ObjectDoesNotExist('The status you choose does not exist.')
-        self.get_update_targets().update(
-            **{str(self.target_field): self.new_value})
+        self.get_update_targets().update(**{str(self.target_field): self.new_value})
 
         # ###
         # Case is moved between Cases and Reviewing Cases tabs accoding to the
@@ -776,22 +687,19 @@ class TestCaseUpdateActions(object):
 
         confirm_status_name = 'CONFIRMED'
         plan.run_case = plan.case.filter(case_status__name=confirm_status_name)
-        plan.review_case = plan.case.exclude(
-            case_status__name=confirm_status_name)
+        plan.review_case = plan.case.exclude(case_status__name=confirm_status_name)
         run_case_count = plan.run_case.count()
         case_count = plan.case.count()
         # FIXME: why not calculate review_case_count or run_case_count by using
         # substraction, which saves one SQL query.
         review_case_count = plan.review_case.count()
 
-        return HttpResponse(
-            json.dumps({
-                'rc': 0, 'response': 'ok',
-                'run_case_count': run_case_count,
-                'case_count': case_count,
-                'review_case_count': review_case_count
-            })
-        )
+        return http.JsonResponse({
+            'rc': 0, 'response': 'ok',
+            'run_case_count': run_case_count,
+            'case_count': case_count,
+            'review_case_count': review_case_count,
+        })
 
     def _update_sortkey(self):
         try:
@@ -823,15 +731,11 @@ class TestCaseUpdateActions(object):
             offset += step_length
 
     def _update_reviewer(self):
-        reviewers = User.objects.filter(
-            username=self.new_value).values_list('pk', flat=True)
+        reviewers = User.objects.filter(username=self.new_value).values_list('pk', flat=True)
         if not reviewers:
             err_msg = 'Reviewer %s is not found' % self.new_value
             raise ObjectDoesNotExist(err_msg)
-        self.get_update_targets().update(**{
-            str(self.target_field):
-            reviewers[0]
-        })
+        self.get_update_targets().update(**{str(self.target_field): reviewers[0]})
 
 
 # NOTE: what permission is necessary
