@@ -1918,7 +1918,30 @@ function onTestCaseDefaultTesterClick(options) {
       constructPlanDetailsCasesZone(container, plan_id, params);
     };
 
-    changeCaseMember(params, cbAfterDefaultTesterChanged);
+    var email_or_username = window.prompt('Please type new email or username');
+    if (!email_or_username) {
+      return false;
+    }
+
+    var update_default_tester_data = {
+      'from_plan': params.from_plan,
+      'case': params.case,
+      'target_field': 'default_tester',
+      'new_value': email_or_username
+    };
+
+    jQ.ajax({
+      'type': 'POST',
+      'url': '/ajax/update/cases-default-tester/',
+      'data': update_default_tester_data,
+      'traditional': true,
+      'success': function (data, textStatus, jqXHR) {
+        cbAfterDefaultTesterChanged(jqXHR);
+      },
+      'error': function (jqXHR, textStatus, errorThrown) {
+        json_failure(jqXHR);
+      }
+    });
   };
 }
 
@@ -2472,26 +2495,6 @@ function sortCase(container, plan_id, order) {
 }
 
 function changeCaseMember(parameters, callback) {
-  var p = window.prompt('Please type new email or username');
-  if (!p) {
-    return false;
-  }
-
-  parameters.target_field = 'default_tester';
-  parameters.new_value = p;
-
-  jQ.ajax({
-    'type': 'POST',
-    'url': '/ajax/update/cases-default-tester/',
-    'data': parameters,
-    'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
 }
 
 function constructPlanParentPreviewDialog(plan_id, parameters, callback) {
