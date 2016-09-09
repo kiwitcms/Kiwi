@@ -2022,8 +2022,8 @@ function onTestCaseReviewerClick(options) {
       return false;
     }
 
-    var p = window.prompt('Please type new email or username');
-    if (!p) {
+    var email_or_username = window.prompt('Please type new email or username');
+    if (!email_or_username) {
       return false;
     }
 
@@ -2034,8 +2034,13 @@ function onTestCaseReviewerClick(options) {
       'hashable': true
     });
     postData.a = 'update';
-    postData.target_field = 'reviewer';
-    postData.new_value = p;
+
+    var update_reviewer_data = {
+      'from_plan': postData.plan,
+      'case': postData.case,
+      'target_field': 'reviewer',
+      'new_value': email_or_username
+    };
 
     var cbAfterReviewerChanged = function(response) {
       var returnobj = jQ.parseJSON(response.responseText);
@@ -2049,7 +2054,7 @@ function onTestCaseReviewerClick(options) {
     jQ.ajax({
       'type': 'POST',
       'url': '/ajax/update/cases-reviewer/',
-      'data': postData,
+      'data': update_reviewer_data,
       'traditional': true,
       'success': function (data, textStatus, jqXHR) {
         cbAfterReviewerChanged(jqXHR);
