@@ -1565,8 +1565,13 @@ function onTestCasePriorityChange(options) {
       'hashable': true
     });
     postdata.a = 'update';
-    postdata.target_field = 'priority';
-    postdata.new_value = this.value;
+
+    var update_priority_data = {
+      'from_plan': postdata.from_plan,
+      'case': postdata.case,
+      'target_field': 'priority',
+      'new_value': this.value
+    };
 
     var afterPriorityChangedCallback = function(response) {
       var returnobj = jQ.parseJSON(response.responseText);
@@ -1580,7 +1585,7 @@ function onTestCasePriorityChange(options) {
     jQ.ajax({
       'type': 'POST',
       'url': '/ajax/update/cases-priority/',
-      'data': postdata,
+      'data': update_priority_data,
       'traditional': true,
       'success': function (data, textStatus, jqXHR) {
         afterPriorityChangedCallback(jqXHR);
@@ -1589,7 +1594,6 @@ function onTestCasePriorityChange(options) {
         json_failure(jqXHR);
       }
     });
-
   };
 }
 
