@@ -84,7 +84,11 @@ or use PIP (sudo required if not in a virtualenv)::
 Note that for successfull pip installation several extra
 dependencies are necessary::
 
-    yum install gcc krb5-devel python-devel postgresql-devel
+    yum install gcc python-devel krb5-devel postgresql-devel
+
+Here's the list of required packages for Debian systems::
+
+    apt install gcc python-dev libkrb5-dev libpq-dev
 
 
 CONFIGURATION
