@@ -78,7 +78,7 @@ Create tables through syncdb & migrate and create super user if needed::
     django-admin.py migrate --settings=tcms.settings.product
 
 Load initial data::
-    
+
     django-admin.py loaddata --settings=tcms.settings.product
 
 Config Settings
@@ -90,7 +90,7 @@ Like on RHEL6.3, the root path is located in::
 
     /usr/lib/python2.6/site-packages/nitrate-3.8.6-py2.6.egg/tcms
 
-As we plan to deploy a example server for nitrate, we can use product.py as the
+As we plan to deploy an example server for nitrate, we can use product.py as the
 default settings. After backed up the product.py, please modify following
 settings based on your custom configurations in settings/product.py:
 
