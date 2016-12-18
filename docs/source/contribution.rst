@@ -21,7 +21,7 @@ see whether it has been reported by other people and the discussion on it. If
 no one reported there yet, you are encouraged to file one with detailed and
 descriptive comment to give a clear description.
 
-.. _Issue: https://github.com/Nitrate/Nitrate/issues
+.. _Issues: https://github.com/Nitrate/Nitrate/issues
 
 
 Documentation
