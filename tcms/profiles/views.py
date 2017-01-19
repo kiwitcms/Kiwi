@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.utils import simplejson
+import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -13,7 +13,7 @@ from django.db.models import Q
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
-from tcms.profiles.models import Bookmark
+from tcms.profiles.models import Bookmark, UserProfile
 from tcms.profiles.forms import BookmarkForm, UserProfileForm
 
 
@@ -46,10 +46,10 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
                     'rc': 1,
                     'response': form.errors.as_text(),
                 }
-                return HttpResponse(simplejson.dumps(ajax_response))
+                return HttpResponse(json.dumps(ajax_response))
 
             form.save()
-            return HttpResponse(simplejson.dumps(self.ajax_response))
+            return HttpResponse(json.dumps(self.ajax_response))
 
         def add_category(self):
             pass
@@ -62,7 +62,7 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
             )
             bks.delete()
 
-            return HttpResponse(simplejson.dumps(self.ajax_response))
+            return HttpResponse(json.dumps(self.ajax_response))
 
         def render(self):
             if request.REQUEST.get('category'):
@@ -105,9 +105,9 @@ def profile(request, username, template_name='profile/info.html'):
         raise Http404(error)
 
     try:
-        up = u.get_profile()
+        up = u.profile
     except ObjectDoesNotExist:
-        up = u.profile.create()
+        up = UserProfile.objects.create(user=u)
     message = None
     form = UserProfileForm(instance=up)
     if request.method == 'POST':

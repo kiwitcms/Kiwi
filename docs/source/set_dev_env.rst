@@ -39,15 +39,11 @@ Create database and user::
     GRANT all privileges on nitrate.* to nitrate@'%' identified by 'nitrate';
 
 For convenience for development, user, password and database name are already
-set in `tcms/settings/devel.py` with default value. Each of them is `nirrate`.
+set in `tcms/settings/devel.py` with default value. Each of them is `nitrate`.
 
-Load database schema::
+Load database schema and initial data::
 
-    mysql -uroot nitrate < contrib/sql/nitrate_db_setup.sql
-
-Load initial data::
-
-    ./manage.py loaddata contrib/sql/initial_data.json
+    ./manage.py migrate
 
 Let's run nitrate
 -----------------

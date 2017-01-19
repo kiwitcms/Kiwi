@@ -25,7 +25,6 @@ MIDDLEWARE_CLASSES += (
 )
 
 INSTALLED_APPS += (
-    'south',
     'debug_toolbar',
 )
 

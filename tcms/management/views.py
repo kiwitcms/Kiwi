@@ -13,7 +13,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils.simplejson import dumps as json_dumps
+import json
 
 from tcms.core.logs.models import TCMSLogModel
 from tcms.core.utils import QuerySetIterationProxy
@@ -42,7 +42,7 @@ def environment_groups(request, template_name='environment/groups.html'):
         if not has_perm('management.add_tcmsenvgroup'):
             ajax_response['response'] = 'Permission denied.'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         group_name = request.REQUEST.get('name')
 
@@ -50,7 +50,7 @@ def environment_groups(request, template_name='environment/groups.html'):
         if not group_name:
             ajax_response['response'] = 'Environment group name is required.'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         try:
             env = env_groups.create(name=group_name,
@@ -59,7 +59,7 @@ def environment_groups(request, template_name='environment/groups.html'):
             env.log_action(who=request.user,
                            action='Initial env group %s' % env.name)
             ajax_response['id'] = env.id
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
         except IntegrityError, error:
             if error[1].startswith('Duplicate'):
                 response_msg = 'Environment group named \'%s\' already ' \
@@ -70,10 +70,10 @@ def environment_groups(request, template_name='environment/groups.html'):
 
             ajax_response['rc'] = 1
 
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
         except:
             ajax_response['response'] = 'Unknown error.'
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
     # Del action
     if user_action == 'del':
@@ -84,7 +84,7 @@ def environment_groups(request, template_name='environment/groups.html'):
                 if request.user.id != manager_id:
                     if not has_perm('management.delete_tcmsenvgroup'):
                         ajax_response['response'] = 'Permission denied.'
-                        return HttpResponse(json_dumps(ajax_response))
+                        return HttpResponse(json.dumps(ajax_response))
 
                 env.delete()
                 ajax_response['response'] = 'ok'
@@ -98,21 +98,21 @@ def environment_groups(request, template_name='environment/groups.html'):
                 env_group_property_map.delete()
             except:
                 pass
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
         else:
             pass
 
         if not has_perm('management.delete_tcmsenvgroup'):
             ajax_response['response'] = 'Permission denied.'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
     # Modify actions
     if user_action == 'modify':
         if not has_perm('management.change_tcmsenvgroup'):
             ajax_response['response'] = 'Permission denied.'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         try:
             env = env_groups.get(id=request.REQUEST['id'])
@@ -123,7 +123,7 @@ def environment_groups(request, template_name='environment/groups.html'):
             else:
                 ajax_response['response'] = 'Argument illegel.'
                 ajax_response['rc'] = 1
-                return HttpResponse(json_dumps(ajax_response))
+                return HttpResponse(json.dumps(ajax_response))
             env.save()
         except TCMSEnvGroup.DoesNotExist, error:
             raise Http404(error)
@@ -266,14 +266,14 @@ def environment_properties(request, template_name='environment/property.html'):
         if not has_perm('management.add_tcmsenvproperty'):
             ajax_response['response'] = 'Permission denied'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         property_name = request.REQUEST.get('name')
 
         if not property_name:
             ajax_response['response'] = 'Property name is required'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         try:
             new_property = TCMSEnvProperty.objects.create(name=property_name)
@@ -289,21 +289,21 @@ def environment_properties(request, template_name='environment/property.html'):
 
             ajax_response['rc'] = 1
             ajax_response['response'] = resp_msg
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
-        return HttpResponse(json_dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     # Actions of edit a exist properties
     if user_action == 'edit':
         if not has_perm('management.change_tcmsenvproperty'):
             ajax_response['response'] = 'Permission denied'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         if not request.REQUEST.get('id'):
             ajax_response['response'] = 'ID is required'
             ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         try:
             env_property = TCMSEnvProperty.objects.get(
@@ -314,13 +314,13 @@ def environment_properties(request, template_name='environment/property.html'):
             except IntegrityError, error:
                 ajax_response['response'] = error[1]
                 ajax_response['rc'] = 1
-                return HttpResponse(json_dumps(ajax_response))
+                return HttpResponse(json.dumps(ajax_response))
 
         except TCMSEnvProperty.DoesNotExist, error:
             ajax_response['response'] = error[1]
             ajax_response['rc'] = 1
 
-        return HttpResponse(json_dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     # Actions of remove properties
     if user_action == 'del':
@@ -393,7 +393,7 @@ def environment_properties(request, template_name='environment/property.html'):
     if request.is_ajax():
         ajax_response['rc'] = 1
         ajax_response['response'] = 'Unknown action'
-        return HttpResponse(json_dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     context_data = {
         'message': message,

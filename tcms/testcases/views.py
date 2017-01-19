@@ -4,7 +4,7 @@ import itertools
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.comments.models import Comment
+from django_comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils import simplejson
+import json
 from django.views.generic.base import TemplateView
 
 from tcms.core import forms
@@ -170,7 +170,7 @@ def automated(request):
         ajax_response['rc'] = 1
         ajax_response['response'] = forms.errors_to_list(form)
 
-    return HttpResponse(simplejson.dumps(ajax_response))
+    return HttpResponse(json.dumps(ajax_response))
 
 
 @user_passes_test(lambda u: u.has_perm('testcases.add_testcase'))
@@ -811,7 +811,7 @@ def ajax_response(request, querySet, testplan, columnIndexNameMap,
                 {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
                  'iTotalDisplayRecords': iTotalDisplayRecords,
                  'sColumns': sColumns})
-            response = HttpJSONResponse(simplejson.dumps(response_dict))
+            response = HttpJSONResponse(json.dumps(response_dict))
             # prevent from caching datatables result
             #    add_never_cache_headers(response)
     return response
@@ -1702,8 +1702,8 @@ def tag(request):
                     })
                     ajax_response['rc'] = 1
                     ajax_response['response'] = str(e)
-                    return HttpResponse(simplejson.dumps(ajax_response))
-        return HttpResponse(simplejson.dumps(ajax_response))
+                    return HttpResponse(json.dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     form = CaseTagForm(initial={'tag': request.REQUEST.get('o_tag')})
     form.populate(case_ids=tcs)

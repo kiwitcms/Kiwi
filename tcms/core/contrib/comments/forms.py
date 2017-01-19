@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django import forms
-from django.contrib.comments.forms import CommentDetailsForm
+from django_comments.forms import CommentDetailsForm
 from django.utils.translation import ugettext_lazy as _
 
 COMMENT_MAX_LENGTH = getattr(settings, 'COMMENT_MAX_LENGTH', 10000)

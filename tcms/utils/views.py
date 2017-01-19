@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.utils import simplejson
+import json
 
 from tcms.core.response import HttpJSONResponse
 
@@ -30,7 +30,7 @@ class AjaxResponseMixin(object):
             self.errors = msg
 
     def dumps(self, data):
-        return simplejson.dumps(data)
+        return json.dumps(data)
 
     def render_to_json(self, data):
         '''

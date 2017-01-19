@@ -268,7 +268,7 @@ class TestPlan(TCMSActionModel):
 
 class TestPlanText(TCMSActionModel):
     plan = models.ForeignKey(TestPlan, related_name='text')
-    plan_text_version = models.IntegerField(max_length=11)
+    plan_text_version = models.IntegerField()
     author = models.ForeignKey('auth.User', db_column='who')
     create_date = models.DateTimeField(auto_now_add=True,
                                        db_column='creation_ts')
@@ -288,9 +288,9 @@ class TestPlanText(TCMSActionModel):
 
 
 class TestPlanPermission(models.Model):
-    userid = models.IntegerField(max_length=9, unique=True, primary_key=True)
-    permissions = models.IntegerField(max_length=4)
-    grant_type = models.IntegerField(max_length=4, unique=True)
+    userid = models.IntegerField(unique=True, primary_key=True)
+    permissions = models.IntegerField()
+    grant_type = models.IntegerField(unique=True)
 
     plan = models.ForeignKey(TestPlan)
 
@@ -300,9 +300,9 @@ class TestPlanPermission(models.Model):
 
 
 class TestPlanPermissionsRegexp(models.Model):
-    plan = models.ForeignKey(TestPlan, primary_key=True)
+    plan = models.OneToOneField(TestPlan)
     user_regexp = models.TextField()
-    permissions = models.IntegerField(max_length=4)
+    permissions = models.IntegerField()
 
     class Meta:
         db_table = u'test_plan_permissions_regexp'

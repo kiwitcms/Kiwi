@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+default_app_config = 'tcms.xmlrpc.apps.Config'
 
 """
 The XML-RPC is compatible with Testopia.
