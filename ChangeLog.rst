@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+master (unreleased)
+-------------------
+
+- Update link to wadofstuff-django-serializers. Fixes #99 (Mr. Senko)
+
 3.8.18 (Aug 21 2016)
 --------------------
 
