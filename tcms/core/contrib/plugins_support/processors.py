@@ -33,6 +33,7 @@ class PushSignalToPlugins(object):
             NewThread(p.receiver, {'model': model, 'instance': instance,
                                    'signal': signal}).start()
 
+
 # Create the PushSignalToPlugins instance
 pstp = PushSignalToPlugins()
 pstp.import_plugins()

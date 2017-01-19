@@ -678,6 +678,7 @@ def _run_listen():
                         dispatch_uid='tcms.testruns.models.TestCaseRun')
     pre_save.connect(run_watchers.pre_save_clean, sender=TestRun)
 
+
 if settings.LISTENING_MODEL_SIGNAL:
     _run_listen()
 

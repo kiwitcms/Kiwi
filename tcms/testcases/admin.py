@@ -26,6 +26,7 @@ class TestCaseBugSystemAdmin(admin.ModelAdmin):
     search_fields = (('name',))
     list_display = ('id', 'name', 'url_reg_exp')
 
+
 admin.site.register(TestCaseCategory, TestCaseCategoryAdmin)
 admin.site.register(TestCase, TestCaseAdmin)
 admin.site.register(TestCaseBugSystem, TestCaseBugSystemAdmin)

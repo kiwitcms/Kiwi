@@ -847,6 +847,7 @@ def _listen():
     post_delete.connect(case_watchers.on_case_delete, TestCase)
     pre_save.connect(case_watchers.pre_save_clean, TestCase)
 
+
 if settings.LISTENING_MODEL_SIGNAL:
     _listen()
 
