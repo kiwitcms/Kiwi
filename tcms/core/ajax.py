@@ -221,8 +221,6 @@ def tag(request, template_name="management/get_tag.html"):
                 pk__in=self.object_pks)
 
         def case(self):
-            from tcms.testcases.views import get_selected_testcases
-
             return self.template_name, get_selected_testcases(self.request)
 
         def run(self):
