@@ -5,6 +5,7 @@ qpid-python==0.20
 django-uuslug==1.0.0
 wadofstuff-django-serializers==1.1.0
 django-celery>=3.1.10
+celery>=3.1.15,<4.0
 https://git.fedorahosted.org/cgit/kobo.git/snapshot/kobo-0.2.1.tar.gz#egg=kobo
 odfpy>=0.9.6
 django-pagination==1.0.7
