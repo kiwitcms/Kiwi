@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 from django.conf import settings
 from django.conf.urls import include, url, patterns
 
@@ -106,6 +107,10 @@ if settings.DEBUG:
         'tcms.core.utils.test_template',
         (r'^tt/(?P<template_name>.*)', 'test_template'),
     )
+
+    if settings.STATIC_ROOT and os.path.exists(settings.STATIC_ROOT):
+        from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+        urlpatterns += staticfiles_urlpatterns()
 
 # Overwrite default 500 handler
 # More details could see django.core.urlresolvers._resolve_special()
