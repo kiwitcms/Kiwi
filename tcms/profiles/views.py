@@ -13,7 +13,7 @@ from django.db.models import Q
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
-from tcms.profiles.models import Bookmark
+from tcms.profiles.models import Bookmark, UserProfile
 from tcms.profiles.forms import BookmarkForm, UserProfileForm
 
 
@@ -105,9 +105,9 @@ def profile(request, username, template_name='profile/info.html'):
         raise Http404(error)
 
     try:
-        up = u.get_profile()
+        up = u.profile
     except ObjectDoesNotExist:
-        up = u.profile.create()
+        up = UserProfile.objects.create(user=u)
     message = None
     form = UserProfileForm(instance=up)
     if request.method == 'POST':
