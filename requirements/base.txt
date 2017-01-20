@@ -10,6 +10,6 @@ celery>=3.1.15,<4.0
 https://git.fedorahosted.org/cgit/kobo.git/snapshot/kobo-0.2.1.tar.gz#egg=kobo
 odfpy>=0.9.6
 django-pagination==1.0.7
-django-tinymce==2.3.0
+django-tinymce==2.4.0
 beautifulsoup4>=4.1.1
 six

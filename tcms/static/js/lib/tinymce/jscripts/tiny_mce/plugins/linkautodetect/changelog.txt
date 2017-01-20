@@ -1,9 +1,0 @@
-0.1     2009-04-15 - initial version
-0.11    2009-05-10 - Fix for email addresses with two periods in the domain
-                        were incorrectly converted to http links.  Fix submitted
-                        by Ralph Slooten.
-                     Fix for tinyMCE.isIE that needed to be tinymce.isIE.
-0.12    2009-06-23 - Fix for URLs that have an HTML anchor identifier in them, such as
-                     http://www.palmpre.org/forums/palm-pre/85-copy-and-paste.html#post457
-                     Previously, it would create a link to only
-                     http://www.palmpre.org/forums/palm-pre/85-copy-and-paste.html
