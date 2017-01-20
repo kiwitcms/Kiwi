@@ -494,7 +494,7 @@ TINYMCE_DEFAULT_CONFIG = {
                "template,"
                "searchreplace,"
                "emotions,"
-               "linkautodetect",
+               "autolink",
     'table_styles': "Header 1=header1;"
                     "Header 2=header2;"
                     "Header 3=header3",
