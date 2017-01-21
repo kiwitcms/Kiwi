@@ -21,7 +21,7 @@ BuildRequires:  python-setuptools
 Requires:       Django = 1.5.5
 Requires:       django-celery >= 3.1.10
 Requires:       django-pagination = 1.0.7
-Requires:       django-tinymce = 1.5.1
+Requires:       django-tinymce = 2.4.0
 Requires:       django-uuslug
 Requires:       kobo-django >= 0.2.0-3
 Requires:       mod_auth_kerb

@@ -7,6 +7,7 @@ Change Log
 - Remove raw SQL migrations and initial schema and data
 - Add migration for django_comments
 - Upgrade Django to 1.8.14
+- Upgrade to django-tinymce 2.4.0 (Mr. Senko)
 
 3.8.18 (Aug 21 2016)
 --------------------
