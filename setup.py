@@ -8,25 +8,6 @@ def get_version():
     return open('VERSION.txt', 'r').read().strip('\r\n')
 
 
-PACKAGE_NAME = 'nitrate'
-PACKAGE_VER = get_version()
-PACKAGE_DESC = 'Test Case Management System'
-PACKAGE_URL = 'https://fedorahosted.org/nitrate/wiki'
-
-
-def get_files_below(path):
-    # we need to generate a list of paths to static files
-    # We have been invoked from "build".
-    # The files we need are in "build/tcms/static"
-    # The paths must be relative to "tcms"
-    # Therefore we add a "tcms" to os.walk, and strip off the leading "tcms" at
-    # the end:
-    for (dirpath, dirnames, filenames) in os.walk(os.path.join('tcms', path)):
-        for filename in filenames:
-            # strip off leading "tcms/" string from each path:
-            yield os.path.join(dirpath, filename)[5:]
-
-
 def get_package_data():
     # annoyingly, it appears that package_data has to list filenames; it can't
     # cope with directories, so we have to figure this out for it:
@@ -55,14 +36,26 @@ install_requires, dependency_links = get_install_requires()
 
 
 setup(
-    name=PACKAGE_NAME,
-    version=PACKAGE_VER,
-    description=PACKAGE_DESC,
-    url=PACKAGE_URL,
+    name='nitrate',
+    version=get_version(),
+    description='Test Case Management System',
+    author='Nitrate Team',
+    maintainer='Chenxiong Qi',
+    maintainer_email='qcxhome@gmail.com',
+    url='https://github.com/Nitrate/Nitrate/',
     license='GPLv2+',
-    packages=find_packages(exclude='tests'),
+    packages=find_packages(),
     # package_data=get_package_data(),
     install_requires=install_requires,
     dependency_links=dependency_links,
     include_package_data=True,
+    classifiers=[
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Software Development :: Quality Assurance',
+        'Topic :: Software Development :: Testing',
+    ]
 )
