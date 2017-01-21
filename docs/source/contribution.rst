@@ -63,8 +63,8 @@ contact Nitrate team to disucss your ideas and implement it. Following these
 steps to contribute code to Nitrate.
 
 
-Get code
-~~~~~~~~
+Get the code
+~~~~~~~~~~~~
 
 Code is hosted in Github. Following the guide in Github to fork and clone
 code to your local machine. For example, I have forked Nitrate, then I can
@@ -73,6 +73,12 @@ clone it
 ::
 
     git clone git@github.com:[my github username]/Nitrate.git
+
+
+Start Nitrate locally
+~~~~~~~~~~~~~~~~~~~~~
+
+See :doc:`set_dev_env` or :doc:`set_dev_env_with_vagrant` for more information!
 
 
 Confirm the problem

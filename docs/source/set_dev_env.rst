@@ -13,7 +13,7 @@ You can get the latest changes with git easily::
 Setup virtualenv
 ----------------
 
-Install devel packages::
+Install devel packages which are needed to compile some of the Python dependencies::
 
     sudo yum install gcc python-devel mysql-devel krb5-devel libxml2-devel libxslt-devel
 
@@ -41,19 +41,29 @@ Create database and user::
 For convenience for development, user, password and database name are already
 set in `tcms/settings/devel.py` with default value. Each of them is `nirrate`.
 
-Load database schema::
+.. note::
 
-    mysql -uroot nitrate < contrib/sql/nitrate_db_setup.sql
+    You may want to adjust the database and/or other configuration settings.
+    Override them in ``./tcms/settings/devel.py`` if necessary. While the
+    Nitrate team prefers MySQL, sqlite appears to work for development
+    and some people have used PostgreSQL with varying success in production!
+    At the moment Nitrate is not 100% portable between database backends
+    due to some hard-coded SQL statements. If you use something other than MySQL
+    some parts of the application may not work correctly!
 
-Load initial data::
+.. warning::
 
-    ./manage.py loaddata contrib/sql/initial_data.json
+    Do not commit local development overrides to GitHub!
 
-Let's run nitrate
+Load database schema and initial data::
+
+    ./manage.py migrate
+
+Let's run Nitrate
 -----------------
 
 You're now ready to start the server::
 
-    python manage.py runserver
+    ./manage.py runserver
 
 Now, open http://127.0.0.1:8000/ and should be presented with your brand new Nitrate homepage!
