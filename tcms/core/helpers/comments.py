@@ -8,12 +8,11 @@ of objects.
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-from django.contrib.comments.models import Comment
+
+from django_comments.models import Comment
 
 # from stdlib
 from datetime import datetime
-
-_SITE = Site.objects.get(pk=settings.SITE_ID)
 
 
 def add_comment(objs, comments, user, submit_date=None):
@@ -29,11 +28,12 @@ def add_comment(objs, comments, user, submit_date=None):
     >>> comments = 'stupid comments by Homer'
     >>> add_comment([testrun,], comments, testuser)
     '''
+    site = Site.objects.get(pk=settings.SITE_ID)
     c_type = ContentType.objects.get_for_model(model=objs[0].__class__)
     create_comment = Comment.objects.create
     for obj in objs:
         create_comment(content_type=c_type,
-                       site=_SITE,
+                       site=site,
                        object_pk=obj.pk,
                        user=user,
                        comment=comments,

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+
 import datetime
 import itertools
+import json
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -13,8 +14,9 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
-from django.utils import simplejson
 from django.views.generic.base import TemplateView
+
+from django_comments.models import Comment
 
 from tcms.core import forms
 from tcms.core.db import SQLExecution
@@ -162,15 +164,12 @@ def automated(request):
                 #        singal handlers.
                 tcs.update(is_automated=form.cleaned_data['is_automated'])
             if isinstance(form.cleaned_data['is_automated_proposed'], bool):
-                tcs.update(
-                    is_automated_proposed=form.cleaned_data[
-                        'is_automated_proposed']
-                )
+                tcs.update(is_automated_proposed=form.cleaned_data['is_automated_proposed'])
     else:
         ajax_response['rc'] = 1
         ajax_response['response'] = forms.errors_to_list(form)
 
-    return HttpResponse(simplejson.dumps(ajax_response))
+    return HttpResponse(json.dumps(ajax_response))
 
 
 @user_passes_test(lambda u: u.has_perm('testcases.add_testcase'))
@@ -189,9 +188,9 @@ def new(request, template_name='case/new.html'):
         default_form_parameters = {'is_automated': '0'}
 
     if request.method == "POST":
-        form = NewCaseForm(request.REQUEST)
+        form = NewCaseForm(request.POST)
         if request.REQUEST.get('product'):
-            form.populate(product_id=request.REQUEST['product'])
+            form.populate(product_id=request.POST['product'])
         else:
             form.populate()
 
@@ -200,23 +199,19 @@ def new(request, template_name='case/new.html'):
 
             class ReturnActions(object):
                 def __init__(self, case, plan):
-                    self.__all__ = ('_addanother',
-                                    '_continue',
-                                    '_returntocase',
-                                    '_returntoplan')
+                    self.__all__ = ('_addanother', '_continue', '_returntocase', '_returntoplan')
                     self.case = case
                     self.plan = plan
 
                 def _continue(self):
                     if self.plan:
-                        return HttpResponseRedirect('%s?from_plan=%s' % (
-                            reverse('tcms.testcases.views.edit',
-                                    args=[self.case.case_id, ]),
-                            self.plan.plan_id))
+                        return HttpResponseRedirect(
+                            '%s?from_plan=%s' % (reverse('tcms.testcases.views.edit',
+                                                         args=[self.case.case_id]),
+                                                 self.plan.plan_id))
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testcases.views.edit',
-                                args=[tc.case_id, ]), )
+                        reverse('tcms.testcases.views.edit', args=[tc.case_id]))
 
                 def _addanother(self):
                     form = NewCaseForm(initial=default_form_parameters)
@@ -228,25 +223,21 @@ def new(request, template_name='case/new.html'):
 
                 def _returntocase(self):
                     if self.plan:
-                        return HttpResponseRedirect('%s?from_plan=%s' % (
-                            reverse('tcms.testcases.views.get',
-                                    args=[self.case.pk, ]),
-                            self.plan.plan_id
-                        )
-                        )
+                        return HttpResponseRedirect(
+                            '%s?from_plan=%s' % (reverse('tcms.testcases.views.get',
+                                                         args=[self.case.pk]),
+                                                 self.plan.plan_id))
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testcases.views.get',
-                                args=[self.case.pk, ]), )
+                        reverse('tcms.testcases.views.get', args=[self.case.pk]))
 
                 def _returntoplan(self):
                     if not self.plan:
                         raise Http404
 
-                    return HttpResponseRedirect('%s#reviewcases' %
-                                                reverse(
-                                                    'tcms.testplans.views.get',
-                                                    args=[self.plan.pk, ]), )
+                    return HttpResponseRedirect(
+                        '%s#reviewcases' % reverse('tcms.testplans.views.get',
+                                                   args=[self.plan.pk]))
 
             # Genrate the instance of actions
             ras = ReturnActions(case=tc, plan=tp)
@@ -811,7 +802,7 @@ def ajax_response(request, querySet, testplan, columnIndexNameMap,
                 {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
                  'iTotalDisplayRecords': iTotalDisplayRecords,
                  'sColumns': sColumns})
-            response = HttpJSONResponse(simplejson.dumps(response_dict))
+            response = HttpJSONResponse(json.dumps(response_dict))
             # prevent from caching datatables result
             #    add_never_cache_headers(response)
     return response
@@ -1702,8 +1693,8 @@ def tag(request):
                     })
                     ajax_response['rc'] = 1
                     ajax_response['response'] = str(e)
-                    return HttpResponse(simplejson.dumps(ajax_response))
-        return HttpResponse(simplejson.dumps(ajax_response))
+                    return HttpResponse(json.dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     form = CaseTagForm(initial={'tag': request.REQUEST.get('o_tag')})
     form.populate(case_ids=tcs)

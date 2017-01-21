@@ -398,6 +398,12 @@ function getBuildsByProductId(allow_blank, product_field, build_field, is_active
   }
 
   var product_id = jQ(product_field).val();
+  no_product_is_selected = product_id === '' || product_id === null;
+  if (no_product_is_selected) {
+    jQ(build_field).html('<option value="">---------</option>');
+    return false;
+  }
+
   var is_active = '';
   if (jQ('#value_sub_module').length) {
     if (jQ('#value_sub_module').val() === "new_run") {
@@ -407,11 +413,6 @@ function getBuildsByProductId(allow_blank, product_field, build_field, is_active
 
   if (is_active) {
     is_active = true;
-  }
-
-  if (product_id === "") {
-    jQ(build_field).html('<option value="">---------</option>');
-    return false;
   }
 
   var success = function(t) {
@@ -1157,39 +1158,6 @@ function getForm(container, app_form, parameters, callback, format) {
     },
     'error': function (jqXHR, textStatus, errorThrown) {
       failure();
-    }
-  });
-}
-
-function updateCaseStatus(plan_id, content_type, object_pk, field, value, value_type, callback) {
-  if (!value_type) {
-    var value_type = 'str';
-  }
-
-  var url = '/ajax/update/case-status';
-
-  if (typeof object_pk === 'object'){
-    object_pk = object_pk.join(',');
-  }
-
-  var parameters = {
-    'plan_id': plan_id,
-    'content_type': content_type,
-    'object_pk': object_pk,
-    'field': field,
-    'value': value,
-    'value_type': value_type
-  };
-
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
     }
   });
 }

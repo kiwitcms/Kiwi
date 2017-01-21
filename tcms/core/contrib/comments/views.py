@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+
+import json
+
 from django.db import models
 from django.http import HttpResponse
-from django.utils import simplejson
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.contrib import comments
-from django.contrib.comments import signals
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import permission_required
+
+import django_comments as comments
 
 
 def all(request, template_name='comments/comments.html'):
@@ -76,7 +78,7 @@ def post(request, template_name='comments/comments.html'):
         comment.user = request.user
 
     # Signal that the comment is about to be saved
-    signals.comment_will_be_posted.send(
+    comments.signals.comment_will_be_posted.send(
         sender=comment.__class__,
         comment=comment,
         request=request
@@ -85,7 +87,7 @@ def post(request, template_name='comments/comments.html'):
     # Save the comment and signal that it was saved
     comment.is_removed = False
     comment.save()
-    signals.comment_was_posted.send(
+    comments.signals.comment_was_posted.send(
         sender=comment.__class__,
         comment=comment,
         request=request
@@ -117,7 +119,7 @@ def delete(request, next=None):
     if not comments_s:
         if request.is_ajax():
             ajax_response = {'rc': 1, 'response': 'Object does not exist.'}
-            return HttpResponse(simplejson.dumps(ajax_response))
+            return HttpResponse(json.dumps(ajax_response))
 
         raise ObjectDoesNotExist()
 
@@ -132,7 +134,7 @@ def delete(request, next=None):
             )
             comment.is_removed = True
             comment.save()
-            signals.comment_was_flagged.send(
+            comments.signals.comment_was_flagged.send(
                 sender=comment.__class__,
                 comment=comment,
                 flag=flag,
@@ -140,7 +142,7 @@ def delete(request, next=None):
                 request=request,
             )
 
-    return HttpResponse(simplejson.dumps(ajax_response))
+    return HttpResponse(json.dumps(ajax_response))
 
 
 delete = permission_required("comments.can_moderate")(delete)

@@ -186,16 +186,11 @@ class BaseCaseForm(forms.Form):
         widget=forms.Textarea,
         required=False
     )
-    estimated_time = DurationField(label='Estimated Time', initial='0m',
-                                   required=False)
-    setup = forms.CharField(label="Setup", widget=TinyMCE,
-                            required=False)
-    action = forms.CharField(label="Actions", widget=TinyMCE,
-                             required=False)
-    effect = forms.CharField(label="Expect results", widget=TinyMCE,
-                             required=False)
-    breakdown = forms.CharField(label="Breakdown", widget=TinyMCE,
-                                required=False)
+    estimated_time = DurationField(label='Estimated Time', initial='0m', required=False)
+    setup = forms.CharField(label="Setup", widget=TinyMCE(), required=False)
+    action = forms.CharField(label="Actions", widget=TinyMCE(), required=False)
+    effect = forms.CharField(label="Expect results", widget=TinyMCE(), required=False)
+    breakdown = forms.CharField(label="Breakdown", widget=TinyMCE(), required=False)
 
     tag = forms.CharField(
         label="Tag",
@@ -554,15 +549,11 @@ class CaseAutomatedForm(forms.Form):
 
 
 class CaseBugForm(forms.ModelForm):
-    case = forms.ModelChoiceField(
-        queryset=TestCase.objects.all(),
-        widget=forms.HiddenInput(),
-    )
-    case_run = forms.ModelChoiceField(
-        queryset=TestCaseRun.objects.all(),
-        widget=forms.HiddenInput(),
-        required=False,
-    )
+    case = forms.ModelChoiceField(queryset=TestCase.objects.all(),
+                                  widget=forms.HiddenInput())
+    case_run = forms.ModelChoiceField(queryset=TestCaseRun.objects.all(),
+                                      widget=forms.HiddenInput(),
+                                      required=False)
 
     def clean(self):
         super(CaseBugForm, self).clean()
@@ -577,6 +568,7 @@ class CaseBugForm(forms.ModelForm):
 
     class Meta:
         model = TestCaseBug
+        fields = '__all__'
 
 
 class CaseComponentForm(forms.Form):

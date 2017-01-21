@@ -2,7 +2,7 @@
 import datetime
 
 from django.conf import settings
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericRelation
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -34,18 +34,16 @@ class TestRun(TCMSActionModel):
         'completed_case_run_percent')
 
     run_id = models.AutoField(primary_key=True)
-    errata_id = models.IntegerField(max_length=11, null=True, blank=True)
+    errata_id = models.IntegerField(null=True, blank=True)
 
-    product_version = models.ForeignKey('management.Version',
-                                        related_name='version_run')
+    product_version = models.ForeignKey('management.Version', related_name='version_run')
     plan_text_version = models.IntegerField()
 
     start_date = models.DateTimeField(auto_now_add=True, db_index=True)
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     summary = models.TextField()
     notes = models.TextField(blank=True)
-    estimated_time = DurationField(max_length=11,
-                                   default=0)
+    estimated_time = DurationField(max_length=11, default=0)
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run')
     environment_id = models.IntegerField(default=0)
@@ -105,6 +103,10 @@ class TestRun(TCMSActionModel):
             'people': lambda value: {
                 'default_tester': Q(default_tester=value),
                 'manager': Q(manager=value),
+                # TODO: Remove first one after upgrade to newer version.
+                # query.set can return either '' or None sometimes, so
+                # currently keeping these two lines here is a workaround.
+                '': Q(manager=value) | Q(default_tester=value),
                 None: Q(manager=value) | Q(default_tester=value),
             }[query.get('people_type')],
         }
@@ -516,18 +518,10 @@ class TestCaseRunManager(models.Manager):
 class TestCaseRun(TCMSActionModel):
     objects = TestCaseRunManager()
     case_run_id = models.AutoField(primary_key=True)
-    assignee = models.ForeignKey(
-        'auth.User',
-        blank=True,
-        null=True,
-        related_name='case_run_assignee'
-    )
-    tested_by = models.ForeignKey(
-        'auth.User',
-        blank=True,
-        null=True,
-        related_name='case_run_tester'
-    )
+    assignee = models.ForeignKey('auth.User', blank=True, null=True,
+                                 related_name='case_run_assignee')
+    tested_by = models.ForeignKey('auth.User', blank=True, null=True,
+                                  related_name='case_run_tester')
     case_text_version = models.IntegerField()
     running_date = models.DateTimeField(null=True, blank=True)
     close_date = models.DateTimeField(null=True, blank=True)
@@ -540,7 +534,7 @@ class TestCaseRun(TCMSActionModel):
     build = models.ForeignKey('management.TestBuild')
     environment_id = models.IntegerField(default=0)
 
-    links = generic.GenericRelation(LinkReference, object_id_field='object_pk')
+    links = GenericRelation(LinkReference, object_id_field='object_pk')
 
     class Meta:
         db_table = u'test_case_runs'
@@ -654,11 +648,12 @@ class TestRunTag(models.Model):
 
 
 class TestRunCC(models.Model):
-    run = models.ForeignKey(TestRun, primary_key=True)
+    run = models.ForeignKey(TestRun, related_name='cc_list')
     user = models.ForeignKey('auth.User', db_column='who')
 
     class Meta:
         db_table = u'test_run_cc'
+        unique_together = ('run', 'user')
 
 
 class TCMSEnvRunValueMap(models.Model):

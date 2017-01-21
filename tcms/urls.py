@@ -2,27 +2,19 @@
 
 from django.conf import settings
 from django.conf.urls import include, url, patterns
-
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-admin.autodiscover()
 
 # XML RPC handler
 from kobo.django.xmlrpc.views import XMLRPCHandlerFactory
 xmlrpc_handler = XMLRPCHandlerFactory('TCMS_XML_RPC')
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^tcms/', include('tcms.foo.urls')),
+    (r'^admin/', include(admin.site.urls)),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    (r'^admin/', include(admin.site.urls)),
-
-    # tinymce
     (r'^tinymce/', include('tinymce.urls')),
 
     # Index and static zone
@@ -33,8 +25,7 @@ urlpatterns = patterns('',
     # Ajax call responder
     (r'^ajax/update/$', 'tcms.core.ajax.update'),
     # TODO: merge this into next mapping
-    (r'^ajax/update/case-status$', 'tcms.core.ajax.update_case_status'),
-    (r'^ajax/update/cases-case-status/$', 'tcms.core.ajax.update_cases_case_status'),
+    (r'^ajax/update/case-status/$', 'tcms.core.ajax.update_cases_case_status'),
     (r'^ajax/update/case-run-status$', 'tcms.core.ajax.update_case_run_status'),
     (r'^ajax/update/cases-priority/$', 'tcms.core.ajax.update_cases_priority'),
     (r'^ajax/update/cases-default-tester/$', 'tcms.core.ajax.update_cases_default_tester'),

@@ -12,7 +12,7 @@ from .views import TestingReport
 from .views import TestingReportCaseRuns
 
 urlpatterns = patterns('tcms.report.views',
-    url(r'^$', RedirectView.as_view(url='overall/')),
+    url(r'^$', RedirectView.as_view(url='overall/', permanent=True)),
     url(r'^overall/$', 'overall'),
     url(r'^product/(?P<product_id>\d+)/overview/$', 'overview'),
     url(r'^product/(?P<product_id>\d+)/build/$', ProductBuildReport.as_view(),

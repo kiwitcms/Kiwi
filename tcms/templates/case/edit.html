@@ -2,6 +2,10 @@
 
 {% block subtitle %}Edit test case - {{ test_case.summary }}{% endblock %}
 
+{% block extra_head %}
+{{ form.media }}
+{% endblock %}
+
 {% block custom_stylesheet %}
 <style type="text/css">
 #testcase_cc_list {
@@ -15,7 +19,6 @@
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tinymce/jscripts/tiny_mce/tiny_mce.js'></script>
 <script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
 <script type="text/javascript" src="/jsi18n/"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>

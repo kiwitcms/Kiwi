@@ -2,11 +2,14 @@
 
 {% block subtitle %}Create new test plan{% endblock %}
 
+{% block extra_head %}
+{{ form.media }}
+{% endblock %}
+
 {% block custom_stylesheet %}
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tinymce/jscripts/tiny_mce/tiny_mce.js'></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/RelatedObjectLookups.js"></script>
 <script type="text/javascript">

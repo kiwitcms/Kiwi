@@ -228,7 +228,7 @@ def able_to_delete_attachment(request, file_id):
 
 # Delete Attachment
 def delete_file(request, file_id):
-    from django.utils import simplejson
+    import json
 
     ajax_response = {'rc': 0, 'response': 'ok'}
     DELEFAILURE = 1
@@ -238,7 +238,7 @@ def delete_file(request, file_id):
     if not state:
         ajax_response['rc'] = AUTHUNSUCCESS
         ajax_response['response'] = 'auth_failure'
-        return HttpResponse(simplejson.dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     # Delete plan's attachment
     if request.REQUEST.get('from_plan'):
@@ -252,7 +252,7 @@ def delete_file(request, file_id):
         except TestPlanAttachment.DoesNotExist:
             ajax_response['rc'] = DELEFAILURE
             ajax_response['response'] = 'failure'
-        return HttpResponse(simplejson.dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))
 
     # Delete cases' attachment
     elif request.REQUEST.get('from_case'):
@@ -267,4 +267,4 @@ def delete_file(request, file_id):
             ajax_response['rc'] = DELEFAILURE
             ajax_response['response'] = 'failure'
 
-        return HttpResponse(simplejson.dumps(ajax_response))
+        return HttpResponse(json.dumps(ajax_response))

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+
 from django import forms
 from django.db.models import Q
 from django.core.exceptions import ValidationError
@@ -60,8 +61,7 @@ class DurationField(forms.CharField):
 
     def validate(self, value):
         super(DurationField, self).validate(value)
-        estimated_time_regex = re.compile(
-            r'^(\d+[d])?(\d+[h])?(\d+[m])?(\d+[s])?$')
+        estimated_time_regex = re.compile(r'^(\d+[d])?(\d+[h])?(\d+[m])?(\d+[s])?$')
         match = estimated_time_regex.match(value.replace(' ', ''))
 
         if not match:

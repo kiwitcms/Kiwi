@@ -159,8 +159,7 @@ class Comment(object):
 
     def add(self):
         import time
-        from django.contrib import comments
-        from django.contrib.comments import signals
+        import django_comments as comments
         from django.db import models
 
         comment_form = comments.get_form()
@@ -201,7 +200,7 @@ class Comment(object):
                 comment.user = self.request.user
 
             # Signal that the comment is about to be saved
-            signals.comment_will_be_posted.send(
+            comments.signals.comment_will_be_posted.send(
                 sender=comment.__class__,
                 comment=comment,
                 request=self.request
@@ -209,7 +208,7 @@ class Comment(object):
 
             # Save the comment and signal that it was saved
             comment.save()
-            signals.comment_was_posted.send(
+            comments.signals.comment_was_posted.send(
                 sender=comment.__class__,
                 comment=comment,
                 request=self.request

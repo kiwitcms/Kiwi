@@ -1,25 +1,33 @@
 # -*- coding: utf-8 -*-
-from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render_to_response
-from django.core.urlresolvers import reverse
-from django.template import RequestContext
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.utils import simplejson
+
+import json
+
+from django import http
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.http import Http404
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_GET
+from django.shortcuts import get_object_or_404
 
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 from tcms.profiles.models import Bookmark
+from tcms.profiles.models import UserProfile
 from tcms.profiles.forms import BookmarkForm, UserProfileForm
 
 
 MODULE_NAME = 'profile'
 
 
+@require_http_methods(['GET', 'POST'])
 # @user_passes_test(lambda u: u.username == username)
 @login_required
 def bookmark(request, username, template_name='profile/bookmarks.html'):
@@ -28,48 +36,34 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
     """
 
     if username != request.user.username:
-        return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+        return http.HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
     else:
         up = {'user': request.user}
 
     class BookmarkActions(object):
         def __init__(self):
-            self.ajax_response = {
-                'rc': 0,
-                'response': 'ok',
-            }
+            self.ajax_response = {'rc': 0, 'response': 'ok'}
 
         def add(self):
-            form = BookmarkForm(request.REQUEST)
+            form = BookmarkForm(request.GET)
             if not form.is_valid():
-                ajax_response = {
-                    'rc': 1,
-                    'response': form.errors.as_text(),
-                }
-                return HttpResponse(simplejson.dumps(ajax_response))
+                ajax_response = {'rc': 1, 'response': form.errors.as_text()}
+                return http.JsonResponse(ajax_response)
 
             form.save()
-            return HttpResponse(simplejson.dumps(self.ajax_response))
-
-        def add_category(self):
-            pass
+            return http.JsonResponse(self.ajax_response)
 
         def remove(self):
-            pks = request.REQUEST.getlist('pk')
-            bks = Bookmark.objects.filter(
-                pk__in=pks,
-                user=request.user,
-            )
+            pks = request.POST.getlist('pk')
+            bks = Bookmark.objects.filter(pk__in=pks, user=request.user)
             bks.delete()
 
-            return HttpResponse(simplejson.dumps(self.ajax_response))
+            return http.JsonResponse(self.ajax_response)
 
         def render(self):
             if request.REQUEST.get('category'):
-                bks = Bookmark.objects.filter(
-                    user=request.user,
-                    category_id=request.REQUEST['category']
-                )
+                bks = Bookmark.objects.filter(user=request.user,
+                                              category_id=request.GET['category'])
             else:
                 bks = Bookmark.objects.filter(user=request.user)
 
@@ -85,29 +79,24 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
             query['a'] = 'add'
             form = BookmarkForm(initial=query)
             form.populate(user=request.user)
-            return HttpResponse(form.as_p())
+            return http.HttpResponse(form.as_p())
 
     action = BookmarkActions()
     func = getattr(action, request.REQUEST.get('a', 'render'))
     return func()
 
 
+@require_http_methods(['GET', 'POST'])
 @login_required
 @csrf_protect
 def profile(request, username, template_name='profile/info.html'):
-    """
-    Edit the profiles of the user
-    """
+    """Edit the profiles of the user"""
+    u = get_object_or_404(User, username=username)
 
     try:
-        u = User.objects.get(username=username)
-    except ObjectDoesNotExist, error:
-        raise Http404(error)
-
-    try:
-        up = u.get_profile()
+        up = UserProfile.get_user_profile(u)
     except ObjectDoesNotExist:
-        up = u.profile.create()
+        up = UserProfile.objects.create(user=u)
     message = None
     form = UserProfileForm(instance=up)
     if request.method == 'POST':
@@ -124,14 +113,13 @@ def profile(request, username, template_name='profile/info.html'):
                               context_instance=RequestContext(request))
 
 
+@require_GET
 @login_required
 def recent(request, username, template_name='profile/recent.html'):
-    """
-    List the recent plan/run.
-    """
+    """List the recent plan/run"""
 
     if username != request.user.username:
-        return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+        return http.HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
     else:
         up = {'user': request.user}
 
@@ -141,8 +129,7 @@ def recent(request, username, template_name='profile/recent.html'):
         'status': 'running',
     }
 
-    tps = TestPlan.objects.filter(
-        Q(author=request.user) | Q(owner=request.user))
+    tps = TestPlan.objects.filter(Q(author=request.user) | Q(owner=request.user))
     tps = tps.order_by('-plan_id')
     tps = tps.select_related('product', 'type')
     tps = tps.extra(select={
@@ -168,5 +155,5 @@ def recent(request, username, template_name='profile/recent.html'):
 
 @login_required
 def redirect_to_profile(request):
-    return HttpResponseRedirect(
+    return http.HttpResponseRedirect(
         reverse('tcms.profiles.views.recent', args=[request.user.username]))

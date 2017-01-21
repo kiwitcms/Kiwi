@@ -2,6 +2,10 @@
 
 {% block subtitle %}{{ test_plan }}{% endblock %}
 
+{% block extra_head %}
+{{ form.media }}
+{% endblock %}
+
 {% block custom_stylesheet %}
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
 <style>

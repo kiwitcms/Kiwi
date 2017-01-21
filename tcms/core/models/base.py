@@ -3,7 +3,7 @@ import urlparse
 
 from django.db import models
 from django.conf import settings
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.sites.models import Site
 
 # ----------------------------------------------------------
@@ -56,8 +56,7 @@ class TCMSContentTypeBaseModel(models.Model):
         related_name="content_type_set_for_%(class)s",
         blank=True, null=True)
     object_pk = models.PositiveIntegerField('object ID', blank=True, null=True)
-    content_object = generic.GenericForeignKey(ct_field="content_type",
-                                               fk_field="object_pk")
+    content_object = GenericForeignKey(ct_field="content_type", fk_field="object_pk")
 
     # Metadata about the comment
     site = models.ForeignKey('sites.Site')

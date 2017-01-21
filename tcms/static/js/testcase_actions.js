@@ -565,8 +565,8 @@ function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_conf
   var value = selector.value;
   var label = jQ(selector).prev()[0];
 
-  var success = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
+  var success = function(data, textStatus, jqXHR) {
+    var returnobj = jQ.parseJSON(jqXHR.responseText);
     if (returnobj.rc !== 0) {
       window.alert(returnobj.response);
       return false;
@@ -585,12 +585,12 @@ function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_conf
     jQ(label).html(case_status).show();
     jQ(selector).hide();
 
-    if( be_confirmed || was_confirmed) {
+    if (be_confirmed || was_confirmed) {
       jQ('#run_case_count').text(returnobj.run_case_count);
       jQ('#case_count').text(returnobj.case_count);
       jQ('#review_case_count').text(returnobj.review_case_count);
-      jQ('#'+case_id).next().remove();
-      jQ('#'+case_id).remove();
+      jQ('#' + case_id).next().remove();
+      jQ('#' + case_id).remove();
 
       // We have to reload the other side of cases to reflect the status
       // change. This MUST be done before selector is hided.
@@ -598,7 +598,22 @@ function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_conf
     }
   };
 
-  changeCasesStatus(plan_id, case_id, value, success);
+  var data = {
+    'from_plan': plan_id,
+    'case': case_id,
+    'target_field': 'case_status',
+    'new_value': value,
+  };
+
+  jQ.ajax({
+    'url': '/ajax/update/case-status/',
+    'type': 'POST',
+    'data': data,
+    'success': success,
+    'error': function (jqXHR, textStatus, errorThrown) {
+      json_failure(jqXHR);
+    }
+  });
 }
 
 function toggleAllCheckBoxes(element, container, name) {
@@ -728,15 +743,6 @@ function changeCaseOrder2(parameters, callback) {
       json_failure(jqXHR);
     }
   });
-}
-
-// Deprecated. dead code.
-function changeCasesStatus(plan_id, object_pk, value, callback) {
-  var plan_id = plan_id;
-  var ctype = 'testcases.testcase';
-  var field = 'case_status';
-  var vtype = 'int';
-  updateCaseStatus(plan_id, ctype, object_pk, field, value, vtype, callback);
 }
 
 // Deprecated. dead code.

@@ -3,4 +3,4 @@
 Changelog
 =========
 
-.. literalinclude:: ../../ChangeLog
+.. literalinclude:: ../../CHANGELOG.rst

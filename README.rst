@@ -4,23 +4,13 @@ Nitrate - Test Case Management System
 Introduction
 ------------
 
-Nitrate is a new test plan, test run and test case management system for
-company and community, it has a lot of great features, such as Bugzilla
-authorize system intergration, fast test plan and runs search, powerful
-access control for each plan, run and case, fully ajax call and more.
+Nitrate is a new test plan, test run and test case management system, that is
+written in Python and Django. It has a lot of great features, such as Bugzilla
+and JIRA integration, QPID integration, fast test plan and runs search,
+powerful access control for each plan, run and case, and XMLRPC APIs.
 
 Dependencies
 ------------
-
-- Python >= 2.6
-- Django = 1.5.5
-- MySQL-python == 1.2.5
-- beautifulsoup4 >= 4.1.1
-- Kobo
-- python-kerberos
-- python-qpid
-- django-uuslug
-- w3m
 
 See also requirements/base.txt and requirements/devel.txt
 

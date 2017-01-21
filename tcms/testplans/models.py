@@ -8,7 +8,7 @@ from django.db.models import Max
 from django.db.models.signals import post_save, post_delete, pre_save
 from uuslug import slugify
 
-from tcms.management.models import TCMSEnvPlanMap, Version
+from tcms.management.models import Version
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans import signals as plan_watchers
 from tcms.core.models import TCMSActionModel
@@ -39,33 +39,23 @@ class TestPlan(TCMSActionModel):
 
     plan_id = models.AutoField(max_length=11, primary_key=True)
     name = models.CharField(max_length=255, db_index=True)
-    create_date = models.DateTimeField(db_column='creation_date',
-                                       auto_now_add=True)
-    is_active = models.BooleanField(db_column='isactive', default=True,
-                                    db_index=True)
-    extra_link = models.CharField(max_length=1024, default=None,
-                                  blank=True, null=True)
+    create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
+    is_active = models.BooleanField(db_column='isactive', default=True, db_index=True)
+    extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
     product_version = models.ForeignKey(Version, related_name='plans')
-    owner = models.ForeignKey('auth.User', blank=True, null=True,
-                              related_name='myplans')
+    owner = models.ForeignKey('auth.User', blank=True, null=True, related_name='myplans')
     author = models.ForeignKey('auth.User')
     product = models.ForeignKey('management.Product', related_name='plan')
     type = models.ForeignKey(TestPlanType)
-    parent = models.ForeignKey('self', blank=True, null=True,
-                               related_name='child_set')
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
 
-    attachment = models.ManyToManyField(
-        'management.TestAttachment',
-        through='testplans.TestPlanAttachment')
-    case = models.ManyToManyField('testcases.TestCase',
-                                  through='testcases.TestCasePlan')
+    attachment = models.ManyToManyField('management.TestAttachment',
+                                        through='testplans.TestPlanAttachment')
     component = models.ManyToManyField('management.Component',
                                        through='testplans.TestPlanComponent')
-    env_group = models.ManyToManyField('management.TCMSEnvGroup',
-                                       through='management.TCMSEnvPlanMap')
-    tag = models.ManyToManyField('management.TestTag',
-                                 through='testplans.TestPlanTag')
+    env_group = models.ManyToManyField('management.TCMSEnvGroup', through='TCMSEnvPlanMap')
+    tag = models.ManyToManyField('management.TestTag', through='testplans.TestPlanTag')
 
     class Meta:
         db_table = u'test_plans'
@@ -249,8 +239,7 @@ class TestPlan(TCMSActionModel):
         '''
         Get case sortkey.
         '''
-        result = TestCasePlan.objects.filter(
-            plan=self).aggregate(Max('sortkey'))
+        result = TestCasePlan.objects.filter(plan=self).aggregate(Max('sortkey'))
         sortkey = result['sortkey__max']
         if sortkey is None:
             return None
@@ -268,7 +257,7 @@ class TestPlan(TCMSActionModel):
 
 class TestPlanText(TCMSActionModel):
     plan = models.ForeignKey(TestPlan, related_name='text')
-    plan_text_version = models.IntegerField(max_length=11)
+    plan_text_version = models.IntegerField()
     author = models.ForeignKey('auth.User', db_column='who')
     create_date = models.DateTimeField(auto_now_add=True,
                                        db_column='creation_ts')
@@ -288,9 +277,9 @@ class TestPlanText(TCMSActionModel):
 
 
 class TestPlanPermission(models.Model):
-    userid = models.IntegerField(max_length=9, unique=True, primary_key=True)
-    permissions = models.IntegerField(max_length=4)
-    grant_type = models.IntegerField(max_length=4, unique=True)
+    userid = models.IntegerField(unique=True, primary_key=True)
+    permissions = models.IntegerField()
+    grant_type = models.IntegerField(unique=True)
 
     plan = models.ForeignKey(TestPlan)
 
@@ -299,19 +288,8 @@ class TestPlanPermission(models.Model):
         unique_together = ('plan', 'userid')
 
 
-class TestPlanPermissionsRegexp(models.Model):
-    plan = models.ForeignKey(TestPlan, primary_key=True)
-    user_regexp = models.TextField()
-    permissions = models.IntegerField(max_length=4)
-
-    class Meta:
-        db_table = u'test_plan_permissions_regexp'
-
-
 class TestPlanAttachment(models.Model):
-    attachment = models.ForeignKey(
-        'management.TestAttachment',
-    )
+    attachment = models.ForeignKey('management.TestAttachment')
     plan = models.ForeignKey(TestPlan)
 
     class Meta:
@@ -363,6 +341,14 @@ class TestPlanEmailSettings(models.Model):
 
     class Meta:
         pass
+
+
+class TCMSEnvPlanMap(models.Model):
+    plan = models.ForeignKey(TestPlan)
+    group = models.ForeignKey('management.TCMSEnvGroup')
+
+    class Meta:
+        db_table = u'tcms_env_plan_map'
 
 
 if register_model:

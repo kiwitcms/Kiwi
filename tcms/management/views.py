@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from json import dumps as json_dumps
 from itertools import groupby
 
 try:
@@ -13,7 +14,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.utils.simplejson import dumps as json_dumps
+from django.views.decorators.http import require_GET
 
 from tcms.core.logs.models import TCMSLogModel
 from tcms.core.utils import QuerySetIterationProxy
@@ -403,6 +404,7 @@ def environment_properties(request, template_name='environment/property.html'):
                               context_instance=RequestContext(request))
 
 
+@require_GET
 def environment_property_values(request):
     """
     List values of property
@@ -411,36 +413,34 @@ def environment_property_values(request):
     message = ''
     duplicated_property_value = []
 
-    if not request.REQUEST.get('property_id'):
+    if not request.GET.get('property_id'):
         return HttpResponse('Property ID should specify')
 
     try:
-        qs = TCMSEnvProperty.objects.select_related('value')
-        property = qs.get(id=request.REQUEST['property_id'])
+        property = TCMSEnvProperty.objects.get(id=request.GET['property_id'])
     except TCMSEnvProperty.DoesNotExist, error:
         return HttpResponse(error)
 
-    user_action = request.REQUEST.get('action')
+    user_action = request.GET.get('action')
 
-    if user_action == 'add' and request.REQUEST.get('value'):
+    if user_action == 'add' and request.GET.get('value'):
         if not request.user.has_perm('management.add_tcmsenvvalue'):
             return HttpResponse('Permission denied')
 
-        for value in request.REQUEST['value'].split(','):
+        for value in request.GET['value'].split(','):
             try:
                 property.value.create(value=value)
             except IntegrityError, error:
                 if error[1].startswith('Duplicate'):
                     duplicated_property_value.append(value)
 
-    if user_action == 'edit' and request.REQUEST.get('id'):
+    if user_action == 'edit' and request.GET.get('id'):
         if not request.user.has_perm('management.change_tcmsenvvalue'):
             return HttpResponse('Permission denied')
 
         try:
-            property_value = property.value.get(id=request.REQUEST['id'])
-            property_value.value = request.REQUEST.get('value',
-                                                       property_value.value)
+            property_value = property.value.get(id=request.GET['id'])
+            property_value.value = request.GET.get('value', property_value.value)
             try:
                 property_value.save()
             except IntegrityError, error:
@@ -450,22 +450,22 @@ def environment_property_values(request):
         except TCMSEnvValue.DoesNotExist, error:
             return HttpResponse(error[1])
 
-    if user_action == 'modify' and request.REQUEST.get('id'):
+    if user_action == 'modify' and request.GET.get('id'):
         if not request.user.has_perm('management.change_tcmsenvvalue'):
             return HttpResponse('Permission denied')
 
-        values = property.value.filter(id__in=request.REQUEST.getlist('id'))
-        if request.REQUEST.get('status') in ['0', '1']:
+        values = property.value.filter(id__in=request.GET.getlist('id'))
+        status = request.GET.get('status')
+        if status in ['0', '1']:
             for value in values:
-                value.is_active = int(request.REQUEST['status'])
+                value.is_active = int(status)
                 value.save()
         else:
             return HttpResponse('Argument illegel')
 
     if duplicated_property_value:
         message = 'Value(s) named \'%s\' already exists in this property, ' \
-                  'please select another name.' % '\', \''.join(
-                      duplicated_property_value)
+                  'please select another name.' % "', '".join(duplicated_property_value)
 
     values = property.value.all()
     context_data = {

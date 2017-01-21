@@ -56,19 +56,13 @@ class Product(TCMSActionModel):
     name = models.CharField(unique=True, max_length=64)
     classification = models.ForeignKey(Classification)
     description = models.TextField(blank=True)
-    milestone_url = models.CharField(db_column='milestoneurl',
-                                     max_length=128,
-                                     default='---')
+    milestone_url = models.CharField(db_column='milestoneurl', max_length=128, default='---')
     disallow_new = models.BooleanField(db_column='disallownew', default=False)
-    vote_super_user = models.IntegerField(db_column='votesperuser',
-                                          null=True, default=True)
-    max_vote_super_bug = models.IntegerField(db_column='maxvotesperbug',
-                                             max_length=6,
-                                             default=10000)
-    votes_to_confirm = models.BooleanField(db_column='votestoconfirm')
+    vote_super_user = models.IntegerField(db_column='votesperuser', null=True, default=True)
+    max_vote_super_bug = models.IntegerField(db_column='maxvotesperbug', default=10000)
+    votes_to_confirm = models.BooleanField(db_column='votestoconfirm', default=False)
     default_milestone = models.CharField(db_column='defaultmilestone',
-                                         max_length=20,
-                                         default='---')
+                                         max_length=20, default='---')
 
     class Meta:
         db_table = u'products'
@@ -124,7 +118,7 @@ class Product(TCMSActionModel):
 class Priority(TCMSActionModel):
     id = models.AutoField(max_length=5, primary_key=True)
     value = models.CharField(unique=True, max_length=64)
-    sortkey = models.IntegerField(max_length=6, default=0)
+    sortkey = models.IntegerField(default=0)
     is_active = models.BooleanField(db_column='isactive', default=True)
 
     class Meta:
@@ -356,13 +350,14 @@ class TestEnvironmentProperty(models.Model):
 
 
 class TestEnvironmentMap(models.Model):
-    environment = models.ForeignKey(TestEnvironment, primary_key=True)
+    environment = models.ForeignKey(TestEnvironment)
     property = models.ForeignKey(TestEnvironmentProperty)
     element = models.ForeignKey(TestEnvironmentElement)
     value_selected = models.TextField(blank=True)
 
     class Meta:
         db_table = u'test_environment_map'
+        # FIXME: is unique_together against environment and property necessary?
 
     def __unicode__(self):
         return self.value_selected
@@ -402,21 +397,10 @@ class TestTag(TCMSActionModel):
 
 class TestAttachment(models.Model):
     attachment_id = models.AutoField(max_length=10, primary_key=True)
-    submitter = models.ForeignKey(
-        'auth.User',
-        related_name='attachments',
-        blank=True,
-        null=True
-    )
-    description = models.CharField(max_length=1024,
-                                   blank=True,
-                                   null=True)
-    file_name = models.CharField(db_column='filename',
-                                 max_length=255,
-                                 unique=True, blank=True)
-    stored_name = models.CharField(max_length=128,
-                                   unique=True,
-                                   blank=True, null=True)
+    submitter = models.ForeignKey('auth.User', related_name='attachments', blank=True, null=True)
+    description = models.CharField(max_length=1024, blank=True, null=True)
+    file_name = models.CharField(db_column='filename', max_length=255, unique=True, blank=True)
+    stored_name = models.CharField(max_length=128, unique=True, blank=True, null=True)
     create_date = models.DateTimeField(db_column='creation_ts')
     mime_type = models.CharField(max_length=100)
 
@@ -428,7 +412,7 @@ class TestAttachment(models.Model):
 
 
 class TestAttachmentData(models.Model):
-    attachment = models.ForeignKey(TestAttachment, primary_key=True)
+    attachment = models.ForeignKey(TestAttachment)
     contents = BlobField(blank=True)
 
     class Meta:
@@ -464,14 +448,6 @@ class TCMSEnvGroup(TCMSActionModel):
     @classmethod
     def get_active(cls):
         return cls.objects.filter(is_active=True)
-
-
-class TCMSEnvPlanMap(models.Model):
-    plan = models.ForeignKey('testplans.TestPlan')
-    group = models.ForeignKey(TCMSEnvGroup)
-
-    class Meta:
-        db_table = u'tcms_env_plan_map'
 
 
 class TCMSEnvProperty(TCMSActionModel):

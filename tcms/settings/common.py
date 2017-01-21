@@ -12,7 +12,7 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-TCMS_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..').replace('\\','/'))
+TCMS_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
 
 MANAGERS = ADMINS
 
@@ -100,7 +100,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(TCMS_ROOT_PATH, 'static').replace('\\','/'),
+    os.path.join(TCMS_ROOT_PATH, 'static').replace('\\', '/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -139,29 +139,30 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\','/'),
+    os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\', '/'),
 )
 
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
-    'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    'djcelery',
+    'django_comments',
     'kobo.django.xmlrpc',
+
+    'djcelery',
     'kombu.transport.django',
     'pagination',
     'tinymce',
 
     'tcms.core',
-    'tcms.core.contrib.auth',
-    'tcms.core.contrib.comments',
+    'tcms.core.contrib.auth.apps.AppConfig',
+    'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
     'tcms.core.logs',
     'tcms.integration.bugzilla',
@@ -173,7 +174,7 @@ INSTALLED_APPS = (
     'tcms.testplans',
     'tcms.testruns',
 
-    'tcms.xmlrpc',
+    'tcms.xmlrpc.apps.AppConfig',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -193,10 +194,7 @@ TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
 
-COMMENTS_APP = 'tcms.core.contrib.comments'
-
-# Define the custom profile models
-AUTH_PROFILE_MODULE = 'profiles.UserProfile'
+COMMENTS_APP = 'tcms.core.contrib.comments'  # 'nitrate_comments'
 
 #
 # XML-RPC interface settings
@@ -232,11 +230,12 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
+# FIXME: Is this serializer necessary? If no, remove it.
 # wadofstuff serializer settings
 # http://code.google.com/p/wadofstuff/wiki/DjangoFullSerializers
-SERIALIZATION_MODULES = {
-    'json': 'wadofstuff.django.serializers.json',
-}
+# SERIALIZATION_MODULES = {
+#     'json': 'wadofstuff.django.serializers.json',
+# }
 
 # Needed by django.core.context_processors.debug:
 # See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-core-context-processors-debug
@@ -405,7 +404,7 @@ LOGGING = {
         }
     },
     'handlers': {
-        'console':{
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
@@ -428,7 +427,7 @@ LOGGING = {
             'propagate': True,
         },
         'nitrate.xmlrpc': {
-            'handlers': ['xmlrpc',],
+            'handlers': ['xmlrpc'],
             'level': 'DEBUG',
             'propagate': True,
         },
@@ -493,8 +492,7 @@ TINYMCE_DEFAULT_CONFIG = {
                "media,"
                "template,"
                "searchreplace,"
-               "emotions,"
-               "linkautodetect",
+               "emotions,",
     'table_styles': "Header 1=header1;"
                     "Header 2=header2;"
                     "Header 3=header3",

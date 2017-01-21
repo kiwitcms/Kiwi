@@ -202,8 +202,7 @@ class CasePlanXMLField(forms.FileField):
         # Check automated status
         element = 'automated'
         if case.get(element, {}).get('value'):
-            is_automated = case[element][
-                'value'] == 'Automatic' and True or False
+            is_automated = case[element]['value'] == 'Automatic' and True or False
         else:
             is_automated = False
 
@@ -364,7 +363,7 @@ class BasePlanForm(forms.Form):
     )
     text = forms.CharField(
         label="Plan Document",
-        widget=TinyMCE,
+        widget=TinyMCE(),
         required=False
     )
     product = forms.ModelChoiceField(

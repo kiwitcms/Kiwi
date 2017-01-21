@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from django.http import HttpResponse
-from django.utils import simplejson
 
 from tcms.core import forms
 from tcms.testcases.forms import CaseCategoryForm
@@ -22,7 +23,6 @@ class BaseActions(object):
 
     def get_testcases(self):
         from tcms.testcases.views import get_selected_testcases
-
         return get_selected_testcases(self.request)
 
 
@@ -65,7 +65,7 @@ class CategoryActions(BaseActions):
         return self.render_ajax(self.ajax_response)
 
     def render_ajax(self, response):
-        return HttpResponse(simplejson.dumps(self.ajax_response))
+        return HttpResponse(json.dumps(self.ajax_response))
 
     def render_form(self):
         form = CaseCategoryForm(initial={
@@ -161,7 +161,7 @@ class ComponentActions(BaseActions):
         return self.render_ajax(self.ajax_response)
 
     def render_ajax(self, response):
-        return HttpResponse(simplejson.dumps(self.ajax_response))
+        return HttpResponse(json.dumps(self.ajax_response))
 
     def render_form(self):
         form = CaseComponentForm(initial={
