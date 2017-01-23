@@ -638,7 +638,7 @@ class TestCaseTag(models.Model):
 
 
 class TestCaseBugSystem(TCMSActionModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
     url_reg_exp = models.CharField(max_length=8192)
     validate_reg_exp = models.CharField(max_length=128)
