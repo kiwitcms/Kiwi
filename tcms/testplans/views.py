@@ -932,11 +932,9 @@ def cases(request, plan_id):
             SUB_MODULE_NAME = 'plans'
             tcs = None
 
-            if request.GET.get('action') == 'add_to_plan':
+            if request.POST.get('action') == 'add_to_plan':
                 if request.user.has_perm('testcases.add_testcaseplan'):
-                    tcs = TestCase.objects.filter(
-                        case_id__in=request.GET.getlist('case'))
-
+                    tcs = TestCase.objects.filter(case_id__in=request.POST.getlist('case'))
                     for tc in tcs:
                         tp.add_case(tc)
                 else:
@@ -945,26 +943,23 @@ def cases(request, plan_id):
                 return HttpResponseRedirect(
                     reverse('tcms.testplans.views.get', args=[plan_id]))
 
-            search_mode = request.GET.get('search_mode')
-            if request.GET.get('action') == 'search':
+            search_mode = request.POST.get('search_mode')
+            if request.POST.get('action') == 'search':
 
                 if search_mode == 'quick':
-                    form = quick_form = QuickSearchCaseForm(request.GET)
+                    form = quick_form = QuickSearchCaseForm(request.POST)
                     normal_form = SearchCaseForm()
                 else:
-                    form = normal_form = SearchCaseForm(request.GET)
-                    form.populate(product_id=request.GET.get('product'))
+                    form = normal_form = SearchCaseForm(request.POST)
+                    form.populate(product_id=request.POST.get('product'))
                     quick_form = QuickSearchCaseForm()
 
                 if form.is_valid():
                     tcs = TestCase.list(form.cleaned_data)
                     tcs = tcs.select_related(
-                        'author', 'default_tester', 'case_status',
-                        'priority', 'category', 'tag__name'
-                    ).only('pk', 'summary', 'create_date',
-                           'author__email', 'default_tester__email',
-                           'case_status__name', 'priority__value',
-                           'category__name', 'tag__name')
+                        'author', 'default_tester', 'case_status', 'priority').only(
+                            'pk', 'summary', 'create_date', 'author__email',
+                            'default_tester__email', 'case_status__name', 'priority__value')
                     tcs = tcs.exclude(case_id__in=tp.case.values_list('case_id', flat=True))
             else:
                 normal_form = SearchCaseForm(initial={
