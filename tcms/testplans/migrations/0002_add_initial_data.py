@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import migrations
 
 
 plan_types = [
@@ -16,7 +16,7 @@ plan_types = [
     'Interoperability',
     'Smoke',
     'Regression',
-    ]
+]
 
 
 def forwards_add_initial_data(apps, schema_editor):
