@@ -4,6 +4,8 @@ Change Log
 3.9 (Unreleased)
 ----------------
 
+- Updated documentation with sections about hosting with
+  Gunicorn, Docker and Google Cloud Engine (Mr. Senko)
 - Remove raw SQL migrations and initial schema and data
 - Add migration for django_comments
 - Upgrade Django to 1.8.14

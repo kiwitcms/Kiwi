@@ -19,6 +19,8 @@ Contents
    set_dev_env.rst
    set_dev_env_with_vagrant.rst
    installing_in_rhel.rst
+   installing_gunicorn.rst
+   installing_gce.rst
    tutorial.rst
    contribution.rst
    faq.rst
