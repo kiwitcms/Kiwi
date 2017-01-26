@@ -67,7 +67,7 @@ def plan_from_request_or_none(request, pk_enough=False):
     Arguments:
     - pk_enough: a choice for invoker to determine whether the ID is enough.
     '''
-    tp_id = request.POST.get("from_plan")
+    tp_id = request.POST.get("from_plan") or request.GET.get("from_plan")
     if tp_id:
         if pk_enough:
             try:
@@ -468,7 +468,7 @@ def get_selected_testcases(request):
     Arguments:
     - request: REQUEST object.
     '''
-    REQ = request.POST
+    REQ = request.POST or request.GET
     if REQ.get('selectAll', None):
         plan = plan_from_request_or_none(request)
         return query_testcases_from_request(request, plan)
