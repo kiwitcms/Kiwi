@@ -3,4 +3,4 @@
 License
 =======
 
-.. TODO
+.. literalinclude:: ../../LICENSE
