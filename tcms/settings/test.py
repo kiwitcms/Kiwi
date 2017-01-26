@@ -13,9 +13,7 @@ DATABASES = {
 
 INSTALLED_APPS += ('django_nose',)
 
-TEST_RUNNER = 'tcms.xmlrpc.tests.base.NitrateTestSuiteRunner'
-
-FIXTURE_DIRS = (os.path.join(TCMS_ROOT_PATH, 'fixtures/').replace('\\', '/'),)
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 LISTENING_MODEL_SIGNAL = False
 

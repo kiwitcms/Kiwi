@@ -77,29 +77,13 @@ debug-install: $(TARBALL) $(SPECFILE)
 
 
 ifeq ($(strip $(TEST_TARGET)),)
-	TEST_TARGET=tcms
+	TEST_TARGET=
 else
 	TEST_TARGET=$(strip (TEST_TARGET))
 endif
 
 test:
-ifeq ($(strip $(TEST_COVER)),)
-	@python manage.py test --settings=tcms.settings.test \
-		--nologcapture \
-		--with-fixture-bundling \
-		--cover-package=tcms \
-		$(TEST_TARGET)
-else
-	@python manage.py test --settings=tcms.settings.test \
-		--nologcapture \
-		--with-fixture-bundling \
-		--with-coverage --cover-erase --cover-html \
-		--cover-html-dir=/tmp/nitrate-test-coverage \
-		--cover-package=tcms \
-		--testmatch="(?:^|[\b_\./-])[Tt]est_"
-		$(TEST_TARGET)
-endif
-
+	@./manage.py test --settings=tcms.settings.test $(TEST_TARGET)
 
 build:
 	python setup.py build
