@@ -67,7 +67,7 @@ def plan_from_request_or_none(request, pk_enough=False):
     Arguments:
     - pk_enough: a choice for invoker to determine whether the ID is enough.
     '''
-    tp_id = request.REQUEST.get("from_plan")
+    tp_id = request.POST.get("from_plan") or request.GET.get("from_plan")
     if tp_id:
         if pk_enough:
             try:
@@ -341,19 +341,19 @@ def get_case_status(template_type):
 def build_cases_search_form(request, populate=None, plan=None):
     '''Build search form preparing for quering TestCases'''
     # Intial the plan in plan details page
-    if request.REQUEST.get('from_plan'):
+    if request.POST.get('from_plan'):
         SearchForm = CaseFilterForm
     else:
         SearchForm = SearchCaseForm
 
     # Initial the form and template
-    action = request.REQUEST.get('a')
+    action = request.POST.get('a')
     if action in TESTCASE_OPERATION_ACTIONS:
         search_form = SearchForm(request.REQUEST)
         request.session['items_per_page'] = \
             request.POST.get('items_per_page', settings.DEFAULT_PAGE_SIZE)
     else:
-        d_status = get_case_status(request.REQUEST.get('template_type'))
+        d_status = get_case_status(request.POST.get('template_type'))
         d_status_ids = d_status.values_list('pk', flat=True)
         items_per_page = request.session.get('items_per_page',
                                              settings.DEFAULT_PAGE_SIZE)
@@ -361,8 +361,8 @@ def build_cases_search_form(request, populate=None, plan=None):
                                           'items_per_page': items_per_page})
 
     if populate:
-        if request.REQUEST.get('product'):
-            search_form.populate(product_id=request.REQUEST['product'])
+        if request.POST.get('product'):
+            search_form.populate(product_id=request.POST['product'])
         elif plan and plan.product_id:
             search_form.populate(product_id=plan.product_id)
         else:
@@ -394,11 +394,11 @@ def paginate_testcases(request, testcases):
 def query_testcases(request, plan, search_form):
     '''Query TestCases according to the criterias along with REQUEST'''
     # FIXME: search_form is not defined before being used.
-    action = request.REQUEST.get('a')
+    action = request.POST.get('a')
     if action in TESTCASE_OPERATION_ACTIONS and search_form.is_valid():
         tcs = TestCase.list(search_form.cleaned_data, plan)
     elif action == 'initial':
-        d_status = get_case_status(request.REQUEST.get('template_type'))
+        d_status = get_case_status(request.POST.get('template_type'))
         tcs = TestCase.objects.filter(case_status__in=d_status)
     else:
         tcs = TestCase.objects.none()
@@ -423,14 +423,14 @@ def sort_queried_testcases(request, testcases):
     - request: REQUEST object
     - testcases: object of QuerySet containing queried TestCases
     '''
-    order_by = request.REQUEST.get('order_by', 'create_date')
-    asc = bool(request.REQUEST.get('asc', None))
+    order_by = request.POST.get('order_by', 'create_date')
+    asc = bool(request.POST.get('asc', None))
     tcs = order_case_queryset(testcases, order_by, asc)
     # default sorted by sortkey
     tcs = tcs.order_by('testcaseplan__sortkey')
     # Resort the order
     # if sorted by 'sortkey'(foreign key field)
-    case_sort_by = request.REQUEST.get('case_sort_by')
+    case_sort_by = request.POST.get('case_sort_by')
     if case_sort_by:
         if case_sort_by not in ['sortkey', '-sortkey']:
             tcs = tcs.order_by(case_sort_by)
@@ -468,7 +468,7 @@ def get_selected_testcases(request):
     Arguments:
     - request: REQUEST object.
     '''
-    REQ = request.REQUEST
+    REQ = request.POST or request.GET
     if REQ.get('selectAll', None):
         plan = plan_from_request_or_none(request)
         return query_testcases_from_request(request, plan)
@@ -511,7 +511,7 @@ def get_selected_cases_ids(request):
     - a list of IDs, which should be checked.
     - empty list, representing select all.
     '''
-    REQUEST = request.REQUEST
+    REQUEST = request.POST
     if REQUEST.get('case'):
         # FIXME: why do not use list comprehension.
         return map(lambda f: int(f), REQUEST.getlist('case'))
@@ -584,7 +584,7 @@ def all(request, template_name="case/all.html"):
     # criterias specified in filter form, or just with default filter
     # conditions during loading TestPlan page.
     query_url = remove_from_request_path(request, 'order_by')
-    asc = bool(request.REQUEST.get('asc', None))
+    asc = bool(request.POST.get('asc', None))
     if asc:
         query_url = remove_from_request_path(query_url, 'asc')
     else:
@@ -592,10 +592,10 @@ def all(request, template_name="case/all.html"):
 
     # Due to this method serves several sort of search requests, so before
     # rendering the search result, template should be adjusted to a proper one.
-    if request.REQUEST.get('from_plan'):
-        if request.REQUEST.get('template_type') == 'case':
+    if request.POST.get('from_plan'):
+        if request.POST.get('template_type') == 'case':
             template_name = 'plan/get_cases.html'
-        elif request.REQUEST.get('template_type') == 'review_case':
+        elif request.POST.get('template_type') == 'review_case':
             template_name = 'plan/get_review_cases.html'
 
     context_data = {
@@ -1069,11 +1069,11 @@ def get(request, case_id, template_name='case/get.html'):
     runs_ordered_by_plan = [(k, list(v)) for k, v in runs_ordered_by_plan]
     case_run_plans = [k for k, v in runs_ordered_by_plan]
     # Get the specific test case run
-    if request.REQUEST.get('case_run_id'):
-        tcr = tcrs.get(pk=request.REQUEST['case_run_id'])
+    if request.GET.get('case_run_id'):
+        tcr = tcrs.get(pk=request.GET['case_run_id'])
     else:
         tcr = None
-    case_run_plan_id = request.REQUEST.get('case_run_plan_id', None)
+    case_run_plan_id = request.GET.get('case_run_plan_id', None)
     if case_run_plan_id:
         for item in runs_ordered_by_plan:
             if item[0].pk == long(case_run_plan_id):
@@ -1086,7 +1086,7 @@ def get(request, case_id, template_name='case/get.html'):
 
     # Get the case texts
     tc_text = tc.get_text_with_version(
-        request.REQUEST.get('case_text_version'))
+        request.GET.get('case_text_version'))
     # Switch the templates for different module
     template_types = {
         'case': 'case/get_details.html',
@@ -1097,9 +1097,9 @@ def get(request, case_id, template_name='case/get.html'):
         'execute_case_run': 'run/execute_case_run.html',
     }
 
-    if request.REQUEST.get('template_type'):
+    if request.GET.get('template_type'):
         template_name = template_types.get(
-            request.REQUEST['template_type'], 'case')
+            request.GET['template_type'], 'case')
 
     grouped_case_bugs = tcr and group_case_bugs(tcr.case.get_bugs())
     # Render the page
@@ -1852,9 +1852,9 @@ def plan(request, case_id):
     Return: Hash
     """
     tc = get_object_or_404(TestCase, case_id=case_id)
-    if request.REQUEST.get('a'):
+    if request.GET.get('a'):
         # Search the plans from database
-        if not request.REQUEST.getlist('plan_id'):
+        if not request.GET.getlist('plan_id'):
             context_data = {
                 'message': 'The case must specific one plan at leaset for '
                            'some action',
