@@ -207,9 +207,9 @@ def tag(request, template_name="management/get_tag.html"):
             self.request = request
             self.template_name = template_name
             for o in self.__all__:
-                if request.REQUEST.get(o):
+                if request.GET.get(o):
                     self.object = o
-                    self.object_pks = request.REQUEST.getlist(o)
+                    self.object_pks = request.GET.getlist(o)
                     break
 
         def get(self):
@@ -271,8 +271,8 @@ def tag(request, template_name="management/get_tag.html"):
     objects = Objects(request, template_name)
     template_name, obj = objects.get()
 
-    q_tag = request.REQUEST.get('tags')
-    q_action = request.REQUEST.get('a')
+    q_tag = request.GET.get('tags')
+    q_action = request.GET.get('a')
     if q_action:
         tag_actions = TagActions(obj=obj, tag=q_tag)
         func = getattr(tag_actions, q_action)
@@ -283,13 +283,13 @@ def tag(request, template_name="management/get_tag.html"):
     del q_tag, q_action
 
     # Response to batch operations
-    if request.REQUEST.get('t') == 'json':
-        if request.REQUEST.get('f') == 'serialized':
+    if request.GET.get('t') == 'json':
+        if request.GET.get('f') == 'serialized':
             return HttpResponse(
                 # FIXME: this line of code depends on the existence of `a`
                 # argument in query string. So, if a does not appear in the
                 # query string, error will happen here
-                serializers.serialize(request.REQUEST['t'], response[1])
+                serializers.serialize(request.GET['t'], response[1])
             )
 
         return HttpResponse(json.dumps({'response': 'ok'}))
