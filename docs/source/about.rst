@@ -14,8 +14,8 @@ Key features
 A brief history
 ---------------
 
-Dependences
------------
+Dependencies
+------------
 
 Basic dependences::
 
