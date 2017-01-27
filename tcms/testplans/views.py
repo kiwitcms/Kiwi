@@ -10,6 +10,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
+from django.core import serializers
 from django.db.models import Count
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
@@ -240,6 +241,21 @@ def all(request, template_name='plan/all.html'):
         # I wish to use 'default' argument, as the same as in ModelForm
         # But it does not seem to work
         search_form = SearchPlanForm(initial={'is_active': True})
+
+    if request.GET.get('action') == 'clone_case':
+        template_name = 'case/clone_select_plan.html'
+        tps = tps.order_by('name')
+
+    if request.GET.get('t') == 'ajax':
+        return HttpResponse(serializers.serialize(
+            request.GET.get('f', 'json'),
+            tps,
+            extras=('num_cases', 'num_runs', 'num_children', 'get_url_path')
+        ))
+
+    if request.GET.get('t') == 'html':
+        if request.GET.get('f') == 'preview':
+            template_name = 'plan/preview.html'
 
     query_url = remove_from_request_path(request, 'order_by')
     if asc:
