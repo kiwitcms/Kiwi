@@ -13,5 +13,4 @@ six
 django-contrib-comments
 django-preserialize
 
-# Packages that cannot be installed from PyPI
-# kobo-django>=0.5.2
+git+https://github.com/release-engineering/kobo.git@kobo-0.5.2#egg=kobo
