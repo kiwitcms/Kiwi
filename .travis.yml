@@ -2,7 +2,7 @@ language: python
 python:
   - "2.7"
 install: "pip install -r requirements/devel.txt"
-script: make flake8
+script: make test
 notifications:
   email:
     on_failure: change

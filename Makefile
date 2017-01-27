@@ -82,7 +82,7 @@ else
 	TEST_TARGET=$(strip (TEST_TARGET))
 endif
 
-test:
+test: flake8
 	@./manage.py test --settings=tcms.settings.test $(TEST_TARGET)
 
 build:
