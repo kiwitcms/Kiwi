@@ -352,11 +352,13 @@ To clone a Test Case:
 #. Click the Plans to clone this Test Case to.
 #. Select **Case Properties**:
 
-   -  Create a Copy - Unchecking will create a link to the selected Test
+   -  Create a copy - Unchecking will create a link to the selected Test
       Case.
    -  Keep original author - untick to make current user the author.
-   -  Copy the component to new product - unchecking will remove
-      component from the cloned Test Case.
+   -  Copy test case components to the product of selected Test Plan
+      (Unchecking will remove components from copied test case).
+   -  Copy test case attachments (Unchecking will remove attachments of copied
+      test case).
 
 #. Click **Clone**.
 

@@ -471,7 +471,7 @@ class CloneCaseForm(forms.Form):
     )
     copy_case = forms.BooleanField(
         label='Create a copy',
-        help_text='Create a Copy (Unchecking will create a link to selected '
+        help_text='Create a copy (Unchecking will create a link to selected '
                   'case)',
         required=False
     )
@@ -488,14 +488,14 @@ class CloneCaseForm(forms.Form):
         required=False
     )
     copy_component = forms.BooleanField(
-        label='Copy the component to new product you specific',
-        help_text='Copy the component to new product you specific ('
-                  'Unchecking will remove component of copied test case)',
+        label='Copy test case components to the product of selected Test Plan',
+        help_text='Copy test case components to the product of selected Test Plan ('
+                  'Unchecking will remove components from copied test case)',
         required=False
     )
     copy_attachment = forms.BooleanField(
         label='Copy the attachments',
-        help_text='Copy the attachments to new product you specific ('
+        help_text='Copy test case attachments ('
                   'Unchecking will remove attachments of copied test case)',
         required=False
     )

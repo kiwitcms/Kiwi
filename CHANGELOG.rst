@@ -5,6 +5,7 @@ Change Log
 ----------------
 
 - Drop support for Python 2.6 (Mr. Senko)
+- Update help strings of clone case form and update docs. Fix #67 (Mr. Senko)
 - Updated documentation with sections about hosting with
   Gunicorn, Docker and Google Cloud Engine (Mr. Senko)
 - Remove raw SQL migrations and initial schema and data
