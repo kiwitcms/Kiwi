@@ -1,38 +1,36 @@
 Setup development environment with Vagrant
 ==========================================
 
-Vagrant is a great tool to build and setup development environment in a much
-quick way. All you need to do is just to
+``Vagrantfile`` is provided in project root directory. To setup the
+development environment, all you need is just to run
 
 ::
 
     vagrant up --provider virtualbox
 
-After ``vagrant`` succeeds to setup the virtual machine, you get a complete
-environment to develop Nitrate. That is,
+After ``vagrant`` succeeds to run the virtual machine, you will get a complete
+environment to develop Nitrate,
 
 * a Python virtual environment creatd at ``$HOME/nitrate-env/`` with all
   necessary dependecies installed.
 
-* database is created and initialized with schema and necessary initial data.
-  Database name is ``nitrate``, and you are able to login with
-  ``nitrate:nitrate``, for example, in either way of following
+* database is created in MariaDB and name is ``nitrate``. It's empty. Before
+  hacking and running development server, remmeber to synchronize database
+  from models.
 
   ::
 
-    mysql -unitrate -pnitrate nitrate
-    mysql -uroot nitrate
+    ./manage.py migrate
 
-* port forwarding. 8000 is mapped to 8087 in the host.
+* port forwarding. ``8000`` is mapped to ``8087`` in host.
 
-* source code is mounted at ``/code``. So, that is where to run ``djang-admin``
-  or other django specific commands.
+* source code is mounted at ``/code``.
 
-Run the development server
+* Run development server
 
-::
+  ::
 
-  django-admin runserver --settings=tcms.settings.devel 0.0.0.0:8000
+    ./manage.py runserver 0.0.0.0:8000
 
 visit http://127.0.0.1:8087 with your favourite web browser.
 
