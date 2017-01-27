@@ -7,8 +7,8 @@ from django.db import migrations
 def forwards_add_initial_data(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
     Group.objects.bulk_create([
-        Group(name='Administrators'),
-        Group(name='Testers'),
+        Group(name='Administrator'),
+        Group(name='Tester'),
     ])
 
     Site = apps.get_model('sites', 'Site')
@@ -17,7 +17,7 @@ def forwards_add_initial_data(apps, schema_editor):
 
 def reverse_remove_initial_data(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
-    Group.objects.filter(name__in=['Administrators', 'Testers']).delete()
+    Group.objects.filter(name__in=['Administrator', 'Tester']).delete()
 
     Site = apps.get_model('sites', 'Site')
     Site.objects.filter(name='localhost').delete()
