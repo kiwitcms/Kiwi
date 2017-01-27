@@ -3,3 +3,7 @@ python:
   - "2.7"
 install: "pip install -r requirements/devel.txt"
 script: make flake8
+notifications:
+  email:
+    on_failure: change
+    on_success: change
