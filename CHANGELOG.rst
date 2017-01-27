@@ -4,6 +4,7 @@ Change Log
 3.9 (Unreleased)
 ----------------
 
+- Drop support for Python 2.6 (Mr. Senko)
 - Updated documentation with sections about hosting with
   Gunicorn, Docker and Google Cloud Engine (Mr. Senko)
 - Remove raw SQL migrations and initial schema and data

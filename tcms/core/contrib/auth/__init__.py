@@ -2,13 +2,7 @@
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.auth.models import Group
-
-# Python 2.7 has an importlib with import_module; for older Pythons,
-# Django's bundled copy provides it.
-try:
-    from importlib import import_module
-except ImportError:
-    from django.utils.importlib import import_module
+from importlib import import_module
 
 
 def get_backend(path):
