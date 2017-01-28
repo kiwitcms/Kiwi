@@ -1,9 +1,11 @@
 Change Log
 ==========
 
-3.9 (Unreleased)
-----------------
+3.8.18.05 (Jan 31 2017, released on MrSenko.com)
+------------------------------------------------
 
+- Rebased onto 698288e from upstream (Mr. Senko)
+- Enable internal tests
 - Drop support for Python 2.6 (Mr. Senko)
 - Update help strings of clone case form and update docs. Fix #67 (Mr. Senko)
 - Updated documentation with sections about hosting with
@@ -14,8 +16,8 @@ Change Log
 - Upgrade Django to 1.8.14
 - Upgrade to django-tinymce 2.4.0 (Mr. Senko)
 
-3.8.18.04 (Jan 24 2017)
------------------------
+3.8.18.04 (Jan 24 2017, released on MrSenko.com)
+------------------------------------------------
 
 - Don't hard-code priorities in advanced search.
   PR #45, fixes RhBz #1139932 (Chenxiong Qi)
