@@ -14,6 +14,19 @@ Change Log
 - Upgrade Django to 1.8.14
 - Upgrade to django-tinymce 2.4.0 (Mr. Senko)
 
+3.8.18.04 (Jan 24 2017)
+-----------------------
+
+- Don't hard-code priorities in advanced search.
+  PR #45, fixes RhBz #1139932 (Chenxiong Qi)
+- Update to Django 1.8.11. PR #81 (Mr. Senko)
+- Update django-tinymce to 2.4.0
+- Update link to wadofstuff-django-serializers. PR #101, fixes #99 (Mr. Senko)
+- Minor updates to documentation. PR #100 (Matthias Cavigelli)
+- Require Celery<2 for compatibility reasons. PR #102 (Mr. Senko)
+- Host static files in DEBUG mode for development. PR #103 (Mr. Senko)
+- flake8 fixes. PR #104 (Mr. Senko)
+
 3.8.18 (Aug 21 2016)
 --------------------
 
