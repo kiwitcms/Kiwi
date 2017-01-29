@@ -4,7 +4,7 @@
 # Documentation, define build_doc 1
 
 Name:           nitrate
-Version:        3.8.17
+Version:        3.8.18
 Release:        1%{?dist}
 Summary:        Test Case Management System
 
@@ -168,17 +168,42 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Wed Feb 11 2015 Jian Chen	<jianchen@redhat.com> 3.8.17-1
-* Ignore empty string in white space character escape
+* Sun Aug 21 2016 Chenxiong Qi <qcxhome@gmail.com> 3.8.18-1
+- Relayout indentation in urls (Chenxiong Qi)
+- Ignore .vagrant/ (Chenxiong Qi)
+- Revert "move javascript to the bottom of page" (Chenxiong Qi)
+- using DataTable to show test runs (Chenxiong Qi)
+- move javascript to the bottom of page (Chenxiong Qi)
+- i18n support (Chenxiong Qi)
+- setup dev env with Vagrant (Chenxiong Qi)
+- Better fix for traceback introduced by PR #86 (Mr. Senko)
+- fix import conflict (Chenxiong Qi)
+- Define variables in a way which works on non RPM based systems (Mr. Senko)
+- Fix flake8 'E731 do not assign a lambda expression, use a def' (Mr. Senko)
+- Fix flake8 E402 module level import not at top of file (Mr. Senko)
+- Fix flake8 errors and remove a few unused methods (Mr. Senko)
+- Rename non-existing fields in queries (Mr. Senko)
+- Use STATIC_URL for a few images (Mr. Senko)
+- update document for development environment setup (Chenxiong Qi)
+- fix search_fields in management admin (Chenxiong Qi)
+- fix flake8 errors (Chenxiong Qi)
+- use Makefile to run flake8 (Chenxiong Qi)
+- Prevent from scrolling page up when show and close tip of environment group (Chenxiong Qi)
+- change file format from dos to unix (Chenxiong Qi)
+- change TCMS to Nitrate in templates (Chenxiong Qi)
+- support travis-ci (Chenxiong Qi)
 
-* Wed Feb 11 2015 Jian Chen	<jianchen@redhat.com> 3.8.16-1
-* Revert whitespace filter in run/testcaserun notes field
+* Wed Feb 11 2015 Jian Chen <jianchen@redhat.com> 3.8.17-1
+- Ignore empty string in white space character escape
 
-* Fri Jan 23 2015 Jian Chen	<jianchen@redhat.com> 3.8.15-1
-* Add whitespace filter in plan/case/run text field.
+* Wed Feb 11 2015 Jian Chen <jianchen@redhat.com> 3.8.16-1
+- Revert whitespace filter in run/testcaserun notes field
+
+* Fri Jan 23 2015 Jian Chen <jianchen@redhat.com> 3.8.15-1
+- Add whitespace filter in plan/case/run text field.
 
 * Mon Dec 22 2014 Chenxiong Qi <cqi@redhat.com> 3.8.14-1
-* Specify html.parser explicitly to parse HTML document
+- Specify html.parser explicitly to parse HTML document
 
 * Thu Dec 18 2014 Chenxiong Qi <cqi@redhat.com> 3.8.13-1
 - Bug fix 1174111
