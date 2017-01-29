@@ -1,8 +1,11 @@
 include AUTHORS CHANGELOG.rst README.rst LICENSE VERSION.txt
-include nitrate.spec Makefile
-recursive-include tcms/templates *
-recursive-include tcms/static *
-recursive-include contrib *
-recursive-include docs *
-recursive-include requirements *
-recursive-exclude docs/target *
+include nitrate.spec Makefile Vagrantfile
+
+graft contrib
+graft requirements
+graft tcms/locale
+graft tcms/static
+graft tcms/templates
+
+include docs/Makefile
+graft docs/source
