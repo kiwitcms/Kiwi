@@ -1,8 +1,5 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-# Extra package build
-# Documentation, define build_doc 1
-
 Name:           nitrate
 Version:        3.8.18
 Release:        1%{?dist}
@@ -40,26 +37,16 @@ Nitrate is a tool for tracking testing being done on a product.
 
 It is a database-backed web application, implemented using Django
 
-%if "%{build_doc}" == "1"
+
 %package doc
 Summary:        Documentation of Nitrate
 Group:          Documentation
 URL:            http://nitrate.readthedocs.org/en/latest/
 BuildRequires:  python-sphinx >= 1.1.2
 
+
 %description doc
 Documentation of Nitrate
-%endif
-
-%if "%{build_apidoc}" == "1"
-%package apidoc
-Summary:        API documentation of Nitrate
-Group:          Documentation
-BuildRequires:  epydoc >= 3.0.1
-
-%description apidoc
-API documentation of Nitrate
-%endif
 
 
 %prep
@@ -76,16 +63,9 @@ sed --in-place \
 %{__python} setup.py build
 
 # Generate documentation
-%if "%{build_doc}" == "1"
-pushd docs
+cd docs
 make html
-popd
-%endif
-
-# Generate API documentation
-%if "%{build_apidoc}" == "1"
-make apidoc
-%endif
+cd -
 
 
 %install
@@ -103,15 +83,6 @@ done
 
 # Install apache config for the app:
 install -m 0644 -D -p contrib/conf/nitrate-httpd.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{name}.conf
-
-%if "%{build_apidoc}" == "1"
-# Copy apidoc to /var/www
-mkdir -p ${RPM_BUILD_ROOT}%{_localstatedir}/www
-cp -r apidoc ${RPM_BUILD_ROOT}%{_localstatedir}/www/%{name}-apidoc
-
-# Install conf file for apidoc
-install -m 0644 -D -p contrib/conf/nitrate-apidoc.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{name}-apidoc.conf
-%endif
 
 # Celery
 # Create celery log and pid dir.
@@ -139,8 +110,10 @@ ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc4.d/S90celeryd
 ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc5.d/S90celeryd
 ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc6.d/K25celeryd
 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
+
 
 %files
 %defattr(-,root,root,-)
@@ -154,18 +127,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(0755, celery, root) %{_var}/run/celery
 %config(noreplace) %{_sysconfdir}/init.d/celeryd
 
-%if "%{build_doc}" == "1"
+
 %files doc
 %defattr(-,root,root,-)
 %doc docs/target/html
-%endif
 
-%if "%{build_apidoc}" == "1"
-%files apidoc
-%defattr(-,root,root,-)
-%{_localstatedir}/www/%{name}-apidoc
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}-apidoc.conf
-%endif
 
 %changelog
 * Sun Aug 21 2016 Chenxiong Qi <qcxhome@gmail.com> 3.8.18-1
