@@ -1,5 +1,7 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
+%define  debug_package %{nil}
+
 Name:           nitrate
 Version:        3.8.18
 Release:        1%{?dist}
