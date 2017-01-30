@@ -79,20 +79,16 @@ mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}
 mkdir -p ${RPM_BUILD_ROOT}%{_docdir}/%{name}
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}/static
 
-for d in contrib; do
-    cp -r ${d} ${RPM_BUILD_ROOT}%{_datadir}/%{name};
-done
-
-# Install apache config for the app:
-install -m 0644 -D -p contrib/conf/nitrate-httpd.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{name}.conf
+mv ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{name}-httpd.conf \
+   ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{name}.conf
 
 # Celery
 # Create celery log and pid dir.
 install -d -m 755 ${RPM_BUILD_ROOT}%{_var}/log/celery
 install -d -m 755 ${RPM_BUILD_ROOT}%{_var}/run/celery
 
-# Install celeryd script
-install -m 0755 -D -p contrib/script/celeryd ${RPM_BUILD_ROOT}%{_sysconfdir}/init.d/celeryd
+chmod 755 ${RPM_BUILD_ROOT}%{_sysconfdir}/init.d/celeryd
+
 
 %pre
 # Create celery group and user
