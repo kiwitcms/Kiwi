@@ -11,19 +11,6 @@ INNER JOIN `auth_user` ON (`test_cases`.`author_id` = `auth_user`.`id`)
 WHERE `test_case_plans`.`plan_id` = %s AND `test_cases`.`case_status_id` = 2
 '''
 
-GET_CASERUNS_BUGS = '''
-SELECT test_case_runs.case_run_id,
-    test_case_bugs.bug_id,
-    test_case_bug_systems.url_reg_exp
-FROM test_case_runs
-INNER JOIN test_case_bugs
-    ON (test_case_runs.case_run_id = test_case_bugs.case_run_id)
-INNER JOIN test_case_bug_systems
-    ON (test_case_bugs.bug_system_id = test_case_bug_systems.id)
-WHERE test_case_runs.run_id = %s
-ORDER BY test_case_runs.case_run_id
-'''
-
 GET_CASERUNS_COMMENTS = '''
 select test_case_runs.case_run_id, auth_user.username,
     django_comments.submit_date, django_comments.comment
