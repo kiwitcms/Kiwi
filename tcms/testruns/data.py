@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collections import namedtuple
-from itertools import izip
 from itertools import groupby
 
 from django.conf import settings
@@ -11,8 +10,6 @@ from django_comments.models import Comment
 from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
-from tcms.core.db import SQLExecution
-from tcms.core.utils.tcms_router import connection
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
@@ -84,7 +81,7 @@ def get_run_bug_ids(run_id):
     ).distinct().filter(case_run__run=run_id)
 
     return [(row['bug_id'], row['bug_system__url_reg_exp'] % row['bug_id'])
-        for row in rows]
+            for row in rows]
 
 
 class TestCaseRunDataMixin(object):
@@ -128,10 +125,9 @@ class TestCaseRunDataMixin(object):
         '''
         rows = []
         for row in TestCaseBug.objects.filter(
-                case_run__run=run_pk
-            ).values(
-                'case_run', 'bug_id', 'bug_system__url_reg_exp'
-            ).order_by('case_run'):
+                case_run__run=run_pk).values(
+                'case_run', 'bug_id',
+                'bug_system__url_reg_exp').order_by('case_run'):
             row['bug_url'] = row['bug_system__url_reg_exp'] % row['bug_id']
             rows.append(row)
         return dict([(key, list(groups)) for key, groups in
@@ -153,14 +149,12 @@ class TestCaseRunDataMixin(object):
                 content_type=ct.pk,
                 is_public=True,
                 is_removed=False,
-                object_pk__in=TestCaseRun.objects.filter(run=run_pk)
-            ).annotate(
-                case_run_id=F('object_pk')
-            ).values(
+                object_pk__in=TestCaseRun.objects.filter(
+                    run=run_pk)).annotate(
+                case_run_id=F('object_pk')).values(
                 'case_run_id',
                 'submit_date',
-                'comment',
-            ).order_by('case_run_id'):
+                'comment').order_by('case_run_id'):
             rows.append(row)
 
         return dict([(key, list(groups)) for key, groups in
