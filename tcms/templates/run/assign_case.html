@@ -89,7 +89,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 					<tr id="row_{{ forloop.counter }}" class="{% cycle 'odd' 'even' %} selection_row">
 						<td align="left">
 							{# Hide the check box when it is in the exist_case_runs, and remove it from form submitation #}
-							<input type="checkbox" name="case"  {% ifin test_case.case_id exist_case_run_ids %}value="{{ test_case.case_id }}" disabled="true"  checked="true"{% else %}value="{{ test_case.case_id }}"{% endifin %} />
+							<input type="checkbox" name="case"  {% ifin test_case.case exist_case_run_ids %}value="{{ test_case.case }}" disabled="true"  checked="true"{% else %}value="{{ test_case.case }}"{% endifin %} />
 						</td>
 						<td>
 							<a id="blind_link_{{ forloop.counter }}" class="blind_link js-toggle-button" data-param="{{ forloop.counter }}" href="javascript:void(0);">
@@ -97,17 +97,17 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 							</a>
 						</td>
 						<td>
-							<a href="{% url "tcms.testcases.views.get" test_case.case_id %}">{{ test_case.case_id }}</a>
+							<a href="{% url "tcms.testcases.views.get" test_case.case %}">{{ test_case.case }}</a>
 						</td>
 						<td class="js-case-summary" data-param="{{ forloop.counter }}" >
 							<a id="link_{{ forloop.counter }}" class="blind_title_link" href="javascript:void(0);">
-								{{ test_case.summary }}
+								{{ test_case.case__summary }}
 							</a>
 						</td>
-						<td>{{ test_case.author_username }}</td>
-						<td>{{ test_case.creation_date }}</td>
-						<td>{{ test_case.category_name }}</td>
-						<td>{{ test_case.priority_value }}</td>
+						<td>{{ test_case.case__author__username }}</td>
+						<td>{{ test_case.case__create_date }}</td>
+						<td>{{ test_case.case__category__name }}</td>
+						<td>{{ test_case.case__priority__value }}</td>
 						<td></td>
 					</tr>
 					<tr class="hide"  id="hidenRow_{{ forloop.counter }}" class="Detailform border-1" style="display: none;">
