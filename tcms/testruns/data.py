@@ -12,7 +12,6 @@ from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.core.utils.tcms_router import connection
 from tcms.testruns.sqls import GET_CASERUNS_COMMENTS
-from tcms.testruns.sqls import GET_CASERUNS_BUGS
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
@@ -126,26 +125,23 @@ class TestCaseRunDataMixin(object):
         }
 
     def get_caseruns_bugs(self, run_pk):
-        '''Get case run bugs for run report
+        """Get case run bugs for run report
 
-        @param run_pk: run's pk whose case runs' bugs will be retrieved.
-        @type run_pk: int
-        @return: the mapping between case run id and bugs
-        @rtype: dict
-        '''
-        cursor = connection.reader_cursor
-        cursor.execute(GET_CASERUNS_BUGS, [run_pk, ])
-        field_names = [field[0] for field in cursor.description]
+        :param int run_pk: run's pk whose case runs' bugs will be retrieved.
+        :return: the mapping between case run id and bug information containing
+            formatted bug URL.
+        :rtype: dict
+        """
         rows = []
-        while 1:
-            row = cursor.fetchone()
-            if row is None:
-                break
-            row = dict(izip(field_names, row))
-            row['bug_url'] = row['url_reg_exp'] % row['bug_id']
+        bugs = TestCaseBug.objects \
+            .filter(case_run__run=run_pk) \
+            .values('case_run', 'bug_id', 'bug_system__url_reg_exp') \
+            .order_by('case_run')
+        for row in bugs:
+            row['bug_url'] = row['bug_system__url_reg_exp'] % row['bug_id']
             rows.append(row)
-        return dict([(key, list(groups)) for key, groups in
-                     groupby(rows, lambda row: row['case_run_id'])])
+        return dict([(case_run_id, list(bugs_info)) for case_run_id, bugs_info in
+                     groupby(rows, lambda row: row['case_run'])])
 
     def get_caseruns_comments(self, run_pk):
         '''Get case runs' comments
