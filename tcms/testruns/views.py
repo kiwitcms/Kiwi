@@ -30,7 +30,6 @@ from django.views.generic.base import View
 
 from django_comments.models import Comment
 
-from tcms.core.db import SQLExecution
 from tcms.core.exceptions import NitrateException
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.bugtrackers import Bugzilla
@@ -44,6 +43,7 @@ from tcms.management.models import Priority, TCMSEnvValue, TestTag
 from tcms.search.forms import RunForm
 from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.forms import CaseBugForm
+from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
@@ -54,7 +54,6 @@ from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
 from tcms.testruns.helpers.serializer import TCR2File
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TCMSEnvRunValueMap
-from tcms.testruns.sqls import GET_CONFIRMED_CASES
 
 
 MODULE_NAME = "testruns"
@@ -1300,7 +1299,7 @@ def remove_case_run(request, run_id):
 
 
 class AddCasesToRunView(View):
-    '''Add cases to a TestRun'''
+    """Add cases to a TestRun"""
 
     permission = 'testruns.add_testcaserun'
     template_name = 'run/assign_case.html'
@@ -1370,22 +1369,33 @@ class AddCasesToRunView(View):
                                             args=[tr.run_id, ]))
 
     def get(self, request, run_id):
-        qs = TestRun.objects.select_related('plan', 'manager', 'build')
-        qs = qs.only('plan__name', 'manager__email', 'build__name')
-        tr = qs.get(run_id=run_id)
+        # information about TestRun, used in the page header
+        tr = TestRun.objects.select_related(
+            'plan', 'manager', 'build'
+        ).only(
+            'plan', 'plan__name',
+            'manager__email', 'build__name'
+        ).get(run_id=run_id)
 
-        tp = tr.plan
+        # select all CONFIRMED cases from the TestPlan that is a parent
+        # of this particular TestRun
 
-        # We need all confirmed cases
-        sql_execution = SQLExecution(GET_CONFIRMED_CASES, [tp.pk, ])
-        rows = sql_execution.rows
+        confirmed_status = TestCaseStatus.objects.get(name='CONFIRMED')
+        confirmed_cases = TestCase.objects.filter(
+            plan=tr.plan, case_status=confirmed_status
+        ).values(
+            'case_id', 'summary', 'create_date',
+            'category__name', 'priority__value', 'author__username')
 
-        etcrs_id = tr.case_run.values_list('case', flat=True)
+        # also grab a list of all TestCase IDs which are already present in the
+        # current TestRun so we can mark them as disabled and not allow them to
+        # be selected
+        etcrs_id = TestCaseRun.objects.filter(run=run_id).values_list('case', flat=True)
 
         data = {
             'test_run': tr,
-            'confirmed_cases': rows,
-            'confirmed_cases_count': sql_execution.rowcount,
+            'confirmed_cases': confirmed_cases,
+            'confirmed_cases_count': len(confirmed_cases),
             'test_case_runs_count': len(etcrs_id),
             'exist_case_run_ids': etcrs_id,
         }

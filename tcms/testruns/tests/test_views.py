@@ -8,6 +8,7 @@ from mock import patch
 from six.moves import http_client
 from xml.etree import ElementTree
 
+from django.utils import formats
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
@@ -24,6 +25,7 @@ from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TCMSEnvPropertyFactory
 from tcms.tests.factories import TCMSEnvValueFactory
 from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
@@ -1240,3 +1242,76 @@ class TestEditRun(BaseCaseRun):
 
         self.assertRedirects(response,
                              reverse('tcms.testruns.views.get', args=[run.pk]))
+
+
+class TestAddCasesToRun(BaseCaseRun):
+    """Test AddCasesToRunView"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestAddCasesToRun, cls).setUpTestData()
+
+        cls.proposed_case = TestCaseFactory(
+            author=cls.tester,
+            default_tester=None,
+            reviewer=cls.tester,
+            case_status=cls.case_status_proposed,
+            plan=[cls.plan])
+
+        user_should_have_perm(cls.tester, 'testruns.add_testcaserun')
+
+    def test_show_add_cases_to_run(self):
+        self.login_tester()
+        url = reverse('add-cases-to-run', args=[self.test_run.pk])
+        response = self.client.get(url)
+
+        self.assertNotContains(
+            response,
+            '<a href="{0}">{1}</a>'.format(
+                reverse('tcms.testcases.views.get',
+                        args=[self.proposed_case.pk]),
+                self.proposed_case.pk),
+            html=True
+        )
+
+        confirmed_cases = [self.case, self.case_1, self.case_2, self.case_3]
+
+        # Check selected and unselected case id checkboxes
+        # cls.case is not added to cls.test_run, so it should not be checked.
+        self.assertContains(
+            response,
+            '<td align="left">'
+            '<input type="checkbox" name="case" value="{0}">'
+            '</td>'.format(self.case.pk),
+            html=True)
+
+        # other cases are added to cls.test_run, so must be checked.
+        for case in confirmed_cases[1:]:
+            self.assertContains(
+                response,
+                '<td align="left">'
+                '<input type="checkbox" name="case" value="{0}" '
+                'disabled="true" checked="true">'
+                '</td>'.format(case.pk),
+                html=True)
+
+        # Check listed case properties
+        for loop_counter, case in enumerate(confirmed_cases, 1):
+            html_pieces = [
+                '<a href="{0}">{1}</a>'.format(
+                    reverse('tcms.testcases.views.get', args=[case.pk]),
+                    case.pk),
+
+                '<td class="js-case-summary" data-param="{0}">'
+                '<a id="link_{0}" class="blind_title_link" '
+                'href="javascript:void(0);">{1}</a></td>'.format(loop_counter,
+                                                                 case.summary),
+
+                '<td>{0}</td>'.format(case.author.username),
+                '<td>{0}</td>'.format(
+                    formats.date_format(case.create_date, 'DATETIME_FORMAT')),
+                '<td>{0}</td>'.format(case.category.name),
+                '<td>{0}</td>'.format(case.priority.value),
+            ]
+            for html in html_pieces:
+                self.assertContains(response, html, html=True)

@@ -104,10 +104,10 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 								{{ test_case.summary }}
 							</a>
 						</td>
-						<td>{{ test_case.author_username }}</td>
-						<td>{{ test_case.creation_date }}</td>
-						<td>{{ test_case.category_name }}</td>
-						<td>{{ test_case.priority_value }}</td>
+						<td>{{ test_case.author__username }}</td>
+						<td>{{ test_case.create_date }}</td>
+						<td>{{ test_case.category__name }}</td>
+						<td>{{ test_case.priority__value }}</td>
 						<td></td>
 					</tr>
 					<tr class="hide"  id="hidenRow_{{ forloop.counter }}" class="Detailform border-1" style="display: none;">
