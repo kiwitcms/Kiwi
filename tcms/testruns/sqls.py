@@ -10,18 +10,3 @@ INNER JOIN priority ON (test_cases.priority_id = priority.id)
 INNER JOIN auth_user ON (test_cases.author_id = auth_user.id)
 WHERE test_case_plans.plan_id = %s AND test_cases.case_status_id = 2
 '''
-
-GET_CASERUNS_COMMENTS = '''
-select test_case_runs.case_run_id, auth_user.username,
-    django_comments.submit_date, django_comments.comment
-from test_case_runs
-inner join django_comments
-    on (test_case_runs.case_run_id = django_comments.object_pk)
-inner join auth_user on (django_comments.user_id = auth_user.id)
-where django_comments.site_id = %s and
-    django_comments.content_type_id = %s and
-    django_comments.is_public = 1 and
-    django_comments.is_removed = 0 and
-    test_case_runs.run_id = %s
-ORDER BY test_case_runs.case_run_id
-'''
