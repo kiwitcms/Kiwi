@@ -46,9 +46,3 @@ where django_comments.site_id = %s and
     test_case_runs.run_id = %s
 ORDER BY test_case_runs.case_run_id
 '''
-
-GET_BUG_COUNT = '''
-select count(distinct test_case_bugs.bug_id) from test_case_bugs
-inner join test_case_runs on (test_case_bugs.case_run_id = test_case_runs.case_run_id)
-where test_case_runs.run_id = %s
-'''
