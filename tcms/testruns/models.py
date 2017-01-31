@@ -10,7 +10,6 @@ from django.db.models import Q
 from django.db.models.signals import post_save, post_delete, pre_save
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.db import SQLExecution
 from tcms.core.models.fields import DurationField
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int

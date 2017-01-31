@@ -28,7 +28,6 @@ from django.views.generic.base import View
 
 from django_comments.models import Comment
 
-from tcms.core.db import SQLExecution
 from tcms.core.exceptions import NitrateException
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.bugtrackers import Bugzilla
