@@ -11,13 +11,6 @@ INNER JOIN `auth_user` ON (`test_cases`.`author_id` = `auth_user`.`id`)
 WHERE `test_case_plans`.`plan_id` = %s AND `test_cases`.`case_status_id` = 2
 '''
 
-STATS_CASERUNS_STATUS = '''
-SELECT test_case_runs.case_run_status_id, COUNT(*) AS status_count
-FROM test_case_runs
-WHERE test_case_runs.run_id = %s
-GROUP BY test_case_runs.case_run_status_id
-'''
-
 GET_RUN_BUG_IDS = '''
 SELECT test_case_bugs.bug_id, test_case_bug_systems.url_reg_exp
 FROM test_case_bugs
