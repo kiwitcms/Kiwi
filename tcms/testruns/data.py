@@ -76,10 +76,19 @@ def stats_caseruns_status(run_id, case_run_statuss):
 
 
 def get_run_bug_ids(run_id):
-    return TestCaseBug.objects.only(
+    """Get list of pairs of bug ID and bug link that are added to a run
+
+    :param int run_id: ID of test run.
+    :return: list of pairs of bug ID and bug link.
+    :rtype: list
+    """
+    rows = TestCaseBug.objects.values(
         'bug_id',
-        'bug_system'
+        'bug_system__url_reg_exp'
     ).distinct().filter(case_run__run=run_id)
+
+    return [(row['bug_id'], row['bug_system__url_reg_exp'] % row['bug_id'])
+            for row in rows]
 
 
 class TestCaseRunDataMixin(object):
