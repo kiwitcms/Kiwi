@@ -40,6 +40,19 @@ Vagrant.configure(2) do |config|
     dnf install -y kobo-django
   SHELL
 
+  config.vm.provision "docker", privileged: true, type: "shell", inline: <<-SHELL
+    dnf install -y docker
+    systemctl enable docker
+    systemctl start docker
+    groupadd docker
+    usermod -aG docker $USER
+    systemctl restart docker
+  SHELL
+
+  config.vm.provision "rpmutils", privileged: true, type: "shell", inline: <<-SHELL
+    dnf install -y rpm-build rpmlint rpmdevtools
+  SHELL
+
   config.vm.provision "devenv", privileged: false, type: "shell", inline: <<-SHELL
     cd
     sudo dnf install -y python2-virtualenv
