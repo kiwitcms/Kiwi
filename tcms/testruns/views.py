@@ -1303,7 +1303,7 @@ def remove_case_run(request, run_id):
 
 
 class AddCasesToRunView(View):
-    '''Add cases to a TestRun'''
+    """Add cases to a TestRun"""
 
     permission = 'testruns.add_testcaserun'
     template_name = 'run/assign_case.html'
