@@ -34,10 +34,6 @@ Vagrant.configure(2) do |config|
 
     # Required to build environment to develop and run Nitrate
     dnf install -y python-devel gcc
-
-    # Some of dependent packages cannot be installed from PyPI. Hence, install
-    # those packages from Fedora repository.
-    dnf install -y kobo-django
   SHELL
 
   config.vm.provision "docker", privileged: true, type: "shell", inline: <<-SHELL
