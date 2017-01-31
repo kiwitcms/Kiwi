@@ -18,7 +18,6 @@ from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.testcases.models import TestCaseBug, TestCaseText, NoneText
 from tcms.testruns import signals as run_watchers
-from tcms.testruns.sqls import GET_BUG_COUNT
 
 try:
     from tcms.core.contrib.plugins_support.signals import register_model
@@ -240,8 +239,15 @@ class TestRun(TCMSActionModel):
         mailto(template, subject, to, context, request)
 
     def get_bug_count(self):
-        sql_executor = SQLExecution(GET_BUG_COUNT, [self.pk, ])
-        return sql_executor.scalar
+        """
+            Return the count of distinct bug numbers recorded for
+            this particular TestRun.
+        """
+        # note fom Django docs: A count() call performs a SELECT COUNT(*)
+        # behind the scenes !!!
+        return TestCaseBug.objects.filter(
+            case_run__run=self.pk
+        ).values('bug_id').distinct().count()
 
     def get_percentage(self, count):
         case_run_count = self.total_num_caseruns
