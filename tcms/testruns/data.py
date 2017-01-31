@@ -4,15 +4,15 @@ from itertools import izip
 from itertools import groupby
 
 from django.conf import settings
-from django.db.models import Count
+from django.db.models import Count, F
 from django.contrib.contenttypes.models import ContentType
+from django_comments.models import Comment
 
 from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.core.db import SQLExecution
 from tcms.core.utils.tcms_router import connection
-from tcms.testruns.sqls import GET_CASERUNS_COMMENTS
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
@@ -146,16 +146,23 @@ class TestCaseRunDataMixin(object):
         @rtype: dict
         '''
         ct = ContentType.objects.get_for_model(TestCaseRun)
-        cursor = connection.reader_cursor
-        cursor.execute(GET_CASERUNS_COMMENTS,
-                       [settings.SITE_ID, ct.pk, run_pk, ])
-        field_names = [field[0] for field in cursor.description]
+
         rows = []
-        while 1:
-            row = cursor.fetchone()
-            if row is None:
-                break
-            rows.append(dict(izip(field_names, row)))
+        for row in Comment.objects.filter(
+                site=settings.SITE_ID,
+                content_type=ct.pk,
+                is_public=True,
+                is_removed=False,
+                object_pk__in=TestCaseRun.objects.filter(run=run_pk)
+            ).annotate(
+                case_run_id=F('object_pk')
+            ).values(
+                'case_run_id',
+                'submit_date',
+                'comment',
+            ).order_by('case_run_id'):
+            rows.append(row)
+
         return dict([(key, list(groups)) for key, groups in
                      groupby(rows, lambda row: row['case_run_id'])])
 
