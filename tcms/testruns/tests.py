@@ -31,6 +31,7 @@ from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestTagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
+from tcms.testruns.data import get_run_bug_ids
 
 # ### Test cases for models ###
 
@@ -1344,3 +1345,36 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
         self.assertEqual(6, data.CaseRunsTotalCount)
         self.assertEqual(expected_completed_percentage, data.CompletedPercentage)
         self.assertEqual(expected_failure_percentage, data.FailurePercentage)
+
+
+class TestGetRunBugIDs(BaseCaseRun):
+    """Test get_run_bug_ids"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestGetRunBugIDs, cls).setUpTestData()
+
+        cls.bugzilla = TestCaseBugSystem.objects.get(name='Bugzilla')
+
+        cls.case_run_1.add_bug('123456', bug_system_id=cls.bugzilla.pk)
+        cls.case_run_1.add_bug('100000', bug_system_id=cls.bugzilla.pk)
+        cls.case_run_1.add_bug('100001', bug_system_id=cls.bugzilla.pk)
+        cls.case_run_2.add_bug('100001', bug_system_id=cls.bugzilla.pk)
+
+    def test_get_bug_ids_when_no_bug_is_added(self):
+        bug_ids = get_run_bug_ids(self.test_run_1.pk)
+        self.assertEqual(0, len(bug_ids))
+
+    def test_get_bug_ids(self):
+        bug_ids = get_run_bug_ids(self.test_run.pk)
+
+        self.assertEqual(3, len(bug_ids))
+
+        # Convert result to dict in order to compare the equivalence easily
+
+        expected = {
+            '123456': self.bugzilla.url_reg_exp % '123456',
+            '100000': self.bugzilla.url_reg_exp % '100000',
+            '100001': self.bugzilla.url_reg_exp % '100001',
+        }
+        self.assertEqual(expected, dict(bug_ids))
