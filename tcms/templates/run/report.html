@@ -112,7 +112,7 @@
 					<span class="notes" >
 						<ul style="margin-left:10px;" class='comment'>
 							{% for comment in test_case_run.user_comments %}
-							<li><b>{{ comment.user }}</b><span class='grey' style='margin-left:5px'>[{{ comment.submit_date }}]</span>	<br />{{ comment.comment|urlize|linebreaksbr }}</li>
+							<li><b>{{ comment.user_name }}</b><span class='grey' style='margin-left:5px'>[{{ comment.submit_date }}]</span>	<br />{{ comment.comment|urlize|linebreaksbr }}</li>
 							{% endfor %}
 						</ul>
 					</span> 

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
+from tcms.core.helpers.comments import add_comment
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.data import get_run_bug_ids
@@ -168,3 +171,68 @@ class TestGetCaseRunsBugs(BaseCaseRun):
             ],
         }
         self.assertEqual(expected_result, result)
+
+
+class TestGetCaseRunsComments(BaseCaseRun):
+    """Test TestCaseRunDataMixin.get_caseruns_comments
+
+    There are two test runs created already, cls.test_run and cls.test_run_1.
+
+    For this case, comments will be added to cls.test_run_1 in order to ensure
+    comments could be retrieved correctly. And another one is for ensuring
+    empty result even if no comment is added.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestGetCaseRunsComments, cls).setUpTestData()
+
+        cls.submit_date = datetime(2017, 7, 7, 7, 7, 7)
+
+        add_comment([cls.case_run_4, cls.case_run_5],
+                    comments='new comment',
+                    user=cls.tester,
+                    submit_date=cls.submit_date)
+        add_comment([cls.case_run_4],
+                    comments='make better',
+                    user=cls.tester,
+                    submit_date=cls.submit_date)
+
+    def test_get_empty_comments_if_no_comment_there(self):
+        data = TestCaseRunDataMixin()
+        comments = data.get_caseruns_comments(self.test_run.pk)
+        self.assertEqual({}, comments)
+
+    def test_get_comments(self):
+        data = TestCaseRunDataMixin()
+        comments = data.get_caseruns_comments(self.test_run_1.pk)
+
+        # note: keys are integer but the values are all string
+        expected_comments = {
+            self.case_run_4.pk: [
+                {
+                    'case_run_id': str(self.case_run_4.pk),
+                    'user_name': self.tester.username,
+                    'submit_date': self.submit_date,
+                    'comment': 'new comment'
+                },
+                {
+                    'case_run_id': str(self.case_run_4.pk),
+                    'user_name': self.tester.username,
+                    'submit_date': self.submit_date,
+                    'comment': 'make better'
+                }
+            ],
+            self.case_run_5.pk: [
+                {
+                    'case_run_id': str(self.case_run_5.pk),
+                    'user_name': self.tester.username,
+                    'submit_date': self.submit_date,
+                    'comment': 'new comment'
+                }
+            ]
+        }
+
+        for exp_key in expected_comments:
+            for exp_cmt in expected_comments[exp_key]:
+                self.assertIn(exp_cmt, comments[exp_key])
