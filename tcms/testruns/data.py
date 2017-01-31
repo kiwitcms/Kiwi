@@ -123,21 +123,22 @@ class TestCaseRunDataMixin(object):
         }
 
     def get_caseruns_bugs(self, run_pk):
-        '''Get case run bugs for run report
+        """Get case run bugs for run report
 
-        @param run_pk: run's pk whose case runs' bugs will be retrieved.
-        @type run_pk: int
-        @return: the mapping between case run id and bugs
-        @rtype: dict
-        '''
+        :param int run_pk: run's pk whose case runs' bugs will be retrieved.
+        :return: the mapping between case run id and bug information containing
+            formatted bug URL.
+        :rtype: dict
+        """
         rows = []
-        for row in TestCaseBug.objects.filter(
-                case_run__run=run_pk).values(
-                'case_run', 'bug_id',
-                'bug_system__url_reg_exp').order_by('case_run'):
+        bugs = TestCaseBug.objects \
+            .filter(case_run__run=run_pk) \
+            .values('case_run', 'bug_id', 'bug_system__url_reg_exp') \
+            .order_by('case_run')
+        for row in bugs:
             row['bug_url'] = row['bug_system__url_reg_exp'] % row['bug_id']
             rows.append(row)
-        return dict([(key, list(groups)) for key, groups in
+        return dict([(case_run_id, list(bugs_info)) for case_run_id, bugs_info in
                      groupby(rows, lambda row: row['case_run'])])
 
     def get_caseruns_comments(self, run_pk):
