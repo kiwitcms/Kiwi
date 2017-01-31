@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from collections import namedtuple
 from itertools import groupby
 
@@ -141,13 +142,13 @@ class TestCaseRunDataMixin(object):
                      groupby(rows, lambda row: row['case_run'])])
 
     def get_caseruns_comments(self, run_pk):
-        '''Get case runs' comments
+        """Get case runs' comments
 
         @param run_pk: run's pk whose comments will be retrieved.
         @type run_pk: int
         @return: the mapping between case run id and comments
         @rtype: dict
-        '''
+        """
         ct = ContentType.objects.get_for_model(TestCaseRun)
 
         rows = []
@@ -161,7 +162,8 @@ class TestCaseRunDataMixin(object):
                 case_run_id=F('object_pk')).values(
                 'case_run_id',
                 'submit_date',
-                'comment').order_by('case_run_id'):
+                'comment',
+                'user_name').order_by('case_run_id'):
             rows.append(row)
 
         return dict([(int(key), list(groups)) for key, groups in
