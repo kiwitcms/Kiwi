@@ -1,79 +1,41 @@
 SPECFILE=nitrate.spec
 
-# Support build branch. That is make supports to build package from current git
-# branch. If you want to distribute TCMS upon a specific branch, checkout to it
-# first, and then issue make.
-BUILD_BRANCH=$(shell git branch | grep "^\*" | sed -e "s/\* //")
-RPM_BINARY=$(shell which rpm2 2>/dev/null)
-
-NAME=$(shell cat $(SPECFILE) | grep Name: | cut -f2 -d: | tr -d ' ')
-VERSION=$(shell cat $(SPECFILE) | grep Version: | cut -f2 -d: | tr -d ' ')
-ifneq ($(RPM_BINARY),)
-	RELEASE=$(shell rpm -q --qf "%{RELEASE}\n" --specfile $(SPECFILE)|head -n1)
-else
-# will not evaluate %{?dist}
-	RELEASE=$(shell cat $(SPECFILE) | grep Release: | cut -f2 -d: | tr -d ' ')
-endif
-
-SRPM=$(NAME)-$(VERSION)-$(RELEASE).src.rpm
-TARBALL=nitrate-$(VERSION).tar.bz2
-PWD=$(shell pwd)
-RPMBUILD_OPTIONS=--nodeps --define "_sourcedir $(PWD)" --define "_srcrpmdir $(PWD)" --define "_rpmdir $(PWD)"
-
-WORK_DIR=/tmp/nitrate-$(VERSION)
-SOURCE_DIR = $(WORK_DIR)/nitrate
-CODE_REPO=git://git.fedorahosted.org/nitrate.git
-
-# API documentation generation
-EPYDOC_BIN=epydoc
-# Default directory of API document is the top level of project.
-APIDOC_DIR=apidoc
-
-.PHONY: help refresh-tags refresh-etags
-
 default: help
 
-# Target: build a local RPM
-local-rpm: $(SRPM)
-	echo "$(SRPM)"
-	rpmbuild --rebuild $(RPMBUILD_OPTIONS) $(SRPM) || exit 1
+DIST_DIR=$(shell pwd)/dist/
+DEFINE_OPTS=--define "_sourcedir $(PWD)/dist" --define "_srcrpmdir $(PWD)/dist" --define "_rpmdir $(PWD)/dist"
 
-# Target for constructing a source RPM:
-$(SRPM): $(TARBALL) $(SPECFILE)
-	echo "$(TARBALL)"
-	rpmbuild -bs $(RPMBUILD_OPTIONS) $(SPECFILE) || exit 1
 
-# Target for constructing a source tarball
-# We do not build from the local copy.
-# Instead, we always checkout a clean source tree from remote repository.
-# This means that we know exactly which version of each file we have in any RPM.
-$(TARBALL): Makefile
-	@echo "Start to build distribution package upon branch $(BUILD_BRANCH)"
-	@rm -rf $(WORK_DIR)
-	@rm -f $(TARBALL)
-	@mkdir $(WORK_DIR)
-	@echo "Getting latest codes from git"
-	@cd $(WORK_DIR); git clone -b $(BUILD_BRANCH) $(CODE_REPO)
-	# Fixup the version field in the page footer so that it shows the precise
-	# RPM version-release:
-	@cd $(SOURCE_DIR); sed --in-place -r 's|NITRATE_VERSION|$(VERSION)|' $(SOURCE_DIR)/tcms/templates/tcms_base.html
-	@cd $(SOURCE_DIR); python setup.py sdist --formats=bztar
-	@cp $(SOURCE_DIR)/dist/$(TARBALL) .
+.PHONY: tarball
+tarball:
+	@python setup.py sdist
 
-src-rpm: $(SRPM)
 
-# Various targets for debugging the creation of an RPM or SRPM:
-# Debug target: stop after the %prep stage
-debug-prep: $(TARBALL) $(SPECFILE)
-	rpmbuild -bp $(RPMBUILD_OPTIONS) $(SPECFILE) || exit 1
+.PHONY: srpm
+srpm:
+	@rpmbuild $(DEFINE_OPTS) -bs $(SPECFILE)
 
-# Debug target: stop after the %build stage
-debug-build: $(TARBALL) $(SPECFILE)
-	rpmbuild -bc $(RPMBUILD_OPTIONS) $(SPECFILE) || exit 1
 
-# Debug target: stop after the %install stage
-debug-install: $(TARBALL) $(SPECFILE)
-	rpmbuild -bi $(RPMBUILD_OPTIONS) $(SPECFILE) || exit 1
+.PHONY: rpm
+rpm:
+	@rpmbuild $(DEFINE_OPTS) -ba $(SPECFILE)
+
+
+.PHONY: build
+build:
+	python setup.py build
+
+
+.PHONY: install
+install:
+	python setup.py install
+
+
+FLAKE8_EXCLUDE=.git,tcms/settings,*sqls.py,urls.py,manage.py,wsgi.py,*settings.py,*raw_sql.py,*xml2dict*
+
+.PHONY: flake8
+flake8:
+	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms
 
 
 ifeq ($(strip $(TEST_TARGET)),)
@@ -82,75 +44,40 @@ else
 	TEST_TARGET=$(strip (TEST_TARGET))
 endif
 
-test: flake8
+.PHONY: test
+test:
 	@./manage.py test --settings=tcms.settings.test $(TEST_TARGET)
 
-build:
-	python setup.py build
 
-install:
-	python setup.py install
+.PHONY: check
+check: flake8 test
 
-################## Code style section by following PEP8 #####################
-# Check code convention based on flake8
-FLAKE8_EXCLUDE=.git,__pycache__,tcms/settings,*sqls.py,urls.py,manage.py,wsgi.py,*settings.py,*raw_sql.py,*xml2dict*
-ifeq ($(strip $(TARGET)),)
-	CHECK_TARGET=tcms
-else
-	CHECK_TARGET=$(strip $(TARGET))
-endif
 
-flake8:
-	@flake8 --exclude=$(FLAKE8_EXCLUDE) $(CHECK_TARGET)
+.PHONY: tags
+tags:
+	@rm -f .tags
+	@ctags -R --languages=Python,CSS,Javascript --python-kinds=-im -f .tags
 
-################## Code style section by following PEP8 #####################
 
-initial-data:
-	@./manage.py dumpdata  --settings=tcms.settings.devel --indent=2 \
-		testcases.TestCaseStatus \
-		testcases.TestCaseBugSystem \
-		testruns.TestCaseRunStatus \
-		management.Priority > contrib/sql/initial_data.json
+.PHONY: etags
+etags:
+	@rm -f TAGS
+	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-im -f TAGS
 
+
+.PHONY: help
 help:
-	@echo 'Usage make [command]'
+	@echo 'Usage: make [command]'
 	@echo ''
 	@echo 'Available commands:'
 	@echo ''
-	@echo '  apidoc           - Build API documentation using epydoc'
-	@echo '  local-rpm        - Create the binary RPM'
-	@echo '  src-rpm          - Create a source RPM'
-	@echo '  debug-prep       - Debug nitrate.spec prep'
-	@echo '  debug-build      - Debug nitrate.spec build'
-	@echo '  debug-install    - Debug nitrate.spec install'
-	@echo '  flake8           - Check Python style by following PEP8'
-	@echo '                     You can specify to check which directories or '
-	@echo '                     files by passing TARGET. By default, tcms/ will'
-	@echo '                     be checked'
-	@echo '  test             - Run command: python manage.py test'
+	@echo '  rpm              - Create RPM'
+	@echo '  srpm             - Create SRPM'
+	@echo '  tarball          - Create tarball. Run command: python setup.py sdist'
+	@echo '  flake8           - Check Python code style throughout whole source code tree'
+	@echo '  test             - Run all tests default. Set TEST_TARGET to run part tests of specific apps'
 	@echo '  build            - Run command: python setup.py build'
 	@echo '  install          - Run command: python setup.py install'
-	@echo '  refresh-tags     - Refresh tags using ctags'
-	@echo '  refresh-etags    - Refresh tags using ctags for Emacs specifically'
-	@echo '  initial-data     - Make initial data from current connected database'
-	@echo '  help             - Show this help message and exit'
-
-refresh-tags:
-	@ctags -R --languages=Python,CSS,Javascript --python-kinds=-i -f tags
-
-refresh-etags:
-	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-i -f etags
-
-apidoc:
-	@$(EPYDOC_BIN) --html \
-		--exclude=tests \
-		--exclude=tcms.core.lib \
-		--exclude=tcms.urls \
-		--exclude=tcms.settings \
-		--exclude=tcms.scripts \
-		-o $(APIDOC_DIR) \
-		--no-sourcecode \
-		--parse-only \
-		-q \
-		tcms
-.PHONY: apidoc
+	@echo '  tags             - Refresh tags for VIM. Default filename is .tags'
+	@echo '  etags            - Refresh tags for Emacs. Default filename is TAGS'
+	@echo '  help             - Show this help message and exit. Default if no command is given'
