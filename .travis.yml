@@ -2,7 +2,7 @@ language: python
 python:
   - "2.7"
 install: "pip install -r requirements/devel.txt"
-script: make test
+script: make check
 notifications:
   email:
     on_failure: change
