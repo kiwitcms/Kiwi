@@ -9,6 +9,8 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save, post_delete, pre_save
 
+from django_comments.models import Comment
+
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.models.fields import DurationField
 from tcms.core.models import TCMSActionModel
@@ -17,6 +19,7 @@ from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.testcases.models import TestCaseBug, TestCaseText, NoneText
 from tcms.testruns import signals as run_watchers
+
 
 try:
     from tcms.core.contrib.plugins_support.signals import register_model
@@ -541,6 +544,7 @@ class TestCaseRun(TCMSActionModel):
     environment_id = models.IntegerField(default=0)
 
     links = GenericRelation(LinkReference, object_id_field='object_pk')
+    comments = GenericRelation(Comment, object_id_field='object_pk')
 
     class Meta:
         db_table = u'test_case_runs'

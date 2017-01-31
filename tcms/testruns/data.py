@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
+
 from collections import namedtuple
-from itertools import izip
 from itertools import groupby
 
 from django.conf import settings
-from django.db.models import Count
-from django.contrib.contenttypes.models import ContentType
+from django.db.models import Count, F
 
 from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
-from tcms.core.utils.tcms_router import connection
-from tcms.testruns.sqls import GET_CASERUNS_COMMENTS
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
@@ -144,26 +141,32 @@ class TestCaseRunDataMixin(object):
                      groupby(rows, lambda row: row['case_run'])])
 
     def get_caseruns_comments(self, run_pk):
-        '''Get case runs' comments
+        """Get case runs' comments
 
-        @param run_pk: run's pk whose comments will be retrieved.
-        @type run_pk: int
-        @return: the mapping between case run id and comments
-        @rtype: dict
-        '''
-        ct = ContentType.objects.get_for_model(TestCaseRun)
-        cursor = connection.reader_cursor
-        cursor.execute(GET_CASERUNS_COMMENTS,
-                       [settings.SITE_ID, ct.pk, run_pk, ])
-        field_names = [field[0] for field in cursor.description]
-        rows = []
-        while 1:
-            row = cursor.fetchone()
-            if row is None:
-                break
-            rows.append(dict(izip(field_names, row)))
-        return dict([(key, list(groups)) for key, groups in
-                     groupby(rows, lambda row: row['case_run_id'])])
+        :param int run_pk: run's pk whose comments will be retrieved.
+        :return: the mapping between case run id and comments
+        :rtype: dict
+        """
+        qs = TestCaseRun.objects.filter(
+            run=run_pk,
+            comments__site=settings.SITE_ID,
+            comments__is_public=True,
+            comments__is_removed=False,
+        ).annotate(
+            submit_date=F('comments__submit_date'),
+            comment=F('comments__comment'),
+            user_name=F('comments__user_name'),
+        ).values(
+            'case_run_id',
+            'submit_date',
+            'comment',
+            'user_name',
+        ).order_by('pk')
+
+        return dict([
+            (case_run_id, list(comments)) for case_run_id, comments in
+            groupby(qs, lambda comment: comment['case_run_id'])
+        ])
 
     def get_summary_stats(self, case_runs):
         '''Get summary statistics from case runs
