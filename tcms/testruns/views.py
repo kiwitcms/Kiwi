@@ -54,7 +54,6 @@ from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
 from tcms.testruns.helpers.serializer import TCR2File
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TCMSEnvRunValueMap
-from tcms.testruns.sqls import GET_CONFIRMED_CASES
 
 
 MODULE_NAME = "testruns"
@@ -1381,22 +1380,36 @@ class AddCasesToRunView(View):
                                             args=[tr.run_id, ]))
 
     def get(self, request, run_id):
-        qs = TestRun.objects.select_related('plan', 'manager', 'build')
-        qs = qs.only('plan__name', 'manager__email', 'build__name')
-        tr = qs.get(run_id=run_id)
+        # information about TestRun, used in the page header
+        tr = TestRun.objects.select_related(
+            'plan', 'manager', 'build'
+        ).only(
+            'plan', 'plan__name',
+            'manager__email', 'build__name'
+        ).get(run_id=run_id)
 
-        tp = tr.plan
+        # select all CONFIRMED cases from the TestPlan that is a parent
+        # of this particular TestRun
+        rows = TestCasePlan.objects.values(
+            'case',
+            'case__create_date', 'case__summary',
+            'case__category__name',
+            'case__priority__value',
+            'case__author__username'
+        ).filter(
+            plan_id=tr.plan,
+            case__case_status=TestCaseStatus.objects.filter(name='CONFIRMED').first().pk
+        )
 
-        # We need all confirmed cases
-        sql_execution = SQLExecution(GET_CONFIRMED_CASES, [tp.pk, ])
-        rows = sql_execution.rows
-
-        etcrs_id = tr.case_run.values_list('case', flat=True)
+        # also grab a list of all TestCase IDs which are already present in the
+        # current TestRun so we can mark them as disabled and not allow them to
+        # be selected
+        etcrs_id = TestCaseRun.objects.filter(run=run_id).values_list('case', flat=True)
 
         data = {
             'test_run': tr,
             'confirmed_cases': rows,
-            'confirmed_cases_count': sql_execution.rowcount,
+            'confirmed_cases_count': rows.count(),
             'test_case_runs_count': len(etcrs_id),
             'exist_case_run_ids': etcrs_id,
         }
