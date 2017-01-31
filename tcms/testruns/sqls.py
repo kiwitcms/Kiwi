@@ -1,7 +1,3 @@
-CLONE_ENV_VALUES = '''
-INSERT INTO `tcms_env_run_value_map` (run_id, value_id) VALUES %s
-'''
-
 GET_CONFIRMED_CASES = '''
 SELECT
 test_cases.case_id, test_cases.creation_date, test_cases.summary,
