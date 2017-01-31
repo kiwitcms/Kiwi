@@ -91,11 +91,10 @@ Like on RHEL6.3, the root path is located in::
     /usr/lib/python2.6/site-packages/nitrate-3.8.6-py2.6.egg/tcms
 
 As we plan to deploy an example server for nitrate, we can use product.py as the
-default settings. After backed up the product.py, please modify following
-settings based on your custom configurations in settings/product.py:
+default settings. After backed up the product.py, please modify
+settings based on your custom configurations in settings/product.py.
+For more information see :doc:`configuration`!
 
-.. literalinclude:: ../../tcms/settings/product.py
-   :language: python
 
 Use cache (Optional)
 --------------------
@@ -188,8 +187,3 @@ If any problem, please refer to log file::
 Or any access info, refer to::
 
     /var/log/httpd/access_log
-
-Upgrading
----------
-
-.. TODO

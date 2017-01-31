@@ -1,5 +1,3 @@
-.. _deployment:
-
 Installing Nitrate with Docker and Google Cloud Engine
 ======================================================
 
