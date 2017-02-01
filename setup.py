@@ -5,27 +5,24 @@ import os
 from setuptools import setup, find_packages
 
 
-def read_file(filename, mode='r'):
-    with open(filename, mode) as f:
-        for line in f:
-            yield line.strip()
-
-
 def get_version():
-    return read_file('VERSION.txt').next()
+    with open('VERSION.txt', 'r') as f:
+        return f.read().strip()
 
 
 def get_install_requires():
     requires = []
     links = []
-    for line in read_file('requirements/base.txt'):
-        parts = line.split('#egg=')
-        if len(parts) == 2:
-            links.append(line)
-            requires.append(parts[1])
-        else:
-            requires.append(line)
-    return requires, links
+    with open('requirements/base.txt', 'r') as f:
+        for line in f:
+            dep_line = line.strip()
+            parts = dep_line.split('#egg=')
+            if len(parts) == 2:
+                links.append(dep_line)
+                requires.append(parts[1])
+            else:
+                requires.append(dep_line)
+        return requires, links
 
 install_requires, dependency_links = get_install_requires()
 
