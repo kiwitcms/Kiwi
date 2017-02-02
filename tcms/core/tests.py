@@ -3,12 +3,10 @@
 import unittest
 
 from django import http
-from django_nose.testcases import FastFixtureTestCase
 
 from tcms.core import responses
 from tcms.core.db import GroupByResult
 from tcms.core.utils import string_to_list
-from tcms.testcases.models import TestCase
 
 
 class TestUtilsFunctions(unittest.TestCase):
@@ -52,46 +50,7 @@ class TestUtilsFunctions(unittest.TestCase):
         self.assertEqual([strings], result)
 
 
-class TestUtilsXmlrpc(FastFixtureTestCase):
-
-    fixtures = ['unittest.json']
-
-    def setUp(self):
-        self.testcase_with_default_tester_null = TestCase.objects.extra(
-            where=['default_tester_id is null'])[0:1].get()
-        self.testcase_with_default_tester_0 = TestCase.objects.extra(
-            where=['default_tester_id = 0'])[0:1].get()
-        self.testcase_with_valid_default_tester = TestCase.objects.filter(
-            default_tester__isnull=False)[0:1].get()
-
-    def test_serialize_model_foreignkey(self):
-        '''Testing whether the foreign key is serialized properly
-
-        If foreign key has related object, the field should be serialized with
-        the correct value.
-        If there is no related object with the foreign key, both the field and
-        the related object retrived via the relationship are set to None.
-        '''
-
-        from tcms.xmlrpc.serializer import XMLRPCSerializer
-
-        s = XMLRPCSerializer(model=self.testcase_with_default_tester_null)
-        result = s.serialize_model()
-        self.assertEqual(result['default_tester'], None)
-        self.assertEqual(result['default_tester_id'], None)
-
-        s = XMLRPCSerializer(model=self.testcase_with_default_tester_0)
-        result = s.serialize_model()
-        self.assertEqual(result['default_tester'], None)
-        self.assertEqual(result['default_tester_id'], None)
-
-        s = XMLRPCSerializer(model=self.testcase_with_valid_default_tester)
-        result = s.serialize_model()
-        self.assertNotEqual(result['default_tester'], None)
-        self.assertNotEqual(result['default_tester_id'], None)
-
-
-class GroupByResultDictLikeTest(TestCase):
+class GroupByResultDictLikeTest(unittest.TestCase):
     '''Test dict like behaviors'''
 
     def setUp(self):
@@ -151,7 +110,7 @@ class GroupByResultDictLikeTest(TestCase):
         self.assertEqual(len(self.groupby_result), 0)
 
 
-class GroupByResultCalculationTest(TestCase):
+class GroupByResultCalculationTest(unittest.TestCase):
     '''Test calculation of GroupByResult'''
 
     def setUp(self):
@@ -192,7 +151,7 @@ class GroupByResultCalculationTest(TestCase):
         self.assertEqual(total, self._sample_nested_total())
 
 
-class GroupByResultLevelTest(TestCase):
+class GroupByResultLevelTest(unittest.TestCase):
     def setUp(self):
         self.levels_groupby_result = GroupByResult({
             'build_1': GroupByResult({
@@ -257,7 +216,7 @@ class GroupByResultLevelTest(TestCase):
         self.assertEqual(value_leaf_count, 2)
 
 
-class VariousResponsesTest(TestCase):
+class VariousResponsesTest(unittest.TestCase):
     '''Test HttpJSONResponse'''
 
     def test_json_response(self):
