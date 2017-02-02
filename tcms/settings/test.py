@@ -11,10 +11,6 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS += ('django_nose',)
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
 LISTENING_MODEL_SIGNAL = False
 
 LOGGING = {
