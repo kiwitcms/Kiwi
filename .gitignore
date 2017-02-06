@@ -22,3 +22,6 @@ tcms/settings/dev_settings.py
 tcms/settings/local.py
 tcms/toys.py
 cover-report/
+htmlcov/
+.cache/
+install/
