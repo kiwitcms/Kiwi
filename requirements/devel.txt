@@ -6,3 +6,4 @@ epydoc==3.0.1
 pytest-django
 pytest-cov
 coverage
+factory_boy
