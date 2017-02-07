@@ -80,10 +80,18 @@ class ProductBuildReportData(object):
                                   key_name='build_id')
 
     def caserun_status_subtotal(self, product_id, build_id):
-        return get_groupby_result(sqls.build_caserun_status_subtotal,
-                                  (product_id, build_id),
-                                  key_name='name',
-                                  with_rollup=True)
+        subtotal = {}
+        total = 0
+        for row in TestCaseRun.objects.filter(
+                run__plan__product=product_id,
+                run__build=build_id
+            ).values('case_run_status__name').annotate(
+                status_count=Count('case_run_status__name'
+            )):
+            subtotal[row['case_run_status__name']] = row['status_count']
+            total += row['status_count']
+        subtotal['TOTAL'] = total
+        return subtotal
 
 
 class ProductComponentReportData(object):
