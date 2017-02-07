@@ -2,6 +2,7 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
+from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -13,15 +14,13 @@ from django.views.generic import View
 from forms import CustomSearchDetailsForm
 from tcms.management.models import Priority
 from tcms.management.models import Product
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestRun, TestCaseRunStatus, TestCaseRun
 from tcms.core.db import workaround_single_value_for_in_clause
 from tcms.core.utils.raw_sql import ReportSQL as RawSQL
 from tcms.report.forms import TestingReportForm
 from tcms.report.forms import TestingReportCaseRunsListForm
 from tcms.report.data import CustomDetailsReportData
 from tcms.report.data import CustomReportData
-from tcms.report.data import overview_view_get_case_run_status_count
-from tcms.report.data import overview_view_get_running_runs_count
 from tcms.report.data import ProductBuildReportData
 from tcms.report.data import ProductComponentReportData
 from tcms.report.data import ProductVersionReportData
@@ -72,8 +71,24 @@ def overview(request, product_id, template_name='report/overview.html'):
     except Product.DoesNotExist as error:
         raise Http404(error)
 
-    runs_count = overview_view_get_running_runs_count(product.pk)
-    caserun_status_count = overview_view_get_case_run_status_count(product.pk)
+    query = TestRun.objects.filter(plan__product=product_id)
+    runs_count = {
+        'TOTAL': query.count(),
+        'finished': query.filter(stop_date__isnull=False).count(),
+    }
+    runs_count['running'] = runs_count['TOTAL'] - runs_count['finished']
+
+    query = TestCaseRun.objects.filter(run__plan__product=product_id)
+    caserun_status_count = {}
+    total = 0
+    for row in TestCaseRun.objects.filter(
+            run__plan__product=product_id
+        ).values('case_run_status__name').annotate(
+            status_count=Count('case_run_status__name'
+        )):
+        caserun_status_count[row['case_run_status__name']] = row['status_count']
+        total += row['status_count']
+    caserun_status_count['TOTAL'] = total
 
     context_data = {
         'module': MODULE_NAME,
