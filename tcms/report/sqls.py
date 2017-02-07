@@ -6,22 +6,6 @@ SQLStatement = namedtuple('SQLStatement',
                           'sql_template, default_joins, default_where')
 
 
-overview_running_runs_count = '''
-SELECT IF(stop_date is null, 'running', 'finished') AS stop_status, COUNT(*) AS total_count
-FROM test_runs
-INNER JOIN test_plans ON (test_runs.plan_id = test_plans.plan_id)
-WHERE test_plans.product_id = %s
-GROUP BY stop_status WITH ROLLUP'''
-
-overview_case_run_status_count = '''
-SELECT tcrss.name, COUNT(*) AS total_count
-FROM test_case_run_status AS tcrss
-INNER JOIN test_case_runs AS tcrs ON (tcrss.case_run_status_id = tcrs.case_run_status_id)
-INNER JOIN test_runs AS trs ON (tcrs.run_id = trs.run_id)
-INNER JOIN test_plans AS tps ON (trs.plan_id = tps.plan_id)
-WHERE tps.product_id = %s
-GROUP BY tcrss.name WITH ROLLUP'''
-
 build_builds_total_runs_count = '''
 SELECT test_runs.build_id, COUNT(*) AS total_count
 FROM test_runs
