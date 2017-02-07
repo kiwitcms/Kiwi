@@ -116,10 +116,17 @@ class ProductComponentReportData(object):
                                   key_name='component_id')
 
     def case_runs_count(self, component_id):
-        return get_groupby_result(sqls.component_case_runs_count,
-                                  (component_id,),
-                                  key_name='name',
-                                  with_rollup=True)
+        subtotal = {}
+        total = 0
+        for row in TestCaseRun.objects.filter(
+                case__component=component_id
+            ).values('case_run_status__name').annotate(
+                status_count=Count('case_run_status__name'
+            )):
+            subtotal[row['case_run_status__name']] = row['status_count']
+            total += row['status_count']
+        subtotal['TOTAL'] = total
+        return subtotal
 
 
 class ProductVersionReportData(object):
