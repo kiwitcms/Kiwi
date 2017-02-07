@@ -71,9 +71,15 @@ FIRST_RUN = False
 MOTD_LOGIN = """<p>This is the development server of the TCMS (for testing).</p>
 <p>Please use your kerberos user name and password.</p>
 """
+
+# user guide URL
+USER_GUIDE_URL = "http://nitrate-mrsenko.readthedocs.io/en/latest/tutorial.html"
+
 # You can add a help link on the footer of home page as following format:
 # ('http://foo.com', 'foo')
 FOOTER_LINKS = (
+ ('https://github.com/MrSenko/Nitrate/issues/new', 'Report an Issue'),
+ (USER_GUIDE_URL, 'User guide'),
  ('/xmlrpc/', 'XML-RPC service'),
 )
 
@@ -86,7 +92,5 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
-# user guide URL
-USER_GUIDE_URL = ""
 
 DEFAULT_PAGE_SIZE = 100
