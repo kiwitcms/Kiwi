@@ -45,15 +45,6 @@ INNER JOIN test_case_runs AS tcrs ON (tcrs.run_id = trs.run_id)
 WHERE tbs.product_id = %s
 GROUP BY tbs.build_id'''
 
-build_caserun_status_subtotal = '''
-SELECT tcrss.name, COUNT(*) AS total_count
-FROM test_case_run_status AS tcrss
-INNER JOIN test_case_runs AS tcrs ON (tcrss.case_run_status_id = tcrs.case_run_status_id)
-INNER JOIN test_runs AS trs ON (trs.run_id = tcrs.run_id)
-INNER JOIN test_builds AS tbs ON (trs.build_id = tbs.build_id)
-WHERE tbs.product_id = %s AND tbs.build_id = %s
-GROUP BY tcrss.name WITH ROLLUP'''
-
 component_total_cases = '''
 SELECT tccs.component_id, COUNT(*) AS total_count
 FROM test_case_components AS tccs
