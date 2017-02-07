@@ -4,10 +4,18 @@ import os
 
 from setuptools import setup, find_packages
 
+import tcms
 
-def get_version():
-    with open('VERSION.txt', 'r') as f:
-        return f.read().strip()
+
+def get_package_data():
+    # annoyingly, it appears that package_data has to list filenames; it can't
+    # cope with directories, so we have to figure this out for it:
+    result = {
+        '': [] + list(get_files_below('../templates'))
+               + list(get_files_below('../static'))
+               + list(get_files_below('../docs')),
+    }
+    return result
 
 
 def get_install_requires():
@@ -34,7 +42,7 @@ def get_long_description():
 
 setup(
     name='nitrate',
-    version=get_version(),
+    version=tcms.VERSION,
     description='Test Case Management System',
     long_description=get_long_description(),
     author='Nitrate Team',

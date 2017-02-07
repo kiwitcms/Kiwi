@@ -54,13 +54,6 @@ Documentation of Nitrate
 %prep
 %setup -q
 
-# Fixup the version field in the page footer so that it shows the precise
-# RPM version-release:
-sed --in-place \
-  -r 's|NITRATE_VERSION|%{version}-%{release}|' \
-  tcms/templates/tcms_base.html
-
-
 %build
 %{__python} setup.py build
 
@@ -115,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS CHANGELOG.rst README.rst LICENSE VERSION.txt
+%doc AUTHORS CHANGELOG.rst README.rst LICENSE
 %{python_sitelib}/tcms/
 %{python_sitelib}/nitrate-%{version}-py*.egg-info/
 %{_datadir}/%{name}

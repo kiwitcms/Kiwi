@@ -2,7 +2,9 @@
 
 import django.conf.global_settings as DEFAULT_SETTINGS
 import os.path
+import tcms
 
+NITRATE_VERSION = tcms.VERSION
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
