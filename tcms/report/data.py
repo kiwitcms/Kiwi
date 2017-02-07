@@ -7,6 +7,7 @@ from itertools import imap
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseBug
@@ -152,10 +153,18 @@ class ProductVersionReportData(object):
                                   key_name='product_version_id')
 
     def case_runs_status_subtotal(self, product_id, version_id):
-        return get_groupby_result(sqls.version_case_run_status_subtotal,
-                                  (product_id, version_id),
-                                  key_name='name',
-                                  with_rollup=True)
+        subtotal = {}
+        total = 0
+        for row in TestCaseRun.objects.filter(
+                run__plan__product=product_id,
+                run__plan__product_version=version_id
+            ).values('case_run_status__name').annotate(
+                status_count=Count('case_run_status__name'
+            )):
+            subtotal[row['case_run_status__name']] = row['status_count']
+            total += row['status_count']
+        subtotal['TOTAL'] = total
+        return subtotal
 
 
 SQLQueryInfo = namedtuple('SQLQueryInfo',
