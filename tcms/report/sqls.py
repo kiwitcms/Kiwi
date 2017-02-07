@@ -149,16 +149,6 @@ INNER JOIN test_case_runs ON (test_runs.run_id = test_case_runs.run_id)
 WHERE test_plans.product_id = %s AND test_case_runs.case_run_status_id = 3
 GROUP BY test_plans.product_version_id'''
 
-version_case_run_status_subtotal = '''
-SELECT tcrss.name, COUNT(*) AS total_count
-FROM test_case_runs AS tcrs
-INNER JOIN test_case_run_status AS tcrss ON (tcrss.case_run_status_id = tcrs.case_run_status_id)
-INNER JOIN test_runs AS trs ON (tcrs.run_id = trs.run_id)
-INNER JOIN test_plans AS tps ON (trs.plan_id = tps.plan_id)
-WHERE tps.product_id = %s AND tps.product_version_id = %s
-GROUP BY tcrss.name WITH ROLLUP'''
-
-
 ### SQL for custom report ###
 
 
