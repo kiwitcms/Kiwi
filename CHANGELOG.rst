@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+unreleased changes
+------------------
+
+- Add documentation about installation with Apache and virtualenv (Mr. Senko)
+
 3.8.18.05 (Jan 31 2017, released on MrSenko.com)
 ------------------------------------------------
 
@@ -10,7 +15,6 @@ Change Log
 - Update help strings of clone case form and update docs. Fix #67 (Mr. Senko)
 - Updated documentation with sections about hosting with
   Gunicorn, Docker and Google Cloud Engine (Mr. Senko)
-- Add documentation about installation with Apache and virtualenv (Mr. Senko)
 - Remove raw SQL migrations and initial schema and data
 - Add migration for django_comments
 - Upgrade Django to 1.8.14
