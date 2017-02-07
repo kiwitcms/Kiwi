@@ -4,7 +4,9 @@ Change Log
 unreleased changes
 ------------------
 
-- Add documentation about installation with Apache and virtualenv (Mr. Senko)
+- Add documentation about installation with Apache and virtualenv.
+  PR #137 (Mr. Senko)
+- Replace hard-coded SQL statements with ORM queries. PR #139 (Mr. Senko)
 
 3.8.18.05 (Jan 31 2017, released on MrSenko.com)
 ------------------------------------------------
