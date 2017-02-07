@@ -25,8 +25,6 @@ from tcms.management.models import TestBuild
 __all__ = (
     'CustomDetailsReportData',
     'CustomReportData',
-    'overview_view_get_case_run_status_count',
-    'overview_view_get_running_runs_count',
     'ProductBuildReportData',
     'ProductComponentReportData',
     'ProductVersionReportData',
@@ -50,20 +48,6 @@ def model_to_pk(model):
 
 def do_nothing(value):
     return value
-
-
-def overview_view_get_running_runs_count(product_id):
-    return get_groupby_result(sqls.overview_running_runs_count,
-                              (product_id,),
-                              key_name='stop_status',
-                              with_rollup=True)
-
-
-def overview_view_get_case_run_status_count(product_id):
-    return get_groupby_result(sqls.overview_case_run_status_count,
-                              (product_id,),
-                              key_name='name',
-                              with_rollup=True)
 
 
 class ProductBuildReportData(object):
