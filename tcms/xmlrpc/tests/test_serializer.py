@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-
-from django_nose.testcases import FastFixtureTestCase
+from django import test
 
 from tcms.management.models import Product
 from tcms.testcases.models import TestCase
@@ -14,13 +13,20 @@ from tcms.xmlrpc.serializer import do_nothing
 from tcms.xmlrpc.serializer import encode_utf8
 from tcms.xmlrpc.serializer import to_str
 
+from tcms.tests.factories import ComponentFactory
+from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import TestAttachmentFactory
 
-class TestXMLSerializer(FastFixtureTestCase):
 
-    fixtures = ['unittest.json']
+class TestXMLSerializer(test.TestCase):
 
     def setUp(self):
-        self.testcase = TestCase.objects.all()[0]
+        self.testcase = TestCaseFactory(component=[ComponentFactory(),
+                                                   ComponentFactory(),
+                                                   ComponentFactory()])
 
     def test_serializer(self):
         serializer = XMLRPCSerializer(model=self.testcase)
@@ -37,6 +43,19 @@ class TestXMLSerializer(FastFixtureTestCase):
 
         self.assertEqual(self.testcase.alias, result['alias'])
         self.assertEqual(self.testcase.arguments, result['arguments'])
+
+
+class TestUtilityMethods(unittest.TestCase):
+
+    def test_datetime_to_str(self):
+        value = datetime_to_str(None)
+        self.assertEqual(value, None)
+
+        from datetime import datetime
+        now = datetime.now()
+        value = datetime_to_str(now)
+        expected_value = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
+        self.assertEqual(expected_value, value)
 
 
 # ################### Mock serializer classes for testing ####################
@@ -86,20 +105,50 @@ class MockProductSerializer(QuerySetBasedXMLRPCSerializer):
 # ################### Mock serializer classes for testing ####################
 
 
-class TestQuerySetBasedSerializer(FastFixtureTestCase):
+class TestQuerySetBasedSerializer(test.TestCase):
     '''Test QuerySetBasedXMLRPCSerializer'''
 
-    fixtures = ['unittest.json']
+    @classmethod
+    def setUpClass(cls):
+        cls.case_author = UserFactory()
 
-    def setUp(self):
-        self.plans = TestPlan.objects.all()
-        self.plan_serializer = MockTestPlanSerializer(TestPlan, self.plans)
+        cls.plans = [
+            TestPlanFactory(attachment=[TestAttachmentFactory(), TestAttachmentFactory()]),
+            TestPlanFactory(attachment=[TestAttachmentFactory()]),
+            TestPlanFactory(attachment=[TestAttachmentFactory(),
+                                        TestAttachmentFactory(),
+                                        TestAttachmentFactory()]),
+        ]
+        TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[0]])
+        TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[0]])
+        TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[1]])
+        TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[2]])
+        TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[2]])
+        TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[2]])
+        cls.plans = TestPlan.objects.filter(pk__in=[plan.pk for plan in cls.plans])
+        cls.plan_serializer = MockTestPlanSerializer(TestPlan, cls.plans)
 
-        self.cases = TestCase.objects.all()
-        self.case_serializer = MockTestCaseSerializer(TestCase, self.cases)
+        cls.cases = [
+            TestCaseFactory(author=cls.case_author, default_tester=None),
+            TestCaseFactory(author=cls.case_author, default_tester=None),
+            TestCaseFactory(author=cls.case_author, default_tester=None),
+        ]
+        cls.cases = TestCase.objects.filter(pk__in=[case.pk for case in cls.cases])
+        cls.case_serializer = MockTestCaseSerializer(TestCase, cls.cases)
 
-        self.products = Product.objects.all()
-        self.product_serializer = MockProductSerializer(Product, self.products)
+        cls.products = [ProductFactory(), ProductFactory(), ProductFactory()]
+        cls.products = Product.objects.filter(pk__in=[product.pk for product in cls.products])
+        cls.product_serializer = MockProductSerializer(Product, cls.products)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.products.delete()
+        cls.cases.delete()
+        for plan in cls.plans:
+            plan.attachment.all().delete()
+            plan.case.all().delete()
+        cls.plans.delete()
+        cls.case_author.delete()
 
     def test_get_values_fields_mapping(self):
         mapping = self.product_serializer._get_values_fields_mapping()
@@ -130,14 +179,12 @@ class TestQuerySetBasedSerializer(FastFixtureTestCase):
 
         fields = list(self.case_serializer._get_m2m_fields())
         fields.sort()
-        expected_fields = [field.name for field in
-                           TestCase._meta._many_to_many()]
+        expected_fields = [field.name for field in TestCase._meta.many_to_many]
         expected_fields.sort()
         self.assertEqual(expected_fields, fields)
 
         fields = self.product_serializer._get_m2m_fields()
-        expected_fields = tuple(field.name for field in
-                                Product._meta._many_to_many())
+        expected_fields = tuple(field.name for field in Product._meta.many_to_many)
         self.assertEqual(fields, ())
         self.assertEqual(expected_fields, fields)
 
@@ -182,13 +229,12 @@ class TestQuerySetBasedSerializer(FastFixtureTestCase):
     def test_get_related_object_pks(self):
         m2m_field_name = 'case'
         m2m_query_result = self.plan_serializer._query_m2m_fields()
-        func = self.plan_serializer._get_related_object_pks
-        result = list(func(m2m_query_result, self.plans[0].pk, m2m_field_name))
+        result = self.plan_serializer._get_related_object_pks(m2m_query_result,
+                                                              self.plans[0].pk,
+                                                              m2m_field_name)
         result.sort()
 
-        expected_values = [row['case'] for row in
-                           self.plans.values('pk', 'case').iterator()
-                           if row['case']]
+        expected_values = [case.pk for case in self.plans[0].case.all()]
         expected_values.sort()
         self.assertEqual(expected_values, result)
 
@@ -243,16 +289,3 @@ class TestQuerySetBasedSerializer(FastFixtureTestCase):
         serializer = MockTestCaseSerializer(TestCase, cases)
         result = serializer.serialize_queryset()
         self.assert_(len(result) == 0)
-
-
-class TestUtilityMethods(unittest.TestCase):
-
-    def test_datetime_to_str(self):
-        value = datetime_to_str(None)
-        self.assertEqual(value, None)
-
-        from datetime import datetime
-        now = datetime.now()
-        value = datetime_to_str(now)
-        expected_value = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
-        self.assertEqual(expected_value, value)

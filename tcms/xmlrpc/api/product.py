@@ -236,7 +236,7 @@ def get(request, id):
     Example:
     >>> Product.get(61)
     """
-    return Product.objects.get(id=id).serialize()
+    return Product.objects.get(id=int(id)).serialize()
 
 
 @log_call(namespace=__xmlrpc_namespace__)
@@ -326,7 +326,7 @@ def get_category(request, id):
     """
     from tcms.testcases.models import TestCaseCategory
 
-    return TestCaseCategory.objects.get(id=id).serialize()
+    return TestCaseCategory.objects.get(id=int(id)).serialize()
 
 
 @log_call(namespace=__xmlrpc_namespace__)
@@ -387,7 +387,7 @@ def get_component(request, id):
     """
     from tcms.management.models import Component
 
-    return Component.objects.get(id=id).serialize()
+    return Component.objects.get(id=int(id)).serialize()
 
 
 @log_call(namespace=__xmlrpc_namespace__)
@@ -416,17 +416,19 @@ def update_component(request, component_id, values):
     """
     from tcms.management.models import Component
 
-    component = Component.objects.get(pk=component_id)
+    if not isinstance(values, dict) or 'name' not in values:
+        raise ValueError('Component name is not in values {0}.'.format(values))
 
-    if values.get('name') and values['name']:
-        component.name = values['name']
+    name = values['name']
+    if not isinstance(name, basestring) or len(name) == 0:
+        raise ValueError('Component name {0} is not a string value.'.format(name))
 
+    component = Component.objects.get(pk=int(component_id))
+    component.name = name
     if values.get('initial_owner_id') and User.objects.filter(pk=values['initial_owner_id']).exists():
         component.initial_owner_id = values['initial_owner_id']
-
     if values.get('initial_qa_contact_id') and User.objects.filter(pk=values['initial_qa_contact_id']).exists():
         component.initial_qa_contact_id = values['initial_qa_contact_id']
-
     component.save()
     return component.serialize()
 
@@ -529,7 +531,7 @@ def get_tag(request, id):
     """
     from tcms.management.models import TestTag
 
-    return TestTag.objects.get(pk=id).serialize()
+    return TestTag.objects.get(pk=int(id)).serialize()
 
 
 @log_call(namespace=__xmlrpc_namespace__)
@@ -557,11 +559,14 @@ def add_version(request, values):
     from tcms.management.forms import VersionForm
     from tcms.core import forms
 
-    form = VersionForm(values)
+    product = pre_check_product(values)
+    form_values = values.copy()
+    form_values['product'] = product.pk
+
+    form = VersionForm(form_values)
     if form.is_valid():
         version = form.save()
         return version.serialize()
-
     else:
         raise ValueError(forms.errors_to_list(form))
 

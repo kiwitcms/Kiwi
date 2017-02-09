@@ -1,69 +1,57 @@
 # -*- coding: utf-8 -*-
-from django.db.models import ObjectDoesNotExist
-from django.test import TestCase
 
+import unittest
+
+from django import test
+from django.db.models import ObjectDoesNotExist
+
+from tcms.tests.factories import ProductFactory
 import tcms.xmlrpc.utils as U
 
 
-class TestXMLRPCUtils(TestCase):
+class TestParseBool(unittest.TestCase):
+
     def test_parse_bool_value_with_rejected_args(self):
-        rejected_args = (3, -1, "", "True", "False", "yes", "no", "33",
-                         "-11", [], (), {}, None)
+        rejected_args = (3, -1, "", "True", "False", "yes", "no", "33", "-11",
+                         [], (), {}, None)
         for arg in rejected_args:
             try:
                 U.parse_bool_value(arg)
             except ValueError as e:
                 self.assertEqual(str(e), 'Unacceptable bool value.')
-            except Exception:
-                self.fail("Unexcept error occurs.")
             else:
                 self.fail("Missing validations for %s" % arg)
 
     def test_parse_bool_value(self):
-        false_values = (0, "0", False)
-        for arg in false_values:
-            try:
-                value = U.parse_bool_value(arg)
-            except Exception:
-                self.fail("Unexcept error occurs.")
-            else:
-                self.assertFalse(value)
+        self.assertFalse(U.parse_bool_value(0))
+        self.assertFalse(U.parse_bool_value('0'))
+        self.assertFalse(U.parse_bool_value(False))
 
-        true_values = (1, "1", True)
-        for arg in true_values:
-            try:
-                value = U.parse_bool_value(arg)
-            except Exception:
-                self.fail("Unexcept error occurs.")
-            else:
-                self.assertTrue(value)
+        self.assertTrue(U.parse_bool_value(1))
+        self.assertTrue(U.parse_bool_value('1'))
+        self.assertTrue(U.parse_bool_value(True))
+
+
+class TestPreCheckProduct(test.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='World Of Warcraft')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.product.delete()
+        cls.product.classification.delete()
 
     def test_pre_check_product_with_dict(self):
-        try:
-            product = U.pre_check_product({
-                "product": 4
-            })
-        except ObjectDoesNotExist:
-            self.fail("Unexcept error occurs.")
-        else:
-            self.assertEqual(product.name, "World Of Warcraft")
+        product = U.pre_check_product({"product": self.product.pk})
+        self.assertEqual(product.name, "World Of Warcraft")
 
-        try:
-            product = U.pre_check_product({
-                "product": "World Of Warcraft"
-            })
-        except ObjectDoesNotExist:
-            self.fail("Unexcept error occurs.")
-        else:
-            self.assertEqual(product.name, "World Of Warcraft")
+        product = U.pre_check_product({"product": "World Of Warcraft"})
+        self.assertEqual(product.name, "World Of Warcraft")
 
     def test_pre_check_product_with_no_key(self):
-        try:
-            product = U.pre_check_product({})
-        except ObjectDoesNotExist:
-            self.fail("Unexcept error occurs.")
-        else:
-            self.assertIsNone(product)
+        self.assertRaises(ValueError, U.pre_check_product, {})
 
     def test_pre_check_product_with_illegal_types(self):
         types = ((), [], True, False, self,)
@@ -71,43 +59,26 @@ class TestXMLRPCUtils(TestCase):
             try:
                 U.pre_check_product(arg)
             except ValueError as e:
-                self.assertEqual(str(e), 'The type of product is not '
-                                         'recognizable.')
+                self.assertEqual(str(e), 'The type of product is not recognizable.')
             else:
                 self.fail("Missing validations for %s" % arg)
 
     def test_pre_check_product_with_number(self):
-        types = (4, "4")
-        for arg in types:
-            try:
-                product = U.pre_check_product(arg)
-            except ValueError:
-                self.fail("Unexcept error occurs.")
-            else:
-                self.assertEqual(product.name, "World Of Warcraft")
+        product = U.pre_check_product(self.product.pk)
+        self.assertEqual(product.name, "World Of Warcraft")
+
+        self.assertRaises(ObjectDoesNotExist, U.pre_check_product, str(self.product.pk))
 
     def test_pre_check_product_with_name(self):
-        try:
-            product = U.pre_check_product("World Of Warcraft")
-        except ValueError:
-            self.fail("Unexcept error occurs.")
-        else:
-            self.assertEqual(product.name, "World Of Warcraft")
+        product = U.pre_check_product("World Of Warcraft")
+        self.assertEqual(product.name, "World Of Warcraft")
 
     def test_pre_check_product_with_no_exist(self):
-        try:
-            U.pre_check_product(9999)
-        except ObjectDoesNotExist:
-            pass
-        else:
-            self.fail("Unexcept error occurs.")
+        self.assertRaises(ObjectDoesNotExist, U.pre_check_product, {"product": 9999})
+        self.assertRaises(ObjectDoesNotExist, U.pre_check_product, {"product": "unknown name"})
 
-        try:
-            U.pre_check_product("AAAAAAA")
-        except ObjectDoesNotExist:
-            pass
-        else:
-            self.fail("Unexcept error occurs.")
+
+class TestPreProcessIds(unittest.TestCase):
 
     def test_pre_process_ids_with_list(self):
         ids = U.pre_process_ids(["1", "2", "3"])
@@ -158,6 +129,9 @@ class TestXMLRPCUtils(TestCase):
         else:
             self.fail("Missing validations.")
 
+
+class TestEstimatedTime(unittest.TestCase):
+
     def test_pre_process_estimated_time(self):
         bad_args = ([], (), {}, True, False, 0, 1, -1)
         for arg in bad_args:
@@ -171,47 +145,29 @@ class TestXMLRPCUtils(TestCase):
                 self.fail("Missing validations.")
 
     def test_pre_process_estimated_time_with_empty(self):
-        try:
-            U.pre_process_estimated_time("")
-        except ValueError as e:
-            self.assertEqual(str(e), 'Invaild estimated_time format.')
-        except Exception:
-            self.fail("Unexcept error occurs.")
-        else:
-            self.fail("Missing validations.")
+        time = U.pre_process_estimated_time("")
+        self.assertEqual('', time)
 
     def test_pre_process_estimated_time_with_bad_form(self):
         try:
             U.pre_process_estimated_time("aaaaaa")
         except ValueError as e:
             self.assertEqual(str(e), 'Invaild estimated_time format.')
-        except Exception:
-            self.fail("Unexcept error occurs.")
         else:
             self.fail("Missing validations.")
 
     def test_pre_process_estimated_time_with_time_string(self):
-        try:
-            time = U.pre_process_estimated_time("13:22:54")
-        except Exception:
-            self.fail("Unexcept error occurs.")
-        else:
-            self.assertEqual(time, "13h22m54s")
+        time = U.pre_process_estimated_time("13:22:54")
+        self.assertEqual(time, "13h22m54s")
 
-        try:
-            time = U.pre_process_estimated_time("1d13h22m54s")
-        except Exception:
-            self.fail("Unexcept error occurs.")
-        else:
-            self.assertEqual(time, "1d13h22m54s")
+        time = U.pre_process_estimated_time("1d13h22m54s")
+        self.assertEqual(time, "1d13h22m54s")
 
     def test_pre_process_estimated_time_with_upper_string(self):
         try:
             U.pre_process_estimated_time("1D13H22M54S")
         except ValueError as e:
             self.assertEqual(str(e), 'Invaild estimated_time format.')
-        except Exception:
-            self.fail("Unexcept error occurs.")
         else:
             self.fail("Missing validations.")
 
@@ -220,8 +176,6 @@ class TestXMLRPCUtils(TestCase):
             U.pre_process_estimated_time("aa:bb:cc")
         except ValueError as e:
             self.assertEqual(str(e), 'Invaild estimated_time format.')
-        except Exception:
-            self.fail("Unexcept error occurs.")
         else:
             self.fail("Missing validations.")
 
@@ -230,8 +184,6 @@ class TestXMLRPCUtils(TestCase):
             U.pre_process_estimated_time("ambhcs")
         except ValueError as e:
             self.assertEqual(str(e), 'Invaild estimated_time format.')
-        except Exception:
-            self.fail("Unexcept error occurs.")
         else:
             self.fail("Missing validations.")
 
@@ -240,7 +192,5 @@ class TestXMLRPCUtils(TestCase):
             U.pre_process_estimated_time("aa@bb@cc")
         except ValueError as e:
             self.assertEqual(str(e), 'Invaild estimated_time format.')
-        except Exception:
-            self.fail("Unexcept error occurs.")
         else:
             self.fail("Missing validations.")

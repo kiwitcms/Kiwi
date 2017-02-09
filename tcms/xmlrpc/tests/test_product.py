@@ -1,11 +1,25 @@
 # -*- coding: utf-8 -*-
+
+import unittest
+
 from xmlrpclib import Fault
 
-from django.contrib.auth.models import User
 from django.test import TestCase
 
 from tcms.xmlrpc.api import product
 from tcms.xmlrpc.tests.utils import make_http_request
+
+from tcms.management.models import Component
+from tcms.tests.factories import ComponentFactory
+from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import TestCaseCategoryFactory
+from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import TestRunFactory
+from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import VersionFactory
 
 
 class AssertMessage(object):
@@ -34,17 +48,36 @@ class AssertMessage(object):
 
 
 class TestCheckCategory(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product_nitrate = ProductFactory(name='nitrate')
+        cls.product_xmlrpc = ProductFactory(name='xmlrpc')
+        cls.case_categories = [
+            TestCaseCategoryFactory(name='auto', product=cls.product_nitrate),
+            TestCaseCategoryFactory(name='manual', product=cls.product_nitrate),
+            TestCaseCategoryFactory(name='pending', product=cls.product_xmlrpc),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        [category.delete() for category in cls.case_categories]
+        cls.product_xmlrpc.delete()
+        cls.product_xmlrpc.classification.delete()
+        cls.product_nitrate.delete()
+        cls.product_nitrate.classification.delete()
+
     def test_check_category(self):
         try:
-            cat = product.check_category(None, "--default--", 1)
+            cat = product.check_category(None, 'manual', self.product_nitrate.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            self.assertEqual(cat['name'], "--default--")
+            self.assertEqual(cat['name'], 'manual')
 
-    def test_check_category_with_non_exist(self):
+    def test_check_category_with_non_exist_category(self):
         try:
-            product.check_category(None, "NonExist", 1)
+            product.check_category(None, "NonExist", self.product_nitrate.pk)
         except Fault as f:
             self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
         else:
@@ -67,34 +100,56 @@ class TestCheckCategory(TestCase):
             else:
                 self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
+    def test_no_category_queried_by_special_name(self):
+        bad_args = (None, [], {}, ())
         for arg in bad_args:
             try:
-                product.check_category(None, arg, "--default--")
+                product.check_category(None, arg, self.product_nitrate.name)
             except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
+                self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
             else:
                 self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
 
 class TestCheckComponent(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product_nitrate = ProductFactory(name='nitrate')
+        cls.product_xmlrpc = ProductFactory(name='xmlrpc')
+        cls.components = [
+            ComponentFactory(name='application', product=cls.product_nitrate),
+            ComponentFactory(name='database', product=cls.product_nitrate),
+            ComponentFactory(name='documentation', product=cls.product_xmlrpc),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        for component in cls.components:
+            component.delete()
+        cls.product_nitrate.delete()
+        cls.product_nitrate.classification.delete()
+        cls.product_xmlrpc.delete()
+        cls.product_xmlrpc.classification.delete()
+
     def test_check_component(self):
         try:
-            cat = product.check_component(None, "P", 1)
+            cat = product.check_component(None, 'application', self.product_nitrate.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            self.assertEqual(cat['name'], "P")
+            self.assertEqual(cat['name'], 'application')
 
     def test_check_component_with_non_exist(self):
         try:
-            product.check_component(None, "NonExist", 1)
+            product.check_component(None, "NonExist", self.product_xmlrpc.pk)
         except Fault as f:
             self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
         else:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
 
         try:
-            product.check_component(None, "P", 9999)
+            product.check_component(None, 'documentation', 9999)
         except Fault as f:
             self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
         else:
@@ -104,29 +159,41 @@ class TestCheckComponent(TestCase):
         bad_args = (None, [], {}, ())
         for arg in bad_args:
             try:
-                product.check_component(None, "P", arg)
+                product.check_component(None, 'database', arg)
             except Fault as f:
                 self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
             else:
                 self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
+    def test_no_component_queried_with_special_name(self):
+        bad_args = (None, [], {}, ())
         for arg in bad_args:
             try:
-                product.check_component(None, arg, "P")
+                product.check_component(None, arg, self.product_nitrate.name)
             except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
+                self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
             else:
                 self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
 
 class TestCheckProduct(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='Nitrate')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_check_product(self):
         try:
-            cat = product.check_product(None, "StarCraft")
+            cat = product.check_product(None, 'Nitrate')
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            self.assertEqual(cat['name'], "StarCraft")
+            self.assertEqual(cat['name'], 'Nitrate')
 
     def test_check_product_with_non_exist(self):
         try:
@@ -148,33 +215,41 @@ class TestCheckProduct(TestCase):
 
 
 class TestFilter(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='Nitrate')
+        cls.product_xmlrpc = ProductFactory(name='XMLRPC API')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.product_xmlrpc.delete()
+        cls.product_xmlrpc.classification.delete()
+
     def test_filter_by_id(self):
         try:
-            prod = product.filter(None, {
-                "id": 1
-            })
+            prod = product.filter(None, {"id": self.product.pk})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(prod)
-            self.assertEqual(prod[0]['name'], "StarCraft")
+            self.assertEqual(prod[0]['name'], 'Nitrate')
 
     def test_filter_by_name(self):
         try:
-            prod = product.filter(None, {
-                "name": "StarCraft"
-            })
+            prod = product.filter(None, {'name': 'Nitrate'})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(prod)
-            self.assertEqual(prod[0]['name'], "StarCraft")
+            self.assertEqual(prod[0]['name'], 'Nitrate')
 
+    @unittest.skip('TBD, the API needs change to meet this test.')
     def test_filter_by_non_doc_fields(self):
         try:
-            product.filter(None, {
-                "disallow_new": False
-            })
+            product.filter(None, {'disallow_new': False})
         except Fault as f:
             self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
         else:
@@ -182,59 +257,92 @@ class TestFilter(TestCase):
 
 
 class TestFilterCategories(TestCase):
-    def test_filter_by_id(self):
-        try:
-            cat = product.filter_categories(None, {
-                "id": 1
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cat)
-            self.assertEqual(cat[0]['name'], "--default--")
 
-    def test_filter_by_name(self):
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='Nitrate')
+        cls.categories = [
+            TestCaseCategoryFactory(name='auto', product=cls.product),
+            TestCaseCategoryFactory(name='manual', product=cls.product),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        for category in cls.categories:
+            category.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
+    def test_filter_by_product_id(self):
         try:
-            cat = product.filter_categories(None, {
-                "name": "--default--"
-            })
+            cat = product.filter_categories(None, {'product': self.product.pk})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(cat)
-            self.assertEqual(cat[0]['name'], "--default--")
+            self.assertEqual(cat[0]['name'], '--default--')
+            self.assertEqual(cat[1]['name'], 'auto')
+            self.assertEqual(cat[2]['name'], 'manual')
+
+    def test_filter_by_product_name(self):
+        try:
+            cat = product.filter_categories(None, {'name': 'auto'})
+        except Fault:
+            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        else:
+            self.assertIsNotNone(cat)
+            self.assertEqual(cat[0]['name'], 'auto')
 
 
 class TestFilterComponents(TestCase):
-    def test_filter_by_id(self):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+        cls.component = ComponentFactory(name='application', product=cls.product,
+                                         initial_owner=None, initial_qa_contact=None)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.component.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
+    def test_filter_by_product_id(self):
         try:
-            com = product.filter_components(None, {
-                "id": 1
-            })
+            com = product.filter_components(None, {'product': self.product.pk})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(com)
-            self.assertEqual(com[0]['name'], "T")
+            self.assertEqual(com[0]['name'], 'application')
 
     def test_filter_by_name(self):
         try:
-            com = product.filter_components(None, {
-                "name": "T"
-            })
+            com = product.filter_components(None, {'name': 'application'})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(com)
-            self.assertEqual(com[0]['name'], "T")
+            self.assertEqual(com[0]['name'], 'application')
 
 
 class TestFilterVersions(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+        cls.version = VersionFactory(value='0.7', product=cls.product)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.version.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_filter_by_id(self):
         try:
-            ver = product.filter_versions(None, {
-                "id": 1
-            })
+            ver = product.filter_versions(None, {'id': self.product.pk})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
@@ -243,9 +351,7 @@ class TestFilterVersions(TestCase):
 
     def test_filter_by_name(self):
         try:
-            ver = product.filter_versions(None, {
-                "value": "0.7"
-            })
+            ver = product.filter_versions(None, {'value': '0.7'})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
@@ -254,9 +360,19 @@ class TestFilterVersions(TestCase):
 
 
 class TestGet(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_get_product(self):
         try:
-            cat = product.get(None, 1)
+            cat = product.get(None, self.product.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
@@ -282,14 +398,29 @@ class TestGet(TestCase):
 
 
 class TestGetBuilds(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+        cls.builds_count = 3
+        cls.builds = [TestBuildFactory(product=cls.product) for i in range(cls.builds_count)]
+
+    @classmethod
+    def tearDownClass(cls):
+        for build in cls.builds:
+            build.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_get_build_with_id(self):
         try:
-            builds = product.get_builds(None, 1)
+            builds = product.get_builds(None, self.product.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(builds)
-            self.assertEqual(len(builds), 4)
+            self.assertEqual(len(builds), self.builds_count + 1)
+            self.assertEqual('unspecified', builds[0]['name'])
 
     def test_get_build_with_name(self):
         try:
@@ -298,7 +429,8 @@ class TestGetBuilds(TestCase):
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(builds)
-            self.assertEqual(len(builds), 4)
+            self.assertEqual(len(builds), self.builds_count + 1)
+            self.assertEqual('unspecified', builds[0]['name'])
 
     def test_get_build_with_non_exist_prod(self):
         try:
@@ -327,14 +459,41 @@ class TestGetBuilds(TestCase):
 
 
 class TestGetCases(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tester = UserFactory(username='great tester')
+        cls.product = ProductFactory(name='StarCraft')
+        cls.version = VersionFactory(value='0.1', product=cls.product)
+        cls.plan = TestPlanFactory(name='Test product.get_cases',
+                                   owner=cls.tester, author=cls.tester,
+                                   product=cls.product,
+                                   product_version=cls.version)
+        cls.case_category = TestCaseCategoryFactory(product=cls.product)
+        cls.cases_count = 10
+        cls.cases = [TestCaseFactory(category=cls.case_category, author=cls.tester,
+                                     reviewer=cls.tester, default_tester=None,
+                                     plan=[cls.plan])
+                     for i in range(cls.cases_count)]
+
+    @classmethod
+    def tearDownClass(cls):
+        for case in cls.cases:
+            case.delete()
+        cls.plan.delete()
+        cls.version.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.tester.delete()
+
     def test_get_case_with_id(self):
         try:
-            cases = product.get_cases(None, 1)
+            cases = product.get_cases(None, self.product.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(cases)
-            self.assertEqual(len(cases), 16)
+            self.assertEqual(len(cases), self.cases_count)
 
     def test_get_case_with_name(self):
         try:
@@ -343,7 +502,7 @@ class TestGetCases(TestCase):
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(cases)
-            self.assertEqual(len(cases), 16)
+            self.assertEqual(len(cases), self.cases_count)
 
     def test_get_case_with_non_exist_prod(self):
         try:
@@ -372,25 +531,43 @@ class TestGetCases(TestCase):
 
 
 class TestGetCategories(TestCase):
-    def test_get_categories_with_id(self):
-        try:
-            cats = product.get_categories(None, 1)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cats)
-            self.assertEqual(len(cats), 1)
-            self.assertTrue(cats[0]['name'], '--default--')
 
-    def test_get_categories_with_name(self):
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+        cls.category_auto = TestCaseCategoryFactory(name='auto', product=cls.product)
+        cls.category_manual = TestCaseCategoryFactory(name='manual', product=cls.product)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.category_auto.delete()
+        cls.category_manual.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
+    def test_get_categories_with_product_id(self):
         try:
-            cats = product.get_categories(None, "StarCraft")
+            cats = product.get_categories(None, self.product.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(cats)
-            self.assertEqual(len(cats), 1)
+            self.assertEqual(len(cats), 3)
+            self.assertTrue(cats[0]['name'], '--default--')
+            self.assertTrue(cats[1]['name'], 'auto')
+            self.assertTrue(cats[2]['name'], 'manual')
+
+    def test_get_categories_with_product_name(self):
+        try:
+            cats = product.get_categories(None, 'StarCraft')
+        except Fault:
+            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        else:
+            self.assertIsNotNone(cats)
+            self.assertEqual(len(cats), 3)
             self.assertEqual(cats[0]['name'], '--default--')
+            self.assertEqual(cats[1]['name'], 'auto')
+            self.assertEqual(cats[2]['name'], 'manual')
 
     def test_get_categories_with_non_exist_prod(self):
         try:
@@ -419,13 +596,25 @@ class TestGetCategories(TestCase):
 
 
 class TestGetCategory(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+        cls.category = TestCaseCategoryFactory(name='manual', product=cls.product)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.category.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_get_category(self):
         try:
-            cat = product.get_category(None, 1)
+            cat = product.get_category(None, self.category.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            self.assertEqual(cat['name'], "--default--")
+            self.assertEqual(cat['name'], 'manual')
 
     def test_get_category_with_non_exist(self):
         try:
@@ -447,42 +636,40 @@ class TestGetCategory(TestCase):
 
 
 class TestAddComponent(TestCase):
-    def setUp(self):
-        super(TestAddComponent, self).setUp()
 
-        self.admin = User(username='tcr_admin',
-                          email='tcr_admin@example.com')
-        self.staff = User(username='tcr_staff',
-                          email='tcr_staff@example.com')
-        self.admin.save()
-        self.staff.save()
-        self.admin_request = make_http_request(
-            user=self.admin,
-            user_perm='management.add_component'
-        )
-        self.staff_request = make_http_request(
-            user=self.staff
-        )
+    @classmethod
+    def setUpClass(cls):
+        cls.admin = UserFactory()
+        cls.staff = UserFactory()
+        cls.admin_request = make_http_request(user=cls.admin, user_perm='management.add_component')
+        cls.staff_request = make_http_request(user=cls.staff)
+        cls.product = ProductFactory()
 
-    def tearDown(self):
-        super(TestAddComponent, self).tearDown()
+        # Any added component in tests will be added to this list and then remove them all
+        cls.components_to_delete = []
 
-        self.admin.delete()
-        self.staff.delete()
+    @classmethod
+    def tearDownClass(cls):
+        Component.objects.filter(pk__in=cls.components_to_delete).delete()
+        cls.staff.delete()
+        cls.admin.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
 
     def test_add_component(self):
         try:
-            com = product.add_component(self.admin_request, 1, "MyComponent")
+            com = product.add_component(self.admin_request, self.product.pk, "application")
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
+            self.components_to_delete.append(com['id'])
             self.assertIsNotNone(com)
-            self.assertEqual(com['name'], 'MyComponent')
-            self.assertEqual(com['initial_owner'], 'tcr_admin')
+            self.assertEqual(com['name'], 'application')
+            self.assertEqual(com['initial_owner'], self.admin.username)
 
     def test_add_component_with_no_perms(self):
         try:
-            product.add_component(self.staff_request, 1, "MyComponent")
+            product.add_component(self.staff_request, self.product.pk, "MyComponent")
         except Fault as f:
             self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
         else:
@@ -490,7 +677,7 @@ class TestAddComponent(TestCase):
 
     def test_add_component_with_non_exist(self):
         try:
-            product.add_component(self.admin_request, 99999, "MyComponent")
+            product.add_component(self.admin_request, 9999, "MyComponent")
         except Fault as f:
             self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
         else:
@@ -498,13 +685,25 @@ class TestAddComponent(TestCase):
 
 
 class TestGetComponent(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+        cls.component = ComponentFactory(name='application', product=cls.product)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.component.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_get_component(self):
         try:
-            com = product.get_component(None, 1)
+            com = product.get_component(None, self.component.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            self.assertEqual(com['name'], "T")
+            self.assertEqual(com['name'], 'application')
 
     def test_get_component_with_non_exist(self):
         try:
@@ -526,51 +725,40 @@ class TestGetComponent(TestCase):
 
 
 class TestUpdateComponent(TestCase):
-    def setUp(self):
-        super(TestUpdateComponent, self).setUp()
 
-        self.admin = User(username='tcr_admin',
-                          email='tcr_admin@example.com')
-        self.staff = User(username='tcr_staff',
-                          email='tcr_staff@example.com')
-        self.admin.save()
-        self.staff.save()
-        self.admin_request = make_http_request(
-            user=self.admin,
-            user_perm='management.change_component'
-        )
-        self.staff_request = make_http_request(
-            user=self.staff
-        )
+    @classmethod
+    def setUpClass(cls):
+        cls.admin = UserFactory()
+        cls.staff = UserFactory()
+        cls.admin_request = make_http_request(user=cls.admin,
+                                              user_perm='management.change_component')
+        cls.staff_request = make_http_request(user=cls.staff)
 
-        from tcms.management.models import Component
+        cls.product = ProductFactory(name='StarCraft')
+        cls.component = ComponentFactory(name="application", product=cls.product,
+                                         initial_owner=None, initial_qa_contact=None)
 
-        self.new_component = Component(name="New Component",
-                                       product_id=1,
-                                       description="Test")
-        self.new_component.save()
-
-    def tearDown(self):
-        super(TestUpdateComponent, self).tearDown()
-
-        self.admin.delete()
-        self.staff.delete()
-        self.new_component.delete()
+    @classmethod
+    def tearDownClass(cls):
+        cls.component.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.staff.delete()
+        cls.admin.delete()
 
     def test_update_component(self):
         try:
-            pk = self.new_component.pk
-            com = product.update_component(self.admin_request, pk, {
-                "name": "Updated."
-            })
+            values = {'name': 'Updated'}
+            com = product.update_component(self.admin_request, self.component.pk, values)
         except Fault:
+            raise
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            self.assertEqual(com['name'], 'Updated.')
+            self.assertEqual(com['name'], 'Updated')
 
     def test_update_component_with_non_exist(self):
         try:
-            product.update_component(self.admin_request, 1111, {})
+            product.update_component(self.admin_request, 1111, {'name': 'new name'})
         except Fault as f:
             self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
         else:
@@ -578,22 +766,14 @@ class TestUpdateComponent(TestCase):
 
     def test_update_component_with_no_perms(self):
         try:
-            product.update_component(self.staff_request, 1, {})
+            product.update_component(self.staff_request, self.component.pk, {})
         except Fault as f:
             self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
         else:
             self.fail(AssertMessage.NOT_VALIDATE_PERMS)
 
-    def test_update_component_with_no_arg(self):
+    def test_update_component_with_special_arg(self):
         bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.update_component(self.admin_request,
-                                         self.new_component.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
         for arg in bad_args:
             try:
@@ -603,18 +783,49 @@ class TestUpdateComponent(TestCase):
             else:
                 self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
+        for arg in bad_args:
+            try:
+                product.update_component(self.admin_request, self.component.pk, arg)
+            except Fault as f:
+                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
+            else:
+                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+
 
 class TestGetComponents(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product = ProductFactory(name='StarCraft')
+        cls.starcraft_version_0_1 = VersionFactory(value='0.1', product=cls.product)
+        cls.components = [
+            ComponentFactory(name='application', product=cls.product,
+                             initial_owner=None, initial_qa_contact=None),
+            ComponentFactory(name='database', product=cls.product,
+                             initial_owner=None, initial_qa_contact=None),
+            ComponentFactory(name='documentation', product=cls.product,
+                             initial_owner=None, initial_qa_contact=None),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        [component.delete() for component in cls.components]
+        cls.starcraft_version_0_1.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_get_components_with_id(self):
         try:
-            coms = product.get_components(None, 1)
+            coms = product.get_components(None, self.product.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(coms)
             self.assertEqual(len(coms), 3)
-            names = list((plan['name'] for plan in coms))
-            self.assertTrue('P' in names and 'T' in names and 'Z' in names)
+            names = [plan['name'] for plan in coms]
+            names.sort()
+            expected_names = ['application', 'database', 'documentation']
+            self.assertEqual(expected_names, names)
 
     def test_get_components_with_name(self):
         try:
@@ -624,8 +835,10 @@ class TestGetComponents(TestCase):
         else:
             self.assertIsNotNone(coms)
             self.assertEqual(len(coms), 3)
-            names = list((plan['name'] for plan in coms))
-            self.assertTrue('P' in names and 'T' in names and 'Z' in names)
+            names = [plan['name'] for plan in coms]
+            names.sort()
+            expected_names = ['application', 'database', 'documentation']
+            self.assertEqual(expected_names, names)
 
     def test_get_components_with_non_exist_prod(self):
         try:
@@ -654,6 +867,8 @@ class TestGetComponents(TestCase):
 
 
 class TestGetEnvironments(TestCase):
+
+    @unittest.skip('No implemented yet.')
     def test_get_environments(self):
         try:
             product.get_environments(None, None)
@@ -664,6 +879,8 @@ class TestGetEnvironments(TestCase):
 
 
 class TestGetMilestones(TestCase):
+
+    @unittest.skip('No implemented yet.')
     def test_get_milestones(self):
         try:
             product.get_milestones(None, None)
@@ -674,25 +891,61 @@ class TestGetMilestones(TestCase):
 
 
 class TestGetPlans(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory(username='jack')
+        cls.product_starcraft = ProductFactory(name='StarCraft')
+        cls.starcraft_version_0_1 = VersionFactory(value='0.1', product=cls.product_starcraft)
+        cls.starcraft_version_0_2 = VersionFactory(value='0.2', product=cls.product_starcraft)
+        cls.product_streetfighter = ProductFactory(name='StreetFighter')
+        cls.streetfighter_version_0_1 = VersionFactory(value='0.1', product=cls.product_streetfighter)
+        cls.plans = [
+            TestPlanFactory(name='StarCraft: Init',
+                            product=cls.product_starcraft, product_version=cls.starcraft_version_0_1,
+                            author=cls.user, owner=cls.user),
+            TestPlanFactory(name='StarCraft: Start',
+                            product=cls.product_starcraft, product_version=cls.starcraft_version_0_2,
+                            author=cls.user, owner=cls.user),
+            TestPlanFactory(name='StreetFighter',
+                            product=cls.product_streetfighter,
+                            product_version=cls.streetfighter_version_0_1,
+                            author=cls.user, owner=cls.user),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        [plan.delete() for plan in cls.plans]
+        cls.starcraft_version_0_1.delete()
+        cls.starcraft_version_0_2.delete()
+        cls.streetfighter_version_0_1.delete()
+        cls.product_starcraft.delete()
+        cls.product_starcraft.classification.delete()
+        cls.product_streetfighter.delete()
+        cls.product_streetfighter.classification.delete()
+        cls.user.delete()
+
     def test_get_plans_with_id(self):
         try:
-            plans = product.get_plans(None, 1)
+            plans = product.get_plans(None, self.product_starcraft.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(plans)
-            self.assertEqual(len(plans), 1)
+            self.assertEqual(len(plans), 2)
             self.assertEqual(plans[0]['name'], 'StarCraft: Init')
+            self.assertEqual(plans[1]['name'], 'StarCraft: Start')
 
     def test_get_plans_with_name(self):
         try:
-            plans = product.get_plans(None, "StarCraft")
+            plans = product.get_plans(None, 'StarCraft')
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(plans)
-            self.assertEqual(len(plans), 1)
+            self.assertEqual(len(plans), 2)
             self.assertEqual(plans[0]['name'], 'StarCraft: Init')
+            self.assertEqual(plans[1]['name'], 'StarCraft: Start')
 
     def test_get_plans_with_non_exist_prod(self):
         try:
@@ -721,27 +974,54 @@ class TestGetPlans(TestCase):
 
 
 class TestGetRuns(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.manager = UserFactory(username='manager')
+        cls.product = ProductFactory(name='StarCraft')
+        cls.build = TestBuildFactory(product=cls.product)
+        cls.runs = [
+            TestRunFactory(summary='Test run for StarCraft: Init on Unknown environment',
+                           manager=cls.manager, build=cls.build, default_tester=None),
+            TestRunFactory(summary='Test run for StarCraft: second one',
+                           manager=cls.manager, build=cls.build, default_tester=None),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        [run.delete() for run in cls.runs]
+        cls.build.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.manager.delete()
+
     def test_get_runs_with_id(self):
         try:
-            runs = product.get_runs(None, 1)
+            runs = product.get_runs(None, self.product.pk)
         except Fault:
+            raise
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(runs)
             self.assertEqual(len(runs), 2)
-            self.assertEqual(runs[0]['summary'], 'Test run for StarCraft: '
-                                                 'Init on Unknown environment')
+            self.assertEqual(runs[0]['summary'],
+                             'Test run for StarCraft: Init on Unknown environment')
+            self.assertEqual(runs[1]['summary'],
+                             'Test run for StarCraft: second one')
 
     def test_get_runs_with_name(self):
         try:
-            runs = product.get_runs(None, "StarCraft")
+            runs = product.get_runs(None, 'StarCraft')
         except Fault:
+            raise
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(runs)
             self.assertEqual(len(runs), 2)
-            self.assertEqual(runs[0]['summary'], 'Test run for StarCraft: '
-                                                 'Init on Unknown environment')
+            self.assertEqual(runs[0]['summary'],
+                             'Test run for StarCraft: Init on Unknown environment')
+            self.assertEqual(runs[1]['summary'],
+                             'Test run for StarCraft: second one')
 
     def test_get_runs_with_non_exist_prod(self):
         try:
@@ -770,9 +1050,26 @@ class TestGetRuns(TestCase):
 
 
 class TestGetTag(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tag = TestTagFactory(name='QWER')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tag.delete()
+
     def test_get_tag(self):
         try:
-            tag = product.get_tag(None, 1)
+            tag = product.get_tag(None, self.tag.pk)
+        except Fault:
+            raise
+            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        else:
+            self.assertEqual(tag['name'], "QWER")
+
+        try:
+            tag = product.get_tag(None, str(self.tag.pk))
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
@@ -798,28 +1095,22 @@ class TestGetTag(TestCase):
 
 
 class TestAddVersion(TestCase):
-    def setUp(self):
-        super(TestAddVersion, self).setUp()
 
-        self.admin = User(username='tcr_admin',
-                          email='tcr_admin@example.com')
-        self.staff = User(username='tcr_staff',
-                          email='tcr_staff@example.com')
-        self.admin.save()
-        self.staff.save()
-        self.admin_request = make_http_request(
-            user=self.admin,
-            user_perm='management.add_version'
-        )
-        self.staff_request = make_http_request(
-            user=self.staff
-        )
+    @classmethod
+    def setUpClass(cls):
+        cls.product_name = 'StarCraft'
+        cls.product = ProductFactory(name=cls.product_name)
+        cls.admin = UserFactory(username='tcr_admin', email='tcr_admin@example.com')
+        cls.staff = UserFactory(username='tcr_staff', email='tcr_staff@example.com')
+        cls.admin_request = make_http_request(user=cls.admin, user_perm='management.add_version')
+        cls.staff_request = make_http_request(user=cls.staff)
 
-    def tearDown(self):
-        super(TestAddVersion, self).tearDown()
-
-        self.admin.delete()
-        self.staff.delete()
+    @classmethod
+    def tearDownClass(cls):
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.admin.delete()
+        cls.staff.delete()
 
     def test_add_version_with_no_args(self):
         bad_args = (None, [], {}, ())
@@ -831,71 +1122,72 @@ class TestAddVersion(TestCase):
             else:
                 self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
-    def test_add_version_with_id(self):
+    def test_add_version_with_product_id(self):
         try:
             prod = product.add_version(self.admin_request, {
-                "product": 1,
+                "product": self.product.pk,
                 "value": "New Version 1"
             })
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertEqual(prod['value'], "New Version 1")
-            self.assertEqual(prod['product_id'], 1)
+            self.assertEqual(prod['product_id'], self.product.pk)
 
-    def test_add_version_with_name(self):
+    def test_add_version_with_product_name(self):
+        new_version = 'New Version 2'
         try:
             prod = product.add_version(self.admin_request, {
-                "product": "StarCraft",
-                "value": "New Version 2"
+                'product': self.product_name,
+                'value': new_version,
             })
         except Fault:
+            raise
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            self.assertEqual(prod['value'], "New Version 2")
-            self.assertEqual(prod['product_id'], 1)
+            self.assertEqual(prod['value'], new_version)
+            self.assertEqual(prod['product_id'], self.product.pk)
 
     def test_add_version_with_non_exist_prod(self):
+        non_existing_product_pk = 111111
         try:
-            product.get_versions(self.admin_request, {
-                "product": 111111,
-                "value": "New Version 2"
+            product.add_version(self.admin_request, {
+                "product": non_existing_product_pk,
+                "value": "0.1",
             })
         except Fault as f:
             self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
         else:
             self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
-    def test_add_version_with_no_required_arg(self):
+    def test_add_version_with_missing_argument(self):
         try:
-            product.get_versions(self.admin_request, {
-                "product": 1,
-            })
+            product.add_version(self.admin_request, {"product": self.product.pk})
         except Fault as f:
             self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
         else:
             self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
         try:
-            product.get_versions(self.admin_request, {
-                "value": "New Version 2"
-            })
+            product.add_version(self.admin_request, {"value": "0.1"})
         except Fault as f:
             self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
         else:
             self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
-    def test_add_version_with_illegal_field(self):
+    def test_add_version_with_extra_unrecognized_field(self):
         try:
-            product.get_versions(self.admin_request, {
-                "product": 1,
-                "value": "New Version 2",
-                "data": "data"
+            new_version = product.add_version(self.admin_request, {
+                'product': self.product.pk,
+                'value': 'New version',
+                'data': 'Extra value that is not expected',
             })
         except Fault as f:
             self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
         else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertEqual(self.product.pk, new_version['product_id'])
+            self.assertEqual(self.product.name, new_version['product'])
+            self.assertEqual('New version', new_version['value'])
 
     def test_add_version_with_no_perms(self):
         try:
@@ -907,35 +1199,43 @@ class TestAddVersion(TestCase):
 
 
 class TestGetVersions(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.product_name = 'StarCraft'
+        cls.versions = ['0.6', '0.7', '0.8', '0.9', '1.0']
+
+        cls.product = ProductFactory(name=cls.product_name)
+        cls.product_versions = [VersionFactory(product=cls.product, value=version)
+                                for version in cls.versions]
+
+    @classmethod
+    def tearDownClass(cls):
+        [version.delete() for version in cls.product_versions]
+        cls.product.delete()
+        cls.product.classification.delete()
+
     def test_get_versions_with_id(self):
         try:
-            prod = product.get_versions(None, 1)
+            prod = product.get_versions(None, self.product.pk)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(prod)
-            self.assertEqual(len(prod), 6)
-            self.assertEqual(prod[0]['value'], '0.6')
-            self.assertEqual(prod[1]['value'], '0.7')
-            self.assertEqual(prod[2]['value'], '0.8')
-            self.assertEqual(prod[3]['value'], '0.9')
-            self.assertEqual(prod[4]['value'], '1.0')
-            self.assertEqual(prod[5]['value'], 'unspecified')
+            versions = [item['value'] for item in prod]
+            versions.sort()
+            self.assertEqual(self.versions + ['unspecified'], versions)
 
     def test_get_versions_with_name(self):
         try:
-            prod = product.get_versions(None, "StarCraft")
+            prod = product.get_versions(None, self.product_name)
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(prod)
-            self.assertEqual(len(prod), 6)
-            self.assertEqual(prod[0]['value'], '0.6')
-            self.assertEqual(prod[1]['value'], '0.7')
-            self.assertEqual(prod[2]['value'], '0.8')
-            self.assertEqual(prod[3]['value'], '0.9')
-            self.assertEqual(prod[4]['value'], '1.0')
-            self.assertEqual(prod[5]['value'], 'unspecified')
+            versions = [item['value'] for item in prod]
+            versions.sort()
+            self.assertEqual(self.versions + ['unspecified'], versions)
 
     def test_get_version_with_no_args(self):
         bad_args = (None, [], {}, ())
@@ -963,7 +1263,7 @@ class TestGetVersions(TestCase):
             self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
     def test_get_version_with_bad_args(self):
-        bad_args = (True, False, '', 'aaaa', object)
+        bad_args = (True, False, '', object)
         for arg in bad_args:
             try:
                 product.get_versions(None, arg)

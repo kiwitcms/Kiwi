@@ -29,6 +29,8 @@ def get_tags(request, values):
     >>> values= {'ids': [121, 123]}
     >>> Tag.get_tags(values)
     """
+    if not isinstance(values, dict):
+        raise TypeError('Argument values must be an dictionary.')
     if values.get('ids'):
         query = {'id__in': values.get('ids')}
         return TestTag.to_xmlrpc(query)

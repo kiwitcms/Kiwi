@@ -3,71 +3,67 @@
 from xmlrpclib import Fault
 
 from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
 from django.test import TestCase
 
 import tcms.xmlrpc.api.user as XUser
 
 from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.xmlrpc.tests.utils import user_should_have_perm
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import GroupFactory
 
 
 class TestUserSerializer(TestCase):
     '''Test User.get_user_dict'''
 
     def setUp(self):
-        self.http_req = make_http_request()
+        self.user = UserFactory()
+        self.http_req = make_http_request(user=self.user)
 
     def test_ensure_password_not_returned(self):
-        test_user = self.http_req.user
-        data = XUser.get_user_dict(test_user)
-        self.assertEqual(data['username'], test_user.username)
-        self.assertEqual(data['email'], test_user.email)
-        self.assert_('password' not in data)
+        data = XUser.get_user_dict(self.user)
+        self.assertEqual(data['username'], self.user.username)
+        self.assertEqual(data['email'], self.user.email)
+        self.assertNotIn('password', data)
 
 
 class TestUserFilter(TestCase):
     '''Test User.filter'''
 
-    def setUp(self):
-        self.user1 = User.objects.create(username='user 1',
-                                         email='user1@exmaple.com',
-                                         is_active=True)
-        self.user2 = User.objects.create(username='user 2',
-                                         email='user2@example.com',
-                                         is_active=False)
-        self.user3 = User.objects.create(username='user 3',
-                                         email='user3@example.com',
-                                         is_active=True)
+    @classmethod
+    def setUpClass(cls):
+        cls.group_tester = GroupFactory(name='tester')
+        cls.group_reviewer = GroupFactory(name='reviewer')
 
-        self.group_tester = Group.objects.create(name='Tester')
-        self.group_reviewer = Group.objects.create(name='Reviewer')
+        cls.user1 = UserFactory(username='user 1', email='user1@exmaple.com', is_active=True,
+                                groups=[cls.group_tester])
+        cls.user2 = UserFactory(username='user 2', email='user2@example.com', is_active=False,
+                                groups=[cls.group_reviewer])
+        cls.user3 = UserFactory(username='user 3', email='user3@example.com', is_active=True,
+                                groups=[cls.group_reviewer])
 
-        self.user1.groups.add(self.group_tester)
-        self.user2.groups.add(self.group_reviewer)
-        self.user3.groups.add(self.group_reviewer)
+        cls.http_req = make_http_request()
 
-        self.http_req = make_http_request()
-
-    def tearDown(self):
-        self.user1.groups.clear()
-        self.user2.groups.clear()
-        self.user3.groups.clear()
-        self.group_tester.delete()
-        self.group_reviewer.delete()
-        self.user1.delete()
-        self.user2.delete()
-        self.user3.delete()
+    @classmethod
+    def tearDownClass(cls):
+        cls.user1.groups.clear()
+        cls.user2.groups.clear()
+        cls.user3.groups.clear()
+        cls.group_tester.delete()
+        cls.group_reviewer.delete()
+        cls.user1.delete()
+        cls.user2.delete()
+        cls.user3.delete()
 
     def test_normal_search(self):
         users = XUser.filter(self.http_req, {'email': 'user2@example.com'})
         self.assertEqual(len(users), 1)
-        for user in users:
-            self.assertEqual(user['id'], self.user2.pk)
-            self.assertEqual(user['username'], self.user2.username)
+        user = users[0]
+        self.assertEqual(user['id'], self.user2.pk)
+        self.assertEqual(user['username'], self.user2.username)
 
         users = XUser.filter(self.http_req, {
-            'username__startswith': 'user ',
+            'pk__in': [self.user1.pk, self.user2.pk, self.user3.pk],
             'is_active': True
         })
         self.assertEqual(len(users), 2)
@@ -117,30 +113,30 @@ class TestUserGetMe(TestCase):
 class TestUserJoin(TestCase):
     '''Test User.join'''
 
-    def setUp(self):
-        self.http_req = make_http_request(user_perm='auth.change_user')
-        self.username = 'test_username'
-        self.user = User.objects.create(username=self.username,
-                                        email='username@example.com')
-        self.group_name = 'test_group'
-        self.group = Group.objects.create(name=self.group_name)
+    @classmethod
+    def setUpClass(cls):
+        cls.http_req = make_http_request(user_perm='auth.change_user')
+        cls.username = 'test_username'
+        cls.user = UserFactory(username=cls.username, email='username@example.com')
+        cls.group_name = 'test_group'
+        cls.group = GroupFactory(name=cls.group_name)
 
-    def tearDown(self):
-        self.user.groups.clear()
-        self.group.delete()
-        self.user.delete()
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.groups.clear()
+        cls.group.delete()
+        cls.user.delete()
 
     def test_join_normally(self):
         XUser.join(self.http_req, self.username, self.group_name)
 
         user = User.objects.get(username=self.username)
         user_added_to_group = user.groups.filter(name=self.group_name).exists()
-        self.assert_(user_added_to_group, 'User should be added to group.')
+        self.assertTrue(user_added_to_group, 'User should be added to group.')
 
     def test_join_nonexistent_user(self):
         try:
-            XUser.join(self.http_req,
-                       'nonexistent user', 'whatever group name')
+            XUser.join(self.http_req, 'nonexistent user', 'whatever group name')
         except Fault as e:
             self.assertEqual(e.faultCode, 404)
 
@@ -154,18 +150,22 @@ class TestUserJoin(TestCase):
 class TestUserUpdate(TestCase):
     '''Test User.update'''
 
-    def setUp(self):
-        self.user = User.objects.create(username='bob',
-                                        email='bob@example.com')
-        self.user.set_password(self.user.username)
-        self.user.save()
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory(username='bob', email='bob@example.com')
+        cls.user.set_password(cls.user.username)
+        cls.user.save()
 
-        self.http_req = make_http_request()
-        self.user_new_attrs = {
+        cls.http_req = make_http_request(user=cls.user)
+        cls.user_new_attrs = {
             'first_name': 'new first name',
             'last_name': 'new last name',
             'email': 'new email',
         }
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
 
     def test_update_myself(self):
         data = XUser.update(self.http_req,

@@ -27,22 +27,26 @@ def parse_bool_value(value):
 def pre_check_product(values):
     if isinstance(values, dict):
         if not values.get('product'):
-            return
+            raise ValueError('No product name to know what product to get.')
         product_str = values['product']
     else:
         product_str = values
 
-    if not (isinstance(product_str, str) or isinstance(product_str, int)):
-        raise ValueError('The type of product is not recognizable.')
+    value_type = type(product_str)
 
-    try:
-        product_id = int(product_str)
-        return Product.objects.get(id=product_id)
-    except ValueError:
+    if value_type == str:
+        if not product_str:
+            raise ValueError('Got empty product name.')
         return Product.objects.get(name=product_str)
+    elif value_type == int:
+        return Product.objects.get(pk=product_str)
+    else:
+        raise ValueError('The type of product is not recognizable.')
 
 
 def pre_process_ids(value):
+    # FIXME: Add more type checks, e.g. value cannot be a boolean value.
+
     if isinstance(value, list):
         return [isinstance(c, int) and c or int(c.strip()) for c in value if c]
 
@@ -94,7 +98,7 @@ def _lookup_fields_in_model(cls, fields):
                 yield True
             else:
                 if getattr(field_info[0], 'related', None):
-                    cls = field_info[0].related.parent_model
+                    cls = field_info[0].related.model
         except FieldDoesNotExist:
             pass
 
@@ -110,8 +114,7 @@ def _need_distinct_m2m_rows(cls, fields):
     @return: whether use distinct or not
     @rtype: bool
     """
-    return next(_lookup_fields_in_model(cls, fields), False) \
-        if fields else False
+    return next(_lookup_fields_in_model(cls, fields), False) if fields else False
 
 
 def distinct_m2m_rows(cls, values, op_type):
@@ -218,6 +221,7 @@ class Comment(object):
 
 
 estimated_time_re = re.compile(r'^(\d+[d])?(\d+[h])?(\d+[m])?(\d+[s])?$')
+estimated_time_hms_re = re.compile(r'^(\d+):(\d+):(\d+)$')
 
 
 def pre_process_estimated_time(value):
@@ -226,19 +230,15 @@ def pre_process_estimated_time(value):
     support value - HH:MM:SS & xdxhxmxs
     return xdxhxmxs
     '''
-    if isinstance(value, str):
+    if isinstance(value, basestring):
         match = estimated_time_re.match(value.replace(' ', ''))
         if match:
             return value
         else:
-            # FIXME: missed validation to invalid value in HH:MM:SS format.
-            # for example: sfsdfs:sfwerwe:rerwerwe
-            raw_estimated_time = value.split(':')
-
-            if len(raw_estimated_time) == 3:
-                hours, minutes, seconds = raw_estimated_time
-                return '{0}h{1}m{2}s'.format(hours, minutes, seconds)
-            else:
+            match = estimated_time_hms_re.match(value)
+            if not match:
                 raise ValueError('Invaild estimated_time format.')
+            else:
+                return '{0}h{1}m{2}s'.format(*match.groups())
     else:
         raise ValueError('Invaild estimated_time format.')

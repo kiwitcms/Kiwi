@@ -9,20 +9,17 @@ def user_should_have_perm(user, perm):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
-            raise ValueError('%s is not valid. Should be in format '
-                             'app_label.perm_codename')
+            raise ValueError('%s is not valid. Should be in format app_label.perm_codename')
         else:
             if not app_label or not codename:
                 raise ValueError('Invalid app_label or codename')
             get_permission = Permission.objects.get
             user.user_permissions.add(
-                get_permission(content_type__app_label=app_label,
-                               codename=codename))
+                get_permission(content_type__app_label=app_label, codename=codename))
     elif isinstance(perm, Permission):
         user.user_permissions.add(perm)
     else:
-        raise TypeError(
-            'perm should be an instance of either basestring or Permission')
+        raise TypeError('perm should be an instance of either basestring or Permission')
 
 
 def remove_perm_from_user(user, perm):
@@ -31,20 +28,17 @@ def remove_perm_from_user(user, perm):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
-            raise ValueError('%s is not valid. Should be in format '
-                             'app_label.perm_codename')
+            raise ValueError('%s is not valid. Should be in format app_label.perm_codename')
         else:
             if not app_label or not codename:
                 raise ValueError('Invalid app_label or codename')
             get_permission = Permission.objects.get
             user.user_permissions.remove(
-                get_permission(content_type__app_label=app_label,
-                               codename=codename))
+                get_permission(content_type__app_label=app_label, codename=codename))
     elif isinstance(perm, Permission):
         user.user_permissions.remove(perm)
     else:
-        raise TypeError(
-            'perm should be an instance of either basestring or Permission')
+        raise TypeError('perm should be an instance of either basestring or Permission')
 
 
 class FakeHTTPRequest(object):

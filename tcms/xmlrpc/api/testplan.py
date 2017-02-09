@@ -798,26 +798,24 @@ def clean_xml_file(xml_file):
     xml_file = xml_file.replace('\n', '')
     xml_file = xml_file.replace('&testopia_', '&')
     xml_file = xml_file.encode("utf8")
-    try:
-        xml = XML2Dict()
-        xml_data = xml.fromstring(xml_file)
-        root_element = xml_data.get('testopia', None)
-        if root_element is None:
-            raise ValueError('Invalid XML document.')
-        if not root_element.get('version', None) != settings.TESTOPIA_XML_VERSION:
-            raise
-        case_elements = root_element.get('testcase', None)
-        if case_elements is not None:
-            if isinstance(case_elements, list):
-                return map(process_case, case_elements)
-            elif isinstance(case_elements, dict):
-                return map(process_case, (case_elements,))
-            else:
-                raise
+
+    xml = XML2Dict()
+    xml_data = xml.fromstring(xml_file)
+    root_element = xml_data.get('testopia', None)
+    if root_element is None:
+        raise ValueError('Invalid XML document.')
+    if not root_element.get('version', None) != settings.TESTOPIA_XML_VERSION:
+        raise
+    case_elements = root_element.get('testcase', None)
+    if case_elements is not None:
+        if isinstance(case_elements, list):
+            return map(process_case, case_elements)
+        elif isinstance(case_elements, dict):
+            return map(process_case, (case_elements,))
         else:
             raise
-    except Exception:
-        raise
+    else:
+        raise ValueError('No case found in XML document.')
 
 
 def process_case(case):
@@ -826,56 +824,43 @@ def process_case(case):
     from tcms.testcases.models import TestCaseStatus
 
     # Check author
-    element = 'author'
-    if case.get(element, {}).get('value'):
-        try:
-            author = User.objects.get(email=case[element]['value'])
-            author_id = author.id
-        except User.DoesNotExist:
-            raise
+    author = case.get('author', {}).get('value')
+    if author:
+        author = User.objects.get(email=author)
+        author_id = author.id
     else:
-        raise
+        raise ValueError('Invalid author: "{0}"'.format(author))
 
     # Check default tester
-    element = 'defaulttester'
-    if case.get(element, {}).get('value'):
-        try:
-            default_tester = User.objects.get(email=case[element]['value'])
-            default_tester_id = default_tester.id
-        except User.DoesNotExist:
-            raise
+    default_tester_email = case.get('defaulttester', {}).get('value')
+    if default_tester_email:
+        default_tester = User.objects.get(email=default_tester_email)
+        default_tester_id = default_tester.id
     else:
         default_tester_id = None
 
     # Check priority
-    element = 'priority'
-    if case.get(element, {}).get('value'):
-        try:
-            priority = Priority.objects.get(value=case[element]['value'])
-            priority_id = priority.id
-        except Priority.DoesNotExist:
-            raise
+    priority = case.get('priority', {}).get('value')
+    if priority:
+        priority = Priority.objects.get(value=priority)
+        priority_id = priority.id
     else:
-        raise
+        raise ValueError('Invalid priority value: "{0}"'.format(priority))
 
     # Check automated status
-    element = 'automated'
-    if case.get(element, {}).get('value'):
-        is_automated = case[element]['value'] == 'Automatic' and True or False
+    automated = case.get('automated', {}).get('value')
+    if automated:
+        is_automated = automated == 'Automatic' and True or False
     else:
         is_automated = False
 
     # Check status
-    element = 'status'
-    if case.get(element, {}).get('value'):
-        try:
-            case_status = TestCaseStatus.objects.get(
-                name=case[element]['value'])
-            case_status_id = case_status.id
-        except TestCaseStatus.DoesNotExist:
-            raise
+    status = case.get('status', {}).get('value')
+    if status:
+        case_status = TestCaseStatus.objects.get(name=status)
+        case_status_id = case_status.id
     else:
-        raise
+        raise ValueError('Invalid status: "{0}"'.format(status))
 
     # Check category
     # *** Ugly code here ***
@@ -883,25 +868,21 @@ def process_case(case):
     # But unfortunate it did not defined product in the XML file.
     # So we have to define the category_name at the moment then get the product from the plan.
     # If we did not found the category of the product we will create one.
-    element = 'categoryname'
-    if case.get(element, {}).get('value'):
-        category_name = case[element]['value']
-    else:
-        raise
+    category_name = case.get('categoryname', {}).get('value')
+    if not category_name:
+        raise ValueError('Invalid category name: "{0}"'.format(category_name))
 
     # Check or create the tag
     element = 'tag'
     if case.get(element, {}):
         tags = []
         if isinstance(case[element], dict):
-            tag, create = TestTag.objects.get_or_create(
-                name=case[element]['value'])
+            tag, create = TestTag.objects.get_or_create(name=case[element]['value'])
             tags.append(tag)
 
         if isinstance(case[element], list):
             for tag_name in case[element]:
-                tag, create = TestTag.objects.get_or_create(
-                    name=tag_name['value'])
+                tag, create = TestTag.objects.get_or_create(name=tag_name['value'])
                 tags.append(tag)
     else:
         tags = None

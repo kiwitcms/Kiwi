@@ -4,35 +4,38 @@ import unittest
 
 from xmlrpclib import Fault
 
+from django import test
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from django_nose.testcases import FastFixtureTestCase
-
 from tcms.core.contrib.xml2dict.xml2dict import XML2Dict
-from tcms.management.models import Component
 from tcms.management.models import Priority
-from tcms.management.models import Product
 from tcms.management.models import TestTag
-from tcms.management.models import Version
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans.models import TestPlan
-from tcms.testplans.models import TestPlanComponent
-from tcms.testplans.models import TestPlanTag
-from tcms.testplans.models import TestPlanType
 from tcms.xmlrpc.api import testplan as XmlrpcTestPlan
 from tcms.xmlrpc.api.testplan import clean_xml_file
 from tcms.xmlrpc.api.testplan import process_case
 from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.xmlrpc.tests.utils import user_should_have_perm
 
+from tcms.tests.factories import ComponentFactory
+from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import TestPlanTypeFactory
+from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import VersionFactory
+
 __all__ = (
     'TestAddComponent',
     'TestAddTag',
     'TestCleanXMLFile',
     'TestComponentMethods',
+    'TestFilter',
     'TestGetAllCasesTags',
     'TestGetProduct',
     'TestGetTestCases',
@@ -41,55 +44,114 @@ __all__ = (
     'TestImportCaseViaXML',
     'TestPlanTypeMethods',
     'TestRemoveTag',
-    'TestTestPlan',
     'TestUpdate',
 )
 
 
-class TestAddTag(FastFixtureTestCase):
+class TestFilter(test.TestCase):
 
-    fixtures = ['unittest.json']
+    @classmethod
+    def setUpClass(cls):
+        super(TestFilter, cls).setUpClass()
+        cls.product = ProductFactory()
+        cls.version = VersionFactory(product=cls.product)
+        cls.tester = UserFactory()
+        cls.plan_type = TestPlanTypeFactory(name='manual smoking')
+        cls.plan_1 = TestPlanFactory(product_version=cls.version,
+                                     product=cls.product,
+                                     author=cls.tester,
+                                     type=cls.plan_type)
+        cls.plan_2 = TestPlanFactory(product_version=cls.version,
+                                     product=cls.product,
+                                     author=cls.tester,
+                                     type=cls.plan_type)
+        cls.case_1 = TestCaseFactory(author=cls.tester,
+                                     default_tester=None,
+                                     reviewer=cls.tester,
+                                     plan=[cls.plan_1])
+        cls.case_2 = TestCaseFactory(author=cls.tester,
+                                     default_tester=None,
+                                     reviewer=cls.tester,
+                                     plan=[cls.plan_1])
 
-    def setUp(self):
-        self.http_req = make_http_request()
-        user_should_have_perm(self.http_req.user, 'testplans.add_testplantag')
+    @classmethod
+    def tearDownClass(cls):
+        cls.plan_1.case.clear()
+        cls.plan_2.case.clear()
+        cls.case_1.delete()
+        cls.case_2.delete()
+        cls.plan_1.delete()
+        cls.plan_2.delete()
+        cls.plan_type.delete()
+        cls.tester.delete()
+        cls.version.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
 
-        self.plans = TestPlan.objects.all()[:2]
-        self.tag1 = TestTag.objects.create(name='xmlrpc_test_tag_1')
-        self.tag2 = TestTag.objects.create(name='xmlrpc_test_tag_2')
-        self.tag_name = 'xmlrpc_tag_name_1'
+    def test_filter_plans(self):
+        plans = XmlrpcTestPlan.filter(None, {'pk__in': [self.plan_1.pk, self.plan_2.pk]})
+        plan = plans[0]
+        self.assertEqual(self.plan_1.name, plan['name'])
+        self.assertEqual(self.plan_1.product_version.pk, plan['product_version_id'])
+        self.assertEqual(self.plan_1.author.pk, plan['author_id'])
 
-    def tearDown(self):
-        tags = [self.tag1.pk, self.tag2.pk]
-        for plan in self.plans:
-            TestPlanTag.objects.filter(plan=plan, tag__in=tags).delete()
-        self.tag1.delete()
-        self.tag2.delete()
+        self.assertEqual(2, len(plan['case']))
+        self.assertEqual([self.case_1.pk, self.case_2.pk], plan['case'])
+        self.assertEqual(0, len(plans[1]['case']))
+
+    def test_filter_out_all_plans(self):
+        plans_total = TestPlan.objects.all().count()
+        self.assertEqual(plans_total, len(XmlrpcTestPlan.filter(None)))
+        self.assertEqual(plans_total, len(XmlrpcTestPlan.filter(None, {})))
+
+
+class TestAddTag(test.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user)
+        user_should_have_perm(cls.http_req.user, 'testplans.add_testplantag')
+
+        cls.product = ProductFactory()
+        cls.plans = [
+            TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product),
+            TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product),
+        ]
+
+        cls.tag1 = TestTagFactory(name='xmlrpc_test_tag_1')
+        cls.tag2 = TestTagFactory(name='xmlrpc_test_tag_2')
+        cls.tag_name = 'xmlrpc_tag_name_1'
+
+    @classmethod
+    def tearDownClass(cls):
+        for plan in cls.plans:
+            plan.tag.clear()
+            plan.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.tag1.delete()
+        cls.tag2.delete()
+        cls.user.delete()
 
     def test_single_id(self):
         '''Test with singal plan id and tag id'''
         try:
-            XmlrpcTestPlan.add_tag(self.http_req,
-                                   self.plans[0].pk, self.tag1.pk)
+            XmlrpcTestPlan.add_tag(self.http_req, self.plans[0].pk, self.tag1.pk)
         except Fault as e:
             self.assertEqual(e.faultCode, 500)
         else:
             self.fail('Argument tags accepts values of string and array ' +
                       'only. Passing a number should cause it fail.')
 
-        XmlrpcTestPlan.add_tag(self.http_req,
-                               self.plans[0].pk, self.tag1.name)
-        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk,
-                                             tag__pk=self.tag1.pk).exists()
+        XmlrpcTestPlan.add_tag(self.http_req, self.plans[0].pk, self.tag1.name)
+        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag1.pk).exists()
         self.assert_(tag_exists)
 
     def test_array_argument(self):
-        XmlrpcTestPlan.add_tag(self.http_req,
-                               self.plans[0].pk,
-                               [self.tag2.name, self.tag_name])
-        tag_exists = TestPlan.objects.filter(
-            pk=self.plans[0].pk,
-            tag__name__in=[self.tag2.name, self.tag_name])
+        XmlrpcTestPlan.add_tag(self.http_req, self.plans[0].pk, [self.tag2.name, self.tag_name])
+        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk,
+                                             tag__name__in=[self.tag2.name, self.tag_name])
         self.assert_(tag_exists.exists())
 
         plans_ids = [plan.pk for plan in self.plans]
@@ -100,40 +162,47 @@ class TestAddTag(FastFixtureTestCase):
             self.assert_(tag_exists)
 
 
-class TestAddComponent(FastFixtureTestCase):
+class TestAddComponent(test.TestCase):
 
-    fixtures = ['unittest.json']
-
-    def setUp(self):
-        self.http_req = make_http_request()
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user)
         perm_name = 'testplans.add_testplancomponent'
-        user_should_have_perm(self.http_req.user, perm_name)
+        user_should_have_perm(cls.http_req.user, perm_name)
 
-        self.product = Product.objects.all()[0]
-        self.plans = TestPlan.objects.all()[:2]
-        self.component1 = Component.objects.create(
-            name='xmlrpc test component 1',
-            description='xmlrpc test description',
-            product=self.product)
-        self.component2 = Component.objects.create(
-            name='xmlrpc test component 2',
-            description='xmlrpc test description',
-            product=self.product)
+        cls.product = ProductFactory()
+        cls.plans = [
+            TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product),
+            TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product),
+        ]
+        cls.component1 = ComponentFactory(name='xmlrpc test component 1',
+                                          description='xmlrpc test description',
+                                          product=cls.product,
+                                          initial_owner=None,
+                                          initial_qa_contact=None)
+        cls.component2 = ComponentFactory(name='xmlrpc test component 2',
+                                          description='xmlrpc test description',
+                                          product=cls.product,
+                                          initial_owner=None,
+                                          initial_qa_contact=None)
 
-    def tearDown(self):
-        components = [self.component1.pk, self.component2.pk]
-        for plan in self.plans:
-            TestPlanComponent.objects.filter(plan=plan,
-                                             component__in=components).delete()
-        self.component1.delete()
-        self.component2.delete()
+    @classmethod
+    def tearDownClass(cls):
+        cls.component1.delete()
+        cls.component2.delete()
+        for plan in cls.plans:
+            plan.component.clear()
+            plan.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.user.delete()
 
     def test_single_id(self):
-        XmlrpcTestPlan.add_component(self.http_req,
-                                     self.plans[0].pk, self.component1.pk)
+        XmlrpcTestPlan.add_component(self.http_req, self.plans[0].pk, self.component1.pk)
         component_exists = TestPlan.objects.filter(
             pk=self.plans[0].pk, component__pk=self.component1.pk).exists()
-        self.assert_(component_exists)
+        self.assertTrue(component_exists)
 
     def test_ids_in_array(self):
         try:
@@ -146,19 +215,20 @@ class TestAddComponent(FastFixtureTestCase):
         XmlrpcTestPlan.add_component(self.http_req, plans_ids, components_ids)
         for plan in TestPlan.objects.filter(pk__in=plans_ids):
             components_ids = [item.pk for item in plan.component.iterator()]
-            self.assert_(self.component1.pk in components_ids)
-            self.assert_(self.component2.pk in components_ids)
+            self.assertTrue(self.component1.pk in components_ids)
+            self.assertTrue(self.component2.pk in components_ids)
 
 
-class TestPlanTypeMethods(unittest.TestCase):
+class TestPlanTypeMethods(test.TestCase):
 
-    def setUp(self):
-        self.http_req = make_http_request()
-        self.plan_type = TestPlanType.objects.create(name='xmlrpc plan type',
-                                                     description='')
+    @classmethod
+    def setUpClass(cls):
+        cls.http_req = make_http_request()
+        cls.plan_type = TestPlanTypeFactory(name='xmlrpc plan type', description='')
 
-    def tearDown(self):
-        self.plan_type.delete()
+    @classmethod
+    def tearDownClass(cls):
+        cls.plan_type.delete()
 
     def test_check_plan_type(self):
         try:
@@ -166,8 +236,7 @@ class TestPlanTypeMethods(unittest.TestCase):
         except Fault as e:
             self.assertEqual(e.faultCode, 400)
 
-        result = XmlrpcTestPlan.check_plan_type(self.http_req,
-                                                self.plan_type.name)
+        result = XmlrpcTestPlan.check_plan_type(self.http_req, self.plan_type.name)
         self.assertEqual(self.plan_type.name, result['name'])
         self.assertEqual(self.plan_type.description, result['description'])
         self.assertEqual(self.plan_type.pk, result['id'])
@@ -189,36 +258,37 @@ class TestPlanTypeMethods(unittest.TestCase):
             self.assertEqual(404, e.faultCode)
 
 
-class TestGetProduct(FastFixtureTestCase):
+class TestGetProduct(test.TestCase):
 
-    fixtures = ['unittest.json']
+    @classmethod
+    def setUpClass(cls):
+        cls.http_req = make_http_request()
+        cls.user = UserFactory()
+        cls.product = ProductFactory()
+        cls.plan = TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product)
 
-    def setUp(self):
-        self.http_req = make_http_request()
-        self.plan = TestPlan.objects.all()[:1][0]
+    @classmethod
+    def tearDownClass(cls):
+        cls.plan.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.user.delete()
 
     def _verify_serialize_result(self, result):
         self.assertEqual(self.plan.product.name, result['name'])
         self.assertEqual(self.plan.product.description, result['description'])
         self.assertEqual(self.plan.product.disallow_new, result['disallow_new'])
-        self.assertEqual(self.plan.product.vote_super_user,
-                         result['vote_super_user'])
-        self.assertEqual(self.plan.product.max_vote_super_bug,
-                         result['max_vote_super_bug'])
-        self.assertEqual(self.plan.product.votes_to_confirm,
-                         result['votes_to_confirm'])
-        self.assertEqual(self.plan.product.default_milestone,
-                         result['default_milestone'])
-        self.assertEqual(self.plan.product.classification.pk,
-                         result['classification_id'])
-        self.assertEqual(self.plan.product.classification.name,
-                         result['classification'])
+        self.assertEqual(self.plan.product.vote_super_user, result['vote_super_user'])
+        self.assertEqual(self.plan.product.max_vote_super_bug, result['max_vote_super_bug'])
+        self.assertEqual(self.plan.product.votes_to_confirm, result['votes_to_confirm'])
+        self.assertEqual(self.plan.product.default_milestone, result['default_milestone'])
+        self.assertEqual(self.plan.product.classification.pk, result['classification_id'])
+        self.assertEqual(self.plan.product.classification.name, result['classification'])
 
     def test_get_product(self):
         try:
             XmlrpcTestPlan.get_product(self.http_req, 0)
-            self.fail('Passing 0 should cause 404 error due to it does not ' +
-                      'exist.')
+            self.fail('Passing 0 should cause 404 error due to it does not exist.')
         except Fault as e:
             self.assertEqual(404, e.faultCode)
 
@@ -234,61 +304,58 @@ class TestGetProduct(FastFixtureTestCase):
             self.assertEqual(400, e.faultCode)
 
 
-class TestComponentMethods(FastFixtureTestCase):
-    '''TODO: '''
-
-    fixtures = ['unittest.json']
-
-    def setUp(self):
-        self.http_req = make_http_request()
-
-    def tearDown(self):
-        pass
-
-
-class TestGetAllCasesTags(FastFixtureTestCase):
+@unittest.skip('TODO: test case is not implemented yet.')
+class TestComponentMethods(test.TestCase):
     '''TODO: '''
 
 
-class TestGetTestCases(FastFixtureTestCase):
+@unittest.skip('TODO: test case is not implemented yet.')
+class TestGetAllCasesTags(test.TestCase):
+    '''TODO: '''
+
+
+class TestGetTestCases(test.TestCase):
     '''Test testplan.get_test_cases method'''
 
-    fixtures = ['unittest.json']
+    @classmethod
+    def setUpClass(cls):
+        cls.http_req = make_http_request()
 
-    def setUp(self):
-        self.http_req = make_http_request()
-        self.plan = TestPlan.objects.all()[:1][0]
+        cls.tester = UserFactory(username='tester')
+        cls.reviewer = UserFactory(username='reviewer')
+        cls.product = ProductFactory()
+        cls.plan = TestPlanFactory(author=cls.tester, owner=cls.tester, product=cls.product)
+        cls.cases = [
+            TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.reviewer,
+                            plan=[cls.plan]),
+            TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.reviewer,
+                            plan=[cls.plan]),
+            TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.reviewer,
+                            plan=[cls.plan]),
+        ]
+        cls.another_plan = TestPlanFactory(author=cls.tester, owner=cls.tester, product=cls.product)
 
-        self.product = Product.objects.all()[:1][0]
-        self.version = Version.objects.create(value='testing',
-                                              product=self.product)
-        self.plan_type = TestPlanType.objects.all()[:1][0]
-        self.new_plan = TestPlan.objects.create(
-            name='new test plan',
-            product_version=self.version,
-            owner=self.http_req.user,
-            author=self.http_req.user,
-            product=self.product,
-            type=self.plan_type,
-            parent=None)
-
-    def tearDown(self):
-        self.new_plan.delete()
-        self.version.delete()
+    @classmethod
+    def tearDownClass(cls):
+        for case in cls.cases:
+            case.plan.clear()
+            case.delete()
+        cls.plan.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.reviewer.delete()
+        cls.tester.delete()
 
     def test_get_test_cases(self):
-        serialized_cases = XmlrpcTestPlan.get_test_cases(self.http_req,
-                                                         self.plan.pk)
+        serialized_cases = XmlrpcTestPlan.get_test_cases(self.http_req, self.plan.pk)
         for case in serialized_cases:
-            expected_case = TestCase.objects.filter(
-                plan=self.plan.pk).get(pk=case['case_id'])
+            expected_case = TestCase.objects.filter(plan=self.plan.pk).get(pk=case['case_id'])
 
             self.assertEqual(expected_case.summary, case['summary'])
             self.assertEqual(expected_case.priority_id, case['priority_id'])
             self.assertEqual(expected_case.author_id, case['author_id'])
 
-            plan_case_rel = TestCasePlan.objects.get(plan=self.plan,
-                                                     case=case['case_id'])
+            plan_case_rel = TestCasePlan.objects.get(plan=self.plan, case=case['case_id'])
             self.assertEqual(plan_case_rel.sortkey, case['sortkey'])
 
     def test_different_argument_type(self):
@@ -310,27 +377,32 @@ class TestGetTestCases(FastFixtureTestCase):
             self.assertEqual(404, e.faultCode)
 
     def test_plan_has_no_cases(self):
-        result = XmlrpcTestPlan.get_test_cases(self.http_req, self.new_plan.pk)
+        result = XmlrpcTestPlan.get_test_cases(self.http_req, self.another_plan.pk)
         self.assertEqual([], result)
 
 
-class TestGetTestRuns(FastFixtureTestCase):
+@unittest.skip('TODO: test case is not implemented yet.')
+class TestGetTestRuns(test.TestCase):
     '''TODO: '''
 
 
-class TestGetText(FastFixtureTestCase):
+@unittest.skip('TODO: test case is not implemented yet.')
+class TestGetText(test.TestCase):
     '''TODO: '''
 
 
-class TestRemoveTag(FastFixtureTestCase):
+@unittest.skip('TODO: test case is not implemented yet.')
+class TestRemoveTag(test.TestCase):
     '''TODO: '''
 
 
-class TestImportCaseViaXML(FastFixtureTestCase):
+@unittest.skip('TODO: test case is not implemented yet.')
+class TestImportCaseViaXML(test.TestCase):
     '''TODO: '''
 
 
-class TestUpdate(FastFixtureTestCase):
+@unittest.skip('TODO: test case is not implemented yet.')
+class TestUpdate(test.TestCase):
     '''TODO: '''
 
 
@@ -477,31 +549,23 @@ xml_file_in_malformat = u'''
 <nitrate version="1.1"></nitrate>'''
 
 
-class TestProcessCase(unittest.TestCase):
+class TestProcessCase(test.TestCase):
     '''Test process_case'''
 
-    def setUp(self):
-        self.xml2dict = XML2Dict()
-        self.user = User.objects.create(username='xml user',
-                                        email='user@example.com')
-        result = Priority.objects.get_or_create(value='P1')
-        self.priority_p1, self.priority_p1_created = result
-        result = TestCaseStatus.objects.get_or_create(name='CONFIRMED')
-        self.status_confirmed, self.status_confirmed_created = result
-        result = TestCaseStatus.objects.get_or_create(name='PROPOSED')
-        self.status_proposed, self.status_proposed_created = result
+    @classmethod
+    def setUpClass(cls):
+        cls.xml2dict = XML2Dict()
+        cls.user = UserFactory(username='xml user', email='user@example.com')
+        cls.priority_p1, created = Priority.objects.get_or_create(value='P1')
+        cls.status_confirmed, created = TestCaseStatus.objects.get_or_create(name='CONFIRMED')
+        cls.status_proposed, created = TestCaseStatus.objects.get_or_create(name='PROPOSED')
 
-    def tearDown(self):
-        self.user.delete()
-        if self.priority_p1_created:
-            self.priority_p1.delete()
-        if self.status_confirmed_created:
-            self.status_confirmed.delete()
-        if self.status_proposed_created:
-            self.status_proposed.delete()
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
 
     def _format_xml_case_string(self, case_data):
-        '''Helper method to format case XML conveniently'''
+        """Helper method to format case XML conveniently"""
         data = case_data.copy()
         data['tags'] = ''.join(
             '<tag>{0}</tag>'.format(tag) for tag in data['tag'])
@@ -587,30 +651,25 @@ class TestProcessCase(unittest.TestCase):
         self.assertRaises(ValueError, process_case, xmldict['testcase'])
 
 
-class TestCleanXMLFile(unittest.TestCase):
+class TestCleanXMLFile(test.TestCase):
     '''Test for testplan.clean_xml_file'''
 
-    def setUp(self):
-        self.user = User.objects.create(username='xml user',
-                                        email='user@example.com')
-        result = Priority.objects.get_or_create(value='P1')
-        self.priority, self.priority_created = result
-        result = TestCaseStatus.objects.get_or_create(name='CONFIRMED')
-        self.status_confirmed, self.status_confirmed_created = result
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory(username='xml user', email='user@example.com')
+        cls.priority = Priority.objects.get(value='P1')
+        cls.status_confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
 
-        self.original_xml_version = None
+        cls.original_xml_version = None
         if hasattr(settings, 'TESTOPIA_XML_VERSION'):
-            self.original_xml_version = settings.TESTOPIA_XML_VERSION
+            cls.original_xml_version = settings.TESTOPIA_XML_VERSION
         settings.TESTOPIA_XML_VERSION = 1.1
 
-    def tearDown(self):
-        self.user.delete()
-        if self.priority_created:
-            self.priority.delete()
-        if self.status_confirmed_created:
-            self.status_confirmed.delete()
-        if self.original_xml_version is not None:
-            settings.TESTOPIA_XML_VERSION = self.original_xml_version
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
+        if cls.original_xml_version is not None:
+            settings.TESTOPIA_XML_VERSION = cls.original_xml_version
 
     def test_clean_xml_file(self):
         result = clean_xml_file(xml_file_without_error)
@@ -631,71 +690,3 @@ class TestCleanXMLFile(unittest.TestCase):
 
 
 # ################ End of testing testplan.import_case_via_XML #############
-
-
-class TestTestPlan(FastFixtureTestCase):
-    '''Test serialization'''
-
-    fixtures = ['unittest.json']
-
-    test_fields = (
-        'plan_id',
-        'name',
-        'create_date',
-        'is_active',
-        'extra_link',
-        'default_product_version',
-
-        # foreign keys
-        'product_version', 'product_version_id',
-        'owner', 'owner_id',
-        'author', 'author_id',
-        'product', 'product_id',
-        'type', 'type_id',
-        'parent', 'parent_id',
-
-        # m2m fields
-        'attachment',
-        'case',
-        'component',
-        'env_group',
-        'tag',
-    )
-
-    def setUp(self):
-        self.plan_pks = [plan.pk for plan in TestPlan.objects.all()[:2]]
-
-    def test_to_xmlrpc(self):
-        result = TestPlan.to_xmlrpc(query={'pk__in': self.plan_pks})
-        self.assertEqual(len(result), 2)
-
-        # Verify fields
-        sample_testplan = result[0]
-        sample_fields = set(name for name in sample_testplan.keys())
-        test_fields = set(self.test_fields)
-        test_result = list(sample_fields ^ test_fields)
-        self.assertEqual(test_result, [])
-
-        result = dict([(item['plan_id'], item) for item in result])
-
-        plan = result[self.plan_pks[0]]
-        sample_plan = TestPlan.objects.get(pk=self.plan_pks[0])
-
-        self.assertEqual(plan['name'], sample_plan.name)
-        self.assertEqual(plan['is_active'], sample_plan.is_active)
-        self.assertEqual(plan['product_version_id'],
-                         sample_plan.product_version_id)
-
-        components = plan['component']
-        components.sort()
-        sample_components = [item.pk for item in sample_plan.component.all()]
-        sample_components.sort()
-        self.assertEqual(components, sample_components)
-
-        plan = result[self.plan_pks[1]]
-        sample_plan = TestPlan.objects.get(pk=self.plan_pks[1])
-
-        self.assertEqual(plan['name'], sample_plan.name)
-        self.assertEqual(plan['is_active'], sample_plan.is_active)
-        self.assertEqual(plan['product_version_id'],
-                         sample_plan.product_version_id)

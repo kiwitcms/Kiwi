@@ -22,7 +22,7 @@ __xmlrpc_namespace__ = 'User'
 def get_user_dict(user):
     u = XMLRPCSerializer(model=user)
     u = u.serialize_model()
-    if u.get('password'):
+    if 'password' in u:
         del u['password']
     return u
 

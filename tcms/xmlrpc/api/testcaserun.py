@@ -81,6 +81,7 @@ def add_comment(request, case_run_ids, comment):
     """
     from tcms.xmlrpc.utils import Comment
 
+    # FIXME: empty object_pks should be an ValueError
     object_pks = pre_process_ids(value=case_run_ids)
     c = Comment(
         request=request,
@@ -200,6 +201,11 @@ def create(request, values):
     from tcms.testruns.forms import XMLRPCNewCaseRunForm
 
     form = XMLRPCNewCaseRunForm(values)
+
+    if not isinstance(values, dict):
+        raise TypeError('Argument values must be in dict type.')
+    if not values:
+        raise ValueError('Argument values is empty.')
 
     if form.is_valid():
         tr = form.cleaned_data['run']
@@ -599,13 +605,8 @@ def attach_log(request, case_run_id, name, url):
                 $name       - String: A short description to this new link, and accept 64 characters at most.
                 $url        - String: The actual URL.
     """
-    try:
-        test_case_run = TestCaseRun.objects.get(pk=case_run_id)
-    except ObjectDoesNotExist:
-        raise
-
+    test_case_run = TestCaseRun.objects.get(pk=case_run_id)
     create_link(name=name, url=url, link_to=test_case_run)
-    return
 
 
 @log_call(namespace=__xmlrpc_namespace__)

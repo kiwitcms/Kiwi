@@ -31,8 +31,25 @@ class UserFactory(DjangoModelFactory):
     username = factory.Sequence(lambda n: 'User %d' % n)
     email = factory.LazyAttribute(lambda user: '%s@example.com' % user.username)
 
+    @factory.post_generation
+    def groups(self, create, extracted, **kwargs):
+        if not create:
+            return
+        if extracted:
+            for group in extracted:
+                self.groups.add(group)
+
+
+class GroupFactory(DjangoModelFactory):
+
+    class Meta:
+        model = 'auth.Group'
+
+    name = factory.Sequence(lambda n: 'Group %d' % n)
+
 
 # ### Factories for app management ###
+
 
 class ClassificationFactory(DjangoModelFactory):
 

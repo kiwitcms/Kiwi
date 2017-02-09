@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+
 from xmlrpclib import Fault
 
-from django_nose.testcases import FastFixtureTestCase
-
+from django import test
 from tcms.xmlrpc.api import tag
+from tcms.tests.factories import TestTagFactory
 
 
 class AssertMessage(object):
@@ -26,8 +27,21 @@ class AssertMessage(object):
     UNEXCEPT_ERROR = "Unexcept error occurs."
 
 
-class TestTag(FastFixtureTestCase):
-    fixtures = ['unittest.json']
+class TestTag(test.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tag_db = TestTagFactory(name='db')
+        cls.tag_fedora = TestTagFactory(name='fedora')
+        cls.tag_python = TestTagFactory(name='python')
+        cls.tag_tests = TestTagFactory(name='tests')
+        cls.tag_xmlrpc = TestTagFactory(name='xmlrpc')
+        cls.tags = [cls.tag_db, cls.tag_fedora, cls.tag_python, cls.tag_tests, cls.tag_xmlrpc]
+
+    @classmethod
+    def tearDownClass(cls):
+        for t in cls.tags:
+            t.delete()
 
     def test_get_tags_with_no_args(self):
         bad_args = (None, [], {}, ())
@@ -49,68 +63,45 @@ class TestTag(FastFixtureTestCase):
             else:
                 self.fail(AssertMessage.NOT_VALIDATE_ARGS)
 
-    def test_get_tags_with_id(self):
+    def test_get_tags_with_ids(self):
         try:
-            test_tag = tag.get_tags(None, {
-                'ids': [1]
-            })
+            test_tag = tag.get_tags(None, {'ids': [self.tag_python.pk,
+                                                   self.tag_db.pk,
+                                                   self.tag_fedora.pk]})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
-            print test_tag
             self.assertIsNotNone(test_tag)
-            self.assertEqual(len(test_tag), 1)
-            self.assertEqual(test_tag[0]['id'], 1)
-            self.assertEqual(test_tag[0]['name'], 'QWER')
+            self.assertEqual(3, len(test_tag))
 
-        try:
-            test_tag = tag.get_tags(None, {
-                'ids': [4, 5, 6]
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(test_tag)
-            self.assertEqual(len(test_tag), 3)
-            self.assertEqual(test_tag[0]['id'], 4)
-            self.assertEqual(test_tag[0]['name'], 'P')
-            self.assertEqual(test_tag[1]['id'], 5)
-            self.assertEqual(test_tag[1]['name'], 'Z')
-            self.assertEqual(test_tag[2]['id'], 6)
-            self.assertEqual(test_tag[2]['name'], 'VS')
+            test_tag = sorted(test_tag, key=lambda item: item['id'])
+            self.assertEqual(test_tag[0]['id'], self.tag_db.pk)
+            self.assertEqual(test_tag[0]['name'], 'db')
+            self.assertEqual(test_tag[1]['id'], self.tag_fedora.pk)
+            self.assertEqual(test_tag[1]['name'], 'fedora')
+            self.assertEqual(test_tag[2]['id'], self.tag_python.pk)
+            self.assertEqual(test_tag[2]['name'], 'python')
 
-    def test_get_tags_with_name(self):
+    def test_get_tags_with_names(self):
         try:
-            test_tag = tag.get_tags(None, {
-                'names': ['QWER']
-            })
+            test_tag = tag.get_tags(None, {'names': ['python', 'fedora', 'db']})
         except Fault:
             self.fail(AssertMessage.UNEXCEPT_ERROR)
         else:
             self.assertIsNotNone(test_tag)
-            self.assertEqual(test_tag[0]['id'], 1)
-            self.assertEqual(test_tag[0]['name'], 'QWER')
+            self.assertEqual(3, len(test_tag))
 
-        try:
-            test_tag = tag.get_tags(None, {
-                'names': ['R1', 'R2', 'R3']
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(test_tag)
-            self.assertEqual(test_tag[0]['id'], 11)
-            self.assertEqual(test_tag[0]['name'], 'R1')
-            self.assertEqual(test_tag[1]['id'], 12)
-            self.assertEqual(test_tag[1]['name'], 'R2')
-            self.assertEqual(test_tag[2]['id'], 13)
-            self.assertEqual(test_tag[2]['name'], 'R3')
+            test_tag = sorted(test_tag, key=lambda item: item['id'])
+            self.assertEqual(test_tag[0]['id'], self.tag_db.pk)
+            self.assertEqual(test_tag[0]['name'], 'db')
+            self.assertEqual(test_tag[1]['id'], self.tag_fedora.pk)
+            self.assertEqual(test_tag[1]['name'], 'fedora')
+            self.assertEqual(test_tag[2]['id'], self.tag_python.pk)
+            self.assertEqual(test_tag[2]['name'], 'python')
 
     def test_get_tags_with_non_exist_fields(self):
         try:
-            tag.get_tags(None, {
-                'tag_id': [1]
-            })
+            tag.get_tags(None, {'tag_id': [1]})
         except Fault as f:
             self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
         else:
@@ -118,18 +109,7 @@ class TestTag(FastFixtureTestCase):
 
     def test_get_tags_with_non_list(self):
         try:
-            tag.get_tags(None, {
-                'ids': 1
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            tag.get_tags(None, {
-                'names': 'QWER'
-            })
+            tag.get_tags(None, {'ids': 1})
         except Fault as f:
             self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
         else:

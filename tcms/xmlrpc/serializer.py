@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from datetime import datetime
 from datetime import timedelta
 from itertools import groupby
@@ -226,7 +227,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
             return self.__class__.m2m_fields
         else:
             return tuple(field.name for field in
-                         self.model_class._meta._many_to_many())
+                         self.model_class._meta.many_to_many)
 
     # TODO: how to deal with the situation that is primary key does not appear
     # in values fields, although such thing could not happen.
@@ -275,9 +276,8 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :rtype: dict
         '''
         qs = self.queryset.values('pk', field_name).order_by('pk')
-        return dict((pk, tuple(values))
-                    for pk, values in groupby(qs.iterator(),
-                                              lambda item: item['pk']))
+        return dict((pk, tuple(values)) for pk, values in
+                    groupby(qs.iterator(), lambda item: item['pk']))
 
     def _query_m2m_fields(self):
         m2m_fields = self._get_m2m_fields()
@@ -285,10 +285,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
                   for field_name in m2m_fields)
         return dict(result)
 
-    def _get_single_field_related_object_pks(self,
-                                             m2m_field_query,
-                                             model_pk,
-                                             field_name):
+    def _get_single_field_related_object_pks(self, m2m_field_query, model_pk, field_name):
         return [item[field_name] for item in m2m_field_query[model_pk]
                 if item[field_name]]
 
@@ -306,9 +303,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :rtype: list
         '''
         data = m2m_fields_query[field_name]
-        return self._get_single_field_related_object_pks(data,
-                                                         model_pk,
-                                                         field_name)
+        return self._get_single_field_related_object_pks(data, model_pk, field_name)
 
     def _handle_extra_fields(self, data):
         '''Add extra fields
