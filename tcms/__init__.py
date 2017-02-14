@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-VERSION = '3.8.18.05'
+VERSION = '3.8.18.07'
