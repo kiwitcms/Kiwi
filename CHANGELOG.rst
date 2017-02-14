@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-unreleased changes
-------------------
+3.8.18.07 (Feb 14 2017, released on MrSenko.com)
+------------------------------------------------
 
 - Rebased onto 82625f1
 - Add documentation about installation with Apache and virtualenv.
