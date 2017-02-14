@@ -7,7 +7,7 @@
 		<th align="left" class="sortcol" width="150">Category</th>
 		<th align="left" class="sortcol" width="120">Tester</th>
 		<th align="left" class="sortcol" width="120">Bugs</th>
-		<th align="left" class="sortcol" width="200">Lastest Execute Time</th>
+		<th align="left" class="sortcol" width="200">Last Execution Time</th>
 	</tr>
 	{% for test_case_run, bugs, comments in case_runs %}
 	<tr>
@@ -32,7 +32,7 @@
 		</tr>
 		{% for comment in comments %}
 		<tr class="border-bottom">
-			<td valign="top" colspan="7">{{ comment.comment|urlize|linebreaksbr }}<span class="grey">[{{ comment.username }} {{ comment.submit_date }}]</span></td>
+			<td valign="top" colspan="7">{{ comment.comment|urlize|linebreaksbr }}<span class="grey">[{{ comment.user__username }} {{ comment.submit_date }}]</span></td>
 		</tr>
 		{% endfor %}
 	{% endif %}
