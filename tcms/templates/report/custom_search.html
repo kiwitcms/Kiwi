@@ -51,8 +51,8 @@ Nitrate.Utils.after_page_load(Nitrate.Report.CustomSearch.on_load);
 			{% for build in builds %}
 			<tr class="{% cycle 'even' 'odd' %}">
 				<td>
-					<input type="hidden" name="build_id" value="{{ build.pk }}" />
-					{% if build.plans_count %}<a class="build_link"  href="{% url "report-custom-details" %}" >{% endif %}{{ build }}</a>
+					<input type="hidden" name="build_id" value="{{ build.build }}" />
+					{% if build.plans_count %}<a class="build_link"  href="{% url "report-custom-details" %}" >{% endif %}{{ build.build__name }}</a>
 				</td>
 				<td valign="top">{{ build.plans_count|default_if_none:0 }}</td>
 				<td valign="top">
