@@ -56,13 +56,15 @@ check: flake8 test
 .PHONY: tags
 tags:
 	@rm -f .tags
-	@ctags -R --languages=Python,CSS,Javascript --python-kinds=-im -f .tags
+	@ctags -R --languages=Python,CSS,Javascript --python-kinds=-im \
+		--exclude=build --exclude=tcms/static/js/lib -f .tags
 
 
 .PHONY: etags
 etags:
 	@rm -f TAGS
-	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-im -f TAGS
+	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-im \
+		--exclude=build --exclude=tcms/static/js/lib -f TAGS
 
 
 .PHONY: help
