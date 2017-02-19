@@ -14,31 +14,7 @@ from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
-
-
-class AssertMessage(object):
-    NOT_VALIDATE_ARGS = "Missing validations for args."
-    NOT_VALIDATE_REQUIRED_ARGS = "Missing validations for required args."
-    NOT_VALIDATE_ILLEGAL_ARGS = "Missing validations for illegal args."
-    NOT_VALIDATE_FOREIGN_KEY = "Missing validations for foreign key."
-    NOT_VALIDATE_LENGTH = "Missing validations for length of value."
-    NOT_VALIDATE_URL_FORMAT = "Missing validations for URL format."
-
-    SHOULD_BE_400 = "Error code should be 400."
-    SHOULD_BE_409 = "Error code should be 409."
-    SHOULD_BE_500 = "Error code should be 500."
-    SHOULD_BE_403 = "Error code should be 403."
-    SHOULD_BE_401 = "Error code should be 401."
-    SHOULD_BE_404 = "Error code should be 404."
-    SHOULD_BE_501 = "Error code should be 501."
-    SHOULD_BE_1 = "Error code should be 1."
-
-    UNEXCEPT_ERROR = "Unexcept error occurs."
-    NEED_ENCODE_UTF8 = "Need to encode with utf8."
-
-    NOT_IMPLEMENT_FUNC = "Not implement yet."
-    XMLRPC_INTERNAL_ERROR = "xmlrpc library error."
-    NOT_VALIDATE_PERMS = "Missing validations for user perms."
+from tcms.xmlrpc.tests.utils import AssertMessage
 
 
 class TestBuildCreate(TestCase):

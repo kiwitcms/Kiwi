@@ -4,19 +4,7 @@ from xmlrpclib import Fault
 from django.test import TestCase
 
 from tcms.xmlrpc.filters import wrap_exceptions
-
-
-class AssertMessage(object):
-    SHOULD_BE_400 = "Error code should be 400."
-    SHOULD_BE_409 = "Error code should be 409."
-    SHOULD_BE_500 = "Error code should be 500."
-    SHOULD_BE_403 = "Error code should be 403."
-    SHOULD_BE_401 = "Error code should be 401."
-    SHOULD_BE_404 = "Error code should be 404."
-    SHOULD_BE_501 = "Error code should be 501."
-    SHOULD_BE_1 = "Error code should be 1."
-
-    SHOULD_RAISE_EXCEPTION = "Should raise an exception."
+from tcms.xmlrpc.tests.utils import AssertMessage
 
 
 class TestFaultCode(TestCase):

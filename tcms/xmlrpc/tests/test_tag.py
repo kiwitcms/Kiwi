@@ -5,26 +5,7 @@ from xmlrpclib import Fault
 from django import test
 from tcms.xmlrpc.api import tag
 from tcms.tests.factories import TestTagFactory
-
-
-class AssertMessage(object):
-    NOT_VALIDATE_ARGS = "Missing validations for args."
-    NOT_VALIDATE_REQUIRED_ARGS = "Missing validations for required args."
-    NOT_VALIDATE_ILLEGAL_ARGS = "Missing validations for illegal args."
-    NOT_VALIDATE_FOREIGN_KEY = "Missing validations for foreign key."
-    NOT_VALIDATE_LENGTH = "Missing validations for length of value."
-    NOT_VALIDATE_URL_FORMAT = "Missing validations for URL format."
-
-    SHOULD_BE_400 = "Error code should be 400."
-    SHOULD_BE_409 = "Error code should be 409."
-    SHOULD_BE_500 = "Error code should be 500."
-    SHOULD_BE_403 = "Error code should be 403."
-    SHOULD_BE_401 = "Error code should be 401."
-    SHOULD_BE_404 = "Error code should be 404."
-    SHOULD_BE_501 = "Error code should be 501."
-    SHOULD_BE_1 = "Error code should be 1."
-
-    UNEXCEPT_ERROR = "Unexcept error occurs."
+from tcms.xmlrpc.tests.utils import AssertMessage
 
 
 class TestTag(test.TestCase):
