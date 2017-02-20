@@ -2,11 +2,12 @@
 
 import unittest
 
+from httplib import BAD_REQUEST
+from httplib import FORBIDDEN
+from httplib import NOT_FOUND
+from httplib import NOT_IMPLEMENTED
 from datetime import datetime
 from xmlrpclib import Fault
-
-from django.test import TestCase
-from django import test
 
 from tcms.xmlrpc.api import testcaserun
 from tcms.xmlrpc.tests.utils import make_http_request
@@ -23,9 +24,10 @@ from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.xmlrpc.tests.utils import AssertMessage
+from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestCaseRunCreate(test.TestCase):
+class TestCaseRunCreate(XmlrpcAPIBaseTest):
     """Test testcaserun.create"""
 
     @classmethod
@@ -65,49 +67,31 @@ class TestCaseRunCreate(test.TestCase):
     def test_create_with_no_args(self):
         bad_args = (None, [], {}, (), 1, 0, -1, True, False, '', 'aaaa', object)
         for arg in bad_args:
-            try:
-                testcaserun.create(self.admin_request, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.create, self.admin_request, arg)
 
     def test_create_with_no_required_fields(self):
-        try:
-            testcaserun.create(self.admin_request, {
+        values = [
+            {
                 "assignee": self.staff.pk,
                 "case_run_status": self.case_run_status.pk,
                 "notes": "unit test 2"
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
-
-        try:
-            testcaserun.create(self.admin_request, {
+            },
+            {
                 "build": self.build.pk,
                 "assignee": self.staff.pk,
                 "case_run_status": 1,
                 "notes": "unit test 2"
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
-
-        try:
-            testcaserun.create(self.admin_request, {
+            },
+            {
                 "run": self.test_run.pk,
                 "build": self.build.pk,
                 "assignee": self.staff.pk,
                 "case_run_status": self.case_run_status.pk,
                 "notes": "unit test 2"
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+            },
+        ]
+        for value in values:
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.create, self.admin_request, value)
 
     def test_create_with_required_fields(self):
         tcr = testcaserun.create(self.admin_request, {
@@ -144,38 +128,25 @@ class TestCaseRunCreate(test.TestCase):
         self.assertEquals(tcr['case_text_version'], 3)
 
     def test_create_with_non_exist_fields(self):
-        try:
-            testcaserun.create(self.admin_request, {
+        values = [
+            {
                 "run": self.test_run.pk,
                 "build": self.build.pk,
                 "case": 111111,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_FOREIGN_KEY)
-
-        try:
-            testcaserun.create(self.admin_request, {
+            },
+            {
                 "run": 11111,
                 "build": self.build.pk,
                 "case": self.case.pk,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_FOREIGN_KEY)
-
-        try:
-            testcaserun.create(self.admin_request, {
+            },
+            {
                 "run": self.test_run.pk,
                 "build": 11222222,
                 "case": self.case.pk,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_FOREIGN_KEY)
+            },
+        ]
+        for value in values:
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.create, self.admin_request, value)
 
     def test_create_with_chinese(self):
         tcr = testcaserun.create(self.admin_request, {
@@ -222,23 +193,19 @@ class TestCaseRunCreate(test.TestCase):
         self.assertEquals(tcr['notes'], large_str)
 
     def test_create_with_no_perm(self):
-        try:
-            testcaserun.create(self.staff_request, {
-                "run": self.test_run.pk,
-                "build": self.build.pk,
-                "case": self.case.pk,
-                "assignee": self.admin.pk,
-                "notes": "test_create_with_all_fields",
-                "sortkey": 2,
-                "case_run_status": self.case_run_status.pk,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_PERMS)
+        values = {
+            "run": self.test_run.pk,
+            "build": self.build.pk,
+            "case": self.case.pk,
+            "assignee": self.admin.pk,
+            "notes": "test_create_with_all_fields",
+            "sortkey": 2,
+            "case_run_status": self.case_run_status.pk,
+        }
+        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.create, self.staff_request, values)
 
 
-class TestCaseRunAddComment(test.TestCase):
+class TestCaseRunAddComment(XmlrpcAPIBaseTest):
     """Test testcaserun.add_comment"""
 
     @classmethod
@@ -281,7 +248,7 @@ class TestCaseRunAddComment(test.TestCase):
         self.assertIsNone(comment)
 
 
-class TestCaseRunAttachBug(test.TestCase):
+class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
     """Test testcaserun.attach_bug"""
 
     @classmethod
@@ -297,12 +264,7 @@ class TestCaseRunAttachBug(test.TestCase):
         cls.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
 
     def test_attach_bug_with_no_perm(self):
-        try:
-            testcaserun.attach_bug(self.staff_request, {})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_PERMS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.attach_bug, self.staff_request, {})
 
     @unittest.skip('TODO: not implemented yet.')
     def test_attach_bug_with_incorrect_type_value(self):
@@ -310,35 +272,21 @@ class TestCaseRunAttachBug(test.TestCase):
 
     @unittest.skip('TODO: fix code to make this test pass.')
     def test_attach_bug_with_no_required_args(self):
-        try:
-            testcaserun.attach_bug(self.admin_request, {
+        values = [
+            {
                 "summary": "This is summary.",
                 "description": "This is description."
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
-
-        try:
-            testcaserun.attach_bug(self.admin_request, {
+            },
+            {
                 "description": "This is description."
-            })
-        except Fault as f:
-            # FIXME: 400 is reasonable
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
-
-        try:
-            testcaserun.attach_bug(self.admin_request, {
+            },
+            {
                 "summary": "This is summary.",
-            })
-        except Fault as f:
-            # FIXME: 400 is reasonable
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+            },
+        ]
+        for value in values:
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_bug,
+                                         self.admin_request, value)
 
     def test_attach_bug_with_required_args(self):
         try:
@@ -391,28 +339,20 @@ class TestCaseRunAttachBug(test.TestCase):
         self.assertEqual(1, bugs_added)
 
     def test_attach_bug_with_non_existing_case_run(self):
-        try:
-            testcaserun.attach_bug(self.admin_request, {
-                "case_run_id": 111111111,
-                "bug_id": '2',
-                "bug_system_id": self.bug_system_bz.pk,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ILLEGAL_ARGS)
+        value = {
+            "case_run_id": 111111111,
+            "bug_id": '2',
+            "bug_system_id": self.bug_system_bz.pk,
+        }
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.attach_bug, self.admin_request, value)
 
     def test_attach_bug_with_non_existing_bug_system(self):
-        try:
-            testcaserun.attach_bug(self.admin_request, {
-                "case_run_id": self.case_run.pk,
-                "bug_id": '2',
-                "bug_system_id": 111111111,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ILLEGAL_ARGS)
+        value = {
+            "case_run_id": self.case_run.pk,
+            "bug_id": '2',
+            "bug_system_id": 111111111,
+        }
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_bug, self.admin_request, value)
 
     def test_attach_bug_with_chinese(self):
         try:
@@ -429,7 +369,7 @@ class TestCaseRunAttachBug(test.TestCase):
             self.assertIsNone(bug)
 
 
-class TestCaseRunAttachLog(test.TestCase):
+class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
     """Test testcaserun.attach_log"""
 
     @classmethod
@@ -442,50 +382,18 @@ class TestCaseRunAttachLog(test.TestCase):
         pass
 
     def test_attach_log_with_not_enough_args(self):
-        try:
-            testcaserun.attach_log(None, '', '')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
-
-        try:
-            testcaserun.attach_log(None, '')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
-
-        try:
-            testcaserun.attach_log(None)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
-
-        try:
-            testcaserun.attach_log(None, '', '', '')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None, '', '')
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None, '')
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None, '', '', '')
 
     def test_attach_log_with_non_exist_id(self):
-        try:
-            testcaserun.attach_log(None, 5523533, '', '')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.attach_log, None, 5523533, '', '')
 
     @unittest.skip('TODO: code should be fixed to make this test pass')
     def test_attach_log_with_invalid_url(self):
-        try:
-            testcaserun.attach_log(None, self.case_run.pk, "UT test logs", 'aaaaaaaaa')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_URL_FORMAT)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log,
+                                     None, self.case_run.pk, "UT test logs", 'aaaaaaaaa')
 
     def test_attach_log(self):
         try:
@@ -498,39 +406,24 @@ class TestCaseRunAttachLog(test.TestCase):
             self.assertIsNone(log)
 
 
-class TestCaseRunCheckStatus(test.TestCase):
+class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
     """Test testcaserun.check_case_run_status"""
 
     @unittest.skip('TODO: fix code to make this test pass.')
     def test_check_status_with_no_args(self):
         bad_args = (None, [], {}, ())
         for arg in bad_args:
-            try:
-                testcaserun.check_case_run_status(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, arg)
 
     @unittest.skip('TODO: fix code to make this test pass.')
     def test_check_status_with_empty_name(self):
-        try:
-            testcaserun.check_case_run_status(None, '')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, '')
 
     @unittest.skip('TODO: fix code to make this test pass.')
     def test_check_status_with_non_basestring(self):
         bad_args = (True, False, 1, 0, -1, [1], (1,), dict(a=1), 0.7)
         for arg in bad_args:
-            try:
-                testcaserun.check_case_run_status(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, arg)
 
     def test_check_status_with_name(self):
         try:
@@ -543,15 +436,10 @@ class TestCaseRunCheckStatus(test.TestCase):
             self.assertEqual(status['name'], "IDLE")
 
     def test_check_status_with_non_exist_name(self):
-        try:
-            testcaserun.check_case_run_status(None, "ABCDEFG")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.check_case_run_status, None, "ABCDEFG")
 
 
-class TestCaseRunDetachBug(TestCase):
+class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -593,19 +481,10 @@ class TestCaseRunDetachBug(TestCase):
     def test_detach_bug_with_no_args(self):
         bad_args = (None, [], {}, ())
         for arg in bad_args:
-            try:
-                testcaserun.detach_bug(self.admin_request, arg, '12345')
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.detach_bug(self.admin_request, self.case_run.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
+                                         self.admin_request, arg, '12345')
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
+                                         self.admin_request, self.case_run.pk, arg)
 
     def test_detach_bug_with_non_exist_id(self):
         original_links_count = self.case_run.case.case_bug.count()
@@ -628,30 +507,17 @@ class TestCaseRunDetachBug(TestCase):
     def test_detach_bug_with_illegal_args(self):
         bad_args = ("AAAA", ['A', 'B', 'C'], dict(A=1, B=2), True, False, (1, 2, 3, 4), -100)
         for arg in bad_args:
-            try:
-                testcaserun.detach_bug(self.admin_request, arg, self.bug_id)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ILLEGAL_ARGS)
-
-            try:
-                testcaserun.detach_bug(self.admin_request, self.case_run.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ILLEGAL_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
+                                         self.admin_request, arg, self.bug_id)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
+                                         self.admin_request, self.case_run.pk, arg)
 
     def test_detach_bug_with_no_perm(self):
-        try:
-            testcaserun.detach_bug(self.staff_request, self.case_run.pk, self.bug_id)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_PERMS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.detach_bug,
+                                     self.staff_request, self.case_run.pk, self.bug_id)
 
 
-class TestCaseRunDetachLog(TestCase):
+class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -671,49 +537,18 @@ class TestCaseRunDetachLog(TestCase):
     def test_detach_log_with_no_args(self):
         bad_args = (None, [], {}, ())
         for arg in bad_args:
-            try:
-                testcaserun.detach_log(None, arg, self.link.pk)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.detach_log(None, self.case_run.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
+                                         None, arg, self.link.pk)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
+                                         None, self.case_run.pk, arg)
 
     def test_detach_log_with_not_enough_args(self):
-        try:
-            testcaserun.detach_log(None, '')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
-
-        try:
-            testcaserun.detach_log(None)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
-
-        try:
-            testcaserun.detach_log(None, '', '', '')
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log, None, '')
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log, None, '', '', '')
 
     def test_detach_log_with_non_exist_id(self):
-        try:
-            testcaserun.detach_log(None, 9999999, self.link.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.XMLRPC_INTERNAL_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.detach_log, None, 9999999, self.link.pk)
 
     def test_detach_log_with_non_exist_log(self):
         testcaserun.detach_log(None, self.case_run.pk, 999999999)
@@ -724,19 +559,10 @@ class TestCaseRunDetachLog(TestCase):
     def test_detach_log_with_invalid_type_args(self):
         bad_args = ("", "AAA", (1,), [1], dict(a=1), True, False)
         for arg in bad_args:
-            try:
-                testcaserun.detach_log(None, arg, self.link.pk)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.detach_log(None, self.case_run.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
+                                         None, arg, self.link.pk)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
+                                         None, self.case_run.pk, arg)
 
     def test_detach_log(self):
         testcaserun.detach_log(None, self.case_run.pk, self.link.pk)
@@ -744,16 +570,16 @@ class TestCaseRunDetachLog(TestCase):
 
 
 @unittest.skip('not implemented yet.')
-class TestCaseRunFilter(TestCase):
+class TestCaseRunFilter(XmlrpcAPIBaseTest):
     pass
 
 
 @unittest.skip('not implemented yet.')
-class TestCaseRunFilterCount(TestCase):
+class TestCaseRunFilterCount(XmlrpcAPIBaseTest):
     pass
 
 
-class TestCaseRunGet(TestCase):
+class TestCaseRunGet(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -769,46 +595,31 @@ class TestCaseRunGet(TestCase):
     def test_get_with_no_args(self):
         bad_args = (None, [], {}, ())
         for arg in bad_args:
-            try:
-                testcaserun.get(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get, None, arg)
 
     @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
     def test_get_with_non_integer(self):
         non_integer = (True, False, '', 'aaaa', self, [1], (1,), dict(a=1), 0.7)
         for arg in non_integer:
-            try:
-                testcaserun.get(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get, None, arg)
 
     def test_get_with_non_exist_id(self):
-        try:
-            testcaserun.get(None, 11111111)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get, None, 11111111)
 
     def test_get_with_id(self):
-            tcr = testcaserun.get(None, self.case_run.pk)
-            self.assertIsNotNone(tcr)
-            self.assertEqual(tcr['build_id'], self.case_run.build.pk)
-            self.assertEqual(tcr['case_id'], self.case_run.case.pk)
-            self.assertEqual(tcr['assignee_id'], self.tester.pk)
-            self.assertEqual(tcr['tested_by_id'], None)
-            self.assertEqual(tcr['notes'], 'testing ...')
-            self.assertEqual(tcr['sortkey'], 10)
-            self.assertEqual(tcr['case_run_status'], 'IDLE')
-            self.assertEqual(tcr['case_run_status_id'], self.status_idle.pk)
+        tcr = testcaserun.get(None, self.case_run.pk)
+        self.assertIsNotNone(tcr)
+        self.assertEqual(tcr['build_id'], self.case_run.build.pk)
+        self.assertEqual(tcr['case_id'], self.case_run.case.pk)
+        self.assertEqual(tcr['assignee_id'], self.tester.pk)
+        self.assertEqual(tcr['tested_by_id'], None)
+        self.assertEqual(tcr['notes'], 'testing ...')
+        self.assertEqual(tcr['sortkey'], 10)
+        self.assertEqual(tcr['case_run_status'], 'IDLE')
+        self.assertEqual(tcr['case_run_status_id'], self.status_idle.pk)
 
 
-class TestCaseRunGetSet(TestCase):
+class TestCaseRunGetSet(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -823,73 +634,41 @@ class TestCaseRunGetSet(TestCase):
     def test_get_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                testcaserun.get_s(None, arg, self.case_run.run.pk, self.case_run.build.pk, 0)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.get_s(None, self.case_run.case.pk, arg, self.case_run.build.pk, 0)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.get_s(None, self.case_run.case.pk, self.case_run.run.pk, arg, 0)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.get_s(None,
-                                  self.case_run.case.pk,
-                                  self.case_run.run.pk,
-                                  self.case_run.build.pk,
-                                  arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(
+                BAD_REQUEST, testcaserun.get_s,
+                None, arg, self.case_run.run.pk, self.case_run.build.pk, 0)
+            self.assertRaisesXmlrpcFault(
+                BAD_REQUEST, testcaserun.get_s,
+                None, self.case_run.case.pk, arg, self.case_run.build.pk, 0)
+            self.assertRaisesXmlrpcFault(
+                BAD_REQUEST, testcaserun.get_s,
+                None, self.case_run.case.pk, self.case_run.run.pk, arg, 0)
+            self.assertRaisesXmlrpcFault(
+                BAD_REQUEST, testcaserun.get_s,
+                None, self.case_run.case.pk, self.case_run.run.pk, self.case_run.build.pk, arg)
 
     def test_get_with_non_exist_run(self):
-        try:
-            testcaserun.get_s(None, self.case_run.case.pk, 1111111, self.case_run.build.pk, 0)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
+                                     None, self.case_run.case.pk, 1111111, self.case_run.build.pk,
+                                     0)
 
     def test_get_with_non_exist_case(self):
-        try:
-            testcaserun.get_s(None, 11111111, self.case_run.run.pk, self.case_run.build.pk, 0)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
+                                     None, 11111111, self.case_run.run.pk, self.case_run.build.pk,
+                                     0)
 
     def test_get_with_non_exist_build(self):
-        try:
-            testcaserun.get_s(None, self.case_run.case.pk, self.case_run.run.pk, 1111111, 0)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
+                                     None, self.case_run.case.pk, self.case_run.run.pk, 1111111,
+                                     0)
 
     def test_get_with_non_exist_env(self):
-        try:
-            testcaserun.get_s(None,
-                              self.case_run.case.pk,
-                              self.case_run.run.pk,
-                              self.case_run.build.pk,
-                              999999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
+                                     None,
+                                     self.case_run.case.pk,
+                                     self.case_run.run.pk,
+                                     self.case_run.build.pk,
+                                     999999)
 
     def test_get_with_no_env(self):
         tcr = testcaserun.get_s(None,
@@ -908,7 +687,7 @@ class TestCaseRunGetSet(TestCase):
         self.assertEqual(tcr['environment_id'], 0)
 
 
-class TestCaseRunGetBugs(TestCase):
+class TestCaseRunGetBugs(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -930,23 +709,13 @@ class TestCaseRunGetBugs(TestCase):
     def test_get_bugs_with_no_args(self):
         bad_args = (None, [], {}, ())
         for arg in bad_args:
-            try:
-                testcaserun.get_bugs(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs, None, arg)
 
     @unittest.skip('TODO: fix get_bugs to make this test pass.')
     def test_get_bugs_with_non_integer(self):
         non_integer = (True, False, '', 'aaaa', self, [1], (1,), dict(a=1), 0.7)
         for arg in non_integer:
-            try:
-                testcaserun.get_bugs(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs, None, arg)
 
     def test_get_bugs_with_non_exist_id(self):
         bugs = testcaserun.get_bugs(None, 11111111)
@@ -961,7 +730,7 @@ class TestCaseRunGetBugs(TestCase):
         self.assertEqual(bugs[0]['bug_id'], '67890')
 
 
-class TestCaseRunGetBugsSet(TestCase):
+class TestCaseRunGetBugsSet(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -983,41 +752,26 @@ class TestCaseRunGetBugsSet(TestCase):
     def test_get_bug_set_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                testcaserun.get_bugs_s(None, arg, self.case_run.case.pk, self.case_run.build.pk, 0)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.get_bugs_s(None, self.case_run.run.pk, arg, self.case_run.build.pk, 0)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaserun.get_bugs_s(None, self.case_run.run.pk, self.case_run.case.pk, arg, 0)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
+                                         None, arg, self.case_run.case.pk, self.case_run.build.pk,
+                                         0)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
+                                         None, self.case_run.run.pk, arg, self.case_run.build.pk,
+                                         0)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
+                                         None, self.case_run.run.pk, self.case_run.case.pk, arg,
+                                         0)
 
     @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
     def test_get_bug_set_with_invalid_environment_value(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                testcaserun.get_bugs_s(None,
-                                       self.case_run.run.pk,
-                                       self.case_run.case.pk,
-                                       self.case_run.build.pk,
-                                       arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
+                                         None,
+                                         self.case_run.run.pk,
+                                         self.case_run.case.pk,
+                                         self.case_run.build.pk,
+                                         arg)
 
     def test_get_bug_set_with_non_exist_run(self):
         tcr = testcaserun.get_bugs_s(None,
@@ -1071,7 +825,7 @@ class TestCaseRunGetBugsSet(TestCase):
         self.assertEqual(tcr[0]['summary'], 'Testing TCMS')
 
 
-class TestCaseRunGetStatus(test.TestCase):
+class TestCaseRunGetStatus(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -1107,20 +861,10 @@ class TestCaseRunGetStatus(test.TestCase):
     def test_get_status_with_no_args(self):
         bad_args = ([], {}, (), "", "AAAA", self)
         for arg in bad_args:
-            try:
-                testcaserun.get_case_run_status(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status, None, arg)
 
     def test_get_status_with_non_exist_id(self):
-        try:
-            testcaserun.get_case_run_status(None, 999999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_case_run_status, None, 999999)
 
     def test_get_status_with_id(self):
         status = testcaserun.get_case_run_status(None, self.status_running.pk)
@@ -1129,47 +873,35 @@ class TestCaseRunGetStatus(test.TestCase):
         self.assertEqual(status['name'], "RUNNING")
 
     def test_get_status_with_name(self):
-        try:
-            testcaserun.get_case_run_status(None, "PROPOSED")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status, None, 'PROPOSED')
 
 
 @unittest.skip('not implemented yet.')
-class TestCaseRunGetCompletionTime(TestCase):
+class TestCaseRunGetCompletionTime(XmlrpcAPIBaseTest):
     pass
 
 
 @unittest.skip('not implemented yet.')
-class TestCaseRunGetCompletionTimeSet(TestCase):
+class TestCaseRunGetCompletionTimeSet(XmlrpcAPIBaseTest):
     pass
 
 
 @unittest.skip('not implemented yet.')
-class TestCaseRunGetHistory(TestCase):
+class TestCaseRunGetHistory(XmlrpcAPIBaseTest):
+
     def test_get_history(self):
-        try:
-            testcaserun.get_history(None, None)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 501, AssertMessage.SHOULD_BE_501)
-        else:
-            self.fail(AssertMessage.NOT_IMPLEMENT_FUNC)
+        self.assertRaisesXmlrpcFault(NOT_IMPLEMENTED, testcaserun.get_history, None, None)
 
 
 @unittest.skip('not implemented yet.')
-class TestCaseRunGetHistorySet(TestCase):
+class TestCaseRunGetHistorySet(XmlrpcAPIBaseTest):
+
     def test_get_history(self):
-        try:
-            testcaserun.get_history_s(None, None, None, None)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 501, AssertMessage.SHOULD_BE_501)
-        else:
-            self.fail(AssertMessage.NOT_IMPLEMENT_FUNC)
+        self.assertRaisesXmlrpcFault(NOT_IMPLEMENTED, testcaserun.get_history_s,
+                                     None, None, None, None)
 
 
-class TestCaseRunGetLogs(TestCase):
+class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -1182,31 +914,16 @@ class TestCaseRunGetLogs(TestCase):
     def test_get_logs_with_no_args(self):
         bad_args = (None, [], (), {}, "")
         for arg in bad_args:
-            try:
-                testcaserun.get_logs(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_logs, None, arg)
 
     @unittest.skip('TODO: fix method to make this test pass.')
     def test_get_logs_with_non_integer(self):
         bad_args = (True, False, "AAA", 0.7, -1)
         for arg in bad_args:
-            try:
-                testcaserun.get_logs(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_logs, None, arg)
 
     def test_get_logs_with_non_exist_id(self):
-        try:
-            testcaserun.get_logs(None, 99999999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_REQUIRED_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_logs, None, 99999999)
 
     def test_get_empty_logs(self):
         logs = testcaserun.get_logs(None, self.case_run_2.pk)
@@ -1222,7 +939,7 @@ class TestCaseRunGetLogs(TestCase):
         self.assertEqual(logs[0]['url'], "http://www.google.com")
 
 
-class TestCaseRunUpdate(TestCase):
+class TestCaseRunUpdate(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -1243,18 +960,10 @@ class TestCaseRunUpdate(TestCase):
     def test_update_with_no_args(self):
         bad_args = (None, [], (), {}, "")
         for arg in bad_args:
-            try:
-                testcaserun.update(self.admin_request, arg, {})
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-            try:
-                testcaserun.update(self.admin_request, self.case_run_1.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
+                                         self.admin_request, arg, {})
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
+                                         self.admin_request, self.case_run_1.pk, arg)
 
     def test_update_with_single_caserun(self):
         tcr = testcaserun.update(self.admin_request, self.case_run_1.pk, {
@@ -1293,34 +1002,17 @@ class TestCaseRunUpdate(TestCase):
         self.assertEqual(tcr[0]['sortkey'], tcr[1]['sortkey'])
 
     def test_update_with_non_exist_build(self):
-        try:
-            testcaserun.update(self.admin_request, self.case_run_1.pk, {
-                "build": 1111111,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
+                                     self.admin_request, self.case_run_1.pk, {"build": 1111111})
 
     def test_update_with_non_exist_assignee(self):
-        try:
-            testcaserun.update(self.admin_request, self.case_run_1.pk, {
-                "assignee": 1111111,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
+                                     self.admin_request, self.case_run_1.pk, {"assignee": 1111111})
 
     def test_update_with_non_exist_status(self):
-        try:
-            testcaserun.update(self.admin_request, self.case_run_1.pk, {
-                "case_run_status": 1111111,
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
+                                     self.admin_request, self.case_run_1.pk,
+                                     {"case_run_status": 1111111})
 
     def test_update_by_ignoring_undoced_fields(self):
         case_run = testcaserun.update(self.admin_request, self.case_run_1.pk, {
@@ -1331,11 +1023,5 @@ class TestCaseRunUpdate(TestCase):
         self.assertEqual('AAAA', case_run[0]['notes'])
 
     def test_update_with_no_perm(self):
-        try:
-            testcaserun.update(self.staff_request, self.case_run_1.pk, {
-                "notes": "AAAA",
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.update,
+                                     self.staff_request, self.case_run_1.pk, {"notes": "AAAA"})

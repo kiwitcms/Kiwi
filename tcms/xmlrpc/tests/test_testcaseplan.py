@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from xmlrpclib import Fault
 
-from django.test import TestCase
+from httplib import BAD_REQUEST
+from httplib import NOT_FOUND
 
 from tcms.xmlrpc.api import testcaseplan
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCasePlanFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.xmlrpc.tests.utils import AssertMessage
+from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestCasePlanGet(TestCase):
+class TestCasePlanGet(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -32,76 +32,35 @@ class TestCasePlanGet(TestCase):
     def test_get_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                testcaseplan.get(None, arg, self.plan.pk)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaseplan.get(None, self.case.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaseplan.get, None, arg, self.plan.pk)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaseplan.get, None, self.case.pk, arg)
 
     def test_get_with_no_exist_case(self):
-        try:
-            testcaseplan.get(None, 10000, self.plan.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.get, None, 10000, self.plan.pk)
 
     def test_get_with_no_exist_plan(self):
-        try:
-            testcaseplan.get(None, self.case.pk, 10000)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.get, None, self.case.pk, 10000)
 
     @unittest.skip('TODO: fix get to make this test pass.')
     def test_get_with_non_integer_case_id(self):
         bad_args = ("A", "1", "", True, False, self, (1,))
         for arg in bad_args:
-            try:
-                testcaseplan.get(None, arg, self.plan.pk)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaseplan.get, None, arg, self.plan.pk)
 
     @unittest.skip('TODO: fix get to make this test pass.')
     def test_get_with_non_integer_plan_id(self):
         bad_args = ("A", "1", "", True, False, self, (1,))
         for arg in bad_args:
-            try:
-                testcaseplan.get(None, self.case.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaseplan.get, None, self.case.pk, arg)
 
     def test_get_with_negative_plan_id(self):
-        try:
-            testcaseplan.get(None, self.case.pk, -1)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.get, None, self.case.pk, -1)
 
     def test_get_with_negative_case_id(self):
-        try:
-            testcaseplan.get(None, -1, self.plan.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.get, None, -1, self.plan.pk)
 
 
-class TestCasePlanUpdate(TestCase):
+class TestCasePlanUpdate(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -119,81 +78,38 @@ class TestCasePlanUpdate(TestCase):
     def test_update_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                testcaseplan.update(None, arg, self.plan.pk, 100)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaseplan.update(None, self.case.pk, arg, 100)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                testcaseplan.update(None, self.case.pk, self.plan.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST,
+                                         testcaseplan.update, None, arg, self.plan.pk, 100)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST,
+                                         testcaseplan.update, None, self.case.pk, arg, 100)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST,
+                                         testcaseplan.update, None, self.case.pk, self.plan.pk, arg)
 
     def test_update_with_no_exist_case(self):
-        try:
-            testcaseplan.update(None, 10000, self.plan.pk, 100)
-        except Fault as f:
-            print f.faultString
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.update, None, 10000, self.plan.pk, 100)
 
     def test_update_with_no_exist_plan(self):
-        try:
-            testcaseplan.update(None, self.case.pk, 10000, 100)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.update, None, self.case.pk, 10000, 100)
 
     @unittest.skip('TODO: fix update to make this test pass.')
     def test_update_with_non_integer_case_id(self):
         bad_args = ("A", "1", "", True, False, self, (1,))
         for arg in bad_args:
-            try:
-                testcaseplan.update(None, arg, self.plan.pk, 100)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST,
+                                         testcaseplan.update, None, arg, self.plan.pk, 100)
 
     @unittest.skip('TODO: fix update to make this test pass.')
     def test_update_with_non_integer_plan_id(self):
         bad_args = ("A", "1", "", True, False, self, (1,))
         for arg in bad_args:
-            try:
-                testcaseplan.update(None, self.case.pk, arg, 100)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST,
+                                         testcaseplan.update, None, self.case.pk, arg, 100)
 
     def test_update_with_negative_plan_id(self):
-        try:
-            testcaseplan.update(None, self.case.pk, -1, 100)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.update, None, self.case.pk, -1, 100)
 
     def test_update_with_negative_case_id(self):
-        try:
-            testcaseplan.update(None, -1, self.plan.pk, 100)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaseplan.update, None, -1, self.plan.pk, 100)
 
     def test_update_with_non_integer_sortkey(self):
         original_sortkey = self.case_plan.sortkey

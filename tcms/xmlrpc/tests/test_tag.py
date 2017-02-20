@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
+from httplib import BAD_REQUEST
 from xmlrpclib import Fault
 
-from django import test
 from tcms.xmlrpc.api import tag
 from tcms.tests.factories import TestTagFactory
 from tcms.xmlrpc.tests.utils import AssertMessage
+from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestTag(test.TestCase):
+class TestTag(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -25,24 +26,15 @@ class TestTag(test.TestCase):
             t.delete()
 
     def test_get_tags_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                tag.get_tags(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, ())
 
     def test_get_tags_with_illgel_args(self):
         bad_args = (1, 0, -1, True, False, '', 'aaaa', object)
         for arg in bad_args:
-            try:
-                tag.get_tags(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, arg)
 
     def test_get_tags_with_ids(self):
         try:
@@ -81,17 +73,7 @@ class TestTag(test.TestCase):
             self.assertEqual(test_tag[2]['name'], 'python')
 
     def test_get_tags_with_non_exist_fields(self):
-        try:
-            tag.get_tags(None, {'tag_id': [1]})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, {'tag_id': [1]})
 
     def test_get_tags_with_non_list(self):
-        try:
-            tag.get_tags(None, {'ids': 1})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, {'ids': 1})

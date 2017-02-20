@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from xmlrpclib import Fault
+from httplib import FORBIDDEN
+from httplib import NOT_FOUND
 
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -11,6 +12,7 @@ from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.xmlrpc.tests.utils import user_should_have_perm
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import GroupFactory
+from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
 class TestUserSerializer(TestCase):
@@ -74,7 +76,7 @@ class TestUserFilter(TestCase):
         self.assertEqual(len(users), 2)
 
 
-class TestUserGet(TestCase):
+class TestUserGet(XmlrpcAPIBaseTest):
     '''Test User.get'''
 
     @classmethod
@@ -97,10 +99,7 @@ class TestUserGet(TestCase):
         self.assertEqual(data['email'], test_user.email)
 
     def test_get_not_exist(self):
-        try:
-            XUser.get(self.http_req, self.http_req.user.pk + 1)
-        except Fault as e:
-            self.assertEqual(e.faultCode, 404)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, XUser.get, self.http_req, self.http_req.user.pk + 1)
 
 
 class TestUserGetMe(TestCase):
@@ -122,7 +121,7 @@ class TestUserGetMe(TestCase):
         self.assertEqual(data['username'], test_user.username)
 
 
-class TestUserJoin(TestCase):
+class TestUserJoin(XmlrpcAPIBaseTest):
     '''Test User.join'''
 
     @classmethod
@@ -147,19 +146,15 @@ class TestUserJoin(TestCase):
         self.assertTrue(user_added_to_group, 'User should be added to group.')
 
     def test_join_nonexistent_user(self):
-        try:
-            XUser.join(self.http_req, 'nonexistent user', 'whatever group name')
-        except Fault as e:
-            self.assertEqual(e.faultCode, 404)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, XUser.join,
+                                     self.http_req, 'nonexistent user', 'whatever group name')
 
     def test_join_nonexistent_group(self):
-        try:
-            XUser.join(self.http_req, self.username, 'nonexistent group name')
-        except Fault as e:
-            self.assertEqual(e.faultCode, 404)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, XUser.join,
+                                     self.http_req, self.username, 'nonexistent group name')
 
 
-class TestUserUpdate(TestCase):
+class TestUserUpdate(XmlrpcAPIBaseTest):
     '''Test User.update'''
 
     @classmethod
@@ -167,6 +162,8 @@ class TestUserUpdate(TestCase):
         cls.user = UserFactory(username='bob', email='bob@example.com')
         cls.user.set_password(cls.user.username)
         cls.user.save()
+
+        cls.another_user = UserFactory()
 
         cls.http_req = make_http_request(user=cls.user)
         cls.user_new_attrs = {
@@ -178,6 +175,7 @@ class TestUserUpdate(TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.user.delete()
+        cls.another_user.delete()
 
     def test_update_myself(self):
         data = XUser.update(self.http_req,
@@ -194,10 +192,8 @@ class TestUserUpdate(TestCase):
 
     def test_update_other_missing_permission(self):
         new_values = {'some_attr': 'xxx'}
-        try:
-            XUser.update(self.http_req, new_values, self.user.pk)
-        except Fault as e:
-            self.assertEqual(e.faultCode, 403)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, XUser.update,
+                                     self.http_req, new_values, self.another_user.pk)
 
     def test_update_other_with_proper_permission(self):
         user_should_have_perm(self.http_req.user, 'auth.change_user')
@@ -219,20 +215,12 @@ class TestUserUpdate(TestCase):
         new_password = 'new password'
         user_new_attrs['password'] = new_password
 
-        try:
-            XUser.update(self.http_req, user_new_attrs, test_user.pk)
-        except Fault as e:
-            self.assertEqual(e.faultCode, 403,
-                             'Old password was not provided, ' +
-                             'PermissionDenied should be catched.')
+        self.assertRaisesXmlrpcFault(FORBIDDEN, XUser.update,
+                                     self.http_req, user_new_attrs, test_user.pk)
 
         user_new_attrs['old_password'] = 'invalid old password'
-        try:
-            XUser.update(self.http_req, user_new_attrs, test_user.pk)
-        except Fault as e:
-            self.assertEqual(e.faultCode, 403,
-                             'Invalid old password was provided. ' +
-                             'PermissionDenied should be catched.')
+        self.assertRaisesXmlrpcFault(FORBIDDEN, XUser.update,
+                                     self.http_req, user_new_attrs, test_user.pk)
 
         user_new_attrs['old_password'] = test_user.username
         data = XUser.update(self.http_req, user_new_attrs, test_user.pk)

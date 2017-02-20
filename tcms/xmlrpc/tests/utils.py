@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from xmlrpclib import Fault
+
+from django import test
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 
@@ -28,6 +31,24 @@ class AssertMessage(object):
     XMLRPC_INTERNAL_ERROR = "xmlrpc library error."
     NOT_VALIDATE_PERMS = "Missing validations for user perms."
     SHOULD_RAISE_EXCEPTION = "Should raise an exception."
+
+
+class XmlrpcAPIBaseTest(test.TestCase):
+
+    def assertRaisesXmlrpcFault(self, faultCode, method, *args, **kwargs):
+        assert callable(method)
+        try:
+            method(*args, **kwargs)
+        except Fault as f:
+            self.assertEqual(f.faultCode, faultCode,
+                             'Except raising fault error with code {0}, but {1} is raised'.format(
+                                 faultCode, f.faultCode))
+        except Exception as e:
+            self.fail('Expect raising xmlrpclib.Fault, but {0} is raised and '
+                      'message is "{1}".'.format(e.__class__.__name__, str(e)))
+        else:
+            self.fail('Expect to raise Fault error with faultCode {0}, '
+                      'but no exception is raised.'.format(faultCode))
 
 
 def user_should_have_perm(user, perm):

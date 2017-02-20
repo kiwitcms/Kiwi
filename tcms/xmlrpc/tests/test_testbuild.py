@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from xmlrpclib import Fault
+from httplib import BAD_REQUEST
+from httplib import FORBIDDEN
+from httplib import NOT_FOUND
 
 from django.test import TestCase
 
@@ -14,10 +16,10 @@ from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
-from tcms.xmlrpc.tests.utils import AssertMessage
+from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestBuildCreate(TestCase):
+class TestBuildCreate(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -34,31 +36,14 @@ class TestBuildCreate(TestCase):
     def test_build_create_with_no_args(self):
         bad_args = (self.admin_request, [], (), {})
         for arg in bad_args:
-            try:
-                build.create(self.admin_request, arg)
-            except Fault as f:
-                if f.faultCode != 400:
-                    raise
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.create, self.admin_request, arg)
 
     def test_build_create_with_no_perms(self):
-        try:
-            build.create(self.staff_request, {})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, build.create, self.staff_request, {})
 
     def test_build_create_with_no_required_fields(self):
         def _create(data):
-            try:
-                build.create(self.admin_request, data)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.create, self.admin_request, data)
 
         values = {
             "description": "Test Build",
@@ -80,13 +65,7 @@ class TestBuildCreate(TestCase):
             "name": "B7",
             "milestone": "aaaaaaaa"
         }
-        try:
-            build.create(self.admin_request, values)
-        except Fault as f:
-            raise
-            self.assertEqual(f.faultCode, 500, AssertMessage.SHOULD_BE_500)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, build.create, self.admin_request, values)
 
     def test_build_create_with_non_exist_product(self):
         values = {
@@ -95,20 +74,10 @@ class TestBuildCreate(TestCase):
             "description": "Test Build",
             "is_active": False
         }
-        try:
-            build.create(self.admin_request, values)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.create, self.admin_request, values)
 
         values['product'] = "AAAAAAAAAA"
-        try:
-            build.create(self.admin_request, values)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.create, self.admin_request, values)
 
     def test_build_create_with_chinese(self):
         values = {
@@ -140,7 +109,7 @@ class TestBuildCreate(TestCase):
         self.assertEqual(b['is_active'], False)
 
 
-class TestBuildUpdate(TestCase):
+class TestBuildUpdate(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -176,75 +145,35 @@ class TestBuildUpdate(TestCase):
     def test_build_update_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                build.update(self.admin_request, arg, {})
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                build.update(self.admin_request, self.build_1.pk, {})
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.update, self.admin_request, arg, {})
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.update,
+                                         self.admin_request, self.build_1.pk, {})
 
     def test_build_update_with_no_perms(self):
-        try:
-            build.update(self.staff_request, self.build_1.pk, {})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, build.update,
+                                     self.staff_request, self.build_1.pk, {})
 
     def test_build_update_with_multi_id(self):
-        try:
-            builds = (self.build_1.pk, self.build_2.pk, self.build_3.pk)
-            build.update(self.admin_request, builds, {})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        builds = (self.build_1.pk, self.build_2.pk, self.build_3.pk)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, build.update, self.admin_request, builds, {})
 
     @unittest.skip('TODO: fix update to make this test pass.')
     def test_build_update_with_non_integer(self):
         bad_args = (True, False, (1,), dict(a=1), -1, 0.7, "", "AA")
         for arg in bad_args:
-            try:
-                build.update(self.admin_request, arg, {})
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.update, self.admin_request, arg, {})
 
     def test_build_update_with_non_exist_build(self):
-        try:
-            build.update(self.admin_request, 999, {})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.update, self.admin_request, 999, {})
 
     def test_build_update_with_non_exist_product_id(self):
-        try:
-            build.update(self.admin_request, self.build_1.pk, {
-                "product": 9999
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.update,
+                                     self.admin_request, self.build_1.pk, {"product": 9999})
 
     def test_build_update_with_non_exist_product_name(self):
-        try:
-            build.update(self.admin_request, self.build_1.pk, {
-                "product": "AAAAAAAAAAAAAA"
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.update,
+                                     self.admin_request, self.build_1.pk,
+                                     {"product": "AAAAAAAAAAAAAA"})
 
     def test_build_update(self):
         b = build.update(self.admin_request, self.build_3.pk, {
@@ -258,7 +187,7 @@ class TestBuildUpdate(TestCase):
         self.assertEqual(b['description'], 'Update from unittest.')
 
 
-class TestBuildGet(TestCase):
+class TestBuildGet(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -276,31 +205,16 @@ class TestBuildGet(TestCase):
     def test_build_get_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                build.get(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.get, None, arg)
 
     @unittest.skip('TODO: fix get to make this test pass.')
     def test_build_get_with_non_integer(self):
         bad_args = (True, False, (1,), dict(a=1), -1, 0.7, "", "AA")
         for arg in bad_args:
-            try:
-                build.get(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.get, None, arg)
 
     def test_build_get_with_non_exist_id(self):
-        try:
-            build.get(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.get, None, 9999)
 
     def test_build_get_with_id(self):
         b = build.get(None, self.build.pk)
@@ -312,7 +226,7 @@ class TestBuildGet(TestCase):
         self.assertTrue(b['is_active'])
 
 
-class TestBuildGetCaseRuns(TestCase):
+class TestBuildGetCaseRuns(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -336,31 +250,16 @@ class TestBuildGetCaseRuns(TestCase):
     def test_build_get_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                build.get_caseruns(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.get_caseruns, None, arg)
 
     @unittest.skip('TODO: fix get_caseruns to make this test pass.')
     def test_build_get_with_non_integer(self):
         bad_args = (True, False, (1,), dict(a=1), -1, 0.7, "", "AA")
         for arg in bad_args:
-            try:
-                build.get_caseruns(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.get_caseruns, None, arg)
 
     def test_build_get_with_non_exist_id(self):
-        try:
-            build.get_caseruns(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.get_caseruns, None, 9999)
 
     def test_build_get_with_id(self):
         b = build.get_caseruns(None, self.build.pk)
@@ -369,7 +268,7 @@ class TestBuildGetCaseRuns(TestCase):
         self.assertEqual(b[0]['case'], self.case_run_1.case.summary)
 
 
-class TestBuildGetRuns(TestCase):
+class TestBuildGetRuns(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -393,31 +292,16 @@ class TestBuildGetRuns(TestCase):
     def test_build_get_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                build.get_runs(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.get_runs, None, arg)
 
     @unittest.skip('TODO: fix get_runs to make this test pass.')
     def test_build_get_with_non_integer(self):
         bad_args = (True, False, (1,), dict(a=1), -1, 0.7, "", "AA")
         for arg in bad_args:
-            try:
-                build.get_runs(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.get_runs, None, arg)
 
     def test_build_get_with_non_exist_id(self):
-        try:
-            build.get_runs(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.get_runs, None, 9999)
 
     def test_build_get_with_id(self):
         b = build.get_runs(None, self.build.pk)
@@ -436,7 +320,7 @@ class TestBuildLookupName(TestCase):
     """DEPRECATED API"""
 
 
-class TestBuildCheck(TestCase):
+class TestBuildCheck(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -455,70 +339,30 @@ class TestBuildCheck(TestCase):
     def test_build_get_with_no_args(self):
         bad_args = (None, [], (), {})
         for arg in bad_args:
-            try:
-                build.check_build(None, arg, self.product.pk)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-            try:
-                build.check_build(None, "B5", arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.check_build, None, arg, self.product.pk)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.check_build, None, "B5", arg)
 
     def test_build_get_with_non_exist_build_name(self):
-        try:
-            build.check_build(None, "AAAAAAAAAAAAAA", self.product.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.check_build,
+                                     None, "AAAAAAAAAAAAAA", self.product.pk)
 
     def test_build_get_with_non_exist_product_id(self):
-        try:
-            build.check_build(None, "B5", 9999999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.check_build, None, "B5", 9999999)
 
     def test_build_get_with_non_exist_product_name(self):
-        try:
-            build.check_build(None, "B5", "AAAAAAAAAAAAAAAA")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, build.check_build, None, "B5", "AAAAAAAAAAAAAAAA")
 
     @unittest.skip('TODO: fix check_build to make this test pass.')
     def test_build_get_with_empty(self):
-        try:
-            build.check_build(None, "", self.product.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            build.check_build(None, "         ", self.product.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, build.check_build, None, "", self.product.pk)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, build.check_build,
+                                     None, "         ", self.product.pk)
 
     @unittest.skip('TODO: fix check_build to make this test pass.')
     def test_build_get_with_illegal_args(self):
         bad_args = (self, 0.7, False, True, 1, -1, 0, (1,), dict(a=1))
         for arg in bad_args:
-            try:
-                build.check_build(None, arg, self.product.pk)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, build.check_build, None, arg, self.product.pk)
 
     def test_build_get(self):
         b = build.check_build(None, self.build.name, self.product.pk)

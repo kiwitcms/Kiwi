@@ -2,6 +2,10 @@
 
 import unittest
 
+from httplib import BAD_REQUEST
+from httplib import NOT_FOUND
+from httplib import FORBIDDEN
+from httplib import NOT_IMPLEMENTED
 from xmlrpclib import Fault
 
 from django.test import TestCase
@@ -21,9 +25,10 @@ from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestTagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
+from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestCheckCategory(TestCase):
+class TestCheckCategory(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -52,42 +57,28 @@ class TestCheckCategory(TestCase):
             self.assertEqual(cat['name'], 'manual')
 
     def test_check_category_with_non_exist_category(self):
-        try:
-            product.check_category(None, "NonExist", self.product_nitrate.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-
-        try:
-            product.check_category(None, "--default--", 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_category,
+                                     None, "NonExist", self.product_nitrate.pk)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_category, None, "--default--", 9999)
 
     def test_check_category_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.check_category(None, "--default--", arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_category, None, "--default--", None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_category, None, "--default--", [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_category, None, "--default--", {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_category, None, "--default--", ())
 
     def test_no_category_queried_by_special_name(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.check_category(None, arg, self.product_nitrate.name)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_category,
+                                     None, None, self.product_nitrate.name)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_category,
+                                     [], None, self.product_nitrate.name)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_category,
+                                     {}, None, self.product_nitrate.name)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_category,
+                                     (), None, self.product_nitrate.name)
 
 
-class TestCheckComponent(TestCase):
+class TestCheckComponent(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -117,42 +108,29 @@ class TestCheckComponent(TestCase):
             self.assertEqual(cat['name'], 'application')
 
     def test_check_component_with_non_exist(self):
-        try:
-            product.check_component(None, "NonExist", self.product_xmlrpc.pk)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-
-        try:
-            product.check_component(None, 'documentation', 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_component,
+                                     None, "NonExist", self.product_xmlrpc.pk)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_component,
+                                     None, 'documentation', 9999)
 
     def test_check_component_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.check_component(None, 'database', arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_component, None, 'database', None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_component, None, 'database', [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_component, None, 'database', {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_component, None, 'database', ())
 
     def test_no_component_queried_with_special_name(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.check_component(None, arg, self.product_nitrate.name)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_component,
+                                     None, None, self.product_nitrate.name)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_component,
+                                     None, [], self.product_nitrate.name)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_component,
+                                     None, {}, self.product_nitrate.name)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_component,
+                                     None, (), self.product_nitrate.name)
 
 
-class TestCheckProduct(TestCase):
+class TestCheckProduct(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -172,25 +150,16 @@ class TestCheckProduct(TestCase):
             self.assertEqual(cat['name'], 'Nitrate')
 
     def test_check_product_with_non_exist(self):
-        try:
-            product.check_product(None, "NonExist")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_product, None, "NonExist")
 
     def test_check_product_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.check_product(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_product, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_product, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_product, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.check_product, None, ())
 
 
-class TestFilter(TestCase):
+class TestFilter(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -224,12 +193,7 @@ class TestFilter(TestCase):
 
     @unittest.skip('TBD, the API needs change to meet this test.')
     def test_filter_by_non_doc_fields(self):
-        try:
-            product.filter(None, {'disallow_new': False})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.filter, None, {'disallow_new': False})
 
 
 class TestFilterCategories(TestCase):
@@ -335,7 +299,7 @@ class TestFilterVersions(TestCase):
             self.assertEqual(ver[0]['value'], "0.7")
 
 
-class TestGet(TestCase):
+class TestGet(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -355,25 +319,16 @@ class TestGet(TestCase):
             self.assertEqual(cat['name'], "StarCraft")
 
     def test_get_product_with_non_exist(self):
-        try:
-            product.get(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get, None, 9999)
 
     def test_get_product_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get, None, ())
 
 
-class TestGetBuilds(TestCase):
+class TestGetBuilds(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -409,32 +364,17 @@ class TestGetBuilds(TestCase):
             self.assertEqual('unspecified', builds[0]['name'])
 
     def test_get_build_with_non_exist_prod(self):
-        try:
-            product.get_builds(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.get_builds(None, "Unknown Product")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_builds, None, 9999)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_builds, None, "Unknown Product")
 
     def test_get_build_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_builds(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_builds, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_builds, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_builds, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_builds, None, ())
 
 
-class TestGetCases(TestCase):
+class TestGetCases(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -481,32 +421,17 @@ class TestGetCases(TestCase):
             self.assertEqual(len(cases), self.cases_count)
 
     def test_get_case_with_non_exist_prod(self):
-        try:
-            product.get_cases(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.get_cases(None, "Unknown Product")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_cases, None, 9999)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_cases, None, "Unknown Product")
 
     def test_get_case_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_cases(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_cases, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_cases, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_cases, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_cases, None, ())
 
 
-class TestGetCategories(TestCase):
+class TestGetCategories(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -546,32 +471,17 @@ class TestGetCategories(TestCase):
             self.assertEqual(cats[2]['name'], 'manual')
 
     def test_get_categories_with_non_exist_prod(self):
-        try:
-            product.get_categories(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.get_categories(None, "Unknown Product")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_categories, None, 9999)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_categories, None, "Unknown Product")
 
     def test_get_categories_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_categories(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_categories, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_categories, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_categories, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_categories, None, ())
 
 
-class TestGetCategory(TestCase):
+class TestGetCategory(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -593,25 +503,16 @@ class TestGetCategory(TestCase):
             self.assertEqual(cat['name'], 'manual')
 
     def test_get_category_with_non_exist(self):
-        try:
-            product.get_category(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_category, None, 9999)
 
     def test_get_category_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_category(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_category, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_category, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_category, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_category, None, ())
 
 
-class TestAddComponent(TestCase):
+class TestAddComponent(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -644,23 +545,15 @@ class TestAddComponent(TestCase):
             self.assertEqual(com['initial_owner'], self.admin.username)
 
     def test_add_component_with_no_perms(self):
-        try:
-            product.add_component(self.staff_request, self.product.pk, "MyComponent")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_PERMS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, product.add_component,
+                                     self.staff_request, self.product.pk, "MyComponent")
 
     def test_add_component_with_non_exist(self):
-        try:
-            product.add_component(self.admin_request, 9999, "MyComponent")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_PERMS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.add_component,
+                                     self.admin_request, 9999, "MyComponent")
 
 
-class TestGetComponent(TestCase):
+class TestGetComponent(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -682,25 +575,16 @@ class TestGetComponent(TestCase):
             self.assertEqual(com['name'], 'application')
 
     def test_get_component_with_non_exist(self):
-        try:
-            product.get_component(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_component, None, 9999)
 
     def test_get_component_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_component(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_component, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_component, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_component, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_component, None, ())
 
 
-class TestUpdateComponent(TestCase):
+class TestUpdateComponent(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -733,42 +617,34 @@ class TestUpdateComponent(TestCase):
             self.assertEqual(com['name'], 'Updated')
 
     def test_update_component_with_non_exist(self):
-        try:
-            product.update_component(self.admin_request, 1111, {'name': 'new name'})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.update_component,
+                                     self.admin_request, 1111, {'name': 'new name'})
 
     def test_update_component_with_no_perms(self):
-        try:
-            product.update_component(self.staff_request, self.component.pk, {})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_PERMS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, product.update_component,
+                                     self.staff_request, self.component.pk, {})
 
     def test_update_component_with_special_arg(self):
-        bad_args = (None, [], {}, ())
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, [], {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, {}, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, (), {})
 
-        for arg in bad_args:
-            try:
-                product.update_component(self.admin_request, arg, {})
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        for arg in bad_args:
-            try:
-                product.update_component(self.admin_request, self.component.pk, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, self.component.pk, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, self.component.pk, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, self.component.pk, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.update_component,
+                                     self.admin_request, self.component.pk, ())
 
 
-class TestGetComponents(TestCase):
+class TestGetComponents(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -817,56 +693,31 @@ class TestGetComponents(TestCase):
             self.assertEqual(expected_names, names)
 
     def test_get_components_with_non_exist_prod(self):
-        try:
-            product.get_components(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.get_components(None, "Unknown Product")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_components, None, 9999)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_components, None, "Unknown Product")
 
     def test_get_components_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_components(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_components, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_components, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_components, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_components, None, ())
 
 
-class TestGetEnvironments(TestCase):
+class TestGetEnvironments(XmlrpcAPIBaseTest):
 
     @unittest.skip('No implemented yet.')
     def test_get_environments(self):
-        try:
-            product.get_environments(None, None)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 501, AssertMessage.SHOULD_BE_501)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_IMPLEMENTED, product.get_environments, None, None)
 
 
 class TestGetMilestones(TestCase):
 
     @unittest.skip('No implemented yet.')
     def test_get_milestones(self):
-        try:
-            product.get_milestones(None, None)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 501, AssertMessage.SHOULD_BE_501)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_IMPLEMENTED, product.get_milestones, None, None)
 
 
-class TestGetPlans(TestCase):
+class TestGetPlans(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -924,32 +775,17 @@ class TestGetPlans(TestCase):
             self.assertEqual(plans[1]['name'], 'StarCraft: Start')
 
     def test_get_plans_with_non_exist_prod(self):
-        try:
-            product.get_plans(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.get_plans(None, "Unknown Product")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_plans, None, 9999)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_plans, None, "Unknown Product")
 
     def test_get_plans_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_plans(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_plans, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_plans, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_plans, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_plans, None, ())
 
 
-class TestGetRuns(TestCase):
+class TestGetRuns(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -1000,32 +836,17 @@ class TestGetRuns(TestCase):
                              'Test run for StarCraft: second one')
 
     def test_get_runs_with_non_exist_prod(self):
-        try:
-            product.get_runs(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.get_runs(None, "Unknown Product")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_runs, None, 9999)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_runs, None, "Unknown Product")
 
     def test_get_runs_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_runs(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_runs, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_runs, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_runs, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_runs, None, ())
 
 
-class TestGetTag(TestCase):
+class TestGetTag(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -1052,25 +873,16 @@ class TestGetTag(TestCase):
             self.assertEqual(tag['name'], "QWER")
 
     def test_get_tag_with_non_exist(self):
-        try:
-            product.get_tag(None, 9999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_tag, None, 9999)
 
     def test_get_tag_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_tag(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_tag, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_tag, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_tag, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_tag, None, ())
 
 
-class TestAddVersion(TestCase):
+class TestAddVersion(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -1089,14 +901,10 @@ class TestAddVersion(TestCase):
         cls.staff.delete()
 
     def test_add_version_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.add_version(self.admin_request, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version, self.admin_request, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version, self.admin_request, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version, self.admin_request, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version, self.admin_request, ())
 
     def test_add_version_with_product_id(self):
         try:
@@ -1126,30 +934,15 @@ class TestAddVersion(TestCase):
 
     def test_add_version_with_non_exist_prod(self):
         non_existing_product_pk = 111111
-        try:
-            product.add_version(self.admin_request, {
-                "product": non_existing_product_pk,
-                "value": "0.1",
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.add_version,
+                                     self.admin_request,
+                                     {"product": non_existing_product_pk, "value": "0.1"})
 
     def test_add_version_with_missing_argument(self):
-        try:
-            product.add_version(self.admin_request, {"product": self.product.pk})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.add_version(self.admin_request, {"value": "0.1"})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version,
+                                     self.admin_request, {"product": self.product.pk})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version,
+                                     self.admin_request, {"value": "0.1"})
 
     def test_add_version_with_extra_unrecognized_field(self):
         try:
@@ -1166,15 +959,10 @@ class TestAddVersion(TestCase):
             self.assertEqual('New version', new_version['value'])
 
     def test_add_version_with_no_perms(self):
-        try:
-            product.add_version(self.staff_request, {})
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_PERMS)
+        self.assertRaisesXmlrpcFault(FORBIDDEN, product.add_version, self.staff_request, {})
 
 
-class TestGetVersions(TestCase):
+class TestGetVersions(XmlrpcAPIBaseTest):
 
     @classmethod
     def setUpClass(cls):
@@ -1214,36 +1002,17 @@ class TestGetVersions(TestCase):
             self.assertEqual(self.versions + ['unspecified'], versions)
 
     def test_get_version_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            try:
-                product.get_versions(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, None)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, [])
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, {})
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, ())
 
     def test_get_version_with_non_exist_prod(self):
-        try:
-            product.get_versions(None, 99999)
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
-
-        try:
-            product.get_versions(None, "Missing Product")
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_versions, None, 99999)
+        self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_versions, None, "Missing Product")
 
     def test_get_version_with_bad_args(self):
-        bad_args = (True, False, '', object)
-        for arg in bad_args:
-            try:
-                product.get_versions(None, arg)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.NOT_VALIDATE_ARGS)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, True)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, False)
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, '')
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, object)

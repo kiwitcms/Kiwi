@@ -1,42 +1,30 @@
 # -*- coding: utf-8 -*-
-from xmlrpclib import Fault
+
+import httplib
 
 from django.test import TestCase
 
 from tcms.xmlrpc.filters import wrap_exceptions
-from tcms.xmlrpc.tests.utils import AssertMessage
+from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestFaultCode(TestCase):
+class TestFaultCode(XmlrpcAPIBaseTest):
+
     def test_403(self):
         def raise_exception(*args, **kwargs):
             from django.core.exceptions import PermissionDenied
-
             raise PermissionDenied()
 
         wrapper = wrap_exceptions(raise_exception)
-
-        try:
-            wrapper()
-        except Fault as f:
-            self.assertEqual(f.faultCode, 403, AssertMessage.SHOULD_BE_403)
-        else:
-            self.fail(AssertMessage.SHOULD_RAISE_EXCEPTION)
+        self.assertRaisesXmlrpcFault(httplib.FORBIDDEN, wrapper)
 
     def test_404(self):
         def raise_exception(*args, **kwargs):
             from django.db.models import ObjectDoesNotExist
-
             raise ObjectDoesNotExist()
 
         wrapper = wrap_exceptions(raise_exception)
-
-        try:
-            wrapper()
-        except Fault as f:
-            self.assertEqual(f.faultCode, 404, AssertMessage.SHOULD_BE_404)
-        else:
-            self.fail(AssertMessage.SHOULD_RAISE_EXCEPTION)
+        self.assertRaisesXmlrpcFault(httplib.NOT_FOUND, wrapper)
 
     def test_400(self):
         exceptions = [v for k, v in locals().iteritems() if k != 'self']
@@ -47,53 +35,29 @@ class TestFaultCode(TestCase):
 
         wrapper = wrap_exceptions(raise_exception)
         for clazz in exceptions:
-            try:
-                wrapper(clazz)
-            except Fault as f:
-                self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-            else:
-                self.fail(AssertMessage.SHOULD_RAISE_EXCEPTION)
+            self.assertRaisesXmlrpcFault(httplib.BAD_REQUEST, wrapper, clazz)
 
     def test_409(self):
         def raise_exception(*args, **kwargs):
             from django.db.utils import IntegrityError
-
             raise IntegrityError()
 
         wrapper = wrap_exceptions(raise_exception)
-
-        try:
-            wrapper()
-        except Fault as f:
-            self.assertEqual(f.faultCode, 409, AssertMessage.SHOULD_BE_409)
-        else:
-            self.fail(AssertMessage.SHOULD_RAISE_EXCEPTION)
+        self.assertRaisesXmlrpcFault(httplib.CONFLICT, wrapper)
 
     def test_500(self):
         def raise_exception(*args, **kwargs):
             raise Exception()
 
         wrapper = wrap_exceptions(raise_exception)
-
-        try:
-            wrapper()
-        except Fault as f:
-            self.assertEqual(f.faultCode, 500, AssertMessage.SHOULD_BE_500)
-        else:
-            self.fail(AssertMessage.SHOULD_RAISE_EXCEPTION)
+        self.assertRaisesXmlrpcFault(httplib.INTERNAL_SERVER_ERROR, wrapper)
 
     def test_501(self):
         def raise_exception(*args, **kwargs):
             raise NotImplementedError()
 
         wrapper = wrap_exceptions(raise_exception)
-
-        try:
-            wrapper()
-        except Fault as f:
-            self.assertEqual(f.faultCode, 501, AssertMessage.SHOULD_BE_501)
-        else:
-            self.fail(AssertMessage.SHOULD_RAISE_EXCEPTION)
+        self.assertRaisesXmlrpcFault(httplib.NOT_IMPLEMENTED, wrapper)
 
 
 class TestAutoWrap(TestCase):
