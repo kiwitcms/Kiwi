@@ -6,13 +6,11 @@ from httplib import BAD_REQUEST
 from httplib import NOT_FOUND
 from httplib import FORBIDDEN
 from httplib import NOT_IMPLEMENTED
-from xmlrpclib import Fault
 
 from django.test import TestCase
 
 from tcms.xmlrpc.api import product
 from tcms.xmlrpc.tests.utils import make_http_request
-from tcms.xmlrpc.tests.utils import AssertMessage
 
 from tcms.management.models import Component
 from tcms.tests.factories import ComponentFactory
@@ -49,12 +47,8 @@ class TestCheckCategory(XmlrpcAPIBaseTest):
         cls.product_nitrate.classification.delete()
 
     def test_check_category(self):
-        try:
-            cat = product.check_category(None, 'manual', self.product_nitrate.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(cat['name'], 'manual')
+        cat = product.check_category(None, 'manual', self.product_nitrate.pk)
+        self.assertEqual(cat['name'], 'manual')
 
     def test_check_category_with_non_exist_category(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_category,
@@ -100,12 +94,8 @@ class TestCheckComponent(XmlrpcAPIBaseTest):
         cls.product_xmlrpc.classification.delete()
 
     def test_check_component(self):
-        try:
-            cat = product.check_component(None, 'application', self.product_nitrate.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(cat['name'], 'application')
+        cat = product.check_component(None, 'application', self.product_nitrate.pk)
+        self.assertEqual(cat['name'], 'application')
 
     def test_check_component_with_non_exist(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_component,
@@ -142,12 +132,8 @@ class TestCheckProduct(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_check_product(self):
-        try:
-            cat = product.check_product(None, 'Nitrate')
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(cat['name'], 'Nitrate')
+        cat = product.check_product(None, 'Nitrate')
+        self.assertEqual(cat['name'], 'Nitrate')
 
     def test_check_product_with_non_exist(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.check_product, None, "NonExist")
@@ -174,22 +160,14 @@ class TestFilter(XmlrpcAPIBaseTest):
         cls.product_xmlrpc.classification.delete()
 
     def test_filter_by_id(self):
-        try:
-            prod = product.filter(None, {"id": self.product.pk})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(prod)
-            self.assertEqual(prod[0]['name'], 'Nitrate')
+        prod = product.filter(None, {"id": self.product.pk})
+        self.assertIsNotNone(prod)
+        self.assertEqual(prod[0]['name'], 'Nitrate')
 
     def test_filter_by_name(self):
-        try:
-            prod = product.filter(None, {'name': 'Nitrate'})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(prod)
-            self.assertEqual(prod[0]['name'], 'Nitrate')
+        prod = product.filter(None, {'name': 'Nitrate'})
+        self.assertIsNotNone(prod)
+        self.assertEqual(prod[0]['name'], 'Nitrate')
 
     @unittest.skip('TBD, the API needs change to meet this test.')
     def test_filter_by_non_doc_fields(self):
@@ -214,24 +192,16 @@ class TestFilterCategories(TestCase):
         cls.product.classification.delete()
 
     def test_filter_by_product_id(self):
-        try:
-            cat = product.filter_categories(None, {'product': self.product.pk})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cat)
-            self.assertEqual(cat[0]['name'], '--default--')
-            self.assertEqual(cat[1]['name'], 'auto')
-            self.assertEqual(cat[2]['name'], 'manual')
+        cat = product.filter_categories(None, {'product': self.product.pk})
+        self.assertIsNotNone(cat)
+        self.assertEqual(cat[0]['name'], '--default--')
+        self.assertEqual(cat[1]['name'], 'auto')
+        self.assertEqual(cat[2]['name'], 'manual')
 
     def test_filter_by_product_name(self):
-        try:
-            cat = product.filter_categories(None, {'name': 'auto'})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cat)
-            self.assertEqual(cat[0]['name'], 'auto')
+        cat = product.filter_categories(None, {'name': 'auto'})
+        self.assertIsNotNone(cat)
+        self.assertEqual(cat[0]['name'], 'auto')
 
 
 class TestFilterComponents(TestCase):
@@ -249,22 +219,14 @@ class TestFilterComponents(TestCase):
         cls.product.classification.delete()
 
     def test_filter_by_product_id(self):
-        try:
-            com = product.filter_components(None, {'product': self.product.pk})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(com)
-            self.assertEqual(com[0]['name'], 'application')
+        com = product.filter_components(None, {'product': self.product.pk})
+        self.assertIsNotNone(com)
+        self.assertEqual(com[0]['name'], 'application')
 
     def test_filter_by_name(self):
-        try:
-            com = product.filter_components(None, {'name': 'application'})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(com)
-            self.assertEqual(com[0]['name'], 'application')
+        com = product.filter_components(None, {'name': 'application'})
+        self.assertIsNotNone(com)
+        self.assertEqual(com[0]['name'], 'application')
 
 
 class TestFilterVersions(TestCase):
@@ -281,22 +243,14 @@ class TestFilterVersions(TestCase):
         cls.product.classification.delete()
 
     def test_filter_by_id(self):
-        try:
-            ver = product.filter_versions(None, {'id': self.product.pk})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(ver)
-            self.assertEqual(ver[0]['value'], "unspecified")
+        ver = product.filter_versions(None, {'id': self.product.pk})
+        self.assertIsNotNone(ver)
+        self.assertEqual(ver[0]['value'], "unspecified")
 
     def test_filter_by_name(self):
-        try:
-            ver = product.filter_versions(None, {'value': '0.7'})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(ver)
-            self.assertEqual(ver[0]['value'], "0.7")
+        ver = product.filter_versions(None, {'value': '0.7'})
+        self.assertIsNotNone(ver)
+        self.assertEqual(ver[0]['value'], "0.7")
 
 
 class TestGet(XmlrpcAPIBaseTest):
@@ -311,12 +265,8 @@ class TestGet(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_get_product(self):
-        try:
-            cat = product.get(None, self.product.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(cat['name'], "StarCraft")
+        cat = product.get(None, self.product.pk)
+        self.assertEqual(cat['name'], "StarCraft")
 
     def test_get_product_with_non_exist(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get, None, 9999)
@@ -344,24 +294,16 @@ class TestGetBuilds(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_get_build_with_id(self):
-        try:
-            builds = product.get_builds(None, self.product.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(builds)
-            self.assertEqual(len(builds), self.builds_count + 1)
-            self.assertEqual('unspecified', builds[0]['name'])
+        builds = product.get_builds(None, self.product.pk)
+        self.assertIsNotNone(builds)
+        self.assertEqual(len(builds), self.builds_count + 1)
+        self.assertEqual('unspecified', builds[0]['name'])
 
     def test_get_build_with_name(self):
-        try:
-            builds = product.get_builds(None, "StarCraft")
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(builds)
-            self.assertEqual(len(builds), self.builds_count + 1)
-            self.assertEqual('unspecified', builds[0]['name'])
+        builds = product.get_builds(None, "StarCraft")
+        self.assertIsNotNone(builds)
+        self.assertEqual(len(builds), self.builds_count + 1)
+        self.assertEqual('unspecified', builds[0]['name'])
 
     def test_get_build_with_non_exist_prod(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_builds, None, 9999)
@@ -403,22 +345,14 @@ class TestGetCases(XmlrpcAPIBaseTest):
         cls.tester.delete()
 
     def test_get_case_with_id(self):
-        try:
-            cases = product.get_cases(None, self.product.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cases)
-            self.assertEqual(len(cases), self.cases_count)
+        cases = product.get_cases(None, self.product.pk)
+        self.assertIsNotNone(cases)
+        self.assertEqual(len(cases), self.cases_count)
 
     def test_get_case_with_name(self):
-        try:
-            cases = product.get_cases(None, "StarCraft")
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cases)
-            self.assertEqual(len(cases), self.cases_count)
+        cases = product.get_cases(None, "StarCraft")
+        self.assertIsNotNone(cases)
+        self.assertEqual(len(cases), self.cases_count)
 
     def test_get_case_with_non_exist_prod(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_cases, None, 9999)
@@ -447,28 +381,20 @@ class TestGetCategories(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_get_categories_with_product_id(self):
-        try:
-            cats = product.get_categories(None, self.product.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cats)
-            self.assertEqual(len(cats), 3)
-            self.assertTrue(cats[0]['name'], '--default--')
-            self.assertTrue(cats[1]['name'], 'auto')
-            self.assertTrue(cats[2]['name'], 'manual')
+        cats = product.get_categories(None, self.product.pk)
+        self.assertIsNotNone(cats)
+        self.assertEqual(len(cats), 3)
+        self.assertTrue(cats[0]['name'], '--default--')
+        self.assertTrue(cats[1]['name'], 'auto')
+        self.assertTrue(cats[2]['name'], 'manual')
 
     def test_get_categories_with_product_name(self):
-        try:
-            cats = product.get_categories(None, 'StarCraft')
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(cats)
-            self.assertEqual(len(cats), 3)
-            self.assertEqual(cats[0]['name'], '--default--')
-            self.assertEqual(cats[1]['name'], 'auto')
-            self.assertEqual(cats[2]['name'], 'manual')
+        cats = product.get_categories(None, 'StarCraft')
+        self.assertIsNotNone(cats)
+        self.assertEqual(len(cats), 3)
+        self.assertEqual(cats[0]['name'], '--default--')
+        self.assertEqual(cats[1]['name'], 'auto')
+        self.assertEqual(cats[2]['name'], 'manual')
 
     def test_get_categories_with_non_exist_prod(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_categories, None, 9999)
@@ -495,12 +421,8 @@ class TestGetCategory(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_get_category(self):
-        try:
-            cat = product.get_category(None, self.category.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(cat['name'], 'manual')
+        cat = product.get_category(None, self.category.pk)
+        self.assertEqual(cat['name'], 'manual')
 
     def test_get_category_with_non_exist(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_category, None, 9999)
@@ -534,15 +456,11 @@ class TestAddComponent(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_add_component(self):
-        try:
-            com = product.add_component(self.admin_request, self.product.pk, "application")
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.components_to_delete.append(com['id'])
-            self.assertIsNotNone(com)
-            self.assertEqual(com['name'], 'application')
-            self.assertEqual(com['initial_owner'], self.admin.username)
+        com = product.add_component(self.admin_request, self.product.pk, "application")
+        self.components_to_delete.append(com['id'])
+        self.assertIsNotNone(com)
+        self.assertEqual(com['name'], 'application')
+        self.assertEqual(com['initial_owner'], self.admin.username)
 
     def test_add_component_with_no_perms(self):
         self.assertRaisesXmlrpcFault(FORBIDDEN, product.add_component,
@@ -567,12 +485,8 @@ class TestGetComponent(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_get_component(self):
-        try:
-            com = product.get_component(None, self.component.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(com['name'], 'application')
+        com = product.get_component(None, self.component.pk)
+        self.assertEqual(com['name'], 'application')
 
     def test_get_component_with_non_exist(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_component, None, 9999)
@@ -607,14 +521,9 @@ class TestUpdateComponent(XmlrpcAPIBaseTest):
         cls.admin.delete()
 
     def test_update_component(self):
-        try:
-            values = {'name': 'Updated'}
-            com = product.update_component(self.admin_request, self.component.pk, values)
-        except Fault:
-            raise
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(com['name'], 'Updated')
+        values = {'name': 'Updated'}
+        com = product.update_component(self.admin_request, self.component.pk, values)
+        self.assertEqual(com['name'], 'Updated')
 
     def test_update_component_with_non_exist(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.update_component,
@@ -667,30 +576,22 @@ class TestGetComponents(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_get_components_with_id(self):
-        try:
-            coms = product.get_components(None, self.product.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(coms)
-            self.assertEqual(len(coms), 3)
-            names = [plan['name'] for plan in coms]
-            names.sort()
-            expected_names = ['application', 'database', 'documentation']
-            self.assertEqual(expected_names, names)
+        coms = product.get_components(None, self.product.pk)
+        self.assertIsNotNone(coms)
+        self.assertEqual(len(coms), 3)
+        names = [plan['name'] for plan in coms]
+        names.sort()
+        expected_names = ['application', 'database', 'documentation']
+        self.assertEqual(expected_names, names)
 
     def test_get_components_with_name(self):
-        try:
-            coms = product.get_components(None, "StarCraft")
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(coms)
-            self.assertEqual(len(coms), 3)
-            names = [plan['name'] for plan in coms]
-            names.sort()
-            expected_names = ['application', 'database', 'documentation']
-            self.assertEqual(expected_names, names)
+        coms = product.get_components(None, "StarCraft")
+        self.assertIsNotNone(coms)
+        self.assertEqual(len(coms), 3)
+        names = [plan['name'] for plan in coms]
+        names.sort()
+        expected_names = ['application', 'database', 'documentation']
+        self.assertEqual(expected_names, names)
 
     def test_get_components_with_non_exist_prod(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_components, None, 9999)
@@ -753,26 +654,18 @@ class TestGetPlans(XmlrpcAPIBaseTest):
         cls.user.delete()
 
     def test_get_plans_with_id(self):
-        try:
-            plans = product.get_plans(None, self.product_starcraft.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(plans)
-            self.assertEqual(len(plans), 2)
-            self.assertEqual(plans[0]['name'], 'StarCraft: Init')
-            self.assertEqual(plans[1]['name'], 'StarCraft: Start')
+        plans = product.get_plans(None, self.product_starcraft.pk)
+        self.assertIsNotNone(plans)
+        self.assertEqual(len(plans), 2)
+        self.assertEqual(plans[0]['name'], 'StarCraft: Init')
+        self.assertEqual(plans[1]['name'], 'StarCraft: Start')
 
     def test_get_plans_with_name(self):
-        try:
-            plans = product.get_plans(None, 'StarCraft')
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(plans)
-            self.assertEqual(len(plans), 2)
-            self.assertEqual(plans[0]['name'], 'StarCraft: Init')
-            self.assertEqual(plans[1]['name'], 'StarCraft: Start')
+        plans = product.get_plans(None, 'StarCraft')
+        self.assertIsNotNone(plans)
+        self.assertEqual(len(plans), 2)
+        self.assertEqual(plans[0]['name'], 'StarCraft: Init')
+        self.assertEqual(plans[1]['name'], 'StarCraft: Start')
 
     def test_get_plans_with_non_exist_prod(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_plans, None, 9999)
@@ -808,32 +701,22 @@ class TestGetRuns(XmlrpcAPIBaseTest):
         cls.manager.delete()
 
     def test_get_runs_with_id(self):
-        try:
-            runs = product.get_runs(None, self.product.pk)
-        except Fault:
-            raise
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(runs)
-            self.assertEqual(len(runs), 2)
-            self.assertEqual(runs[0]['summary'],
-                             'Test run for StarCraft: Init on Unknown environment')
-            self.assertEqual(runs[1]['summary'],
-                             'Test run for StarCraft: second one')
+        runs = product.get_runs(None, self.product.pk)
+        self.assertIsNotNone(runs)
+        self.assertEqual(len(runs), 2)
+        self.assertEqual(runs[0]['summary'],
+                         'Test run for StarCraft: Init on Unknown environment')
+        self.assertEqual(runs[1]['summary'],
+                         'Test run for StarCraft: second one')
 
     def test_get_runs_with_name(self):
-        try:
-            runs = product.get_runs(None, 'StarCraft')
-        except Fault:
-            raise
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(runs)
-            self.assertEqual(len(runs), 2)
-            self.assertEqual(runs[0]['summary'],
-                             'Test run for StarCraft: Init on Unknown environment')
-            self.assertEqual(runs[1]['summary'],
-                             'Test run for StarCraft: second one')
+        runs = product.get_runs(None, 'StarCraft')
+        self.assertIsNotNone(runs)
+        self.assertEqual(len(runs), 2)
+        self.assertEqual(runs[0]['summary'],
+                         'Test run for StarCraft: Init on Unknown environment')
+        self.assertEqual(runs[1]['summary'],
+                         'Test run for StarCraft: second one')
 
     def test_get_runs_with_non_exist_prod(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_runs, None, 9999)
@@ -857,20 +740,11 @@ class TestGetTag(XmlrpcAPIBaseTest):
         cls.tag.delete()
 
     def test_get_tag(self):
-        try:
-            tag = product.get_tag(None, self.tag.pk)
-        except Fault:
-            raise
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(tag['name'], "QWER")
+        tag = product.get_tag(None, self.tag.pk)
+        self.assertEqual(tag['name'], "QWER")
 
-        try:
-            tag = product.get_tag(None, str(self.tag.pk))
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(tag['name'], "QWER")
+        tag = product.get_tag(None, str(self.tag.pk))
+        self.assertEqual(tag['name'], "QWER")
 
     def test_get_tag_with_non_exist(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_tag, None, 9999)
@@ -907,30 +781,21 @@ class TestAddVersion(XmlrpcAPIBaseTest):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version, self.admin_request, ())
 
     def test_add_version_with_product_id(self):
-        try:
-            prod = product.add_version(self.admin_request, {
-                "product": self.product.pk,
-                "value": "New Version 1"
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(prod['value'], "New Version 1")
-            self.assertEqual(prod['product_id'], self.product.pk)
+        prod = product.add_version(self.admin_request, {
+            "product": self.product.pk,
+            "value": "New Version 1"
+        })
+        self.assertEqual(prod['value'], "New Version 1")
+        self.assertEqual(prod['product_id'], self.product.pk)
 
     def test_add_version_with_product_name(self):
         new_version = 'New Version 2'
-        try:
-            prod = product.add_version(self.admin_request, {
-                'product': self.product_name,
-                'value': new_version,
-            })
-        except Fault:
-            raise
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertEqual(prod['value'], new_version)
-            self.assertEqual(prod['product_id'], self.product.pk)
+        prod = product.add_version(self.admin_request, {
+            'product': self.product_name,
+            'value': new_version,
+        })
+        self.assertEqual(prod['value'], new_version)
+        self.assertEqual(prod['product_id'], self.product.pk)
 
     def test_add_version_with_non_exist_prod(self):
         non_existing_product_pk = 111111
@@ -945,18 +810,14 @@ class TestAddVersion(XmlrpcAPIBaseTest):
                                      self.admin_request, {"value": "0.1"})
 
     def test_add_version_with_extra_unrecognized_field(self):
-        try:
-            new_version = product.add_version(self.admin_request, {
-                'product': self.product.pk,
-                'value': 'New version',
-                'data': 'Extra value that is not expected',
-            })
-        except Fault as f:
-            self.assertEqual(f.faultCode, 400, AssertMessage.SHOULD_BE_400)
-        else:
-            self.assertEqual(self.product.pk, new_version['product_id'])
-            self.assertEqual(self.product.name, new_version['product'])
-            self.assertEqual('New version', new_version['value'])
+        new_version = product.add_version(self.admin_request, {
+            'product': self.product.pk,
+            'value': 'New version',
+            'data': 'Extra value that is not expected',
+        })
+        self.assertEqual(self.product.pk, new_version['product_id'])
+        self.assertEqual(self.product.name, new_version['product'])
+        self.assertEqual('New version', new_version['value'])
 
     def test_add_version_with_no_perms(self):
         self.assertRaisesXmlrpcFault(FORBIDDEN, product.add_version, self.staff_request, {})
@@ -980,26 +841,18 @@ class TestGetVersions(XmlrpcAPIBaseTest):
         cls.product.classification.delete()
 
     def test_get_versions_with_id(self):
-        try:
-            prod = product.get_versions(None, self.product.pk)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(prod)
-            versions = [item['value'] for item in prod]
-            versions.sort()
-            self.assertEqual(self.versions + ['unspecified'], versions)
+        prod = product.get_versions(None, self.product.pk)
+        self.assertIsNotNone(prod)
+        versions = [item['value'] for item in prod]
+        versions.sort()
+        self.assertEqual(self.versions + ['unspecified'], versions)
 
     def test_get_versions_with_name(self):
-        try:
-            prod = product.get_versions(None, self.product_name)
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(prod)
-            versions = [item['value'] for item in prod]
-            versions.sort()
-            self.assertEqual(self.versions + ['unspecified'], versions)
+        prod = product.get_versions(None, self.product_name)
+        self.assertIsNotNone(prod)
+        versions = [item['value'] for item in prod]
+        versions.sort()
+        self.assertEqual(self.versions + ['unspecified'], versions)
 
     def test_get_version_with_no_args(self):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, product.get_versions, None, None)

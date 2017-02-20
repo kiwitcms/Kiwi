@@ -5,7 +5,6 @@ import unittest
 from httplib import BAD_REQUEST
 from httplib import NOT_FOUND
 from httplib import INTERNAL_SERVER_ERROR
-from xmlrpclib import Fault
 
 from django import test
 from django.conf import settings

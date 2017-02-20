@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from httplib import BAD_REQUEST
-from xmlrpclib import Fault
 
 from tcms.xmlrpc.api import tag
 from tcms.tests.factories import TestTagFactory
-from tcms.xmlrpc.tests.utils import AssertMessage
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
@@ -37,40 +35,32 @@ class TestTag(XmlrpcAPIBaseTest):
             self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, arg)
 
     def test_get_tags_with_ids(self):
-        try:
-            test_tag = tag.get_tags(None, {'ids': [self.tag_python.pk,
-                                                   self.tag_db.pk,
-                                                   self.tag_fedora.pk]})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(test_tag)
-            self.assertEqual(3, len(test_tag))
+        test_tag = tag.get_tags(None, {'ids': [self.tag_python.pk,
+                                               self.tag_db.pk,
+                                               self.tag_fedora.pk]})
+        self.assertIsNotNone(test_tag)
+        self.assertEqual(3, len(test_tag))
 
-            test_tag = sorted(test_tag, key=lambda item: item['id'])
-            self.assertEqual(test_tag[0]['id'], self.tag_db.pk)
-            self.assertEqual(test_tag[0]['name'], 'db')
-            self.assertEqual(test_tag[1]['id'], self.tag_fedora.pk)
-            self.assertEqual(test_tag[1]['name'], 'fedora')
-            self.assertEqual(test_tag[2]['id'], self.tag_python.pk)
-            self.assertEqual(test_tag[2]['name'], 'python')
+        test_tag = sorted(test_tag, key=lambda item: item['id'])
+        self.assertEqual(test_tag[0]['id'], self.tag_db.pk)
+        self.assertEqual(test_tag[0]['name'], 'db')
+        self.assertEqual(test_tag[1]['id'], self.tag_fedora.pk)
+        self.assertEqual(test_tag[1]['name'], 'fedora')
+        self.assertEqual(test_tag[2]['id'], self.tag_python.pk)
+        self.assertEqual(test_tag[2]['name'], 'python')
 
     def test_get_tags_with_names(self):
-        try:
-            test_tag = tag.get_tags(None, {'names': ['python', 'fedora', 'db']})
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(test_tag)
-            self.assertEqual(3, len(test_tag))
+        test_tag = tag.get_tags(None, {'names': ['python', 'fedora', 'db']})
+        self.assertIsNotNone(test_tag)
+        self.assertEqual(3, len(test_tag))
 
-            test_tag = sorted(test_tag, key=lambda item: item['id'])
-            self.assertEqual(test_tag[0]['id'], self.tag_db.pk)
-            self.assertEqual(test_tag[0]['name'], 'db')
-            self.assertEqual(test_tag[1]['id'], self.tag_fedora.pk)
-            self.assertEqual(test_tag[1]['name'], 'fedora')
-            self.assertEqual(test_tag[2]['id'], self.tag_python.pk)
-            self.assertEqual(test_tag[2]['name'], 'python')
+        test_tag = sorted(test_tag, key=lambda item: item['id'])
+        self.assertEqual(test_tag[0]['id'], self.tag_db.pk)
+        self.assertEqual(test_tag[0]['name'], 'db')
+        self.assertEqual(test_tag[1]['id'], self.tag_fedora.pk)
+        self.assertEqual(test_tag[1]['name'], 'fedora')
+        self.assertEqual(test_tag[2]['id'], self.tag_python.pk)
+        self.assertEqual(test_tag[2]['name'], 'python')
 
     def test_get_tags_with_non_exist_fields(self):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, {'tag_id': [1]})

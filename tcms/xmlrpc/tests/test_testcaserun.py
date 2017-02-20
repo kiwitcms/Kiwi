@@ -7,7 +7,6 @@ from httplib import FORBIDDEN
 from httplib import NOT_FOUND
 from httplib import NOT_IMPLEMENTED
 from datetime import datetime
-from xmlrpclib import Fault
 
 from tcms.xmlrpc.api import testcaserun
 from tcms.xmlrpc.tests.utils import make_http_request
@@ -23,7 +22,6 @@ from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import TestBuildFactory
-from tcms.xmlrpc.tests.utils import AssertMessage
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
@@ -289,41 +287,29 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
                                          self.admin_request, value)
 
     def test_attach_bug_with_required_args(self):
-        try:
-            bug = testcaserun.attach_bug(self.admin_request, {
-                "case_run_id": self.case_run.pk,
-                "bug_id": '1',
-                "bug_system_id": self.bug_system_bz.pk,
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNone(bug)
+        bug = testcaserun.attach_bug(self.admin_request, {
+            "case_run_id": self.case_run.pk,
+            "bug_id": '1',
+            "bug_system_id": self.bug_system_bz.pk,
+        })
+        self.assertIsNone(bug)
 
-        try:
-            bug = testcaserun.attach_bug(self.admin_request, {
-                "case_run_id": self.case_run.pk,
-                "bug_id": "TCMS-123",
-                "bug_system_id": self.bug_system_jira.pk,
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNone(bug)
+        bug = testcaserun.attach_bug(self.admin_request, {
+            "case_run_id": self.case_run.pk,
+            "bug_id": "TCMS-123",
+            "bug_system_id": self.bug_system_jira.pk,
+        })
+        self.assertIsNone(bug)
 
     def test_attach_bug_with_all_fields(self):
-        try:
-            bug = testcaserun.attach_bug(self.admin_request, {
-                "case_run_id": self.case_run.pk,
-                "bug_id": '2',
-                "bug_system_id": self.bug_system_bz.pk,
-                "summary": "This is summary.",
-                "description": "This is description."
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNone(bug)
+        bug = testcaserun.attach_bug(self.admin_request, {
+            "case_run_id": self.case_run.pk,
+            "bug_id": '2',
+            "bug_system_id": self.bug_system_bz.pk,
+            "summary": "This is summary.",
+            "description": "This is description."
+        })
+        self.assertIsNone(bug)
 
     def test_succeed_to_attach_bug_by_passing_extra_data(self):
         testcaserun.attach_bug(self.admin_request, {
@@ -355,18 +341,14 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_bug, self.admin_request, value)
 
     def test_attach_bug_with_chinese(self):
-        try:
-            bug = testcaserun.attach_bug(self.admin_request, {
-                "case_run_id": self.case_run.pk,
-                "bug_id": '12',
-                "bug_system_id": self.bug_system_bz.pk,
-                "summary": "你好，中国",
-                "description": "中国是一个具有悠久历史的文明古国"
-            })
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNone(bug)
+        bug = testcaserun.attach_bug(self.admin_request, {
+            "case_run_id": self.case_run.pk,
+            "bug_id": '12',
+            "bug_system_id": self.bug_system_bz.pk,
+            "summary": "你好，中国",
+            "description": "中国是一个具有悠久历史的文明古国"
+        })
+        self.assertIsNone(bug)
 
 
 class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
@@ -396,14 +378,9 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
                                      None, self.case_run.pk, "UT test logs", 'aaaaaaaaa')
 
     def test_attach_log(self):
-        try:
-            url = "http://127.0.0.1/test/test-log.log"
-            log = testcaserun.attach_log(None, self.case_run.pk, "UT test logs", url)
-        except Fault as f:
-            print str(f.faultString)
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNone(log)
+        url = "http://127.0.0.1/test/test-log.log"
+        log = testcaserun.attach_log(None, self.case_run.pk, "UT test logs", url)
+        self.assertIsNone(log)
 
 
 class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
@@ -426,14 +403,10 @@ class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
             self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, arg)
 
     def test_check_status_with_name(self):
-        try:
-            status = testcaserun.check_case_run_status(None, "IDLE")
-        except Fault:
-            self.fail(AssertMessage.UNEXCEPT_ERROR)
-        else:
-            self.assertIsNotNone(status)
-            self.assertEqual(status['id'], 1)
-            self.assertEqual(status['name'], "IDLE")
+        status = testcaserun.check_case_run_status(None, "IDLE")
+        self.assertIsNotNone(status)
+        self.assertEqual(status['id'], 1)
+        self.assertEqual(status['name'], "IDLE")
 
     def test_check_status_with_non_exist_name(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.check_case_run_status, None, "ABCDEFG")
