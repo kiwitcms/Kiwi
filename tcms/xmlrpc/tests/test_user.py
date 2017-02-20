@@ -77,8 +77,14 @@ class TestUserFilter(TestCase):
 class TestUserGet(TestCase):
     '''Test User.get'''
 
-    def setUp(self):
-        self.http_req = make_http_request()
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
 
     def test_get(self):
         test_user = self.http_req.user
@@ -100,8 +106,14 @@ class TestUserGet(TestCase):
 class TestUserGetMe(TestCase):
     '''Test User.get_me'''
 
-    def setUp(self):
-        self.http_req = make_http_request()
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.user.delete()
 
     def test_get_me(self):
         test_user = self.http_req.user
