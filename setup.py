@@ -3,20 +3,6 @@
 from setuptools import setup, find_packages
 
 import tcms
-<<<<<<< HEAD
-=======
-
-
-def get_package_data():
-    # annoyingly, it appears that package_data has to list filenames; it can't
-    # cope with directories, so we have to figure this out for it:
-    result = {
-        '': [] + list(get_files_below('../templates'))
-               + list(get_files_below('../static'))
-               + list(get_files_below('../docs')),
-    }
-    return result
->>>>>>> 6aee565... Use version from module, not txt file
 
 
 def get_install_requires():
