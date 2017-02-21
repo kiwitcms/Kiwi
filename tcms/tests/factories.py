@@ -28,7 +28,7 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = 'auth.User'
 
-    username = factory.Sequence(lambda n: 'User %d' % n)
+    username = factory.Sequence(lambda n: 'User%d' % n)
     email = factory.LazyAttribute(lambda user: '%s@example.com' % user.username)
 
     @factory.post_generation
