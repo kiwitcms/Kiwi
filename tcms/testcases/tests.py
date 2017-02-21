@@ -6,6 +6,7 @@ from django.forms import ValidationError
 
 from fields import MultipleEmailField
 
+
 class TestMultipleEmailField(unittest.TestCase):
 
     @classmethod
