@@ -242,10 +242,16 @@ class TestFilterVersions(TestCase):
         cls.product.delete()
         cls.product.classification.delete()
 
-    def test_filter_by_id(self):
-        ver = product.filter_versions(None, {'id': self.product.pk})
+    def test_filter_by_version_id(self):
+        ver = product.filter_versions(None, {'id': self.version.pk})
         self.assertIsNotNone(ver)
-        self.assertEqual(ver[0]['value'], "unspecified")
+        self.assertEqual(ver[0]['value'], "0.7")
+
+    def test_filter_by_product_id(self):
+        versions = product.filter_versions(None, {'product_id': self.product.pk})
+        self.assertIsInstance(versions, list)
+        versions = [version['value'] for version in versions]
+        self.assertEqual(['0.7', 'unspecified'], versions)
 
     def test_filter_by_name(self):
         ver = product.filter_versions(None, {'value': '0.7'})
