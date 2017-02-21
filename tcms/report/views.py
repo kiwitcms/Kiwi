@@ -2,6 +2,7 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
+from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -13,15 +14,12 @@ from django.views.generic import View
 from forms import CustomSearchDetailsForm
 from tcms.management.models import Priority
 from tcms.management.models import Product
-from tcms.testruns.models import TestCaseRunStatus
-from tcms.core.db import workaround_single_value_for_in_clause
+from tcms.testruns.models import TestRun, TestCaseRunStatus, TestCaseRun
 from tcms.core.utils.raw_sql import ReportSQL as RawSQL
 from tcms.report.forms import TestingReportForm
 from tcms.report.forms import TestingReportCaseRunsListForm
 from tcms.report.data import CustomDetailsReportData
 from tcms.report.data import CustomReportData
-from tcms.report.data import overview_view_get_case_run_status_count
-from tcms.report.data import overview_view_get_running_runs_count
 from tcms.report.data import ProductBuildReportData
 from tcms.report.data import ProductComponentReportData
 from tcms.report.data import ProductVersionReportData
@@ -72,8 +70,23 @@ def overview(request, product_id, template_name='report/overview.html'):
     except Product.DoesNotExist as error:
         raise Http404(error)
 
-    runs_count = overview_view_get_running_runs_count(product.pk)
-    caserun_status_count = overview_view_get_case_run_status_count(product.pk)
+    query = TestRun.objects.filter(plan__product=product_id)
+    runs_count = {
+        'TOTAL': query.count(),
+        'finished': query.filter(stop_date__isnull=False).count(),
+    }
+    runs_count['running'] = runs_count['TOTAL'] - runs_count['finished']
+
+    query = TestCaseRun.objects.filter(run__plan__product=product_id)
+    caserun_status_count = {}
+    total = 0
+    for row in TestCaseRun.objects.filter(
+            run__plan__product=product_id).values(
+            'case_run_status__name').annotate(
+            status_count=Count('case_run_status__name')):
+        caserun_status_count[row['case_run_status__name']] = row['status_count']
+        total += row['status_count']
+    caserun_status_count['TOTAL'] = total
 
     context_data = {
         'module': MODULE_NAME,
@@ -109,8 +122,8 @@ class ProductVersionReport(TemplateView, ProductVersionReportData):
         product_id = self.product.pk
 
         plans_subtotal = self.plans_subtotal(product_id)
-        running_runs_subtotal = self.running_runs_subtotal(product_id)
-        finished_runs_subtotal = self.finished_runs_subtotal(product_id)
+        running_runs_subtotal = self.runs_subtotal(product_id, True)
+        finished_runs_subtotal = self.runs_subtotal(product_id, False)
         cases_subtotal = self.cases_subtotal(product_id)
         case_runs_subtotal = self.case_runs_subtotal(product_id)
         finished_case_runs_subtotal = \
@@ -238,7 +251,6 @@ class ProductComponentReport(TemplateView, ProductComponentReportData):
         total_cases = self.total_cases(pid)
         failed_case_runs_count = self.failed_case_runs_count(pid)
         finished_case_runs_count = self.finished_case_runs_count(pid)
-        total_case_runs_count = self.total_case_runs_count(pid)
 
         for component in components:
             cid = component.pk
@@ -247,7 +259,7 @@ class ProductComponentReport(TemplateView, ProductComponentReportData):
                                                                          0)
 
             n = finished_case_runs_count.get(cid, 0)
-            m = total_case_runs_count.get(cid, 0)
+            m = component.total_cases
             if n and m:
                 component.finished_case_run_percent = round(n * 100.0 / m, 1)
             else:
@@ -301,63 +313,49 @@ class CustomReport(TemplateView):
             context.update({'builds': ()})
             return context
 
-        _data = self.data_class(form)
-        self._data = _data
+        self._data = self.data_class(form)
 
-        builds = _data._get_builds()
-        build_ids = [build.pk for build in builds]
+        builds = self._data._get_builds()
+        build_ids = [b['build'] for b in builds]
 
-        # TODO: remove this after upgrading MySQL-python to 1.2.5
-        build_ids = workaround_single_value_for_in_clause(build_ids)
-
-        if build_ids:
+        if builds:
             # Summary header data
-            runs_subtotal = _data.runs_subtotal()
-            plans_subtotal = _data.plans_subtotal()
-            case_runs_subtotal = _data.case_runs_subtotal()
-            isautomated_subtotal = _data.cases_isautomated_subtotal()
+            runs_total = 0
+            case_runs_total = 0
+            automation_total = self._data.automation_total(build_ids)
 
-            # Staus matrix used to render progress bar for each build
-            case_runs_status_matrix = _data.status_matrix()
-
-            status_names_ids = TestCaseRunStatus.get_names_ids()
-            # FIXME: this would raise KeyError once status names are modified
-            # to other ones.
-            passed_id = status_names_ids['PASSED']
-            failed_id = status_names_ids['FAILED']
+            # Status matrix used to render progress bar for each build
+            status_matrix = self._data.status_matrix(build_ids)
 
             for build in builds:
-                bid = build.pk
-                build.runs_count = runs_subtotal.get(bid, 0)
-                build.plans_count = plans_subtotal.get(bid, 0)
-                build.case_runs_count = case_runs_subtotal.get(bid, 0)
+                bid = build['build']
+                runs_total += build['runs_count']
 
-                status_subtotal = case_runs_status_matrix.get(bid, {})
-                passed_count = status_subtotal.get(passed_id, 0)
-                failed_count = status_subtotal.get(failed_id, 0)
+                passed_count = status_matrix[bid].get('PASSED', 0)
+                failed_count = status_matrix[bid].get('FAILED', 0)
 
-                c = case_runs_subtotal.get(bid, 0)
+                c = build['case_runs_count']
+                case_runs_total += build['case_runs_count']
 
                 if c:
-                    build.passed_case_runs_percent = passed_count * 100.0 / c
-                    build.failed_case_runs_percent = failed_count * 100.0 / c
+                    build['passed_case_runs_percent'] = passed_count * 100.0 / c
+                    build['failed_case_runs_percent'] = failed_count * 100.0 / c
                 else:
-                    build.passed_case_runs_percent = .0
-                    build.failed_case_runs_percent = .0
+                    build['passed_case_runs_percent'] = .0
+                    build['failed_case_runs_percent'] = .0
 
-                build.passed_case_runs_count = passed_count
-                build.failed_case_runs_count = failed_count
-                build.case_runs_count = c
+                build['passed_case_runs_count'] = passed_count
+                build['failed_case_runs_count'] = failed_count
 
             context.update({
-                # TODO: replace following three TOTAL key lookup with total
-                # method invocation.
-                'total_runs_count': runs_subtotal.get('TOTAL', 0),
-                'total_plans_count': plans_subtotal.get('TOTAL', 0),
-                'total_count': isautomated_subtotal.get('TOTAL', 0),
-                'manual_count': isautomated_subtotal.get(0, 0),
-                'auto_count': isautomated_subtotal.get(1, 0),
-                'both_count': isautomated_subtotal.get(2, 0),
+                'total_runs_count': runs_total,
+                'total_plans_count': TestRun.objects.filter(
+                    build__in=build_ids
+                ).values('plan').distinct().count(),
+                'total_count': case_runs_total,
+                'manual_count': automation_total.get('Manual', 0),
+                'auto_count': automation_total.get('Auto', 0),
+                'both_count': automation_total.get('Both', 0),
             })
 
         context.update({'builds': builds})
@@ -446,20 +444,16 @@ class CustomDetailReport(CustomReport):
                                         self)._report_data_context()
             data.update(summary_header_data)
 
-            build_ids = [build.pk for build in data['builds']]
-            # TODO: remove this after upgrading MySQL-python to 1.2.5
-            build_ids = workaround_single_value_for_in_clause(build_ids)
+            build_ids = [build['build'] for build in data['builds']]
 
             status_matrix = self.walk_matrix_row_by_row(
-                self._data.generate_status_matrix(build_ids))
+                self._data.generate_status_matrix(build_ids)
+            )
 
-            # TODO: remove this after upgrading MySQL-python to 1.2.5
-            status_ids = workaround_single_value_for_in_clause(
-                (TestCaseRunStatus.id_failed(),))
+            status_ids = (TestCaseRunStatus.id_failed(),)
             failed_case_runs = self.read_case_runs(build_ids, status_ids)
-            # TODO: remove this after upgrading MySQL-python to 1.2.5
-            status_ids = workaround_single_value_for_in_clause(
-                (TestCaseRunStatus.id_blocked(),))
+
+            status_ids = (TestCaseRunStatus.id_blocked(),)
             blocked_case_runs = self.read_case_runs(build_ids, status_ids)
 
             data.update({
