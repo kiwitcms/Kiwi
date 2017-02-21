@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+3.8.18.08 (Feb 21 2017, released on MrSenko.com)
+------------------------------------------------
+
+- Replace hard-coded SQL statements with ORM queries in reporting app.
+  PR #146, fix #127 (Mr. Senko)
+
 3.8.18.07 (Feb 14 2017, released on MrSenko.com)
 ------------------------------------------------
 
