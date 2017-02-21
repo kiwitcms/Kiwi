@@ -4,48 +4,54 @@ import httplib
 import os
 import xml.etree.ElementTree as et
 
-from django.contrib.auth.models import User
+from django import test
 from django.core.urlresolvers import reverse
 from django.test.client import Client
-from django import test
 
 from tcms.settings.common import TCMS_ROOT_PATH
-from tcms.management.models import Classification
-from tcms.management.models import Product
-from tcms.management.models import Version
 from tcms.testcases.models import TestCase
 from tcms.testplans.models import TestPlan
-from tcms.testplans.models import TestPlanType
+from tcms.tests.factories import ClassificationFactory
+from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import TestPlanTypeFactory
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import VersionFactory
 
 
 class PlanTests(test.TestCase):
 
-    def setUp(self):
-        self.user = User.objects.create_superuser(username='admin',
-                                                  email='admin@example.com',
-                                                  password='admin')
-        self.c = Client()
-        self.c.post('/accounts/login/',
-                    {'username': 'admin', 'password': 'admin'},
-                    follow=True)
+    @classmethod
+    def setUpClass(cls):
+        cls.user = UserFactory(username='admin', email='admin@example.com')
+        cls.user.set_password('admin')
+        cls.user.is_superuser = True
+        cls.user.save()
 
-        self.classification = Classification.objects.create(name='Auto')
-        self.product = Product.objects.create(name='Nitrate', classification=self.classification)
-        self.product_version = Version.objects.create(value='0.1', product=self.product)
-        self.plan_type = TestPlanType.objects.all()[0]
+        cls.c = Client()
+        cls.c.login(username='admin', password='admin')
 
-        self.test_plan = TestPlan.objects.create(name='another test plan for testing',
-                                                 product_version=self.product_version,
-                                                 author=self.user,
-                                                 product=self.product,
-                                                 type=self.plan_type)
-        self.plan_id = self.test_plan.pk
+        cls.classification = ClassificationFactory(name='Auto')
+        cls.product = ProductFactory(name='Nitrate', classification=cls.classification)
+        cls.product_version = VersionFactory(value='0.1', product=cls.product)
+        cls.plan_type = TestPlanTypeFactory()
 
-    def tearDown(self):
-        self.test_plan.delete()
-        self.product_version.delete()
-        self.product.delete()
-        self.classification.delete()
+        cls.test_plan = TestPlanFactory(name='another test plan for testing',
+                                        product_version=cls.product_version,
+                                        owner=cls.user,
+                                        author=cls.user,
+                                        product=cls.product,
+                                        type=cls.plan_type)
+        cls.plan_id = cls.test_plan.pk
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.c.logout()
+        cls.test_plan.delete()
+        cls.product_version.delete()
+        cls.product.delete()
+        cls.classification.delete()
+        cls.user.delete()
 
     def test_open_plans_search(self):
         location = reverse('tcms.testplans.views.all')
@@ -82,16 +88,14 @@ class PlanTests(test.TestCase):
 
     def test_plan_importcase(self):
         location = reverse('tcms.testplans.views.cases', args=[self.plan_id])
-        filename = os.path.join(TCMS_ROOT_PATH,
-                                'fixtures', 'cases-to-import.xml')
+        filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
         with open(filename, 'r') as fin:
-            response = self.c.post(location, {'a': 'import_cases',
-                                              'xml_file': fin}, follow=True)
+            response = self.c.post(location, {'a': 'import_cases', 'xml_file': fin}, follow=True)
         self.assertEquals(response.status_code, httplib.OK)
 
         summary = 'Remove this case from a test plan'
         has_case = TestCase.objects.filter(summary=summary).exists()
-        self.assert_(has_case)
+        self.assertTrue(has_case)
 
     def test_plan_delete(self):
         tp_pk = self.test_plan.pk
