@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+3.8.18.08.01 (Feb 21 2017, released on MrSenko.com)
+---------------------------------------------------
+
 - Don't install files under /etc/ to avoid SandboxViolation (Mr. Senko)
 
 3.8.18.08 (Feb 21 2017, released on MrSenko.com)
