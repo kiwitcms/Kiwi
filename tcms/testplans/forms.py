@@ -281,7 +281,7 @@ class CasePlanXMLField(forms.FileField):
         elif not data and initial:
             return initial
 
-        if not data.content_type == 'text/xml':
+        if not data.content_type == 'text/xml' and not data.content_type == 'application/xml':
             raise forms.ValidationError(self.error_messages['invalid_file'])
 
         # We need to get a file object for PIL. We might have a path or we
