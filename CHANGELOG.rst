@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+unreleased
+----------
+
+- Rebased onto 7a6bc34
+- Enable the test suite. Fix #113 (Chenxiong Qi)
+
 3.8.18.08.01 (Feb 21 2017, released on MrSenko.com)
 ---------------------------------------------------
 
