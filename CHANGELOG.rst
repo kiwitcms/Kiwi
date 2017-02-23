@@ -56,6 +56,7 @@ Change Log
 - Add migration for django_comments
 - Upgrade Django to 1.8.14
 - Upgrade to django-tinymce 2.4.0 (Mr. Senko)
+- Refactor tcms.core.migrations.0001_django_comments__object_pk (Mr. Senko)
 
 
 3.8.18.04 (Jan 24 2017, released on MrSenko.com)
