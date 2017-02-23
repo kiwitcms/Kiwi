@@ -27,6 +27,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0001_django_comments__object_pk'),
+        ('sites', '__latest__'),
     ]
 
     operations = [
