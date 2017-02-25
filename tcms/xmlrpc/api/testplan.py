@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import itertools
-
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import transaction
 from kobo.django.xmlrpc.decorators import user_passes_test
 
-from tcms.core.utils.tcms_router import connection
 from tcms.management.models import Component
 from tcms.management.models import TestTag
 from tcms.management.models import Product
-from tcms.testplans.models import TestPlan, TestPlanType
+from tcms.testplans.models import TestPlan, TestPlanType, TCMSEnvPlanMap
 from tcms.xmlrpc.decorators import log_call
-from tcms.xmlrpc.sqls import TP_ADD_ENV_GROUP, TP_CLEAR_ENV_GROUP
 from tcms.xmlrpc.utils import pre_process_ids, distinct_count
 
 __all__ = (
@@ -620,7 +615,7 @@ def update(request, plan_ids, values):
     """
     Description: Updates the fields of the selected test plan.
 
-    Params:      $plan_ids - Integer: A single TestPlan ID.
+    Params:      $plan_ids - Integer: A single (or list of) TestPlan ID.
 
                  $values - Hash of keys matching TestPlan fields and the new values
                            to set each field to.
@@ -636,7 +631,7 @@ def update(request, plan_ids, values):
       | owner                                     | String/Integer | user_name/user_id                          |
       | parent                                    | Integer        | Parent plan ID                             |
       | is_active                                 | Boolean        | True/False                                 |
-      | env_group                                 | Integer        |                                            |
+      | env_group                                 | Integer        | New environment group ID                   |
       +-------------------------+----------------+--------------------------------------------------------------+
 
     Returns:     Hash: The updated test plan object.
@@ -691,23 +686,20 @@ def update(request, plan_ids, values):
 
         tps.update(**_values)
 
+        # requested to update environment group for selected test plans
         if form.cleaned_data['env_group']:
-            # NOTE: MyISAM does not support transaction, so no need to use
-            # transaction.commit_on_success to control the commit.
-            cursor = connection.writer_cursor
-            in_condition = ','.join(itertools.repeat('%s', len(plan_ids)))
-            del_env_group_sql = TP_CLEAR_ENV_GROUP % in_condition
-            cursor.execute(del_env_group_sql, plan_ids)
+            # prepare the list of new objects to be inserted into DB
+            new_objects = [
+                TCMSEnvPlanMap(
+                    plan_id=plan_pk,
+                    group_id=form.cleaned_data['env_group'].pk
+                ) for plan_pk in plan_ids
+            ]
 
-            insert_values = ','.join(itertools.repeat('(%s, %s)', len(plan_ids)))
-            insert_env_group_sql = TP_ADD_ENV_GROUP % insert_values
-            args = list()
-            for arg in itertools.izip(plan_ids,
-                                      itertools.repeat(form.cleaned_data['env_group'].pk,
-                                                       len(plan_ids))):
-                args.extend(arg)
-            cursor.execute(insert_env_group_sql, args)
-            transaction.commit_unless_managed()
+            # first delete the old values (b/c many-to-many I presume ?)
+            TCMSEnvPlanMap.objects.filter(plan__in=plan_ids).delete()
+            # then create all objects with 1 INSERT
+            TCMSEnvPlanMap.objects.bulk_create(new_objects)
     else:
         raise ValueError(forms.errors_to_list(form))
 
