@@ -443,7 +443,7 @@ class TestCaseTagFactory(DjangoModelFactory):
 
     case = factory.SubFactory(TestCaseFactory)
     tag = factory.SubFactory(TestTagFactory)
-    user = factory.SubFactory(UserFactory)
+    user = 0
 
 
 class TestCaseTextFactory(DjangoModelFactory):
