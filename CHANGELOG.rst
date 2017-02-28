@@ -1,13 +1,15 @@
 Change Log
 ==========
 
-unreleased
-----------
+3.8.18.09 (Feb 28 2017, released on MrSenko.com)
+------------------------------------------------
 
 - Rebased onto 7a6bc34
 - Enable the test suite. Fix #113 (Chenxiong Qi)
 - Refactor tcms.core.migrations.0001_django_comments__object_pk.
   PR #157 (Mr. Senko)
+- Refactor SQLs in xmlrpc (with tests). PR #159 (Mr. Senko)
+- Enable Coveralls.io. PR #160 (Mr. Senko)
 
 3.8.18.08.01 (Feb 21 2017, released on MrSenko.com)
 ---------------------------------------------------
