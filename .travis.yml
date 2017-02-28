@@ -1,8 +1,12 @@
 language: python
 python:
   - "2.7"
+before_install:
+  - pip install coveralls
 install: "pip install -r requirements/devel.txt"
 script: make check
+after_success:
+  - coveralls
 notifications:
   email:
     on_failure: change
