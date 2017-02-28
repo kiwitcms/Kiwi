@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import itertools
-
 from itertools import imap
 
 from django.conf import settings
@@ -18,7 +16,6 @@ from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
 from tcms.xmlrpc.decorators import log_call
-from tcms.xmlrpc.sqls import TC_REMOVE_CC
 from tcms.xmlrpc.utils import distinct_count
 from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.utils import pre_process_ids
@@ -1246,13 +1243,10 @@ def notification_remove_cc(request, case_ids, cc_list):
 
     try:
         tc_ids = pre_process_ids(case_ids)
-        cursor = connection.writer_cursor
-        ids_values = ",".join(itertools.repeat('%s', len(tc_ids)))
-        email_values = ",".join(itertools.repeat('%s', len(cc_list)))
-        sql = TC_REMOVE_CC % (ids_values, email_values)
-        tc_ids.extend(cc_list)
-        cursor.execute(sql, tc_ids)
-        transaction.commit_unless_managed()
+
+        for tc in TestCase.objects.filter(pk__in=tc_ids).iterator():
+            tc.emailing.remove_cc(cc_list)
+
     except (TypeError, ValueError, Exception):
         raise
 

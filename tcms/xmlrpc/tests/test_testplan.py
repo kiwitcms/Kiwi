@@ -17,6 +17,7 @@ from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans.models import TestPlan
+from tcms.testplans.models import TCMSEnvPlanMap
 from tcms.xmlrpc.api import testplan as XmlrpcTestPlan
 from tcms.xmlrpc.api.testplan import clean_xml_file
 from tcms.xmlrpc.api.testplan import process_case
@@ -29,6 +30,7 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTypeFactory
 from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TCMSEnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
@@ -375,9 +377,74 @@ class TestImportCaseViaXML(test.TestCase):
     '''TODO: '''
 
 
-@unittest.skip('TODO: test case is not implemented yet.')
 class TestUpdate(test.TestCase):
-    '''TODO: '''
+    ''' Tests the XMLRPM testplan.update method '''
+    @classmethod
+    def setUpClass(cls):
+        super(TestUpdate, cls).setUpClass()
+
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user)
+        perm_name = 'testplans.change_testplan'
+        user_should_have_perm(cls.http_req.user, perm_name)
+
+        cls.env_group_1 = TCMSEnvGroupFactory()
+        cls.env_group_2 = TCMSEnvGroupFactory()
+        cls.product = ProductFactory()
+        cls.version = VersionFactory(product=cls.product)
+        cls.tester = UserFactory()
+        cls.plan_type = TestPlanTypeFactory(name='manual smoking')
+        cls.plan_1 = TestPlanFactory(product_version=cls.version,
+                                     product=cls.product,
+                                     author=cls.tester,
+                                     type=cls.plan_type,
+                                     env_group=(cls.env_group_1,))
+        cls.plan_2 = TestPlanFactory(product_version=cls.version,
+                                     product=cls.product,
+                                     author=cls.tester,
+                                     type=cls.plan_type,
+                                     env_group=(cls.env_group_1,))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.plan_1.delete()
+        cls.plan_2.delete()
+        cls.plan_type.delete()
+        cls.tester.delete()
+        cls.user.delete()
+        cls.version.delete()
+        cls.product.delete()
+        cls.product.classification.delete()
+        cls.env_group_1.delete()
+        cls.env_group_2.delete()
+
+    def test_update_env_group(self):
+        # first verify that plan_1 and plan_2 point to self.env_group_1
+        self.assertEqual(self.plan_1.env_group.count(), 1)
+        self.assertEqual(self.plan_1.env_group.all()[0].pk, self.env_group_1.pk)
+
+        self.assertEqual(self.plan_2.env_group.count(), 1)
+        self.assertEqual(self.plan_2.env_group.all()[0].pk, self.env_group_1.pk)
+
+        # and there are only 2 objects in the many-to-many table
+        self.assertEqual(TCMSEnvPlanMap.objects.count(), 2)
+
+        # then issue XMLRPC request to modify the env_group of self.plan_2
+        plans = XmlrpcTestPlan.update(self.http_req, self.plan_2.pk, {'env_group': self.env_group_2.pk})
+        plan = plans[0]
+
+        # now verify that the returned TP (plan_2) has been updated to env_group_2
+        self.assertEqual(plan['plan_id'], self.plan_2.pk)
+        self.assertEqual(len(plan['env_group']), 1)
+        self.assertEqual(plan['env_group'][0], self.env_group_2.pk)
+
+        # and that plan_1 has not changed at all
+        self.assertEqual(self.plan_1.env_group.count(), 1)
+        self.assertEqual(self.plan_1.env_group.all()[0].pk, self.env_group_1.pk)
+
+        # and there are still only 2 objects in the many-to-many table
+        # iow no dangling objects left
+        self.assertEqual(TCMSEnvPlanMap.objects.count(), 2)
 
 
 # ################ Section for testing testplan.import_case_via_XML ########
