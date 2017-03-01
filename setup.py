@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 from setuptools import setup, find_packages
 
 import tcms
@@ -19,6 +18,7 @@ def get_install_requires():
             else:
                 requires.append(dep_line)
         return requires, links
+
 
 install_requires, dependency_links = get_install_requires()
 
