@@ -5,6 +5,17 @@ import unittest
 from django.forms import ValidationError
 
 from fields import MultipleEmailField
+from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import TestCasePlan
+from tcms.tests import BasePlanCase
+from tcms.tests.factories import ComponentFactory
+from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import TestCaseComponentFactory
+from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestCaseTagFactory
+from tcms.tests.factories import TestRunFactory
+from tcms.tests.factories import TestTagFactory
 
 
 class TestMultipleEmailField(unittest.TestCase):
@@ -52,3 +63,166 @@ class TestMultipleEmailField(unittest.TestCase):
         self.field.required = False
         data = self.field.clean(value)
         self.assertEqual(data, [])
+
+
+class TestCaseRemoveBug(BasePlanCase):
+    """Test TestCase.remove_bug"""
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestCaseRemoveBug, cls).setUpClass()
+        cls.build = TestBuildFactory(product=cls.product)
+        cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
+                                      manager=cls.tester, default_tester=cls.tester)
+        cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
+                                          case=cls.case, run=cls.test_run, build=cls.build)
+        cls.bug_system = TestCaseBugSystem.objects.get(name='Bugzilla')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.case_run.delete()
+        cls.test_run.delete()
+        cls.build.delete()
+        super(TestCaseRemoveBug, cls).tearDownClass()
+
+    def setUp(self):
+        self.bug_id_1 = '12345678'
+        self.case.add_bug(self.bug_id_1, self.bug_system.pk,
+                          summary='error when add a bug to a case')
+        self.bug_id_2 = '10000'
+        self.case.add_bug(self.bug_id_2, self.bug_system.pk, case_run=self.case_run)
+
+    def tearDown(self):
+        self.case.case_bug.all().delete()
+
+    def test_remove_case_bug(self):
+        self.case.remove_bug(self.bug_id_1)
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
+        self.assertFalse(bug_found)
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
+        self.assertTrue(bug_found,
+                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_2))
+
+    def test_case_bug_not_removed_by_passing_case_run(self):
+        self.case.remove_bug(self.bug_id_1, run_id=self.case_run.pk)
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
+        self.assertTrue(bug_found,
+                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_1))
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
+        self.assertTrue(bug_found,
+                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_2))
+
+    def test_remove_case_run_bug(self):
+        self.case.remove_bug(self.bug_id_2, run_id=self.case_run.pk)
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
+        self.assertFalse(bug_found)
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
+        self.assertTrue(bug_found,
+                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_1))
+
+    def test_case_run_bug_not_removed_by_missing_case_run(self):
+        self.case.remove_bug(self.bug_id_2)
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_1).exists()
+        self.assertTrue(bug_found,
+                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_1))
+
+        bug_found = self.case.case_bug.filter(bug_id=self.bug_id_2).exists()
+        self.assertTrue(bug_found,
+                        'Bug {0} does not exist. It should not be deleted.'.format(self.bug_id_2))
+
+
+class TestCaseRemoveComponent(BasePlanCase):
+    """Test TestCase.remove_component"""
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestCaseRemoveComponent, cls).setUpClass()
+
+        cls.component_1 = ComponentFactory(name='Application',
+                                           product=cls.product,
+                                           initial_owner=cls.tester,
+                                           initial_qa_contact=cls.tester)
+        cls.component_2 = ComponentFactory(name='Database',
+                                           product=cls.product,
+                                           initial_owner=cls.tester,
+                                           initial_qa_contact=cls.tester)
+
+        cls.cc_rel_1 = TestCaseComponentFactory(case=cls.case, component=cls.component_1)
+        cls.cc_rel_2 = TestCaseComponentFactory(case=cls.case, component=cls.component_2)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.cc_rel_1.delete()
+        cls.cc_rel_2.delete()
+        cls.component_1.delete()
+        cls.component_2.delete()
+        super(TestCaseRemoveComponent, cls).tearDownClass()
+
+    def test_remove_a_component(self):
+        self.case.remove_component(self.component_1)
+
+        found = self.case.component.filter(pk=self.component_1.pk).exists()
+        self.assertFalse(
+            found, 'Component {0} exists. But, it should be removed.'.format(self.component_1.pk))
+        found = self.case.component.filter(pk=self.component_2.pk).exists()
+        self.assertTrue(
+            found,
+            'Component {0} does not exist. It should not be removed.'.format(self.component_2.pk))
+
+
+class TestCaseRemovePlan(BasePlanCase):
+    """Test TestCase.remove_plan"""
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestCaseRemovePlan, cls).setUpClass()
+
+        cls.new_case = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                       plan=[cls.plan])
+
+    @classmethod
+    def tearDownClass(cls):
+        TestCasePlan.objects.filter(plan=cls.plan, case=cls.new_case).delete()
+        cls.new_case.delete()
+        super(TestCaseRemovePlan, cls).tearDownClass()
+
+    def test_remove_plan(self):
+        self.new_case.remove_plan(self.plan)
+
+        found = self.plan.case.filter(pk=self.new_case.pk).exists()
+        self.assertFalse(
+            found, 'Case {0} should has no relationship to plan {0} now.'.format(self.new_case.pk,
+                                                                                 self.plan.pk))
+
+
+class TestCaseRemoveTag(BasePlanCase):
+    """Test TestCase.remove_tag"""
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestCaseRemoveTag, cls).setUpClass()
+
+        cls.tag_rhel = TestTagFactory(name='rhel')
+        cls.tag_fedora = TestTagFactory(name='fedora')
+        TestCaseTagFactory(case=cls.case, tag=cls.tag_rhel, user=cls.tester.pk)
+        TestCaseTagFactory(case=cls.case, tag=cls.tag_fedora, user=cls.tester.pk)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.case.tag.clear()
+        cls.tag_rhel.delete()
+        cls.tag_fedora.delete()
+        super(TestCaseRemoveTag, cls).tearDownClass()
+
+    def test_remove_tag(self):
+        self.case.remove_tag(self.tag_rhel)
+
+        tag_pks = list(self.case.tag.all().values_list('pk', flat=True))
+        self.assertEqual([self.tag_fedora.pk], tag_pks)

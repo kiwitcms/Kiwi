@@ -529,29 +529,29 @@ class TestCase(TCMSActionModel):
         mailto(template, subject, to, context, request)
 
     def remove_bug(self, bug_id, run_id=None):
-        cursor = connection.writer_cursor
         sql = SQL.REMOVE_BUG
         args = [bug_id, self.pk]
         if run_id:
             sql = SQL.REMOVE_BUG_WITH_RUN_ID
             args.append(run_id)
-        cursor.execute(sql, args)
-        transaction.commit_unless_managed()
+        with transaction.atomic():
+            cursor = connection.writer_cursor
+            cursor.execute(sql, args)
 
     def remove_component(self, component):
-        cursor = connection.writer_cursor
-        cursor.execute(SQL.REMOVE_COMPONENT, (self.case_id, component.id))
-        transaction.commit_unless_managed()
+        with transaction.atomic():
+            cursor = connection.writer_cursor
+            cursor.execute(SQL.REMOVE_COMPONENT, (self.case_id, component.id))
 
     def remove_plan(self, plan):
-        cursor = connection.writer_cursor
-        cursor.execute(SQL.REMOVE_PLAN, (plan.plan_id, self.case_id))
-        transaction.commit_unless_managed()
+        with transaction.atomic():
+            cursor = connection.writer_cursor
+            cursor.execute(SQL.REMOVE_PLAN, (plan.plan_id, self.case_id))
 
     def remove_tag(self, tag):
-        cursor = connection.writer_cursor
-        cursor.execute(SQL.REMOVE_TAG, (self.pk, tag.pk))
-        transaction.commit_unless_managed()
+        with transaction.atomic():
+            cursor = connection.writer_cursor
+            cursor.execute(SQL.REMOVE_TAG, (self.pk, tag.pk))
 
     def get_url_path(self, request=None):
         return reverse('tcms.testcases.views.get', args=[self.pk, ])

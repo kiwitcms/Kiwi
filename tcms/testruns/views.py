@@ -1240,9 +1240,7 @@ def order_case(request, run_id):
         ))
 
     case_run_ids = request.REQUEST.getlist('case_run')
-    sql = 'UPDATE `test_case_runs` SET `sortkey` = %s WHERE `test_case_runs`' \
-          '.`case_run_id` = %s'
-    cursor = connection.writer_cursor
+    sql = 'UPDATE test_case_runs SET sortkey = %s WHERE test_case_runs.case_run_id = %s'
     # sort key begin with 10, end with length*10, step 10.
     # e.g.
     # case_run_ids = [10334, 10294, 10315, 10443]
@@ -1256,14 +1254,13 @@ def order_case(request, run_id):
     #         (30, 10315)
     #         (40, 10443)
     new_sort_keys = xrange(10, (len(case_run_ids) + 1) * 10, 10)
-    key_id_pairs = itertools.izip(new_sort_keys, case_run_ids)
-    for key_id_pair in key_id_pairs:
-        cursor.execute(sql, key_id_pair)
-    transaction.commit_unless_managed()
+    key_id_pairs = itertools.izip(new_sort_keys, (int(pk) for pk in case_run_ids))
+    with transaction.atomic():
+        for key_id_pair in key_id_pairs:
+            cursor = connection.writer_cursor
+            cursor.execute(sql, key_id_pair)
 
-    return HttpResponseRedirect(
-        reverse('tcms.testruns.views.get', args=[run_id, ])
-    )
+    return HttpResponseRedirect(reverse('tcms.testruns.views.get', args=[run_id]))
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
