@@ -45,10 +45,6 @@ setup(
 
     packages=find_packages(),
     include_package_data=True,
-    data_files=[
-        ('/etc/httpd/conf.d/', ['contrib/conf/nitrate-httpd.conf']),
-        ('/etc/init.d', ['contrib/script/celeryd']),
-        ],
 
     classifiers=[
         'Intended Audience :: Developers',
