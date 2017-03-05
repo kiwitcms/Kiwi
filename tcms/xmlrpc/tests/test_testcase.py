@@ -18,9 +18,7 @@ class TestNotificationRemoveCC(test.TestCase):
     """ Tests the XMLRPM testcase.notication_remove_cc method """
 
     @classmethod
-    def setUpClass(cls):
-        super(TestNotificationRemoveCC, cls).setUpClass()
-
+    def setUpTestData(cls):
         cls.user = UserFactory()
         cls.http_req = make_http_request(user=cls.user)
         perm_name = 'testcases.change_testcase'
@@ -29,13 +27,6 @@ class TestNotificationRemoveCC(test.TestCase):
         cls.default_cc = 'example@MrSenko.com'
         cls.testcase = TestCaseFactory()
         cls.testcase.emailing.add_cc(cls.default_cc)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.testcase.emailing.cc_list.all().delete()
-        cls.testcase.delete()
-        cls.user.delete()
-        super(TestNotificationRemoveCC, cls).tearDownClass()
 
     def test_remove_existing_cc(self):
         # initially testcase has the default CC listed

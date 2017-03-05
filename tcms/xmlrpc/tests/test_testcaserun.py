@@ -10,7 +10,6 @@ from datetime import datetime
 
 from tcms.xmlrpc.api import testcaserun
 from tcms.xmlrpc.tests.utils import make_http_request
-from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.models import TestCaseBugSystem
 
@@ -29,8 +28,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
     """Test testcaserun.create"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunCreate, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory(username='tcr_admin', email='tcr_admin@example.com')
         cls.staff = UserFactory(username='tcr_staff', email='tcr_staff@example.com')
         cls.admin_request = make_http_request(user=cls.admin, user_perm='testruns.add_testcaserun')
@@ -45,22 +43,6 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         cls.case = TestCaseFactory(author=cls.admin, default_tester=None, plan=[cls.plan])
 
         cls.case_run_pks = []
-
-    @classmethod
-    def tearDownClass(cls):
-        super(TestCaseRunCreate, cls).tearDownClass()
-        TestCaseRun.objects.filter(pk__in=cls.case_run_pks).delete()
-        cls.test_run.delete()
-        cls.case.plan.clear()
-        cls.case.delete()
-        cls.plan.delete()
-        cls.plan.type.delete()
-        cls.version.delete()
-        cls.product.build.all().delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.admin.delete()
-        cls.staff.delete()
 
     def test_create_with_no_args(self):
         bad_args = (None, [], {}, (), 1, 0, -1, True, False, '', 'aaaa', object)
@@ -207,8 +189,7 @@ class TestCaseRunAddComment(XmlrpcAPIBaseTest):
     """Test testcaserun.add_comment"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunAddComment, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory(username='update_admin', email='update_admin@example.com')
         cls.admin_request = make_http_request(user=cls.admin,
                                               user_perm='testruns.change_testcaserun')
@@ -250,8 +231,7 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
     """Test testcaserun.attach_bug"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunAttachBug, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory(username='update_admin', email='update_admin@example.com')
         cls.staff = UserFactory(username='update_staff', email='update_staff@example.com')
         cls.admin_request = make_http_request(user=cls.admin,
@@ -355,8 +335,7 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
     """Test testcaserun.attach_log"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunAttachLog, cls).setUpClass()
+    def setUpTestData(cls):
         cls.case_run = TestCaseRunFactory()
 
     @unittest.skip('TODO: not implemented yet.')
@@ -415,8 +394,7 @@ class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
 class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunDetachBug, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory()
         cls.staff = UserFactory()
         cls.admin_request = make_http_request(user=cls.admin,
@@ -493,8 +471,7 @@ class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
 class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunDetachLog, cls).setUpClass()
+    def setUpTestData(cls):
         cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
         cls.tester = UserFactory()
         cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=None,
@@ -555,8 +532,7 @@ class TestCaseRunFilterCount(XmlrpcAPIBaseTest):
 class TestCaseRunGet(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunGet, cls).setUpClass()
+    def setUpTestData(cls):
         cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
         cls.tester = UserFactory()
         cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=None,
@@ -595,8 +571,7 @@ class TestCaseRunGet(XmlrpcAPIBaseTest):
 class TestCaseRunGetSet(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunGetSet, cls).setUpClass()
+    def setUpTestData(cls):
         cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
         cls.tester = UserFactory()
         cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=None,
@@ -663,8 +638,7 @@ class TestCaseRunGetSet(XmlrpcAPIBaseTest):
 class TestCaseRunGetBugs(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunGetBugs, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory()
         cls.admin_request = make_http_request(user=cls.admin,
                                               user_perm='testcases.add_testcasebug')
@@ -706,8 +680,7 @@ class TestCaseRunGetBugs(XmlrpcAPIBaseTest):
 class TestCaseRunGetBugsSet(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunGetBugsSet, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory(username='update_admin', email='update_admin@example.com')
         cls.admin_request = make_http_request(user=cls.admin,
                                               user_perm='testcases.add_testcasebug')
@@ -801,8 +774,7 @@ class TestCaseRunGetBugsSet(XmlrpcAPIBaseTest):
 class TestCaseRunGetStatus(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunGetStatus, cls).setUpClass()
+    def setUpTestData(cls):
         cls.status_running = TestCaseRunStatus.objects.get(name='RUNNING')
 
     def test_get_all_status(self):
@@ -877,8 +849,7 @@ class TestCaseRunGetHistorySet(XmlrpcAPIBaseTest):
 class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunGetLogs, cls).setUpClass()
+    def setUpTestData(cls):
         cls.case_run_1 = TestCaseRunFactory()
         cls.case_run_2 = TestCaseRunFactory()
         testcaserun.attach_log(None, cls.case_run_1.pk, "Test logs", "http://www.google.com")
@@ -915,8 +886,7 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
 class TestCaseRunUpdate(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRunUpdate, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory()
         cls.staff = UserFactory()
         cls.user = UserFactory()

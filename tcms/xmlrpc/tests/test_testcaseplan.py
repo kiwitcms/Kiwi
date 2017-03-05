@@ -15,8 +15,7 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 class TestCasePlanGet(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCasePlanGet, cls).setUpClass()
+    def setUpTestData(cls):
         cls.case = TestCaseFactory(summary='test caseplan')
         cls.plan = TestPlanFactory(name='test xmlrpc')
         cls.case_plan = TestCasePlanFactory(case=cls.case, plan=cls.plan)
@@ -63,8 +62,7 @@ class TestCasePlanGet(XmlrpcAPIBaseTest):
 class TestCasePlanUpdate(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCasePlanUpdate, cls).setUpClass()
+    def setUpTestData(cls):
         cls.case = TestCaseFactory(summary='test caseplan')
         cls.plan = TestPlanFactory(name='test xmlrpc')
         cls.case_plan = TestCasePlanFactory(case=cls.case, plan=cls.plan)

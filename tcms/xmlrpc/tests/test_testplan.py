@@ -56,8 +56,7 @@ __all__ = (
 class TestFilter(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestFilter, cls).setUpClass()
+    def setUpTestData(cls):
         cls.product = ProductFactory()
         cls.version = VersionFactory(product=cls.product)
         cls.tester = UserFactory()
@@ -79,20 +78,6 @@ class TestFilter(XmlrpcAPIBaseTest):
                                      reviewer=cls.tester,
                                      plan=[cls.plan_1])
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.plan_1.case.clear()
-        cls.plan_2.case.clear()
-        cls.case_1.delete()
-        cls.case_2.delete()
-        cls.plan_1.delete()
-        cls.plan_2.delete()
-        cls.plan_type.delete()
-        cls.tester.delete()
-        cls.version.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-
     def test_filter_plans(self):
         plans = XmlrpcTestPlan.filter(None, {'pk__in': [self.plan_1.pk, self.plan_2.pk]})
         plan = plans[0]
@@ -113,7 +98,7 @@ class TestFilter(XmlrpcAPIBaseTest):
 class TestAddTag(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory()
         cls.http_req = make_http_request(user=cls.user)
         user_should_have_perm(cls.http_req.user, 'testplans.add_testplantag')
@@ -127,17 +112,6 @@ class TestAddTag(XmlrpcAPIBaseTest):
         cls.tag1 = TestTagFactory(name='xmlrpc_test_tag_1')
         cls.tag2 = TestTagFactory(name='xmlrpc_test_tag_2')
         cls.tag_name = 'xmlrpc_tag_name_1'
-
-    @classmethod
-    def tearDownClass(cls):
-        for plan in cls.plans:
-            plan.tag.clear()
-            plan.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.tag1.delete()
-        cls.tag2.delete()
-        cls.user.delete()
 
     def test_single_id(self):
         '''Test with singal plan id and tag id'''
@@ -165,7 +139,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
 class TestAddComponent(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory()
         cls.http_req = make_http_request(user=cls.user)
         perm_name = 'testplans.add_testplancomponent'
@@ -186,17 +160,6 @@ class TestAddComponent(XmlrpcAPIBaseTest):
                                           product=cls.product,
                                           initial_owner=None,
                                           initial_qa_contact=None)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.component1.delete()
-        cls.component2.delete()
-        for plan in cls.plans:
-            plan.component.clear()
-            plan.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.user.delete()
 
     def test_single_id(self):
         XmlrpcTestPlan.add_component(self.http_req, self.plans[0].pk, self.component1.pk)
@@ -220,13 +183,9 @@ class TestAddComponent(XmlrpcAPIBaseTest):
 class TestPlanTypeMethods(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.http_req = make_http_request()
         cls.plan_type = TestPlanTypeFactory(name='xmlrpc plan type', description='')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.plan_type.delete()
 
     def test_check_plan_type(self):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, XmlrpcTestPlan.check_plan_type, self.http_req)
@@ -249,18 +208,11 @@ class TestPlanTypeMethods(XmlrpcAPIBaseTest):
 class TestGetProduct(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.http_req = make_http_request()
         cls.user = UserFactory()
         cls.product = ProductFactory()
         cls.plan = TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.plan.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.user.delete()
 
     def _verify_serialize_result(self, result):
         self.assertEqual(self.plan.product.name, result['name'])
@@ -300,7 +252,7 @@ class TestGetTestCases(XmlrpcAPIBaseTest):
     '''Test testplan.get_test_cases method'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.http_req = make_http_request()
 
         cls.tester = UserFactory(username='tester')
@@ -316,17 +268,6 @@ class TestGetTestCases(XmlrpcAPIBaseTest):
                             plan=[cls.plan]),
         ]
         cls.another_plan = TestPlanFactory(author=cls.tester, owner=cls.tester, product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        for case in cls.cases:
-            case.plan.clear()
-            case.delete()
-        cls.plan.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.reviewer.delete()
-        cls.tester.delete()
 
     def test_get_test_cases(self):
         serialized_cases = XmlrpcTestPlan.get_test_cases(self.http_req, self.plan.pk)
@@ -381,9 +322,7 @@ class TestUpdate(test.TestCase):
     """ Tests the XMLRPM testplan.update method """
 
     @classmethod
-    def setUpClass(cls):
-        super(TestUpdate, cls).setUpClass()
-
+    def setUpTestData(cls):
         cls.user = UserFactory()
         cls.http_req = make_http_request(user=cls.user)
         perm_name = 'testplans.change_testplan'
@@ -405,20 +344,6 @@ class TestUpdate(test.TestCase):
                                      author=cls.tester,
                                      type=cls.plan_type,
                                      env_group=(cls.env_group_1,))
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.plan_1.delete()
-        cls.plan_2.delete()
-        cls.plan_type.delete()
-        cls.tester.delete()
-        cls.user.delete()
-        cls.version.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.env_group_1.delete()
-        cls.env_group_2.delete()
-        super(TestUpdate, cls).tearDownClass()
 
     def test_update_env_group(self):
         # plan_1 and plan_2 point to self.env_group_1
@@ -588,16 +513,12 @@ class TestProcessCase(test.TestCase):
     '''Test process_case'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.xml2dict = XML2Dict()
         cls.user = UserFactory(username='xml user', email='user@example.com')
         cls.priority_p1, created = Priority.objects.get_or_create(value='P1')
         cls.status_confirmed, created = TestCaseStatus.objects.get_or_create(name='CONFIRMED')
         cls.status_proposed, created = TestCaseStatus.objects.get_or_create(name='PROPOSED')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user.delete()
 
     def _format_xml_case_string(self, case_data):
         """Helper method to format case XML conveniently"""
@@ -690,7 +611,7 @@ class TestCleanXMLFile(test.TestCase):
     '''Test for testplan.clean_xml_file'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory(username='xml user', email='user@example.com')
         cls.priority = Priority.objects.get(value='P1')
         cls.status_confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
@@ -699,12 +620,6 @@ class TestCleanXMLFile(test.TestCase):
         if hasattr(settings, 'TESTOPIA_XML_VERSION'):
             cls.original_xml_version = settings.TESTOPIA_XML_VERSION
         settings.TESTOPIA_XML_VERSION = 1.1
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user.delete()
-        if cls.original_xml_version is not None:
-            settings.TESTOPIA_XML_VERSION = cls.original_xml_version
 
     def test_clean_xml_file(self):
         result = clean_xml_file(xml_file_without_error)

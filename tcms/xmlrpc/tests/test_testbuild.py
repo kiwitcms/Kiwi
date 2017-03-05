@@ -22,8 +22,7 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 class TestBuildCreate(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestBuildCreate, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory()
         cls.admin_request = make_http_request(user=cls.admin, user_perm='management.add_testbuild')
 
@@ -112,8 +111,7 @@ class TestBuildCreate(XmlrpcAPIBaseTest):
 class TestBuildUpdate(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestBuildUpdate, cls).setUpClass()
+    def setUpTestData(cls):
         cls.admin = UserFactory()
         cls.admin_request = make_http_request(user=cls.admin, user_perm='management.change_testbuild')
 
@@ -123,23 +121,9 @@ class TestBuildUpdate(XmlrpcAPIBaseTest):
         cls.product = ProductFactory()
         cls.another_product = ProductFactory()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.another_product.delete()
-        cls.another_product.classification.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        super(TestBuildUpdate, cls).tearDownClass()
-
-    def setUp(self):
-        self.build_1 = TestBuildFactory(product=self.product)
-        self.build_2 = TestBuildFactory(product=self.product)
-        self.build_3 = TestBuildFactory(product=self.product)
-
-    def tearDown(self):
-        self.build_1.delete()
-        self.build_2.delete()
-        self.build_3.delete()
+        cls.build_1 = TestBuildFactory(product=cls.product)
+        cls.build_2 = TestBuildFactory(product=cls.product)
+        cls.build_3 = TestBuildFactory(product=cls.product)
 
     @unittest.skip('TODO: fix update to make this test pass.')
     def test_build_update_with_no_args(self):
@@ -190,16 +174,9 @@ class TestBuildUpdate(XmlrpcAPIBaseTest):
 class TestBuildGet(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestBuildGet, cls).setUpClass()
+    def setUpTestData(cls):
         cls.product = ProductFactory()
         cls.build = TestBuildFactory(description='for testing', product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.build.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     @unittest.skip('TODO: fix get to make this test pass.')
     def test_build_get_with_no_args(self):
@@ -229,22 +206,12 @@ class TestBuildGet(XmlrpcAPIBaseTest):
 class TestBuildGetCaseRuns(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestBuildGetCaseRuns, cls).setUpClass()
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='Nitrate')
         cls.build = TestBuildFactory(product=cls.product)
         cls.user = UserFactory()
         cls.case_run_1 = TestCaseRunFactory(assignee=cls.user, build=cls.build)
         cls.case_run_2 = TestCaseRunFactory(assignee=cls.user, build=cls.build)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.case_run_1.delete()
-        cls.case_run_2.delete()
-        cls.user.delete()
-        cls.build.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     @unittest.skip('TODO: fix get_caseruns to make this test pass.')
     def test_build_get_with_no_args(self):
@@ -271,22 +238,13 @@ class TestBuildGetCaseRuns(XmlrpcAPIBaseTest):
 class TestBuildGetRuns(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory()
         cls.version = VersionFactory(value='0.1', product=cls.product)
         cls.build = TestBuildFactory(product=cls.product)
         cls.user = UserFactory()
         cls.test_run = TestRunFactory(manager=cls.user, default_tester=None,
                                       build=cls.build)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.test_run.delete()
-        cls.user.delete()
-        cls.build.delete()
-        cls.version.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     @unittest.skip('TODO: fix get_runs to make this test pass.')
     def test_build_get_with_no_args(self):
@@ -323,17 +281,9 @@ class TestBuildLookupName(TestCase):
 class TestBuildCheck(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
-        super(TestBuildCheck, cls).setUpClass()
+    def setUpTestData(cls):
         cls.product = ProductFactory()
         cls.build = TestBuildFactory(description='testing ...', product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.build.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        super(TestBuildCheck, cls).tearDownClass()
 
     @unittest.skip('TODO: fix check_build to make this test pass.')
     def test_build_get_with_no_args(self):

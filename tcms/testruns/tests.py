@@ -20,8 +20,8 @@ class TestOrderCases(BasePlanCase):
     """Test view method order_case"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestOrderCases, cls).setUpClass()
+    def setUpTestData(cls):
+        super(TestOrderCases, cls).setUpTestData()
         cls.build = TestBuildFactory(product=cls.product)
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)
@@ -34,18 +34,7 @@ class TestOrderCases(BasePlanCase):
         cls.case_run_3 = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
                                             run=cls.test_run, case=cls.case_3, build=cls.build,
                                             sortkey=300)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.case_run_1.delete()
-        cls.case_run_2.delete()
-        cls.case_run_3.delete()
-        cls.test_run.delete()
-        cls.build.delete()
-        super(TestOrderCases, cls).tearDownClass()
-
-    def setUp(self):
-        self.client = test.Client()
+        cls.client = test.Client()
 
     def test_404_if_run_does_not_exist(self):
         nonexisting_run_pk = TestRun.objects.count() + 1
