@@ -22,7 +22,7 @@ from tcms.tests.factories import VersionFactory
 class PlanTests(test.TestCase):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory(username='admin', email='admin@example.com')
         cls.user.set_password('admin')
         cls.user.is_superuser = True
@@ -43,15 +43,6 @@ class PlanTests(test.TestCase):
                                         product=cls.product,
                                         type=cls.plan_type)
         cls.plan_id = cls.test_plan.pk
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.c.logout()
-        cls.test_plan.delete()
-        cls.product_version.delete()
-        cls.product.delete()
-        cls.classification.delete()
-        cls.user.delete()
 
     def test_open_plans_search(self):
         location = reverse('tcms.testplans.views.all')

@@ -10,18 +10,13 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 class TestTag(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.tag_db = TestTagFactory(name='db')
         cls.tag_fedora = TestTagFactory(name='fedora')
         cls.tag_python = TestTagFactory(name='python')
         cls.tag_tests = TestTagFactory(name='tests')
         cls.tag_xmlrpc = TestTagFactory(name='xmlrpc')
         cls.tags = [cls.tag_db, cls.tag_fedora, cls.tag_python, cls.tag_tests, cls.tag_xmlrpc]
-
-    @classmethod
-    def tearDownClass(cls):
-        for t in cls.tags:
-            t.delete()
 
     def test_get_tags_with_no_args(self):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, tag.get_tags, None, None)
