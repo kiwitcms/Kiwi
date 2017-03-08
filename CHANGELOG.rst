@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+3.8.18.10 (Mar 8 2017, released on MrSenko.com)
+------------------------------------------------
+
+- Rebased onto c696e62
+- Don't use deprecated request.REQUEST. PR #156 (Mr. Senko)
+- Update tests and fix Travis CI core dump. PR #168, Issue #161 (Mr. Senko)
+
+
 3.8.18.09 (Feb 28 2017, released on MrSenko.com)
 ------------------------------------------------
 
@@ -9,16 +17,19 @@ Change Log
 - Refactor SQLs in xmlrpc (with tests). PR #159 (Mr. Senko)
 - Enable Coveralls.io. PR #160 (Mr. Senko)
 
+
 3.8.18.08.01 (Feb 21 2017, released on MrSenko.com)
 ---------------------------------------------------
 
 - Don't install files under /etc/ to avoid SandboxViolation (Mr. Senko)
+
 
 3.8.18.08 (Feb 21 2017, released on MrSenko.com)
 ------------------------------------------------
 
 - Replace hard-coded SQL statements with ORM queries in reporting app.
   PR #146, fix #127 (Mr. Senko)
+
 
 3.8.18.07 (Feb 14 2017, released on MrSenko.com)
 ------------------------------------------------
@@ -28,6 +39,7 @@ Change Log
   PR #137 (Mr. Senko)
 - Replace hard-coded SQL statements with ORM queries. PR #139 (Mr. Senko)
 - Use version from module, not txt file. PR #145 (Mr. Senko)
+
 
 3.8.18.05 (Jan 31 2017, released on MrSenko.com)
 ------------------------------------------------
@@ -43,6 +55,7 @@ Change Log
 - Upgrade Django to 1.8.14
 - Upgrade to django-tinymce 2.4.0 (Mr. Senko)
 
+
 3.8.18.04 (Jan 24 2017, released on MrSenko.com)
 ------------------------------------------------
 
@@ -55,6 +68,7 @@ Change Log
 - Require Celery<2 for compatibility reasons. PR #102 (Mr. Senko)
 - Host static files in DEBUG mode for development. PR #103 (Mr. Senko)
 - flake8 fixes. PR #104 (Mr. Senko)
+
 
 3.8.18 (Aug 21 2016)
 --------------------
