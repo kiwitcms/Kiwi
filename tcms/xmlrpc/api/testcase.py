@@ -1069,19 +1069,15 @@ def unlink_plan(requst, case_id, plan_id):
     Description: Unlink a test case from the given plan. If only one plan is linked, this will delete
                  the test case.
 
-    Params:      $case_ids - Integer/String: An integer or alias representing the ID in the database.
-                 $plan_id  - Integer: An integer representing the ID in the database.
+    Params:      $case_id - Integer/String: An integer or alias representing the ID in the database.
+                 $plan_id - Integer: An integer representing the ID in the database.
 
     Returns:     Array: Array of plans hash still linked if any, empty if not.
 
     Example:
     >>> TestCase.unlink_plan(12345, 137)
     """
-    sql = 'DELETE FROM test_case_plans WHERE plan_id = %s and case_id = %s'
-    cursor = connection.writer_cursor
-    cursor.execute(sql, [int(plan_id), int(case_id)])
-    transaction.commit_unless_managed()
-
+    TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
     plan_pks = TestCasePlan.objects.filter(case=case_id).values_list('plan',
                                                                      flat=True)
     return TestPlan.to_xmlrpc(query={'pk__in': plan_pks})
