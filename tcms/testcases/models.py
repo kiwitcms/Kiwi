@@ -418,14 +418,7 @@ class TestCase(TCMSActionModel):
         return latest_text
 
     def add_to_plan(self, plan):
-
-        try:
-            TestCasePlan.objects.get(case=self, plan=plan)
-        except TestCasePlan.DoesNotExist:
-            TestCasePlan.objects.get_or_create(
-                case=self,
-                plan=plan,
-            )
+        TestCasePlan.objects.get_or_create(case=self, plan=plan)
 
     def clear_components(self):
         try:
