@@ -4,12 +4,10 @@ from itertools import imap
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import transaction
 from django.forms import EmailField, ValidationError
 
 from kobo.django.xmlrpc.decorators import user_passes_test
 
-from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
@@ -879,20 +877,25 @@ def link_plan(request, case_ids, plan_ids):
             err_msg = 'TestPlan %s does not exist.' % ids_str
         raise ObjectDoesNotExist(err_msg)
 
+    # (plan_id, case_id) pair might probably exist in test_case_plans table, so
+    # skip the ones that do exist and create the rest.
+    # note: this query returns a list of tuples!
+    existing = TestCasePlan.objects.filter(
+        plan__in=plan_ids,
+        case__in=case_ids
+    ).values_list('plan', 'case')
+
     # Link the plans to cases
     def _generate_link_plan_value():
         for plan_id in plan_ids:
             for case_id in case_ids:
-                yield plan_id, case_id
+                if (plan_id, case_id) not in existing:
+                    yield plan_id, case_id
 
-    # (plan_id, case_id) pair might probably exist in test_case_plans table, so
-    # IGNORE tell MySQL to insert other non-exist ones without error report
-    # that will break whole INSERT INTO operation.
-    sql = 'INSERT IGNORE INTO test_case_plans (plan_id, case_id) VALUES\n%s'
-    sql = sql % ',\n'.join(str(value) for value in _generate_link_plan_value())
-    cursor = connection.writer_cursor
-    cursor.execute(sql)
-    transaction.commit_unless_managed()
+    TestCasePlan.objects.bulk_create([
+        TestCasePlan(plan_id=_plan_id, case_id=_case_id)
+        for _plan_id, _case_id in _generate_link_plan_value()
+    ])
 
 
 @log_call(namespace=__xmlrpc_namespace__)

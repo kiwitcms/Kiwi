@@ -2,6 +2,7 @@
 
 from django import test
 
+from tcms.testcases.models import TestCasePlan
 from tcms.xmlrpc.api import testcase as XmlrpcTestCase
 from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.xmlrpc.tests.utils import user_should_have_perm
@@ -9,11 +10,6 @@ from tcms.xmlrpc.tests.utils import user_should_have_perm
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import UserFactory
-
-__all__ = (
-    'TestNotificationRemoveCC',
-    'TestUnlinkPlan',
-)
 
 
 class TestNotificationRemoveCC(test.TestCase):
@@ -69,3 +65,50 @@ class TestUnlinkPlan(test.TestCase):
         self.assertEqual(1, self.testcase_2.plan.count())
         self.assertEqual(1, len(result))
         self.assertEqual(self.plan_2.pk, result[0]['plan_id'])
+
+
+class TestLinkPlan(test.TestCase):
+    """ Test the XML-RPC method testcase.link_plan() """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user)
+        perm_name = 'testcases.add_testcaseplan'
+        user_should_have_perm(cls.http_req.user, perm_name)
+
+        cls.testcase_1 = TestCaseFactory()
+        cls.testcase_2 = TestCaseFactory()
+        cls.testcase_3 = TestCaseFactory()
+
+        cls.plan_1 = TestPlanFactory()
+        cls.plan_2 = TestPlanFactory()
+        cls.plan_3 = TestPlanFactory()
+
+        # case 1 is already linked to plan 1
+        cls.testcase_1.add_to_plan(cls.plan_1)
+
+    def test_insert_ignores_existing_mappings(self):
+        plans = [self.plan_1.pk, self.plan_2.pk, self.plan_3.pk]
+        cases = [self.testcase_1.pk, self.testcase_2.pk, self.testcase_3.pk]
+        XmlrpcTestCase.link_plan(self.http_req, cases, plans)
+
+        # no duplicates for plan1/case1 were created
+        self.assertEqual(
+            1,
+            TestCasePlan.objects.filter(
+                plan=self.plan_1.pk,
+                case=self.testcase_1.pk
+            ).count()
+        )
+
+        # verify all case/plan combinations exist
+        for plan_id in plans:
+            for case_id in cases:
+                self.assertEqual(
+                    1,
+                    TestCasePlan.objects.filter(
+                        plan=plan_id,
+                        case=case_id
+                    ).count()
+                )
