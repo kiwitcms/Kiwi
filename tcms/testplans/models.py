@@ -220,10 +220,7 @@ class TestPlan(TCMSActionModel):
         return TCMSEnvPlanMap.objects.filter(plan=self).delete()
 
     def delete_case(self, case):
-        cursor = connection.writer_cursor
-        cursor.execute("DELETE from test_case_plans \
-            WHERE plan_id = %s \
-            AND case_id = %s", (self.plan_id, case.case_id))
+        TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
 
     @models.permalink
     def get_absolute_url(self):

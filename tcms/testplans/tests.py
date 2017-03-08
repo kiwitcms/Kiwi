@@ -9,10 +9,11 @@ from django.core.urlresolvers import reverse
 from django.test.client import Client
 
 from tcms.settings.common import TCMS_ROOT_PATH
-from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testplans.models import TestPlan
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTypeFactory
 from tcms.tests.factories import UserFactory
@@ -139,3 +140,22 @@ class PlanTests(test.TestCase):
 
         response = self.c.get(location, {'plan_text_version': 1})
         self.assertEquals(response.status_code, httplib.OK)
+
+
+class TestPlanModel(test.TestCase):
+    """ Test some model operations directly without a view """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.plan_1 = TestPlanFactory()
+        cls.testcase_1 = TestCaseFactory()
+        cls.testcase_2 = TestCaseFactory()
+
+        cls.plan_1.add_case(cls.testcase_1)
+        cls.plan_1.add_case(cls.testcase_2)
+
+    def test_plan_delete(self):
+        self.plan_1.delete_case(self.testcase_1)
+        cases_left = TestCasePlan.objects.filter(plan=self.plan_1.pk)
+        self.assertEqual(1, cases_left.count())
+        self.assertEqual(self.testcase_2.pk, cases_left[0].case.pk)
