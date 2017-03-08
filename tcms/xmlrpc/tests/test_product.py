@@ -12,7 +12,6 @@ from django.test import TestCase
 from tcms.xmlrpc.api import product
 from tcms.xmlrpc.tests.utils import make_http_request
 
-from tcms.management.models import Component
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestBuildFactory
@@ -29,7 +28,7 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 class TestCheckCategory(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product_nitrate = ProductFactory(name='nitrate')
         cls.product_xmlrpc = ProductFactory(name='xmlrpc')
         cls.case_categories = [
@@ -37,14 +36,6 @@ class TestCheckCategory(XmlrpcAPIBaseTest):
             TestCaseCategoryFactory(name='manual', product=cls.product_nitrate),
             TestCaseCategoryFactory(name='pending', product=cls.product_xmlrpc),
         ]
-
-    @classmethod
-    def tearDownClass(cls):
-        [category.delete() for category in cls.case_categories]
-        cls.product_xmlrpc.delete()
-        cls.product_xmlrpc.classification.delete()
-        cls.product_nitrate.delete()
-        cls.product_nitrate.classification.delete()
 
     def test_check_category(self):
         cat = product.check_category(None, 'manual', self.product_nitrate.pk)
@@ -75,7 +66,7 @@ class TestCheckCategory(XmlrpcAPIBaseTest):
 class TestCheckComponent(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product_nitrate = ProductFactory(name='nitrate')
         cls.product_xmlrpc = ProductFactory(name='xmlrpc')
         cls.components = [
@@ -83,15 +74,6 @@ class TestCheckComponent(XmlrpcAPIBaseTest):
             ComponentFactory(name='database', product=cls.product_nitrate),
             ComponentFactory(name='documentation', product=cls.product_xmlrpc),
         ]
-
-    @classmethod
-    def tearDownClass(cls):
-        for component in cls.components:
-            component.delete()
-        cls.product_nitrate.delete()
-        cls.product_nitrate.classification.delete()
-        cls.product_xmlrpc.delete()
-        cls.product_xmlrpc.classification.delete()
 
     def test_check_component(self):
         cat = product.check_component(None, 'application', self.product_nitrate.pk)
@@ -123,13 +105,8 @@ class TestCheckComponent(XmlrpcAPIBaseTest):
 class TestCheckProduct(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='Nitrate')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_check_product(self):
         cat = product.check_product(None, 'Nitrate')
@@ -148,16 +125,9 @@ class TestCheckProduct(XmlrpcAPIBaseTest):
 class TestFilter(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='Nitrate')
         cls.product_xmlrpc = ProductFactory(name='XMLRPC API')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.product_xmlrpc.delete()
-        cls.product_xmlrpc.classification.delete()
 
     def test_filter_by_id(self):
         prod = product.filter(None, {"id": self.product.pk})
@@ -177,19 +147,12 @@ class TestFilter(XmlrpcAPIBaseTest):
 class TestFilterCategories(TestCase):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='Nitrate')
         cls.categories = [
             TestCaseCategoryFactory(name='auto', product=cls.product),
             TestCaseCategoryFactory(name='manual', product=cls.product),
         ]
-
-    @classmethod
-    def tearDownClass(cls):
-        for category in cls.categories:
-            category.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_filter_by_product_id(self):
         cat = product.filter_categories(None, {'product': self.product.pk})
@@ -207,16 +170,10 @@ class TestFilterCategories(TestCase):
 class TestFilterComponents(TestCase):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
         cls.component = ComponentFactory(name='application', product=cls.product,
                                          initial_owner=None, initial_qa_contact=None)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.component.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_filter_by_product_id(self):
         com = product.filter_components(None, {'product': self.product.pk})
@@ -232,15 +189,9 @@ class TestFilterComponents(TestCase):
 class TestFilterVersions(TestCase):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
         cls.version = VersionFactory(value='0.7', product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.version.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_filter_by_version_id(self):
         ver = product.filter_versions(None, {'id': self.version.pk})
@@ -262,13 +213,8 @@ class TestFilterVersions(TestCase):
 class TestGet(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_get_product(self):
         cat = product.get(None, self.product.pk)
@@ -287,17 +233,10 @@ class TestGet(XmlrpcAPIBaseTest):
 class TestGetBuilds(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
         cls.builds_count = 3
         cls.builds = [TestBuildFactory(product=cls.product) for i in range(cls.builds_count)]
-
-    @classmethod
-    def tearDownClass(cls):
-        for build in cls.builds:
-            build.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_get_build_with_id(self):
         builds = product.get_builds(None, self.product.pk)
@@ -325,7 +264,7 @@ class TestGetBuilds(XmlrpcAPIBaseTest):
 class TestGetCases(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.tester = UserFactory(username='great tester')
         cls.product = ProductFactory(name='StarCraft')
         cls.version = VersionFactory(value='0.1', product=cls.product)
@@ -339,16 +278,6 @@ class TestGetCases(XmlrpcAPIBaseTest):
                                      reviewer=cls.tester, default_tester=None,
                                      plan=[cls.plan])
                      for i in range(cls.cases_count)]
-
-    @classmethod
-    def tearDownClass(cls):
-        for case in cls.cases:
-            case.delete()
-        cls.plan.delete()
-        cls.version.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.tester.delete()
 
     def test_get_case_with_id(self):
         cases = product.get_cases(None, self.product.pk)
@@ -374,17 +303,10 @@ class TestGetCases(XmlrpcAPIBaseTest):
 class TestGetCategories(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
         cls.category_auto = TestCaseCategoryFactory(name='auto', product=cls.product)
         cls.category_manual = TestCaseCategoryFactory(name='manual', product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.category_auto.delete()
-        cls.category_manual.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_get_categories_with_product_id(self):
         cats = product.get_categories(None, self.product.pk)
@@ -416,15 +338,9 @@ class TestGetCategories(XmlrpcAPIBaseTest):
 class TestGetCategory(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
         cls.category = TestCaseCategoryFactory(name='manual', product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.category.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_get_category(self):
         cat = product.get_category(None, self.category.pk)
@@ -443,7 +359,7 @@ class TestGetCategory(XmlrpcAPIBaseTest):
 class TestAddComponent(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.admin = UserFactory()
         cls.staff = UserFactory()
         cls.admin_request = make_http_request(user=cls.admin, user_perm='management.add_component')
@@ -452,14 +368,6 @@ class TestAddComponent(XmlrpcAPIBaseTest):
 
         # Any added component in tests will be added to this list and then remove them all
         cls.components_to_delete = []
-
-    @classmethod
-    def tearDownClass(cls):
-        Component.objects.filter(pk__in=cls.components_to_delete).delete()
-        cls.staff.delete()
-        cls.admin.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_add_component(self):
         com = product.add_component(self.admin_request, self.product.pk, "application")
@@ -480,15 +388,9 @@ class TestAddComponent(XmlrpcAPIBaseTest):
 class TestGetComponent(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
         cls.component = ComponentFactory(name='application', product=cls.product)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.component.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_get_component(self):
         com = product.get_component(None, self.component.pk)
@@ -507,7 +409,7 @@ class TestGetComponent(XmlrpcAPIBaseTest):
 class TestUpdateComponent(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.admin = UserFactory()
         cls.staff = UserFactory()
         cls.admin_request = make_http_request(user=cls.admin,
@@ -517,14 +419,6 @@ class TestUpdateComponent(XmlrpcAPIBaseTest):
         cls.product = ProductFactory(name='StarCraft')
         cls.component = ComponentFactory(name="application", product=cls.product,
                                          initial_owner=None, initial_qa_contact=None)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.component.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.staff.delete()
-        cls.admin.delete()
 
     def test_update_component(self):
         values = {'name': 'Updated'}
@@ -562,7 +456,7 @@ class TestUpdateComponent(XmlrpcAPIBaseTest):
 class TestGetComponents(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='StarCraft')
         cls.starcraft_version_0_1 = VersionFactory(value='0.1', product=cls.product)
         cls.components = [
@@ -573,13 +467,6 @@ class TestGetComponents(XmlrpcAPIBaseTest):
             ComponentFactory(name='documentation', product=cls.product,
                              initial_owner=None, initial_qa_contact=None),
         ]
-
-    @classmethod
-    def tearDownClass(cls):
-        [component.delete() for component in cls.components]
-        cls.starcraft_version_0_1.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_get_components_with_id(self):
         coms = product.get_components(None, self.product.pk)
@@ -627,7 +514,7 @@ class TestGetMilestones(TestCase):
 class TestGetPlans(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory(username='jack')
         cls.product_starcraft = ProductFactory(name='StarCraft')
         cls.starcraft_version_0_1 = VersionFactory(value='0.1', product=cls.product_starcraft)
@@ -646,18 +533,6 @@ class TestGetPlans(XmlrpcAPIBaseTest):
                             product_version=cls.streetfighter_version_0_1,
                             author=cls.user, owner=cls.user),
         ]
-
-    @classmethod
-    def tearDownClass(cls):
-        [plan.delete() for plan in cls.plans]
-        cls.starcraft_version_0_1.delete()
-        cls.starcraft_version_0_2.delete()
-        cls.streetfighter_version_0_1.delete()
-        cls.product_starcraft.delete()
-        cls.product_starcraft.classification.delete()
-        cls.product_streetfighter.delete()
-        cls.product_streetfighter.classification.delete()
-        cls.user.delete()
 
     def test_get_plans_with_id(self):
         plans = product.get_plans(None, self.product_starcraft.pk)
@@ -687,7 +562,7 @@ class TestGetPlans(XmlrpcAPIBaseTest):
 class TestGetRuns(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.manager = UserFactory(username='manager')
         cls.product = ProductFactory(name='StarCraft')
         cls.build = TestBuildFactory(product=cls.product)
@@ -697,14 +572,6 @@ class TestGetRuns(XmlrpcAPIBaseTest):
             TestRunFactory(summary='Test run for StarCraft: second one',
                            manager=cls.manager, build=cls.build, default_tester=None),
         ]
-
-    @classmethod
-    def tearDownClass(cls):
-        [run.delete() for run in cls.runs]
-        cls.build.delete()
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.manager.delete()
 
     def test_get_runs_with_id(self):
         runs = product.get_runs(None, self.product.pk)
@@ -738,12 +605,8 @@ class TestGetRuns(XmlrpcAPIBaseTest):
 class TestGetTag(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.tag = TestTagFactory(name='QWER')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.tag.delete()
 
     def test_get_tag(self):
         tag = product.get_tag(None, self.tag.pk)
@@ -765,20 +628,13 @@ class TestGetTag(XmlrpcAPIBaseTest):
 class TestAddVersion(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product_name = 'StarCraft'
         cls.product = ProductFactory(name=cls.product_name)
         cls.admin = UserFactory(username='tcr_admin', email='tcr_admin@example.com')
         cls.staff = UserFactory(username='tcr_staff', email='tcr_staff@example.com')
         cls.admin_request = make_http_request(user=cls.admin, user_perm='management.add_version')
         cls.staff_request = make_http_request(user=cls.staff)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.product.delete()
-        cls.product.classification.delete()
-        cls.admin.delete()
-        cls.staff.delete()
 
     def test_add_version_with_no_args(self):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, product.add_version, self.admin_request, None)
@@ -832,19 +688,13 @@ class TestAddVersion(XmlrpcAPIBaseTest):
 class TestGetVersions(XmlrpcAPIBaseTest):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product_name = 'StarCraft'
         cls.versions = ['0.6', '0.7', '0.8', '0.9', '1.0']
 
         cls.product = ProductFactory(name=cls.product_name)
         cls.product_versions = [VersionFactory(product=cls.product, value=version)
                                 for version in cls.versions]
-
-    @classmethod
-    def tearDownClass(cls):
-        [version.delete() for version in cls.product_versions]
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_get_versions_with_id(self):
         prod = product.get_versions(None, self.product.pk)

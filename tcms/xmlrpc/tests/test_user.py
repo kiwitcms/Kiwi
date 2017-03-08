@@ -18,9 +18,10 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 class TestUserSerializer(TestCase):
     '''Test User.get_user_dict'''
 
-    def setUp(self):
-        self.user = UserFactory()
-        self.http_req = make_http_request(user=self.user)
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user)
 
     def test_ensure_password_not_returned(self):
         data = XUser.get_user_dict(self.user)
@@ -33,7 +34,7 @@ class TestUserFilter(TestCase):
     '''Test User.filter'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.group_tester = GroupFactory(name='tester')
         cls.group_reviewer = GroupFactory(name='reviewer')
 
@@ -45,17 +46,6 @@ class TestUserFilter(TestCase):
                                 groups=[cls.group_reviewer])
 
         cls.http_req = make_http_request()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user1.groups.clear()
-        cls.user2.groups.clear()
-        cls.user3.groups.clear()
-        cls.group_tester.delete()
-        cls.group_reviewer.delete()
-        cls.user1.delete()
-        cls.user2.delete()
-        cls.user3.delete()
 
     def test_normal_search(self):
         users = XUser.filter(self.http_req, {'email': 'user2@example.com'})
@@ -80,13 +70,9 @@ class TestUserGet(XmlrpcAPIBaseTest):
     '''Test User.get'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory()
         cls.http_req = make_http_request(user=cls.user)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user.delete()
 
     def test_get(self):
         test_user = self.http_req.user
@@ -106,13 +92,9 @@ class TestUserGetMe(TestCase):
     '''Test User.get_me'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory()
         cls.http_req = make_http_request(user=cls.user)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user.delete()
 
     def test_get_me(self):
         test_user = self.http_req.user
@@ -125,18 +107,12 @@ class TestUserJoin(XmlrpcAPIBaseTest):
     '''Test User.join'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.http_req = make_http_request(user_perm='auth.change_user')
         cls.username = 'test_username'
         cls.user = UserFactory(username=cls.username, email='username@example.com')
         cls.group_name = 'test_group'
         cls.group = GroupFactory(name=cls.group_name)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user.groups.clear()
-        cls.group.delete()
-        cls.user.delete()
 
     def test_join_normally(self):
         XUser.join(self.http_req, self.username, self.group_name)
@@ -158,7 +134,7 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
     '''Test User.update'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.user = UserFactory(username='bob', email='bob@example.com')
         cls.user.set_password(cls.user.username)
         cls.user.save()
@@ -171,11 +147,6 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
             'last_name': 'new last name',
             'email': 'new email',
         }
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user.delete()
-        cls.another_user.delete()
 
     def test_update_myself(self):
         data = XUser.update(self.http_req,

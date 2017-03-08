@@ -23,10 +23,11 @@ from tcms.tests.factories import TestAttachmentFactory
 
 class TestXMLSerializer(test.TestCase):
 
-    def setUp(self):
-        self.testcase = TestCaseFactory(component=[ComponentFactory(),
-                                                   ComponentFactory(),
-                                                   ComponentFactory()])
+    @classmethod
+    def setUpTestData(cls):
+        cls.testcase = TestCaseFactory(component=[ComponentFactory(),
+                                                  ComponentFactory(),
+                                                  ComponentFactory()])
 
     def test_serializer(self):
         serializer = XMLRPCSerializer(model=self.testcase)
@@ -109,7 +110,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
     '''Test QuerySetBasedXMLRPCSerializer'''
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.case_author = UserFactory()
 
         cls.plans = [
@@ -139,16 +140,6 @@ class TestQuerySetBasedSerializer(test.TestCase):
         cls.products = [ProductFactory(), ProductFactory(), ProductFactory()]
         cls.products = Product.objects.filter(pk__in=[product.pk for product in cls.products])
         cls.product_serializer = MockProductSerializer(Product, cls.products)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.products.delete()
-        cls.cases.delete()
-        for plan in cls.plans:
-            plan.attachment.all().delete()
-            plan.case.all().delete()
-        cls.plans.delete()
-        cls.case_author.delete()
 
     def test_get_values_fields_mapping(self):
         mapping = self.product_serializer._get_values_fields_mapping()

@@ -31,13 +31,8 @@ class TestParseBool(unittest.TestCase):
 class TestPreCheckProduct(test.TestCase):
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.product = ProductFactory(name='World Of Warcraft')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.product.delete()
-        cls.product.classification.delete()
 
     def test_pre_check_product_with_dict(self):
         product = U.pre_check_product({"product": self.product.pk})

@@ -6,7 +6,6 @@ from django.forms import ValidationError
 
 from fields import MultipleEmailField
 from tcms.testcases.models import TestCaseBugSystem
-from tcms.testcases.models import TestCasePlan
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestBuildFactory
@@ -69,21 +68,14 @@ class TestCaseRemoveBug(BasePlanCase):
     """Test TestCase.remove_bug"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRemoveBug, cls).setUpClass()
+    def setUpTestData(cls):
+        super(TestCaseRemoveBug, cls).setUpTestData()
         cls.build = TestBuildFactory(product=cls.product)
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)
         cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
                                           case=cls.case, run=cls.test_run, build=cls.build)
         cls.bug_system = TestCaseBugSystem.objects.get(name='Bugzilla')
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.case_run.delete()
-        cls.test_run.delete()
-        cls.build.delete()
-        super(TestCaseRemoveBug, cls).tearDownClass()
 
     def setUp(self):
         self.bug_id_1 = '12345678'
@@ -142,8 +134,8 @@ class TestCaseRemoveComponent(BasePlanCase):
     """Test TestCase.remove_component"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRemoveComponent, cls).setUpClass()
+    def setUpTestData(cls):
+        super(TestCaseRemoveComponent, cls).setUpTestData()
 
         cls.component_1 = ComponentFactory(name='Application',
                                            product=cls.product,
@@ -156,14 +148,6 @@ class TestCaseRemoveComponent(BasePlanCase):
 
         cls.cc_rel_1 = TestCaseComponentFactory(case=cls.case, component=cls.component_1)
         cls.cc_rel_2 = TestCaseComponentFactory(case=cls.case, component=cls.component_2)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.cc_rel_1.delete()
-        cls.cc_rel_2.delete()
-        cls.component_1.delete()
-        cls.component_2.delete()
-        super(TestCaseRemoveComponent, cls).tearDownClass()
 
     def test_remove_a_component(self):
         self.case.remove_component(self.component_1)
@@ -181,17 +165,11 @@ class TestCaseRemovePlan(BasePlanCase):
     """Test TestCase.remove_plan"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRemovePlan, cls).setUpClass()
+    def setUpTestData(cls):
+        super(TestCaseRemovePlan, cls).setUpTestData()
 
         cls.new_case = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
                                        plan=[cls.plan])
-
-    @classmethod
-    def tearDownClass(cls):
-        TestCasePlan.objects.filter(plan=cls.plan, case=cls.new_case).delete()
-        cls.new_case.delete()
-        super(TestCaseRemovePlan, cls).tearDownClass()
 
     def test_remove_plan(self):
         self.new_case.remove_plan(self.plan)
@@ -206,20 +184,13 @@ class TestCaseRemoveTag(BasePlanCase):
     """Test TestCase.remove_tag"""
 
     @classmethod
-    def setUpClass(cls):
-        super(TestCaseRemoveTag, cls).setUpClass()
+    def setUpTestData(cls):
+        super(TestCaseRemoveTag, cls).setUpTestData()
 
         cls.tag_rhel = TestTagFactory(name='rhel')
         cls.tag_fedora = TestTagFactory(name='fedora')
         TestCaseTagFactory(case=cls.case, tag=cls.tag_rhel, user=cls.tester.pk)
         TestCaseTagFactory(case=cls.case, tag=cls.tag_fedora, user=cls.tester.pk)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.case.tag.clear()
-        cls.tag_rhel.delete()
-        cls.tag_fedora.delete()
-        super(TestCaseRemoveTag, cls).tearDownClass()
 
     def test_remove_tag(self):
         self.case.remove_tag(self.tag_rhel)
