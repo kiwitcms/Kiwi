@@ -1,8 +1,20 @@
 language: python
 python:
   - "2.7"
+env:
+  - TEST_DB=SQLite
+  - TEST_DB=MySQL
+  - TEST_DB=Postgres
+services:
+  - mysql
+  - postgresql
+addons:
+  - postgresql: '9.5'
 before_install:
-  - pip install coveralls
+  - mysql -e 'SELECT VERSION();'
+  - mysql -e 'CREATE DATABASE nitrate_travis CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+  - psql -c  "CREATE DATABASE nitrate_travis ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" -U postgres
+  - pip install coveralls psycopg2
 install: "pip install -r requirements/devel.txt"
 script: make check
 after_success:
