@@ -628,11 +628,7 @@ def get_logs(request, case_run_id):
 
     Params:     $case_run_id - Integer:
     """
-    try:
-        test_case_run = TestCaseRun.objects.get(pk=case_run_id)
-    except ObjectDoesNotExist:
-        raise
-
+    test_case_run = TestCaseRun.objects.get(pk=case_run_id)
     links = LinkReference.get_from(test_case_run)
     s = XMLRPCSerializer(links)
     return s.serialize_queryset()
