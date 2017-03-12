@@ -5,7 +5,6 @@ import httplib
 from django import test
 from django.core.urlresolvers import reverse
 
-from tcms.testruns.models import TestRun
 from tcms.testruns.models import TestCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import TestRunFactory
@@ -37,7 +36,7 @@ class TestOrderCases(BasePlanCase):
         cls.client = test.Client()
 
     def test_404_if_run_does_not_exist(self):
-        nonexisting_run_pk = TestRun.objects.count() + 1
+        nonexisting_run_pk = 999999
         url = reverse('tcms.testruns.views.order_case', args=[nonexisting_run_pk])
         response = self.client.get(url)
         self.assertEqual(httplib.NOT_FOUND, response.status_code)
