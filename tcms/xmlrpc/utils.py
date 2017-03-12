@@ -38,7 +38,7 @@ def pre_check_product(values):
         if not product_str:
             raise ValueError('Got empty product name.')
         return Product.objects.get(name=product_str)
-    elif value_type == int:
+    elif value_type in [int, long]:
         return Product.objects.get(pk=product_str)
     else:
         raise ValueError('The type of product is not recognizable.')
@@ -48,12 +48,14 @@ def pre_process_ids(value):
     # FIXME: Add more type checks, e.g. value cannot be a boolean value.
 
     if isinstance(value, list):
-        return [isinstance(c, int) and c or int(c.strip()) for c in value if c]
+        return [isinstance(c, int) and c or
+                isinstance(c, long) and c or
+                int(c.strip()) for c in value if c]
 
     if isinstance(value, str):
         return [int(c.strip()) for c in value.split(',') if c]
 
-    if isinstance(value, int):
+    if isinstance(value, int) or isinstance(value, long):
         return [value]
 
     raise TypeError('Unrecognizable type of ids')
