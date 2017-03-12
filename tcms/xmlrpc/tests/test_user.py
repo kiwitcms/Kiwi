@@ -35,8 +35,8 @@ class TestUserFilter(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.group_tester = GroupFactory(name='tester')
-        cls.group_reviewer = GroupFactory(name='reviewer')
+        cls.group_tester = GroupFactory()
+        cls.group_reviewer = GroupFactory()
 
         cls.user1 = UserFactory(username='user 1', email='user1@exmaple.com', is_active=True,
                                 groups=[cls.group_tester])
