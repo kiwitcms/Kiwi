@@ -1,3 +1,4 @@
+dist: trusty
 language: python
 python:
   - "2.7"
@@ -9,10 +10,24 @@ services:
   - mysql
   - postgresql
 addons:
-  - postgresql: '9.5'
+  - postgresql: 9.5
+matrix:
+  include:
+    - python: 2.7
+      env: TEST_DB=MariaDB
+      addons:
+        mariadb: 10.1
 before_install:
+  - cat "$TRAVIS_BUILD_DIR/.travis/my.cnf" | sudo tee -a /etc/mysql/conf.d/mariadb.cnf
+  - sudo cat /etc/mysql/conf.d/mariadb.cnf
+  - sudo service mysql restart
+
   - mysql -e 'SELECT VERSION();'
-  - mysql -e 'CREATE DATABASE nitrate_travis CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+  - mysql -e 'CREATE DATABASE nitrate_travis CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
+  - mysql -e 'GRANT ALL PRIVILEGES ON nitrate_travis.* TO travis;'
+  - mysql -e 'CREATE DATABASE test_nitrate_travis CHARACTER SET utf8 COLLATE utf8_unicode_ci;' 
+  - mysql -e 'GRANT ALL PRIVILEGES ON test_nitrate_travis.* TO travis;'
+
   - psql -c  "CREATE DATABASE nitrate_travis ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" -U postgres
   - pip install coveralls psycopg2
 install: "pip install -r requirements/devel.txt"
