@@ -8,6 +8,7 @@ from httplib import NOT_FOUND
 from httplib import NOT_IMPLEMENTED
 from datetime import datetime
 
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.api import testcaserun
 from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.testruns.models import TestCaseRunStatus
@@ -875,10 +876,11 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
         self.assertEqual(len(logs), 0)
 
     def test_get_logs(self):
+        tcr_log = LinkReference.get_from(self.case_run_1)[0]
         logs = testcaserun.get_logs(None, self.case_run_1.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)
-        self.assertEqual(logs[0]['id'], 1)
+        self.assertEqual(logs[0]['id'], tcr_log.pk)
         self.assertEqual(logs[0]['name'], "Test logs")
         self.assertEqual(logs[0]['url'], "http://www.google.com")
 
