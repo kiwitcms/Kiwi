@@ -2,6 +2,7 @@ dist: trusty
 language: python
 python:
   - "2.7"
+cache: pip
 env:
   - TEST_DB=SQLite
   - TEST_DB=MySQL
