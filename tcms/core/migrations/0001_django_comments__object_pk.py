@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.db import migrations, models
 
 
@@ -38,6 +39,17 @@ class Migration(migrations.Migration):
         ('django_comments', '__latest__'),
     ]
 
-    operations = [
-        DjangoCommentsAlterField('comment', 'object_pk', models.IntegerField())
-    ]
+    # PostgreSQL needs USING() to know how to convert between data types
+    # Fixed in https://code.djangoproject.com/ticket/25002. Not backported to Django 1.8
+    # Remove after migration to Django 1.9 and later
+    if settings.DATABASES['default']['ENGINE'].find('postgresql') > -1:
+        operations = [
+            migrations.RunSQL('ALTER TABLE django_comments ALTER COLUMN object_pk TYPE integer USING object_pk::integer')
+        ]
+    else:
+        # handles correct type migrtion for MySQL and SQLite
+        # Note: SQLite doesn't support the ALTER/MODIFY COLUMN statement so
+        # we can't use RawSQL here!
+        operations = [
+            DjangoCommentsAlterField('comment', 'object_pk', models.IntegerField())
+        ]
