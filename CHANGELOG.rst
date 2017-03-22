@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+3.8.18.12 (Mar 22 2017, released on MrSenko.com)
+------------------------------------------------
+
+- Rebased onto 980b07b
+- Add tests, SQL refactor and fixes for commit_unless_managed.
+  PR #170, Issue #148 (Mr. Senko)
+- Enable testing with MySQL and Postgres on Travis-CI. PR #171,
+  Issue #169 (Mr. Senko)
+
 3.8.18.10 (Mar 8 2017, released on MrSenko.com)
 ------------------------------------------------
 
