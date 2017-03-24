@@ -32,7 +32,7 @@
 			<div>
 				<ol>
 					{% for test_case in test_plan.result_set %}
-					<li>[{{ test_case.case_id }}] {{ test_case.summary }}</li>
+					<li>[{{ test_case.case }}] {{ test_case.case__summary }}</li>
 					{% endfor %}
 				</ol>
 			</div>
@@ -48,7 +48,7 @@
 			{{ test_plan.summary|safe }}
 			{% for test_case in test_plan.result_set %}
 			<div style="clear: left">
-				<h3>[{{ test_case.case_id }}] {{ test_case.summary }}</h3>
+				<h3>[{{ test_case.case }}] {{ test_case.case__summary }}</h3>
 				<div class="thin-line"></div>
 				<div class="case-stage">
 					<h4>Set up</h4>

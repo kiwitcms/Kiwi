@@ -122,10 +122,32 @@ class PlanTests(test.TestCase):
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.OK)
 
+    def test_plan_printable_without_selected_plan(self):
+        location = reverse('tcms.testplans.views.printable')
+        response = self.c.get(location)
+        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEqual(response.context['info'], 'At least one target is required.')
+
     def test_plan_printable(self):
         location = reverse('tcms.testplans.views.printable')
-        response = self.c.get(location, {'plan_id': self.plan_id})
+        response = self.c.get(location, {'plan': self.plan_id})
         self.assertEquals(response.status_code, httplib.OK)
+
+        for test_plan in response.context['test_plans']:
+            self.assertTrue(test_plan.pk > 0)
+            self.assertTrue(test_plan.name is not '')
+            self.assertTrue(test_plan.summary is not '')
+            self.assertTrue(test_plan.latest_text.plan_text is not '')
+
+            self.assertTrue(len(test_plan.result_set) > 0)
+            for case in test_plan.result_set:
+                self.assertTrue(case.case_id > 0)
+                self.assertTrue(case.summary is not '')
+                # factory sets all 4
+                self.assertTrue(case.setup is not '')
+                self.assertTrue(case.action is not '')
+                self.assertTrue(case.effect is not '')
+                self.assertTrue(case.breakdown is not '')
 
     def test_plan_export(self):
         location = reverse('tcms.testplans.views.export')

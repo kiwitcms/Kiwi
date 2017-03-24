@@ -26,7 +26,7 @@ from uuslug import slugify
 from tcms.core.views import Prompt
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
-from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testcases.models import TestCase, TestCasePlan, TestCaseText
 from tcms.testcases.models import TestCaseStatus, TestCaseCategory
 from tcms.management.models import TCMSEnvGroup, Component
 from tcms.testplans.models import TestPlan, TestPlanComponent
@@ -1206,12 +1206,31 @@ def printable(request, template_name='plan/printable.html'):
     tps = TestPlan.objects.filter(pk__in=plan_pks).only('pk', 'name')
 
     def plan_generator():
-        repeat = len(plan_pks)
-        params_sql = ','.join(itertools.repeat('%s', repeat))
-        sql = sqls.TP_PRINTABLE_CASE_TEXTS % (params_sql, params_sql)
-        result_set = SQLExecution(sql, plan_pks * 2)
-        group_data = itertools.groupby(result_set.rows, lambda data: data['plan_id'])
-        cases_dict = dict((key, list(values)) for key, values in group_data)
+        cases_dict = {}
+        cases_seen = []
+        for row in TestCaseText.objects.values(
+            'setup', 'action', 'effect', 'breakdown',
+            'case', 'case__summary', 'case__plan'
+        ).filter(
+            case__plan__in=plan_pks,
+            case__case_status__name__in=['PROPOSED', 'CONFIRMED', 'NEEDS_UPDATE']
+        ).order_by('case__plan', 'case', '-case_text_version'):
+            plan_id = row['case__plan']
+
+            # start info for new plan
+            if plan_id not in cases_dict:
+                cases_dict[plan_id] = []
+                cases_seen = []
+
+            # continue adding cases to plan
+            case_id = row['case']
+            # only latest case text version
+            if case_id in cases_seen:
+                continue
+
+            cases_seen.append(case_id)
+            cases_dict[plan_id].append(row)
+
         for tp in tps:
             tp.result_set = cases_dict.get(tp.plan_id, None)
             yield tp
