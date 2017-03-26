@@ -5,27 +5,24 @@
         ]>
 <testopia version="1.1">
     {% for meta in data_generator %}
-    <testcase author="{{ meta.auther_email }}"
-              priority="{{ meta.priority }}"
-              automated="{{ meta.isautomated }}"
-              status="{{ meta.case_status }}">
-        <summary>{{ meta.summary }}</summary>
-        <categoryname>{{ meta.category_name }}</categoryname>
-        {% for component in meta.c_meta %}
-        <component product="{{ component.product_name }}">
-            {{ component.component_name }}
-        </component>
+    <testcase author="{{ meta.case__author__email }}"
+              priority="{{ meta.case__priority__value }}"
+              automated="{{ meta.case__is_automated }}"
+              status="{{ meta.case__case_status__name }}">
+        <summary>{{ meta.case__summary }}</summary>
+        <categoryname>{{ meta.case__category__name }}</categoryname>
+        {% for component in meta.components %}
+        <component product="{{ component.product }}">{{ component.component }}</component>
         {% endfor %}
-        <defaulttester>{{ meta.tester_email|default:"" }}</defaulttester>
-        <notes>{{ meta.notes }}</notes>
-        <testplan_reference type="Xml_description">{{ meta.plan_name }}
-        </testplan_reference>
-        <action>{{ meta.latest_text.0.action }}</action>
-        <expectedresults>{{ meta.latest_text.0.effect }}</expectedresults>
-        <setup>{{ meta.latest_text.0.setup }}</setup>
-        <breakdown>{{ meta.latest_text.0.breakdown }}</breakdown>
-        {% for tag in meta.tag %}
-        <tag>{{ tag.tag_name }}</tag>
+        <defaulttester>{{ meta.case__default_tester__email|default:"" }}</defaulttester>
+        <notes>{{ meta.case__notes }}</notes>
+        <testplan_reference type="Xml_description">{{ meta.case__plan__name }}</testplan_reference>
+        <action>{{ meta.action }}</action>
+        <expectedresults>{{ meta.effect }}</expectedresults>
+        <setup>{{ meta.setup }}</setup>
+        <breakdown>{{ meta.breakdown }}</breakdown>
+        {% for tag in meta.tags %}
+        <tag>{{ tag }}</tag>
         {% endfor %}
     </testcase>
     {% endfor %}
