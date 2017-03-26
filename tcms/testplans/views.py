@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import itertools
 import urllib
 
 from json import dumps as json_dumps
@@ -37,11 +36,8 @@ from tcms.search import remove_from_request_path
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.forms import NewPlanForm, EditPlanForm, ClonePlanForm, \
     ImportCasesViaXMLForm, SearchPlanForm, PlanComponentForm
-from tcms.core.db import SQLExecution
 from tcms.core.utils.checksum import checksum
 from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
-from tcms.testplans import sqls
-from tcms.utils.dict_utils import create_group_by_dict as create_dict
 
 MODULE_NAME = "testplans"
 
@@ -1266,36 +1262,75 @@ def export(request, template_name='plan/export.xml'):
 
 
 def generator_proxy(plan_pks):
-    def key_func(data):
-        return (data['plan_id'], data['case_id'])
+    cases_seen = []
+    previous_plan = 0
 
-    params_sql = ','.join(itertools.repeat('%s', len(plan_pks)))
-    metas = SQLExecution(sqls.TP_EXPORT_ALL_CASES_META % params_sql,
-                         plan_pks).rows
-    compoment_dict = create_dict(
-        sqls.TP_EXPORT_ALL_CASES_COMPONENTS % params_sql,
-        plan_pks,
-        key_func)
-    tag_dict = create_dict(sqls.TP_EXPORT_ALL_CASE_TAGS % params_sql,
-                           plan_pks,
-                           key_func)
+    # NB: filter is same as below
+    case_ids = [tc.pk for tc in TestCase.objects.filter(
+        plan__in=plan_pks,
+        case_status__name__in=['PROPOSED', 'CONFIRMED', 'NEEDS_UPDATE']
+    ).only('pk')]
 
-    sql = sqls.TP_EXPORT_ALL_CASE_TEXTS % (params_sql, params_sql)
-    plan_text_dict = create_dict(sql, plan_pks * 2, key_func)
+    # case components & tags info
+    components = {}
+    tags = {}
+    previous_component = None
+    previous_tag = None
+    for row in TestCase.objects.filter(
+        pk__in=case_ids
+    ).values(
+        'pk', 'component__name', 'component__product__name', 'tag__name'
+    ).order_by('pk'):
+        pk = row['pk']
+        component_name = row['component__name']
+        tag_name = row['tag__name']
 
-    for meta in metas:
-        plan_id = meta['plan_id']
-        case_id = meta['case_id']
-        c_meta = compoment_dict.get((plan_id, case_id), None)
-        if c_meta:
-            meta['c_meta'] = c_meta
+        if pk not in components:
+            components[pk] = []
+            tags[pk] = []
 
-        tag = tag_dict.get((plan_id, case_id), None)
-        if tag:
-            meta['tag'] = tag
+        # skip duplicate components (can happen when there are more tags
+        # for a single case)
+        if component_name and component_name != previous_component:
+            components[pk].append({
+                'component': component_name,
+                'product': row['component__product__name']
+            })
+            previous_component = component_name
 
-        plan_text = plan_text_dict.get((plan_id, case_id), None)
-        if plan_text:
-            meta['latest_text'] = plan_text
+        # skip duplicate tags (can happen when there are more components
+        # for a single case)
+        if tag_name and tag_name != previous_tag:
+            tags[pk].append(tag_name)
+            previous_tag = tag_name
 
-        yield meta
+    # cases text and meta information
+    for row in TestCaseText.objects.values(
+        'setup', 'action', 'effect', 'breakdown',
+        'case', 'case__plan', 'case__plan__name',
+        'case__summary', 'case__is_automated', 'case__notes',
+        'case__priority__value', 'case__case_status__name',
+        'case__author__email', 'case__default_tester__email',
+        'case__category__name',
+    ).filter(
+        case__plan__in=plan_pks,
+        case__case_status__name__in=['PROPOSED', 'CONFIRMED', 'NEEDS_UPDATE']
+    ).order_by('-case__plan', 'case', '-case_text_version'):
+        plan_id = row['case__plan']
+        case_id = row['case']
+
+        # start exporting cases for new plan
+        if plan_id > previous_plan:
+            cases_seen = []
+            previous_plan = plan_id
+
+        # continue exporting cases from current plan
+        # but only latest case text version
+        if case_id in cases_seen:
+            continue
+
+        cases_seen.append(case_id)
+
+        row['components'] = components[case_id]
+        row['tags'] = tags[case_id]
+        yield row

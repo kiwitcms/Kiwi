@@ -156,9 +156,14 @@ class PlanTests(test.TestCase):
 
         xml_doc = response.content
         try:
-            et.fromstring(xml_doc)
+            xml_doc = et.fromstring(xml_doc)
         except et.ParseError:
             self.fail('XML document exported from test plan is invalid.')
+
+        for tc in xml_doc.iter('testcase'):
+            self.assertEqual('CONFIRMED', tc.attrib['status'])
+            for tp_ref in tc.iter('testplan_reference'):
+                self.assertEqual(tp_ref.text, self.test_plan.name)
 
     def test_plan_attachment(self):
         location = reverse('tcms.testplans.views.attachment',
