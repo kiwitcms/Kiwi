@@ -711,7 +711,8 @@ def clone(request, template_name='plan/clone.html'):
     '''Clone testplan'''
     SUB_MODULE_NAME = 'plans'
 
-    if not request.REQUEST.get('plan'):
+    req_data = request.GET or request.POST
+    if 'plan' not in req_data:
         return HttpResponse(Prompt.render(
             request=request,
             info_type=Prompt.Info,
@@ -719,7 +720,7 @@ def clone(request, template_name='plan/clone.html'):
             next='javascript:window.history.go(-1)',
         ))
 
-    tps = TestPlan.objects.filter(pk__in=request.REQUEST.getlist('plan'))
+    tps = TestPlan.objects.filter(pk__in=req_data.getlist('plan'))
 
     if not tps:
         return HttpResponse(Prompt.render(
