@@ -30,7 +30,7 @@ class CategoryActions(BaseActions):
     '''Category actions used by view function `category`'''
 
     def __get_form(self):
-        self.form = CaseCategoryForm(self.request.REQUEST)
+        self.form = CaseCategoryForm(self.request.POST)
         self.form.populate(product_id=self.product_id)
         return self.form
 
@@ -53,7 +53,7 @@ class CategoryActions(BaseActions):
         if not is_valid:
             return form
 
-        category_pk = self.request.REQUEST.get('o_category')
+        category_pk = self.request.POST.get('o_category')
         # FIXME: no exception hanlder when pk does not exist.
         category = TestCaseCategory.objects.get(pk=category_pk)
         # FIXME: lower performance. It's not necessary to update each TestCase
@@ -70,7 +70,7 @@ class CategoryActions(BaseActions):
     def render_form(self):
         form = CaseCategoryForm(initial={
             'product': self.product_id,
-            'category': self.request.REQUEST.get('o_category'),
+            'category': self.request.POST.get('o_category'),
         })
         form.populate(product_id=self.product_id)
 
