@@ -1005,7 +1005,7 @@ def cases(request, plan_id):
                                       context_instance=RequestContext(request))
 
         def delete_cases(self):
-            if not request.GET.get('case'):
+            if not request.POST.get('case'):
                 ajax_response['rc'] = 1
                 ajax_response['reponse'] = 'At least one case is required to delete.'
                 return HttpResponse(json_dumps(ajax_response))
@@ -1031,12 +1031,12 @@ def cases(request, plan_id):
             # Because the cases sortkey in database is chaos,
             # Most of them are None.
 
-            if not request.GET.get('case'):
+            if not request.POST.get('case'):
                 ajax_response['rc'] = 1
                 ajax_response['reponse'] = 'At least one case is required to re-order.'
                 return HttpResponse(json_dumps(ajax_response))
 
-            tc_pks = request.GET.getlist('case')
+            tc_pks = request.POST.getlist('case')
             tcs = TestCase.objects.filter(pk__in=tc_pks)
 
             for tc in tcs:
@@ -1119,9 +1119,10 @@ def cases(request, plan_id):
 
     # tp = get_object_or_404(TestPlan, plan_id=plan_id)
     cas = CaseActions(request, tp)
-    actions = request.REQUEST.get('a')
+    req_data = request.GET or request.POST
+    action = req_data.get('a')
 
-    if actions not in cas.__all__:
+    if action not in cas.__all__:
         if request.GET.get('format') == 'json':
             ajax_response['rc'] = 1
             ajax_response['response'] = 'Unrecognizable actions'
@@ -1134,7 +1135,7 @@ def cases(request, plan_id):
             next=reverse('tcms.testplans.views.get', args=[plan_id]),
         ))
 
-    func = getattr(cas, actions)
+    func = getattr(cas, action)
     return func()
 
 
