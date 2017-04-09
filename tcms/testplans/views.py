@@ -919,7 +919,6 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 def text_history(request, plan_id, template_name='plan/history.html'):
     '''View test plan text history'''
     SUB_MODULE_NAME = 'plans'
-    REQ = request.REQUEST
 
     tp = get_object_or_404(TestPlan, plan_id=int(plan_id))
     tptxts = tp.text.select_related('author').only('plan',
@@ -927,7 +926,7 @@ def text_history(request, plan_id, template_name='plan/history.html'):
                                                    'plan_text',
                                                    'plan_text_version',
                                                    'author__email')
-    selected_plan_text_version = int(REQ.get('plan_text_version', 0))
+    selected_plan_text_version = int(request.GET.get('plan_text_version', 0))
     context_data = {
         'module': MODULE_NAME,
         'sub_module': SUB_MODULE_NAME,
