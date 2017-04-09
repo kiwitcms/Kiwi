@@ -81,7 +81,7 @@ class ComponentActions(BaseActions):
     '''Component actions used by view function `component`'''
 
     def __get_form(self):
-        self.form = CaseComponentForm(self.request.REQUEST)
+        self.form = CaseComponentForm(self.request.POST)
         self.form.populate(product_id=self.product_id)
         return self.form
 
@@ -167,7 +167,7 @@ class ComponentActions(BaseActions):
         form = CaseComponentForm(initial={
             'product': self.product_id,
             # 'category': self.request.REQUEST.get('category'),
-            'component': self.request.REQUEST.getlist('o_component'),
+            'component': self.request.POST.getlist('o_component'),
         })
         form.populate(product_id=self.product_id)
 
