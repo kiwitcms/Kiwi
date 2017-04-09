@@ -60,7 +60,7 @@ def clean_request(request, keys=None):
     """
     Clean the request strings
     """
-    request_contents = request.REQUEST.copy()
+    request_contents = request.GET.copy()
     if not keys:
         keys = request_contents.keys()
     rt = {}
@@ -70,7 +70,7 @@ def clean_request(request, keys=None):
             if k == 'order_by' or k == 'from_plan':
                 continue
 
-            v = request.REQUEST[k]
+            v = request.GET[k]
             # Convert the value to be list if it's __in filter.
             if k.endswith('__in') and isinstance(v, unicode):
                 v = string_to_list(v)
