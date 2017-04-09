@@ -19,7 +19,7 @@ class BaseActions(object):
     def __init__(self, request):
         self.ajax_response = {'rc': 0, 'response': 'ok', 'errors_list': []}
         self.request = request
-        self.product_id = request.REQUEST.get('product')
+        self.product_id = request.POST.get('product')
 
     def get_testcases(self):
         from tcms.testcases.views import get_selected_testcases
