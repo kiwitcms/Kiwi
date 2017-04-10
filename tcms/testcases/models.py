@@ -600,6 +600,7 @@ class TestCaseAttachment(models.Model):
     attachment = models.ForeignKey('management.TestAttachment')
     case = models.ForeignKey(TestCase, default=None, related_name='case_attachment')
     case_run = models.ForeignKey('testruns.TestCaseRun', default=None,
+                                 null=True, blank=True,
                                  related_name='case_run_attachment')
 
     class Meta:
