@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+3.8.18.15 (Apr 12 2017, released on MrSenko.com)
+------------------------------------------------
+
+- Rebased onto 8f45beb
+- Remove tcms.core.migrations.0001_django_comments__object_pk
+
+
 3.8.18.12 (Mar 22 2017, released on MrSenko.com)
 ------------------------------------------------
 
