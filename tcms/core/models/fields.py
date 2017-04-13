@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from MySQLdb.constants import FIELD_TYPE
+try:
+    # Nitrate may not be running under MySQL
+    from MySQLdb.constants import FIELD_TYPE
+    from django.db.backends.mysql.base import django_conversions
+    django_conversions.update({FIELD_TYPE.TIME: None})
+except ImportError:
+    pass
+
 from django.conf import settings
 from django.db.models.fields import IntegerField
 from django.db import models
-from django.db.backends.mysql.base import django_conversions
 
 from tcms.core.forms.fields import DurationField as DurationFormField
-
-django_conversions.update({FIELD_TYPE.TIME: None})
 
 
 class BlobValueWrapper(object):
