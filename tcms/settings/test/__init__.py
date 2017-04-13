@@ -1,4 +1,3 @@
-import os
 from tcms.settings.devel import *
 
 DATABASES = {
@@ -11,22 +10,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
-if 'TRAVIS' in os.environ:
-    if os.environ.get('TEST_DB').lower() in ['mysql', 'mariadb']:
-        DATABASES['default'].update({
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'nitrate_travis',
-            'USER': 'travis',
-            'HOST': '127.0.0.1',
-        })
-    elif os.environ.get('TEST_DB').lower() == 'postgres':
-        DATABASES['default'].update({
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'nitrate_travis',
-            'USER': 'postgres',
-            'HOST': 'localhost',
-        })
 
 LISTENING_MODEL_SIGNAL = False
 

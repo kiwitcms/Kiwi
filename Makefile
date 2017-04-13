@@ -44,9 +44,30 @@ else
 	TEST_TARGET=$(strip (TEST_TARGET))
 endif
 
+DJANGO_SETTINGS_MODULE="tcms.settings.test"
+
+ifeq ($(TEST_DB),MySQL)
+	DJANGO_SETTINGS_MODULE="tcms.settings.test.mysql"
+endif
+
+ifeq ($(TEST_DB),MariaDB)
+	DJANGO_SETTINGS_MODULE="tcms.settings.test.mysql"
+endif
+
+ifeq ($(TEST_DB),Postgres)
+	DJANGO_SETTINGS_MODULE="tcms.settings.test.postgresql"
+endif
+
+
 .PHONY: test
 test:
-	@pytest $(TEST_TARGET)
+	if [ "$$TEST_DB" == "all" ]; then \
+		for DB in SQLite MySQL Postgres MariaDB; do \
+			TEST_DB=$$DB make test; \
+		done; \
+	else \
+		DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pytest $(TEST_TARGET); \
+	fi
 
 
 .PHONY: check
