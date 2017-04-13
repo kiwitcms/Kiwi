@@ -42,13 +42,17 @@ dependencies. See :doc:`set_dev_env` for more information. Then::
     (venv)# git clone https://github.com/Nitrate/Nitrate.git
     (venv)# cd ./Nitrate/
     (venv)# git checkout --track [a proper tag or branch]
-    (venv)# pip install -r ./requirements/base.txt
+    (venv)# pip install -r ./requirements/mysql.txt
     (venv)# python setup.py install
 
 .. note::
 
     Nitrate source code has been cloned into your home directory but
     has been installed into the virtual environment for Apache!
+
+.. note::
+
+    Alternatively you can use ``requirements/postgres.txt`` for PostgreSQL!
 
 
 Initialize database

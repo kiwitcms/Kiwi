@@ -34,9 +34,13 @@ Install devel packages that should be installed first::
 
     sudo yum install gcc w3m python-devel mysql-devel krb5-devel libxml2-devel libxslt-devel
 
-Install dependencies from ``requirements/base.txt``::
+Install dependencies from ``requirements/mysql.txt``::
 
-    sudo pip install -r requirements/base.txt
+    sudo pip install -r requirements/mysql.txt
+
+.. note::
+
+    Alternatively you can use ``requirements/postgres.txt`` for PostgreSQL!
 
 Install from source code
 ~~~~~~~~~~~~~~~~~~~~~~~~

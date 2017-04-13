@@ -17,7 +17,7 @@ A brief history
 Dependencies
 ------------
 
-Basic dependences::
+Basic dependences (excluding database engine)::
 
     Python >= 2.6.5
 
@@ -26,4 +26,3 @@ Basic dependences::
 Additional recommended dependences for development:
 
 .. literalinclude:: ../../requirements/devel.txt
-
