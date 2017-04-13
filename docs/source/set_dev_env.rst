@@ -21,16 +21,21 @@ Create a virtual environment for Nitrate::
 
     virtualenv ~/virtualenvs/nitrate
 
-Install dependencies from ``requirements/devel.txt``::
+Install dependencies for development::
 
     . ~/virtualenvs/nitrate/bin/activate
+    pip install -r requirements/mysql.txt
     pip install -r requirements/devel.txt
+
+.. note::
+
+    Alternatively you can use ``requirements/postgres.txt`` for PostgreSQL!
 
 Initialize database
 -------------------
 
-Currently, MySQL is only be supported, either mysql or mariadb is okay for
-running Nitrate.
+Currently we recommend either MySQL or MariaDB for running Nitrate. Support
+for PostgreSQL is still experimental.
 
 Create database and user::
 
