@@ -5,7 +5,6 @@ from django import test
 from tcms.testcases.models import TestCasePlan
 from tcms.xmlrpc.api import testcase as XmlrpcTestCase
 from tcms.xmlrpc.tests.utils import make_http_request
-from tcms.xmlrpc.tests.utils import user_should_have_perm
 
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
@@ -18,9 +17,8 @@ class TestNotificationRemoveCC(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory()
-        cls.http_req = make_http_request(user=cls.user)
-        perm_name = 'testcases.change_testcase'
-        user_should_have_perm(cls.http_req.user, perm_name)
+        cls.http_req = make_http_request(user=cls.user,
+                                         user_perm='testcases.change_testcase')
 
         cls.default_cc = 'example@MrSenko.com'
         cls.testcase = TestCaseFactory()
@@ -41,9 +39,8 @@ class TestUnlinkPlan(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory()
-        cls.http_req = make_http_request(user=cls.user)
-        perm_name = 'testcases.delete_testcaseplan'
-        user_should_have_perm(cls.http_req.user, perm_name)
+        cls.http_req = make_http_request(user=cls.user,
+                                         user_perm='testcases.delete_testcaseplan')
 
         cls.testcase_1 = TestCaseFactory()
         cls.testcase_2 = TestCaseFactory()
@@ -73,9 +70,8 @@ class TestLinkPlan(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory()
-        cls.http_req = make_http_request(user=cls.user)
-        perm_name = 'testcases.add_testcaseplan'
-        user_should_have_perm(cls.http_req.user, perm_name)
+        cls.http_req = make_http_request(user=cls.user,
+                                         user_perm='testcases.add_testcaseplan')
 
         cls.testcase_1 = TestCaseFactory()
         cls.testcase_2 = TestCaseFactory()

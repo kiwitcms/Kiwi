@@ -8,10 +8,10 @@ from django.test import TestCase
 
 import tcms.xmlrpc.api.user as XUser
 
-from tcms.xmlrpc.tests.utils import make_http_request
-from tcms.xmlrpc.tests.utils import user_should_have_perm
-from tcms.tests.factories import UserFactory
 from tcms.tests.factories import GroupFactory
+from tcms.tests.factories import UserFactory
+from tcms.tests import user_should_have_perm
+from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 

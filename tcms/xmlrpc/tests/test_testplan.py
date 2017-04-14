@@ -22,7 +22,6 @@ from tcms.xmlrpc.api import testplan as XmlrpcTestPlan
 from tcms.xmlrpc.api.testplan import clean_xml_file
 from tcms.xmlrpc.api.testplan import process_case
 from tcms.xmlrpc.tests.utils import make_http_request
-from tcms.xmlrpc.tests.utils import user_should_have_perm
 
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
@@ -100,8 +99,8 @@ class TestAddTag(XmlrpcAPIBaseTest):
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory()
-        cls.http_req = make_http_request(user=cls.user)
-        user_should_have_perm(cls.http_req.user, 'testplans.add_testplantag')
+        cls.http_req = make_http_request(user=cls.user,
+                                         user_perm='testplans.add_testplantag')
 
         cls.product = ProductFactory()
         cls.plans = [
@@ -141,9 +140,8 @@ class TestAddComponent(XmlrpcAPIBaseTest):
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory()
-        cls.http_req = make_http_request(user=cls.user)
-        perm_name = 'testplans.add_testplancomponent'
-        user_should_have_perm(cls.http_req.user, perm_name)
+        cls.http_req = make_http_request(user=cls.user,
+                                         user_perm='testplans.add_testplancomponent')
 
         cls.product = ProductFactory()
         cls.plans = [
@@ -324,9 +322,8 @@ class TestUpdate(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory()
-        cls.http_req = make_http_request(user=cls.user)
-        perm_name = 'testplans.change_testplan'
-        user_should_have_perm(cls.http_req.user, perm_name)
+        cls.http_req = make_http_request(user=cls.user,
+                                         user_perm='testplans.change_testplan')
 
         cls.env_group_1 = TCMSEnvGroupFactory()
         cls.env_group_2 = TCMSEnvGroupFactory()
