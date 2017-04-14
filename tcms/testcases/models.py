@@ -532,7 +532,9 @@ class TestCase(TCMSActionModel):
         query.delete()
 
     def remove_component(self, component):
-        TestCaseComponent.objects.filter(case=self, component=component).delete()
+        # note: cannot use self.component.remove(component) on a ManyToManyField
+        # which specifies an intermediary model so we use the model manager!
+        self.component.through.objects.filter(case=self.pk, component=component.pk).delete()
 
     def remove_plan(self, plan):
         self.plan.through.objects.filter(case=self.pk, plan=plan.pk).delete()
