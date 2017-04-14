@@ -1,19 +1,3 @@
-REMOVE_COMPONENT = '''
-DELETE FROM test_case_components WHERE case_id = %s AND component_id = %s
-'''
-REMOVE_PLAN = '''
-DELETE FROM test_case_plans WHERE plan_id = %s AND case_id = %s
-'''
-REMOVE_TAG = '''
-DELETE FROM test_case_tags WHERE case_id = %s AND tag_id = %s
-'''
-REMOVE_BUG = '''
-DELETE FROM test_case_bugs WHERE bug_id = %s AND case_id = %s AND case_run_id IS NULL
-'''
-REMOVE_BUG_WITH_RUN_ID = '''
-DELETE FROM test_case_bugs WHERE bug_id = %s AND case_id = %s AND case_run_id = %s
-'''
-
 TC_PRINTABLE_CASE_TEXTS = '''
 SELECT t1.case_id,
        t1.summary,
