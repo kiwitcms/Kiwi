@@ -5,6 +5,7 @@ import unittest
 from django.forms import ValidationError
 
 from fields import MultipleEmailField
+from forms import CaseTagForm
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
@@ -197,3 +198,33 @@ class TestCaseRemoveTag(BasePlanCase):
 
         tag_pks = list(self.case.tag.all().values_list('pk', flat=True))
         self.assertEqual([self.tag_fedora.pk], tag_pks)
+
+
+class CaseTagFormTest(BasePlanCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.tag_1 = TestTagFactory(name='tag one')
+        cls.tag_2 = TestTagFactory(name='tag two')
+        cls.tag_3 = TestTagFactory(name='tag three')
+
+        cls.cases = []
+        for i in range(5):
+            case = TestCaseFactory(summary='test_case_number_%d' % i)
+            case.add_tag(cls.tag_1)
+            if i % 2 == 0:
+                case.add_tag(cls.tag_2)
+            if i % 3 == 0:
+                case.add_tag(cls.tag_3)
+            cls.cases.append(case)
+
+    def test_populate_from_cases_contains_all_three_tags(self):
+        case_ids = [case.pk for case in self.cases]
+        form = CaseTagForm()
+        form.populate(case_ids=case_ids)
+
+        self.assertEqual(3, len(form.fields['o_tag'].queryset))
+        form_tags = form.fields['o_tag'].queryset.values_list('name', flat=True)
+        self.assertIn(self.tag_1.name, form_tags)
+        self.assertIn(self.tag_2.name, form_tags)
+        self.assertIn(self.tag_3.name, form_tags)

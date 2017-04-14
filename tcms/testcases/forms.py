@@ -8,7 +8,7 @@ from tcms.core.exceptions import NitrateException
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.management.models import Priority, Product, Component, TestTag
-from models import TestCase, TestCaseCategory, TestCaseStatus
+from models import TestCase, TestCaseCategory, TestCaseStatus, TestCaseTag
 from models import TestCaseBug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from fields import MultipleEmailField
 
@@ -622,7 +622,9 @@ class CaseTagForm(forms.Form):
 
     def populate(self, case_ids=None):
         if case_ids:
-            self.fields['o_tag'].queryset = TestTag.objects.filter(
-                testcase__in=case_ids).order_by('name').distinct()
+            tag_ids = TestCaseTag.objects.filter(
+                case__in=case_ids
+            ).values_list('tag').distinct()
+            self.fields['o_tag'].queryset = TestTag.objects.filter(pk__in=tag_ids).order_by('name')
         else:
             self.fields['o_category'].queryset = TestCaseCategory.objects.all()
