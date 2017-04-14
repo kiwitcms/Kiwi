@@ -25,11 +25,13 @@ from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TCMSEnvPlanMap
 from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TestPlanAttachment
+from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTypeFactory
+from tcms.tests.factories import TestTagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests import BasePlanCase
@@ -149,22 +151,6 @@ class PlanTests(test.TestCase):
                 self.assertTrue(case.effect is not '')
                 self.assertTrue(case.breakdown is not '')
 
-    def test_plan_export(self):
-        location = reverse('tcms.testplans.views.export')
-        response = self.c.get(location, {'plan': self.plan_id})
-        self.assertEquals(response.status_code, httplib.OK)
-
-        xml_doc = response.content
-        try:
-            xml_doc = et.fromstring(xml_doc)
-        except et.ParseError:
-            self.fail('XML document exported from test plan is invalid.')
-
-        for tc in xml_doc.iter('testcase'):
-            self.assertEqual('CONFIRMED', tc.attrib['status'])
-            for tp_ref in tc.iter('testplan_reference'):
-                self.assertEqual(tp_ref.text, self.test_plan.name)
-
     def test_plan_attachment(self):
         location = reverse('tcms.testplans.views.attachment',
                            args=[self.plan_id])
@@ -179,6 +165,104 @@ class PlanTests(test.TestCase):
 
         response = self.c.get(location, {'plan_text_version': 1})
         self.assertEquals(response.status_code, httplib.OK)
+
+
+class ExportTestPlanTests(test.TestCase):
+    """ Test the export functionality! """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = UserFactory(username='admin', email='admin@example.com')
+        cls.user.set_password('admin')
+        cls.user.is_superuser = True
+        cls.user.save()
+
+        cls.c = Client()
+        cls.c.login(username='admin', password='admin')
+
+        cls.classification = ClassificationFactory(name='Auto')
+        cls.product = ProductFactory(name='Nitrate', classification=cls.classification)
+        cls.product_version = VersionFactory(value='0.1', product=cls.product)
+        cls.plan_type = TestPlanTypeFactory()
+
+        cls.test_plan = TestPlanFactory(name='Test plan for testing exports',
+                                        product_version=cls.product_version,
+                                        owner=cls.user,
+                                        author=cls.user,
+                                        product=cls.product,
+                                        type=cls.plan_type)
+
+        # create test cases into the test plan
+        cls.cases = []
+        for i in range(10):
+            case = TestCaseFactory(
+                summary='test_case_number_%d' % i,
+                author=cls.user,
+                default_tester=None,
+                reviewer=cls.user,
+                plan=[cls.test_plan]
+            )
+            tag = TestTagFactory(name='tag_for_%s' % case.summary)
+            component = ComponentFactory(name='component_for_%s' % case.summary)
+            case.add_tag(tag)
+            case.add_component(component)
+
+            if i % 2 == 0:
+                tag = TestTagFactory(name='second_tag_for_%s' % case.summary)
+                component = ComponentFactory(name='second_component_for_%s' % case.summary)
+                case.add_tag(tag)
+                case.add_component(component)
+
+            cls.cases.append(case)
+
+    def test_export_returns_valid_xml_and_content(self):
+        location = reverse('tcms.testplans.views.export')
+        response = self.c.get(location, {'plan': self.test_plan.pk})
+        self.assertEquals(response.status_code, httplib.OK)
+
+        xml_doc = response.content
+        try:
+            xml_doc = et.fromstring(xml_doc)
+        except et.ParseError:
+            self.fail('XML document exported from test plan is invalid.')
+
+        for test_case in xml_doc.findall('testcase'):
+            self.assertEqual('CONFIRMED', test_case.attrib['status'])
+
+            for tp_ref in test_case.iter('testplan_reference'):
+                self.assertEqual(tp_ref.text, self.test_plan.name)
+
+            summary = test_case.findall('summary')[0].text
+            case_number = int(summary.replace('test_case_number_', ''))
+
+            # validate case tags
+            tags = test_case.findall('tag')
+            if case_number % 2 == 0:
+                self.assertEqual(2, len(tags))
+                self.assertEqual('second_tag_for_%s' % summary, tags[1].text)
+            else:
+                self.assertEqual(1, len(tags))
+            self.assertEqual('tag_for_%s' % summary, tags[0].text)
+
+            # validate case components
+            components = test_case.findall('component')
+
+            # each component has a product attribute
+            for comp in components:
+                self.assertTrue(comp.get('product') != '')
+
+            if case_number % 2 == 0:
+                self.assertEqual(2, len(components))
+                self.assertEqual('second_component_for_%s' % summary, components[1].text.strip())
+            else:
+                self.assertEqual(1, len(components))
+            self.assertEqual('component_for_%s' % summary, components[0].text.strip())
+
+    def test_export_wo_parameters_returns_html_warning(self):
+        location = reverse('tcms.testplans.views.export')
+        response = self.c.get(location)
+        self.assertEquals(response.status_code, httplib.OK)
+        self.assertIn('At least one target is required.', response.content)
 
 
 class TestPlanModel(test.TestCase):
