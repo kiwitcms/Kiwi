@@ -1,4 +1,5 @@
 -r base.txt
+
 django-debug-toolbar==1.4
 Sphinx>=1.1.2
 flake8
@@ -7,3 +8,4 @@ pytest-django
 pytest-cov
 coverage
 factory_boy
+mock

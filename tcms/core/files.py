@@ -1,141 +1,121 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+
+import os
+
+from datetime import datetime
+
+from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils.encoding import smart_str
+
+from tcms.core.views import Prompt
+from tcms.management.models import TestAttachment
+from tcms.testcases.models import TestCaseAttachment
+from tcms.testplans.models import TestPlanAttachment
 
 
 @user_passes_test(lambda u: u.has_perm('management.add_testattachment'))
 def upload_file(request):
     if request.FILES.get('upload_file'):
-        import os
-        from datetime import datetime
-
-        from django.conf import settings
-        from tcms.core.views import Prompt
-        from tcms.management.models import TestAttachment
+        upload_file = request.FILES['upload_file']
 
         try:
-            upload_file = request.FILES['upload_file']
+            upload_file.name.encode('utf8')
+        except UnicodeEncodeError:
+            return HttpResponse(Prompt.render(
+                request=request,
+                info_type=Prompt.Alert,
+                info='Upload File name is not legal.',
+                next='javascript:window.history.go(-1);',
+            ))
 
-            try:
-                upload_file.name.encode('utf8')
-            except UnicodeEncodeError:
-                return HttpResponse(Prompt.render(
-                    request=request,
-                    info_type=Prompt.Alert,
-                    info='Upload File name is not legal.',
-                    next='javascript:window.history.go(-1);',
-                ))
+        now = datetime.now()
 
-            now = datetime.now()
+        stored_name = '%s-%s-%s' % (request.user.username, now, upload_file.name)
 
-            stored_name = '%s-%s-%s' % (
-                request.user.username,
-                now,
-                upload_file.name
+        stored_file_name = os.path.join(
+            settings.FILE_UPLOAD_DIR, stored_name).replace('\\', '/')
+        stored_file_name = smart_str(stored_file_name)
+
+        if upload_file._size > settings.MAX_UPLOAD_SIZE:
+            return HttpResponse(Prompt.render(
+                request=request,
+                info_type=Prompt.Alert,
+                info='You upload entity is too large. \
+                    Please ensure the file is less than %s bytes. \
+                    ' % settings.MAX_UPLOAD_SIZE,
+                next='javascript:window.history.go(-1);',
+            ))
+
+        # Create the upload directory when it's not exist
+        try:
+            os.listdir(settings.FILE_UPLOAD_DIR)
+        except OSError:
+            os.mkdir(settings.FILE_UPLOAD_DIR)
+
+        # Write to a temporary file
+        try:
+            open(stored_file_name, 'ro')
+            return HttpResponse(Prompt.render(
+                request=request,
+                info_type=Prompt.Alert,
+                info='File named \'%s\' already exist in upload folder, \
+                    please rename to another name for solve conflict.\
+                    ' % upload_file.name,
+                next='javascript:window.history.go(-1);',
+            ))
+        except IOError:
+            pass
+
+        dest = open(stored_file_name, 'wb+')
+        for chunk in upload_file.chunks():
+            dest.write(chunk)
+        dest.close()
+
+        # Write the file to database
+        # store_file = open(upload_file_name, 'ro')
+        ta = TestAttachment.objects.create(
+            submitter_id=request.user.id,
+            description=request.POST.get('description', None),
+            file_name=upload_file.name,
+            stored_name=stored_name,
+            create_date=now,
+            mime_type=upload_file.content_type
+        )
+
+        if request.POST.get('to_plan_id'):
+            TestPlanAttachment.objects.create(
+                plan_id=int(request.POST['to_plan_id']),
+                attachment_id=ta.attachment_id,
             )
 
-            stored_file_name = os.path.join(
-                settings.FILE_UPLOAD_DIR, stored_name
-            ).replace('\\', '/')
-            stored_file_name = smart_str(stored_file_name)
-
-            if upload_file._size > settings.MAX_UPLOAD_SIZE:
-                return HttpResponse(Prompt.render(
-                    request=request,
-                    info_type=Prompt.Alert,
-                    info='You upload entity is too large. \
-                        Please ensure the file is less than %s bytes. \
-                        ' % settings.MAX_UPLOAD_SIZE,
-                    next='javascript:window.history.go(-1);',
-                ))
-
-            # Create the upload directory when it's not exist
-            try:
-                os.listdir(settings.FILE_UPLOAD_DIR)
-            except OSError:
-                os.mkdir(settings.FILE_UPLOAD_DIR)
-
-            # Write to a temporary file
-            try:
-                open(stored_file_name, 'ro')
-                return HttpResponse(Prompt.render(
-                    request=request,
-                    info_type=Prompt.Alert,
-                    info='File named \'%s\' already exist in upload folder, \
-                        please rename to another name for solve conflict.\
-                        ' % upload_file.name,
-                    next='javascript:window.history.go(-1);',
-                ))
-            except IOError:
-                pass
-
-            dest = open(stored_file_name, 'wb+')
-            for chunk in upload_file.chunks():
-                dest.write(chunk)
-            dest.close()
-
-            # Write the file to database
-            # store_file = open(upload_file_name, 'ro')
-            ta = TestAttachment.objects.create(
-                submitter_id=request.user.id,
-                description=request.REQUEST.get('description', None),
-                file_name=upload_file.name,
-                stored_name=stored_name,
-                create_date=now,
-                mime_type=upload_file.content_type
+            return HttpResponseRedirect(
+                reverse('tcms.testplans.views.attachment',
+                        args=[request.POST['to_plan_id']])
+            )
+        elif request.POST.get('to_case_id'):
+            TestCaseAttachment.objects.create(
+                attachment_id=ta.attachment_id,
+                case_id=int(request.POST['to_case_id'])
             )
 
-            if request.REQUEST.get('to_plan_id'):
-                from tcms.testplans.models import TestPlanAttachment
-
-                try:
-                    int(request.REQUEST['to_plan_id'])
-                except ValueError:
-                    raise
-
-                TestPlanAttachment.objects.create(
-                    plan_id=request.REQUEST.get('to_plan_id'),
-                    attachment_id=ta.attachment_id,
-                )
-
-                return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.attachment',
-                            args=[request.REQUEST['to_plan_id']])
-                )
-            elif request.REQUEST.get('to_case_id'):
-                from tcms.testcases.models import TestCaseAttachment
-
-                try:
-                    int(request.REQUEST['to_case_id'])
-                except ValueError:
-                    raise
-
-                TestCaseAttachment.objects.create(
-                    attachment_id=ta.attachment_id,
-                    case_id=request.REQUEST['to_case_id']
-                )
-
-                return HttpResponseRedirect(
-                    reverse('tcms.testcases.views.attachment',
-                            args=[request.REQUEST['to_case_id']])
-                )
-        except:
-            raise
+            return HttpResponseRedirect(
+                reverse('tcms.testcases.views.attachment',
+                        args=[request.POST['to_case_id']])
+            )
     else:
         try:
             return HttpResponseRedirect(
                 reverse('tcms.testplans.views.attachment',
-                        args=[request.REQUEST['to_plan_id']])
+                        args=[request.POST['to_plan_id']])
             )
         except KeyError:
             return HttpResponseRedirect(
                 reverse('tcms.testcases.views.attachment',
-                        args=[request.REQUEST['to_case_id']])
+                        args=[request.POST['to_case_id']])
             )
-
-    raise NotImplementedError
 
 
 def check_file(request, file_id):
