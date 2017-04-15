@@ -93,6 +93,10 @@ urlpatterns = patterns('',
 # Debug zone
 
 if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
     urlpatterns += patterns(
         'tcms.core.utils.test_template',
         (r'^tt/(?P<template_name>.*)', 'test_template'),
