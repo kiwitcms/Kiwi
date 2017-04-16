@@ -468,7 +468,7 @@ def get_selected_testcases(request):
     Arguments:
     - request: REQUEST object.
     '''
-    REQ = request.REQUEST
+    REQ = request.POST or request.GET
     if REQ.get('selectAll', None):
         plan = plan_from_request_or_none(request)
         return query_testcases_from_request(request, plan)

@@ -2468,8 +2468,8 @@ function constructBatchTagProcessDialog(plan_id) {
           'name__startswith': request.term,
           'info_type': 'tags',
           'format': 'ulli',
-          'testcase__plan__pk': plan_id,
-          'field': 'name'
+          'case__plan': plan_id,
+          'field': 'tag__name'
         },
         'success': function(data) {
           var processedData = [];
