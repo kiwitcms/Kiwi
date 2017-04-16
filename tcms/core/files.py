@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
 import os
 
 from datetime import datetime
@@ -10,6 +9,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils.encoding import smart_str
+from django.http import JsonResponse
 
 from tcms.core.views import Prompt
 from tcms.management.models import TestAttachment
@@ -207,7 +207,7 @@ def delete_file(request, file_id):
     if not state:
         ajax_response['rc'] = AUTHUNSUCCESS
         ajax_response['response'] = 'auth_failure'
-        return HttpResponse(json.dumps(ajax_response))
+        return JsonResponse(ajax_response)
 
     # Delete plan's attachment
     if 'from_plan' in request.GET:
@@ -219,7 +219,7 @@ def delete_file(request, file_id):
         except TestPlanAttachment.DoesNotExist:
             ajax_response['rc'] = DELEFAILURE
             ajax_response['response'] = 'failure'
-        return HttpResponse(json.dumps(ajax_response))
+        return JsonResponse(ajax_response)
 
     # Delete cases' attachment
     elif 'from_case' in request.GET:
@@ -232,4 +232,4 @@ def delete_file(request, file_id):
             ajax_response['rc'] = DELEFAILURE
             ajax_response['response'] = 'failure'
 
-        return HttpResponse(json.dumps(ajax_response))
+        return JsonResponse(ajax_response)
