@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 import os
 
 from datetime import datetime
@@ -12,7 +13,9 @@ from django.utils.encoding import smart_str
 
 from tcms.core.views import Prompt
 from tcms.management.models import TestAttachment
+from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseAttachment
+from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TestPlanAttachment
 
 
@@ -165,51 +168,37 @@ def check_file(request, file_id):
 
 
 def able_to_delete_attachment(request, file_id):
-    '''
+    """
     These are allowed to delete attachment -
         1. super user
         2. attachments's submitter
         3. testplan's author or owner
         4. testcase's owner
-    '''
-    from tcms.management.models import TestAttachment
-    from tcms.testplans.models import TestPlan
-    from tcms.testcases.models import TestCase
+    """
 
     user = request.user
     if user.is_superuser:
         return True
-    attach = TestAttachment.objects.all().get(attachment_id=file_id)
-    submit_id = attach.submitter_id
-    if user.id == submit_id:
+
+    attach = TestAttachment.objects.get(attachment_id=file_id)
+    if user.pk == attach.submitter_id:
         return True
 
-    if request.REQUEST.get('from_plan'):
-        try:
-            planid = int(request.REQUEST['from_plan'])
-            testplan = TestPlan.objects.all().get(plan_id=planid)
-            ownerid = testplan.owner_id
-            authorid = testplan.author_id
-            if user.id == ownerid or user.id == authorid:
-                return True
-        except KeyError, TestPlan.DoesNotExist:
-            raise
-    elif request.REQUEST.get('from_case'):
-        try:
-            caseid = int(request.REQUEST['from_case'])
-            ownerid = TestCase.objects.all().get(case_id=caseid).author_id
-            if user.id == ownerid:
-                return True
-        except KeyError:
-            raise
+    if 'from_plan' in request.GET:
+        plan_id = int(request.GET['from_plan'])
+        plan = TestPlan.objects.get(plan_id=plan_id)
+        return user.pk == plan.owner_id or user.pk == plan.author_id
+
+    if 'from_case' in request.GET:
+        case_id = int(request.GET['from_case'])
+        case = TestCase.objects.get(case_id=case_id)
+        return user.pk == case.author_id
 
     return False
 
 
 # Delete Attachment
 def delete_file(request, file_id):
-    import json
-
     ajax_response = {'rc': 0, 'response': 'ok'}
     DELEFAILURE = 1
     AUTHUNSUCCESS = 2
@@ -221,11 +210,9 @@ def delete_file(request, file_id):
         return HttpResponse(json.dumps(ajax_response))
 
     # Delete plan's attachment
-    if request.REQUEST.get('from_plan'):
-        from tcms.testplans.models import TestPlanAttachment
-
+    if 'from_plan' in request.GET:
         try:
-            plan_id = int(request.REQUEST.get('from_plan'))
+            plan_id = int(request.GET['from_plan'])
             attachment = TestPlanAttachment.objects.filter(attachment=file_id,
                                                            plan_id=plan_id)
             attachment.delete()
@@ -235,11 +222,9 @@ def delete_file(request, file_id):
         return HttpResponse(json.dumps(ajax_response))
 
     # Delete cases' attachment
-    elif request.REQUEST.get('from_case'):
-        from tcms.testcases.models import TestCaseAttachment
-
+    elif 'from_case' in request.GET:
         try:
-            case_id = int(request.REQUEST.get('from_case'))
+            case_id = int(request.GET['from_case'])
             attachment = TestCaseAttachment.objects.filter(attachment=file_id,
                                                            case_id=case_id)
             attachment.delete()

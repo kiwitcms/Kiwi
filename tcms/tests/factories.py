@@ -424,7 +424,7 @@ class TestCaseAttachmentFactory(DjangoModelFactory):
 
     attachment = factory.SubFactory(TestAttachmentFactory)
     case = factory.SubFactory(TestCaseFactory)
-    case_run = factory.SubFactory('tests.TestCaseRunFactory')
+    case_run = factory.SubFactory('tcms.tests.factories.TestCaseRunFactory')
 
 
 class TestCaseComponentFactory(DjangoModelFactory):
