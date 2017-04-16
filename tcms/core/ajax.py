@@ -23,7 +23,7 @@ from django.views.decorators.http import require_GET
 from tcms.management.models import Component, TestBuild, Version
 from tcms.management.models import Priority
 from tcms.management.models import TestTag
-from tcms.testcases.models import TestCase, TestCaseBug
+from tcms.testcases.models import TestCase, TestCaseBug, TestCaseTag
 from tcms.testcases.models import TestCaseCategory
 from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
@@ -47,12 +47,11 @@ def check_permission(request, ctype):
     return False
 
 
-def strip_parameters(request, skip_parameters):
+def strip_parameters(request_dict, skip_parameters):
     parameters = {}
-    for dict_ in request.REQUEST.dicts:
-        for k, v in dict_.items():
-            if k not in skip_parameters and v:
-                parameters[str(k)] = v
+    for k, v in request_dict.items():
+        if k not in skip_parameters and v:
+            parameters[str(k)] = v
 
     return parameters
 
@@ -120,14 +119,14 @@ def info(request):
             )
 
         def tags(self):
-            query = strip_parameters(request, self.internal_parameters)
-            tags = TestTag.objects
+            query = strip_parameters(request.GET, self.internal_parameters)
+            tags = TestCaseTag.objects
             # Generate the string combination, because we are using
             # case sensitive table
             if query.get('name__startswith'):
                 seq = get_string_combinations(query['name__startswith'])
                 tags = tags.filter(eval(
-                    '|'.join(["Q(name__startswith = '%s')" % item for item in seq])
+                    '|'.join(["models.Q(tag__name__startswith = '%s')" % item for item in seq])
                 ))
                 del query['name__startswith']
 
@@ -137,7 +136,7 @@ def info(request):
         def users(self):
             from django.contrib.auth.models import User
 
-            query = strip_parameters(self.request, self.internal_parameters)
+            query = strip_parameters(self.request.GET, self.internal_parameters)
             return User.objects.filter(**query)
 
         def versions(self):
@@ -145,15 +144,15 @@ def info(request):
 
             return Version.objects.filter(product__id=self.product_id)
 
-    objects = Objects(request=request, product_id=request.GET['product_id'])
+    objects = Objects(request=request, product_id=request.GET.get('product_id'))
     obj = getattr(objects, request.GET['info_type'], None)
 
     if obj:
         if request.GET.get('format') == 'ulli':
             field = request.GET.get('field', 'name')
             response_str = '<ul>'
-            for o in obj():
-                response_str += '<li>' + getattr(o, field, None) + '</li>'
+            for o in obj().values(field):
+                response_str += '<li>' + o.get(field, None) + '</li>'
             response_str += '</ul>'
             return HttpResponse(response_str)
 
@@ -172,7 +171,7 @@ def form(request):
 
     # The parameters in internal_parameters will delete from parameters
     internal_parameters = ['app_form', 'format']
-    parameters = strip_parameters(request, internal_parameters)
+    parameters = strip_parameters(request.REQUEST, internal_parameters)
     q_app_form = request.REQUEST.get('app_form')
     q_format = request.REQUEST.get('format')
     if not q_format:
