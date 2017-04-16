@@ -131,7 +131,7 @@ def info(request):
             if query.get('name__startswith'):
                 seq = get_string_combinations(query['name__startswith'])
                 tags = tags.filter(eval(
-                    '|'.join(["Q(name__startswith = '%s')" % item for item in seq])
+                    '|'.join(["models.Q(name__startswith = '%s')" % item for item in seq])
                 ))
                 del query['name__startswith']
 
@@ -150,7 +150,7 @@ def info(request):
             return Version.objects.filter(product__id=self.product_id)
 
     objects = Objects(request=request, product_id=request.GET.get('product_id'))
-    obj = getattr(objects, request.GET.get('info_type'), None)
+    obj = getattr(objects, request.GET['info_type'], None)
 
     if obj:
         if request.GET.get('format') == 'ulli':
