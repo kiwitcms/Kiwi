@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+    db:
+        image: centos/mariadb
+        volumes:
+            - nitrate_db_data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: nitrate-1s-aw3s0m3
+            MYSQL_DATABASE: nitrate
+            MYSQL_USER: nitrate
+            MYSQL_PASSWORD: nitrate
+
+    web:
+        depends_on:
+            - db
+        restart: always
+        image: nitrate/nitrate:3.8.18
+        ports:
+            - 80
+        volumes:
+            - nitrate_uploads:/var/nitrate/uploads
+        environment:
+            NITRATE_DB_HOST: db
+            NITRATE_DB_PORT: 3306
+            NITRATE_DB_NAME: nitrate
+            NITRATE_DB_USER: nitrate
+            NITRATE_DB_PASSWORD: nitrate
+
+volumes:
+    nitrate_db_data:
+    nitrate_uploads:
