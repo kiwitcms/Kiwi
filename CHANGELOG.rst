@@ -1,6 +1,21 @@
 Change Log
 ==========
 
+3.8.18.17 (Apr 24 2017, released on MrSenko.com)
+------------------------------------------------
+
+- Rebased onto a1c47ec
+- Updated removal of deprecated request.REQUEST from PR #156 (Mr. Senko)
+- Updated tests from previous merge of PR #171 (Mr. Senko)
+- Refactor SQL in testplans to ORM. PR #172 (Mr. Senko)
+- Fix Issue #174 - Error when remove tag from a plan's cases (Mr. Senko)
+- Refactor SQL in testcases to ORM. PR #177 (Mr. Senko)
+- Improve tags search and fix hints while adding tags to selected test cases
+  inside of a test plan. PR #178 (Mr. Senko)
+- Update documentation about installation steps for RHEL6. PR #179 (Mr. Senko)
+- Make it possible to build and run Nitrate as docker image. PR #180 (Mr. Senko)
+
+
 3.8.18.15 (Apr 12 2017, released on MrSenko.com)
 ------------------------------------------------
 
