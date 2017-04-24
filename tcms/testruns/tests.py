@@ -5,6 +5,7 @@ import httplib
 from django import test
 from django.core.urlresolvers import reverse
 
+from tcms.testruns.models import TestRun
 from tcms.testruns.models import TestCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import TestRunFactory
