@@ -1679,7 +1679,8 @@ def tag(request):
     if not tcs:
         raise Http404
 
-    if request.REQUEST.get('a'):
+    # a == action
+    if request.POST.get('a') == 'remove':
         tag_ids = request.POST.getlist('o_tag')
         tags = TestTag.objects.filter(pk__in=tag_ids)
         for tc in tcs:
@@ -1696,7 +1697,7 @@ def tag(request):
                     return HttpResponse(json.dumps(ajax_response))
         return HttpResponse(json.dumps(ajax_response))
 
-    form = CaseTagForm(initial={'tag': request.REQUEST.get('o_tag')})
+    form = CaseTagForm(initial={'tag': request.POST.get('o_tag')})
     form.populate(case_ids=tcs)
     return HttpResponse(form.as_p())
 
