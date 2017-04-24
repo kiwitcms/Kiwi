@@ -1,16 +1,26 @@
 # -*- coding: utf-8 -*-
 
+import json
 import httplib
 import os
 import xml.etree.ElementTree as et
 
+from six.moves import http_client
+from six.moves import map
+
 from django import test
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test.client import Client
 
+from tcms.core.logs.models import TCMSLogModel
 from tcms.settings.common import TCMS_ROOT_PATH
-from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
+from tcms.tests import BasePlanCase
+from tcms.tests import remove_perm_from_user
+from tcms.tests import user_should_have_perm
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
@@ -159,3 +169,204 @@ class TestPlanModel(test.TestCase):
         cases_left = TestCasePlan.objects.filter(plan=self.plan_1.pk)
         self.assertEqual(1, cases_left.count())
         self.assertEqual(self.testcase_2.pk, cases_left[0].case.pk)
+
+
+# ### Test cases for view methods ### #
+
+
+class TestUnknownActionOnCases(BasePlanCase):
+    """Test case for unknown action on a plan's cases"""
+
+    def setUp(self):
+        self.cases_url = reverse('tcms.testplans.views.cases', args=[self.plan.pk])
+        self.client = Client()
+
+    def test_ajax_request(self):
+        response = self.client.get(self.cases_url, {'a': 'unknown action', 'format': 'json'})
+        data = json.loads(response.content)
+        self.assertEqual('Unrecognizable actions', data['response'])
+
+    def test_request_from_webui(self):
+        response = self.client.get(self.cases_url, {'a': 'unknown action'})
+        self.assertContains(response, 'Unrecognizable actions')
+
+
+class TestDeleteCasesFromPlan(BasePlanCase):
+    """Test case for deleting cases from a plan"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestDeleteCasesFromPlan, cls).setUpTestData()
+        cls.plan_tester = User(username='tester')
+        cls.plan_tester.set_password('password')
+        cls.plan_tester.save()
+
+    def setUp(self):
+        self.cases_url = reverse('tcms.testplans.views.cases', args=[self.plan.pk])
+        self.client = Client()
+        self.client.login(username=self.plan_tester.username, password='password')
+
+    def tearDown(self):
+        self.client.logout()
+
+    def test_missing_cases_ids(self):
+        response = self.client.post(self.cases_url, {'a': 'delete_cases'})
+        data = json.loads(response.content)
+        self.assertEqual(1, data['rc'])
+        self.assertEqual('At least one case is required to delete.', data['response'])
+
+    def test_delete_cases(self):
+        post_data = {'a': 'delete_cases', 'case': [self.case_1.pk, self.case_3.pk]}
+        response = self.client.post(self.cases_url, post_data)
+        data = json.loads(response.content)
+
+        self.assertEqual(0, data['rc'])
+        self.assertEqual('ok', data['response'])
+        self.assertFalse(self.plan.case.filter(pk__in=[self.case_1.pk, self.case_3.pk]).exists())
+
+        # Assert action logs are recorded for plan and case correctly
+
+        expected_log = 'Remove from plan {}'.format(self.plan.pk)
+        for pk in (self.case_1.pk, self.case_3.pk):
+            log = TCMSLogModel.get_logs_for_model(TestCase, pk)[0]
+            self.assertEqual(expected_log, log.action)
+
+        for plan_pk, case_pk in ((self.plan.pk, self.case_1.pk), (self.plan.pk, self.case_3.pk)):
+            expected_log = 'Remove case {} from plan {}'.format(case_pk, plan_pk)
+            self.assertTrue(TCMSLogModel.objects.filter(action=expected_log).exists())
+
+
+class TestSortCases(BasePlanCase):
+    """Test case for sorting cases"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestSortCases, cls).setUpTestData()
+        cls.plan_tester = User(username='tester')
+        cls.plan_tester.set_password('password')
+        cls.plan_tester.save()
+
+    def setUp(self):
+        self.cases_url = reverse('tcms.testplans.views.cases', args=[self.plan.pk])
+        self.client = Client()
+        self.client.login(username=self.plan_tester.username, password='password')
+
+    def tearDown(self):
+        self.client.logout()
+
+    def test_missing_cases_ids(self):
+        response = self.client.post(self.cases_url, {'a': 'order_cases'})
+        data = json.loads(response.content)
+        self.assertEqual(1, data['rc'])
+        self.assertEqual('At least one case is required to re-order.', data['response'])
+
+    def test_order_cases(self):
+        post_data = {'a': 'order_cases', 'case': [self.case_1.pk, self.case_3.pk]}
+        response = self.client.post(self.cases_url, post_data)
+        data = json.loads(response.content)
+
+        self.assertEqual(0, data['rc'])
+        self.assertEqual('ok', data['response'])
+
+        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_1)
+        self.assertEqual(10, case_plan_rel.sortkey)
+
+        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_3)
+        self.assertEqual(20, case_plan_rel.sortkey)
+
+
+class TestLinkCases(BasePlanCase):
+    """Test case for linking cases from other plans"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestLinkCases, cls).setUpTestData()
+
+        cls.another_plan = TestPlanFactory(author=cls.tester, owner=cls.tester,
+                                           product=cls.product, product_version=cls.version)
+        cls.another_case_1 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                             plan=[cls.another_plan])
+        cls.another_case_2 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                             plan=[cls.another_plan])
+
+        cls.plan_tester = User(username='tester')
+        cls.plan_tester.set_password('password')
+        cls.plan_tester.save()
+
+    def setUp(self):
+        self.cases_url = reverse('tcms.testplans.views.cases', args=[self.plan.pk])
+        self.client = Client()
+        self.client.login(username=self.plan_tester.username, password='password')
+
+    def tearDown(self):
+        self.client.logout()
+
+        # Ensure permission is removed whenever it was added during tests
+        remove_perm_from_user(self.plan_tester, 'testcases.add_testcaseplan')
+
+    def assert_quick_search_is_shown(self, response):
+        self.assertContains(
+            response,
+            '<li class="profile_tab_active" id="quick_tab">')
+
+    def assert_normal_search_is_shown(self, response):
+        self.assertContains(
+            response,
+            '<li class="profile_tab_active" id="normal_tab">')
+
+    def test_show_quick_search_by_default(self):
+        response = self.client.post(self.cases_url, {'a': 'link_cases'})
+        self.assert_quick_search_is_shown(response)
+
+    def assert_search_result(self, response):
+        self.assertContains(
+            response,
+            '<a href="{}">{}</a>'.format(
+                reverse('tcms.testcases.views.get', args=[self.another_case_2.pk]),
+                self.another_case_2.pk))
+
+        # Assert: Do not list case that already belongs to the plan
+        self.assertNotContains(
+            response,
+            '<a href="{}">{}</a>'.format(
+                reverse('tcms.testcases.views.get', args=[self.case_2.pk]),
+                self.case_2.pk))
+
+    def test_quick_search(self):
+        post_data = {'a': 'link_cases', 'action': 'search', 'search_mode': 'quick',
+                     'case_id_set': ','.join(map(str, [self.case_1.pk, self.another_case_2.pk]))}
+        response = self.client.post(self.cases_url, post_data)
+
+        self.assert_quick_search_is_shown(response)
+        self.assert_search_result(response)
+
+    def test_normal_search(self):
+        post_data = {'a': 'link_cases', 'action': 'search', 'search_mode': 'normal',
+                     'case_id_set': ','.join(map(str, [self.case_1.pk, self.another_case_2.pk]))}
+        response = self.client.post(self.cases_url, post_data)
+
+        self.assert_normal_search_is_shown(response)
+        self.assert_search_result(response)
+
+    def test_missing_permission_to_link_cases(self):
+        post_data = {'a': 'link_cases', 'action': 'add_to_plan',
+                     'case': [self.another_case_1.pk, self.another_case_2.pk]}
+        response = self.client.post(self.cases_url, post_data)
+        self.assertContains(response, 'Permission Denied')
+
+    def test_link_cases(self):
+        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
+
+        post_data = {'a': 'link_cases', 'action': 'add_to_plan',
+                     'case': [self.another_case_1.pk, self.another_case_2.pk]}
+        response = self.client.post(self.cases_url, post_data)
+
+        self.assertRedirects(
+            response,
+            reverse('tcms.testplans.views.get', args=[self.plan.pk]),
+            target_status_code=http_client.MOVED_PERMANENTLY)
+
+        self.assertTrue(
+            TestCasePlan.objects.filter(plan=self.plan, case=self.another_case_1).exists())
+        self.assertTrue(
+            TestCasePlan.objects.filter(plan=self.plan, case=self.another_case_2).exists())

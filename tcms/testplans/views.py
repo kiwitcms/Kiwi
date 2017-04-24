@@ -15,6 +15,7 @@ from django.db.models import Count
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -940,9 +941,10 @@ def text_history(request, plan_id, template_name='plan/history.html'):
 
 @require_http_methods(['GET', 'POST'])
 def cases(request, plan_id):
-    '''Process the xml with import'''
+    """Process the xml with import"""
+
     ajax_response = {'rc': 0, 'response': 'ok'}
-    tp = get_object_or_404(TestPlan, plan_id=int(plan_id))
+    tp = get_object_or_404(TestPlan, plan_id=plan_id)
 
     class CaseActions(object):
         def __init__(self, request, tp):
@@ -951,7 +953,7 @@ def cases(request, plan_id):
             self.tp = tp
 
         def link_cases(self, template_name='plan/search_case.html'):
-            '''Handle to form to add case to plans'''
+            """Handle to form to add case to plans"""
             SUB_MODULE_NAME = 'plans'
             tcs = None
 
@@ -1007,34 +1009,31 @@ def cases(request, plan_id):
         def delete_cases(self):
             if not request.POST.get('case'):
                 ajax_response['rc'] = 1
-                ajax_response['reponse'] = 'At least one case is required to delete.'
-                return HttpResponse(json_dumps(ajax_response))
+                ajax_response['response'] = 'At least one case is required to delete.'
+                return JsonResponse(ajax_response)
 
             tcs = get_selected_testcases(request)
 
             # Log Action
             tp_log = TCMSLog(model=tp)
-
             for tc in tcs:
                 tp_log.make(who=request.user,
                             action='Remove case %s from plan %s' % (tc.case_id, tp.plan_id))
-
                 tc.log_action(who=request.user, action='Remove from plan %s' % tp.plan_id)
-
                 tp.delete_case(case=tc)
 
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse(ajax_response)
 
         def order_cases(self):
-            '''Resort case with new order'''
+            """Resort case with new order"""
             # Current we should rewrite all of cases belong to the plan.
             # Because the cases sortkey in database is chaos,
             # Most of them are None.
 
             if not request.POST.get('case'):
                 ajax_response['rc'] = 1
-                ajax_response['reponse'] = 'At least one case is required to re-order.'
-                return HttpResponse(json_dumps(ajax_response))
+                ajax_response['response'] = 'At least one case is required to re-order.'
+                return JsonResponse(ajax_response)
 
             tc_pks = request.POST.getlist('case')
             tcs = TestCase.objects.filter(pk__in=tc_pks)
@@ -1043,7 +1042,7 @@ def cases(request, plan_id):
                 new_sort_key = (tc_pks.index(str(tc.pk)) + 1) * 10
                 TestCasePlan.objects.filter(plan=tp, case=tc).update(sortkey=new_sort_key)
 
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse(ajax_response)
 
         def import_cases(self):
             if request.method == 'POST':
