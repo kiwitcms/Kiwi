@@ -66,6 +66,18 @@ etags:
 	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-im \
 		--exclude=build --exclude=tcms/static/js/lib -f TAGS
 
+ifeq ($(DOCKER_ORG),)
+  DOCKER_ORG='nitrate'
+endif
+
+NITRATE_VERSION=$(shell cat tcms/__init__.py | grep __version__ | cut -f2 -d"'")
+
+docker-image:
+	docker build -t $(DOCKER_ORG)/nitrate:$(NITRATE_VERSION) .
+
+docker-run: docker-image
+	docker compose up
+
 
 .PHONY: help
 help:
