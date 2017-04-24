@@ -6,7 +6,7 @@ RUN yum -y --setopt=tsflags=nodocs install python-virtualenv gcc mariadb-devel \
 # enable when you want to update RPM packages
 # this will be used for testing building a Docker image with the
 # latest possible versions from CentOS!
-#RUN yum -y update --setopt=tsflags=nodocs
+RUN yum -y update --setopt=tsflags=nodocs
 RUN yum clean all
 
 # static files configuration for Apache
