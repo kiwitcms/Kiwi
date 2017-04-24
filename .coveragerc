@@ -6,3 +6,4 @@ branch = True
 omit =
     */tests.py
     */tests/test_*.py
+    */migrations/*.py
