@@ -20,6 +20,21 @@ on. Once you find a problem, please search it in the `Issues`_ to see whether
 it has been reported by other people. If no one reported there yet, you are
 encouraged to file one with detailed and descriptive description.
 
+Automated test suite can be execute with the ``make test`` command. The
+following syntax is supported::
+
+        make test (uses SQlite)
+        TEST_DB=MySQL make test
+        TEST_DB=MariaDB make test
+        TEST_DB=Postgres make test
+        TEST_DB=all make test (will test on all DBs)
+
+.. note::
+
+    If you want to execute testing against different DB engines on your local
+    development environment make sure the respecitve DB engines are installed
+    and configured! ``make test`` uses the configuration files under
+    ``tcms/settings/test/``. Make sure to edit them if necessary!
 
 Documentation
 -------------

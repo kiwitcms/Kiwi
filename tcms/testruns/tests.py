@@ -36,7 +36,7 @@ class TestOrderCases(BasePlanCase):
         cls.client = test.Client()
 
     def test_404_if_run_does_not_exist(self):
-        nonexisting_run_pk = 999999
+        nonexisting_run_pk = TestRun.objects.last().pk + 1
         url = reverse('tcms.testruns.views.order_case', args=[nonexisting_run_pk])
         response = self.client.get(url)
         self.assertEqual(httplib.NOT_FOUND, response.status_code)
