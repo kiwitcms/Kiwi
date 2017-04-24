@@ -29,7 +29,6 @@ ENV PATH /venv/bin:$PATH
 
 
 # Install Nitrate dependencies
-RUN pip install gunicorn
 COPY ./requirements/ /Nitrate/requirements/
 RUN pip install -r /Nitrate/requirements/mysql.txt
 
