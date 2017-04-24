@@ -16,7 +16,7 @@ services:
         depends_on:
             - db
         restart: always
-        image: nitrate/nitrate:3.8.18
+        image: nitrate/nitrate:3.8.18.17
         ports:
             - 80
         volumes:
