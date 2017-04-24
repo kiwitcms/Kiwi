@@ -72,14 +72,13 @@ Update settings/product.py::
         }
     }
 
-Create tables through syncdb & migrate and create super user if needed::
+Create tables and load initial data::
 
-    django-admin.py syncdb --settings=tcms.settings.product
     django-admin.py migrate --settings=tcms.settings.product
 
-Load initial data::
+Create super user if needed::
 
-    django-admin.py loaddata --settings=tcms.settings.product
+    django-admin.py createsuperuser --settings=tcms.settings.product
 
 Config Settings
 ---------------
