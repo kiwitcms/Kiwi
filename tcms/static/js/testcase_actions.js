@@ -236,7 +236,7 @@ Nitrate.TestCases.Details.on_load = function() {
 
       jQ.ajax({
         'url': url,
-        'type': 'GET',
+        'type': 'POST',
         'data': params,
         'traditional': true,
         'success': function (data, textStatus, jqXHR) {
