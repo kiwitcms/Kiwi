@@ -362,5 +362,12 @@ def _listen():
     pre_save.connect(plan_watchers.pre_save_clean, TestPlan)
 
 
+def _disconnect_signals():
+    """ used in testing """
+    post_save.disconnect(plan_watchers.on_plan_save, TestPlan)
+    post_delete.disconnect(plan_watchers.on_plan_delete, TestPlan)
+    pre_save.disconnect(plan_watchers.pre_save_clean, TestPlan)
+
+
 if settings.LISTENING_MODEL_SIGNAL:
     _listen()
