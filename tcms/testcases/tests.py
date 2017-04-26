@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import json
 import unittest
 
 from django import test
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.forms import ValidationError
+from django.test import Client
 
 from fields import MultipleEmailField
 from forms import CaseTagForm
 from tcms.testcases.models import TestCaseBugSystem
-from tcms.tests import BasePlanCase
+from tcms.testcases.models import TestCaseComponent
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseComponentFactory
@@ -17,6 +21,9 @@ from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestTagFactory
+from tcms.tests import BasePlanCase
+from tcms.tests import remove_perm_from_user
+from tcms.tests import user_should_have_perm
 
 
 class TestMultipleEmailField(unittest.TestCase):
@@ -229,3 +236,117 @@ class CaseTagFormTest(test.TestCase):
         self.assertIn(self.tag_1.name, form_tags)
         self.assertIn(self.tag_2.name, form_tags)
         self.assertIn(self.tag_3.name, form_tags)
+
+
+# ### Test cases for view methods ###
+
+
+class TestOperateComponentView(BasePlanCase):
+    """Tests for operating components on cases"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestOperateComponentView, cls).setUpTestData()
+
+        cls.comp_application = ComponentFactory(name='Application',
+                                                product=cls.product,
+                                                initial_owner=cls.tester,
+                                                initial_qa_contact=cls.tester)
+        cls.comp_database = ComponentFactory(name='Database',
+                                             product=cls.product,
+                                             initial_owner=cls.tester,
+                                             initial_qa_contact=cls.tester)
+        cls.comp_cli = ComponentFactory(name='CLI',
+                                        product=cls.product,
+                                        initial_owner=cls.tester,
+                                        initial_qa_contact=cls.tester)
+        cls.comp_api = ComponentFactory(name='API',
+                                        product=cls.product,
+                                        initial_owner=cls.tester,
+                                        initial_qa_contact=cls.tester)
+
+        TestCaseComponentFactory(case=cls.case_1, component=cls.comp_cli)
+        TestCaseComponentFactory(case=cls.case_1, component=cls.comp_api)
+
+        cls.tester = User.objects.create(username='tester', email='tester@example.com')
+        cls.tester.set_password('password')
+        cls.tester.save()
+
+        user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
+
+        cls.cases_component_url = reverse('tcms.testcases.views.component')
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username=self.tester.username, password='password')
+
+    def tearDown(self):
+        self.client.logout()
+
+        remove_perm_from_user(self.tester, 'testcases.delete_testcasecomponent')
+
+    def test_show_components_form(self):
+        response = self.client.post(self.cases_component_url,
+                                    {'product': self.product.pk})
+
+        self.assertContains(
+            response,
+            '<option value="{}" selected="selected">{}</option>'.format(
+                self.product.pk, self.product.name),
+            html=True)
+
+        comp_options = ('<option value="{}">{}</option>'.format(comp.pk, comp.name)
+                        for comp in (self.comp_application, self.comp_database,
+                                     self.comp_cli, self.comp_api))
+        self.assertContains(
+            response,
+            '''<select multiple="multiple" id="id_o_component" name="o_component">
+{}
+</select>'''.format(''.join(comp_options)),
+            html=True)
+
+    def test_add_components(self):
+        post_data = {
+            'product': self.product.pk,
+            'o_component': [self.comp_application.pk, self.comp_database.pk],
+            'case': [self.case_1.pk],
+            'a': 'add',
+            'from_plan': self.plan.pk,
+        }
+        response = self.client.post(self.cases_component_url, post_data)
+
+        data = json.loads(response.content)
+        self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
+
+        for comp in (self.comp_application, self.comp_database):
+            has_comp = TestCaseComponent.objects.filter(case=self.case_1, component=comp).exists()
+            self.assertTrue(has_comp)
+
+    def test_missing_delete_perm(self):
+        post_data = {
+            'o_component': [self.comp_cli.pk, self.comp_api.pk],
+            'case': [self.case_1.pk],
+            'a': 'remove',
+        }
+        response = self.client.post(self.cases_component_url, post_data)
+        data = json.loads(response.content)
+        self.assertEqual(
+            {'rc': 1, 'response': 'Permission denied - delete', 'errors_list': []},
+            data)
+
+    def test_remove_components(self):
+        user_should_have_perm(self.tester, 'testcases.delete_testcasecomponent')
+
+        post_data = {
+            'o_component': [self.comp_cli.pk, self.comp_api.pk],
+            'case': [self.case_1.pk],
+            'a': 'remove',
+        }
+        response = self.client.post(self.cases_component_url, post_data)
+
+        data = json.loads(response.content)
+        self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
+
+        for comp in (self.comp_cli, self.comp_api):
+            has_comp = TestCaseComponent.objects.filter(case=self.case_1, component=comp).exists()
+            self.assertFalse(has_comp)

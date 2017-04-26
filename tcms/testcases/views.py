@@ -14,6 +14,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
 
 from django_comments.models import Comment
@@ -1702,6 +1703,7 @@ def tag(request):
     return HttpResponse(form.as_p())
 
 
+@require_POST
 @user_passes_test(lambda u: u.has_perm('testcases.add_testcasecomponent'))
 def component(request):
     """
@@ -1710,7 +1712,7 @@ def component(request):
     # FIXME: It will update product/category/component at one time so far.
     # We may disconnect the component from case product in future.
     cas = actions.ComponentActions(request)
-    action = request.REQUEST.get('a', 'render_form')
+    action = request.POST.get('a', 'render_form')
     func = getattr(cas, action.lower())
     return func()
 

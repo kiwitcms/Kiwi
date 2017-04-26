@@ -3,6 +3,7 @@
 import json
 
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 from tcms.core import forms
 from tcms.testcases.forms import CaseCategoryForm
@@ -78,7 +79,7 @@ class CategoryActions(BaseActions):
 
 
 class ComponentActions(BaseActions):
-    '''Component actions used by view function `component`'''
+    """Component actions used by view function `component`"""
 
     def __get_form(self):
         self.form = CaseComponentForm(self.request.POST)
@@ -93,7 +94,7 @@ class ComponentActions(BaseActions):
         return 1, form
 
     def __check_perms(self, perm):
-        perm_name = 'testcases.' + perm + '_testcasecomponent'
+        perm_name = 'testcases.{}_testcasecomponent'.format(perm)
         if not self.request.user.has_perm(perm_name):
             self.ajax_response['rc'] = 1
             self.ajax_response['response'] = 'Permission denied - ' + perm
@@ -117,8 +118,7 @@ class ComponentActions(BaseActions):
                 try:
                     tc.add_component(component=c)
                 except:
-                    self.ajax_response['errors_list'].append({
-                        'case': tc.pk, 'component': c.pk})
+                    self.ajax_response['errors_list'].append({'case': tc.pk, 'component': c.pk})
 
         return self.render_ajax(self.ajax_response)
 
@@ -137,8 +137,7 @@ class ComponentActions(BaseActions):
                 try:
                     tc.remove_component(component=c)
                 except:
-                    self.ajax_response['errors_list'].append({
-                        'case': tc.pk, 'component': c.pk})
+                    self.ajax_response['errors_list'].append({'case': tc.pk, 'component': c.pk})
 
         return self.render_ajax(self.ajax_response)
 
@@ -161,12 +160,11 @@ class ComponentActions(BaseActions):
         return self.render_ajax(self.ajax_response)
 
     def render_ajax(self, response):
-        return HttpResponse(json.dumps(self.ajax_response))
+        return JsonResponse(self.ajax_response)
 
     def render_form(self):
         form = CaseComponentForm(initial={
             'product': self.product_id,
-            # 'category': self.request.REQUEST.get('category'),
             'component': self.request.POST.getlist('o_component'),
         })
         form.populate(product_id=self.product_id)
