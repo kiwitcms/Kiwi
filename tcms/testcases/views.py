@@ -1717,15 +1717,14 @@ def component(request):
     return func()
 
 
+@require_POST
 @user_passes_test(lambda u: u.has_perm('testcases.add_testcasecomponent'))
 def category(request):
-    """
-    Management test case categorys
-    """
+    """Management test case categories"""
     # FIXME: It will update product/category/component at one time so far.
     # We may disconnect the component from case product in future.
     cas = actions.CategoryActions(request)
-    func = getattr(cas, request.REQUEST.get('a', 'render_form').lower())
+    func = getattr(cas, request.POST.get('a', 'render_form').lower())
     return func()
 
 

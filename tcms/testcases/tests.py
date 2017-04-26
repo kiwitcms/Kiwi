@@ -11,10 +11,12 @@ from django.test import Client
 
 from fields import MultipleEmailField
 from forms import CaseTagForm
+from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testcases.models import TestCaseComponent
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import TestCaseCategoryFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
@@ -350,3 +352,64 @@ class TestOperateComponentView(BasePlanCase):
         for comp in (self.comp_cli, self.comp_api):
             has_comp = TestCaseComponent.objects.filter(case=self.case_1, component=comp).exists()
             self.assertFalse(has_comp)
+
+
+class TestOperateCategoryView(BasePlanCase):
+    """Tests for operating category on cases"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestOperateCategoryView, cls).setUpTestData()
+
+        cls.case_cat_full_auto = TestCaseCategoryFactory(name='Full Auto', product=cls.product)
+        cls.case_cat_full_manual = TestCaseCategoryFactory(name='Full Manual', product=cls.product)
+
+        cls.tester = User.objects.create(username='tester', email='tester@example.com')
+        cls.tester.set_password('password')
+        cls.tester.save()
+
+        user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
+
+        cls.case_category_url = reverse('tcms.testcases.views.category')
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username=self.tester.username, password='password')
+
+    def tearDown(self):
+        self.client.logout()
+
+    def test_show_categories_form(self):
+        response = self.client.post(self.case_category_url, {'product': self.product.pk})
+
+        self.assertContains(
+            response,
+            '<option value="{}" selected="selected">{}</option>'.format(
+                self.product.pk, self.product.name),
+            html=True)
+
+        categories = ('<option value="{}">{}</option>'.format(category.pk, category.name)
+                      for category in self.product.category.all())
+        self.assertContains(
+            response,
+            '''<select multiple="multiple" id="id_o_category" name="o_category">
+{}
+</select>'''.format(''.join(categories)),
+            html=True)
+
+    def test_update_cases_category(self):
+        post_data = {
+            'from_plan': self.plan.pk,
+            'product': self.product.pk,
+            'case': [self.case_1.pk, self.case_3.pk],
+            'a': 'update',
+            'o_category': self.case_cat_full_auto.pk,
+        }
+        response = self.client.post(self.case_category_url, post_data)
+
+        data = json.loads(response.content)
+        self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
+
+        for pk in (self.case_1.pk, self.case_3.pk):
+            case = TestCase.objects.get(pk=pk)
+            self.assertEqual(self.case_cat_full_auto, case.category)

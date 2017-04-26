@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
-
 from django.http import HttpResponse
 from django.http import JsonResponse
 
@@ -15,7 +13,7 @@ __all__ = ('CategoryActions', 'ComponentActions')
 
 
 class BaseActions(object):
-    '''Base class for all Actions'''
+    """Base class for all Actions"""
 
     def __init__(self, request):
         self.ajax_response = {'rc': 0, 'response': 'ok', 'errors_list': []}
@@ -26,9 +24,13 @@ class BaseActions(object):
         from tcms.testcases.views import get_selected_testcases
         return get_selected_testcases(self.request)
 
+    def render_ajax(self, data):
+        """Return JSON response"""
+        return JsonResponse(data)
+
 
 class CategoryActions(BaseActions):
-    '''Category actions used by view function `category`'''
+    """Category actions used by view function `category`"""
 
     def __get_form(self):
         self.form = CaseCategoryForm(self.request.POST)
@@ -64,9 +66,6 @@ class CategoryActions(BaseActions):
             tc.category = category
             tc.save()
         return self.render_ajax(self.ajax_response)
-
-    def render_ajax(self, response):
-        return HttpResponse(json.dumps(self.ajax_response))
 
     def render_form(self):
         form = CaseCategoryForm(initial={
@@ -158,9 +157,6 @@ class ComponentActions(BaseActions):
                 tc.add_component(component=c)
 
         return self.render_ajax(self.ajax_response)
-
-    def render_ajax(self, response):
-        return JsonResponse(self.ajax_response)
 
     def render_form(self):
         form = CaseComponentForm(initial={
