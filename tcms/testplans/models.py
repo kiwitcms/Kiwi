@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Max
-from django.db.models.signals import post_save, post_delete, pre_save
+from django.db.models.signals import post_save, pre_delete, pre_save
 from uuslug import slugify
 
 from tcms.management.models import Version
@@ -358,14 +358,14 @@ if register_model:
 
 def _listen():
     post_save.connect(plan_watchers.on_plan_save, TestPlan)
-    post_delete.connect(plan_watchers.on_plan_delete, TestPlan)
+    pre_delete.connect(plan_watchers.on_plan_delete, TestPlan)
     pre_save.connect(plan_watchers.pre_save_clean, TestPlan)
 
 
 def _disconnect_signals():
     """ used in testing """
     post_save.disconnect(plan_watchers.on_plan_save, TestPlan)
-    post_delete.disconnect(plan_watchers.on_plan_delete, TestPlan)
+    pre_delete.disconnect(plan_watchers.on_plan_delete, TestPlan)
     pre_save.disconnect(plan_watchers.pre_save_clean, TestPlan)
 
 

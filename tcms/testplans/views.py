@@ -126,6 +126,9 @@ def new(request, template_name='plan/new.html'):
                     for env_group in env_groups:
                         tp.add_env_group(env_group=env_group)
 
+            # create emailing settings to avoid Issue #181 on MySQL
+            tp.emailing.save()
+
             return HttpResponseRedirect(
                 reverse('tcms.testplans.views.get', args=[tp.plan_id, ])
             )
