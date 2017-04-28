@@ -633,11 +633,21 @@ class TestCaseTag(models.Model):
 class TestCaseBugSystem(TCMSActionModel):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
-    url_reg_exp = models.CharField(max_length=8192)
-    validate_reg_exp = models.CharField(max_length=128)
+    url_reg_exp = models.CharField(
+        max_length=8192,
+        verbose_name='URL format string',
+        help_text='A valid Python format string such as http://bugs.example.com/%s'
+    )
+    validate_reg_exp = models.CharField(
+        max_length=128,
+        verbose_name='RegExp for ID validation',
+        help_text='A valid JavaScript regular expression such as ^\d$',
+    )
 
     class Meta:
         db_table = u'test_case_bug_systems'
+        verbose_name = 'Bug tracker'
+        verbose_name_plural = 'Bug trackers'
 
     def __unicode__(self):
         return self.name
