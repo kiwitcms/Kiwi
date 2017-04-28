@@ -3,13 +3,28 @@
 Administration
 ==============
 
-The TCMS Administration tab allows administrators to manage:
+The ADMIN tab allows administrators to manage:
 
 -  Group and user permissions
 -  Entities
--  Test Plans and Test Cases.
+-  Test Plans and Test Cases
+-  Bug tracking systems
+-  and more ...
 
 |The Administration screen|
+
+Adding bug trackers
+-------------------
+
+One of the first steps when working with Nitrate is to configure bug
+tracking systems. This can be done via the interface located via the menu
+``ADMIN -> Test cases -> Bug trackers``. Each bug tracker is given a
+name, short description, URL format string and a regular expression
+which is used to validate bug ID strings sent from the user.
+
+Users can add or remove bugs to test cases and test case runs if they
+have the `testcases.add_testcasebug` and/or `testcases.delete_testcasebug`
+permissions!
 
 Managing permissions
 --------------------
