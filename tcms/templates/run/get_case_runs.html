@@ -148,9 +148,10 @@
 	</form>
 </div>
 	<script id="add_issue_form_template" type="text/x-handlebars-template">
-		<form id="add_issue_form">
-			<input type="hidden" name="a" value="add">
 {% verbatim %}
+            <h4>{{ action_button_text }} bug</h4>
+		<form id="add_issue_form">
+			<input type="hidden" name="a" value="{{ a }}">
 				{{#each hiddenFields}}
 					<input type="hidden" name="{{ this.name }}" value="{{ this.value }}">
 				{{/each}}
@@ -169,7 +170,9 @@
 			</div>
 			</br></br>
 			<div>
-				<input type="submit" value="Add">
+{% verbatim %}
+				<input type="submit" value="{{ action_button_text }}">
+{% endverbatim %}
 				<input type="button" value="Cancel" class="js-cancel-button" >
 			</div>
 		</form>

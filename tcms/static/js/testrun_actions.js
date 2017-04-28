@@ -154,7 +154,7 @@ Nitrate.TestRuns.Details.on_load = function() {
       });
       c_container.find('.js-remove-caserun-bug').bind('click', function(){
         var params = jQ(this).data('params');
-        removeCaseRunBug(params[0], c[0], c_container[0], params[1], params[2]);
+        removeCaseRunBug(params[0], c[0], c_container[0], params[1], params[2], params[3]);
       });
       c_container.find('.js-add-testlog').bind('click', function(){
         var params = jQ(this).data('params');
@@ -612,6 +612,7 @@ function constructCaseRunZone(container, title_container, case_id) {
  * options:
  * @param extraFormHiddenData: used for providing extra data for specific AJAX request.
  * @param onSubmit: callback function when user click Add button
+ * @param action: string - Add or Remove. Default is Add
  */
 /*
  * FIXME: which namespace is proper to hold this dialog class?
@@ -624,6 +625,11 @@ function AddIssueDialog(options) {
   this.extraFormHiddenData = options.extraFormHiddenData;
   if (this.extraFormHiddenData !== undefined && typeof this.extraFormHiddenData !== "object") {
     throw new Error("extraFormHiddenData sould be an object if present.");
+  }
+
+  this.action = options.action;
+  if (this.action === undefined) {
+    this.action = "Add";
   }
 }
 
@@ -642,7 +648,12 @@ AddIssueDialog.prototype.show = function () {
   }
 
   var template = Handlebars.compile(jQ("#add_issue_form_template").html());
-  var context = {'hiddenFields': hiddenPart};
+  var context = {
+    'hiddenFields': hiddenPart,
+    'action_button_text': this.action,
+    'a': this.action.toLowerCase(),
+  };
+
   jQ('#dialog').html(template(context))
     .find('.js-cancel-button').bind('click', function() {
       jQ('#dialog').hide();
@@ -1243,34 +1254,39 @@ function updateBugsActionAdd(case_runs) {
 }
 
 function updateBugsActionRemove(case_runs) {
-  var bug_ids = jQ.trim(window.prompt("Please input a Bugzilla ID or Jira issue key."));
-  if (!bug_ids) {
-    return false;
-  }
+  var dialog = new AddIssueDialog({
+    'action': 'Remove',
+    'extraFormHiddenData': { 'case_runs': case_runs.join() },
+    'onSubmit': function(e, dialog) {
+      e.stopPropagation();
+      e.preventDefault();
+      var form_data = dialog.get_data();
+      form_data.bug_id = form_data.bug_id.trim();
 
-  var bug_system_id = getBugSystemId(bug_ids);
-  if (bug_system_id > 2) {
-    window.alert(default_messages.alert.invalid_issue_id);
-    return false;
-  }
-  jQ.ajax({
-    url: '/caserun/update-bugs-for-many/',
-    dataType: 'json',
-    success: function(res) {
-      if (res.rc == 0) {
-        reloadWindow();
-      } else {
-        window.alert(res.response);
+      if (!form_data.bug_id.length) {
+        return;
+      }
+
+      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
         return false;
       }
-    },
-    data: {
-      'bug_id': bug_ids,
-      'a': 'remove',
-      'case_runs': case_runs.join(),
-      'bug_system_id': bug_system_id
+
+      jQ.ajax({
+        url: '/caserun/update-bugs-for-many/',
+        dataType: 'json',
+        success: function(res) {
+          if (res.rc == 0) {
+            reloadWindow();
+          } else {
+            window.alert(res.response);
+            return false;
+          }
+        },
+        data: form_data,
+      });
     }
   });
+  dialog.show();
 }
 
 function updateBugs(action) {
