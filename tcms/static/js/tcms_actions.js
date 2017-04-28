@@ -120,7 +120,6 @@ var default_messages = {
     'bookmark_added': 'Bookmark added.',
     'no_run_selected': 'No run selected.',
     'invalid_bug_id': 'Please input a valid bug id!',
-    'invalid_issue_id': 'Please input a valid Bugzilla/JIRA id.',
     'no_bugs_specified': 'Please specify bug ID',
     'no_plan_specified': 'Please specify one plan at least.'
   },
@@ -1410,8 +1409,4 @@ function validateIssueID(bugRegExp, bugId) {
     window.alert(default_messages.alert.invalid_bug_id);
   }
   return result;
-}
-
-function getBugSystemId(bugId) {
-  return /^\d{1,7}$/.test(bugId) ? 1 : (/^[A-Z0-9]+-\d+$/.test(bugId) ? 2 : 3)
 }
