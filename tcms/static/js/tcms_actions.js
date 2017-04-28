@@ -119,8 +119,7 @@ var default_messages = {
     'last_case_run': 'It is the last case run',
     'bookmark_added': 'Bookmark added.',
     'no_run_selected': 'No run selected.',
-    'invalid_bug_id': 'Please input a valid bug id which is less equal 7 numberes, e.g. 1001234',
-    'invalid_jira_id': 'Please input a valid JIRA id, e.g. TCMS-32',
+    'invalid_bug_id': 'Please input a valid bug id!',
     'invalid_issue_id': 'Please input a valid Bugzilla/JIRA id.',
     'no_bugs_specified': 'Please specify bug ID',
     'no_plan_specified': 'Please specify one plan at least.'
@@ -759,7 +758,7 @@ function bind_component_selector_to_product(allow_blank, load, product_field, co
 function debug_output(value) {
   try {
     console.log(value);
-  } catch(err) {}
+  } catch (err) {}
 }
 
 function myCustomURLConverter(url, node, on_save) {
@@ -1392,20 +1391,25 @@ function exportCase(url, form, table) {
 
 var printableCases = exportCase;
 
-function validateIssueID(bugSystemId, bugId) {
-  if (bugSystemId == 1) {
-    var result = /^\d{1,7}$/.test(bugId);
-    if (!result) {
-      window.alert(default_messages.alert.invalid_bug_id);
-    }
-    return result;
-  } else if (bugSystemId == 2) {
-    var result = /^[A-Z0-9]+-\d+$/.test(bugId);
-    if (!result) {
-      window.alert(default_messages.alert.invalid_jira_id);
-    }
-    return result;
+function validateIssueID(bugRegExp, bugId) {
+  // if bugRegExp is empty string then all input is valid!
+  if (!bugRegExp) {
+    return true;
   }
+
+  try {
+    var bug_re = new RegExp(bugRegExp);
+  // catch syntax errors in regular expressions
+  } catch(err) {
+    window.alert(err.name + ': ' + err.message);
+    return false;
+  }
+  var result = bug_re.test(bugId);
+
+  if (!result) {
+    window.alert(default_messages.alert.invalid_bug_id);
+  }
+  return result;
 }
 
 function getBugSystemId(bugId) {
