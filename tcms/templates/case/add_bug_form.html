@@ -1,0 +1,24 @@
+<table class="list" cellpadding="0" cellspacing="0" width="100%">
+	{% if perms.testcases.add_testcasebug %}
+	<tr>
+		<td colspan="4" style="padding:0;">
+			<form id="id_case_bug_form" action="{% url "tcms.testcases.views.bug" test_case.case_id %}" method="get">
+				<div class="addtag">
+					<span class="tit">Add Bug</span>
+					<input type="hidden" name="handle" value="add" />
+					<input type="hidden" name="case" value="{{ test_case.case_id }}" />
+					<input type="hidden" name="case_run" value="" />
+					<select name='bug_system'>
+                                        {% for btr in bug_trackers %}
+                                            <option value="{{ btr.pk }}" data-validation-regexp="{{ btr.validate_reg_exp }}" {% if forloop.first %}selected{% endif %}>{{ btr.name }}</option>
+                                        {% endfor %}
+					</select>
+					<input id="id_bugs" type="text" size="20" name="bug_id" />
+					<input style="display:none">
+					<a href="#bug" class="addlink js-add-bug" >Add</a>
+				</div>
+			</form>
+		</td>
+	</tr>
+	{% endif %}
+</table>

@@ -33,7 +33,7 @@ from tcms.testcases import actions
 from tcms.testcases import data
 from tcms.testcases import sqls
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCaseAttachment, TestCasePlan
+    TestCaseAttachment, TestCasePlan, TestCaseBugSystem
 from tcms.management.models import Priority, TestTag
 from tcms.testcases.models import TestCaseBug
 from tcms.testplans.models import TestPlan
@@ -1119,6 +1119,7 @@ def get(request, case_id, template_name='case/get.html'):
         'test_case_text': tc_text,
         'test_case_status': TestCaseStatus.objects.all(),
         'test_case_run_status': TestCaseRunStatus.objects.all(),
+        'bug_trackers': TestCaseBugSystem.objects.all(),
         'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
     }
     return render_to_response(template_name, context_data,

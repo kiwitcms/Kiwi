@@ -28,27 +28,6 @@
 		<td colspan="4" align="center" class="grey">No bug related to this case.</td>
 	</tr>
 	{% endfor %}
-	{% if perms.testcases.add_testcasebug %}
-	<tr>
-		<td colspan="4" style="padding:0;">
-			<form id="id_case_bug_form" action="{% url "tcms.testcases.views.bug" test_case.case_id %}" method="get">
-				<div class="addtag">
-					<span class="tit">Add Bug</span>
-					<input type="hidden" name="handle" value="add" />
-					<input type="hidden" name="case" value="{{ test_case.case_id }}" />
-					<input type="hidden" name="case_run" value="" />
-					<select name='bug_system'>
-						<option value='1' selected="selected">Bugzilla</option>
-						<option value='2'>JIRA</option>
-					</select>
-					<input id="id_bugs" type="text" size="20" name="bug_id" />
-					<input style="display:none">
-					<a href="#bug" class="addlink js-add-bug" >Add</a>
-				</div>
-			</form>
-		</td>
-	</tr>
-	{% endif %}
 </table>
 {% if message %}
 	<div id="message" class="hidden">{{ message }}</div>
