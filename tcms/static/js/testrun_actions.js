@@ -154,7 +154,7 @@ Nitrate.TestRuns.Details.on_load = function() {
       });
       c_container.find('.js-remove-caserun-bug').bind('click', function(){
         var params = jQ(this).data('params');
-        removeCaseRunBug(params[0], c[0], c_container[0], params[1], params[2], params[3]);
+        removeCaseRunBug(params[0], c[0], c_container[0], params[1], params[2]);
       });
       c_container.find('.js-add-testlog').bind('click', function(){
         var params = jQ(this).data('params');
@@ -608,7 +608,6 @@ function constructCaseRunZone(container, title_container, case_id) {
  * Dialog to allow user to add sort of issue keys to case run(s).
  *
  * Here, issue key is a general to whatever the issue tracker system is.
- * Currently, two issue tracker systems get supported, Bugzilla and Jira.
  *
  * options:
  * @param extraFormHiddenData: used for providing extra data for specific AJAX request.
@@ -650,19 +649,10 @@ AddIssueDialog.prototype.show = function () {
     })
     .end().show();
 
-  this.previousVisibleIssueSystem = "bug-system-bugzilla";
   this.form = jQ("#add_issue_form")[0];
 
   // Used for following event callbacks to ref this dialog's instance
   var that = this;
-
-  // Switch bug system panel
-  jQ('#bug_system_id').change(function (e) {
-    var tabName = jQ('#bug_system_id option:selected').data('tab');
-    jQ('#add_issue_form').find('#' + that.previousVisibleIssueSystem).toggle();
-    jQ('#add_issue_form').find('#' + tabName).toggle();
-    that.previousVisibleIssueSystem = tabName;
-  });
 
   // Set custom callback functions
   if (this.onSubmit !== undefined) {
@@ -674,16 +664,7 @@ AddIssueDialog.prototype.show = function () {
 
 AddIssueDialog.prototype.get_data = function () {
   var form_data = Nitrate.Utils.formSerialize(this.form);
-
-  // have to ensure bug_id only refs to a string
-  if (form_data.bug_system_id == 1) {
-    form_data.bug_id = jQ('#bug-system-bugzilla').find('[name="bug_id"]').val();
-  } else if (form_data.bug_system_id == 2) {
-    form_data.bug_id = jQ('#bug-system-jira').find('[name="bug_id"]').val();
-  } else {
-    throw new Error('Unknown bug system ID');
-  }
-
+  form_data.bug_validation_regexp = jQ('#bug_system_id option:selected').data('validation-regexp');
   return form_data;
 };
 
@@ -704,7 +685,7 @@ function addCaseRunBug(run_id, title_container, container, case_id, case_run_id,
         return;
       }
 
-      if (!validateIssueID(form_data.bug_system_id, form_data.bug_id)) {
+      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
         return false;
       }
 
@@ -1239,7 +1220,7 @@ function updateBugsActionAdd(case_runs) {
         return;
       }
 
-      if (!validateIssueID(form_data.bug_system_id, form_data.bug_id)) {
+      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
         return false;
       }
 

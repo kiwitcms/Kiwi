@@ -755,6 +755,7 @@ function changeCasePriority(object_pk, value, callback) {
 
 function addCaseBug(form, callback) {
   var addBugInfo = Nitrate.Utils.formSerialize(form);
+//TODO: fix this
   addBugInfo.bug_id = addBugInfo.bug_id.trim();
 
   if (!addBugInfo.bug_id.length) {

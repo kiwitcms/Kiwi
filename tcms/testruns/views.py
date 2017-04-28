@@ -44,7 +44,7 @@ from tcms.search import remove_from_request_path
 from tcms.search.order import order_run_queryset
 from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.forms import CaseBugForm
-from tcms.testcases.models import TestCasePlan, TestCaseStatus
+from tcms.testcases.models import TestCasePlan, TestCaseStatus, TestCaseBugSystem
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
@@ -767,6 +767,7 @@ def get(request, run_id, template_name='run/get.html'):
         'priorities': Priority.objects.all(),
         'case_own_tags': ttags,
         'errata_url_prefix': settings.ERRATA_URL_PREFIX,
+        'bug_trackers': TestCaseBugSystem.objects.all(),
     }
     return render_to_response(template_name, context_data,
                               context_instance=RequestContext(request))
@@ -906,16 +907,6 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             user_comments = comments.get(case_run.pk, [])
             case_run.user_comments = user_comments
 
-        jira_bug_ids = [bug_id for bug_id, bug_url in bug_ids if '-' in bug_id]
-        bugzilla_bug_ids = [bug_id for bug_id, bug_url in bug_ids if
-                            '-' not in bug_id]
-        jira_url = settings.JIRA_URL + \
-            'issues/?jql=issueKey%%20in%%20(%s)' % \
-            '%2C%20'.join(jira_bug_ids)
-        bugzilla_url = settings.BUGZILLA_URL + \
-            'buglist.cgi?bugidtype=include&bug_id=%s' % \
-            ','.join(bugzilla_bug_ids)
-
         context = super(TestRunReportView, self).get_context_data(**kwargs)
         context.update({
             'test_run': run,
@@ -924,8 +915,6 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             'test_case_run_bugs': bug_ids,
             'mode_stats': mode_stats,
             'summary_stats': summary_stats,
-            'jira_url': jira_url,
-            'bugzilla_url': bugzilla_url
         })
 
         return context
