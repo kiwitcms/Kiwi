@@ -12,7 +12,8 @@
           {% else %}
               {{ field.label_tag }}{{ field.field }}
           {% endif %}
-          {% if field.field.field.help_text %}<p class="help">{{ field.field.field.help_text|safe }}</p>{% endif %}
+          <br/>
+          {% if field.field.field.help_text %}<span class="help">{{ field.field.field.help_text|safe }}</span>{% endif %}
       </div>
       {% endfor %}
       </div>
