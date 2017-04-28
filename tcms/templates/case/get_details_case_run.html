@@ -97,9 +97,9 @@
 								{% for bug in bugs %}
 								    {% if bug.case_run_id %}
 								        <span class="grey">From Run</span><a href="{% url "tcms.testruns.views.get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
-								        {% ifequal bug.case_run_id test_case_run.pk %}
+								        {% if bug.case_run_id == test_case_run.pk and perms.testcases.delete_testcasebug %}
 								        <a href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'><img width="9" height="9" title="remove this bug" src="{{ STATIC_URL }}images/remove_small.png"></a>
-								        {% endifequal %}
+								        {% endif %}
 								    {% else %}
 								        <span class="grey">From Case</span>
 								        <a href="{% url "tcms.testcases.views.get" bug.case_id %}">{{ bug.case_id }}</a>
