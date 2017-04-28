@@ -214,7 +214,10 @@ Nitrate.TestCases.Instance = {
 			<div class="ajax_loading"></div>
 		</div>
 		<div id="bug" class="tab_list" style="display:none">
+                    <div id="bug_list">
 			{% include "case/get_bug.html" %}
+                    </div>
+                    {% include "case/add_bug_form.html" %}
 		</div>
 		 <div id="case_run" class="tab_list" style="display:none">
 			{% include "case/get_case_run.html" %}
