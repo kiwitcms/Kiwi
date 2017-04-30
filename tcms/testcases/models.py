@@ -32,10 +32,10 @@ AUTOMATED_CHOICES = (
 class NoneText:
     author = None
     case_text_version = 0
-    action = None
-    effect = None
-    setup = None
-    breakdown = None
+    action = ''
+    effect = ''
+    setup = ''
+    breakdown = ''
     create_date = datetime.now()
 
     @classmethod

@@ -709,7 +709,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 @require_http_methods(['GET', 'POST'])
 @user_passes_test(lambda u: u.has_perm('testplans.add_testplan'))
 def clone(request, template_name='plan/clone.html'):
-    '''Clone testplan'''
+    """Clone testplan"""
     SUB_MODULE_NAME = 'plans'
 
     req_data = request.GET or request.POST
@@ -727,7 +727,7 @@ def clone(request, template_name='plan/clone.html'):
         return HttpResponse(Prompt.render(
             request=request,
             info_type=Prompt.Info,
-            info='The plan you specific does not exist in database',
+            info='The plan you specify does not exist in database.',
             next='javascript:window.history.go(-1)',
         ))
 
@@ -735,130 +735,67 @@ def clone(request, template_name='plan/clone.html'):
     if request.method == "POST":
         clone_form = ClonePlanForm(request.POST)
         clone_form.populate(product_id=request.POST.get('product_id'))
+
         if clone_form.is_valid():
+            clone_options = clone_form.cleaned_data
 
             # Create new test plan.
             for tp in tps:
-                tp_dest = TestPlan.objects.create(
-                    product=clone_form.cleaned_data['product'],
-                    author=clone_form.cleaned_data['keep_orignal_author'] and
-                    tp.author or request.user,
-                    type=tp.type,
-                    product_version=clone_form.cleaned_data['product_version'],
-                    name=len(tps) == 1 and clone_form.cleaned_data['name'] or tp.name,
-                    create_date=tp.create_date,
-                    is_active=tp.is_active,
-                    extra_link=tp.extra_link,
-                    parent=clone_form.cleaned_data['set_parent'] and tp or None)
 
-                # Copy the plan documents
-                if clone_form.cleaned_data['copy_texts']:
-                    tptxts_src = tp.text.all()
-                    for tptxt_src in tptxts_src:
-                        tp_dest.add_text(
-                            plan_text_version=tptxt_src.plan_text_version,
-                            author=tptxt_src.author,
-                            create_date=tptxt_src.create_date,
-                            plan_text=tptxt_src.plan_text)
-                else:
-                    tp_dest.add_text(author=request.user, plan_text='')
+                new_name = len(tps) == 1 and clone_options['name'] or None
 
-                # Copy the plan tags
-                for tp_tag_src in tp.tag.all():
-                    tp_dest.add_tag(tag=tp_tag_src)
+                clone_params = dict(
+                    # Cloned plan properties
+                    new_name=new_name,
+                    product=clone_options['product'],
+                    version=clone_options['product_version'],
+                    set_parent=clone_options['set_parent'],
 
-                # Copy the plan attachments
-                if clone_form.cleaned_data['copy_attachements']:
-                    for tp_attach_src in tp.attachment.all():
-                        tp_dest.add_attachment(attachment=tp_attach_src)
+                    # Related data
+                    copy_texts=clone_options['copy_texts'],
+                    copy_attachments=clone_options['copy_attachements'],
+                    copy_environment_group=clone_options['copy_environment_group'],
 
-                # Copy the environment group
-                if clone_form.cleaned_data['copy_environment_group']:
-                    for env_group in tp.env_group.all():
-                        tp_dest.add_env_group(env_group=env_group)
+                    # Link or copy cases
+                    link_cases=clone_options['link_testcases'],
+                    copy_cases=clone_options['copy_testcases'],
+                    default_component_initial_owner=request.user,
+                )
 
-                # Link the cases of the plan
-                if clone_form.cleaned_data['link_testcases']:
-                    tpcases_src = tp.case.all()
+                assign_me_as_plan_author = not clone_options['keep_orignal_author']
+                if assign_me_as_plan_author:
+                    clone_params['new_original_author'] = request.user
 
-                    if clone_form.cleaned_data['copy_testcases']:
-                        for tpcase_src in tpcases_src:
-                            tcp = get_object_or_404(TestCasePlan, plan=tp,
-                                                    case=tpcase_src)
-                            if clone_form.cleaned_data['maintain_case_orignal_author']:
-                                author = tpcase_src.author
-                            else:
-                                author = request.user
+                assign_me_as_copied_case_author = \
+                    clone_options['copy_testcases'] and \
+                    not clone_options['maintain_case_orignal_author']
+                if assign_me_as_copied_case_author:
+                    clone_params['new_case_author'] = request.user
 
-                            if clone_form.cleaned_data['keep_case_default_tester']:
-                                if hasattr(tpcase_src, 'default_tester'):
-                                    default_tester = getattr(tpcase_src, 'default_tester')
-                                else:
-                                    default_tester = None
-                            else:
-                                default_tester = request.user
-                            tc_category, b_created = TestCaseCategory.objects.get_or_create(
-                                name=tpcase_src.category.name,
-                                product=clone_form.cleaned_data['product'])
-                            tpcase_dest = TestCase.objects.create(
-                                create_date=tpcase_src.create_date,
-                                is_automated=tpcase_src.is_automated,
-                                script=tpcase_src.script,
-                                arguments=tpcase_src.arguments,
-                                summary=tpcase_src.summary,
-                                requirement=tpcase_src.requirement,
-                                alias=tpcase_src.alias,
-                                estimated_time=tpcase_src.estimated_time,
-                                case_status=TestCaseStatus.get_PROPOSED(),
-                                category=tc_category,
-                                priority=tpcase_src.priority,
-                                author=author,
-                                default_tester=default_tester)
+                assign_me_as_copied_case_default_tester = \
+                    clone_options['copy_testcases'] and \
+                    not clone_options['keep_case_default_tester']
+                if assign_me_as_copied_case_default_tester:
+                    clone_params['new_case_default_tester'] = request.user
 
-                            # Add case to plan.
-                            tp_dest.add_case(tpcase_dest, tcp.sortkey)
+                assign_me_as_text_author = not clone_options['copy_texts']
+                if assign_me_as_text_author:
+                    clone_params['default_text_author'] = request.user
 
-                            for tc_tag_src in tpcase_src.tag.all():
-                                tpcase_dest.add_tag(tag=tc_tag_src)
-                            for component in tpcase_src.component.filter(product__id=tp.product_id):
-                                try:
-                                    new_c = tp_dest.product.component.get(name=component.name)
-                                except ObjectDoesNotExist:
-                                    new_c = tp_dest.product.component.create(
-                                        name=component.name,
-                                        initial_owner=request.user,
-                                        description=component.description)
-
-                                tpcase_dest.add_component(new_c)
-
-                            text = tpcase_src.latest_text()
-
-                            if text:
-                                tpcase_dest.add_text(author=text.author,
-                                                     action=text.action,
-                                                     effect=text.effect,
-                                                     setup=text.setup,
-                                                     breakdown=text.breakdown,
-                                                     create_date=text.create_date)
-
-                    else:
-                        for tpcase_src in tpcases_src:
-                            tcp = get_object_or_404(TestCasePlan, plan=tp, case=tpcase_src)
-                            tp_dest.add_case(tpcase_src, tcp.sortkey)
+                cloned_plan = tp.clone(**clone_params)
 
             if len(tps) == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[tp_dest.plan_id]))
+                    reverse('tcms.testplans.views.get', args=[cloned_plan.plan_id]))
             else:
                 args = {
                     'action': 'search',
                     'product': clone_form.cleaned_data['product'].id,
                     'product_version': clone_form.cleaned_data['product_version'].id,
                 }
-
                 url_args = urllib.urlencode(args)
-
-                return HttpResponseRedirect(reverse('tcms.testplans.views.all') + '?' + url_args)
+                return HttpResponseRedirect(
+                    '{}?{}'.format(reverse('tcms.testplans.views.all'), url_args))
     else:
         # Generate the default values for the form
         if len(tps) == 1:
@@ -873,7 +810,7 @@ def clone(request, template_name='plan/clone.html'):
                 'copy_testcases': False,
                 'maintain_case_orignal_author': True,
                 'keep_case_default_tester': False,
-                'name': 'Copy of %s' % tps[0].name
+                'name': tps[0].make_cloned_name(),
             })
             clone_form.populate(product_id=tps[0].product.id)
         else:

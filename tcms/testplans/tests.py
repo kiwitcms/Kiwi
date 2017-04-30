@@ -5,8 +5,11 @@ import httplib
 import os
 import xml.etree.ElementTree as et
 
+from itertools import izip
+
 from six.moves import http_client
 from six.moves import map
+from six.moves import urllib
 
 from django import test
 from django.contrib.auth.models import User
@@ -14,13 +17,14 @@ from django.core.urlresolvers import reverse
 from django.test.client import Client
 
 from tcms.core.logs.models import TCMSLogModel
+from tcms.management.models import Product
+from tcms.management.models import Version
 from tcms.settings.common import TCMS_ROOT_PATH
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
+from tcms.testplans.models import TCMSEnvPlanMap
 from tcms.testplans.models import TestPlan
-from tcms.tests import BasePlanCase
-from tcms.tests import remove_perm_from_user
-from tcms.tests import user_should_have_perm
+from tcms.testplans.models import TestPlanAttachment
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
@@ -28,6 +32,9 @@ from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTypeFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
+from tcms.tests import BasePlanCase
+from tcms.tests import remove_perm_from_user
+from tcms.tests import user_should_have_perm
 
 
 class PlanTests(test.TestCase):
@@ -68,11 +75,6 @@ class PlanTests(test.TestCase):
     def test_plan_new_get(self):
         location = reverse('tcms.testplans.views.new')
         response = self.c.get(location, follow=True)
-        self.assertEquals(response.status_code, httplib.OK)
-
-    def test_plan_clone(self):
-        location = reverse('tcms.testplans.views.clone')
-        response = self.c.get(location, {'plan_id': self.plan_id})
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_details(self):
@@ -370,3 +372,264 @@ class TestLinkCases(BasePlanCase):
             TestCasePlan.objects.filter(plan=self.plan, case=self.another_case_1).exists())
         self.assertTrue(
             TestCasePlan.objects.filter(plan=self.plan, case=self.another_case_2).exists())
+
+
+class TestCloneView(BasePlanCase):
+    """Test case for cloning a plan"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestCloneView, cls).setUpTestData()
+
+        cls.another_plan = TestPlanFactory(
+            name='Another plan for test',
+            author=cls.tester, owner=cls.tester,
+            product=cls.product, product_version=cls.version)
+        cls.another_case_1 = TestCaseFactory(
+            author=cls.tester, default_tester=None,
+            reviewer=cls.tester, plan=[cls.another_plan])
+        cls.another_case_2 = TestCaseFactory(
+            author=cls.tester, default_tester=None,
+            reviewer=cls.tester, plan=[cls.another_plan])
+
+        cls.third_plan = TestPlanFactory(
+            name='Third plan for test',
+            author=cls.tester, owner=cls.tester,
+            product=cls.product, product_version=cls.version)
+        cls.third_case_1 = TestCaseFactory(
+            author=cls.tester, default_tester=None,
+            reviewer=cls.tester, plan=[cls.third_plan])
+        cls.third_case_2 = TestCaseFactory(
+            author=cls.tester, default_tester=None,
+            reviewer=cls.tester, plan=[cls.third_plan])
+
+        cls.totally_new_plan = TestPlanFactory(
+            name='Test clone plan with copying cases',
+            author=cls.tester, owner=cls.tester,
+            product=cls.product, product_version=cls.version)
+        cls.case_maintain_original_author = TestCaseFactory(
+            author=cls.tester, default_tester=None,
+            reviewer=cls.tester, plan=[cls.totally_new_plan])
+        cls.case_keep_default_tester = TestCaseFactory(
+            author=cls.tester, default_tester=None,
+            reviewer=cls.tester, plan=[cls.totally_new_plan])
+
+        cls.plan_tester = User.objects.create_user(
+            username='plan_tester',
+            email='tester@example.com',
+            password='password')
+        user_should_have_perm(cls.plan_tester, 'testplans.add_testplan')
+        cls.plan_clone_url = reverse('tcms.testplans.views.clone')
+
+    def test_refuse_if_missing_a_plan(self):
+        self.client.login(username=self.plan_tester.username, password='password')
+
+        data_missing_plan = {}  # No plan is passed
+        response = self.client.get(self.plan_clone_url, data_missing_plan)
+        self.assertContains(response, 'At least one plan is required by clone function')
+
+    def test_refuse_if_give_nonexisting_plan(self):
+        self.client.login(username=self.plan_tester.username, password='password')
+
+        response = self.client.get(self.plan_clone_url, {'plan': 99999})
+        self.assertContains(response, 'The plan you specify does not exist in database')
+
+    def test_open_clone_page_to_clone_one_plan(self):
+        self.client.login(username=self.plan_tester.username, password='password')
+
+        response = self.client.get(self.plan_clone_url, {'plan': self.plan.pk})
+
+        self.assertContains(
+            response,
+            '<label class="strong" for="id_name">New Plan Name</label>',
+            html=True)
+
+        self.assertContains(
+            response,
+            '<input id="id_name" name="name" type="text" value="Copy of {}">'.format(
+                self.plan.name),
+            html=True)
+
+    def test_open_clone_page_to_clone_multiple_plans(self):
+        self.client.login(username=self.plan_tester.username, password='password')
+
+        response = self.client.get(self.plan_clone_url,
+                                   {'plan': [self.plan.pk, self.another_plan.pk]})
+
+        plans_li = ['''<li>
+    <span class="lab-50">{}</span>
+    <span class="lab-100">{}</span>
+    <span>
+        <a href="" title="{} ({})">{}</a>
+    </span>
+</li>'''.format(plan.pk, plan.type, plan.name, plan.author.email, plan.name)
+            for plan in (self.plan, self.another_plan)]
+
+        self.assertContains(
+            response,
+            '<ul class="ul-no-format">{}</ul>'.format(''.join(plans_li)),
+            html=True)
+
+    def verify_cloned_plan(self, original_plan, cloned_plan,
+                           link_cases=True, copy_cases=None,
+                           maintain_case_orignal_author=None,
+                           keep_case_default_tester=None):
+        self.assertEqual('Copy of {}'.format(original_plan.name), cloned_plan.name)
+        self.assertEqual(Product.objects.get(pk=self.product.pk), cloned_plan.product)
+        self.assertEqual(Version.objects.get(pk=self.version.pk), cloned_plan.product_version)
+
+        # Verify option set_parent
+        self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
+
+        # Verify option copy_texts
+        self.assertEqual(cloned_plan.text.count(), original_plan.text.count())
+        for copied_text, original_text in izip(cloned_plan.text.all(),
+                                               original_plan.text.all()):
+            self.assertEqual(copied_text.plan_text_version, original_text.plan_text_version)
+            self.assertEqual(copied_text.author, original_text.author)
+            self.assertEqual(copied_text.create_date, original_text.create_date)
+            self.assertEqual(copied_text.plan_text, original_text.plan_text)
+
+        # Verify option copy_attachments
+        for attachment in original_plan.attachment.all():
+            added = TestPlanAttachment.objects.filter(
+                plan=cloned_plan, attachment=attachment).exists()
+            self.assertTrue(added)
+
+        # Verify option copy_environment_groups
+        for env_group in original_plan.env_group.all():
+            added = TCMSEnvPlanMap.objects.filter(plan=cloned_plan, group=env_group).exists()
+            self.assertTrue(added)
+
+        # Verify options link_testcases and copy_testcases
+        if link_cases and not copy_cases:
+            for case in original_plan.case.all():
+                is_case_linked = TestCasePlan.objects.filter(plan=cloned_plan, case=case).exists()
+                self.assertTrue(is_case_linked)
+
+        if link_cases and copy_cases:
+            # Ensure cases of original plan are not linked to cloned plan
+            for case in original_plan.case.all():
+                original_case_not_linked_to_cloned_plan = TestCasePlan.objects.filter(
+                    plan=cloned_plan, case=case).exists()
+                self.assertFalse(original_case_not_linked_to_cloned_plan)
+
+            self.assertEqual(cloned_plan.case.count(), original_plan.case.count())
+
+            # Verify if case' author and default tester are set properly
+            for original_case, copied_case in izip(original_plan.case.all(),
+                                                   cloned_plan.case.all()):
+                if maintain_case_orignal_author:
+                    self.assertEqual(original_case.author, copied_case.author)
+                else:
+                    me = self.plan_tester
+                    self.assertEqual(me, copied_case.author)
+
+                if keep_case_default_tester:
+                    self.assertEqual(original_case.default_tester, copied_case.default_tester)
+                else:
+                    me = self.plan_tester
+                    self.assertEqual(me, copied_case.default_tester)
+
+    def test_clone_a_plan_with_default_options(self):
+        post_data = {
+            'name': self.third_plan.make_cloned_name(),
+            'plan': self.third_plan.pk,
+            'product': self.product.pk,
+            'product_version': self.version.pk,
+            'set_parent': 'on',
+            'copy_texts': 'on',
+            'copy_attachments': 'on',
+            'copy_environment_groups': 'on',
+            'link_testcases': 'on',
+            'maintain_case_orignal_author': 'on',
+            'keep_case_default_tester': 'on',
+            'submit': 'Clone',
+        }
+        self.client.login(username=self.plan_tester.username, password='password')
+        response = self.client.post(self.plan_clone_url, post_data)
+
+        cloned_plan = TestPlan.objects.get(name=self.third_plan.make_cloned_name())
+
+        self.assertRedirects(
+            response,
+            reverse('tcms.testplans.views.get', args=[cloned_plan.pk]),
+            target_status_code=http_client.MOVED_PERMANENTLY)
+
+        self.verify_cloned_plan(self.third_plan, cloned_plan)
+
+    def test_clone_a_plan_by_copying_cases(self):
+        post_data = {
+            'name': self.totally_new_plan.make_cloned_name(),
+            'plan': self.totally_new_plan.pk,
+            'product': self.product.pk,
+            'product_version': self.version.pk,
+            'set_parent': 'on',
+            'copy_texts': 'on',
+            'copy_attachments': 'on',
+            'copy_environment_groups': 'on',
+            'link_testcases': 'on',
+            'maintain_case_orignal_author': 'on',
+            'keep_case_default_tester': 'on',
+            'submit': 'Clone',
+
+            'copy_testcases': 'on',
+        }
+        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.post(self.plan_clone_url, post_data)
+        cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
+        self.verify_cloned_plan(self.totally_new_plan, cloned_plan,
+                                copy_cases=True,
+                                maintain_case_orignal_author=True,
+                                keep_case_default_tester=True)
+
+    def test_clone_a_plan_by_setting_me_to_copied_cases_author_default_tester(self):
+        post_data = {
+            'name': self.totally_new_plan.make_cloned_name(),
+            'plan': self.totally_new_plan.pk,
+            'product': self.product.pk,
+            'product_version': self.version.pk,
+            'set_parent': 'on',
+            'copy_texts': 'on',
+            'copy_attachments': 'on',
+            'copy_environment_groups': 'on',
+            'link_testcases': 'on',
+            'submit': 'Clone',
+
+            'copy_testcases': 'on',
+            # Do not pass maintain_case_orignal_author and keep_case_default_tester
+        }
+        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.post(self.plan_clone_url, post_data)
+        cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
+        self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
+
+    def test_clone_multiple_plans_with_default_options(self):
+        post_data = {
+            'plan': [self.plan.pk, self.another_plan.pk],
+            'product': self.product.pk,
+            'product_version': self.version.pk,
+            'set_parent': 'on',
+            'copy_texts': 'on',
+            'copy_attachments': 'on',
+            'copy_environment_groups': 'on',
+            'link_testcases': 'on',
+            'maintain_case_orignal_author': 'on',
+            'keep_case_default_tester': 'on',
+            'submit': 'Clone',
+        }
+        self.client.login(username=self.plan_tester.username, password='password')
+        response = self.client.post(self.plan_clone_url, post_data)
+
+        url_querystr = urllib.parse.urlencode({
+            'action': 'search',
+            'product': self.product.pk,
+            'product_version': self.version.pk
+        })
+        self.assertRedirects(
+            response,
+            '{}?{}'.format(reverse('tcms.testplans.views.all'), url_querystr))
+
+        for origin_plan in (self.plan, self.another_plan):
+            cloned_plan = TestPlan.objects.get(name=origin_plan.make_cloned_name())
+            self.verify_cloned_plan(origin_plan, cloned_plan)

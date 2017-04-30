@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from datetime import datetime
 
 from django.conf import settings
@@ -6,14 +7,19 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Max
 from django.db.models.signals import post_save, post_delete, pre_save
+from django.shortcuts import get_object_or_404
+
 from uuslug import slugify
 
-from tcms.management.models import Version
-from tcms.testcases.models import TestCasePlan
-from tcms.testplans import signals as plan_watchers
 from tcms.core.models import TCMSActionModel
-from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.checksum import checksum
+from tcms.core.utils.tcms_router import connection
+from tcms.management.models import Version
+from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import TestCasePlan
+from tcms.testcases.models import TestCaseStatus
+from tcms.testplans import signals as plan_watchers
 
 try:
     from tcms.core.contrib.plugins_support.signals import register_model
@@ -35,7 +41,7 @@ class TestPlanType(TCMSActionModel):
 
 
 class TestPlan(TCMSActionModel):
-    '''A plan within the TCMS'''
+    """A plan within the TCMS"""
 
     plan_id = models.AutoField(max_length=11, primary_key=True)
     name = models.CharField(max_length=255, db_index=True)
@@ -250,6 +256,149 @@ class TestPlan(TCMSActionModel):
             return TestPlanEmailSettings.objects.create(plan=self)
 
     emailing = property(_get_email_conf)
+
+    def make_cloned_name(self):
+        """Make default name of cloned plan"""
+        return 'Copy of {}'.format(self.name)
+
+    def clone(self, new_name=None, product=None, version=None,
+              new_original_author=None, set_parent=True,
+              copy_texts=True, default_text_author=None,
+              copy_attachments=True,
+              copy_environment_group=True,
+              link_cases=True, copy_cases=None,
+              new_case_author=None,
+              new_case_default_tester=None,
+              default_component_initial_owner=None):
+        """Clone this plan
+
+        :param str new_name: New name of cloned plan. If not passed, make_cloned_name is called
+            to generate a default one.
+        :param product: Product of cloned plan. If not passed, original plan's product is used.
+        :param version: Product version of cloned plan. If not passed, original plan's
+            product_version is used.
+        :param new_original_author: New author of cloned plan. If not passed, original plan's
+            author is used.
+        :param bool set_parent: Whether to set original plan as parent of cloned plan.
+            Set by default.
+        :param bool copy_texts: Whether to copy the four text. Copy by default.
+        :param default_text_author: When not copy the four text, new text will be created.
+            This is the default author of new created text.
+        :param bool copy_attachments: Whether to copy attachments. Copy by default.
+        :param bool copy_environment_group: Whether to copy environment groups. Copy by default.
+        :param bool link_cases: Whether to link cases to cloned plan. Default is True.
+        :param bool copy_cases: Whether to copy cases to cloned plan instead of just linking them.
+            Default is False.
+        :param new_case_author: The author of copied cases. Used only if copy cases.
+        :param new_case_default_tester: The default tester of copied cases. Used only if copy cases.
+        :param default_component_initial_owner: Used only if copy cases. If copied case does not
+            have original case' component, create it and use this value as the initial_owner.
+        :rtype: cloned plan
+        """
+
+        if not copy_texts and not default_text_author:
+            raise ValueError('Missing default text author when not copy texts.')
+
+        if not copy_cases and not default_component_initial_owner:
+            raise ValueError('Missing default component initial owner when not copy cases.')
+
+        tp_dest = TestPlan.objects.create(
+            name=new_name or self.make_cloned_name(),
+            product=product or self.product,
+            author=new_original_author or self.author,
+            type=self.type,
+            product_version=version or self.product_version,
+            create_date=self.create_date,
+            is_active=self.is_active,
+            extra_link=self.extra_link,
+            parent=self if set_parent else None)
+
+        # Copy the plan documents
+        if copy_texts:
+            tptxts_src = self.text.all()
+            for tptxt_src in tptxts_src:
+                tp_dest.add_text(
+                    plan_text_version=tptxt_src.plan_text_version,
+                    author=tptxt_src.author,
+                    create_date=tptxt_src.create_date,
+                    plan_text=tptxt_src.plan_text)
+        else:
+            tp_dest.add_text(author=default_text_author, plan_text='')
+
+        # Copy the plan tags
+        for tp_tag_src in self.tag.all():
+            tp_dest.add_tag(tag=tp_tag_src)
+
+        # Copy the plan attachments
+        if copy_attachments:
+            for tp_attach_src in self.attachment.all():
+                tp_dest.add_attachment(attachment=tp_attach_src)
+
+        # Copy the environment group
+        if copy_environment_group:
+            for env_group in self.env_group.all():
+                tp_dest.add_env_group(env_group=env_group)
+
+        # Link the cases of the plan
+        if link_cases:
+            tpcases_src = self.case.all()
+
+            if copy_cases:
+                for tpcase_src in tpcases_src:
+                    tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
+                    author = new_case_author or tpcase_src.author
+                    default_tester = new_case_default_tester or tpcase_src.default_tester
+
+                    tc_category, b_created = TestCaseCategory.objects.get_or_create(
+                        name=tpcase_src.category.name, product=product)
+
+                    tpcase_dest = TestCase.objects.create(
+                        create_date=tpcase_src.create_date,
+                        is_automated=tpcase_src.is_automated,
+                        script=tpcase_src.script,
+                        arguments=tpcase_src.arguments,
+                        summary=tpcase_src.summary,
+                        requirement=tpcase_src.requirement,
+                        alias=tpcase_src.alias,
+                        estimated_time=tpcase_src.estimated_time,
+                        case_status=TestCaseStatus.get_PROPOSED(),
+                        category=tc_category,
+                        priority=tpcase_src.priority,
+                        author=author,
+                        default_tester=default_tester)
+
+                    # Add case to plan.
+                    tp_dest.add_case(tpcase_dest, tcp.sortkey)
+
+                    for tc_tag_src in tpcase_src.tag.all():
+                        tpcase_dest.add_tag(tag=tc_tag_src)
+
+                    for component in tpcase_src.component.filter(product__id=self.product_id):
+                        try:
+                            new_c = tp_dest.product.component.get(name=component.name)
+                        except ObjectDoesNotExist:
+                            new_c = tp_dest.product.component.create(
+                                name=component.name,
+                                initial_owner=default_component_initial_owner,
+                                description=component.description)
+
+                        tpcase_dest.add_component(new_c)
+
+                    text = tpcase_src.latest_text()
+
+                    if text:
+                        tpcase_dest.add_text(author=text.author,
+                                             action=text.action,
+                                             effect=text.effect,
+                                             setup=text.setup,
+                                             breakdown=text.breakdown,
+                                             create_date=text.create_date)
+            else:
+                for tpcase_src in tpcases_src:
+                    tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
+                    tp_dest.add_case(tpcase_src, tcp.sortkey)
+
+        return tp_dest
 
 
 class TestPlanText(TCMSActionModel):
