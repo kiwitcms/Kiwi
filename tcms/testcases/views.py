@@ -1764,9 +1764,7 @@ def get_log(request, case_id, template_name="management/get_log.html"):
 
 @user_passes_test(lambda u: u.has_perm('testcases.change_testcasebug'))
 def bug(request, case_id, template_name='case/get_bug.html'):
-    """
-    Process the bugs for cases
-    """
+    """Process the bugs for cases"""
     # FIXME: Rewrite these codes for Ajax.Request
     tc = get_object_or_404(TestCase, case_id=case_id)
 
@@ -1782,7 +1780,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             form = CaseBugForm(initial={
                 'case': self.case,
             })
-            if request.REQUEST.get('type') == 'table':
+            if request.GET.get('type') == 'table':
                 return HttpResponse(form.as_table())
 
             return HttpResponse(form.as_p())
@@ -1801,7 +1799,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             if not self.request.user.has_perm('testcases.add_testcasebug'):
                 return self.render(response='Permission denied.')
 
-            form = CaseBugForm(request.REQUEST)
+            form = CaseBugForm(request.GET)
             if not form.is_valid():
                 errors = []
                 for field_name, messages in form.errors.iteritems():
@@ -1827,8 +1825,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
                 return self.render(response='Permission denied.')
 
             try:
-                self.case.remove_bug(request.REQUEST.get('id'),
-                                     request.REQUEST.get('run_id'))
+                self.case.remove_bug(request.GET.get('id'), request.GET.get('run_id'))
             except ObjectDoesNotExist, error:
                 return self.render(response=error)
 
@@ -1840,10 +1837,10 @@ def bug(request, case_id, template_name='case/get_bug.html'):
         template_name=template_name
     )
 
-    if not request.REQUEST.get('handle') in case_bug_actions.__all__:
+    if not request.GET.get('handle') in case_bug_actions.__all__:
         return case_bug_actions.render(response='Unrecognizable actions')
 
-    func = getattr(case_bug_actions, request.REQUEST['handle'])
+    func = getattr(case_bug_actions, request.GET['handle'])
     return func()
 
 

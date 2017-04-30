@@ -413,3 +413,43 @@ class TestOperateCategoryView(BasePlanCase):
         for pk in (self.case_1.pk, self.case_3.pk):
             case = TestCase.objects.get(pk=pk)
             self.assertEqual(self.case_cat_full_auto, case.category)
+
+
+class TestAddIssueToCase(BasePlanCase):
+    """Tests for adding issue to case"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestAddIssueToCase, cls).setUpTestData()
+
+        cls.plan_tester = User.objects.create_user(username='plantester',
+                                                   email='plantester@example.com',
+                                                   password='password')
+        user_should_have_perm(cls.plan_tester, 'testcases.change_testcasebug')
+
+        cls.case_bug_url = reverse('tcms.testcases.views.bug', args=[cls.case_1.pk])
+        cls.issue_tracker = TestCaseBugSystem.objects.get(name='Bugzilla')
+
+    def test_add_and_remove_a_bug(self):
+        user_should_have_perm(self.plan_tester, 'testcases.add_testcasebug')
+        user_should_have_perm(self.plan_tester, 'testcases.delete_testcasebug')
+
+        self.client.login(username=self.plan_tester.username, password='password')
+        request_data = {
+            'handle': 'add',
+            'case': self.case_1.pk,
+            'bug_id': '123456',
+            'bug_system': self.issue_tracker.pk,
+        }
+        self.client.get(self.case_bug_url, request_data)
+        self.assertTrue(self.case_1.case_bug.filter(bug_id='123456').exists())
+
+        request_data = {
+            'handle': 'remove',
+            'case': self.case_1.pk,
+            'bug_id': '123456',
+        }
+        self.client.get(self.case_bug_url, request_data)
+
+        not_have_bug = self.case_1.case_bug.filter(bug_id='123456').exists()
+        self.assertTrue(not_have_bug)

@@ -933,7 +933,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
 def bug(request, case_run_id, template_name='run/execute_case_run.html'):
-    '''Process the bugs for case runs.'''
+    """Process the bugs for case runs."""
 
     class CaseRunBugActions(object):
         __all__ = ['add', 'file', 'remove', 'render_form']
