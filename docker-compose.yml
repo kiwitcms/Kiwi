@@ -16,6 +16,7 @@ services:
         depends_on:
             - db
         restart: always
+        # NOTE: mrsenko/nitrate is a private image on Docker Store!
         image: mrsenko/nitrate:3.8.18.17
         ports:
             - 80
