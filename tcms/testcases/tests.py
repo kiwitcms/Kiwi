@@ -9,11 +9,14 @@ from django.core.urlresolvers import reverse
 from django.forms import ValidationError
 from django.test import Client
 
+from uuslug import slugify
+
 from fields import MultipleEmailField
 from forms import CaseTagForm
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testcases.models import TestCaseComponent
+from tcms.testcases.models import TestCasePlan
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseCategoryFactory
@@ -21,6 +24,7 @@ from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseTagFactory
+from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestTagFactory
 from tcms.tests import BasePlanCase
@@ -453,3 +457,108 @@ class TestAddIssueToCase(BasePlanCase):
 
         not_have_bug = self.case_1.case_bug.filter(bug_id='123456').exists()
         self.assertTrue(not_have_bug)
+
+
+class TestOperateCasePlans(BasePlanCase):
+    """Test operation in case' plans tab"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestOperateCasePlans, cls).setUpTestData()
+
+        # Besides the plan and its cases created in parent class, this test case
+        # also needs other cases in order to list multiple plans of a case and
+        # remove a plan from a case.
+
+        cls.plan_test_case_plans = TestPlanFactory(author=cls.tester,
+                                                   owner=cls.tester,
+                                                   product=cls.product,
+                                                   product_version=cls.version)
+        cls.plan_test_add = TestPlanFactory(author=cls.tester,
+                                            owner=cls.tester,
+                                            product=cls.product,
+                                            product_version=cls.version)
+        cls.plan_test_remove = TestPlanFactory(author=cls.tester,
+                                               owner=cls.tester,
+                                               product=cls.product,
+                                               product_version=cls.version)
+
+        cls.case_1.add_to_plan(cls.plan_test_case_plans)
+        cls.case_1.add_to_plan(cls.plan_test_remove)
+
+        cls.plan_tester = User.objects.create_user(username='plantester',
+                                                   email='plantester@example.com',
+                                                   password='password')
+
+        cls.case_plans_url = reverse('tcms.testcases.views.plan', args=[cls.case_1.pk])
+
+    def tearDown(self):
+        remove_perm_from_user(self.plan_tester, 'testcases.add_testcaseplan')
+        remove_perm_from_user(self.plan_tester, 'testcases.change_testcaseplan')
+
+    def assert_list_case_plans(self, response, case):
+        for case_plan_rel in TestCasePlan.objects.filter(case=case):
+            plan = case_plan_rel.plan
+            self.assertContains(
+                response,
+                '<a href="/plan/{0}/{1}">{0}</a>'.format(plan.pk, slugify(plan.name)),
+                html=True)
+
+            self.assertContains(
+                response,
+                '<a href="/plan/{}/{}">{}</a>'.format(plan.pk, slugify(plan.name), plan.name),
+                html=True)
+
+    def test_list_plans(self):
+        response = self.client.get(self.case_plans_url)
+        self.assert_list_case_plans(response, self.case_1)
+
+    def test_missing_permission_to_add(self):
+        response = self.client.get(self.case_plans_url,
+                                   {'a': 'add', 'plan_id': self.plan_test_add.pk})
+        self.assertContains(response, 'Permission denied')
+
+    def test_missing_permission_to_remove(self):
+        response = self.client.get(self.case_plans_url,
+                                   {'a': 'remove', 'plan_id': self.plan_test_remove.pk})
+        self.assertContains(response, 'Permission denied')
+
+    def test_add_a_plan(self):
+        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
+        self.client.login(username=self.plan_tester.username, password='password')
+        response = self.client.get(self.case_plans_url,
+                                   {'a': 'add', 'plan_id': self.plan_test_add.pk})
+
+        self.assert_list_case_plans(response, self.case_1)
+
+        self.assertTrue(TestCasePlan.objects.filter(
+            plan=self.plan_test_add, case=self.case_1).exists())
+
+    def test_remove_a_plan(self):
+        user_should_have_perm(self.plan_tester, 'testcases.change_testcaseplan')
+        self.client.login(username=self.plan_tester.username, password='password')
+        response = self.client.get(self.case_plans_url,
+                                   {'a': 'remove', 'plan_id': self.plan_test_remove.pk})
+
+        self.assert_list_case_plans(response, self.case_1)
+
+        not_linked_to_plan = not TestCasePlan.objects.filter(
+            case=self.case_1, plan=self.plan_test_remove).exists()
+        self.assertTrue(not_linked_to_plan)
+
+    def test_add_a_few_plans(self):
+        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
+        self.client.login(username=self.plan_tester.username, password='password')
+        # This time, add a few plans to another case
+        url = reverse('tcms.testcases.views.plan', args=[self.case_2.pk])
+
+        response = self.client.get(url,
+                                   {'a': 'add', 'plan_id': [self.plan_test_add.pk,
+                                                            self.plan_test_remove.pk]})
+
+        self.assert_list_case_plans(response, self.case_2)
+
+        self.assertTrue(TestCasePlan.objects.filter(
+            case=self.case_2, plan=self.plan_test_add).exists())
+        self.assertTrue(TestCasePlan.objects.filter(
+            case=self.case_2, plan=self.plan_test_remove).exists())

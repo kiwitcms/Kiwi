@@ -14,6 +14,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
 
@@ -1844,12 +1845,9 @@ def bug(request, case_id, template_name='case/get_bug.html'):
     return func()
 
 
+@require_GET
 def plan(request, case_id):
-    """
-    Operating the case plan objects, such as add to remove plan from case
-
-    Return: Hash
-    """
+    """Add and remove plan in plan tab"""
     tc = get_object_or_404(TestCase, case_id=case_id)
     if request.GET.get('a'):
         # Search the plans from database
@@ -1863,43 +1861,46 @@ def plan(request, case_id):
                 context_data,
                 context_instance=RequestContext(request))
 
-        tps = TestPlan.objects.filter(
-            pk__in=request.REQUEST.getlist('plan_id'))
+        tps = TestPlan.objects.filter(pk__in=request.GET.getlist('plan_id'))
 
         if not tps:
             context_data = {
                 'testplans': tps,
                 'message': 'The plan id are not exist in database at all.'
             }
-            return render_to_response('case/get_plan.html', context_data,
-                                      context_instance=RequestContext(request))
+            return render_to_response(
+                'case/get_plan.html',
+                context_data,
+                context_instance=RequestContext(request))
 
         # Add case plan action
-        if request.REQUEST['a'] == 'add':
+        if request.GET['a'] == 'add':
             if not request.user.has_perm('testcases.add_testcaseplan'):
                 context_data = {
                     'test_case': tc,
                     'test_plans': tps,
                     'message': 'Permission denied',
                 }
-                return render_to_response('case/get_plan.html', context_data,
-                                          context_instance=RequestContext(
-                                              request))
+                return render_to_response(
+                    'case/get_plan.html',
+                    context_data,
+                    context_instance=RequestContext(request))
 
             for tp in tps:
                 tc.add_to_plan(tp)
 
         # Remove case plan action
-        if request.REQUEST['a'] == 'remove':
+        if request.GET['a'] == 'remove':
             if not request.user.has_perm('testcases.change_testcaseplan'):
                 context_data = {
                     'test_case': tc,
                     'test_plans': tps,
                     'message': 'Permission denied',
                 }
-                return render_to_response('case/get_plan.html', context_data,
-                                          context_instance=RequestContext(
-                                              request))
+                return render_to_response(
+                    'case/get_plan.html',
+                    context_data,
+                    context_instance=RequestContext(request))
 
             for tp in tps:
                 tc.remove_plan(tp)
@@ -1914,5 +1915,7 @@ def plan(request, case_id):
         'test_case': tc,
         'test_plans': tps,
     }
-    return render_to_response('case/get_plan.html', context_data,
-                              context_instance=RequestContext(request))
+    return render_to_response(
+        'case/get_plan.html',
+        context_data,
+        context_instance=RequestContext(request))
