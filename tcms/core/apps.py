@@ -2,6 +2,8 @@ from django.apps import AppConfig as DjangoAppConfig
 from django.db.models.signals import post_migrate
 from django.utils.translation import ugettext_lazy as _
 
+# flake8: noqa
+
 
 DEFAULT_PERMS = {
     'Tester': {
