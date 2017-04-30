@@ -70,10 +70,12 @@
 					{{ form.build }} 
 					<a href="{{ ADMIN_PREFIX }}/management/testbuild/add/" class="addlink" id="add_id_build">Add Build</a></td>
 			</tr>
+                        {% if errata_url_prefix %}
 			<tr>
 				<td><label>Errata </label></td>
 				<td>{{ form.errata_id }}</td>
 			</tr>
+                        {% endif %}
 			<tr>
 				<td><label>Manager</label></td>
 				{% ifequal test_run.manager user %}
