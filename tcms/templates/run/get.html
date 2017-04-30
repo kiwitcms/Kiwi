@@ -147,14 +147,14 @@ jQ(function() {
 					<a href="{% url "tcms.testruns.views.all" %}?build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
 				</div>
 			</div>
+                        {% if errata_url_prefix and test_run.errata_id %}
 			<div class="listinfo">
 				<div class="title grey">Errata&nbsp;:</div>
 				<div class="name">
-				{% if test_run.errata_id %}
 				<a href="{{ errata_url_prefix }}/{{ test_run.errata_id }}" target="_blank">{{ test_run.errata_id }}</a>
-				{% endif %}
 				</div>
 			</div>
+                        {% endif %}
 			<div class="listinfo">
 				<div class="title grey">Default Tester&nbsp;:</div>
 				<div class="name">

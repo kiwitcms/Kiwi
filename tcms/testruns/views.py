@@ -230,6 +230,7 @@ def new(request, template_name='run/new.html'):
         'form': form,
         'num_unconfirmed_cases': num_unconfirmed_cases,
         'run_estimated_time': estimated_time,
+        'errata_url_prefix': settings.ERRATA_URL_PREFIX,
     }
     return render_to_response(template_name, context_data,
                               context_instance=RequestContext(request))
@@ -852,6 +853,7 @@ def edit(request, run_id, template_name='run/edit.html'):
         'sub_module': SUB_MODULE_NAME,
         'test_run': tr,
         'form': form,
+        'errata_url_prefix': settings.ERRATA_URL_PREFIX,
     }
     return render_to_response(template_name, context_data,
                               context_instance=RequestContext(request))
