@@ -5,8 +5,8 @@ Administration
 
 The TCMS Administration tab allows administrators to manage:
 
--  Group and user permissions
 -  Entities
+-  Group and user permissions
 -  Test Plans and Test Cases.
 
 |The Administration screen|
@@ -21,8 +21,13 @@ The Auth administration section covers Groups and Users.
 Groups
 ~~~~~~
 
-The TCMS uses groups to manage access to parts of the system. Groups
-have two fields: name and permissions.
+Nitrate uses groups to manage access to parts of the system. Groups
+have two fields: name and permissions. By default there are two groups
+created
+
+* Administrator - has all available permissions;
+* Tester - has all available permissions from the ``django_comments``,
+  ``management``, ``testcases``, ``testruns`` and ``testplans`` applications.
 
 Adding a group
 ^^^^^^^^^^^^^^
@@ -102,7 +107,11 @@ Assigning permissions
 ^^^^^^^^^^^^^^^^^^^^^
 
 User permissions can be granted or revoked for individual components of
-the TCMS. For example, the ability to add attachments to a Test Case.
+Nitrate. All permissions are prefixed with the ``add_``, ``change_`` and
+``delete_`` prefixes signifying the operation which is controlled by this
+permission. Then the codename contains the name of the model for which this
+permission applies. For example, the ability to add attachments to a Test Case
+is controlled via the ``add_testcaseattachment`` permission.
 
 Procedure: Assigning permissions
 ''''''''''''''''''''''''''''''''
@@ -125,7 +134,7 @@ To assign permissions:
 Adding a user to a group
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Group permissions in the TCMS work the same as they do in Linux. The
+Group permissions in Nitrate work the same as they do in Linux. The
 system checks a user's personal permissions, then group permissions.
 
 Procedure: Adding a user to a group
@@ -143,7 +152,7 @@ To add a user to a group:
 Updating personal information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The TCMS can store email, first and last name details of a user.
+Nitrate can store email, first and last name details of a user.
 
 Procedure: Updating personal information
 ''''''''''''''''''''''''''''''''''''''''
@@ -165,7 +174,7 @@ To update personal information:
 Deleting a user
 ^^^^^^^^^^^^^^^
 
-Users can not be deleted from TCMS. A user that is no longer required
+Users can not be deleted from Nitrate. A user that is no longer required
 must be disabled.
 
 Procedure: Disabling a user
@@ -186,7 +195,7 @@ To disable a user:
 Access Control Lists
 ~~~~~~~~~~~~~~~~~~~~
 
-The TCMS uses ACLs for the user groups: Guest, Tester, and Admin. The
+Nitrate uses ACLs for the user groups: Guest, Tester, and Admin. The
 permissions for each group can be controlled from the **Group** section
 in the **AUTH** tab.
 
@@ -205,7 +214,7 @@ in the **AUTH** tab.
 Managing entities
 -----------------
 
-The following entities are listed in the TCMS:
+The following entities are listed in Nitrate:
 
 -  Builds
 -  Classifications
@@ -464,7 +473,7 @@ To edit a product:
 Versions
 ~~~~~~~~
 
-Each product in the TCMS needs a version. Many products will have
+Each product in Nitrate needs a version. Many products will have
 multiple versions. For example, Firefox 3.0.14, 3.5.3.
 
 Procedure: Adding a version
@@ -543,7 +552,7 @@ To add a Test Plan type:
 Test plans
 ~~~~~~~~~~
 
-This screen provides a list of all the test plans in TCMS. The **Add
+This screen provides a list of all the test plans in Nitrate. The **Add
 test plan** link can be used to create a test plan. For more
 information, see Creating a Test Plan.
 
@@ -594,7 +603,7 @@ To add a category:
 Test cases
 ~~~~~~~~~~
 
-This screen provides a list of all the test cases in TCMS. The **Add
+This screen provides a list of all the test cases in Nitrate. The **Add
 test case** link can be used to create a test case. For more
 information, see Creating a Test Case.
 

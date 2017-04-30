@@ -3,9 +3,11 @@ from __future__ import unicode_literals
 
 from django.db import migrations
 
+
 def delete_stale_content_type(apps, schema_editor):
     ContentType = apps.get_model('contenttypes', 'ContentType')
     ContentType.objects.filter(model='testplanpermission').delete()
+
 
 class Migration(migrations.Migration):
 
