@@ -422,18 +422,6 @@ class TestPlanText(TCMSActionModel):
         return self
 
 
-class TestPlanPermission(models.Model):
-    userid = models.IntegerField(unique=True, primary_key=True)
-    permissions = models.IntegerField()
-    grant_type = models.IntegerField(unique=True)
-
-    plan = models.ForeignKey(TestPlan)
-
-    class Meta:
-        db_table = u'test_plan_permissions'
-        unique_together = ('plan', 'userid')
-
-
 class TestPlanAttachment(models.Model):
     attachment = models.ForeignKey('management.TestAttachment')
     plan = models.ForeignKey(TestPlan)
