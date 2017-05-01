@@ -622,7 +622,8 @@ class CaseTagForm(forms.Form):
 
     def populate(self, case_ids=None):
         if case_ids:
+            # note: backwards relationship filter. TestCaseTag -> TestTag
             self.fields['o_tag'].queryset = TestTag.objects.filter(
-                testcase__in=case_ids).order_by('name').distinct()
+                cases__in=case_ids).order_by('name').distinct()
         else:
             self.fields['o_category'].queryset = TestCaseCategory.objects.all()
