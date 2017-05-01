@@ -1,6 +1,22 @@
 Change Log
 ==========
 
+3.8.18.18 (May 1 2017, released on MrSenko.com)
+-----------------------------------------------
+
+- Rebased onto a2363f8
+- Add default permissions to groups. PR #191 (Mr. Senko)
+- Fix Issue #186: Errata field visible when ``ERRATA_URL_PREFIX`` is empty.
+  PR #188 (Mr. Senko)
+- Fix Issue #181: Failed to delete testplan or product. PR #182 (Mr. Senko)
+- Add link to Administration guide in footer (Mr. Senko)
+- Update MOTD displayed on login/registration form (Mr. Senko)
+- Updated RPMs inside Docker image (Mr. Senko)
+- Use bug trackers defined in the DB. PR #79 (Mr. Senko)
+
+NOTE: this release introduces new database migrations!
+
+
 3.8.18.17 (Apr 24 2017, released on MrSenko.com)
 ------------------------------------------------
 
