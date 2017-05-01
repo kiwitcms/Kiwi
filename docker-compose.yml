@@ -17,7 +17,7 @@ services:
             - db
         restart: always
         # NOTE: mrsenko/nitrate is a private image on Docker Store!
-        image: mrsenko/nitrate:3.8.18.17
+        image: mrsenko/nitrate:3.8.18.18
         ports:
             - 80
         volumes:
