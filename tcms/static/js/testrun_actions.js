@@ -608,11 +608,11 @@ function constructCaseRunZone(container, title_container, case_id) {
  * Dialog to allow user to add sort of issue keys to case run(s).
  *
  * Here, issue key is a general to whatever the issue tracker system is.
- * Currently, two issue tracker systems get supported, Bugzilla and Jira.
  *
  * options:
  * @param extraFormHiddenData: used for providing extra data for specific AJAX request.
  * @param onSubmit: callback function when user click Add button
+ * @param action: string - Add or Remove. Default is Add
  */
 /*
  * FIXME: which namespace is proper to hold this dialog class?
@@ -625,6 +625,11 @@ function AddIssueDialog(options) {
   this.extraFormHiddenData = options.extraFormHiddenData;
   if (this.extraFormHiddenData !== undefined && typeof this.extraFormHiddenData !== "object") {
     throw new Error("extraFormHiddenData sould be an object if present.");
+  }
+
+  this.action = options.action;
+  if (this.action === undefined) {
+    this.action = "Add";
   }
 }
 
@@ -643,26 +648,22 @@ AddIssueDialog.prototype.show = function () {
   }
 
   var template = Handlebars.compile(jQ("#add_issue_form_template").html());
-  var context = {'hiddenFields': hiddenPart};
+  var context = {
+    'hiddenFields': hiddenPart,
+    'action_button_text': this.action,
+    'a': this.action.toLowerCase(),
+  };
+
   jQ('#dialog').html(template(context))
     .find('.js-cancel-button').bind('click', function() {
       jQ('#dialog').hide();
     })
     .end().show();
 
-  this.previousVisibleIssueSystem = "bug-system-bugzilla";
   this.form = jQ("#add_issue_form")[0];
 
   // Used for following event callbacks to ref this dialog's instance
   var that = this;
-
-  // Switch bug system panel
-  jQ('#bug_system_id').change(function (e) {
-    var tabName = jQ('#bug_system_id option:selected').data('tab');
-    jQ('#add_issue_form').find('#' + that.previousVisibleIssueSystem).toggle();
-    jQ('#add_issue_form').find('#' + tabName).toggle();
-    that.previousVisibleIssueSystem = tabName;
-  });
 
   // Set custom callback functions
   if (this.onSubmit !== undefined) {
@@ -674,16 +675,7 @@ AddIssueDialog.prototype.show = function () {
 
 AddIssueDialog.prototype.get_data = function () {
   var form_data = Nitrate.Utils.formSerialize(this.form);
-
-  // have to ensure bug_id only refs to a string
-  if (form_data.bug_system_id == 1) {
-    form_data.bug_id = jQ('#bug-system-bugzilla').find('[name="bug_id"]').val();
-  } else if (form_data.bug_system_id == 2) {
-    form_data.bug_id = jQ('#bug-system-jira').find('[name="bug_id"]').val();
-  } else {
-    throw new Error('Unknown bug system ID');
-  }
-
+  form_data.bug_validation_regexp = jQ('#bug_system_id option:selected').data('validation-regexp');
   return form_data;
 };
 
@@ -704,7 +696,7 @@ function addCaseRunBug(run_id, title_container, container, case_id, case_run_id,
         return;
       }
 
-      if (!validateIssueID(form_data.bug_system_id, form_data.bug_id)) {
+      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
         return false;
       }
 
@@ -1239,7 +1231,7 @@ function updateBugsActionAdd(case_runs) {
         return;
       }
 
-      if (!validateIssueID(form_data.bug_system_id, form_data.bug_id)) {
+      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
         return false;
       }
 
@@ -1262,34 +1254,39 @@ function updateBugsActionAdd(case_runs) {
 }
 
 function updateBugsActionRemove(case_runs) {
-  var bug_ids = jQ.trim(window.prompt("Please input a Bugzilla ID or Jira issue key."));
-  if (!bug_ids) {
-    return false;
-  }
+  var dialog = new AddIssueDialog({
+    'action': 'Remove',
+    'extraFormHiddenData': { 'case_runs': case_runs.join() },
+    'onSubmit': function(e, dialog) {
+      e.stopPropagation();
+      e.preventDefault();
+      var form_data = dialog.get_data();
+      form_data.bug_id = form_data.bug_id.trim();
 
-  var bug_system_id = getBugSystemId(bug_ids);
-  if (bug_system_id > 2) {
-    window.alert(default_messages.alert.invalid_issue_id);
-    return false;
-  }
-  jQ.ajax({
-    url: '/caserun/update-bugs-for-many/',
-    dataType: 'json',
-    success: function(res) {
-      if (res.rc == 0) {
-        reloadWindow();
-      } else {
-        window.alert(res.response);
+      if (!form_data.bug_id.length) {
+        return;
+      }
+
+      if (!validateIssueID(form_data.bug_validation_regexp, form_data.bug_id)) {
         return false;
       }
-    },
-    data: {
-      'bug_id': bug_ids,
-      'a': 'remove',
-      'case_runs': case_runs.join(),
-      'bug_system_id': bug_system_id
+
+      jQ.ajax({
+        url: '/caserun/update-bugs-for-many/',
+        dataType: 'json',
+        success: function(res) {
+          if (res.rc == 0) {
+            reloadWindow();
+          } else {
+            window.alert(res.response);
+            return false;
+          }
+        },
+        data: form_data,
+      });
     }
   });
+  dialog.show();
 }
 
 function updateBugs(action) {

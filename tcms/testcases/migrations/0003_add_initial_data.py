@@ -13,11 +13,11 @@ def forwards_add_initial_data(apps, schema_editor):
         TestCaseBugSystem(name='Bugzilla',
                           description='1-7 digit, e.g. 1001234',
                           url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
-                          validate_reg_exp='^\\d{1,7}$'),
+                          validate_reg_exp=r'^\d{1,7}$'),
         TestCaseBugSystem(name='JIRA',
                           description='e.g. NITRATE-222',
                           url_reg_exp='https://jira.example.com/browse/%s',
-                          validate_reg_exp='^[A-Z0-9]+-\\d+$'),
+                          validate_reg_exp=r'^[A-Z0-9]+-\d+$'),
     ])
 
     TestCaseStatus = apps.get_model('testcases', 'TestCaseStatus')

@@ -755,12 +755,13 @@ function changeCasePriority(object_pk, value, callback) {
 
 function addCaseBug(form, callback) {
   var addBugInfo = Nitrate.Utils.formSerialize(form);
+  addBugInfo.bug_validation_regexp = jQ('select[name="bug_system"] option:selected').data('validation-regexp');
   addBugInfo.bug_id = addBugInfo.bug_id.trim();
 
   if (!addBugInfo.bug_id.length) {
     // No bug ID input, no any response is required
     return false;
-  } else if (!validateIssueID(addBugInfo.bug_system, addBugInfo.bug_id)) {
+  } else if (!validateIssueID(addBugInfo.bug_validation_regexp, addBugInfo.bug_id)) {
     return false;
   }
 
@@ -791,7 +792,7 @@ function addCaseBug(form, callback) {
     'type': form.method,
     'data': addBugInfo,
     'success': function (data, textStatus, jqXHR) {
-      jQ('#bug').html(data);
+      jQ('#bug_list').html(data);
     },
     'complete': function () {
       complete();
@@ -830,7 +831,7 @@ function removeCaseBug(id, case_id, case_run_id) {
     'type': 'GET',
     'data': parameteres,
     'success': function (data, textStatus, jqXHR) {
-      jQ('#bug').html(data);
+      jQ('#bug_list').html(data);
     },
     'complete': function () {
       complete();
