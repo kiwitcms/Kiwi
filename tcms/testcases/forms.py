@@ -625,5 +625,3 @@ class CaseTagForm(forms.Form):
             # note: backwards relationship filter. TestCaseTag -> TestTag
             self.fields['o_tag'].queryset = TestTag.objects.filter(
                 cases__in=case_ids).order_by('name').distinct()
-        else:
-            self.fields['o_category'].queryset = TestCaseCategory.objects.all()

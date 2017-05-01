@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import itertools
 import json
+import itertools
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
@@ -11,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -1669,11 +1670,10 @@ def clone(request, template_name='case/clone.html'):
                               context_instance=RequestContext(request))
 
 
+@require_POST
 def tag(request):
-    """
-    Management test case tags
-    """
-    ajax_response = {'rc': 0, 'response': 'ok', 'errors_list': []}
+    """Remove tags from selected cases in plan page"""
+
     # FIXME: It's unnecessary to check existance of each case Id. Because, in
     # the following iteration through queried testcases, this problem is solved
     # naturally.
@@ -1690,14 +1690,12 @@ def tag(request):
                 try:
                     tc.remove_tag(tag=tag)
                 except Exception as e:
-                    ajax_response['errors_list'].append({
-                        'case': tc.pk,
-                        'tag': tag.pk
+                    return JsonResponse({
+                        'rc': 1,
+                        'response': str(e),
+                        'errors_list': [{'case': tc.pk, 'tag': tag.pk}],
                     })
-                    ajax_response['rc'] = 1
-                    ajax_response['response'] = str(e)
-                    return HttpResponse(json.dumps(ajax_response))
-        return HttpResponse(json.dumps(ajax_response))
+        return JsonResponse({'rc': 0, 'response': 'ok', 'errors_list': []})
 
     form = CaseTagForm(initial={'tag': request.POST.get('o_tag')})
     form.populate(case_ids=tcs)
