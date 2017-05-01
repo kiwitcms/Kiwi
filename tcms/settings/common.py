@@ -294,19 +294,11 @@ PLAN_RUNS_PAGE_SIZE = 20
 
 # Site-specific messages
 
-# The site can supply optional "message of the day" style
-# banners, similar to /etc/motd
-# They are fragments of HTML.
+# The site can supply optional "message of the day" style banners, similar to
+# /etc/motd. They are fragments of HTML.
 
-# This one, if set, is shown on the front page.
-# It is only shown to authenticated users
-#MOTD_AUTH = """<p>This is a development instance of the TCMS</p>
-# <p>(this is MOTD_AUTH)</p>"""
-
-# This one, if set, is shown on the login screen.
-# It is shown to unauthenticated users
-#MOTD_LOGIN = """<p>This is a development instance of the TCMS</p>
-# <p>(this is MOTD_LOGIN)</p>"""
+# This if set, is shown on the login/registration screens.
+MOTD_LOGIN = """<em>If it is not in Nitrate, then we don't test it!</em>"""
 
 # The URLS will be list in footer
 # Example:
