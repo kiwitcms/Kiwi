@@ -81,6 +81,7 @@ USER_GUIDE_URL = "http://nitrate-mrsenko.readthedocs.io/en/latest/tutorial.html"
 FOOTER_LINKS = (
  ('https://github.com/MrSenko/Nitrate/issues/new', 'Report an Issue'),
  (USER_GUIDE_URL, 'User guide'),
+ ('http://nitrate-mrsenko.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
  ('/xmlrpc/', 'XML-RPC service'),
 )
 
