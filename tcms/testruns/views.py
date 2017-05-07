@@ -685,7 +685,7 @@ def open_run_get_comments_subtotal(case_run_ids):
                                 is_removed=False)
     qs = qs.values('object_pk').annotate(comment_count=Count('pk'))
     qs = qs.order_by('object_pk').iterator()
-    result = ((row['object_pk'], row['comment_count']) for row in qs)
+    result = ((int(row['object_pk']), row['comment_count']) for row in qs)
     return dict(result)
 
 
