@@ -2,16 +2,18 @@
 
 import json
 
+from django.contrib.auth.decorators import permission_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.decorators import permission_required
+from django.views.decorators.http import require_POST
 
 import django_comments as comments
 
 
+@require_POST
 def post(request, template_name='comments/comments.html'):
     """
     Post a comment.
