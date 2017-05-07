@@ -2,6 +2,7 @@
 
 import json
 
+from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -15,10 +16,8 @@ import django_comments as comments
 
 @require_POST
 def post(request, template_name='comments/comments.html'):
-    """
-    Post a comment.
-    HTTP POST is required.
-    """
+    """Post a comment"""
+
     # Fill out some initial data fields from an authenticated user, if present
     data = request.POST.copy()
 
@@ -79,16 +78,13 @@ def post(request, template_name='comments/comments.html'):
                               context_instance=RequestContext(request))
 
 
-def delete(request, next=None):
-    """
-    Deletes a comment. Confirmation on GET, action on POST. Requires the "can
-    moderate comments" permission.
-    """
-    from django.conf import settings
+@require_POST
+def delete(request):
+    """Deletes a comment"""
 
     ajax_response = {'rc': 0, 'response': 'ok'}
     comments_s = comments.get_model().objects.filter(
-        pk__in=request.REQUEST.getlist('comment_id'),
+        pk__in=request.POST.getlist('comment_id'),
         site__pk=settings.SITE_ID,
         is_removed=False,
         user_id=request.user.id
@@ -101,7 +97,6 @@ def delete(request, next=None):
 
         raise ObjectDoesNotExist()
 
-    # Delete on POST
     # Flag the comment as deleted instead of actually deleting it.
     for comment in comments_s:
         if comment.user == request.user:
