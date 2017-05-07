@@ -42,7 +42,6 @@ urlpatterns = patterns('',
     (r'^management/deletefile/(?P<file_id>\d+)/$', 'tcms.core.files.delete_file'),
 
     (r'^comments/post/', 'tcms.core.contrib.comments.views.post'),
-    (r'^comments/list/', 'tcms.core.contrib.comments.views.all'),
     (r'^comments/delete/', 'tcms.core.contrib.comments.views.delete'),
 
     # Account information zone, such as login method

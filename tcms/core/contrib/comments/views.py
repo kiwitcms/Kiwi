@@ -12,30 +12,6 @@ from django.contrib.auth.decorators import permission_required
 import django_comments as comments
 
 
-def all(request, template_name='comments/comments.html'):
-    """
-    List the comment of a specific object
-    """
-    # Fill out some initial data fields from an authenticated user, if present
-    data = request.REQUEST.copy()
-
-    # Look up the object we're trying to comment about
-    ctype = data.get("content_type")
-    object_pk = data.get("object_pk")
-
-    try:
-        model = models.get_model(*ctype.split(".", 1))
-        target = model._default_manager.get(pk=object_pk)
-    except:
-        raise
-
-    context_data = {
-        'object': target,
-    }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
-
-
 def post(request, template_name='comments/comments.html'):
     """
     Post a comment.

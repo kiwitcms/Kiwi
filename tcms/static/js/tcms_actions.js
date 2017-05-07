@@ -953,31 +953,6 @@ function batchProcessTag(parameters, callback, format) {
   });
 }
 
-function bindCommentDeleteLink(container, parameters) {
-  // Bind delete link
-  var d_success = function(t) {
-    constructCommentZone(container, parameters);
-  };
-  if (jQ(container).parent().length) {
-    var d_objects = jQ(container).parent().find('.commentdelete');
-
-    d_objects.unbind('click');
-    d_objects.bind('click', function(i) {
-      if (!window.confirm('Are you sure to delete the comment?')) {
-        return false;
-      }
-      var d_form = jQ(this).parent()[0];
-      jQ.ajax({
-        'url': d_form.action,
-        'type': d_form.method,
-        'parameters': jQ(d_form).serialize(),
-        'success': function (data, textStatus, jqXHR) {
-          d_success(jqXHR);
-        }
-      });
-    });
-  }
-}
 
 function removeComment(form, callback) {
   var url = form.action;
@@ -998,31 +973,9 @@ function removeComment(form, callback) {
   });
 }
 
-function constructCommentZone(container, parameters) {
-  var complete = function(t) {
-    bindCommentDeleteLink(container, parameters);
-  };
-
-  jQ(container).html('<div class="ajax_loading"></div>');
-
-  var url = '/comments/list/';
-
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'parameters': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-    },
-    'complete': function () {
-      complete();
-    }
-  });
-}
 
 function submitComment(container, parameters, callback) {
   var complete = function(t) {
-    bindCommentDeleteLink(container, parameters);
     updateCommentsCount(parameters['case_id'], true);
     if (callback) {
       callback();
