@@ -167,7 +167,6 @@ INSTALLED_APPS = (
     'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
     'tcms.core.logs',
-    'tcms.integration.bugzilla',
     'tcms.integration.djqpid',
     'tcms.integration.errata',
     'tcms.management',
@@ -274,10 +273,6 @@ CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
 import djcelery
 djcelery.setup_loader()
 
-# TCMS Bug System settings
-# Set default bug system to bugzilla
-DEFAULT_BUG_SYSTEM_ID = 1
-
 # Maximum upload file size, default set to 5MB.
 # 2.5MB - 2621440
 # 5MB - 5242880
@@ -326,19 +321,8 @@ FILE_UPLOAD_DIR = '/var/nitrate/uploads'
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False
 
-#
-# Authentication backend settings
-#
-# Bugzilla author xmlrpc url
-# Required by bugzilla authentication backend
-BUGZILLA3_RPC_SERVER = ''
-BUGZILLA_URL = ''
-
 # JIRA URL
 JIRA_URL = ''
-
-# Turn on/off bugzilla external tracker
-BUGZILLA_EXTERNAL_TRACKER = False
 
 # Turn on/off listening signals sent by models.
 LISTENING_MODEL_SIGNAL = True

@@ -14,7 +14,6 @@ from tcms.core.models.fields import DurationField
 from tcms.core.utils.checksum import checksum
 from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
-from tcms.integration.bugzilla.task import bugzilla_external_track
 from tcms.testcases import signals as case_watchers
 from tcms.testcases import sqls as SQL
 
@@ -330,8 +329,9 @@ class TestCase(TCMSActionModel):
         )
 
         if created:
-            if settings.BUGZILLA_EXTERNAL_TRACKER and bz_external_track:
-                bugzilla_external_track.delay(bug)
+            if bz_external_track:
+                # TODO: where do we get issue_tracker from ?
+                self.issue_tracker.add_testcase_to_issue(bugzilla, self, bug)
         else:
             raise ValueError('Bug %s already exist.' % bug_id)
 
@@ -643,6 +643,43 @@ class TestCaseBugSystem(TCMSActionModel):
         verbose_name='RegExp for ID validation',
         help_text='A valid JavaScript regular expression such as ^\d$',
     )
+
+    tracker_type = models.CharField(
+        max_length=128,
+        verbose_name='Type',
+        help_text='This determines how Nitrate integrates with the IT system',
+        default='IssueTrackerType',
+    )
+
+    report_url = models.CharField(
+        max_length=1024,
+        null=True,
+        blank=True,
+        verbose_name='Report URL',
+        help_text='''For Bugzilla the report URL looks like
+<strong>https://bugzilla.example.com/buglist.cgi?bugidtype=include&bug_id=1,2,3</strong>
+<br/>so the value of this field must be <strong>https://bugzilla.example.com</strong>!
+Leave empty to disable!
+''')
+
+    api_url = models.CharField(
+        max_length=1024,
+        null=True,
+        blank=True,
+        verbose_name='API URL',
+        help_text='This is the URL to which API requests will be sent. Leave empty to disable!')
+
+    api_username = models.CharField(
+        max_length=256,
+        null=True,
+        blank=True,
+        verbose_name='API username')
+
+    api_password = models.CharField(
+        max_length=256,
+        null=True,
+        blank=True,
+        verbose_name='API password or token')
 
     class Meta:
         db_table = u'test_case_bug_systems'
