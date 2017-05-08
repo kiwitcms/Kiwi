@@ -22,14 +22,6 @@ WHERE test_case_runs.run_id = %s
 GROUP BY test_case_runs.case_run_status_id
 '''
 
-GET_RUN_BUG_IDS = '''
-SELECT test_case_bugs.bug_id, test_case_bug_systems.url_reg_exp
-FROM test_case_bugs
-INNER JOIN test_case_runs ON (test_case_bugs.case_run_id = test_case_runs.case_run_id)
-INNER JOIN test_case_bug_systems ON (test_case_bugs.bug_system_id = test_case_bug_systems.id)
-WHERE test_case_runs.run_id = %s
-'''
-
 GET_CASERUNS_BUGS = '''
 SELECT test_case_runs.case_run_id,
     test_case_bugs.bug_id,

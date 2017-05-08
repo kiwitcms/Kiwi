@@ -6,6 +6,7 @@ from itertools import groupby
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
+from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.core.db import SQLExecution
@@ -13,7 +14,6 @@ from tcms.core.utils.tcms_router import connection
 from tcms.testruns.sqls import STATS_CASERUNS_STATUS
 from tcms.testruns.sqls import GET_CASERUNS_COMMENTS
 from tcms.testruns.sqls import GET_CASERUNS_BUGS
-from tcms.testruns.sqls import GET_RUN_BUG_IDS
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
@@ -75,9 +75,13 @@ def stats_caseruns_status(run_id, case_run_statuss):
 
 
 def get_run_bug_ids(run_id):
-    rows = SQLExecution(GET_RUN_BUG_IDS, (run_id,)).rows
-    return set((row['bug_id'], row['url_reg_exp'] % row['bug_id'])
-               for row in rows)
+    rows = TestCaseBug.objects.values(
+        'bug_id',
+        'bug_system__url_reg_exp'
+    ).distinct().filter(case_run__run=run_id)
+
+    return [(row['bug_id'], row['bug_system__url_reg_exp'] % row['bug_id'])
+            for row in rows]
 
 
 class TestCaseRunDataMixin(object):
