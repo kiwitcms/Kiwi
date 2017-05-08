@@ -54,6 +54,7 @@ from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunClone
 from tcms.testruns.helpers.serializer import TCR2File
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TCMSEnvRunValueMap
 from tcms.testruns.sqls import GET_CONFIRMED_CASES
+from tcms.issuetracker.types import IssueTrackerType
 
 
 MODULE_NAME = "testruns"
@@ -895,7 +896,34 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             'tested_by__username')
         mode_stats = self.stats_mode_caseruns(case_runs)
         summary_stats = self.get_summary_stats(case_runs)
-        bug_ids = get_run_bug_ids(self.run_id)
+
+        test_case_run_bugs = []
+        bug_system_types = {}
+        for bug in get_run_bug_ids(self.run_id):
+            # format the bug URLs based on DB settings
+            test_case_run_bugs.append((
+                bug.bug_id,
+                bug.bug_system.url_reg_exp % bug.bug_id,
+            ))
+            # find out all unique bug tracking systems which were used to record
+            # bugs in this particular test run. we use this data for reporting
+            if bug.bug_system.pk not in bug_system_types:
+                # store a tracker type object for producing the report URL
+                tracker = IssueTrackerType.from_name(bug.bug_system.tracker_type)(bug.bug_system)
+                bug_system_types[bug.bug_system.pk] = (tracker, [])
+
+            # store the list of bugs as well
+            bug_system_types[bug.bug_system.pk][1].append(bug.bug_id)
+
+        # list of URLs which opens all bugs reported to every different
+        # issue tracker used in this test run
+        report_urls = []
+        for (it, ids) in bug_system_types.values():
+            report_url = it.all_issues_link(ids)
+            # if IT doesn't support this feature or report url is not configured
+            # the above method will return None
+            if report_url:
+                report_urls.append((it.tracker.name, report_url))
 
         caserun_bugs = self.get_caseruns_bugs(run.pk)
         comments = self.get_caseruns_comments(run.pk)
@@ -911,9 +939,10 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             'test_run': run,
             'test_case_runs': case_runs,
             'test_case_runs_count': len(case_runs),
-            'test_case_run_bugs': bug_ids,
+            'test_case_run_bugs': test_case_run_bugs,
             'mode_stats': mode_stats,
             'summary_stats': summary_stats,
+            'report_urls': report_urls,
         })
 
         return context
