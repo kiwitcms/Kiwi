@@ -3,7 +3,6 @@
 import datetime
 import itertools
 import json
-import re
 import time
 import urllib
 
@@ -926,8 +925,6 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 
     class CaseRunBugActions(object):
         __all__ = ['add', 'file', 'remove', 'render_form']
-        bugzilla_regex = re.compile(r'^\d{1,7}$')
-        jira_regex = re.compile(r'^[A-Z0-9]+-\d+$')
 
         def __init__(self, request, case_run, template_name):
             self.request = request
