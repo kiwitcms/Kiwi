@@ -61,3 +61,15 @@ class TestQuickSearch(BasePlanCase):
                                    {'search_type': 'runs', 'search_content': 'keyword'})
         url = '{}?a=search&search=keyword'.format(reverse('tcms.testruns.views.all'))
         self.assertRedirects(response, url)
+
+    def test_goto_search_if_no_object_is_found(self):
+        non_existing_pk = 9999999
+        response = self.client.get(self.search_url,
+                                   {'search_type': 'cases', 'search_content': non_existing_pk})
+        url = '{}?a=search&search={}'.format(reverse('tcms.testcases.views.all'), non_existing_pk)
+        self.assertRedirects(response, url)
+
+    def test_404_if_unknown_search_type(self):
+        response = self.client.get(self.search_url,
+                                   {'search_type': 'unknown type', 'search_content': self.plan.pk})
+        self.assertEqual(http_client.NOT_FOUND, response.status_code)

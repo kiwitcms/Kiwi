@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from django.core.exceptions import ObjectDoesNotExist
+import re
+
 from django.core.urlresolvers import reverse
-from django.db import models
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_GET
+from django.http import Http404
+
+from tcms.testplans.models import TestPlan
+from tcms.testcases.models import TestCase
+from tcms.testruns.models import TestRun
 
 
 @require_GET
@@ -13,41 +18,27 @@ def search(request):
     Redirect to correct url of the search content
     """
 
-    request_content = request.GET.get('search_content', '')
-    request_type = request.GET.get('search_type')
+    models = {'plans': TestPlan, 'cases': TestCase, 'runs': TestRun}
 
-    # Get search contents
-    search_types = {
-        'plans': (
-            'testplans', 'testplan', reverse('tcms.testplans.views.all')),
-        'runs': (
-            'testruns', 'testrun', reverse('tcms.testruns.views.all')),
-        'cases': (
-            'testcases', 'testcase', reverse('tcms.testcases.views.all'))
-    }
+    search_content = request.GET.get('search_content')
+    search_type = request.GET.get('search_type')
 
-    search_type = search_types.get(request_type)
+    if not search_content or not search_type:
+        raise Http404
 
-    app_label = search_type[0]
-    model = search_type[1]
-    base_search_url = search_type[2]
+    if search_type not in models:
+        raise Http404
 
-    # Try to get the object directly
-    try:
-        request_content = int(request_content)
-        target = models.get_model(*[app_label, model])._default_manager.get(
-            pk=request_content)
-        url = '%s' % (
-            reverse('tcms.%s.views.get' % app_label, args=[target.pk]),
-        )
+    try_to_get_object = re.match('^\d+$', search_content) is not None
+    model = models[search_type]
 
-        return HttpResponseRedirect(url)
-    except ObjectDoesNotExist:
-        pass
-    except ValueError:
-        pass
+    if try_to_get_object:
+        pk = int(search_content)
+        objects = model.objects.filter(pk=pk).only('pk')
+        if objects:
+            return HttpResponseRedirect(
+                reverse('tcms.{}.views.get'.format(model._meta.app_label), args=[pk]))
 
-    # Redirect to search all page
-    url = '%s?a=search&search=%s' % (base_search_url, request_content)
-
+    url = '{}?a=search&search={}'.format(
+        reverse('tcms.{}.views.all'.format(model._meta.app_label)), search_content)
     return HttpResponseRedirect(url)
