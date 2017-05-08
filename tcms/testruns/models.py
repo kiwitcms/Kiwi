@@ -570,7 +570,7 @@ class TestCaseRun(TCMSActionModel):
 
         return scence_templates.get(field)
 
-    def add_bug(self, bug_id, bug_system_id=settings.DEFAULT_BUG_SYSTEM_ID,
+    def add_bug(self, bug_id, bug_system_id,
                 summary=None, description=None, bz_external_track=False):
         return self.case.add_bug(
             bug_id=bug_id,
