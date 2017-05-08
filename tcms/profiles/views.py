@@ -58,7 +58,7 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
             return http.JsonResponse(self.ajax_response)
 
         def render(self):
-            if request.REQUEST.get('category'):
+            if request.GET.get('category'):
                 bks = Bookmark.objects.filter(user=request.user,
                                               category_id=request.GET['category'])
             else:
@@ -79,7 +79,8 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
             return http.HttpResponse(form.as_p())
 
     action = BookmarkActions()
-    func = getattr(action, request.REQUEST.get('a', 'render'))
+    request_data = request.GET or request.POST
+    func = getattr(action, request_data.get('a', 'render'))
     return func()
 
 
