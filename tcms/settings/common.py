@@ -321,8 +321,9 @@ FILE_UPLOAD_DIR = '/var/nitrate/uploads'
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False
 
-# JIRA URL
-JIRA_URL = ''
+# Used to construct absolute URls when interfacing with
+# external systems. Must override in product.py
+NITRATE_BASE_URL='http://127.0.0.1:8000'
 
 # Turn on/off listening signals sent by models.
 LISTENING_MODEL_SIGNAL = True

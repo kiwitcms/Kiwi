@@ -1,3 +1,4 @@
+import bugzilla
 import bugzilla_integration
 
 
@@ -63,9 +64,21 @@ class IssueTrackerType(object):
 
 
 class Bugzilla(IssueTrackerType):
+    def __init__(self, tracker):
+        super(Bugzilla, self).__init__(tracker)
+
+        # passing user & password will attemt to authenticate
+        # when the __init__ method runs. Do it here so that we don't
+        # have to do it everywhere else where it might be needed.
+        self.rpc = bugzilla.Bugzilla(
+            tracker.api_url,
+            user=self.tracker.api_username,
+            password=self.tracker.api_password,
+        )
+
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
-            bugzilla_integration.add_bug_to_bugzilla(self.tracker, case, issue)
+            bugzilla_integration.add_bug_to_bugzilla(self.rpc, case, issue)
 
     def all_issues_link(self, ids):
         if not self.tracker.report_url:

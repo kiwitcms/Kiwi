@@ -16,6 +16,7 @@ from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.testcases import signals as case_watchers
 from tcms.testcases import sqls as SQL
+from tcms.issuetracker.types import IssueTrackerType
 
 
 try:
@@ -330,8 +331,9 @@ class TestCase(TCMSActionModel):
 
         if created:
             if bz_external_track:
-                # TODO: where do we get issue_tracker from ?
-                self.issue_tracker.add_testcase_to_issue(bugzilla, self, bug)
+                bug_system = TestCaseBugSystem.objects.get(pk=bug_system_id)
+                it = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
+                it.add_testcase_to_issue([self], bug)
         else:
             raise ValueError('Bug %s already exist.' % bug_id)
 

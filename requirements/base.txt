@@ -6,6 +6,7 @@ django-uuslug==1.1.8
 django-celery>=3.1.10
 celery>=3.1.15,<4.0
 odfpy>=0.9.6
+python-bugzilla
 django-pagination==1.0.7
 django-tinymce==2.4.0
 beautifulsoup4>=4.1.1
