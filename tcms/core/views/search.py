@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponseRedirect
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
+from django.db import models
+from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_GET
 
 
+@require_GET
 def search(request):
     """
     Redirect to correct url of the search content
     """
-    from django.db import models
-    from django.core.exceptions import ObjectDoesNotExist
 
-    request_content = request.REQUEST.get('search_content', '')
-    request_type = request.REQUEST.get('search_type')
+    request_content = request.GET.get('search_content', '')
+    request_type = request.GET.get('search_type')
 
     # Get search contents
     search_types = {
