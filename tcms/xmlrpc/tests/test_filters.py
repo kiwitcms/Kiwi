@@ -27,7 +27,7 @@ class TestFaultCode(XmlrpcAPIBaseTest):
         self.assertRaisesXmlrpcFault(httplib.NOT_FOUND, wrapper)
 
     def test_400(self):
-        exceptions = [v for k, v in locals().iteritems() if k != 'self']
+        exceptions = [v for k, v in locals().copy().iteritems() if k != 'self']
         exceptions.extend((TypeError, ValueError))
 
         def raise_exception(cls):
