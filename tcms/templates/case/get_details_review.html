@@ -72,7 +72,7 @@
 				{% for comment in case_comments %}
 					<li>
 						{% ifequal comment.user.pk user.pk %}
-						<form action="{% url "tcms.core.contrib.comments.views.delete" %}" method="get" class="form_comment">
+						<form action="{% url "tcms.core.contrib.comments.views.delete" %}" method="post" class="form_comment">
 							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
 							<input type="hidden" name="object_pk" value="{{ test_case.pk }}" />
 							<span class="strong">#{{ forloop.counter }}</span>
