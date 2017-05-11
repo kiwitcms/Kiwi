@@ -1,31 +1,32 @@
 # -*- coding: utf-8 -*-
+
 from django.conf import settings
+from django.contrib import auth
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
-from django.core.urlresolvers import reverse
 from django.template import RequestContext
+from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_http_methods
 
+from tcms.core.contrib.auth import get_using_backend
+from tcms.core.contrib.auth.forms import RegistrationForm
+from tcms.core.contrib.auth.models import UserActivateKey
 from tcms.core.views import Prompt
-from models import UserActivateKey
 
 
+@require_GET
 def logout(request):
-    """
-    Login method of account
-    """
-    from django.contrib.auth import logout
-
-    logout(request)
-    return redirect(
-        request.REQUEST.get('next', reverse('tcms.core.views.index')))
+    """Login method of account"""
+    auth.logout(request)
+    return redirect(request.GET.get('next', reverse('tcms.core.views.index')))
 
 
+@require_http_methods(['GET', 'POST'])
 def register(request, template_name='registration/registration_form.html'):
-    """
-    Register method of account
-    """
-    from tcms.core.contrib.auth import get_using_backend
-    from forms import RegistrationForm
+    """Register method of account"""
+
+    request_data = request.GET or request.POST
 
     # Check the register is allowed by backend
     backend = get_using_backend()
@@ -35,7 +36,7 @@ def register(request, template_name='registration/registration_form.html'):
             request=request,
             info_type=Prompt.Alert,
             info='The backend is not allow to register.',
-            next=request.REQUEST.get('next', reverse('tcms.core.views.index'))
+            next=request_data.get('next', reverse('tcms.core.views.index'))
         ))
 
     if request.method == 'POST':
@@ -50,30 +51,24 @@ def register(request, template_name='registration/registration_form.html'):
 
                 msg = 'Your accounts has been create, please check your ' \
                       'mailbox for active.'
-                return HttpResponse(Prompt.render(
-                    request=request,
-                    info_type=Prompt.Info,
-                    info=msg,
-                    next=request.REQUEST.get('next',
-                                             reverse('tcms.core.views.index'))
-                ))
-
-            # If can not send email, prompt to user.
-            msg = 'Your accounts has been create, but you need to contact ' \
-                  'admins to active your account.'
-            if settings.ADMINS:
-                msg += '<p>Following is the admin list</p><ul>'
-                for admin in settings.ADMINS:
-                    msg += '<li><a href="mailto:%s">%s</a></li>' % (
-                        admin[1], admin[0])
-                msg += '</ul>'
+            else:
+                msg = [
+                    '<p>Your accounts has been create, but you need to contact '
+                    'admins to active your account.</p>',
+                ]
+                # If can not send email, prompt to user.
+                if settings.ADMINS:
+                    msg.append('<p>Following is the admin list</p><ul>')
+                    for name, email in settings.ADMINS:
+                        msg.append('<li><a href="mailto:{}">{}</a></li>'.format(email, name))
+                    msg.append('</ul>')
+                    msg = ''.join(msg)
 
             return HttpResponse(Prompt.render(
                 request=request,
                 info_type=Prompt.Info,
                 info=msg,
-                next=request.REQUEST.get('next',
-                                         reverse('tcms.core.views.index'))
+                next=request.POST.get('next', reverse('tcms.core.views.index'))
             ))
     else:
         form = RegistrationForm()
@@ -85,10 +80,9 @@ def register(request, template_name='registration/registration_form.html'):
                               context_instance=RequestContext(request))
 
 
+@require_GET
 def confirm(request, activation_key):
-    """
-    Confirm the user registeration
-    """
+    """Confirm the user registeration"""
 
     # Get the object
     try:
@@ -100,23 +94,23 @@ def confirm(request, activation_key):
             request=request,
             info_type=Prompt.Info,
             info=msg,
-            next=request.REQUEST.get('next', reverse('tcms.core.views.index'))
+            next=request.GET.get('next', reverse('tcms.core.views.index'))
         ))
 
     # All thing done, start to active the user and use the user login
     user = ak.user
     user.is_active = True
-    user.save()
+    user.save(update_fields=['is_active'])
     ak.delete()
     # login(request, user)
 
     # Response to web browser.
-    msg = 'Your accound has been activate successful, click next link to ' \
+    msg = 'Your accound has been activated successfully, click next link to ' \
           're-login.'
     return HttpResponse(Prompt.render(
         request=request,
         info_type=Prompt.Info,
         info=msg,
-        next=request.REQUEST.get('next', reverse(
+        next=request.GET.get('next', reverse(
             'tcms.profiles.views.redirect_to_profile'))
     ))
