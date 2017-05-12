@@ -154,7 +154,7 @@ class TestRegistration(TestCase):
 
         self.assertContains(
             response,
-            'Your accounts has been create, please check your mailbox for active')
+            'Your account has been created, please check your mailbox for confirmation')
 
         # Verify notification mail
         self.assertEqual(1, len(mail.outbox))
@@ -172,7 +172,7 @@ class TestRegistration(TestCase):
 
         self.assertContains(
             response,
-            'Your accounts has been create, but you need to contact admins '
+            'Your account has been created, but you need to contact an administrator '
             'to active your account')
 
         self.assertContains(
@@ -200,7 +200,7 @@ class TestConfirm(TestCase):
 
         self.assertContains(
             response,
-            'They key is no longer exist in database')
+            'This key no longer exist in the database')
 
         self.assertContains(
             response,
@@ -220,7 +220,7 @@ class TestConfirm(TestCase):
 
         self.assertContains(
             response,
-            'Your accound has been activated successfully')
+            'Your account has been activated successfully')
 
         self.assertContains(
             response,
