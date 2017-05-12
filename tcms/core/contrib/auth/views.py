@@ -40,7 +40,7 @@ def register(request, template_name='registration/registration_form.html'):
         ))
 
     if request.method == 'POST':
-        form = form = RegistrationForm(data=request.POST, files=request.FILES)
+        form = RegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             ak = form.set_active_key()
