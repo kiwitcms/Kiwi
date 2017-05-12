@@ -7,12 +7,12 @@ from django.core.urlresolvers import reverse
 from tcms.profiles.forms import BookmarkForm
 
 
-class TestOpenBoolmarks(TestCase):
+class TestOpenBookmarks(TestCase):
     """Test for opening bookmarks"""
 
     @classmethod
     def setUpClass(cls):
-        super(TestOpenBoolmarks, cls).setUpClass()
+        super(TestOpenBookmarks, cls).setUpClass()
 
         cls.tester = User.objects.create_user(username='bookmark_tester',
                                               email='bookmark_tester@example.com',
