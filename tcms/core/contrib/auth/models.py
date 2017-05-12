@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+
+import datetime
+import random
+
+from hashlib import sha1
+
 from django.db import models
 
 
@@ -12,14 +18,6 @@ class UserActivateKey(models.Model):
 
     @classmethod
     def set_random_key_for_user(cls, user, force=False):
-        import random
-        import datetime
-
-        try:
-            from hashlib import sha1
-        except ImportError:
-            from sha import new as sha1
-
         salt = sha1(str(random.random())).hexdigest()[:5]
         activation_key = sha1(salt + user.username).hexdigest()
 

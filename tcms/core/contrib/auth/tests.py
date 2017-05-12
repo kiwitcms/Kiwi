@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+
+from hashlib import sha1
 from mock import patch
 
 from django.conf import settings
@@ -10,6 +13,59 @@ from django.core import mail
 
 from tcms.core.contrib.auth.models import UserActivateKey
 
+
+# ### Test cases for models ###
+
+
+class TestSetRandomKey(TestCase):
+    """Test case for UserActivateKey.set_random_key_for_user"""
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.new_user = User.objects.create(username='new-tester',
+                                           email='new-tester@example.com',
+                                           password='password')
+
+    @patch('tcms.core.contrib.auth.models.datetime')
+    @patch('tcms.core.contrib.auth.models.random')
+    def test_set_random_key(self, random, mock_datetime):
+        mock_datetime.datetime.today.return_value = datetime.datetime(2017, 5, 10)
+        mock_datetime.timedelta.return_value = datetime.timedelta(7)
+        fake_random = 0.12345678
+        random.random.return_value = fake_random
+
+        activation_key = UserActivateKey.set_random_key_for_user(self.new_user)
+
+        self.assertEqual(self.new_user, activation_key.user)
+
+        s_random = sha1(str(fake_random)).hexdigest()[:5]
+        expected_key = sha1('{}{}'.format(
+            s_random, self.new_user.username)).hexdigest()
+        self.assertEqual(expected_key, activation_key.activation_key)
+
+        self.assertEqual(datetime.datetime(2017, 5, 17),
+                         activation_key.key_expires)
+
+
+class TestForceToSetRandomKey(TestCase):
+    """Test case for UserActivateKey.set_random_key_for_user forcely"""
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.new_user = User.objects.create(username='new-tester',
+                                           email='new-tester@example.com',
+                                           password='password')
+        cls.origin_activation_key = UserActivateKey.set_random_key_for_user(cls.new_user)
+
+    def test_set_random_key_forcely(self):
+        new_activation_key = UserActivateKey.set_random_key_for_user(self.new_user,
+                                                                     force=True)
+        self.assertEqual(self.origin_activation_key.user, new_activation_key.user)
+        self.assertNotEqual(self.origin_activation_key.activation_key,
+                            new_activation_key.activation_key)
+
+
+# ### Test cases for view methods ###
 
 class TestLogout(TestCase):
     """Test for logout view method"""
@@ -65,7 +121,7 @@ class TestRegistration(TestCase):
 
     @patch('tcms.core.contrib.auth.views.settings.ENABLE_ASYNC_EMAIL', new=False)
     @patch('tcms.core.utils.mailto.threading.Thread', new=MockThread)
-    @patch('hashlib.sha1')
+    @patch('tcms.core.contrib.auth.models.sha1')
     def assert_user_registration(self, username, sha1):
         sha1.return_value.hexdigest.return_value = self.fake_activate_key
 
@@ -154,7 +210,7 @@ class TestConfirm(TestCase):
     def test_confirm(self):
         fake_activate_key = 'secret-activate-key'
 
-        with patch('hashlib.sha1') as sha1:
+        with patch('tcms.core.contrib.auth.models.sha1') as sha1:
             sha1.return_value.hexdigest.return_value = fake_activate_key
             UserActivateKey.set_random_key_for_user(self.new_user)
 
