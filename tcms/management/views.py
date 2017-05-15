@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.http import require_GET
@@ -26,6 +27,7 @@ from tcms.management.models import TCMSEnvValue
 MODULE_NAME = "management"
 
 
+@require_GET
 def environment_groups(request, template_name='environment/groups.html'):
     """
     Environements list
@@ -36,104 +38,79 @@ def environment_groups(request, template_name='environment/groups.html'):
     ajax_response = {'rc': 0, 'response': 'ok'}
 
     has_perm = request.user.has_perm
-    user_action = request.REQUEST.get('action')
+    user_action = request.GET.get('action')
+
+    # import pytest; pytest.set_trace()
 
     # Add action
     if user_action == 'add':
         if not has_perm('management.add_tcmsenvgroup'):
-            ajax_response['response'] = 'Permission denied.'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
-        group_name = request.REQUEST.get('name')
+        group_name = request.GET.get('name')
 
         # Get the group name of envrionment from javascript
         if not group_name:
-            ajax_response['response'] = 'Environment group name is required.'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse(
+                {'rc': 1, 'response': 'Environment group name is required.'})
 
-        try:
+        if env_groups.filter(name=group_name).exists():
+            response_msg = "Environment group name '%s' already " \
+                           'exists, please select another name.' % group_name
+            return JsonResponse({'rc': 1, 'response': response_msg})
+        else:
             env = env_groups.create(name=group_name,
                                     manager_id=request.user.id,
                                     modified_by_id=None)
             env.log_action(who=request.user,
                            action='Initial env group %s' % env.name)
-            ajax_response['id'] = env.id
-            return HttpResponse(json_dumps(ajax_response))
-        except IntegrityError, error:
-            if error[1].startswith('Duplicate'):
-                response_msg = 'Environment group named \'%s\' already ' \
-                    'exists, please select another name.' % group_name
-                ajax_response['response'] = response_msg
-            else:
-                ajax_response['response'] = error[1]
-
-            ajax_response['rc'] = 1
-
-            return HttpResponse(json_dumps(ajax_response))
-        except:
-            ajax_response['response'] = 'Unknown error.'
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse({'rc': 0, 'response': 'ok', 'id': env.id})
 
     # Del action
     if user_action == 'del':
-        if request.REQUEST.get('id'):
-            try:
-                env = env_groups.get(id=request.REQUEST['id'])
-                manager_id = env.manager_id
-                if request.user.id != manager_id:
-                    if not has_perm('management.delete_tcmsenvgroup'):
-                        ajax_response['response'] = 'Permission denied.'
-                        return HttpResponse(json_dumps(ajax_response))
+        if not request.GET.get('id'):
+            raise Http404
 
-                env.delete()
-                ajax_response['response'] = 'ok'
-            except TCMSEnvGroup.DoesNotExist, error:
-                raise Http404(error)
+        try:
+            group_pk = int(request.GET['id'])
+        except ValueError:
+            return JsonResponse({'rc': 1, 'response': 'id must be an integer.'})
 
-            try:
-                env_group_property_map = env_groups.filter(
-                    group_id=request.REQUEST['id']
-                )
-                env_group_property_map.delete()
-            except:
-                pass
-            return HttpResponse(json_dumps(ajax_response))
-        else:
-            pass
+        groups = list(env_groups.filter(pk=group_pk))
+        if len(groups) == 0:
+            raise Http404
 
-        if not has_perm('management.delete_tcmsenvgroup'):
-            ajax_response['response'] = 'Permission denied.'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+        if request.user.pk != groups[0].manager_id:
+            if not has_perm('management.delete_tcmsenvgroup'):
+                return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
+
+        groups[0].delete()
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
 
     # Modify actions
     if user_action == 'modify':
         if not has_perm('management.change_tcmsenvgroup'):
-            ajax_response['response'] = 'Permission denied.'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
         try:
-            env = env_groups.get(id=request.REQUEST['id'])
-            if request.REQUEST.get('status') in ['0', '1']:
-                env.is_active = int(request.REQUEST['status'])
-                action = 'Change env group status to %s' % env.is_active
+            env = env_groups.get(id=request.GET['id'])
+            if request.GET.get('status') in ['0', '1']:
+                env.is_active = int(request.GET['status'])
+                env.save(update_fields=['is_active'])
+
+                action = 'Change env group status to {}'.format(env.is_active)
                 env.log_action(who=request.user, action=action)
             else:
-                ajax_response['response'] = 'Argument illegel.'
-                ajax_response['rc'] = 1
-                return HttpResponse(json_dumps(ajax_response))
-            env.save()
-        except TCMSEnvGroup.DoesNotExist, error:
+                return JsonResponse({'rc': 1, 'response': 'Argument illegel.'})
+        except TCMSEnvGroup.DoesNotExist as error:
             raise Http404(error)
 
     # Search actions
     if user_action == 'search':
-        if request.REQUEST.get('name'):
+        if request.GET.get('name'):
             env_groups = env_groups.filter(
-                name__icontains=request.REQUEST['name']
+                name__icontains=request.GET['name']
             )
         else:
             env_groups = env_groups.all()
