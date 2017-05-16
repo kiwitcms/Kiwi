@@ -313,3 +313,116 @@ class TestModifyGroup(TestCase):
 
         group = TCMSEnvGroup.objects.get(pk=self.group_nitrate.pk)
         self.assertFalse(group.is_active)
+
+
+class TestVisitEnvironmentGroupPage(TestCase):
+    """Test case for visiting environment group page"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestVisitEnvironmentGroupPage, cls).setUpTestData()
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+        user_should_have_perm(cls.tester, 'management.change_tcmsenvgroup')
+
+        cls.group_edit_url = reverse('tcms.management.views.environment_group_edit')
+        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.disabled_group = TCMSEnvGroupFactory(name='disabled-group',
+                                                 is_active=False,
+                                                 manager=cls.tester)
+
+    def test_404_when_missing_group_id(self):
+        self.client.login(username=self.tester.username, password='password')
+        response = self.client.get(self.group_edit_url)
+        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+
+    def test_404_if_group_id_not_exist(self):
+        self.client.login(username=self.tester.username, password='password')
+        response = self.client.get(self.group_edit_url, {'id': 9999999})
+        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+
+    def test_visit_a_group(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_edit_url, {'id': self.group_nitrate.pk})
+
+        self.assertContains(
+            response,
+            '<input name="name" value="{}" type="text">'.format(self.group_nitrate.name),
+            html=True)
+
+        self.assertContains(
+            response,
+            '<input name="enabled" type="checkbox" checked>',
+            html=True)
+
+    def test_visit_disabled_group(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_edit_url, {'id': self.disabled_group.pk})
+
+        self.assertContains(
+            response,
+            '<input name="name" value="{}" type="text">'.format(self.disabled_group.name),
+            html=True)
+
+        self.assertContains(
+            response,
+            '<input name="enabled" type="checkbox">',
+            html=True)
+
+
+class TestEditEnvironmentGroup(TestCase):
+    """Test case for editing environment group"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestEditEnvironmentGroup, cls).setUpTestData()
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+        user_should_have_perm(cls.tester, 'management.change_tcmsenvgroup')
+
+        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.duplicate_group = TCMSEnvGroupFactory(name='fedora', manager=cls.tester)
+
+        cls.property_1 = TCMSEnvPropertyFactory()
+        cls.property_2 = TCMSEnvPropertyFactory()
+        cls.property_3 = TCMSEnvPropertyFactory()
+
+        cls.group_edit_url = reverse('tcms.management.views.environment_group_edit')
+
+    def test_refuse_if_there_is_duplicate_group_name(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_edit_url, {
+            'action': 'modify',
+            'id': self.group_nitrate.pk,
+            'name': self.duplicate_group.name,
+            'enabled': 'on'
+        })
+
+        self.assertContains(response, 'Duplicated name already exists')
+
+    def test_edit_group(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        new_group_name = 'nitrate-dev'
+        self.client.get(self.group_edit_url, {
+            'action': 'modify',
+            'id': self.group_nitrate.pk,
+            'name': new_group_name,
+            'enabled': 'on',
+            'selected_property_ids': [self.property_1.pk, self.property_2.pk]
+        })
+
+        group = TCMSEnvGroup.objects.get(pk=self.group_nitrate.pk)
+        self.assertEqual(new_group_name, group.name)
+        self.assertTrue(group.is_active)
+        self.assertTrue(TCMSEnvGroupPropertyMap.objects.filter(
+            group_id=self.group_nitrate.pk, property_id=self.property_1.pk).exists())
+        self.assertTrue(TCMSEnvGroupPropertyMap.objects.filter(
+            group_id=self.group_nitrate.pk, property_id=self.property_2.pk).exists())

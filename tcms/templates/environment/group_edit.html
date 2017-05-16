@@ -6,7 +6,7 @@
 
 {% block custom_stylesheet %}
 
-{% endblock %} 
+{% endblock %}
 
 {% block custom_javascript %}
 <script type="text/javascript" src="/jsi18n/"></script>
@@ -28,56 +28,51 @@ Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a> 
-		>> <a href="{% url "tcms.management.views.environment_groups" %}">Environment groups</a> 
-		>> Edit group - {{ environment.name }} 
+		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		>> <a href="{% url "tcms.management.views.environment_groups" %}">Environment groups</a>
+		>> Edit group - {{ environment.name }}
 	</div>
-	{% if perms.testcases.change_testcase %}
 	<form id="js-edit-group" action="{% url "tcms.management.views.environment_group_edit" %}" method="GET">
 		<input type="hidden" name="action" value="modify">
 		<input type="hidden" name="id" value="{{ environment.id }}">
 		<h2>Edit Environment Group</h2>
-			<table border="0" class="manage" cellspan="0" cellspacing="0 "  width="98%">
-				<tr>
-					<td class="manage-tit" width="15%" height="28">
-						<label>Environment Group Name</label>
-					</td>
-					<td>
-						<input type="text" name="name" value="{{ environment.name }}" />
-						<span>Enabled</span>
-						<input type="checkbox" name="enabled" {% if environment.is_active %}checked{% endif %} />
-					</td>
-				</tr>
-				<tr>
-					<td class="manage-tit">
-						<label>
-							Properties<br />
-							<a class="editlink" href="{% url "tcms.management.views.environment_properties" %}">Edit</a>
-						</label>
-					</td>
-					<td>
-						<div class="selectgroup">
-							<select id="id_properties" name="selected_property_ids" multiple="multiple">
-								{% for property in properties %}
-								<option value="{{ property.id }}" {% ifin property selected_properties %}selected{% endifin %}>{{ property.name }}</option>
-								{% endfor %}
-							</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" class="manage-tit" align="center" height="25">
-
-						<input type="submit" value="Save">
-						<input type="button" value="Back" id="js-back-button" >
-						<br clear="all">
-						<span class="successlink">{{ message }}</span>
-					</td>
-				</tr>
-			</table>
+		<table border="0" class="manage" cellspan="0" cellspacing="0 "  width="98%">
+			<tr>
+				<td class="manage-tit" width="15%" height="28">
+					<label>Environment Group Name</label>
+				</td>
+				<td>
+					<input type="text" name="name" value="{{ environment.name }}" />
+					<span>Enabled</span>
+					<input type="checkbox" name="enabled" {% if environment.is_active %}checked{% endif %} />
+				</td>
+			</tr>
+			<tr>
+				<td class="manage-tit">
+					<label>
+						Properties<br />
+						<a class="editlink" href="{% url "tcms.management.views.environment_properties" %}">Edit</a>
+					</label>
+				</td>
+				<td>
+					<div class="selectgroup">
+						<select id="id_properties" name="selected_property_ids" multiple="multiple">
+							{% for property in properties %}
+							<option value="{{ property.id }}" {% ifin property selected_properties %}selected{% endifin %}>{{ property.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="manage-tit" align="center" height="25">
+					<input type="submit" value="Save">
+					<input type="button" value="Back" id="js-back-button" >
+					<br clear="all">
+					<span class="successlink">{{ message }}</span>
+				</td>
+			</tr>
+		</table>
 	</form>
-	{% else %}
-	<div>You have no permission to edit the plan</div>
-	{% endif %}
 </div>
 {% endblock %}

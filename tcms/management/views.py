@@ -34,13 +34,9 @@ def environment_groups(request, template_name='environment/groups.html'):
     """
 
     env_groups = TCMSEnvGroup.objects
-    # Initial the response to browser
-    ajax_response = {'rc': 0, 'response': 'ok'}
 
     has_perm = request.user.has_perm
     user_action = request.GET.get('action')
-
-    # import pytest; pytest.set_trace()
 
     # Add action
     if user_action == 'add':
@@ -148,16 +144,16 @@ def environment_groups(request, template_name='environment/groups.html'):
                               context_instance=RequestContext(request))
 
 
+@require_GET
 @user_passes_test(lambda u: u.has_perm('management.change_tcmsenvgroup'))
-def environment_group_edit(request,
-                           template_name='environment/group_edit.html'):
+def environment_group_edit(request, template_name='environment/group_edit.html'):
     """
     Assign properties to environment group
     """
 
     # Initial the response
     response = ''
-    environment_id = request.REQUEST.get('id', None)
+    environment_id = request.GET.get('id', None)
 
     if environment_id is None:
         raise Http404
@@ -167,8 +163,10 @@ def environment_group_edit(request,
     except TCMSEnvGroup.DoesNotExist:
         raise Http404
 
+    # import pytest; pytest.set_trace()
+
     try:
-        de = TCMSEnvGroup.objects.get(name=request.REQUEST.get('name'))
+        de = TCMSEnvGroup.objects.get(name=request.GET.get('name'))
         if environment != de:
             response = 'Duplicated name already exists, please change to ' \
                 'another name.'
@@ -183,8 +181,8 @@ def environment_group_edit(request,
     except TCMSEnvGroup.DoesNotExist:
         pass
 
-    if request.REQUEST.get('action') == 'modify':   # Actions of modify
-        environment_name = request.REQUEST['name']
+    if request.GET.get('action') == 'modify':   # Actions of modify
+        environment_name = request.GET['name']
         if environment.name != environment_name:
             environment.name = environment_name
             environment.log_action(
@@ -192,8 +190,8 @@ def environment_group_edit(request,
                 action='Modify name %s from to %s' % (environment.name,
                                                       environment_name))
 
-        if environment.is_active != request.REQUEST.get('enabled', False):
-            environment.is_active = request.REQUEST.get('enabled', False)
+        if environment.is_active != request.GET.get('enabled', False):
+            environment.is_active = request.GET.get('enabled', False)
             environment.log_action(
                 who=request.user,
                 action='Change env group status to %s' % environment.is_active)
@@ -202,11 +200,10 @@ def environment_group_edit(request,
         environment.save()
 
         # Remove all of properties of the group.
-        TCMSEnvGroupPropertyMap.objects.filter(
-            group__id=environment.id).delete()
+        TCMSEnvGroupPropertyMap.objects.filter(group__id=environment.id).delete()
 
         # Readd the property to environemnt group and log the action
-        for property_id in request.REQUEST.getlist('selected_property_ids'):
+        for property_id in request.GET.getlist('selected_property_ids'):
             TCMSEnvGroupPropertyMap.objects.create(group_id=environment.id,
                                                    property_id=property_id)
 
