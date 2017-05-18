@@ -9,9 +9,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
+from tcms.core.logs.models import TCMSLogModel
 from tcms.management.models import TCMSEnvGroup
 from tcms.management.models import TCMSEnvGroupPropertyMap
-from tcms.core.logs.models import TCMSLogModel
+from tcms.management.models import TCMSEnvProperty
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import TCMSEnvGroupFactory
@@ -306,10 +307,10 @@ class TestModifyGroup(TestCase):
         user_should_have_perm(self.tester, self.permission)
         self.client.login(username=self.tester.username, password='password')
 
-        response = self.client.get(self.group_modify_url,
-                                   {'action': 'modify',
-                                    'id': self.group_nitrate.pk,
-                                    'status': 0})
+        self.client.get(self.group_modify_url,
+                        {'action': 'modify',
+                         'id': self.group_nitrate.pk,
+                         'status': 0})
 
         group = TCMSEnvGroup.objects.get(pk=self.group_nitrate.pk)
         self.assertFalse(group.is_active)
@@ -426,3 +427,252 @@ class TestEditEnvironmentGroup(TestCase):
             group_id=self.group_nitrate.pk, property_id=self.property_1.pk).exists())
         self.assertTrue(TCMSEnvGroupPropertyMap.objects.filter(
             group_id=self.group_nitrate.pk, property_id=self.property_2.pk).exists())
+
+
+class TestAddProperty(TestCase):
+    """Test case for adding properties to a group"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestAddProperty, cls).setUpTestData()
+
+        cls.permission = 'management.add_tcmsenvproperty'
+        cls.group_properties_url = reverse('tcms.management.views.environment_properties')
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+
+        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.duplicate_property = TCMSEnvPropertyFactory(name='f26')
+
+    def setUp(self):
+        user_should_have_perm(self.tester, self.permission)
+
+    def test_refuse_if_missing_permission(self):
+        remove_perm_from_user(self.tester, self.permission)
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url, {'action': 'add'})
+
+        self.assertEqual({'rc': 1, 'response': 'Permission denied'},
+                         json.loads(response.content))
+
+    def test_refuse_if_missing_property_name(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url, {'action': 'add'})
+        self.assertEqual({'rc': 1, 'response': 'Property name is required'},
+                         json.loads(response.content))
+
+        response = self.client.get(self.group_properties_url,
+                                   {'action': 'add', 'name': ''})
+        self.assertEqual({'rc': 1, 'response': 'Property name is required'},
+                         json.loads(response.content))
+
+    def test_refuse_to_create_duplicate_property(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        request_data = {
+            'action': 'add',
+            'name': self.duplicate_property.name,
+        }
+        response = self.client.get(self.group_properties_url, request_data)
+
+        expected_result = {
+            'rc': 1,
+            'response': "Environment property named '{}' already exists, "
+                        "please select another name.".format(self.duplicate_property.name)
+        }
+        self.assertEqual(expected_result, json.loads(response.content))
+
+    def test_add_new_property(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        new_property_name = 'f24'
+        request_data = {
+            'action': 'add',
+            'name': new_property_name,
+        }
+        response = self.client.get(self.group_properties_url, request_data)
+
+        self.assertTrue(TCMSEnvProperty.objects.filter(name=new_property_name).exists())
+
+        new_property = TCMSEnvProperty.objects.get(name=new_property_name)
+        self.assertEqual({'rc': 0, 'response': 'ok',
+                          'name': new_property_name, 'id': new_property.pk},
+                         json.loads(response.content))
+
+
+class TestEditProperty(TestCase):
+    """Test case for editing a property"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestEditProperty, cls).setUpTestData()
+
+        cls.permission = 'management.change_tcmsenvproperty'
+        cls.group_properties_url = reverse('tcms.management.views.environment_properties')
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+
+        cls.property = TCMSEnvPropertyFactory(name='f26')
+
+    def setUp(self):
+        user_should_have_perm(self.tester, self.permission)
+
+    def test_refuse_if_missing_permission(self):
+        remove_perm_from_user(self.tester, self.permission)
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url,
+                                   {'action': 'edit', 'id': self.property.pk})
+        self.assertEqual({'rc': 1, 'response': 'Permission denied'},
+                         json.loads(response.content))
+
+    def test_refuse_if_missing_property_id(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url, {'action': 'edit'})
+
+        self.assertEqual({'rc': 1, 'response': 'ID is required'},
+                         json.loads(response.content))
+
+    def test_refuse_if_property_id_not_exist(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url,
+                                   {'action': 'edit', 'id': 999999999})
+
+        self.assertEqual({'rc': 1, 'response': 'ID does not exist.'},
+                         json.loads(response.content))
+
+    def test_edit_a_property(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        new_property_name = 'fedora-24'
+        response = self.client.get(self.group_properties_url,
+                                   {'action': 'edit',
+                                    'id': self.property.pk,
+                                    'name': new_property_name})
+
+        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+
+        property = TCMSEnvProperty.objects.get(pk=self.property.pk)
+        self.assertEqual(new_property_name, property.name)
+
+
+class TestEnableDisableProperty(TestCase):
+    """Test case for modifying a property"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestEnableDisableProperty, cls).setUpTestData()
+
+        cls.permission = 'management.change_tcmsenvproperty'
+        cls.group_properties_url = reverse('tcms.management.views.environment_properties')
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+
+        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate')
+
+        cls.property_os = TCMSEnvPropertyFactory(name='OS')
+        cls.property_lang = TCMSEnvPropertyFactory(name='lang')
+        cls.disabled_property_1 = TCMSEnvPropertyFactory(name='disabled-property-1',
+                                                         is_active=False)
+        cls.disabled_property_2 = TCMSEnvPropertyFactory(name='disabled-property-2',
+                                                         is_active=False)
+
+        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                       property=cls.property_os)
+        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                       property=cls.property_lang)
+        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                       property=cls.disabled_property_1)
+        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                       property=cls.disabled_property_2)
+
+    def setUp(self):
+        user_should_have_perm(self.tester, self.permission)
+
+    def test_refuse_if_missing_permission(self):
+        remove_perm_from_user(self.tester, self.permission)
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url,
+                                   {'action': 'modify', 'id': self.property_os.pk})
+
+        self.assertContains(response, 'Permission denied')
+
+    def test_refuse_if_status_is_illegal(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        for illegal_status in ('yes', 'no', '2', '-1'):
+            response = self.client.get(self.group_properties_url,
+                                       {'action': 'modify',
+                                        'id': [self.property_os.pk,
+                                               self.property_lang.pk],
+                                        'status': illegal_status})
+
+            self.assertContains(response, 'Argument illegal')
+
+            self.assertTrue(
+                TCMSEnvGroupPropertyMap.objects.filter(
+                    group=self.group_nitrate,
+                    property=self.property_os).exists())
+
+            self.assertTrue(
+                TCMSEnvGroupPropertyMap.objects.filter(
+                    group=self.group_nitrate,
+                    property=self.property_lang).exists())
+
+    def test_enable_a_property(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url,
+                                   {'action': 'modify',
+                                    'id': [self.disabled_property_1.pk,
+                                           self.disabled_property_2.pk],
+                                    'status': 1})
+
+        self.assertContains(
+            response,
+            "Modify test properties status &#39;{}&#39; successfully.".format(
+                "&#39;, &#39;".join([self.disabled_property_1.name,
+                                     self.disabled_property_2.name])))
+
+        self.assertTrue(
+            TCMSEnvProperty.objects.get(pk=self.disabled_property_1.pk).is_active)
+        self.assertTrue(
+            TCMSEnvProperty.objects.get(pk=self.disabled_property_2.pk).is_active)
+
+    def test_disable_a_property(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.get(self.group_properties_url,
+                                   {'action': 'modify',
+                                    'id': [self.property_os.pk,
+                                           self.property_lang.pk],
+                                    'status': 0})
+
+        self.assertContains(
+            response,
+            "Modify test properties status &#39;{}&#39; successfully.".format(
+                "&#39;, &#39;".join([self.property_os.name,
+                                     self.property_lang.name])))
+
+        self.assertFalse(
+            TCMSEnvProperty.objects.get(pk=self.property_os.pk).is_active)
+        self.assertFalse(
+            TCMSEnvProperty.objects.get(pk=self.property_lang.pk).is_active)
+
+        self.assertFalse(
+            TCMSEnvGroupPropertyMap.objects.filter(
+                group=self.group_nitrate, property=self.property_os).exists())
+        self.assertFalse(
+            TCMSEnvGroupPropertyMap.objects.filter(
+                group=self.group_nitrate, property=self.property_lang).exists())

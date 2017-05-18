@@ -224,6 +224,7 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
                               context_instance=RequestContext(request))
 
 
+@require_GET
 def environment_properties(request, template_name='environment/property.html'):
     """
     Edit environemnt properties and values belong to
@@ -234,68 +235,59 @@ def environment_properties(request, template_name='environment/property.html'):
     message = ''
 
     has_perm = request.user.has_perm
-    user_action = request.REQUEST.get('action')
+    user_action = request.GET.get('action')
 
     # Actions of create properties
     if user_action == 'add':
         if not has_perm('management.add_tcmsenvproperty'):
-            ajax_response['response'] = 'Permission denied'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse({'rc': 1, 'response': 'Permission denied'})
 
-        property_name = request.REQUEST.get('name')
+        property_name = request.GET.get('name')
 
         if not property_name:
-            ajax_response['response'] = 'Property name is required'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse({'rc': 1, 'response': 'Property name is required'})
 
-        try:
-            new_property = TCMSEnvProperty.objects.create(name=property_name)
-            ajax_response['id'] = new_property.id
-            ajax_response['name'] = new_property.name
+        if TCMSEnvProperty.objects.filter(name=property_name).exists():
+            resp_msg = "Environment property named '{}' already exists, " \
+                       "please select another name.".format(property_name)
+            return JsonResponse({'rc': 1, 'response': resp_msg})
 
-        except IntegrityError, error:
-            if error[1].startswith('Duplicate'):
-                resp_msg = 'Environment proprerty named \'%s\' already ' \
-                    'exists, please select another name.' % property_name
-            else:
-                resp_msg = error[1]
+        new_property = TCMSEnvProperty.objects.create(name=property_name)
 
-            ajax_response['rc'] = 1
-            ajax_response['response'] = resp_msg
-            return HttpResponse(json_dumps(ajax_response))
-
-        return HttpResponse(json_dumps(ajax_response))
+        return JsonResponse({
+            'rc': 0,
+            'response': 'ok',
+            'id': new_property.pk,
+            'name': new_property.name
+        })
 
     # Actions of edit a exist properties
     if user_action == 'edit':
         if not has_perm('management.change_tcmsenvproperty'):
-            ajax_response['response'] = 'Permission denied'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+            return JsonResponse({'rc': 1, 'response': 'Permission denied'})
 
-        if not request.REQUEST.get('id'):
-            ajax_response['response'] = 'ID is required'
-            ajax_response['rc'] = 1
-            return HttpResponse(json_dumps(ajax_response))
+        if not request.GET.get('id'):
+            return JsonResponse({'rc': 1, 'response': 'ID is required'})
 
         try:
-            env_property = TCMSEnvProperty.objects.get(
-                id=request.REQUEST['id'])
-            env_property.name = request.REQUEST.get('name', env_property.name)
-            try:
-                env_property.save()
-            except IntegrityError, error:
-                ajax_response['response'] = error[1]
-                ajax_response['rc'] = 1
-                return HttpResponse(json_dumps(ajax_response))
+            property_id = request.GET['id']
+            env_property = TCMSEnvProperty.objects.get(id=int(property_id))
+        except ValueError:
+            return JsonResponse({
+                'rc': 1,
+                'response': 'ID {} is not a valid integer.'.format(property_id)
+            })
+        except TCMSEnvProperty.DoesNotExist:
+            return JsonResponse({'rc': 1, 'response': 'ID does not exist.'})
 
-        except TCMSEnvProperty.DoesNotExist, error:
-            ajax_response['response'] = error[1]
-            ajax_response['rc'] = 1
+        new_name = request.GET.get('name', env_property.name)
+        env_property.name = new_name
+        try:
+            env_property.save(update_fields=['name'])
+        except:
+            return JsonResponse({'rc': 1, 'response': 'Cannot save property.'})
 
-        return HttpResponse(json_dumps(ajax_response))
+        return JsonResponse({'rc': 0, 'response': 'ok'})
 
     # Actions of remove properties
     if user_action == 'del':
@@ -317,12 +309,9 @@ def environment_properties(request, template_name='environment/property.html'):
                 pass
 
             try:
-                env_properties = TCMSEnvProperty.objects.filter(
-                    id__in=property_ids)
-                property_values = '\', \''.join(
-                    env_properties.values_list('name', flat=True))
-                message = 'Remove test properties %s successfully.' % \
-                    property_values
+                env_properties = TCMSEnvProperty.objects.filter(id__in=property_ids)
+                property_values = '\', \''.join(env_properties.values_list('name', flat=True))
+                message = 'Remove test properties %s successfully.' % property_values
                 env_properties.delete()
             except TCMSEnvProperty.DoesNotExist as error:
                 message = error[1]
@@ -332,38 +321,24 @@ def environment_properties(request, template_name='environment/property.html'):
         if not has_perm('management.change_tcmsenvproperty'):
             message = 'Permission denied'
 
-        property_ids = request.REQUEST.getlist('id')
+        property_ids = request.GET.getlist('id')
 
         if has_perm('management.change_tcmsenvproperty') and property_ids:
-            try:
-                env_properties = TCMSEnvProperty.objects.filter(
-                    id__in=property_ids)
+            env_properties = TCMSEnvProperty.objects.filter(id__in=property_ids)
 
-                if request.REQUEST.get('status') in ['0', '1']:
-                    for env_property in env_properties:
-                        env_property.is_active = int(request.REQUEST['status'])
-                        env_property.save()
+            if request.GET.get('status') in ['0', '1']:
+                for env_property in env_properties:
+                    env_property.is_active = int(request.GET['status'])
+                    env_property.save()
 
-                    property_values = '\', \''.join(
-                        env_properties.values_list('name', flat=True))
-                    message = 'Modify test properties status \'%s\' ' \
-                              'successfully.' % property_values
-                else:
-                    message = 'Argument illegel'
+                property_values = "', '".join(env_properties.values_list('name', flat=True))
+                message = "Modify test properties status '%s' successfully." % property_values
 
-            except TCMSEnvProperty.DoesNotExist as error:
-                message = error[1]
-
-            try:
-                filter = TCMSEnvGroupPropertyMap.objects.filter
-
-                env_group_property_map = filter(property__id__in=property_ids)
-                env_group_property_map and env_group_property_map.delete()
-
-                env_group_value_map = filter(property__id__in=property_ids)
-                env_group_value_map and env_group_value_map.delete()
-            except:
-                pass
+                if not env_property.is_active:
+                    TCMSEnvGroupPropertyMap.objects.filter(
+                        property__id__in=property_ids).delete()
+            else:
+                message = 'Argument illegal'
 
     if request.is_ajax():
         ajax_response['rc'] = 1
