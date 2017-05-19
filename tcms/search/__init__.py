@@ -212,8 +212,3 @@ def fmt_queries(*queries):
                     v = ', '.join(map(str, v))
                 results[k] = v
     return results
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

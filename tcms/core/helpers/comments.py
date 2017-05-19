@@ -40,9 +40,3 @@ def add_comment(objs, comments, user, submit_date=None):
                        submit_date=submit_date or datetime.now(),
                        user_email=user.email,
                        user_name=user.username)
-
-
-if __name__ == '__main__':
-    import doctest
-
-    doctest.testmod()

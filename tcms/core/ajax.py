@@ -874,9 +874,3 @@ def objects_update(objects, **kwargs):
     if objects.model.__name__ == TestCaseRun.__name__ and kwargs.get(
             'case_run_status', None):
         post_update.send(sender=None, **kwargs)
-
-
-if __name__ == '__main__':
-    import doctest
-
-    doctest.testmod()

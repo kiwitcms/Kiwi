@@ -6,8 +6,9 @@ nkchenz@gmail.com 2007
 Provided as-is; use at your own risk; no warranty; no promises; enjoy!
 """
 
+
 class object_dict(dict):
-    """object view of dict, you can 
+    """object view of dict, you can
     >>> a = object_dict()
     >>> a.fish = 'fish'
     >>> a['fish']
@@ -35,11 +36,3 @@ class object_dict(dict):
 
     def __setattr__(self, item, value):
         self.__setitem__(item, value)
-
-
-def _test():
-    import doctest
-    doctest.testmod()
-
-if __name__ == "__main__":
-    _test()
