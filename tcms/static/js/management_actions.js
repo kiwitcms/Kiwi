@@ -191,14 +191,6 @@ function editEnvProperty(id) {
   }
 }
 
-function deleteEnvProperty() {
-  var answer = window.confirm("Are you sure you wish to remove these environment property?");
-
-  if (answer) {
-    window.location.href = Nitrate.Management.Environment.Property.Param.del_property
-      + '?action=del&' + jQ('#id_property_form').serialize();
-  }
-}
 
 function enableEnvProperty() {
   if (!jQ('#id_properties_container input[name="id"]:checked').length) {

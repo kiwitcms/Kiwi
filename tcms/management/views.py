@@ -290,33 +290,6 @@ def environment_properties(request, template_name='environment/property.html'):
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
     # Actions of remove properties
-    if user_action == 'del':
-        if not has_perm('management.delete_tcmsenvproperty'):
-            message = 'Permission denied'
-
-        property_ids = request.REQUEST.getlist('id')
-
-        if has_perm('management.delete_tcmsenvproperty') and property_ids:
-            try:
-                filter = TCMSEnvGroupPropertyMap.objects.filter
-
-                env_group_property_map = filter(property__id__in=property_ids)
-                env_group_property_map and env_group_property_map.delete()
-
-                env_group_value_map = filter(property__id__in=property_ids)
-                env_group_value_map and env_group_value_map.delete()
-            except:
-                pass
-
-            try:
-                env_properties = TCMSEnvProperty.objects.filter(id__in=property_ids)
-                property_values = '\', \''.join(env_properties.values_list('name', flat=True))
-                message = 'Remove test properties %s successfully.' % property_values
-                env_properties.delete()
-            except TCMSEnvProperty.DoesNotExist as error:
-                message = error[1]
-
-    # Actions of remove properties
     if user_action == 'modify':
         if not has_perm('management.change_tcmsenvproperty'):
             message = 'Permission denied'
