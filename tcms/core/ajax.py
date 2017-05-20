@@ -480,13 +480,14 @@ def update(request):
     return say_yes()
 
 
+@require_POST
 def update_case_run_status(request):
     '''
     Update Case Run status.
     '''
     now = datetime.datetime.now()
 
-    data = request.REQUEST.copy()
+    data = request.POST.copy()
     ctype = data.get("content_type")
     vtype = data.get('value_type', 'str')
     object_pk_str = data.get("object_pk")
