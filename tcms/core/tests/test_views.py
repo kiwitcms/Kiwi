@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
+import json
+
+from django_comments.models import Comment
+from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.core.urlresolvers import reverse
 from six.moves import http_client
 
-from django.core.urlresolvers import reverse
-
-from tcms.tests import BasePlanCase
-from tcms.tests.factories import TestRunFactory
+from tcms.testruns.models import TestCaseRun
 from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestRunFactory
+from tcms.tests import BasePlanCase
 
 
 class TestQuickSearch(BasePlanCase):
@@ -73,3 +78,72 @@ class TestQuickSearch(BasePlanCase):
         response = self.client.get(self.search_url,
                                    {'search_type': 'unknown type', 'search_content': self.plan.pk})
         self.assertEqual(http_client.NOT_FOUND, response.status_code)
+
+
+class TestCommentCaseRuns(BasePlanCase):
+    """Test case for ajax.comment_case_runs"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestCommentCaseRuns, cls).setUpTestData()
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+        cls.test_run = TestRunFactory(plan=cls.plan)
+        cls.case_run_1 = TestCaseRunFactory(case=cls.case_1, run=cls.test_run)
+        cls.case_run_2 = TestCaseRunFactory(case=cls.case_2, run=cls.test_run)
+        cls.case_run_3 = TestCaseRunFactory(case=cls.case_3, run=cls.test_run)
+
+        cls.many_comments_url = reverse('tcms.core.ajax.comment_case_runs')
+
+    def test_refuse_if_missing_comment(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(self.many_comments_url,
+                                    {'run': [self.case_run_1.pk, self.case_run_2.pk]})
+        self.assertEqual({'rc': 1, 'response': 'Comments needed'},
+                         json.loads(response.content))
+
+    def test_refuse_if_missing_no_case_run_pk(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(self.many_comments_url,
+                                    {'comment': 'new comment', 'run': []})
+        self.assertEqual({'rc': 1, 'response': 'No runs selected.'},
+                         json.loads(response.content))
+
+        response = self.client.post(self.many_comments_url,
+                                    {'comment': 'new comment'})
+        self.assertEqual({'rc': 1, 'response': 'No runs selected.'},
+                         json.loads(response.content))
+
+    def test_refuse_if_passed_case_run_pks_not_exist(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(self.many_comments_url,
+                                    {'comment': 'new comment',
+                                     'run': '99999998,1009900'})
+        self.assertEqual({'rc': 1, 'response': 'No caserun found.'},
+                         json.loads(response.content))
+
+    def test_add_comment_to_case_runs(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        new_comment = 'new comment'
+        response = self.client.post(
+            self.many_comments_url,
+            {'comment': new_comment,
+             'run': ','.join([str(self.case_run_1.pk),
+                              str(self.case_run_2.pk)])})
+        self.assertEqual({'rc': 0, 'response': 'ok'},
+                         json.loads(response.content))
+
+        # Assert comments are added
+        case_run_ct = ContentType.objects.get_for_model(TestCaseRun)
+
+        for case_run_pk in (self.case_run_1.pk, self.case_run_2.pk):
+            comments = Comment.objects.filter(object_pk=case_run_pk,
+                                              content_type=case_run_ct)
+            self.assertEqual(new_comment, comments[0].comment)
+            self.assertEqual(self.tester, comments[0].user)
