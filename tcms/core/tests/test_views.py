@@ -10,23 +10,32 @@ from six.moves import http_client
 
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
+from tcms.testruns.models import TestCaseRunStatus
+from tcms.tests import BasePlanCase
+from tcms.tests import remove_perm_from_user
+from tcms.tests import user_should_have_perm
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestRunFactory
-from tcms.tests import BasePlanCase
-from tcms.tests import user_should_have_perm
-from tcms.tests import remove_perm_from_user
 
 
-class TestQuickSearch(BasePlanCase):
+class BaseCaseRun(BasePlanCase):
+    """Base test case containing test run and case runs"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestQuickSearch, cls).setUpTestData()
+        super(BaseCaseRun, cls).setUpTestData()
 
         cls.test_run = TestRunFactory(plan=cls.plan)
         cls.case_run_1 = TestCaseRunFactory(case=cls.case_1, run=cls.test_run)
         cls.case_run_2 = TestCaseRunFactory(case=cls.case_2, run=cls.test_run)
         cls.case_run_3 = TestCaseRunFactory(case=cls.case_3, run=cls.test_run)
+
+
+class TestQuickSearch(BaseCaseRun):
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestQuickSearch, cls).setUpTestData()
 
         cls.search_url = reverse('tcms.core.views.search')
 
@@ -83,7 +92,7 @@ class TestQuickSearch(BasePlanCase):
         self.assertEqual(http_client.NOT_FOUND, response.status_code)
 
 
-class TestCommentCaseRuns(BasePlanCase):
+class TestCommentCaseRuns(BaseCaseRun):
     """Test case for ajax.comment_case_runs"""
 
     @classmethod
@@ -93,10 +102,6 @@ class TestCommentCaseRuns(BasePlanCase):
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
                                               password='password')
-        cls.test_run = TestRunFactory(plan=cls.plan)
-        cls.case_run_1 = TestCaseRunFactory(case=cls.case_1, run=cls.test_run)
-        cls.case_run_2 = TestCaseRunFactory(case=cls.case_2, run=cls.test_run)
-        cls.case_run_3 = TestCaseRunFactory(case=cls.case_3, run=cls.test_run)
 
         cls.many_comments_url = reverse('tcms.core.ajax.comment_case_runs')
 
@@ -201,3 +206,51 @@ class TestUpdateObject(BasePlanCase):
         self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
         plan = TestPlan.objects.get(pk=self.plan.pk)
         self.assertFalse(plan.is_active)
+
+
+class TestUpdateCaseRunStatus(BaseCaseRun):
+    """Test case for update_case_run_status"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestUpdateCaseRunStatus, cls).setUpTestData()
+
+        cls.permission = 'testruns.change_testcaserun'
+        cls.update_url = reverse('tcms.core.ajax.update_case_run_status')
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+
+    def setUp(self):
+        user_should_have_perm(self.tester, self.permission)
+
+    def test_refuse_if_missing_permission(self):
+        remove_perm_from_user(self.tester, self.permission)
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(self.update_url, {
+            'content_type': 'testruns.testcaserun',
+            'object_pk': self.case_run_1.pk,
+            'field': 'case_run_status',
+            'value': str(TestCaseRunStatus.objects.get(name='PAUSED').pk),
+            'value_type': 'int',
+        })
+
+        self.assertEqual({'rc': 1, 'response': 'Permission Dinied.'},
+                         json.loads(response.content))
+
+    def test_change_case_run_status(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(self.update_url, {
+            'content_type': 'testruns.testcaserun',
+            'object_pk': self.case_run_1.pk,
+            'field': 'case_run_status',
+            'value': str(TestCaseRunStatus.objects.get(name='PAUSED').pk),
+            'value_type': 'int',
+        })
+
+        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+        self.assertEqual(
+            'PAUSED', TestCaseRun.objects.get(pk=self.case_run_1.pk).case_run_status.name)
