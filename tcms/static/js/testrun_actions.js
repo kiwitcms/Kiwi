@@ -1379,6 +1379,7 @@ function showCommentForm() {
       url: '/caserun/comment-many/',
       data: {'comment': comments, 'run': runs.join()},
       dataType: 'json',
+      type: 'post',
       success: function(res) {
         if (res.rc == 0) {
           reloadWindow();

@@ -19,6 +19,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_POST
 
 from tcms.management.models import Component, TestBuild, Version
 from tcms.management.models import Priority
@@ -749,11 +750,12 @@ update_cases_sortkey = update_cases_default_tester
 update_cases_reviewer = update_cases_default_tester
 
 
+@require_POST
 def comment_case_runs(request):
-    '''
+    """
     Add comment to one or more caseruns at a time.
-    '''
-    data = request.REQUEST.copy()
+    """
+    data = request.POST.copy()
     comment = data.get('comment', None)
     if not comment:
         return say_no('Comments needed')
