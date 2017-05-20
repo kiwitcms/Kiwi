@@ -375,6 +375,7 @@ def say_yes():
 
 
 # Deprecated. Not flexible.
+@require_POST
 def update(request):
     '''
     Generic approach to update a model,\n
@@ -382,7 +383,7 @@ def update(request):
     '''
     now = datetime.datetime.now()
 
-    data = request.REQUEST.copy()
+    data = request.POST.copy()
     ctype = data.get("content_type")
     vtype = data.get('value_type', 'str')
     object_pk_str = data.get("object_pk")

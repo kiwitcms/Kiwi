@@ -8,10 +8,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from six.moves import http_client
 
+from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests import BasePlanCase
+from tcms.tests import user_should_have_perm
+from tcms.tests import remove_perm_from_user
 
 
 class TestQuickSearch(BasePlanCase):
@@ -147,3 +150,54 @@ class TestCommentCaseRuns(BasePlanCase):
                                               content_type=case_run_ct)
             self.assertEqual(new_comment, comments[0].comment)
             self.assertEqual(self.tester, comments[0].user)
+
+
+class TestUpdateObject(BasePlanCase):
+    """Test case for update"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestUpdateObject, cls).setUpTestData()
+
+        cls.permission = 'testplans.change_testplan'
+        cls.update_url = reverse('tcms.core.ajax.update')
+
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+
+    def setUp(self):
+        user_should_have_perm(self.tester, self.permission)
+
+    def test_refuse_if_missing_permission(self):
+        post_data = {
+            'content_type': 'testplans.testplan',
+            'object_pk': self.plan.pk,
+            'field': 'is_active',
+            'value': 'False',
+            'value_type': 'bool'
+        }
+
+        remove_perm_from_user(self.tester, self.permission)
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(self.update_url, post_data)
+
+        self.assertEqual({'rc': 1, 'response': 'Permission Dinied.'},
+                         json.loads(response.content))
+
+    def test_update_plan_is_active(self):
+        post_data = {
+            'content_type': 'testplans.testplan',
+            'object_pk': self.plan.pk,
+            'field': 'is_active',
+            'value': 'False',
+            'value_type': 'bool'
+        }
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(self.update_url, post_data)
+
+        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+        plan = TestPlan.objects.get(pk=self.plan.pk)
+        self.assertFalse(plan.is_active)
