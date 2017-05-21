@@ -146,8 +146,8 @@ def info(request):
 
             return Version.objects.filter(product__id=self.product_id)
 
-    objects = Objects(request=request, product_id=request.GET['product_id'])
-    obj = getattr(objects, request.GET['info_type'], None)
+    objects = Objects(request=request, product_id=request.GET.get('product_id'))
+    obj = getattr(objects, request.GET.get('info_type'), None)
 
     if obj:
         if request.GET.get('format') == 'ulli':
