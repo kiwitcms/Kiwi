@@ -107,7 +107,7 @@ def info(request):
 
             if self.request.GET.get('env_group_id'):
                 env_group = TCMSEnvGroup.objects.get(
-                    id=self.request.REQUEST['env_group_id']
+                    id=self.request.GET['env_group_id']
                 )
                 return env_group.property.all()
             else:
