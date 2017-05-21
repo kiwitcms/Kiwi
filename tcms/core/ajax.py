@@ -168,14 +168,15 @@ def info(request):
     return HttpResponse('Unrecognizable infotype')
 
 
+@require_GET
 def form(request):
     """Response get form ajax call, most using in dialog"""
 
     # The parameters in internal_parameters will delete from parameters
     internal_parameters = ['app_form', 'format']
     parameters = strip_parameters(request, internal_parameters)
-    q_app_form = request.REQUEST.get('app_form')
-    q_format = request.REQUEST.get('format')
+    q_app_form = request.GET.get('app_form')
+    q_format = request.GET.get('format')
     if not q_format:
         q_format = 'p'
 

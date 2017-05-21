@@ -2,12 +2,14 @@
 
 import json
 
-from django_comments.models import Comment
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.test import TestCase
+from django_comments.models import Comment
 from six.moves import http_client
 
+from tcms.testcases.forms import CaseAutomatedForm
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
@@ -254,3 +256,13 @@ class TestUpdateCaseRunStatus(BaseCaseRun):
         self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
         self.assertEqual(
             'PAUSED', TestCaseRun.objects.get(pk=self.case_run_1.pk).case_run_status.name)
+
+
+class TestGetForm(TestCase):
+    """Test case for form"""
+
+    def test_get_form(self):
+        response = self.client.get(reverse('tcms.core.ajax.form'),
+                                   {'app_form': 'testcases.CaseAutomatedForm'})
+        form = CaseAutomatedForm()
+        self.assertHTMLEqual(response.content, form.as_p())
