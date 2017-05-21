@@ -5,11 +5,13 @@ import json
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django import test
 from django_comments.models import Comment
 from six.moves import http_client
 
+from tcms.management.models import Priority
 from tcms.testcases.forms import CaseAutomatedForm
+from tcms.testcases.forms import TestCase
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
@@ -258,7 +260,7 @@ class TestUpdateCaseRunStatus(BaseCaseRun):
             'PAUSED', TestCaseRun.objects.get(pk=self.case_run_1.pk).case_run_status.name)
 
 
-class TestGetForm(TestCase):
+class TestGetForm(test.TestCase):
     """Test case for form"""
 
     def test_get_form(self):
@@ -266,3 +268,56 @@ class TestGetForm(TestCase):
                                    {'app_form': 'testcases.CaseAutomatedForm'})
         form = CaseAutomatedForm()
         self.assertHTMLEqual(response.content, form.as_p())
+
+
+class TestUpdateCasePriority(BasePlanCase):
+    """Test case for update_cases_default_tester"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestUpdateCasePriority, cls).setUpTestData()
+
+        cls.permission = 'testcases.change_testcase'
+        cls.case_update_url = reverse('tcms.core.ajax.update_cases_default_tester')
+        cls.tester = User.objects.create_user(username='tester',
+                                              email='tester@example.com',
+                                              password='password')
+
+    def setUp(self):
+        user_should_have_perm(self.tester, self.permission)
+
+    def test_refuse_if_missing_permission(self):
+        remove_perm_from_user(self.tester, self.permission)
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(
+            self.case_update_url,
+            {
+                'target_field': 'priority',
+                'from_plan': self.plan.pk,
+                'case': [self.case_1.pk, self.case_3.pk],
+                'new_value': Priority.objects.get(value='P3').pk,
+            })
+
+        self.assertEqual(
+            {'rc': 1, 'response': "You don't have enough permission to "
+                                  "update TestCases."},
+            json.loads(response.content))
+
+    def test_update_case_priority(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        response = self.client.post(
+            self.case_update_url,
+            {
+                'target_field': 'priority',
+                'from_plan': self.plan.pk,
+                'case': [self.case_1.pk, self.case_3.pk],
+                'new_value': Priority.objects.get(value='P3').pk,
+            })
+
+        self.assertEqual({'rc': 0, 'response': 'ok'},
+                         json.loads(response.content))
+
+        for pk in (self.case_1.pk, self.case_3.pk):
+            self.assertEqual('P3', TestCase.objects.get(pk=pk).priority.value)

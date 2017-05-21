@@ -600,8 +600,8 @@ class TestCaseUpdateActions(ModelUpdateActions):
 
     def __init__(self, request):
         self.request = request
-        self.target_field = request.REQUEST.get('target_field')
-        self.new_value = request.REQUEST.get('new_value')
+        self.target_field = request.POST.get('target_field')
+        self.new_value = request.POST.get('new_value')
 
     def get_update_action(self):
         return getattr(self, '_update_%s' % self.target_field, None)
@@ -741,6 +741,7 @@ class TestCaseUpdateActions(ModelUpdateActions):
 
 # NOTE: what permission is necessary
 # FIXME: find a good chance to map all TestCase property change request to this
+@require_POST
 def update_cases_default_tester(request):
     '''Update default tester upon selected TestCases'''
     proxy = TestCaseUpdateActions(request)
