@@ -2,24 +2,30 @@
 
 import json
 
+from django_comments.models import Comment
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.core import serializers
 from django.core.urlresolvers import reverse
 from django import test
-from django_comments.models import Comment
 from six.moves import http_client
 
 from tcms.management.models import Priority
+from tcms.management.models import TCMSEnvGroup
+from tcms.management.models import TCMSEnvProperty
 from tcms.testcases.forms import CaseAutomatedForm
 from tcms.testcases.forms import TestCase
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
+from tcms.tests.factories import TCMSEnvGroupFactory
+from tcms.tests.factories import TCMSEnvGroupPropertyMapFactory
+from tcms.tests.factories import TCMSEnvPropertyFactory
+from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestRunFactory
 from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
-from tcms.tests.factories import TestCaseRunFactory
-from tcms.tests.factories import TestRunFactory
 
 
 class BaseCaseRun(BasePlanCase):
@@ -321,3 +327,50 @@ class TestUpdateCasePriority(BasePlanCase):
 
         for pk in (self.case_1.pk, self.case_3.pk):
             self.assertEqual('P3', TestCase.objects.get(pk=pk).priority.value)
+
+
+class TestGetObjectInfo(BasePlanCase):
+    """Test case for info view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestGetObjectInfo, cls).setUpTestData()
+
+        cls.get_info_url = reverse('tcms.core.ajax.info')
+
+        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate')
+        cls.group_new = TCMSEnvGroupFactory(name='NewGroup')
+
+        cls.property_os = TCMSEnvPropertyFactory(name='os')
+        cls.property_python = TCMSEnvPropertyFactory(name='python')
+        cls.property_django = TCMSEnvPropertyFactory(name='django')
+
+        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                       property=cls.property_os)
+        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                       property=cls.property_python)
+        TCMSEnvGroupPropertyMapFactory(group=cls.group_new,
+                                       property=cls.property_django)
+
+    def test_get_env_properties(self):
+        response = self.client.get(self.get_info_url, {'info_type': 'env_properties'})
+
+        expected_json = json.loads(
+            serializers.serialize(
+                'json',
+                TCMSEnvProperty.objects.all(),
+                fields=('name', 'value')))
+        self.assertEqual(expected_json, json.loads(response.content))
+
+    def test_get_env_properties_by_group(self):
+        response = self.client.get(self.get_info_url,
+                                   {'info_type': 'env_properties',
+                                    'env_group_id': self.group_new.pk})
+
+        group = TCMSEnvGroup.objects.get(pk=self.group_new.pk)
+        expected_json = json.loads(
+            serializers.serialize(
+                'json',
+                group.property.all(),
+                fields=('name', 'value')))
+        self.assertEqual(expected_json, json.loads(response.content))
