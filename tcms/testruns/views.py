@@ -30,7 +30,6 @@ from django_comments.models import Comment
 from tcms.core.db import SQLExecution
 from tcms.core.exceptions import NitrateException
 from tcms.core.responses import HttpJSONResponse
-from tcms.core.utils.bugtrackers import Bugzilla
 from tcms.core.utils import clean_request
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils.tcms_router import connection
@@ -1003,11 +1002,14 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
             return HttpJSONResponse(json.dumps(response))
 
         def file(self):
-            rh_bz = Bugzilla(settings.BUGZILLA_URL)
-            url = rh_bz.make_url(self.case_run.run, self.case_run,
-                                 self.case_run.case_text_version)
+            bug_system_id = request.GET.get('bug_system_id')
+            bug_system = TestCaseBugSystem.objects.get(pk=bug_system_id)
+            tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
 
-            return HttpResponseRedirect(url)
+            url = tracker.report_issue_from_test_case(self.case_run)
+
+            response = {'rc': 0, 'response': url}
+            return self.ajax_response(response)
 
         def remove(self):
             if not self.request.user.has_perm('testcases.delete_testcasebug'):

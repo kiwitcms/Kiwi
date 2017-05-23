@@ -1,5 +1,8 @@
+import urllib
 import bugzilla
 import bugzilla_integration
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
 
 class IssueTrackerType(object):
@@ -25,14 +28,14 @@ class IssueTrackerType(object):
             raise NotImplementedError('IT of type %s is not supported' % name)
         return globals()[name]
 
-    def report_issue_from_testcase(self, testcase):
+    def report_issue_from_testcase(self, caserun):
         """
             When merking results inside a test case run there is a
             'Report' link. When clicked this method is called to automatically
             report new issue and provide all the details, like steps to reproduce,
             from the test case.
 
-            @testcase - TestCase object
+            @caserun - TestCaseRun object
         """
         raise NotImplementedError()
 
@@ -88,6 +91,50 @@ class Bugzilla(IssueTrackerType):
             self.tracker.report_url += '/'
 
         return self.tracker.report_url + 'buglist.cgi?bugidtype=include&bug_id=%s' % ','.join(ids)
+
+    def report_issue_from_test_case(self, caserun):
+        # because of circular dependencies
+        from tcms.testcases.models import TestCaseText
+
+        args = {}
+        args['cf_build_id'] = caserun.run.build.name
+
+        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
+
+        if txt and isinstance(txt, TestCaseText):
+            plain_txt = txt.get_plain_text()
+
+            setup = plain_txt.setup
+            action = plain_txt.action
+            effect = plain_txt.effect
+        else:
+            setup = 'None'
+            action = 'None'
+            effect = 'None'
+
+        caserun_url = settings.NITRATE_BASE_URL + \
+            reverse('tcms.testruns.views.get', args=[caserun.run.pk])
+
+        comment = "Filed from caserun %s\n\n" % caserun_url
+        comment += "Version-Release number of selected " \
+                   "component (if applicable):\n"
+        comment += '%s\n\n' % caserun.build.name
+        comment += "Steps to Reproduce: \n%s\n%s\n\n" % (setup, action)
+        comment += "Actual results: \n<describe what happened>\n\n"
+        comment += "Expected results:\n%s\n\n" % effect
+
+        args['comment'] = comment
+        args['component'] = caserun.case.component.values_list('name',
+                                                               flat=True)
+        args['product'] = caserun.run.plan.product.name
+        args['short_desc'] = 'Test case failure: %s' % caserun.case.summary
+        args['version'] = caserun.run.product_version
+
+        url = self.tracker.report_url
+        if not url.endswith('/'):
+            url += '/'
+
+        return url + 'enter_bug.cgi?' + urllib.urlencode(args, True)
 
 
 class JIRA(IssueTrackerType):

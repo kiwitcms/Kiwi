@@ -163,16 +163,18 @@
 			{% endfor %}
 			</select>
 			</br>
+{% verbatim %}
+                    {{#if show_bug_id_field}}
 			<div id="bug-system" style="line-height:30px;">
 				<div class="bug_id">Bug ID</div>
-					<input type="text" name="bug_id">
-					</br>
-					<input type="checkbox" name="bz_external_track" value="bz_external_track">&nbsp;
-					<span class="use_bz_external_track">Check to add Test Case(s) to Issue Tracker</span>
+				<input type="text" name="bug_id">
+				</br>
+				<input type="checkbox" name="bz_external_track" value="bz_external_track">&nbsp;
+				<span class="use_bz_external_track">Check to add Test Case(s) to Issue Tracker</span>
 			</div>
 			</br></br>
+                    {{/if}}
 			<div>
-{% verbatim %}
 				<input type="submit" value="{{ action_button_text }}">
 {% endverbatim %}
 				<input type="button" value="Cancel" class="js-cancel-button" >

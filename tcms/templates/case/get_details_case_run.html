@@ -81,7 +81,7 @@
 			<div class="container">
 				<h4 class="borderB">bug
 					<span>
-						[ <a href="{% url "tcms.testruns.views.bug" test_case_run.pk %}?a=file" target="_blank" class="buglink" title="File a bug on bugzilla">File</a>&nbsp;|&nbsp;
+						<a href="javascript:void(0);" title="File" class="js-file-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Report</a>&nbsp;|&nbsp;
 						{% if perms.testcases.add_testcasebug %}
 						<a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Add</a>
 						{% endif %} ]
