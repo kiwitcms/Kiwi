@@ -1,6 +1,40 @@
 Change Log
 ==========
 
+3.8.18.21 (May 24 2017, released on MrSenko.com)
+-----------------------------------------------
+
+- Rebased onto f7e2c6c
+- Includes PRs #197, #198, #199, #200, #201, #202, #204:
+  removal of deprecated ``request.REQUEST`` and more tests (tkdchen)
+- Includes PR #203: Minor fixes (Mr. Senko)
+- Fixed failing test cases on PostgreSQL and MySQL (Mr. Senko)
+- Remove unused doctest. PR #205 (tkdchen)
+- Fixes Issue #185: Improve integrations between Nitrate and
+  external bug tracking systems (Mr. Senko). In particular:
+  - removed all hard-coded issue tracker settings
+  - allow issue trackers to be configured entirely in the DB
+  - re-implemented the functionality to open all bugs inside
+    the issue tracker by clicking a single link at the bottom
+    of the test run reports page
+  - re-implemented the "Check to add test case(s) to Issue Tracker"
+    checkbox when adding a bug to a test case run
+  - re-implemented the "Report" bug functionality, which will pre-load
+    the chosen Issue Tracker with information about the test case
+    which was used to discover the bug.
+  - NOTE: full integration is available only for Bugzilla. This version
+    provides only reporting integration for JIRA
+
+NOTE: this release introduces new database migrations!
+
+NOTE: this release includes updated static files!
+
+NOTE: this release introduces a new configuration setting called
+``NITRATE_BASE_URL``. It defined the FQDN of your Nitrate instance!
+This configuration is used to construct a URL linking back to test
+cases and test runs when reporting bugs!
+
+
 3.8.18.18 (May 1 2017, released on MrSenko.com)
 -----------------------------------------------
 
