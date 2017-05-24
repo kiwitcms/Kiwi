@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Max
-from django.db.models.signals import post_save, post_delete, pre_save
+from django.db.models.signals import post_save, pre_delete, pre_save
 from django.shortcuts import get_object_or_404
 
 from uuslug import slugify
