@@ -1,11 +1,11 @@
 Nitrate - Test Case Management System
 =====================================
 
-.. image:: https://travis-ci.org/Nitrate/Nitrate.svg?branch=develop
-    :target: https://travis-ci.org/Nitrate/Nitrate
+.. image:: https://travis-ci.org/MrSenko/Nitrate.svg?branch=master
+    :target: https://travis-ci.org/MrSenko/Nitrate
 
-.. image:: https://coveralls.io/repos/github/Nitrate/Nitrate/badge.svg?branch=develop
-   :target: https://coveralls.io/github/Nitrate/Nitrate?branch=develop
+.. image:: https://coveralls.io/repos/github/MrSenko/Nitrate/badge.svg?branch=master
+   :target: https://coveralls.io/github/MrSenko/Nitrate?branch=master
 
 Introduction
 ------------
