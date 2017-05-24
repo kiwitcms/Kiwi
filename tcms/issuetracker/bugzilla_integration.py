@@ -51,11 +51,17 @@ class BugzillaThread(threading.Thread):
 
 
 try:
-    from celery import task
+    # todo: fix this or completely remove it
+    # Adding test cases to Bugzilla currently breaks
+    # when executed as Celery task, but not when executed
+    # as a thread!!!
+    _celery_add_bug_to_bugzilla = None
 
-    @task
-    def _celery_add_bug_to_bugzilla(rpc, testcase, bug):
-        _rpc_add_bug_to_bugzilla(rpc, testcase, bug)
+    # from celery import task
+
+    # @task
+    # def _celery_add_bug_to_bugzilla(rpc, testcase, bug):
+    #     _rpc_add_bug_to_bugzilla(rpc, testcase, bug)
 except ImportError:
     _celery_add_bug_to_bugzilla = None
 
