@@ -157,9 +157,14 @@ class TestFilterCategories(TestCase):
     def test_filter_by_product_id(self):
         cat = product.filter_categories(None, {'product': self.product.pk})
         self.assertIsNotNone(cat)
-        self.assertEqual(cat[0]['name'], '--default--')
-        self.assertEqual(cat[1]['name'], 'auto')
-        self.assertEqual(cat[2]['name'], 'manual')
+
+        # PostgreSQL returns data in arbitrary order
+        category_names = [c['name'] for c in cat]
+
+        self.assertEqual(3, len(category_names))
+        self.assertIn('--default--', category_names)
+        self.assertIn('auto', category_names)
+        self.assertIn('manual', category_names)
 
     def test_filter_by_product_name(self):
         cat = product.filter_categories(None, {'name': 'auto'})
@@ -311,18 +316,26 @@ class TestGetCategories(XmlrpcAPIBaseTest):
     def test_get_categories_with_product_id(self):
         cats = product.get_categories(None, self.product.pk)
         self.assertIsNotNone(cats)
-        self.assertEqual(len(cats), 3)
-        self.assertTrue(cats[0]['name'], '--default--')
-        self.assertTrue(cats[1]['name'], 'auto')
-        self.assertTrue(cats[2]['name'], 'manual')
+
+        # PostgreSQL returns data in arbitrary order
+        category_names = [c['name'] for c in cats]
+
+        self.assertEqual(3, len(category_names))
+        self.assertIn('--default--', category_names)
+        self.assertIn('auto', category_names)
+        self.assertIn('manual', category_names)
 
     def test_get_categories_with_product_name(self):
         cats = product.get_categories(None, 'StarCraft')
         self.assertIsNotNone(cats)
-        self.assertEqual(len(cats), 3)
-        self.assertEqual(cats[0]['name'], '--default--')
-        self.assertEqual(cats[1]['name'], 'auto')
-        self.assertEqual(cats[2]['name'], 'manual')
+
+        # PostgreSQL returns data in arbitrary order
+        category_names = [c['name'] for c in cats]
+
+        self.assertEqual(3, len(category_names))
+        self.assertIn('--default--', category_names)
+        self.assertIn('auto', category_names)
+        self.assertIn('manual', category_names)
 
     def test_get_categories_with_non_exist_prod(self):
         self.assertRaisesXmlrpcFault(NOT_FOUND, product.get_categories, None, 9999)
