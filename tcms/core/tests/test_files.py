@@ -149,7 +149,7 @@ class TestAbleToDeleteFile(BasePlanCase):
     def setUp(self):
         super(TestAbleToDeleteFile, self).setUp()
 
-        self.fake_file_id = 1
+        self.fake_file_id = self.attachment.pk
         self.request = RequestFactory()
 
     def test_superuser_can(self):
