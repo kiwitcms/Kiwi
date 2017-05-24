@@ -42,17 +42,6 @@ DATABASE_ROUTERS = ['tcms.core.utils.tcms_router.RWRouter']
 # Kerberos realm
 #KRB5_REALM = 'EXAMPLE.COM'
 
-# Bugzilla integration setttings
-# Config following settings if your want to integrate with bugzilla
-BUGZILLA3_RPC_SERVER = ''
-BUGZILLA_URL = ''
-BUGZILLA_USER = ''
-BUGZILLA_PASSWORD = ''
-
-# JIRA integration setttings
-# Config following settings if your want to integrate with JIRA
-JIRA_URL = ''
-
 # Set the default send mail address
 EMAIL_HOST = 'smtp.example.com'
 EMAIL_FROM = 'noreply@example.com'

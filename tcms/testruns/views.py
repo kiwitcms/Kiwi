@@ -3,7 +3,6 @@
 import datetime
 import itertools
 import json
-import re
 import time
 import urllib
 
@@ -30,7 +29,6 @@ from django_comments.models import Comment
 
 from tcms.core.exceptions import NitrateException
 from tcms.core.responses import HttpJSONResponse
-from tcms.core.utils.bugtrackers import Bugzilla
 from tcms.core.utils import clean_request
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils.tcms_router import connection
@@ -53,6 +51,7 @@ from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
 from tcms.testruns.helpers.serializer import TCR2File
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TCMSEnvRunValueMap
+from tcms.issuetracker.types import IssueTrackerType
 
 
 MODULE_NAME = "testruns"
@@ -896,7 +895,34 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             'tested_by__username')
         mode_stats = self.stats_mode_caseruns(case_runs)
         summary_stats = self.get_summary_stats(case_runs)
-        bug_ids = get_run_bug_ids(self.run_id)
+
+        test_case_run_bugs = []
+        bug_system_types = {}
+        for bug in get_run_bug_ids(self.run_id):
+            # format the bug URLs based on DB settings
+            test_case_run_bugs.append((
+                bug.bug_id,
+                bug.bug_system.url_reg_exp % bug.bug_id,
+            ))
+            # find out all unique bug tracking systems which were used to record
+            # bugs in this particular test run. we use this data for reporting
+            if bug.bug_system.pk not in bug_system_types:
+                # store a tracker type object for producing the report URL
+                tracker = IssueTrackerType.from_name(bug.bug_system.tracker_type)(bug.bug_system)
+                bug_system_types[bug.bug_system.pk] = (tracker, [])
+
+            # store the list of bugs as well
+            bug_system_types[bug.bug_system.pk][1].append(bug.bug_id)
+
+        # list of URLs which opens all bugs reported to every different
+        # issue tracker used in this test run
+        report_urls = []
+        for (it, ids) in bug_system_types.values():
+            report_url = it.all_issues_link(ids)
+            # if IT doesn't support this feature or report url is not configured
+            # the above method will return None
+            if report_url:
+                report_urls.append((it.tracker.name, report_url))
 
         caserun_bugs = self.get_caseruns_bugs(run.pk)
         comments = self.get_caseruns_comments(run.pk)
@@ -912,9 +938,10 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             'test_run': run,
             'test_case_runs': case_runs,
             'test_case_runs_count': len(case_runs),
-            'test_case_run_bugs': bug_ids,
+            'test_case_run_bugs': test_case_run_bugs,
             'mode_stats': mode_stats,
             'summary_stats': summary_stats,
+            'report_urls': report_urls,
         })
 
         return context
@@ -926,8 +953,6 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 
     class CaseRunBugActions(object):
         __all__ = ['add', 'file', 'remove', 'render_form']
-        bugzilla_regex = re.compile(r'^\d{1,7}$')
-        jira_regex = re.compile(r'^[A-Z0-9]+-\d+$')
 
         def __init__(self, request, case_run, template_name):
             self.request = request
@@ -977,11 +1002,14 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
             return HttpJSONResponse(json.dumps(response))
 
         def file(self):
-            rh_bz = Bugzilla(settings.BUGZILLA_URL)
-            url = rh_bz.make_url(self.case_run.run, self.case_run,
-                                 self.case_run.case_text_version)
+            bug_system_id = request.GET.get('bug_system_id')
+            bug_system = TestCaseBugSystem.objects.get(pk=bug_system_id)
+            tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
 
-            return HttpResponseRedirect(url)
+            url = tracker.report_issue_from_test_case(self.case_run)
+
+            response = {'rc': 0, 'response': url}
+            return self.ajax_response(response)
 
         def remove(self):
             if not self.request.user.has_perm('testcases.delete_testcasebug'):

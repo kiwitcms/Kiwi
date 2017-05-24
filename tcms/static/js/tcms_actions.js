@@ -756,7 +756,7 @@ function bind_component_selector_to_product(allow_blank, load, product_field, co
 function debug_output(value) {
   try {
     console.log(value);
-  } catch(err) {}
+  } catch (err) {}
 }
 
 function myCustomURLConverter(url, node, on_save) {

@@ -148,6 +148,10 @@ Nitrate.TestRuns.Details.on_load = function() {
       c_container.find('.js-show-changelog').bind('click', function() {
         toggleDiv(this, jQ(this).data('param'));
       });
+      c_container.find('.js-file-caserun-bug').bind('click', function(){
+        var params = jQ(this).data('params');
+        fileCaseRunBug(params[0], c[0], c_container[0], params[1], params[2]);
+      });
       c_container.find('.js-add-caserun-bug').bind('click', function(){
         var params = jQ(this).data('params');
         addCaseRunBug(params[0], c[0], c_container[0], params[1], params[2]);
@@ -631,6 +635,11 @@ function AddIssueDialog(options) {
   if (this.action === undefined) {
     this.action = "Add";
   }
+
+  this.a = options.a;
+  if (this.a === undefined) {
+    this.a = this.action.toLowerCase();
+  }
 }
 
 
@@ -651,7 +660,8 @@ AddIssueDialog.prototype.show = function () {
   var context = {
     'hiddenFields': hiddenPart,
     'action_button_text': this.action,
-    'a': this.action.toLowerCase(),
+    'show_bug_id_field': this.action === 'Add',
+    'a': this.a,
   };
 
   jQ('#dialog').html(template(context))
@@ -681,6 +691,45 @@ AddIssueDialog.prototype.get_data = function () {
 
 //// end of AddIssueDialog definition /////////
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+function getIssueTrackerNewURL() {
+}
+
+function fileCaseRunBug(run_id, title_container, container, case_id, case_run_id, callback) {
+  var dialog = new AddIssueDialog({
+    'action': 'Report',
+    'a': 'file',
+    'extraFormHiddenData': { 'case_run': case_run_id, 'case': case_id },
+    'onSubmit': function (e, dialog) {
+      e.stopPropagation();
+      e.preventDefault();
+
+      form_data = dialog.get_data();
+
+      var success_callback = function(t) {
+        jQ('#dialog').hide();
+        var returnobj = t;
+
+        if (returnobj.rc === 0) {
+          if (callback) {
+            return callback();
+          }
+
+          window.open(returnobj.response, '_blank');
+          return true;
+        } else {
+          window.alert(returnobj.response);
+          return false;
+        }
+      };
+
+      var url = Nitrate.http.URLConf.reverse({ 'name': 'case_run_bug', 'arguments': {'id': case_run_id} });
+      jQ.ajax({ url: url, dataType: 'json', data: form_data, success: success_callback });
+    }
+  });
+
+  dialog.show();
+}
 
 function addCaseRunBug(run_id, title_container, container, case_id, case_run_id, callback) {
   var dialog = new AddIssueDialog({

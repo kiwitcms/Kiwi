@@ -75,13 +75,10 @@ def stats_caseruns_status(run_id, case_run_statuss):
 
 
 def get_run_bug_ids(run_id):
-    rows = TestCaseBug.objects.values(
+    return TestCaseBug.objects.only(
         'bug_id',
-        'bug_system__url_reg_exp'
+        'bug_system'
     ).distinct().filter(case_run__run=run_id)
-
-    return [(row['bug_id'], row['bug_system__url_reg_exp'] % row['bug_id'])
-            for row in rows]
 
 
 class TestCaseRunDataMixin(object):

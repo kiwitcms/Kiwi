@@ -2,7 +2,6 @@
 
 from itertools import imap
 
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import EmailField, ValidationError
 
@@ -230,7 +229,7 @@ def attach_bug(request, values):
       +-------------------+----------------+-----------+-------------------------------+
       | case_id           | Integer        | Required  | ID of Case                    |
       | bug_id            | Integer        | Required  | ID of Bug                     |
-      | bug_system_id     | Integer        | Required  | 1: BZ(Default), 2: JIRA       |
+      | bug_system_id     | Integer        | Required  | ID of Bug tracker in DB       |
       | summary           | String         | Optional  | Bug summary                   |
       | description       | String         | Optional  | Bug description               |
       +-------------------+----------------+-----------+-------------------------------+
@@ -248,10 +247,7 @@ def attach_bug(request, values):
     })
     """
     from tcms.core import forms
-    from tcms.testcases.models import TestCaseBugSystem
     from tcms.xmlrpc.forms import AttachCaseBugForm
-
-    DEFAULT_BUG_SYSTEM_ID = settings.DEFAULT_BUG_SYSTEM_ID
 
     if isinstance(values, dict):
         values = [values, ]
@@ -259,19 +255,11 @@ def attach_bug(request, values):
     for value in values:
         form = AttachCaseBugForm(value)
         if form.is_valid():
-            if form.cleaned_data['bug_system_id']:
-                bug_system_id = form.cleaned_data['bug_system_id']
-                bug_system_id = bug_system_id if \
-                    TestCaseBugSystem.objects.filter(
-                        pk=bug_system_id).exists() else DEFAULT_BUG_SYSTEM_ID
-            else:
-                bug_system_id = DEFAULT_BUG_SYSTEM_ID
-
             tc = TestCase.objects.only('pk').get(case_id=form.cleaned_data[
                 'case_id'])
             tc.add_bug(
                 bug_id=form.cleaned_data['bug_id'],
-                bug_system_id=bug_system_id,
+                bug_system_id=form.cleaned_data['bug_system_id'],
                 summary=form.cleaned_data['summary'],
                 description=form.cleaned_data['description']
             )
