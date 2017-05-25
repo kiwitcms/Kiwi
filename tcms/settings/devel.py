@@ -10,7 +10,7 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/nitrate.devel.sqlite',
+        'NAME': '/tmp/kiwi.devel.sqlite',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',
