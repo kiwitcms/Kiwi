@@ -1,5 +1,5 @@
 include AUTHORS CHANGELOG.rst README.rst LICENSE
-include nitrate.spec Makefile Vagrantfile
+include Makefile Vagrantfile
 
 graft contrib
 graft requirements

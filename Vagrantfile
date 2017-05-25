@@ -17,9 +17,9 @@ Vagrant.configure(2) do |config|
     systemctl enable mariadb.service
     systemctl start mariadb.service
 
-    echo "create database nitrate character set utf8" | mysql -uroot
+    echo "create database kiwi character set utf8" | mysql -uroot
 
-    echo 'select "hello world"' | mysql -uroot nitrate
+    echo 'select "hello world"' | mysql -uroot kiwi
   SHELL
 
   config.vm.provision "pgsql", privileged: true, type: "shell", inline: <<-SHELL
@@ -32,7 +32,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "deps", privileged: true, type: "shell", inline: <<-SHELL
     dnf install -y git ctags redhat-rpm-config ipython python-ipdb
 
-    # Required to build environment to develop and run Nitrate
+    # Required to build environment to develop and run KiwiTestPad
     dnf install -y python-devel gcc
   SHELL
 
@@ -53,8 +53,8 @@ Vagrant.configure(2) do |config|
     cd
     sudo dnf install -y python2-virtualenv
 
-    virtualenv --system-site-packages nitrate-env
-    . ~/nitrate-env/bin/activate
+    virtualenv --system-site-packages kiwi-env
+    . ~/kiwi-env/bin/activate
     pip install -r /code/requirements/devel.txt
     cd /code
     python setup.py develop

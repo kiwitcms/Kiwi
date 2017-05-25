@@ -6,6 +6,7 @@ Change Log
 
 - Forked from https://github.com/Nitrate/Nitrate as a stand-alone project
 - Future versions will be released under the name **KiwiTestPad**
+- ``NITRATE_BASE_URL`` has been renamed to ``KIWI_BASE_URL``
 
 
 3.8.18.21 (May 24 2017, released on MrSenko.com)

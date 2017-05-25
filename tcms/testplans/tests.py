@@ -52,7 +52,7 @@ class PlanTests(test.TestCase):
         cls.c.login(username='admin', password='admin')
 
         cls.classification = ClassificationFactory(name='Auto')
-        cls.product = ProductFactory(name='Nitrate', classification=cls.classification)
+        cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
         cls.product_version = VersionFactory(value='0.1', product=cls.product)
         cls.plan_type = TestPlanTypeFactory()
 
@@ -181,7 +181,7 @@ class ExportTestPlanTests(test.TestCase):
         cls.c.login(username='admin', password='admin')
 
         cls.classification = ClassificationFactory(name='Auto')
-        cls.product = ProductFactory(name='Nitrate', classification=cls.classification)
+        cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
         cls.product_version = VersionFactory(value='0.1', product=cls.product)
         cls.plan_type = TestPlanTypeFactory()
 

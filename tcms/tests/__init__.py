@@ -72,7 +72,7 @@ class BasePlanCase(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.product = ProductFactory(name='Nitrate')
+        cls.product = ProductFactory(name='Kiwi')
         cls.version = VersionFactory(value='0.1', product=cls.product)
         cls.tester = UserFactory()
         cls.plan = TestPlanFactory(author=cls.tester, owner=cls.tester,

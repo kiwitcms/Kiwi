@@ -10,7 +10,7 @@ from kobo.django.xmlrpc.models import XmlRpcLog
 
 __all__ = ('log_call',)
 
-logger = logging.getLogger('nitrate.xmlrpc')
+logger = logging.getLogger('kiwi.xmlrpc')
 
 if settings.DEBUG:
     # To avoid pollute XMLRPC logs with those generated during development

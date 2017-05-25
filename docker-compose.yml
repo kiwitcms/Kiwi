@@ -4,31 +4,31 @@ services:
     db:
         image: centos/mariadb
         volumes:
-            - nitrate_db_data:/var/lib/mysql
+            - kiwi_db_data:/var/lib/mysql
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: nitrate-1s-aw3s0m3
-            MYSQL_DATABASE: nitrate
-            MYSQL_USER: nitrate
-            MYSQL_PASSWORD: nitrate
+            MYSQL_ROOT_PASSWORD: kiwi-1s-aw3s0m3
+            MYSQL_DATABASE: kiwi
+            MYSQL_USER: kiwi
+            MYSQL_PASSWORD: kiwi
 
     web:
         depends_on:
             - db
         restart: always
-        # NOTE: mrsenko/nitrate is a private image on Docker Store!
-        image: mrsenko/nitrate:3.8.18.21
+        # NOTE: mrsenko/kiwi is a private image on Docker Store!
+        image: mrsenko/kiwi:3.21
         ports:
             - 80
         volumes:
-            - nitrate_uploads:/var/nitrate/uploads
+            - kiwi_uploads:/var/kiwi/uploads
         environment:
-            NITRATE_DB_HOST: db
-            NITRATE_DB_PORT: 3306
-            NITRATE_DB_NAME: nitrate
-            NITRATE_DB_USER: nitrate
-            NITRATE_DB_PASSWORD: nitrate
+            KIWI_DB_HOST: db
+            KIWI_DB_PORT: 3306
+            KIWI_DB_NAME: kiwi
+            KIWI_DB_USER: kiwi
+            KIWI_DB_PASSWORD: kiwi
 
 volumes:
-    nitrate_db_data:
-    nitrate_uploads:
+    kiwi_db_data:
+    kiwi_uploads:

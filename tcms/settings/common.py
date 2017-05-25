@@ -4,7 +4,7 @@ import django.conf.global_settings as DEFAULT_SETTINGS
 import os.path
 import tcms
 
-NITRATE_VERSION = tcms.__version__
+KIWI_VERSION = tcms.__version__
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -91,7 +91,7 @@ ADMIN_PREFIX = '/admin'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/usr/share/nitrate/static/'
+STATIC_ROOT = '/usr/share/kiwi/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -195,7 +195,7 @@ TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
 
-COMMENTS_APP = 'tcms.core.contrib.comments'  # 'nitrate_comments'
+COMMENTS_APP = 'tcms.core.contrib.comments'
 
 #
 # XML-RPC interface settings
@@ -293,21 +293,15 @@ PLAN_RUNS_PAGE_SIZE = 20
 # /etc/motd. They are fragments of HTML.
 
 # This if set, is shown on the login/registration screens.
-MOTD_LOGIN = """<em>If it is not in Nitrate, then we don't test it!</em>"""
+MOTD_LOGIN = """<em>If it is not in KiwiTestPad, then we don't test it!</em>"""
 
 # The URLS will be list in footer
-# Example:
-#FOOTER_LINKS = (
-#   ('mailto:nitrate-dev-list@example.com', 'Contact Us'),
-#   ('mailto:nitrate-admin@example.com', 'Request Permission'),
-#   ('http://foo.com', 'foo')
-#)
 FOOTER_LINKS = ()
 
 # Attachement file download path
 # it could be spcified to a different out of MEDIA_URL
 # FILE_UPLOAD_DIR = path.join(MEDIA_DIR, 'uploads').replace('\\','/'),
-FILE_UPLOAD_DIR = '/var/nitrate/uploads'
+FILE_UPLOAD_DIR = '/var/kiwi/uploads'
 
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
@@ -315,7 +309,7 @@ SET_ADMIN_AS_SUPERUSER = False
 
 # Used to construct absolute URls when interfacing with
 # external systems. Must override in product.py
-NITRATE_BASE_URL='http://127.0.0.1:8000'
+KIWI_BASE_URL='http://127.0.0.1:8000'
 
 # Turn on/off listening signals sent by models.
 LISTENING_MODEL_SIGNAL = True
@@ -398,7 +392,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'nitrate.xmlrpc': {
+        'kiwi.xmlrpc': {
             'handlers': ['xmlrpc'],
             'level': 'DEBUG',
             'propagate': True,

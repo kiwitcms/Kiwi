@@ -10,11 +10,11 @@ RUN yum -y update --setopt=tsflags=nodocs
 RUN yum clean all
 
 # static files configuration for Apache
-COPY ./contrib/conf/nitrate-httpd.conf /etc/httpd/conf.d/
+COPY ./contrib/conf/kiwi-httpd.conf /etc/httpd/conf.d/
 
 # configure uploads directory
-RUN mkdir -p /var/nitrate/uploads
-RUN chown apache:apache /var/nitrate/uploads
+RUN mkdir -p /var/kiwi/uploads
+RUN chown apache:apache /var/kiwi/uploads
 
 # Create a virtualenv for the application dependencies
 # Using --system-site-packages b/c Apache configuration
@@ -28,17 +28,17 @@ ENV VIRTUAL_ENV /venv
 ENV PATH /venv/bin:$PATH
 
 
-# Install Nitrate dependencies
-COPY ./requirements/ /Nitrate/requirements/
-RUN pip install -r /Nitrate/requirements/mysql.txt
+# Install KiwiTestPad dependencies
+COPY ./requirements/ /Kiwi/requirements/
+RUN pip install -r /Kiwi/requirements/mysql.txt
 
 # Add manage.py
-COPY ./manage.py /Nitrate/
-RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Nitrate/manage.py
+COPY ./manage.py /Kiwi/
+RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py
 
 # Add application code
 COPY ./tcms/ /usr/lib/python2.7/site-packages/tcms/
 RUN find /usr/lib/python2.7/site-packages/tcms/ -name "*.pyc" -delete
 
 # collect static files
-RUN /Nitrate/manage.py collectstatic --noinput
+RUN /Kiwi/manage.py collectstatic --noinput

@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 class IssueTrackerType(object):
     """
         Represents actions which can be performed with issue trackers.
-        This is a common interfce for all issue trackers that Nitrate
+        This is a common interfce for all issue trackers that KiwiTestPad
         supports!
     """
 
@@ -112,7 +112,7 @@ class Bugzilla(IssueTrackerType):
             action = 'None'
             effect = 'None'
 
-        caserun_url = settings.NITRATE_BASE_URL + \
+        caserun_url = settings.KIWI_BASE_URL + \
             reverse('tcms.testruns.views.get', args=[caserun.run.pk])
 
         comment = "Filed from caserun %s\n\n" % caserun_url

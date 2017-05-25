@@ -11,19 +11,19 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('NITRATE_DB_NAME', 'nitrate'),
-        'USER': os.environ.get('NITRATE_DB_USER', 'nitrate'),
-        'PASSWORD': os.environ.get('NITRATE_DB_PASSWORD', 'nitrate'),
-        'HOST': os.environ.get('NITRATE_DB_HOST', ''),
-        'PORT': os.environ.get('NITRATE_DB_PORT', ''),
+        'NAME': os.environ.get('KIWI_DB_NAME', 'kiwi'),
+        'USER': os.environ.get('KIWI_DB_USER', 'kiwi'),
+        'PASSWORD': os.environ.get('KIWI_DB_PASSWORD', 'kiwi'),
+        'HOST': os.environ.get('KIWI_DB_HOST', ''),
+        'PORT': os.environ.get('KIWI_DB_PORT', ''),
     },
     'slave_1': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('NITRATE_DB_NAME', 'nitrate'),
-        'USER': os.environ.get('NITRATE_DB_USER', 'nitrate'),
-        'PASSWORD': os.environ.get('NITRATE_DB_PASSWORD', 'nitrate'),
-        'HOST': os.environ.get('NITRATE_DB_HOST', ''),
-        'PORT': os.environ.get('NITRATE_DB_PORT', ''),
+        'NAME': os.environ.get('KIWI_DB_NAME', 'kiwi'),
+        'USER': os.environ.get('KIWI_DB_USER', 'kiwi'),
+        'PASSWORD': os.environ.get('KIWI_DB_PASSWORD', 'kiwi'),
+        'HOST': os.environ.get('KIWI_DB_HOST', ''),
+        'PORT': os.environ.get('KIWI_DB_PORT', ''),
     },
 }
 
@@ -52,20 +52,18 @@ EMAIL_FROM = 'noreply@example.com'
 FIRST_RUN = False
 
 # user guide URL
-USER_GUIDE_URL = "http://nitrate-mrsenko.readthedocs.io/en/latest/tutorial.html"
+USER_GUIDE_URL = "http://kiwitestpad.readthedocs.io/en/latest/tutorial.html"
 
 # You can add a help link on the footer of home page as following format:
 # ('http://foo.com', 'foo')
 FOOTER_LINKS = (
- ('https://github.com/MrSenko/Nitrate/issues/new', 'Report an Issue'),
+ ('https://github.com/MrSenko/Kiwi/issues/new', 'Report an Issue'),
  (USER_GUIDE_URL, 'User guide'),
- ('http://nitrate-mrsenko.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
+ ('http://kiwitestpad.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
  ('/xmlrpc/', 'XML-RPC service'),
 )
 
-# added for nitrate3.4 compatibility
 DEFAULT_GROUPS = ['default']
-TESTOPIA_XML_VERSION = '1.0'
 
 # admin settings
 ADMINS = (

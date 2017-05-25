@@ -10,7 +10,7 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nitrate',
+        'NAME': 'kiwi',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',

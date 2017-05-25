@@ -1,24 +1,11 @@
-SPECFILE=nitrate.spec
-
 default: help
 
 DIST_DIR=$(shell pwd)/dist/
-DEFINE_OPTS=--define "_sourcedir $(PWD)/dist" --define "_srcrpmdir $(PWD)/dist" --define "_rpmdir $(PWD)/dist"
 
 
 .PHONY: tarball
 tarball:
 	@python setup.py sdist
-
-
-.PHONY: srpm
-srpm:
-	@rpmbuild $(DEFINE_OPTS) -bs $(SPECFILE)
-
-
-.PHONY: rpm
-rpm:
-	@rpmbuild $(DEFINE_OPTS) -ba $(SPECFILE)
 
 
 .PHONY: build
@@ -88,13 +75,13 @@ etags:
 		--exclude=build --exclude=tcms/static/js/lib -f TAGS
 
 ifeq ($(DOCKER_ORG),)
-  DOCKER_ORG='nitrate'
+  DOCKER_ORG='mrsenko'
 endif
 
-NITRATE_VERSION=$(shell cat tcms/__init__.py | grep __version__ | cut -f2 -d"'")
+KIWI_VERSION=$(shell cat tcms/__init__.py | grep __version__ | cut -f2 -d"'")
 
 docker-image:
-	docker build -t $(DOCKER_ORG)/nitrate:$(NITRATE_VERSION) .
+	docker build -t $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) .
 
 docker-run: docker-image
 	docker compose up
@@ -106,8 +93,6 @@ help:
 	@echo ''
 	@echo 'Available commands:'
 	@echo ''
-	@echo '  rpm              - Create RPM'
-	@echo '  srpm             - Create SRPM'
 	@echo '  tarball          - Create tarball. Run command: python setup.py sdist'
 	@echo '  flake8           - Check Python code style throughout whole source code tree'
 	@echo '  test             - Run all tests default. Set TEST_TARGET to run part tests of specific apps'

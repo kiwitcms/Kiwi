@@ -42,7 +42,7 @@ class UploadedHTMLFile(UploadedFile):
     '''Represent an uploaded HTML file
 
     While uploading an HTML file, several tags, attributee have to be deleted,
-    because they would break Nitrate internal JavaScript features and styles
+    because they would break KiwiTestPad's internal JavaScript features and styles
     and make some features unusable. Especially to the JavaScript surrounded by
     SCRIPT or referenced from unknown external resources, security issue must
     be considered.

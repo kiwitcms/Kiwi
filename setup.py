@@ -29,14 +29,14 @@ def get_long_description():
 
 
 setup(
-    name='nitrate',
+    name='kiwitestpad',
     version=tcms.__version__,
     description='Test Case Management System',
     long_description=get_long_description(),
-    author='Nitrate Team',
-    maintainer='Chenxiong Qi',
-    maintainer_email='qcxhome@gmail.com',
-    url='https://github.com/Nitrate/Nitrate/',
+    author='various',
+    maintainer='Alexander Todorov',
+    maintainer_email='atodorov@MrSenko.com',
+    url='https://github.com/MrSenko/Kiwi/',
     license='GPLv2+',
     keywords='test case',
 
