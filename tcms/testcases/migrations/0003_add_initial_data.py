@@ -15,7 +15,7 @@ def forwards_add_initial_data(apps, schema_editor):
                           url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
                           validate_reg_exp=r'^\d{1,7}$'),
         TestCaseBugSystem(name='JIRA',
-                          description='e.g. NITRATE-222',
+                          description='e.g. KIWI-222',
                           url_reg_exp='https://jira.example.com/browse/%s',
                           validate_reg_exp=r'^[A-Z0-9]+-\d+$'),
     ])

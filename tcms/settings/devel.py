@@ -1,6 +1,6 @@
 # Django settings for devel env.
 
-from common import *
+from product import *
 
 # Debug settings
 DEBUG = True
@@ -9,8 +9,8 @@ TEMPLATE_DEBUG = DEBUG
 # Database settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kiwi',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/tmp/nitrate.devel.sqlite',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',

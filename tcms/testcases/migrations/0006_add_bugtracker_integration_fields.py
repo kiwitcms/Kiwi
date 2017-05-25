@@ -46,7 +46,7 @@ Leave empty to disable!''',
             name='tracker_type',
             field=models.CharField(
                 default='IssueTrackerType',
-                help_text=b'This determines how Nitrate interfaces with the IT system',
+                help_text=b'This determines how KiwiTestPad interfaces with the IT system',
                 max_length=128,
                 verbose_name=b'Type'),
         ),
