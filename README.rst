@@ -1,61 +1,44 @@
-Nitrate - Test Case Management System
-=====================================
+KiwiTestPad - Test Case Management System
+=========================================
 
-.. image:: https://travis-ci.org/MrSenko/Nitrate.svg?branch=master
-    :target: https://travis-ci.org/MrSenko/Nitrate
+.. image:: https://travis-ci.org/MrSenko/Kiwi.svg?branch=master
+    :target: https://travis-ci.org/MrSenko/Kiwi
 
-.. image:: https://coveralls.io/repos/github/MrSenko/Nitrate/badge.svg?branch=master
-   :target: https://coveralls.io/github/MrSenko/Nitrate?branch=master
+.. image:: https://coveralls.io/repos/github/MrSenko/Kiwi/badge.svg?branch=master
+   :target: https://coveralls.io/github/MrSenko/Kiwi?branch=master
+
+.. image:: https://readthedocs.org/projects/kiwitestpad/badge/?version=latest
+   :target: http://kiwitestpad.readthedocs.io/en/latest/?badge=latest
+
 
 Introduction
 ------------
 
-Nitrate is a new test plan, test run and test case management system, that is
+KiwiTestPad is a test plan, test run and test case management system, that is
 written in Python and Django. It has a lot of great features, such as Bugzilla
 and JIRA integration, QPID integration, fast test plan and runs search,
 powerful access control for each plan, run and case, and XMLRPC APIs.
 
-Dependencies
-------------
-
-See also requirements/base.txt and requirements/devel.txt
 
 Documentation
 -------------
 
-http://nitrate.readthedocs.org/
+http://kiwitestpad.readthedocs.org/
+
 
 Installation
 ------------
 
-See also `Installation in RHEL`_
+See http://kiwitestpad.readthedocs.io/en/latest/installing_docker.html
 
-.. _Installation in RHEL:  http://nitrate.readthedocs.org/en/latest/installing_in_rhel.html
 
 Contribution
 ------------
 
-See also Contribution_
+See http://kiwitestpad.readthedocs.org/en/latest/contribution.html
 
-.. _Contribution: http://nitrate.readthedocs.org/en/latest/contribution.html
 
 Bug Reports
 -----------
 
-`File a New Bug Report`_
-
-.. _File a New Bug Report: http://nitrate.readthedocs.org/en/latest/bug_reporting.html
-
-Mailing Lists
--------------
-
-`nitrate-devel at lists.fedorahosted.org`_
-
-.. _nitrate-devel at lists.fedorahosted.org: mailto:nitrate-devel@lists.fedorahosted.org
-
-IRC
----
-
-`#nitrate on irc.freenode.org`_
-
-.. _#nitrate on irc.freenode.org: irc://irc.freenode.org/nitrate
+See http://kiwitestpad.readthedocs.org/en/latest/bug_reporting.html

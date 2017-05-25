@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+3.21 (May XX 2017, released on MrSenko.com)
+-------------------------------------------
+
+- Forked from https://github.com/Nitrate/Nitrate as a stand-alone project
+- Future versions will be released under the name **KiwiTestPad**
+
+
 3.8.18.21 (May 24 2017, released on MrSenko.com)
 -----------------------------------------------
 
