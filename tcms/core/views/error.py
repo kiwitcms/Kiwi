@@ -9,9 +9,6 @@ def server_error(request, template_name='500.html'):
     RequestContext, and worse, the static file with prefix 'STATIC_URL' will
     become a relative resource on current page,
 
-    e.g:
-    http://host/run/118632/images/logo_shipshape_1.png
-
     Here we render the error page with request object which has 'STATIC_URL'
     """
     try:
