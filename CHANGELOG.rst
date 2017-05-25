@@ -30,7 +30,7 @@ NOTE: this release introduces new database migrations!
 NOTE: this release includes updated static files!
 
 NOTE: this release introduces a new configuration setting called
-``NITRATE_BASE_URL``. It defined the FQDN of your Nitrate instance!
+``NITRATE_BASE_URL``. It defines the FQDN of your Nitrate instance!
 This configuration is used to construct a URL linking back to test
 cases and test runs when reporting bugs!
 
