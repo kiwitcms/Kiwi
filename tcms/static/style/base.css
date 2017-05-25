@@ -17,7 +17,6 @@ body { font-size:12px; width:100%; min-width:1200px; line-height:150%; font-fami
 .fixed { display: block; min-height: 1%; }
 *html .fixed { height: 1%; }
 
-.logo {height:50px;width:40px;}
 .clear{ clear:both!important; float:none!important;}
 .absoluteright{position:absolute; right:10px; top:4px;}
 .absoluteright span{display:inline-table; height:18px; line-height:18px;}
