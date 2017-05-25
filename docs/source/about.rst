@@ -1,7 +1,7 @@
 .. _about:
 
-About Nitrate
-=============
+About KiwiTestPad
+=================
 
 .. TODO
    specific description

@@ -4,8 +4,8 @@
 Contribution
 ============
 
-Nitrate team welcomes and appreciates any kind of contribution from you in
-order to make Nitrate better and better. Anyone who is interested in Nitrate is
+KiwiTestPad team welcomes and appreciates any kind of contribution from you in
+order to make KiwiTestPad better and better. Anyone who is interested in KiwiTestPad is
 able to contribute in various areas, whatever you are a good and experienced
 developer, documentation writer or even a normal user.
 
@@ -14,7 +14,7 @@ Testing
 -------
 
 Testing, testing, and testing. Testing is the most important way to ensure the
-high quality of Nitrate to serve users. There are many areas to test, such as
+high quality of KiwiTestPad to serve users. There are many areas to test, such as
 the features, documentation, translation, and any other aspects you may focus
 on. Once you find a problem, please search it in the `Issues`_ to see whether
 it has been reported by other people. If no one reported there yet, you are
@@ -51,7 +51,7 @@ Translation
 -----------
 
 We are willing to make our contribution to benefit the world. To translate
-Nitrate to usual languages in the universe is a critial task. Your contribution
+KiwiTestPad to usual languages in the universe is a critial task. Your contribution
 is so important to everyone. Picking up and editing the PO file of specific
 language you are skilled in.
 
@@ -63,7 +63,7 @@ consulting language experts around you when you hesitant.
 Package
 -------
 
-Currently, Nitrate team only supports to distribute standard Python package
+Currently, KiwiTestPad team only supports to distribute standard Python package
 and RPM package. You are encouraged to package for other package system, such
 as the deb package for Debian based Linux distributions.
 
@@ -74,24 +74,24 @@ Development
 If you are experiencing programming in Python and Django or interested in
 learning how to develop a website using Django, contributing patch to fix
 problems or improving features are both welcome. Please don't be hesitated to
-contact Nitrate team to disucss your ideas and implement it. Following these
-steps to contribute code to Nitrate.
+contact KiwiTestPad team to disucss your ideas and implement it. Following these
+steps to contribute code to KiwiTestPad.
 
 
 Get the code
 ~~~~~~~~~~~~
 
 Code is hosted in Github. Following the guide in Github to fork and clone
-code to your local machine. For example, I have forked Nitrate, then I can
+code to your local machine. For example, I have forked KiwiTestPad, then I can
 clone it
 
 ::
 
-    git clone git@github.com:[my github username]/Nitrate.git
+    git clone git@github.com:[my github username]/Kiwi.git
 
 
-Start Nitrate locally
-~~~~~~~~~~~~~~~~~~~~~
+Start KiwiTestPad locally
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 See :doc:`set_dev_env` or :doc:`set_dev_env_with_vagrant` for more information!
 
@@ -160,7 +160,7 @@ second part. It should look like::
 Review & Acceptance
 ~~~~~~~~~~~~~~~~~~~
 
-Till now, congratulations, you have contributed to Nitrate. Please be patient
+Till now, congratulations, you have contributed to KiwiTestPad. Please be patient
 to wait for our review.
 
-.. _Issues: https://github.com/Nitrate/Nitrate/issues
+.. _Issues: https://github.com/MrSenko/Kiwi/issues

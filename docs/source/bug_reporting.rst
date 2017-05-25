@@ -4,8 +4,8 @@ Report an Issue
 Security Issues
 ---------------
 
-If you think that an issue with nitrate may have security implications, please
-do not publically report it in the bug tracker, mailing lists, or IRC. Nitrate
+If you think that an issue with KiwiTestPad may have security implications, please
+do not publically report it in the bug tracker. KiwiTestPad
 has a dedicated process for handling (potential) security issues that should be
 used instead. So if your issue has security implications, ignore the rest of
 this page and follow the security process instead.
@@ -19,7 +19,7 @@ everybody from community could understand and get involved into the discussion
 easily. Also, an issue with much details can help developers to know the
 problem deeply and make a proper solution finally.
 
-.. _create an issue: https://github.com/Nitrate/Nitrate/issues
+.. _create an issue: https://github.com/MrSenko/Kiwi/issues
 
 Before you file an issue, a good practice is to search issues to see whether
 any others have same or similar problems. Avoid duplicated issues will always

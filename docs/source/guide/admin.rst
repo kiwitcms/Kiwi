@@ -16,7 +16,7 @@ The ADMIN tab allows administrators to manage:
 Adding bug trackers
 -------------------
 
-One of the first steps when working with Nitrate is to configure bug
+One of the first steps when working with KiwiTestPad is to configure bug
 tracking systems. This can be done via the interface located via the menu
 ``ADMIN -> Test cases -> Bug trackers``. Each bug tracker is given a
 name, short description, URL format string and a regular expression
@@ -36,7 +36,7 @@ The Auth administration section covers Groups and Users.
 Groups
 ~~~~~~
 
-Nitrate uses groups to manage access to parts of the system. Groups
+KiwiTestPad uses groups to manage access to parts of the system. Groups
 have two fields: name and permissions. By default there are two groups
 created
 
@@ -122,7 +122,7 @@ Assigning permissions
 ^^^^^^^^^^^^^^^^^^^^^
 
 User permissions can be granted or revoked for individual components of
-Nitrate. All permissions are prefixed with the ``add_``, ``change_`` and
+KiwiTestPad. All permissions are prefixed with the ``add_``, ``change_`` and
 ``delete_`` prefixes signifying the operation which is controlled by this
 permission. Then the codename contains the name of the model for which this
 permission applies. For example, the ability to add attachments to a Test Case
@@ -149,7 +149,7 @@ To assign permissions:
 Adding a user to a group
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Group permissions in Nitrate work the same as they do in Linux. The
+Group permissions in KiwiTestPad work the same as they do in Linux. The
 system checks a user's personal permissions, then group permissions.
 
 Procedure: Adding a user to a group
@@ -167,7 +167,7 @@ To add a user to a group:
 Updating personal information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Nitrate can store email, first and last name details of a user.
+KiwiTestPad can store email, first and last name details of a user.
 
 Procedure: Updating personal information
 ''''''''''''''''''''''''''''''''''''''''
@@ -189,7 +189,7 @@ To update personal information:
 Deleting a user
 ^^^^^^^^^^^^^^^
 
-Users can not be deleted from Nitrate. A user that is no longer required
+Users can not be deleted from KiwiTestPad. A user that is no longer required
 must be disabled.
 
 Procedure: Disabling a user
@@ -210,7 +210,7 @@ To disable a user:
 Access Control Lists
 ~~~~~~~~~~~~~~~~~~~~
 
-Nitrate uses ACLs for the user groups: Guest, Tester, and Admin. The
+KiwiTestPad uses ACLs for the user groups: Guest, Tester, and Admin. The
 permissions for each group can be controlled from the **Group** section
 in the **AUTH** tab.
 
@@ -229,7 +229,7 @@ in the **AUTH** tab.
 Managing entities
 -----------------
 
-The following entities are listed in Nitrate:
+The following entities are listed in KiwiTestPad:
 
 -  Builds
 -  Classifications
@@ -488,7 +488,7 @@ To edit a product:
 Versions
 ~~~~~~~~
 
-Each product in Nitrate needs a version. Many products will have
+Each product in KiwiTestPad needs a version. Many products will have
 multiple versions. For example, Firefox 3.0.14, 3.5.3.
 
 Procedure: Adding a version
@@ -567,7 +567,7 @@ To add a Test Plan type:
 Test plans
 ~~~~~~~~~~
 
-This screen provides a list of all the test plans in Nitrate. The **Add
+This screen provides a list of all the test plans in KiwiTestPad. The **Add
 test plan** link can be used to create a test plan. For more
 information, see Creating a Test Plan.
 
@@ -618,7 +618,7 @@ To add a category:
 Test cases
 ~~~~~~~~~~
 
-This screen provides a list of all the test cases in Nitrate. The **Add
+This screen provides a list of all the test cases in KiwiTestPad. The **Add
 test case** link can be used to create a test case. For more
 information, see Creating a Test Case.
 

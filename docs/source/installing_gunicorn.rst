@@ -1,34 +1,34 @@
-Installing Nitrate with Gunicorn
-================================
+Installing KiwiTestPad with Gunicorn
+====================================
 
 Installation
 ------------
 
-Start by creating a virtualenv for your Nitrate instance::
+Start by creating a virtualenv for your KiwiTestPad instance::
 
-    $ mkvirtualenv myNitrate
+    $ mkvirtualenv myKiwi
 
 Install Gunicorn::
 
-    (myNitrate)$ pip install gunicorn
+    (myKiwi)$ pip install gunicorn
 
-Install Nitrate::
+Install KiwiTestPad::
 
-    (myNitrate)$ cd ~/path/to/Nitrate
-    (myNitrate)$ python ./setup.py install
+    (myKiwi)$ cd ~/path/to/Kiwi
+    (myKiwi)$ python ./setup.py install
 
 
 Configuration
 --------------
 
-You need to create a directory holding customized settings to your Nitrate
+You need to create a directory holding customized settings to your KiwiTestPad
 instance and a ``wsgi.py`` file for Gunicorn::
 
-    (myNitrate)$ mkdir mynitrate
+    (myKiwi)$ mkdir mykiwi
 
-The ``mynitrate/`` directory needs to contain the following files::
+The ``mykiwi/`` directory needs to contain the following files::
 
-    (myNitrate)$ ls -l mynitrate/
+    (myKiwi)$ ls -l mykiwi/
     total 0
     -rw-rw-r--. 1 atodorov atodorov    0 Jan 26 11:41 __init__.py
     -rw-rw-r--. 1 atodorov atodorov 1300 Jan 26 11:41 settings.py
@@ -36,18 +36,18 @@ The ``mynitrate/`` directory needs to contain the following files::
 
 ``__init__.py`` must be empty. The other files should look like shown below.
 
-``mynitrate/wsgi.py``::
+``mykiwi/wsgi.py``::
 
     import os
     
     from django.core.wsgi import get_wsgi_application
     
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mynitrate.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mykiwi.settings")
     
     application = get_wsgi_application()
 
 
-``mynitrate/settings.py``::
+``mykiwi/settings.py``::
 
     from tcms.settings.product import *
     
@@ -68,7 +68,7 @@ The ``mynitrate/`` directory needs to contain the following files::
             'PASSWORD': 'changeMe',
         },
     }
-    # Nitrate defines a 'slave_1' connection
+    # KiwiTestPad defines a 'slave_1' connection
     DATABASES['slave_1'] = DATABASES['default']
 
 Static files storage with Amazon S3
@@ -82,9 +82,9 @@ http://honza.ca/2011/05/deploying-django-with-nginx-and-gunicorn.
 Another very easy and cheap way to host your static files is to
 use Amazon S3. If you decide to do this then::
 
-    (myNitrate)$ pip install django-s3-folder-storage
+    (myKiwi)$ pip install django-s3-folder-storage
 
-and add the following configuration to `mynitrate/settings.py`::
+and add the following configuration to `mykiwi/settings.py`::
 
     INSTALLED_APPS += (
         's3_folder_storage',
@@ -103,7 +103,7 @@ and add the following configuration to `mynitrate/settings.py`::
 
     Amazon S3 Frankfurt supports only Sigv4 requests so you need to properly
     instruct the storages layer to handle them. To work around this create
-    a file named ``mynitrate/storage.py`` with the following content::
+    a file named ``mykiwi/storage.py`` with the following content::
 
         import os
         from s3_folder_storage.s3 import StaticStorage
@@ -118,26 +118,26 @@ and add the following configuration to `mynitrate/settings.py`::
                         calling_format=self.calling_format, host='s3.eu-central-1.amazonaws.com')
                 return self._connection
 
-    then update your ``mynitrate/settings.py``::
+    then update your ``mykiwi/settings.py``::
 
-        STATICFILES_STORAGE = 'mynitrate.storage.SigV4Storage'
+        STATICFILES_STORAGE = 'mykiwi.storage.SigV4Storage'
         STATIC_URL = '//s3-eu-central-1.amazonaws.com/%s/%s/' % (AWS_STORAGE_BUCKET_NAME, STATIC_S3_PATH)
 
 After static files storage has been configured execute::
 
-    (myNitrate)$ PYTHONPATH=. django-admin collectstatic --settings mynitrate.settings
+    (myKiwi)$ PYTHONPATH=. django-admin collectstatic --settings mykiwi.settings
 
 
-Serve Nitrate with Gunicorn
----------------------------
+Serve KiwiTestPad with Gunicorn
+--------------------------------
 
-Once your local Nitrate instance has been configured then create the database::
+Once your local KiwiTestPad instance has been configured then create the database::
 
-    (myNitrate)$ PYTHONPATH=. django-admin migrate --settings mynitrate.settings
+    (myKiwi)$ PYTHONPATH=. django-admin migrate --settings mykiwi.settings
 
-Then create the first user account on your Nitrate instance::
+Then create the first user account on your KiwiTestPad instance::
 
-    (myNitrate)$ PYTHONPATH=. django-admin createsuperuser --settings mynitrate.settings
+    (myKiwi)$ PYTHONPATH=. django-admin createsuperuser --settings mykiwi.settings
     Username (leave blank to use 'atodorov'): 
     Email address: atodorov@MrSenko.com
     Password: 
@@ -146,7 +146,7 @@ Then create the first user account on your Nitrate instance::
 
 Afterwards start Gunicorn::
 
-    (myNitrate)$ gunicorn mynitrate.wsgi
+    (myKiwi)$ gunicorn mykiwi.wsgi
     [2017-01-26 11:52:57 +0000] [24161] [INFO] Starting gunicorn 19.6.0
     [2017-01-26 11:52:57 +0000] [24161] [INFO] Listening at: http://127.0.0.1:8000 (24161)
     [2017-01-26 11:52:57 +0000] [24161] [INFO] Using worker: sync

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# nitrate documentation build configuration file, created by
+# KiwiTestPad documentation build configuration file, created by
 # sphinx-quickstart on Tue Nov 26 22:58:55 2013.
 #
 # This file is execfile()d with the current directory set to its
@@ -54,8 +54,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'nitrate'
-copyright = u'2013, Red Hat, Inc.'
+project = u'KiwiTestPad'
+copyright = u'2013, Red Hat, Inc.; 2017, Mr. Senko, Ltd.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -188,7 +188,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'nitratedoc'
+htmlhelp_basename = 'kiwidoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -208,7 +208,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'nitrate.tex', u'nitrate Documentation',
+  ('index', 'kiwi.tex', u'KiwiTestPad Documentation',
    u'hlin,weizhou,cqi,qduanmu', 'manual'),
 ]
 
@@ -238,7 +238,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'nitrate', u'nitrate Documentation',
+    ('index', 'kiwi', u'KiwiTestPad Documentation',
      [u'hlin,weizhou,cqi,qduanmu'], 1)
 ]
 
@@ -252,8 +252,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'nitrate', u'nitrate Documentation',
-   u'hlin,weizhou,cqi,qduanmu', 'nitrate', 'One line description of project.',
+  ('index', 'kiwi', u'KiwiTestPad Documentation',
+   u'hlin,weizhou,cqi,qduanmu', 'kiwi', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -273,13 +273,13 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'nitrate'
-epub_author = u'hlin,weizhou,cqi,qduanmu'
-epub_publisher = u'hlin,weizhou,cqi,qduanmu'
-epub_copyright = u'2013, Red Hat, Inc.'
+epub_title = u'kiwi'
+epub_author = u'hlin,weizhou,cqi,qduanmu,MrSenko'
+epub_publisher = u'hlin,weizhou,cqi,qduanmu,MrSenko'
+epub_copyright = u'2013, Red Hat, Inc.; 2017, Mr. Senko, Ltd.'
 
 # The basename for the epub file. It defaults to the project name.
-#epub_basename = u'nitrate'
+#epub_basename = u'kiwi'
 
 # The HTML theme for the epub output. Since the default themes are not optimized
 # for small screen space, using the same theme for HTML and epub output is

@@ -9,12 +9,12 @@ development environment, all you need is just to run
     vagrant up --provider virtualbox
 
 After ``vagrant`` succeeds to run the virtual machine, you will get a complete
-environment to develop Nitrate,
+environment to develop KiwiTestPad,
 
-* a Python virtual environment creatd at ``$HOME/nitrate-env/`` with all
+* a Python virtual environment creatd at ``$HOME/kiwi-env/`` with all
   necessary dependecies installed.
 
-* database is created in MariaDB and name is ``nitrate``. It's empty. Before
+* database is created in MariaDB and name is ``kiwi``. It's empty. Before
   hacking and running development server, remmeber to synchronize database
   from models.
 

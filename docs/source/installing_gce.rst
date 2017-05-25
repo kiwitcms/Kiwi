@@ -1,9 +1,9 @@
-Installing Nitrate with Docker and Google Cloud Engine
-======================================================
+Installing KiwiTestPad with Docker and Google Cloud Engine
+==========================================================
 
-It is possible to host Nitrate on Google Cloud Engine as a Docker image.
+It is possible to host KiwiTestPad on Google Cloud Engine as a Docker image.
 The image is configured to use Gunicorn as the backend server. To read
-more about Nitrate and Gunicorn see :doc:`installing_gunicorn`.
+more about KiwiTestPad and Gunicorn see :doc:`installing_gunicorn`.
 
 .. warning::
 
@@ -14,7 +14,7 @@ more about Nitrate and Gunicorn see :doc:`installing_gunicorn`.
 Create Docker image
 -------------------
 
-First make sure you are able to start Nitrate via Gunicorn locally!
+First make sure you are able to start KiwiTestPad via Gunicorn locally!
 Then inside your application directory create the following files.
 
 ``app.yaml``::
@@ -79,27 +79,27 @@ Use the following ``Dockerfile`` to build your image::
 
     RUN pip install -U pip
 
-    # Install gunicorn and Nitrate
+    # Install gunicorn and KiwiTestPad
     # remove django-s3-folder-storage if you don't use Amazon S3 for static files
-    RUN pip install gunicorn nitrate django-s3-folder-storage
+    RUN pip install gunicorn django-s3-folder-storage kiwitestpad
 
     # Add application code.
     ADD . /app
 
     # Gunicorn is used to run the application on Google App Engine. $PORT is defined
     # by the runtime.
-    CMD gunicorn -b :$PORT --keyfile /app/ssl/key.pem --certfile /app/ssl/cert.pem mynitrate.wsgi
+    CMD gunicorn -b :$PORT --keyfile /app/ssl/key.pem --certfile /app/ssl/cert.pem mykiwi.wsgi
 
 .. note::
 
     ``ssl/`` is a directory containing SSL key and certificate if you'd like to serve
-    Nitrate via HTTPS.
+    KiwiTestPad via HTTPS.
 
 .. warning::
 
-    At the time of writing Nitrate is not distributed as a package hosted on
-    Python Package Index. The command ``pip install nitrate`` above will fail
-    unless you provide it with the exact URL to ``nitrate-X.Y.tar.gz``! You can
+    At the time of writing KiwiTestPad is not distributed as a package hosted on
+    Python Package Index. The command ``pip install kiwitestpad`` above will fail
+    unless you provide it with the exact URL to ``kiwitestpad-X.Y.tar.gz``! You can
     build the package on your own using ``python ./setup.py sdist``!
 
 
@@ -108,7 +108,7 @@ Build and push the latest version of the image
 
 ::
 
-    $ IMAGE="gcr.io/YOUR-ORGANIZATION/nitrate:v$(date +%Y%m%d%H%M)"
+    $ IMAGE="gcr.io/YOUR-ORGANIZATION/kiwi:v$(date +%Y%m%d%H%M)"
     $ docker build --tag $IMAGE .
     $ gcloud docker push $IMAGE
 
@@ -122,8 +122,8 @@ Create the service for the first time
 
 ::
 
-    $ kubectl run nitrate --image=gcr.io/YOUR-ORGANIZATION/nitrate:vYYYYMMDDHHMM --port 8080
-    $ kubectl expose rc nitrate --port 443 --target-port 8080 --name nitrate-https --type=LoadBalancer
+    $ kubectl run kiwi --image=gcr.io/YOUR-ORGANIZATION/kiwi:vYYYYMMDDHHMM --port 8080
+    $ kubectl expose rc kiwi --port 443 --target-port 8080 --name kiwi-https --type=LoadBalancer
 
 These commands will create a resource controller with a single pod running the
 service. After a while you can view the external IP address using the command::
@@ -140,28 +140,28 @@ Create DB structure, first user and upload static files
 -------------------------------------------------------
 
 The commands below are executed from inside the Docker image
-because they need access to ``mynitrate/settings.py``::
+because they need access to ``mykiwi/settings.py``::
 
 
     $ kubectl get pods
     NAME            READY     STATUS    RESTARTS   AGE
-    nitrate-d2u6p   1/1       Running   0          18h
+    kiwi-d2u6p   1/1       Running   0          18h
     
-    $ kubectl exec nitrate-d2u6p -i -t -- bash -il
-    root@nitrate-d2u6p:/home/vmagent/app# source /env/bin/activate
-    (env)root@nitrate-d2u6p:/home/vmagent/app# PYTHONPATH=. django-admin migrate --settings mynitrate.settings
-    (env)root@nitrate-d2u6p:/home/vmagent/app# PYTHONPATH=. django-admin createsuperuser --settings mynitrate.settings
-    (env)root@nitrate-d2u6p:/home/vmagent/app# PYTHONPATH=. django-admin collectstatic --noinput --settings mynitrate.settings
+    $ kubectl exec kiwi-d2u6p -i -t -- bash -il
+    root@kiwi-d2u6p:/home/vmagent/app# source /env/bin/activate
+    (env)root@kiwi-d2u6p:/home/vmagent/app# PYTHONPATH=. django-admin migrate --settings mykiwi.settings
+    (env)root@kiwi-d2u6p:/home/vmagent/app# PYTHONPATH=. django-admin createsuperuser --settings mykiwi.settings
+    (env)root@kiwi-d2u6p:/home/vmagent/app# PYTHONPATH=. django-admin collectstatic --noinput --settings mykiwi.settings
 
 
 Updating to new version
 -----------------------
 
-* Update Nitrate code and/or settings;
+* Update KiwiTestPad code and/or settings;
 * Create a new Docker image version and upload it to Google Container Engine;
 * Update the service to use the latest version of the Docker image::
 
-    $ kubectl rolling-update nitrate --image=gcr.io/YOUR-ORGANIZATION/nitrate:vYYYYMMDDHHMM
+    $ kubectl rolling-update kiwi --image=gcr.io/YOUR-ORGANIZATION/kiwi:vYYYYMMDDHHMM
 
 where you pass the latest version to the ``--image`` parameter;
 
@@ -170,6 +170,6 @@ where you pass the latest version to the ``--image`` parameter;
 How To Configure
 ----------------
 
-All configuration needs to go into ``mynitrate/settings.py`` **BEFORE** you build the
+All configuration needs to go into ``mykiwi/settings.py`` **BEFORE** you build the
 Docker image and push it to GCE.
 
