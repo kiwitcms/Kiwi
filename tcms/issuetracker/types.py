@@ -83,7 +83,7 @@ class Bugzilla(IssueTrackerType):
             tracker.api_url,
             user=self.tracker.api_username,
             password=self.tracker.api_password,
-            cachefile=bugzilla_cache_dir + 'cache',
+            cookiefile=bugzilla_cache_dir + 'cookie',
             tokenfile=bugzilla_cache_dir + 'token',
         )
 

@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-3.21.1 (May 26 2017, released on MrSenko.com)
+3.21.2 (May 26 2017, released on MrSenko.com)
 ---------------------------------------------
 
 - Forked from https://github.com/Nitrate/Nitrate as a stand-alone project

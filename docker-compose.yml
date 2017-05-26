@@ -17,7 +17,7 @@ services:
             - db
         restart: always
         # NOTE: mrsenko/kiwi is a private image on Docker Store!
-        image: mrsenko/kiwi:3.21.1
+        image: mrsenko/kiwi:3.21.2
         ports:
             - 80
         volumes:
