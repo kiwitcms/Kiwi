@@ -21,24 +21,10 @@ from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import TCMSEnvGroupFactory
 from tcms.tests.factories import TCMSEnvGroupPropertyMapFactory
 from tcms.tests.factories import TCMSEnvPropertyFactory
-from tcms.tests.factories import TestCaseRunFactory
-from tcms.tests.factories import TestRunFactory
 from tcms.tests import BasePlanCase
+from tcms.tests import BaseCaseRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
-
-
-class BaseCaseRun(BasePlanCase):
-    """Base test case containing test run and case runs"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(BaseCaseRun, cls).setUpTestData()
-
-        cls.test_run = TestRunFactory(plan=cls.plan)
-        cls.case_run_1 = TestCaseRunFactory(case=cls.case_1, run=cls.test_run)
-        cls.case_run_2 = TestCaseRunFactory(case=cls.case_2, run=cls.test_run)
-        cls.case_run_3 = TestCaseRunFactory(case=cls.case_3, run=cls.test_run)
 
 
 class TestQuickSearch(BaseCaseRun):
