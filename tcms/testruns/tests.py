@@ -7,33 +7,19 @@ from django.core.urlresolvers import reverse
 
 from tcms.testruns.models import TestRun
 from tcms.testruns.models import TestCaseRun
-from tcms.tests import BasePlanCase
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import TestBuildFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests import BaseCaseRun
 
 
 # ### Test case for View methods ###
 
 
-class TestOrderCases(BasePlanCase):
+class TestOrderCases(BaseCaseRun):
     """Test view method order_case"""
 
     @classmethod
     def setUpTestData(cls):
         super(TestOrderCases, cls).setUpTestData()
-        cls.build = TestBuildFactory(product=cls.product)
-        cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
-                                      manager=cls.tester, default_tester=cls.tester)
-        cls.case_run_1 = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                                            run=cls.test_run, case=cls.case_1, build=cls.build,
-                                            sortkey=101)
-        cls.case_run_2 = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                                            run=cls.test_run, case=cls.case_2, build=cls.build,
-                                            sortkey=200)
-        cls.case_run_3 = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                                            run=cls.test_run, case=cls.case_3, build=cls.build,
-                                            sortkey=300)
+
         cls.client = test.Client()
 
     def test_404_if_run_does_not_exist(self):
