@@ -1,12 +1,13 @@
 Change Log
 ==========
 
-3.21 (May XX 2017, released on MrSenko.com)
--------------------------------------------
+3.21.1 (May 26 2017, released on MrSenko.com)
+---------------------------------------------
 
 - Forked from https://github.com/Nitrate/Nitrate as a stand-alone project
 - Future versions will be released under the name **KiwiTestPad**
 - ``NITRATE_BASE_URL`` has been renamed to ``KIWI_BASE_URL``
+- Use ``/tmp/.bugzilla`` for python-bugzilla cache to avoid 500 ISE
 
 
 3.8.18.21 (May 24 2017, released on MrSenko.com)
