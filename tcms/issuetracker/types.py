@@ -1,3 +1,4 @@
+import os
 import urllib
 import bugzilla
 import bugzilla_integration
@@ -70,6 +71,11 @@ class Bugzilla(IssueTrackerType):
     def __init__(self, tracker):
         super(Bugzilla, self).__init__(tracker)
 
+        # directory for Bugzilla credentials
+        bugzilla_cache_dir = '/tmp/.bugzilla/'
+        if not os.path.exists(bugzilla_cache_dir):
+            os.makedirs(bugzilla_cache_dir, 0o700)
+
         # passing user & password will attemt to authenticate
         # when the __init__ method runs. Do it here so that we don't
         # have to do it everywhere else where it might be needed.
@@ -77,6 +83,8 @@ class Bugzilla(IssueTrackerType):
             tracker.api_url,
             user=self.tracker.api_username,
             password=self.tracker.api_password,
+            cachefile=bugzilla_cache_dir + 'cache',
+            tokenfile=bugzilla_cache_dir + 'token',
         )
 
     def add_testcase_to_issue(self, testcases, issue):
