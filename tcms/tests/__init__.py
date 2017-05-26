@@ -5,9 +5,12 @@ from django.contrib.auth.models import Permission
 
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
+from tcms.tests.factories import TestBuildFactory
 
 __all__ = (
     'user_should_have_perm',
@@ -85,3 +88,36 @@ class BasePlanCase(test.TestCase):
                                      plan=[cls.plan])
         cls.case_3 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
                                      plan=[cls.plan])
+
+
+class BaseCaseRun(BasePlanCase):
+    """Base test case containing test run and case runs"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(BaseCaseRun, cls).setUpTestData()
+
+        cls.build = TestBuildFactory(product=cls.product)
+
+        cls.test_run = TestRunFactory(product_version=cls.version,
+                                      plan=cls.plan,
+                                      manager=cls.tester,
+                                      default_tester=cls.tester)
+        cls.case_run_1 = TestCaseRunFactory(assignee=cls.tester,
+                                            tested_by=cls.tester,
+                                            run=cls.test_run,
+                                            case=cls.case_1,
+                                            build=cls.build,
+                                            sortkey=101)
+        cls.case_run_2 = TestCaseRunFactory(assignee=cls.tester,
+                                            tested_by=cls.tester,
+                                            run=cls.test_run,
+                                            case=cls.case_2,
+                                            build=cls.build,
+                                            sortkey=200)
+        cls.case_run_3 = TestCaseRunFactory(assignee=cls.tester,
+                                            tested_by=cls.tester,
+                                            run=cls.test_run,
+                                            case=cls.case_3,
+                                            build=cls.build,
+                                            sortkey=300)
