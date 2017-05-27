@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url, patterns
+from django.conf.urls import url
+from .. import views
 
-urlpatterns = patterns(
-    'tcms.testruns.views',
-    url(r'^$', 'all'),
-    url(r'^ajax/$', 'ajax_search'),
-    url(r'^env_value/$', 'env_value'),
-    url(r'^clone/$', 'clone'),
-)
+urlpatterns = [
+    url(r'^$', views.all),
+    url(r'^ajax/$', views.ajax_search),
+    url(r'^env_value/$', views.env_value),
+    url(r'^clone/$', views.clone),
+]

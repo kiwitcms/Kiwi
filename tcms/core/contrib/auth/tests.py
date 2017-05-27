@@ -132,7 +132,7 @@ class TestRegistration(TestCase):
                                      'email': 'new-tester@example.com'})
         self.assertContains(
             response,
-            '<a href="{}">Continue</a>'.format(reverse('tcms.core.views.index')),
+            '<a href="{}">Continue</a>'.format(reverse('core-views-index')),
             html=True)
 
         users = User.objects.filter(username=username)
@@ -204,7 +204,7 @@ class TestConfirm(TestCase):
 
         self.assertContains(
             response,
-            '<a href="{}">Continue</a>'.format(reverse('tcms.core.views.index')),
+            '<a href="{}">Continue</a>'.format(reverse('core-views-index')),
             html=True)
 
     def test_confirm(self):

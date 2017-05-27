@@ -39,7 +39,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "core-views-index" %}">Home</a>
 		{% if test_plan %}
 		>>Plan: <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		>>Case: <a href="{% url "tcms.testcases.views.get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
