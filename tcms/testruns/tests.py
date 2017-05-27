@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import httplib
+from six.moves import http_client
 
 from django import test
 from django.core.urlresolvers import reverse
@@ -57,7 +57,7 @@ class TestOrderCases(BaseCaseRun):
         nonexisting_run_pk = TestRun.objects.last().pk + 1
         url = reverse('testruns-order_case', args=[nonexisting_run_pk])
         response = self.client.get(url)
-        self.assertEqual(httplib.NOT_FOUND, response.status_code)
+        self.assertEqual(http_client.NOT_FOUND, response.status_code)
 
     def test_prompt_if_no_case_run_is_passed(self):
         url = reverse('testruns-order_case', args=[self.test_run.pk])
@@ -91,13 +91,13 @@ class TestGetRun(BaseCaseRun):
     def test_404_if_non_existing_pk(self):
         url = reverse('testruns-get', args=[99999999])
         response = self.client.get(url)
-        self.assertEqual(httplib.NOT_FOUND, response.status_code)
+        self.assertEqual(http_client.NOT_FOUND, response.status_code)
 
     def test_get_a_run(self):
         url = reverse('testruns-get', args=[self.test_run.pk])
         response = self.client.get(url)
 
-        self.assertEqual(httplib.OK, response.status_code)
+        self.assertEqual(http_client.OK, response.status_code)
 
         for case_run in (self.case_run_1, self.case_run_2, self.case_run_3):
             self.assertContains(
@@ -112,7 +112,6 @@ class TestGetRun(BaseCaseRun):
 
 
 # ### Test cases for data ###
-
 
 class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):
 

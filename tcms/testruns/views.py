@@ -661,7 +661,7 @@ def open_run_get_case_runs(request, run):
     # Continue to search the case runs with conditions
     # 4. case runs preparing for render case runs table
     tcrs = tcrs.filter(**clean_request(request))
-    order_by = request.REQUEST.get('order_by')
+    order_by = request.GET.get('order_by')
     if order_by:
         tcrs = tcrs.order_by(order_by)
     else:
@@ -698,7 +698,8 @@ def open_run_get_users(case_runs):
 
 @require_GET
 def get(request, run_id, template_name='run/get.html'):
-    '''Display testrun's detail'''
+    """Display testrun's detail"""
+
     SUB_MODULE_NAME = "runs"
 
     # Get the test run
@@ -732,7 +733,7 @@ def get(request, run_id, template_name='run/get.html'):
     ttags.sort()
 
     def walk_case_runs():
-        '''Walking case runs for helping rendering case runs table'''
+        """Walking case runs for helping rendering case runs table"""
         priorities = Priority.get_values()
         testers, assignees = open_run_get_users(tcrs)
         comments_subtotal = open_run_get_comments_subtotal(
