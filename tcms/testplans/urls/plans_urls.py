@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url, patterns
+from django.conf.urls import url
+from .. import views
 
-urlpatterns = patterns(
-    'tcms.testplans.views',
-    url(r'^$', 'all'),
-    url(r'^new/$', 'new'),
-    url(r'^ajax/$', 'ajax_search'),
-    url(r'^treeview/$', 'tree_view'),
-    url(r'^clone/$', 'clone'),
-    url(r'^printable/$', 'printable'),
-    url(r'^export/$', 'export'),
-    url(r'^component/$', 'component'),
-)
+urlpatterns = [
+    url(r'^$', views.all),
+    url(r'^new/$', views.new),
+    url(r'^ajax/$', views.ajax_search),
+    url(r'^treeview/$', views.tree_view),
+    url(r'^clone/$', views.clone),
+    url(r'^printable/$', views.printable),
+    url(r'^export/$', views.export),
+    url(r'^component/$', views.component),
+]

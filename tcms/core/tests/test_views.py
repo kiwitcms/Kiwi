@@ -33,7 +33,7 @@ class TestQuickSearch(BaseCaseRun):
     def setUpTestData(cls):
         super(TestQuickSearch, cls).setUpTestData()
 
-        cls.search_url = reverse('tcms.core.views.search')
+        cls.search_url = reverse('core-views-search')
 
     def test_goto_plan(self):
         response = self.client.get(self.search_url,

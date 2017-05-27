@@ -19,7 +19,7 @@ from tcms.core.views import Prompt
 def logout(request):
     """Logout method of account"""
     auth.logout(request)
-    return redirect(request.GET.get('next', reverse('tcms.core.views.index')))
+    return redirect(request.GET.get('next', reverse('core-views-index')))
 
 
 @require_http_methods(['GET', 'POST'])
@@ -36,7 +36,7 @@ def register(request, template_name='registration/registration_form.html'):
             request=request,
             info_type=Prompt.Alert,
             info='The backend is not allowed to register.',
-            next=request_data.get('next', reverse('tcms.core.views.index'))
+            next=request_data.get('next', reverse('core-views-index'))
         ))
 
     if request.method == 'POST':
@@ -68,7 +68,7 @@ def register(request, template_name='registration/registration_form.html'):
                 request=request,
                 info_type=Prompt.Info,
                 info=msg,
-                next=request.POST.get('next', reverse('tcms.core.views.index'))
+                next=request.POST.get('next', reverse('core-views-index'))
             ))
     else:
         form = RegistrationForm()
@@ -94,7 +94,7 @@ def confirm(request, activation_key):
             request=request,
             info_type=Prompt.Info,
             info=msg,
-            next=request.GET.get('next', reverse('tcms.core.views.index'))
+            next=request.GET.get('next', reverse('core-views-index'))
         ))
 
     # All thing done, start to active the user and use the user login

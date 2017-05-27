@@ -1,105 +1,122 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
-from django.conf.urls import include, url, patterns
+from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.admindocs import urls as admindocs_urls
+from django.views.i18n import javascript_catalog
+
+from tinymce import urls as tinymce_urls
+from tcms.core import ajax
+from tcms.core import files
+from tcms.core import views as core_views
+from tcms.core.contrib.comments import views as comments_views
+from tcms.core.contrib.linkreference import views as linkreference_views
+from tcms.profiles import urls as profiles_urls
+from tcms.testplans import urls as testplans_urls
+from tcms.testcases import urls as testcases_urls
+from tcms.testruns import urls as testruns_urls
+from tcms.testruns import views as testruns_views
+from tcms.management import views as management_views
+from tcms.report import urls as report_urls
+from tcms.search import advance_search
+
 
 # XML RPC handler
 from kobo.django.xmlrpc.views import XMLRPCHandlerFactory
 xmlrpc_handler = XMLRPCHandlerFactory('TCMS_XML_RPC')
 
-urlpatterns = patterns('',
-    (r'^admin/', include(admin.site.urls)),
 
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
-    # to INSTALLED_APPS to enable admin documentation:
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+urlpatterns = [
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/doc/', include(admindocs_urls)),
 
-    (r'^tinymce/', include('tinymce.urls')),
+    url(r'^tinymce/', include(tinymce_urls)),
 
     # Index and static zone
-    (r'^$', 'tcms.core.views.index'),
-    (r'^search/$', 'tcms.core.views.search'),
-    (r'^xmlrpc/$', xmlrpc_handler),
+    url(r'^$', core_views.index, name='core-views-index'),
+    url(r'^search/$', core_views.search, name='core-views-search'),
+    url(r'^xmlrpc/$', xmlrpc_handler),
 
     # Ajax call responder
-    (r'^ajax/update/$', 'tcms.core.ajax.update'),
-    # TODO: merge this into next mapping
-    (r'^ajax/update/case-status/$', 'tcms.core.ajax.update_cases_case_status'),
-    (r'^ajax/update/case-run-status$', 'tcms.core.ajax.update_case_run_status'),
-    (r'^ajax/update/cases-priority/$', 'tcms.core.ajax.update_cases_priority'),
-    (r'^ajax/update/cases-default-tester/$', 'tcms.core.ajax.update_cases_default_tester'),
-    (r'^ajax/update/cases-reviewer/$', 'tcms.core.ajax.update_cases_reviewer'),
-    (r'^ajax/update/cases-sortkey/$', 'tcms.core.ajax.update_cases_sortkey'),
-    (r'^ajax/form/$', 'tcms.core.ajax.form'),
-    (r'^ajax/get-prod-relate-obj/$', 'tcms.core.ajax.get_prod_related_obj_json'),
-    (r'^management/getinfo/$', 'tcms.core.ajax.info'),
-    (r'^management/tags/$', 'tcms.core.ajax.tag'),
+    url(r'^ajax/update/$', ajax.update),
+    url(r'^ajax/update/case-status/$', ajax.update_cases_case_status),
+    url(r'^ajax/update/case-run-status$', ajax.update_case_run_status),
+    url(r'^ajax/update/cases-priority/$', ajax.update_cases_priority),
+    url(r'^ajax/update/cases-default-tester/$', ajax.update_cases_default_tester),
+    url(r'^ajax/update/cases-reviewer/$', ajax.update_cases_reviewer),
+    url(r'^ajax/update/cases-sortkey/$', ajax.update_cases_sortkey),
+    url(r'^ajax/form/$', ajax.form),
+    url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
+    url(r'^management/getinfo/$', ajax.info),
+    url(r'^management/tags/$', ajax.tag),
 
     # Attached file zone
-    (r'^management/uploadfile/$', 'tcms.core.files.upload_file'),
-    (r'^management/checkfile/(?P<file_id>\d+)/$', 'tcms.core.files.check_file'),
-    (r'^management/deletefile/(?P<file_id>\d+)/$', 'tcms.core.files.delete_file'),
+    url(r'^management/uploadfile/$', files.upload_file),
+    url(r'^management/checkfile/(?P<file_id>\d+)/$', files.check_file),
+    url(r'^management/deletefile/(?P<file_id>\d+)/$', files.delete_file),
 
-    (r'^comments/post/', 'tcms.core.contrib.comments.views.post'),
-    (r'^comments/delete/', 'tcms.core.contrib.comments.views.delete'),
+    # comments
+    url(r'^comments/post/', comments_views.post),
+    url(r'^comments/delete/', comments_views.delete),
 
     # Account information zone, such as login method
-    url(r'^accounts/', include('tcms.profiles.urls')),
+    url(r'^accounts/', include(profiles_urls)),
 
     # Testplans zone
-    url(r'^plan/', include('tcms.testplans.urls.plan_urls')),
-    url(r'^plans/', include('tcms.testplans.urls.plans_urls')),
+    url(r'^plan/', include(testplans_urls.plan_urls)),
+    url(r'^plans/', include(testplans_urls.plans_urls)),
 
     # Testcases zone
-    url(r'^case/', include('tcms.testcases.urls.case_urls')),
-    url(r'^cases/', include('tcms.testcases.urls.cases_urls')),
+    url(r'^case/', include(testcases_urls.case_urls)),
+    url(r'^cases/', include(testcases_urls.cases_urls)),
 
     # Testruns zone
-    url(r'^run/', include('tcms.testruns.urls.run_urls')),
-    url(r'^runs/', include('tcms.testruns.urls.runs_urls')),
+    url(r'^run/', include(testruns_urls.run_urls)),
+    url(r'^runs/', include(testruns_urls.runs_urls)),
 
-    (r'^caseruns/$', 'tcms.testruns.views.caseruns'),
-    (r'^caserun/(?P<case_run_id>\d+)/bug/$', 'tcms.testruns.views.bug'),
-    (r'^caserun/comment-many/', 'tcms.core.ajax.comment_case_runs'),
-    (r'^caserun/update-bugs-for-many/', 'tcms.core.ajax.update_bugs_to_caseruns'),
+    url(r'^caseruns/$', testruns_views.caseruns),
+    url(r'^caserun/(?P<case_run_id>\d+)/bug/$', testruns_views.bug),
+    url(r'^caserun/comment-many/', ajax.comment_case_runs),
+    url(r'^caserun/update-bugs-for-many/', ajax.update_bugs_to_caseruns),
 
-    (r'^linkref/add/$', 'tcms.core.contrib.linkreference.views.add'),
-    (r'^linkref/get/$', 'tcms.core.contrib.linkreference.views.get'),
-    (r'^linkref/remove/(?P<link_id>\d+)/$', 'tcms.core.contrib.linkreference.views.remove'),
+    url(r'^linkref/add/$', linkreference_views.add),
+    url(r'^linkref/get/$', linkreference_views.get),
+    url(r'^linkref/remove/(?P<link_id>\d+)/$', linkreference_views.remove),
 
     # Management zone
-    # (r'^management/$', 'tcms.management.views.index'),
-    (r'^environment/groups/$', 'tcms.management.views.environment_groups'),
-    (r'^environment/group/edit/$', 'tcms.management.views.environment_group_edit'),
-    (r'^environment/properties/$', 'tcms.management.views.environment_properties'),
-    (r'^environment/properties/values/$', 'tcms.management.views.environment_property_values'),
-
-    # Management ajax zone
+    url(r'^environment/groups/$', management_views.environment_groups),
+    url(r'^environment/group/edit/$', management_views.environment_group_edit),
+    url(r'^environment/properties/$', management_views.environment_properties),
+    url(r'^environment/properties/values/$', management_views.environment_property_values),
 
     # Report zone
-    url(r'^report/', include('tcms.report.urls')),
+    url(r'^report/', include(report_urls)),
 
     # Advance search
-    url(r'^advance-search/$', 'tcms.search.advance_search', name='advance_search'),
+    url(r'^advance-search/$', advance_search, name='advance_search'),
 
+    # TODO: do we need this at all ???
     # Using admin js without admin permission
-    # refer: https://docs.djangoproject.com/en/1.6/topics/i18n/translation/#module-django.views.i18n
-    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog',
-     {'packages': ('django.conf', 'django.contrib.admin')}),
-)
+    # https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#django.views.i18n.javascript_catalog
+    url(r'^jsi18n/$', javascript_catalog, {'packages': ('django.conf', 'django.contrib.admin')}),
+]
 
 # Debug zone
 
 if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ]
-    urlpatterns += patterns(
-        'tcms.core.utils.test_template',
-        (r'^tt/(?P<template_name>.*)', 'test_template'),
-    )
+    try:
+        import debug_toolbar
+        from tcms.core.utils import test_template
+
+        urlpatterns += [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+            url(r'^tt/(?P<template_name>.*)', test_template),
+        ]
+    # in case we're trying to debug in production
+    # and debug_toolbar is not installed
+    except ImportError:
+        pass
 
 # Overwrite default 500 handler
 # More details could see django.core.urlresolvers._resolve_special()

@@ -23,7 +23,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 		<input id="value_product_id" type="hidden" mame="product_id" value="{{ test_plan.product_id }}">
 	</div>
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
 		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		>> Add cases from other plans

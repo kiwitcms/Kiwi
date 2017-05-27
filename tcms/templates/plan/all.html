@@ -26,7 +26,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.List.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "core-views-index" %}">Home</a>
 		{% if query_result %}
 		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a> 
 		>> Search result

@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url, patterns
+from django.conf.urls import url
 
-urlpatterns = patterns(
-    'tcms.testcases.views',
-    url(r'^new/$', 'new'),
-    url(r'^$', 'all'),
-    url(r'^search/$', 'search'),
-    url(r'^load-more/$', 'load_more_cases'),
-    url(r'^ajax/$', 'ajax_search'),
-    url(r'^automated/$', 'automated'),
-    url(r'^tag/$', 'tag'),
-    url(r'^component/$', 'component'),
-    url(r'^category/$', 'category'),
-    url(r'^clone/$', 'clone'),
-    url(r'^printable/$', 'printable'),
-    url(r'^export/$', 'export'),
-)
+from .. import views
+
+urlpatterns = [
+    url(r'^new/$', views.new),
+    url(r'^$', views.all),
+    url(r'^search/$', views.search),
+    url(r'^load-more/$', views.load_more_cases),
+    url(r'^ajax/$', views.ajax_search),
+    url(r'^automated/$', views.automated),
+    url(r'^tag/$', views.tag),
+    url(r'^component/$', views.component),
+    url(r'^category/$', views.category),
+    url(r'^clone/$', views.clone),
+    url(r'^printable/$', views.printable),
+    url(r'^export/$', views.export),
+]
