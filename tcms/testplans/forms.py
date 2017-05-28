@@ -132,7 +132,6 @@ class PlanFileField(forms.FileField):
 class CasePlanXMLField(forms.FileField):
     """
     Custom field for the XML file.
-    Use xml2dict to anasisly the file upload.
     Based on ImageField built-in Django source code.
     """
     default_error_messages = {

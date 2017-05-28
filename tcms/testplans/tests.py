@@ -99,7 +99,7 @@ class PlanTests(test.TestCase):
             ).exists()
         )
 
-        # now try to imort
+        # now try to import
         location = reverse('plan-cases', args=[self.plan_id])
         filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
         with open(filename, 'r') as fin:
