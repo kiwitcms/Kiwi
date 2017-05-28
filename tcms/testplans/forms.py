@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.conf import settings
-from django.contrib.auth.models import User
 
 from odf.odf2xhtml import ODF2XHTML, load
 
-from tcms.core.contrib.xml2dict.xml2dict import XML2Dict
 from tcms.core.forms.fields import UserField, StripURLField
 from tinymce.widgets import TinyMCE
-from tcms.management.models import Component, Product, Version, TCMSEnvGroup, \
-    Priority, TestTag
-from tcms.testcases.models import TestCaseStatus
+from tcms.management.models import Component, Product, Version, TCMSEnvGroup, TestTag
 from models import TestPlan, TestPlanType
+from tcms.utils.xml import clean_xml_file, process_case
 # ===========Plan Fields==============
 
 
@@ -142,134 +138,13 @@ class CasePlanXMLField(forms.FileField):
     default_error_messages = {
         'invalid_file': 'The file you uploaded is not a correct XML file.',
         'interpret_error': 'The file you uploaded unable to interpret.',
-        'root_element_is_needed': 'Root element named testopia is need, '
-                                  'please use the xml exported by TCMS or '
-                                  'testopia.',
-        'test_case_element_is_needed': 'At least one test case is required '
-                                       'in the XML file, plese export the '
-                                       'plan with cases.',
-        'xml_version_is_incorrect': 'XML version is incorrect, please use '
-                                    'the xml exported by TCMS or testopia 3.',
-        'element_could_not_found': 'The element \'%s\' value \'%s\' could '
-                                   'not found in database.',
-        'element_is_required': 'The element \'%s\' is required in XML.'
     }
 
-    xml_data = ''
-
     def process_case(self, case):
-        # Check author
-        element = 'author'
-        if case.get(element, {}).get('value'):
-            try:
-                author = User.objects.get(email=case[element]['value'])
-                author_id = author.id
-            except User.DoesNotExist:
-                raise forms.ValidationError(
-                    self.error_messages['element_could_not_found'] % (
-                        element, case[element]['value']))
-        else:
-            raise forms.ValidationError(
-                self.error_messages['element_is_required'] % element)
-
-        # Check default tester
-        element = 'defaulttester'
-        if case.get(element, {}).get('value'):
-            try:
-                default_tester = User.objects.get(email=case[element]['value'])
-                default_tester_id = default_tester.id
-            except User.DoesNotExist:
-                raise forms.ValidationError(
-                    self.error_messages['element_could_not_found'] % (
-                        element, case[element]['value']))
-        else:
-            default_tester_id = None
-
-        # Check priority
-        element = 'priority'
-        if case.get(element, {}).get('value'):
-            try:
-                priority = Priority.objects.get(value=case[element]['value'])
-                priority_id = priority.id
-            except Priority.DoesNotExist:
-                raise forms.ValidationError(
-                    self.error_messages['element_could_not_found'] % (
-                        element, case[element]['value']))
-        else:
-            raise forms.ValidationError(
-                self.error_messages['element_is_required'] % element)
-
-        # Check automated status
-        element = 'automated'
-        if case.get(element, {}).get('value'):
-            is_automated = case[element]['value'] == 'Automatic' and True or False
-        else:
-            is_automated = False
-
-        # Check status
-        element = 'status'
-        if case.get(element, {}).get('value'):
-            try:
-                case_status = TestCaseStatus.objects.get(
-                    name=case[element]['value'])
-                case_status_id = case_status.id
-            except TestCaseStatus.DoesNotExist:
-                raise forms.ValidationError(
-                    self.error_messages['element_could_not_found'] % (
-                        element, case[element]['value']))
-        else:
-            raise forms.ValidationError(
-                self.error_messages['element_is_required'] % element)
-
-        # Check category
-        # *** Ugly code here ***
-        # There is a bug in the XML file, the category is related to product.
-        # But unfortunate it did not defined product in the XML file.
-        # So we have to define the category_name at the moment then get the
-        # product from the plan.
-        # If we did not found the category of the product we will create one.
-        element = 'categoryname'
-        if case.get(element, {}).get('value'):
-            category_name = case[element]['value']
-        else:
-            raise forms.ValidationError(
-                self.error_messages['element_is_required'] % element)
-
-        # Check or create the tag
-        element = 'tag'
-        if case.get(element, {}):
-            tags = []
-            if isinstance(case[element], dict):
-                tag, create = TestTag.objects.get_or_create(
-                    name=case[element]['value'])
-                tags.append(tag)
-
-            if isinstance(case[element], list):
-                for tag_name in case[element]:
-                    tag, create = TestTag.objects.get_or_create(
-                        name=tag_name['value'])
-                    tags.append(tag)
-        else:
-            tags = None
-
-        new_case = {
-            'summary': case.get('summary', {}).get('value', ''),
-            'author_id': author_id,
-            'author': author,
-            'default_tester_id': default_tester_id,
-            'priority_id': priority_id,
-            'is_automated': is_automated,
-            'case_status_id': case_status_id,
-            'category_name': category_name,
-            'notes': case.get('notes', {}).get('value', ''),
-            'action': case.get('action', {}).get('value', ''),
-            'effect': case.get('expectedresults', {}).get('value', ''),
-            'setup': case.get('setup', {}).get('value', ''),
-            'breakdown': case.get('breakdown', {}).get('value', ''),
-            'tags': tags,
-        }
-
-        return new_case
+        try:
+            return process_case(case)
+        except ValueError as err:
+            forms.ValidationError(err.message)
 
     def clean(self, data, initial=None):
         """
@@ -294,48 +169,22 @@ class CasePlanXMLField(forms.FileField):
             else:
                 xml_file = data['content']
 
-        # Replace line breaks for XML interpret
-        xml_file = xml_file.replace('\n', '')
-        xml_file = xml_file.replace('&testopia_', '&')
-
         # Insert clean code here
         try:
-            xml = XML2Dict()
-            self.xml_data = xml.fromstring(xml_file)
-            if not self.xml_data.get('testopia'):
-                raise forms.ValidationError(
-                    self.error_messages['root_element_is_needed'])
-
-            if not self.xml_data['testopia'].get(
-                    'version') != settings.TESTOPIA_XML_VERSION:
-                raise forms.ValidationError(
-                    self.error_messages['xml_version_is_incorrect'])
-
-            if not self.xml_data['testopia'].get('testcase'):
-                raise forms.ValidationError(
-                    self.error_messages['test_case_element_is_needed'])
-
-            new_case_from_xml = []
-            if isinstance(self.xml_data['testopia']['testcase'], list):
-                for case in self.xml_data['testopia']['testcase']:
-                    new_case_from_xml.append(self.process_case(case))
-            elif isinstance(self.xml_data['testopia']['testcase'], dict):
-                new_case_from_xml.append(
-                    self.process_case(self.xml_data['testopia']['testcase']))
-            else:
-                raise forms.ValidationError(
-                    self.error_messages['test_case_element_is_needed'])
-
-        except Exception, error:
+            new_case_from_xml = clean_xml_file(xml_file)
+        except ValueError as error:
+            raise forms.ValidationError(error)
+        except Exception as error:
             raise forms.ValidationError('%s: %s' % (
                 self.error_messages['interpret_error'],
                 error
             ))
-        except SyntaxError, error:
+        except SyntaxError as error:
             raise forms.ValidationError('%s: %s' % (
                 self.error_messages['interpret_error'],
                 error
             ))
+
         if hasattr(f, 'seek') and callable(f.seek):
             f.seek(0)
 
@@ -633,7 +482,7 @@ class ImportCasesViaXMLForm(forms.Form):
     a = forms.CharField(widget=forms.HiddenInput)
     xml_file = CasePlanXMLField(
         label='Upload XML file:',
-        help_text='XML file is export with TCMS or Testopia.'
+        help_text='XML file is exported from Kiwi or Testopia.'
     )
 
 

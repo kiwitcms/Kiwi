@@ -93,11 +93,18 @@ class PlanTests(test.TestCase):
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_importcase(self):
+        self.assertFalse(
+            TestCase.objects.filter(
+                summary='Remove this case from a test plan'
+            ).exists()
+        )
+
+        # now try to imort
         location = reverse('plan-cases', args=[self.plan_id])
         filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
         with open(filename, 'r') as fin:
             response = self.c.post(location, {'a': 'import_cases', 'xml_file': fin}, follow=True)
-        self.assertEquals(response.status_code, httplib.OK)
+            self.assertEquals(response.status_code, httplib.OK)
 
         summary = 'Remove this case from a test plan'
         has_case = TestCase.objects.filter(summary=summary).exists()

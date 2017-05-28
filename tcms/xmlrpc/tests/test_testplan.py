@@ -8,7 +8,6 @@ from httplib import INTERNAL_SERVER_ERROR
 
 from django import test
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from tcms.core.contrib.xml2dict.xml2dict import XML2Dict
 from tcms.management.models import Priority
@@ -19,8 +18,7 @@ from tcms.testcases.models import TestCaseStatus
 from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TCMSEnvPlanMap
 from tcms.xmlrpc.api import testplan as XmlrpcTestPlan
-from tcms.xmlrpc.api.testplan import clean_xml_file
-from tcms.xmlrpc.api.testplan import process_case
+from tcms.utils.xml import clean_xml_file, process_case
 from tcms.xmlrpc.tests.utils import make_http_request
 
 from tcms.tests.factories import ComponentFactory
@@ -557,46 +555,50 @@ class TestProcessCase(test.TestCase):
         case_data = sample_case_data.copy()
         case_data['author'] = 'another_user@example.com'
         xmldict = self._create_xml_dict(case_data)
-        self.assertRaises(User.DoesNotExist, process_case, xmldict['testcase'])
+        with self.assertRaisesRegexp(ValueError, 'Author "another_user@example.com" not found in DB!'):
+            process_case(xmldict['testcase'])
 
         case_data = sample_case_data.copy()
         case_data['defaulttester'] = 'another_user@example.com'
         xmldict = self._create_xml_dict(case_data)
-        self.assertRaises(User.DoesNotExist, process_case, xmldict['testcase'])
+        new_case = process_case(xmldict['testcase'])
+        self.assertIsNone(new_case['default_tester_id'])
 
         case_data = sample_case_data.copy()
         case_data['priority'] = 'PP'
         xmldict = self._create_xml_dict(case_data)
-        self.assertRaises(Priority.DoesNotExist,
-                          process_case, xmldict['testcase'])
+        with self.assertRaisesRegexp(ValueError, 'Priority "PP" not found in DB!'):
+            process_case(xmldict['testcase'])
 
         case_data = sample_case_data.copy()
         case_data['priority'] = ''
         xmldict = self._create_xml_dict(case_data)
-        self.assertRaises(ValueError, process_case, xmldict['testcase'])
+        with self.assertRaisesRegexp(ValueError, 'Element "priority" is required in XML'):
+            process_case(xmldict['testcase'])
 
         case_data = sample_case_data.copy()
         case_data['status'] = 'UNKNOWN_STATUS'
         xmldict = self._create_xml_dict(case_data)
-        self.assertRaises(TestCaseStatus.DoesNotExist,
-                          process_case, xmldict['testcase'])
+        new_case = process_case(xmldict['testcase'])
+        self.assertEqual(TestCaseStatus.objects.get(name='PROPOSED').pk, new_case['case_status_id'])
 
         case_data = sample_case_data.copy()
         case_data['status'] = ''
         xmldict = self._create_xml_dict(case_data)
-        self.assertRaises(ValueError, process_case, xmldict['testcase'])
+        new_case = process_case(xmldict['testcase'])
+        self.assertEqual(TestCaseStatus.objects.get(name='PROPOSED').pk, new_case['case_status_id'])
 
         case_data = sample_case_data.copy()
         case_data['automated'] = ''
         xmldict = self._create_xml_dict(case_data)
-        cleaned_case = process_case(xmldict['testcase'])
-        self.assertEqual(False, cleaned_case['is_automated'])
+        new_case = process_case(xmldict['testcase'])
+        self.assertEqual(False, new_case['is_automated'])
 
         case_data = sample_case_data.copy()
         case_data['tag'] = ''
         xmldict = self._create_xml_dict(case_data)
-        cleaned_case = process_case(xmldict['testcase'])
-        self.assertEqual(None, cleaned_case['tags'])
+        new_case = process_case(xmldict['testcase'])
+        self.assertEqual(None, new_case['tags'])
 
         case_data = sample_case_data.copy()
         case_data['categoryname'] = ''
@@ -625,9 +627,8 @@ class TestCleanXMLFile(test.TestCase):
         result = clean_xml_file(xml_file_single_case_without_error)
         self.assertEqual(1, len(result))
 
-        self.assertRaises(User.DoesNotExist,
-                          clean_xml_file,
-                          xml_file_with_error)
+        with self.assertRaisesRegexp(ValueError, 'Priority "Pn" not found in DB!'):
+            clean_xml_file(xml_file_with_error)
 
         self.assertRaises(ValueError, clean_xml_file, xml_file_in_malformat)
 
