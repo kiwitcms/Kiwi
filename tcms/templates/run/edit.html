@@ -31,12 +31,12 @@
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		{% if request.REQUEST.from_plan %}
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> <a href="{{ test_run.plan.get_absolute_url }}">Test Plan :{{ test_run.plan.plan_id }}: {{ test_run.plan }}</a>
 		{% else %}
-		>> <a href="{% url "tcms.testruns.views.all" %}">Test Runs</a>
+		>> <a href="{% url "testruns-all" %}">Test Runs</a>
 		{% endif %}
-		>> <a href="{% url "tcms.testruns.views.get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run }}</a> >>Edit
+		>> <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run }}</a> >>Edit
 	</div>
 	<h2>Edit Test Run</h2>
 	<form action="{% url "tcms.testruns.views.edit" test_run.run_id %}" method="post">
@@ -162,7 +162,7 @@
 		<div id="control_box" class="submit-row">
 			<input type="submit" value="Save" />
 			<input type="reset" value="Reset" />
-			<input type="button" value="Back" onclick="window.location.href='{% url "tcms.testruns.views.get" test_run.run_id %}'" />
+			<input type="button" value="Back" onclick="window.location.href='{% url "testruns-get" test_run.run_id %}'" />
 		</div>
 	</div>
 	</form>

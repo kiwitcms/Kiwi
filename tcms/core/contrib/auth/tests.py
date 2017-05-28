@@ -77,16 +77,16 @@ class TestLogout(TestCase):
         cls.tester = User.objects.create_user(username='authtester',
                                               email='authtester@example.com',
                                               password='password')
-        cls.logout_url = reverse('tcms.core.contrib.auth.views.logout')
+        cls.logout_url = reverse('tcms-logout')
 
     def test_logout_then_redirect_to_next(self):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(self.logout_url, follow=True)
-        self.assertRedirects(response, reverse('django.contrib.auth.views.login'))
+        self.assertRedirects(response, reverse('tcms-login'))
 
     def test_logout_then_goto_next(self):
         self.client.login(username=self.tester.username, password='password')
-        next_url = reverse('tcms.testplans.views.all')
+        next_url = reverse('plans-all')
         response = self.client.get(self.logout_url, {'next': next_url}, follow=True)
         self.assertRedirects(response, next_url)
 
@@ -109,7 +109,7 @@ class MockThread(object):
 class TestRegistration(TestCase):
 
     def setUp(self):
-        self.register_url = reverse('tcms.core.contrib.auth.views.register')
+        self.register_url = reverse('tcms-register')
         self.fake_activate_key = 'secret-activate-key'
 
     def test_open_registration_page(self):
@@ -159,7 +159,7 @@ class TestRegistration(TestCase):
         # Verify notification mail
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(settings.EMAIL_FROM, mail.outbox[0].from_email)
-        self.assertIn(reverse('tcms.core.contrib.auth.views.confirm',
+        self.assertIn(reverse('tcms-confirm',
                               args=[self.fake_activate_key]),
                       mail.outbox[0].body)
 
@@ -194,7 +194,7 @@ class TestConfirm(TestCase):
                                            password='password')
 
     def test_fail_if_activation_key_not_exist(self):
-        confirm_url = reverse('tcms.core.contrib.auth.views.confirm',
+        confirm_url = reverse('tcms-confirm',
                               args=['nonexisting-activation-key'])
         response = self.client.get(confirm_url)
 
@@ -214,7 +214,7 @@ class TestConfirm(TestCase):
             sha1.return_value.hexdigest.return_value = fake_activate_key
             UserActivateKey.set_random_key_for_user(self.new_user)
 
-        confirm_url = reverse('tcms.core.contrib.auth.views.confirm',
+        confirm_url = reverse('tcms-confirm',
                               args=[fake_activate_key])
         response = self.client.get(confirm_url)
 
@@ -225,7 +225,7 @@ class TestConfirm(TestCase):
         self.assertContains(
             response,
             '<a href="{}">Continue</a>'.format(
-                reverse('tcms.profiles.views.redirect_to_profile')),
+                reverse('tcms-redirect_to_profile')),
             html=True)
 
         user = User.objects.get(username=self.new_user.username)

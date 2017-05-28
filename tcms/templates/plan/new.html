@@ -22,10 +22,10 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 <div id="content">
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> New Test Plan
 	</div>
-	<form method="post" action="{% url "tcms.testplans.views.new" %}" enctype="multipart/form-data">
+	<form method="post" action="{% url "plans-new" %}" enctype="multipart/form-data">
 		<h2>Create New Test Plan</h2>
 		<div class="Detailform border-1" >
 			<table class="editor" cellspan="0" cellspacing="0">

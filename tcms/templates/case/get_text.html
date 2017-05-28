@@ -2,7 +2,7 @@
 	<tr>
 		<td colspan="2">
 			<span class="right-bar">
-				<a href="{% url "tcms.testcases.views.text_history" test_case.case_id %}?from_plan={{ testplan.plan_id }}" class="historylink">
+				<a href="{% url "testcases-text_history" test_case.case_id %}?from_plan={{ testplan.plan_id }}" class="historylink">
 					View edit history(Current in version {{ test_case_text.case_text_version }})
 				</a>
 			</span>

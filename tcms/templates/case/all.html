@@ -14,8 +14,8 @@
 <script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
 <script type="text/javascript">
 	Nitrate.TestCases.List.Param = {
-		'case_printable': '{% url "tcms.testcases.views.printable" %}',
-		'case_export':'{% url "tcms.testcases.views.export" %}'
+		'case_printable': '{% url "testcases-printable" %}',
+		'case_export':'{% url "testcases-export" %}'
 	};
 Nitrate.Utils.after_page_load(Nitrate.TestCases.List.on_load);
 </script>
@@ -25,12 +25,12 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.List.on_load);
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a> >>
 		{% if query_result %}
-		<a href="{% url "tcms.testcases.views.search" %}">Search Cases</a> >> Search result
+		<a href="{% url "testcases-search" %}">Search Cases</a> >> Search result
 		{% else %}
 		Search Cases
 		{% endif %}
 	</div>
-	<form action="{% url "tcms.testcases.views.search" %}" method="get">
+	<form action="{% url "testcases-search" %}" method="get">
 		<div id="itemSearch" class="itemSearch">
 			<h2>Search Case</h2>
 			{% include "case/form/search.html" %}

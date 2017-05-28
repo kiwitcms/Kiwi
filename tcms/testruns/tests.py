@@ -24,22 +24,22 @@ class TestOrderCases(BaseCaseRun):
 
     def test_404_if_run_does_not_exist(self):
         nonexisting_run_pk = TestRun.objects.last().pk + 1
-        url = reverse('tcms.testruns.views.order_case', args=[nonexisting_run_pk])
+        url = reverse('testruns-order_case', args=[nonexisting_run_pk])
         response = self.client.get(url)
         self.assertEqual(httplib.NOT_FOUND, response.status_code)
 
     def test_prompt_if_no_case_run_is_passed(self):
-        url = reverse('tcms.testruns.views.order_case', args=[self.test_run.pk])
+        url = reverse('testruns-order_case', args=[self.test_run.pk])
         response = self.client.get(url)
         self.assertIn('At least one case is required by re-oder in run', response.content)
 
     def test_order_case_runs(self):
-        url = reverse('tcms.testruns.views.order_case', args=[self.test_run.pk])
+        url = reverse('testruns-order_case', args=[self.test_run.pk])
         response = self.client.get(url, {'case_run': [self.case_run_1.pk,
                                                       self.case_run_2.pk,
                                                       self.case_run_3.pk]})
 
-        redirect_to = reverse('tcms.testruns.views.get', args=[self.test_run.pk])
+        redirect_to = reverse('testruns-get', args=[self.test_run.pk])
         self.assertRedirects(response, redirect_to)
 
         test_sortkeys = [

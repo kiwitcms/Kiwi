@@ -545,7 +545,7 @@ class TestCase(TCMSActionModel):
         self.tag.through.objects.filter(case=self.pk, tag=tag.pk).delete()
 
     def get_url_path(self, request=None):
-        return reverse('tcms.testcases.views.get', args=[self.pk, ])
+        return reverse('testcases-get', args=[self.pk, ])
 
     def _get_email_conf(self):
         try:

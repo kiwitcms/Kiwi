@@ -39,22 +39,23 @@ urlpatterns = [
     url(r'^xmlrpc/$', xmlrpc_handler),
 
     # Ajax call responder
-    url(r'^ajax/update/$', ajax.update),
+    url(r'^ajax/update/$', ajax.update, name='ajax-update'),
     url(r'^ajax/update/case-status/$', ajax.update_cases_case_status),
-    url(r'^ajax/update/case-run-status$', ajax.update_case_run_status),
+    url(r'^ajax/update/case-run-status$', ajax.update_case_run_status, name='ajax-update_case_run_status'),
     url(r'^ajax/update/cases-priority/$', ajax.update_cases_priority),
-    url(r'^ajax/update/cases-default-tester/$', ajax.update_cases_default_tester),
+    url(r'^ajax/update/cases-default-tester/$', ajax.update_cases_default_tester,
+        name='ajax-update_cases_default_tester'),
     url(r'^ajax/update/cases-reviewer/$', ajax.update_cases_reviewer),
     url(r'^ajax/update/cases-sortkey/$', ajax.update_cases_sortkey),
-    url(r'^ajax/form/$', ajax.form),
+    url(r'^ajax/form/$', ajax.form, name='ajax-form'),
     url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
-    url(r'^management/getinfo/$', ajax.info),
+    url(r'^management/getinfo/$', ajax.info, name='ajax-info'),
     url(r'^management/tags/$', ajax.tag),
 
     # Attached file zone
-    url(r'^management/uploadfile/$', files.upload_file),
-    url(r'^management/checkfile/(?P<file_id>\d+)/$', files.check_file),
-    url(r'^management/deletefile/(?P<file_id>\d+)/$', files.delete_file),
+    url(r'^management/uploadfile/$', files.upload_file, name='mgmt-upload_file'),
+    url(r'^management/checkfile/(?P<file_id>\d+)/$', files.check_file, name='mgmt-check_file'),
+    url(r'^management/deletefile/(?P<file_id>\d+)/$', files.delete_file, name='mgmt-delete_file'),
 
     # comments
     url(r'^comments/post/', comments_views.post),
@@ -77,7 +78,7 @@ urlpatterns = [
 
     url(r'^caseruns/$', testruns_views.caseruns),
     url(r'^caserun/(?P<case_run_id>\d+)/bug/$', testruns_views.bug),
-    url(r'^caserun/comment-many/', ajax.comment_case_runs),
+    url(r'^caserun/comment-many/', ajax.comment_case_runs, name='ajax-comment_case_runs'),
     url(r'^caserun/update-bugs-for-many/', ajax.update_bugs_to_caseruns),
 
     url(r'^linkref/add/$', linkreference_views.add),
@@ -85,10 +86,14 @@ urlpatterns = [
     url(r'^linkref/remove/(?P<link_id>\d+)/$', linkreference_views.remove),
 
     # Management zone
-    url(r'^environment/groups/$', management_views.environment_groups),
-    url(r'^environment/group/edit/$', management_views.environment_group_edit),
-    url(r'^environment/properties/$', management_views.environment_properties),
-    url(r'^environment/properties/values/$', management_views.environment_property_values),
+    url(r'^environment/groups/$', management_views.environment_groups,
+        name='mgmt-environment_groups'),
+    url(r'^environment/group/edit/$', management_views.environment_group_edit,
+        name='mgmt-environment_group_edit'),
+    url(r'^environment/properties/$', management_views.environment_properties,
+        name='mgmt-environment_properties'),
+    url(r'^environment/properties/values/$', management_views.environment_property_values,
+        name='mgmt-environment_property_values'),
 
     # Report zone
     url(r'^report/', include(report_urls)),

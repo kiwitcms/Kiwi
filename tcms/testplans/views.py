@@ -127,7 +127,7 @@ def new(request, template_name='plan/new.html'):
             tp.emailing.save()
 
             return HttpResponseRedirect(
-                reverse('tcms.testplans.views.get', args=[tp.plan_id, ])
+                reverse('test_plan_url_short', args=[tp.plan_id, ])
             )
     else:
         form = NewPlanForm()
@@ -155,7 +155,7 @@ def delete(request, plan_id):
             } else { \
                 history.go(-1) \
             };</script>" % (plan_id, reverse(
-            'tcms.testplans.views.delete', args=[plan_id, ]
+            'plan-delete', args=[plan_id, ]
         ))
         )
     elif request.GET.get('sure') == 'yes':
@@ -165,7 +165,7 @@ def delete(request, plan_id):
             tp.delete()
             return HttpResponse(
                 "<script>window.location.href='%s'</script>" % reverse(
-                    'tcms.testplans.views.all')
+                    'plans-all')
             )
         except:
             return HttpResponse(Prompt.render(
@@ -569,7 +569,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
                 request=request,
                 info_type=Prompt.Info,
                 info='At least one test run and one case is required to add cases to runs.',
-                next=reverse('tcms.testplans.views.get', args=[plan_id]),
+                next=reverse('test_plan_url_short', args=[plan_id]),
             ))
 
         # Adding cases to runs by recursion
@@ -587,7 +587,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
             testrun.estimated_time = testrun.estimated_time + estimated_time
             testrun.save()
 
-        return HttpResponseRedirect(reverse('tcms.testplans.views.get', args=[plan_id]))
+        return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
 
 @require_http_methods(['GET', 'POST'])
@@ -663,7 +663,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             # Update plan email settings
             update_plan_email_settings(tp, form)
             return HttpResponseRedirect(
-                reverse('tcms.testplans.views.get', args=[plan_id, slugify(tp.name)]))
+                reverse('test_plan_url', args=[plan_id, slugify(tp.name)]))
     else:
         # Generate a blank form
         # Temporary use one environment group in this case
@@ -785,7 +785,7 @@ def clone(request, template_name='plan/clone.html'):
 
             if len(tps) == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[cloned_plan.plan_id]))
+                    reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
             else:
                 args = {
                     'action': 'search',
@@ -794,7 +794,7 @@ def clone(request, template_name='plan/clone.html'):
                 }
                 url_args = urllib.urlencode(args)
                 return HttpResponseRedirect(
-                    '{}?{}'.format(reverse('tcms.testplans.views.all'), url_args))
+                    '{}?{}'.format(reverse('plans-all'), url_args))
     else:
         # Generate the default values for the form
         if len(tps) == 1:
@@ -902,7 +902,7 @@ def cases(request, plan_id):
                     return HttpResponse("Permission Denied")
 
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[plan_id]))
+                    reverse('test_plan_url_short', args=[plan_id]))
 
             search_mode = request.POST.get('search_mode')
             if request.POST.get('action') == 'search':
@@ -988,7 +988,7 @@ def cases(request, plan_id):
                         request=request,
                         info_type=Prompt.Alert,
                         info='Permission denied',
-                        next=reverse('tcms.testplans.views.get', args=[plan_id]),
+                        next=reverse('test_plan_url_short', args=[plan_id]),
                     ))
 
                 xml_form = ImportCasesViaXMLForm(request.POST, request.FILES)
@@ -1040,17 +1040,17 @@ def cases(request, plan_id):
                         tc.add_to_plan(plan=tp)
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testplans.views.get', args=[plan_id]) + '#testcases')
+                        reverse('test_plan_url_short', args=[plan_id]) + '#testcases')
                 else:
                     return HttpResponse(Prompt.render(
                         request=request,
                         info_type=Prompt.Alert,
                         info=xml_form.errors,
-                        next=reverse('tcms.testplans.views.get', args=[plan_id]) + '#testcases'
+                        next=reverse('test_plan_url_short', args=[plan_id]) + '#testcases'
                     ))
             else:
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[plan_id]) + '#testcases')
+                    reverse('test_plan_url_short', args=[plan_id]) + '#testcases')
 
     # tp = get_object_or_404(TestPlan, plan_id=plan_id)
     cas = CaseActions(request, tp)
@@ -1067,7 +1067,7 @@ def cases(request, plan_id):
             request=request,
             info_type=Prompt.Alert,
             info='Unrecognizable actions',
-            next=reverse('tcms.testplans.views.get', args=[plan_id]),
+            next=reverse('test_plan_url_short', args=[plan_id]),
         ))
 
     func = getattr(cas, action)

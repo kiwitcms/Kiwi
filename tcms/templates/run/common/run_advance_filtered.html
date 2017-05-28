@@ -19,10 +19,10 @@
 		{% for test_run in test_runs %}
 		<tr class="{% cycle 'rowodd' 'roweven' %}" id="run_{{test_run.run_id}}">
 			<td><input type='checkbox' name="run" value="{{ test_run.pk }}" class="run_selector" /></td>
-			<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.run_id }}</a></td>
-			<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.summary }}</a></td>
-			<td><a href="{% url "tcms.profiles.views.profile" test_run.manager.username %}">{{ test_run.manager }}</a></td>
-			<td>{% if test_run.default_tester_id %}<a href="{% url "tcms.profiles.views.profile" test_run.default_tester.username %}">{% endif %}{{ test_run.default_tester }}{% if test_run.default_tester_id %}</a>{% endif %}</td>
+			<td><a href="{% url "testruns-get" test_run.run_id %}" >{{ test_run.run_id }}</a></td>
+			<td><a href="{% url "testruns-get" test_run.run_id %}" >{{ test_run.summary }}</a></td>
+			<td><a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager }}</a></td>
+			<td>{% if test_run.default_tester_id %}<a href="{% url "tcms-profile" test_run.default_tester.username %}">{% endif %}{{ test_run.default_tester }}{% if test_run.default_tester_id %}</a>{% endif %}</td>
 			<td style="display:none" class="col_plan_content"><a href="{{ test_run.plan.get_absolute_url }}" >{{ test_run.plan }}</a></td>
 			<td>{{ test_run.build.product }}</td>
 			<td>{{ test_run.product_version }}</td>

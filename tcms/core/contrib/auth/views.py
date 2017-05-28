@@ -112,5 +112,5 @@ def confirm(request, activation_key):
         info_type=Prompt.Info,
         info=msg,
         next=request.GET.get('next', reverse(
-            'tcms.profiles.views.redirect_to_profile'))
+            'tcms-redirect_to_profile'))
     ))

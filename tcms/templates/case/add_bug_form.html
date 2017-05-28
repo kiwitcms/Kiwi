@@ -2,7 +2,7 @@
 	{% if perms.testcases.add_testcasebug %}
 	<tr>
 		<td colspan="4" style="padding:0;">
-			<form id="id_case_bug_form" action="{% url "tcms.testcases.views.bug" test_case.case_id %}" method="get">
+			<form id="id_case_bug_form" action="{% url "testcases-bug" test_case.case_id %}" method="get">
 				<div class="addtag">
 					<span class="tit">Add Bug</span>
 					<input type="hidden" name="handle" value="add" />
