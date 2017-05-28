@@ -181,7 +181,7 @@ INSTALLED_APPS = (
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
+    'django.template.context_processors.request',
     'tcms.core.context_processors.admin_prefix_processor',
     'tcms.core.context_processors.auth_backend_processor',
     'tcms.core.context_processors.request_contents_processor',
@@ -231,8 +231,8 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
-# Needed by django.core.context_processors.debug:
-# See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-core-context-processors-debug
+# Needed by django.template.context_processors.debug:
+# See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-template-context-processors-debug
 INTERNAL_IPS = ('127.0.0.1', )
 
 # Authentication backends
