@@ -5,16 +5,7 @@ from tcms.core.utils.tcms_router import connection
 
 __all__ = ('SQLExecution',
            'get_groupby_result',
-           'GroupByResult',
-           'workaround_single_value_for_in_clause')
-
-
-def workaround_single_value_for_in_clause(build_ids):
-    '''Workaround for using MySQL-python 1.2.4
-
-    This workaround is not necessary after upgrading MySQL-python to 1.2.5
-    '''
-    return build_ids * 2 if len(build_ids) == 1 else build_ids
+           'GroupByResult')
 
 
 class SQLExecution(object):
