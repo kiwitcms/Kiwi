@@ -116,7 +116,7 @@ if settings.DEBUG:
 
         urlpatterns += [
             url(r'^__debug__/', include(debug_toolbar.urls)),
-            url(r'^tt/(?P<template_name>.*)', test_template),
+            url(r'^tt/(?P<template_name>.*)', test_template.test_template),
         ]
     # in case we're trying to debug in production
     # and debug_toolbar is not installed
