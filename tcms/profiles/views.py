@@ -33,7 +33,7 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
     """
 
     if username != request.user.username:
-        return http.HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+        return http.HttpResponseRedirect(reverse('tcms-login'))
     else:
         up = {'user': request.user}
 
@@ -117,7 +117,7 @@ def recent(request, username, template_name='profile/recent.html'):
     """List the recent plan/run"""
 
     if username != request.user.username:
-        return http.HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+        return http.HttpResponseRedirect(reverse('tcms-login'))
     else:
         up = {'user': request.user}
 
@@ -154,4 +154,4 @@ def recent(request, username, template_name='profile/recent.html'):
 @login_required
 def redirect_to_profile(request):
     return http.HttpResponseRedirect(
-        reverse('tcms.profiles.views.recent', args=[request.user.username]))
+        reverse('tcms-recent', args=[request.user.username]))

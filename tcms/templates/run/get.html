@@ -39,10 +39,10 @@ jQ(function() {
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		{% if request.REQUEST.from_plan %}
-		&gt;&gt; <a href="{% url "tcms.testplans.views.all" %}">Seach Plan</a>
+		&gt;&gt; <a href="{% url "plans-all" %}">Seach Plan</a>
 		&gt;&gt; Test Plan: <a href="{{ test_run.plan.get_absolute_url }}">[{{ test_run.plan.plan_id }}] {{ test_run.plan.name }}</a>
 		{% else %}
-		&gt;&gt; <a href="{% url "tcms.testruns.views.all" %}">Search Runs</a>
+		&gt;&gt; <a href="{% url "testruns-all" %}">Search Runs</a>
 		{% endif %}
 		&gt;&gt; [{{ test_run.run_id }}] {{ test_run.summary }}
 	</div>
@@ -83,13 +83,13 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Product Version&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.testruns.views.all" %}?product={{ test_run.build.product_id }}&product_version={{ test_run.product_version_id }}" title="Search test runs of {{ test_run.product_version }}">{{ test_run.product_version }}</a>
+					<a href="{% url "testruns-all" %}?product={{ test_run.build.product_id }}&product_version={{ test_run.product_version_id }}" title="Search test runs of {{ test_run.product_version }}">{{ test_run.product_version }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Manager&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.profiles.views.profile" test_run.manager.username %}">{{ test_run.manager.email }}</a>
+					<a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager.email }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
@@ -138,13 +138,13 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Product&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.testruns.views.all" %}?product={{ test_run.product_version.product_id }}" title="Search test runs of {{ test_run.product_version.product }}">{{ test_run.product_version.product }}</a>
+					<a href="{% url "testruns-all" %}?product={{ test_run.product_version.product_id }}" title="Search test runs of {{ test_run.product_version.product }}">{{ test_run.product_version.product }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Build&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.testruns.views.all" %}?build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
+					<a href="{% url "testruns-all" %}?build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
 				</div>
 			</div>
                         {% if errata_url_prefix and test_run.errata_id %}
@@ -159,7 +159,7 @@ jQ(function() {
 				<div class="title grey">Default Tester&nbsp;:</div>
 				<div class="name">
 					{% if test_run.default_tester %}
-					<a href="{% url "tcms.profiles.views.profile" test_run.default_tester.username %}">{{ test_run.default_tester.email }}</a>
+					<a href="{% url "tcms-profile" test_run.default_tester.username %}">{{ test_run.default_tester.email }}</a>
 					{% else %}
 					{{ test_run.default_tester }}
 					{% endif %}

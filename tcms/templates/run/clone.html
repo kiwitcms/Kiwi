@@ -31,9 +31,9 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 	</div>
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">...</a>
+		>> <a href="{% url "plans-all" %}">...</a>
 		>> <a href="{{ test_run.plan.get_absolute_url }}">...</a>
-		>> <a href="{% url "tcms.testruns.views.get" test_run.run_id %}">{{ test_run.summary }}</a>
+		>> <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a>
 		>> Clone
 	</div>
 	<h2>Clone Test Run - {{ test_run.summary }}</h2>
@@ -169,7 +169,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 							</a>
 						</td>
 						<td>
-							<a href="{% url "tcms.testcases.views.get" case_run.case_id %}">{{ case_run.case_id }}</a>
+							<a href="{% url "testcases-get" case_run.case_id %}">{{ case_run.case_id }}</a>
 							<input type="hidden" name="case" value="{{ case_run.case_id }}">
                             <input type="hidden" name="case_run_id" value="{{ case_run.case_run_id }}">
 						</td>

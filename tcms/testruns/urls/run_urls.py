@@ -6,7 +6,7 @@ from .. import views
 
 urlpatterns = [
     url(r'^new/$', views.new),
-    url(r'^(?P<run_id>\d+)/$', views.get),
+    url(r'^(?P<run_id>\d+)/$', views.get, name='testruns-get'),
     url(r'^(?P<run_id>\d+)/clone/$', views.new_run_with_caseruns),
     url(r'^(?P<run_id>\d+)/delete/$', views.delete),
     url(r'^(?P<run_id>\d+)/edit/$', views.edit),
@@ -16,7 +16,7 @@ urlpatterns = [
 
     url(r'^(?P<run_id>\d+)/ordercase/$', views.order_case),
     url(r'^(?P<run_id>\d+)/changestatus/$', views.change_status),
-    url(r'^(?P<run_id>\d+)/ordercaserun/$', views.order_case),
+    url(r'^(?P<run_id>\d+)/ordercaserun/$', views.order_case, name='testruns-order_case'),
     url(r'^(?P<run_id>\d+)/removecaserun/$', views.remove_case_run),
 
     url(r'^(?P<run_id>\d+)/assigncase/$', views.AddCasesToRunView.as_view(),

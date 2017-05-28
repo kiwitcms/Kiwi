@@ -64,7 +64,7 @@ def new(request, template_name='run/new.html'):
 
     # If from_plan does not exist will redirect to plans for select a plan
     if not request.REQUEST.get('from_plan'):
-        return HttpResponseRedirect(reverse('tcms.testplans.views.all'))
+        return HttpResponseRedirect(reverse('plans-all'))
 
     plan_id = request.REQUEST.get('from_plan')
     # Case is required by a test run
@@ -73,7 +73,7 @@ def new(request, template_name='run/new.html'):
             request=request,
             info_type=Prompt.Info,
             info='At least one case is required by a run.',
-            next=reverse('tcms.testplans.views.get', args=[plan_id, ]),
+            next=reverse('test_plan_url_short', args=[plan_id, ]),
         ))
 
     # Ready to write cases to test plan
@@ -197,7 +197,7 @@ def new(request, template_name='run/new.html'):
                 TCMSEnvRunValueMap.objects.bulk_create(args)
 
             return HttpResponseRedirect(
-                reverse('tcms.testruns.views.get', args=[tr.run_id, ])
+                reverse('testruns-get', args=[tr.run_id, ])
             )
 
     else:
@@ -269,7 +269,7 @@ def delete(request, run_id):
             tr.case_run.all().delete()
             tr.delete()
             return HttpResponseRedirect(
-                reverse('tcms.testplans.views.get', args=(plan_id, ))
+                reverse('test_plan_url_short', args=(plan_id, ))
             )
         except:
             return HttpResponse(Prompt.render(
@@ -826,7 +826,7 @@ def edit(request, run_id, template_name='run/edit.html'):
                 tr.update_completion_status(is_auto_updated=False,
                                             is_finish=is_finish)
             return HttpResponseRedirect(
-                reverse('tcms.testruns.views.get', args=[run_id, ])
+                reverse('testruns-get', args=[run_id, ])
             )
     else:
         # Generate a blank form
@@ -1206,7 +1206,7 @@ def clone(request, template_name='run/clone.html'):
 
             if len(trs) == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testruns.views.get', args=[n_tr.pk])
+                    reverse('testruns-get', args=[n_tr.pk])
                 )
 
             params = {
@@ -1215,7 +1215,7 @@ def clone(request, template_name='run/clone.html'):
                 'build': form.cleaned_data['build'].pk}
 
             return HttpResponseRedirect('%s?%s' % (
-                reverse('tcms.testruns.views.all'),
+                reverse('testruns-all'),
                 urllib.urlencode(params, True)
             ))
     else:
@@ -1253,7 +1253,7 @@ def order_case(request, run_id):
             request=request,
             info_type=Prompt.Info,
             info='At least one case is required by re-oder in run.',
-            next=reverse('tcms.testruns.views.get', args=[run_id, ]),
+            next=reverse('testruns-get', args=[run_id, ]),
         ))
 
     case_run_ids = request.REQUEST.getlist('case_run')
@@ -1277,7 +1277,7 @@ def order_case(request, run_id):
             cursor = connection.writer_cursor
             cursor.execute(sql, key_id_pair)
 
-    return HttpResponseRedirect(reverse('tcms.testruns.views.get', args=[run_id]))
+    return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
@@ -1291,7 +1291,7 @@ def change_status(request, run_id):
         tr.update_completion_status(is_auto_updated=False, is_finish=False)
 
     return HttpResponseRedirect(
-        reverse('tcms.testruns.views.get', args=[run_id, ])
+        reverse('testruns-get', args=[run_id, ])
     )
 
 
@@ -1310,7 +1310,7 @@ def remove_case_run(request, run_id):
     # If no case run to remove, no further operation is required, just return
     # back to run page immediately.
     if not case_run_ids:
-        return HttpResponseRedirect(reverse('tcms.testruns.views.get',
+        return HttpResponseRedirect(reverse('testruns-get',
                                             args=[run_id, ]))
 
     run = get_object_or_404(TestRun.objects.only('pk'), pk=run_id)
@@ -1320,7 +1320,7 @@ def remove_case_run(request, run_id):
 
     caseruns_exist = TestCaseRun.objects.filter(run_id=run.pk).exists()
     if caseruns_exist:
-        redirect_to = 'tcms.testruns.views.get'
+        redirect_to = 'testruns-get'
     else:
         redirect_to = 'add-cases-to-run'
 
@@ -1394,7 +1394,7 @@ class AddCasesToRunView(View):
             for nc in ncs:
                 tr.add_case_run(case=nc)
 
-        return HttpResponseRedirect(reverse('tcms.testruns.views.get',
+        return HttpResponseRedirect(reverse('testruns-get',
                                             args=[tr.run_id, ]))
 
     def get(self, request, run_id):
@@ -1512,7 +1512,7 @@ def update_case_run_text(request, run_id):
         request=request,
         info_type=Prompt.Info,
         info=info,
-        next=reverse('tcms.testruns.views.get', args=[run_id, ]),
+        next=reverse('testruns-get', args=[run_id, ]),
     ))
 
 

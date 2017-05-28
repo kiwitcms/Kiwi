@@ -144,7 +144,7 @@ class TestRun(TCMSActionModel):
         # Upward compatibility code
         if request:
             return request.build_absolute_uri(
-                reverse('tcms.testruns.views.get', args=[self.pk, ])
+                reverse('testruns-get', args=[self.pk, ])
             )
 
         return self.get_url(request)
@@ -164,7 +164,7 @@ class TestRun(TCMSActionModel):
         return list(set(to))
 
     def get_url_path(self):
-        return reverse('tcms.testruns.views.get', args=[self.pk, ])
+        return reverse('testruns-get', args=[self.pk, ])
 
     # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, case_run_status=1, assignee=None,

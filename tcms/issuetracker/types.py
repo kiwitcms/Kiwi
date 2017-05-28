@@ -121,7 +121,7 @@ class Bugzilla(IssueTrackerType):
             effect = 'None'
 
         caserun_url = settings.KIWI_BASE_URL + \
-            reverse('tcms.testruns.views.get', args=[caserun.run.pk])
+            reverse('testruns-get', args=[caserun.run.pk])
 
         comment = "Filed from caserun %s\n\n" % caserun_url
         comment += "Version-Release number of selected " \

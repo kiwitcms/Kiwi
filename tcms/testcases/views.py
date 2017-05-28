@@ -227,19 +227,19 @@ def new(request, template_name='case/new.html'):
                 def _returntocase(self):
                     if self.plan:
                         return HttpResponseRedirect(
-                            '%s?from_plan=%s' % (reverse('tcms.testcases.views.get',
+                            '%s?from_plan=%s' % (reverse('testcases-get',
                                                          args=[self.case.pk]),
                                                  self.plan.plan_id))
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testcases.views.get', args=[self.case.pk]))
+                        reverse('testcases-get', args=[self.case.pk]))
 
                 def _returntoplan(self):
                     if not self.plan:
                         raise Http404
 
                     return HttpResponseRedirect(
-                        '%s#reviewcases' % reverse('tcms.testplans.views.get',
+                        '%s#reviewcases' % reverse('test_plan_url_short',
                                                    args=[self.plan.pk]))
 
             # Genrate the instance of actions
@@ -1052,7 +1052,7 @@ def get(request, case_id, template_name='case/get.html'):
                 info_type=Prompt.Info,
                 info='''This case has been removed from the plan, but you
                           can view the case detail''',
-                next=reverse('tcms.testcases.views.get',
+                next=reverse('testcases-get',
                              args=[case_id, ]),
             ))
     else:
@@ -1357,15 +1357,15 @@ def edit(request, case_id, template_name='case/edit.html'):
                 confirm_status_name = 'CONFIRMED'
                 if tc.case_status.name == confirm_status_name:
                     return HttpResponseRedirect('%s#testcases' % (
-                        reverse('tcms.testplans.views.get', args=[tp.pk, ]),
+                        reverse('test_plan_url_short', args=[tp.pk, ]),
                     ))
                 else:
                     return HttpResponseRedirect('%s#reviewcases' % (
-                        reverse('tcms.testplans.views.get', args=[tp.pk, ]),
+                        reverse('test_plan_url_short', args=[tp.pk, ]),
                     ))
 
             return HttpResponseRedirect('%s?from_plan=%s' % (
-                reverse('tcms.testcases.views.get', args=[case_id, ]),
+                reverse('testcases-get', args=[case_id, ]),
                 request.REQUEST.get('from_plan', None),
             ))
 
@@ -1616,18 +1616,18 @@ def clone(request, template_name='case/clone.html'):
 
             if cases_count == 1 and plans_count == 1:
                 return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('tcms.testcases.views.get', args=[tc_dest.pk, ]),
+                    reverse('testcases-get', args=[tc_dest.pk, ]),
                     tp.pk
                 ))
 
             if cases_count == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testcases.views.get', args=[tc_dest.pk, ])
+                    reverse('testcases-get', args=[tc_dest.pk, ])
                 )
 
             if plans_count == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[tp.pk, ])
+                    reverse('test_plan_url_short', args=[tp.pk, ])
                 )
 
             # Otherwise it will prompt to user the clone action is successful.
@@ -1636,7 +1636,7 @@ def clone(request, template_name='case/clone.html'):
                 info_type=Prompt.Info,
                 info='Test case successful to clone, click following link '
                      'to return to plans page.',
-                next=reverse('tcms.testplans.views.all')
+                next=reverse('plans-all')
             ))
     else:
         selected_cases = get_selected_testcases(request)

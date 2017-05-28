@@ -24,7 +24,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Attachment.on_load);
 <div id="content">
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.name }}</a>
 		>> Add Attachment
 	</div>
@@ -33,7 +33,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Attachment.on_load);
 		<h2 id="display_title" style="line-height:1.2em;">{{ test_plan.name }}</h2>
 		</div><!-- plan detail end-->
 			<div class="Detailform border-1">
-			<form action="{% url "tcms.core.files.upload_file" %}" method="POST" enctype="multipart/form-data">
+			<form action="{% url "mgmt-upload_file" %}" method="POST" enctype="multipart/form-data">
 				<div class="mixbar">
 					<span class="tit">Upload New Attachment</span>
 					<input type="hidden" name="to_plan_id" value="{{ test_plan.plan_id }}" />
@@ -59,11 +59,11 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Attachment.on_load);
 				<tbody>
 					{% for attachment in test_plan.attachment.all %}
 					<tr id="{{ attachment.attachment_id }}"  class="{% cycle 'odd' 'even' %}">
-						<td><a href="{% url "tcms.core.files.check_file" attachment.attachment_id %}">{{ attachment.file_name }}</a></td>
+						<td><a href="{% url "mgmt-check_file" attachment.attachment_id %}">{{ attachment.file_name }}</a></td>
 						<td>{{ attachment.submitter }}</td>
 						<td>{{ attachment.create_date }}</td>
 						<td>{{ attachment.mime_type }}</td>
-                        <td><a href="{% url "tcms.core.files.check_file" attachment.attachment_id %}">View</a> | <a class="js-del-attach" data-params='[{{attachment.attachment_id}}, "from_plan",{{test_plan.plan_id}}]' href="#">Delete</a> </td>
+                        <td><a href="{% url "mgmt-check_file" attachment.attachment_id %}">View</a> | <a class="js-del-attach" data-params='[{{attachment.attachment_id}}, "from_plan",{{test_plan.plan_id}}]' href="#">Delete</a> </td>
                     </tr>
 					{% endfor %}
 				</tbody>

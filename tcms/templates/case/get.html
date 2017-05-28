@@ -46,7 +46,7 @@ Nitrate.TestCases.Instance = {
 	{% else %}
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
-		&gt;&gt; <a href="{% url "tcms.testcases.views.search" %}">Search Case</a>
+		&gt;&gt; <a href="{% url "testcases-search" %}">Search Case</a>
 		&gt;&gt; Case: {{ test_case.case_id }}: {{ test_case.summary }}
 	</div>
 	<div id="tcms_values" class="hidden">
@@ -58,7 +58,7 @@ Nitrate.TestCases.Instance = {
 		<span id="id_buttons" ><input id="btn_edit" type="button" value="Edit" data-link="{% url "tcms.testcases.views.edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}"/></span>
 		{% endif %}
 		{% if perms.testcases.add_testcaseplan %}
-		<span id=""><input type="button" id="btn_clone" value="Clone case" data-link="{% url "tcms.testcases.views.clone" %}?from_plan={{ test_plan.plan_id }}&case={{ test_case.case_id }}"/></span>
+		<span id=""><input type="button" id="btn_clone" value="Clone case" data-link="{% url "testcases-clone" %}?from_plan={{ test_plan.plan_id }}&case={{ test_case.case_id }}"/></span>
 		{% endif %}
 		{% if test_plan %}
 		<span class="right-action">
@@ -75,7 +75,7 @@ Nitrate.TestCases.Instance = {
 					<div class="title grey">Default Tester&nbsp;:</div>
 					<div class="name">
 						{% if test_case.default_tester	%}
-						<span id="display_default_tester"><a href="{% url "tcms.profiles.views.profile" test_case.default_tester.username %}">{{ test_case.default_tester.email }}</a></span>
+						<span id="display_default_tester"><a href="{% url "tcms-profile" test_case.default_tester.username %}">{{ test_case.default_tester.email }}</a></span>
 						{% else %}
 						<span >No default tester</span>
 						{% endif %}
@@ -117,7 +117,7 @@ Nitrate.TestCases.Instance = {
 				<div class="listinfo">
 					<div class="title grey">Author&nbsp;:</div>
 					<span class="name">
-						<a href="{% url "tcms.profiles.views.profile" test_case.author.username %}">
+						<a href="{% url "tcms-profile" test_case.author.username %}">
 							{{ test_case.author.email }}
 						</a>
 					</span>

@@ -23,12 +23,12 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		{% if query_result %}
-		>> <a href="{% url "tcms.testruns.views.all" %}">Test Runs</a> >> Search result
+		>> <a href="{% url "testruns-all" %}">Test Runs</a> >> Search result
 		{% else %}
 		>> Test Runs
 		{% endif %}
 	</div>
-	<form action="{% url "tcms.testruns.views.all" %}" method="get">
+	<form action="{% url "testruns-all" %}" method="get">
 		<div id="itemSearch" class="itemSearch">
 			<input type="hidden" name="action" value="search" />
 			<div>
@@ -49,8 +49,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 	{% if REQUEST_CONTENTS.items %}
 	<div id="contentTab" class="mixbar">
 		{# <span class="tit">{{ test_runs.count }} Test Runs</span> #}
-		<span class="tit"><a href="{% url "tcms.testruns.views.all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
-		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param='{% url "tcms.testruns.views.clone" %}' />
+		<span class="tit"><a href="{% url "testruns-all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
+		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param='{% url "testruns-clone" %}' />
 	</div>
 	{% include "run/common/run_filtered.html" %}
 	{% else %}

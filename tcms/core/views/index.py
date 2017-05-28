@@ -9,8 +9,8 @@ def index(request, template_name='index.html'):
     """
 
     if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+        return HttpResponseRedirect(reverse('tcms-login'))
 
     return HttpResponseRedirect(
-        reverse('tcms.profiles.views.recent', args=[request.user.username])
+        reverse('tcms-recent', args=[request.user.username])
     )

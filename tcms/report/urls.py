@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='overall/', permanent=True)),
-    url(r'^overall/$', views.overall),
+    url(r'^overall/$', views.overall, name='report-overall'),
     url(r'^product/(?P<product_id>\d+)/overview/$', views.overview),
     url(r'^product/(?P<product_id>\d+)/build/$', views.ProductBuildReport.as_view(),
         name='report-overall-product-build'),

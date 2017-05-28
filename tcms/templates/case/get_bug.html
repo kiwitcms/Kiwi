@@ -13,7 +13,7 @@
 	{% for bug in test_case.get_bugs %}
 	<tr class="{% cycle 'even' 'odd' %}">
 		<td>{{ bug.case_run_id }}</td>
-		<td>{% if bug.case_run_id %}<a href="{% url "tcms.testruns.views.get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>{% else %}None{% endif %}</td>
+		<td>{% if bug.case_run_id %}<a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>{% else %}None{% endif %}</td>
 		<td><a href="{{ bug.get_absolute_url }}">{{ bug.get_absolute_url }}</a></td>
         <td>
 			{% if perms.testcases.delete_testcasebug %}

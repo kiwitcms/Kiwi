@@ -25,7 +25,7 @@ def _rpc_add_bug_to_bugzilla(rpc, testcase, bug):
     try:
         text = """---- Bug confirmed via test case ----
 URL: %s
-Summary: %s""" % (settings.KIWI_BASE_URL + reverse('tcms.testcases.views.get', args=[testcase.pk]),
+Summary: %s""" % (settings.KIWI_BASE_URL + reverse('testcases-get', args=[testcase.pk]),
                   testcase.summary)
 
         rpc.update_bugs(bug.bug_id, {'comment': {'comment': text, 'is_private': False}})

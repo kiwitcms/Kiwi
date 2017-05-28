@@ -48,7 +48,7 @@ class TestOpenBookmarks(TestCase):
     def test_open_bookmark_page(self):
         self.client.login(username=self.tester.username, password='password')
 
-        url = reverse('tcms.profiles.views.bookmark',
+        url = reverse('tcms-bookmark',
                       kwargs={'username': self.tester.username})
         response = self.client.get(url)
 

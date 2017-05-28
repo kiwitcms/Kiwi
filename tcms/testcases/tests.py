@@ -284,7 +284,7 @@ class TestOperateComponentView(BasePlanCase):
 
         user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
 
-        cls.cases_component_url = reverse('tcms.testcases.views.component')
+        cls.cases_component_url = reverse('testcases-component')
 
     def setUp(self):
         self.client = Client()
@@ -378,7 +378,7 @@ class TestOperateCategoryView(BasePlanCase):
 
         user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
 
-        cls.case_category_url = reverse('tcms.testcases.views.category')
+        cls.case_category_url = reverse('testcases-category')
 
     def setUp(self):
         self.client = Client()
@@ -435,7 +435,7 @@ class TestAddIssueToCase(BasePlanCase):
                                                    password='password')
         user_should_have_perm(cls.plan_tester, 'testcases.change_testcasebug')
 
-        cls.case_bug_url = reverse('tcms.testcases.views.bug', args=[cls.case_1.pk])
+        cls.case_bug_url = reverse('testcases-bug', args=[cls.case_1.pk])
         cls.issue_tracker = TestCaseBugSystem.objects.get(name='Bugzilla')
 
     def test_add_and_remove_a_bug(self):
@@ -494,7 +494,7 @@ class TestOperateCasePlans(BasePlanCase):
                                                    email='plantester@example.com',
                                                    password='password')
 
-        cls.case_plans_url = reverse('tcms.testcases.views.plan', args=[cls.case_1.pk])
+        cls.case_plans_url = reverse('testcases-plan', args=[cls.case_1.pk])
 
     def tearDown(self):
         remove_perm_from_user(self.plan_tester, 'testcases.add_testcaseplan')
@@ -554,7 +554,7 @@ class TestOperateCasePlans(BasePlanCase):
         user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
         self.client.login(username=self.plan_tester.username, password='password')
         # This time, add a few plans to another case
-        url = reverse('tcms.testcases.views.plan', args=[self.case_2.pk])
+        url = reverse('testcases-plan', args=[self.case_2.pk])
 
         response = self.client.get(url,
                                    {'a': 'add', 'plan_id': [self.plan_test_add.pk,
@@ -585,7 +585,7 @@ class TestOperateCaseTag(BasePlanCase):
         TestCaseTagFactory(case=cls.case_3, tag=cls.tag_rhel)
         TestCaseTagFactory(case=cls.case_3, tag=cls.tag_python)
 
-        cls.cases_tag_url = reverse('tcms.testcases.views.tag')
+        cls.cases_tag_url = reverse('testcases-tag')
 
     def test_show_cases_list(self):
         response = self.client.post(self.cases_tag_url,

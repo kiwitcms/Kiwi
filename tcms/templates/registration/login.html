@@ -12,7 +12,7 @@
 	<div id="index" >
 		<br clear="all">
 		<div class="login radius">
-			<form id="id_login_form" action="{% url "django.contrib.auth.views.login" %}" method="POST">
+			<form id="id_login_form" action="{% url "tcms-login" %}" method="POST">
 				{% csrf_token %}
 				{% if SETTINGS.MOTD_LOGIN %}
 				<div class="cc">{{ SETTINGS.MOTD_LOGIN|safe}}</div>
@@ -25,7 +25,7 @@
 					</tr>
                     <tr>
                     	<td></td>
-						<td ><a href="{% url "django.contrib.auth.views.password_reset" %}">Forget the password</a></td>
+						<td ><a href="{% url "tcms-password_reset" %}">Forget the password</a></td>
 					</tr>
 					<tr>
                     	<td>&nbsp;</td>
