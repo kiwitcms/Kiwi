@@ -6,7 +6,7 @@ from celery import task
 from django.conf import settings
 from django.core.mail import get_connection
 from django.core.mail import EmailMessage
-from django.template import loader, Context, RequestContext
+from django.template.loader import render_to_string
 
 
 @task()
@@ -21,11 +21,7 @@ def blocking_mailto(template_name, subject, to_mail, context=None,
         context = Context to render the mail content
     """
     try:
-        t = loader.get_template(template_name)
-        if request:
-            mail_content = t.render(RequestContext(request, context))
-        else:
-            mail_content = t.render(Context(context))
+        mail_content = render_to_string(template_name, context, request=request)
 
         connection = get_connection(username=None,
                                     password=None,
@@ -45,8 +41,7 @@ def blocking_mailto(template_name, subject, to_mail, context=None,
 def non_blocking_mailto(template_name, subject, recipients=None,
                         context=None, sender=settings.EMAIL_FROM,
                         cc=None):
-    t = loader.get_template(template_name)
-    body = t.render(Context(context))
+    body = render_to_string(template_name, context)
     if settings.DEBUG:
         recipients = settings.EMAILS_FOR_DEBUG
 
