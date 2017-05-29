@@ -19,7 +19,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_GET
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
@@ -696,6 +696,7 @@ def open_run_get_users(case_runs):
     return (dict(testers.iterator()), dict(assignees.iterator()))
 
 
+@require_GET
 def get(request, run_id, template_name='run/get.html'):
     '''Display testrun's detail'''
     SUB_MODULE_NAME = "runs"
@@ -776,9 +777,9 @@ def edit(request, run_id, template_name='run/edit.html'):
         raise Http404
     # If the form is submitted
     if request.method == "POST":
-        form = EditRunForm(request.REQUEST)
-        if request.REQUEST.get('product'):
-            form.populate(product_id=request.REQUEST.get('product'))
+        form = EditRunForm(request.POST)
+        if request.POST.get('product'):
+            form.populate(product_id=request.POST.get('product'))
         else:
             form.populate(product_id=tr.plan.product_id)
 

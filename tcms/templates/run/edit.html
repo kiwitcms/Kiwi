@@ -30,7 +30,7 @@
 	</div>
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
-		{% if request.REQUEST.from_plan %}
+		{% if request.GET.from_plan %}
 		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> <a href="{{ test_run.plan.get_absolute_url }}">Test Plan :{{ test_run.plan.plan_id }}: {{ test_run.plan }}</a>
 		{% else %}
