@@ -93,14 +93,14 @@ def _lookup_fields_in_model(cls, fields):
     So this method will find out that case is a m2m field and notice the
     outter method use distinct to avoid duplicated rows.
     """
-    for field in fields:
+    for field_name in fields:
         try:
-            field_info = cls._meta.get_field_by_name(field)
-            if field_info[-1]:
+            field = cls._meta.get_field(field_name)
+            if field.is_relation and field.many_to_many:
                 yield True
             else:
-                if getattr(field_info[0], 'related', None):
-                    cls = field_info[0].related.model
+                if getattr(field, 'rel', None):
+                    cls = field.rel.model
         except FieldDoesNotExist:
             pass
 
@@ -165,12 +165,12 @@ class Comment(object):
     def add(self):
         import time
         import django_comments as comments
-        from django.db import models
+        from django.apps import apps
 
         comment_form = comments.get_form()
 
         try:
-            model = models.get_model(*self.content_type.split('.', 1))
+            model = apps.get_model(*self.content_type.split('.', 1))
             targets = model._default_manager.filter(pk__in=self.object_pks)
         except:
             raise
