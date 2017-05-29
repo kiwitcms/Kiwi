@@ -134,7 +134,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
-            "notes": "开源中国",
+            "notes": u"开源中国",
             "case_text_version": 2,
         })
         self.assertIsNotNone(tcr)
@@ -326,8 +326,8 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
             "case_run_id": self.case_run.pk,
             "bug_id": '12',
             "bug_system_id": self.bug_system_bz.pk,
-            "summary": "你好，中国",
-            "description": "中国是一个具有悠久历史的文明古国"
+            "summary": u"你好，中国",
+            "description": u"中国是一个具有悠久历史的文明古国"
         })
         self.assertIsNone(bug)
 
