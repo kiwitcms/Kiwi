@@ -7,7 +7,6 @@ import tcms
 KIWI_VERSION = tcms.__version__
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 # Administrators error report email settings
 ADMINS = (
@@ -115,11 +114,27 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\', '/'),
+        ],
+        'OPTIONS': {
+            'context_processors': DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+                'django.template.context_processors.request',
+                'tcms.core.context_processors.admin_prefix_processor',
+                'tcms.core.context_processors.auth_backend_processor',
+                'tcms.core.context_processors.request_contents_processor',
+                'tcms.core.context_processors.settings_processor',
+            ),
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ]
+        },
+    },
+]
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -137,12 +152,6 @@ ROOT_URLCONF = 'tcms.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tcms.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\', '/'),
-)
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -180,13 +189,6 @@ INSTALLED_APPS = (
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
-TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.template.context_processors.request',
-    'tcms.core.context_processors.admin_prefix_processor',
-    'tcms.core.context_processors.auth_backend_processor',
-    'tcms.core.context_processors.request_contents_processor',
-    'tcms.core.context_processors.settings_processor',
-)
 
 #
 # Default apps settings
