@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # FIXME: Use exception to replace the feature
+from django.shortcuts import render
 
 
 class Prompt(object):
@@ -17,13 +18,8 @@ class Prompt(object):
     @classmethod
     def render(cls, request, info_type=None, info=None, next=None):
         """Generate the html to response"""
-        from django.template import RequestContext, loader
-
-        t = loader.get_template('prompt.html')
-        c = RequestContext(request, {
+        return render(request, 'prompt.html', {
             'type': info_type,
             'info': info,
             'next': next
         })
-
-        return t.render(c)
