@@ -781,9 +781,7 @@ def ajax_response(request, querySet, testplan, columnIndexNameMap,
         try:
             # prepare the JSON with the response, consider using :
             # from django.template.defaultfilters import escapejs
-            jsonString = render_to_string(jsonTemplatePath, locals(),
-                                          context_instance=RequestContext(
-                                              request))
+            jsonString = render_to_string(jsonTemplatePath, locals(), request=request)
             response = HttpJSONResponse(jsonString)
         except Exception, e:
             print e

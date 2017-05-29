@@ -459,8 +459,7 @@ def load_runs_of_one_plan(request, plan_id,
         'iTotalDisplayRecords': total_display_records,
         'runs': queryset,
     }
-    json_data = render_to_string(template_name, context,
-                                 context_instance=RequestContext(request))
+    json_data = render_to_string(template_name, context, request=request)
     return HttpJSONResponse(json_data)
 
 
@@ -561,8 +560,7 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
         'iTotalDisplayRecords': total_display_records,
         'runs': trs,
     }
-    json_data = render_to_string(template_name, context,
-                                 context_instance=RequestContext(request))
+    json_data = render_to_string(template_name, context, request=request)
     return HttpJSONResponse(json_data)
 
 
