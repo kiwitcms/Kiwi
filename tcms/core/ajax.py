@@ -668,10 +668,24 @@ class TestCaseUpdateActions(ModelUpdateActions):
         self.get_update_targets().update(**{str(self.target_field): user_pk[0]})
 
     def _update_case_status(self):
-        exists = TestCaseStatus.objects.filter(pk=self.new_value).exists()
-        if not exists:
+        try:
+            new_status = TestCaseStatus.objects.get(pk=self.new_value)
+        except TestCaseStatus.DoesNotExist:
             raise ObjectDoesNotExist('The status you choose does not exist.')
-        self.get_update_targets().update(**{str(self.target_field): self.new_value})
+
+        update_object = self.get_update_targets()
+        if not update_object:
+            return say_no('No record(s) found')
+
+        for testcase in update_object:
+            if hasattr(testcase, 'log_action'):
+                testcase.log_action(
+                    who=self.request.user,
+                    action='Field %s changed from %s to %s.' % (
+                        self.target_field, testcase.case_status, new_status.name
+                    )
+                )
+        update_object.update(**{str(self.target_field): self.new_value})
 
         # ###
         # Case is moved between Cases and Reviewing Cases tabs accoding to the
