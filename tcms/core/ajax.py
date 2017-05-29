@@ -12,7 +12,7 @@ from django import http
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
+from django.apps import apps
 from django.dispatch import Signal
 from django.http import Http404
 from django.http import HttpResponse
@@ -406,7 +406,7 @@ def update(request):
     if not has_perms:
         return say_no('Permission Dinied.')
 
-    model = models.get_model(*ctype.split(".", 1))
+    model = apps.get_model(*ctype.split(".", 1))
     targets = model._default_manager.filter(pk__in=object_pk)
 
     if not targets:
@@ -510,7 +510,7 @@ def update_case_run_status(request):
     if not has_perms:
         return say_no('Permission Dinied.')
 
-    model = models.get_model(*ctype.split(".", 1))
+    model = apps.get_model(*ctype.split(".", 1))
     targets = model._default_manager.filter(pk__in=object_pk)
 
     if not targets:
