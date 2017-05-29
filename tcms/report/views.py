@@ -4,8 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.http import Http404
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
@@ -58,8 +57,7 @@ def overall(request, template_name='report/list.html'):
         'sub_module': SUB_MODULE_NAME,
         'products': products
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @cache_page(REPORT_VIEW_CACHE_DURATION)
@@ -95,8 +93,7 @@ def overview(request, product_id, template_name='report/overview.html'):
         'runs_count': runs_count,
         'case_run_count': caserun_status_count,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 class ProductVersionReport(TemplateView, ProductVersionReportData):

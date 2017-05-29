@@ -16,8 +16,7 @@ from django.db import models
 from django.dispatch import Signal
 from django.http import Http404
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 
@@ -314,8 +313,7 @@ def tag(request, template_name="management/get_tag.html"):
             'tags': tags,
             'object': obj[0],
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context_data)
     return HttpResponse('')
 
 

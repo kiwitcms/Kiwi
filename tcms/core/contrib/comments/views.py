@@ -7,8 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.http import require_POST
 
 import django_comments as comments
@@ -45,8 +44,7 @@ def post(request, template_name='comments/comments.html'):
             'object': target,
             'form': form,
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context_data)
 
     # Otherwise create the comment
     comment = form.get_comment_object()
@@ -74,8 +72,7 @@ def post(request, template_name='comments/comments.html'):
         'object': target,
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_POST

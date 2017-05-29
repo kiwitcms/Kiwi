@@ -8,8 +8,7 @@ import time
 
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
 from tcms.core.helpers.cache import cached_entities
@@ -45,8 +44,7 @@ def advance_search(request, tmpl='search/advanced_search.html'):
         PLAN_TYPE_CHOICES = cached_entities('testplantype')
         errors = fmt_errors(errors)
         priorities = Priority.objects.filter(is_active=True).order_by('value')
-        return render_to_response(tmpl, locals(),
-                                  context_instance=RequestContext(request))
+        return render(request, tmpl, locals())
 
     start = time.time()
     results = query(request,
@@ -146,7 +144,7 @@ def render_results(request, results, time_cost, queries, tmpl='search/results.ht
         'queries': queries,
         'query_url': query_url,
     }
-    return render_to_response(tmpl, context_data, context_instance=RequestContext(request))
+    return render(request, tmpl, context_data)
 
 
 def remove_from_request_path(request, name):

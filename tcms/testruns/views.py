@@ -16,9 +16,7 @@ from django.db import transaction
 from django.db.models import Count
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
@@ -229,8 +227,7 @@ def new(request, template_name='run/new.html'):
         'run_estimated_time': estimated_time,
         'errata_url_prefix': settings.ERRATA_URL_PREFIX,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.delete_testrun'))
@@ -346,8 +343,7 @@ def all(request, template_name='run/all.html'):
         'search_form': search_form,
         'query_url': query_url,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 def run_queryset_from_querystring(querystring):
@@ -765,8 +761,7 @@ def get(request, run_id, template_name='run/get.html'):
         'errata_url_prefix': settings.ERRATA_URL_PREFIX,
         'bug_trackers': TestCaseBugSystem.objects.all(),
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
@@ -851,8 +846,7 @@ def edit(request, run_id, template_name='run/edit.html'):
         'form': form,
         'errata_url_prefix': settings.ERRATA_URL_PREFIX,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
@@ -1099,8 +1093,7 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
             'test_run': tr,
             'cases_run': tcrs,
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -1149,8 +1142,7 @@ def clone(request, template_name='run/clone.html'):
             'test_run': tr,
             'cases_run': tcrs,
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context_data)
 
     # Process multiple runs clone page
     template_name = 'run/clone_multiple.html'
@@ -1235,8 +1227,7 @@ def clone(request, template_name='run/clone.html'):
         'sub_module': SUB_MODULE_NAME,
         'clone_form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 def order_case(request, run_id):
@@ -1430,9 +1421,7 @@ class AddCasesToRunView(View):
             'exist_case_run_ids': etcrs_id,
         }
 
-        return render_to_response(self.template_name,
-                                  data,
-                                  context_instance=RequestContext(request))
+        return render(request, self.template_name, data)
 
 
 def cc(request, run_id):
@@ -1450,8 +1439,7 @@ def cc(request, run_id):
                 'is_ajax': True,
                 'message': 'User name or email is required by this operation'
             }
-            return render_to_response('run/get_cc.html', context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, 'run/get_cc.html', context_data)
 
         try:
             user = User.objects.get(
@@ -1464,8 +1452,7 @@ def cc(request, run_id):
                 'is_ajax': True,
                 'message': 'The user you typed does not exist in database'
             }
-            return render_to_response('run/get_cc.html', context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, 'run/get_cc.html', context_data)
 
         if request.REQUEST['do'] == 'add':
             tr.add_cc(user=user)
@@ -1474,8 +1461,7 @@ def cc(request, run_id):
             tr.remove_cc(user=user)
 
     context_data = {'test_run': tr, 'is_ajax': True}
-    return render_to_response('run/get_cc.html', context_data,
-                              context_instance=RequestContext(request))
+    return render(request, 'run/get_cc.html', context_data)
 
 
 def update_case_run_text(request, run_id):
@@ -1579,9 +1565,8 @@ def env_value(request):
             except:
                 raise
 
-            fragment = render_to_response("run/get_environment.html",
-                                          {"test_run": self.trs[0], "is_ajax": True},
-                                          context_instance=RequestContext(request))
+            fragment = render(request, "run/get_environment.html",
+                              {"test_run": self.trs[0], "is_ajax": True})
             self.ajax_response.update({"fragment": fragment.content})
             return HttpResponse(json.dumps(self.ajax_response))
 
@@ -1673,8 +1658,7 @@ def caseruns(request, templ='report/caseruns.html'):
         caseruns = get_caseruns_of_runs(runs, queries)
         context['test_case_runs'] = caseruns
         context['runs'] = runs
-    return render_to_response(templ, context,
-                              context_instance=RequestContext(request))
+    return render(request, templ, context)
 
 
 def get_caseruns_of_runs(runs, kwargs=None):
