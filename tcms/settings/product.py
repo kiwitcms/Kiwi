@@ -5,7 +5,6 @@ from common import *
 
 # Debug settings
 DEBUG = False
-TEMPLATE_DEBUG = DEBUG
 
 # Database settings
 DATABASES = {
