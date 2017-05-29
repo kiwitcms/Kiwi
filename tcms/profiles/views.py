@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
@@ -68,8 +67,7 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
                 'user_profile': up,
                 'bookmarks': bks,
             }
-            return render_to_response(template_name, context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, template_name, context_data)
 
         def render_form(self):
             query = request.GET.copy()
@@ -107,8 +105,7 @@ def profile(request, username, template_name='profile/info.html'):
         'form': form,
         'message': message,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_GET
@@ -147,8 +144,7 @@ def recent(request, username, template_name='profile/recent.html'):
         'last_15_test_plans': tps_active[:15],
         'last_15_test_runs': latest_fifteen_testruns,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @login_required

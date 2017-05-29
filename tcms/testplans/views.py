@@ -15,8 +15,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
@@ -91,8 +90,7 @@ def new(request, template_name='plan/new.html'):
                     'sub_module': SUB_MODULE_NAME,
                     'form': form,
                 }
-                return render_to_response(template_name, context_data,
-                                          context_instance=RequestContext(request))
+                return render(request, template_name, context_data)
 
         # Process the test plan submit to the form
 
@@ -137,8 +135,7 @@ def new(request, template_name='plan/new.html'):
         'sub_module': SUB_MODULE_NAME,
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_GET
@@ -278,8 +275,7 @@ def all(request, template_name='plan/all.html'):
         'query_url_page_type': query_url_page_type,
         'page_type': page_type
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 def get_number_of_plans_cases(plan_ids):
@@ -514,8 +510,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
         'test_plan': tp,
         'xml_form': ImportCasesViaXMLForm(initial={'a': 'import_cases'}),
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -553,8 +548,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
             'test_runs': testruns.iterator(),
             'test_cases': tcs.iterator(),
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context_data)
 
     # Add cases to runs
     if request.method == 'POST':
@@ -621,8 +615,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                     'form': form,
                     'test_plan': tp,
                 }
-                return render_to_response(template_name, context_data,
-                                          context_instance=RequestContext(request))
+                return render(template_name, context_data)
 
             if request.user.has_perm('testplans.change_testplan'):
                 tp.name = form.cleaned_data['name']
@@ -699,8 +692,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
         'test_plan': tp,
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -827,8 +819,7 @@ def clone(request, template_name='plan/clone.html'):
         'testplans': tps,
         'clone_form': clone_form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):
@@ -846,8 +837,7 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
         'limit': file_size_limit,
         'limit_readable': str(limit_readable) + "Mb",
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_GET
@@ -869,8 +859,7 @@ def text_history(request, plan_id, template_name='plan/history.html'):
         'test_plan_texts': tptxts,
         'select_plan_text_version': selected_plan_text_version,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -937,8 +926,7 @@ def cases(request, plan_id):
                 'quick_form': quick_form,
                 'search_mode': search_mode
             }
-            return render_to_response(template_name, context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, template_name, context_data)
 
         def delete_cases(self):
             if not request.POST.get('case'):
@@ -1165,8 +1153,7 @@ def component(request, template_name='plan/get_component.html'):
                 return HttpResponse(serializers.serialize(request.GET['type'], obj))
 
             context_data = {'test_plan': self.tps[0]}
-            return render_to_response(template_name, context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, template_name, context_data)
 
     if not request.GET.get('plan'):
         raise Http404
@@ -1236,8 +1223,7 @@ def printable(request, template_name='plan/printable.html'):
         'test_plans': plan_generator(),
     }
 
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_GET
@@ -1256,8 +1242,7 @@ def export(request, template_name='plan/export.xml'):
         'data_generator': generator_proxy(plan_pks),
     }
 
-    response = render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+    response = render(request, template_name, context_data)
     response['Content-Disposition'] = 'attachment; filename=tcms-testcases-%s.xml' % timestamp_str
     return response
 

@@ -4,8 +4,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import redirect, render_to_response
-from django.template import RequestContext
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_http_methods
 
@@ -76,8 +75,7 @@ def register(request, template_name='registration/registration_form.html'):
     context_data = {
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context_data)
 
 
 @require_GET
