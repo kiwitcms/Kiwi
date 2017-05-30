@@ -99,6 +99,7 @@ class TestGetRun(BaseCaseRun):
 
         self.assertEqual(http_client.OK, response.status_code)
 
+        for_loop_counter = 1
         for case_run in (self.case_run_1, self.case_run_2, self.case_run_3):
             self.assertContains(
                 response,
@@ -106,9 +107,10 @@ class TestGetRun(BaseCaseRun):
                 html=True)
             self.assertContains(
                 response,
-                '<a id="link_{0}" href="#caserun_{0}" title="Expand test case">'
-                '{1}</a>'.format(case_run.pk, case_run.case.summary),
+                '<a id="link_{0}" href="#caserun_{1}" title="Expand test case">'
+                '{2}</a>'.format(for_loop_counter, case_run.pk, case_run.case.summary),
                 html=True)
+            for_loop_counter += 1
 
 
 # ### Test cases for data ###
