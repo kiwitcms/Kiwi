@@ -17,7 +17,6 @@ Contents
 
    about.rst
    set_dev_env.rst
-   set_dev_env_with_vagrant.rst
    installing_docker.rst
    installing_in_rhel.rst
    installing_in_virtualenv.rst

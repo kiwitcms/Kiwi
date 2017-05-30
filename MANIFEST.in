@@ -1,5 +1,5 @@
 include AUTHORS CHANGELOG.rst README.rst LICENSE
-include Makefile Vagrantfile
+include Makefile
 
 graft contrib
 graft requirements
