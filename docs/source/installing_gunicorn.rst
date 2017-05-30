@@ -68,8 +68,6 @@ The ``mykiwi/`` directory needs to contain the following files::
             'PASSWORD': 'changeMe',
         },
     }
-    # KiwiTestPad defines a 'slave_1' connection
-    DATABASES['slave_1'] = DATABASES['default']
 
 Static files storage with Amazon S3
 -----------------------------------

@@ -815,7 +815,7 @@ class TestCaseEmailSettings(models.Model):
         else:
             emailaddr_list = list(email_addrs)
 
-        self.cc_list.filter(email__in=emailaddr_list).using(None).delete()
+        self.cc_list.filter(email__in=emailaddr_list).delete()
 
     def filter_new_emails(self, origin_emails, new_emails):
         ''' Find out the new email addresses to be added '''

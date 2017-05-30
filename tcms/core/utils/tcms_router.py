@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import connections
 
 
+# This is not currently in use, but we can provide it as add-on
 class RWRouter(object):
     def __init__(self):
         self.db_list = settings.DATABASES.keys()
