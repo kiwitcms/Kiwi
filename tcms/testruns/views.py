@@ -284,6 +284,7 @@ def delete(request, run_id):
         ))
 
 
+@require_GET
 def all(request, template_name='run/all.html'):
     '''Read the test runs from database and display them.'''
     SUB_MODULE_NAME = "runs"
@@ -291,8 +292,8 @@ def all(request, template_name='run/all.html'):
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the furture.
 
-    if request.REQUEST.get('manager'):
-        people = request.REQUEST.get('people')
+    if request.GET.get('manager'):
+        people = request.GET.get('people')
         if request.user.is_authenticated() \
                 and (people == request.user.username or people == request.user.email):
             SUB_MODULE_NAME = "my_runs"
@@ -300,14 +301,14 @@ def all(request, template_name='run/all.html'):
     # Initial the values will be use if it's not a search
     query_result = False
     trs = None
-    order_by = request.REQUEST.get('order_by', 'create_date')
-    asc = bool(request.REQUEST.get('asc', None))
+    order_by = request.GET.get('order_by', 'create_date')
+    asc = bool(request.GET.get('asc', None))
     # If it's a search
-    if request.REQUEST.items():
-        search_form = SearchRunForm(request.REQUEST)
+    if request.GET.items():
+        search_form = SearchRunForm(request.GET)
 
-        if request.REQUEST.get('product'):
-            search_form.populate(product_id=request.REQUEST['product'])
+        if request.GET.get('product'):
+            search_form.populate(product_id=request.GET['product'])
         else:
             search_form.populate()
 
@@ -371,6 +372,7 @@ def magic_convert(queryset, key_name, value_name):
     return dict(((row[key_name], row[value_name]) for row in queryset))
 
 
+@require_GET
 def load_runs_of_one_plan(request, plan_id,
                           template_name='plan/common/json_plan_runs.txt'):
     """A dedicated view to return a set of runs of a plan
@@ -395,7 +397,7 @@ def load_runs_of_one_plan(request, plan_id,
                              }
 
     tp = TestPlan.objects.get(plan_id=plan_id)
-    form = PlanFilterRunForm(request.REQUEST)
+    form = PlanFilterRunForm(request.GET)
 
     if form.is_valid():
         queryset = tp.run.filter(**form.cleaned_data)
@@ -459,6 +461,7 @@ def load_runs_of_one_plan(request, plan_id,
     return HttpJSONResponse(json_data)
 
 
+@require_GET
 def ajax_search(request, template_name='run/common/json_runs.txt'):
     """Response request to search test runs from Search Runs"""
     column_index_name_map = {0: '',
@@ -475,9 +478,9 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
                              11: 'completed',
                              }
 
-    search_form = SearchRunForm(request.REQUEST)
-    if request.REQUEST.get('product'):
-        search_form.populate(product_id=request.REQUEST['product'])
+    search_form = SearchRunForm(request.GET)
+    if request.GET.get('product'):
+        search_form.populate(product_id=request.GET['product'])
     else:
         search_form.populate()
 
