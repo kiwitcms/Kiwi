@@ -8,6 +8,7 @@ KIWI_VERSION = tcms.__version__
 
 DEBUG = True
 
+#todo: change this
 # Administrators error report email settings
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -46,6 +47,9 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+
+DATABASE_ROUTERS = ['tcms.core.utils.tcms_router.RWRouter']
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -145,6 +149,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    # enable for kerberos authentication
+    # 'django.contrib.auth.middleware.RemoteUserMiddleware',
 )
 
 ROOT_URLCONF = 'tcms.urls'
@@ -241,19 +247,21 @@ INTERNAL_IPS = ('127.0.0.1', )
 # For the login/register/logout reaon, we only support the internal auth backends.
 AUTHENTICATION_BACKENDS = (
     'tcms.core.contrib.auth.backends.DBModelBackend',
+    # enable for Kerberos authentication
+    # 'tcms.core.contrib.auth.backends.ModAuthKerbBackend',
 )
 
 #
-# Mail settings
+# Mail settings - TODO: CHANGE THESE
 #
 # Set the default send mail address
 # See http://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_HOST = ''
 EMAIL_PORT = 25
-EMAIL_FROM = 'noreply@foo.com'
-EMAIL_SUBJECT_PREFIX = '[TCMS] '
-
+EMAIL_FROM = 'kiwi@example.com'
+EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 EMAILS_FOR_DEBUG = []
+
 BROKER_URL = 'django://'
 ENABLE_ASYNC_EMAIL = True
 
@@ -297,8 +305,15 @@ PLAN_RUNS_PAGE_SIZE = 20
 # This if set, is shown on the login/registration screens.
 MOTD_LOGIN = """<em>If it is not in KiwiTestPad, then we don't test it!</em>"""
 
-# The URLS will be list in footer
-FOOTER_LINKS = ()
+# You can add a help link on the footer of home page as following format:
+# ('http://foo.com', 'foo')
+FOOTER_LINKS = (
+ ('https://github.com/MrSenko/Kiwi/issues/new', 'Report an Issue'),
+ (USER_GUIDE_URL, 'User guide'),
+ ('http://kiwitestpad.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
+ ('/xmlrpc/', 'XML-RPC service'),
+)
+
 
 # Attachement file download path
 # it could be spcified to a different out of MEDIA_URL
@@ -318,19 +333,18 @@ LISTENING_MODEL_SIGNAL = True
 
 # Kerberos settings
 # Required by kerberos authentication backend
-KRB5_REALM = ''
+KRB5_REALM = 'EXAMPLE.COM'
 
 # Integration with Errata system, used to linkify the Errata ID
 # A valid Errata URL:
 # https://errata.devel.example.com/errata/stateview/{Errata ID}
 ERRATA_URL_PREFIX = ''
 
-# user guide url:
-USER_GUIDE_URL = ''
+# user guide URL
+USER_GUIDE_URL = "http://kiwitestpad.readthedocs.io/en/latest/tutorial.html"
 
-# Default page size for showing each possible query result. This provides a
-# consistent user experiece to users.
-DEFAULT_PAGE_SIZE = 20
+# Default page size when paginating queries
+DEFAULT_PAGE_SIZE = 100
 
 # Disable TCMS to produce test run progress info to consumers by qpid for
 # reducing unnecessary I/O access and errata does not subscribe tcms msg now.
@@ -479,3 +493,6 @@ LOCALE_PATHS = (
 )
 
 TESTOPIA_XML_VERSION = '1.1'
+
+# default group in which new users will be created
+DEFAULT_GROUPS = ['default']
