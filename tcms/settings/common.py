@@ -284,6 +284,9 @@ PLAN_RUNS_PAGE_SIZE = 20
 # This if set, is shown on the login/registration screens.
 MOTD_LOGIN = """<em>If it is not in KiwiTestPad, then we don't test it!</em>"""
 
+# user guide URL
+USER_GUIDE_URL = "http://kiwitestpad.readthedocs.io/en/latest/tutorial.html"
+
 # You can add a help link on the footer of home page as following format:
 # ('http://foo.com', 'foo')
 FOOTER_LINKS = (
@@ -319,8 +322,6 @@ KRB5_REALM = 'EXAMPLE.COM'
 # https://errata.devel.example.com/errata/stateview/{Errata ID}
 ERRATA_URL_PREFIX = ''
 
-# user guide URL
-USER_GUIDE_URL = "http://kiwitestpad.readthedocs.io/en/latest/tutorial.html"
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100
