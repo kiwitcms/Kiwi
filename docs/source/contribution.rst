@@ -93,7 +93,7 @@ clone it
 Start KiwiTestPad locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-See :doc:`set_dev_env` or :doc:`set_dev_env_with_vagrant` for more information!
+See :doc:`set_dev_env` for more information!
 
 
 Confirm the problem
