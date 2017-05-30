@@ -3,7 +3,6 @@
 from django.conf.urls import url
 
 from .. import views
-from tcms.testruns.views import load_runs_of_one_plan
 
 urlpatterns = [
     url(r'^(?P<case_id>\d+)/$', views.get, name='testcases-get'),
@@ -23,7 +22,4 @@ urlpatterns = [
         name='caserun-simple-pane'),
     url(r'^(?P<case_id>\d+)/caserun-detail-pane/$', views.TestCaseCaseRunDetailPanelView.as_view(),
         name='caserun-detail-pane'),
-
-    url(r'^(?P<plan_id>\d+)/runs/$', load_runs_of_one_plan,
-        name='load_runs_of_one_plan_url'),
 ]
