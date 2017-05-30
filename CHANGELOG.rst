@@ -11,7 +11,7 @@ Change Log
 
 
 3.8.18.21 (May 24 2017, released on MrSenko.com)
------------------------------------------------
+------------------------------------------------
 
 - Rebased onto f7e2c6c
 - Includes PRs #197, #198, #199, #200, #201, #202, #204:
@@ -21,6 +21,7 @@ Change Log
 - Remove unused doctest. PR #205 (tkdchen)
 - Fixes Issue #185: Improve integrations between Nitrate and
   external bug tracking systems (Mr. Senko). In particular:
+
   - removed all hard-coded issue tracker settings
   - allow issue trackers to be configured entirely in the DB
   - re-implemented the functionality to open all bugs inside
@@ -250,7 +251,7 @@ NOTE: this release introduces new database migrations!
 ----------------------
 
 - Bug 1039495 - [test run][export to xml]If a case related many bugs in a run, when export the run to xml, the file only show the latest bug for this case.
-- Bug 1129058 - [TestPlan |Add cases ] The browser has no response and is in dead after selecting all the selected cases
+- Bug 1129058 - [TestPlan|Add cases] The browser has no response and is in dead after selecting all the selected cases
 - Bug 1130903 - [xmlrpc]User can not filter case via estimated_time when invoke TestCase.filter_count method.
 - Bug 1130933 - [xmlrpc] User can not update estimated_time to 0s when invoke TestRun.update method.
 - Bug 1130961 - [TestPlan|Components] Can't remove all the default components of one test plan at one time

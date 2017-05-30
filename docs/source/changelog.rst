@@ -1,6 +1,1 @@
-.. _changelog:
-
-Changelog
-=========
-
-.. literalinclude:: ../../CHANGELOG.rst
+.. include:: ../../CHANGELOG.rst

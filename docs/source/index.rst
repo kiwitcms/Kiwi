@@ -5,18 +5,12 @@
 
 KiwiTestPad documentation
 =========================
-.. TODO
-   Short Description
-
-Contents
---------
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :numbered:
 
-   about.rst
-   set_dev_env.rst
+   About KiwiTestPad <about.rst>
    installing_docker.rst
    installing_in_virtualenv.rst
    installing_gunicorn.rst
@@ -24,9 +18,8 @@ Contents
    configuration.rst
    tutorial.rst
    contribution.rst
-   bug_reporting.rst
-   changelog.rst
    support.rst
+   changelog.rst
 
 Indices and tables
 ------------------

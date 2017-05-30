@@ -40,8 +40,9 @@ Contribution
 
 See http://kiwitestpad.readthedocs.org/en/latest/contribution.html
 
+Support
+-------
 
-Bug Reports
------------
-
-See http://kiwitestpad.readthedocs.org/en/latest/bug_reporting.html
+Commercial support for KiwiTestPad is available from
+`Mr. Senko <http://MrSenko.com>`_. For more information, pricing and support
+levels info see http://MrSenko/kiwi/.
