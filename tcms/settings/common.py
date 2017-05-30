@@ -4,19 +4,18 @@ import django.conf.global_settings as DEFAULT_SETTINGS
 import os.path
 import tcms
 
-KIWI_VERSION = tcms.__version__
 
+#############################################################
+### You have to override the following settings in product.py
+
+
+# Set to False for production
 DEBUG = True
 
-#todo: change this
-# Administrators error report email settings
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
 
-TCMS_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv'
 
-MANAGERS = ADMINS
 
 # Database settings
 DATABASES = {
@@ -30,21 +29,86 @@ DATABASES = {
     },
 }
 
+
+# Administrators error report email settings
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+)
+
+
+# Email settings
+# See http://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+EMAIL_HOST = ''
+EMAIL_PORT = 25
+EMAIL_FROM = 'kiwi@example.com'
+EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
+EMAILS_FOR_DEBUG = []
+ENABLE_ASYNC_EMAIL = True
+
+
+
+###########################################################
+### You may want to override the following settings as well
+
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+# See https://docs.djangoproject.com/en/1.11/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['*']
 
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'Asia/Shanghai'
 
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+# Used to construct absolute URLs when interfacing with
+# external systems. Must override in product.py
+KIWI_BASE_URL='http://127.0.0.1:8000'
 
+
+# https://docs.djangoproject.com/en/1.11/ref/settings/#site-id
 SITE_ID = 1
+
+
+# Maximum upload file size, default set to 5MB.
+MAX_UPLOAD_SIZE = 5242880
+
+
+# Attachement file download path
+FILE_UPLOAD_DIR = '/var/kiwi/uploads'
+
+
+# TCMS email templates
+PLAN_EMAIL_TEMPLATE = 'mail/change_plan.txt'
+PLAN_DELELE_EMAIL_TEMPLATE = 'mail/delete_plan.txt'
+CASE_EMAIL_TEMPLATE = 'mail/edit_case.txt'
+CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
+
+
+# If this if set, it is shown on the login/registration screens.
+MOTD_LOGIN = """<em>If it is not in KiwiTestPad, then we don't test it!</em>"""
+
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = '/usr/share/kiwi/static/'
+
+
+# Cache backend - not used ATM!
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+
+
+####################################
+### Don't change the settings below.
+
+KIWI_VERSION = tcms.__version__
+
+MANAGERS = ADMINS
+
+# internal
+TCMS_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -54,8 +118,16 @@ USE_I18N = True
 # calendars according to the current locale.
 USE_L10N = True
 
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'en-us'
+
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = False
+
+# Local time zone for this installation. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+TIME_ZONE = 'Etc/UTC'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -68,12 +140,6 @@ MEDIA_URL = ''
 
 # URL prefix for admin absolute URL
 ADMIN_PREFIX = '/admin'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/usr/share/kiwi/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -93,9 +159,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv'
 
 TEMPLATES = [
     {
@@ -137,7 +200,6 @@ ROOT_URLCONF = 'tcms.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tcms.wsgi.application'
 
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
@@ -174,21 +236,11 @@ INSTALLED_APPS = (
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
-
-#
-# Default apps settings
-#
-
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
-
 COMMENTS_APP = 'tcms.core.contrib.comments'
 
-#
 # XML-RPC interface settings
-#
-# XML-RPC methods
-
 XMLRPC_METHODS = {
     'TCMS_XML_RPC': (
         ('tcms.xmlrpc.api.auth', 'Auth'),
@@ -209,42 +261,19 @@ XMLRPC_METHODS = {
 
 XMLRPC_TEMPLATE = 'xmlrpc.html'
 
-# Cache backend
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
-# Needed by django.template.context_processors.debug:
-# See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-template-context-processors-debug
-INTERNAL_IPS = ('127.0.0.1', )
-
 # Authentication backends
-# For the login/register/logout reaon, we only support the internal auth backends.
+# NOTE: we only support the internal auth backends.
 AUTHENTICATION_BACKENDS = (
     'tcms.core.contrib.auth.backends.DBModelBackend',
     # enable for Kerberos authentication
     # 'tcms.core.contrib.auth.backends.ModAuthKerbBackend',
 )
 
-#
-# Mail settings - TODO: CHANGE THESE
-#
-# Set the default send mail address
-# See http://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_HOST = ''
-EMAIL_PORT = 25
-EMAIL_FROM = 'kiwi@example.com'
-EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
-EMAILS_FOR_DEBUG = []
-
-BROKER_URL = 'django://'
-ENABLE_ASYNC_EMAIL = True
 
 # Celery worker settings
+BROKER_URL = 'django://'
 CELERY_TASK_RESULT_EXPIRES = 60 * 2
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYD_TIMER_PRECISION = 120
@@ -252,43 +281,14 @@ CELERY_IGNORE_RESULT = True
 CELERY_MAX_CACHED_RESULTS = -1
 CELERY_DEFAULT_RATE_LIMIT = '250/m'
 
-# TCMS email behavior settings
-PLAN_EMAIL_TEMPLATE = 'mail/change_plan.txt'
-PLAN_DELELE_EMAIL_TEMPLATE = 'mail/delete_plan.txt'
-CASE_EMAIL_TEMPLATE = 'mail/edit_case.txt'
-CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
-
 # Celery async queue
 import djcelery
 djcelery.setup_loader()
 
-# Maximum upload file size, default set to 5MB.
-# 2.5MB - 2621440
-# 5MB - 5242880
-# 10MB - 10485760
-# 20MB - 20971520
-# 50MB - 5242880
-# 100MB 104857600
-# 250MB - 214958080
-# 500MB - 429916160
-MAX_UPLOAD_SIZE = 5242880
-
-# Pagination
-PLAN_RUNS_PAGE_SIZE = 20
-
-# Site-specific messages
-
-# The site can supply optional "message of the day" style banners, similar to
-# /etc/motd. They are fragments of HTML.
-
-# This if set, is shown on the login/registration screens.
-MOTD_LOGIN = """<em>If it is not in KiwiTestPad, then we don't test it!</em>"""
 
 # user guide URL
 USER_GUIDE_URL = "http://kiwitestpad.readthedocs.io/en/latest/tutorial.html"
 
-# You can add a help link on the footer of home page as following format:
-# ('http://foo.com', 'foo')
 FOOTER_LINKS = (
  ('https://github.com/MrSenko/Kiwi/issues/new', 'Report an Issue'),
  (USER_GUIDE_URL, 'User guide'),
@@ -297,18 +297,9 @@ FOOTER_LINKS = (
 )
 
 
-# Attachement file download path
-# it could be spcified to a different out of MEDIA_URL
-# FILE_UPLOAD_DIR = path.join(MEDIA_DIR, 'uploads').replace('\\','/'),
-FILE_UPLOAD_DIR = '/var/kiwi/uploads'
-
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False
-
-# Used to construct absolute URls when interfacing with
-# external systems. Must override in product.py
-KIWI_BASE_URL='http://127.0.0.1:8000'
 
 # Turn on/off listening signals sent by models.
 LISTENING_MODEL_SIGNAL = True
@@ -321,7 +312,6 @@ KRB5_REALM = 'EXAMPLE.COM'
 # A valid Errata URL:
 # https://errata.devel.example.com/errata/stateview/{Errata ID}
 ERRATA_URL_PREFIX = ''
-
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100
@@ -472,6 +462,8 @@ LOCALE_PATHS = (
     os.path.join(TCMS_ROOT_PATH, 'locale'),
 )
 
+# when importing test cases from XML exported by Testopia
+# this is the version we're looking for
 TESTOPIA_XML_VERSION = '1.1'
 
 # default group in which new users will be created
