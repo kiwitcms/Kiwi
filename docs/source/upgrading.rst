@@ -1,4 +1,0 @@
-Upgrading
-=========
-
-.. TODO

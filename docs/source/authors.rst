@@ -1,6 +1,0 @@
-.. _authors:
-
-Authors
-=======
-
-.. TODO

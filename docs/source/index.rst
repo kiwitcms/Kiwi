@@ -24,16 +24,11 @@ Contents
    installing_gunicorn.rst
    installing_gce.rst
    configuration.rst
-   upgrading.rst
    tutorial.rst
    contribution.rst
-   faq.rst
    bug_reporting.rst
-   xmlrpc-api.rst
    changelog.rst
    support.rst
-   authors.rst
-   license.rst
 
 Indices and tables
 ------------------
