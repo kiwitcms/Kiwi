@@ -569,14 +569,9 @@ def datatable_paginate(request, queryset):
     DataTable sends request with pagination information that is extracted and
     used to paginate queried queryset.
     """
-    DEFAULT_PAGE_SIZE = 10
-    MAX_SIZE_PER_PAGE = 100
-
     # Safety measure. If someone messes with iDisplayLength manually,
     # we clip it to the max value of 100.
-    display_length = min(int(request.GET.get('iDisplayLength',
-                                             DEFAULT_PAGE_SIZE)),
-                         MAX_SIZE_PER_PAGE)
+    display_length = int(request.GET.get('iDisplayLength', settings.DEFAULT_PAGE_SIZE))
     # Where the data starts from (page)
     start_record = int(request.GET.get('iDisplayStart', 0))
     # where the data ends (end of page)
