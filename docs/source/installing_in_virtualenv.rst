@@ -94,8 +94,6 @@ Create the following files.
             'PASSWORD': 'password',
         },
     }
-    # KiwiTestPad defines a 'slave_1' connection
-    DATABASES['slave_1'] = DATABASES['default']
     
     STATIC_ROOT = '/var/www/html/mykiwi/static'
 

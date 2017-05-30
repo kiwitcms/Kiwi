@@ -18,38 +18,17 @@ TCMS_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..').r
 
 MANAGERS = ADMINS
 
+# Database settings
 DATABASES = {
-    # Master DB for writing
     'default': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('KIWI_DB_NAME', 'kiwi'),
+        'USER': os.environ.get('KIWI_DB_USER', 'kiwi'),
+        'PASSWORD': os.environ.get('KIWI_DB_PASSWORD', 'kiwi'),
+        'HOST': os.environ.get('KIWI_DB_HOST', ''),
+        'PORT': os.environ.get('KIWI_DB_PORT', ''),
     },
-    # First slave DB for reading
-    'slave_1': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    },
-    # Second slave DB for reporting, optional
-    'slave_report': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
 }
-
-
-DATABASE_ROUTERS = ['tcms.core.utils.tcms_router.RWRouter']
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
