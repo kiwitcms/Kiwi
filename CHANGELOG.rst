@@ -1,6 +1,21 @@
 Change Log
 ==========
 
+3.22 (May 31 2017, released on MrSenko.com)
+-------------------------------------------
+
+- Multiple refactorings of deprecated Django features (Mr. Senko)
+- Added more tests (Chenxiong Qi)
+- Replace deprecated XML2Dict with xmltodict. Fixes
+  `Issue #10 <https://github.com/MrSenko/Kiwi/issues/10>`_ (Mr. Senko)
+- Use mysqlclient instead of MySQL-python. Fixes
+  `Issue #14 <https://github.com/MrSenko/Kiwi/issues/14>`_ (Mr. Senko)
+- Make TestCase changelog display state changes using their names. Fixes
+  `Issue #9 <https://github.com/MrSenko/Kiwi/issues/9>`_ (Mr. Senko)
+- Multiple documentation improvements, including documentation of all
+  configuration settings (Mr. Senko)
+
+
 3.21.2 (May 26 2017, released on MrSenko.com)
 ---------------------------------------------
 
