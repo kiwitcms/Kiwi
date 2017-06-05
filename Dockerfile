@@ -32,6 +32,24 @@ ENV PATH /venv/bin:$PATH
 COPY ./requirements/ /Kiwi/requirements/
 RUN pip install -r /Kiwi/requirements/mysql.txt
 
+# now remove -devel RPMs used to build Python dependencies
+RUN yum -y remove gcc mariadb-devel krb5-devel libxml2-devel libxslt-devel git
+
+# remove other -devel RPMs pulled in from base images
+RUN rpm -qa | grep "\-devel" | grep -v python-devel | xargs yum -y remove
+
+# remove Perl packages pulled in from base images
+RUN yum -y remove perl-*
+
+# remove other binaries and left-overs
+RUN yum -y remove openssh* *-headers rsync pygobject3-base gobject-introspection
+
+# final clean up
+RUN yum clean all
+
+# remove files and directories we can't with yum and rpm
+RUN rm -rf /anaconda-post.log
+
 # Add manage.py
 COPY ./manage.py /Kiwi/
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py
