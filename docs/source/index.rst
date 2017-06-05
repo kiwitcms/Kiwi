@@ -12,9 +12,6 @@ KiwiTestPad documentation
 
    About KiwiTestPad <about.rst>
    installing_docker.rst
-   installing_in_virtualenv.rst
-   installing_gunicorn.rst
-   installing_gce.rst
    configuration.rst
    tutorial.rst
    contribution.rst
