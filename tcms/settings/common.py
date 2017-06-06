@@ -219,7 +219,6 @@ INSTALLED_APPS = (
     'tcms.core.contrib.linkreference',
     'tcms.core.logs',
     'tcms.integration.djqpid',
-    'tcms.integration.errata',
     'tcms.management',
     'tcms.profiles',
     'tcms.testcases',
@@ -289,16 +288,11 @@ LISTENING_MODEL_SIGNAL = True
 # Required by kerberos authentication backend
 KRB5_REALM = 'EXAMPLE.COM'
 
-# Integration with Errata system, used to linkify the Errata ID
-# A valid Errata URL:
-# https://errata.devel.example.com/errata/stateview/{Errata ID}
-ERRATA_URL_PREFIX = ''
-
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100
 
 # Disable TCMS to produce test run progress info to consumers by qpid for
-# reducing unnecessary I/O access and errata does not subscribe tcms msg now.
+# reducing unnecessary I/O access.
 # If you want to continue sending msg to qpid, please overwrite it in product
 # .py and make sure qpid config is correct.
 ENABLE_QPID = False

@@ -69,12 +69,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 						<a href="{{ ADMIN_PREFIX }}/management/testbuild/add/" class="addlink" id="add_id_build">Add Build</a>
 					</td>
 				</tr>
-                                {% if errata_url_prefix %}
-				<tr>
-					<td valign="top"><label for="id_errata_id">Errata</label></td>
-					<td>{{ form.errata_id }}<div class="errors">{{ form.errata_id.errors }}</div></td>
-				</tr>
-                                {% endif %}
 				<tr>
 					<td valign="top" valign="top"><label for="id_manager">Run Manager </label></td>
 					<td valign="top">{{ form.manager }}<div class="errors">{{ form.manager.errors }}</div></td>

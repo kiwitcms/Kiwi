@@ -81,7 +81,6 @@ def qpid_run_created(sender, *args, **kwargs):
         run_create_info = {
             "plan_id": tr.plan_id,
             "run_id": tr.run_id,
-            "errata_id": tr.errata_id,
             "when": datetime.datetime.now().strftime("%Y-%m-%d %X")
         }
         try:

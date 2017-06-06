@@ -451,7 +451,6 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     values_fields_mapping = {
         'auto_update_run_status': ('auto_update_run_status', do_nothing),
         'environment_id': ('environment_id', do_nothing),
-        'errata_id': ('errata_id', do_nothing),
         'estimated_time': ('estimated_time', int_to_str),
         'notes': ('notes', do_nothing),
         'plan_text_version': ('plan_text_version', do_nothing),

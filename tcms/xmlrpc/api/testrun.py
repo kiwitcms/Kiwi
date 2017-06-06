@@ -160,7 +160,6 @@ def create(request, values):
       +-------------------+----------------+-----------+---------------------------------------+
       | plan              | Integer        | Required  | ID of test plan                       |
       | build             | Integer/String | Required  | ID of Build                           |
-      | errata_id         | Integer        | Optional  | ID of Errata                          |
       | manager           | Integer        | Required  | ID of run manager                     |
       | summary           | String         | Required  |                                       |
       | product           | Integer        | Required  | ID of product                         |
@@ -180,7 +179,6 @@ def create(request, values):
     >>> values = {'build': 384,
         'manager': 137,
         'plan': 137,
-        'errata_id': 124,
         'product': 61,
         'product_version': 93,
         'summary': 'Testing XML-RPC for TCMS',
@@ -215,7 +213,6 @@ def create(request, values):
             estimated_time=form.cleaned_data['estimated_time'],
             plan=form.cleaned_data['plan'],
             build=form.cleaned_data['build'],
-            errata_id=form.cleaned_data['errata_id'],
             manager=form.cleaned_data['manager'],
             default_tester=form.cleaned_data['default_tester'],
         )
@@ -583,7 +580,6 @@ def update(request, run_ids, values):
     | plan              | Integer        | TestPlan.plan_id               |
     | product           | Integer        | Product.id                     |
     | build             | Integer        | Build.id                       |
-    | errata_id         | Integer        | Errata.id                      |
     | manager           | Integer        | Auth.User.id                   |
     | default_tester    | Intege         | Auth.User.id                   |
     | summary           | String         |                                |
@@ -622,9 +618,6 @@ def update(request, run_ids, values):
 
         if form.cleaned_data['build']:
             _values['build'] = form.cleaned_data['build']
-
-        if form.cleaned_data['errata_id']:
-            _values['errata_id'] = form.cleaned_data['errata_id']
 
         if form.cleaned_data['manager']:
             _values['manager'] = form.cleaned_data['manager']

@@ -122,7 +122,6 @@ def new(request, template_name='run/new.html'):
                 manager=form.cleaned_data['manager'],
                 default_tester=default_tester,
                 estimated_time=form.cleaned_data['estimated_time'],
-                errata_id=form.cleaned_data['errata_id'],
                 auto_update_run_status=form.cleaned_data[
                     'auto_update_run_status']
             )
@@ -225,7 +224,6 @@ def new(request, template_name='run/new.html'):
         'form': form,
         'num_unconfirmed_cases': num_unconfirmed_cases,
         'run_estimated_time': estimated_time,
-        'errata_url_prefix': settings.ERRATA_URL_PREFIX,
     }
     return render(request, template_name, context_data)
 
@@ -758,7 +756,6 @@ def get(request, run_id, template_name='run/get.html'):
         'test_case_run_status': case_run_statuss,
         'priorities': Priority.objects.all(),
         'case_own_tags': ttags,
-        'errata_url_prefix': settings.ERRATA_URL_PREFIX,
         'bug_trackers': TestCaseBugSystem.objects.all(),
     }
     return render(request, template_name, context_data)
@@ -809,7 +806,6 @@ def edit(request, run_id, template_name='run/edit.html'):
             tr.product_version = form.cleaned_data['product_version']
             tr.notes = form.cleaned_data['notes']
             tr.estimated_time = form.cleaned_data['estimated_time']
-            tr.errata_id = form.cleaned_data['errata_id']
             tr.auto_update_run_status = form.cleaned_data[
                 'auto_update_run_status']
             tr.save()
@@ -834,7 +830,6 @@ def edit(request, run_id, template_name='run/edit.html'):
             'notes': tr.notes,
             'finished': tr.stop_date,
             'estimated_time': tr.clear_estimated_time,
-            'errata_id': tr.errata_id,
             'auto_update_run_status': tr.auto_update_run_status,
         })
         form.populate(product_id=tr.build.product_id)
@@ -844,7 +839,6 @@ def edit(request, run_id, template_name='run/edit.html'):
         'sub_module': SUB_MODULE_NAME,
         'test_run': tr,
         'form': form,
-        'errata_url_prefix': settings.ERRATA_URL_PREFIX,
     }
     return render(request, template_name, context_data)
 
@@ -1131,7 +1125,6 @@ def clone(request, template_name='run/clone.html'):
             'default_tester':
                 tr.default_tester_id and tr.default_tester.email or '',
             'use_newest_case_text': True,
-            'errata_id': tr.errata_id,
         })
         form.populate(product_id=tr.plan.product_id)
 

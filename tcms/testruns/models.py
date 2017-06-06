@@ -32,7 +32,6 @@ class TestRun(TCMSActionModel):
         'completed_case_run_percent')
 
     run_id = models.AutoField(primary_key=True)
-    errata_id = models.IntegerField(null=True, blank=True)
 
     product_version = models.ForeignKey('management.Version', related_name='version_run')
     plan_text_version = models.IntegerField()
