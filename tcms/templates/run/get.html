@@ -48,25 +48,25 @@ jQ(function() {
 	</div>
 	<div class="control">
 		{% if perms.testruns.change_testcaserun %}
-		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'tcms.testruns.views.edit' test_run.run_id %}", "{{ request.GET.from_plan }}"]'>
+		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'testruns-edit' test_run.run_id %}", "{{ request.GET.from_plan }}"]'>
 		{% else %}
 		<input id="btn_edit" type="button" value="Edit" disabled="true">
 		{% endif %}
 		{% if perms.testruns.add_testrun %}
-		<input id="btn_clone" type="button" value="Clone" title="Clone test run to other test build" data-param="{% url 'tcms.testruns.views.new_run_with_caseruns' test_run.pk %}" />
+		<input id="btn_clone" type="button" value="Clone" title="Clone test run to other test build" data-param="{% url 'testruns-clone-with-caseruns' test_run.pk %}" />
 		{% else %}
 		<input type="button" value="Clone" disabled="true"/>
 		{% endif %}
 		{% if perms.testruns.delete_testrun %}
 		{% ifequal test_run.manager user %}
-		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'tcms.testruns.views.delete' test_run.pk %}">
+		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'testruns-delete' test_run.pk %}">
 		{% else %}
 		{% ifequal test_run.plan.author user %}
-		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'tcms.testruns.views.delete' test_run.pk %}">
+		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'testruns-delete' test_run.pk %}">
 		{% endifequal %}
 		{% endifequal %}
-		<input id="btn_export_csv" type="button" value="Export To CSV" title="Export cases in this run" data-param="{% url 'tcms.testruns.views.export' test_run.pk %}" >
-		<input id="btn_export_xml" type="button" value="Export To XML" title="Export cases in this run" data-param="{% url 'tcms.testruns.views.export' test_run.pk %}" >
+		<input id="btn_export_csv" type="button" value="Export To CSV" title="Export cases in this run" data-param="{% url 'testruns-export' test_run.pk %}" >
+		<input id="btn_export_xml" type="button" value="Export To XML" title="Export cases in this run" data-param="{% url 'testruns-export' test_run.pk %}" >
 		{% endif %}
 	</div>
 	<h2 id="display_title">{{ test_run.summary }}</h2>
@@ -164,12 +164,12 @@ jQ(function() {
 					{% if test_run.stop_date %}
 					<span class="pauselink"> Finished </span>
 					{% if perms.testruns.change_testrun %}
-					<input type="button"  class="spadelink js-set-running" value="Set to Running" data-param="{% url 'tcms.testruns.views.change_status' test_run.run_id %}">
+					<input type="button"  class="spadelink js-set-running" value="Set to Running" data-param="{% url 'testruns-change_status' test_run.run_id %}">
 					{% endif %}
 					{% else %}
 					<span class="runninglink">Running</span>
 					{% if perms.testruns.change_testrun %}
-					<input type="button"class="spadelink js-set-finished" value="Set to Finished" data-param="{% url 'tcms.testruns.views.change_status' test_run.run_id %}">
+					<input type="button"class="spadelink js-set-finished" value="Set to Finished" data-param="{% url 'testruns-change_status' test_run.run_id %}">
 					{% endif %}
 					{% endif %}
 				</div>

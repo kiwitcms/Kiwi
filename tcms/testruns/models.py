@@ -638,7 +638,7 @@ class TestRunTag(models.Model):
     tag = models.ForeignKey(
         'management.TestTag'
     )
-    run = models.ForeignKey(TestRun)
+    run = models.ForeignKey(TestRun, related_name='tags')
     user = models.IntegerField(db_column='userid', default='0')
 
     class Meta:

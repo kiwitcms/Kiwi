@@ -36,7 +36,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 		>> New Test Run
 	</div>
 	<h2>Create New Test Run</h2>
-	<form action="{% url "tcms.testruns.views.new" %}" method="post">
+	<form action="{% url "testruns-new" %}" method="post">
 		<input type="hidden" id="id_plan_id" name="from_plan" value="{{ from_plan }}" />
 		{# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
 		<input type="hidden" name="POSTING_TO_CREATE" value="YES" />

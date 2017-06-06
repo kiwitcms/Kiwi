@@ -37,14 +37,14 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 		>> Clone
 	</div>
 	<h2>Clone Test Run - {{ test_run.summary }}</h2>
-	<form action="{% url "tcms.testruns.views.new" %}" method="post">
+	<form action="{% url "testruns-new" %}" method="post">
 		<input type="hidden" id="id_plan_id" name="from_plan" value="{{ test_run.plan_id }}" />
 		<input type="hidden" id="id_product_id" name="product_id" value="{{ test_run.plan.product_id }}" />
 		<input type="hidden" name="do" value="clone_run" />
 		<input type="hidden" name="orig_run_id" value="{{ test_run.run_id }}" />
 		{# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
 		<input type="hidden" name="POSTING_TO_CREATE" value="YES" />
-		
+
 		<div class="Detailform border-1">
 			<table class="editor" cellspan="0" cellspacing="0">
 				<tr>
@@ -135,65 +135,65 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 				<input type="button" name="cancel" value="cancel" class="js-cancel-button" >
 			</div>
 		</div>
-	</div>
-	
-	<input type="hidden" name="testcases" value="testcases" />
-	<div class="Detailform border-1" id="testcases_selected">
-		<div class="mixbar">
-			<span class="title"><b>Selected cases {{ test_run.case_run.count }}:</b></span>
-			<table id="testcases" class="list" cellpadding="0" cellspacing="0" border="0" >
-				<thead>
-					<tr>
-						<th align="left" width="4%"></th>
-						<th class="number widthID" align="left">ID</th>
-						<th class="text" align="left" width="26%">Test Case Summary</th>
-						<th class="text" align="left" width="20%">Author</th>
-						<th class="date-iso" align="left" width="20%">Created Date</th>
-						<th class="text" align="left" width="8%">Status</th>
-						<th class="text" align="left" width="8%">Category</th>
-						<th class="text" align="left" width="8%">Priority</th>
-						<th class="sortable" align="left" width="10%">Sortkey</th>
-						<th class="nosort" align="left" width="10%">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for case_run in cases_run.all %}
-					<tr class="{% cycle 'odd' 'even' %} js-one-case" id="row_{{ forloop.counter }}">
-						<td>
-							<a id="blind_link_{{ forloop.counter }}" class="blind_link" href="javascript:toggleTestCaseContents('{{ forloop.counter }}')">
-								<img id="blind_icon_{{ forloop.counter }}" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
-							</a>
-						</td>
-						<td>
-							<a href="{% url "testcases-get" case_run.case_id %}">{{ case_run.case_id }}</a>
-							<input type="hidden" name="case" value="{{ case_run.case_id }}">
-                            <input type="hidden" name="case_run_id" value="{{ case_run.case_run_id }}">
-						</td>
-						<td>
-							<a id="link_{{ forloop.counter }}" class="blind_title_link" href="javascript:toggleTestCaseContents('{{ forloop.counter }}')">
-								{{ case_run.case.summary }}
-							</a>
-						</td>
-						<td>{{ case_run.case.author.email }}</td>
-						<td>{{ case_run.case.create_date }}</td>
-						<td>{{ case_run.case.case_status }}</td>
-						<td>{{ case_run.case.category }}</td>
-						<td>{{ case_run.case.priority }}</td>
-						<td>{{ case_run.sortkey }}</td>
-						<td> 
-							<a class="deletelink js-remove-button" href="javascript:void(0);" >
-								remove
-							</a>
-						</td>
-					</tr>
-					<tr class="hide" id="hidenRow_{{ forloop.counter }}" class="Detailform border-1" style="display: none;">
-						<td id="id_case_text_{{ forloop.counter }}" style="display: none;">
-							<div class="ajax_loading">
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+
+		<input type="hidden" name="testcases" value="testcases" />
+		<div class="Detailform border-1" id="testcases_selected">
+			<div class="mixbar">
+				<span class="title"><b>Selected cases {{ test_run.case_run.count }}:</b></span>
+				<table id="testcases" class="list" cellpadding="0" cellspacing="0" border="0" >
+					<thead>
+						<tr>
+							<th align="left" width="4%"></th>
+							<th class="number widthID" align="left">ID</th>
+							<th class="text" align="left" width="26%">Test Case Summary</th>
+							<th class="text" align="left" width="20%">Author</th>
+							<th class="date-iso" align="left" width="20%">Created Date</th>
+							<th class="text" align="left" width="8%">Status</th>
+							<th class="text" align="left" width="8%">Category</th>
+							<th class="text" align="left" width="8%">Priority</th>
+							<th class="sortable" align="left" width="10%">Sortkey</th>
+							<th class="nosort" align="left" width="10%">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for case_run in cases_run.all %}
+						<tr class="{% cycle 'odd' 'even' %} js-one-case" id="row_{{ forloop.counter }}">
+							<td>
+								<a id="blind_link_{{ forloop.counter }}" class="blind_link" href="javascript:toggleTestCaseContents('{{ forloop.counter }}')">
+									<img id="blind_icon_{{ forloop.counter }}" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
+								</a>
+							</td>
+							<td>
+								<a href="{% url "testcases-get" case_run.case_id %}">{{ case_run.case_id }}</a>
+								<input type="hidden" name="case" value="{{ case_run.case_id }}">
+															<input type="hidden" name="case_run_id" value="{{ case_run.case_run_id }}">
+							</td>
+							<td>
+								<a id="link_{{ forloop.counter }}" class="blind_title_link" href="javascript:toggleTestCaseContents('{{ forloop.counter }}')">
+									{{ case_run.case.summary }}
+								</a>
+							</td>
+							<td>{{ case_run.case.author.email }}</td>
+							<td>{{ case_run.case.create_date }}</td>
+							<td>{{ case_run.case.case_status }}</td>
+							<td>{{ case_run.case.category }}</td>
+							<td>{{ case_run.case.priority }}</td>
+							<td>{{ case_run.sortkey }}</td>
+							<td> 
+								<a class="deletelink js-remove-button" href="javascript:void(0);" >
+									remove
+								</a>
+							</td>
+						</tr>
+						<tr class="hide" id="hidenRow_{{ forloop.counter }}" class="Detailform border-1" style="display: none;">
+							<td id="id_case_text_{{ forloop.counter }}" style="display: none;">
+								<div class="ajax_loading">
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</form>
 	{% endblock %}
