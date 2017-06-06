@@ -2,7 +2,7 @@
 
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import PermissionDenied
-from kobo.django.xmlrpc.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.xmlrpc.decorators import log_call
@@ -162,7 +162,7 @@ def update(request, values=None, id=None):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('auth.change_user'))
+@permission_required('auth.change_user', raise_exception=True)
 def join(request, username, groupname):
     """
     Description: Add user to a group specified by name.
