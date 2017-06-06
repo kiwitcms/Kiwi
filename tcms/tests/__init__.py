@@ -3,6 +3,8 @@
 from django import test
 from django.contrib.auth.models import Permission
 
+from tcms.testruns.models import TestCaseRunStatus
+from tcms.testcases.models import TestCaseStatus
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
@@ -75,18 +77,37 @@ class BasePlanCase(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        cls.case_status_confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
+        cls.case_status_proposed = TestCaseStatus.objects.get(name='PROPOSED')
+
         cls.product = ProductFactory(name='Kiwi')
         cls.version = VersionFactory(value='0.1', product=cls.product)
         cls.tester = UserFactory()
+
         cls.plan = TestPlanFactory(author=cls.tester, owner=cls.tester,
                                    product=cls.product, product_version=cls.version)
+
         cls.case = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                   case_status=cls.case_status_confirmed,
                                    plan=[cls.plan])
         cls.case_1 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                     case_status=cls.case_status_confirmed,
                                      plan=[cls.plan])
         cls.case_2 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                     case_status=cls.case_status_confirmed,
                                      plan=[cls.plan])
         cls.case_3 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                     case_status=cls.case_status_confirmed,
+                                     plan=[cls.plan])
+
+        cls.case_4 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                     case_status=cls.case_status_confirmed,
+                                     plan=[cls.plan])
+        cls.case_5 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                     case_status=cls.case_status_confirmed,
+                                     plan=[cls.plan])
+        cls.case_6 = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
+                                     case_status=cls.case_status_confirmed,
                                      plan=[cls.plan])
 
 
@@ -97,27 +118,32 @@ class BaseCaseRun(BasePlanCase):
     def setUpTestData(cls):
         super(BaseCaseRun, cls).setUpTestData()
 
+        cls.case_run_status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+
         cls.build = TestBuildFactory(product=cls.product)
 
         cls.test_run = TestRunFactory(product_version=cls.version,
                                       plan=cls.plan,
+                                      build=cls.build,
                                       manager=cls.tester,
                                       default_tester=cls.tester)
-        cls.case_run_1 = TestCaseRunFactory(assignee=cls.tester,
-                                            tested_by=cls.tester,
-                                            run=cls.test_run,
-                                            case=cls.case_1,
-                                            build=cls.build,
-                                            sortkey=101)
-        cls.case_run_2 = TestCaseRunFactory(assignee=cls.tester,
-                                            tested_by=cls.tester,
-                                            run=cls.test_run,
-                                            case=cls.case_2,
-                                            build=cls.build,
-                                            sortkey=200)
-        cls.case_run_3 = TestCaseRunFactory(assignee=cls.tester,
-                                            tested_by=cls.tester,
-                                            run=cls.test_run,
-                                            case=cls.case_3,
-                                            build=cls.build,
-                                            sortkey=300)
+
+        cls.case_run_1, cls.case_run_2, cls.case_run_3 = [
+            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
+                               run=cls.test_run, build=cls.build,
+                               case_run_status=cls.case_run_status_idle,
+                               case=case, sortkey=i * 10)
+            for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1)]
+
+        cls.test_run_1 = TestRunFactory(product_version=cls.version,
+                                        plan=cls.plan,
+                                        build=cls.build,
+                                        manager=cls.tester,
+                                        default_tester=cls.tester)
+
+        cls.case_run_4, cls.case_run_5, cls.case_run_6 = [
+            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
+                               run=cls.test_run_1, build=cls.build,
+                               case_run_status=cls.case_run_status_idle,
+                               case=case, sortkey=i * 10)
+            for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1)]

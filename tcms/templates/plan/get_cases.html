@@ -54,8 +54,8 @@
                 {% endif %}
                     <ul>
 			{% if perms.testruns.add_testrun %}
-                        <li><input id="js-new-run" class="new_run icon_plan" type="button" value="Write new run" data-param="{% url "tcms.testruns.views.new" %}"/></li>
-                        <li><input type= "button" id="js-add-case-to-run" class="search icon_plan" value="Add cases to run" data-param="{% url "tcms.testplans.views.choose_run" test_plan.plan_id %}" /></li>
+                        <li><input id="js-new-run" class="new_run icon_plan" type="button" value="Write new run" data-param="{% url "testruns-new" %}"/></li>
+                        <li><input type= "button" id="js-add-case-to-run" class="search icon_plan" value="Add cases to run" data-param="{% url "plan-choose_run" test_plan.plan_id %}" /></li>
 			{% else %}
 			<li><input type="button" class="new_run icon_plan" title="Make new test run from selected cases" value="Write new run" disabled="true" /></li>
                         <li><input type="button" class="search icon_plan" value="Add cases to run" disabled="true"></li>

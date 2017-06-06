@@ -32,7 +32,7 @@
 <tr>
 	<td colspan="9">
 		{% if perms.testruns.add_testrun %}
-		<span class="prompt-message"><center >No Test Run was found in this plan, if you  want to create one ,go to <a href="{% url "tcms.testruns.views.new" %}?from_plan={{ test_plan.plan_id }}">Create Test Run</a>.</center></span>
+		<span class="prompt-message"><center >No Test Run was found in this plan, if you  want to create one ,go to <a href="{% url "testruns-new" %}?from_plan={{ test_plan.plan_id }}">Create Test Run</a>.</center></span>
 		{% else %}
 		<span class="prompt-message"><center >No Test Run was found in this plan.</center></span>
 		{% endif %}

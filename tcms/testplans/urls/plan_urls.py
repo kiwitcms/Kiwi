@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^(?P<plan_id>\d+)/(?P<slug>[-\w\d]+)$', views.get, name='test_plan_url'),
 
     url(r'^(?P<plan_id>\d+)/delete/$', views.delete, name='plan-delete'),
-    url(r'^(?P<plan_id>\d+)/chooseruns/$', views.choose_run),
+    url(r'^(?P<plan_id>\d+)/chooseruns/$', views.choose_run, name='plan-choose_run'),
     url(r'^(?P<plan_id>\d+)/edit/$', views.edit, name='plan-edit'),
     url(r'^(?P<plan_id>\d+)/attachment/$', views.attachment, name='plan-attachment'),
     url(r'^(?P<plan_id>\d+)/history/$', views.text_history, name='plan-text_history'),
