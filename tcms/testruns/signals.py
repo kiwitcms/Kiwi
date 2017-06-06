@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 # FIXME: Use signal to handle log
 import threading
-import datetime
-
-from tcms.integration.djqpid import Producer
 
 
 # Reference from
@@ -72,22 +69,3 @@ def post_update_handler(sender, **kwargs):
 def pre_save_clean(sender, **kwargs):
     instance = kwargs['instance']
     instance.clean()
-
-
-# new testrun created info for qpid
-def qpid_run_created(sender, *args, **kwargs):
-    tr = kwargs['instance']
-    if kwargs.get('created'):
-        run_create_info = {
-            "plan_id": tr.plan_id,
-            "run_id": tr.run_id,
-            "when": datetime.datetime.now().strftime("%Y-%m-%d %X")
-        }
-        try:
-            Producer().send(run_create_info, "testrun.created", False)
-        except:
-            pass
-
-    else:
-        # FIXME: Log, Plugin and other editing functions
-        pass

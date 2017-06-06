@@ -1,6 +1,5 @@
 Django==1.8.14
 kerberos==1.1.1
-qpid-python==0.20
 django-uuslug==1.1.8
 odfpy>=0.9.6
 python-bugzilla

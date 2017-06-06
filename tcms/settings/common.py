@@ -218,7 +218,6 @@ INSTALLED_APPS = (
     'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
     'tcms.core.logs',
-    'tcms.integration.djqpid',
     'tcms.management',
     'tcms.profiles',
     'tcms.testcases',
@@ -290,12 +289,6 @@ KRB5_REALM = 'EXAMPLE.COM'
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100
-
-# Disable TCMS to produce test run progress info to consumers by qpid for
-# reducing unnecessary I/O access.
-# If you want to continue sending msg to qpid, please overwrite it in product
-# .py and make sure qpid config is correct.
-ENABLE_QPID = False
 
 # TCMS use Piwik to track request.
 ENABLE_PIWIK_TRACKING = False
