@@ -206,8 +206,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_comments',
-    'kobo.django.xmlrpc',
-
     'pagination',
     'tinymce',
 
@@ -221,8 +219,7 @@ INSTALLED_APPS = (
     'tcms.testcases',
     'tcms.testplans',
     'tcms.testruns',
-
-    'tcms.xmlrpc.apps.AppConfig',
+    'tcms.xmlrpc',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
