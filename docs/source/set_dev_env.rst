@@ -13,7 +13,7 @@ Setup virtualenv
 
 Install devel packages which are needed to compile some of the Python dependencies::
 
-    sudo yum install gcc python-devel mysql-devel krb5-devel libxml2-devel libxslt-devel
+    sudo yum install gcc python-devel mysql-devel libxml2-devel libxslt-devel
 
 Create a virtual environment for KiwiTestPad::
 

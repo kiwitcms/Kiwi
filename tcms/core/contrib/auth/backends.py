@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import xmlrpclib
-import kerberos
 
 from django.conf import settings
-
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -124,6 +122,8 @@ class KerberosBackend(ModelBackend):
     #            )
 
     def authenticate(self, username=None, password=None):
+        import kerberos
+
         try:
             kerberos.checkPassword(
                 username, password, '',

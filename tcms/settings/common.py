@@ -188,8 +188,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    # enable for kerberos authentication
-    # 'django.contrib.auth.middleware.RemoteUserMiddleware',
 )
 
 ROOT_URLCONF = 'tcms.urls'
@@ -260,8 +258,6 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 # NOTE: we only support the internal auth backends.
 AUTHENTICATION_BACKENDS = (
     'tcms.core.contrib.auth.backends.DBModelBackend',
-    # enable for Kerberos authentication
-    # 'tcms.core.contrib.auth.backends.ModAuthKerbBackend',
 )
 
 
@@ -282,10 +278,6 @@ SET_ADMIN_AS_SUPERUSER = False
 
 # Turn on/off listening signals sent by models.
 LISTENING_MODEL_SIGNAL = True
-
-# Kerberos settings
-# Required by kerberos authentication backend
-KRB5_REALM = 'EXAMPLE.COM'
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100
