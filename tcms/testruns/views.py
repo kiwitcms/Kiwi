@@ -24,6 +24,7 @@ from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
 from django.views.generic.base import View
 
@@ -61,16 +62,18 @@ from tcms.testruns.sqls import GET_CONFIRMED_CASES
 MODULE_NAME = "testruns"
 
 
+@require_POST
 @user_passes_test(lambda u: u.has_perm('testruns.add_testrun'))
 def new(request, template_name='run/new.html'):
-    '''Display the create test run page.'''
+    """Display the create test run page."""
+
     SUB_MODULE_NAME = "new_run"
 
     # If from_plan does not exist will redirect to plans for select a plan
-    if not request.REQUEST.get('from_plan'):
+    if not request.POST.get('from_plan'):
         return HttpResponseRedirect(reverse('tcms.testplans.views.all'))
 
-    plan_id = request.REQUEST.get('from_plan')
+    plan_id = request.POST.get('from_plan')
     # Case is required by a test run
     if not request.REQUEST.get('case'):
         return HttpResponse(Prompt.render(
@@ -87,7 +90,7 @@ def new(request, template_name='run/new.html'):
     # are necessary
     tp = TestPlan.objects.select_related().get(plan_id=plan_id)
     tcrs = TestCaseRun.objects.filter(
-        case_run_id__in=request.REQUEST.getlist('case_run_id'))
+        case_run_id__in=request.POST.getlist('case_run_id'))
 
     num_unconfirmed_cases = tcs.exclude(case_status=confirm_status).count()
     estimated_time = datetime.timedelta(seconds=0)
@@ -105,10 +108,10 @@ def new(request, template_name='run/new.html'):
                                  'priority__value',
                                  'case_status__name')
 
-    if request.REQUEST.get('POSTING_TO_CREATE'):
+    if request.POST.get('POSTING_TO_CREATE'):
         form = NewRunForm(request.POST)
-        if request.REQUEST.get('product'):
-            form.populate(product_id=request.REQUEST['product'])
+        if request.POST.get('product'):
+            form.populate(product_id=request.POST['product'])
         else:
             form.populate(product_id=tp.product_id)
 
@@ -118,8 +121,7 @@ def new(request, template_name='run/new.html'):
 
             tr = TestRun.objects.create(
                 product_version=form.cleaned_data['product_version'],
-                plan_text_version=tp.latest_text() and
-                tp.latest_text().plan_text_version or 0,
+                plan_text_version=tp.latest_text() and tp.latest_text().plan_text_version or 0,
                 stop_date=None,
                 summary=form.cleaned_data.get('summary'),
                 notes=form.cleaned_data.get('notes'),
@@ -129,8 +131,7 @@ def new(request, template_name='run/new.html'):
                 default_tester=default_tester,
                 estimated_time=form.cleaned_data['estimated_time'],
                 errata_id=form.cleaned_data['errata_id'],
-                auto_update_run_status=form.cleaned_data[
-                    'auto_update_run_status']
+                auto_update_run_status=form.cleaned_data['auto_update_run_status']
             )
 
             keep_status = form.cleaned_data['keep_status']
@@ -178,16 +179,15 @@ def new(request, template_name='run/new.html'):
                     loop += 1
 
             # Write the values into tcms_env_run_value_map table
-            env_property_id_set = set(request.REQUEST.getlist(
-                "env_property_id"))
+            env_property_id_set = set(request.POST.getlist("env_property_id"))
             if env_property_id_set:
                 args = list()
                 for property_id in env_property_id_set:
                     checkbox_name = 'select_property_id_%s' % property_id
                     select_name = 'select_property_value_%s' % property_id
-                    checked = request.REQUEST.getlist(checkbox_name)
+                    checked = request.POST.getlist(checkbox_name)
                     if checked:
-                        env_values = request.REQUEST.getlist(select_name)
+                        env_values = request.POST.getlist(select_name)
                         if not env_values:
                             continue
 
@@ -195,8 +195,7 @@ def new(request, template_name='run/new.html'):
                             raise ValueError('Invalid number of env values.')
 
                         for value_id in env_values:
-                            args.append(TCMSEnvRunValueMap(run=tr,
-                                                           value_id=value_id))
+                            args.append(TCMSEnvRunValueMap(run=tr, value_id=value_id))
 
                 TCMSEnvRunValueMap.objects.bulk_create(args)
 
@@ -210,8 +209,7 @@ def new(request, template_name='run/new.html'):
         form = NewRunForm(initial={
             'summary': 'Test run for %s on %s' % (
                 tp.name,
-                tp.env_group.all() and tp.env_group.all()[
-                    0] or 'Unknown environment'
+                tp.env_group.all() and tp.env_group.all()[0] or 'Unknown environment'
             ),
             'estimated_time': format_timedelta(estimated_time),
             'manager': tp.author.email,
@@ -1046,13 +1044,15 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
     return func()
 
 
+@require_POST
 def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
-    '''Clone cases from filter caserun'''
+    """Clone cases from filter caserun"""
+
     SUB_MODULE_NAME = "runs"
     tr = get_object_or_404(TestRun, run_id=run_id)
 
-    if request.REQUEST.get('case_run'):
-        tcrs = tr.case_run.filter(pk__in=request.REQUEST.getlist('case_run'))
+    if request.POST.get('case_run'):
+        tcrs = tr.case_run.filter(pk__in=request.POST.getlist('case_run'))
     else:
         tcrs = []
 
@@ -1065,7 +1065,7 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
     estimated_time = reduce(lambda x, y: x + y,
                             [tcr.case.estimated_time for tcr in tcrs])
 
-    if not request.REQUEST.get('submit'):
+    if not request.POST.get('submit'):
         form = RunCloneForm(initial={
             'summary': tr.summary,
             'notes': tr.notes, 'manager': tr.manager.email,
@@ -1093,16 +1093,19 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
 
 @require_http_methods(['GET', 'POST'])
 def clone(request, template_name='run/clone.html'):
-    '''Clone test run to another build'''
+    """Clone test run to another build"""
+
     SUB_MODULE_NAME = "runs"
 
     trs = TestRun.objects.select_related()
 
-    filter_str = request.REQUEST.get('filter_str')
+    req_data = request.GET or request.POST
+
+    filter_str = req_data.get('filter_str')
     if filter_str:
         trs = run_queryset_from_querystring(filter_str)
     else:
-        trs = trs.filter(pk__in=request.REQUEST.getlist('run'))
+        trs = trs.filter(pk__in=req_data.getlist('run'))
 
     if not trs:
         return HttpResponse(Prompt.render(
@@ -1113,7 +1116,7 @@ def clone(request, template_name='run/clone.html'):
         ))
 
     # Generate the clone run page for one run
-    if trs.count() == 1 and not request.REQUEST.get('submit'):
+    if trs.count() == 1 and not req_data.get('submit'):
         tr = trs[0]
         tcrs = tr.case_run.all()
         form = RunCloneForm(initial={
@@ -1144,8 +1147,8 @@ def clone(request, template_name='run/clone.html'):
     template_name = 'run/clone_multiple.html'
 
     if request.method == "POST":
-        form = MulitpleRunsCloneForm(request.REQUEST)
-        form.populate(trs=trs, product_id=request.REQUEST.get('product'))
+        form = MulitpleRunsCloneForm(request.POST)
+        form.populate(trs=trs, product_id=request.POST.get('product'))
         if form.is_valid():
             for tr in trs:
                 n_tr = TestRun.objects.create(
@@ -1166,14 +1169,19 @@ def clone(request, template_name='run/clone.html'):
                 )
 
                 for tcr in tr.case_run.all():
+                    if form.cleaned_data['update_case_text']:
+                        text_versions = list(tcr.get_text_versions())
+                        if text_versions:
+                            case_text_version = text_versions[-1]
+                        else:
+                            case_text_version = tcr.case_text_version
+                    else:
+                        case_text_version = tcr.case_text_version
+
                     n_tr.add_case_run(
                         case=tcr.case,
                         assignee=tcr.assignee,
-                        case_text_version=(
-                            form.cleaned_data['update_case_text'] and
-                            bool(tcr.get_text_versions()) and
-                            tcr.get_text_versions()[0] or
-                            tcr.case_text_version),
+                        case_text_version=case_text_version,
                         build=form.cleaned_data['build'],
                         notes=tcr.notes,
                         sortkey=tcr.sortkey,
