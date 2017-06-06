@@ -506,7 +506,6 @@ class TestRunFactory(DjangoModelFactory):
     product_version = factory.SubFactory(VersionFactory)
     plan_text_version = 1
     stop_date = None
-    errata_id = None
     notes = ''
     plan = factory.SubFactory(TestPlanFactory)
     # FIXME: field name build conflicts with method Factory.build

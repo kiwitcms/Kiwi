@@ -147,14 +147,6 @@ jQ(function() {
 					<a href="{% url "testruns-all" %}?build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
 				</div>
 			</div>
-                        {% if errata_url_prefix and test_run.errata_id %}
-			<div class="listinfo">
-				<div class="title grey">Errata&nbsp;:</div>
-				<div class="name">
-				<a href="{{ errata_url_prefix }}/{{ test_run.errata_id }}" target="_blank">{{ test_run.errata_id }}</a>
-				</div>
-			</div>
-                        {% endif %}
 			<div class="listinfo">
 				<div class="title grey">Default Tester&nbsp;:</div>
 				<div class="name">

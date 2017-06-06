@@ -66,10 +66,6 @@ class BaseRunForm(forms.Form):
         required=False,
         initial=True
     )
-    errata_id = forms.IntegerField(
-        label='Errata_id',
-        required=False,
-    )
     auto_update_run_status = forms.BooleanField(
         label='Set Status Automatically', widget=forms.CheckboxInput(),
         help_text='Check to update test run status automatically',
