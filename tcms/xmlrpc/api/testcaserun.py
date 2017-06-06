@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db.models import ObjectDoesNotExist
-from kobo.django.xmlrpc.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 
 from tcms.core.contrib.linkreference.models import create_link, LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
@@ -94,7 +94,7 @@ def add_comment(request, case_run_ids, comment):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testcases.add_testcasebug'))
+@permission_required('testcases.add_testcasebug', raise_exception=True)
 def attach_bug(request, values):
     """
     Description: Add one or more bugs to the selected test cases.
@@ -164,7 +164,7 @@ def check_case_run_status(request, name):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.add_testcaserun'))
+@permission_required('testruns.add_testcaserun', raise_exception=True)
 def create(request, values):
     """
     *** It always report - ValueError: invalid literal for int() with base 10: '' ***
@@ -226,7 +226,7 @@ def create(request, values):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testcases.delete_testcasebug'))
+@permission_required('testcases.delete_testcasebug', raise_exception=True)
 def detach_bug(request, case_run_ids, bug_ids):
     """
     Description: Remove one or more bugs to the selected test case-runs.
@@ -523,7 +523,7 @@ def lookup_status_id_by_name(request, name):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
+@permission_required('testruns.change_testcaserun', raise_exception=True)
 def update(request, case_run_ids, values):
     """
     Description: Updates the fields of the selected case-runs.

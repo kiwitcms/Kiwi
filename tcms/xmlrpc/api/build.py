@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from kobo.django.xmlrpc.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 
 from tcms.xmlrpc.decorators import log_call
 from tcms.management.models import TestBuild
@@ -36,7 +36,7 @@ def check_build(request, name, product):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('management.add_testbuild'))
+@permission_required('management.add_testbuild', raise_exception=True)
 def create(request, values):
     """
     Description: Creates a new build object and stores it in the database
@@ -146,7 +146,7 @@ def lookup_name_by_id(request, build_id):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('management.change_testbuild'))
+@permission_required('management.change_testbuild', raise_exception=True)
 def update(request, build_id, values):
     """
     Description: Updates the fields of the selected build or builds.

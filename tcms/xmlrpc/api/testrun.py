@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.core.exceptions import ObjectDoesNotExist
-from kobo.django.xmlrpc.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
@@ -39,7 +39,7 @@ __xmlrpc_namespace__ = 'TestRun'
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.add_testcaserun'))
+@permission_required('testruns.add_testcaserun', raise_exception=True)
 def add_cases(request, run_ids, case_ids):
     """
     Description: Add one or more cases to the selected test runs.
@@ -72,7 +72,7 @@ def add_cases(request, run_ids, case_ids):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.delete_testcaserun'))
+@permission_required('testruns.delete_testcaserun', raise_exception=True)
 def remove_cases(request, run_ids, case_ids):
     """
     Description: Remove one or more cases from the selected test runs.
@@ -114,7 +114,7 @@ def remove_cases(request, run_ids, case_ids):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.add_testruntag'))
+@permission_required('testruns.add_testruntag', raise_exception=True)
 def add_tag(request, run_ids, tags):
     """
     Description: Add one or more tags to the selected test runs.
@@ -148,7 +148,7 @@ def add_tag(request, run_ids, tags):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.add_testrun'))
+@permission_required('testruns.add_testrun', raise_exception=True)
 def create(request, values):
     """
     Description: Creates a new Test Run object and stores it in the database.
@@ -238,7 +238,7 @@ def create(request, values):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.change_tcmsenvrunvaluemap'))
+@permission_required('testruns.change_tcmsenvrunvaluemap', raise_exception=True)
 def env_value(request, action, run_ids, env_value_ids):
     """
     Description: add/remove env values to the given runs, function is same as link_env_value/unlink_env_value
@@ -524,7 +524,7 @@ def get_test_plan(request, run_id):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.delete_testruntag'))
+@permission_required('testruns.delete_testruntag', raise_exception=True)
 def remove_tag(request, run_ids, tags):
     """
     Description: Remove a tag from a run.
@@ -564,7 +564,7 @@ def remove_tag(request, run_ids, tags):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
+@permission_required('testruns.change_testrun', raise_exception=True)
 def update(request, run_ids, values):
     """
     Description: Updates the fields of the selected test run.
@@ -663,7 +663,7 @@ def update(request, run_ids, values):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.add_tcmsenvrunvaluemap'))
+@permission_required('testruns.add_tcmsenvrunvaluemap', raise_exception=True)
 def link_env_value(request, run_ids, env_value_ids):
     """
     Description: Link env values to the given runs.
@@ -685,7 +685,7 @@ def link_env_value(request, run_ids, env_value_ids):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-@user_passes_test(lambda u: u.has_perm('testruns.delete_tcmsenvrunvaluemap'))
+@permission_required('testruns.delete_tcmsenvrunvaluemap', raise_exception=True)
 def unlink_env_value(request, run_ids, env_value_ids):
     """
     Description: Unlink env values to the given runs.
