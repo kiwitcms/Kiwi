@@ -42,9 +42,6 @@ EMAIL_HOST = ''
 EMAIL_PORT = 25
 EMAIL_FROM = 'kiwi@example.com'
 EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
-EMAILS_FOR_DEBUG = []
-ENABLE_ASYNC_EMAIL = True
-
 
 
 ###########################################################
@@ -213,8 +210,6 @@ INSTALLED_APPS = (
     'django_comments',
     'kobo.django.xmlrpc',
 
-    'djcelery',
-    'kombu.transport.django',
     'pagination',
     'tinymce',
 
@@ -270,20 +265,6 @@ AUTHENTICATION_BACKENDS = (
     # enable for Kerberos authentication
     # 'tcms.core.contrib.auth.backends.ModAuthKerbBackend',
 )
-
-
-# Celery worker settings
-BROKER_URL = 'django://'
-CELERY_TASK_RESULT_EXPIRES = 60 * 2
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-CELERYD_TIMER_PRECISION = 120
-CELERY_IGNORE_RESULT = True
-CELERY_MAX_CACHED_RESULTS = -1
-CELERY_DEFAULT_RATE_LIMIT = '250/m'
-
-# Celery async queue
-import djcelery
-djcelery.setup_loader()
 
 
 # user guide URL

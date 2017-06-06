@@ -49,7 +49,7 @@ class RegistrationForm(UserCreationForm):
                     args=[active_key.activation_key, ])
         )
         mailto(
-            template_name=template_name, to_mail=self.cleaned_data['email'],
+            template_name=template_name, recipients=self.cleaned_data['email'],
             subject='Your new %s account confirmation' % s.domain,
             context={
                 'user': self.instance,

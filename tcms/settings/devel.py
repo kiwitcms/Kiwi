@@ -26,9 +26,6 @@ INSTALLED_APPS += (
     'debug_toolbar',
 )
 
-# For local development
-ENABLE_ASYNC_EMAIL = False
-
 FILE_UPLOAD_DIR = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')
 
 # Needed by django.template.context_processors.debug:

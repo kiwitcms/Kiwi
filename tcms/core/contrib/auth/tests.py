@@ -119,7 +119,6 @@ class TestRegistration(TestCase):
             '<input value="Register" class="loginbutton sprites" type="submit">',
             html=True)
 
-    @patch('tcms.core.contrib.auth.views.settings.ENABLE_ASYNC_EMAIL', new=False)
     @patch('tcms.core.utils.mailto.threading.Thread', new=MockThread)
     @patch('tcms.core.contrib.auth.models.sha1')
     def assert_user_registration(self, username, sha1):

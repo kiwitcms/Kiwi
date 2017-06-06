@@ -89,7 +89,7 @@ class Bugzilla(IssueTrackerType):
 
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
-            bugzilla_integration.add_bug_to_bugzilla(self.rpc, case, issue)
+            bugzilla_integration.BugzillaThread(self.rpc, case, issue).start()
 
     def all_issues_link(self, ids):
         if not self.tracker.report_url:

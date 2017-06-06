@@ -310,7 +310,7 @@ class TestCase(TCMSActionModel):
             'reviewer': {
                 'template_name': 'mail/change_case_reviewer.txt',
                 'subject': 'You have been speicific to be the reviewer of cases',
-                'to_mail': list(set(tcs.values_list('reviewer__email', flat=True))),
+                'recipients': list(set(tcs.values_list('reviewer__email', flat=True))),
                 'context': {'test_cases': tcs},
             }
         }

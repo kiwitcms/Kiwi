@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 
-from tcms.core.utils.mailto import send_email_using_threading
+from tcms.core.utils.mailto import mailto
 
 
 def email_plan_update(plan):
@@ -9,8 +9,8 @@ def email_plan_update(plan):
     if len(recipients) == 0:
         return
     subject = u'TestPlan %s has been updated.' % plan.pk
-    send_email_using_threading(settings.PLAN_EMAIL_TEMPLATE, subject,
-                               recipients, {'plan': plan})
+    mailto(settings.PLAN_EMAIL_TEMPLATE, subject,
+           recipients, {'plan': plan})
 
 
 def email_plan_deletion(plan):
@@ -18,8 +18,8 @@ def email_plan_deletion(plan):
     if len(recipients) == 0:
         return
     subject = u'TestPlan %s has been deleted.' % plan.pk
-    send_email_using_threading(settings.PLAN_DELELE_EMAIL_TEMPLATE, subject,
-                               recipients, {'plan': plan})
+    mailto(settings.PLAN_DELELE_EMAIL_TEMPLATE, subject,
+           recipients, {'plan': plan})
 
 
 def get_plan_notification_recipients(plan):

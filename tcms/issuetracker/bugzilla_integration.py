@@ -9,7 +9,7 @@ import threading
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-__all__ = ['add_bug_to_bugzilla']
+__all__ = ['BugzillaThread']
 
 
 def _rpc_add_bug_to_bugzilla(rpc, testcase, bug):
@@ -36,8 +36,9 @@ Summary: %s""" % (settings.KIWI_BASE_URL + reverse('testcases-get', args=[testca
 
 class BugzillaThread(threading.Thread):
     """
-        Execute Bugzilla RPC code in a thread if celery
-        is not enabled.
+        Execute Bugzilla RPC code in a thread!
+
+        Executed from the IssueTracker interface methods.
     """
 
     def __init__(self, rpc, testcase, bug):
@@ -48,35 +49,3 @@ class BugzillaThread(threading.Thread):
 
     def run(self):
         _rpc_add_bug_to_bugzilla(self.rpc, self.testcase, self.bug)
-
-
-try:
-    # todo: fix this or completely remove it
-    # Adding test cases to Bugzilla currently breaks
-    # when executed as Celery task, but not when executed
-    # as a thread!!!
-    _celery_add_bug_to_bugzilla = None
-
-    # from celery import task
-
-    # @task
-    # def _celery_add_bug_to_bugzilla(rpc, testcase, bug):
-    #     _rpc_add_bug_to_bugzilla(rpc, testcase, bug)
-except ImportError:
-    _celery_add_bug_to_bugzilla = None
-
-
-def add_bug_to_bugzilla(rpc, testcase, bug):
-    """
-        Executed from the IssueTracker interface methods.
-        This function takes care to run either in a thread or
-        as a Celery task depending on how the settings are defined.
-
-        NOTE: this is the only public function from this module!
-    """
-# todo: fix problem with celery, doesn't seem to work properly
-# or maybe self.rpc doesn't get serialized very well ???
-    if _celery_add_bug_to_bugzilla:
-        _celery_add_bug_to_bugzilla.delay(rpc, testcase, bug)
-    else:
-        BugzillaThread(rpc, testcase, bug).start()
