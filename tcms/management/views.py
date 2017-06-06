@@ -8,7 +8,7 @@ try:
 except:
     pass
 
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.http import HttpResponse
@@ -143,7 +143,7 @@ def environment_groups(request, template_name='environment/groups.html'):
 
 
 @require_GET
-@user_passes_test(lambda u: u.has_perm('management.change_tcmsenvgroup'))
+@permission_required('management.change_tcmsenvgroup')
 def environment_group_edit(request, template_name='environment/group_edit.html'):
     """
     Assign properties to environment group
