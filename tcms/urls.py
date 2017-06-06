@@ -20,11 +20,7 @@ from tcms.testruns import views as testruns_views
 from tcms.management import views as management_views
 from tcms.report import urls as report_urls
 from tcms.search import advance_search
-
-
-# XML RPC handler
-from kobo.django.xmlrpc.views import XMLRPCHandlerFactory
-xmlrpc_handler = XMLRPCHandlerFactory('TCMS_XML_RPC')
+from tcms.xmlrpc import urls as xmlrpc_urls
 
 
 urlpatterns = [
@@ -36,7 +32,7 @@ urlpatterns = [
     # Index and static zone
     url(r'^$', core_views.index, name='core-views-index'),
     url(r'^search/$', core_views.search, name='core-views-search'),
-    url(r'^xmlrpc/$', xmlrpc_handler),
+    url(r'^xmlrpc/$', include(xmlrpc_urls)),
 
     # Ajax call responder
     url(r'^ajax/update/$', ajax.update, name='ajax-update'),

@@ -3,9 +3,7 @@
 import inspect
 import logging
 from functools import wraps
-
 from django.conf import settings
-from kobo.django.xmlrpc.models import XmlRpcLog
 
 
 __all__ = ('log_call',)
@@ -21,13 +19,14 @@ if settings.DEBUG:
             args)
         logger.debug(log_msg)
 else:
+    from .models import XmlRpcLog
     create_log = XmlRpcLog.objects.create
 
 
 def log_call(*args, **kwargs):
     '''Log XMLRPC-specific invocations
 
-    This is copied from kobo.django.xmlrpc.decorators to add custom abitlities,
+    This was copied from kobo.django.xmlrpc.decorators to add custom abitlities,
     so that we don't have to wait upstream to make the changes.
 
     Usage::

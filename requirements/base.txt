@@ -9,5 +9,3 @@ six
 django-contrib-comments
 django-preserialize
 xmltodict
-
-git+https://github.com/release-engineering/kobo.git@kobo-0.5.2#egg=kobo
