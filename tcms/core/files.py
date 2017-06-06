@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils.encoding import smart_str
@@ -19,7 +19,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TestPlanAttachment
 
 
-@user_passes_test(lambda u: u.has_perm('management.add_testattachment'))
+@permission_required('management.add_testattachment')
 def upload_file(request):
     if request.FILES.get('upload_file'):
         upload_file = request.FILES['upload_file']

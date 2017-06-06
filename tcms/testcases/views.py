@@ -5,7 +5,7 @@ import json
 import itertools
 
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -138,7 +138,7 @@ def create_testcase(request, form, tp):
     return tc
 
 
-@user_passes_test(lambda u: u.has_perm('testcases.change_testcase'))
+@permission_required('testcases.change_testcase')
 def automated(request):
     """Change the automated status for cases
 
@@ -174,7 +174,7 @@ def automated(request):
     return HttpResponse(json.dumps(ajax_response))
 
 
-@user_passes_test(lambda u: u.has_perm('testcases.add_testcase'))
+@permission_required('testcases.add_testcase')
 def new(request, template_name='case/new.html'):
     """New testcase"""
     tp = plan_from_request_or_none(request)
@@ -1278,7 +1278,7 @@ def update_testcase(request, tc, tc_form):
     tc.save()
 
 
-@user_passes_test(lambda u: u.has_perm('testcases.change_testcase'))
+@permission_required('testcases.change_testcase')
 def edit(request, case_id, template_name='case/edit.html'):
     """Edit case detail"""
     try:
@@ -1450,7 +1450,7 @@ def text_history(request, case_id, template_name='case/history.html'):
     return render(request, template_name, context_data)
 
 
-@user_passes_test(lambda u: u.has_perm('testcases.add_testcase'))
+@permission_required('testcases.add_testcase')
 def clone(request, template_name='case/clone.html'):
     """Clone one case or multiple case into other plan or plans"""
     SUB_MODULE_NAME = 'cases'
@@ -1691,7 +1691,7 @@ def tag(request):
 
 
 @require_POST
-@user_passes_test(lambda u: u.has_perm('testcases.add_testcasecomponent'))
+@permission_required('testcases.add_testcasecomponent')
 def component(request):
     """
     Management test case components
@@ -1705,7 +1705,7 @@ def component(request):
 
 
 @require_POST
-@user_passes_test(lambda u: u.has_perm('testcases.add_testcasecomponent'))
+@permission_required('testcases.add_testcasecomponent')
 def category(request):
     """Management test case categories"""
     # FIXME: It will update product/category/component at one time so far.
@@ -1715,7 +1715,7 @@ def category(request):
     return func()
 
 
-@user_passes_test(lambda u: u.has_perm('testcases.add_testcaseattachment'))
+@permission_required('testcases.add_testcaseattachment')
 def attachment(request, case_id, template_name='case/attachment.html'):
     """Manage test case attachments"""
     SUB_MODULE_NAME = 'cases'
@@ -1747,7 +1747,7 @@ def get_log(request, case_id, template_name="management/get_log.html"):
     return render(request, template_name, context_data)
 
 
-@user_passes_test(lambda u: u.has_perm('testcases.change_testcasebug'))
+@permission_required('testcases.change_testcasebug')
 def bug(request, case_id, template_name='case/get_bug.html'):
     """Process the bugs for cases"""
     # FIXME: Rewrite these codes for Ajax.Request
