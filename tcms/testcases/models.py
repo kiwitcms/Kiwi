@@ -650,14 +650,12 @@ class TestCaseBugSystem(TCMSActionModel):
         default='IssueTrackerType',
     )
 
-    report_url = models.CharField(
+    base_url = models.CharField(
         max_length=1024,
         null=True,
         blank=True,
-        verbose_name='Report URL',
-        help_text='''For Bugzilla the report URL looks like
-<strong>https://bugzilla.example.com/buglist.cgi?bugidtype=include&bug_id=1,2,3</strong>
-<br/>so the value of this field must be <strong>https://bugzilla.example.com</strong>!
+        verbose_name='Base URL',
+        help_text='''Base URL, for example <strong>https://bugzilla.example.com</strong>!
 Leave empty to disable!
 ''')
 
