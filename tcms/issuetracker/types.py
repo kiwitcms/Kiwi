@@ -92,13 +92,13 @@ class Bugzilla(IssueTrackerType):
             bugzilla_integration.BugzillaThread(self.rpc, case, issue).start()
 
     def all_issues_link(self, ids):
-        if not self.tracker.report_url:
+        if not self.tracker.base_url:
             return None
 
-        if not self.tracker.report_url.endswith('/'):
-            self.tracker.report_url += '/'
+        if not self.tracker.base_url.endswith('/'):
+            self.tracker.base_url += '/'
 
-        return self.tracker.report_url + 'buglist.cgi?bugidtype=include&bug_id=%s' % ','.join(ids)
+        return self.tracker.base_url + 'buglist.cgi?bugidtype=include&bug_id=%s' % ','.join(ids)
 
     def report_issue_from_test_case(self, caserun):
         # because of circular dependencies
@@ -138,7 +138,7 @@ class Bugzilla(IssueTrackerType):
         args['short_desc'] = 'Test case failure: %s' % caserun.case.summary
         args['version'] = caserun.run.product_version
 
-        url = self.tracker.report_url
+        url = self.tracker.base_url
         if not url.endswith('/'):
             url += '/'
 
@@ -147,10 +147,10 @@ class Bugzilla(IssueTrackerType):
 
 class JIRA(IssueTrackerType):
     def all_issues_link(self, ids):
-        if not self.tracker.report_url:
+        if not self.tracker.base_url:
             return None
 
-        if not self.tracker.report_url.endswith('/'):
-            self.tracker.report_url += '/'
+        if not self.tracker.base_url.endswith('/'):
+            self.tracker.base_url += '/'
 
-        return self.tracker.report_url + 'issues/?jql=issueKey%%20in%%20(%s)' % '%2C%20'.join(ids)
+        return self.tracker.base_url + 'issues/?jql=issueKey%%20in%%20(%s)' % '%2C%20'.join(ids)
