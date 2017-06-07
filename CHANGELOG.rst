@@ -4,7 +4,7 @@ Change Log
 3.23 (Jun 6 2017, released on MrSenko.com)
 ------------------------------------------
 
-- Docker compose is now hosted at <https://github.com/MrSenko/kiwi-docker>
+- Docker compose is now hosted at https://github.com/MrSenko/kiwi-docker
   with the ability to customize all settings and the Docker image itself
   (Mr. Senko)
 - Trimmed down the contents of the Docker image - removed unnecessary RPM
