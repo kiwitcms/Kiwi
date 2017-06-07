@@ -2,7 +2,7 @@ FROM centos/httpd
 
 # install virtualenv and libraries needed to build the python dependencies
 RUN yum -y --setopt=tsflags=nodocs install python-virtualenv gcc mariadb-devel \
-    libxml2-devel libxslt-devel git mod_wsgi
+    libxml2-devel libxslt-devel mod_wsgi
 # enable when you want to update RPM packages
 # this will be used for testing building a Docker image with the
 # latest possible versions from CentOS!
@@ -33,7 +33,7 @@ COPY ./requirements/ /Kiwi/requirements/
 RUN pip install -r /Kiwi/requirements/mysql.txt
 
 # now remove -devel RPMs used to build Python dependencies
-RUN yum -y remove gcc mariadb-devel libxml2-devel libxslt-devel git
+RUN yum -y remove gcc mariadb-devel libxml2-devel libxslt-devel
 
 # remove other -devel RPMs pulled in from base images
 RUN rpm -qa | grep "\-devel" | grep -v python-devel | xargs yum -y remove
