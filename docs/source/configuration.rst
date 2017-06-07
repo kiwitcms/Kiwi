@@ -13,6 +13,14 @@ to update some of them for your particular production environment.
     available at `<https://github.com/MrSenko/kiwi-docker>`_!
 
 
+JIRA options
+------------
+
+JIRA integration can be controlled via the ``JIRA_OPTIONS`` configuration
+setting. By default this setting is not provided and the code uses
+``jira.JIRA.DEFAULT_OPTIONS``.
+
+
 Kerberos authentication
 -----------------------
 

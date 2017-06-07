@@ -2,6 +2,8 @@ import os
 import urllib
 import bugzilla
 import bugzilla_integration
+import jira
+import jira_integration
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
@@ -146,6 +148,24 @@ class Bugzilla(IssueTrackerType):
 
 
 class JIRA(IssueTrackerType):
+    def __init__(self, tracker):
+        super(JIRA, self).__init__(tracker)
+
+        if hasattr(settings, 'JIRA_OPTIONS'):
+            options = settings.JIRA_OPTIONS
+        else:
+            options = None
+
+        self.rpc = jira.JIRA(
+            tracker.api_url,
+            basic_auth=(self.tracker.api_username, self.tracker.api_password),
+            options=options,
+        )
+
+    def add_testcase_to_issue(self, testcases, issue):
+        for case in testcases:
+            jira_integration.JiraThread(self.rpc, case, issue).start()
+
     def all_issues_link(self, ids):
         if not self.tracker.base_url:
             return None
@@ -154,3 +174,70 @@ class JIRA(IssueTrackerType):
             self.tracker.base_url += '/'
 
         return self.tracker.base_url + 'issues/?jql=issueKey%%20in%%20(%s)' % '%2C%20'.join(ids)
+
+    def report_issue_from_test_case(self, caserun):
+        """
+            For the HTML API description see:
+            https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
+        """
+        # because of circular dependencies
+        from tcms.testcases.models import TestCaseText
+
+        # note: your jira instance needs to have the same projects
+        # defined otherwise this will fail!
+        project = self.rpc.project(caserun.run.plan.product.name)
+
+        try:
+            issue_type = self.rpc.issue_type_by_name('Bug')
+        except KeyError:
+            issue_type = self.rpc.issue_types()[0]
+
+        args = {
+            'pid': project.id,
+            'issuetype': issue_type.id,
+            'summary': 'Failed test: %s' % caserun.case.summary,
+        }
+
+        try:
+            # apparently JIRA can't search users via their e-mail so try to
+            # search by username and hope that it matches
+            tested_by = caserun.tested_by
+            if not tested_by:
+                tested_by = caserun.assignee
+
+            args['reporter'] = self.rpc.user(tested_by.username).key
+        except jira.JIRAError:
+            pass
+
+        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
+
+        if txt and isinstance(txt, TestCaseText):
+            plain_txt = txt.get_plain_text()
+
+            setup = plain_txt.setup
+            action = plain_txt.action
+            effect = plain_txt.effect
+        else:
+            setup = 'None'
+            action = 'None'
+            effect = 'None'
+
+        caserun_url = settings.KIWI_BASE_URL + \
+            reverse('testruns-get', args=[caserun.run.pk])
+
+        comment = "Filed from caserun %s\n\n" % caserun_url
+        comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
+        comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
+        comment += "Version-Release number of selected " \
+                   "component (if applicable):\n"
+        comment += "%s\n\n" % caserun.build.name
+        comment += "Steps to Reproduce: \n%s\n%s\n\n" % (setup, action)
+        comment += "Actual results: \n<describe what happened>\n\n"
+        comment += "Expected results:\n%s\n\n" % effect
+        args['description'] = comment
+
+        url = self.tracker.base_url
+        if not url.endswith('/'):
+            url += '/'
+
+        return url + '/secure/CreateIssueDetails!init.jspa?' + urllib.urlencode(args, True)
