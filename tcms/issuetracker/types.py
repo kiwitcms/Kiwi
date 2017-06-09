@@ -4,6 +4,8 @@ import bugzilla
 import bugzilla_integration
 import jira
 import jira_integration
+import github
+import github_integration
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
@@ -241,3 +243,59 @@ class JIRA(IssueTrackerType):
             url += '/'
 
         return url + '/secure/CreateIssueDetails!init.jspa?' + urllib.urlencode(args, True)
+
+
+class GitHub(IssueTrackerType):
+    def __init__(self, tracker):
+        super(GitHub, self).__init__(tracker)
+
+        # NOTE: we use an access token so only the password field is required
+        self.rpc = github.Github(self.tracker.api_password)
+
+    def add_testcase_to_issue(self, testcases, issue):
+        for case in testcases:
+            github_integration.GitHubThread(self.rpc, self.tracker, case, issue).start()
+
+    def report_issue_from_test_case(self, caserun):
+        """
+            GitHub only supports title and body parameters
+        """
+        # because of circular dependencies
+        from tcms.testcases.models import TestCaseText
+
+        args = {
+            'title': 'Failed test: %s' % caserun.case.summary,
+        }
+
+        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
+
+        if txt and isinstance(txt, TestCaseText):
+            plain_txt = txt.get_plain_text()
+
+            setup = plain_txt.setup
+            action = plain_txt.action
+            effect = plain_txt.effect
+        else:
+            setup = 'None'
+            action = 'None'
+            effect = 'None'
+
+        caserun_url = settings.KIWI_BASE_URL + \
+            reverse('testruns-get', args=[caserun.run.pk])
+
+        comment = "Filed from caserun %s\n\n" % caserun_url
+        comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
+        comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
+        comment += "Version-Release number of selected " \
+                   "component (if applicable):\n"
+        comment += "%s\n\n" % caserun.build.name
+        comment += "Steps to Reproduce: \n%s\n%s\n\n" % (setup, action)
+        comment += "Actual results: \n<describe what happened>\n\n"
+        comment += "Expected results:\n%s\n\n" % effect
+        args['body'] = comment
+
+        url = self.tracker.base_url
+        if not url.endswith('/'):
+            url += '/'
+
+        return url + '/issues/new?' + urllib.urlencode(args, True)
