@@ -3,6 +3,7 @@ django-uuslug==1.1.8
 odfpy>=0.9.6
 python-bugzilla
 jira
+PyGithub
 django-pagination==1.0.7
 django-tinymce==2.4.0
 beautifulsoup4>=4.1.1

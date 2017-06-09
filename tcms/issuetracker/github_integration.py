@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+    Helper which facilitate actual communications with GitHub.
+"""
+
+import warnings
+import threading
+
+from django.conf import settings
+from django.core.urlresolvers import reverse
+
+
+class GitHubThread(threading.Thread):
+    """
+        Execute GitHub RPC code in a thread!
+
+        Executed from the IssueTracker interface methods.
+    """
+
+    def __init__(self, rpc, tracker, testcase, bug):
+        """
+            @rpc - GitHub object
+            @tracker - TestCaseBugSystem object
+            @testcase - TestCase object
+            @bug - TestCaseBug object
+        """
+
+        self.rpc = rpc
+        self.testcase = testcase
+        self.bug = bug
+
+        repo_id = tracker.base_url.strip().strip('/').lower()
+        repo_id = repo_id.replace('https://', '').replace('http://', '').replace('github.com/', '')
+        self.repo = self.rpc.get_repo(repo_id)
+
+        super(GitHubThread, self).__init__()
+
+    def run(self):
+        """
+            Link the test case with the issue!
+        """
+
+        try:
+            text = """---- Issue confirmed via test case ----
+URL: %s
+Summary: %s""" % (settings.KIWI_BASE_URL + reverse('testcases-get', args=[self.testcase.pk]),
+                  self.testcase.summary)
+
+            self.repo.get_issue(int(self.bug.bug_id)).create_comment(text)
+        except Exception, err:
+            message = '%s: %s' % (err.__class__.__name__, err)
+            warnings.warn(message)
