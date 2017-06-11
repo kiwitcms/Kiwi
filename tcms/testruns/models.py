@@ -86,7 +86,7 @@ class TestRun(TCMSActionModel):
             'product': lambda value: Q(build__product=value),
             'product_version': lambda value: Q(product_version=value),
             'plan': lambda value: Q(plan__plan_id=int(value)) if is_int(value) else Q(plan__name__icontains=value),
-            'build': lambda value: lambda value: Q(build=value),
+            'build': lambda value: Q(build=value),
             'env_group': lambda value: Q(plan__env_group=value),
             'people_id': lambda value: Q(manager__id=value) | Q(default_tester__id=value),
             'manager': lambda value: Q(manager=value),
@@ -100,6 +100,7 @@ class TestRun(TCMSActionModel):
             'people': lambda value: {
                 'default_tester': Q(default_tester=value),
                 'manager': Q(manager=value),
+                'people': Q(manager=value) | Q(default_tester=value),
                 # TODO: Remove first one after upgrade to newer version.
                 # query.set can return either '' or None sometimes, so
                 # currently keeping these two lines here is a workaround.
