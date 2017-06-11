@@ -42,8 +42,6 @@ from tcms.core.utils.validations import validate_bug_id
 from tcms.core.views import Prompt
 from tcms.management.models import Priority, TCMSEnvValue, TestTag
 from tcms.search.forms import RunForm
-from tcms.search import remove_from_request_path
-from tcms.search.order import order_run_queryset
 from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.forms import CaseBugForm
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
@@ -288,64 +286,29 @@ def delete(request, run_id):
         ))
 
 
+@require_GET
 def all(request, template_name='run/all.html'):
     '''Read the test runs from database and display them.'''
     SUB_MODULE_NAME = "runs"
 
-    # TODO: this function now only performs a forward feature, no queries
-    # need here. All of it will be removed in the furture.
+    query_result = len(request.GET) > 0
 
-    if request.REQUEST.get('manager'):
-        people = request.REQUEST.get('people')
-        if request.user.is_authenticated() \
-                and (people == request.user.username or people == request.user.email):
-            SUB_MODULE_NAME = "my_runs"
-
-    # Initial the values will be use if it's not a search
-    query_result = False
-    trs = None
-    order_by = request.REQUEST.get('order_by', 'create_date')
-    asc = bool(request.REQUEST.get('asc', None))
-    # If it's a search
-    if request.REQUEST.items():
-        search_form = SearchRunForm(request.REQUEST)
-
-        if request.REQUEST.get('product'):
-            search_form.populate(product_id=request.REQUEST['product'])
+    if request.GET.items():
+        search_form = SearchRunForm(request.GET)
+        if request.GET.get('product'):
+            search_form.populate(product_id=request.GET['product'])
         else:
             search_form.populate()
 
-        if search_form.is_valid():
-            # It's a search here.
-            query_result = True
-            trs = TestRun.list(search_form.cleaned_data)
-            trs = trs.select_related('manager',
-                                     'default_tester',
-                                     'build', 'plan',
-                                     'build__product__name', )
-
-            # Further optimize by adding caserun attributes:
-            trs = trs.extra(
-                select={'env_groups': RawSQL.environment_group_for_run, },
-            )
-            trs = order_run_queryset(trs, order_by, asc)
+        search_form.is_valid()
     else:
         search_form = SearchRunForm()
-        # search_form.populate()
-    # generating a query_url with order options
-    query_url = remove_from_request_path(request, 'order_by')
-    if asc:
-        query_url = remove_from_request_path(query_url, 'asc')
-    else:
-        query_url = '%s&asc=True' % query_url
 
     context_data = {
         'module': MODULE_NAME,
         'sub_module': SUB_MODULE_NAME,
-        'test_runs': trs,
         'query_result': query_result,
         'search_form': search_form,
-        'query_url': query_url,
     }
     return render_to_response(template_name, context_data,
                               context_instance=RequestContext(request))
@@ -465,6 +428,7 @@ def load_runs_of_one_plan(request, plan_id,
     return HttpJSONResponse(json_data)
 
 
+@require_GET
 def ajax_search(request, template_name='run/common/json_runs.txt'):
     """Response request to search test runs from Search Runs"""
     column_index_name_map = {0: '',
@@ -481,9 +445,9 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
                              11: 'completed',
                              }
 
-    search_form = SearchRunForm(request.REQUEST)
-    if request.REQUEST.get('product'):
-        search_form.populate(product_id=request.REQUEST['product'])
+    search_form = SearchRunForm(request.GET)
+    if request.GET.get('product'):
+        search_form.populate(product_id=request.GET['product'])
     else:
         search_form.populate()
 
@@ -517,25 +481,35 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
         # Get associated statistics data
         run_ids = [run.pk for run in trs]
         qs = TestCaseRun.objects \
-            .filter(case_run_status=TestCaseRunStatus.id_failed(), run__in=run_ids) \
+            .filter(case_run_status=TestCaseRunStatus.id_failed(),
+                    run__in=run_ids) \
             .values('run', 'case_run_status') \
             .annotate(count=Count('pk')) \
             .order_by('run', 'case_run_status')
-        failure_subtotal = magic_convert(qs, key_name='run', value_name='count')
+        failure_subtotal = magic_convert(qs,
+                                         key_name='run',
+                                         value_name='count')
 
         completed_status_ids = TestCaseRunStatus._get_completed_status_ids()
         qs = TestCaseRun.objects \
-            .filter(case_run_status__in=completed_status_ids, run__in=run_ids) \
+            .filter(case_run_status__in=completed_status_ids,
+                    run__in=run_ids) \
             .values('run', 'case_run_status') \
             .annotate(count=Count('pk')) \
             .order_by('run', 'case_run_status')
         completed_subtotal = dict((
             (run_id, sum((item['count'] for item in stats_rows)))
             for run_id, stats_rows
-            in itertools.groupby(qs.iterator(), key=lambda row: row['run'])))
+            in itertools.groupby(qs.iterator(),
+                                 key=lambda row: row['run'])))
 
-        qs = TestCaseRun.objects.filter(run__in=run_ids).values('run').annotate(cases_count=Count('case'))
-        cases_subtotal = magic_convert(qs, key_name='run', value_name='cases_count')
+        qs = TestCaseRun.objects \
+            .filter(run__in=run_ids) \
+            .values('run') \
+            .annotate(cases_count=Count('case'))
+        cases_subtotal = magic_convert(qs,
+                                       key_name='run',
+                                       value_name='cases_count')
 
         for run in trs:
             run_id = run.pk
