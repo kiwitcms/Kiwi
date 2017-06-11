@@ -836,6 +836,88 @@ class TestAJAXSearchRuns(BaseCaseRun):
                                search_result)
 
 
+class TestAddRemoveRunCC(BaseCaseRun):
+    """Test view tcms.testruns.views.cc"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestAddRemoveRunCC, cls).setUpTestData()
+
+        cls.cc_url = reverse('testruns-cc', args=[cls.test_run.pk])
+
+        cls.cc_user_1 = UserFactory(username='cc-user-1',
+                                    email='cc-user-1@example.com')
+        cls.cc_user_2 = UserFactory(username='cc-user-2',
+                                    email='cc-user-2@example.com')
+        cls.cc_user_3 = UserFactory(username='cc-user-3',
+                                    email='cc-user-3@example.com')
+
+        cls.test_run.add_cc(cls.cc_user_2)
+        cls.test_run.add_cc(cls.cc_user_3)
+
+    def test_404_if_run_not_exist(self):
+        cc_url = reverse('testruns-cc', args=[999999])
+        response = self.client.get(cc_url)
+        self.assert404(response)
+
+    def assert_cc(self, response, expected_cc):
+        self.assertEqual(len(expected_cc), self.test_run.cc.count())
+
+        for cc in expected_cc:
+            self.assertContains(
+                response,
+                '<a href="mailto:{0}">{0}</a>'.format(cc.email),
+                html=True)
+
+    def test_refuse_if_missing_action(self):
+        response = self.client.get(self.cc_url,
+                                   {'user': self.cc_user_1.username})
+        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
+
+    def test_add_cc(self):
+        response = self.client.get(
+            self.cc_url,
+            {'do': 'add', 'user': self.cc_user_1.username})
+
+        self.assert_cc(response,
+                       [self.cc_user_2, self.cc_user_3, self.cc_user_1])
+
+    def test_remove_cc(self):
+        response = self.client.get(
+            self.cc_url,
+            {'do': 'remove', 'user': self.cc_user_2.username})
+
+        self.assert_cc(response, [self.cc_user_3])
+
+    def test_refuse_to_remove_if_missing_user(self):
+        response = self.client.get(self.cc_url, {'do': 'remove'})
+
+        self.assertContains(
+            response,
+            'User name or email is required by this operation')
+
+        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
+
+    def test_refuse_to_add_if_missing_user(self):
+        response = self.client.get(self.cc_url, {'do': 'add'})
+
+        self.assertContains(
+            response,
+            'User name or email is required by this operation')
+
+        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
+
+    def test_refuse_if_user_not_exist(self):
+        response = self.client.get(self.cc_url,
+                                   {'do': 'add', 'user': 'not exist'})
+
+        self.assertContains(
+            response,
+            'The user you typed does not exist in database')
+
+        self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
+
+
 # ### Test cases for data ###
 
 class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):

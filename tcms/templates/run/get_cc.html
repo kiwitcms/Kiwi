@@ -1,30 +1,30 @@
 {% if not is_ajax %}
-<ul style="margin:0px;" class="js-cc-ul">
-{% for cc in test_run.cc.select_related.all %}
-<li>
-	<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
-	{% if perms.testruns.delete_testruncc %}
-	<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
+	<ul style="margin:0px;" class="js-cc-ul">
+	{% for cc in test_run.cc.select_related.all %}
+	<li>
+		<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
+		{% if perms.testruns.delete_testruncc %}
+		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
+		{% endif %}
+	</li>
+	{% endfor %}
+	</ul>
+
+	<div><a class="addlink js-add-cc" href="javascript:void(0)" data-param="{{ test_run.run_id }}">Add CC</a></div>
+
+	{% if message %}
+		<div id="message" class="hidden">{{ message }}</div>
 	{% endif %}
-</li>
-{% endfor %}
-</ul>
-
-<div><a class="addlink js-add-cc" href="javascript:void(0)" data-param="{{ test_run.run_id }}">Add CC</a></div>
-
-{% if message %}
-	<div id="message" class="hidden">{{ message }}</div>
-{% endif %}
 {% else %}
-{% if message %}
+	{% if message %}
 	<div id="message" class="hidden">{{ message }}</div>
-{% endif %}
-{% for cc in test_run.cc.select_related.all %}
-<li>
-	<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
-	{% if perms.testruns.delete_testruncc %}
-	<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
 	{% endif %}
-</li>
-{% endfor %}
+	{% for cc in test_run.cc.select_related.all %}
+	<li>
+		<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
+		{% if perms.testruns.delete_testruncc %}
+		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
+		{% endif %}
+	</li>
+	{% endfor %}
 {% endif %}
