@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 from datetime import timedelta
 from six.moves import http_client
 
@@ -13,15 +14,19 @@ from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
 
+from tcms.tests import BaseCaseRun
+from tcms.tests import BasePlanCase
+from tcms.tests import user_should_have_perm
+from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TCMSEnvPropertyFactory
 from tcms.tests.factories import TCMSEnvValueFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestTagFactory
-from tcms.tests import BaseCaseRun
-from tcms.tests import BasePlanCase
-from tcms.tests import user_should_have_perm
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import VersionFactory
 
 # ### Test cases for models ###
 
@@ -581,6 +586,254 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
                              list(cloned_run.tags.values_list('tag')))
         else:
             self.assertEqual([], list(cloned_run.tags.all()))
+
+
+class TestSearchRuns(BaseCaseRun):
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestSearchRuns, cls).setUpTestData()
+
+        cls.search_runs_url = reverse('testruns-all')
+
+    def test_only_show_search_form(self):
+        response = self.client.get(self.search_runs_url)
+        self.assertContains(response, '<form id="runs_form"></form>', html=True)
+
+    def test_search_runs(self):
+        search_criteria = {'summary': 'run'}
+
+        response = self.client.get(self.search_runs_url, search_criteria)
+
+        self.assertContains(
+            response,
+            '<input id="id_summary" name="summary" value="run" type="text">',
+            html=True)
+
+        # Assert table with this ID exists. Because searching runs actually
+        # happens in an AJAX requested from DataTable, no need to verify
+        # search runs at this moment.
+        self.assertContains(response, 'id="testruns_table"')
+
+
+class TestAJAXSearchRuns(BaseCaseRun):
+    """Test ajax_search view
+
+    View method ajax_search is called by DataTable in a AJAX GET request. This
+    test aims to test the search, so DataTable related behavior do not belong
+    to test purpose, ignore it.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestAJAXSearchRuns, cls).setUpTestData()
+
+        cls.search_url = reverse('testruns-ajax_search')
+
+        # Add more test runs for testing different search criterias
+
+        cls.run_tester = UserFactory(username='run_tester',
+                                     email='runtester@example.com')
+
+        cls.product_issuetracker = ProductFactory(name='issuetracker')
+        cls.version_issuetracker_0_1 = VersionFactory(
+            value='0.1', product=cls.product_issuetracker)
+        cls.version_issuetracker_1_2 = VersionFactory(
+            value='1.2', product=cls.product_issuetracker)
+
+        cls.plan_issuetracker = TestPlanFactory(
+            name='Test issue tracker releases',
+            author=cls.tester,
+            owner=cls.tester,
+            product=cls.product_issuetracker,
+            product_version=cls.version_issuetracker_0_1)
+
+        # Probably need more cases as well in order to create case runs to
+        # test statistcis in search result
+
+        cls.build_issuetracker_fast = TestBuildFactory(
+            product=cls.product_issuetracker)
+
+        cls.run_hotfix = TestRunFactory(
+            summary='Fast verify hotfix',
+            product_version=cls.version_issuetracker_0_1,
+            plan=cls.plan_issuetracker,
+            build=cls.build_issuetracker_fast,
+            manager=cls.tester,
+            default_tester=cls.run_tester,
+            tag=[TestTagFactory(name='fedora'),
+                 TestTagFactory(name='rhel')])
+
+        cls.run_release = TestRunFactory(
+            summary='Smoke test before release',
+            product_version=cls.version_issuetracker_1_2,
+            plan=cls.plan_issuetracker,
+            build=cls.build_issuetracker_fast,
+            manager=cls.tester,
+            default_tester=cls.run_tester)
+
+        cls.run_daily = TestRunFactory(
+            summary='Daily test during sprint',
+            product_version=cls.version_issuetracker_0_1,
+            plan=cls.plan_issuetracker,
+            build=cls.build_issuetracker_fast,
+            manager=cls.tester,
+            default_tester=cls.run_tester,
+            tag=[TestTagFactory(name='rhel')])
+
+    def assert_found_runs(self, expected_found_runs, search_result):
+        expected_runs_count = len(expected_found_runs)
+        self.assertEqual(expected_runs_count, search_result['iTotalRecords'])
+        self.assertEqual(expected_runs_count, search_result['iTotalDisplayRecords'])
+        self.assertEqual(expected_runs_count, len(search_result['aaData']))
+
+        for run, row in zip(expected_found_runs, search_result['aaData']):
+            self.assertEqual(
+                "<a href='{}'>{}</a>".format(
+                    reverse('testruns-get', args=[run.pk]), run.pk),
+                row[1])
+            self.assertEqual(
+                "<a href='{}'>{}</a>".format(
+                    reverse('testruns-get', args=[run.pk]), run.summary),
+                row[2])
+
+    def test_search_all_runs(self):
+        response = self.client.get(self.search_url)
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs(TestRun.objects.all(), search_result)
+
+    def test_empty_search_result(self):
+        response = self.client.get(self.search_url, {'build': 9999})
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs([], search_result)
+
+    def test_search_by_summary(self):
+        response = self.client.get(self.search_url, {'summary': 'run'})
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs([self.test_run, self.test_run_1], search_result)
+
+    def test_search_by_product(self):
+        response = self.client.get(self.search_url,
+                                   {'product': self.product_issuetracker.pk})
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs(
+            [self.run_hotfix, self.run_release, self.run_daily],
+            search_result)
+
+    def test_search_by_product_and_version(self):
+        query_criteria = {
+            'product': self.product_issuetracker.pk,
+            'product_version': self.version_issuetracker_1_2.pk,
+        }
+        response = self.client.get(self.search_url, query_criteria)
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs([self.run_release], search_result)
+
+    def test_search_by_product_and_build(self):
+        query_criteria = {
+            'product': self.product_issuetracker.pk,
+            'build': self.build_issuetracker_fast.pk,
+        }
+        response = self.client.get(self.search_url, query_criteria)
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs(
+            [self.run_hotfix, self.run_release, self.run_daily],
+            search_result)
+
+    def test_search_by_product_and_other_product_build(self):
+        query_criteria = {
+            'product': self.product_issuetracker.pk,
+            'build': self.build.pk,
+        }
+        response = self.client.get(self.search_url, query_criteria)
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs([], search_result)
+
+    def test_search_by_plan_name(self):
+        response = self.client.get(self.search_url, {'plan': 'Issue'})
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs(
+            [self.run_hotfix, self.run_release, self.run_daily],
+            search_result)
+
+    def test_search_by_empty_plan_name(self):
+        response = self.client.get(self.search_url, {'plan': ''})
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs(TestRun.objects.all(), search_result)
+
+    def test_search_by_plan_id(self):
+        response = self.client.get(self.search_url, {'plan': self.plan.pk})
+
+        search_result = json.loads(response.content)
+        self.assert_found_runs([self.test_run, self.test_run_1], search_result)
+
+    def test_search_by_manager_or_default_tester(self):
+        response = self.client.get(self.search_url, {'people_type': 'people',
+                                                     'people': self.run_tester})
+        search_result = json.loads(response.content)
+        self.assert_found_runs(
+            [self.run_hotfix, self.run_release, self.run_daily],
+            search_result)
+
+        response = self.client.get(self.search_url, {'people_type': 'people',
+                                                     'people': self.tester})
+        search_result = json.loads(response.content)
+        self.assert_found_runs(TestRun.objects.all(), search_result)
+
+    def test_search_by_manager(self):
+        response = self.client.get(self.search_url,
+                                   {'people_type': 'manager',
+                                    'people': self.tester.username})
+        search_result = json.loads(response.content)
+        self.assert_found_runs(TestRun.objects.all(), search_result)
+
+    def test_search_by_non_existing_manager(self):
+        response = self.client.get(self.search_url,
+                                   {'people_type': 'manager',
+                                    'people': 'nonexisting-manager'})
+        search_result = json.loads(response.content)
+        self.assert_found_runs([], search_result)
+
+    def test_search_by_default_tester(self):
+        response = self.client.get(self.search_url,
+                                   {'people_type': 'default_tester',
+                                    'people': self.run_tester.username})
+        search_result = json.loads(response.content)
+        self.assert_found_runs(
+            [self.run_hotfix, self.run_release, self.run_daily],
+            search_result)
+
+    def test_search_by_non_existing_default_tester(self):
+        response = self.client.get(self.search_url,
+                                   {'people_type': 'default_tester',
+                                    'people': 'nonexisting-default-tester'})
+        search_result = json.loads(response.content)
+        self.assert_found_runs([], search_result)
+
+    def test_search_running_runs(self):
+        response = self.client.get(self.search_url, {'status': 'running'})
+        search_result = json.loads(response.content)
+        self.assert_found_runs(TestRun.objects.all(), search_result)
+
+    def test_search_finished_runs(self):
+        response = self.client.get(self.search_url, {'status': 'finished'})
+        search_result = json.loads(response.content)
+        self.assert_found_runs([], search_result)
+
+    def test_search_by_tag(self):
+        response = self.client.get(self.search_url, {'tag__name__in': 'rhel'})
+        search_result = json.loads(response.content)
+        self.assert_found_runs([self.run_hotfix, self.run_daily],
+                               search_result)
 
 
 # ### Test cases for data ###

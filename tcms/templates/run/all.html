@@ -18,7 +18,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 
 {% block contents %}
 
-
 <div id="content">
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
@@ -53,11 +52,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param='{% url "testruns-clone" %}' />
 	</div>
 	{% include "run/common/run_filtered.html" %}
-	{% else %}
-	{% if query_result %}
-	<span class="prompt-message"><center>No test runs found</center></span>
 	{% endif %}
 	</form>
-	{% endif %}
 </div>
 {% endblock %}
