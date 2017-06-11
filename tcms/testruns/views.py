@@ -1391,46 +1391,35 @@ class AddCasesToRunView(View):
                                   context_instance=RequestContext(request))
 
 
+@require_GET
 def cc(request, run_id):
-    '''
-    Operating the test run cc objects, such as add to remove cc from run
+    """Add or remove cc from a test run"""
 
-    Return: Hash
-    '''
     tr = get_object_or_404(TestRun, run_id=run_id)
-
-    if request.REQUEST.get('do'):
-        if not request.REQUEST.get('user'):
-            context_data = {
-                'test_run': tr,
-                'is_ajax': True,
-                'message': 'User name or email is required by this operation'
-            }
-            return render_to_response('run/get_cc.html', context_data,
-                                      context_instance=RequestContext(request))
-
-        try:
-            user = User.objects.get(
-                Q(username=request.REQUEST['user']) |
-                Q(email=request.REQUEST['user'])
-            )
-        except ObjectDoesNotExist:
-            context_data = {
-                'test_run': tr,
-                'is_ajax': True,
-                'message': 'The user you typed does not exist in database'
-            }
-            return render_to_response('run/get_cc.html', context_data,
-                                      context_instance=RequestContext(request))
-
-        if request.REQUEST['do'] == 'add':
-            tr.add_cc(user=user)
-
-        if request.REQUEST['do'] == 'remove':
-            tr.remove_cc(user=user)
-
+    do = request.GET.get('do')
+    username_or_email = request.GET.get('user')
     context_data = {'test_run': tr, 'is_ajax': True}
-    return render_to_response('run/get_cc.html', context_data,
+
+    if do:
+        if not username_or_email:
+            context_data['message'] = 'User name or email is required by this operation'
+        else:
+            try:
+                user = User.objects.get(
+                    Q(username=username_or_email) |
+                    Q(email=username_or_email)
+                )
+            except ObjectDoesNotExist:
+                context_data['message'] = 'The user you typed does not exist in database'
+            else:
+                if do == 'add':
+                    tr.add_cc(user=user)
+
+                if do == 'remove':
+                    tr.remove_cc(user=user)
+
+    return render_to_response('run/get_cc.html',
+                              context_data,
                               context_instance=RequestContext(request))
 
 

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from six.moves import http_client
+
 from django import test
 from django.contrib.auth.models import Permission
 
@@ -72,7 +74,14 @@ def create_request_user(username=None, password=None):
     return user
 
 
-class BasePlanCase(test.TestCase):
+class HelperAssertions(object):
+    """Helper assertion methods"""
+
+    def assert404(self, response):
+        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+
+
+class BasePlanCase(HelperAssertions, test.TestCase):
     """Base test case by providing essential Plan and Case objects used in tests"""
 
     @classmethod
