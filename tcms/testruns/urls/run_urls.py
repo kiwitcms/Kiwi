@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^(?P<run_id>\d+)/assigncase/$', views.AddCasesToRunView.as_view(),
         name='add-cases-to-run'),
 
-    url(r'^(?P<run_id>\d+)/cc/$', views.cc),
+    url(r'^(?P<run_id>\d+)/cc/$', views.cc, name='testruns-cc'),
     url(r'^(?P<run_id>\d+)/update/$', views.update_case_run_text),
     url(r'^(?P<run_id>\d+)/export/$', views.export, name='testruns-export'),
 ]
