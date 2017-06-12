@@ -2,12 +2,11 @@
 
 import json
 
-from django_comments.models import Comment
-from django.contrib.auth.models import User
+from django import test
 from django.contrib.contenttypes.models import ContentType
 from django.core import serializers
 from django.core.urlresolvers import reverse
-from django import test
+from django_comments.models import Comment
 from six.moves import http_client
 
 from tcms.management.models import Priority
@@ -18,13 +17,13 @@ from tcms.testcases.forms import TestCase
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
+from tcms.tests import BaseCaseRun
+from tcms.tests import BasePlanCase
+from tcms.tests import remove_perm_from_user
+from tcms.tests import user_should_have_perm
 from tcms.tests.factories import TCMSEnvGroupFactory
 from tcms.tests.factories import TCMSEnvGroupPropertyMapFactory
 from tcms.tests.factories import TCMSEnvPropertyFactory
-from tcms.tests import BasePlanCase
-from tcms.tests import BaseCaseRun
-from tcms.tests import remove_perm_from_user
-from tcms.tests import user_should_have_perm
 
 
 class TestQuickSearch(BaseCaseRun):
@@ -46,6 +45,7 @@ class TestQuickSearch(BaseCaseRun):
     def test_goto_case(self):
         response = self.client.get(self.search_url,
                                    {'search_type': 'cases', 'search_content': self.case_1.pk})
+
         self.assertRedirects(
             response,
             reverse('testcases-get', args=[self.case_1.pk]))
@@ -94,11 +94,6 @@ class TestCommentCaseRuns(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super(TestCommentCaseRuns, cls).setUpTestData()
-
-        cls.tester = User.objects.create_user(username='tester',
-                                              email='tester@example.com',
-                                              password='password')
-
         cls.many_comments_url = reverse('ajax-comment_case_runs')
 
     def test_refuse_if_missing_comment(self):
@@ -163,14 +158,14 @@ class TestUpdateObject(BasePlanCase):
         cls.permission = 'testplans.change_testplan'
         cls.update_url = reverse('ajax-update')
 
-        cls.tester = User.objects.create_user(username='tester',
-                                              email='tester@example.com',
-                                              password='password')
-
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
 
     def test_refuse_if_missing_permission(self):
+        self.client.login(username=self.tester.username, password='password')
+
+        remove_perm_from_user(self.tester, self.permission)
+
         post_data = {
             'content_type': 'testplans.testplan',
             'object_pk': self.plan.pk,
@@ -178,9 +173,6 @@ class TestUpdateObject(BasePlanCase):
             'value': 'False',
             'value_type': 'bool'
         }
-
-        remove_perm_from_user(self.tester, self.permission)
-        self.client.login(username=self.tester.username, password='password')
 
         response = self.client.post(self.update_url, post_data)
 
@@ -188,6 +180,8 @@ class TestUpdateObject(BasePlanCase):
                          json.loads(response.content))
 
     def test_update_plan_is_active(self):
+        self.client.login(username=self.tester.username, password='password')
+
         post_data = {
             'content_type': 'testplans.testplan',
             'object_pk': self.plan.pk,
@@ -195,7 +189,6 @@ class TestUpdateObject(BasePlanCase):
             'value': 'False',
             'value_type': 'bool'
         }
-        self.client.login(username=self.tester.username, password='password')
 
         response = self.client.post(self.update_url, post_data)
 
@@ -213,10 +206,6 @@ class TestUpdateCaseRunStatus(BaseCaseRun):
 
         cls.permission = 'testruns.change_testcaserun'
         cls.update_url = reverse('ajax-update_case_run_status')
-
-        cls.tester = User.objects.create_user(username='tester',
-                                              email='tester@example.com',
-                                              password='password')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -271,9 +260,6 @@ class TestUpdateCasePriority(BasePlanCase):
 
         cls.permission = 'testcases.change_testcase'
         cls.case_update_url = reverse('ajax-update_cases_default_tester')
-        cls.tester = User.objects.create_user(username='tester',
-                                              email='tester@example.com',
-                                              password='password')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
