@@ -4,7 +4,6 @@ import json
 from datetime import timedelta
 from six.moves import http_client
 
-from django import test
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
@@ -63,24 +62,24 @@ class TestOrderCases(BaseCaseRun):
     def setUpTestData(cls):
         super(TestOrderCases, cls).setUpTestData()
 
-        cls.client = test.Client()
-
     def test_404_if_run_does_not_exist(self):
         nonexisting_run_pk = TestRun.objects.last().pk + 1
         url = reverse('testruns-order_case', args=[nonexisting_run_pk])
-        response = self.client.get(url)
-        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+        response = self.client.post(url)
+        self.assert404(response)
 
     def test_prompt_if_no_case_run_is_passed(self):
         url = reverse('testruns-order_case', args=[self.test_run.pk])
-        response = self.client.get(url)
-        self.assertIn('At least one case is required by re-oder in run', response.content)
+        response = self.client.post(url)
+        self.assertIn(
+            'At least one case is required by re-oder in run',
+            response.content)
 
     def test_order_case_runs(self):
         url = reverse('testruns-order_case', args=[self.test_run.pk])
-        response = self.client.get(url, {'case_run': [self.case_run_1.pk,
-                                                      self.case_run_2.pk,
-                                                      self.case_run_3.pk]})
+        response = self.client.post(url, {'case_run': [self.case_run_1.pk,
+                                                       self.case_run_2.pk,
+                                                       self.case_run_3.pk]})
 
         redirect_to = reverse('testruns-get', args=[self.test_run.pk])
         self.assertRedirects(response, redirect_to)

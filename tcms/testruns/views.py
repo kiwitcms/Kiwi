@@ -1204,6 +1204,7 @@ def clone(request, template_name='run/clone.html'):
     return render(request, template_name, context_data)
 
 
+@require_POST
 def order_case(request, run_id):
     '''Resort case with new order'''
     # Current we should rewrite all of cases belong to the plan.
@@ -1211,7 +1212,7 @@ def order_case(request, run_id):
     # Most of them are None.
     get_object_or_404(TestRun, run_id=run_id)
 
-    if not request.REQUEST.get('case_run'):
+    if 'case_run' not in request.POST:
         return HttpResponse(Prompt.render(
             request=request,
             info_type=Prompt.Info,
@@ -1219,7 +1220,7 @@ def order_case(request, run_id):
             next=reverse('testruns-get', args=[run_id, ]),
         ))
 
-    case_run_ids = request.REQUEST.getlist('case_run')
+    case_run_ids = request.POST.getlist('case_run')
     sql = 'UPDATE test_case_runs SET sortkey = %s WHERE test_case_runs.case_run_id = %s'
     # sort key begin with 10, end with length*10, step 10.
     # e.g.
