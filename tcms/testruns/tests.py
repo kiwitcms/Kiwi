@@ -131,13 +131,9 @@ class TestCreateNewRun(BasePlanCase):
     def setUpTestData(cls):
         super(TestCreateNewRun, cls).setUpTestData()
 
-        cls.tester = User.objects.create_user(username='tester',
-                                              email='tester@example.com',
-                                              password='password')
         cls.permission = 'testruns.add_testrun'
         user_should_have_perm(cls.tester, cls.permission)
         cls.url = reverse('testruns-new')
-
         cls.build_fast = TestBuildFactory(name='fast', product=cls.product)
 
     def test_refuse_if_missing_plan_pk(self):
@@ -256,9 +252,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
     def setUpTestData(cls):
         super(TestStartCloneRunFromRunPage, cls).setUpTestData()
 
-        cls.tester = User.objects.create_user(username='tester',
-                                              email='tester@example.com',
-                                              password='password')
         cls.permission = 'testruns.add_testrun'
         user_should_have_perm(cls.tester, cls.permission)
 
@@ -379,10 +372,6 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
     @classmethod
     def setUpTestData(cls):
         super(TestStartCloneRunFromRunsSearchPage, cls).setUpTestData()
-
-        cls.tester = User.objects.create_user(username='tester',
-                                              email='tester@example.com',
-                                              password='password')
         cls.clone_url = reverse('testruns-clone')
         cls.permission = 'testruns.add_testrun'
 

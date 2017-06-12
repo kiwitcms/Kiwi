@@ -135,7 +135,6 @@ class TestAddGroup(TestCase):
         cls.tester = User.objects.create_user(username='new-tester',
                                               email='new-tester@example.com',
                                               password='password')
-
         cls.new_group_name = 'nitrate-dev'
 
         cls.permission = 'management.add_tcmsenvgroup'
