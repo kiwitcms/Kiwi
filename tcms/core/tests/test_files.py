@@ -8,7 +8,6 @@ import tempfile
 from mock import patch
 
 from django.core.urlresolvers import reverse
-from django.test import Client
 from django.test import RequestFactory
 
 from tcms.core.files import able_to_delete_attachment
@@ -31,6 +30,8 @@ class TestUploadFile(BasePlanCase):
     def setUpTestData(cls):
         super(TestUploadFile, cls).setUpTestData()
 
+        cls.upload_file_url = reverse('tcms.core.files.upload_file')
+
         cls.password = 'password'
         cls.user = create_request_user(username='uploader', password=cls.password)
         user_should_have_perm(cls.user, 'management.add_testattachment')
@@ -40,8 +41,8 @@ class TestUploadFile(BasePlanCase):
     def setUpClass(cls):
         super(TestUploadFile, cls).setUpClass()
 
-        cls.file_upload_dir = tempfile.mkdtemp(prefix='{0}-upload-dir'.format(cls.__name__))
-        cls.upload_file_url = reverse('tcms.core.files.upload_file')
+        cls.file_upload_dir = tempfile.mkdtemp(
+            prefix='{0}-upload-dir'.format(cls.__name__))
 
     @classmethod
     def tearDownClass(cls):
@@ -57,14 +58,13 @@ class TestUploadFile(BasePlanCase):
         os.write(fd, 'abc' * 100)
         os.close(fd)
 
-        self.client = Client()
-        self.client.login(username=self.user.username, password=self.password)
-
     def tearDown(self):
         os.remove(self.upload_filename)
         super(TestUploadFile, self).tearDown()
 
     def test_no_file_is_posted(self):
+        self.client.login(username=self.user.username, password=self.password)
+
         response = self.client.post(reverse('tcms.core.files.upload_file'),
                                     {'to_plan_id': self.plan.pk})
         self.assertRedirects(
@@ -79,6 +79,8 @@ class TestUploadFile(BasePlanCase):
 
     @patch('tcms.core.files.settings.MAX_UPLOAD_SIZE', new=10)
     def test_refuse_if_file_is_too_big(self):
+        self.client.login(username=self.user.username, password=self.password)
+
         with open(self.upload_filename, 'r') as upload_file:
             response = self.client.post(self.upload_file_url,
                                         {'to_plan_id': self.plan.pk,
@@ -87,7 +89,10 @@ class TestUploadFile(BasePlanCase):
         self.assertContains(response, 'You upload entity is too large')
 
     def test_upload_file_to_plan(self):
-        with patch('tcms.core.files.settings.FILE_UPLOAD_DIR', new=self.file_upload_dir):
+        self.client.login(username=self.user.username, password=self.password)
+
+        with patch('tcms.core.files.settings.FILE_UPLOAD_DIR',
+                   new=self.file_upload_dir):
             with open(self.upload_filename, 'r') as upload_file:
                 response = self.client.post(self.upload_file_url,
                                             {'to_plan_id': self.plan.pk,
@@ -109,7 +114,10 @@ class TestUploadFile(BasePlanCase):
         self.assertTrue(plan_attachment_rel_exists)
 
     def test_upload_file_to_case(self):
-        with patch('tcms.core.files.settings.FILE_UPLOAD_DIR', new=self.file_upload_dir):
+        self.client.login(username=self.user.username, password=self.password)
+
+        with patch('tcms.core.files.settings.FILE_UPLOAD_DIR',
+                   new=self.file_upload_dir):
             with open(self.upload_filename, 'r') as upload_file:
                 response = self.client.post(self.upload_file_url,
                                             {'to_case_id': self.case_1.pk,
@@ -209,22 +217,19 @@ class TestDeleteFileAuthorization(BasePlanCase):
         cls.anyone_else.save()
 
         cls.plan_attachment = TestAttachmentFactory()
-        cls.plan_attachment_rel = TestPlanAttachmentFactory(plan=cls.plan,
-                                                            attachment=cls.plan_attachment)
+        cls.plan_attachment_rel = TestPlanAttachmentFactory(
+            plan=cls.plan,
+            attachment=cls.plan_attachment)
         cls.submitter_pwd = 'secret'
         cls.plan_attachment.submitter.set_password(cls.submitter_pwd)
         cls.plan_attachment.submitter.save()
 
         cls.case_attachment = TestAttachmentFactory()
-        cls.case_attachment_rel = TestCaseAttachmentFactory(case=cls.case_1,
-                                                            attachment=cls.case_attachment)
+        cls.case_attachment_rel = TestCaseAttachmentFactory(
+            case=cls.case_1,
+            attachment=cls.case_attachment)
         cls.case_attachment.submitter.set_password(cls.submitter_pwd)
         cls.case_attachment.submitter.save()
-
-    def setUp(self):
-        super(TestDeleteFileAuthorization, self).setUp()
-
-        self.client = Client()
 
     def test_refuse_if_user_cannot_delete_file(self):
         self.client.login(username=self.anyone_else.username,

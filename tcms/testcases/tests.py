@@ -9,7 +9,6 @@ from django import test
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.forms import ValidationError
-from django.test import Client
 
 from uuslug import slugify
 
@@ -286,16 +285,12 @@ class TestOperateComponentView(BasePlanCase):
 
         cls.cases_component_url = reverse('tcms.testcases.views.component')
 
-    def setUp(self):
-        self.client = Client()
-        self.client.login(username=self.tester.username, password='password')
-
     def tearDown(self):
-        self.client.logout()
-
         remove_perm_from_user(self.tester, 'testcases.delete_testcasecomponent')
 
     def test_show_components_form(self):
+        self.client.login(username=self.tester.username, password='password')
+
         response = self.client.post(self.cases_component_url,
                                     {'product': self.product.pk})
 
@@ -316,6 +311,8 @@ class TestOperateComponentView(BasePlanCase):
             html=True)
 
     def test_add_components(self):
+        self.client.login(username=self.tester.username, password='password')
+
         post_data = {
             'product': self.product.pk,
             'o_component': [self.comp_application.pk, self.comp_database.pk],
@@ -329,10 +326,13 @@ class TestOperateComponentView(BasePlanCase):
         self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
 
         for comp in (self.comp_application, self.comp_database):
-            has_comp = TestCaseComponent.objects.filter(case=self.case_1, component=comp).exists()
-            self.assertTrue(has_comp)
+            case_components = TestCaseComponent.objects.filter(
+                case=self.case_1, component=comp)
+            self.assertTrue(case_components.exists())
 
     def test_missing_delete_perm(self):
+        self.client.login(username=self.tester.username, password='password')
+
         post_data = {
             'o_component': [self.comp_cli.pk, self.comp_api.pk],
             'case': [self.case_1.pk],
@@ -345,6 +345,8 @@ class TestOperateComponentView(BasePlanCase):
             data)
 
     def test_remove_components(self):
+        self.client.login(username=self.tester.username, password='password')
+
         user_should_have_perm(self.tester, 'testcases.delete_testcasecomponent')
 
         post_data = {
@@ -358,8 +360,9 @@ class TestOperateComponentView(BasePlanCase):
         self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
 
         for comp in (self.comp_cli, self.comp_api):
-            has_comp = TestCaseComponent.objects.filter(case=self.case_1, component=comp).exists()
-            self.assertFalse(has_comp)
+            case_components = TestCaseComponent.objects.filter(
+                case=self.case_1, component=comp)
+            self.assertFalse(case_components.exists())
 
 
 class TestOperateCategoryView(BasePlanCase):
@@ -380,14 +383,9 @@ class TestOperateCategoryView(BasePlanCase):
 
         cls.case_category_url = reverse('tcms.testcases.views.category')
 
-    def setUp(self):
-        self.client = Client()
+    def test_show_categories_form(self):
         self.client.login(username=self.tester.username, password='password')
 
-    def tearDown(self):
-        self.client.logout()
-
-    def test_show_categories_form(self):
         response = self.client.post(self.case_category_url, {'product': self.product.pk})
 
         self.assertContains(
@@ -406,6 +404,8 @@ class TestOperateCategoryView(BasePlanCase):
             html=True)
 
     def test_update_cases_category(self):
+        self.client.login(username=self.tester.username, password='password')
+
         post_data = {
             'from_plan': self.plan.pk,
             'product': self.product.pk,
