@@ -4,6 +4,7 @@ from six.moves import http_client
 
 from django import test
 from django.contrib.auth.models import Permission
+from django.contrib.auth.models import User
 
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.models import TestCaseStatus
@@ -91,7 +92,12 @@ class BasePlanCase(HelperAssertions, test.TestCase):
 
         cls.product = ProductFactory(name='Nitrate')
         cls.version = VersionFactory(value='0.1', product=cls.product)
-        cls.tester = UserFactory()
+
+        cls.tester = User.objects.create_user(
+            username='nitrate-tester',
+            email='nitrate-tester@example.com')
+        cls.tester.set_password('password')
+        cls.tester.save()
 
         cls.plan = TestPlanFactory(author=cls.tester, owner=cls.tester,
                                    product=cls.product, product_version=cls.version)

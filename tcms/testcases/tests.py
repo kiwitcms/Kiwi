@@ -277,10 +277,6 @@ class TestOperateComponentView(BasePlanCase):
         TestCaseComponentFactory(case=cls.case_1, component=cls.comp_cli)
         TestCaseComponentFactory(case=cls.case_1, component=cls.comp_api)
 
-        cls.tester = User.objects.create(username='tester', email='tester@example.com')
-        cls.tester.set_password('password')
-        cls.tester.save()
-
         user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
 
         cls.cases_component_url = reverse('tcms.testcases.views.component')
@@ -374,10 +370,6 @@ class TestOperateCategoryView(BasePlanCase):
 
         cls.case_cat_full_auto = TestCaseCategoryFactory(name='Full Auto', product=cls.product)
         cls.case_cat_full_manual = TestCaseCategoryFactory(name='Full Manual', product=cls.product)
-
-        cls.tester = User.objects.create(username='tester', email='tester@example.com')
-        cls.tester.set_password('password')
-        cls.tester.save()
 
         user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
 
