@@ -1,6 +1,40 @@
 Change Log
 ==========
 
+3.24 (Jun 13 2017, released on MrSenko.com)
+-------------------------------------------
+
+- Removed dependency on Celery and django-celery. The following configuration
+  settings have been removed: ``BROKER_URL``, ``CELERY_TASK_RESULT_EXPIRES``,
+  ``CELERY_RESULT_BACKEND``, ``CELERYD_TIMER_PRECISION``,
+  ``CELERY_IGNORE_RESULT``, ``CELERY_MAX_CACHED_RESULTS``,
+  ``CELERY_DEFAULT_RATE_LIMIT`` (Mr. Senko)
+- Refactoring of internal email sending capabilities. The following
+  configuration settings have been removed:
+  ``EMAILS_FOR_DEBUG`` (replaced by ``ADMINS``), ``ENABLE_ASYNC_EMAIL``
+  (Mr. Senko)
+- Removed integration with *Errata System* and ``ERRATA_URL_PREFIX`` setting.
+  Fixes `Issue #15 <https://github.com/MrSenko/Kiwi/issues/15>`_ (Mr. Senko)
+- Removed dependency on qpid-python and QPID integration which has been disabled
+  for a long time and most likely not working. This removes the ``ENABLE_QPID``
+  setting as well. Fixes
+
+- Removed dependency on kerberos with instructions how to add it back and
+  enabled it if required (Mr. Senko)
+- Removed dependency on Kobo. Fixes
+  `Issue #5 <https://github.com/MrSenko/Kiwi/issues/5>`_ (Mr. Senko)
+- Add missing integrations for JIRA. It is now possible to link failed
+  Test Case(s) to JIRA Issues and Report new issues with pre-filled information
+  from the test case! Fixes
+  `Issue #2 <https://github.com/MrSenko/Kiwi/issues/2>`_ (Mr. Senko)
+- Add more tests (Chenxiong Qi)
+- Add integration with GitHub issues. Fixes
+  `Issue #4 <https://github.com/MrSenko/Kiwi/issues/4>`_ (Mr. Senko)
+
+
+IMPORTANT: this release introduces new database migrations!
+
+
 3.23 (Jun 6 2017, released on MrSenko.com)
 ------------------------------------------
 
