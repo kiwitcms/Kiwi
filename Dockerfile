@@ -29,6 +29,7 @@ ENV PATH /venv/bin:$PATH
 
 
 # Install KiwiTestPad dependencies
+RUN pip install --upgrade pip
 COPY ./requirements/ /Kiwi/requirements/
 RUN pip install -r /Kiwi/requirements/mysql.txt
 
