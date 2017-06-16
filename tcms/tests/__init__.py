@@ -125,6 +125,22 @@ class BasePlanCase(HelperAssertions, test.TestCase):
                                      case_status=cls.case_status_confirmed,
                                      plan=[cls.plan])
 
+    def login_tester(self, user=None, password=None):
+        """Login tester user for test
+
+        Login pre-created tester user by default. If both user and password
+        are given, login that user instead.
+        """
+        if user and password:
+            login_user = user
+            login_password = password
+        else:
+            login_user = self.tester
+            login_password = 'password'
+
+        self.client.login(username=login_user.username,
+                          password=login_password)
+
 
 class BaseCaseRun(BasePlanCase):
     """Base test case containing test run and case runs"""
