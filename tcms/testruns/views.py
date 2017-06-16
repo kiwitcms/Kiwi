@@ -1535,34 +1535,6 @@ def env_value(request):
             self.ajax_response.update({"fragment": fragment.content})
             return HttpResponse(json.dumps(self.ajax_response))
 
-        # FIXME Deprecated
-        def add_mulitple(self):
-            chk_perm = self.has_no_perm('add')
-            if chk_perm:
-                return HttpResponse(json.dumps(chk_perm))
-
-            # Write the values into tcms_env_run_value_map table
-            for key, value in self.request.REQUEST.items():
-                if key.startswith('select_property_id_'):
-                    try:
-                        property_id = key.split('_')[3]
-                        property_id = int(property_id)
-                    except IndexError:
-                        raise
-                    except ValueError:
-                        raise
-
-                    if request.REQUEST.get('select_property_value_%s' % property_id):
-                        try:
-                            value_id = int(request.REQUEST.get(
-                                'select_property_value_%s' % property_id))
-                        except ValueError:
-                            raise
-
-                        for tr in self.trs:
-                            TCMSEnvRunValueMap.objects.create(run=tr, value_id=value_id)
-            return HttpResponse(json.dumps(self.ajax_response))
-
         def remove(self):
             chk_perm = self.has_no_perm('delete')
             if chk_perm:
