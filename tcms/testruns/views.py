@@ -1488,9 +1488,10 @@ def export(request, run_id):
     return response
 
 
+@require_GET
 def env_value(request):
-    '''Run environment property edit function'''
-    trs = TestRun.objects.filter(run_id__in=request.REQUEST.getlist('run_id'))
+    """Run environment property edit function"""
+    trs = TestRun.objects.filter(run_id__in=request.GET.getlist('run_id'))
 
     class RunEnvActions(object):
         def __init__(self, requet, trs):
@@ -1515,7 +1516,7 @@ def env_value(request):
                 return HttpResponse(json.dumps(chk_perm))
 
             try:
-                value = self.get_env_value(request.REQUEST.get('env_value_id'))
+                value = self.get_env_value(request.GET.get('env_value_id'))
                 for tr in self.trs:
                     o, c = tr.add_env_value(env_value=value)
 
@@ -1570,7 +1571,7 @@ def env_value(request):
             try:
                 for tr in self.trs:
                     tr.remove_env_value(env_value=self.get_env_value(
-                        request.REQUEST.get('env_value_id')
+                        request.GET.get('env_value_id')
                     ))
             except:
                 pass
@@ -1585,11 +1586,11 @@ def env_value(request):
             try:
                 for tr in self.trs:
                     tr.remove_env_value(env_value=self.get_env_value(
-                        request.REQUEST.get('old_env_value_id')
+                        request.GET.get('old_env_value_id')
                     ))
 
                     tr.add_env_value(env_value=self.get_env_value(
-                        request.REQUEST.get('new_env_value_id')
+                        request.GET.get('new_env_value_id')
                     ))
             except:
                 raise
@@ -1598,16 +1599,12 @@ def env_value(request):
 
     run_env_actions = RunEnvActions(request, trs)
 
-    if not request.REQUEST.get('a') in run_env_actions.__all__:
+    if request.GET.get('a') not in run_env_actions.__all__:
         ajax_response = {'rc': 1, 'response': 'Unrecognizable actions'}
         return HttpResponse(json.dumps(ajax_response))
 
-    func = getattr(run_env_actions, request.REQUEST['a'])
-
-    try:
-        return func()
-    except:
-        raise
+    func = getattr(run_env_actions, request.GET['a'])
+    return func()
 
 
 def caseruns(request, templ='report/caseruns.html'):
