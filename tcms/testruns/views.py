@@ -1303,7 +1303,7 @@ class AddCasesToRunView(View):
 
     def post(self, request, run_id):
         # Selected cases' ids to add to run
-        ncs_id = request.REQUEST.getlist('case')
+        ncs_id = request.POST.getlist('case')
         if not ncs_id:
             return HttpResponse(Prompt.render(
                 request=request,
@@ -1344,7 +1344,7 @@ class AddCasesToRunView(View):
         tr.estimated_time = tr.estimated_time + estimated_time
         tr.save(update_fields=['estimated_time'])
 
-        if request.REQUEST.get('_use_plan_sortkey'):
+        if request.POST.get('_use_plan_sortkey'):
             case_pks = (case.pk for case in ncs)
             qs = TestCasePlan.objects.filter(
                 plan=tp, case__in=case_pks).values('case', 'sortkey')
