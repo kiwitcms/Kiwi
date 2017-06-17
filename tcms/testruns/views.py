@@ -1464,10 +1464,11 @@ def update_case_run_text(request, run_id):
     ))
 
 
+@require_GET
 def export(request, run_id):
     timestamp_str = time.strftime('%Y-%m-%d')
-    case_runs = request.REQUEST.getlist('case_run')
-    format = request.REQUEST.get('format', 'csv')
+    case_runs = request.GET.getlist('case_run')
+    format = request.GET.get('format', 'csv')
     # Export selected case runs
     if case_runs:
         tcrs = TestCaseRun.objects.filter(case_run_id__in=case_runs)
