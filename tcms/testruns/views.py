@@ -749,7 +749,7 @@ def get(request, run_id, template_name='run/get.html'):
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
 def edit(request, run_id, template_name='run/edit.html'):
-    '''Edit test plan view'''
+    """Edit test plan view"""
     # Define the default sub module
     SUB_MODULE_NAME = 'runs'
 
@@ -757,11 +757,12 @@ def edit(request, run_id, template_name='run/edit.html'):
         tr = TestRun.objects.select_related().get(run_id=run_id)
     except ObjectDoesNotExist:
         raise Http404
+
     # If the form is submitted
     if request.method == "POST":
-        form = EditRunForm(request.REQUEST)
-        if request.REQUEST.get('product'):
-            form.populate(product_id=request.REQUEST.get('product'))
+        form = EditRunForm(request.POST)
+        if request.POST.get('product'):
+            form.populate(product_id=request.POST.get('product'))
         else:
             form.populate(product_id=tr.plan.product_id)
 
