@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from six.moves import http_client
 
 from django import test
@@ -80,6 +82,10 @@ class HelperAssertions(object):
 
     def assert404(self, response):
         self.assertEqual(http_client.NOT_FOUND, response.status_code)
+
+    def assertJsonResponse(self, response, expected, status_code=200):
+        self.assertEqual(status_code, response.status_code)
+        self.assertEqual(expected, json.loads(response.content))
 
 
 class BasePlanCase(HelperAssertions, test.TestCase):

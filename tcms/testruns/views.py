@@ -904,6 +904,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         return context
 
 
+@require_GET
 @permission_required('testruns.change_testrun')
 def bug(request, case_run_id, template_name='run/execute_case_run.html'):
     """Process the bugs for case runs."""
@@ -974,8 +975,8 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 return self.render(response=response)
 
             try:
-                bug_id = self.request.REQUEST.get('bug_id')
-                run_id = self.request.REQUEST.get('case_run')
+                bug_id = self.request.GET.get('bug_id')
+                run_id = self.request.GET.get('case_run')
                 self.case_run.remove_bug(bug_id, run_id)
             except ObjectDoesNotExist, error:
                 response = {'rc': 1, 'response': str(error)}
@@ -990,7 +991,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 'case_run': self.case_run.case_run_id,
                 'case': self.case_run.case_id,
             })
-            if self.request.REQUEST.get('type') == 'table':
+            if self.request.GET.get('type') == 'table':
                 return HttpResponse(form.as_table())
 
             return HttpResponse(form.as_p())
@@ -1008,12 +1009,12 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                              case_run=tcr,
                              template_name=template_name)
 
-    if not request.REQUEST.get('a') in crba.__all__:
+    if not request.GET.get('a') in crba.__all__:
         return crba.ajax_response(response={
             'rc': 1,
             'response': 'Unrecognizable actions'})
 
-    func = getattr(crba, request.REQUEST['a'])
+    func = getattr(crba, request.GET['a'])
     return func()
 
 

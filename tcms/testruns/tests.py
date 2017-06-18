@@ -10,6 +10,7 @@ from xml.etree import ElementTree
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
+from tcms.testcases.models import TestCaseBug
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testruns.data import stats_caseruns_status
 from tcms.testruns.models import TCMSEnvRunValueMap
@@ -384,7 +385,7 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
                                         manager=cls.tester,
                                         default_tester=cls.tester)
 
-        for tag_name in ('python', 'nitrate', 'django'):
+        for tag_name in ('python', 'kiwi', 'django'):
             cls.origin_run.add_tag(TestTagFactory(name=tag_name))
 
         for cc in (User.objects.create_user(username='run_tester1',
@@ -1039,6 +1040,72 @@ class TestExportTestRunCases(BaseCaseRun):
         xmldoc = ElementTree.fromstring(response.content)
         case_run_nodes = xmldoc.findall('testcaserun')
         self.assertEqual(self.test_run.case_run.count(), len(case_run_nodes))
+
+
+class TestBugActions(BaseCaseRun):
+    """Test bug view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestBugActions, cls).setUpTestData()
+
+        user_should_have_perm(cls.tester, 'testruns.change_testrun')
+        user_should_have_perm(cls.tester, 'testcases.delete_testcasebug')
+
+        cls.bugzilla = TestCaseBugSystem.objects.get(name='Bugzilla')
+        cls.jira = TestCaseBugSystem.objects.get(name='JIRA')
+
+        cls.case_run_bug_url = reverse('testruns-bug', args=[cls.test_run.pk])
+
+        cls.bug_12345 = '12345'
+        cls.jira_kiwi_100 = 'KIWI-100'
+        cls.case_run_1.add_bug(cls.bug_12345, bug_system_id=cls.bugzilla.pk)
+        cls.case_run_1.add_bug(cls.jira_kiwi_100, bug_system_id=cls.jira.pk)
+
+    def test_404_if_case_run_id_not_exist(self):
+        self.login_tester()
+        self.case_run_bug_url = reverse('testruns-bug', args=[999])
+
+        response = self.client.get(self.case_run_bug_url, {})
+        self.assert404(response)
+
+    def test_refuse_if_action_is_unknown(self):
+        self.login_tester()
+
+        post_data = {
+            'a': 'unknown action',
+            'case_run': self.case_run_1.pk,
+            'case': self.case_run_1.case.pk,
+            'bug_system_id': TestCaseBugSystem.objects.get(name='Bugzilla').pk,
+            'bug_id': '123456',
+        }
+
+        response = self.client.get(self.case_run_bug_url, post_data)
+
+        self.assertJsonResponse(
+            response,
+            {'rc': 1, 'response': 'Unrecognizable actions'})
+
+    def test_remove_bug_from_case_run(self):
+        self.login_tester()
+
+        post_data = {
+            'a': 'remove',
+            'case_run': self.case_run_1.pk,
+            'bug_id': self.bug_12345,
+        }
+
+        response = self.client.get(self.case_run_bug_url, post_data)
+
+        bug_exists = TestCaseBug.objects.filter(
+            bug_id=self.bug_12345,
+            case=self.case_run_1.case,
+            case_run=self.case_run_1).exists()
+        self.assertFalse(bug_exists)
+
+        self.assertJsonResponse(
+            response,
+            {'rc': 0, 'response': 'ok', 'run_bug_count': 1})
 
 
 # ### Test cases for data ###
