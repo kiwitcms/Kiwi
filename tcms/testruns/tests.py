@@ -1179,6 +1179,39 @@ class TestRemoveCaseRuns(BaseCaseRun):
                              target_status_code=302)
 
 
+class TestUpdateCaseRunText(BaseCaseRun):
+    """Test update_case_run_text view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestUpdateCaseRunText, cls).setUpTestData()
+
+        cls.update_url = reverse('testruns-update_case_run_text',
+                                 args=[cls.test_run.pk])
+
+        # To increase case text version
+        cls.case_run_1.case.add_text(action='action',
+                                     effect='effect',
+                                     setup='setup',
+                                     breakdown='breakdown')
+        cls.case_run_1.case.add_text(action='action_1',
+                                     effect='effect_1',
+                                     setup='setup_1',
+                                     breakdown='breakdown_1')
+
+    def test_update_selected_case_runs(self):
+        self.login_tester()
+
+        response = self.client.post(self.update_url, {'case_run': [self.case_run_1.pk]})
+
+        self.assertContains(
+            response,
+            '1 case run(s) succeed to update')
+
+        self.assertEqual(self.case_run_1.case.latest_text_version(),
+                         self.case_run_1.latest_text().case_text_version)
+
+
 # ### Test cases for data ###
 
 class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):
