@@ -1260,13 +1260,14 @@ def change_status(request, run_id):
     )
 
 
+@require_POST
 @permission_required('testruns.delete_testcaserun')
 def remove_case_run(request, run_id):
-    '''Remove specific case run from the run'''
+    """Remove specific case run from the run"""
 
     # Ignore invalid case run ids
     case_run_ids = []
-    for item in request.REQUEST.getlist('case_run'):
+    for item in request.POST.getlist('case_run'):
         try:
             case_run_ids.append(int(item))
         except (ValueError, TypeError):

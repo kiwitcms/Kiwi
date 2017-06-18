@@ -17,7 +17,8 @@ urlpatterns = [
     url(r'^(?P<run_id>\d+)/ordercase/$', views.order_case),
     url(r'^(?P<run_id>\d+)/changestatus/$', views.change_status, name='testruns-change_status'),
     url(r'^(?P<run_id>\d+)/ordercaserun/$', views.order_case, name='testruns-order_case'),
-    url(r'^(?P<run_id>\d+)/removecaserun/$', views.remove_case_run),
+    url(r'^(?P<run_id>\d+)/removecaserun/$', views.remove_case_run,
+        name='testruns-remove_case_run'),
 
     url(r'^(?P<run_id>\d+)/assigncase/$', views.AddCasesToRunView.as_view(),
         name='add-cases-to-run'),
