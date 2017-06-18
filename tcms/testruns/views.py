@@ -68,7 +68,7 @@ def new(request, template_name='run/new.html'):
 
     plan_id = request.POST.get('from_plan')
     # Case is required by a test run
-    if not request.REQUEST.get('case'):
+    if not request.POST.get('case'):
         return HttpResponse(Prompt.render(
             request=request,
             info_type=Prompt.Info,
