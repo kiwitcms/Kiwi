@@ -73,7 +73,7 @@ def new(request, template_name='run/new.html'):
 
     plan_id = request.POST.get('from_plan')
     # Case is required by a test run
-    if not request.REQUEST.get('case'):
+    if not request.POST.get('case'):
         return HttpResponse(Prompt.render(
             request=request,
             info_type=Prompt.Info,
@@ -363,7 +363,7 @@ def load_runs_of_one_plan(request, plan_id,
                              }
 
     tp = TestPlan.objects.get(plan_id=plan_id)
-    form = PlanFilterRunForm(request.REQUEST)
+    form = PlanFilterRunForm(request.GET)
 
     if form.is_valid():
         queryset = tp.run.filter(**form.cleaned_data)
