@@ -1118,6 +1118,79 @@ class TestBugActions(BaseCaseRun):
             {'rc': 0, 'response': 'ok', 'run_bug_count': 1})
 
 
+class TestRemoveCaseRuns(BaseCaseRun):
+    """Test remove_case_run view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestRemoveCaseRuns, cls).setUpTestData()
+
+        user_should_have_perm(cls.tester, 'testruns.delete_testcaserun')
+
+        cls.remove_case_run_url = reverse('tcms.testruns.views.remove_case_run',
+                                          args=[cls.test_run.pk])
+
+    def test_nothing_change_if_no_case_run_passed(self):
+        self.login_tester()
+
+        response = self.client.post(self.remove_case_run_url, {})
+
+        self.assertRedirects(response,
+                             reverse('tcms.testruns.views.get',
+                                     args=[self.test_run.pk]))
+
+    def test_ignore_non_integer_case_run_ids(self):
+        self.login_tester()
+
+        expected_rest_case_runs_count = self.test_run.case_run.count() - 2
+
+        self.client.post(self.remove_case_run_url,
+                         {
+                             'case_run': [self.case_run_1.pk,
+                                          'a1000',
+                                          self.case_run_2.pk],
+                         })
+
+        self.assertEqual(expected_rest_case_runs_count,
+                         self.test_run.case_run.count())
+
+    def test_remove_case_runs(self):
+        self.login_tester()
+
+        expected_rest_case_runs_count = self.test_run.case_run.count() - 1
+
+        self.client.post(self.remove_case_run_url,
+                         {'case_run': [self.case_run_1.pk]})
+
+        self.assertEqual(expected_rest_case_runs_count,
+                         self.test_run.case_run.count())
+
+    def test_redirect_to_run_if_still_case_runs_exist_after_removal(self):
+        self.login_tester()
+
+        response = self.client.post(self.remove_case_run_url,
+                                    {'case_run': [self.case_run_1.pk]})
+
+        self.assertRedirects(response,
+                             reverse('tcms.testruns.views.get',
+                                     args=[self.test_run.pk]))
+
+    def test_redirect_to_add_case_runs_if_all_case_runs_are_removed(self):
+        self.login_tester()
+
+        response = self.client.post(
+            self.remove_case_run_url,
+            {
+                'case_run': [case_run.pk for case_run
+                             in self.test_run.case_run.all()]
+            })
+
+        self.assertRedirects(response,
+                             reverse('add-cases-to-run',
+                                     args=[self.test_run.pk]),
+                             target_status_code=302)
+
+
 # ### Test cases for data ###
 
 
