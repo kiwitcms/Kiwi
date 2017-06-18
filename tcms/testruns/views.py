@@ -734,7 +734,7 @@ def get(request, run_id, template_name='run/get.html'):
 
 @permission_required('testruns.change_testrun')
 def edit(request, run_id, template_name='run/edit.html'):
-    '''Edit test plan view'''
+    """Edit test plan view"""
     # Define the default sub module
     SUB_MODULE_NAME = 'runs'
 
@@ -742,6 +742,7 @@ def edit(request, run_id, template_name='run/edit.html'):
         tr = TestRun.objects.select_related().get(run_id=run_id)
     except ObjectDoesNotExist:
         raise Http404
+
     # If the form is submitted
     if request.method == "POST":
         form = EditRunForm(request.POST)
