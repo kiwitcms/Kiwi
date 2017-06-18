@@ -1426,12 +1426,14 @@ def cc(request, run_id):
                               context_instance=RequestContext(request))
 
 
+@require_POST
 def update_case_run_text(request, run_id):
-    '''Update the IDLE cases to newest text'''
+    """Update the IDLE cases to newest text"""
+
     tr = get_object_or_404(TestRun, run_id=run_id)
 
-    if request.REQUEST.get('case_run'):
-        tcrs = tr.case_run.filter(pk__in=request.REQUEST.getlist('case_run'))
+    if request.POST.get('case_run'):
+        tcrs = tr.case_run.filter(pk__in=request.POST.getlist('case_run'))
     else:
         tcrs = tr.case_run.all()
 
@@ -1451,8 +1453,6 @@ def update_case_run_text(request, run_id):
 
     info = '<p>%s case run(s) succeed to update, following is the list:</p>\
     <ul>%s</ul>' % (count, updated_tcrs)
-
-    del tr, tcrs, count, updated_tcrs
 
     return HttpResponse(Prompt.render(
         request=request,
