@@ -1057,7 +1057,7 @@ class TestBugActions(BaseCaseRun):
         cls.bugzilla = TestCaseBugSystem.objects.get(name='Bugzilla')
         cls.jira = TestCaseBugSystem.objects.get(name='JIRA')
 
-        cls.case_run_bug_url = reverse('testruns-bug', args=[cls.test_run.pk])
+        cls.case_run_bug_url = reverse('testruns-bug', args=[cls.case_run_1.pk])
 
         cls.bug_12345 = '12345'
         cls.jira_kiwi_100 = 'KIWI-100'
