@@ -925,7 +925,7 @@ class TestEnvValue(BaseCaseRun):
         cls.test_run.add_env_value(cls.value_linux)
         cls.test_run_1.add_env_value(cls.value_linux)
 
-        cls.env_value_url = reverse('tcms.testruns.views.env_value')
+        cls.env_value_url = reverse('testruns-env_value')
         user_should_have_perm(cls.tester, 'testruns.add_tcmsenvrunvaluemap')
         user_should_have_perm(cls.tester, 'testruns.delete_tcmsenvrunvaluemap')
 
