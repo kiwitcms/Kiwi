@@ -82,7 +82,8 @@ class TestFilter(XmlrpcAPIBaseTest):
         self.assertEqual(self.plan_1.author.pk, plan['author_id'])
 
         self.assertEqual(2, len(plan['case']))
-        self.assertEqual([self.case_1.pk, self.case_2.pk], plan['case'])
+        self.assertIn(self.case_1.pk, plan['case'])
+        self.assertIn(self.case_2.pk, plan['case'])
         self.assertEqual(0, len(plans[1]['case']))
 
     def test_filter_out_all_plans(self):
