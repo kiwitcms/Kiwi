@@ -236,6 +236,7 @@ class CloneRunBaseTest(BaseCaseRun):
             'type="text" value="{}">'.format(self.test_run.summary),
             html=True)
 
+        for_loop_counter = 1
         for case_run in (self.case_run_1, self.case_run_2):
             self.assertContains(
                 response,
@@ -245,8 +246,9 @@ class CloneRunBaseTest(BaseCaseRun):
                 response,
                 '<a id="link_{0}" class="blind_title_link" '
                 'href="javascript:toggleTestCaseContents(\'{0}\')">{1}</a>'.format(
-                    case_run.pk, case_run.case.summary),
+                    for_loop_counter, case_run.case.summary),
                 html=True)
+            for_loop_counter += 1
 
 
 class TestStartCloneRunFromRunPage(CloneRunBaseTest):
