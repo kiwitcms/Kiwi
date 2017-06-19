@@ -431,7 +431,7 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
                              5: 'plan',
                              6: 'build__product__name',
                              7: 'product_version',
-                             8: 'env_groups',
+                             8: 'plan__env_group__name',
                              9: 'total_num_caseruns',
                              10: 'stop_date',
                              11: 'completed',
@@ -456,15 +456,12 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
                                          'default_tester__id',
                                          'default_tester__username',
                                          'plan__name',
+                                         'plan__env_group__name',
                                          'build__product__name',
                                          'stop_date',
                                          'product_version__value')
 
         # Further optimize by adding caserun attributes:
-        trs = trs.extra(
-            select={'env_groups': RawSQL.environment_group_for_run},
-        )
-
         total_records = total_display_records = trs.count()
 
         trs = sort_queryset(request, trs, column_index_name_map)
@@ -503,7 +500,14 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
                                        key_name='run',
                                        value_name='cases_count')
 
+        env_groups = {}
+        for grp in TestPlan.objects.filter(
+                pk__in=[run.plan_id for run in trs]).prefetch_related(
+                'env_group').values('pk', 'env_group__name'):
+            env_groups[grp['pk']] = grp['env_group__name']
+
         for run in trs:
+            run.env_groups = env_groups[run.plan_id]
             run_id = run.pk
             cases_count = cases_subtotal.get(run_id, 0)
             if cases_count:
