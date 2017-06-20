@@ -212,7 +212,7 @@ class TestCreateNewRun(BasePlanCase):
         self.assertEqual(self.tester, new_run.default_tester)
 
         for case, case_run in zip((self.case_1, self.case_2),
-                                  new_run.case_run.all()):
+                                  new_run.case_run.order_by('case')):
             self.assertEqual(case, case_run.case)
             self.assertEqual(None, case_run.tested_by)
             self.assertEqual(self.tester, case_run.assignee)
