@@ -523,9 +523,17 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
 
         response = self.client.post(self.clone_url, post_data)
 
-        cloned_runs = list(TestRun.objects.all())[-len(runs_to_clone):]
+        # grabs the last X runs, which should be the cloned ones
+        # using reversed ordering b/c negative indexes are not supported
+        cloned_runs = TestRun.objects.order_by('-pk').only('pk')[:len(runs_to_clone)]
+        # then order by summary
+        cloned_runs = TestRun.objects.filter(pk__in=[r.pk for r in cloned_runs]).order_by('summary')
 
-        if len(cloned_runs) == 1:
+        # convert to ordered query set so we can compare to it later using the same
+        # ordering by summary as above
+        runs_to_clone = TestRun.objects.filter(pk__in=post_data['run']).order_by('summary')
+
+        if cloned_runs.count() == 1:
             # Finally, redirect to the new cloned test run
             self.assertRedirects(
                 response,
@@ -550,8 +558,8 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
         self.assertEqual(origin_run.manager, cloned_run.manager)
         self.assertEqual(self.tester, cloned_run.default_tester)
 
-        for origin_case_run, cloned_case_run in zip(origin_run.case_run.all(),
-                                                    cloned_run.case_run.all()):
+        for origin_case_run, cloned_case_run in zip(origin_run.case_run.order_by('case'),
+                                                    cloned_run.case_run.order_by('case')):
             self.assertEqual(origin_case_run.case, cloned_case_run.case)
             self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
             self.assertEqual(origin_case_run.build, cloned_case_run.build)
