@@ -690,15 +690,20 @@ class TestAJAXSearchRuns(BaseCaseRun):
         self.assertEqual(expected_runs_count, search_result['iTotalDisplayRecords'])
         self.assertEqual(expected_runs_count, len(search_result['aaData']))
 
-        for run, row in zip(expected_found_runs, search_result['aaData']):
-            self.assertEqual(
+        # used for assertIn b/c on Postgres the order in which items
+        # are returned is not guaranteed at all
+        links_id = [r[1] for r in search_result['aaData']]
+        links_summary = [r[2] for r in search_result['aaData']]
+
+        for run in expected_found_runs:
+            self.assertIn(
                 "<a href='{}'>{}</a>".format(
                     reverse('testruns-get', args=[run.pk]), run.pk),
-                row[1])
-            self.assertEqual(
+                links_id)
+            self.assertIn(
                 "<a href='{}'>{}</a>".format(
                     reverse('testruns-get', args=[run.pk]), run.summary),
-                row[2])
+                links_summary)
 
     def test_search_all_runs(self):
         response = self.client.get(self.search_url)
