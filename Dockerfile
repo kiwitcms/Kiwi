@@ -43,7 +43,8 @@ RUN rpm -qa | grep "\-devel" | grep -v python-devel | xargs yum -y remove
 RUN yum -y remove perl-*
 
 # remove other binaries and left-overs
-RUN yum -y remove openssh* *-headers rsync pygobject3-base gobject-introspection
+RUN yum -y remove openssh* *-headers rsync pygobject3-base gobject-introspection \
+    w3m
 
 # final clean up
 RUN yum clean all
