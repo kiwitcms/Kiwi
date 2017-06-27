@@ -41,6 +41,30 @@ out to which repository you want to communicate.
     of them inside GitHub's interface!
 
 
+Using Amazon SES instead of SMTP email
+--------------------------------------
+
+KiwiTestPad supports email notifications which by default are sent over SMTP and
+need to be configured via the following settings::
+
+    EMAIL_HOST = ''
+    EMAIL_PORT = 25
+    EMAIL_FROM = 'kiwi@example.com'
+    EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
+
+If you'd like to use an external email service, like Amazon SES you have to
+configure the following settings instead::
+
+    EMAIL_FROM = 'kiwi@example.com'
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_SES_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
+    AWS_SES_SECRET_ACCESS_KEY = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
+
+Also modify the Docker image to include the following lines::
+
+    RUN pip install django_ses
+
+
 Kerberos authentication
 -----------------------
 
