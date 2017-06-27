@@ -1,6 +1,22 @@
 Change Log
 ==========
 
+3.26 (Jun 27 2017, released on MrSenko.com)
+-------------------------------------------
+
+- Multiple replacements of deprecated ``request.REQUEST`` and more tests
+  (Chenxiong Qi)
+- Use the ``EMAIL_SUBJECT_PREFIX`` setting when sending emails (Mr. Senko)
+- Document how to use an external email provider instead of SMTP with
+  example for Amazon SES. Fixes
+  `Issue #12 <https://github.com/MrSenko/Kiwi/issues/12>`_ (Mr. Senko)
+- Remove the ``KIWI_BASE_URL`` configuration setting. The Administration
+  Guide now includes a section called *Configure Kiwi’s base URL* which
+  explains how to configure the base URL of your installation! (Mr. Senko)
+
+IMPORTANT: this release introduces new database migrations!
+
+
 3.24 (Jun 13 2017, released on MrSenko.com)
 -------------------------------------------
 
