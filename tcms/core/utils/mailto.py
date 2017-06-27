@@ -28,7 +28,7 @@ def mailto(template_name, subject, recipients=None,
 
     email_thread = threading.Thread(
         target=send_mail,
-        args=(subject, body, sender, recipients),
+        args=(settings.EMAIL_SUBJECT_PREFIX + subject, body, sender, recipients),
         kwargs={'fail_silently': False}
     )
     # This is to tell Python not to wait for the thread to return
