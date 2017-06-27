@@ -10,4 +10,5 @@ beautifulsoup4>=4.1.1
 six
 django-contrib-comments
 django-preserialize
+html2text
 xmltodict
