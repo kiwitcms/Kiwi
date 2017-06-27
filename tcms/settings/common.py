@@ -53,15 +53,6 @@ EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 ALLOWED_HOSTS = ['*']
 
 
-# Used to construct absolute URLs when interfacing with
-# external systems. Must override in product.py
-KIWI_BASE_URL='http://127.0.0.1:8000'
-
-
-# https://docs.djangoproject.com/en/1.11/ref/settings/#site-id
-SITE_ID = 1
-
-
 # Maximum upload file size, default set to 5MB.
 MAX_UPLOAD_SIZE = 5242880
 
@@ -99,6 +90,8 @@ CACHES = {
 
 ####################################
 ### Don't change the settings below.
+
+SITE_ID = 1
 
 KIWI_VERSION = tcms.__version__
 

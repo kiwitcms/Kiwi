@@ -6,9 +6,6 @@
 import warnings
 import threading
 
-from django.conf import settings
-from django.core.urlresolvers import reverse
-
 
 class JiraThread(threading.Thread):
     """
@@ -37,8 +34,7 @@ class JiraThread(threading.Thread):
         try:
             text = """---- Issue confirmed via test case ----
 URL: %s
-Summary: %s""" % (settings.KIWI_BASE_URL + reverse('testcases-get', args=[self.testcase.pk]),
-                  self.testcase.summary)
+Summary: %s""" % (self.testcase.get_url(), self.testcase.summary)
 
             self.rpc.add_comment(self.bug.bug_id, text)
         except Exception, err:

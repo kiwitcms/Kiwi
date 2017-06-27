@@ -6,9 +6,6 @@
 import warnings
 import threading
 
-from django.conf import settings
-from django.core.urlresolvers import reverse
-
 
 class BugzillaThread(threading.Thread):
     """
@@ -38,8 +35,7 @@ class BugzillaThread(threading.Thread):
         try:
             text = """---- Bug confirmed via test case ----
 URL: %s
-Summary: %s""" % (settings.KIWI_BASE_URL + reverse('testcases-get', args=[self.testcase.pk]),
-                  self.testcase.summary)
+Summary: %s""" % (self.testcase.get_url(), self.testcase.summary)
 
             self.rpc.update_bugs(self.bug.bug_id, {'comment': {'comment': text, 'is_private': False}})
         except Exception, err:

@@ -6,9 +6,6 @@
 import warnings
 import threading
 
-from django.conf import settings
-from django.core.urlresolvers import reverse
-
 
 class GitHubThread(threading.Thread):
     """
@@ -43,8 +40,7 @@ class GitHubThread(threading.Thread):
         try:
             text = """---- Issue confirmed via test case ----
 URL: %s
-Summary: %s""" % (settings.KIWI_BASE_URL + reverse('testcases-get', args=[self.testcase.pk]),
-                  self.testcase.summary)
+Summary: %s""" % (self.testcase.get_url(), self.testcase.summary)
 
             self.repo.get_issue(int(self.bug.bug_id)).create_comment(text)
         except Exception, err:

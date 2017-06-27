@@ -12,7 +12,7 @@ def forwards_add_initial_data(apps, schema_editor):
     ])
 
     Site = apps.get_model('sites', 'Site')
-    Site.objects.create(name='Localhost', domain='nitrate.localhost')
+    Site.objects.create(name='Localhost', domain='127.0.0.1:8000')
 
 
 def reverse_remove_initial_data(apps, schema_editor):

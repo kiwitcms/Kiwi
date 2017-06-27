@@ -13,6 +13,18 @@ The ADMIN tab allows administrators to manage:
 
 |The Administration screen|
 
+Configure Kiwi's base URL
+-------------------------
+
+The first step you need to do is configure the base URL of your KiwiTestPad
+installation. This is used to construct links to test plans, test cases, etc.
+The default value is ``127.0.0.1:8000`` which is suitable if you are running
+in devel mode. To update the setting go to
+``http://<your_domain_or_ip>/admin/sites/site/1/``!
+In the text field enter the domain name or IR address, including port if
+necessary and click the Save button!
+
+
 Adding bug trackers
 -------------------
 

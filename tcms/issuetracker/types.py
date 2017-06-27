@@ -7,7 +7,6 @@ import jira_integration
 import github
 import github_integration
 from django.conf import settings
-from django.core.urlresolvers import reverse
 
 
 class IssueTrackerType(object):
@@ -124,10 +123,7 @@ class Bugzilla(IssueTrackerType):
             action = 'None'
             effect = 'None'
 
-        caserun_url = settings.KIWI_BASE_URL + \
-            reverse('testruns-get', args=[caserun.run.pk])
-
-        comment = "Filed from caserun %s\n\n" % caserun_url
+        comment = "Filed from caserun %s\n\n" % caserun.get_url()
         comment += "Version-Release number of selected " \
                    "component (if applicable):\n"
         comment += '%s\n\n' % caserun.build.name
@@ -224,10 +220,7 @@ class JIRA(IssueTrackerType):
             action = 'None'
             effect = 'None'
 
-        caserun_url = settings.KIWI_BASE_URL + \
-            reverse('testruns-get', args=[caserun.run.pk])
-
-        comment = "Filed from caserun %s\n\n" % caserun_url
+        comment = "Filed from caserun %s\n\n" % caserun.get_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
         comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
         comment += "Version-Release number of selected " \
@@ -280,10 +273,7 @@ class GitHub(IssueTrackerType):
             action = 'None'
             effect = 'None'
 
-        caserun_url = settings.KIWI_BASE_URL + \
-            reverse('testruns-get', args=[caserun.run.pk])
-
-        comment = "Filed from caserun %s\n\n" % caserun_url
+        comment = "Filed from caserun %s\n\n" % caserun.get_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
         comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
         comment += "Version-Release number of selected " \
