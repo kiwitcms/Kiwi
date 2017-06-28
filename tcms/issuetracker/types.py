@@ -55,6 +55,12 @@ class IssueTrackerType(object):
         """
         raise NotImplementedError()
 
+    def is_adding_testcase_to_issue_disabled(self):
+        """
+            When is linking a TC to a Bug disabled?
+        """
+        return not (self.tracker.api_url and self.tracker.api_username and self.tracker.api_password)
+
     def all_issues_link(self, ids):
         """
             Used in testruns.views.get() aka run/report.html to produce
@@ -248,6 +254,12 @@ class GitHub(IssueTrackerType):
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
             github_integration.GitHubThread(self.rpc, self.tracker, case, issue).start()
+
+    def is_adding_testcase_to_issue_disabled(self):
+        """
+            Only disabled if we don't have an authentication token
+        """
+        return not (self.tracker.base_url and self.tracker.api_password)
 
     def report_issue_from_testcase(self, caserun):
         """

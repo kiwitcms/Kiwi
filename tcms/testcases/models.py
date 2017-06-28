@@ -333,7 +333,10 @@ class TestCase(TCMSActionModel):
             if bz_external_track:
                 bug_system = TestCaseBugSystem.objects.get(pk=bug_system_id)
                 it = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-                it.add_testcase_to_issue([self], bug)
+                if not it.is_adding_testcase_to_issue_disabled():
+                    it.add_testcase_to_issue([self], bug)
+                else:
+                    raise ValueError('Enable linking test cases by configuring API parameters for this Issue Tracker!')
         else:
             raise ValueError('Bug %s already exist.' % bug_id)
 
