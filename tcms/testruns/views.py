@@ -967,11 +967,14 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
         def file(self):
             bug_system_id = request.GET.get('bug_system_id')
             bug_system = TestCaseBugSystem.objects.get(pk=bug_system_id)
-            tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
 
-            url = tracker.report_issue_from_test_case(self.case_run)
+            if bug_system.base_url:
+                tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
+                url = tracker.report_issue_from_testcase(self.case_run)
+                response = {'rc': 0, 'response': url}
+            else:
+                response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker by configuring its base_url!'}
 
-            response = {'rc': 0, 'response': url}
             return self.ajax_response(response)
 
         def remove(self):
