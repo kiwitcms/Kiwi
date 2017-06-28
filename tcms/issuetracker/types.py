@@ -103,7 +103,7 @@ class Bugzilla(IssueTrackerType):
 
         return self.tracker.base_url + 'buglist.cgi?bugidtype=include&bug_id=%s' % ','.join(ids)
 
-    def report_issue_from_test_case(self, caserun):
+    def report_issue_from_testcase(self, caserun):
         # because of circular dependencies
         from tcms.testcases.models import TestCaseText
 
@@ -173,7 +173,7 @@ class JIRA(IssueTrackerType):
 
         return self.tracker.base_url + 'issues/?jql=issueKey%%20in%%20(%s)' % '%2C%20'.join(ids)
 
-    def report_issue_from_test_case(self, caserun):
+    def report_issue_from_testcase(self, caserun):
         """
             For the HTML API description see:
             https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
@@ -249,7 +249,7 @@ class GitHub(IssueTrackerType):
         for case in testcases:
             github_integration.GitHubThread(self.rpc, self.tracker, case, issue).start()
 
-    def report_issue_from_test_case(self, caserun):
+    def report_issue_from_testcase(self, caserun):
         """
             GitHub only supports title and body parameters
         """
