@@ -341,22 +341,10 @@ class TestCase(TCMSActionModel):
             raise ValueError('Bug %s already exist.' % bug_id)
 
     def add_component(self, component):
-        try:
-            return TestCaseComponent.objects.create(
-                case=self,
-                component=component,
-            )
-        except:
-            raise
+        return TestCaseComponent.objects.create(case=self, component=component)
 
     def add_tag(self, tag):
-        try:
-            return TestCaseTag.objects.get_or_create(
-                case=self,
-                tag=tag
-            )
-        except:
-            raise
+        return TestCaseTag.objects.get_or_create(case=self, tag=tag)
 
     def update_tags(self, new_tags):
         '''
