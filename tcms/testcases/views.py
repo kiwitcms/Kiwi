@@ -648,6 +648,7 @@ def search(request, template_name='case/all.html'):
     return render(request, template_name, context_data)
 
 
+@require_GET
 def ajax_search(request, template_name='case/common/json_cases.txt'):
     """Generate the case list in search case and case zone in plan
     """
