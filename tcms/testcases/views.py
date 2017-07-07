@@ -1289,15 +1289,15 @@ def edit(request, case_id, template_name='case/edit.html'):
     tp = plan_from_request_or_none(request)
 
     if request.method == "POST":
-        form = EditCaseForm(request.REQUEST)
-        if request.REQUEST.get('product'):
-            form.populate(product_id=request.REQUEST['product'])
+        form = EditCaseForm(request.POST)
+        if request.POST.get('product'):
+            form.populate(product_id=request.POST['product'])
         elif tp:
             form.populate(product_id=tp.product_id)
         else:
             form.populate()
 
-        n_form = CaseNotifyForm(request.REQUEST)
+        n_form = CaseNotifyForm(request.POST)
 
         if form.is_valid() and n_form.is_valid():
 
@@ -1313,13 +1313,13 @@ def edit(request, case_id, template_name='case/edit.html'):
             update_case_email_settings(tc, n_form)
 
             # Returns
-            if request.REQUEST.get('_continue'):
+            if request.POST.get('_continue'):
                 return HttpResponseRedirect('%s?from_plan=%s' % (
                     reverse('tcms.testcases.views.edit', args=[case_id, ]),
-                    request.REQUEST.get('from_plan', None),
+                    request.POST.get('from_plan', None),
                 ))
 
-            if request.REQUEST.get('_continuenext'):
+            if request.POST.get('_continuenext'):
                 if not tp:
                     raise Http404
 
@@ -1341,7 +1341,7 @@ def edit(request, case_id, template_name='case/edit.html'):
                     tp.pk,
                 ))
 
-            if request.REQUEST.get('_returntoplan'):
+            if request.POST.get('_returntoplan'):
                 if not tp:
                     raise Http404
                 confirm_status_name = 'CONFIRMED'
@@ -1356,7 +1356,7 @@ def edit(request, case_id, template_name='case/edit.html'):
 
             return HttpResponseRedirect('%s?from_plan=%s' % (
                 reverse('testcases-get', args=[case_id, ]),
-                request.REQUEST.get('from_plan', None),
+                request.POST.get('from_plan', None),
             ))
 
     else:
