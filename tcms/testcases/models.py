@@ -455,7 +455,6 @@ class TestCase(TCMSActionModel):
             self.is_automated_proposed and ' (Autoproposed)' or '')
 
     def get_previous_and_next(self, pk_list):
-        pk_list = list(pk_list)
         current_idx = pk_list.index(self.pk)
         prev = TestCase.objects.get(pk=pk_list[current_idx - 1])
         try:

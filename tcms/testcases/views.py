@@ -1343,7 +1343,8 @@ def edit(request, case_id, template_name='case/edit.html'):
                 else:
                     pk_list = tp.case.exclude(
                         case_status__name=confirm_status_name)
-                pk_list = pk_list.defer('case_id').values_list('pk', flat=True)
+                pk_list = list(pk_list.defer('case_id').values_list('pk', flat=True))
+                pk_list.sort()
 
                 # Get the previous and next case
                 p_tc, n_tc = tc.get_previous_and_next(pk_list=pk_list)
