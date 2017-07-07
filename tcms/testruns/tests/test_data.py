@@ -170,7 +170,10 @@ class TestGetCaseRunsBugs(BaseCaseRun):
                 }
             ],
         }
-        self.assertEqual(expected_result, result)
+
+        for exp_key in expected_result:
+            for exp_bug in expected_result[exp_key]:
+                self.assertIn(exp_bug, result[exp_key])
 
 
 class TestGetCaseRunsComments(BaseCaseRun):
