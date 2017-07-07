@@ -152,13 +152,17 @@ class TestCaseRunDataMixin(object):
         ct = ContentType.objects.get_for_model(TestCaseRun)
 
         rows = []
+        # note: cast to string b/c object_pk is a Textield and PostgreSQL
+        # doesn't like TEXT in <list of integers>
+        # in Django 1.10 we have the Cast() function for similar cases, see
+        # https://docs.djangoproject.com/en/1.10/ref/models/database-functions/#cast
+        obj_pks = [str(o.pk) for o in TestCaseRun.objects.filter(run=run_pk).only('pk')]
         for row in Comment.objects.filter(
                 site=settings.SITE_ID,
                 content_type=ct.pk,
                 is_public=True,
                 is_removed=False,
-                object_pk__in=TestCaseRun.objects.filter(
-                    run=run_pk)).annotate(
+                object_pk__in=obj_pks).annotate(
                 case_run_id=F('object_pk')).values(
                 'case_run_id',
                 'submit_date',
