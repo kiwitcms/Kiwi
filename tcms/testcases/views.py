@@ -154,7 +154,7 @@ def automated(request):
     """
     ajax_response = {'rc': 0, 'response': 'ok'}
 
-    form = CaseAutomatedForm(request.REQUEST)
+    form = CaseAutomatedForm(request.POST)
     if form.is_valid():
         tcs = get_selected_testcases(request)
 

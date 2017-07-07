@@ -816,3 +816,65 @@ class TestAJAXSearchCases(BasePlanCase):
         cases_count = self.plan.case.count()
         self.assertEqual(cases_count, data['iTotalRecords'])
         self.assertEqual(cases_count, data['iTotalDisplayRecords'])
+
+
+class TestChangeCasesAutomated(BasePlanCase):
+    """Test automated view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestChangeCasesAutomated, cls).setUpTestData()
+
+        cls.change_data = {
+            'case': [cls.case_1.pk, cls.case_2.pk],
+            'a': 'change',
+            # Add necessary automated value here:
+            # o_is_automated
+            # o_is_manual
+            # o_is_automated_proposed
+        }
+
+        user_should_have_perm(cls.tester, 'testcases.change_testcase')
+        cls.change_url = reverse('tcms.testcases.views.automated')
+
+    def test_update_automated(self):
+        self.login_tester()
+
+        change_data = self.change_data.copy()
+        change_data['o_is_automated'] = 'on'
+
+        response = self.client.post(self.change_url, change_data)
+
+        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
+
+        for pk in self.change_data['case']:
+            case = TestCase.objects.get(pk=pk)
+            self.assertEqual(1, case.is_automated)
+
+    def test_update_manual(self):
+        self.login_tester()
+
+        change_data = self.change_data.copy()
+        change_data['o_is_manual'] = 'on'
+
+        response = self.client.post(self.change_url, change_data)
+
+        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
+
+        for pk in self.change_data['case']:
+            case = TestCase.objects.get(pk=pk)
+            self.assertEqual(0, case.is_automated)
+
+    def test_update_automated_proposed(self):
+        self.login_tester()
+
+        change_data = self.change_data.copy()
+        change_data['o_is_automated_proposed'] = 'on'
+
+        response = self.client.post(self.change_url, change_data)
+
+        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
+
+        for pk in self.change_data['case']:
+            case = TestCase.objects.get(pk=pk)
+            self.assertTrue(case.is_automated_proposed)
