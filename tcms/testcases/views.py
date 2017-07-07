@@ -1158,10 +1158,10 @@ def printable(request, template_name='case/printable.html'):
     return render(request, template_name, context_data)
 
 
+@require_POST
 def export(request, template_name='case/export.xml'):
     """Export the plan"""
-    REQ = request.REQUEST
-    case_pks = REQ.getlist('case')
+    case_pks = request.POST.getlist('case')
     if not case_pks:
         return HttpResponse(Prompt.render(
             request=request,
