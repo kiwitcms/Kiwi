@@ -138,6 +138,7 @@ def create_testcase(request, form, tp):
     return tc
 
 
+@require_POST
 @permission_required('testcases.change_testcase')
 def automated(request):
     """Change the automated status for cases
