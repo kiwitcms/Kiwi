@@ -39,7 +39,7 @@
 		>> <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run }}</a> >>Edit
 	</div>
 	<h2>Edit Test Run</h2>
-	<form action="{% url "tcms.testruns.views.edit" test_run.run_id %}" method="post">
+	<form action="{% url "testruns-edit" test_run.run_id %}" method="post">
 	<div class="Detailform border-1">
 		<table border="0" cellspacing="1" cellpadding="0" class="editor" >
 			<tr>

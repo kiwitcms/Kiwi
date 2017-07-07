@@ -58,7 +58,7 @@
 						<br>
 						{% if perms.comments.can_moderate %}
 						{% ifequal comment.user__pk request.user.pk %}
-						<form action="{% url "tcms.core.contrib.comments.views.delete" %}" method="post" class="form_comment" style="display:inline;">
+						<form action="{% url "comments-delete" %}" method="post" class="form_comment" style="display:inline;">
 							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
 							<input type="hidden" name="object_pk" value="{{ test_case_run.case_id }}" />
 							<input class='commentdelete sprites' value='' type='submit' title="Remove Comment" />

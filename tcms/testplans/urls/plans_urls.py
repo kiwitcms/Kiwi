@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^clone/$', views.clone, name='plans-clone'),
     url(r'^printable/$', views.printable, name='plans-printable'),
     url(r'^export/$', views.export, name='plans-export'),
-    url(r'^component/$', views.component),
+    url(r'^component/$', views.component, name='plans-component'),
 ]
