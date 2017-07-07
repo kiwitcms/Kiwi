@@ -863,18 +863,20 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         for bug in get_run_bug_ids(self.run_id):
             # format the bug URLs based on DB settings
             test_case_run_bugs.append((
-                bug.bug_id,
-                bug.bug_system.url_reg_exp % bug.bug_id,
+                bug['bug_id'],
+                bug['bug_system__url_reg_exp'] % bug['bug_id'],
             ))
             # find out all unique bug tracking systems which were used to record
             # bugs in this particular test run. we use this data for reporting
-            if bug.bug_system.pk not in bug_system_types:
+            if bug['bug_system'] not in bug_system_types:
                 # store a tracker type object for producing the report URL
-                tracker = IssueTrackerType.from_name(bug.bug_system.tracker_type)(bug.bug_system)
-                bug_system_types[bug.bug_system.pk] = (tracker, [])
+                tracker_class = IssueTrackerType.from_name(bug['bug_system__tracker_type'])
+                bug_system = TestCaseBugSystem.objects.get(pk=bug['bug_system'])
+                tracker = tracker_class(bug_system)
+                bug_system_types[bug['bug_system']] = (tracker, [])
 
             # store the list of bugs as well
-            bug_system_types[bug.bug_system.pk][1].append(bug.bug_id)
+            bug_system_types[bug['bug_system']][1].append(bug['bug_id'])
 
         # list of URLs which opens all bugs reported to every different
         # issue tracker used in this test run
@@ -892,8 +894,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         for case_run in case_runs:
             bugs = caserun_bugs.get(case_run.pk, ())
             case_run.bugs = bugs
-            user_comments = comments.get(case_run.pk, [])
-            case_run.user_comments = user_comments
+            case_run.user_comments = comments.get(case_run.pk, [])
 
         context = super(TestRunReportView, self).get_context_data(**kwargs)
         context.update({
