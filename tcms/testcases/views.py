@@ -619,6 +619,7 @@ def all(request, template_name="case/all.html"):
     return render(request, template_name, context_data)
 
 
+@require_GET
 def search(request, template_name='case/all.html'):
     """
     generate the function of searching cases with search criteria
@@ -626,12 +627,12 @@ def search(request, template_name='case/all.html'):
 
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the furture.
-    search_form = SearchCaseForm(request.REQUEST)
-    if request.REQUEST.get('product'):
-        search_form.populate(product_id=request.REQUEST['product'])
+    search_form = SearchCaseForm(request.GET)
+    if request.GET.get('product'):
+        search_form.populate(product_id=request.GET['product'])
     else:
         search_form.populate()
-    if request.REQUEST.get('a') == 'search' and search_form.is_valid():
+    if request.GET.get('a') == 'search' and search_form.is_valid():
         tcs = TestCase.list(search_form.cleaned_data)
     else:
         tcs = TestCase.objects.none()
