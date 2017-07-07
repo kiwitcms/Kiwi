@@ -784,3 +784,35 @@ class TestEditCase(BasePlanCase):
             reverse('tcms.testplans.views.get', args=[self.plan.pk])
         )
         self.assertRedirects(response, redirect_url, target_status_code=301)
+
+
+class TestAJAXSearchCases(BasePlanCase):
+    """Test ajax_search"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestAJAXSearchCases, cls).setUpTestData()
+
+        cls.search_data = {
+            'summary': '',
+            'author': '',
+            'product': '',
+            'plan': '',
+            'is_automated': '',
+            'category': '',
+            'component': '',
+            'bug_id': '',
+            'tag__name__in': '',
+            'a': 'search',
+        }
+
+        cls.search_url = reverse('tcms.testcases.views.ajax_search')
+
+    def test_search_all_cases(self):
+        response = self.client.get(self.search_url, self.search_data)
+
+        data = json.loads(response.content)
+
+        cases_count = self.plan.case.count()
+        self.assertEqual(cases_count, data['iTotalRecords'])
+        self.assertEqual(cases_count, data['iTotalDisplayRecords'])

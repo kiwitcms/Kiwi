@@ -654,19 +654,21 @@ def ajax_search(request, template_name='case/common/json_cases.txt'):
     SearchForm = SearchCaseForm
 
     tp = plan_from_request_or_none(request)
+
+    action = request.GET.get('a')
+
     # Initial the form and template
-    if request.REQUEST.get('a') in ('search', 'sort'):
-        search_form = SearchForm(request.REQUEST)
+    if action in ('search', 'sort'):
+        search_form = SearchForm(request.GET)
     else:
         # Hacking for case plan
         confirmed_status_name = 'CONFIRMED'
         # 'c' is meaning component
-        if request.REQUEST.get('template_type') == 'case':
-            d_status = \
-                TestCaseStatus.objects.filter(name=confirmed_status_name)
-        elif request.REQUEST.get('template_type') == 'review_case':
-            d_status = TestCaseStatus.objects.exclude(
-                name=confirmed_status_name)
+        template_type = request.GET.get('template_type')
+        if template_type == 'case':
+            d_status = TestCaseStatus.objects.filter(name=confirmed_status_name)
+        elif template_type == 'review_case':
+            d_status = TestCaseStatus.objects.exclude(name=confirmed_status_name)
         else:
             d_status = TestCaseStatus.objects.all()
 
@@ -675,18 +677,17 @@ def ajax_search(request, template_name='case/common/json_cases.txt'):
         search_form = SearchForm(initial={'case_status': d_status_ids})
 
     # Populate the form
-    if request.REQUEST.get('product'):
-        search_form.populate(product_id=request.REQUEST['product'])
+    if request.GET.get('product'):
+        search_form.populate(product_id=request.GET['product'])
     elif tp and tp.product_id:
         search_form.populate(product_id=tp.product_id)
     else:
         search_form.populate()
 
     # Query the database when search
-    if request.REQUEST.get('a') in (
-            'search', 'sort') and search_form.is_valid():
+    if action in ('search', 'sort') and search_form.is_valid():
         tcs = TestCase.list(search_form.cleaned_data)
-    elif request.REQUEST.get('a') == 'initial':
+    elif action == 'initial':
         tcs = TestCase.objects.filter(case_status__in=d_status)
     else:
         tcs = TestCase.objects.none()
@@ -695,20 +696,25 @@ def ajax_search(request, template_name='case/common/json_cases.txt'):
     if tp:
         tcs = tcs.filter(plan=tp)
 
-    tcs = tcs.select_related('author',
-                             'default_tester',
-                             'case_status',
-                             'priority',
-                             'category').only('case_id', 'summary',
-                                              'create_date',
-                                              'is_automated',
-                                              'is_automated_proposed',
-                                              'case_status__name',
-                                              'category__name',
-                                              'priority__value',
-                                              'author__username',
-                                              'default_tester__id',
-                                              'default_tester__username')
+    tcs = tcs.select_related(
+        'author',
+        'default_tester',
+        'case_status',
+        'priority',
+        'category'
+    ).only(
+        'case_id',
+        'summary',
+        'create_date',
+        'is_automated',
+        'is_automated_proposed',
+        'case_status__name',
+        'category__name',
+        'priority__value',
+        'author__username',
+        'default_tester__id',
+        'default_tester__username'
+    )
     tcs = tcs.extra(select={'num_bug': RawSQL.num_case_bugs, })
 
     # columnIndexNameMap is required for correct sorting behavior, 5 should be
