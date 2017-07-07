@@ -636,3 +636,151 @@ class TestOperateCaseTag(BasePlanCase):
                 'errors_list': [{'case': self.case_1.pk, 'tag': self.tag_fedora.pk}],
             },
             data)
+
+
+class TestEditCase(BasePlanCase):
+    """Test edit view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestEditCase, cls).setUpTestData()
+
+        cls.proposed_case = TestCaseFactory(
+            author=cls.tester,
+            default_tester=None,
+            reviewer=cls.tester,
+            case_status=cls.case_status_proposed,
+            plan=[cls.plan])
+
+        user_should_have_perm(cls.tester, 'testcases.change_testcase')
+        cls.case_edit_url = reverse('tcms.testcases.views.edit',
+                                    args=[cls.case_1.pk])
+
+        # Copy, then modify or add new data for specific tests below
+        cls.edit_data = {
+            'from_plan': cls.plan.pk,
+            'summary': cls.case_1.summary,
+            'product': cls.case_1.category.product.pk,
+            'category': cls.case_1.category.pk,
+            'default_tester': '',
+            'estimated_time': '0m',
+            'case_status': cls.case_status_confirmed.pk,
+            'arguments': '',
+            'extra_link': '',
+            'notes': '',
+            'is_automated': '0',
+            'requirement': '',
+            'script': '',
+            'alias': '',
+            'priority': cls.case_1.priority.pk,
+            'tag': 'RHEL',
+            'setup': '',
+            'action': '',
+            'breakdown': '',
+            'effect': '',
+            'cc_list': '',
+        }
+
+    def test_404_if_case_id_not_exist(self):
+        self.login_tester()
+        url = reverse('tcms.testcases.views.edit', args=[99999])
+        response = self.client.get(url)
+        self.assert404(response)
+
+    def test_404_if_from_plan_not_exist(self):
+        self.login_tester()
+        response = self.client.get(self.case_edit_url, {'from_plan': 9999})
+        self.assert404(response)
+
+    def test_show_edit_page(self):
+        self.login_tester()
+        response = self.client.get(self.case_edit_url)
+        self.assertEqual(200, response.status_code)
+
+    def test_edit_a_case(self):
+        self.login_tester()
+
+        edit_data = self.edit_data.copy()
+        new_summary = 'Edited: {0}'.format(self.case_1.summary)
+        edit_data['summary'] = new_summary
+
+        response = self.client.post(self.case_edit_url, edit_data)
+
+        redirect_url = '{0}?from_plan={1}'.format(
+            reverse('tcms.testcases.views.get', args=[self.case_1.pk]),
+            self.plan.pk,
+        )
+        self.assertRedirects(response, redirect_url)
+
+        edited_case = TestCase.objects.get(pk=self.case_1.pk)
+        self.assertEqual(new_summary, edited_case.summary)
+
+    def test_continue_edit_this_case_after_save(self):
+        self.login_tester()
+
+        edit_data = self.edit_data.copy()
+        edit_data['_continue'] = 'continue edit'
+
+        response = self.client.post(self.case_edit_url, edit_data)
+
+        redirect_url = '{0}?from_plan={1}'.format(
+            reverse('tcms.testcases.views.edit', args=[self.case_1.pk]),
+            self.plan.pk,
+        )
+        self.assertRedirects(response, redirect_url)
+
+    def test_continue_edit_next_confirmed_case_after_save(self):
+        self.login_tester()
+
+        edit_data = self.edit_data.copy()
+        edit_data['_continuenext'] = 'continue edit next case'
+
+        response = self.client.post(self.case_edit_url, edit_data)
+
+        redirect_url = '{0}?from_plan={1}'.format(
+            reverse('tcms.testcases.views.edit', args=[self.case_2.pk]),
+            self.plan.pk,
+        )
+        self.assertRedirects(response, redirect_url)
+
+    def test_continue_edit_next_non_confirmed_case_after_save(self):
+        self.login_tester()
+
+        edit_data = self.edit_data.copy()
+        edit_data['case_status'] = self.case_status_proposed.pk
+        edit_data['_continuenext'] = 'continue edit next case'
+
+        response = self.client.post(self.case_edit_url, edit_data)
+
+        redirect_url = '{0}?from_plan={1}'.format(
+            reverse('tcms.testcases.views.edit', args=[self.proposed_case.pk]),
+            self.plan.pk,
+        )
+        self.assertRedirects(response, redirect_url)
+
+    def test_return_to_plan_confirmed_cases_tab(self):
+        self.login_tester()
+
+        edit_data = self.edit_data.copy()
+        edit_data['_returntoplan'] = 'return to plan'
+
+        response = self.client.post(self.case_edit_url, edit_data)
+
+        redirect_url = '{0}#testcases'.format(
+            reverse('tcms.testplans.views.get', args=[self.plan.pk])
+        )
+        self.assertRedirects(response, redirect_url, target_status_code=301)
+
+    def test_return_to_plan_review_cases_tab(self):
+        self.login_tester()
+
+        edit_data = self.edit_data.copy()
+        edit_data['case_status'] = self.case_status_proposed.pk
+        edit_data['_returntoplan'] = 'return to plan'
+
+        response = self.client.post(self.case_edit_url, edit_data)
+
+        redirect_url = '{0}#reviewcases'.format(
+            reverse('tcms.testplans.views.get', args=[self.plan.pk])
+        )
+        self.assertRedirects(response, redirect_url, target_status_code=301)
