@@ -164,7 +164,7 @@ class TestCaseRunDataMixin(object):
                 'comment').order_by('case_run_id'):
             rows.append(row)
 
-        return dict([(key, list(groups)) for key, groups in
+        return dict([(int(key), list(groups)) for key, groups in
                      groupby(rows, lambda row: row['case_run_id'])])
 
     def get_summary_stats(self, case_runs):
