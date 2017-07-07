@@ -58,7 +58,7 @@ test_cases should be a queryset of a list of TestCases.
 	</td>
 	<td align="center" >
 		{% if perms.testcases.change_testcase %}
-		<a class="editlink" href="{% url "tcms.testcases.views.edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">Edit</a>
+		<a class="editlink" href="{% url "testcases-edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">Edit</a>
 		{% else %}
 		<span class="editlink grey">Edit</span>
 		{% endif %}

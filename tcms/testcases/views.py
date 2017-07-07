@@ -209,12 +209,12 @@ def new(request, template_name='case/new.html'):
                 def _continue(self):
                     if self.plan:
                         return HttpResponseRedirect(
-                            '%s?from_plan=%s' % (reverse('tcms.testcases.views.edit',
+                            '%s?from_plan=%s' % (reverse('testcases-edit',
                                                          args=[self.case.case_id]),
                                                  self.plan.plan_id))
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testcases.views.edit', args=[tc.case_id]))
+                        reverse('testcases-edit', args=[tc.case_id]))
 
                 def _addanother(self):
                     form = NewCaseForm(initial=default_form_parameters)
@@ -1324,7 +1324,7 @@ def edit(request, case_id, template_name='case/edit.html'):
             # Returns
             if request.POST.get('_continue'):
                 return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('tcms.testcases.views.edit', args=[case_id, ]),
+                    reverse('testcases-edit', args=[case_id, ]),
                     request.POST.get('from_plan', None),
                 ))
 
@@ -1346,7 +1346,7 @@ def edit(request, case_id, template_name='case/edit.html'):
                 # Get the previous and next case
                 p_tc, n_tc = tc.get_previous_and_next(pk_list=pk_list)
                 return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('tcms.testcases.views.edit', args=[n_tc.pk, ]),
+                    reverse('testcases-edit', args=[n_tc.pk, ]),
                     tp.pk,
                 ))
 

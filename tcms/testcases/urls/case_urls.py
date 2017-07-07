@@ -6,7 +6,7 @@ from .. import views
 
 urlpatterns = [
     url(r'^(?P<case_id>\d+)/$', views.get, name='testcases-get'),
-    url(r'^(?P<case_id>\d+)/edit/$', views.edit),
+    url(r'^(?P<case_id>\d+)/edit/$', views.edit, name='testcases-edit'),
     url(r'^(?P<case_id>\d+)/history/$', views.text_history, name='testcases-text_history'),
     url(r'^(?P<case_id>\d+)/attachment/$', views.attachment, name='testcases-attachment'),
     url(r'^(?P<case_id>\d+)/log/$', views.get_log),
