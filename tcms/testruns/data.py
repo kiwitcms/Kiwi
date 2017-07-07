@@ -82,13 +82,12 @@ def get_run_bug_ids(run_id):
     :return: list of pairs of bug ID and bug link.
     :rtype: list
     """
-    rows = TestCaseBug.objects.values(
+    return TestCaseBug.objects.values(
         'bug_id',
+        'bug_system',
+        'bug_system__tracker_type',
         'bug_system__url_reg_exp'
     ).distinct().filter(case_run__run=run_id)
-
-    return [(row['bug_id'], row['bug_system__url_reg_exp'] % row['bug_id'])
-            for row in rows]
 
 
 class TestCaseRunDataMixin(object):

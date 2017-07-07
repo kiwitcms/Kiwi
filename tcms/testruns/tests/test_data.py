@@ -100,14 +100,14 @@ class TestGetRunBugIDs(BaseCaseRun):
 
         self.assertEqual(3, len(bug_ids))
 
-        # Convert result to dict in order to compare the equivalence easily
+        # Convert result to list in order to compare more easily
+        received_bugs = []
+        for bug in bug_ids:
+            received_bugs.append(bug['bug_system__url_reg_exp'] % bug['bug_id'])
 
-        expected = {
-            '123456': self.bugzilla.url_reg_exp % '123456',
-            '100000': self.bugzilla.url_reg_exp % '100000',
-            '100001': self.bugzilla.url_reg_exp % '100001',
-        }
-        self.assertEqual(expected, dict(bug_ids))
+        self.assertIn(self.bugzilla.url_reg_exp % '123456', received_bugs)
+        self.assertIn(self.bugzilla.url_reg_exp % '100000', received_bugs)
+        self.assertIn(self.bugzilla.url_reg_exp % '100001', received_bugs)
 
 
 class TestGetCaseRunsBugs(BaseCaseRun):
