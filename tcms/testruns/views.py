@@ -1392,7 +1392,7 @@ class AddCasesToRunView(View):
         ).filter(
             plan_id=tr.plan,
             case__case_status=TestCaseStatus.objects.filter(name='CONFIRMED').first().pk
-        )
+        ).order_by('case')  # order b/c of PostgreSQL
 
         # also grab a list of all TestCase IDs which are already present in the
         # current TestRun so we can mark them as disabled and not allow them to

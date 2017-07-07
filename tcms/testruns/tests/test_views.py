@@ -1304,6 +1304,7 @@ class TestAddCasesToRun(BaseCaseRun):
                 html=True)
 
         # Check listed case properties
+        # note: the response is ordered by 'case'
         for loop_counter, case in enumerate(confirmed_cases, 1):
             html_pieces = [
                 '<a href="{0}">{1}</a>'.format(
