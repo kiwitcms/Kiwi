@@ -340,6 +340,7 @@ def get_case_status(template_type):
     return d_status
 
 
+@require_POST
 def build_cases_search_form(request, populate=None, plan=None):
     '''Build search form preparing for quering TestCases'''
     # Intial the plan in plan details page
