@@ -55,7 +55,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 			Edit History
 		</a>
 	</span>
-	<form action="{% url "tcms.testcases.views.edit" test_case.case_id %}" method="post">
+	<form action="{% url "testcases-edit" test_case.case_id %}" method="post">
 		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}">
 		<div class="Detailform border-1" >
 			<fieldset class="no-border background-light-grey">

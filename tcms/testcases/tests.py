@@ -653,8 +653,7 @@ class TestEditCase(BasePlanCase):
             plan=[cls.plan])
 
         user_should_have_perm(cls.tester, 'testcases.change_testcase')
-        cls.case_edit_url = reverse('tcms.testcases.views.edit',
-                                    args=[cls.case_1.pk])
+        cls.case_edit_url = reverse('testcases-edit', args=[cls.case_1.pk])
 
         # Copy, then modify or add new data for specific tests below
         cls.edit_data = {
@@ -683,7 +682,7 @@ class TestEditCase(BasePlanCase):
 
     def test_404_if_case_id_not_exist(self):
         self.login_tester()
-        url = reverse('tcms.testcases.views.edit', args=[99999])
+        url = reverse('testcases-edit', args=[99999])
         response = self.client.get(url)
         self.assert404(response)
 
@@ -707,7 +706,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}?from_plan={1}'.format(
-            reverse('tcms.testcases.views.get', args=[self.case_1.pk]),
+            reverse('testcases-get', args=[self.case_1.pk]),
             self.plan.pk,
         )
         self.assertRedirects(response, redirect_url)
@@ -724,7 +723,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}?from_plan={1}'.format(
-            reverse('tcms.testcases.views.edit', args=[self.case_1.pk]),
+            reverse('testcases-edit', args=[self.case_1.pk]),
             self.plan.pk,
         )
         self.assertRedirects(response, redirect_url)
@@ -738,7 +737,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}?from_plan={1}'.format(
-            reverse('tcms.testcases.views.edit', args=[self.case_2.pk]),
+            reverse('testcases-edit', args=[self.case_2.pk]),
             self.plan.pk,
         )
         self.assertRedirects(response, redirect_url)
@@ -753,7 +752,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}?from_plan={1}'.format(
-            reverse('tcms.testcases.views.edit', args=[self.proposed_case.pk]),
+            reverse('testcases-edit', args=[self.proposed_case.pk]),
             self.plan.pk,
         )
         self.assertRedirects(response, redirect_url)
@@ -767,7 +766,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}#testcases'.format(
-            reverse('tcms.testplans.views.get', args=[self.plan.pk])
+            reverse('testplans-get', args=[self.plan.pk])
         )
         self.assertRedirects(response, redirect_url, target_status_code=301)
 
@@ -781,7 +780,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}#reviewcases'.format(
-            reverse('tcms.testplans.views.get', args=[self.plan.pk])
+            reverse('testplans-get', args=[self.plan.pk])
         )
         self.assertRedirects(response, redirect_url, target_status_code=301)
 
@@ -806,7 +805,7 @@ class TestAJAXSearchCases(BasePlanCase):
             'a': 'search',
         }
 
-        cls.search_url = reverse('tcms.testcases.views.ajax_search')
+        cls.search_url = reverse('testcases-ajax_search')
 
     def test_search_all_cases(self):
         response = self.client.get(self.search_url, self.search_data)
@@ -835,7 +834,7 @@ class TestChangeCasesAutomated(BasePlanCase):
         }
 
         user_should_have_perm(cls.tester, 'testcases.change_testcase')
-        cls.change_url = reverse('tcms.testcases.views.automated')
+        cls.change_url = reverse('testcases-automated')
 
     def test_update_automated(self):
         self.login_tester()
