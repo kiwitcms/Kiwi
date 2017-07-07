@@ -352,7 +352,7 @@ def build_cases_search_form(request, populate=None, plan=None):
     # Initial the form and template
     action = request.POST.get('a')
     if action in TESTCASE_OPERATION_ACTIONS:
-        search_form = SearchForm(request.REQUEST)
+        search_form = SearchForm(request.POST)
         request.session['items_per_page'] = \
             request.POST.get('items_per_page', settings.DEFAULT_PAGE_SIZE)
     else:
@@ -876,7 +876,7 @@ class TestCaseCaseRunListPaneView(TemplateView):
     def get(self, request, case_id):
         self.case_id = case_id
 
-        plan_id = self.request.REQUEST.get('plan_id', None)
+        plan_id = self.request.GET.get('plan_id', None)
         self.plan_id = int(plan_id) if plan_id is not None else None
 
         this_cls = TestCaseCaseRunListPaneView
