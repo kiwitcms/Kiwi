@@ -92,6 +92,7 @@ def new(request, template_name='run/new.html'):
                                     'case_status',
                                     'category',
                                     'priority')
+    # note: ordered for test_show_create_new_run_page() on PostgreSQL
     tcs_values = tcs_values.only('case_id',
                                  'summary',
                                  'estimated_time',
@@ -99,7 +100,7 @@ def new(request, template_name='run/new.html'):
                                  'create_date',
                                  'category__name',
                                  'priority__value',
-                                 'case_status__name')
+                                 'case_status__name').order_by('case_id')
 
     if request.POST.get('POSTING_TO_CREATE'):
         form = NewRunForm(request.POST)
