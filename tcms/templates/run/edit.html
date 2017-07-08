@@ -47,7 +47,7 @@
 				<td>
 					<span class="summary">{{ form.summary }}</span>
 					<span class="errors">{{ form.summary.errors }}</span>
-				</td>	
+				</td>
 			</tr>
 			<tr>
 				<td><label>Test Plan</label></td>
@@ -67,7 +67,7 @@
 			<tr>
 				<td><label>Build </label></td>
 				<td>
-					{{ form.build }} 
+					{{ form.build }}
 					<a href="{{ ADMIN_PREFIX }}/management/testbuild/add/" class="addlink" id="add_id_build">Add Build</a></td>
 			</tr>
 			<tr>
@@ -90,14 +90,14 @@
 			<tr>
 				<td><label>Default Tester</label></td>
 				<td>{{ form.default_tester }}<span class="errors">{{ form.default_tester.errors }}</span></td>
-				
+
 			</tr>
 			<tr>
 				<td><label class="strong">Estimated Time</label></td>
 				<td>
 					<div class="time">
 						{{ form.estimated_time }}
-					</div> 
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -163,4 +163,3 @@
 </div>
 
 {% endblock %}
-
