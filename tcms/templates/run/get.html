@@ -1,5 +1,5 @@
 {% extends "tcms_base.html" %}
-{% load extra_filters %} 
+{% load extra_filters %}
 
 {% block subtitle %}{{ test_run.summary }}{% endblock %}
 
@@ -38,7 +38,7 @@ jQ(function() {
 	</div>
 	<div class="sprites crumble">
 		<a href="{% url "tcms.core.views.index" %}">Home</a>
-		{% if request.REQUEST.from_plan %}
+		{% if request.GET.from_plan %}
 		&gt;&gt; <a href="{% url "tcms.testplans.views.all" %}">Seach Plan</a>
 		&gt;&gt; Test Plan: <a href="{{ test_run.plan.get_absolute_url }}">[{{ test_run.plan.plan_id }}] {{ test_run.plan.name }}</a>
 		{% else %}
@@ -48,7 +48,7 @@ jQ(function() {
 	</div>
 	<div class="control">
 		{% if perms.testruns.change_testcaserun %}
-		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'tcms.testruns.views.edit' test_run.run_id %}", "{{ request.REQUEST.from_plan }}"]'>
+		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'tcms.testruns.views.edit' test_run.run_id %}", "{{ request.GET.from_plan }}"]'>
 		{% else %}
 		<input id="btn_edit" type="button" value="Edit" disabled="true">
 		{% endif %}
