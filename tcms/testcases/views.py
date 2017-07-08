@@ -1137,11 +1137,10 @@ def get(request, case_id, template_name='case/get.html'):
 # case_status is that, Select All causes previous filter criteria is
 #       passed via REQUEST, whereas case_status must exist. So, we have to find
 #       a way to distinguish them for different purpose, respectively.
+@require_POST
 def printable(request, template_name='case/printable.html'):
     """Create the printable copy for plan/case"""
-    req_getlist = request.REQUEST.getlist
-
-    case_pks = req_getlist('case')
+    case_pks = request.POST.getlist('case')
 
     if not case_pks:
         return HttpResponse(Prompt.render(

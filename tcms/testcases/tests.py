@@ -899,7 +899,7 @@ class TestExportCases(BasePlanCase):
         # Verify header
         self.assertEqual(
             'attachment; filename=tcms-testcases-%02i-%02i-%02i.xml' % (
-                today.year, today.month, today.day) ,
+                today.year, today.month, today.day),
             response['Content-Disposition'])
         # verify content
 
@@ -910,3 +910,36 @@ class TestExportCases(BasePlanCase):
     def test_no_cases_to_be_exported(self):
         response = self.client.post(self.export_url, {})
         self.assertContains(response, 'At least one target is required')
+
+
+class TestPrintablePage(BasePlanCase):
+    """Test printable page view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestPrintablePage, cls).setUpTestData()
+        cls.printable_url = reverse('tcms.testcases.views.printable')
+
+        cls.case_1.add_text(action='action',
+                            effect='effect',
+                            setup='setup',
+                            breakdown='breakdown')
+        cls.case_2.add_text(action='action',
+                            effect='effect',
+                            setup='setup',
+                            breakdown='breakdown')
+
+    def test_no_cases_to_print(self):
+        response = self.client.post(self.printable_url, {})
+        self.assertContains(response, 'At least one target is required')
+
+    def test_printable_page(self):
+        response = self.client.post(self.printable_url,
+                                    {'case': [self.case_1.pk, self.case_2.pk]})
+
+        for case in [self.case_1, self.case_2]:
+            self.assertContains(
+                response,
+                '<h3>[{0}] {1}</h3>'.format(case.pk, case.summary),
+                html=True
+            )
