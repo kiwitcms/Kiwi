@@ -12,4 +12,4 @@ def get_form_target():
     """
     Returns the target URL for the comment form submission view.
     """
-    return reverse('tcms.core.contrib.comments.views.post')
+    return reverse('comments-post')
