@@ -943,3 +943,65 @@ class TestPrintablePage(BasePlanCase):
                 '<h3>[{0}] {1}</h3>'.format(case.pk, case.summary),
                 html=True
             )
+
+
+class TestCloneCase(BasePlanCase):
+    """Test clone view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestCloneCase, cls).setUpTestData()
+
+        user_should_have_perm(cls.tester, 'testcases.add_testcase')
+        cls.clone_url = reverse('tcms.testcases.views.clone')
+
+    def test_refuse_if_missing_argument(self):
+        self.login_tester()
+
+        # Refuse to clone cases if missing selectAll and case arguments
+        response = self.client.get(self.clone_url, {})
+
+        self.assertContains(response, 'At least one case is required')
+
+    def test_show_clone_page_with_from_plan(self):
+        self.login_tester()
+
+        response = self.client.get(self.clone_url,
+                                   {'from_plan': self.plan.pk,
+                                    'case': [self.case_1.pk, self.case_2.pk]})
+
+        self.assertContains(
+            response,
+            '''<div>
+    <input type="radio" id="id_use_sameplan" name="selectplan" value="{0}">
+    <label for="id_use_sameplan" class="strong">Use the same Plan -- {0} : {1}</label>
+</div>'''.format(self.plan.pk, self.plan.name),
+            html=True)
+
+        for loop_counter, case in enumerate([self.case_1, self.case_2]):
+            self.assertContains(
+                response,
+                '<label for="id_case_{0}">'
+                '<input checked="checked" id="id_case_{0}" name="case" '
+                'type="checkbox" value="{1}"> {2}</label>'.format(
+                    loop_counter, case.pk, case.summary),
+                html=True)
+
+    def test_show_clone_page_without_from_plan(self):
+        self.login_tester()
+
+        response = self.client.get(self.clone_url, {'case': self.case_1.pk})
+
+        self.assertNotContains(
+            response,
+            'Use the same Plan -- {0} : {1}'.format(self.plan.pk,
+                                                    self.plan.name),
+        )
+
+        self.assertContains(
+            response,
+            '<label for="id_case_0">'
+            '<input checked="checked" id="id_case_0" name="case" '
+            'type="checkbox" value="{0}"> {1}</label>'.format(
+                self.case_1.pk, self.case_1.summary),
+            html=True)
