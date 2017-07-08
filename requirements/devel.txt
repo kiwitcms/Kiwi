@@ -1,9 +1,9 @@
 -r base.txt
 
-django-debug-toolbar==1.7
-Sphinx>=1.1.2
+django-debug-toolbar
+Sphinx
 flake8
-epydoc==3.0.1
+epydoc
 pytest-django
 pytest-cov
 coverage
