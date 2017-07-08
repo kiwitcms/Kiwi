@@ -4,11 +4,8 @@ import xmlrpclib
 from django.conf import settings
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.backends import ModelBackend, RemoteUserBackend
-
-# from tcms
-from tcms.core.contrib.auth import initiate_user_with_default_setups
 
 
 class DBModelBackend(ModelBackend):
@@ -216,3 +213,15 @@ class ModAuthKerbBackend(RemoteUserBackend):
         if len(username_tuple) > 1:
             username = username_tuple[1]
         return len(username) > 30 and username[:30] or username
+
+
+def initiate_user_with_default_setups(user):
+    '''
+    Add default groups, permissions, status to a newly
+    created user.
+    '''
+    default_groups = Group.objects.filter(name__in=settings.DEFAULT_GROUPS)
+    user.is_active = True
+    for grp in default_groups:
+        user.groups.add(grp)
+    user.save()
