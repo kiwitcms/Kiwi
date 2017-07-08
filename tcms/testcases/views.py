@@ -1465,9 +1465,9 @@ def clone(request, template_name='case/clone.html'):
     """Clone one case or multiple case into other plan or plans"""
     SUB_MODULE_NAME = 'cases'
 
-    selectAll_present = 'selectAll' in request.GET or 'selectAll' in request.POST
-    case_present = 'case' in request.GET or 'case' in request.POST
-    if not (selectAll_present or case_present):
+    request_data = getattr(request, request.method)
+
+    if 'selectAll' not in request_data and 'case' not in request_data:
         return HttpResponse(Prompt.render(
             request=request,
             info_type=Prompt.Info,
@@ -1652,15 +1652,15 @@ def clone(request, template_name='case/clone.html'):
         clone_form.populate(case_ids=selected_cases)
 
     # Generate search plan form
-    if request.GET.get('from_plan'):
-        tp = TestPlan.objects.get(plan_id=request.GET['from_plan'])
+    if request_data.get('from_plan'):
+        tp = TestPlan.objects.get(plan_id=request_data['from_plan'])
         search_plan_form = SearchPlanForm(
             initial={'product': tp.product_id, 'is_active': True})
         search_plan_form.populate(product_id=tp.product_id)
 
-    submit_action = request.GET.get('submit', None)
+    submit_action = request_data.get('submit', None)
     context_data = {
-        'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
+        'module': request_data.get('from_plan') and 'testplans' or MODULE_NAME,
         'sub_module': SUB_MODULE_NAME,
         'test_plan': tp,
         'search_form': search_plan_form,

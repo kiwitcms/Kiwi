@@ -19,11 +19,11 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 		{% endif %}
 		>> Clone case
 	</div>
-	
+
 	<div id="hidden">
 		<input id="value_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}" />
 	</div>
-	
+
 	<h2>Clone Test Case(s)</h2>
 	<div class="Detailform border-1">
 		<div class="editor" cellspacing="0" cellspan="0">
@@ -103,13 +103,13 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 						</ul>
 					</fieldset>
 				</div>
-			</div>
-			<div class="submit-row">
-				<input type="hidden" name="from_plan" value="{{ test_plan.pk }}"/>
-				<input type="submit" name="submit" value="Clone" />
-				<input type="button" value="Cancel" class="js-cancel-button"/>
-			</div>
-		</form>
+				<div class="submit-row">
+					<input type="hidden" name="from_plan" value="{{ test_plan.pk }}"/>
+					<input type="submit" name="submit" value="Clone" />
+					<input type="button" value="Cancel" class="js-cancel-button"/>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 {% endblock %}
