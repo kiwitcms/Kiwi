@@ -192,7 +192,7 @@ def new(request, template_name='case/new.html'):
 
     if request.method == "POST":
         form = NewCaseForm(request.POST)
-        if request.REQUEST.get('product'):
+        if request.POST.get('product'):
             form.populate(product_id=request.POST['product'])
         else:
             form.populate()
@@ -245,7 +245,7 @@ def new(request, template_name='case/new.html'):
             # Genrate the instance of actions
             ras = ReturnActions(case=tc, plan=tp)
             for ra_str in ras.__all__:
-                if request.REQUEST.get(ra_str):
+                if request.POST.get(ra_str):
                     func = getattr(ras, ra_str)
                     break
             else:
