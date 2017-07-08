@@ -31,9 +31,9 @@ DATABASES = {
 
 
 # Administrators error report email settings
-ADMINS = (
+ADMINS = [
     # ('Your Name', 'your_email@example.com'),
-)
+]
 
 
 # Email settings
@@ -136,19 +136,19 @@ ADMIN_PREFIX = '/admin'
 STATIC_URL = '/static/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(TCMS_ROOT_PATH, 'static').replace('\\', '/'),
-)
+]
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = (
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
+]
 
 TEMPLATES = [
     {
@@ -157,13 +157,13 @@ TEMPLATES = [
             os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\', '/'),
         ],
         'OPTIONS': {
-            'context_processors': DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+            'context_processors': DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + [
                 'django.template.context_processors.request',
                 'tcms.core.context_processors.admin_prefix_processor',
                 'tcms.core.context_processors.auth_backend_processor',
                 'tcms.core.context_processors.request_contents_processor',
                 'tcms.core.context_processors.settings_processor',
-            ),
+            ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
@@ -172,7 +172,7 @@ TEMPLATES = [
     },
 ]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -181,14 +181,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
-)
+]
 
 ROOT_URLCONF = 'tcms.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tcms.wsgi.application'
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
@@ -213,7 +213,7 @@ INSTALLED_APPS = (
     'tcms.testplans',
     'tcms.testruns',
     'tcms.xmlrpc',
-)
+]
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
@@ -246,20 +246,20 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Authentication backends
 # NOTE: we only support the internal auth backends.
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'tcms.core.contrib.auth.backends.DBModelBackend',
-)
+]
 
 
 # user guide URL
 USER_GUIDE_URL = "http://kiwitestpad.readthedocs.io/en/latest/tutorial.html"
 
-FOOTER_LINKS = (
+FOOTER_LINKS = [
  ('https://github.com/MrSenko/Kiwi/issues/new', 'Report an Issue'),
  (USER_GUIDE_URL, 'User guide'),
  ('http://kiwitestpad.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
  ('/xmlrpc/', 'XML-RPC service'),
-)
+]
 
 
 # Enable the administrator delete permission
@@ -408,9 +408,9 @@ TINYMCE_DEFAULT_CONFIG = {
                         "Table Row=tableRow1",
 }
 
-LOCALE_PATHS = (
+LOCALE_PATHS = [
     os.path.join(TCMS_ROOT_PATH, 'locale'),
-)
+]
 
 # when importing test cases from XML exported by Testopia
 # this is the version we're looking for
