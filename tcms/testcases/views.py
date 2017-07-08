@@ -1137,9 +1137,7 @@ def get(request, case_id, template_name='case/get.html'):
 @require_POST
 def printable(request, template_name='case/printable.html'):
     """Create the printable copy for plan/case"""
-    req_getlist = request.POST.getlist
-
-    case_pks = req_getlist('case')
+    case_pks = request.POST.getlist('case')
 
     if not case_pks:
         return HttpResponse(Prompt.render(
