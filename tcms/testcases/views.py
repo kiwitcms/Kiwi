@@ -621,32 +621,19 @@ def all(request, template_name="case/all.html"):
                               context_instance=RequestContext(request))
 
 
+@require_GET
 def search(request, template_name='case/all.html'):
     """
     generate the function of searching cases with search criteria
     """
-
-    # TODO: this function now only performs a forward feature, no queries
-    # need here. All of it will be removed in the furture.
-    search_form = SearchCaseForm(request.REQUEST)
-    if request.REQUEST.get('product'):
-        search_form.populate(product_id=request.REQUEST['product'])
+    search_form = SearchCaseForm(request.GET)
+    if request.GET.get('product'):
+        search_form.populate(product_id=request.GET['product'])
     else:
         search_form.populate()
-    if request.REQUEST.get('a') == 'search' and search_form.is_valid():
-        tcs = TestCase.list(search_form.cleaned_data)
-    else:
-        tcs = TestCase.objects.none()
-    tcs = tcs.select_related('author',
-                             'default_tester',
-                             'case_status',
-                             'priority',
-                             'category')
-    tcs = tcs.distinct()
-    tcs = tcs.order_by('-create_date')
+
     context_data = {
         'module': MODULE_NAME,
-        'test_cases': tcs,
         'search_form': search_form,
     }
     return render_to_response(template_name, context_data,

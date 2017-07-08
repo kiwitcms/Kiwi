@@ -1005,3 +1005,30 @@ class TestCloneCase(BasePlanCase):
             'type="checkbox" value="{0}"> {1}</label>'.format(
                 self.case_1.pk, self.case_1.summary),
             html=True)
+
+
+class TestSearchCases(BasePlanCase):
+    """Test search view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestSearchCases, cls).setUpTestData()
+
+        cls.search_url = reverse('tcms.testcases.views.search')
+
+    def test_search_without_selected_product(self):
+        response = self.client.get(self.search_url, {})
+        self.assertContains(
+            response,
+            '<option value="" selected="selected">---------</option>',
+            html=True)
+
+    def test_search_with_selected_product(self):
+        response = self.client.get(self.search_url,
+                                   {'product': self.product.pk})
+        self.assertContains(
+            response,
+            '<option value="{0}" selected="selected">{1}</option>'.format(
+                self.product.pk, self.product.name),
+            html=True
+        )
