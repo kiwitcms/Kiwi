@@ -2,6 +2,9 @@
 
 import json
 import unittest
+import xml.etree.ElementTree
+
+from datetime import datetime
 
 import mock
 
@@ -877,3 +880,32 @@ class TestChangeCasesAutomated(BasePlanCase):
         for pk in self.change_data['case']:
             case = TestCase.objects.get(pk=pk)
             self.assertTrue(case.is_automated_proposed)
+
+
+class TestExportCases(BasePlanCase):
+    """Test export view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestExportCases, cls).setUpTestData()
+        cls.export_url = reverse('testcases-export')
+
+    def test_export_cases(self):
+        response = self.client.post(self.export_url,
+                                    {'case': [self.case_1.pk, self.case_2.pk]})
+
+        today = datetime.now()
+        # Verify header
+        self.assertEqual(
+            'attachment; filename=tcms-testcases-%02i-%02i-%02i.xml' % (
+                today.year, today.month, today.day),
+            response['Content-Disposition'])
+        # verify content
+
+        xmldoc = xml.etree.ElementTree.fromstring(response.content)
+        exported_cases_count = xmldoc.findall('testcase')
+        self.assertEqual(2, len(exported_cases_count))
+
+    def test_no_cases_to_be_exported(self):
+        response = self.client.post(self.export_url, {})
+        self.assertContains(response, 'At least one target is required')
