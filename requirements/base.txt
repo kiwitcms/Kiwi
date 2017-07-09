@@ -5,7 +5,7 @@ python-bugzilla
 jira
 PyGithub
 django-pagination==1.0.7
-django-tinymce==2.4.0
+django-tinymce==2.6.0
 beautifulsoup4>=4.1.1
 six
 django-contrib-comments
