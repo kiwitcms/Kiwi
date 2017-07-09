@@ -12,5 +12,4 @@ beautifulsoup4>=4.1.1
 six
 django-contrib-comments==1.8.0
 django-preserialize==1.2.1
-
-git+https://github.com/release-engineering/kobo.git@kobo-0.5.2#egg=kobo
+kobo==0.5.2
