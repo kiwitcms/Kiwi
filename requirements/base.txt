@@ -10,7 +10,7 @@ django-pagination==1.0.7
 django-tinymce==2.4.0
 beautifulsoup4>=4.1.1
 six
-django-contrib-comments
-django-preserialize
+django-contrib-comments==1.8.0
+django-preserialize==1.2.1
 
 git+https://github.com/release-engineering/kobo.git@kobo-0.5.2#egg=kobo
