@@ -1,6 +1,22 @@
 Change Log
 ==========
 
+3.28 (Jul 11 2017, released on MrSenko.com)
+-------------------------------------------
+
+- Replace w3m cmd line tool with html2text. Fixes
+  `Issue #7 <https://github.com/MrSenko/Kiwi/issues/7>`_ (Mr. Senko)
+- Disable bug reporting if Issue Tracker base_url is empty (Mr. Senko)
+- Don't link TC to Issue Trackers if required parameters not present.
+  By default these are api_url, api_username and api_password. For GitHub
+  they are base_url and api_password. Fixes
+  `Issue #3 <https://github.com/MrSenko/Kiwi/issues/3>`_ (Mr. Senko)
+- Don't add component to testcase if component already exists. Fixes
+  `Issue #13 <https://github.com/MrSenko/Kiwi/issues/13>`_ (Mr. Senko)
+- Add more tests (Chenxiong Qi)
+- Replace deprecated ``request.REQUEST`` (Chenxiong Qi, Mr. Senko)
+
+
 3.26 (Jun 27 2017, released on MrSenko.com)
 -------------------------------------------
 
