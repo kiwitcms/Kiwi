@@ -326,12 +326,12 @@ class CasePlanXMLField(forms.FileField):
                 raise forms.ValidationError(
                     self.error_messages['test_case_element_is_needed'])
 
-        except Exception, error:
+        except Exception as error:
             raise forms.ValidationError('%s: %s' % (
                 self.error_messages['interpret_error'],
                 error
             ))
-        except SyntaxError, error:
+        except SyntaxError as error:
             raise forms.ValidationError('%s: %s' % (
                 self.error_messages['interpret_error'],
                 error
@@ -530,7 +530,7 @@ class SearchPlanForm(forms.Form):
         results = string_to_list(self.cleaned_data['pk__in'])
         try:
             return [int(r) for r in results]
-        except Exception, e:
+        except Exception as e:
             raise forms.ValidationError(str(e))
 
     def clean_tag__name__in(self):

@@ -25,7 +25,7 @@ class BZ_Externer_Track_Thread(threading.Thread):
                         {'ext_bz_bug_id': str(self.bug.case.case_id),
                          'ext_type_description': 'TCMS Test Case'}, ]
                 })
-            except Exception, err:
+            except Exception as err:
                 message = '%s: %s' % (err.__class__.__name__, err)
                 warnings.warn(message)
         else:

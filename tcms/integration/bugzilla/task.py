@@ -19,6 +19,6 @@ def bugzilla_external_track(bug):
                 'external_bugs': [{'ext_bz_bug_id': str(bug.case.case_id),
                                    'ext_type_description': 'TCMS Test Case'}, ]
             })
-        except Exception, err:
+        except Exception as err:
             message = '%s: %s' % (err.__class__.__name__, str(err))
             warnings.warn(message)

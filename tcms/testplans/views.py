@@ -465,7 +465,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
                                           context_instance=RequestContext(
                                               request))
             response = HttpJSONResponse(jsonString)
-        except Exception, e:
+        except Exception as e:
             print e
     else:
         aaData = []
