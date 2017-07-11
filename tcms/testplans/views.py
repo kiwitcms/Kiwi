@@ -458,7 +458,7 @@ def ajax_response(request, querySet, columnIndexNameMap,
             # from django.template.defaultfilters import escapejs
             jsonString = render_to_string(jsonTemplatePath, locals(), request=request)
             response = HttpJSONResponse(jsonString)
-        except Exception, e:
+        except Exception as e:
             print e
     else:
         aaData = []

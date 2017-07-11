@@ -74,7 +74,7 @@ def get(request):
         try:
             model_instance = model_class.objects.get(pk=target_id)
             links = LinkReference.get_from(model_instance)
-        except Exception, err:
+        except Exception as err:
             jd = json.dumps({'rc': 1, 'response': str(err)})
             return HttpJSONResponseServerError(content=jd)
 
@@ -108,7 +108,7 @@ def remove(request, link_id):
 
     try:
         LinkReference.unlink(value)
-    except Exception, err:
+    except Exception as err:
         jd = json.dumps({'rc': 1, 'response': str(err)})
         return HttpJSONResponseBadRequest(content=jd)
 

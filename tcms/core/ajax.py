@@ -358,7 +358,7 @@ def get_value_by_type(val, v_type):
     else:
         try:
             value = pipe(val)
-        except Exception, e:
+        except Exception as e:
             error = str(e)
     return value, error
 
