@@ -40,7 +40,7 @@ def get_choice(value, _type=str, deli=','):
     try:
         results = value.split(deli)
         return [_type(r.strip()) for r in results if r]
-    except Exception, e:
+    except Exception as e:
         raise forms.ValidationError(str(e))
 
 
