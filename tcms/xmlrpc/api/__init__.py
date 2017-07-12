@@ -11,3 +11,6 @@ from testcaseplan import *  # NOQA
 from testrun import *  # NOQA
 from user import *  # NOQA
 from version import *  # NOQA
+
+from tcms.xmlrpc.filters import autowrap_xmlrpc_apis
+autowrap_xmlrpc_apis(__path__, __package__)  # NOQA
