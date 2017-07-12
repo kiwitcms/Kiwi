@@ -32,7 +32,7 @@ urlpatterns = [
     # Index and static zone
     url(r'^$', core_views.index, name='core-views-index'),
     url(r'^search/$', core_views.search, name='core-views-search'),
-    url(r'^xmlrpc/$', include(xmlrpc_urls)),
+    url(r'^xmlrpc/', include(xmlrpc_urls)),
 
     # Ajax call responder
     url(r'^ajax/update/$', ajax.update, name='ajax-update'),
