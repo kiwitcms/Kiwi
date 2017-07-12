@@ -5,7 +5,7 @@ import json
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
+from django.apps import apps
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
@@ -32,7 +32,7 @@ def post(request, template_name='comments/comments.html'):
     object_pk = data.get("object_pk")
 
     try:
-        model = models.get_model(*ctype.split(".", 1))
+        model = apps.get_model(*ctype.split(".", 1))
         target = model._default_manager.get(pk=object_pk)
     except:
         raise

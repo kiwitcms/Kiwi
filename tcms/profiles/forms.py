@@ -134,7 +134,7 @@ class BookmarkForm(forms.Form):
 
     def clean(self):
         from django.conf import settings
-        from django.db import models
+        from django.apps import apps
         from django.core.exceptions import ObjectDoesNotExist, ValidationError
         from django.contrib.sites.models import Site
         from django.contrib.auth.models import User
@@ -143,7 +143,7 @@ class BookmarkForm(forms.Form):
         cleaned_data = self.cleaned_data.copy()
         if cleaned_data.get('content_type'):
             try:
-                m = models.get_model(
+                m = apps.get_model(
                     *cleaned_data['content_type'].split(".", 1))
                 target = m._default_manager.get(pk=cleaned_data['object_pk'])
                 app_label, model = cleaned_data['content_type'].split(".", 1)
