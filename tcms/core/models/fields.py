@@ -51,7 +51,7 @@ class BlobField(models.Field):
             raise NotImplementedError
 
     def to_python(self, value):
-        if settings.DATABASE_ENGINE == 'postgresql_psycopg2':
+        if settings.DATABASES['default']['ENGINE'].endswith('postgresql_psycopg2'):
             if value is None:
                 return value
             return str(value)
@@ -61,12 +61,8 @@ class BlobField(models.Field):
     def get_db_prep_save(self, value, connection):
         if value is None:
             return None
-        if settings.DATABASE_ENGINE == 'postgresql_psycopg2':
-            try:
-                import psycopg2
-            except ImportError:
-                raise
-
+        if settings.DATABASES['default']['ENGINE'].endswith('postgresql_psycopg2'):
+            import psycopg2
             return psycopg2.Binary(value)
         else:
             return str(value)
