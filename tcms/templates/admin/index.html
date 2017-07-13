@@ -23,7 +23,7 @@
             <table class="index" summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}" cellspacing="0" cellspan="0">
             <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</a></caption>
              {% for model in app.models %}
-                 <tr class="{% cycle row1,row2 %}">
+                 <tr class="{% cycle 'row1' 'row2' %}">
                 {% if model.perms.change %}
                     <th scope="row" align="left" width="70%"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
                 {% else %}
