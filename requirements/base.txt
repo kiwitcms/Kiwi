@@ -1,4 +1,4 @@
-Django==1.9.13
+Django==1.10.7
 django-uuslug
 odfpy
 python-bugzilla
