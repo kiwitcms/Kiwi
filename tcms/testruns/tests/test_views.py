@@ -207,7 +207,7 @@ class CloneRunBaseTest(BaseCaseRun):
         self.assertContains(
             response,
             '<input id="id_summary" maxlength="255" name="summary" '
-            'type="text" value="{}">'.format(self.test_run.summary),
+            'type="text" value="{}" required>'.format(self.test_run.summary),
             html=True)
 
         for_loop_counter = 1
