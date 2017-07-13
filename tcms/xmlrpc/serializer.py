@@ -30,13 +30,6 @@ def encode_utf8(value):
     return value if value is None else value.encode('utf-8')
 
 
-def int_to_str(value):
-    if value is None:
-        return value
-    delta = timedelta(seconds=value)
-    return timedelta_to_str(delta)
-
-
 def datetime_to_str(value):
     if value is None:
         return value
@@ -451,7 +444,7 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     values_fields_mapping = {
         'auto_update_run_status': ('auto_update_run_status', do_nothing),
         'environment_id': ('environment_id', do_nothing),
-        'estimated_time': ('estimated_time', int_to_str),
+        'estimated_time': ('estimated_time', timedelta_to_str),
         'notes': ('notes', do_nothing),
         'plan_text_version': ('plan_text_version', do_nothing),
         'run_id': ('run_id', do_nothing),
@@ -480,7 +473,7 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'arguments': ('arguments', do_nothing),
         'case_id': ('case_id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
-        'estimated_time': ('estimated_time', int_to_str),
+        'estimated_time': ('estimated_time', timedelta_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_automated': ('is_automated', do_nothing),
         'is_automated_proposed': ('is_automated_proposed', do_nothing),
