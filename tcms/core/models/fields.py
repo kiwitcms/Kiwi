@@ -37,7 +37,6 @@ class BlobValueWrapper(object):
 
 class BlobField(models.Field):
     """A field for persisting binary data in databases that we support."""
-    __metaclass__ = models.SubfieldBase
 
     def db_type(self, connection):
         engine = connection.settings_dict['ENGINE']
@@ -49,6 +48,9 @@ class BlobField(models.Field):
             return 'bytea'
         else:
             raise NotImplementedError
+
+    def from_db_value(self, value, expression, connection, context):
+        return self.to_python(value)
 
     def to_python(self, value):
         if settings.DATABASES['default']['ENGINE'].endswith('postgresql_psycopg2'):
@@ -69,7 +71,8 @@ class BlobField(models.Field):
 
 
 class DurationField(IntegerField):
-    __metaclass__ = models.SubfieldBase
+    def from_db_value(self, value, expression, connection, context):
+        return self.to_python(value)
 
     def to_python(self, value):
         if isinstance(value, (int, long)):
