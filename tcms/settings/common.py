@@ -157,8 +157,13 @@ TEMPLATES = [
             os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\', '/'),
         ],
         'OPTIONS': {
-            'context_processors': DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + [
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.static',
                 'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+
                 'tcms.core.context_processors.admin_prefix_processor',
                 'tcms.core.context_processors.auth_backend_processor',
                 'tcms.core.context_processors.request_contents_processor',
