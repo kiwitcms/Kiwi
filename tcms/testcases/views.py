@@ -1016,8 +1016,8 @@ def get(request, case_id, template_name='case/get.html'):
     try:
         tc = TestCase.objects.select_related(
             'author', 'default_tester',
-            'category__name', 'category__product__name',
-            'priority__value', 'case_status__name').get(case_id=case_id)
+            'category', 'category',
+            'priority', 'case_status').get(case_id=case_id)
     except ObjectDoesNotExist:
         raise Http404
 
@@ -1049,9 +1049,9 @@ def get(request, case_id, template_name='case/get.html'):
 
     # Get the test case runs
     tcrs = tc.case_run.select_related(
-        'run__summary', 'tested_by',
-        'assignee', 'case__category__name',
-        'case__priority__value', 'case_run_status__name').all()
+        'run', 'tested_by',
+        'assignee', 'case',
+        'case', 'case_run_status').all()
     tcrs = tcrs.extra(select={
         'num_bug': RawSQL.num_case_run_bugs,
     }).order_by('run__plan')
@@ -1887,10 +1887,9 @@ def plan(request, case_id):
                 tc.remove_plan(tp)
 
     tps = tc.plan.all()
-    tps = tps.select_related('author__username',
-                             'author__email',
-                             'type__name',
-                             'product__name')
+    tps = tps.select_related('author',
+                             'type',
+                             'product')
 
     context_data = {
         'test_case': tc,

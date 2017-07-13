@@ -38,7 +38,6 @@ class TCR2File(object):
         self.headers = self.HEADERS
 
         qs = tcrs.select_related('case',
-                                 'case__category',
                                  'case_run_status')
         self.tcrs = qs.only('case__summary',
                             'case__script',

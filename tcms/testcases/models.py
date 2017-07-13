@@ -427,7 +427,7 @@ class TestCase(TCMSActionModel):
 
     def get_bugs(self):
         return TestCaseBug.objects.select_related(
-            'case_run', 'bug_system__url_reg_exp'
+            'case_run', 'bug_system'
         ).filter(case__case_id=self.case_id)
 
     def get_components(self):
