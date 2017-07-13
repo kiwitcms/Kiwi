@@ -160,7 +160,7 @@ def check_file(request, file_id):
             except IOError, error:
                 raise Http404(error)
 
-    response = HttpResponse(contents, mimetype=str(attachment.mime_type))
+    response = HttpResponse(contents, content_type=str(attachment.mime_type))
     file_name = smart_str(attachment.file_name)
     response['Content-Disposition'] = \
         'attachment; filename="%s"' % file_name
