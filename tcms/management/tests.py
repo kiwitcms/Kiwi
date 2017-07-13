@@ -422,7 +422,7 @@ class TestEditEnvironmentGroup(TestCase):
             'action': 'modify',
             'id': self.group_nitrate.pk,
             'name': new_group_name,
-            'enabled': 'on',
+            'enabled': True,
             'selected_property_ids': [self.property_1.pk, self.property_2.pk]
         })
 
