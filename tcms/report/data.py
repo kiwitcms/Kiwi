@@ -414,9 +414,7 @@ class CustomDetailsReportData(CustomReportData):
         '''
         tcrs = TestCaseRun.objects.filter(run__build__in=build_ids,
                                           case_run_status_id__in=status_ids)
-        tcrs = tcrs.select_related('run', 'case',
-                                   'case__category',
-                                   'tested_by')
+        tcrs = tcrs.select_related('run', 'case', 'tested_by')
         tcrs = tcrs.only('run', 'case__summary', 'case__category__name',
                          'tested_by__username', 'close_date')
         tcrs = tcrs.order_by('case')
@@ -1244,7 +1242,7 @@ class TestingReportCaseRunsData(object):
     def get_case_runs(self, form):
         filter_criteria = self._get_filter_criteria(form)
         qs = TestCaseRun.objects.filter(**filter_criteria)
-        qs = qs.select_related('run', 'case', 'case__category')
+        qs = qs.select_related('run', 'case')
         case_runs = qs.only('tested_by', 'assignee',
                             'run__run_id',
                             'run__plan',

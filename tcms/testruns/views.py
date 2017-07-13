@@ -234,7 +234,7 @@ def delete(request, run_id):
 
     '''
     try:
-        tr = TestRun.objects.select_related('manager', 'plan__author').get(
+        tr = TestRun.objects.select_related('manager', 'plan').get(
             run_id=run_id
         )
     except ObjectDoesNotExist:
@@ -451,16 +451,16 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
             'default_tester',
             'build',
             'plan',
-            'build__product__name').only('run_id',
-                                         'summary',
-                                         'manager__username',
-                                         'default_tester__id',
-                                         'default_tester__username',
-                                         'plan__name',
-                                         'plan__env_group__name',
-                                         'build__product__name',
-                                         'stop_date',
-                                         'product_version__value')
+            'build').only('run_id',
+                          'summary',
+                          'manager__username',
+                          'default_tester__id',
+                          'default_tester__username',
+                          'plan__name',
+                          'plan__env_group__name',
+                          'build__product__name',
+                          'stop_date',
+                          'product_version__value')
 
         # Further optimize by adding caserun attributes:
         total_records = total_display_records = trs.count()
@@ -610,9 +610,7 @@ def open_run_get_case_runs(request, run):
 
     This is an internal method. Do not call this directly.
     '''
-    tcrs = run.case_run.select_related('run',
-                                       'case',
-                                       'case__priority', 'case__category')
+    tcrs = run.case_run.select_related('run', 'case')
     tcrs = tcrs.only('run__run_id',
                      'run__plan',
                      'case_run_status',
@@ -849,7 +847,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             pk=self.run_id)
 
         case_runs = TestCaseRun.objects.filter(run=run).select_related(
-            'case_run_status', 'case', 'tested_by', 'case__category').only(
+            'case_run_status', 'case', 'tested_by').only(
             'close_date',
             'case_run_status__name',
             'case__category__name',
