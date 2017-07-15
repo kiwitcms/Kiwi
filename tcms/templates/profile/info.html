@@ -36,7 +36,7 @@
 						<input type="hidden" name="user" value="{{ user.pk }}" />
 						{% if AUTH_BACKEND.can_register %}
 						{{ form.username }}
-						<a href="{% url "password_change" %}">Change password</a>
+						<a href="{% url "tcms-password_change" %}">Change password</a>
 						{% else %}
 						{{ user_profile.user.username }}
 						<input type="hidden" name="username" value="{{ user_profile.user.username }}" />
