@@ -61,7 +61,7 @@ def register(request, template_name='registration/registration_form.html'):
                     for name, email in settings.ADMINS:
                         msg.append('<li><a href="mailto:{}">{}</a></li>'.format(email, name))
                     msg.append('</ul>')
-                    msg = ''.join(msg)
+                msg = ''.join(msg)
 
             return HttpResponse(Prompt.render(
                 request=request,
