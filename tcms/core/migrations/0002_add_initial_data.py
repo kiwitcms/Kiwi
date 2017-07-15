@@ -12,7 +12,7 @@ def forwards_add_initial_data(apps, schema_editor):
     ])
 
     Site = apps.get_model('sites', 'Site')
-    Site.objects.create(name='Localhost', domain='127.0.0.1:8000')
+    Site.objects.create(name='localhost', domain='127.0.0.1:8000')
 
 
 def reverse_remove_initial_data(apps, schema_editor):
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('core', '0001_django_comments__object_pk'),
-        ('sites', '__latest__'),
+        ('sites', '0001_initial'),
     ]
 
     operations = [
