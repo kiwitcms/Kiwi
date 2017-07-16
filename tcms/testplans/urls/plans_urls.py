@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^$', views.all, name='testplans-all'),
 
     url(r'^new/$', views.new, name='plans-new'),
-    url(r'^ajax/$', views.ajax_search),
+    url(r'^ajax/$', views.ajax_search, name='plans-ajax_search'),
     url(r'^treeview/$', views.tree_view),
     url(r'^clone/$', views.clone, name='plans-clone'),
     url(r'^printable/$', views.printable, name='plans-printable'),

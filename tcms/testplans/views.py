@@ -22,22 +22,28 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
 from uuslug import slugify
 
-from tcms.core.views import Prompt
+from tcms.core.models import TCMSLog
 from tcms.core.responses import HttpJSONResponse
+from tcms.core.utils.checksum import checksum
+from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
-from tcms.testcases.models import TestCase, TestCasePlan, TestCaseText
-from tcms.testcases.models import TestCaseStatus, TestCaseCategory
+from tcms.core.views import Prompt
 from tcms.management.models import TCMSEnvGroup, Component
+from tcms.search import remove_from_request_path
+from tcms.search.order import order_plan_queryset
+from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
+from tcms.testcases.models import TestCaseStatus, TestCaseCategory
+from tcms.testcases.models import TestCase, TestCasePlan, TestCaseText
+from tcms.testcases.views import get_selected_testcases
+from tcms.testplans.forms import ClonePlanForm
+from tcms.testplans.forms import EditPlanForm
+from tcms.testplans.forms import ImportCasesViaXMLForm
+from tcms.testplans.forms import NewPlanForm
+from tcms.testplans.forms import PlanComponentForm
+from tcms.testplans.forms import SearchPlanForm
 from tcms.testplans.models import TestPlan, TestPlanComponent
 from tcms.testruns.models import TestRun, TestCaseRun
-from tcms.core.models import TCMSLog
-from tcms.search.order import order_plan_queryset
-from tcms.search import remove_from_request_path
-from tcms.testcases.views import get_selected_testcases
-from tcms.testplans.forms import NewPlanForm, EditPlanForm, ClonePlanForm, \
-    ImportCasesViaXMLForm, SearchPlanForm, PlanComponentForm
-from tcms.core.utils.checksum import checksum
-from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
+
 
 MODULE_NAME = "testplans"
 
@@ -383,112 +389,40 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
             else:
                 tps = TestPlan.list(search_form.cleaned_data)
                 tps = tps.select_related('author', 'owner', 'type', 'product')
+
     # columnIndexNameMap is required for correct sorting behavior, 5 should
     # be product, but we use run.build.product
-    columnIndexNameMap = {
-        0: '',
-        1: 'plan_id',
-        2: 'name',
-        3: 'author__username',
-        4: 'owner__username',
-        5: 'product',
-        6: 'product_version',
-        7: 'type',
-        8: 'num_cases',
-        9: 'num_runs',
-        10: ''
-    }
-    return ajax_response(request, tps, columnIndexNameMap,
-                         jsonTemplatePath='plan/common/json_plans.txt')
+    column_names = [
+        '',
+        'plan_id',
+        'name',
+        'author__username',
+        'owner__username',
+        'product',
+        'product_version',
+        'type',
+        'num_cases',
+        'num_runs',
+        ''
+    ]
+    return ajax_response(request, tps, column_names,
+                         'plan/common/json_plans.txt')
 
 
-# TODO: refactor this method by moving sorting, pagination and data calculation
-# to the outside. Response just does what the response is resposible for to the
-# HTTP.
-def ajax_response(request, querySet, columnIndexNameMap,
-                  jsonTemplatePath='plan/common/json_plans.txt', *args):
-    '''
-    json template for the ajax request for searching.
-    '''
-    cols = int(request.GET.get('iColumns', 0))  # Get the number of columns
-    # Safety measure. If someone messes with iDisplayLength manually, we
-    # clip it to the max value of 100.
-    iDisplayLength = min(int(request.GET.get('iDisplayLength', 20)), 100)
-    if iDisplayLength == -1:
-        startRecord = 0
-        endRecord = querySet.count()
-    else:
-        # Where the data starts from (page)
-        startRecord = int(request.GET.get('iDisplayStart', 0))
-        # where the data ends (end of page)
-        endRecord = startRecord + iDisplayLength
-    # Pass sColumns
-    keys = columnIndexNameMap.keys()
-    keys.sort()
-    colitems = [columnIndexNameMap[key] for key in keys]
-    sColumns = ",".join(map(str, colitems))
+def ajax_response(request, queryset, column_names, template_name):
+    """json template for the ajax request for searching"""
+    dt = DataTableResult(request.GET, queryset, column_names)
 
-    # Ordering data
-    iSortingCols = int(request.GET.get('iSortingCols', 0))
-    asortingCols = []
+    data = dt.get_response_data()
+    data['querySet'] = calculate_stats_for_testplans(data['querySet'])
 
-    if iSortingCols:
-        for sortedColIndex in range(0, iSortingCols):
-            sortedColID = int(
-                request.GET.get('iSortCol_' + str(sortedColIndex), 0))
-            # make sure the column is sortable first
-            if request.GET.get('bSortable_%s' % sortedColID, 'false') == \
-                    'true':
-                sortedColName = columnIndexNameMap[sortedColID]
-                sortingDirection = request.GET.get(
-                    'sSortDir_' + str(sortedColIndex), 'asc')
-                if sortingDirection == 'desc':
-                    sortedColName = '-' + sortedColName
-                asortingCols.append(sortedColName)
-        if len(asortingCols):
-            querySet = querySet.order_by(*asortingCols)
-    # count how many records match the final criteria
-    iTotalRecords = iTotalDisplayRecords = querySet.count()
-    # get the slice
-    querySet = querySet[startRecord:endRecord]
-
-    # We need to display the number of cases and runs that are related to each
-    # TestPlan.
-    querySet = calculate_stats_for_testplans(querySet)
-
-    sEcho = int(request.GET.get('sEcho', 0))  # required echo response
-
-    if jsonTemplatePath:
-        try:
-            # prepare the JSON with the response, consider using :
-            # from django.template.defaultfilters import escapejs
-            jsonString = render_to_string(jsonTemplatePath, locals(), request=request)
-            response = HttpJSONResponse(jsonString)
-        except Exception as e:
-            print e
-    else:
-        aaData = []
-        a = querySet.values()
-        for row in a:
-            rowkeys = row.keys()
-            rowvalues = row.values()
-            rowlist = []
-            for col in range(0, len(colitems)):
-                for idx, val in enumerate(rowkeys):
-                    if val == colitems[col]:
-                        rowlist.append(str(rowvalues[idx]))
-            aaData.append(rowlist)
-            response_dict = {}
-            response_dict.update({'aaData': aaData})
-            response_dict.update(
-                {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
-                 'iTotalDisplayRecords': iTotalDisplayRecords,
-                 'sColumns': sColumns})
-            response = HttpJSONResponse(json_dumps(response_dict))
-            # prevent from caching datatables result
-            # add_never_cache_headers(response)
-
-    return response
+    # prepare the JSON with the response, consider using :
+    # from django.template.defaultfilters import escapejs
+    json_result = render_to_string(
+        template_name,
+        data,
+        request=request)
+    return HttpJSONResponse(json_result)
 
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):
