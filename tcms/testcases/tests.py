@@ -12,6 +12,7 @@ from django import test
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.forms import ValidationError
+from django.test import RequestFactory
 
 from uuslug import slugify
 
@@ -23,6 +24,7 @@ from tcms.testcases.models import TestCaseTag
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testcases.models import TestCaseComponent
 from tcms.testcases.models import TestCasePlan
+from tcms.testcases.views import ajax_response
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseCategoryFactory
@@ -1031,3 +1033,80 @@ class TestSearchCases(BasePlanCase):
                 self.product.pk, self.product.name),
             html=True
         )
+
+
+class TestAJAXResponse(BasePlanCase):
+    """Test ajax_response"""
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+        self.column_names = [
+            'case_id',
+            'summary',
+            'author__username',
+            'default_tester__username',
+            'is_automated',
+            'case_status__name',
+            'category__name',
+            'priority__value',
+            'create_date',
+        ]
+
+        self.template = 'case/common/json_cases.txt'
+
+    def test_return_empty_cases(self):
+        url = reverse('testcases-ajax_search')
+        request = self.factory.get(url, {
+
+        })
+        request.user = self.tester
+
+        empty_cases = TestCase.objects.none()
+        response = ajax_response(request, empty_cases, self.column_names, self.template)
+
+        data = json.loads(response.content)
+
+        self.assertEqual(0, data['sEcho'])
+        self.assertEqual(0, data['iTotalRecords'])
+        self.assertEqual(0, data['iTotalDisplayRecords'])
+        self.assertEqual([], data['aaData'])
+
+    def test_return_sorted_cases_by_name_desc(self):
+        url = reverse('testcases-ajax_search')
+        request = self.factory.get(url, {
+            'sEcho': 1,
+            'iDisplayStart': 0,
+            'iDisplayLength': 2,
+            'iSortCol_0': 0,
+            'sSortDir_0': 'desc',
+            'iSortingCols': 1,
+            'bSortable_0': 'true',
+            'bSortable_1': 'true',
+            'bSortable_2': 'true',
+            'bSortable_3': 'true',
+        })
+        request.user = self.tester
+
+        cases = self.plan.case.all()
+        response = ajax_response(request, cases, self.column_names, self.template)
+
+        data = json.loads(response.content)
+
+        total = self.plan.case.count()
+        self.assertEqual(1, data['sEcho'])
+        self.assertEqual(total, data['iTotalRecords'])
+        self.assertEqual(total, data['iTotalDisplayRecords'])
+        self.assertEqual(2, len(data['aaData']))
+
+        id_links = [row[2] for row in data['aaData']]
+        id_links.sort()
+        expected_id_links = [
+            "<a href='{0}'>{1}</a>".format(
+                reverse('testcases-get', args=[case.pk]),
+                case.pk,
+            )
+            for case in self.plan.case.order_by('-pk')[0:2]
+        ]
+        expected_id_links.sort()
+        self.assertEqual(expected_id_links, id_links)
