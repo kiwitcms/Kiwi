@@ -34,6 +34,7 @@ from tcms.core.exceptions import NitrateException
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.bugtrackers import Bugzilla
 from tcms.core.utils import clean_request
+from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
@@ -348,18 +349,19 @@ def load_runs_of_one_plan(request, plan_id,
     data, it accepts field lookup parameters collected from the filter panel
     in the UI.
     """
-    column_index_name_map = {0: '',
-                             1: 'run_id',
-                             2: 'summary',
-                             3: 'manager__username',
-                             4: 'default_tester__username',
-                             5: 'start_date',
-                             6: 'build__name',
-                             7: 'stop_date',
-                             8: 'total_num_caseruns',
-                             9: 'failure_caseruns_percent',
-                             10: 'successful_caseruns_percent',
-                             }
+    column_names = {
+        '',
+        'run_id',
+        'summary',
+        'manager__username',
+        'default_tester__username',
+        'start_date',
+        'build__name',
+        'stop_date',
+        'total_num_caseruns',
+        'failure_caseruns_percent',
+        'successful_caseruns_percent',
+    }
 
     tp = TestPlan.objects.get(plan_id=plan_id)
     form = PlanFilterRunForm(request.GET)
@@ -369,10 +371,9 @@ def load_runs_of_one_plan(request, plan_id,
         queryset = queryset.select_related(
             'build', 'manager', 'default_tester').order_by('-pk')
 
-        total_records = total_display_records = queryset.count()
-
-        queryset = sort_queryset(request, queryset, column_index_name_map)
-        queryset = datatable_paginate(request, queryset)
+        dt = DataTableResult(request.GET, queryset, column_names)
+        response_data = dt.get_response_data()
+        searched_runs = response_data['querySet']
 
         # Get associated statistics data
         run_filters = dict(('run__{0}'.format(key), value)
@@ -399,7 +400,7 @@ def load_runs_of_one_plan(request, plan_id,
         cases_subtotal = magic_convert(qs,
                                        key_name='run', value_name='count')
 
-        for run in queryset:
+        for run in searched_runs:
             run_id = run.pk
             cases_count = cases_subtotal.get(run_id, 0)
             if cases_count:
@@ -413,16 +414,15 @@ def load_runs_of_one_plan(request, plan_id,
                 'success_percent': success_percent,
             }
     else:
-        queryset = TestRun.objects.none()
-        total_records = total_display_records = queryset.count()
+        response_data = {
+            'sEcho': int(request.GET.get('sEcho', 0)),
+            'iTotalRecords': 0,
+            'iTotalDisplayRecords': 0,
+            'querySet': TestRun.objects.none(),
+        }
 
-    context = {
-        'sEcho': int(request.GET.get('sEcho', 0)),
-        'iTotalRecords': total_records,
-        'iTotalDisplayRecords': total_display_records,
-        'runs': queryset,
-    }
-    json_data = render_to_string(template_name, context,
+    json_data = render_to_string(template_name,
+                                 response_data,
                                  context_instance=RequestContext(request))
     return HttpJSONResponse(json_data)
 
@@ -430,20 +430,6 @@ def load_runs_of_one_plan(request, plan_id,
 @require_GET
 def ajax_search(request, template_name='run/common/json_runs.txt'):
     """Response request to search test runs from Search Runs"""
-    column_index_name_map = {0: '',
-                             1: 'run_id',
-                             2: 'summary',
-                             3: 'manager__username',
-                             4: 'default_tester__username',
-                             5: 'plan',
-                             6: 'build__product__name',
-                             7: 'product_version',
-                             8: 'env_groups',
-                             9: 'total_num_caseruns',
-                             10: 'stop_date',
-                             11: 'completed',
-                             }
-
     search_form = SearchRunForm(request.GET)
     if request.GET.get('product'):
         search_form.populate(product_id=request.GET['product'])
@@ -457,60 +443,67 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
             'default_tester',
             'build',
             'plan',
-            'build__product__name').only('run_id',
-                                         'summary',
-                                         'manager__username',
-                                         'default_tester__id',
-                                         'default_tester__username',
-                                         'plan__name',
-                                         'build__product__name',
-                                         'stop_date',
-                                         'product_version__value')
+            'build__product__name'
+        ).only(
+            'run_id',
+            'summary',
+            'manager__username',
+            'default_tester__id',
+            'default_tester__username',
+            'plan__name',
+            'build__product__name',
+            'stop_date',
+            'product_version__value'
+        )
 
         # Further optimize by adding caserun attributes:
         trs = trs.extra(
             select={'env_groups': RawSQL.environment_group_for_run},
         )
 
-        total_records = total_display_records = trs.count()
+        column_names = [
+            '',
+            'run_id',
+            'summary',
+            'manager__username',
+            'default_tester__username',
+            'plan',
+            'build__product__name',
+            'product_version',
+            'env_groups',
+            'total_num_caseruns',
+            'stop_date',
+            'completed',
+        ]
 
-        trs = sort_queryset(request, trs, column_index_name_map)
-        trs = datatable_paginate(request, trs)
+        dt = DataTableResult(request.GET, trs, column_names)
+        response_data = dt.get_response_data()
+        searched_runs = response_data['querySet']
 
         # Get associated statistics data
-        run_ids = [run.pk for run in trs]
+        run_ids = [run.pk for run in searched_runs]
         qs = TestCaseRun.objects \
-            .filter(case_run_status=TestCaseRunStatus.id_failed(),
-                    run__in=run_ids) \
+            .filter(case_run_status=TestCaseRunStatus.id_failed(), run__in=run_ids) \
             .values('run', 'case_run_status') \
             .annotate(count=Count('pk')) \
             .order_by('run', 'case_run_status')
-        failure_subtotal = magic_convert(qs,
-                                         key_name='run',
-                                         value_name='count')
+        failure_subtotal = magic_convert(qs, key_name='run', value_name='count')
 
         completed_status_ids = TestCaseRunStatus._get_completed_status_ids()
         qs = TestCaseRun.objects \
-            .filter(case_run_status__in=completed_status_ids,
-                    run__in=run_ids) \
+            .filter(case_run_status__in=completed_status_ids, run__in=run_ids) \
             .values('run', 'case_run_status') \
             .annotate(count=Count('pk')) \
             .order_by('run', 'case_run_status')
         completed_subtotal = dict((
             (run_id, sum((item['count'] for item in stats_rows)))
             for run_id, stats_rows
-            in itertools.groupby(qs.iterator(),
-                                 key=lambda row: row['run'])))
+            in itertools.groupby(qs.iterator(), key=lambda row: row['run'])))
 
-        qs = TestCaseRun.objects \
-            .filter(run__in=run_ids) \
-            .values('run') \
-            .annotate(cases_count=Count('case'))
-        cases_subtotal = magic_convert(qs,
-                                       key_name='run',
-                                       value_name='cases_count')
+        qs = TestCaseRun.objects.filter(run__in=run_ids).values('run').annotate(cases_count=Count('case'))
+        cases_subtotal = magic_convert(qs, key_name='run', value_name='cases_count')
 
-        for run in trs:
+        for run in searched_runs:
             run_id = run.pk
             cases_count = cases_subtotal.get(run_id, 0)
             if cases_count:
@@ -524,93 +517,17 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
                 'failure_percent': failure_percent,
             }
     else:
-        trs = TestRun.objects.none()
-        total_records = total_display_records = trs.count()
+        response_data = {
+            'sEcho': int(request.GET.get('sEcho', 0)),
+            'iTotalRecords': 0,
+            'iTotalDisplayRecords': 0,
+            'runs': TestRun.objects.none(),
+        }
 
-    # columnIndexNameMap is required for correct sorting behavior, 5 should
-    # be product, but we use run.build.product
-    context = {
-        'sEcho': int(request.GET.get('sEcho', 0)),
-        'iTotalRecords': total_records,
-        'iTotalDisplayRecords': total_display_records,
-        'runs': trs,
-    }
-    json_data = render_to_string(template_name, context,
+    json_data = render_to_string(template_name,
+                                 response_data,
                                  context_instance=RequestContext(request))
     return HttpJSONResponse(json_data)
-
-
-def datatable_paginate(request, queryset):
-    """Paginate queryset
-
-    DataTable sends request with pagination information that is extracted and
-    used to paginate queried queryset.
-    """
-    DEFAULT_PAGE_SIZE = 10
-    MAX_SIZE_PER_PAGE = 100
-
-    # Safety measure. If someone messes with iDisplayLength manually,
-    # we clip it to the max value of 100.
-    display_length = min(int(request.GET.get('iDisplayLength',
-                                             DEFAULT_PAGE_SIZE)),
-                         MAX_SIZE_PER_PAGE)
-    # Where the data starts from (page)
-    start_record = int(request.GET.get('iDisplayStart', 0))
-    # where the data ends (end of page)
-    end_record = start_record + display_length
-
-    return queryset[start_record:end_record]
-
-
-def get_sorting_cols(request, index_column_name_mapping):
-    """Find sorting column and sort direction for each of them
-
-    This works on top of parameters passed along with HTTP request by
-    DataTable.
-
-    :param HTTPRequest request: request object containing sorting information
-    passed by DataTable.
-    :param dict index_column_name_mapping: a mapping from column index to
-    column name. This is passed by a method that is calling this method.
-    :return: sequence of column names sort on. Sort direction will be prefixed
-    if desc is specified by DataTable. If there is no sorting columns found,
-    an empty sequence is returned, that is safe to pass to QuerySet that will
-    not cause Django to generate ORDER BY clause.
-    :rtype: list
-    """
-    get = request.GET.get
-
-    iSortingCols = int(get('iSortingCols', 0))
-    if not iSortingCols:
-        return []
-
-    mapping = ((int(get('iSortCol_{0}'.format(sorting_col_index))),
-                get('sSortDir_{0}'.format(sorting_col_index)))
-               for sorting_col_index in range(0, iSortingCols)
-               if get('bSortable_{0}'.format(
-                   get('iSortCol_{0}'.format(sorting_col_index)))) == u'true')
-
-    return ['{0}{1}'.format('-' if sSortDir_N == 'desc' else '',
-                            index_column_name_mapping[iSortCol_N])
-            for iSortCol_N, sSortDir_N in mapping]
-
-
-def sort_queryset(request, queryset, index_column_name_mapping):
-    """Sort queryset on specified column by DataTable
-
-    Each time an AJAX request from DataTable to sort on a particular column,
-    a set of variable are sent together within the HTTP request. All of them
-    are used to determine which column queryset is sorted on, which columns are
-    sortable (that is defined by JavaScript code in client side), which
-    direction to sort the column that is ASC or DESC.
-
-    :param dict index_column_name_mapping: a mapping from column index to
-    column name, that is used to find and construct the sequence of columns to
-    sort on and the sort direction. This mapping must be as same as the column
-    definitions in client side.
-    """
-    sorting_cols = get_sorting_cols(request, index_column_name_mapping)
-    return queryset.order_by(*sorting_cols)
 
 
 def open_run_get_case_runs(request, run):

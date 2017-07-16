@@ -653,3 +653,121 @@ class TestCloneView(BasePlanCase):
         for origin_plan in (self.plan, self.another_plan):
             cloned_plan = TestPlan.objects.get(name=origin_plan.make_cloned_name())
             self.verify_cloned_plan(origin_plan, cloned_plan)
+
+
+class TestAJAXSearch(BasePlanCase):
+    """Test ajax_search view method"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestAJAXSearch, cls).setUpTestData()
+
+        # Add more plans for testing search
+        for i in range(25):
+            TestPlanFactory(author=cls.tester,
+                            owner=cls.tester,
+                            product=cls.product,
+                            product_version=cls.version)
+
+        # So far, each test has 26 plans
+
+        cls.search_url = reverse('tcms.testplans.views.ajax_search')
+
+        # By default, search active plans. Search by other fields if needed,
+        # copy this dict and add other fields.
+        cls.search_data = {
+            # Search plans
+            'is_active': 'on',
+
+            # DataTable properties: pagination and sorting
+            'sEcho': 1,
+            'iDisplayStart': 0,
+            'iDisplayLength': 3,
+            'iSortCol_0': 1,
+            'sSortDir_0': 'asc',
+            'iSortingCols': 1,
+            # In the view, first column is not sortable.
+            'bSortable_0': 'false',
+            'bSortable_1': 'true',
+            'bSortable_2': 'true',
+            'bSortable_3': 'true',
+            'bSortable_4': 'true',
+        }
+
+    def test_emtpy_plans(self):
+        response = self.client.get(self.search_url, {})
+
+        data = json.loads(response.content)
+
+        self.assertEqual(0, data['sEcho'])
+        self.assertEqual(0, data['iTotalRecords'])
+        self.assertEqual(0, data['iTotalDisplayRecords'])
+        self.assertEqual([], data['aaData'])
+
+    def test_get_first_page_order_by_pk(self):
+        search_data = self.search_data.copy()
+
+        response = self.client.get(self.search_url, search_data)
+
+        data = json.loads(response.content)
+
+        plans_count = TestPlan.objects.count()
+        self.assertEqual(1, data['sEcho'])
+        self.assertEqual(plans_count, data['iTotalRecords'])
+        self.assertEqual(plans_count, data['iTotalDisplayRecords'])
+        self.assertEqual(search_data['iDisplayLength'], len(data['aaData']))
+
+        expected_plans = TestPlan.objects.all()[0:3]
+
+        for i, plan in enumerate(expected_plans):
+            self.assertEquals(
+                "<a href='{}'>{}</a>".format(plan.get_absolute_url(), plan.pk),
+                data['aaData'][i]['1'])
+
+    def test_get_last_page_order_by_name(self):
+        search_data = self.search_data.copy()
+        plans_count = TestPlan.objects.count()
+        # To request last page
+        search_data['iDisplayStart'] = plans_count / 3 * 3
+        search_data['iSortCol_0'] = 2
+
+        response = self.client.get(self.search_url, search_data)
+
+        data = json.loads(response.content)
+
+        self.assertEqual(1, data['sEcho'])
+        self.assertEqual(plans_count, data['iTotalRecords'])
+        self.assertEqual(plans_count, data['iTotalDisplayRecords'])
+        self.assertEqual(2, len(data['aaData']))
+
+        expected_plans = TestPlan.objects.order_by('name')[
+            search_data['iDisplayStart']:plans_count
+        ]
+
+        for i, plan in enumerate(expected_plans):
+            self.assertEquals(
+                "<a href='{}'>{}</a>".format(plan.get_absolute_url(), plan.pk),
+                data['aaData'][i]['1'])
+
+    def test_get_second_page_order_by_pk_desc(self):
+        search_data = self.search_data.copy()
+        # To request second page
+        search_data['iDisplayStart'] = 3
+        search_data['sSortDir_0'] = 'desc'
+
+        response = self.client.get(self.search_url, search_data)
+
+        data = json.loads(response.content)
+
+        plans_count = TestPlan.objects.count()
+        self.assertEqual(1, data['sEcho'])
+        self.assertEqual(plans_count, data['iTotalRecords'])
+        self.assertEqual(plans_count, data['iTotalDisplayRecords'])
+        self.assertEqual(search_data['iDisplayLength'], len(data['aaData']))
+
+        expected_plans = TestPlan.objects.order_by('-pk')[3:6]
+
+        for i, plan in enumerate(expected_plans):
+            self.assertEquals(
+                "<a href='{}'>{}</a>".format(plan.get_absolute_url(), plan.pk),
+                data['aaData'][i]['1'])

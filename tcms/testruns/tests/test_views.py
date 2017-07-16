@@ -650,6 +650,33 @@ class TestAJAXSearchRuns(BaseCaseRun):
             default_tester=cls.run_tester,
             tag=[TestTagFactory(name='rhel')])
 
+        cls.search_data = {
+            'action': 'search',
+            # Add criteria for searching runs in each test
+
+            # DataTable properties: pagination and sorting
+            'sEcho': 1,
+            'iDisplayStart': 0,
+            # Make enough length to display all searched runs in one page
+            'iDisplayLength': TestRun.objects.count() + 1,
+            'iSortCol_0': 1,
+            'sSortDir_0': 'asc',
+            'iSortingCols': 1,
+            # In the view, first column is not sortable.
+            'bSortable_0': 'false',
+            'bSortable_1': 'true',
+            'bSortable_2': 'true',
+            'bSortable_3': 'true',
+            'bSortable_4': 'true',
+            'bSortable_5': 'true',
+            'bSortable_6': 'true',
+            'bSortable_7': 'true',
+            'bSortable_8': 'true',
+            'bSortable_9': 'true',
+            'bSortable_10': 'true',
+            'bSortable_11': 'true',
+        }
+
     def assert_found_runs(self, expected_found_runs, search_result):
         expected_runs_count = len(expected_found_runs)
         self.assertEqual(expected_runs_count, search_result['iTotalRecords'])

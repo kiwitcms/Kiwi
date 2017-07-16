@@ -3,7 +3,7 @@
 	"iTotalRecords": {{ iTotalRecords }},
 	"iTotalDisplayRecords": {{ iTotalDisplayRecords }},
 	"aaData":[
-	{% for run in runs %}
+	{% for run in querySet %}
 	[
 		"<input type='checkbox' name='run' value='{{  run.pk  }}' class='run_selector'>",
 		"<a href='{% url "tcms.testruns.views.get" run.run_id %}'>{{  run.run_id  }}</a>",

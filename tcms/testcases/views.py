@@ -26,6 +26,7 @@ from tcms.core.db import SQLExecution
 from tcms.core.logs.models import TCMSLogModel
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
+from tcms.core.utils import DataTableResult
 from tcms.core.views import Prompt
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
@@ -711,97 +712,33 @@ def ajax_search(request, template_name='case/common/json_cases.txt'):
 
     # columnIndexNameMap is required for correct sorting behavior, 5 should be
     # product, but we use run.build.product
-    columnIndexNameMap = {
-        0: '', 1: '', 2: 'case_id',
-        3: 'summary', 4: 'author__username',
-        5: 'default_tester__username', 6: 'is_automated',
-        7: 'case_status__name', 8: 'category__name',
-        9: 'priority__value', 10: 'create_date'
-    }
-    return ajax_response(request, tcs, tp, columnIndexNameMap,
-                         jsonTemplatePath='case/common/json_cases.txt')
+    column_names = [
+        '',
+        '',
+        'case_id',
+        'summary',
+        'author__username',
+        'default_tester__username',
+        'is_automated',
+        'case_status__name',
+        'category__name',
+        'priority__value',
+        'create_date',
+    ]
+    return ajax_response(request, tcs, column_names, template_name)
 
 
-def ajax_response(request, querySet, testplan, columnIndexNameMap,
-                  jsonTemplatePath='case/common/json_cases.txt', *args):
-    """
-    json template for the ajax request for searching.
-    """
-    # Get the number of columns
-    cols = int(request.GET.get('iColumns', 0))
-    # Safety measure. If someone messes with iDisplayLength manually,
-    # we clip it to the max value of 100.
-    iDisplayLength = min(int(request.GET.get('iDisplayLength', 20)), 100)
-    # Where the data starts from (page)
-    startRecord = int(request.GET.get('iDisplayStart', 0))
-    # where the data ends (end of page)
-    endRecord = startRecord + iDisplayLength
+def ajax_response(request, queryset, column_names, template_name):
+    """json template for the ajax request for searching"""
+    dt = DataTableResult(request.GET, queryset, column_names)
 
-    # Pass sColumns
-    keys = columnIndexNameMap.keys()
-    keys.sort()
-    colitems = [columnIndexNameMap[key] for key in keys]
-    sColumns = ",".join(map(str, colitems))
-
-    # Ordering data
-    iSortingCols = int(request.GET.get('iSortingCols', 0))
-    asortingCols = []
-
-    if iSortingCols:
-        for sortedColIndex in range(0, iSortingCols):
-            sortedColID = int(
-                request.GET.get('iSortCol_' + str(sortedColIndex), 0))
-            # make sure the column is sortable first
-            if request.GET.get('bSortable_%s' % sortedColID,
-                               'false') == 'true':
-                sortedColName = columnIndexNameMap[sortedColID]
-                sortingDirection = request.GET.get(
-                    'sSortDir_' + str(sortedColIndex), 'asc')
-                if sortingDirection == 'desc':
-                    sortedColName = '-' + sortedColName
-                asortingCols.append(sortedColName)
-        if len(asortingCols):
-            querySet = querySet.order_by(*asortingCols)
-
-    # count how many records match the final criteria
-    iTotalRecords = iTotalDisplayRecords = querySet.count()
-    # get the slice
-    querySet = querySet[startRecord:endRecord]
-
-    sEcho = int(request.GET.get('sEcho', 0))  # required echo response
-
-    if jsonTemplatePath:
-        try:
-            # prepare the JSON with the response, consider using :
-            # from django.template.defaultfilters import escapejs
-            jsonString = render_to_string(jsonTemplatePath, locals(),
-                                          context_instance=RequestContext(
-                                              request))
-            response = HttpJSONResponse(jsonString)
-        except Exception as e:
-            print e
-    else:
-        aaData = []
-        a = querySet.values()
-        for row in a:
-            rowkeys = row.keys()
-            rowvalues = row.values()
-            rowlist = []
-            for col in range(0, len(colitems)):
-                for idx, val in enumerate(rowkeys):
-                    if val == colitems[col]:
-                        rowlist.append(str(rowvalues[idx]))
-            aaData.append(rowlist)
-            response_dict = {}
-            response_dict.update({'aaData': aaData})
-            response_dict.update(
-                {'sEcho': sEcho, 'iTotalRecords': iTotalRecords,
-                 'iTotalDisplayRecords': iTotalDisplayRecords,
-                 'sColumns': sColumns})
-            response = HttpJSONResponse(json.dumps(response_dict))
-            # prevent from caching datatables result
-            #    add_never_cache_headers(response)
-    return response
+    # prepare the JSON with the response, consider using :
+    # from django.template.defaultfilters import escapejs
+    json_result = render_to_string(
+        template_name,
+        dt.get_response_data(),
+        context_instance=RequestContext(request))
+    return HttpJSONResponse(json_result)
 
 
 class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
