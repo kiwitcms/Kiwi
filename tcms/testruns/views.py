@@ -359,26 +359,32 @@ def load_runs_of_one_plan(request, plan_id,
         run_filters = dict(('run__{0}'.format(key), value)
                            for key, value in form.cleaned_data.items())
 
-        qs = TestCaseRun.objects \
-            .filter(case_run_status=TestCaseRunStatus.id_failed(),
-                    **run_filters) \
-            .values('run', 'case_run_status') \
-            .annotate(count=Count('pk')).order_by('run', 'case_run_status')
-        failure_subtotal = magic_convert(qs,
-                                         key_name='run', value_name='count')
+        qs = TestCaseRun.objects.filter(
+            case_run_status=TestCaseRunStatus.id_failed(),
+            **run_filters
+        ).values(
+            'run', 'case_run_status'
+        ).annotate(
+            count=Count('pk')
+        ).order_by('run', 'case_run_status')
+        failure_subtotal = magic_convert(qs, key_name='run', value_name='count')
 
-        qs = TestCaseRun.objects \
-            .filter(case_run_status=TestCaseRunStatus.id_passed(),
-                    **run_filters) \
-            .values('run', 'case_run_status') \
-            .annotate(count=Count('pk')).order_by('run', 'case_run_status')
-        success_subtotal = magic_convert(qs,
-                                         key_name='run', value_name='count')
+        qs = TestCaseRun.objects.filter(
+            case_run_status=TestCaseRunStatus.id_passed(),
+            **run_filters
+        ).values(
+            'run', 'case_run_status'
+        ).annotate(
+            count=Count('pk')
+        ).order_by('run', 'case_run_status')
+        success_subtotal = magic_convert(qs, key_name='run', value_name='count')
 
-        qs = TestCaseRun.objects.filter(**run_filters).values('run') \
-            .annotate(count=Count('case')).order_by('run')
-        cases_subtotal = magic_convert(qs,
-                                       key_name='run', value_name='count')
+        qs = TestCaseRun.objects.filter(
+            **run_filters
+        ).values('run').annotate(
+            count=Count('case')
+        ).order_by('run')
+        cases_subtotal = magic_convert(qs, key_name='run', value_name='count')
 
         for run in searched_runs:
             run_id = run.pk
