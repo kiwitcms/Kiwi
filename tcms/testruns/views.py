@@ -12,7 +12,6 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.db import transaction
 from django.db.models import Count
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -31,7 +30,6 @@ from tcms.core.exceptions import NitrateException
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils import clean_request
 from tcms.core.utils.raw_sql import RawSQL
-from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.core.utils.validations import validate_bug_id
 from tcms.core.views import Prompt
@@ -1230,7 +1228,6 @@ def order_case(request, run_id):
         ))
 
     case_run_ids = request.POST.getlist('case_run')
-    sql = 'UPDATE test_case_runs SET sortkey = %s WHERE test_case_runs.case_run_id = %s'
     # sort key begin with 10, end with length*10, step 10.
     # e.g.
     # case_run_ids = [10334, 10294, 10315, 10443]
@@ -1245,10 +1242,8 @@ def order_case(request, run_id):
     #         (40, 10443)
     new_sort_keys = xrange(10, (len(case_run_ids) + 1) * 10, 10)
     key_id_pairs = itertools.izip(new_sort_keys, (int(pk) for pk in case_run_ids))
-    with transaction.atomic():
-        for key_id_pair in key_id_pairs:
-            cursor = connection.writer_cursor
-            cursor.execute(sql, key_id_pair)
+    for sort_key, caserun_id in key_id_pairs:
+        TestCaseRun.objects.filter(pk=caserun_id).update(sortkey=sort_key)
 
     return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
