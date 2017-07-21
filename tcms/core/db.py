@@ -4,7 +4,6 @@ from itertools import izip
 from tcms.core.utils.tcms_router import connection
 
 __all__ = ('SQLExecution',
-           'get_groupby_result',
            'GroupByResult')
 
 
@@ -238,74 +237,3 @@ class GroupByResult(object):
                 count = 1 if value_in_row else count + 1
         self._meta['value_leaf_count'] = count
         return count
-
-
-# TODO: enhance method get_groupby_result to support multiple fields in GROUP
-# BY clause.
-
-# TODO: key_conv and value_name are not used, maybe the rest as well.
-# we should probably remove them
-def get_groupby_result(sql, params,
-                       key_name=None, key_conv=None,
-                       value_name=None,
-                       with_rollup=False, rollup_name=None):
-    '''Get mapping between GROUP BY field and total count
-
-    Example, to execute SQL `SELECT objtype, count(*) from t1 GROUP by name`.
-
-    Possible values of objtype are plan, case, run. Then, the result of this
-    method would be a dictionary object like this
-
-    {'plan': 100, 'case': 50, 'run': 300}
-
-    If use WITH ROLLUP like
-    `SELECT objtype, count(*) from t1 GROUP by name WITH ROLLUP`. Result of
-    this query would be
-
-    {'plan': 100, 'case': 50, 'run': 300, 'TOTAL': 450}
-
-    @param sql: the GROUP BY SQL statement
-    @type sql: str
-    @param params: parameters of the GROUP BY SQL statement
-    @type params: list, tuple
-    @param key_name: the GROUP BY field name, that will be the key in result
-        mapping object. Default to groupby_field if not specified
-    @type key_name: str
-    @param key_conv: method call applied to the value of GROUP BY field while
-        constructing the result mapping
-    @type key_conv: callable object
-    @param value_name: the field name of total count. Default to total_count if
-        not specified
-    @param with_rollup: whether WITH ROLLUP is used in GROUP BY. Default to
-        False
-    @type with_rollup: bool
-    @param rollup_name: name associated with ROLLUP field. Default to TOTAL
-    @type rollup_name: str
-    @return: mapping between GROUP BY field and the total count
-    @rtype: dict
-    '''
-    def _key_conv(value):
-        if key_conv is not None:
-            if not hasattr(key_conv, '__call__'):
-                raise ValueError('key_conv is not a callable object')
-            return key_conv(value)
-        else:
-            return value
-
-    _key_name = 'groupby_field' if key_name is None else str(key_name)
-    _value_name = 'total_count' if value_name is None else str(value_name)
-
-    _rollup_name = None
-    if with_rollup:
-        _rollup_name = 'TOTAL' if rollup_name is None else rollup_name
-
-    def _rows_generator():
-        sql_executor = SQLExecution(sql, params)
-        for row in sql_executor.rows:
-            key, value = row[_key_name], row[_value_name]
-            if with_rollup:
-                yield _key_conv(_rollup_name if key is None else key), value
-            else:
-                yield _key_conv(key), value
-
-    return GroupByResult(_rows_generator(), total_name=_rollup_name)
