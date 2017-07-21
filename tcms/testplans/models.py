@@ -14,7 +14,6 @@ from uuslug import slugify
 
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils.checksum import checksum
-from tcms.core.utils.tcms_router import connection
 from tcms.management.models import Version
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseCategory
@@ -209,10 +208,7 @@ class TestPlan(TCMSActionModel):
         )
 
     def remove_tag(self, tag):
-        cursor = connection.writer_cursor
-        cursor.execute("DELETE from test_plan_tags \
-            WHERE plan_id = %s \
-            AND tag_id = %s", (self.pk, tag.pk))
+        TestPlanTag.objects.filter(plan=self, tag=tag).delete()
 
     def remove_component(self, component):
         try:
