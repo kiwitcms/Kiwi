@@ -304,9 +304,51 @@ class TestGetText(test.TestCase):
     '''TODO: '''
 
 
-@unittest.skip('TODO: test case is not implemented yet.')
-class TestRemoveTag(test.TestCase):
-    '''TODO: '''
+class TestRemoveTag(XmlrpcAPIBaseTest):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = UserFactory()
+        cls.http_req = make_http_request(user=cls.user,
+                                         user_perm='testplans.delete_testplantag')
+
+        cls.product = ProductFactory()
+        cls.plans = [
+            TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product),
+            TestPlanFactory(author=cls.user, owner=cls.user, product=cls.product),
+        ]
+
+        cls.tag0 = TestTagFactory(name='xmlrpc_test_tag_0')
+        cls.tag1 = TestTagFactory(name='xmlrpc_test_tag_1')
+
+        cls.plans[0].add_tag(cls.tag0)
+        cls.plans[1].add_tag(cls.tag1)
+
+        cls.tag_name = 'xmlrpc_tag_name_1'
+
+    def test_single_id(self):
+        '''Test with single plan id and tag id'''
+        # removing by ID raises an error
+        self.assertRaisesXmlrpcFault(INTERNAL_SERVER_ERROR, XmlrpcTestPlan.remove_tag,
+                                     self.http_req, self.plans[0].pk, self.tag0.pk)
+
+        # removing by name works fine
+        XmlrpcTestPlan.remove_tag(self.http_req, self.plans[0].pk, self.tag0.name)
+        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag0.pk).exists()
+        self.assertFalse(tag_exists)
+
+    def test_array_argument(self):
+        XmlrpcTestPlan.remove_tag(self.http_req, self.plans[0].pk, [self.tag0.name, self.tag_name])
+        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk,
+                                             tag__name__in=[self.tag0.name, self.tag_name])
+        self.assertFalse(tag_exists.exists())
+
+        plans_ids = [plan.pk for plan in self.plans]
+        tags_names = [self.tag_name, 'xmlrpc_tag_name_2']
+        XmlrpcTestPlan.remove_tag(self.http_req, plans_ids, tags_names)
+        for plan in self.plans:
+            tag_exists = plan.tag.filter(name__in=tags_names).exists()
+            self.assertFalse(tag_exists)
 
 
 @unittest.skip('TODO: test case is not implemented yet.')
