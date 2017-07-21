@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.core import mail
+from django.contrib.sites.models import Site
 
 from tcms.core.contrib.auth.models import UserActivateKey
 
@@ -91,21 +91,6 @@ class TestLogout(TestCase):
         self.assertRedirects(response, next_url)
 
 
-class MockThread(object):
-    """Mocking threading.Thread that does not run target in thread"""
-
-    def __init__(self, target, args=None, kwargs=None):
-        self.target = target
-        self.args = args or ()
-        self.kwargs = kwargs or {}
-
-    def setDaemon(self, is_daemon):
-        """Do nothing for setting daemon"""
-
-    def start(self):
-        self.target(*self.args, **self.kwargs)
-
-
 class TestRegistration(TestCase):
 
     def setUp(self):
@@ -119,7 +104,6 @@ class TestRegistration(TestCase):
             '<input value="Register" class="loginbutton sprites" type="submit">',
             html=True)
 
-    @patch('tcms.core.utils.mailto.threading.Thread', new=MockThread)
     @patch('tcms.core.contrib.auth.models.sha1')
     def assert_user_registration(self, username, sha1):
         sha1.return_value.hexdigest.return_value = self.fake_activate_key
@@ -147,20 +131,27 @@ class TestRegistration(TestCase):
 
         return response
 
+    @patch('tcms.core.utils.mailto.send_mail')
     @patch('tcms.core.contrib.auth.views.settings.EMAIL_HOST', new='smtp.example.com')
-    def test_register_user_by_email_confirmation(self):
+    def test_register_user_by_email_confirmation(self, send_mail):
         response = self.assert_user_registration('new-tester')
 
         self.assertContains(
             response,
             'Your account has been created, please check your mailbox for confirmation')
 
+        s = Site.objects.get_current()
+        confirm_url = 'http://%s%s' % (s.domain, reverse('tcms-confirm', args=[self.fake_activate_key]))
+
         # Verify notification mail
-        self.assertEqual(1, len(mail.outbox))
-        self.assertEqual(settings.EMAIL_FROM, mail.outbox[0].from_email)
-        self.assertIn(reverse('tcms-confirm',
-                              args=[self.fake_activate_key]),
-                      mail.outbox[0].body)
+        send_mail.assert_called_once_with(
+            settings.EMAIL_SUBJECT_PREFIX + 'Your new 127.0.0.1:8000 account confirmation',
+            """Welcome, new-tester, and thanks for signing up for an 127.0.0.1:8000 account!
+
+
+%s
+""" % confirm_url,
+            settings.EMAIL_FROM, ['new-tester@example.com'], fail_silently=False)
 
     @patch('tcms.core.contrib.auth.views.settings.EMAIL_HOST', new='')
     @patch('tcms.core.contrib.auth.views.settings.ADMINS',
