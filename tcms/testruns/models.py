@@ -13,7 +13,6 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.models.fields import DurationField
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
-from tcms.core.utils.tcms_router import connection
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.testcases.models import TestCaseBug, TestCaseText, NoneText
 from tcms.testruns import signals as run_watchers
@@ -216,10 +215,7 @@ class TestRun(TCMSActionModel):
         TestRunTag.objects.filter(run=self, tag=tag).delete()
 
     def remove_cc(self, user):
-        cursor = connection.writer_cursor
-        cursor.execute("DELETE from test_run_cc \
-            WHERE run_id = %s \
-            AND who = %s", (self.run_id, user.id))
+        TestRunCC.objects.filter(run=self, user=user).delete()
 
     def remove_env_value(self, env_value):
         run_env_value = TCMSEnvRunValueMap.objects.get(
