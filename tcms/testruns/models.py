@@ -213,10 +213,7 @@ class TestRun(TCMSActionModel):
                                                         value=env_value)
 
     def remove_tag(self, tag):
-        cursor = connection.writer_cursor
-        cursor.execute("DELETE from test_run_tags \
-            WHERE run_id = %s \
-            AND tag_id = %s", (self.pk, tag.pk))
+        TestRunTag.objects.filter(run=self, tag=tag).delete()
 
     def remove_cc(self, user):
         cursor = connection.writer_cursor
