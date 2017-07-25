@@ -50,15 +50,6 @@ INNER JOIN products ON (products.id = components.product_id)
 WHERE test_case_components.case_id IN (%s)
 '''
 
-TC_EXPORT_ALL_CASE_TAGS = '''
-SELECT test_cases.case_id,
-       test_tags.tag_name
-FROM test_cases
-INNER JOIN test_case_tags ON (test_case_tags.case_id = test_cases.case_id)
-INNER JOIN test_tags ON (test_tags.tag_id = test_case_tags.tag_id)
-WHERE test_cases.case_id IN (%s)
-'''
-
 TC_EXPORT_ALL_CASE_TEXTS = '''
 SELECT t1.case_id,
        t2.setup,
