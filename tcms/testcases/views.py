@@ -521,27 +521,22 @@ def get_selected_cases_ids(request):
         return []
 
 
-def get_tags_from_cases(case_ids, plan_id=None):
+def get_tags_from_cases(case_ids, plan=None):
     '''Get all tags from test cases
 
     @param cases: an iterable object containing test cases' ids
     @type cases: list, tuple
+
+    @param plan: TestPlan object
+
     @return: a list containing all found tags with id and name
     @rtype: list
     '''
-    case_id_list = ', '.join((str(item) for item in case_ids))
-    if plan_id:
-        sql = sqls.GET_TAGS_FROM_CASES_FROM_PLAN.format(
-            case_id_list if case_id_list else '0')
+    query = TestTag.objects.filter(cases__in=case_ids).distinct().order_by('name')
+    if plan:
+        query = query.filter(cases__plan=plan)
 
-        rows = SQLExecution(sql, (plan_id,)).rows
-    else:
-        sql = sqls.GET_TAGS_FROM_CASES.format(
-            case_id_list if case_id_list else '0')
-
-        rows = SQLExecution(sql).rows
-
-    return sorted(rows, key=lambda tag: tag['tag_name'])
+    return query
 
 
 def all(request, template_name="case/all.html"):
@@ -567,10 +562,7 @@ def all(request, template_name="case/all.html"):
     selected_case_ids = get_selected_cases_ids(request)
 
     # Get the tags own by the cases
-    if tp:
-        ttags = get_tags_from_cases((case.pk for case in tcs), tp.pk)
-    else:
-        ttags = get_tags_from_cases((case.pk for case in tcs))
+    ttags = get_tags_from_cases((case.pk for case in tcs), tp)
 
     tcs = paginate_testcases(request, tcs)
 
