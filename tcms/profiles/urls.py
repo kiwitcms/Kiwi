@@ -22,9 +22,10 @@ urlpatterns = [
 
     url(r'login/$', contrib_auth_views.login, name='tcms-login'),
     url(r'changepassword/$', contrib_auth_views.password_change, name='tcms-password_change'),
-    url(r'changepassword/done/$', contrib_auth_views.password_change_done),
+    url(r'changepassword/done/$', contrib_auth_views.password_change_done,
+        name='password_change_done'),
     url(r'^passwordreset/$', contrib_auth_views.password_reset, name='tcms-password_reset'),
-    url(r'^passwordreset/done/$', contrib_auth_views.password_reset_done),
-    url(r'^passwordreset/confirm//(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
-        contrib_auth_views.password_reset_confirm),
+    url(r'^passwordreset/done/$', contrib_auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^passwordreset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+        contrib_auth_views.password_reset_confirm, name='password_reset_confirm'),
 ]
