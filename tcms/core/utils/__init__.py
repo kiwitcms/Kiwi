@@ -28,15 +28,6 @@ def form_errors_to_list(form):
     return [(k, unicode(v[0])) for k, v in form.errors.items()]
 
 
-def get_string_combinations(s):
-    """
-    @param s: string
-    @return: a list containing s and the lowercase, uppercase
-            & first letter uppercase form of s.
-    """
-    return s, s.lower(), s.upper(), s.capitalize()
-
-
 def calc_percent(x, y):
     if not x or not y:
         return 0
