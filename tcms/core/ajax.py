@@ -33,7 +33,6 @@ from tcms.testruns import signals as run_watchers
 from tcms.testruns.models import TestRun, TestCaseRun
 from tcms.core.exceptions import NitrateException
 from tcms.core.helpers.comments import add_comment
-from tcms.core.utils import get_string_combinations
 from tcms.core.utils.validations import validate_bug_id
 
 post_update = Signal(providing_args=["instances", "kwargs"])
@@ -124,14 +123,10 @@ def info(request):
             # Generate the string combination, because we are using
             # case sensitive table
             if query.get('name__startswith'):
-                seq = get_string_combinations(query['name__startswith'])
-                tags = tags.filter(eval(
-                    '|'.join(["models.Q(tag__name__startswith = '%s')" % item for item in seq])
-                ))
+                tags = tags.filter(tag__name__istartswith=query['name__startswith'])
                 del query['name__startswith']
 
-            tags = tags.filter(**query).distinct()
-            return tags
+            return tags.filter(**query).distinct()
 
         def users(self):
             from django.contrib.auth.models import User

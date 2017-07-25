@@ -825,7 +825,7 @@ function constructTagZone(container, parameters) {
             'name__startswith': request.term,
             'info_type': 'tags',
             'format': 'ulli',
-            'field': 'name'
+            'field': 'tag__name'
           },
           'success': function(data) {
             var processedData = [];
