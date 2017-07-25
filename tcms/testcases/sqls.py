@@ -77,20 +77,3 @@ FROM   test_cases t1
                     AND t2.case_text_version = t3.max_version )
 WHERE  t2.case_id IN ( %s )
 '''
-
-GET_TAGS_FROM_CASES_FROM_PLAN = '''
-SELECT DISTINCT test_tags.tag_id, test_tags.tag_name
-FROM test_tags
-INNER JOIN test_case_tags ON (test_tags.tag_id = test_case_tags.tag_id)
-INNER JOIN test_cases ON (test_case_tags.case_id = test_cases.case_id)
-INNER JOIN test_case_plans ON (test_cases.case_id = test_case_plans.case_id)
-WHERE test_cases.case_id IN ({0}) AND test_case_plans.plan_id = %s
-'''
-
-GET_TAGS_FROM_CASES = '''
-SELECT DISTINCT test_tags.tag_id, test_tags.tag_name
-FROM test_tags
-INNER JOIN test_case_tags ON (test_tags.tag_id = test_case_tags.tag_id)
-INNER JOIN test_cases ON (test_case_tags.case_id = test_cases.case_id)
-WHERE test_cases.case_id IN ({0})
-'''
