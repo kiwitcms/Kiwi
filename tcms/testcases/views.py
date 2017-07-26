@@ -32,9 +32,9 @@ from tcms.testcases import actions
 from tcms.testcases import data
 from tcms.testcases import sqls
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCaseAttachment, TestCasePlan, TestCaseBugSystem
+    TestCaseAttachment, TestCasePlan, TestCaseBugSystem, \
+    TestCaseBug, TestCaseText
 from tcms.management.models import Priority, TestTag
-from tcms.testcases.models import TestCaseBug
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
@@ -1175,10 +1175,17 @@ def generator_proxy(case_pks):
         TestCase.objects.filter(
             pk__in=case_pks
         ).values('case_id', 'tag__name').order_by('case_id'),
-        'case_id')
+        'case_id'
+    )
 
-    sql = sqls.TC_EXPORT_ALL_CASE_TEXTS % (param_sql, param_sql)
-    plan_text_dict = create_dict(sql, case_pks * 2, key_func)
+    plan_text_dict = create_dict_from_query(
+        TestCaseText.objects.filter(
+            case__in=case_pks
+        ).values(
+            'case_id', 'setup', 'action', 'effect', 'breakdown'
+        ).order_by('case_id', '-case_text_version'),
+        'case_id'
+    )
 
     for meta in metas:
         case_id = meta['case_id']
