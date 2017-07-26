@@ -49,22 +49,3 @@ INNER JOIN test_case_components ON (components.id = test_case_components.compone
 INNER JOIN products ON (products.id = components.product_id)
 WHERE test_case_components.case_id IN (%s)
 '''
-
-TC_EXPORT_ALL_CASE_TEXTS = '''
-SELECT t1.case_id,
-       t2.setup,
-       t2.action,
-       t2.effect,
-       t2.breakdown
-FROM   test_cases t1
-       INNER JOIN test_case_texts t2
-               ON ( t1.case_id = t2.case_id )
-       INNER JOIN (SELECT t4.case_id,
-                          Max(t4.case_text_version) AS max_version
-                   FROM   test_case_texts t4
-                   WHERE  t4.case_id IN ( %s )
-                   GROUP  BY t4.case_id) t3
-               ON ( t2.case_id = t3.case_id
-                    AND t2.case_text_version = t3.max_version )
-WHERE  t2.case_id IN ( %s )
-'''
