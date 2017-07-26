@@ -43,6 +43,7 @@ from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
     CloneCaseForm, CaseBugForm, CaseTagForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_group_by_dict as create_dict
+from tcms.utils.dict_utils import create_dict_from_query
 from fields import CC_LIST_DEFAULT_DELIMITER
 
 
@@ -1170,15 +1171,11 @@ def generator_proxy(case_pks):
     compoment_dict = create_dict(
         sqls.TC_EXPORT_ALL_CASES_COMPONENTS % param_sql,
         case_pks, key_func)
-    tag_dict = {}
-    for tag in TestCase.objects.filter(
-        pk__in=case_pks
-    ).values('case_id', 'tag__name').order_by('case_id'):
-        case_id = tag['case_id']
-        if case_id in tag_dict:
-            tag_dict[case_id].append(tag)
-        else:
-            tag_dict[case_id] = [tag]
+    tag_dict = create_dict_from_query(
+        TestCase.objects.filter(
+            pk__in=case_pks
+        ).values('case_id', 'tag__name').order_by('case_id'),
+        'case_id')
 
     sql = sqls.TC_EXPORT_ALL_CASE_TEXTS % (param_sql, param_sql)
     plan_text_dict = create_dict(sql, case_pks * 2, key_func)
