@@ -21,7 +21,6 @@ from django.views.generic.base import TemplateView
 from django_comments.models import Comment
 
 from tcms.core import forms
-from tcms.core.db import SQLExecution
 from tcms.core.logs.models import TCMSLogModel
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
@@ -30,7 +29,6 @@ from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
 from tcms.testcases import data
-from tcms.testcases import sqls
 from tcms.testcases.models import TestCase, TestCaseStatus, \
     TestCaseAttachment, TestCasePlan, TestCaseBugSystem, \
     TestCaseBug, TestCaseText, TestCaseComponent
@@ -1165,10 +1163,16 @@ def export(request, template_name='case/export.xml'):
 
 
 def generator_proxy(case_pks):
-    param_sql = ','.join(itertools.repeat('%s', len(case_pks)))
+    metas = TestCase.objects.filter(
+        pk__in=case_pks
+    ).exclude(
+        case_status__name='DISABLED'
+    ).values(
+        'case_id', 'summary', 'is_automated', 'notes',
+        'priority__value', 'case_status__name',
+        'author__email', 'default_tester__email',
+        'category__name')
 
-    metas = SQLExecution(sqls.TC_EXPORT_ALL_CASES_META % param_sql,
-                         case_pks).rows
     component_dict = create_dict_from_query(
         TestCaseComponent.objects.filter(
             case__in=case_pks

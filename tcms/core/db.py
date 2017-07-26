@@ -1,81 +1,11 @@
 # -*- coding: utf-8 -*-
-from itertools import izip
-
-from tcms.core.utils.tcms_router import connection
-
-__all__ = ('SQLExecution',
-           'GroupByResult')
 
 
-class SQLExecution(object):
-    '''Cursor.execute proxy class
-
-    This proxy class provides two major abilities.
-
-    1. iteration of visiting each row selected by SELECT statement from db
-    server.
-
-    2. get the affected rows' count. This will benefit developers to avoid
-    issuing extra SQL to count the number of rows current SELECT statement is
-    retrieving.
-
-    Compatibility: the second item above relies on cursor.rowcount attribute
-    described in PEP-0249. Cannot guarantee all database backends supports this
-    by following 249 specification. But, at least, MySQLdb and psycopg2 does.
-    '''
-
-    def __init__(self, sql, params=None, with_field_name=True):
-        '''Initialize and execute SQL query
-
-        @param sql: the SQL query to execute
-        @type sql: str
-        @param params: optional, parameters for the SQL
-            tuple
-        @type sql: list or tuple
-        '''
-        self.cursor = connection.reader_cursor
-        if params is None:
-            self.cursor.execute(sql)
-        else:
-            self.cursor.execute(sql, params)
-        self.field_names = [field[0] for field in self.cursor.description]
-
-        if with_field_name:
-            self.rows = self._rows_with_field_name
-        else:
-            self.rows = self._raw_rows
-
-    @property
-    def rowcount(self):
-        return self.cursor.rowcount
-
-    @property
-    def _rows_with_field_name(self):
-        while 1:
-            row = self.cursor.fetchone()
-            if row is None:
-                break
-            yield dict(izip(self.field_names, row))
-
-    @property
-    def _raw_rows(self):
-        while 1:
-            row = self.cursor.fetchone()
-            if row is None:
-                break
-            yield row
-
-    @property
-    def scalar(self):
-        row = self.rows.next()
-        for key, value in row.iteritems():
-            return value
+__all__ = ('GroupByResult')
 
 
 # TODO: redesign GroupByResult, major goal is to distiguish level node and
 # value node.
-
-
 class GroupByResult(object):
     '''Group By result
 
