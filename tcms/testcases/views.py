@@ -1110,8 +1110,8 @@ def get(request, case_id, template_name='case/get.html'):
 # NOTE: if you want to print cases according to case_status, you have to pass
 # printable_case_status in the REQUEST. Why to do this rather than using
 # case_status is that, Select All causes previous filter criteria is
-#       passed via REQUEST, whereas case_status must exist. So, we have to find
-#       a way to distinguish them for different purpose, respectively.
+# passed via REQUEST, whereas case_status must exist. So, we have to find
+# a way to distinguish them for different purpose, respectively.
 @require_POST
 def printable(request, template_name='case/printable.html'):
     """Create the printable copy for plan/case"""
@@ -1123,10 +1123,15 @@ def printable(request, template_name='case/printable.html'):
             info_type=Prompt.Info,
             info='At least one target is required.', ))
 
-    repeat = len(case_pks)
-    params_sql = ','.join(itertools.repeat('%s', repeat))
-    sql = sqls.TC_PRINTABLE_CASE_TEXTS % (params_sql, params_sql)
-    tcs = SQLExecution(sql, case_pks * 2).rows
+    tcs = create_dict_from_query(
+        TestCaseText.objects.filter(
+            case__in=case_pks
+        ).values(
+            'case_id', 'case__summary', 'setup', 'action', 'effect', 'breakdown'
+        ).order_by('case_id', '-case_text_version'),
+        'case_id',
+        True
+    )
 
     context_data = {
         'test_cases': tcs,
@@ -1186,7 +1191,8 @@ def generator_proxy(case_pks):
         ).values(
             'case_id', 'setup', 'action', 'effect', 'breakdown'
         ).order_by('case_id', '-case_text_version'),
-        'case_id'
+        'case_id',
+        True
     )
 
     for meta in metas:

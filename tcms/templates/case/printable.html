@@ -18,9 +18,10 @@
 </head>
 <body>
 	<!-- Title area -->
-	{% for test_case in test_cases %}
+	{% for case_id, test_cases in test_cases.items %}
 	<div style="clear: left">
-		<h3>[{{ test_case.case_id }}] {{ test_case.summary }}</h3>
+            {% for test_case in test_cases %}
+		<h3>[{{ test_case.case_id }}] {{ test_case.case__summary }}</h3>
 		<div class="thin-line"></div>
 		<div class="case-stage">
 			<h4>Set up</h4>
@@ -38,6 +39,7 @@
 			<h4>Breakdown</h4>
 			{{ test_case.breakdown|safe }}
 		</div>
+            {% endfor %}
 	</div>
 	{% endfor %}
 </body>
