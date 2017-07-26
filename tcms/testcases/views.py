@@ -33,7 +33,7 @@ from tcms.testcases import data
 from tcms.testcases import sqls
 from tcms.testcases.models import TestCase, TestCaseStatus, \
     TestCaseAttachment, TestCasePlan, TestCaseBugSystem, \
-    TestCaseBug, TestCaseText
+    TestCaseBug, TestCaseText, TestCaseComponent
 from tcms.management.models import Priority, TestTag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -42,7 +42,6 @@ from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
     SearchCaseForm, CaseFilterForm, EditCaseForm, CaseNotifyForm, \
     CloneCaseForm, CaseBugForm, CaseTagForm
 from tcms.testplans.forms import SearchPlanForm
-from tcms.utils.dict_utils import create_group_by_dict as create_dict
 from tcms.utils.dict_utils import create_dict_from_query
 from fields import CC_LIST_DEFAULT_DELIMITER
 
@@ -1161,16 +1160,19 @@ def export(request, template_name='case/export.xml'):
 
 
 def generator_proxy(case_pks):
-    def key_func(data):
-        return data['case_id']
-
     param_sql = ','.join(itertools.repeat('%s', len(case_pks)))
 
     metas = SQLExecution(sqls.TC_EXPORT_ALL_CASES_META % param_sql,
                          case_pks).rows
-    compoment_dict = create_dict(
-        sqls.TC_EXPORT_ALL_CASES_COMPONENTS % param_sql,
-        case_pks, key_func)
+    component_dict = create_dict_from_query(
+        TestCaseComponent.objects.filter(
+            case__in=case_pks
+        ).values(
+            'case_id', 'component_id', 'component__name', 'component__product__name'
+        ).order_by('case_id'),
+        'case_id'
+    )
+
     tag_dict = create_dict_from_query(
         TestCase.objects.filter(
             pk__in=case_pks
@@ -1189,7 +1191,7 @@ def generator_proxy(case_pks):
 
     for meta in metas:
         case_id = meta['case_id']
-        c_meta = compoment_dict.get(case_id, None)
+        c_meta = component_dict.get(case_id, None)
         if c_meta:
             meta['c_meta'] = c_meta
 

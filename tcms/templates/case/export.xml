@@ -12,8 +12,8 @@
         <summary>{{ meta.summary }}</summary>
         <categoryname>{{ meta.category_name }}</categoryname>
         {% for component in meta.c_meta %}
-        <component product="{{ component.product_name }}">
-            {{ component.component_name }}
+        <component product="{{ component.component__product__name }}">
+            {{ component.component__name }}
         </component>
         {% endfor %}
         <defaulttester>{{ meta.tester_email|default:"" }}</defaulttester>

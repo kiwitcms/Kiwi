@@ -38,14 +38,3 @@ test_cases.category_id)
 WHERE (test_cases.case_id IN (%s)
        AND test_case_status.case_status_id IN (1,2,4));
 '''
-
-TC_EXPORT_ALL_CASES_COMPONENTS = '''
-SELECT test_case_components.case_id,
-       components.id as component_id,
-       components.name as component_name,
-       products.name as product_name
-FROM components
-INNER JOIN test_case_components ON (components.id = test_case_components.component_id)
-INNER JOIN products ON (products.id = components.product_id)
-WHERE test_case_components.case_id IN (%s)
-'''
