@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+3.30 (Jul 27 2017, released on MrSenko.com)
+-------------------------------------------
+
+- Upgrade Django to 1.9.13 (Mr. Senko)
+- Upgrade all other requirements to their latest versions (Mr. Senko)
+- Fix bug in `class BlobField` where database engine is not examined
+  correctly (Mr. Senko)
+- Replace `SQLExecution` with ORM queries (Mr. Senko)
+- Improve test assertions so they don't fail when database returns
+  records in arbitrary order (Mr. Senko)
+
+IMPORTANT: this release introduces new database migrations!
+
+
 3.28 (Jul 11 2017, released on MrSenko.com)
 -------------------------------------------
 
