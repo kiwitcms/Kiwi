@@ -27,12 +27,12 @@ def upload_file(request):
         try:
             upload_file.name.encode('utf8')
         except UnicodeEncodeError:
-            return HttpResponse(Prompt.render(
+            return Prompt.render(
                 request=request,
                 info_type=Prompt.Alert,
                 info='Upload File name is not legal.',
                 next='javascript:window.history.go(-1);',
-            ))
+            )
 
         now = datetime.now()
 
@@ -43,14 +43,14 @@ def upload_file(request):
         stored_file_name = smart_str(stored_file_name)
 
         if upload_file._size > settings.MAX_UPLOAD_SIZE:
-            return HttpResponse(Prompt.render(
+            return Prompt.render(
                 request=request,
                 info_type=Prompt.Alert,
                 info='You upload entity is too large. \
                     Please ensure the file is less than %s bytes. \
                     ' % settings.MAX_UPLOAD_SIZE,
                 next='javascript:window.history.go(-1);',
-            ))
+            )
 
         # Create the upload directory when it's not exist
         try:
@@ -61,14 +61,14 @@ def upload_file(request):
         # Write to a temporary file
         try:
             open(stored_file_name, 'ro')
-            return HttpResponse(Prompt.render(
+            return Prompt.render(
                 request=request,
                 info_type=Prompt.Alert,
                 info='File named \'%s\' already exist in upload folder, \
                     please rename to another name for solve conflict.\
                     ' % upload_file.name,
                 next='javascript:window.history.go(-1);',
-            ))
+            )
         except IOError:
             pass
 

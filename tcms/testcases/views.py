@@ -1026,14 +1026,14 @@ def get(request, case_id, template_name='case/get.html'):
         try:
             tp = tps.get(pk=plan_id_from_request)
         except TestPlan.DoesNotExist:
-            return HttpResponse(Prompt.render(
+            return Prompt.render(
                 request=request,
                 info_type=Prompt.Info,
                 info='''This case has been removed from the plan, but you
                           can view the case detail''',
                 next=reverse('testcases-get',
                              args=[case_id, ]),
-            ))
+            )
     else:
         tp = None
 
@@ -1116,10 +1116,10 @@ def printable(request, template_name='case/printable.html'):
     case_pks = request.POST.getlist('case')
 
     if not case_pks:
-        return HttpResponse(Prompt.render(
+        return Prompt.render(
             request=request,
             info_type=Prompt.Info,
-            info='At least one target is required.', ))
+            info='At least one target is required.', )
 
     tcs = create_dict_from_query(
         TestCaseText.objects.filter(
@@ -1142,10 +1142,10 @@ def export(request, template_name='case/export.xml'):
     """Export the plan"""
     case_pks = request.POST.getlist('case')
     if not case_pks:
-        return HttpResponse(Prompt.render(
+        return Prompt.render(
             request=request,
             info_type=Prompt.Info,
-            info='At least one target is required.', ))
+            info='At least one target is required.', )
 
     timestamp = datetime.datetime.now()
     timestamp_str = '%02i-%02i-%02i' \
@@ -1469,12 +1469,12 @@ def clone(request, template_name='case/clone.html'):
     request_data = getattr(request, request.method)
 
     if 'selectAll' not in request_data and 'case' not in request_data:
-        return HttpResponse(Prompt.render(
+        return Prompt.render(
             request=request,
             info_type=Prompt.Info,
             info='At least one case is required.',
             next='javascript:window.history.go(-1)'
-        ))
+        )
 
     tp_src = plan_from_request_or_none(request)
     tp = None
@@ -1632,13 +1632,13 @@ def clone(request, template_name='case/clone.html'):
                 )
 
             # Otherwise it will prompt to user the clone action is successful.
-            return HttpResponse(Prompt.render(
+            return Prompt.render(
                 request=request,
                 info_type=Prompt.Info,
                 info='Test case successful to clone, click following link '
                      'to return to plans page.',
                 next=reverse('plans-all')
-            ))
+            )
     else:
         selected_cases = get_selected_testcases(request)
         # Initial the clone case form

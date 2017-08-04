@@ -3,7 +3,6 @@
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_http_methods
@@ -31,12 +30,12 @@ def register(request, template_name='registration/registration_form.html'):
     backend = get_using_backend()
     cr = getattr(backend, 'can_register')  # can register
     if not cr:
-        return HttpResponse(Prompt.render(
+        return Prompt.render(
             request=request,
             info_type=Prompt.Alert,
             info='The backend is not allowed to register.',
             next=request_data.get('next', reverse('core-views-index'))
-        ))
+        )
 
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
@@ -63,12 +62,12 @@ def register(request, template_name='registration/registration_form.html'):
                     msg.append('</ul>')
                 msg = ''.join(msg)
 
-            return HttpResponse(Prompt.render(
+            return Prompt.render(
                 request=request,
                 info_type=Prompt.Info,
                 info=msg,
                 next=request.POST.get('next', reverse('core-views-index'))
-            ))
+            )
     else:
         form = RegistrationForm()
 
@@ -88,12 +87,12 @@ def confirm(request, activation_key):
         ak = ak.get(activation_key=activation_key)
     except UserActivateKey.DoesNotExist:
         msg = 'This key no longer exist in the database.'
-        return HttpResponse(Prompt.render(
+        return Prompt.render(
             request=request,
             info_type=Prompt.Info,
             info=msg,
             next=request.GET.get('next', reverse('core-views-index'))
-        ))
+        )
 
     # All thing done, start to active the user and use the user login
     user = ak.user
@@ -105,10 +104,10 @@ def confirm(request, activation_key):
     # Response to web browser.
     msg = 'Your account has been activated successfully, click next link to ' \
           're-login.'
-    return HttpResponse(Prompt.render(
+    return Prompt.render(
         request=request,
         info_type=Prompt.Info,
         info=msg,
         next=request.GET.get('next', reverse(
             'tcms-redirect_to_profile'))
-    ))
+    )
