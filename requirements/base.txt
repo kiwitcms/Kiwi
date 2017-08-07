@@ -4,7 +4,7 @@ odfpy
 python-bugzilla
 jira
 PyGithub
-django-pagination
+dj-pagination
 django-tinymce
 beautifulsoup4
 six

@@ -1,13 +1,4 @@
 from django.utils.deprecation import MiddlewareMixin
-from pagination.middleware import PaginationMiddleware
-
-
-class MyPaginationMiddleware(MiddlewareMixin, PaginationMiddleware):
-    """
-        New-style middleware for Django 1.10 until we drop
-        django-pagination
-    """
-    pass
 
 
 class CsrfDisableMiddleware(MiddlewareMixin):
