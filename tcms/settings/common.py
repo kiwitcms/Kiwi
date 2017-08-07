@@ -185,7 +185,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'tcms.core.middleware.MyPaginationMiddleware',
+    'dj_pagination.middleware.PaginationMiddleware',
 ]
 
 ROOT_URLCONF = 'tcms.urls'
@@ -204,7 +204,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_comments',
-    'pagination',
+    'dj_pagination',
     'tinymce',
 
     'tcms.core',
@@ -276,6 +276,7 @@ LISTENING_MODEL_SIGNAL = True
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100
+PAGINATION_DEFAULT_PAGINATION = DEFAULT_PAGE_SIZE
 
 # TCMS use Piwik to track request.
 ENABLE_PIWIK_TRACKING = False
