@@ -63,6 +63,7 @@ class PlanTests(test.TestCase):
                                         product=cls.product,
                                         type=cls.plan_type)
         cls.plan_id = cls.test_plan.pk
+        cls.child_plan = TestPlanFactory(parent=cls.test_plan)
 
     def test_open_plans_search(self):
         location = reverse('plans-all')
@@ -73,6 +74,18 @@ class PlanTests(test.TestCase):
         location = reverse('plans-all')
         response = self.c.get(location, {'action': 'search', 'type': self.test_plan.type.pk})
         self.assertEquals(response.status_code, httplib.OK)
+
+    def test_plan_treeview(self):
+        location = reverse('plans-all')
+        response = self.c.get(location, {'t': 'ajax', 'pk': self.test_plan.pk})
+
+        self.assertEqual(response.status_code, httplib.OK)
+        data = json.loads(response.content)
+        self.assertEqual(1, len(data))
+        self.assertEqual(self.test_plan.pk, data[0]['pk'])
+        self.assertEqual(self.test_plan.get_url_path(), data[0]['get_url_path'])
+        self.assertEqual(None, data[0]['parent'])
+        self.assertEqual(1, data[0]['num_children'])
 
     def test_plan_new_get(self):
         location = reverse('plans-new')

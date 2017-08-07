@@ -62,8 +62,8 @@ Nitrate.TestPlans.TreeView = {
     }
 
     // Get the parent plan
-    if (c_plan.fields.parent) {
-      var p2 = { pk: c_plan.fields.parent, t: 'ajax'};
+    if (c_plan.parent) {
+      var p2 = { pk: c_plan.parent, t: 'ajax'};
       var c2 = function(t) {
         var returnobj = jQ.parseJSON(t.responseText);
         p_plan = returnobj[0];
@@ -72,8 +72,8 @@ Nitrate.TestPlans.TreeView = {
     }
 
     // Get the brother plans
-    if (c_plan.fields.parent) {
-      var p3 = { parent__pk: c_plan.fields.parent, t: 'ajax'};
+    if (c_plan.parent) {
+      var p3 = { parent__pk: c_plan.parent, t: 'ajax'};
       var c3 = function(t) {
         var returnobj = jQ.parseJSON(t.responseText);
         b_plans = returnobj;
@@ -116,7 +116,7 @@ Nitrate.TestPlans.TreeView = {
     var tree = Nitrate.TestPlans.TreeView;
     var parent_obj, brother_obj;
 
-    var parent_param = { pk: tree.data[0].fields.parent, t: 'ajax' };
+    var parent_param = { pk: tree.data[0].parent, t: 'ajax' };
 
     var parent_callback = function(t) {
       var returnobj = jQ.parseJSON(t.responseText);
@@ -124,7 +124,7 @@ Nitrate.TestPlans.TreeView = {
     };
     tree.filter(parent_param, parent_callback);
 
-    var brother_param = { parent__pk: tree.data[0].fields.parent, t: 'ajax' };
+    var brother_param = { parent__pk: tree.data[0].parent, t: 'ajax' };
 
     var brother_callback = function(t){
       var returnobj = jQ.parseJSON(t.responseText);
@@ -196,7 +196,7 @@ Nitrate.TestPlans.TreeView = {
     // Add the 'Up' button
     if (!data && this.data) {
       var data = this.data;
-      if (data && data[0].fields.parent) {
+      if (data && data[0].parent) {
         var li = jQ('<li>');
         var btn = jQ('<input>', {'type': 'button', 'value': 'Up'});
         li.html(btn);
@@ -213,14 +213,14 @@ Nitrate.TestPlans.TreeView = {
       }
 
       var li = jQ('<li>');
-      var title = '[<a href="' + data[i].extras.get_url_path + '">' + data[i].pk + '</a>] ';
+      var title = '[<a href="' + data[i].get_url_path + '">' + data[i].pk + '</a>] ';
 
-      if (data[i].extras.num_children && data[i].children) {
+      if (data[i].num_children && data[i].children) {
         title = icon_expand + title;
         li.addClass('no-list-style');
       }
 
-      if (data[i].extras.num_children && !data[i].children) {
+      if (data[i].num_children && !data[i].children) {
         title = icon_collapse + title;
         li.addClass('no-list-style');
       }
@@ -229,33 +229,33 @@ Nitrate.TestPlans.TreeView = {
         li.addClass('current');
       }
 
-      if (data[i].fields.is_active) {
+      if (data[i].is_active) {
         title = '<div>' + title;
       } else {
         title = '<div class="line-through">' + title;
       }
 
       // Construct the items
-      title += '<a class="plan_name" href="' + data[i].extras.get_url_path + '">' + data[i].fields.name + '</a>';
+      title += '<a class="plan_name" href="' + data[i].get_url_path + '">' + data[i].name + '</a>';
       title += ' (';
-      if (data[i].extras.num_cases && data[i].is_current) {
-        title += '<a href="#testcases" onclick="FocusTabOnPlanPage(this)">' + data[i].extras.num_cases + ' cases</a>, ';
-      } else if (data[i].extras.num_cases && !(data[i].is_current)) {
-        title += '<a href="' + data[i].extras.get_url_path + '#testcases">' + data[i].extras.num_cases + ' cases</a>, ';
+      if (data[i].num_cases && data[i].is_current) {
+        title += '<a href="#testcases" onclick="FocusTabOnPlanPage(this)">' + data[i].num_cases + ' cases</a>, ';
+      } else if (data[i].num_cases && !(data[i].is_current)) {
+        title += '<a href="' + data[i].get_url_path + '#testcases">' + data[i].num_cases + ' cases</a>, ';
       } else {
         title += '0 case, ';
       }
 
-      if (data[i].extras.num_runs && data[i].is_current) {
-        title += '<a href="#testruns" onclick="FocusTabOnPlanPage(this)">' + data[i].extras.num_runs + ' runs</a>, ';
-      } else if (data[i].extras.num_runs && !data[i].is_current) {
-        title += '<a href="' + data[i].extras.get_url_path + '#testruns">' + data[i].extras.num_runs + ' runs</a>, ';
+      if (data[i].num_runs && data[i].is_current) {
+        title += '<a href="#testruns" onclick="FocusTabOnPlanPage(this)">' + data[i].num_runs + ' runs</a>, ';
+      } else if (data[i].num_runs && !data[i].is_current) {
+        title += '<a href="' + data[i].get_url_path + '#testruns">' + data[i].num_runs + ' runs</a>, ';
       } else {
         title += '0 runs, ';
       }
 
       if (data[i].is_current) {
-        switch (data[i].extras.num_children) {
+        switch (data[i].num_children) {
           case 0:
             title += '0 child';
             break;
@@ -263,19 +263,19 @@ Nitrate.TestPlans.TreeView = {
             title += '<a href="#treeview" onclick="expandCurrentPlan(jQ(this).parent()[0])">' + '1 child</a>';
             break;
           default:
-            title += '<a href="#treeview" onclick="expandCurrentPlan(jQ(this).parent()[0])">' + data[i].extras.num_children + ' children</a>';
+            title += '<a href="#treeview" onclick="expandCurrentPlan(jQ(this).parent()[0])">' + data[i].num_children + ' children</a>';
             break;
         }
       } else {
-        switch (data[i].extras.num_children) {
+        switch (data[i].num_children) {
           case 0:
             title += '0 child';
             break;
           case 1:
-            title += '<a href="' + data[i].extras.get_url_path + '#treeview">' + '1 child</a>';
+            title += '<a href="' + data[i].get_url_path + '#treeview">' + '1 child</a>';
             break;
           default:
-            title += '<a href="' + data[i].extras.get_url_path + '#treeview">' + data[i].extras.num_children + ' children</a>';
+            title += '<a href="' + data[i].get_url_path + '#treeview">' + data[i].num_children + ' children</a>';
             break;
         }
 
