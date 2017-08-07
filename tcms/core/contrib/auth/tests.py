@@ -183,6 +183,10 @@ class TestConfirm(TestCase):
                                            email='new-user@example.com',
                                            password='password')
 
+    def setUp(self):
+        self.new_user.is_active = False
+        self.new_user.save()
+
     def test_fail_if_activation_key_not_exist(self):
         confirm_url = reverse('tcms-confirm',
                               args=['nonexisting-activation-key'])
@@ -196,6 +200,33 @@ class TestConfirm(TestCase):
             response,
             '<a href="{}">Continue</a>'.format(reverse('core-views-index')),
             html=True)
+
+        # user account not activated
+        user = User.objects.get(username=self.new_user.username)
+        self.assertFalse(user.is_active)
+
+    def test_fail_if_activation_key_expired(self):
+        fake_activation_key = 'secret-activation-key'
+
+        with patch('tcms.core.contrib.auth.models.sha1') as sha1:
+            sha1.return_value.hexdigest.return_value = fake_activation_key
+            key = UserActivateKey.set_random_key_for_user(self.new_user)
+            key.key_expires = datetime.datetime.now() - datetime.timedelta(days=10)
+            key.save()
+
+        confirm_url = reverse('tcms-confirm', args=[fake_activation_key])
+        response = self.client.get(confirm_url)
+
+        self.assertContains(response, 'This key has expired')
+
+        self.assertContains(
+            response,
+            '<a href="{}">Continue</a>'.format(reverse('core-views-index')),
+            html=True)
+
+        # user account not activated
+        user = User.objects.get(username=self.new_user.username)
+        self.assertFalse(user.is_active)
 
     def test_confirm(self):
         fake_activate_key = 'secret-activate-key'
@@ -218,6 +249,7 @@ class TestConfirm(TestCase):
                 reverse('tcms-redirect_to_profile')),
             html=True)
 
+        # user account activated
         user = User.objects.get(username=self.new_user.username)
         self.assertTrue(user.is_active)
         activate_key_deleted = not UserActivateKey.objects.filter(user=user).exists()

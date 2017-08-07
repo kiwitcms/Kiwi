@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
@@ -87,6 +89,15 @@ def confirm(request, activation_key):
         ak = ak.get(activation_key=activation_key)
     except UserActivateKey.DoesNotExist:
         msg = 'This key no longer exist in the database.'
+        return Prompt.render(
+            request=request,
+            info_type=Prompt.Info,
+            info=msg,
+            next=request.GET.get('next', reverse('core-views-index'))
+        )
+
+    if ak.key_expires <= datetime.now():
+        msg = 'This key has expired!'
         return Prompt.render(
             request=request,
             info_type=Prompt.Info,
