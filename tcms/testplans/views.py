@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.db.models import Count
 from django.db.models import Q
+from django.forms.models import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
@@ -245,11 +246,16 @@ def all(request, template_name='plan/all.html'):
         tps = tps.order_by('name')
 
     if request.GET.get('t') == 'ajax':
-        return HttpResponse(serializers.serialize(
-            request.GET.get('f', 'json'),
-            tps,
-            extras=('num_cases', 'num_runs', 'num_children', 'get_url_path')
-        ))
+        results = []
+        for obj in tps:
+            dict_obj = model_to_dict(obj, fields=('name', 'parent', 'is_active'))
+
+            for attr in ['pk', 'num_cases', 'num_cases', 'num_runs', 'num_children']:
+                dict_obj[attr] = getattr(obj, attr)
+            dict_obj['get_url_path'] = obj.get_url_path()
+
+            results.append(dict_obj)
+        return JsonResponse(results, safe=False)
 
     if request.GET.get('t') == 'html':
         if request.GET.get('f') == 'preview':
@@ -1148,7 +1154,6 @@ def component(request, template_name='plan/get_component.html'):
                 return HttpResponse(json_dumps(ajax_response))
 
             if request.GET.get('type'):
-                from django.core import serializers
                 obj = TestPlanComponent.objects.filter(plan__in=self.tps)
                 return HttpResponse(serializers.serialize(request.GET['type'], obj))
 
