@@ -18,13 +18,13 @@ DATABASES = {
 }
 
 # django-debug-toolbar settings
-MIDDLEWARE_CLASSES += (
+MIDDLEWARE += [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
+]
 
-INSTALLED_APPS += (
+INSTALLED_APPS += [
     'debug_toolbar',
-)
+]
 
 FILE_UPLOAD_DIR = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')
 
