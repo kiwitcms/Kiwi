@@ -99,8 +99,8 @@ def _lookup_fields_in_model(cls, fields):
             if field.is_relation and field.many_to_many:
                 yield True
             else:
-                if getattr(field, 'rel', None):
-                    cls = field.rel.model
+                if getattr(field, 'remote_field', None):
+                    cls = field.remote_field.model
         except FieldDoesNotExist:
             pass
 
