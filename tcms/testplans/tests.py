@@ -13,7 +13,7 @@ from six.moves import urllib
 
 from django import test
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.client import Client
 
 from tcms.core.logs.models import TCMSLogModel

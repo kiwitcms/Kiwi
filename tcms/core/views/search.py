@@ -2,7 +2,7 @@
 
 import re
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_GET
 from django.http import Http404

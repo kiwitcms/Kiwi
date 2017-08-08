@@ -8,7 +8,7 @@ from six.moves import http_client
 from xml.etree import ElementTree
 
 from django.utils import formats
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 from tcms.testcases.models import TestCaseBug

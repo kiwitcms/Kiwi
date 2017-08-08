@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_http_methods
 
