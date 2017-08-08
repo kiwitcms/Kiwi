@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.admindocs import urls as admindocs_urls
-from django.views.i18n import javascript_catalog
+from django.views.i18n import JavaScriptCatalog
 
 from tinymce import urls as tinymce_urls
 from tcms.core import ajax
@@ -99,8 +99,8 @@ urlpatterns = [
 
     # TODO: do we need this at all ???
     # Using admin js without admin permission
-    # https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#django.views.i18n.javascript_catalog
-    url(r'^jsi18n/$', javascript_catalog, {'packages': ('django.conf', 'django.contrib.admin')}),
+    # https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), {'packages': ('django.conf', 'django.contrib.admin')}),
 ]
 
 # Debug zone
