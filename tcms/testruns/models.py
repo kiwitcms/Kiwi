@@ -630,10 +630,9 @@ class TestCaseRun(TCMSActionModel):
         except IndexError:
             return NoneText
 
-    @models.permalink
     def get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestCaseRun!
-        return ('testruns-get', (), {'run_id': self.run_id})
+        return reverse('testruns-get', args=[self.run_id])
 
     def get_url_path(self, request=None):
         return self.get_absolute_url()
