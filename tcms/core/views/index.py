@@ -8,7 +8,7 @@ def index(request, template_name='index.html'):
     Home page of TCMS
     """
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('tcms-login'))
 
     return HttpResponseRedirect(
