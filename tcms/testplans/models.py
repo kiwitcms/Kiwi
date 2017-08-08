@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Max
+from django.urls import reverse
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.shortcuts import get_object_or_404
 
@@ -225,12 +226,8 @@ class TestPlan(TCMSActionModel):
     def delete_case(self, case):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('test_plan_url', (), {
-            'plan_id': self.plan_id,
-            'slug': slugify(self.name),
-        })
+        return reverse('test_plan_url', args=[self.plan_id, slugify(self.name)])
 
     def get_url_path(self, request=None):
         return self.get_absolute_url()
