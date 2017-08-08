@@ -3,9 +3,8 @@
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib import auth
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_http_methods
 
@@ -13,13 +12,6 @@ from tcms.core.contrib.auth import get_using_backend
 from tcms.core.contrib.auth.forms import RegistrationForm
 from tcms.core.contrib.auth.models import UserActivateKey
 from tcms.core.views import Prompt
-
-
-@require_GET
-def logout(request):
-    """Logout method of account"""
-    auth.logout(request)
-    return redirect(request.GET.get('next', reverse('core-views-index')))
 
 
 @require_http_methods(['GET', 'POST'])
