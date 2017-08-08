@@ -301,15 +301,9 @@ class TestOperateComponentView(BasePlanCase):
                 self.product.pk, self.product.name),
             html=True)
 
-        comp_options = ('<option value="{}">{}</option>'.format(comp.pk, comp.name)
-                        for comp in (self.comp_application, self.comp_database,
-                                     self.comp_cli, self.comp_api))
-        self.assertContains(
-            response,
-            '''<select multiple="multiple" id="id_o_component" name="o_component">
-{}
-</select>'''.format(''.join(comp_options)),
-            html=True)
+        for comp in (self.comp_application, self.comp_database, self.comp_cli, self.comp_api):
+            comp_option = '<option value="{}">{}</option>'.format(comp.pk, comp.name)
+            self.assertContains(response, comp_option, html=True)
 
     def test_add_components(self):
         self.client.login(username=self.tester.username, password='password')
