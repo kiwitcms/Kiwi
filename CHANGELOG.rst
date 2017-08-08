@@ -1,6 +1,22 @@
 Change Log
 ==========
 
+3.32 (Aug 8 2017, released on MrSenko.com)
+------------------------------------------
+
+- Upgrade Django to 1.10.7 (Mr. Senko)
+- Replace unmaintained django-pagination with dj-pagination. Fixes
+  `Issue #48 <https://github.com/MrSenko/Kiwi/issues/48>`_ (Mr. Senko)
+- When activating new accounts check the expiration date of activation
+  keys. Previously this was not checked (Mr. Senko)
+- Fix a traceback when showing Plan -> Tree View (Mr. Senko)
+- Fixed an issue where `Prompt.render` was wrapped within `HttpResponse`
+  causing DB connections to be closed after view functions have returned (Mr. Senko)
+- Refactored responses for AJAX calls (Chenxiong Qi)
+
+IMPORTANT: this release introduces new database migrations!
+
+
 3.30 (Jul 27 2017, released on MrSenko.com)
 -------------------------------------------
 
