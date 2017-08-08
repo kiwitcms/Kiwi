@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='TCMSEnvPlanMap',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('group', models.ForeignKey(to='management.TCMSEnvGroup')),
+                ('group', models.ForeignKey(to='management.TCMSEnvGroup', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'tcms_env_plan_map',
@@ -45,8 +45,8 @@ class Migration(migrations.Migration):
                 ('changed', models.DateTimeField(serialize=False, primary_key=True)),
                 ('oldvalue', models.TextField(blank=True)),
                 ('newvalue', models.TextField(blank=True)),
-                ('plan', models.ForeignKey(to='testplans.TestPlan')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who')),
+                ('plan', models.ForeignKey(to='testplans.TestPlan', on_delete=models.CASCADE)),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_plan_activity',
@@ -56,8 +56,8 @@ class Migration(migrations.Migration):
             name='TestPlanAttachment',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('attachment', models.ForeignKey(to='management.TestAttachment')),
-                ('plan', models.ForeignKey(to='testplans.TestPlan')),
+                ('attachment', models.ForeignKey(to='management.TestAttachment', on_delete=models.CASCADE)),
+                ('plan', models.ForeignKey(to='testplans.TestPlan', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_plan_attachments',
@@ -67,8 +67,8 @@ class Migration(migrations.Migration):
             name='TestPlanComponent',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('component', models.ForeignKey(to='management.Component')),
-                ('plan', models.ForeignKey(to='testplans.TestPlan')),
+                ('component', models.ForeignKey(to='management.Component', on_delete=models.CASCADE)),
+                ('plan', models.ForeignKey(to='testplans.TestPlan', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_plan_components',
@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
                 ('notify_on_plan_update', models.BooleanField(default=False)),
                 ('notify_on_plan_delete', models.BooleanField(default=False)),
                 ('notify_on_case_update', models.BooleanField(default=False)),
-                ('plan', models.OneToOneField(related_name='email_settings', to='testplans.TestPlan')),
+                ('plan', models.OneToOneField(related_name='email_settings', to='testplans.TestPlan', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -95,7 +95,7 @@ class Migration(migrations.Migration):
                 ('userid', models.IntegerField(unique=True, serialize=False, primary_key=True)),
                 ('permissions', models.IntegerField()),
                 ('grant_type', models.IntegerField(unique=True)),
-                ('plan', models.ForeignKey(to='testplans.TestPlan')),
+                ('plan', models.ForeignKey(to='testplans.TestPlan', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_plan_permissions',
@@ -106,8 +106,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('user', models.IntegerField(default=b'1', db_column=b'userid')),
-                ('plan', models.ForeignKey(to='testplans.TestPlan')),
-                ('tag', models.ForeignKey(to='management.TestTag')),
+                ('plan', models.ForeignKey(to='testplans.TestPlan', on_delete=models.CASCADE)),
+                ('tag', models.ForeignKey(to='management.TestTag', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_plan_tags',
@@ -121,8 +121,8 @@ class Migration(migrations.Migration):
                 ('create_date', models.DateTimeField(auto_now_add=True, db_column=b'creation_ts')),
                 ('plan_text', models.TextField(blank=True)),
                 ('checksum', models.CharField(max_length=32)),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who')),
-                ('plan', models.ForeignKey(related_name='text', to='testplans.TestPlan')),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who', on_delete=models.CASCADE)),
+                ('plan', models.ForeignKey(related_name='text', to='testplans.TestPlan', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['plan', '-plan_text_version'],
@@ -151,7 +151,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testplan',
             name='author',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testplan',
@@ -166,22 +166,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testplan',
             name='owner',
-            field=models.ForeignKey(related_name='myplans', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name='myplans', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testplan',
             name='parent',
-            field=models.ForeignKey(related_name='child_set', blank=True, to='testplans.TestPlan', null=True),
+            field=models.ForeignKey(related_name='child_set', blank=True, to='testplans.TestPlan', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testplan',
             name='product',
-            field=models.ForeignKey(related_name='plan', to='management.Product'),
+            field=models.ForeignKey(related_name='plan', to='management.Product', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testplan',
             name='product_version',
-            field=models.ForeignKey(related_name='plans', to='management.Version'),
+            field=models.ForeignKey(related_name='plans', to='management.Version', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testplan',
@@ -191,12 +191,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testplan',
             name='type',
-            field=models.ForeignKey(to='testplans.TestPlanType'),
+            field=models.ForeignKey(to='testplans.TestPlanType', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='tcmsenvplanmap',
             name='plan',
-            field=models.ForeignKey(to='testplans.TestPlan'),
+            field=models.ForeignKey(to='testplans.TestPlan', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='testplantext',

@@ -32,7 +32,7 @@ class TestRun(TCMSActionModel):
 
     run_id = models.AutoField(primary_key=True)
 
-    product_version = models.ForeignKey('management.Version', related_name='version_run')
+    product_version = models.ForeignKey('management.Version', related_name='version_run', on_delete=models.CASCADE)
     plan_text_version = models.IntegerField()
 
     start_date = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -41,13 +41,14 @@ class TestRun(TCMSActionModel):
     notes = models.TextField(blank=True)
     estimated_time = DurationField(default=0)
 
-    plan = models.ForeignKey('testplans.TestPlan', related_name='run')
+    plan = models.ForeignKey('testplans.TestPlan', related_name='run', on_delete=models.CASCADE)
     environment_id = models.IntegerField(default=0)
-    build = models.ForeignKey('management.TestBuild', related_name='build_run')
-    manager = models.ForeignKey('auth.User', related_name='manager')
+    build = models.ForeignKey('management.TestBuild', related_name='build_run', on_delete=models.CASCADE)
+    manager = models.ForeignKey('auth.User', related_name='manager', on_delete=models.CASCADE)
     default_tester = models.ForeignKey('auth.User',
                                        null=True, blank=True,
-                                       related_name='default_tester')
+                                       related_name='default_tester',
+                                       on_delete=models.CASCADE)
 
     env_value = models.ManyToManyField('management.TCMSEnvValue',
                                        through='testruns.TCMSEnvRunValueMap')
@@ -511,19 +512,21 @@ class TestCaseRun(TCMSActionModel):
     objects = TestCaseRunManager()
     case_run_id = models.AutoField(primary_key=True)
     assignee = models.ForeignKey('auth.User', blank=True, null=True,
-                                 related_name='case_run_assignee')
+                                 related_name='case_run_assignee',
+                                 on_delete=models.CASCADE)
     tested_by = models.ForeignKey('auth.User', blank=True, null=True,
-                                  related_name='case_run_tester')
+                                  related_name='case_run_tester',
+                                  on_delete=models.CASCADE)
     case_text_version = models.IntegerField()
     running_date = models.DateTimeField(null=True, blank=True)
     close_date = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     sortkey = models.IntegerField(null=True, blank=True)
 
-    run = models.ForeignKey(TestRun, related_name='case_run')
-    case = models.ForeignKey('testcases.TestCase', related_name='case_run')
-    case_run_status = models.ForeignKey(TestCaseRunStatus)
-    build = models.ForeignKey('management.TestBuild')
+    run = models.ForeignKey(TestRun, related_name='case_run', on_delete=models.CASCADE)
+    case = models.ForeignKey('testcases.TestCase', related_name='case_run', on_delete=models.CASCADE)
+    case_run_status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
+    build = models.ForeignKey('management.TestBuild', on_delete=models.CASCADE)
     environment_id = models.IntegerField(default=0)
 
     links = GenericRelation(LinkReference, object_id_field='object_pk')
@@ -637,10 +640,8 @@ class TestCaseRun(TCMSActionModel):
 
 
 class TestRunTag(models.Model):
-    tag = models.ForeignKey(
-        'management.TestTag'
-    )
-    run = models.ForeignKey(TestRun, related_name='tags')
+    tag = models.ForeignKey('management.TestTag', on_delete=models.CASCADE)
+    run = models.ForeignKey(TestRun, related_name='tags', on_delete=models.CASCADE)
     user = models.IntegerField(db_column='userid', default='0')
 
     class Meta:
@@ -648,8 +649,8 @@ class TestRunTag(models.Model):
 
 
 class TestRunCC(models.Model):
-    run = models.ForeignKey(TestRun, related_name='cc_list')
-    user = models.ForeignKey('auth.User', db_column='who')
+    run = models.ForeignKey(TestRun, related_name='cc_list', on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', db_column='who', on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'test_run_cc'
@@ -657,8 +658,8 @@ class TestRunCC(models.Model):
 
 
 class TCMSEnvRunValueMap(models.Model):
-    run = models.ForeignKey(TestRun)
-    value = models.ForeignKey('management.TCMSEnvValue')
+    run = models.ForeignKey(TestRun, on_delete=models.CASCADE)
+    value = models.ForeignKey('management.TCMSEnvValue', on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'tcms_env_run_value_map'

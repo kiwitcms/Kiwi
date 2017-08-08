@@ -54,12 +54,12 @@ class TCMSContentTypeBaseModel(models.Model):
         'contenttypes.ContentType',
         verbose_name='content type',
         related_name="content_type_set_for_%(class)s",
-        blank=True, null=True)
+        blank=True, null=True, on_delete=models.CASCADE)
     object_pk = models.PositiveIntegerField('object ID', blank=True, null=True)
     content_object = GenericForeignKey(ct_field="content_type", fk_field="object_pk")
 
     # Metadata about the comment
-    site = models.ForeignKey('sites.Site')
+    site = models.ForeignKey('sites.Site', on_delete=models.CASCADE)
 
     class Meta:
         abstract = True

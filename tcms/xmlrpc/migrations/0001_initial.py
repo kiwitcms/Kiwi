@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('dt_inserted', models.DateTimeField(auto_now_add=True)),
                 ('method', models.CharField(max_length=255)),
                 ('args', models.TextField(blank=True)),
-                ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)),
             ],
         ),
     ]

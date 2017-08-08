@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(default=b'', max_length=64, blank=True)),
                 ('url', models.TextField()),
                 ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('content_type', models.ForeignKey(related_name='content_type_set_for_linkreference', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True)),
-                ('site', models.ForeignKey(to='sites.Site')),
+                ('content_type', models.ForeignKey(related_name='content_type_set_for_linkreference', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE)),
+                ('site', models.ForeignKey(to='sites.Site', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'tcms_linkrefs',

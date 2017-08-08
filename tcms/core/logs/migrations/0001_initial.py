@@ -21,9 +21,9 @@ class Migration(migrations.Migration):
                 ('object_pk', models.PositiveIntegerField(null=True, verbose_name=b'object ID', blank=True)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('action', models.TextField()),
-                ('content_type', models.ForeignKey(related_name='content_type_set_for_tcmslogmodel', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True)),
-                ('site', models.ForeignKey(to='sites.Site')),
-                ('who', models.ForeignKey(related_name='log_who', to=settings.AUTH_USER_MODEL)),
+                ('content_type', models.ForeignKey(related_name='content_type_set_for_tcmslogmodel', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE)),
+                ('site', models.ForeignKey(to='sites.Site', on_delete=models.CASCADE)),
+                ('who', models.ForeignKey(related_name='log_who', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,

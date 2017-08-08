@@ -21,22 +21,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcasebug',
             name='case_run',
-            field=models.ForeignKey(related_name='case_run_bug', default=None, blank=True, to='testruns.TestCaseRun', null=True),
+            field=models.ForeignKey(related_name='case_run_bug', default=None, blank=True, to='testruns.TestCaseRun', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcaseattachment',
             name='attachment',
-            field=models.ForeignKey(to='management.TestAttachment'),
+            field=models.ForeignKey(to='management.TestAttachment', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcaseattachment',
             name='case',
-            field=models.ForeignKey(related_name='case_attachment', default=None, to='testcases.TestCase'),
+            field=models.ForeignKey(related_name='case_attachment', default=None, to='testcases.TestCase', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcaseattachment',
             name='case_run',
-            field=models.ForeignKey(related_name='case_run_attachment', default=None, to='testruns.TestCaseRun'),
+            field=models.ForeignKey(related_name='case_run_attachment', default=None, to='testruns.TestCaseRun', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcase',
@@ -46,17 +46,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcase',
             name='author',
-            field=models.ForeignKey(related_name='cases_as_author', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='cases_as_author', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcase',
             name='case_status',
-            field=models.ForeignKey(to='testcases.TestCaseStatus'),
+            field=models.ForeignKey(to='testcases.TestCaseStatus', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcase',
             name='category',
-            field=models.ForeignKey(related_name='category_case', to='testcases.TestCaseCategory'),
+            field=models.ForeignKey(related_name='category_case', to='testcases.TestCaseCategory', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcase',
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcase',
             name='default_tester',
-            field=models.ForeignKey(related_name='cases_as_default_tester', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name='cases_as_default_tester', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcase',
@@ -76,12 +76,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcase',
             name='priority',
-            field=models.ForeignKey(related_name='priority_case', to='management.Priority'),
+            field=models.ForeignKey(related_name='priority_case', to='management.Priority', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcase',
             name='reviewer',
-            field=models.ForeignKey(related_name='cases_as_reviewer', to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name='cases_as_reviewer', to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcase',
@@ -91,12 +91,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contact',
             name='content_type',
-            field=models.ForeignKey(related_name='content_type_set_for_contact', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True),
+            field=models.ForeignKey(related_name='content_type_set_for_contact', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='contact',
             name='site',
-            field=models.ForeignKey(to='sites.Site'),
+            field=models.ForeignKey(to='sites.Site', on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='testcasetext',

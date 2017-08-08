@@ -9,7 +9,7 @@ from managers import TCMSLogManager
 # Create your models here.
 
 class TCMSLogModel(TCMSContentTypeBaseModel):
-    who = models.ForeignKey('auth.User', related_name='log_who')
+    who = models.ForeignKey('auth.User', related_name='log_who', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     action = models.TextField()
 
