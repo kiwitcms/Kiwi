@@ -201,7 +201,7 @@ class Comment(object):
             # Otherwise create the comment
             comment = form.get_comment_object()
             comment.ip_address = self.request.META.get("REMOTE_ADDR", None)
-            if self.request.user.is_authenticated():
+            if self.request.user.is_authenticated:
                 comment.user = self.request.user
 
             # Signal that the comment is about to be saved

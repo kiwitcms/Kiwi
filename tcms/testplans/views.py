@@ -211,7 +211,7 @@ def all(request, template_name='plan/all.html'):
             # Detemine the query is the user's plans and change the sub
             # module value
             author = request.GET.get('author')
-            if author and request.user.is_authenticated():
+            if author and request.user.is_authenticated:
                 if author == request.user.username or author == request.user.email:
                     SUB_MODULE_NAME = "my_plans"
 
@@ -381,7 +381,7 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
             # module value
             author = request.GET.get('author__email__startswith')
             if author and len(search_form.changed_data) == 1:
-                if request.user.is_authenticated():
+                if request.user.is_authenticated:
                     if author == request.user.username or author == request.user.email:
                         q = Q(author__email__startswith=author) | \
                             Q(owner__email__startswith=author)
