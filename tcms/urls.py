@@ -24,7 +24,7 @@ from tcms.xmlrpc import urls as xmlrpc_urls
 
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^admin/doc/', include(admindocs_urls)),
 
     url(r'^tinymce/', include(tinymce_urls)),
