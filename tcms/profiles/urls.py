@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import include, url
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import views as contrib_auth_views
 
 from . import views as profiles_views
@@ -15,17 +16,20 @@ urlpatterns = [
     url(r'^(?P<username>[\w.@+-]+)/recent/$', profiles_views.recent,
         name='tcms-recent'),
 
-    url(r'logout/$', auth_views.logout, name='tcms-logout'),
+    url(r'logout/$',
+        contrib_auth_views.LogoutView.as_view(
+            next_page=reverse_lazy('core-views-index')),
+        name='tcms-logout'),
     url(r'register/$', auth_views.register, name='tcms-register'),
     url(r'confirm/(?P<activation_key>[A-Za-z0-9\-]+)/$', auth_views.confirm,
         name='tcms-confirm'),
 
-    url(r'login/$', contrib_auth_views.login, name='tcms-login'),
-    url(r'changepassword/$', contrib_auth_views.password_change, name='tcms-password_change'),
-    url(r'changepassword/done/$', contrib_auth_views.password_change_done,
+    url(r'login/$', contrib_auth_views.LoginView.as_view(), name='tcms-login'),
+    url(r'changepassword/$', contrib_auth_views.PasswordChangeView.as_view(), name='tcms-password_change'),
+    url(r'changepassword/done/$', contrib_auth_views.PasswordChangeDoneView.as_view(),
         name='password_change_done'),
-    url(r'^passwordreset/$', contrib_auth_views.password_reset, name='tcms-password_reset'),
-    url(r'^passwordreset/done/$', contrib_auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^passwordreset/$', contrib_auth_views.PasswordResetView.as_view(), name='tcms-password_reset'),
+    url(r'^passwordreset/done/$', contrib_auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     url(r'^passwordreset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
-        contrib_auth_views.password_reset_confirm, name='password_reset_confirm'),
+        contrib_auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 ]
