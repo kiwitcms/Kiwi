@@ -92,7 +92,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(serialize=False, primary_key=True, db_column=b'category_id')),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField(blank=True)),
-                ('product', models.ForeignKey(related_name='category', to='management.Product')),
+                ('product', models.ForeignKey(related_name='category', to='management.Product', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_case_categories',
@@ -104,8 +104,8 @@ class Migration(migrations.Migration):
             name='TestCaseComponent',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('case', models.ForeignKey(to='testcases.TestCase')),
-                ('component', models.ForeignKey(to='management.Component')),
+                ('case', models.ForeignKey(to='testcases.TestCase', on_delete=models.CASCADE)),
+                ('component', models.ForeignKey(to='management.Component', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_case_components',
@@ -122,7 +122,7 @@ class Migration(migrations.Migration):
                 ('auto_to_run_manager', models.BooleanField(default=False)),
                 ('auto_to_run_tester', models.BooleanField(default=False)),
                 ('auto_to_case_run_assignee', models.BooleanField(default=False)),
-                ('case', models.OneToOneField(related_name='email_settings', to='testcases.TestCase')),
+                ('case', models.OneToOneField(related_name='email_settings', to='testcases.TestCase', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -130,8 +130,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('sortkey', models.IntegerField(null=True, blank=True)),
-                ('case', models.ForeignKey(to='testcases.TestCase')),
-                ('plan', models.ForeignKey(to='testplans.TestPlan')),
+                ('case', models.ForeignKey(to='testcases.TestCase', on_delete=models.CASCADE)),
+                ('plan', models.ForeignKey(to='testplans.TestPlan', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_case_plans',
@@ -156,8 +156,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('user', models.IntegerField(default=b'0', db_column=b'userid')),
-                ('case', models.ForeignKey(to='testcases.TestCase')),
-                ('tag', models.ForeignKey(to='management.TestTag')),
+                ('case', models.ForeignKey(to='testcases.TestCase', on_delete=models.CASCADE)),
+                ('tag', models.ForeignKey(to='management.TestTag', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_case_tags',
@@ -177,8 +177,8 @@ class Migration(migrations.Migration):
                 ('effect_checksum', models.CharField(max_length=32)),
                 ('setup_checksum', models.CharField(max_length=32)),
                 ('breakdown_checksum', models.CharField(max_length=32)),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who')),
-                ('case', models.ForeignKey(related_name='text', to='testcases.TestCase')),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who', on_delete=models.CASCADE)),
+                ('case', models.ForeignKey(related_name='text', to='testcases.TestCase', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['case', '-case_text_version'],
@@ -189,11 +189,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcasebug',
             name='bug_system',
-            field=models.ForeignKey(default=1, to='testcases.TestCaseBugSystem'),
+            field=models.ForeignKey(default=1, to='testcases.TestCaseBugSystem', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcasebug',
             name='case',
-            field=models.ForeignKey(related_name='case_bug', to='testcases.TestCase'),
+            field=models.ForeignKey(related_name='case_bug', to='testcases.TestCase', on_delete=models.CASCADE),
         ),
     ]

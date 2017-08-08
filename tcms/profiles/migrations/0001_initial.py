@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=1024)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'tcms_bookmark_categories',
@@ -74,8 +74,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('isbless', models.IntegerField(default=0)),
                 ('grant_type', models.IntegerField(default=0)),
-                ('group', models.ForeignKey(to='profiles.Groups')),
-                ('user', models.ForeignKey(to='profiles.Profiles')),
+                ('group', models.ForeignKey(to='profiles.Groups', on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(to='profiles.Profiles', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'user_group_map',
@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
                 ('im_type_id', models.IntegerField(default=1, null=True, blank=True)),
                 ('address', models.TextField(default=b'', blank=True)),
                 ('notes', models.TextField(default=b'', blank=True)),
-                ('user', models.OneToOneField(related_name='profile', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(related_name='profile', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'tcms_user_profiles',
@@ -100,22 +100,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bookmark',
             name='category',
-            field=models.ForeignKey(related_name='bookmark', blank=True, to='profiles.BookmarkCategory', null=True),
+            field=models.ForeignKey(related_name='bookmark', blank=True, to='profiles.BookmarkCategory', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='bookmark',
             name='content_type',
-            field=models.ForeignKey(related_name='content_type_set_for_bookmark', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True),
+            field=models.ForeignKey(related_name='content_type_set_for_bookmark', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='bookmark',
             name='site',
-            field=models.ForeignKey(to='sites.Site'),
+            field=models.ForeignKey(to='sites.Site', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='bookmark',
             name='user',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='usergroupmap',

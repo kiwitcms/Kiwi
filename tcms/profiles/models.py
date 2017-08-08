@@ -36,9 +36,9 @@ class Groups(models.Model):
 
 
 class UserGroupMap(models.Model):
-    user = models.ForeignKey(Profiles)  # user_id
+    user = models.ForeignKey(Profiles, on_delete=models.CASCADE)  # user_id
     # (actually has two primary keys)
-    group = models.ForeignKey(Groups)  # group_id
+    group = models.ForeignKey(Groups, on_delete=models.CASCADE)  # group_id
     isbless = models.IntegerField(default=0)
     grant_type = models.IntegerField(default=0)
 
@@ -53,7 +53,7 @@ class UserGroupMap(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField('auth.User', unique=True, related_name='profile')
+    user = models.OneToOneField('auth.User', unique=True, related_name='profile', on_delete=models.CASCADE)
     phone_number = models.CharField(blank=True, default='', max_length=128)
     url = models.URLField(blank=True, default='')
     im = models.CharField(blank=True, default='', max_length=128)
@@ -84,7 +84,7 @@ class UserProfile(models.Model):
 
 
 class BookmarkCategory(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     name = models.CharField(max_length=1024)
 
     class Meta:
@@ -95,9 +95,9 @@ class BookmarkCategory(models.Model):
 
 
 class Bookmark(TCMSContentTypeBaseModel):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     category = models.ForeignKey(BookmarkCategory, blank=True, null=True,
-                                 related_name='bookmark')
+                                 related_name='bookmark', on_delete=models.CASCADE)
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True, null=True)
     url = models.CharField(max_length=8192)

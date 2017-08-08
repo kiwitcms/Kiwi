@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='testcaseattachment',
             name='case_run',
-            field=models.ForeignKey(related_name='case_run_attachment', default=None, blank=True, to='testruns.TestCaseRun', null=True),
+            field=models.ForeignKey(related_name='case_run_attachment', default=None, blank=True, to='testruns.TestCaseRun', null=True, on_delete=models.CASCADE),
         ),
     ]

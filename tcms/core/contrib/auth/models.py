@@ -9,7 +9,7 @@ from django.db import models
 
 
 class UserActivateKey(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     activation_key = models.CharField(max_length=40, null=True, blank=True)
     key_expires = models.DateTimeField(null=True, blank=True)
 

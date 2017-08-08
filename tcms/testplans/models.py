@@ -49,12 +49,12 @@ class TestPlan(TCMSActionModel):
     is_active = models.BooleanField(db_column='isactive', default=True, db_index=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
-    product_version = models.ForeignKey(Version, related_name='plans')
-    owner = models.ForeignKey('auth.User', blank=True, null=True, related_name='myplans')
-    author = models.ForeignKey('auth.User')
-    product = models.ForeignKey('management.Product', related_name='plan')
-    type = models.ForeignKey(TestPlanType)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
+    product_version = models.ForeignKey(Version, related_name='plans', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', blank=True, null=True, related_name='myplans', on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    product = models.ForeignKey('management.Product', related_name='plan', on_delete=models.CASCADE)
+    type = models.ForeignKey(TestPlanType, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set', on_delete=models.CASCADE)
 
     attachment = models.ManyToManyField('management.TestAttachment',
                                         through='testplans.TestPlanAttachment')
@@ -399,9 +399,9 @@ class TestPlan(TCMSActionModel):
 
 
 class TestPlanText(TCMSActionModel):
-    plan = models.ForeignKey(TestPlan, related_name='text')
+    plan = models.ForeignKey(TestPlan, related_name='text', on_delete=models.CASCADE)
     plan_text_version = models.IntegerField()
-    author = models.ForeignKey('auth.User', db_column='who')
+    author = models.ForeignKey('auth.User', db_column='who', on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True,
                                        db_column='creation_ts')
     plan_text = models.TextField(blank=True)
@@ -418,17 +418,17 @@ class TestPlanText(TCMSActionModel):
 
 
 class TestPlanAttachment(models.Model):
-    attachment = models.ForeignKey('management.TestAttachment')
-    plan = models.ForeignKey(TestPlan)
+    attachment = models.ForeignKey('management.TestAttachment', on_delete=models.CASCADE)
+    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'test_plan_attachments'
 
 
 class TestPlanActivity(models.Model):
-    plan = models.ForeignKey(TestPlan)
+    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
     fieldid = models.IntegerField()
-    who = models.ForeignKey('auth.User', db_column='who')
+    who = models.ForeignKey('auth.User', db_column='who', on_delete=models.CASCADE)
     changed = models.DateTimeField(primary_key=True)
     oldvalue = models.TextField(blank=True)
     newvalue = models.TextField(blank=True)
@@ -438,10 +438,8 @@ class TestPlanActivity(models.Model):
 
 
 class TestPlanTag(models.Model):
-    tag = models.ForeignKey(
-        'management.TestTag'
-    )
-    plan = models.ForeignKey(TestPlan)
+    tag = models.ForeignKey('management.TestTag', on_delete=models.CASCADE)
+    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
     user = models.IntegerField(default="1", db_column='userid')
 
     class Meta:
@@ -449,8 +447,8 @@ class TestPlanTag(models.Model):
 
 
 class TestPlanComponent(models.Model):
-    plan = models.ForeignKey(TestPlan)
-    component = models.ForeignKey('management.Component')
+    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
+    component = models.ForeignKey('management.Component', on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'test_plan_components'
@@ -458,7 +456,7 @@ class TestPlanComponent(models.Model):
 
 
 class TestPlanEmailSettings(models.Model):
-    plan = models.OneToOneField(TestPlan, related_name='email_settings')
+    plan = models.OneToOneField(TestPlan, related_name='email_settings', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
     auto_to_plan_owner = models.BooleanField(default=False)
     auto_to_plan_author = models.BooleanField(default=False)
@@ -473,8 +471,8 @@ class TestPlanEmailSettings(models.Model):
 
 
 class TCMSEnvPlanMap(models.Model):
-    plan = models.ForeignKey(TestPlan)
-    group = models.ForeignKey('management.TCMSEnvGroup')
+    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
+    group = models.ForeignKey('management.TCMSEnvGroup', on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'tcms_env_plan_map'
