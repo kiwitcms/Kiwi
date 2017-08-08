@@ -10,7 +10,7 @@ import mock
 
 from django import test
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.forms import ValidationError
 from django.test import RequestFactory
 

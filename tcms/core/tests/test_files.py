@@ -7,7 +7,7 @@ import tempfile
 
 from mock import patch
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import RequestFactory
 
 from tcms.core.files import able_to_delete_attachment

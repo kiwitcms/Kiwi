@@ -5,7 +5,7 @@ import json
 from django import test
 from django.contrib.contenttypes.models import ContentType
 from django.core import serializers
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django_comments.models import Comment
 from six.moves import http_client
 
