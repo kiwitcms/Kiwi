@@ -640,6 +640,12 @@ function AddIssueDialog(options) {
   if (this.a === undefined) {
     this.a = this.action.toLowerCase();
   }
+
+  if (options.hasOwnProperty("show_bug_id_field")) {
+    this.show_bug_id_field = options.show_bug_id_field;
+  } else {
+    this.show_bug_id_field = false;
+  }
 }
 
 
@@ -660,7 +666,8 @@ AddIssueDialog.prototype.show = function () {
   var context = {
     'hiddenFields': hiddenPart,
     'action_button_text': this.action,
-    'show_bug_id_field': this.action === 'Add',
+    'show_bug_id_field': this.show_bug_id_field || this.action === 'Add',
+    'show_add_to_bugzilla_checkbox': this.action === 'Add',
     'a': this.a,
   };
 
@@ -1305,6 +1312,7 @@ function updateBugsActionAdd(case_runs) {
 function updateBugsActionRemove(case_runs) {
   var dialog = new AddIssueDialog({
     'action': 'Remove',
+    'show_bug_id_field': true,
     'extraFormHiddenData': { 'case_runs': case_runs.join() },
     'onSubmit': function(e, dialog) {
       e.stopPropagation();
