@@ -1,6 +1,19 @@
 Change Log
 ==========
 
+3.33 (Aug 15 2017, released on MrSenko.com)
+------------------------------------------
+
+- Update Django to 1.11.4 (Mr. Senko)
+- Many other updates related to deprecated features in Django (Mr. Senko)
+- Fix a bug where the tab menu Bugs -> Remove didn't remove bugs from
+  the currently opened test run (Mr. Senko)
+- Make use of versioned static files which helps users see updates to
+  the JavaScript and CSS files which are cached inside the browser. Fixes
+  `Issue #6 <https://github.com/MrSenko/Kiwi/issues/6>`_ (Mr. Senko)
+
+
+
 3.32 (Aug 8 2017, released on MrSenko.com)
 ------------------------------------------
 
