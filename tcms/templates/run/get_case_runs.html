@@ -168,9 +168,11 @@
 			<div id="bug-system" style="line-height:30px;">
 				<div class="bug_id">Bug ID</div>
 				<input type="text" name="bug_id">
+                            {{#if show_add_to_bugzilla_checkbox}}
 				</br>
 				<input type="checkbox" name="bz_external_track" value="bz_external_track">&nbsp;
 				<span class="use_bz_external_track">Check to add Test Case(s) to Issue Tracker</span>
+                            {{/if}}
 			</div>
 			</br></br>
                     {{/if}}
