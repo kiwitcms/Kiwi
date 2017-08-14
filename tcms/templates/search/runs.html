@@ -1,7 +1,8 @@
 {% load pagination_tags %}
+{% load static %}
 
-<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/management_actions.js'></script>
+<script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/management_actions.js' %}"></script>
 <script type="text/javascript">
 	Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 </script>

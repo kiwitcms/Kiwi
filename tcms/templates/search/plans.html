@@ -1,8 +1,9 @@
-<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+{% load static %}
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript" src="/jsi18n/"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/calendar.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/DateTimeShortcuts.js"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
 
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestPlans.Advance_Search_List.on_load);

@@ -1,4 +1,6 @@
-<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+{% load static %}
+
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript" language="javascript" charset="utf-8">
 	Nitrate.TestCases.List.Param = {
 		'case_printable': '{% url "testcases-printable" %}',

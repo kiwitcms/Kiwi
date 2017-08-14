@@ -1,13 +1,13 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %}Profile - {{ user_profile.user.username }}{% endblock %}
 
 {% block custom_stylesheet %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/profiles.js"></script>
+<script type="text/javascript" src="{% static 'js/profiles.js' %}"></script>
 {% endblock %}
 
 {% block contents %}

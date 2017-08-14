@@ -1,22 +1,22 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% load extra_filters %}
 
 {% block subtitle %}Test plans{% endblock %}
 
 {% block custom_stylesheet %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables.css" />
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables_themeroller.css" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables_themeroller.css' %}" />
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.dataTables.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript" src="{% static 'js/lib/jquery.dataTables.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript" src="/jsi18n/"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/calendar.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/DateTimeShortcuts.js"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
 
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestPlans.List.on_load);

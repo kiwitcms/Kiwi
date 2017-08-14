@@ -1,3 +1,4 @@
+{% load static %}
 <form id="cases_form" action="{% url "testcases-clone" %}" method="post">
 	<div id="contentTab" class="mixbar">
 		{#}<span class="tit">{{ test_cases.count }} Cases</span>{#}
@@ -16,7 +17,7 @@
 			<tr>
 				<th width="18px">
 					<a id="id_blind_all_link">
-						<img src="{{ STATIC_URL }}images/t1.gif" border="0" alt="" class="collapse-all">
+						<img src="{% static 'images/t1.gif' %}" border="0" alt="" class="collapse-all">
 					</a>
 				</th>
 				<th width="20" class="nosort">

@@ -1,3 +1,4 @@
+{% load static %}
 {% load comments %}
 <td colspan="14" style="padding:10px;">
 	<div class="caserunDetail">
@@ -98,7 +99,7 @@
 								    {% if bug.case_run_id %}
 								        <span class="grey">From Run</span><a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
 								        {% if bug.case_run_id == test_case_run.pk and perms.testcases.delete_testcasebug %}
-								        <a href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'><img width="9" height="9" title="remove this bug" src="{{ STATIC_URL }}images/remove_small.png"></a>
+								        <a href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'><img width="9" height="9" title="remove this bug" src="{% static 'images/remove_small.png' %}"></a>
 								        {% endif %}
 								    {% else %}
 								        <span class="grey">From Case</span>
@@ -223,7 +224,7 @@
 											<a href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape }}</a>
 											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
 											<a href="javascript:void(0);" class="js-remove-testlog" data-param="{{ link.pk }}">
-												<img title="Remove this log" src="{{ STATIC_URL }}images/remove_small.png" />
+												<img title="Remove this log" src="{% static 'images/remove_small.png' %}" />
 											</a>
 										</li>
 										{% endfor %}

@@ -1,4 +1,5 @@
 {% load comments %}
+{% load static %}
 <td id="id_case_run_{{ forloop.counter }}" colspan="12">
 <table class="list" id="table_case_runs_by_plan" cellspacing="0" cellspan="0">
 <tbody>
@@ -20,7 +21,7 @@
 {% for test_case_run in case_runs %}
 		<tr id="id_tr_case_{{ forloop.counter }}" class="case_title {% cycle 'odd' 'even' %}">
 			<td class="expandable">
-				<img class="collapse blind_icon" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="" />
+				<img class="collapse blind_icon" src="{% static 'images/t1.gif' %}" border="0" alt="" />
 				<input type="hidden" name="case" value="{{ test_case_run.case_id }}" />
 				<input type="hidden" name="case_run" value="{{ test_case_run.pk }}" />
 				<input type="hidden" name="case_text_version" value="{{ test_case_run.case_text_version }}" />
@@ -57,7 +58,7 @@
 				<label class="left_float">{{ test_case_run.case_run_status__name|upper }}</label>
 			</td>
 			{% if test_case_run.comments_count > 0 %}
-			<td class="expandable"><img src="{{ STATIC_URL }}images/comment.png" style="vertical-align: middle;">{{ test_case_run.comments_count }}</td>
+			<td class="expandable"><img src="{% static 'images/comment.png' %}" style="vertical-align: middle;">{{ test_case_run.comments_count }}</td>
 			{% else %}
 			<td class="expandable">{{ test_case_run.comments_count }}</td>
 			{% endif %}

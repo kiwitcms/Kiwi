@@ -1,5 +1,5 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %}Environment properties{% endblock %}
 
 {% block custom_stylesheet %}
@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/management_actions.js"></script>
+<script type="text/javascript" src="{% static 'js/management_actions.js' %}"></script>
 <script type="text/javascript">
 	Nitrate.Management.Environment.Property.Param = {
 		'add_property': '{% url "mgmt-environment_properties" %}',

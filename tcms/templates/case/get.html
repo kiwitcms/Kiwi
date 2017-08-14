@@ -1,5 +1,5 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% load extra_filters %}
 
 {% block subtitle %}Test case - {{ test_case.case_id }}: {{ test_case.summary }}{% endblock %}
@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.dataTables.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/lib/dataTables.numHTML.js"></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/deleconfirm.js'></script>
+<script type="text/javascript" src="{% static 'js/lib/jquery.dataTables.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lib/dataTables.numHTML.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/deleconfirm.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestCases.Details.on_load);
 

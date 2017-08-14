@@ -1,4 +1,5 @@
 {% load pagination_tags %}
+{% load static %}
 {% if test_cases %}
 	{% autopaginate test_cases %}
 	<form id="cases_form" action="{% url "testcases-clone" %}" method="post">
@@ -20,7 +21,7 @@
 			<tr>
 				<th width="18px">
 					<a id="id_blind_all_link">
-						<img src="{{ STATIC_URL }}images/t1.gif" border="0" alt="" class="collapse-all">
+						<img src="{% static 'images/t1.gif' %}" border="0" alt="" class="collapse-all">
 					</a>
 				</th>
 				<th width="20" class="nosort">
@@ -41,7 +42,7 @@
 			{% for test_case in test_cases %}
 			<tr class="case_title {% cycle 'odd' 'even' %}">
 				<td class="expandable">
-					<img class="expand blind_icon" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
+					<img class="expand blind_icon" src="{% static 'images/t1.gif' %}" border="0" alt="">
 				</td>
 				<td valign="top"><input type="checkbox" name="case" value="{{ test_case.case_id }}"></td>
 				<td valign="top"><a href="{% url "testcases-get" test_case.case_id %}">{{ test_case.case_id }}</a></td>

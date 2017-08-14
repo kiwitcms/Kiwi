@@ -1,9 +1,9 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %} {{ test_plan.name }}{% endblock %}
 
 {% block custom_stylesheet %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
 <style>
 #tab_testcases{ padding-left:5px;}
 #tab_testruns {padding-left:5px;}
@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/deleconfirm.js'></script>
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/deleconfirm.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestPlans.Attachment.on_load);
 </script>

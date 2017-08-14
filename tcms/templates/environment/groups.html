@@ -1,12 +1,12 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %}Environment groups{% endblock %}
 
 {% block custom_stylesheet %}
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/management_actions.js"></script>
+<script type="text/javascript" src="{% static 'js/management_actions.js' %}"></script>
 <script type="text/javascript">
 	Nitrate.Management.Environment.Param = {
 		'add_group': '{% url "mgmt-environment_groups" %}',
@@ -28,7 +28,7 @@
 	<div class="mixbar">
 		<form method="get" action="{% url "mgmt-environment_groups" %}" id="changelist-search">
 			<input type="hidden" name="action" value="search">
-            <label for="searchbar"><img alt="Search" height="20px" src="{{ STATIC_URL }}images/search.png"/></label>
+            <label for="searchbar"><img alt="Search" height="20px" src="{% static 'images/search.png' %}"/></label>
 			<input type="text" id="searchbar" value="{{ REQUEST_CONTENTS.name }}" name="name" size="40"/>
 			<input type="submit" value="Search environment group"/>
 		</form>

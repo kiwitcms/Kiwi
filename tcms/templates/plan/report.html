@@ -1,9 +1,9 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %}Test plan{% endblock %}
 
 {% block custom_stylesheet %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
     <style>
         #tab_testcases{ padding-left:5px;}
         #tab_testruns {padding-left:5px;}
