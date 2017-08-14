@@ -1,3 +1,4 @@
+{% load static %}
 {% load ifin %}
 {% load testcase_tags %}
 <form id="js-cases-nav-form" action="{% url "testcases-all" %}" method="get">
@@ -142,7 +143,7 @@
 		<tr>
 			<th class="nosort" align="left" width="18px">
 				<a id='id_blind_all_link' class="blind_all_link">
-					<img src="{{ STATIC_URL }}images/t1.gif" border="0" alt="" class="collapse-all" title="Expand all cases">
+					<img src="{% static 'images/t1.gif' %}" border="0" alt="" class="collapse-all" title="Expand all cases">
 				</a>
 			</th>
 			<th class="nosort" align="left" width="20px">

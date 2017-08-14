@@ -1,11 +1,12 @@
 {% extends "tcms_base.html" %}
+{% load static %}
 
 {% block subtitle %}Kiwi >> 500 (Service Error){% endblock %}
 
 {% block contents %}
 
 <div class="error_404_500">
-	<img src="{{ STATIC_URL }}images/500.png" width="" height="" alt="">
+	<img src="{% static 'images/500.png' %}" width="" height="" alt="">
 	<div class="radius error_content">
 		<ul>
 			<li>Sorry, This is a service error.</li>

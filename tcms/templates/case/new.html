@@ -1,5 +1,5 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %}Add new case{% endblock %}
 
 {% block extra_head %}
@@ -10,12 +10,12 @@
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/testplan_actions.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript" src="/jsi18n/"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectFilter2.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectBox.js"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 </script>
@@ -40,7 +40,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 		{% endif %}
 		<div id="newcase" class="Detailform border-1">
 			<div id="id_create_case_process" class="submit" style="display: none">
-				<img src="{{ STATIC_URL }}images/loading/ajax-button.gif" />
+				<img src="{% static 'images/loading/ajax-button.gif' %}" />
 			</div>
 			<fieldset class="no-border background-light-grey">
 				<div class="editor-side">

@@ -1,13 +1,13 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %}Clone Plan{% endblock %}
 
 {% block custom_stylesheet %}
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/index.js'></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 </script>

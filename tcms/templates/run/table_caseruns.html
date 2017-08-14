@@ -1,3 +1,5 @@
+{% load static %}
+
 <table class="list" id="id_table_cases" cellspacing="0" cellspan="0">
 	<thead>
 		<tr>
@@ -6,7 +8,7 @@
 			</th>
 			<th width="18">
 				<a id="id_blind_all_link" title="Expand all cases">
-					<img id="id_blind_all_img" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="" class="collapse-all">
+					<img id="id_blind_all_img" src="{% static 'images/t1.gif' %}" border="0" alt="" class="collapse-all">
 				</a>
 			</th>
 			<th class="widthID">Case Run ID</th>
@@ -32,7 +34,7 @@
 				<input type="hidden" name="case_text_version" value="{{ test_case_run.case_text_version }}" />
 			</td>
 			<td title="expand test case" class="expandable vmiddle case_title">
-				<img class="blind_icon expand" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="" />
+				<img class="blind_icon expand" src="{% static 'images/t1.gif' %}" border="0" alt="" />
 			</td>
 			<td class="case_title expandable">
 				<a href="#caserun_{{ test_case_run.pk }}">#{{ test_case_run.pk }}</a>
@@ -63,7 +65,7 @@
 			<td class="expandable center">
 				<img border="0" alt="" class="icon_status btn_{{ status_name|lower }}" />
 			</td>
-			<td><div id="{{ test_case_run.case_id }}_case_comment_count">{% if comments_count %}<img src="{{ STATIC_URL }}images/comment.png" style="vertical-align: middle;">{%endif %} <span id="{{ test_case_run.case_id }}_comments_count">{{ comments_count }}</span></div></td>
+			<td><div id="{{ test_case_run.case_id }}_case_comment_count">{% if comments_count %}<img src="{% static 'images/comment.png' %}" style="vertical-align: middle;">{%endif %} <span id="{{ test_case_run.case_id }}_comments_count">{{ comments_count }}</span></div></td>
 			<td class="expandable">
 				<span class="mark">
 					<a href="#" class="js-change-order" data-params='["{{ test_case_run.run_id }}", "{{ test_case_run.pk }}", "{{ test_case_run.sortkey }}"]'>{{ test_case_run.sortkey }}</a>

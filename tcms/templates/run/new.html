@@ -1,22 +1,22 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% load split_as_option %}
 {% load extra_filters %}
 
 {% block subtitle %}Create new test run{% endblock %}
 
 {% block custom_stylesheet %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables.css" />
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/dataTables/jquery.dataTables_themeroller.css" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables_themeroller.css' %}" />
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.dataTables.js"></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/createrun.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="{% static 'js/lib/jquery.dataTables.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/createrun.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
 
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
@@ -138,7 +138,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 			<span class="title"><b>Selected cases:</b></span>
 				<span class="notice">
 					{% if  num_unconfirmed_cases %}
-					<img src="{{ STATIC_URL }}images/warning.png" style="float:none"/>
+					<img src="{% static 'images/warning.png' %}" style="float:none"/>
 					{{ num_unconfirmed_cases }} unconfirmed cases removed
 					{% endif %}
 				</span>
@@ -165,7 +165,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 							{% endif %}
 						</td>
 						<td{% if not test_case.case_status.name == 'CONFIRMED' %} style='text-decoration: line-through'{% endif %}>
-							{% if not test_case.case_status.name == 'CONFIRMED' %} <img src="{{ STATIC_URL }}images/warning.png"/>{% endif %}
+							{% if not test_case.case_status.name == 'CONFIRMED' %} <img src="{% static 'images/warning.png' %}"/>{% endif %}
 							<a id="link_{{ forloop.counter }}" class="blind_title_link js-case-summary" data-param="{{ forloop.counter }}" >
 								{{ test_case.summary }}
 							</a>

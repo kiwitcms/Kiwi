@@ -1,12 +1,12 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% block subtitle %}Case History{% endblock %}
 
 {% block custom_stylesheet %}
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/testplan_actions.js'></script>
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript">
 	jQ('.js-one-record').live('click',function() {
 		var param = jQ(this).data('param');

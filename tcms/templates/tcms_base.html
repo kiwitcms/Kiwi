@@ -1,18 +1,19 @@
 {% load cache %}
+{% load static %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<title>{% block subtitle %}{% endblock %}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="Content-Language" content="utf-8" />
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/jquery/ui/cupertino/jquery-ui-1.8.20.css" />
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/base.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/print.css" media="print" />
+	<link rel="stylesheet" type="text/css" href="{% static 'style/jquery/ui/cupertino/jquery-ui-1.8.20.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'style/base.css' %}" media="screen" />
+	<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
 	{% block custom_stylesheet %}{% endblock %}
-	<script type="text/javascript" src="{{ STATIC_URL }}admin/js/jquery.init.js"></script>
-	<script type="text/javascript" src='{{ STATIC_URL }}js/lib/jquery-1.7.2.min.js'></script>
-	<script type="text/javascript" src='{{ STATIC_URL }}js/lib/jquery-ui-1.8.20.min.js'></script>
-	<script type="text/javascript" src='{{ STATIC_URL }}js/lib/handlebars-1.3.0.min.js'></script>
+	<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/lib/jquery-1.7.2.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/lib/jquery-ui-1.8.20.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/lib/handlebars-1.3.0.min.js' %}"></script>
 	<script type="text/javascript" language="javascript" charset="utf-8">
 		jQuery.noConflict();
 		var jQ = jQuery;
@@ -33,8 +34,8 @@
 		// Top level namespace
 		window.Nitrate = {};
 	</script>
-	<script type="text/javascript" src='{{ STATIC_URL }}js/lib/jquery.shiftcheckbox.js'></script>
-	<script type="text/javascript" src='{{ STATIC_URL }}js/tcms_actions.js'></script>
+	<script type="text/javascript" src="{% static 'js/lib/jquery.shiftcheckbox.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/tcms_actions.js' %}"></script>
 	{% block custom_javascript %}{% endblock %}
 		{% if SETTINGS.ENABLE_PIWIK_TRACKING %}
 		<script type="text/javascript">
@@ -55,7 +56,6 @@
 		</script>
 		{% endif %}
 	<script type="text/javascript">
-	window.__admin_media_prefix__ = "{{ STATIC_URL }}admin/";
 	{% if request.user.is_authenticated %}
 	Nitrate.User = {
 		pk: {{ request.user.pk }},
@@ -95,7 +95,7 @@
 <body id="body">
 	<div id="header">
                 <div class="logo">
-                    <a href="{% url "core-views-index" %}"><img src="{{ STATIC_URL }}images/kiwi_h50.png" alt="logo" /></a>
+                    <a href="{% url "core-views-index" %}"><img src="{% static 'images/kiwi_h50.png' %}" alt="logo" /></a>
                 </div>
 		<div class="absoluteright">
 		<label>

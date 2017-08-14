@@ -1,5 +1,5 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% load i18n admin_modify ifin %}
 
 {% block subtitle %}Edit Environment group{% endblock %}
@@ -10,10 +10,10 @@
 
 {% block custom_javascript %}
 <script type="text/javascript" src="/jsi18n/"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/core.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectFilter2.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}admin/js/SelectBox.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/management_actions.js"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/management_actions.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 </script>

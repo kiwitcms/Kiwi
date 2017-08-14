@@ -1,12 +1,13 @@
 {% extends "tcms_base.html" %}
 {% load extra_filters %}
+{% load static %}
 
 {% block subtitle %}{{ test_run.summary }}{% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/lib/tablednd.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
+<script type="text/javascript" src="{% static 'js/lib/tablednd.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript">
 {#　Define the case_run_status array for all of case run status　#}
 Nitrate.TestRuns.CaseRunStatus = new Array();
@@ -112,7 +113,7 @@ jQ(function() {
 						<li>
 							{{ tag }}
 						{% if perms.testruns.delete_testruntag %}
-						<a href="javascript:void(0)" class="js-remove-tag" data-params='["{{ test_run.run_id }}", "{{ tag }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
+						<a href="javascript:void(0)" class="js-remove-tag" data-params='["{{ test_run.run_id }}", "{{ tag }}"]'><img src="{% static 'images/remove_small.png' %}" width="9" height="9" title="remove this tag" /></a>
 						{% endif %}
 						</li>
 						{% endfor %}

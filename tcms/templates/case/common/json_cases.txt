@@ -1,3 +1,4 @@
+{% load static %}
 {
     "sEcho": {{sEcho}},
     "iTotalRecords": {{iTotalRecords}},
@@ -5,7 +6,7 @@
     "aaData":[
         {% for test_case in querySet %}
         [
-            "<img class='expand blind_icon' src='{{ STATIC_URL }}images/t1.gif' border='0' alt=''>",
+            "<img class='expand blind_icon' src='{% static "images/t1.gif" %}' border='0' alt=''>",
             "<input type='checkbox' name='case' value='{{ test_case.case_id }}'>",
             "<a href='{% url "testcases-get" test_case.case_id %}'>{{ test_case.case_id }}</a>",
             "<a id='link_{{ test_case.case_id }}' href='{% url "testcases-get" test_case.case_id %}'>{{ test_case.summary }}</a>",

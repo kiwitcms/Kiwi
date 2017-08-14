@@ -1,5 +1,5 @@
 {% extends "tcms_base.html" %}
-
+{% load static %}
 {% load ifin %}
 
 {% block subtitle %}Choose test run to assign case{% endblock %}
@@ -8,9 +8,9 @@
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src='{{ STATIC_URL }}js/testrun_actions.js'></script>
-<script type="text/javascript" src='{{ STATIC_URL }}js/testcase_actions.js'></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/testplan_actions.js"></script>
+<script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestRuns.ChooseRuns.on_load);
 </script>
@@ -97,7 +97,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.ChooseRuns.on_load);
 					<tr id="row_{{ forloop.counter }}" class="{% cycle 'odd' 'even' %} selection_row js-one-case">
 						<td>
 							<a id="blind_link_{{ forloop.counter }}" class="blind_link js-toggle-button" href="javascript:void(0);" data-param="{{ forloop.counter }}">
-								<img id="blind_icon_{{ forloop.counter }}" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
+								<img id="blind_icon_{{ forloop.counter }}" src="{% static 'images/t1.gif' %}" border="0" alt="">
 							</a>
 						</td>
 						<td>

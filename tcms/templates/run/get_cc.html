@@ -1,10 +1,12 @@
+{% load static %}
+
 {% if not is_ajax %}
 	<ul style="margin:0px;" class="js-cc-ul">
 	{% for cc in test_run.cc.select_related.all %}
 	<li>
 		<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
 		{% if perms.testruns.delete_testruncc %}
-		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
+		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{% static 'images/remove_small.png' %}" width="9" height="9" title="remove this tag" /></a>
 		{% endif %}
 	</li>
 	{% endfor %}
@@ -23,7 +25,7 @@
 	<li>
 		<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
 		{% if perms.testruns.delete_testruncc %}
-		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{{ STATIC_URL }}images/remove_small.png" width="9" height="9" title="remove this tag" /></a>
+		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{% static 'images/remove_small.png' %}" width="9" height="9" title="remove this tag" /></a>
 		{% endif %}
 	</li>
 	{% endfor %}

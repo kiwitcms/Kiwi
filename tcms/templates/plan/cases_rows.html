@@ -1,3 +1,5 @@
+{% load static %}
+
 {% comment %}
 Template for rendering rows of TestCases. Rows are TR tags used in a TABLE
 tag.
@@ -11,7 +13,7 @@ test_cases should be a queryset of a list of TestCases.
 {% for test_case in test_cases %}
 <tr class="case_title {% cycle 'odd' 'even' %}" id='{{ test_case.pk }}' >
 	<td class="expandable js-just-loaded">
-		<img class="expand blind_icon" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
+		<img class="expand blind_icon" src="{% static 'images/t1.gif' %}" border="0" alt="">
 	</td>
 	<td>
 		{# FIXME: replacing selected_case_ids with selected_cases_ids is proper  #}

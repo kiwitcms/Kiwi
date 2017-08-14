@@ -1,3 +1,5 @@
+{% load static %}
+
 {% if not is_ajax %}
 <ul id="env_area">
 	{% for run_env_value in test_run.env_value.select_related.all %}
@@ -17,12 +19,12 @@
 			<span class="action_property">
 				{% if perms.testruns.change_tcmsenvrunvaluemap %}
 					<a href="javascript:void(0)" class="js-edit-property" data-params='["id_env_value_{{ run_env_value.pk }}", "id_select_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'>
-						<img src="{{ STATIC_URL }}images/icon_changelink.gif" title="Edit this value"/>
+						<img src="{% static 'images/icon_changelink.gif' %}" title="Edit this value"/>
 					</a>
 				{% endif %}
 				{% if perms.testruns.delete_tcmsenvrunvaluemap %}
 					<a href="javascript:void(0)">
-						<img src="{{ STATIC_URL }}images/remove_small.png" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
+						<img src="{% static 'images/remove_small.png' %}" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
 					</a>
 				{% endif %}
 			</span>
@@ -74,12 +76,12 @@
 		<span class="action_property">
 			{% if perms.testruns.change_tcmsenvrunvaluemap %}
 				<a href="javascript:void(0)" class="js-edit-property" data-params='["id_env_value_{{ run_env_value.pk }}", "id_select_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'>
-					<img src="{{ STATIC_URL }}images/icon_changelink.gif" title="Edit this value"/>
+					<img src="{% static 'images/icon_changelink.gif' %}" title="Edit this value"/>
 				</a>
 			{% endif %}
 			{% if perms.testruns.delete_tcmsenvrunvaluemap %}
 				<a href="javascript:void(0)">
-					<img src="{{ STATIC_URL }}images/remove_small.png" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
+					<img src="{% static 'images/remove_small.png' %}" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
 				</a>
 			{% endif %}
 		</span>
