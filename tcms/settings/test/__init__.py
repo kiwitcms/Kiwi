@@ -13,6 +13,8 @@ DATABASES = {
 
 LISTENING_MODEL_SIGNAL = False
 
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
