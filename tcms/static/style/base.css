@@ -212,7 +212,7 @@ fieldset .form-row{ padding-top:10px; width:100%; background:#f1f1f1; clear:both
 fieldset h2{ margin:0px; background:#235D9F; color:#fff; border-bottom:1px solid #ccc; border-top:1px solid #fff; border-left:1px solid #fff; border-right:1px solid #fff; padding-bottom:3px; padding-top:3px; font-size:1.1em; padding-left:10px; }
 .form-row label	{ width:150px; float:left; padding-left:10px; font-weight:600; color:#666;  }
 fieldset .required{ clear:left;width:150px; float:left; padding-left:10px; font-weight:600; color:#666; }
-.errornote{ background:#FCE595; color:red; background : url("static/admin/img/admin/icon_error.gif") left 3px  no-repeat; padding-left:20px; }
+.errornote{ background:#FCE595; color:red; padding-left:20px; }
 .errorlist{ width:99%; margin:10px auto;background:#AF2B2B;font-size:12px;-moz-border-radius:5px 5px 5px 5px;-moz-box-shadow:0 1px 4px #666666; border:1px solid #6F1B1B;color:#FFF;display:block;text-shadow:0 0px 0 #000000; padding:10px 0; font-weight:bold;}
 .errorlist li{ list-style:none; margin-left:10px;}
 .errorlist li ul{padding:0px; border:0px; -moz-box-shadow:0px 0px 0px; -moz-border-radius:0px; margin:0px; font-weight:normal;}
@@ -387,7 +387,7 @@ fieldset .required{ clear:left;width:150px; float:left; padding-left:10px; font-
 .content_tab li{ line-height:30px; margin:0px; padding:0px;}
 .tab{ font-weight:bold; float:left; border-bottom:none; width:auto; cursor:pointer; background:#f5f5f5; border-right:1px solid #ccc;}
 .tab a{ text-decoration:none; padding:10px 15px; line-height:30px; position:relative; width:100%;}
-.tab_focus{ font-weight:bold; float:left;/*background:#659ACC url("../images/tab_corner.png") right top no-repeat;*/ background:#235d9f;}
+.tab_focus{ font-weight:bold; float:left;background:#235d9f;}
 .tab_focus a{ color:#fff;}
 .tab_navigation{ background:#235d9f; width:100%; float:left; padding-top:3px;  position:relative;}
 .tab_navigation .hyperlink{ color:#FFF; margin-left:10px; float:left;}
