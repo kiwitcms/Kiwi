@@ -9,6 +9,5 @@ django-tinymce
 beautifulsoup4
 six
 django-contrib-comments
-django-preserialize
 html2text
 xmltodict
