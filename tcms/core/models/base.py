@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import urlparse
+from urllib.parse import urlparse, urlunparse
 
 from django.db import models
 from django.conf import settings
@@ -37,8 +37,8 @@ class UrlMixin(object):
             url = self.get_url()
         except NotImplemented:
             raise
-        bits = urlparse.urlparse(url)
-        return urlparse.urlunparse(('', '') + bits[2:])
+        bits = urlparse(url)
+        return urlunparse(('', '') + bits[2:])
 
     get_url_path.dont_recurse = True
 

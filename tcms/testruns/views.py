@@ -4,7 +4,7 @@ import datetime
 import itertools
 import json
 import time
-import urllib
+from urllib.parse import urlencode
 from functools import reduce
 
 from django.conf import settings
@@ -1104,7 +1104,7 @@ def clone(request, template_name='run/clone.html'):
 
             return HttpResponseRedirect('%s?%s' % (
                 reverse('testruns-all'),
-                urllib.urlencode(params, True)
+                urlencode(params, True)
             ))
     else:
         form = MulitpleRunsCloneForm(initial={
@@ -1158,7 +1158,7 @@ def order_case(request, run_id):
     #         (30, 10315)
     #         (40, 10443)
     new_sort_keys = range(10, (len(case_run_ids) + 1) * 10, 10)
-    key_id_pairs = itertools.izip(new_sort_keys, (int(pk) for pk in case_run_ids))
+    key_id_pairs = zip(new_sort_keys, (int(pk) for pk in case_run_ids))
     for sort_key, caserun_id in key_id_pairs:
         TestCaseRun.objects.filter(pk=caserun_id).update(sortkey=sort_key)
 

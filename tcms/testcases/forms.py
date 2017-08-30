@@ -8,9 +8,9 @@ from tcms.core.exceptions import NitrateException
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.management.models import Priority, Product, Component, TestTag
-from models import TestCase, TestCaseCategory, TestCaseStatus, TestCaseTag
-from models import TestCaseBug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
-from fields import MultipleEmailField
+from .models import TestCase, TestCaseCategory, TestCaseStatus, TestCaseTag
+from .models import TestCaseBug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
+from .fields import MultipleEmailField
 
 AUTOMATED_CHOICES = (
     (0, 'Manual'),

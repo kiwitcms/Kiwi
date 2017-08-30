@@ -1,6 +1,6 @@
 # Django settings for devel env.
 
-from product import *
+from .product import *
 
 # Debug settings
 DEBUG = True

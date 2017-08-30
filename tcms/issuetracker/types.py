@@ -1,11 +1,11 @@
 import os
-import urllib
+from urllib.parse import urlencode
 import bugzilla
-import bugzilla_integration
+from . import bugzilla_integration
 import jira
-import jira_integration
+from . import jira_integration
 import github
-import github_integration
+from . import github_integration
 from django.conf import settings
 
 
@@ -148,7 +148,7 @@ class Bugzilla(IssueTrackerType):
         if not url.endswith('/'):
             url += '/'
 
-        return url + 'enter_bug.cgi?' + urllib.urlencode(args, True)
+        return url + 'enter_bug.cgi?' + urlencode(args, True)
 
 
 class JIRA(IssueTrackerType):
@@ -241,7 +241,7 @@ class JIRA(IssueTrackerType):
         if not url.endswith('/'):
             url += '/'
 
-        return url + '/secure/CreateIssueDetails!init.jspa?' + urllib.urlencode(args, True)
+        return url + '/secure/CreateIssueDetails!init.jspa?' + urlencode(args, True)
 
 
 class GitHub(IssueTrackerType):
@@ -300,4 +300,4 @@ class GitHub(IssueTrackerType):
         if not url.endswith('/'):
             url += '/'
 
-        return url + '/issues/new?' + urllib.urlencode(args, True)
+        return url + '/issues/new?' + urlencode(args, True)

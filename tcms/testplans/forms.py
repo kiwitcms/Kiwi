@@ -6,7 +6,7 @@ from odf.odf2xhtml import ODF2XHTML, load
 from tcms.core.forms.fields import UserField, StripURLField
 from tinymce.widgets import TinyMCE
 from tcms.management.models import Component, Product, Version, TCMSEnvGroup, TestTag
-from models import TestPlan, TestPlanType
+from .models import TestPlan, TestPlanType
 from tcms.utils.xml import clean_xml_file, process_case
 # ===========Plan Fields==============
 

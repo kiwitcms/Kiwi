@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import httplib
+import http.client
 
 from django.test import TestCase
 
@@ -16,7 +16,7 @@ class TestFaultCode(XmlrpcAPIBaseTest):
             raise PermissionDenied()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.FORBIDDEN, wrapper)
+        self.assertRaisesXmlrpcFault(http.client.FORBIDDEN, wrapper)
 
     def test_404(self):
         def raise_exception(*args, **kwargs):
@@ -24,7 +24,7 @@ class TestFaultCode(XmlrpcAPIBaseTest):
             raise ObjectDoesNotExist()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.NOT_FOUND, wrapper)
+        self.assertRaisesXmlrpcFault(http.client.NOT_FOUND, wrapper)
 
     def test_400(self):
         exceptions = [v for k, v in locals().copy().iteritems() if k != 'self']
@@ -35,7 +35,7 @@ class TestFaultCode(XmlrpcAPIBaseTest):
 
         wrapper = wrap_exceptions(raise_exception)
         for clazz in exceptions:
-            self.assertRaisesXmlrpcFault(httplib.BAD_REQUEST, wrapper, clazz)
+            self.assertRaisesXmlrpcFault(http.client.BAD_REQUEST, wrapper, clazz)
 
     def test_409(self):
         def raise_exception(*args, **kwargs):
@@ -43,21 +43,21 @@ class TestFaultCode(XmlrpcAPIBaseTest):
             raise IntegrityError()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.CONFLICT, wrapper)
+        self.assertRaisesXmlrpcFault(http.client.CONFLICT, wrapper)
 
     def test_500(self):
         def raise_exception(*args, **kwargs):
             raise Exception()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.INTERNAL_SERVER_ERROR, wrapper)
+        self.assertRaisesXmlrpcFault(http.client.INTERNAL_SERVER_ERROR, wrapper)
 
     def test_501(self):
         def raise_exception(*args, **kwargs):
             raise NotImplementedError()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.NOT_IMPLEMENTED, wrapper)
+        self.assertRaisesXmlrpcFault(http.client.NOT_IMPLEMENTED, wrapper)
 
 
 class TestAutoWrap(TestCase):

@@ -3,9 +3,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from base import TCMSContentTypeBaseModel  # noqa
-from base import UrlMixin
-from fields import BlobValueWrapper, BlobField  # noqa
+from .base import TCMSContentTypeBaseModel  # noqa
+from .base import UrlMixin
+from .fields import BlobValueWrapper, BlobField  # noqa
 from tcms.core.logs.views import TCMSLog
 from tcms.testruns import signals as run_watchers  # noqa
 from tcms.xmlrpc.serializer import XMLRPCSerializer

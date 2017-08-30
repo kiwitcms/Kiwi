@@ -7,7 +7,7 @@ from tcms.management.models import Product, Version, TestBuild, TCMSEnvGroup, \
     TestTag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
-from models import TestRun, TestCaseRunStatus
+from .models import TestRun, TestCaseRunStatus
 
 
 STATUS_CHOICES = (

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from httplib import INTERNAL_SERVER_ERROR
+from http.client import INTERNAL_SERVER_ERROR
 
 from tcms.testruns.models import TestRun
 from tcms.xmlrpc.api import testrun as XmlrpcTestRun
