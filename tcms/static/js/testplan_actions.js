@@ -514,6 +514,11 @@ Nitrate.TestPlans.Create.on_load = function() {
   jQ('.js-cancel-button').bind('click', function() {
     window.history.back();
   });
+
+  // Populate product version field.
+  if (jQ('#id_product').length && !jQ('#id_product_version').val()) {
+    fireEvent(jQ('#id_product')[0],'change');
+  }
 };
 
 Nitrate.TestPlans.Edit.on_load = function() {
