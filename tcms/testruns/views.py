@@ -900,7 +900,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 bug_id = self.request.GET.get('bug_id')
                 run_id = self.request.GET.get('case_run')
                 self.case_run.remove_bug(bug_id, run_id)
-            except ObjectDoesNotExist, error:
+            except ObjectDoesNotExist as error:
                 response = {'rc': 1, 'response': str(error)}
                 return self.ajax_response(response=response)
 

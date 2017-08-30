@@ -1762,7 +1762,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
 
             try:
                 self.case.remove_bug(request.GET.get('id'), request.GET.get('run_id'))
-            except ObjectDoesNotExist, error:
+            except ObjectDoesNotExist as error:
                 return self.render(response=error)
 
             return self.render()

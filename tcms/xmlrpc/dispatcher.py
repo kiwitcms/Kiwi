@@ -92,7 +92,7 @@ class DjangoXMLRPCDispatcher(SimpleXMLRPCDispatcher):
             response = (response,)
             response = xmlrpclib.dumps(response, methodresponse=1, allow_none=self.allow_none, encoding=self.encoding)
 
-        except xmlrpclib.Fault, fault:
+        except xmlrpclib.Fault as fault:
             response = xmlrpclib.dumps(fault, allow_none=self.allow_none, encoding=self.encoding)
 
         except:

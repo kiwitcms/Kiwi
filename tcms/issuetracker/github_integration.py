@@ -43,6 +43,6 @@ URL: %s
 Summary: %s""" % (self.testcase.get_url(), self.testcase.summary)
 
             self.repo.get_issue(int(self.bug.bug_id)).create_comment(text)
-        except Exception, err:
+        except Exception as err:
             message = '%s: %s' % (err.__class__.__name__, err)
             warnings.warn(message)

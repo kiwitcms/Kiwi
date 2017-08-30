@@ -152,7 +152,7 @@ class BookmarkForm(forms.Form):
                 )
                 cleaned_data['content_type'] = ct
                 cleaned_data['object_pk'] = target.pk
-            except ObjectDoesNotExist, error:
+            except ObjectDoesNotExist as error:
                 raise ValidationError(error)
 
         cleaned_data['user'] = User.objects.get(pk=cleaned_data['user'])

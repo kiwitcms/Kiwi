@@ -102,7 +102,7 @@ def remove(request, link_id):
     field = IntegerField(min_value=1)
     try:
         value = field.clean(link_id)
-    except ValidationError, err:
+    except ValidationError as err:
         jd = json.dumps({'rc': 1, 'response': '\n'.join(err.messages)})
         return HttpJSONResponseBadRequest(content=jd)
 

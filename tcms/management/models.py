@@ -108,7 +108,6 @@ class Product(TCMSActionModel):
     def get_choices(cls, allow_blank):
         # Generate a list of (id, string) pairs suitable
         # for a ChoiceField's "choices":
-        print cls.objects.all()
         return get_as_choices(cls.objects.order_by('name').all(), allow_blank)
 
     def as_choice(self):
