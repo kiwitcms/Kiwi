@@ -7,6 +7,7 @@ Most of these functions are use for Ajax.
 import datetime
 import sys
 import json
+from distutils.util import strtobool
 
 from django import http
 from django.contrib.auth.models import User
@@ -75,7 +76,7 @@ def info(request):
 
             query = {
                 'product_id': self.product_id,
-                'is_active': self.request.GET.get('is_active')
+                'is_active': bool(strtobool(self.request.GET.get('is_active', 'False')))
             }
             return TestBuild.list(query)
 
@@ -151,7 +152,6 @@ def info(request):
             response_str += '</ul>'
             return HttpResponse(response_str)
 
-        # import pdb; pdb.set_trace()
         return HttpResponse(serializers.serialize(
             request.GET.get('format', 'json'),
             obj(),
