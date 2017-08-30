@@ -5,7 +5,7 @@
 	{% if queries %}
 	<div class="queries">
 		<ul>
-			{% for k, v in queries.iteritems %}
+			{% for k, v in queries.items %}
 			<li><label>{{ k|title }}:</label>{{ v|safe }};</li>
 			{% endfor %}
 			{% if not report_data.builds_selected %}

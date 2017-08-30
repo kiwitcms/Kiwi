@@ -117,7 +117,7 @@ class QuerySetIterationProxy(object):
 
     def next(self):
         next_one = self._iterable.next()
-        for name, lookup_table in self._associated_data.iteritems():
+        for name, lookup_table in self._associated_data.items():
             setattr(next_one,
                     name,
                     lookup_table.get(

@@ -173,7 +173,7 @@ def fmt_errors(form_errors):
     '''
     errors = []
     for error in form_errors:
-        for k, v in error.iteritems():
+        for k, v in error.items():
             k = k.replace('p_product', 'product')
             k = k.replace('p_', 'product ')
             k = k.replace('cs_', 'case ')
@@ -192,7 +192,7 @@ def fmt_queries(*queries):
     '''
     results = {}
     for query in queries:
-        for k, v in query.iteritems():
+        for k, v in query.items():
             k = k.replace('p_product', 'product')
             k = k.replace('p_', 'product ')
             k = k.replace('cs_', 'case ')

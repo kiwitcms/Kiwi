@@ -341,12 +341,12 @@ class PlanFilterRunForm(forms.Form):
 
     def __init__(self, request_data):
         super(PlanFilterRunForm, self).__init__(
-            dict((k, v) for k, v in request_data.iteritems() if v.strip())
+            dict((k, v) for k, v in request_data.items() if v.strip())
         )
 
     def clean(self):
         cleaned_data = {}
-        for key, value in self.cleaned_data.iteritems():
+        for key, value in self.cleaned_data.items():
             if not value:
                 continue
             if not (isinstance(value, str) and not value.strip()):

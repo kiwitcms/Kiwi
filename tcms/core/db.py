@@ -69,8 +69,8 @@ class GroupByResult(object):
     def get(self, key, default=None):
         return self._data.get(key, default)
 
-    def iteritems(self):
-        return self._data.iteritems()
+    def items(self):
+        return self._data.items()
 
     def setdefault(self, key, default=None):
         return self._data.setdefault(key, default)
@@ -101,7 +101,7 @@ class GroupByResult(object):
             total = self[self._total_name]
         else:
             total = 0
-            for name, subtotal in self._data.iteritems():
+            for name, subtotal in self._data.items():
                 # NOTE: is it possible do such judgement in advance when adding
                 # element
                 if isinstance(subtotal, int):
@@ -160,7 +160,7 @@ class GroupByResult(object):
             return self._meta['value_leaf_count']
 
         count = 0
-        for key, value in self.iteritems():
+        for key, value in self.items():
             if isinstance(value, GroupByResult):
                 count += value.leaf_values_count(value_in_row)
             else:

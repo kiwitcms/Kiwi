@@ -403,12 +403,12 @@ class CustomDetailReport(CustomReport):
         prev_plan = None
         # TODO: replace this with collections.OrderedDict after
         # upgrading to Python 2.7
-        ordered_plans = sorted(matrix_dataset.iteritems(),
+        ordered_plans = sorted(matrix_dataset.items(),
                                key=lambda item: item[0].pk)
         for plan, runs in ordered_plans:
             plan_runs_count = len(runs)
             # TODO: and also this line
-            ordered_runs = sorted(runs.iteritems(),
+            ordered_runs = sorted(runs.items(),
                                   key=lambda item: item[0].pk)
             for run, status_subtotal in ordered_runs:
                 if plan == prev_plan:

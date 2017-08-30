@@ -52,7 +52,7 @@ def log_call(*args, **kwargs):
                 known_args = zip(arg_names, args)
                 unknown_args = list(enumerate(args[len(arg_names):]))
                 keyword_args = [(key, value) for key, value in
-                                kwargs.iteritems()
+                                kwargs.items()
                                 if (key, value) not in known_args]
 
                 create_log(user=request.user,

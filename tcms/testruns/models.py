@@ -109,7 +109,7 @@ class TestRun(TCMSActionModel):
             }[query.get('people_type')],
         }
 
-        conditions = [mapping[key](value) for key, value in query.iteritems()
+        conditions = [mapping[key](value) for key, value in query.items()
                       if value and key in mapping]
 
         runs = cls.objects.filter(*conditions)
@@ -352,7 +352,7 @@ class TestCaseRunStatus(TCMSActionModel):
     @classmethod
     def get_names_ids(cls):
         '''Get all status names in reverse mapping between name and id'''
-        return dict((name, _id) for _id, name in cls.get_names().iteritems())
+        return dict((name, _id) for _id, name in cls.get_names().items())
 
     def is_finished(self):
         if self.name in ['PASSED', 'FAILED', 'ERROR', 'WAIVED']:

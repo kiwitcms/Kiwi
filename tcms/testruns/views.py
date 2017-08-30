@@ -322,7 +322,7 @@ def run_queryset_from_querystring(querystring):
         filter_keywords.pop('page_size')
 
     filter_keywords = dict(
-        (str(k), v) for (k, v) in filter_keywords.iteritems() if v.strip())
+        (str(k), v) for (k, v) in filter_keywords.items() if v.strip())
 
     trs = TestRun.objects.filter(**filter_keywords)
     return trs
@@ -371,7 +371,7 @@ def load_runs_of_one_plan(request, plan_id,
 
         # Get associated statistics data
         run_filters = dict(('run__{0}'.format(key), value)
-                           for key, value in form.cleaned_data.iteritems())
+                           for key, value in form.cleaned_data.items())
 
         qs = TestCaseRun.objects \
             .filter(case_run_status=TestCaseRunStatus.id_failed(),
