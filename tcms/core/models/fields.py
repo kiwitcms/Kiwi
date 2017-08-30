@@ -75,7 +75,7 @@ class DurationField(IntegerField):
         return self.to_python(value)
 
     def to_python(self, value):
-        if isinstance(value, (int, long)):
+        if isinstance(value, int):
             return datetime.timedelta(seconds=value)
         elif isinstance(value, datetime.timedelta):
             return value

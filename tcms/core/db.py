@@ -104,7 +104,7 @@ class GroupByResult(object):
             for name, subtotal in self._data.iteritems():
                 # NOTE: is it possible do such judgement in advance when adding
                 # element
-                if isinstance(subtotal, int) or isinstance(subtotal, long):
+                if isinstance(subtotal, int):
                     total += subtotal
                 elif isinstance(subtotal, GroupByResult):
                     total += subtotal.total
