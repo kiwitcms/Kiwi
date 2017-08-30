@@ -57,11 +57,11 @@ class GroupByResultDictLikeTest(unittest.TestCase):
         self.groupby_result = GroupByResult({'total': 100})
 
     def test_in(self):
-        self.assert_('a' not in self.groupby_result)
-        self.assert_('total' in self.groupby_result)
+        self.assertTrue('a' not in self.groupby_result)
+        self.assertTrue('total' in self.groupby_result)
 
     def test_key(self):
-        self.assert_(self.groupby_result.keys(), ['total'])
+        self.assertTrue(self.groupby_result.keys(), ['total'])
 
     def test_setdefault(self):
         ret_val = self.groupby_result.setdefault('count', {})
@@ -104,9 +104,9 @@ class GroupByResultDictLikeTest(unittest.TestCase):
     def test_del(self):
         self.groupby_result['count'] = 200
         del self.groupby_result['total']
-        self.assert_('total' not in self.groupby_result)
+        self.assertTrue('total' not in self.groupby_result)
         del self.groupby_result['count']
-        self.assert_('count' not in self.groupby_result)
+        self.assertTrue('count' not in self.groupby_result)
         self.assertEqual(len(self.groupby_result), 0)
 
 
@@ -221,15 +221,15 @@ class VariousResponsesTest(unittest.TestCase):
 
     def test_json_response(self):
         response = responses.HttpJSONResponse('{}')
-        self.assert_(isinstance(response, http.HttpResponse))
+        self.assertTrue(isinstance(response, http.HttpResponse))
         self.assertEqual(response['Content-Type'], 'application/json')
 
     def test_json_response_badrequest(self):
         response = responses.HttpJSONResponseBadRequest('{}')
-        self.assert_(isinstance(response, http.HttpResponseBadRequest))
+        self.assertTrue(isinstance(response, http.HttpResponseBadRequest))
         self.assertEqual(response['Content-Type'], 'application/json')
 
     def test_json_response_servererror(self):
         response = responses.HttpJSONResponseServerError('{}')
-        self.assert_(isinstance(response, http.HttpResponseServerError))
+        self.assertTrue(isinstance(response, http.HttpResponseServerError))
         self.assertEqual(response['Content-Type'], 'application/json')
