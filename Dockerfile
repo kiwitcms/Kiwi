@@ -2,7 +2,7 @@ FROM centos/httpd
 
 # install virtualenv and libraries needed to build the python dependencies
 RUN yum -y --setopt=tsflags=nodocs install python-virtualenv gcc mariadb-devel \
-    libxml2-devel libxslt-devel mod_wsgi
+    libxml2-devel libxslt-devel mod_wsgi mod_ssl
 # enable when you want to update RPM packages
 # this will be used for testing building a Docker image with the
 # latest possible versions from CentOS!
