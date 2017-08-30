@@ -147,7 +147,7 @@ def check_file(request, file_id):
             try:
                 f = open(stored_file_name, 'ro')
                 contents = f.read()
-            except IOError, error:
+            except IOError as error:
                 raise Http404(error)
         else:
             stored_file_name = os.path.join(
@@ -157,7 +157,7 @@ def check_file(request, file_id):
             try:
                 f = open(stored_file_name, 'ro')
                 contents = f.read()
-            except IOError, error:
+            except IOError as error:
                 raise Http404(error)
 
     response = HttpResponse(contents, content_type=str(attachment.mime_type))

@@ -378,7 +378,7 @@ class SearchPlanForm(forms.Form):
         results = string_to_list(self.cleaned_data['pk__in'])
         try:
             return [int(r) for r in results]
-        except Exception, e:
+        except Exception as e:
             raise forms.ValidationError(str(e))
 
     def clean_tag__name__in(self):

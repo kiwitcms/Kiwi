@@ -112,7 +112,7 @@ class XMLRPCHandlerFactory(object):
 
             try:
                 module = __import__(module_name, {}, {}, [fn])
-            except ImportError, ex:
+            except ImportError as ex:
                 raise ImproperlyConfigured("Error registering XML-RPC method: module '%s' cannot be imported: %s" % (module_name, ex))
 
             try:

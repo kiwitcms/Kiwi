@@ -37,6 +37,6 @@ URL: %s
 Summary: %s""" % (self.testcase.get_url(), self.testcase.summary)
 
             self.rpc.add_comment(self.bug.bug_id, text)
-        except Exception, err:
+        except Exception as err:
             message = '%s: %s' % (err.__class__.__name__, err)
             warnings.warn(message)

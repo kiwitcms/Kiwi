@@ -791,7 +791,7 @@ def clean_bug_form(request):
     try:
         data['bugs'] = request.GET.get('bug_id', '').split(',')
         data['runs'] = map(int, request.GET.get('case_runs', '').split(','))
-    except (TypeError, ValueError), e:
+    except (TypeError, ValueError) as e:
         return (None, 'Please specify only integers for bugs, '
                       'caseruns(using comma to seperate IDs), '
                       'and bug_system. (DEBUG INFO: %s)' % str(e))

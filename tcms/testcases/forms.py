@@ -47,7 +47,7 @@ class BugField(forms.CharField):
         for bug_id in bug_ids:
             try:
                 bug_id = int(bug_id)
-            except ValueError, error:
+            except ValueError as error:
                 raise forms.ValidationError(error)
             if abs(bug_id) > 8388607:
                 raise forms.ValidationError(error)
@@ -401,7 +401,7 @@ class BaseCaseSearchForm(forms.Form):
         for d in data:
             try:
                 int(d)
-            except ValueError, error:
+            except ValueError as error:
                 raise forms.ValidationError(error)
 
         return data
