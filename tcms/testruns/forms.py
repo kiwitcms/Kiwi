@@ -349,7 +349,7 @@ class PlanFilterRunForm(forms.Form):
         for key, value in self.cleaned_data.iteritems():
             if not value:
                 continue
-            if not (isinstance(value, basestring) and not value.strip()):
+            if not (isinstance(value, str) and not value.strip()):
                 cleaned_data[key] = value
         return cleaned_data
 

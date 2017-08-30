@@ -420,7 +420,7 @@ def update_component(request, component_id, values):
         raise ValueError('Component name is not in values {0}.'.format(values))
 
     name = values['name']
-    if not isinstance(name, basestring) or len(name) == 0:
+    if not isinstance(name, str) or len(name) == 0:
         raise ValueError('Component name {0} is not a string value.'.format(name))
 
     component = Component.objects.get(pk=int(component_id))

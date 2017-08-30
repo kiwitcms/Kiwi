@@ -376,7 +376,7 @@ class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
         self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, '')
 
     @unittest.skip('TODO: fix code to make this test pass.')
-    def test_check_status_with_non_basestring(self):
+    def test_check_status_with_non_str(self):
         bad_args = (True, False, 1, 0, -1, [1], (1,), dict(a=1), 0.7)
         for arg in bad_args:
             self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, arg)

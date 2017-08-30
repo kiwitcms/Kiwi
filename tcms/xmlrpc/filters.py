@@ -86,7 +86,7 @@ def autowrap_xmlrpc_apis(path, package):
 
 
 def _format_message(msg):
-    return [msg] if isinstance(msg, basestring) else msg
+    return [msg] if isinstance(msg, str) else msg
 
 
 # create your own filter here.

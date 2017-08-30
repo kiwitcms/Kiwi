@@ -27,7 +27,7 @@ __all__ = (
 
 
 def user_should_have_perm(user, perm):
-    if isinstance(perm, basestring):
+    if isinstance(perm, str):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
@@ -41,13 +41,13 @@ def user_should_have_perm(user, perm):
     elif isinstance(perm, Permission):
         user.user_permissions.add(perm)
     else:
-        raise TypeError('perm should be an instance of either basestring or Permission')
+        raise TypeError('perm should be an instance of either str or Permission')
 
 
 def remove_perm_from_user(user, perm):
     """Remove a permission from an user"""
 
-    if isinstance(perm, basestring):
+    if isinstance(perm, str):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
@@ -61,7 +61,7 @@ def remove_perm_from_user(user, perm):
     elif isinstance(perm, Permission):
         user.user_permissions.remove(perm)
     else:
-        raise TypeError('perm should be an instance of either basestring or Permission')
+        raise TypeError('perm should be an instance of either str or Permission')
 
 
 def create_request_user(username=None, password=None):
