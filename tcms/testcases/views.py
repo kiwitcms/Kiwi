@@ -997,7 +997,7 @@ def get(request, case_id, template_name='case/get.html'):
     case_run_plan_id = request.GET.get('case_run_plan_id', None)
     if case_run_plan_id:
         for item in runs_ordered_by_plan:
-            if item[0].pk == long(case_run_plan_id):
+            if item[0].pk == int(case_run_plan_id):
                 case_runs_by_plan = item[1]
                 break
             else:
