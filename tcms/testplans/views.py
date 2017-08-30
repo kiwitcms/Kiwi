@@ -2,6 +2,7 @@
 
 import datetime
 import urllib
+from functools import reduce
 
 from json import dumps as json_dumps
 
