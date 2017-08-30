@@ -90,7 +90,7 @@ class BookmarkCategory(models.Model):
     class Meta:
         db_table = u'tcms_bookmark_categories'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -106,5 +106,5 @@ class Bookmark(TCMSContentTypeBaseModel):
         db_table = u'tcms_bookmarks'
         index_together = (('content_type', 'object_pk', 'site'),)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

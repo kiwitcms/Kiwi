@@ -33,7 +33,7 @@ class TestPlanType(TCMSActionModel):
     name = models.CharField(max_length=64, unique=True)
     description = models.TextField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -68,7 +68,7 @@ class TestPlan(TCMSActionModel):
         db_table = u'test_plans'
         index_together = [['product', 'plan_id']]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @classmethod

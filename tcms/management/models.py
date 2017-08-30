@@ -47,7 +47,7 @@ class Classification(TCMSActionModel):
     class Meta:
         db_table = u'classifications'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -67,7 +67,7 @@ class Product(TCMSActionModel):
     class Meta:
         db_table = u'products'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @classmethod
@@ -125,7 +125,7 @@ class Priority(TCMSActionModel):
         db_table = u'priority'
         verbose_name_plural = u'priorities'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.value
 
     cache_key_values = 'priority__value'
@@ -153,8 +153,8 @@ class Milestone(models.Model):
     class Meta:
         db_table = u'milestones'
 
-    def __unicode__(self):
-        return unicode(self.value)
+    def __str__(self):
+        return self.value
 
 
 class Component(TCMSActionModel):
@@ -185,7 +185,7 @@ class Component(TCMSActionModel):
         db_table = u'components'
         unique_together = ('product', 'name')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -198,7 +198,7 @@ class Version(TCMSActionModel):
         db_table = u'versions'
         unique_together = ('product', 'value')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.value
 
     @classmethod
@@ -269,7 +269,7 @@ class TestBuild(TCMSActionModel):
             query['is_active'] = True
         return cls.list(query)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def as_choice(self):
@@ -304,7 +304,7 @@ class TestEnvironment(TCMSActionModel):
     class Meta:
         db_table = u'test_environments'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def as_choice(self):
@@ -320,7 +320,7 @@ class TestEnvironmentCategory(models.Model):
         db_table = u'test_environment_category'
         index_together = (('env_category_id', 'product'), ('product', 'name'))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -334,7 +334,7 @@ class TestEnvironmentElement(models.Model):
     class Meta:
         db_table = u'test_environment_element'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -347,7 +347,7 @@ class TestEnvironmentProperty(models.Model):
     class Meta:
         db_table = u'test_environment_property'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -361,7 +361,7 @@ class TestEnvironmentMap(models.Model):
         db_table = u'test_environment_map'
         # FIXME: is unique_together against environment and property necessary?
 
-    def __unicode__(self):
+    def __str__(self):
         return self.value_selected
 
 
@@ -377,7 +377,7 @@ class TestTag(TCMSActionModel):
         verbose_name = u'tag'
         verbose_name_plural = u'tags'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @classmethod
@@ -406,7 +406,7 @@ class TestAttachment(models.Model):
     create_date = models.DateTimeField(db_column='creation_ts')
     mime_type = models.CharField(max_length=100)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.file_name
 
     class Meta:
@@ -445,8 +445,8 @@ class TCMSEnvGroup(TCMSActionModel):
     class Meta:
         db_table = u'tcms_env_groups'
 
-    def __unicode__(self):
-        return unicode(self.name)
+    def __str__(self):
+        return self.name
 
     @classmethod
     def get_active(cls):
@@ -460,8 +460,8 @@ class TCMSEnvProperty(TCMSActionModel):
     class Meta:
         db_table = u'tcms_env_properties'
 
-    def __unicode__(self):
-        return unicode(self.name)
+    def __str__(self):
+        return self.name
 
     @classmethod
     def get_active(cls):
@@ -485,8 +485,8 @@ class TCMSEnvValue(TCMSActionModel):
         db_table = u'tcms_env_values'
         unique_together = ('property', 'value')
 
-    def __unicode__(self):
-        return unicode(self.value)
+    def __str__(self):
+        return self.value
 
     @classmethod
     def get_active(cls):
