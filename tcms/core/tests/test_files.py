@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
 import os
 import shutil
 import tempfile
@@ -9,6 +8,7 @@ from mock import patch
 
 from django.urls import reverse
 from django.test import RequestFactory
+from django.conf import settings
 
 from tcms.core.files import able_to_delete_attachment
 from tcms.management.models import TestAttachment
@@ -238,7 +238,9 @@ class TestDeleteFileAuthorization(BasePlanCase):
         url = reverse('mgmt-delete_file', args=[self.plan_attachment.pk])
         response = self.client.get(url, {'from_plan': self.plan.pk})
 
-        self.assertEqual({'rc': 2, 'response': 'auth_failure'}, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 2, 'response': 'auth_failure'})
 
     def test_delete_attachment_from_plan(self):
         self.client.login(username=self.plan_attachment.submitter.username,
@@ -247,7 +249,9 @@ class TestDeleteFileAuthorization(BasePlanCase):
         url = reverse('mgmt-delete_file', args=[self.plan_attachment.pk])
         response = self.client.get(url, {'from_plan': self.plan.pk})
 
-        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 0, 'response': 'ok'})
         still_has = self.plan.attachment.filter(pk=self.plan_attachment.pk).exists()
         self.assertFalse(still_has)
         # TODO: skip because delete_file does not delete a TestAttachment object from database
@@ -260,7 +264,9 @@ class TestDeleteFileAuthorization(BasePlanCase):
         url = reverse('mgmt-delete_file', args=[self.case_attachment.pk])
         response = self.client.get(url, {'from_case': self.case_1.pk})
 
-        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 0, 'response': 'ok'})
         still_has = self.case_1.attachment.filter(pk=self.case_attachment.pk).exists()
         self.assertFalse(still_has)
         # TODO: skip because delete_file does not delete a TestAttachment object from database

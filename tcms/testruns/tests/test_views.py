@@ -9,6 +9,7 @@ from xml.etree import ElementTree
 
 from django.utils import formats
 from django.urls import reverse
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from tcms.testcases.models import TestCaseBug
@@ -52,7 +53,7 @@ class TestOrderCases(BaseCaseRun):
         response = self.client.post(url)
         self.assertIn(
             'At least one case is required by re-oder in run',
-            response.content)
+            str(response.content, encoding=settings.DEFAULT_CHARSET))
 
     def test_order_case_runs(self):
         url = reverse('testruns-order_case', args=[self.test_run.pk])
@@ -709,26 +710,26 @@ class TestAJAXSearchRuns(BaseCaseRun):
     def test_search_all_runs(self):
         response = self.client.get(self.search_url)
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(TestRun.objects.all(), search_result)
 
     def test_empty_search_result(self):
         response = self.client.get(self.search_url, {'build': 9999})
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([], search_result)
 
     def test_search_by_summary(self):
         response = self.client.get(self.search_url, {'summary': 'run'})
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([self.test_run, self.test_run_1], search_result)
 
     def test_search_by_product(self):
         response = self.client.get(self.search_url,
                                    {'product': self.product_issuetracker.pk})
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(
             [self.run_hotfix, self.run_release, self.run_daily],
             search_result)
@@ -740,7 +741,7 @@ class TestAJAXSearchRuns(BaseCaseRun):
         }
         response = self.client.get(self.search_url, query_criteria)
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([self.run_release], search_result)
 
     def test_search_by_product_and_build(self):
@@ -750,7 +751,7 @@ class TestAJAXSearchRuns(BaseCaseRun):
         }
         response = self.client.get(self.search_url, query_criteria)
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(
             [self.run_hotfix, self.run_release, self.run_daily],
             search_result)
@@ -762,13 +763,13 @@ class TestAJAXSearchRuns(BaseCaseRun):
         }
         response = self.client.get(self.search_url, query_criteria)
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([], search_result)
 
     def test_search_by_plan_name(self):
         response = self.client.get(self.search_url, {'plan': 'Issue'})
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(
             [self.run_hotfix, self.run_release, self.run_daily],
             search_result)
@@ -776,47 +777,47 @@ class TestAJAXSearchRuns(BaseCaseRun):
     def test_search_by_empty_plan_name(self):
         response = self.client.get(self.search_url, {'plan': ''})
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(TestRun.objects.all(), search_result)
 
     def test_search_by_plan_id(self):
         response = self.client.get(self.search_url, {'plan': self.plan.pk})
 
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([self.test_run, self.test_run_1], search_result)
 
     def test_search_by_manager_or_default_tester(self):
         response = self.client.get(self.search_url, {'people_type': 'people',
                                                      'people': self.run_tester})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(
             [self.run_hotfix, self.run_release, self.run_daily],
             search_result)
 
         response = self.client.get(self.search_url, {'people_type': 'people',
                                                      'people': self.tester})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(TestRun.objects.all(), search_result)
 
     def test_search_by_manager(self):
         response = self.client.get(self.search_url,
                                    {'people_type': 'manager',
                                     'people': self.tester.username})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(TestRun.objects.all(), search_result)
 
     def test_search_by_non_existing_manager(self):
         response = self.client.get(self.search_url,
                                    {'people_type': 'manager',
                                     'people': 'nonexisting-manager'})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([], search_result)
 
     def test_search_by_default_tester(self):
         response = self.client.get(self.search_url,
                                    {'people_type': 'default_tester',
                                     'people': self.run_tester.username})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(
             [self.run_hotfix, self.run_release, self.run_daily],
             search_result)
@@ -825,22 +826,22 @@ class TestAJAXSearchRuns(BaseCaseRun):
         response = self.client.get(self.search_url,
                                    {'people_type': 'default_tester',
                                     'people': 'nonexisting-default-tester'})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([], search_result)
 
     def test_search_running_runs(self):
         response = self.client.get(self.search_url, {'status': 'running'})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs(TestRun.objects.all(), search_result)
 
     def test_search_finished_runs(self):
         response = self.client.get(self.search_url, {'status': 'finished'})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([], search_result)
 
     def test_search_by_tag(self):
         response = self.client.get(self.search_url, {'tag__name__in': 'rhel'})
-        search_result = json.loads(response.content)
+        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([self.run_hotfix, self.run_daily],
                                search_result)
 
@@ -957,8 +958,9 @@ class TestEnvValue(BaseCaseRun):
             'run_id': self.test_run.pk
         })
 
-        self.assertEqual({'rc': 1, 'response': 'Unrecognizable actions'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Unrecognizable actions'})
 
     def test_add_env_value(self):
         self.login_tester()
@@ -1049,7 +1051,7 @@ class TestExportTestRunCases(BaseCaseRun):
         response = self.client.get(self.export_url, {'format': 'csv'})
         self.assertEqual(self.test_run.case_run.count(),
                          # Do not count header line
-                         len(response.content.strip().split(os.linesep)) - 1)
+                         len(str(response.content, encoding=settings.DEFAULT_CHARSET).strip().split(os.linesep)) - 1)
 
     def test_export_all_case_runs_to_xml_by_default(self):
         response = self.client.get(self.export_url, {'format': 'xml'})

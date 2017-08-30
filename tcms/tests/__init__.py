@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import json
-
 from six.moves import http_client
 
 from django import test
+from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User
 
@@ -85,7 +84,9 @@ class HelperAssertions(object):
 
     def assertJsonResponse(self, response, expected, status_code=200):
         self.assertEqual(status_code, response.status_code)
-        self.assertEqual(expected, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            expected)
 
 
 class BasePlanCase(HelperAssertions, test.TestCase):

@@ -10,6 +10,7 @@ from six.moves import http_client
 from six.moves import map
 
 from django import test
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.test.client import Client
@@ -78,7 +79,7 @@ class PlanTests(test.TestCase):
         response = self.c.get(location, {'t': 'ajax', 'pk': self.test_plan.pk})
 
         self.assertEqual(response.status_code, http.client.OK)
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(1, len(data))
         self.assertEqual(self.test_plan.pk, data[0]['pk'])
         self.assertEqual(self.test_plan.get_url_path(), data[0]['get_url_path'])
@@ -280,7 +281,7 @@ class ExportTestPlanTests(test.TestCase):
         location = reverse('plans-export')
         response = self.c.get(location)
         self.assertEqual(response.status_code, http.client.OK)
-        self.assertIn('At least one target is required.', response.content)
+        self.assertIn('At least one target is required.', str(response.content, encoding=settings.DEFAULT_CHARSET))
 
 
 class TestPlanModel(test.TestCase):
@@ -313,7 +314,7 @@ class TestUnknownActionOnCases(BasePlanCase):
 
     def test_ajax_request(self):
         response = self.client.get(self.cases_url, {'a': 'unknown action', 'format': 'json'})
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual('Unrecognizable actions', data['response'])
 
     def test_request_from_webui(self):
@@ -337,7 +338,7 @@ class TestDeleteCasesFromPlan(BasePlanCase):
         self.client.login(username=self.plan_tester.username, password='password')
 
         response = self.client.post(self.cases_url, {'a': 'delete_cases'})
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(1, data['rc'])
         self.assertEqual('At least one case is required to delete.', data['response'])
 
@@ -346,7 +347,7 @@ class TestDeleteCasesFromPlan(BasePlanCase):
 
         post_data = {'a': 'delete_cases', 'case': [self.case_1.pk, self.case_3.pk]}
         response = self.client.post(self.cases_url, post_data)
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(0, data['rc'])
         self.assertEqual('ok', data['response'])
@@ -380,7 +381,7 @@ class TestSortCases(BasePlanCase):
         self.client.login(username=self.plan_tester.username, password='password')
 
         response = self.client.post(self.cases_url, {'a': 'order_cases'})
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(1, data['rc'])
         self.assertEqual('At least one case is required to re-order.', data['response'])
 
@@ -389,7 +390,7 @@ class TestSortCases(BasePlanCase):
 
         post_data = {'a': 'order_cases', 'case': [self.case_1.pk, self.case_3.pk]}
         response = self.client.post(self.cases_url, post_data)
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(0, data['rc'])
         self.assertEqual('ok', data['response'])
@@ -820,7 +821,7 @@ class TestAJAXSearch(BasePlanCase):
     def test_emtpy_plans(self):
         response = self.client.get(self.search_url, {})
 
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(0, data['sEcho'])
         self.assertEqual(0, data['iTotalRecords'])
@@ -832,7 +833,7 @@ class TestAJAXSearch(BasePlanCase):
 
         response = self.client.get(self.search_url, search_data)
 
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         plans_count = TestPlan.objects.count()
         self.assertEqual(1, data['sEcho'])
@@ -856,7 +857,7 @@ class TestAJAXSearch(BasePlanCase):
 
         response = self.client.get(self.search_url, search_data)
 
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(1, data['sEcho'])
         self.assertEqual(plans_count, data['iTotalRecords'])
@@ -880,7 +881,7 @@ class TestAJAXSearch(BasePlanCase):
 
         response = self.client.get(self.search_url, search_data)
 
-        data = json.loads(response.content)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         plans_count = TestPlan.objects.count()
         self.assertEqual(1, data['sEcho'])

@@ -97,7 +97,7 @@ def environment_groups(request, template_name='environment/groups.html'):
                 action = 'Change env group status to {}'.format(env.is_active)
                 env.log_action(who=request.user, action=action)
             else:
-                return JsonResponse({'rc': 1, 'response': 'Argument illegel.'})
+                return JsonResponse({'rc': 1, 'response': 'Argument illegal.'})
         except TCMSEnvGroup.DoesNotExist as error:
             raise Http404(error)
 
@@ -378,7 +378,7 @@ def environment_property_values(request):
                 value.is_active = int(status)
                 value.save()
         else:
-            return HttpResponse('Argument illegel')
+            return HttpResponse('Argument illegal')
 
     if duplicated_property_value:
         message = 'Value(s) named \'%s\' already exists in this property, ' \
