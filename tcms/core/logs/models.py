@@ -20,7 +20,7 @@ class TCMSLogModel(TCMSContentTypeBaseModel):
         db_table = u'tcms_logs'
         index_together = (('content_type', 'object_pk', 'site'),)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.action
 
     @classmethod

@@ -63,7 +63,7 @@ class TestRun(TCMSActionModel):
         db_table = u'test_runs'
         unique_together = ('run_id', 'product_version', 'plan_text_version')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.summary
 
     @classmethod
@@ -335,7 +335,7 @@ class TestCaseRunStatus(TCMSActionModel):
     class Meta:
         db_table = u'test_case_run_status'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     cache_key_names = 'case_run_status__names'
@@ -535,7 +535,7 @@ class TestCaseRun(TCMSActionModel):
         db_table = u'test_case_runs'
         unique_together = ('case', 'run', 'case_text_version')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s: %s' % (self.pk, self.case_id)
 
     @classmethod

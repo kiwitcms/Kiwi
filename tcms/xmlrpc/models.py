@@ -11,5 +11,5 @@ class XmlRpcLog(models.Model):
     method = models.CharField(max_length=255)
     args = models.TextField(blank=True)
 
-    def __unicode__(self):
-        return u"%s: %s" % (self.user, self.method)
+    def __str__(self):
+        return "%s: %s" % (self.user, self.method)

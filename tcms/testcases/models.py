@@ -60,7 +60,7 @@ class TestCaseStatus(TCMSActionModel):
         verbose_name = "Test case status"
         verbose_name_plural = "Test case status"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @classmethod
@@ -103,7 +103,7 @@ class TestCaseCategory(TCMSActionModel):
         verbose_name_plural = u'test case categories'
         unique_together = ('product', 'name')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -154,7 +154,7 @@ class TestCase(TCMSActionModel):
     class Meta:
         db_table = u'test_cases'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.summary
 
     @classmethod
@@ -675,7 +675,7 @@ Leave empty to disable!
         verbose_name = 'Bug tracker'
         verbose_name_plural = 'Bug trackers'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     @classmethod
@@ -706,8 +706,8 @@ class TestCaseBug(TCMSActionModel):
         else:
             return super(TestCaseBug, self).unique_error_message(model_class, unique_check)
 
-    def __unicode__(self):
-        return str(self.bug_id)
+    def __str__(self):
+        return self.bug_id
 
     def get_name(self):
         if self.summary:
@@ -730,7 +730,7 @@ class Contact(TCMSContentTypeBaseModel):
     email = models.EmailField(db_index=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
