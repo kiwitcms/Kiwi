@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.db import migrations, models
-import tcms.core.models.base
 from django.conf import settings
+from django.db import migrations, models
+
+import tcms.core.models.base
 import tcms.core.models.fields
 
 
@@ -20,7 +19,7 @@ class Migration(migrations.Migration):
             name='Contact',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('object_pk', models.PositiveIntegerField(null=True, verbose_name=b'object ID', blank=True)),
+                ('object_pk', models.PositiveIntegerField(null=True, verbose_name='object ID', blank=True)),
                 ('name', models.CharField(max_length=50)),
                 ('email', models.EmailField(max_length=254, db_index=True)),
                 ('date_joined', models.DateTimeField(auto_now_add=True)),
@@ -33,8 +32,8 @@ class Migration(migrations.Migration):
             name='TestCase',
             fields=[
                 ('case_id', models.AutoField(max_length=10, serialize=False, primary_key=True)),
-                ('create_date', models.DateTimeField(auto_now_add=True, db_column=b'creation_date')),
-                ('is_automated', models.IntegerField(default=0, db_column=b'isautomated')),
+                ('create_date', models.DateTimeField(auto_now_add=True, db_column='creation_date')),
+                ('is_automated', models.IntegerField(default=0, db_column='isautomated')),
                 ('is_automated_proposed', models.BooleanField(default=False)),
                 ('script', models.TextField(blank=True)),
                 ('arguments', models.TextField(blank=True)),
@@ -42,7 +41,7 @@ class Migration(migrations.Migration):
                 ('summary', models.CharField(max_length=255, blank=True)),
                 ('requirement', models.CharField(max_length=255, blank=True)),
                 ('alias', models.CharField(max_length=255, blank=True)),
-                ('estimated_time', tcms.core.models.fields.DurationField(default=0, db_column=b'estimated_time')),
+                ('estimated_time', tcms.core.models.fields.DurationField(default=0, db_column='estimated_time')),
                 ('notes', models.TextField(blank=True)),
             ],
             options={
@@ -89,7 +88,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestCaseCategory',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, db_column=b'category_id')),
+                ('id', models.AutoField(serialize=False, primary_key=True, db_column='category_id')),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField(blank=True)),
                 ('product', models.ForeignKey(related_name='category', to='management.Product', on_delete=models.CASCADE)),
@@ -140,7 +139,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestCaseStatus',
             fields=[
-                ('id', models.AutoField(max_length=6, serialize=False, primary_key=True, db_column=b'case_status_id')),
+                ('id', models.AutoField(max_length=6, serialize=False, primary_key=True, db_column='case_status_id')),
                 ('name', models.CharField(max_length=255)),
                 ('description', models.TextField(null=True, blank=True)),
             ],
@@ -155,7 +154,7 @@ class Migration(migrations.Migration):
             name='TestCaseTag',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('user', models.IntegerField(default=b'0', db_column=b'userid')),
+                ('user', models.IntegerField(default='0', db_column='userid')),
                 ('case', models.ForeignKey(to='testcases.TestCase', on_delete=models.CASCADE)),
                 ('tag', models.ForeignKey(to='management.TestTag', on_delete=models.CASCADE)),
             ],
@@ -168,7 +167,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('case_text_version', models.IntegerField()),
-                ('create_date', models.DateTimeField(auto_now_add=True, db_column=b'creation_ts')),
+                ('create_date', models.DateTimeField(auto_now_add=True, db_column='creation_ts')),
                 ('action', models.TextField(blank=True)),
                 ('effect', models.TextField(blank=True)),
                 ('setup', models.TextField(blank=True)),
@@ -177,7 +176,7 @@ class Migration(migrations.Migration):
                 ('effect_checksum', models.CharField(max_length=32)),
                 ('setup_checksum', models.CharField(max_length=32)),
                 ('breakdown_checksum', models.CharField(max_length=32)),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who', on_delete=models.CASCADE)),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)),
                 ('case', models.ForeignKey(related_name='text', to='testcases.TestCase', on_delete=models.CASCADE)),
             ],
             options={

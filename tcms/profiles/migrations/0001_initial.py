@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import migrations, models
 from django.conf import settings
 
@@ -18,7 +16,7 @@ class Migration(migrations.Migration):
             name='Bookmark',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('object_pk', models.PositiveIntegerField(null=True, verbose_name=b'object ID', blank=True)),
+                ('object_pk', models.PositiveIntegerField(null=True, verbose_name='object ID', blank=True)),
                 ('name', models.CharField(max_length=1024)),
                 ('description', models.TextField(null=True, blank=True)),
                 ('url', models.CharField(max_length=8192)),
@@ -85,12 +83,12 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('phone_number', models.CharField(default=b'', max_length=128, blank=True)),
-                ('url', models.URLField(default=b'', blank=True)),
-                ('im', models.CharField(default=b'', max_length=128, blank=True)),
+                ('phone_number', models.CharField(default='', max_length=128, blank=True)),
+                ('url', models.URLField(default='', blank=True)),
+                ('im', models.CharField(default='', max_length=128, blank=True)),
                 ('im_type_id', models.IntegerField(default=1, null=True, blank=True)),
-                ('address', models.TextField(default=b'', blank=True)),
-                ('notes', models.TextField(default=b'', blank=True)),
+                ('address', models.TextField(default='', blank=True)),
+                ('notes', models.TextField(default='', blank=True)),
                 ('user', models.OneToOneField(related_name='profile', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
@@ -105,7 +103,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bookmark',
             name='content_type',
-            field=models.ForeignKey(related_name='content_type_set_for_bookmark', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='content_type_set_for_bookmark', verbose_name='content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='bookmark',

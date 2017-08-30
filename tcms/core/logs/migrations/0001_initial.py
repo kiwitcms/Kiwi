@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import migrations, models
 from django.conf import settings
 
@@ -18,10 +16,10 @@ class Migration(migrations.Migration):
             name='TCMSLogModel',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('object_pk', models.PositiveIntegerField(null=True, verbose_name=b'object ID', blank=True)),
+                ('object_pk', models.PositiveIntegerField(null=True, verbose_name='object ID', blank=True)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('action', models.TextField()),
-                ('content_type', models.ForeignKey(related_name='content_type_set_for_tcmslogmodel', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE)),
+                ('content_type', models.ForeignKey(related_name='content_type_set_for_tcmslogmodel', verbose_name='content type', blank=True, to='contenttypes.ContentType', null=True, on_delete=models.CASCADE)),
                 ('site', models.ForeignKey(to='sites.Site', on_delete=models.CASCADE)),
                 ('who', models.ForeignKey(related_name='log_who', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
