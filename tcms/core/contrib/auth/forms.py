@@ -31,7 +31,7 @@ class RegistrationForm(UserCreationForm):
         return user
 
     def set_active_key(self):
-        from models import UserActivateKey
+        from .models import UserActivateKey
 
         return UserActivateKey.set_random_key_for_user(user=self.instance)
 

@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 def get_form():
-    from forms import SimpleForm
+    from .forms import SimpleForm
     return SimpleForm
 
 

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from httplib import BAD_REQUEST
-from httplib import FORBIDDEN
-from httplib import NOT_FOUND
+from http.client import BAD_REQUEST
+from http.client import FORBIDDEN
+from http.client import NOT_FOUND
 
 from django.test import TestCase
 

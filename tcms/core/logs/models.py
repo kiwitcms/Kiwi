@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from tcms.core.models import TCMSContentTypeBaseModel
-from managers import TCMSLogManager
+from .managers import TCMSLogManager
 
 
 # Create your models here.

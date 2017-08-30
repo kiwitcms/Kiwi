@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from itertools import ifilterfalse
+from itertools import filterfalse
 
 from django.forms import EmailField
 from django.forms import ValidationError
@@ -30,7 +30,7 @@ class MultipleEmailField(EmailField):
             raise ValidationError(
                 '%s is not a valid string value.' % str(value))
 
-        result = [item.strip() for item in ifilterfalse(
+        result = [item.strip() for item in filterfalse(
             lambda item: item.strip() == '', value.split(self.delimiter))]
         return result
 

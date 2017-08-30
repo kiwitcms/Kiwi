@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import httplib
+import http.client
 from six.moves import http_client
 
 from django.test import TestCase
@@ -733,7 +733,7 @@ class ProductTests(TestCase):
                 'product_version': product_version.pk,
                 'type': plan_type.pk,
             }, follow=True)
-            self.assertEqual(httplib.OK, response.status_code)
+            self.assertEqual(http.client.OK, response.status_code)
             # verify test plan was created
             self.assertTrue(test_plan_name in response.content)
             self.assertEqual(previous_plans_count + 1, TestPlan.objects.count())
@@ -742,7 +742,7 @@ class ProductTests(TestCase):
             admin_delete_url = "admin:%s_%s_delete" % (product._meta.app_label, product._meta.model_name)
             location = reverse(admin_delete_url, args=[product.pk])
             response = self.c.get(location)
-            self.assertEqual(httplib.OK, response.status_code)
+            self.assertEqual(http.client.OK, response.status_code)
             self.assertTrue('Are you sure you want to delete the product "%s"' % product.name in response.content)
             self.assertTrue("Yes, I'm sure" in response.content)
 

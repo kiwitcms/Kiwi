@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import urllib
+from urllib.parse import urlencode
 from functools import reduce
 
 from json import dumps as json_dumps
@@ -723,7 +723,7 @@ def clone(request, template_name='plan/clone.html'):
                     'product': clone_form.cleaned_data['product'].id,
                     'product_version': clone_form.cleaned_data['product_version'].id,
                 }
-                url_args = urllib.urlencode(args)
+                url_args = urlencode(args)
                 return HttpResponseRedirect(
                     '{}?{}'.format(reverse('plans-all'), url_args))
     else:

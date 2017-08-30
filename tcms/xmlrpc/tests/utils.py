@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from xmlrpclib import Fault
+from xmlrpc.client import Fault
 
 from django import test
 from django.contrib.auth.models import User
@@ -19,7 +19,7 @@ class XmlrpcAPIBaseTest(test.TestCase):
                              'Except raising fault error with code {0}, but {1} is raised'.format(
                                  faultCode, f.faultCode))
         except Exception as e:
-            self.fail('Expect raising xmlrpclib.Fault, but {0} is raised and '
+            self.fail('Expect raising xmlrpc.client.Fault, but {0} is raised and '
                       'message is "{1}".'.format(e.__class__.__name__, str(e)))
         else:
             self.fail('Expect to raise Fault error with faultCode {0}, '

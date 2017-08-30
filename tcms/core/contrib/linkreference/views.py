@@ -5,8 +5,8 @@ import json
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.http import require_GET, require_POST
 
-from forms import AddLinkReferenceForm, BasicValidationForm
-from models import create_link, LinkReference
+from .forms import AddLinkReferenceForm, BasicValidationForm
+from .models import create_link, LinkReference
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.responses import HttpJSONResponseBadRequest
 from tcms.core.responses import HttpJSONResponseServerError

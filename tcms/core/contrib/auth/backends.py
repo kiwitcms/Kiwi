@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import xmlrpclib
+import xmlrpc.client
 
 from django.conf import settings
 from django.core.validators import validate_email
@@ -65,7 +65,7 @@ class BugzillaBackend(ModelBackend):
     #            )
 
     def authenticate(self, username=None, password=None):
-        server = xmlrpclib.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
+        server = xmlrpc.client.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
 
         try:
             validate_email(username)
@@ -74,7 +74,7 @@ class BugzillaBackend(ModelBackend):
         else:
             try:
                 server.bugzilla.login(username, password)
-            except xmlrpclib.Fault:
+            except xmlrpc.client.Fault:
                 return None
 
             try:

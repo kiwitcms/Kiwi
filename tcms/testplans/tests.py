@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import json
-import httplib
+import http.client
 import os
 import xml.etree.ElementTree as et
-
-from itertools import izip
+from urllib.parse import urlencode
 
 from six.moves import http_client
 from six.moves import map
-from six.moves import urllib
 
 from django import test
 from django.contrib.auth.models import User
@@ -68,18 +66,18 @@ class PlanTests(test.TestCase):
     def test_open_plans_search(self):
         location = reverse('plans-all')
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
     def test_search_plans(self):
         location = reverse('plans-all')
         response = self.c.get(location, {'action': 'search', 'type': self.test_plan.type.pk})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
     def test_plan_treeview(self):
         location = reverse('plans-all')
         response = self.c.get(location, {'t': 'ajax', 'pk': self.test_plan.pk})
 
-        self.assertEqual(response.status_code, httplib.OK)
+        self.assertEqual(response.status_code, http.client.OK)
         data = json.loads(response.content)
         self.assertEqual(1, len(data))
         self.assertEqual(self.test_plan.pk, data[0]['pk'])
@@ -90,20 +88,20 @@ class PlanTests(test.TestCase):
     def test_plan_new_get(self):
         location = reverse('plans-new')
         response = self.c.get(location, follow=True)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
     def test_plan_details(self):
         location = reverse('test_plan_url_short', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.MOVED_PERMANENTLY)
+        self.assertEquals(response.status_code, http.client.MOVED_PERMANENTLY)
 
         response = self.c.get(location, follow=True)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
     def test_plan_cases(self):
         location = reverse('plan-cases', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
     def test_plan_importcase(self):
         self.assertFalse(
@@ -117,7 +115,7 @@ class PlanTests(test.TestCase):
         filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
         with open(filename, 'r') as fin:
             response = self.c.post(location, {'a': 'import_cases', 'xml_file': fin}, follow=True)
-            self.assertEquals(response.status_code, httplib.OK)
+            self.assertEquals(response.status_code, http.client.OK)
 
         summary = 'Remove this case from a test plan'
         has_case = TestCase.objects.filter(summary=summary).exists()
@@ -128,13 +126,13 @@ class PlanTests(test.TestCase):
 
         location = reverse('plan-delete', args=[tp_pk])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
         response = self.c.get(location, {'sure': 'no'})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
         response = self.c.get(location, {'sure': 'yes'})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
         deleted = not TestPlan.objects.filter(pk=tp_pk).exists()
         self.assert_(deleted,
                      'TestPlan {0} should be deleted. But, not.'.format(tp_pk))
@@ -142,18 +140,18 @@ class PlanTests(test.TestCase):
     def test_plan_edit(self):
         location = reverse('plan-edit', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
     def test_plan_printable_without_selected_plan(self):
         location = reverse('plans-printable')
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
         self.assertEqual(response.context['info'], 'At least one target is required.')
 
     def test_plan_printable(self):
         location = reverse('plans-printable')
         response = self.c.get(location, {'plan': self.plan_id})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
         for test_plan in response.context['test_plans']:
             self.assertTrue(test_plan.pk > 0)
@@ -175,16 +173,16 @@ class PlanTests(test.TestCase):
         location = reverse('plan-attachment',
                            args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
     def test_plan_history(self):
         location = reverse('plan-text_history',
                            args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
         response = self.c.get(location, {'plan_text_version': 1})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
 
 class ExportTestPlanTests(test.TestCase):
@@ -238,7 +236,7 @@ class ExportTestPlanTests(test.TestCase):
     def test_export_returns_valid_xml_and_content(self):
         location = reverse('plans-export')
         response = self.c.get(location, {'plan': self.test_plan.pk})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
 
         xml_doc = response.content
         try:
@@ -281,7 +279,7 @@ class ExportTestPlanTests(test.TestCase):
     def test_export_wo_parameters_returns_html_warning(self):
         location = reverse('plans-export')
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http.client.OK)
         self.assertIn('At least one target is required.', response.content)
 
 
@@ -628,7 +626,7 @@ class TestCloneView(BasePlanCase):
 
         # Verify option copy_texts
         self.assertEqual(cloned_plan.text.count(), original_plan.text.count())
-        for copied_text, original_text in izip(cloned_plan.text.all(),
+        for copied_text, original_text in zip(cloned_plan.text.all(),
                                                original_plan.text.all()):
             self.assertEqual(copied_text.plan_text_version, original_text.plan_text_version)
             self.assertEqual(copied_text.author, original_text.author)
@@ -662,7 +660,7 @@ class TestCloneView(BasePlanCase):
             self.assertEqual(cloned_plan.case.count(), original_plan.case.count())
 
             # Verify if case' author and default tester are set properly
-            for original_case, copied_case in izip(original_plan.case.all(),
+            for original_case, copied_case in zip(original_plan.case.all(),
                                                    cloned_plan.case.all()):
                 if maintain_case_orignal_author:
                     self.assertEqual(original_case.author, copied_case.author)
@@ -766,7 +764,7 @@ class TestCloneView(BasePlanCase):
         self.client.login(username=self.plan_tester.username, password='password')
         response = self.client.post(self.plan_clone_url, post_data)
 
-        url_querystr = urllib.parse.urlencode({
+        url_querystr = urlencode({
             'action': 'search',
             'product': self.product.pk,
             'product_version': self.version.pk

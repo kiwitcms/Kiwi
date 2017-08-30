@@ -56,7 +56,7 @@ class XMLRPCSerializer(object):
     """
     Django XMLRPC Serializer
     The goal is to process the datetime and timedelta data structure
-    that python xmlrpclib can not handle.
+    that python xmlrpc.client can not handle.
 
     How to use it:
     # Model

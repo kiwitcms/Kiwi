@@ -2,8 +2,8 @@
 
 import unittest
 
-from httplib import BAD_REQUEST
-from httplib import NOT_FOUND
+from http.client import BAD_REQUEST
+from http.client import NOT_FOUND
 
 from tcms.xmlrpc.api import testcaseplan
 from tcms.tests.factories import TestCaseFactory

@@ -16,8 +16,8 @@ from django.test import RequestFactory
 
 from uuslug import slugify
 
-from fields import MultipleEmailField
-from forms import CaseTagForm
+from .fields import MultipleEmailField
+from .forms import CaseTagForm
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseTag

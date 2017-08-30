@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import get_backends
 
-from models import UserProfile
+from .models import UserProfile
 from tcms.core.forms import StripURLField
 
 
@@ -163,7 +163,7 @@ class BookmarkForm(forms.Form):
         pass
 
     def save(self):
-        from models import Bookmark
+        from .models import Bookmark
 
         cleaned_data = self.cleaned_data.copy()
         del cleaned_data['a']

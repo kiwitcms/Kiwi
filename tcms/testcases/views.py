@@ -42,7 +42,7 @@ from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
     CloneCaseForm, CaseBugForm, CaseTagForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_dict_from_query
-from fields import CC_LIST_DEFAULT_DELIMITER
+from .fields import CC_LIST_DEFAULT_DELIMITER
 
 
 MODULE_NAME = "testcases"

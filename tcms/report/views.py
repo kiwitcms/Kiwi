@@ -10,7 +10,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.views.generic import View
 
-from forms import CustomSearchDetailsForm
+from .forms import CustomSearchDetailsForm
 from tcms.management.models import Priority
 from tcms.management.models import Product
 from tcms.testruns.models import TestRun, TestCaseRunStatus, TestCaseRun

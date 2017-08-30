@@ -8,8 +8,8 @@
 
 
 import sys
-import xmlrpclib
-from SimpleXMLRPCServer import SimpleXMLRPCDispatcher
+import xmlrpc.client
+from xmlrpc.server import SimpleXMLRPCDispatcher
 
 
 __all__ = (
@@ -77,7 +77,7 @@ class DjangoXMLRPCDispatcher(SimpleXMLRPCDispatcher):
         """
 
         data = request.body
-        params, method = xmlrpclib.loads(data)
+        params, method = xmlrpc.client.loads(data)
 
         # add request to params
         params = (request, ) + params
@@ -90,14 +90,14 @@ class DjangoXMLRPCDispatcher(SimpleXMLRPCDispatcher):
                 response = self._dispatch(method, params)
             # wrap response in a singleton tuple
             response = (response,)
-            response = xmlrpclib.dumps(response, methodresponse=1, allow_none=self.allow_none, encoding=self.encoding)
+            response = xmlrpc.client.dumps(response, methodresponse=1, allow_none=self.allow_none, encoding=self.encoding)
 
-        except xmlrpclib.Fault as fault:
-            response = xmlrpclib.dumps(fault, allow_none=self.allow_none, encoding=self.encoding)
+        except xmlrpc.client.Fault as fault:
+            response = xmlrpc.client.dumps(fault, allow_none=self.allow_none, encoding=self.encoding)
 
         except:
-            response = xmlrpclib.dumps(
-                xmlrpclib.Fault(1, "%s: %s" % (sys.exc_type.__name__, sys.exc_value)),
+            response = xmlrpc.client.dumps(
+                xmlrpc.client.Fault(1, "%s: %s" % (sys.exc_type.__name__, sys.exc_value)),
                 allow_none=self.allow_none, encoding=self.encoding)
 
         return response
