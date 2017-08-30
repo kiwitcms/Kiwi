@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import migrations, models
 
 
@@ -29,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcasebugsystem',
             name='base_url',
-            field=models.CharField(help_text=b'Base URL, for example <strong>https://bugzilla.example.com</strong>!\nLeave empty to disable!\n', max_length=1024, null=True, verbose_name=b'Base URL', blank=True),
+            field=models.CharField(help_text='Base URL, for example <strong>https://bugzilla.example.com</strong>!\nLeave empty to disable!\n', max_length=1024, null=True, verbose_name=b'Base URL', blank=True),
         ),
         migrations.RunPython(forward_copy_data, reverse_copy_data),
         migrations.RemoveField(
