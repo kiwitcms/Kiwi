@@ -2,7 +2,7 @@ dist: trusty
 sudo: required
 language: python
 python:
-  - "2.7"
+  - "3.5"
 cache: pip
 env:
   - TEST_DB=SQLite
@@ -15,7 +15,7 @@ addons:
   - postgresql: 9.5
 matrix:
   include:
-    - python: 2.7
+    - python: 3.5
       env: TEST_DB=MariaDB
       addons:
         mariadb: 10.1
