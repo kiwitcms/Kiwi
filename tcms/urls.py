@@ -100,7 +100,7 @@ urlpatterns = [
     # TODO: do we need this at all ???
     # Using admin js without admin permission
     # https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), {'packages': ('django.conf', 'django.contrib.admin')}),
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view()),
 ]
 
 # Debug zone
