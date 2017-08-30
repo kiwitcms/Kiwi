@@ -100,13 +100,13 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         })
         self.assertIsNotNone(tcr)
         self.case_run_pks.append(tcr['case_run_id'])
-        self.assertEquals(tcr['build_id'], self.build.pk)
-        self.assertEquals(tcr['case_id'], self.case.pk)
-        self.assertEquals(tcr['assignee_id'], self.admin.pk)
-        self.assertEquals(tcr['notes'], "test_create_with_all_fields")
-        self.assertEquals(tcr['sortkey'], 90)
-        self.assertEquals(tcr['case_run_status'], 'IDLE')
-        self.assertEquals(tcr['case_text_version'], 3)
+        self.assertEqual(tcr['build_id'], self.build.pk)
+        self.assertEqual(tcr['case_id'], self.case.pk)
+        self.assertEqual(tcr['assignee_id'], self.admin.pk)
+        self.assertEqual(tcr['notes'], "test_create_with_all_fields")
+        self.assertEqual(tcr['sortkey'], 90)
+        self.assertEqual(tcr['case_run_status'], 'IDLE')
+        self.assertEqual(tcr['case_text_version'], 3)
 
     def test_create_with_non_exist_fields(self):
         values = [
@@ -139,11 +139,11 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         })
         self.assertIsNotNone(tcr)
         self.case_run_pks.append(tcr['case_run_id'])
-        self.assertEquals(tcr['build_id'], self.build.pk)
-        self.assertEquals(tcr['case_id'], self.case.pk)
-        self.assertEquals(tcr['assignee_id'], None)
-        self.assertEquals(tcr['case_text_version'], 2)
-        self.assertEquals(tcr['notes'], u"\u5f00\u6e90\u4e2d\u56fd")
+        self.assertEqual(tcr['build_id'], self.build.pk)
+        self.assertEqual(tcr['case_id'], self.case.pk)
+        self.assertEqual(tcr['assignee_id'], None)
+        self.assertEqual(tcr['case_text_version'], 2)
+        self.assertEqual(tcr['notes'], u"\u5f00\u6e90\u4e2d\u56fd")
 
     def test_create_with_long_field(self):
         large_str = """aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -166,11 +166,11 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         })
         self.assertIsNotNone(tcr)
         self.case_run_pks.append(tcr['case_run_id'])
-        self.assertEquals(tcr['build_id'], self.build.pk)
-        self.assertEquals(tcr['case_id'], self.case.pk)
-        self.assertEquals(tcr['assignee_id'], None)
-        self.assertEquals(tcr['case_text_version'], 2)
-        self.assertEquals(tcr['notes'], large_str)
+        self.assertEqual(tcr['build_id'], self.build.pk)
+        self.assertEqual(tcr['case_id'], self.case.pk)
+        self.assertEqual(tcr['assignee_id'], None)
+        self.assertEqual(tcr['case_text_version'], 2)
+        self.assertEqual(tcr['notes'], large_str)
 
     def test_create_with_no_perm(self):
         values = {
