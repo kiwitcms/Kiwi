@@ -178,7 +178,7 @@ def form(request):
 
     # Get the form
     q_app, q_form = q_app_form.split('.')[0], q_app_form.split('.')[1]
-    exec ('from tcms.%s.forms import %s as form' % (q_app, q_form))
+    exec('from tcms.%s.forms import %s as form' % (q_app, q_form))
     try:
         __import__('tcms.%s.forms' % q_app)
     except ImportError:
