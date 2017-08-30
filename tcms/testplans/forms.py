@@ -70,7 +70,7 @@ class UploadedHTMLFile(UploadedFile):
             pop('id', None)
             pop('ID', None)
 
-        return unicode(soup.body)
+        return soup.body
 
 
 class UploadedODTFile(UploadedFile):

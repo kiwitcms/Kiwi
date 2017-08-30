@@ -91,7 +91,7 @@ def process_case(case):
     element = 'tag'
     if case.get(element, {}):
         tags = []
-        if isinstance(case[element], unicode):
+        if isinstance(case[element], str):
             tag, create = TestTag.objects.get_or_create(name=case[element])
             tags.append(tag)
 

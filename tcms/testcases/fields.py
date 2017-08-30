@@ -26,7 +26,7 @@ class MultipleEmailField(EmailField):
         if not value:
             return []
 
-        if not isinstance(value, unicode):
+        if not isinstance(value, str):
             raise ValidationError(
                 '%s is not a valid string value.' % str(value))
 
