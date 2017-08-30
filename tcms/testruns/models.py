@@ -336,7 +336,7 @@ class TestCaseRunStatus(TCMSActionModel):
         db_table = u'test_case_run_status'
 
     def __unicode__(self):
-        return unicode(self.name)
+        return self.name
 
     cache_key_names = 'case_run_status__names'
 

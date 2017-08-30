@@ -74,7 +74,7 @@ class TimedeltaWidget(forms.Widget):
     def _has_changed(self, initial_value, data_value):
         # data_value comes from value_from_datadict(): A tuple of strings.
         assert isinstance(initial_value, datetime.timedelta), initial_value
-        initial = tuple([unicode(i) for i in split_seconds(
+        initial = tuple([str(i) for i in split_seconds(
             initial_value.days * SECONDS_PER_DAY + initial_value.seconds,
             self.inputs, self.multiply)])
         assert len(initial) == len(data_value)
