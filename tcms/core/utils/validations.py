@@ -13,7 +13,7 @@ __all__ = (
 
 
 def validate_bug_id(bug_id, bug_system_id):
-    if not isinstance(bug_id, (basestring, list, tuple)):
+    if not isinstance(bug_id, (str, list, tuple)):
         raise TypeError('Type error of bug_id.')
 
     if not bug_system_id:

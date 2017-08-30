@@ -232,7 +232,7 @@ def pre_process_estimated_time(value):
     support value - HH:MM:SS & xdxhxmxs
     return xdxhxmxs
     '''
-    if isinstance(value, basestring):
+    if isinstance(value, str):
         match = estimated_time_re.match(value.replace(' ', ''))
         if match:
             return value
