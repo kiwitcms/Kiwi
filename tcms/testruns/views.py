@@ -5,6 +5,7 @@ import itertools
 import json
 import time
 import urllib
+from functools import reduce
 
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
@@ -1156,7 +1157,7 @@ def order_case(request, run_id):
     #         (20, 10294)
     #         (30, 10315)
     #         (40, 10443)
-    new_sort_keys = xrange(10, (len(case_run_ids) + 1) * 10, 10)
+    new_sort_keys = range(10, (len(case_run_ids) + 1) * 10, 10)
     key_id_pairs = itertools.izip(new_sort_keys, (int(pk) for pk in case_run_ids))
     for sort_key, caserun_id in key_id_pairs:
         TestCaseRun.objects.filter(pk=caserun_id).update(sortkey=sort_key)
