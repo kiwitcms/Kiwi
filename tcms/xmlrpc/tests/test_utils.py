@@ -15,7 +15,7 @@ class TestParseBool(unittest.TestCase):
         rejected_args = (3, -1, "", "True", "False", "yes", "no", "33", "-11",
                          [], (), {}, None)
         for arg in rejected_args:
-            self.assertRaisesRegexp(ValueError, 'Unacceptable bool value.',
+            self.assertRaisesRegex(ValueError, 'Unacceptable bool value.',
                                     U.parse_bool_value, arg)
 
     def test_parse_bool_value(self):
@@ -47,7 +47,7 @@ class TestPreCheckProduct(test.TestCase):
     def test_pre_check_product_with_illegal_types(self):
         types = ((), [], True, False, self,)
         for arg in types:
-            self.assertRaisesRegexp(ValueError, 'The type of product is not recognizable.',
+            self.assertRaisesRegex(ValueError, 'The type of product is not recognizable.',
                                     U.pre_check_product, arg)
 
     def test_pre_check_product_with_number(self):
@@ -83,10 +83,10 @@ class TestPreProcessIds(unittest.TestCase):
         self.assertEqual(ids, [1])
 
     def test_pre_process_ids_with_others(self):
-        self.assertRaisesRegexp(TypeError, 'Unrecognizable type of ids',
+        self.assertRaisesRegex(TypeError, 'Unrecognizable type of ids',
                                 U.pre_process_ids, (1,))
 
-        self.assertRaisesRegexp(TypeError, 'Unrecognizable type of ids',
+        self.assertRaisesRegex(TypeError, 'Unrecognizable type of ids',
                                 U.pre_process_ids, {'a': 1})
 
     def test_pre_process_ids_with_string(self):
@@ -99,7 +99,7 @@ class TestEstimatedTime(unittest.TestCase):
     def test_pre_process_estimated_time(self):
         bad_args = ([], (), {}, True, False, 0, 1, -1)
         for arg in bad_args:
-            self.assertRaisesRegexp(ValueError, 'Invaild estimated_time format.',
+            self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.',
                                     U.pre_process_estimated_time, arg)
 
     def test_pre_process_estimated_time_with_empty(self):
@@ -107,7 +107,7 @@ class TestEstimatedTime(unittest.TestCase):
         self.assertEqual('', time)
 
     def test_pre_process_estimated_time_with_bad_form(self):
-        self.assertRaisesRegexp(ValueError, 'Invaild estimated_time format.',
+        self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.',
                                 U.pre_process_estimated_time, "aaaaaa")
 
     def test_pre_process_estimated_time_with_time_string(self):
@@ -118,17 +118,17 @@ class TestEstimatedTime(unittest.TestCase):
         self.assertEqual(time, "1d13h22m54s")
 
     def test_pre_process_estimated_time_with_upper_string(self):
-        self.assertRaisesRegexp(ValueError, 'Invaild estimated_time format.',
+        self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.',
                                 U.pre_process_estimated_time, "1D13H22M54S")
 
     def test_pre_process_estimated_time_with_string(self):
-        self.assertRaisesRegexp(ValueError, 'Invaild estimated_time format.',
+        self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.',
                                 U.pre_process_estimated_time, "aa:bb:cc")
 
     def test_pre_process_estimated_time_with_mhs(self):
-        self.assertRaisesRegexp(ValueError, 'Invaild estimated_time format.',
+        self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.',
                                 U.pre_process_estimated_time, "ambhcs")
 
     def test_pre_process_estimated_time_with_symbols(self):
-        self.assertRaisesRegexp(ValueError, 'Invaild estimated_time format.',
+        self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.',
                                 U.pre_process_estimated_time, "aa@bb@cc")

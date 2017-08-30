@@ -597,7 +597,7 @@ class TestProcessCase(test.TestCase):
         case_data = sample_case_data.copy()
         case_data['author'] = 'another_user@example.com'
         xmldict = self._create_xml_dict(case_data)
-        with self.assertRaisesRegexp(ValueError, 'Author "another_user@example.com" not found in DB!'):
+        with self.assertRaisesRegex(ValueError, 'Author "another_user@example.com" not found in DB!'):
             process_case(xmldict['testcase'])
 
         case_data = sample_case_data.copy()
@@ -609,13 +609,13 @@ class TestProcessCase(test.TestCase):
         case_data = sample_case_data.copy()
         case_data['priority'] = 'PP'
         xmldict = self._create_xml_dict(case_data)
-        with self.assertRaisesRegexp(ValueError, 'Priority "PP" not found in DB!'):
+        with self.assertRaisesRegex(ValueError, 'Priority "PP" not found in DB!'):
             process_case(xmldict['testcase'])
 
         case_data = sample_case_data.copy()
         case_data['priority'] = ''
         xmldict = self._create_xml_dict(case_data)
-        with self.assertRaisesRegexp(ValueError, 'Element "priority" is required in XML'):
+        with self.assertRaisesRegex(ValueError, 'Element "priority" is required in XML'):
             process_case(xmldict['testcase'])
 
         case_data = sample_case_data.copy()
@@ -669,7 +669,7 @@ class TestCleanXMLFile(test.TestCase):
         result = clean_xml_file(xml_file_single_case_without_error)
         self.assertEqual(1, len(result))
 
-        with self.assertRaisesRegexp(ValueError, 'Priority "Pn" not found in DB!'):
+        with self.assertRaisesRegex(ValueError, 'Priority "Pn" not found in DB!'):
             clean_xml_file(xml_file_with_error)
 
         self.assertRaises(ValueError, clean_xml_file, xml_file_in_malformat)
