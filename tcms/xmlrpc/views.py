@@ -170,5 +170,5 @@ for var in ("XMLRPC_METHODS", ):
         raise ImproperlyConfigured("Variable '%s' not set in settings." % var)
 
 
-for i in settings.XMLRPC_METHODS.iterkeys():
+for i in settings.XMLRPC_METHODS.keys():
     XMLRPCHandlerFactory(i)

@@ -128,7 +128,7 @@ def distinct_m2m_rows(cls, values, op_type):
     @rtype: django.db.models.query.QuerySet
     """
     flag = False
-    for field in values.iterkeys():
+    for field in values.keys():
         if '__' in field:
             if _need_distinct_m2m_rows(cls, field.split('__')):
                 flag = True

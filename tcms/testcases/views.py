@@ -1738,7 +1738,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             form = CaseBugForm(request.GET)
             if not form.is_valid():
                 errors = []
-                for field_name, messages in form.errors.iteritems():
+                for field_name, messages in form.errors.items():
                     for item in messages:
                         errors.append(item)
                 response = '\n'.join(errors)

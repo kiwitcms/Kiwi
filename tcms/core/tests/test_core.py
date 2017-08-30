@@ -133,12 +133,12 @@ class GroupByResultCalculationTest(unittest.TestCase):
         })
 
     def _sample_total(self):
-        return sum(count for key, count in self.groupby_result.iteritems())
+        return sum(count for key, count in self.groupby_result.items())
 
     def _sample_nested_total(self):
         total = 0
-        for key, nested_result in self.nested_groupby_result.iteritems():
-            for n, count in nested_result.iteritems():
+        for key, nested_result in self.nested_groupby_result.items():
+            for n, count in nested_result.items():
                 total += count
         return total
 

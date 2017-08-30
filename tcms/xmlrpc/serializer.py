@@ -309,9 +309,9 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         '''
         extra_fields = self.get_extra_fields()
 
-        for handle_name, value in extra_fields.iteritems():
+        for handle_name, value in extra_fields.items():
             if handle_name == 'alias':
-                for original_name, alias in value.iteritems():
+                for original_name, alias in value.items():
                     if original_name in data:
                         data[alias] = data[original_name]
 
@@ -346,7 +346,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
             new_serialized_data = {}
             if values_fields_mapping:
                 for orm_name, serialize_info in \
-                        values_fields_mapping.iteritems():
+                        values_fields_mapping.items():
                     serialize_name, conv_func = serialize_info
                     value = conv_func(row[orm_name])
                     new_serialized_data[serialize_name] = value

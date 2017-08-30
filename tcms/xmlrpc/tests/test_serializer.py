@@ -189,7 +189,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assertEqual(expected_field_name, field_name)
 
     def verify_m2m_field_query_result(self, m2m_field_name, result):
-        for object_pk, objects in result.iteritems():
+        for object_pk, objects in result.items():
             self.assert_(isinstance(objects, tuple))
             for object_value in objects:
                 self.assertEqual(object_pk, object_value['pk'])
@@ -208,7 +208,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assert_(isinstance(result, dict))
         self.assertEqual(len(result), len(MockTestPlanSerializer.m2m_fields))
 
-        for m2m_field_name, this_query_result in result.iteritems():
+        for m2m_field_name, this_query_result in result.items():
             self.assert_(m2m_field_name in MockTestPlanSerializer.m2m_fields)
             self.assert_(isinstance(this_query_result, dict))
 

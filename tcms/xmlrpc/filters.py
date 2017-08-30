@@ -23,7 +23,7 @@ def _validate_config():
 def _get_enable_apis():
     _validate_config()
     apis = list()
-    for value in settings.XMLRPC_METHODS.itervalues():
+    for value in settings.XMLRPC_METHODS.values():
         for api in value:
             apis.append(api[0])
     return apis
