@@ -1455,7 +1455,7 @@ def env_value(request):
 
             fragment = render(request, "run/get_environment.html",
                               {"test_run": self.trs[0], "is_ajax": True})
-            self.ajax_response.update({"fragment": fragment.content})
+            self.ajax_response.update({"fragment": str(fragment.content, encoding=settings.DEFAULT_CHARSET)})
             return HttpResponse(json.dumps(self.ajax_response))
 
         def remove(self):

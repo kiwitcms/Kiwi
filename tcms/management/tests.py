@@ -5,6 +5,7 @@ import http.client
 from six.moves import http_client
 
 from django.test import TestCase
+from django.conf import settings
 from django.test.client import Client
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -145,25 +146,27 @@ class TestAddGroup(TestCase):
 
         response = self.client.get(self.group_add_url,
                                    {'action': 'add', 'name': self.new_group_name})
-        self.assertEqual({'rc': 1, 'response': 'Permission denied.'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Permission denied.'})
 
     def test_missing_group_name(self):
         self.client.login(username=self.tester, password='password')
 
         response = self.client.get(self.group_add_url, {'action': 'add'})
-        self.assertEqual({'rc': 1, 'response': 'Environment group name is required.'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Environment group name is required.'})
 
         response = self.client.get(self.group_add_url, {'action': 'add', 'name': ''})
-        self.assertEqual({'rc': 1, 'response': 'Environment group name is required.'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Environment group name is required.'})
 
     def test_add_a_new_group(self):
         self.client.login(username=self.tester, password='password')
         response = self.client.get(self.group_add_url,
                                    {'action': 'add', 'name': self.new_group_name})
-        response_data = json.loads(response.content)
 
         groups = TCMSEnvGroup.objects.filter(name=self.new_group_name)
         self.assertEqual(1, groups.count())
@@ -171,7 +174,9 @@ class TestAddGroup(TestCase):
         new_group = groups[0]
 
         self.assertEqual(self.tester, new_group.manager)
-        self.assertEqual({'rc': 0, 'response': 'ok', 'id': new_group.pk}, response_data)
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 0, 'response': 'ok', 'id': new_group.pk})
 
         # Assert log is created for new group
         env_group_ct = ContentType.objects.get_for_model(TCMSEnvGroup)
@@ -188,7 +193,7 @@ class TestAddGroup(TestCase):
 
         response = self.client.get(self.group_add_url,
                                    {'action': 'add', 'name': self.new_group_name})
-        response_data = json.loads(response.content)
+        response_data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertIn(
             "Environment group name '{}' already".format(self.new_group_name),
             response_data['response']
@@ -227,7 +232,9 @@ class TestDeleteGroup(TestCase):
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': self.group_nitrate.pk})
 
-        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 0, 'response': 'ok'})
 
         self.assertFalse(
             TCMSEnvGroup.objects.filter(pk=self.group_nitrate.pk).exists())
@@ -236,8 +243,9 @@ class TestDeleteGroup(TestCase):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': self.group_nitrate.pk})
-        self.assertEqual({'rc': 1, 'response': 'Permission denied.'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Permission denied.'})
 
     def test_delete_group_by_non_manager(self):
         user_should_have_perm(self.tester, self.permission)
@@ -246,7 +254,9 @@ class TestDeleteGroup(TestCase):
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': self.group_fedora.pk})
 
-        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 0, 'response': 'ok'})
 
         self.assertFalse(
             TCMSEnvGroup.objects.filter(pk=self.group_fedora.pk).exists())
@@ -283,8 +293,9 @@ class TestModifyGroup(TestCase):
                                    {'action': 'modify',
                                     'id': self.group_nitrate.pk,
                                     'status': 0})
-        self.assertEqual({'rc': 1, 'response': 'Permission denied.'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Permission denied.'})
 
     def test_refuse_invalid_status_value(self):
         user_should_have_perm(self.tester, self.permission)
@@ -296,8 +307,9 @@ class TestModifyGroup(TestCase):
                                        {'action': 'modify',
                                         'id': self.group_nitrate.pk,
                                         'status': invalid_status})
-            self.assertEqual({'rc': 1, 'response': 'Argument illegel.'},
-                             json.loads(response.content))
+            self.assertJSONEqual(
+                str(response.content, encoding=settings.DEFAULT_CHARSET),
+                {'rc': 1, 'response': 'Argument illegal.'})
 
     def test_404_if_group_pk_not_exist(self):
         user_should_have_perm(self.tester, self.permission)
@@ -461,20 +473,23 @@ class TestAddProperty(TestCase):
 
         response = self.client.get(self.group_properties_url, {'action': 'add'})
 
-        self.assertEqual({'rc': 1, 'response': 'Permission denied'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Permission denied'})
 
     def test_refuse_if_missing_property_name(self):
         self.client.login(username=self.tester.username, password='password')
 
         response = self.client.get(self.group_properties_url, {'action': 'add'})
-        self.assertEqual({'rc': 1, 'response': 'Property name is required'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Property name is required'})
 
         response = self.client.get(self.group_properties_url,
                                    {'action': 'add', 'name': ''})
-        self.assertEqual({'rc': 1, 'response': 'Property name is required'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Property name is required'})
 
     def test_refuse_to_create_duplicate_property(self):
         self.client.login(username=self.tester.username, password='password')
@@ -490,7 +505,9 @@ class TestAddProperty(TestCase):
             'response': "Environment property named '{}' already exists, "
                         "please select another name.".format(self.duplicate_property.name)
         }
-        self.assertEqual(expected_result, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            expected_result)
 
     def test_add_new_property(self):
         self.client.login(username=self.tester.username, password='password')
@@ -505,9 +522,9 @@ class TestAddProperty(TestCase):
         self.assertTrue(TCMSEnvProperty.objects.filter(name=new_property_name).exists())
 
         new_property = TCMSEnvProperty.objects.get(name=new_property_name)
-        self.assertEqual({'rc': 0, 'response': 'ok',
-                          'name': new_property_name, 'id': new_property.pk},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 0, 'response': 'ok', 'name': new_property_name, 'id': new_property.pk})
 
 
 class TestEditProperty(TestCase):
@@ -535,16 +552,18 @@ class TestEditProperty(TestCase):
 
         response = self.client.get(self.group_properties_url,
                                    {'action': 'edit', 'id': self.property.pk})
-        self.assertEqual({'rc': 1, 'response': 'Permission denied'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'Permission denied'})
 
     def test_refuse_if_missing_property_id(self):
         self.client.login(username=self.tester.username, password='password')
 
         response = self.client.get(self.group_properties_url, {'action': 'edit'})
 
-        self.assertEqual({'rc': 1, 'response': 'ID is required'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'ID is required'})
 
     def test_refuse_if_property_id_not_exist(self):
         self.client.login(username=self.tester.username, password='password')
@@ -552,8 +571,9 @@ class TestEditProperty(TestCase):
         response = self.client.get(self.group_properties_url,
                                    {'action': 'edit', 'id': 999999999})
 
-        self.assertEqual({'rc': 1, 'response': 'ID does not exist.'},
-                         json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 1, 'response': 'ID does not exist.'})
 
     def test_edit_a_property(self):
         self.client.login(username=self.tester.username, password='password')
@@ -564,7 +584,9 @@ class TestEditProperty(TestCase):
                                     'id': self.property.pk,
                                     'name': new_property_name})
 
-        self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            {'rc': 0, 'response': 'ok'})
 
         property = TCMSEnvProperty.objects.get(pk=self.property.pk)
         self.assertEqual(new_property_name, property.name)
@@ -735,7 +757,7 @@ class ProductTests(TestCase):
             }, follow=True)
             self.assertEqual(http.client.OK, response.status_code)
             # verify test plan was created
-            self.assertTrue(test_plan_name in response.content)
+            self.assertTrue(test_plan_name in str(response.content, encoding=settings.DEFAULT_CHARSET))
             self.assertEqual(previous_plans_count + 1, TestPlan.objects.count())
 
             # now delete the product
@@ -743,8 +765,8 @@ class ProductTests(TestCase):
             location = reverse(admin_delete_url, args=[product.pk])
             response = self.c.get(location)
             self.assertEqual(http.client.OK, response.status_code)
-            self.assertTrue('Are you sure you want to delete the product "%s"' % product.name in response.content)
-            self.assertTrue("Yes, I'm sure" in response.content)
+            self.assertTrue('Are you sure you want to delete the product "%s"' % product.name in str(response.content, encoding=settings.DEFAULT_CHARSET))
+            self.assertTrue("Yes, I'm sure" in str(response.content, encoding=settings.DEFAULT_CHARSET))
 
             # confirm that we're sure we want to delete it
             response = self.c.post(location, {'post': 'yes'})
