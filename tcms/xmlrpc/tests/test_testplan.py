@@ -117,20 +117,20 @@ class TestAddTag(XmlrpcAPIBaseTest):
 
         XmlrpcTestPlan.add_tag(self.http_req, self.plans[0].pk, self.tag1.name)
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag1.pk).exists()
-        self.assert_(tag_exists)
+        self.assertTrue(tag_exists)
 
     def test_array_argument(self):
         XmlrpcTestPlan.add_tag(self.http_req, self.plans[0].pk, [self.tag2.name, self.tag_name])
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk,
                                              tag__name__in=[self.tag2.name, self.tag_name])
-        self.assert_(tag_exists.exists())
+        self.assertTrue(tag_exists.exists())
 
         plans_ids = [plan.pk for plan in self.plans]
         tags_names = [self.tag_name, 'xmlrpc_tag_name_2']
         XmlrpcTestPlan.add_tag(self.http_req, plans_ids, tags_names)
         for plan in self.plans:
             tag_exists = plan.tag.filter(name__in=tags_names).exists()
-            self.assert_(tag_exists)
+            self.assertTrue(tag_exists)
 
 
 class TestAddComponent(XmlrpcAPIBaseTest):
@@ -581,7 +581,7 @@ class TestProcessCase(test.TestCase):
         self.assertEqual(False, cleaned_case['is_automated'])
         self.assertEqual(sample_case_data['categoryname'],
                          cleaned_case['category_name'])
-        self.assert_(isinstance(cleaned_case['tags'], list))
+        self.assertTrue(isinstance(cleaned_case['tags'], list))
         for tag in sample_case_data['tag']:
             expected_tag = TestTag.objects.get(name=tag)
             self.assertEqual(expected_tag, cleaned_case['tags'][0])

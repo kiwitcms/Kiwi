@@ -195,10 +195,10 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
 
         user_new_attrs['old_password'] = test_user.username
         data = XUser.update(self.http_req, user_new_attrs, test_user.pk)
-        self.assert_('password' not in data)
+        self.assertTrue('password' not in data)
         self.assertEqual(data['first_name'], user_new_attrs['first_name'])
         self.assertEqual(data['last_name'], user_new_attrs['last_name'])
         self.assertEqual(data['email'], user_new_attrs['email'])
 
         user = User.objects.get(pk=test_user.pk)
-        self.assert_(user.check_password(new_password))
+        self.assertTrue(user.check_password(new_password))
