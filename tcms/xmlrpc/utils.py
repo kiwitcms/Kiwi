@@ -36,7 +36,7 @@ def pre_check_product(values):
         if not product_str:
             raise ValueError('Got empty product name.')
         return Product.objects.get(name=product_str)
-    elif isinstance(product_str, int):
+    elif type(product_str) == int:  # to avoid breaking tests with bool(int)
         return Product.objects.get(pk=product_str)
     else:
         raise ValueError('The type of product is not recognizable.')
