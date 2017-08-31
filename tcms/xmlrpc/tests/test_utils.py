@@ -45,10 +45,9 @@ class TestPreCheckProduct(test.TestCase):
         self.assertRaises(ValueError, U.pre_check_product, {})
 
     def test_pre_check_product_with_illegal_types(self):
-        types = ((), [], True, False, self,)
-        for arg in types:
-            self.assertRaisesRegex(ValueError, 'The type of product is not recognizable.',
-                                    U.pre_check_product, arg)
+        for arg in [(), [], True, False, self]:
+            with self.assertRaisesRegex(ValueError, 'The type of product is not recognizable.'):
+                U.pre_check_product(arg)
 
     def test_pre_check_product_with_number(self):
         product = U.pre_check_product(self.product.pk)
