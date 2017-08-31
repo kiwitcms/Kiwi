@@ -54,8 +54,9 @@ class TestUploadFile(BasePlanCase):
         super(TestUploadFile, self).setUp()
 
         fd, self.upload_filename = tempfile.mkstemp(
-            prefix='{0}-upload-file.txt'.format(self.__class__.__name__))
-        os.write(fd, 'abc' * 100)
+            prefix='{0}-upload-file.txt'.format(self.__class__.__name__),
+            text=True)
+        os.write(fd, 'abc'.encode(settings.DEFAULT_CHARSET) * 100)
         os.close(fd)
 
     def tearDown(self):
