@@ -25,9 +25,9 @@ def clean_xml_file(xml_file):
     case_elements = root_element.get('testcase', None)
     if case_elements is not None:
         if isinstance(case_elements, list):
-            return map(process_case, case_elements)
+            return list(map(process_case, case_elements))
         elif isinstance(case_elements, dict):
-            return map(process_case, (case_elements,))
+            return list(map(process_case, (case_elements,)))
         else:
             raise ValueError('Element "testcase" is not a list or a dict!')
     else:
