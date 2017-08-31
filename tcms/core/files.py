@@ -60,7 +60,7 @@ def upload_file(request):
 
         # Write to a temporary file
         try:
-            open(stored_file_name, 'ro')
+            open(stored_file_name, 'r')
             return Prompt.render(
                 request=request,
                 info_type=Prompt.Alert,
