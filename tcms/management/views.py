@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from distutils.util import strtobool
 from json import dumps as json_dumps
 from itertools import groupby
 
@@ -188,7 +189,7 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
                                                       environment_name))
 
         if environment.is_active != request.GET.get('enabled', False):
-            environment.is_active = request.GET.get('enabled', False)
+            environment.is_active = bool(strtobool(request.GET.get('enabled', False)))
             environment.log_action(
                 who=request.user,
                 action='Change env group status to %s' % environment.is_active)
