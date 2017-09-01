@@ -10,7 +10,6 @@ from tcms.xmlrpc.serializer import QuerySetBasedXMLRPCSerializer
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.xmlrpc.serializer import datetime_to_str
 from tcms.xmlrpc.serializer import do_nothing
-from tcms.xmlrpc.serializer import encode_utf8
 from tcms.xmlrpc.serializer import to_str
 
 from tcms.tests.factories import ComponentFactory
@@ -73,7 +72,7 @@ class MockTestPlanSerializer(QuerySetBasedXMLRPCSerializer):
         'author': ('author_id', do_nothing),
         'author__username': ('author', to_str),
         'product_version': ('product_version_id', do_nothing),
-        'product_version__value': ('product_version', encode_utf8),
+        'product_version__value': ('product_version', do_nothing),
     }
 
     extra_fields = {
@@ -95,7 +94,7 @@ class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
         'author': ('author_id', do_nothing),
         'author__username': ('author', to_str),
         'case_status': ('case_status_id', do_nothing),
-        'case_status__name': ('case_status', encode_utf8),
+        'case_status__name': ('case_status', do_nothing),
     }
 
 

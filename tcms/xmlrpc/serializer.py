@@ -26,10 +26,6 @@ def to_str(value):
     return value if value is None else str(value)
 
 
-def encode_utf8(value):
-    return value if value is None else value.encode('utf-8')
-
-
 def datetime_to_str(value):
     if value is None:
         return value
@@ -395,13 +391,13 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'owner': ('owner_id', do_nothing),
         'owner__username': ('owner', to_str),
         'parent': ('parent_id', do_nothing),
-        'parent__name': ('parent', encode_utf8),
+        'parent__name': ('parent', do_nothing),
         'product': ('product_id', do_nothing),
-        'product__name': ('product', encode_utf8),
+        'product__name': ('product', do_nothing),
         'product_version': ('product_version_id', do_nothing),
-        'product_version__value': ('product_version', encode_utf8),
+        'product_version__value': ('product_version', do_nothing),
         'type': ('type_id', do_nothing),
-        'type__name': ('type', encode_utf8),
+        'type__name': ('type', do_nothing),
     }
 
     extra_fields = {
@@ -426,13 +422,13 @@ class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'assignee': ('assignee_id', do_nothing),
         'assignee__username': ('assignee', to_str),
         'build': ('build_id', do_nothing),
-        'build__name': ('build', encode_utf8),
+        'build__name': ('build', do_nothing),
         'case': ('case_id', do_nothing),
-        'case__summary': ('case', encode_utf8),
+        'case__summary': ('case', do_nothing),
         'case_run_status': ('case_run_status_id', do_nothing),
-        'case_run_status__name': ('case_run_status', encode_utf8),
+        'case_run_status__name': ('case_run_status', do_nothing),
         'run': ('run_id', do_nothing),
-        'run__summary': ('run', encode_utf8),
+        'run__summary': ('run', do_nothing),
         'tested_by': ('tested_by_id', do_nothing),
         'tested_by__username': ('tested_by', to_str),
     }
@@ -453,15 +449,15 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'summary': ('summary', do_nothing),
 
         'build': ('build_id', do_nothing),
-        'build__name': ('build', encode_utf8),
+        'build__name': ('build', do_nothing),
         'default_tester': ('default_tester_id', do_nothing),
         'default_tester__username': ('default_tester', to_str),
         'manager': ('manager_id', do_nothing),
         'manager__username': ('manager', to_str),
         'plan': ('plan_id', do_nothing),
-        'plan__name': ('plan', encode_utf8),
+        'plan__name': ('plan', do_nothing),
         'product_version': ('product_version_id', do_nothing),
-        'product_version__value': ('product_version', encode_utf8),
+        'product_version__value': ('product_version', do_nothing),
     }
 
 
@@ -485,13 +481,13 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'author': ('author_id', do_nothing),
         'author__username': ('author', to_str),
         'case_status': ('case_status_id', do_nothing),
-        'case_status__name': ('case_status', encode_utf8),
+        'case_status__name': ('case_status', do_nothing),
         'category': ('category_id', do_nothing),
-        'category__name': ('category', encode_utf8),
+        'category__name': ('category', do_nothing),
         'default_tester': ('default_tester_id', do_nothing),
         'default_tester__username': ('default_tester', to_str),
         'priority': ('priority_id', do_nothing),
-        'priority__value': ('priority', encode_utf8),
+        'priority__value': ('priority', do_nothing),
         'reviewer': ('reviewer_id', do_nothing),
         'reviewer__username': ('reviewer', to_str),
     }
@@ -512,7 +508,7 @@ class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'default_milestone': ('default_milestone', do_nothing),
 
         'classification': ('classification_id', do_nothing),
-        'classification__name': ('classification', encode_utf8),
+        'classification__name': ('classification', do_nothing),
     }
 
 
@@ -527,5 +523,5 @@ class TestBuildXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'name': ('name', do_nothing),
 
         'product': ('product_id', do_nothing),
-        'product__name': ('product', encode_utf8),
+        'product__name': ('product', do_nothing),
     }
