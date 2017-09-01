@@ -148,9 +148,9 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assertEqual(mapping, MockTestCaseSerializer.values_fields_mapping)
 
     def test_get_values_fields(self):
-        fields = self.case_serializer._get_values_fields()
+        fields = list(self.case_serializer._get_values_fields())
         fields.sort()
-        expected_fields = MockTestCaseSerializer.values_fields_mapping.keys()
+        expected_fields = list(MockTestCaseSerializer.values_fields_mapping.keys())
         expected_fields.sort()
         self.assertEqual(expected_fields, fields)
 
