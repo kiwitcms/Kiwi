@@ -2,7 +2,7 @@
 {% load static %}
 {% load extra_filters %}
 
-{% block subtitle %}{{ type|upper }} - {{ info }}{% endblock %}
+{% block subtitle %}{{ type|upper }} - {{ info|striptags }}{% endblock %}
 
 {% block custom_stylesheet %}
 <link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
