@@ -7,7 +7,6 @@ PyGithub
 dj-pagination
 django-tinymce
 beautifulsoup4
-six
 django-contrib-comments
 html2text
 xmltodict

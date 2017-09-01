@@ -2,7 +2,6 @@
 
 import json
 import http.client
-from six.moves import http_client
 
 from django.test import TestCase
 from django.conf import settings
@@ -266,7 +265,7 @@ class TestDeleteGroup(TestCase):
                           password='password')
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': 9999999999})
-        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+        self.assertEqual(http.client.NOT_FOUND, response.status_code)
 
 
 class TestModifyGroup(TestCase):
@@ -319,7 +318,7 @@ class TestModifyGroup(TestCase):
                                    {'action': 'modify',
                                     'id': 999999999,
                                     'status': 1})
-        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+        self.assertEqual(http.client.NOT_FOUND, response.status_code)
 
     def test_disable_a_group(self):
         user_should_have_perm(self.tester, self.permission)
@@ -355,12 +354,12 @@ class TestVisitEnvironmentGroupPage(TestCase):
     def test_404_when_missing_group_id(self):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(self.group_edit_url)
-        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+        self.assertEqual(http.client.NOT_FOUND, response.status_code)
 
     def test_404_if_group_id_not_exist(self):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(self.group_edit_url, {'id': 9999999})
-        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+        self.assertEqual(http.client.NOT_FOUND, response.status_code)
 
     def test_visit_a_group(self):
         self.client.login(username=self.tester.username, password='password')

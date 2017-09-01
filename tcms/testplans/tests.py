@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import os
 import json
 import http.client
-import os
 import xml.etree.ElementTree as et
 from urllib.parse import urlencode
-
-from six.moves import http_client
-from six.moves import map
 
 from django import test
 from django.conf import settings
@@ -513,7 +510,7 @@ class TestLinkCases(BasePlanCase):
         self.assertRedirects(
             response,
             reverse('test_plan_url_short', args=[self.plan.pk]),
-            target_status_code=http_client.MOVED_PERMANENTLY)
+            target_status_code=http.client.MOVED_PERMANENTLY)
 
         self.assertTrue(
             TestCasePlan.objects.filter(plan=self.plan, case=self.another_case_1).exists())
@@ -698,7 +695,7 @@ class TestCloneView(BasePlanCase):
         self.assertRedirects(
             response,
             reverse('test_plan_url_short', args=[cloned_plan.pk]),
-            target_status_code=http_client.MOVED_PERMANENTLY)
+            target_status_code=http.client.MOVED_PERMANENTLY)
 
         self.verify_cloned_plan(self.third_plan, cloned_plan)
 
