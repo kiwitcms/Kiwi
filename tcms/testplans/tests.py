@@ -136,7 +136,7 @@ class PlanTests(test.TestCase):
         self.assertEqual(response.status_code, http.client.OK)
         deleted = not TestPlan.objects.filter(pk=tp_pk).exists()
         self.assertTrue(deleted,
-                     'TestPlan {0} should be deleted. But, not.'.format(tp_pk))
+                        'TestPlan {0} should be deleted. But, not.'.format(tp_pk))
 
     def test_plan_edit(self):
         location = reverse('plan-edit', args=[self.plan_id])
@@ -628,7 +628,7 @@ class TestCloneView(BasePlanCase):
         # Verify option copy_texts
         self.assertEqual(cloned_plan.text.count(), original_plan.text.count())
         for copied_text, original_text in zip(cloned_plan.text.all(),
-                                               original_plan.text.all()):
+                                              original_plan.text.all()):
             self.assertEqual(copied_text.plan_text_version, original_text.plan_text_version)
             self.assertEqual(copied_text.author, original_text.author)
             self.assertEqual(copied_text.create_date, original_text.create_date)
@@ -662,7 +662,7 @@ class TestCloneView(BasePlanCase):
 
             # Verify if case' author and default tester are set properly
             for original_case, copied_case in zip(original_plan.case.all(),
-                                                   cloned_plan.case.all()):
+                                                  cloned_plan.case.all()):
                 if maintain_case_orignal_author:
                     self.assertEqual(original_case.author, copied_case.author)
                 else:
