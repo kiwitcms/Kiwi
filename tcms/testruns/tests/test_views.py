@@ -576,7 +576,7 @@ class TestSearchRuns(BaseCaseRun):
 
     def test_only_show_search_form(self):
         response = self.client.get(self.search_runs_url)
-        self.assertContains(response, '<form id="runs_form"></form>', html=True)
+        self.assertContains(response, "<form id='runs_form'>")
 
     def test_search_runs(self):
         search_criteria = {'summary': 'run'}
