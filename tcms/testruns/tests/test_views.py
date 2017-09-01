@@ -2,9 +2,9 @@
 
 import os
 import json
+import http.client
 from datetime import timedelta
 from mock import patch
-from six.moves import http_client
 from xml.etree import ElementTree
 
 from django.utils import formats
@@ -82,13 +82,13 @@ class TestGetRun(BaseCaseRun):
     def test_404_if_non_existing_pk(self):
         url = reverse('testruns-get', args=[99999999])
         response = self.client.get(url)
-        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+        self.assertEqual(http.client.NOT_FOUND, response.status_code)
 
     def test_get_a_run(self):
         url = reverse('testruns-get', args=[self.test_run.pk])
         response = self.client.get(url)
 
-        self.assertEqual(http_client.OK, response.status_code)
+        self.assertEqual(http.client.OK, response.status_code)
 
         for i, case_run in enumerate(
                 (self.case_run_1, self.case_run_2, self.case_run_3), 1):
@@ -514,7 +514,7 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
                 response,
                 reverse('testruns-get', args=[cloned_runs[0].pk]))
         else:
-            self.assertEqual(http_client.FOUND, response.status_code)
+            self.assertEqual(http.client.FOUND, response.status_code)
 
         for origin_run, cloned_run in zip(runs_to_clone, cloned_runs):
             self.assert_cloned_run(origin_run, cloned_run,

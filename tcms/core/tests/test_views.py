@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import http.client
 
 from django import test
 from django.conf import settings
@@ -8,7 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.core import serializers
 from django.urls import reverse
 from django_comments.models import Comment
-from six.moves import http_client
 
 from tcms.management.models import Priority
 from tcms.management.models import TCMSEnvGroup
@@ -41,7 +41,7 @@ class TestQuickSearch(BaseCaseRun):
         self.assertRedirects(
             response,
             reverse('test_plan_url_short', args=[self.plan.pk]),
-            target_status_code=http_client.MOVED_PERMANENTLY)
+            target_status_code=http.client.MOVED_PERMANENTLY)
 
     def test_goto_case(self):
         response = self.client.get(self.search_url,
@@ -86,7 +86,7 @@ class TestQuickSearch(BaseCaseRun):
     def test_404_if_unknown_search_type(self):
         response = self.client.get(self.search_url,
                                    {'search_type': 'unknown type', 'search_content': self.plan.pk})
-        self.assertEqual(http_client.NOT_FOUND, response.status_code)
+        self.assertEqual(http.client.NOT_FOUND, response.status_code)
 
 
 class TestCommentCaseRuns(BaseCaseRun):
