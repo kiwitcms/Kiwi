@@ -287,7 +287,7 @@ def all(request, template_name='run/all.html'):
 
     query_result = len(request.GET) > 0
 
-    if request.GET.items():
+    if request.GET:
         search_form = SearchRunForm(request.GET)
         if request.GET.get('product'):
             search_form.populate(product_id=request.GET['product'])

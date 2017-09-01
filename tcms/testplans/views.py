@@ -201,7 +201,7 @@ def all(request, template_name='plan/all.html'):
     order_by = request.GET.get('order_by', 'create_date')
     asc = bool(request.GET.get('asc', None))
     # if it's a search request the page will be fill
-    if request.GET.items():
+    if request.GET:
         search_form = SearchPlanForm(request.GET)
         if request.GET.get('product'):
             search_form.populate(product_id=request.GET['product'])
@@ -244,8 +244,6 @@ def all(request, template_name='plan/all.html'):
             tps = order_plan_queryset(tps, order_by, asc)
     else:
         # Set search active plans only by default
-        # I wish to use 'default' argument, as the same as in ModelForm
-        # But it does not seem to work
         search_form = SearchPlanForm(initial={'is_active': True})
 
     if request.GET.get('action') == 'clone_case':
@@ -370,8 +368,8 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
 
     # If it's not a search the page will be blank
     tps = TestPlan.objects.none()
-    # if it's a search request the page will be fill
-    if request.GET.items():
+    # if it's a search request the request will be full
+    if request.GET:
         search_form = SearchPlanForm(request.GET)
         if request.GET.get('product'):
             search_form.populate(product_id=request.GET['product'])
