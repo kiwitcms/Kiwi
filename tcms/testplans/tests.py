@@ -852,7 +852,7 @@ class TestAJAXSearch(BasePlanCase):
         search_data = self.search_data.copy()
         plans_count = TestPlan.objects.count()
         # To request last page
-        search_data['iDisplayStart'] = plans_count / 3 * 3
+        search_data['iDisplayStart'] = plans_count // 3 * 3
         search_data['iSortCol_0'] = 2
 
         response = self.client.get(self.search_url, search_data)
