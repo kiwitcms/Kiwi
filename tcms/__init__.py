@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-__version__ = '3.33.1'
+__version__ = '3.36-py3'
