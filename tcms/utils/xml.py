@@ -8,9 +8,12 @@ from tcms.testcases.models import TestCaseStatus
 
 
 def clean_xml_file(xml_file):
+    # uploaded files are a stream of bytes
+    if isinstance(xml_file, bytes):
+        xml_file = xml_file.decode(settings.DEFAULT_CHARSET)
+    # but tests sometimes use strings
     xml_file = xml_file.replace('\n', '')
     xml_file = xml_file.replace('&testopia_', '&')
-    xml_file = xml_file.encode("utf8")
 
     xml_data = xmltodict.parse(xml_file)
 
