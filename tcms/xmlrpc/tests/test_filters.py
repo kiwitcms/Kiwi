@@ -68,5 +68,4 @@ class TestAutoWrap(TestCase):
 
         for func_name in func_names:
             func = getattr(auth, func_name)
-            code = func.func_code
-            self.assertEqual(code.co_name, "_decorator")
+            self.assertEqual(func.__code__.co_name, "_decorator")
