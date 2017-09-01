@@ -89,8 +89,7 @@ class TestBuildCreate(XmlrpcAPIBaseTest):
         self.assertIsNotNone(b)
         self.assertEqual(b['product_id'], self.product.pk)
         self.assertEqual(b['name'], "B99")
-        self.assertEqual(b['description'],
-                         '\xe5\xbc\x80\xe6\xba\x90\xe4\xb8\xad\xe5\x9b\xbd')
+        self.assertEqual(b['description'], values['description'])
         self.assertEqual(b['is_active'], False)
 
     def test_build_create(self):
