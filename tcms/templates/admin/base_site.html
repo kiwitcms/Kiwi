@@ -17,7 +17,7 @@
 {% block nav-global %}{% endblock %}
 
 {% block custom_javascript %}
-	<script type="text/javascript" src="/admin/jsi18n/"></script>
+	<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 	<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
 	<script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
 	<script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
