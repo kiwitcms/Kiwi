@@ -68,7 +68,10 @@ def info(request):
 
         def __init__(self, request, product_id=None):
             self.request = request
-            self.product_id = product_id
+            try:
+                self.product_id = int(product_id)
+            except (ValueError, TypeError):
+                self.product_id = 0
             self.internal_parameters = ('info_type', 'field', 'format')
 
         def builds(self):
