@@ -4,9 +4,9 @@ Setting up a local development environment
 Get source code
 ~~~~~~~~~~~~~~~
 
-The KiwiTestPad source code is available at: https://github.com/MrSenko/Kiwi::
+The KiwiTestPad source code is available at: https://github.com/kiwitcms/Kiwi::
 
-    git clone https://github.com/MrSenko/Kiwi.git
+    git clone https://github.com/kiwitcms/Kiwi.git
 
 Setup virtualenv
 ~~~~~~~~~~~~~~~~

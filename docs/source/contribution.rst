@@ -43,7 +43,7 @@ Reporting General Issues
 ------------------------
 
 If you have any good idea, or catch a bug, please do
-create an issue at https://github.com/MrSenko/Kiwi/issues!
+create an issue at https://github.com/kiwitcms/Kiwi/issues!
 
 
 Documentation

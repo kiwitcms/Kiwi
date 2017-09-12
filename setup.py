@@ -36,7 +36,7 @@ setup(
     author='various',
     maintainer='Alexander Todorov',
     maintainer_email='atodorov@MrSenko.com',
-    url='https://github.com/MrSenko/Kiwi/',
+    url='https://github.com/kiwitcms/Kiwi/',
     license='GPLv2+',
     keywords='test case',
 

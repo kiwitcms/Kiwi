@@ -1,11 +1,11 @@
 KiwiTestPad - Test Case Management System
 =========================================
 
-.. image:: https://travis-ci.org/MrSenko/Kiwi.svg?branch=master
-    :target: https://travis-ci.org/MrSenko/Kiwi
+.. image:: https://travis-ci.org/kiwitcms/Kiwi.svg?branch=master
+    :target: https://travis-ci.org/kiwitcms/Kiwi
 
-.. image:: https://coveralls.io/repos/github/MrSenko/Kiwi/badge.svg?branch=master
-   :target: https://coveralls.io/github/MrSenko/Kiwi?branch=master
+.. image:: https://coveralls.io/repos/github/kiwitcms/Kiwi/badge.svg?branch=master
+   :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
 
 .. image:: https://readthedocs.org/projects/kiwitestpad/badge/?version=latest
    :target: http://kiwitestpad.readthedocs.io/en/latest/?badge=latest
@@ -14,7 +14,7 @@ KiwiTestPad - Test Case Management System
 Introduction
 ------------
 
-.. image:: https://raw.githubusercontent.com/MrSenko/Kiwi/master/tcms/static/images/kiwi_h80.png
+.. image:: https://raw.githubusercontent.com/kiwitcms/Kiwi/master/tcms/static/images/kiwi_h80.png
    :alt: "KiwiTestPad Logo"
 
 KiwiTestPad is a test plan, test run and test case management system, that is
