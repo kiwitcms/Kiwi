@@ -1,6 +1,26 @@
 Change Log
 ==========
 
+3.37 (Sep 12 2017, released on MrSenko.com)
+------------------------------------------
+
+- Migrate to Python 3. Docker container uses Python 3.5 from
+  SoftwareCollections.org (Mr. Senko)
+- Docker container now uses self-signed HTTPS with options to specify custom
+  certificates (Mr. Senko)
+- Set MySQL mode to ``STRICT_TRANS_TABLES`` (Mr. Senko)
+- Remove dependency on ``django-preserialize`` (Mr. Senko)
+- Remove explicit dependency on ``six`` (Mr. Senko)
+- Fix traceback while loading builds at test run creation (Mr. Senko)
+- Populate product version when crating new Test Plan. Fixes
+  `Issue #16 <https://github.com/MrSenko/Kiwi/issues/16>`_ (Mr. Senko)
+- Initialize admin jQuery after jQuery has been loaded. Fixes a problem with
+  popup windows not closing (Mr. Senko)
+- Fix traceback when loading product versions if no products were
+  defined (Mr. Senko)
+
+
+
 3.33 (Aug 15 2017, released on MrSenko.com)
 ------------------------------------------
 
