@@ -29,7 +29,7 @@ def get_long_description():
 
 
 setup(
-    name='kiwitestpad',
+    name='kiwitcms',
     version=tcms.__version__,
     description='Test Case Management System',
     long_description=get_long_description(),

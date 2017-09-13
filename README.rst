@@ -7,8 +7,8 @@ Kiwi TCMS - Open Source Test Case Management System
 .. image:: https://coveralls.io/repos/github/kiwitcms/Kiwi/badge.svg?branch=master
    :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
 
-.. image:: https://readthedocs.org/projects/kiwitestpad/badge/?version=latest
-   :target: http://kiwitestpad.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/kiwitcms/badge/?version=latest
+   :target: http://kiwitcms.readthedocs.io/en/latest/?badge=latest
 
 
 Introduction
@@ -26,19 +26,19 @@ for each plan, run and case, and XML-RPC APIs.
 Documentation
 -------------
 
-http://kiwitestpad.readthedocs.org/
+http://kiwitcms.readthedocs.org/
 
 
 Installation
 ------------
 
-See http://kiwitestpad.readthedocs.io/en/latest/installing_docker.html
+See http://kiwitcms.readthedocs.io/en/latest/installing_docker.html
 
 
 Contribution
 ------------
 
-See http://kiwitestpad.readthedocs.org/en/latest/contribution.html
+See http://kiwitcms.readthedocs.org/en/latest/contribution.html
 
 Support
 -------
