@@ -4,7 +4,7 @@ Setting up a local development environment
 Get source code
 ~~~~~~~~~~~~~~~
 
-The KiwiTestPad source code is available at: https://github.com/kiwitcms/Kiwi::
+The Kiwi TCMS source code is available at: https://github.com/kiwitcms/Kiwi::
 
     git clone https://github.com/kiwitcms/Kiwi.git
 
@@ -15,7 +15,7 @@ Install devel packages which are needed to compile some of the Python dependenci
 
     sudo yum install gcc python-devel mysql-devel libxml2-devel libxslt-devel
 
-Create a virtual environment for KiwiTestPad::
+Create a virtual environment for Kiwi TCMS::
 
     virtualenv ~/virtualenvs/kiwi
 
@@ -34,24 +34,24 @@ Initialize database
 
 .. note::
 
-    In development mode KiwiTestPad is configured to use SQLite!
+    In development mode Kiwi TCMS is configured to use SQLite!
     You may want to adjust the database and/or other configuration settings.
     Override them in ``./tcms/settings/devel.py`` if necessary.
 
 .. warning::
 
-    At the moment KiwiTestPad is not 100% portable between database backends!
-    We recommend either MySQL or MariaDB for running KiwiTestPad!
+    At the moment Kiwi TCMS is not 100% portable between database backends!
+    We recommend either MySQL or MariaDB for running Kiwi TCMS!
 
 Load database schema and initial data::
 
     ./manage.py migrate
 
-Let's run KiwiTestPad
+Let's run Kiwi TCMS
 ---------------------
 
 You're now ready to start the server::
 
     ./manage.py runserver
 
-Now, open http://127.0.0.1:8000/ and should be presented with your brand new KiwiTestPad homepage!
+Now, open http://127.0.0.1:8000/ and should be presented with your brand new Kiwi TCMS homepage!

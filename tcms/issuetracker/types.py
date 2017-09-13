@@ -12,7 +12,7 @@ from django.conf import settings
 class IssueTrackerType(object):
     """
         Represents actions which can be performed with issue trackers.
-        This is a common interfce for all issue trackers that KiwiTestPad
+        This is a common interfce for all issue trackers that Kiwi TCMS
         supports!
     """
 

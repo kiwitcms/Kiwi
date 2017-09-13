@@ -4,8 +4,8 @@
 Contribute
 ==========
 
-KiwiTestPad team welcomes and appreciates any kind of contribution from you in
-order to make KiwiTestPad better and better. Anyone who is interested in KiwiTestPad is
+Kiwi TCMS team welcomes and appreciates any kind of contribution from you in
+order to make Kiwi TCMS better and better. Anyone who is interested in Kiwi TCMS is
 able to contribute in various areas, whatever you are a good and experienced
 developer, documentation writer or even a normal user.
 
@@ -34,7 +34,7 @@ following syntax is supported::
 Security Issues
 ---------------
 
-If you think that an issue with KiwiTestPad may have security implications, please
+If you think that an issue with Kiwi TCMS may have security implications, please
 do not publically report it in the bug tracker. Instead ping us via email to
 coordinate the fix and disclosure of the issue!
 

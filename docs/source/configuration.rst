@@ -1,4 +1,4 @@
-KiwiTestPad configuration settings
+Kiwi TCMS configuration settings
 ==================================
 
 All sensible settings are defined in ``tcms/settings/common.py``. You will have
@@ -44,7 +44,7 @@ out to which repository you want to communicate.
 Using Amazon SES instead of SMTP email
 --------------------------------------
 
-KiwiTestPad supports email notifications which by default are sent over SMTP and
+Kiwi TCMS supports email notifications which by default are sent over SMTP and
 need to be configured via the following settings::
 
     EMAIL_HOST = ''
@@ -68,7 +68,7 @@ Also modify the Docker image to include the following lines::
 Kerberos authentication
 -----------------------
 
-KiwiTestPad supports passwordless authentication with Kerberos. This is
+Kiwi TCMS supports passwordless authentication with Kerberos. This is
 turned off by default because most organization do not use it. To enable
 configure the following settings::
 

@@ -72,7 +72,7 @@ CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
 
 
 # If this if set, it is shown on the login/registration screens.
-MOTD_LOGIN = """<em>If it is not in KiwiTestPad, then we don't test it!</em>"""
+MOTD_LOGIN = """<em>If it is not in Kiwi TCMS, then we don't test it!</em>"""
 
 
 # Absolute path to the directory static files should be collected to.

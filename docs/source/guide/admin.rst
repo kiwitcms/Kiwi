@@ -16,7 +16,7 @@ The ADMIN tab allows administrators to manage:
 Configure Kiwi's base URL
 -------------------------
 
-The first step you need to do is configure the base URL of your KiwiTestPad
+The first step you need to do is configure the base URL of your Kiwi TCMS
 installation. This is used to construct links to test plans, test cases, etc.
 The default value is ``127.0.0.1:8000`` which is suitable if you are running
 in devel mode. To update the setting go to
@@ -28,7 +28,7 @@ necessary and click the Save button!
 Adding bug trackers
 -------------------
 
-One of the first steps when working with KiwiTestPad is to configure bug
+One of the first steps when working with Kiwi TCMS is to configure bug
 tracking systems. This can be done via the interface located via the menu
 ``ADMIN -> Test cases -> Bug trackers``. Each bug tracker is given a
 name, short description, URL format string and a regular expression
@@ -48,7 +48,7 @@ The Auth administration section covers Groups and Users.
 Groups
 ~~~~~~
 
-KiwiTestPad uses groups to manage access to parts of the system. Groups
+Kiwi TCMS uses groups to manage access to parts of the system. Groups
 have two fields: name and permissions. By default there are two groups
 created
 
@@ -134,7 +134,7 @@ Assigning permissions
 ^^^^^^^^^^^^^^^^^^^^^
 
 User permissions can be granted or revoked for individual components of
-KiwiTestPad. All permissions are prefixed with the ``add_``, ``change_`` and
+Kiwi TCMS. All permissions are prefixed with the ``add_``, ``change_`` and
 ``delete_`` prefixes signifying the operation which is controlled by this
 permission. Then the codename contains the name of the model for which this
 permission applies. For example, the ability to add attachments to a Test Case
@@ -161,7 +161,7 @@ To assign permissions:
 Adding a user to a group
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Group permissions in KiwiTestPad work the same as they do in Linux. The
+Group permissions in Kiwi TCMS work the same as they do in Linux. The
 system checks a user's personal permissions, then group permissions.
 
 Procedure: Adding a user to a group
@@ -179,7 +179,7 @@ To add a user to a group:
 Updating personal information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-KiwiTestPad can store email, first and last name details of a user.
+Kiwi TCMS can store email, first and last name details of a user.
 
 Procedure: Updating personal information
 ''''''''''''''''''''''''''''''''''''''''
@@ -201,7 +201,7 @@ To update personal information:
 Deleting a user
 ^^^^^^^^^^^^^^^
 
-Users can not be deleted from KiwiTestPad. A user that is no longer required
+Users can not be deleted from Kiwi TCMS. A user that is no longer required
 must be disabled.
 
 Procedure: Disabling a user
@@ -222,7 +222,7 @@ To disable a user:
 Access Control Lists
 ~~~~~~~~~~~~~~~~~~~~
 
-KiwiTestPad uses ACLs for the user groups: Guest, Tester, and Admin. The
+Kiwi TCMS uses ACLs for the user groups: Guest, Tester, and Admin. The
 permissions for each group can be controlled from the **Group** section
 in the **AUTH** tab.
 
@@ -241,7 +241,7 @@ in the **AUTH** tab.
 Managing entities
 -----------------
 
-The following entities are listed in KiwiTestPad:
+The following entities are listed in Kiwi TCMS:
 
 -  Builds
 -  Classifications
@@ -500,7 +500,7 @@ To edit a product:
 Versions
 ~~~~~~~~
 
-Each product in KiwiTestPad needs a version. Many products will have
+Each product in Kiwi TCMS needs a version. Many products will have
 multiple versions. For example, Firefox 3.0.14, 3.5.3.
 
 Procedure: Adding a version
@@ -579,7 +579,7 @@ To add a Test Plan type:
 Test plans
 ~~~~~~~~~~
 
-This screen provides a list of all the test plans in KiwiTestPad. The **Add
+This screen provides a list of all the test plans in Kiwi TCMS. The **Add
 test plan** link can be used to create a test plan. For more
 information, see Creating a Test Plan.
 
@@ -630,7 +630,7 @@ To add a category:
 Test cases
 ~~~~~~~~~~
 
-This screen provides a list of all the test cases in KiwiTestPad. The **Add
+This screen provides a list of all the test cases in Kiwi TCMS. The **Add
 test case** link can be used to create a test case. For more
 information, see Creating a Test Case.
 

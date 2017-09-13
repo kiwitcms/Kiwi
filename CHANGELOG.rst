@@ -159,7 +159,7 @@ IMPORTANT: this release introduces new database migrations!
 ---------------------------------------------
 
 - Forked from https://github.com/Nitrate/Nitrate as a stand-alone project
-- Future versions will be released under the name **KiwiTestPad**
+- Future versions will be released under the name **Kiwi TCMS**
 - ``NITRATE_BASE_URL`` has been renamed to ``KIWI_BASE_URL``
 - Use ``/tmp/.bugzilla`` for python-bugzilla cache to avoid 500 ISE
 

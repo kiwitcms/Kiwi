@@ -44,7 +44,7 @@ Leave empty to disable!''',
             name='tracker_type',
             field=models.CharField(
                 default='IssueTrackerType',
-                help_text='This determines how KiwiTestPad interfaces with the IT system',
+                help_text='This determines how Kiwi TCMS interfaces with the IT system',
                 max_length=128,
                 verbose_name='Type'),
         ),

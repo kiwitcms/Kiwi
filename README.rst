@@ -1,5 +1,5 @@
-KiwiTestPad - Test Case Management System
-=========================================
+Kiwi TCMS - Open Source Test Case Management System
+===================================================
 
 .. image:: https://travis-ci.org/kiwitcms/Kiwi.svg?branch=master
     :target: https://travis-ci.org/kiwitcms/Kiwi
@@ -15,9 +15,9 @@ Introduction
 ------------
 
 .. image:: https://raw.githubusercontent.com/kiwitcms/Kiwi/master/tcms/static/images/kiwi_h80.png
-   :alt: "KiwiTestPad Logo"
+   :alt: "Kiwi TCMS Logo"
 
-KiwiTestPad is a test plan, test run and test case management system, that is
+Kiwi TCMS is a test plan, test run and test case management system, that is
 written in Python and Django. It has a lot of great features, such as Bugzilla
 and JIRA integration, fast test plan and runs search, powerful access control
 for each plan, run and case, and XML-RPC APIs.
@@ -43,6 +43,6 @@ See http://kiwitestpad.readthedocs.org/en/latest/contribution.html
 Support
 -------
 
-Commercial support for KiwiTestPad is available from
+Commercial support for Kiwi TCMS is available from
 `Mr. Senko <http://MrSenko.com>`_. For more information, pricing and support
 levels info see http://MrSenko.com/kiwi/.

@@ -638,7 +638,7 @@ class TestCaseBugSystem(TCMSActionModel):
     tracker_type = models.CharField(
         max_length=128,
         verbose_name='Type',
-        help_text='This determines how KiwiTestPad integrates with the IT system',
+        help_text='This determines how Kiwi TCMS integrates with the IT system',
         default='IssueTrackerType',
     )
 

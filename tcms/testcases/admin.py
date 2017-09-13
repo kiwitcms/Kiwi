@@ -79,7 +79,7 @@ class BugSystemAdminForm(forms.ModelForm):
     # select only tracker types for which we have available integrations
     tracker_type = IssueTrackerTypeField(
         label='Type',
-        help_text='This determines how KiwiTestPad integrates with the IT system',
+        help_text='This determines how Kiwi TCMS integrates with the IT system',
     )
 
     class Meta:

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# KiwiTestPad documentation build configuration file, created by
+# Kiwi TCMS documentation build configuration file, created by
 # sphinx-quickstart on Tue Nov 26 22:58:55 2013.
 #
 # This file is execfile()d with the current directory set to its
@@ -54,7 +54,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'KiwiTestPad'
+project = u'Kiwi TCMS'
 copyright = u'2013, Red Hat, Inc.; 2017, Mr. Senko, Ltd.'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -208,7 +208,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'kiwi.tex', u'KiwiTestPad Documentation',
+  ('index', 'kiwi.tex', u'Kiwi TCMS Documentation',
    u'hlin,weizhou,cqi,qduanmu', 'manual'),
 ]
 
@@ -238,7 +238,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'kiwi', u'KiwiTestPad Documentation',
+    ('index', 'kiwi', u'Kiwi TCMS Documentation',
      [u'hlin,weizhou,cqi,qduanmu'], 1)
 ]
 
@@ -252,7 +252,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'kiwi', u'KiwiTestPad Documentation',
+  ('index', 'kiwi', u'Kiwi TCMS Documentation',
    u'hlin,weizhou,cqi,qduanmu', 'kiwi', 'One line description of project.',
    'Miscellaneous'),
 ]

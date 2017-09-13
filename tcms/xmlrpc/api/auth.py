@@ -26,13 +26,13 @@ def check_user_name(parameters):
 @log_call(namespace=__xmlrpc_namespace__)
 def login(request, parameters):
     """
-    Description: Login into KiwiTestPad
+    Description: Login into Kiwi TCMS
     Params:      $parameters - Hash: keys must match valid search fields.
     +-------------------------------------------------------------------+
     |                    Login Parameters                               |
     +-------------------------------------------------------------------+
     |        Key          |          Valid Values                       |
-    | username            | A KiwiTestPad login (email address)         |
+    | username            | A Kiwi TCMS login (email address)         |
     | password            | String                                      |
     +-------------------------------------------------------------------+
 
@@ -62,7 +62,7 @@ def login(request, parameters):
 @log_call(namespace=__xmlrpc_namespace__)
 def login_krbv(request):
     """
-    Description: Login into KiwiTestPad deployed with mod_auth_kerb
+    Description: Login into Kiwi TCMS deployed with mod_auth_kerb
 
     Returns:     String: Session ID.
 

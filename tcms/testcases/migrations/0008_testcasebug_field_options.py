@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='testcasebugsystem',
             name='tracker_type',
-            field=models.CharField(default='IssueTrackerType', help_text='This determines how KiwiTestPad integrates with the IT system', max_length=128, verbose_name='Type'),
+            field=models.CharField(default='IssueTrackerType', help_text='This determines how Kiwi TCMS integrates with the IT system', max_length=128, verbose_name='Type'),
         ),
     ]
