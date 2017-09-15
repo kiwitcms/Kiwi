@@ -25,3 +25,4 @@ cover-report/
 htmlcov/
 .cache/
 install/
+node_modules/
