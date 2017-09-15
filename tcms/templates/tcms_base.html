@@ -6,6 +6,15 @@
 	<title>{% block subtitle %}{% endblock %}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="Content-Language" content="utf-8" />
+    <!-- PatternFly Styles -->
+    <link rel="stylesheet" href="{% static 'patternfly/dist/css/patternfly.min.css' %}">
+    <link rel="stylesheet" href="{% static 'patternfly/dist/css/patternfly-additions.min.css' %}">
+
+    <!-- JS -->
+    <script src="{% static 'patternfly/node_modules/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'patternfly/node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'patternfly/dist/js/patternfly.min.js' %}"></script>
+
 	<link rel="stylesheet" type="text/css" href="{% static 'style/jquery/ui/cupertino/jquery-ui-1.8.20.css' %}" />
 	<link rel="stylesheet" type="text/css" href="{% static 'style/base.css' %}" media="screen" />
 	<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
