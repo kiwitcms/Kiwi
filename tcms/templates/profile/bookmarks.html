@@ -18,15 +18,6 @@ Nitrate.Utils.after_page_load(Nitrate.Profiles.Bookmarks.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble profile_tab">
-		<ul>
-			<li><a href="{% url "tcms-profile" user.username %}">Basic Information</a></li>
-			{% ifequal user_profile.user user %}
-			<li  class="profile_tab_active"><a href="{% url "tcms-bookmark" user.username %}">Bookmarks</a></li>
-			<li><a href="{% url "tcms-recent" user.username %}">Recent</a></li>
-			{% endifequal %}
-		</ul>
-	</div>
 	<form id="id_form_bookmark" action="{% url "tcms-bookmark" user.username %}" method="post">
 		<div class="table_watchlist_toolbar">
 			<span>
