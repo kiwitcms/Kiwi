@@ -14,15 +14,6 @@
 {% block contents %}
 
 <div id="content" >
-	<div class="sprites crumble profile_tab">
-		<ul>
-			<li><a href="{% url "tcms-profile" user.username %}">Basic Information</a></li>
-			{% ifequal user_profile.user user %}
-			<li><a href="{% url "tcms-bookmark" user.username %}">Bookmarks</a></li>
-			<li class="profile_tab_active"><a href="{% url "tcms-recent" user.username %}">Recent</a></li>
-			{% endifequal %}
-		</ul>
-	</div>
 	<div class="listinfo_content listinfo_index">
 		<div class="leftlistinfo">
 			<table cellpadding="0" cellspacing="0" class="home_table">

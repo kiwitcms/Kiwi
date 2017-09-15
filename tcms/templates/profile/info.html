@@ -12,17 +12,6 @@
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble profile_tab">
-		<ul>
-			<li class="profile_tab_active"><a href="{% url "tcms-profile" user.username %}">Basic Information</a></li>
-			{% ifequal user_profile.user user %}
-			<li><a href="{% url "tcms-bookmark" user.username %}">Bookmarks</a></li>
-			<li><a href="{% url "tcms-recent" user.username %}">Recent</a></li>
-			{% endifequal %}
-		</ul>
-	</div>
-
-		
 		{% ifequal user_profile.user user %}
 		<form action="." method="post">
 			{% csrf_token %}
