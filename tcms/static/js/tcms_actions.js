@@ -54,13 +54,12 @@ jQ(window).bind('load', function(e) {
 
   // Observe the bookmark form
   if (jQ('#id_bookmark_iform').length) {
-    jQ('#id_bookmark_iform').bind('submit', function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      var url = this.action;
+    jQ('#bookmark_submit').bind('click', function(e) {
+      var form = jQ('#id_bookmark_iform');
+      var url = form.attr('action');
       var dialog = showDialog();
       var username = Nitrate.User.username;
-      var parameters = Nitrate.Utils.formSerialize(this);
+      var parameters = Nitrate.Utils.formSerialize(form);
       parameters.url = window.location.href;
 
       if (!parameters.name) {
@@ -94,7 +93,7 @@ jQ(window).bind('load', function(e) {
 
       jQ.ajax({
         'url': url,
-        'type': this.method,
+        'type': form.attr('method'),
         'data': parameters,
         'success': function (data, textStatus, jqXHR) {
           jQ(dialog).html(data);

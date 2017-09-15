@@ -104,55 +104,239 @@
 		{% block extra_head %}{% endblock %}
 </head>
 <body id="body">
-	<div id="header">
-                <div class="logo">
-                    <a href="{% url "core-views-index" %}"><img src="{% static 'images/kiwi_h50.png' %}" alt="logo" /></a>
-                </div>
-		<div class="absoluteright">
-		<label>
-			{% if user.is_authenticated %}
-			<a href="{% url "tcms-profile" user.username %}">Welcome, {{ user }}</a>
-			{% if AUTH_BACKEND.can_logout %}
-			<span>[</span><a href="{% url "tcms-logout" %}?next={{ request.path }}">Logout</a><span>]</span>
-			{% endif %}
-			{% else %}
-			Welcome, Guest.
-			[
-			{% if AUTH_BACKEND.can_login %}
-			<a href="{% url "tcms-login" %}?next={{ request.path }}" class="banner_login">Login</a>
-			{% endif %}
-			{% if AUTH_BACKEND.can_register %}
-			<a href="{% url "tcms-register" %}?next={{ request.path }}" class="banner_login">Register</a>
-			{% endif %}
-			]
-			{% endif %}
-			<a class="sprites userguide" href="{{ SETTINGS.USER_GUIDE_URL }}" target="_blank">User Guide</a>
-		</label>
-		{% if user.is_authenticated %}
-		<form id="id_bookmark_iform" action="{% url "tcms-bookmark" user.username %}" method="get">
-			<input type="hidden" name="a" value="render_form" />
-			<input type="hidden" name="user" value="{{ request.user.pk }}" />
-			<input type="hidden" name="site" value="{{ SETTINGS.SITE_ID }}" />
-			{% block content_type %}{% endblock %}
-			<input type="submit" value="Bookmark this page" class='sprites bookmark' />
-		</form>
-		{% endif %}
-		</div>
-		{% include 'menu.html' %}
+    <!-- PatternFly Horizontal Nav -->
+    <nav class="navbar navbar-default navbar-pf" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <img src="node_modules/patternfly/dist/img/brand.svg" alt="Kiwi TCMS" />
+            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-utility">
 
-	</div>
-	{% block contents %}{% endblock %}
-	<div id="dialog" style="display:none"><div class="ajax_loading"></div></div>
-	<div id="footer">
-		{% if SETTINGS.FOOTER_LINKS %}
-		<div class="footercontent">
-			{% for link in SETTINGS.FOOTER_LINKS %}
-			<a href="{{ link.0 }}">{{ link.1 }}</a>{% if not forloop.last %}|{% endif %}
-			{% endfor %}
-		</div>
-		{% endif %}
-		<div class="center"><span>Kiwi TCMS {{ SETTINGS.KIWI_VERSION }}</span></div>
-	</div>
+                <li class="dropdown" style="float:right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="pficon pficon-user"></span>
+                        {% if user.is_authenticated %}{{ user }}{% else %}Welcome Guest{% endif %}
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url "testruns-all" %}?people={{ user.email }}">My Test Runs</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url "plans-all" %}?author__email__startswith={{ user.email }}">My Test Plans</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'tcms-bookmark' user.username %}">My bookmarks</a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{% url "tcms-profile" user.username %}">My profile</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url "tcms-password_change" %}">Change password</a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        {% if AUTH_BACKEND.can_logout %}
+                        <li>
+                            <a href="{% url "tcms-logout" %}?next={{ request.path }}">Logout</a>
+                        </li>
+                        {% endif %}
+
+                    {% else %}
+                        {% if AUTH_BACKEND.can_login %}
+                        <li>
+                            <a href="{% url "tcms-login" %}?next={{ request.path }}">Login</a>
+                        </li>
+                        {% endif %}
+
+                        <li class="divider"></li>
+
+                        {% if AUTH_BACKEND.can_register %}
+                        <li>
+                            <a href="{% url "tcms-register" %}?next={{ request.path }}">Register</a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                    </ul>
+                </li>
+
+                <li class="dropdown" style="float:right">
+                    <a class="nav-item-iconic" id="horizontalDropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span title="Help" class="fa pficon-help"></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="horizontalDropdownMenu1">
+                        {% for link in SETTINGS.FOOTER_LINKS %}
+                        <li><a href="{{ link.0 }}">{{ link.1 }}</a></li>
+                        {% endfor %}
+                        <li class="divider"></li>
+                        <li><a href="#">Version {{ SETTINGS.KIWI_VERSION }}</a></li>
+                    </ul>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li style="float:right">
+                    <a class="nav-item-iconic fa fa-bookmark-o" id="bookmark_submit" title="Bookmark" href="#"></a>
+
+                    <form id="id_bookmark_iform" action="{% url "tcms-bookmark" user.username %}" method="get">
+                        <input type="hidden" name="a" value="render_form" />
+                        <input type="hidden" name="user" value="{{ request.user.pk }}" />
+                        <input type="hidden" name="site" value="{{ SETTINGS.SITE_ID }}" />
+                        {% block content_type %}{% endblock %}
+                    </form>
+                </li>
+                {% endif %}
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-primary">
+                <li>
+                    <a href="{% url "core-views-index" %}">DASHBOARD</a>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        TESTING
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if perms.testplans.add_testplan %}
+                        <li>
+                            <a href="{% url "plans-new" %}">New Test Plan</a>
+                        </li>
+                        {% endif %}
+
+                        <li class="divider"></li>
+
+                        {% if perms.testcases.add_testcase %}
+                        <li>
+                            <a href="{% url "testcases-new" %}">New Test Case</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        SEARCH
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url "plans-all" %}">Search Test Plans</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url "testruns-all" %}">Search Test Runs</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url "testcases-search" %}">Search Test Cases</a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{% url "advance_search" %}">Advanced search</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        REPORTING
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url "report-overall" %}">Overall report</a>
+                        </li>
+                        <li>
+                            <a href="{% url "report-custom" %}">Custom report</a>
+                        </li>
+                        <li>
+                            <a href="{% url "testing-report" %}">Testing report</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        ADMIN
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Environment</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{% url "mgmt-environment_groups" %}">Groups</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "mgmt-environment_properties" %}">Properties</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="divider"></li>
+
+                    {% if user.is_staff %}
+                        {% if perms.auth.change_user %}
+                        <li>
+                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/auth/">Users and groups</a>
+                        </li>
+                        {% endif %}
+
+                        {% if perms.management %}
+                        <li>
+                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/management/">TCMS management</a>
+                        </li>
+                        {% endif %}
+
+                        {% if perms.testplans.change_testplantype %}
+                        <li>
+                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/testplans/">Test Plans</a>
+                        </li>
+                        {% endif %}
+
+                        {% if perms.testcases %}
+                        <li>
+                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/testcases/">Test Cases</a>
+                        </li>
+                        {% endif %}
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{{ SETTINGS.ADMIN_PREFIX }}">Everything else</a>
+                        </li>
+                    {% endif %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    {% block contents %}{% endblock %}
+    <div id="dialog" style="display:none"><div class="ajax_loading"></div></div>
 
 	<script type="text/javascript">
 		jQ(window).bind('load', function() {
