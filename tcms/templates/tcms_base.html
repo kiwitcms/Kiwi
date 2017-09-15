@@ -1,4 +1,3 @@
-{% load cache %}
 {% load static %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -144,7 +143,6 @@
 	</div>
 	{% block contents %}{% endblock %}
 	<div id="dialog" style="display:none"><div class="ajax_loading"></div></div>
-	{% cache 600 footerbar%}
 	<div id="footer">
 		{% if SETTINGS.FOOTER_LINKS %}
 		<div class="footercontent">
@@ -155,7 +153,6 @@
 		{% endif %}
 		<div class="center"><span>Kiwi TCMS {{ SETTINGS.KIWI_VERSION }}</span></div>
 	</div>
-	{% endcache %}
 
 	<script type="text/javascript">
 		jQ(window).bind('load', function() {
