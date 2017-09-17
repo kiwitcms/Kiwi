@@ -145,7 +145,7 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 /**************************buttons************************/
 .toolbar{ margin:0 0 5px 10px;}
 .toolbar a{color:#fff;}
-.toolbar ul li{color:#000; list-style:none; padding:8px 10px 4px 10px;; vertical-align:middle; height:18px; position:relative; background:#f7f7f7 url(/static/images/toolbar_bg.png) repeat-x left top; display:inline-block; -moz-border-radius:5px; -khtml-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px; border:solid 1px #f1f0f0; cursor:pointer;z-index:0px;}
+.toolbar ul li{color:#000; list-style:none; padding:8px 10px 4px 10px;; vertical-align:middle; min-height:18px; position:relative; background:#f7f7f7 url(/static/images/toolbar_bg.png) repeat-x left top; display:inline-block; -moz-border-radius:5px; -khtml-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px; border:solid 1px #f1f0f0; cursor:pointer;z-index:0px;}
 .toolbar ul ul{display:none;}
 .toolbar li:hover ul{display:block;position:absolute;top:27px;left:-2px; padding:5px;min-width:100px;background:#f3f3f3;border:solid 1px #235d9f;border-top:none;-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;-webkit-border-bottom-right-radius:5px;-webkit-border-bottom-left-radius:5px;z-index:1000;}
 .toolbar li ul li{display:block; background:none; border:none; margin:0px; padding:6px 5px 0 5px; height:19px;line-height:25px;}
