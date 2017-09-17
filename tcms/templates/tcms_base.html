@@ -27,20 +27,6 @@
 	<script type="text/javascript" language="javascript" charset="utf-8">
 		jQuery.noConflict();
 		var jQ = jQuery;
-		{% if SETTINGS.ENABLE_PIWIK_TRACKING %}
-		// jQuery global ajax event handler for Piwik
-				jQ(document).ajaxSend(function(event, jqxhr, settings){
-						if (window.Piwik) {
-								var piwikTracker = Piwik.getAsyncTracker();
-								var u=(("https:" == document.location.protocol) ? "https" : "http") + "://";
-								piwikTracker.setSiteId({{ SETTINGS.PIWIK_SITE_ID }});
-								piwikTracker.setTrackerUrl(u+"{{SETTINGS.PIWIK_SITE_API_URL}}");
-								piwikTracker.setDocumentTitle("Kiwi TCMS ajax request");
-								piwikTracker.setCustomUrl(settings.url);
-								piwikTracker.trackPageView();
-						}
-				});
-				{% endif %}
 		// Top level namespace
 		window.Nitrate = {};
 	</script>
@@ -48,24 +34,6 @@
 	<script type="text/javascript" src="{% static 'js/tcms_actions.js' %}"></script>
 
 	{% block custom_javascript %}{% endblock %}
-		{% if SETTINGS.ENABLE_PIWIK_TRACKING %}
-		<script type="text/javascript">
-				// Prototype global ajax event handler for Piwik
-				Ajax.Responders.register({
-						onCreate: function(request, xhr) {
-								if (window.Piwik) {
-										var piwikTracker = Piwik.getAsyncTracker();
-										var u=(("https:" == document.location.protocol) ? "https" : "http") + "://";
-										piwikTracker.setSiteId({{ SETTINGS.PIWIK_SITE_ID }});
-										piwikTracker.setTrackerUrl(u+"{{SETTINGS.PIWIK_SITE_API_URL}}");
-										piwikTracker.setDocumentTitle("[Ajax] " + request.parameters.content_type);
-										piwikTracker.setCustomUrl(request.url.strip());
-										piwikTracker.trackPageView();
-								}
-						}
-				});
-		</script>
-		{% endif %}
 	<script type="text/javascript">
 	{% if request.user.is_authenticated %}
 	Nitrate.User = {
@@ -81,26 +49,6 @@
 	};
 	{% endif %}
 	</script>
-		{% if SETTINGS.ENABLE_PIWIK_TRACKING %}
-		<!-- Piwik -->
-		<script type="text/javascript">
-				var _paq = _paq || [];
-				_paq.push(["trackPageView"]);
-				_paq.push(["enableLinkTracking"]);
-
-				(function() {
-				var u=(("https:" == document.location.protocol) ? "https" : "http") + "://";
-				_paq.push(["setTrackerUrl", u+"{{SETTINGS.PIWIK_SITE_API_URL}}"]);
-				_paq.push(["setSiteId", "{{ SETTINGS.PIWIK_SITE_ID }}"]);
-				var d=document, g=d.createElement("script"),
-				s=d.getElementsByTagName("script")[0];
-				g.type="text/javascript"; g.defer=true; g.async=true;
-				g.src=u+"{{SETTINGS.PIWIK_SITE_JS_URL}}";
-				s.parentNode.insertBefore(g,s);
-				})();
-		</script>
-		<!-- End Piwik Code -->
-		{% endif %}
 		{% block extra_head %}{% endblock %}
 </head>
 <body id="body">
