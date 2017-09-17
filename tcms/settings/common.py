@@ -285,15 +285,6 @@ LISTENING_MODEL_SIGNAL = True
 DEFAULT_PAGE_SIZE = 100
 PAGINATION_DEFAULT_PAGINATION = DEFAULT_PAGE_SIZE
 
-# TCMS use Piwik to track request.
-ENABLE_PIWIK_TRACKING = False
-# Piwik site id, generate by eng-ops
-PIWIK_SITE_ID = ''
-# Piwik api url without schema.
-PIWIK_SITE_API_URL = ''
-# Piwik js lib url without schema
-PIWIK_SITE_JS_URL = ''
-
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
