@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.shortcuts import render
 
 
 def index(request, template_name='index.html'):
@@ -14,3 +15,10 @@ def index(request, template_name='index.html'):
     return HttpResponseRedirect(
         reverse('tcms-recent', args=[request.user.username])
     )
+
+
+def navigation(request):
+    """
+    iframe navigation workaround until we migrate everything to patternfly
+    """
+    return render(request, 'navigation.html')
