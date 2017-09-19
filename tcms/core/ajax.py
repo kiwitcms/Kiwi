@@ -77,9 +77,14 @@ def info(request):
         def builds(self):
             from tcms.management.models import TestBuild
 
+            try:
+                _is_active = bool(strtobool(self.request.GET.get('is_active', 'False')))
+            except (ValueError, TypeError):
+                _is_active = False
+
             query = {
                 'product_id': self.product_id,
-                'is_active': bool(strtobool(self.request.GET.get('is_active', 'False')))
+                'is_active': _is_active
             }
             return TestBuild.list(query)
 
