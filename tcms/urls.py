@@ -24,6 +24,9 @@ from tcms.xmlrpc import urls as xmlrpc_urls
 
 
 urlpatterns = [
+    # iframe navigation workaround
+    url(r'^navigation/', core_views.navigation, name='iframe-navigation'),
+
     url(r'^admin/', admin.site.urls),
     url(r'^admin/doc/', include(admindocs_urls)),
 
