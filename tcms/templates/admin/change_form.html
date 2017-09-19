@@ -1,7 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_modify %}
-{% block extrahead %}{{ block.super }}
-<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+{% block custom_javascript %}{{ block.super }}
 {{ media }}
 {% endblock %}
 
