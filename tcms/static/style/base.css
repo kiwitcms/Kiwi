@@ -46,7 +46,6 @@ body { font-size:12px; width:100%; min-width:1200px; line-height:150%; font-fami
 
 /*---------------header-----------------*/
 .crumble{ background-position:0 -185px; background-repeat:repeat-x;padding-left:10px;color:#333; height:33px; line-height:33px;}
-a.banner_login{ color:red;}
 .menu{width:100%;height:37px; background-position:0 -535px; background-repeat:repeat-x;line-height:37px;}
 .menu a:link,.menu a:visited{text-decoration:none; color:#FFFFFF;}
 .menu a:hover{text-decoration:none; color:#FFFFFF;}
@@ -176,12 +175,6 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 .prompt-message{color:#235d9f; }
 
 /*****************************single sign on****************/
-.login{ width:440px; margin:50px auto;padding:5px; border:1px solid #e7e7e7; color:#666; background:url(../images/login_bg.png) repeat-x left top #e7e7e7;}
-.login h3{ font-size:1.2em; padding:5px 0px; margin:0px; text-align:center; color:#659acc; }
-.login .login_table{ padding:10px; width:100%; -moz-border-radius:2px 2px 2px 2px; }
-.login .message{ color:red; text-align:center; }
-.login .login_table td .lab{ text-align:left; } 
-.login input[type='text'],.login input[type='password']{height:25px; border:solid 1px #ccc; width:250px;}
 .loginbutton{ background-position:5px -80px; background-color:#fff; height:26px; line-height:26px; padding:0 10px 0 24px;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px; border:solid 1px #ccc;cursor:pointer;}
 .resetbutton{ background-position:5px -80px; background-color:#fff; height:26px; line-height:26px; padding:0 10px 0 24px;-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px; border:solid 1px #ccc;}
 .cc{ margin:10px 0 0 20px;}
