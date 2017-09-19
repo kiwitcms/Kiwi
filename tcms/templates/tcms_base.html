@@ -285,13 +285,5 @@
 
     {% block contents %}{% endblock %}
     <div id="dialog" style="display:none"><div class="ajax_loading"></div></div>
-
-	<script type="text/javascript">
-		jQ(window).bind('load', function() {
-			jQ('#js-execute-search').bind('click', function() {
-			  jQ('#search_content').val() === '' || this.form.submit();
-			});
-		});
-	</script>
 </body>
 </html>
