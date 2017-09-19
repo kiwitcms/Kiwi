@@ -1,42 +1,59 @@
 {% extends "tcms_base.html" %}
 {% load static %}
-{% block subtitle %}Kiwi{% endblock %}
-{% block custom_stylesheet %}
-{% endblock %}
+{% block html_class %}login-pf{% endblock %}
+{% block subtitle %}Login{% endblock %}
 {% block custom_javascript %}
-	<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+    {% include 'patternfly.html' %}
 {% endblock %}
 
 {% block contents %}
-<div id="content">
-	<div id="index" >
-		<br clear="all">
-		<div class="login radius">
-			<form id="id_login_form" action="{% url "tcms-login" %}" method="POST">
-				{% csrf_token %}
-				{% if SETTINGS.MOTD_LOGIN %}
-				<div class="cc">{{ SETTINGS.MOTD_LOGIN|safe}}</div>
-				{% endif %}
-				{% if SETTINGS.WELCOME_MESSAGE %}<h3>{{ SETTINGS.WELCOME_MESSAGE }}</h3>{% endif %}
-				<table border="0" cellpadding="10" cellspacing="10" class="login_table">
-					{{ form.as_table }}
-					<tr style="display:none">
-						<td id="login_info" colspan="2"></td>
-					</tr>
-                    <tr>
-                    	<td></td>
-						<td ><a href="{% url "tcms-password_reset" %}">Forget the password</a></td>
-					</tr>
-					<tr>
-                    	<td>&nbsp;</td>
-						<td  class="submit">
-							<input type="hidden" name="next" value="{{ next }}" />
-							<input type="submit" value="Login" class="loginbutton sprites" />
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-	</div>
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7 col-md-6 col-lg-5 login">
+      <form class="form-horizontal" role="form" action="{% url "tcms-login" %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <div class="form-group">
+          <label for="inputUsername" class="col-sm-2 col-md-2 control-label">Username</label>
+          <div class="col-sm-10 col-md-10">
+            <input type="text" class="form-control" id="inputUsername" name="username" placeholder="" tabindex="1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="col-sm-2 col-md-2 control-label">Password</label>
+          <div class="col-sm-10 col-md-10">
+            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="" tabindex="2">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-8 col-sm-offset-2 col-sm-6 col-md-offset-2 col-md-6">
+            <span class="help-block">Forgot <a href="{% url "tcms-password_reset" %}" tabindex="6">password</a>?</span>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 submit">
+            <button type="submit" class="btn btn-primary btn-lg" tabindex="4">Log In</button>
+          </div>
+        </div>
+      </form>
+    </div><!--/.col-*-->
+    <div class="col-sm-5 col-md-6 col-lg-7 details">
+      <p>
+        <strong>
+        {% if SETTINGS.WELCOME_MESSAGE %}
+            {{ SETTINGS.WELCOME_MESSAGE }}
+        {% else %}
+            Welcome to Kiwi TCMS | the leading open source test case management system!
+        {% endif %}
+        </strong>
+      </p>
+      <p>
+        {% if SETTINGS.MOTD_LOGIN %}
+            {{ SETTINGS.MOTD_LOGIN|safe}}
+        {% else %}
+            Please login to get started.
+        {% endif %}
+      </p>
+    </div><!--/.col-*-->
+  </div><!--/.row-->
+</div><!--/.container-->
 {% endblock %}
