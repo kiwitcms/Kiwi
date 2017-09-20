@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+3.38 (Sep 20 2017, released on MrSenko.com)
+------------------------------------------
+
+- Bug fix: Test Case EDIT and CLONE buttons are now working again (Mr. Senko)
+- More tests and better handling of input parameters when loading builds
+  (Mr. Senko)
+- Load more of the required JavaScript and CSS files for admin forms (Mr. Senko)
+
+
 3.37 (Sep 12 2017, released on MrSenko.com)
 ------------------------------------------
 
