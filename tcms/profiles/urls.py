@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.urls import reverse_lazy
 from django.contrib.auth import views as contrib_auth_views
 

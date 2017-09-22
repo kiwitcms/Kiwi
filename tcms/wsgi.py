@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-WSGI config for tcms project.
+WSGI config for Kiwi TCMS project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
@@ -15,7 +15,13 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
+
 import os
+import sys
+from django.core.wsgi import get_wsgi_application
+
+import tcms
+
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -25,14 +31,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tcms.settings.product")
 os.environ['PYTHON_EGG_CACHE'] = '/tmp/.python-eggs/'
 
 # add tcms's core lib path
-import tcms, sys
-# tcms should exist in only one path.
 sys.path.append(os.path.join(tcms.__path__[0], 'core', 'lib'))
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
-from django.core.wsgi import get_wsgi_application
 _application = get_wsgi_application()
 
 
@@ -40,7 +43,7 @@ def application(environ, start_response):
     environ['PATH_INFO'] = environ['SCRIPT_NAME'] + environ['PATH_INFO']
     if environ['wsgi.url_scheme'] == 'https':
         environ['HTTPS'] = 'on'
-    
+
     return _application(environ, start_response)
 
 # Apply WSGI middleware here.

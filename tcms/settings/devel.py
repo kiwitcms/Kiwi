@@ -1,6 +1,7 @@
 # Django settings for devel env.
 
-from .product import *
+import os
+from .product import *  # noqa: F403
 
 # Debug settings
 DEBUG = True
@@ -18,15 +19,12 @@ DATABASES = {
 }
 
 # django-debug-toolbar settings
-MIDDLEWARE += [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-]
 
-INSTALLED_APPS += [
-    'debug_toolbar',
-]
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']  # noqa: F405
 
-FILE_UPLOAD_DIR = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')
+INSTALLED_APPS += ['debug_toolbar']  # noqa: F405
+
+FILE_UPLOAD_DIR = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')  # noqa: F405
 
 # Needed by django.template.context_processors.debug:
 # See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-template-context-processors-debug

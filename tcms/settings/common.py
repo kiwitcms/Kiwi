@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import django.conf.global_settings as DEFAULT_SETTINGS
 import os.path
 import tcms
 
 
-#############################################################
-### You have to override the following settings in product.py
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~ You have to override the following settings in product.py
 
 
 # Set to False for production
@@ -47,8 +46,8 @@ EMAIL_FROM = 'kiwi@example.com'
 EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 
 
-###########################################################
-### You may want to override the following settings as well
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~ You may want to override the following settings as well
 
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -90,9 +89,8 @@ CACHES = {
 }
 
 
-
-####################################
-### Don't change the settings below.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~ DANGER: Don't change the settings below!
 
 SITE_ID = 1
 
@@ -269,10 +267,10 @@ AUTHENTICATION_BACKENDS = [
 
 # actually now displayed in the help menu at the top!
 FOOTER_LINKS = [
- ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
- ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User guide'),
- ('http://kiwitcms.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
- ('/xmlrpc/', 'XML-RPC service'),
+    ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
+    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User guide'),
+    ('http://kiwitcms.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
+    ('/xmlrpc/', 'XML-RPC service'),
 ]
 
 

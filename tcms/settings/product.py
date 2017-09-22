@@ -1,9 +1,6 @@
 # Django settings for product env.
 
-import os
-from .common import *
+from .common import *  # noqa: F401,F403
 
 # Debug settings
 DEBUG = False
-
-
