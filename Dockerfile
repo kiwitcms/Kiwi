@@ -1,8 +1,9 @@
 FROM centos/httpd
 
-RUN yum -y --setopt=tsflags=nodocs install centos-release-scl && \
+RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm && \
+    yum -y --setopt=tsflags=nodocs install centos-release-scl && \
     yum -y --setopt=tsflags=nodocs install rh-python35 gcc mariadb-devel \
-    libxml2-devel libxslt-devel httpd-devel mod_wsgi mod_ssl && \
+    libxml2-devel libxslt-devel httpd-devel mod_wsgi mod_ssl npm && \
     yum -y update --setopt=tsflags=nodocs
 
 # static files configuration for Apache
@@ -51,9 +52,18 @@ RUN rpm -qa | grep yum | xargs rpm -ev && \
 COPY ./manage.py /Kiwi/
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py
 
+# install patternfly
+COPY package.json /Kiwi/
+RUN cd /Kiwi/ && npm install patternfly && \
+    find ./node_modules -type f -not -path "*/dist/*" -delete && \
+    find ./node_modules -type d -empty -delete
+
 # Copy the application code to the virtual environment
 COPY ./tcms/ /venv/lib64/python3.5/site-packages/tcms/
 RUN find /venv/lib64/python3.5/site-packages/tcms/ -name "*.pyc" -delete
 
 # collect static files
 RUN /Kiwi/manage.py collectstatic --noinput
+
+# todo: remove static & node_modules from under tcms directory
+# todo: remove npm & friends
