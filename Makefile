@@ -18,7 +18,7 @@ install:
 	python setup.py install
 
 
-FLAKE8_EXCLUDE=.git,tcms/settings,*sqls.py,urls.py,wsgi.py,*settings.py,*raw_sql.py,*xml2dict*
+FLAKE8_EXCLUDE=.git,*raw_sql.py
 
 .PHONY: flake8
 flake8:
@@ -75,10 +75,12 @@ etags:
 		--exclude=build --exclude=tcms/static/js/lib -f TAGS
 
 ifeq ($(DOCKER_ORG),)
-  DOCKER_ORG='mrsenko'
+  DOCKER_ORG='kiwitcms'
 endif
 
-KIWI_VERSION=$(shell cat tcms/__init__.py | grep __version__ | cut -f2 -d"'")
+ifeq ($(KIWI_VERSION),)
+    KIWI_VERSION=$(shell cat tcms/__init__.py | grep __version__ | cut -f2 -d"'")
+endif
 
 docker-image:
 	docker build -t $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) .

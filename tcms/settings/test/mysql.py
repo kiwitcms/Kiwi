@@ -1,6 +1,6 @@
-from tcms.settings.test import *
+from tcms.settings.test import *  # noqa: F403
 
-DATABASES['default'].update({
+DATABASES['default'].update({     # noqa: F405
     'ENGINE': 'django.db.backends.mysql',
     'NAME': 'kiwi',
     'USER': 'kiwi',
