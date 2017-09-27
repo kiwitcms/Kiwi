@@ -7,6 +7,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.backends import ModelBackend, RemoteUserBackend
 
+from tcms.utils.permissions import assign_default_group_permissions
+
 
 class DBModelBackend(ModelBackend):
     can_login = True
@@ -196,6 +198,7 @@ class ModAuthKerbBackend(RemoteUserBackend):
         """
         user.email = user.username + '@' + settings.KRB5_REALM.lower()
         user.set_unusable_password()
+        user.is_active = True
         user.save()
         initiate_user_with_default_setups(user)
         return user
@@ -220,8 +223,12 @@ def initiate_user_with_default_setups(user):
     Add default groups, permissions, status to a newly
     created user.
     '''
+    # create default permissions if not already set
+    assign_default_group_permissions()
+
     default_groups = Group.objects.filter(name__in=settings.DEFAULT_GROUPS)
-    user.is_active = True
     for grp in default_groups:
         user.groups.add(grp)
+
+    user.is_staff = True  # so they can add Products, Builds, etc via the ADMIN menu
     user.save()

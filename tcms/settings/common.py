@@ -55,6 +55,10 @@ EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 ALLOWED_HOSTS = ['*']
 
 
+# default group in which new users will be created
+DEFAULT_GROUPS = ['Tester']
+
+
 # Maximum upload file size, default set to 5MB.
 MAX_UPLOAD_SIZE = 5242880
 
@@ -419,6 +423,3 @@ LOCALE_PATHS = [
 # when importing test cases from XML exported by Testopia
 # this is the version we're looking for
 TESTOPIA_XML_VERSION = '1.1'
-
-# default group in which new users will be created
-DEFAULT_GROUPS = ['default']
