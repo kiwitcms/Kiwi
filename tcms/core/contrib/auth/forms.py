@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
+from .backends import initiate_user_with_default_setups
+
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=30)
@@ -28,6 +30,7 @@ class RegistrationForm(UserCreationForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
+            initiate_user_with_default_setups(user)
         return user
 
     def set_active_key(self):
