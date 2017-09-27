@@ -1,6 +1,24 @@
 Change Log
 ==========
 
+3.39 (Sep 27 2017, released on MrSenko.com)
+------------------------------------------
+
+- Introduce modern UI elements using Patternfly library!
+  Main navigation, login and password reset pages are
+  currently implemented. NOTE: main navigation is placed
+  inside an iframe to workaround issues with the legacy
+  JavaScript on other pages. These will be fixed in the future
+  and the iframe will be removed! (Mr. Senko)
+- Piwik integration has been removed together with the following settings
+  ``ENABLE_PIWIK_TRACKING``, ``PIWIK_SITE_ID``, ``PIWIK_SITE_API_URL``,
+  ``PIWIK_SITE_JS_URL`` (Mr. Senko)
+- ``USER_GUIDE_URL`` setting has been removed. You can specify this configuration
+  directly in ``FOOTER_LINKS`` (Mr. Senko)
+- Added missing templates and views for password reset functionality (Mr. Senko)
+- Makefile updates and flake8 fixes (Mr. Senko)
+
+
 3.38 (Sep 20 2017, released on MrSenko.com)
 ------------------------------------------
 
