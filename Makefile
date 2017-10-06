@@ -84,9 +84,10 @@ endif
 
 docker-image:
 	docker build -t $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) .
+	docker tag $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) $(DOCKER_ORG)/kiwi:latest
 
 run:
-	docker compose up
+	docker-compose up
 
 
 .PHONY: help
