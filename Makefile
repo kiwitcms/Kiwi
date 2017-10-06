@@ -85,7 +85,7 @@ endif
 docker-image:
 	docker build -t $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) .
 
-docker-run: docker-image
+run:
 	docker compose up
 
 

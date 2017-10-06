@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+    db:
+        container_name: kiwi_db
+        image: centos/mariadb
+        volumes:
+            - db_data:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: kiwi-1s-aw3s0m3
+            MYSQL_DATABASE: kiwi
+            MYSQL_USER: kiwi
+            MYSQL_PASSWORD: kiwi
+
+    web:
+        container_name: kiwi_web
+        depends_on:
+            - db
+        restart: always
+        image: kiwitcms/kiwi:latest
+        ports:
+            - 443:443
+        volumes:
+            - uploads:/var/kiwi/uploads
+            - ./contrib/ssl/kiwi-https.crt:/etc/pki/tls/certs/localhost.crt
+            - ./contrib/ssl/kiwi-https.key:/etc/pki/tls/private/localhost.key
+        environment:
+            KIWI_DB_HOST: db
+            KIWI_DB_PORT: 3306
+            KIWI_DB_NAME: kiwi
+            KIWI_DB_USER: kiwi
+            KIWI_DB_PASSWORD: kiwi
+
+volumes:
+    db_data:
+    uploads:
