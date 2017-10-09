@@ -585,40 +585,6 @@ class TCMSEnvRunValueMapFactory(DjangoModelFactory):
 
 # ### Factories for app profiles ###
 
-
-class ProfilesFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'profiles.Profiles'
-
-    login_name = factory.Sequence(lambda n: 'Profile login name %d' % n)
-    cryptpassword = 'crypted password'
-    realname = factory.LazyAttribute(lambda obj: "%s's realname" % obj.login_name)
-    disabledtext = ''
-    mybugslink = 1
-
-
-class GroupsFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'profiles.Groups'
-
-    name = factory.Sequence(lambda n: 'Group name %d' % n)
-    description = ''
-    isbuggroup = 0
-    userregexp = ''
-    isactive = 0
-
-
-class UserGroupMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'profiles.UserGroupMap'
-
-    user = factory.SubFactory(UserFactory)
-    group = factory.SubFactory(GroupsFactory)
-
-
 class UserProfileFactory(DjangoModelFactory):
 
     class Meta:
