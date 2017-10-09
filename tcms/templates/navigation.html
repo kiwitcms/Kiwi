@@ -118,6 +118,12 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
+                        {% if not user.is_authenticated %}
+                        <li>
+                            <a href="{% url "tcms-login" %}" target="_parent">Login required</a>
+                        </li>
+                        {% endif %}
+
                         {% if perms.testplans.add_testplan %}
                         <li>
                             <a href="{% url "plans-new" %}" target="_parent">New Test Plan</a>
