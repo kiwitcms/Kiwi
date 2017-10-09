@@ -12,6 +12,9 @@ services:
             MYSQL_DATABASE: kiwi
             MYSQL_USER: kiwi
             MYSQL_PASSWORD: kiwi
+            # Depends on https://github.com/CentOS/CentOS-Dockerfiles/pull/146
+            MYSQL_CHARSET: utf8
+            MYSQL_COLLATION: utf8_unicode_ci
 
     web:
         container_name: kiwi_web

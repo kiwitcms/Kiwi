@@ -1,8 +1,55 @@
 Change Log
 ==========
 
+3.41 (Oct 09 2017, released on MrSenko.com)
+-------------------------------------------
+
+- Upon registration assign default group permissions if none set.
+  Also by default make all users have the ``is_staff`` permission
+  so they can add Products, Builds, Versions, etc. via the ADMIN menu
+  (Mr. Senko)
+- Add ``docker-compose.yml`` file (Mr. Senko)
+- Update documentation (Mr. Senko)
+- Remove unused plugins_support/ directory (Mr. Senko)
+- Remove unused models in ``tcms.profiles``. The ``Profiles``,
+  ``Groups`` and ``UserGroupMap`` models are removed because they are
+  not used (Mr. Senko)
+- Remove max_length=30 limitation for EmailField in RegistrationForm.
+  Fixes `Issue #71 <https://github.com/MrSenko/Kiwi/issues/71>`_ (Mr. Senko)
+- Display error messages on login form (Mr. Senko)
+- Update main navigation to indicate login is required before creating
+  Test Plan (Mr. Senko)
+
+WARNING:
+
+    MariaDB defaults are to use ``latin1`` as the default character set and collation.
+    This will lead to 500 internal server errors when trying to save data which
+    does not use ASCII characters. This is a limitation with the underlying CentOS/MariaDB
+    docker image and a `solution <https://github.com/CentOS/CentOS-Dockerfiles/pull/146>`_
+    has been proposed upstream.
+
+    You can manually update your existing databases by using the following instructions::
+
+        bash-4.2$ mysql -u root -p
+        Enter password: 
+        
+        MariaDB [(none)]> ALTER DATABASE kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+        Query OK, 1 row affected (0.00 sec)
+        
+        bash-4.2$ mysql -D kiwi -u root -p -B -N -e "SHOW TABLES" | awk '{print "ALTER TABLE", $1, "CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;"}' > /tmp/alter_charset.txt
+        Enter password: 
+        
+        bash-4.2$ cat /tmp/alter_charset.txt | mysql -D kiwi -u root -p
+        Enter password: 
+
+    You can use the ``SHOW TABLE STATUS;`` query to see the current settings for your tables!
+
+
+IMPORTANT: this release introduces new database migrations!
+
+
 3.39 (Sep 27 2017, released on MrSenko.com)
-------------------------------------------
+-------------------------------------------
 
 - Introduce modern UI elements using Patternfly library!
   Main navigation, login and password reset pages are
@@ -20,7 +67,7 @@ Change Log
 
 
 3.38 (Sep 20 2017, released on MrSenko.com)
-------------------------------------------
+-------------------------------------------
 
 - Bug fix: Test Case EDIT and CLONE buttons are now working again (Mr. Senko)
 - More tests and better handling of input parameters when loading builds
@@ -29,7 +76,7 @@ Change Log
 
 
 3.37 (Sep 12 2017, released on MrSenko.com)
-------------------------------------------
+-------------------------------------------
 
 - Migrate to Python 3. Docker container uses Python 3.5 from
   SoftwareCollections.org (Mr. Senko)
@@ -49,7 +96,7 @@ Change Log
 
 
 3.33 (Aug 15 2017, released on MrSenko.com)
-------------------------------------------
+-------------------------------------------
 
 - Update Django to 1.11.4 (Mr. Senko)
 - Many other updates related to deprecated features in Django (Mr. Senko)
