@@ -8,7 +8,7 @@ from .backends import initiate_user_with_default_setups
 
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(max_length=30)
+    email = forms.EmailField()
 
     class Meta:
         model = User
