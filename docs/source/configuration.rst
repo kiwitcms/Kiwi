@@ -55,7 +55,9 @@ need to be configured via the following settings::
 If you'd like to use an external email service, like Amazon SES you have to
 configure the following settings instead::
 
+    EMAIL_HOST = 'example.com'
     EMAIL_FROM = 'kiwi@example.com'
+    DEFAULT_FROM_EMAIL = EMAIL_FROM
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
     AWS_SES_SECRET_ACCESS_KEY = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'

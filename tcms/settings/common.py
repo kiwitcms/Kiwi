@@ -39,7 +39,7 @@ ADMINS = [
 
 
 # Email settings
-# See http://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+# EMAIL_HOST must be defined if you want Kiwi TCMS to send emails
 EMAIL_HOST = ''
 EMAIL_PORT = 25
 EMAIL_FROM = 'kiwi@example.com'
