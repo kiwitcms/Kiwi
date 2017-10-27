@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import http
-from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
@@ -48,9 +47,7 @@ class TestOpenBookmarks(TestCase):
     def setUpClass(cls):
         super(TestOpenBookmarks, cls).setUpClass()
 
-        cls.tester = User.objects.create_user(username='bookmark_tester',
-                                              email='bookmark_tester@example.com',
-                                              password='password')
+        cls.tester = create_request_user('bookmark_tester', 'password')
 
         bookmark_form = BookmarkForm({
             'name': 'plan page',
