@@ -52,9 +52,15 @@
       <p>
         {% if SETTINGS.MOTD_LOGIN %}
             {{ SETTINGS.MOTD_LOGIN|safe}}
-        {% else %}
-            Please login to get started.
         {% endif %}
+      </p>
+      <p>
+        Please login to get started
+        {% if AUTH_BACKEND.can_register %}
+        or <a href="{% url "tcms-register" %}" style="color:white;text-decoration:underline">register an account</a>
+        if you don't have one
+        {% endif %}
+        !
       </p>
     </div><!--/.col-*-->
   </div><!--/.row-->
