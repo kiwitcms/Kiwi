@@ -70,7 +70,7 @@
 		<ul>
 			{% for method in method_list %}
 			{% if method.name != 'system.multicall' %}
-			<li><a href="#{{ method.name|lower }}">{{ method.name|escape }}</a></li>
+			<li class="xmlrpc_method"><a href="#{{ method.name|lower }}">{{ method.name|escape }}</a></li>
 			{% endif %}
 			{% endfor %}
 		</ul>
