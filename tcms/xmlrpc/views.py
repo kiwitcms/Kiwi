@@ -36,7 +36,7 @@ import django.db
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
-from django.template import Template, RequestContext, loader
+from django.template import Template, loader
 
 from .dispatcher import DjangoXMLRPCDispatcher
 
@@ -149,20 +149,20 @@ class XMLRPCHandlerFactory(object):
                     "help": self.xmlrpc_dispatcher.system_methodHelp(method).split("\n"),
                 })
 
-            c = RequestContext(request, {
-                "title": "XML-RPC interface (%s)" % self.name,
-                "method_list": method_list,
-            })
-
             template = getattr(settings, "XMLRPC_TEMPLATE", None)
             if template is not None:
                 t = loader.get_template(template)
             else:
                 t = Template(XMLRPC_TEMPLATE, name="XML-RPC template")
 
-            context_instance = RequestContext(request)
-            context_instance.update(c)
-            return HttpResponse(t.render(context_instance))
+            return HttpResponse(
+                t.render(
+                    context={
+                        "method_list": method_list,
+                    },
+                    request=request
+                )
+            )
 
 
 for var in ("XMLRPC_METHODS", ):
