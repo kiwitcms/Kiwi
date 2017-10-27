@@ -2,6 +2,7 @@
 
 import json
 import unittest
+import http.client
 import xml.etree.ElementTree
 
 from datetime import datetime
@@ -26,6 +27,7 @@ from tcms.testcases.models import TestCaseBugSystem
 from tcms.testcases.models import TestCaseComponent
 from tcms.testcases.models import TestCasePlan
 from tcms.testcases.views import ajax_response
+from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseCategoryFactory
@@ -36,9 +38,46 @@ from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestTagFactory
-from tcms.tests import BasePlanCase
+from tcms.tests import BasePlanCase, BaseCaseRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
+from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+
+
+class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
+    """Assert what a default user (non-admin) will see"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestGetCaseRunDetailsAsDefaultUser, cls).setUpTestData()
+
+    def test_user_in_default_group_sees_comments(self):
+        # test for https://github.com/kiwitcms/Kiwi/issues/74
+        initiate_user_with_default_setups(self.tester)
+        self.login_tester()
+
+        url = reverse('caserun-detail-pane', args=[self.case_run_1.case_id])
+        response = self.client.get(
+            url,
+            {
+                'case_run_id': self.case_run_1.pk,
+                'case_text_version': self.case_run_1.case.latest_text_version()
+            }
+        )
+
+        self.assertEqual(http.client.OK, response.status_code)
+
+        self.assertContains(
+            response,
+            '<textarea name="comment" cols="40" required id="id_comment" maxlength="10000" rows="10">\n</textarea>',
+            html=True)
+
+        for status in TestCaseRunStatus.objects.all():
+            self.assertContains(
+                response,
+                "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" title=\"%s\"" % (status.name.lower(), status.name),
+                html=False
+            )
 
 
 class TestMultipleEmailField(unittest.TestCase):
