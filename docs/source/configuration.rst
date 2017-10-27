@@ -4,6 +4,12 @@ Kiwi TCMS configuration settings
 All sensible settings are defined in ``tcms/settings/common.py``. You will have
 to update some of them for your particular production environment.
 
+.. note::
+
+    After adjusting settings for your environment you have to configure
+    Kiwi TCMS via its web interface! As a minimum you have to
+    :ref:`configure-kiwi-base-url`!
+
 .. literalinclude:: ../../tcms/settings/common.py
    :language: python
 

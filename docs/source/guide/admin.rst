@@ -13,6 +13,8 @@ The ADMIN tab allows administrators to manage:
 
 |The Administration screen|
 
+.. _configure-kiwi-base-url:
+
 Configure Kiwi's base URL
 -------------------------
 
