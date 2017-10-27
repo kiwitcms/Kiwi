@@ -17,7 +17,8 @@ class UserProfile(models.Model):
         db_table = u'tcms_user_profiles'
 
     def get_im(self):
-        from forms import IM_CHOICES
+        # to avoid circular imports
+        from .forms import IM_CHOICES
 
         if not self.im:
             return None
