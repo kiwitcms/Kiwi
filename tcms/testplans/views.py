@@ -120,7 +120,7 @@ def new(request, template_name='plan/new.html'):
                 tp.add_text(author=request.user, plan_text=form.cleaned_data['text'])
 
             # Add test plan environment groups
-            if request.user.has_perm('management.add_tcmsenvplanmap'):
+            if request.user.has_perm('testplans.add_tcmsenvplanmap'):
                 if request.POST.get('env_group'):
                     env_groups = TCMSEnvGroup.objects.filter(
                         id__in=request.POST.getlist('env_group')
@@ -581,7 +581,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                                 plan_text=request.POST.get('text'),
                                 text_checksum=text_checksum)
 
-            if request.user.has_perm('management.change_tcmsenvplanmap'):
+            if request.user.has_perm('testplans.change_tcmsenvplanmap'):
                 tp.clear_env_groups()
 
                 if request.POST.get('env_group'):

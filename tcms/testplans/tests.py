@@ -21,6 +21,8 @@ from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TCMSEnvPlanMap
 from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TestPlanAttachment
+from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
@@ -28,11 +30,76 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTypeFactory
 from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TCMSEnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
+
+
+class TestPlanEnvironmentGroupTests(test.TestCase):
+    """Test setting/editting ENV groups in Test Plans"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestPlanEnvironmentGroupTests, cls).setUpTestData()
+
+        cls.product = ProductFactory()
+        cls.product_version = VersionFactory(product=cls.product)
+
+        cls.env_group = TCMSEnvGroupFactory()
+        cls.new_env_group = TCMSEnvGroupFactory(name='Laptop hardware')
+
+        cls.tester = UserFactory()
+        cls.tester.set_password('password')
+        initiate_user_with_default_setups(cls.tester)
+
+    def setUp(self):
+        is_logged_in = self.client.login(username=self.tester.username, password='password')
+        self.assertTrue(is_logged_in)
+
+    def test_user_with_default_perms_can_create_testplan_and_set_env_group(self):
+        # test for https://github.com/kiwitcms/Kiwi/issues/73
+        url = reverse('plans-new')
+        response = self.client.post(
+            url,
+            {
+                'name': 'TP for Issue #73',
+                'product': self.product.pk,
+                'product_version': self.product_version.pk,
+                'type': TestPlanTypeFactory().pk,
+                'env_group': self.env_group.pk,
+            },
+            follow=True,
+        )
+
+        self.assertEqual(http.client.OK, response.status_code)
+        self.assertContains(response, ">%s</a>" % self.env_group.name)
+
+    def test_user_with_default_perms_can_edit_tp_and_change_env_group(self):
+        test_plan = TestPlanFactory(
+            product=self.product,
+            product_version=self.product_version,
+            env_group=[self.env_group]
+        )
+        url = reverse('plan-edit', args=[test_plan.pk, ])
+
+        response = self.client.post(
+            url,
+            {
+                'name': 'NEW TEST PLAN NAME',
+                'product': test_plan.product.pk,
+                'product_version': test_plan.product_version.pk,
+                'type': test_plan.type.pk,
+                'env_group': self.new_env_group.pk,
+                'text': "We've changed the ENV group setting",
+            },
+            follow=True,
+        )
+
+        self.assertEqual(http.client.OK, response.status_code)
+        self.assertContains(response, ">%s</a>" % self.new_env_group.name)
 
 
 class PlanTests(test.TestCase):
