@@ -6,7 +6,7 @@
 			<div class="container" style="min-height:190px;">
 				{# {% get_comment_list for test_case_run as case_run_comments %} #}
 				<h4 style="padding-bottom:3px;">Comments</h4>
-				{% if perms.comments.add_comment %}
+				{% if perms.django_comments.add_comment %}
 				<form class="update_form" method="POST">
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">
 						{% get_comment_form for test_case_run as comment_form %}
