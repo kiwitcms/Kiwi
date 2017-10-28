@@ -270,6 +270,8 @@ To add a Test Plan from the Test Case screen:
 
 #. Verify the Test Plan details are correct. Click **Submit**.
 
+.. _importing-test-case:
+
 Importing a Test Case
 ---------------------
 
@@ -312,10 +314,6 @@ The XML file requires the following format:
    -  Setup steps to prepare the machine for the Test Case.
    -  Breakdown steps to return machine to original state.
 
-Example: Sample XML file.
-^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: ../_static/tcms_testcases.xml
-   :language: xml
 
 Cloning Test Cases
 ------------------
