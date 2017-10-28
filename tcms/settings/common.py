@@ -78,6 +78,15 @@ CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
 MOTD_LOGIN = """<em>If it is not in Kiwi TCMS, then we don't test it!</em>"""
 
 
+# redefine the help menu in the navigation bar
+HELP_MENU_ITEMS = [
+    ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
+    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User guide'),
+    ('http://kiwitcms.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
+    ('/xmlrpc/', 'XML-RPC service'),
+]
+
+
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
@@ -264,14 +273,6 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 # NOTE: we only support the internal auth backends.
 AUTHENTICATION_BACKENDS = [
     'tcms.core.contrib.auth.backends.DBModelBackend',
-]
-
-# actually now displayed in the help menu at the top!
-FOOTER_LINKS = [
-    ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
-    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User guide'),
-    ('http://kiwitcms.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
-    ('/xmlrpc/', 'XML-RPC service'),
 ]
 
 
