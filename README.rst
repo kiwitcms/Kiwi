@@ -23,6 +23,23 @@ and JIRA integration, fast test plan and runs search, powerful access control
 for each plan, run and case, and XML-RPC APIs.
 
 
+Brief history
+-------------
+
+* Feb 2009 - Project created by Red Hat, Inc. as a replacement for Testopia
+  under the name Nitrate
+* Nov 2014 - Source code published on GitHub without previous history
+* Aug 2016 - Mr. Senko, Ltd. starts contributing to Nitrate
+* May 2017 - Upstream appears to be totally unresponsive, Mr. Senko, Ltd.
+  `creates a fork <http://mrsenko.com/blog/mr-senko/2017/05/26/nitrate-is-now-kiwitestpad/>`_
+  and continues rapid development separately
+* Aug 2017 - The fork has support for the latest Django version
+* Sep 2017 - Project name changed to **Kiwi TCMS** and migrated to Python 3,
+  started migrating to modern UI using Patternfly
+* Oct 2017 - Kiwi TCMS has an official website at http://kiwitcms.org and
+  will be developed as a community project sponsored by Mr. Senko, Ltd.
+
+
 Documentation
 -------------
 
@@ -45,4 +62,4 @@ Support
 
 Commercial support for Kiwi TCMS is available from
 `Mr. Senko <http://MrSenko.com>`_. For more information, pricing and support
-levels info see http://MrSenko.com/kiwi/.
+levels info see http://MrSenko.com/.
