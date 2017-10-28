@@ -14,7 +14,7 @@ developer, documentation writer or even a normal user.
 Testing
 -------
 
-Automated test suite can be executed with the ``make test`` command. The
+Automated test suite can be executed with the ``make check`` command. The
 following syntax is supported::
 
         make check (uses SQlite)
@@ -27,7 +27,7 @@ following syntax is supported::
 
     If you want to execute testing against different DB engines on your local
     development environment make sure the respecitve DB engines are installed
-    and configured! ``make test`` uses the configuration files under
+    and configured! ``make check`` uses the configuration files under
     ``tcms/settings/test/``. Make sure to edit them if necessary!
 
 
@@ -50,9 +50,8 @@ Documentation
 -------------
 
 Documentation has been provided along with the source code within the ``docs/``
-directory and is built using Sphinx. All content are written in
-reStructuredText format. You can use any your favourite text editor to edit it.
-To build the docs::
+directory and is built using Sphinx. All content is written in
+reStructuredText format. To build the docs::
 
     $ cd docs/
     $ make html

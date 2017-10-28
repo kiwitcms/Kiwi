@@ -50,11 +50,12 @@ Upgrading
 To upgrade running Kiwi TCMS containers execute the following commands::
 
     docker-compose down
-    docker pull kiwitcms/kiwi # to fetch latest version from Docker.io
+    # make docker-image if you build from source or
+    docker pull kiwitcms/kiwi # to fetch latest version from a docker registry
     docker-compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
-.. note:
+.. note::
 
     Uploads and database data should stay intact because they are split into
     separate volumes, which makes upgrading very easy. However you may want to
