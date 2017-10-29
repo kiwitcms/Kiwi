@@ -4,44 +4,52 @@ Test Cases
 ==========
 
 This chapter explains how to create, search, edit, and import, clone,
-review, tag and remove Test Cases in the TCMS.
-
-Test Case workflow
-------------------
-
-This section outlines the process for creating a Test Case in TCMS. Test
-Cases can not be deleted, instead they have their **Active** status set
-to false.
+review, tag and remove Test Cases in Kiwi TCMS. Test Cases can not be
+deleted, instead they have their **Active** status set to False.
 
 There are three ways to associate Test Cases with a Test Plan:
 
-#. Create a new Test Case. For more information, see Creating a Test
-   Case.
-#. Add an existing Test Case. For more information, see Using an
-   existing Test Case.
-#. Import a Test Case (XML). For more information, see Importing a Test
-   Case.
+#. Create a new Test Case, see :ref:`create-test-case`.
+#. Add an existing Test Case, :ref:`use-existing-test-case`.
+#. Import a Test Case from XML, see :ref:`importing-test-case`.
 
 |Test Plan workflow|
+
+
+Searching for Test Cases
+------------------------
+
+To search Test Cases:
+
+#. From the **Main menu** click **SEARCH::Search Test Cases**.
+
+   |The Testing menu 1|
+
+#. In the **Search Case** screen, enter the required search details.
+
+   |The Search Case screen|
+
+#. Click **Search** button. The search results appear.
+
+   |Test Case search results|
+
+
+.. _create-test-case:
 
 Creating a Test Case
 --------------------
 
-This section explains the procedure for creating a Test Case. When
-writing a Test Case, clear setup instructions help reduce the chance of
+When writing a Test Case clear setup instructions help reduce the chance of
 failure due to an incorrect environment. A clear set of actions with
 measurable expected results ensures that the Test Case produces
-consistent outcomes regardless of who runs it. Breakdown instructions
-should be provided to ensure the machine is returned to its original
-state. For more information see Appendix A Writing a Test Case.
+consistent outcomes regardless of who executes it. Breakdown instructions
+should be provided to ensure the test environment is returned to its original
+state. For more information see :ref:`appendix`.
 
-Procedure: Creating a new Test Case
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To create a new Test Case inside a Test Plan document:
 
-To create a new Test Case:
-
-#. Select a Test Plan, click **Cases**.
-#. Hover over **Cases**, then click on **Write new case**.
+#. Open an existing Test Plan, click **Cases** tab.
+#. Hover over **Cases** sub-menu, then click on **Write new case**.
 
    |The Write New Case button|
 
@@ -50,25 +58,25 @@ To create a new Test Case:
    -  Enter a **Summary**. This will appear in search results. It must
       be informative and concise.
    -  Select the **Product**. The product of the component being tested.
-   -  Select the **Component**. The part of a product being tested. For
-      example Firefox is a component of the product RHEL 5. TCMS
-      supports multiple components for one Test Case.
-   -  Select the **Category**. This is the type of test being run. For
-      example, Regression, and Bug Verification.
+   -  Select the **Component**. The part of a product being tested.
+      Multiple components for one Test Case are supported.
+   -  Select the **Category**. This is the type of test being executed. For
+      example, Regression or Bug Verification.
    -  Select the **Automated** status: manual, auto, or autoproposed.
-   -  Enter the **Requirement** (Legacy Testopia field).
-   -  Enter **Script** (Legacy Testopia field).
-   -  Enter **Alias**.
-   -  Enter the **Default Tester**. Must be a valid email.
+   -  Enter the **Requirement** (optional, legacy Testopia field).
+   -  Enter **Script** (optional, legacy Testopia field).
+   -  Enter **Alias** (optional).
+   -  Enter the **Default Tester** (optional). Must be a valid email address registered in Kiwi TCMS.
       This user will be notified by email when a Test Run is created.
-   -  Select the **Estimated Time** to execute the Test Case. This is
+   -  Select the **Estimated Time** (optional) to execute the Test Case. This is
       used as a guide when allocating resources.
    -  Select the **Priority**. This is a sliding scale, with P1 being
-      the highest. Priority is used as a guide when allocating
+      the highest. Priority can be used as a guide when allocating
       resources.
-   -  Enter **Arguments**. Passed to an automated test script.
-   -  Enter **Reference Link**. This is a user-specified field and can
-      be a url to git, request tracker, Bugzilla or another reference.
+   -  Enter **Arguments** (optional). These are arguments to **Script**
+      however further integration is not implemented at the moment!
+   -  Enter **Reference Link** (optional). This is a user-specified field and can
+      be a URL to git, Bugzilla or another reference.
    -  Enter **Tags** relevant to the test case.
    -  Enter **Notes**. Additional information about the Test Case.
    -  In the **Setup** text box, enter the setup instructions. Precise,
@@ -80,7 +88,7 @@ To create a new Test Case:
    -  In the **Expected Results** text box, enter the measurable
       results. There should be a 1:1 correlation with the actions.
    -  In the **Breakdown** text box, enter the post test breakdown
-      instructions. It is important that machines are returned to their
+      instructions. It is important that test environment is returned to the
       original state following a Test Run.
 
    |The add new case screen|
@@ -93,89 +101,86 @@ To create a new Test Case:
    -  To cancel the process and return to the Test Plan screen, click
       **Back**.
 
-Searching for Test Cases
-------------------------
 
-Test Cases can be searched using the following fields:
+.. note:
 
--  Case Summary
--  Author
--  Product
--  Plan
--  Priority
--  Automation status
--  Category
--  Status
--  Component
--  Bug ID
--  Tag
+    Kiwi TCMS allows you to enter free form text for any of the Test Case
+    description fields. We advise that you use
+    `Given-When-Then <https://github.com/cucumber/cucumber/wiki/Given-When-Then>`_
+    combined with a list of steps to reproduce!
 
-Procedure: Searching Test Cases
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Cloning Test Cases
+------------------
 
-To search Test Cases:
+Test Cases can be cloned to multiple Test Plans. Alternatively you can use the
+Clone-Edit workflow to create similar Test Cases, within the same Test Plan,
+very quickly! To clone a Test Case:
 
-#. From the **TESTING** menu, click **Search Cases**.
+#. Open the Test Case to be cloned.
+#. Click **Clone** button.
 
-   |The Testing menu 1|
+   |The Clone button 1|
 
-#. In the **Search Case** screen, enter the required search details.
+#. Select the Test Plan for the cloned Test Case. Use the filter to
+   narrow search results:
 
-   |The Search Case screen|
+   |Test Plan filter details screen|
 
-#. Click **Search**. The search results appear.
+#. Tick the Test Plans you want to clone this Test Case into.
+#. Update **Case Properties**:
+#. Click **Clone** button.
 
-   |Test Case search results|
+   |Clone Test Case details screen|
 
-Advanced search
-~~~~~~~~~~~~~~~
+#. The new cloned Test Case is displayed.
 
-Advanced search accepts a combination of fields from Test Plan, Case,
-and Run.
+.. note::
 
-Procedure: Advanced Search
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+  When **Create a copy** is selected Kiwi TCMS will create an exact copy of the Test Case,
+  and link it to the new Test Plan. Changes to the cloned Test Case will
+  not affect the original version.
 
-To use advanced search for Test Plans, Cases and Runs:
 
-#. In the search screen, click **Advanced Search**
-#. Enter the required search terms.
+.. _importing-test-case:
 
-   |The advanced search window.|
+Importing a Test Case
+---------------------
 
-#. Click **Search Case**.
+Test Cases can be imported into Test Plans from XML files.
+The XML file is from a previously exported Test Case or
+from Testopia, see :ref:`exporting-test-plan`.
+To import a Test Case, in the Test Plan screen:
+
+#. Open a Test Plan.
+#. Click **Cases** tab.
+#. Hover over **Case** sub-menu, then click **Import cases from XML**.
+
+   |Import Cases from XML|
+
+#. Click **Browse**.
+#. Select the XML file to import, and then click **Open**.
+#. Click **Import** button.
+
+   |The Import XML window|
+
 
 Editing a Test Case
 -------------------
 
 The Edit function modifies fields in a Test Case.
 
-Procedure: Editing a Test Case
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Editing a Test Case
+~~~~~~~~~~~~~~~~~~~
 
 To edit a Test Case:
 
-#. Select the Test Case to be edited, and then click **Edit**.
+#. Open a Test Plan and click **Edit** action for a selected Test Case.
+   Alternatively open the Test Case by clicking on its ID and then click
+   the **Edit** button.
 
    |The Edit button|
 
 #. Edit the fields as required:
-
-   -  Summary
-   -  Default Tester
-   -  Estimated Time
-   -  Automated
-   -  Requirement
-   -  Script
-   -  Alias
-   -  Priority
-   -  Status
-   -  Arguments
-   -  Reference Link
-   -  Tags
-   -  Notes
-   -  Testing steps (setup, actions, results, break down).
-
 #. Perform one of the following:
 
    -  To save and exit, click **Save**.
@@ -184,17 +189,18 @@ To edit a Test Case:
 
 .. note::
 
-   To view the change log, click **Edit History**.
+   To view the change history, click **Edit History** in the top-right corner
+   of the Test Case Edit view.
 
-Procedure: Bulk edit of components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bulk edit of components
+~~~~~~~~~~~~~~~~~~~~~~~
 
-TCMS supports the bulk edit of components of a Test Case through the
+Kiwi TCMS supports the bulk edit of components of a Test Case through the
 Test Plan interface.
 
-#. Browse to the Test Plan containing the Test Cases to be edited.
-#. Select the Test Cases to be edited.
-#. Click **Component**.
+#. Open the Test Plan containing the Test Cases to be edited.
+#. Select Test Cases to be edited.
+#. Click **Component** sub-menu button.
 
    |The Component button 1|
 
@@ -202,51 +208,143 @@ Test Plan interface.
 
    |The Component button 2|
 
-   The Test Plan updates.
+#. The Test Plan will update.
 
-Procedure: Bulk add/remove of components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bulk add/remove of tags
+~~~~~~~~~~~~~~~~~~~~~~~
 
-TCMS supports the bulk add/remove of tags of Test Cases through the Test
+Kiwi TCMS supports the bulk add/remove of tags of Test Cases through the Test
 Plan interface.
 
-#. Browse to the Test Plan containing the Test cases to be edit.
+#. Open to the Test Plan containing the Test Cases to be edited.
 #. Select the Test cases to be edited.
-#. **To add a new tag:**
+#. To add a new tag:
 
-   -  From the Tag options click **Add**.
+   -  From the **Tag** sub-menu click **Add**.
 
       |The Test cases tags options Add|
 
    -  A pop-up will appear, type the tag name and press **Submit**.
-   -  Click **Submit**.
+   -  Click **Submit** button.
 
-#. **To remove an existing tag:**
+#. To remove an existing tag:
 
-   -  From the Tag options click Remove.
+   -  From the **Tag** sub-menu click **Remove**.
 
       |The Test cases tags options Remove|
 
-   -  Enter tag name. TCMS will prompt the user with existing tag names.
+   -  Enter tag name. Kiwi TCMS will display adialog with existing tag names.
 
       |Tags remove list|
 
-   -  Click **Submit**.
+   -  Select which tags to remove and click **Submit** button.
 
-Using an existing Test Case
----------------------------
+Adding a tag via Test Case view
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This section outlines the process for adding an existing Test Case to a
-Test Plan. There are two ways to achieve this: from the Test Case, from
-the Test Plan.
+#. Open the Test Case to be edited, click the **Tags** tab.
+#. Enter tag name.
+#. Click **Add** button.
 
-Procedure: Adding a Test Case from the Test Plan
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   |The Test Case tags tab 1|
 
-To add an existing Test Case from the Test Plan screen:
 
-#. Select a Test Plan, click **Cases**.
-#. Click **Case**, then click **Add cases from other plans**.
+Removing a tag via Test Case view
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Open the Test Case to be edited, click the **Tags** tab.
+
+   |The Test Case tags tab 2|
+
+#. Click **Remove** action next to the tag to be deleted.
+
+
+
+
+Reviewing a Test Case
+---------------------
+
+When a new Test Case is created inside a Test Plan its status is set to
+PROPOSED. It is not possible to add such Test Cases to a Test Run for execution.
+The review functionality allows other associates to provide feedback and
+finally modify the status of a Test Case to CONFIRMED.
+
+To review a Test Case open the Test Plan view and:
+
+#. Click **Reviewing Cases** tab.
+#. Expand Test Case details.
+#. Read the description and provide comments.
+#. Once satisfied change the status to **CONFIRMED** via the **Status** drop-down.
+#. Change history is available under the comments section.
+
+|Test Case Review Screen|
+
+.. note::
+
+    Each user is able to delete only their own comments however we discourage you
+    of deleting anything because you may lose vital history.
+
+Test Case status can also be updated via the Test Plan view:
+
+#. Open a Test Plan.
+#. Select the Test Cases to be edited:
+
+   -  Single Test Case - click the check-box beside the case ID.
+
+      |A single Test Case selected|
+
+   -  Multiple Test Cases - click the check-box beside each case ID.
+
+      |Multiple Test Cases selected|
+
+   -  All Test Cases - click the check-box in the column headings.
+
+      |All Test Cases selected|
+
+#. From **Status** sub-menu click **Status**.
+
+   |Test Case status options.|
+
+#. Click **Ok** to apply the changes.
+#. Test Case status is updated.
+
+   |Status changes confirmation.|
+
+
+Changing the order of Test Cases in a Test Plan or Test Run
+-----------------------------------------------------------
+
+Kiwi TCMS allows the user to change the order of Test Cases within
+a Test Plan or a Test Run. To change the order of Test Cases:
+
+#. Open the Test Plan or Test Run.
+#. From the right side of the UI, click **Re-order cases**.
+
+    |Test Cases Reorder|
+
+#. Drag Test Cases up or down to change their order.
+#. Click **Done Sorting** button to complete the process. 
+
+    |Test Cases Reorder Done|
+
+.. note:: The **Done Sorting** button will change its name briefly to
+   **Submitting Changes** before returning to **Re-order cases**.
+
+.. _use-existing-test-case:
+
+Adding an existing Test Case to Test Plan
+-----------------------------------------
+
+Existing Test Cases can be added to Test Plans in two different ways:
+
+#. from the Test Case view or
+#. from the Test Plan view.
+
+Adding a Test Case via the Test Plan view
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Open an existing Test Plan, click **Cases** tab.
+#. Click **Case** sub-menu, then click **Add cases from other plans**.
 
    |The Add cases from other plans button|
 
@@ -254,235 +352,47 @@ To add an existing Test Case from the Test Plan screen:
    click **Search**.
 #. From the search results list, select the check box of the Test Cases
    to be added to the Test Plan.
-#. Click **Add Selected Cases**.
+#. Click **Add Selected Cases** button.
 
    |Add Selected Cases|
 
-Procedure: Adding a Test Plan to the Test Case
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding a Test Plan via the Test Case view
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To add a Test Plan from the Test Case screen:
-
-#. Select a Test Case, and then click **Test Plans**.
-#. In **Add into another Plan**, enter the Plan ID. Click **Add**.
+#. Open an existing Test Case and click **Test Plans** tab.
+#. In the **Add into another Plan** text box, enter the plan ID.
+#. Click **Add** button.
 
    |The Test Plans tab|
 
-#. Verify the Test Plan details are correct. Click **Submit**.
-
-.. _importing-test-case:
-
-Importing a Test Case
----------------------
-
-This section outlines the process for importing a Test Case into a Test
-Plan. The Test Case must have been exported as XML from the existing
-Testopia database. For more information, see Exporting a Test Plan.
-
-Procedure: Importing a Test Case
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To import a Test Case, in the Test Plan screen:
-
-#. Click **Cases**.
-#. Hover over **Case**, then click **Import cases from XML**.
-
-   |Import Cases from XML|
-
-#. Click **Browse**.
-#. Select the XML file to import, and then click **Open**.
-#. Click **Import**.
-
-   |The Import XML window|
-
-XML format
-~~~~~~~~~~
-
-The XML file requires the following format:
-
-#. DTD information (as per Testopia).
-#. Testopia version.
-#. Test case details:
-
-   -  Tag meta data: author, priority, automated, status.
-   -  Test Case summary
-   -  Category Name
-   -  Default Tester
-   -  Name of Test Plan the Test Case was exported from.
-   -  Actions to be performed.
-   -  Expected Results to be measured.
-   -  Setup steps to prepare the machine for the Test Case.
-   -  Breakdown steps to return machine to original state.
-
-
-Cloning Test Cases
-------------------
-
-Test Cases can be cloned to multiple Test Plans:
-
-Procedure: Cloning Test Cases
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To clone a Test Case:
-
-#. Browse to the Test Case.
-#. Click **Clone**.
-
-   |The Clone button 1|
-
-#. Select the Test Plan for the cloned Test Cases. Use the filter to
-   narrow search results:
-
-   -  ID
-   -  Product
-   -  Product version
-   -  Plan type
-   -  Environment group
-   -  Plan author
-   -  Tag
-   -  Plan summary
-   -  Status (active)
-
-   Click **Filter Plan**.
-
-   |Test Plan filter details screen|
-
-#. Click the Plans to clone this Test Case to.
-#. Select **Case Properties**:
-
-   -  Create a copy - Unchecking will create a link to the selected Test
-      Case.
-   -  Keep original author - untick to make current user the author.
-   -  Copy test case components to the product of selected Test Plan
-      (Unchecking will remove components from copied test case).
-   -  Copy test case attachments (Unchecking will remove attachments of copied
-      test case).
-
-#. Click **Clone**.
-
-   |Clone Test Case details screen|
-
-The new cloned Test Case is displayed.
-
-.. note::
-
-  The default clone settings will create an exact copy of the Test Case,
-  and link it to the new Test Plan. Changes to the cloned Test Case will
-  not affect the original version.
-
-Changing Test Case status
--------------------------
-
-The TCMS allows the user to change the status on one, selected or all
-Test Cases.
-
-Procedure: Changing Test Case status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To change the Test Case status:
-
-#. Select the Test Cases to be edited:
-
-   -  Single Test Case - click the checkbox beside the sort ID.
-
-      |A single Test Case selected|
-
-   -  Multiple Test Cases - click the checkbox beside each sort ID.
-
-      |Multiple Test Cases selected|
-
-   -  All Test Cases - click the checkbox in the column headings.
-
-      |All Test Cases selected|
-
-#. From **Set status**, select the **Status**.
-
-   |Test Case status options.|
-
-#. Click **Ok** to apply the changes. The Test Case status is updated.
-
-   |Status changes confirmation.|
-
-Reviewing a Test Case
----------------------
-
-The review function allows other Associates to provide feedback, and
-modify the status of a Proposed Test Case.
-
-Test Case Tags
---------------
-
-The tag function is used to replace the Testopia "Group". Test Cases may
-be searched / filtered by tag. A Test Case can have more than one tag.
-
-Procedure: Adding a tag
-~~~~~~~~~~~~~~~~~~~~~~~
-
-To add a new tag:
-
-#. Select the Test Case to be reviewed, click the **Tags** tab.
-#. Enter tag name. TCMS will prompt the user with existing tag names.
-#. Click **Add**.
-
-   |The Test Case tags tab 1|
-
-Procedure: Removing a tag
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To remove an existing tag:
-
-#. Select the Test Case, click the **Tags** tab.
-
-   |The Test Case tags tab 2|
-
-#. Click **Remove** on the tag to be deleted.
-
-Changing the order of Test Cases in a Plan or Run
--------------------------------------------------
-
-The TCMS allows the user to drag and drop the order of Test Cases within
-a Test Plan and Test Run.
-
-Procedure: Changing the order of Test Cases
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To change the order of Test Cases:
-
-#. Browse to the Test Plan or Test Run.
-#. From the right side of the UI, click **Re-order cases**.
-#. Drag and drop Test Cases to change order.
-#. Click **Done Sorting** to end the process. The button will change to
-   **Submitting Changes** before returning to **Sort cases**.
+#. A confirmation dialog will open.
+#. Verify that chosen Test Plan details are correct.
+#. Click **Submit** button.
 
 Removing a Test Case from a Test Plan
 -------------------------------------
 
-This section outlines the process for removing a Test Case from a Test
-Plan. This is particularly useful after cloning a Test Plan. There are
-two ways to remove a Test Case from a Test Plan:
+Sometimes Test Cases need to be removed from Test Plans. For example after
+cloning another Test Plan. There are two ways to remove a Test Case from a Test Plan:
 
-#. Remove Test Case from the Test Plan - **Cases** tab.
-#. Remove Test Plan from the Test Case - **Test plans** tab.
+#. Remove Test Case via the Test Plan view.
+#. Remove Test Plan via the Test Case view.
 
-Procedure: Removing a Test Case from the Test Plan - Case tab.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Removing a Test Case via the Test Plan view
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To remove a Test Case:
-
-#. Select a Test Plan.
-#. Select the Test Case's check box.
-#. Click **Remove**. The Test Case is removed.
+#. Open a Test Plan. Make sure **Cases** tab is active.
+#. Select the Test Case check-box. You can select several Test Cases.
+#. From the **Case** sub-menu click **Remove**.
 
    |The Remove button 1|
 
-Procedure: Removing a Test Plan from the Test Case - Test plans tab.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Removing a Test Plan via the Test Case view
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To remove a Test Plan:
-
-#. Select the Test Case.
-#. Click **Test plans**.
-#. Click **Remove**. The Test Case is removed.
+#. Open the Test Case view.
+#. Click **Test plans** tab.
+#. Click **Remove** action button.
 
    |The Remove button 2|
 
@@ -491,10 +401,10 @@ To remove a Test Plan:
 .. |The add new case screen| image:: ../_static/Case_Enter_Details.png
 .. |The Testing menu 1| image:: ../_static/Click_Cases.png
 .. |The Search Case screen| image:: ../_static/Cases_Home.png
-.. |Test Case search results| image:: ../_static/Search_Results.png
-.. |The Edit button| image:: ../_static/Click_Edit.png
+.. |Test Case search results| image:: ../_static/Test_Case_Search_Results.png
+.. |The Edit button| image:: ../_static/Test_Case_Edit_From_Plan.png
 .. |The Component button 1| image:: ../_static/Click_Component.png
-.. |The Component button 2| image:: ../_static/Click_Add.png
+.. |The Component button 2| image:: ../_static/Bulk_Add_Test_Case_Components.png
 .. |The Test cases tags options Add| image:: ../_static/Tags_Add.png
 .. |The Test cases tags options Remove| image:: ../_static/Tags_Remove.png
 .. |Tags remove list| image:: ../_static/Tags_Autocomplete.png
@@ -515,4 +425,6 @@ To remove a Test Plan:
 .. |The Test Case tags tab 2| image:: ../_static/Tab_Tags.png
 .. |The Remove button 1| image:: ../_static/Click_Remove_TC.png
 .. |The Remove button 2| image:: ../_static/Click_Remove_TP.png
-.. |The advanced search window.| image:: ../_static/Advanced_Search.png
+.. |Test Case Review Screen| image:: ../_static/Test_Case_Review.png
+.. |Test Cases Reorder| image:: ../_static/Test_Cases_Reorder.png
+.. |Test Cases Reorder Done| image:: ../_static/Test_Cases_Reorder_Done.png

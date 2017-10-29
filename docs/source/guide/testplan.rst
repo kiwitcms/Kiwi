@@ -270,6 +270,8 @@ To print a Test Plan:
 #. A printer friednly version displays.
 #. From the **File** menu in your Browser, click **Print**.
 
+.. _exporting-test-plan:
+
 Exporting a Test Plan
 ---------------------
 
