@@ -8,10 +8,36 @@ The Kiwi TCMS source code is available at: https://github.com/kiwitcms/Kiwi::
 
     git clone https://github.com/kiwitcms/Kiwi.git
 
+Install Python 3
+~~~~~~~~~~~~~~~~
+
+Kiwi TCMS is a Python 3 project! On CentOS 7 this is available via
+`SoftwareCollections.org <https://www.softwarecollections.org/en/scls/rhscl/rh-python35/>`_.
+All further instructions assume that you have Python 3 enabled. If you are using software
+collections then execute::
+
+    scl enable rh-python35 /bin/bash
+
+If you are using a different Linux distribution then consult its documentation
+for more details on how to install and enable Python 3!
+
+.. note::
+
+    At the time of writing Kiwi TCMS has been tested with Python 3.5. You can always consult
+    ``Dockerfile`` to find out the latest version which we use!
+
 Setup virtualenv
 ~~~~~~~~~~~~~~~~
 
-Install devel packages which are needed to compile some of the Python dependencies::
+Create a virtual environment for Kiwi TCMS::
+
+    virtualenv ~/virtualenvs/kiwi
+
+
+Dependencies
+~~~~~~~~~~~~
+
+First install RPM packages which are needed to compile some of the Python dependencies::
 
     sudo yum install gcc python-devel mysql-devel libxml2-devel libxslt-devel graphviz
 
@@ -19,19 +45,21 @@ Install devel packages which are needed to compile some of the Python dependenci
 
     Graphviz is only used to build model diagrams from source code!
 
-Create a virtual environment for Kiwi TCMS::
-
-    virtualenv ~/virtualenvs/kiwi
-
-Install dependencies for development::
+Then install dependencies for development::
 
     . ~/virtualenvs/kiwi/bin/activate
     pip install -r requirements/mysql.txt
     pip install -r requirements/devel.txt
 
+
 .. note::
 
     Alternatively you can use ``requirements/postgres.txt`` for PostgreSQL!
+
+The user interface needs the `PatternFly <http://www.patternfly.org/>`_ library so::
+
+    npm install patternfly
+
 
 Initialize database
 -------------------
@@ -47,9 +75,10 @@ Initialize database
     At the moment Kiwi TCMS is not 100% portable between database backends!
     We recommend either MySQL or MariaDB for running Kiwi TCMS!
 
-Load database schema and initial data::
+Load database schema and create initial user::
 
     ./manage.py migrate
+    ./manage.py createsuperuser
 
 Let's run Kiwi TCMS
 ---------------------
