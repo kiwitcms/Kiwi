@@ -9,3 +9,5 @@ pytest-cov
 coverage
 factory_boy
 mock
+django-extensions
+pydot

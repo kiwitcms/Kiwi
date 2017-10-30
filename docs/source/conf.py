@@ -12,8 +12,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -22,6 +22,15 @@ import os
 sys.path.insert(1, os.path.abspath('../../'))
 
 import tcms
+import subprocess
+
+manage_py = os.path.abspath(os.path.join('..', '..', 'manage.py'))
+docs_dir = os.path.abspath(os.path.join('..', '..', 'docs/source/guide'))
+
+# generate source images for model diagrams
+subprocess.run([manage_py, 'graph_models', '--pydot', '-g', 'testplans', '-o', '%s/testplans.dot' % docs_dir], check=True)
+subprocess.run([manage_py, 'graph_models', '--pydot', '-g', 'testcases', '-o', '%s/testcases.dot' % docs_dir], check=True)
+subprocess.run([manage_py, 'graph_models', '--pydot', '-g', 'testruns', '-o', '%s/testruns.dot' % docs_dir], check=True)
 
 # -- General configuration ------------------------------------------------
 
@@ -34,6 +43,7 @@ import tcms
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
+    'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
