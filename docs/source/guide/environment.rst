@@ -3,7 +3,7 @@
 Environment Variables
 =====================
 
-TCMS uses environment variables to define the test hardware setup. The
+Kiwi TCMS uses environment variables to define the test setup. The
 Environment Group is the top level container object, it contains one or
 more Properties, each having a range of values. Properties can belong to
 more than one group.
@@ -20,20 +20,15 @@ Managing environment groups
 ---------------------------
 
 A group is the container object in an environment. It allows a Test Plan
-to be targeted to a specific set of hardware and hence provides greater
+to be targeted to a specific set of testing conditions and hence provides greater
 repeatability in testing.
 
 Searching environment groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Environment groups can be searched for by name.
-
-Procedure: Searching environment groups
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 To search an environment group:
 
-#. From the **ENVIRONMENT** tab, click **Groups**.
+#. From the **Main menu** click **ADMIN::Environment::Groups**.
 
    |The Environment menu 1|
 
@@ -45,13 +40,9 @@ To search an environment group:
 Adding a new group
 ~~~~~~~~~~~~~~~~~~
 
-Adding a group uses the **Edit Group** screen.
+Adding a group uses the **Environment Groups** screen shown above.
 
-Procedure: Adding a new group.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-#. Click **ENVIRONMENT**.
-#. Click **Add New Group**.
+#. Click **Add New Group** button.
 
    |The Add New Group button|
 
@@ -69,9 +60,7 @@ Procedure: Adding a new group.
 
    |The Environment Group Edit screen|
 
-#. Click **Save**.
-
- 
+#. Click **Save** button.
 
 .. note::
 
@@ -81,9 +70,6 @@ Editing an environment group
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An environment group can only be edited by authenticated users.
-
-Procedure: Edit an environment group
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To edit an environment group:
 
@@ -103,48 +89,35 @@ To edit an environment group:
 Deleting a group
 ~~~~~~~~~~~~~~~~
 
-Groups can not be deleted. A group that is no longer required must be
-disabled.
+A group that is no longer required must be disabled! 
 
-Procedure: Disabling a group
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. warning::
 
-To disable a group:
+    It is possible to delete environment groups but we discourage this
+    practice. Django will delete all database records that are connected
+    to this group!
 
-#. From the **ENVIRONMENT** menu, click **Groups**.
-#. From the Group list, click **Disable**.
-
-   |The disable button|
-
-   The group name will change to a strike through font.
-
-   |Disabled group|
-
-To re-activate a group, click **Enable**.
 
 Managing environment properties
 -------------------------------
 
 Environment properties and their associated values can be used in
-multiple environment groups. When creating values ensure that they are
-discrete measurable properties. For example, screen resolution should be
-'1920x1200' rather than '24 inch widescreen'.
+multiple environment groups. Properties can also be assigned to Test Runs
+to indicate under what conditions the testing was performed.
 
-Navigating property management
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When creating values ensure that they are discrete measurable properties.
+For example, screen resolution should be '1920x1200' rather than '24 inch widescreen'.
 
 The **Environment Properties** screen provides the ability to edit,
 create, enable, and disable properties.
 
--  To access the **Properties Management** screen, from the
-   **ENVIRONMENT** tab, click **Properties**.
+-  From the **Main menu** click **ADMIN::Environment::Properties**.
 
-   |The Environment menu 2|
+   |The Environment menu 1|
 
 -  To display a property's values, click on the property.
 
    |The Environment Properties screen|
-
  
 
 .. note::
@@ -152,41 +125,33 @@ create, enable, and disable properties.
   Due to auditing requirements, environment properties and values cannot
   be deleted. To disable unused properties and values, click **Disable**.
 
-Add a property
-~~~~~~~~~~~~~~
-
-Procedure: Adding an environment property
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Adding a property
+~~~~~~~~~~~~~~~~~
 
 To add an environment property:
 
-#. From the **ENVIRONMENT** tab, click **Properties**.
-#. Click **Add**.
+#. From the **Environment Properties** screen click **Add**.
 
    |The Add button|
 
 #. Enter the **New Property Name** ensuring that the property name is
    descriptive, and then click **Ok**.
-#. Select the new property. The row containing the property will become
-   orange.
+#. Select the new property. The row containing the property will change its color.
 #. In the **Values** text box, enter the property value. Click **Add
    Value**.
 
-   |The Add Value button|
+    |The Add Value button|
 
-   The new value is now displayed.
+#. The new value is now displayed.
 
-|Property with new value|
+    |Property with new value|
 
 Editing a Property
 ~~~~~~~~~~~~~~~~~~
 
-Procedure: Editing an environment property
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To edit an environment property (see screenshots above):
 
-To edit an environment property:
-
-#. From the **ENVIRONMENT** tab, click **Properties**.
+#. Open **Environment Properties** screen.
 #. Renaming:
 
    -  Click **Rename**.
@@ -194,7 +159,7 @@ To edit an environment property:
 
 #. Edit values:
 
-   -  In the row containing the value, click **Rename**.
+   -  Click on the property name to display its values.
    -  Enter the new **Value**, and then click **Ok**.
 
 .. |The Environment menu 1| image:: ../_static/Click_Groups.png
@@ -203,9 +168,6 @@ To edit an environment property:
 .. |The Environment Group name screen| image:: ../_static/Group_Enter_Name.png
 .. |The Environment Group Edit screen| image:: ../_static/Group_Edit_Details.png
 .. |The Edit link| image:: ../_static/Click_Edit.png
-.. |The disable button| image:: ../_static/Groups_Disable.png
-.. |Disabled group| image:: ../_static/Groups_Strikethrough.png
-.. |The Environment menu 2| image:: ../_static/Click_Properties.png
 .. |The Environment Properties screen| image:: ../_static/Properties_Management.png
 .. |The Add button| image:: ../_static/Click_Add.png
 .. |The Add Value button| image:: ../_static/New_Values.png
