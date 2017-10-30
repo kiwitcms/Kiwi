@@ -4,25 +4,39 @@ Test Runs
 =========
 
 This chapter explains how to create, search, edit, execute, and generate
-reports for Test Runs in TCMS.
+reports for Test Runs in Kiwi TCMS. A Test Run in Kiwi TCMS contains the execution results
+of selected test cases against particular product builds and environment.
 
--  To view Test Runs you have created, click **TESTING**, then **My Runs**.
--  To view Test Runs assigned to you, click **View My Assigned Runs**.
+To view Test Runs you have created or are assigned to you click **Main menu::DASHBOARD**
+or alternatively click **Personal menu::My Test Runs**.
+
+Searching for Test Runs
+-----------------------
+
+To search for Test Runs:
+
+#. From the **Main menu** click **SEARCH::Search Test Runs**.
+
+   |The Testing menu 2|
+
+#. In the **Search Test Run** screen, enter the required search details.
+
+   |The Search Test Run screen|
+
+#. Click **Search** button and the results will appear.
+
+   |Test Run search results|
+
 
 Creating a Test Run
 -------------------
 
 Test Runs are created for a specific Test Plan. Only Test Cases with a
-status of **CONFIRMED** will be added to the Test Run. A Test Run can be
-assigned to any user in the TCMS.
+status of **CONFIRMED** can be added to the Test Run. A Test Run can be
+assigned to any user in Kiwi TCMS. To create a Test Run:
 
-Procedure: Creating a Test Run
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To create a Test Run:
-
-#. Select a Test Plan, on the **Cases** tab hover over **Run** then
-   click on **Write new run** from the drop-down menu.
+#. Open a Test Plan and click the **Cases** tab
+#. From the **Run** sub-menu click on **Write new run**
 
    |The New Run button|
 
@@ -41,105 +55,60 @@ To create a Test Run:
 
    |The Create New Test Run screen|
 
-#. Click **Remove** on any Test Cases that are not required for this Test Run.
+#. Test Cases will be shown under the above screen.
+#. Click **Remove** action on any Test Cases that are not required for this Test Run.
+#. Click **Save** button.
 
-#. Click **Save**.
+.. note::
 
-Procedure: Add Test Cases to an existing Test Run.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Kiwi TCMS notifies the default tester by email that they have been assigned a
+    new Test Run!
 
-To add a Test Case to a Test Run:
+Add Test Cases to an existing Test Run
+--------------------------------------
 
-#. Select a Test Plan, use filter if required.
-#. Click **Run** then **Add into Run** from the drop-down list.
+To add a Test Case to an existing Test Run:
+
+#. Open the Test Plan containing this Test Case.
+#. Select Test Cases you want to add.
+#. From **Run** sub-menu click **Add into Run** item.
 
    |The Add cases to run button|
 
-#. Select the Test Run.
-#. Click **Update**.
+#. Select the Test Run to which Test Cases will be added.
+#. Click **Update** button.
 
    |The Update button|
 
 .. note::
 
-   Test Cases can only be removed from a Test Run when it is created.
+    Test Cases can be added via the Test Run view as well. While the Test Run is
+    opened youmay use the **Cases** sub-menu to add/remove other Test Cases to this Test Run.
 
-TCMS Notifications
-~~~~~~~~~~~~~~~~~~
 
-TCMS notifies the default tester by email that they have been assigned a
-Test Run.
+Cloning a Test Run
+------------------
 
-Example: Test Run Notification
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: ../_static/testrun_notification.xml
-   :language: xml
+Test Runs can be cloned for easier creation of testing tasks between team members.
+To clone a Test Run:
 
-Searching for Test Runs
------------------------
+#. Open the Test Run.
+#. Select which Test Case executions (aka test case-runs) to be cloned.
+   Use a filter, if required, to help restrict the number of visible
+   runs.
+#. Click **Clone** button at the top of the page.
 
-To search Test Runs created by other authors, use the following fields:
+   |The Clone button 2|
 
--  Run Summary
--  Product
--  Environment group
--  Owner: Manager\|Tester, Manager, Default Tester
--  Case Run Assignee
--  Plan
--  Product version
--  Build
--  Status
--  Tag
-
-Procedure: Searching for Test Runs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To search for Test Runs:
-
-#. From the **TESTING** menu, click **Search Runs**.
-
-   |The Testing menu 2|
-
-#. In the **Search Test Run** screen, enter the required search details.
-
-   |The Search Test Run screen|
-
-#. Click **Search**. The search results appear.
-
-   |Test Run search results|
-
-Advanced search
-~~~~~~~~~~~~~~~
-
-Advanced search accepts a combination of fields from Test Plan, Case,
-and Run.
-
-Procedure: Advanced Search
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To use advanced search for Test Plans, Cases and Runs:
-
-#. In the search screen, click **Advanced Search**
-#. Enter the required search terms.
-
-   |The advanced search window.|
-
-#. Click **Search Run**.
+#. Enter the details for the cloned Test Run. Details are auto-populated from the original.
+#. Click **Save** button.
 
 Editing a Test Run
 ------------------
 
 The Edit function modifies fields in a Test Run.
 
-Procedure: Editing a Test Run
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To edit a Test Run:
-
-#. Select the Test Run to be edited, and then click **Edit**.
-
-   |The Edit button|
-
+#. Open the Test Run to be edited, and then click **Edit** button.
 #. Edit the fields as required:
 
    -  Summary
@@ -148,119 +117,11 @@ To edit a Test Run:
    -  Manager
    -  Default Tester
    -  Estimated Time
-   -  Environment Property value
+   -  Environment Property values
    -  Notes
    -  Finished
 
-#. Click **Save**.
-
-Deleting a Test Run
--------------------
-
-A Test Run can be deleted (removed).
-
-Procedure: Deleting a Test Run
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To delete a Test Run:
-
-#. Browse to the Test Run.
-#. Click **Delete**.
-
-   |The Delete button|
-
-#. Click **Ok** to delete or **Cancel** to return.
-
-   |The Delete confirmation screen.|
-
-Cloning a Test Run
-------------------
-
-A Test Run can be cloned.
-
-Procedure: Cloning a Test Run
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To clone a Test Run:
-
-#. Browse to the Test Run.
-#. Select test case-run(s) in the test run.
-   Use a filter, if required, to help restrict the number of visible
-   runs.
-#. Click **Clone**.
-
-   |The Clone button 2|
-
-#. Enter the details for the cloned run.
-   Details are auto-populated from the original run.
-#. Click **Save**.
-
-Executing a Test Run
---------------------
-
-Test Runs can be executed at any time. The user can execute any of the
-Test Cases within a run, regardless of the order they appear. Use the
-**Comment** field to make notes about a Test Case. All comments will be
-displayed when a report is generated for a Test Run. Upon completion of
-a Test Run, the TCMS will annotate failed Test Cases with the message
-"File Bug".
-
-Procedure: Executing a Test Run
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To execute a Test Run:
-
-#. From the **TESTING** tab, click **My Runs**.
-#. From the Test Runs list, click the Test Run to execute. The Test Run
-   summary is displayed.
-
-   |The Test Run summary|
-
-   The user is able to change the Test Case status on this page. 
-#. Execute each Test Case. Enter a **Comment** if required. Comments
-   will be displayed when a report is generated for the Test Run.
-
-   |A Test Case|
-
-#. Select the appropriate **Status** icon.
-
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | Icon        | Meaning                                                                                                                   |
-   +=============+===========================================================================================================================+
-   | |image78|   | Idle - Default value. The Test Case has not been examined.                                                                |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | |image79|   | Running - Test Case is in progress.                                                                                       |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | |image80|   | Paused - This status is used to denote a problem with the test case itself that prevents the test from being completed.   |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | |image81|   | Passed - Test Case met all the expected results.                                                                          |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | |image82|   | Failed - Test Case did not meet all the expected results, or produced an unhandled exception.                             |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | |image83|   | Blocked - Test Case has a dependency that has failed.                                                                     |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | |image84|   | Error - Test environment has problems that prevent Test Case     execution.                                               |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-   | |image85|   | Waived - Test Case is not suitable for this run or blocked by other cases.                                                |
-   +-------------+---------------------------------------------------------------------------------------------------------------------------+
-
-Procedure 4.9. Bulk update of Test Cases
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Bulk operations include change case-runs status, add/remove bug by input
-bug ID from case-runs, add comment to case-run.
-
-#. Select the Test Cases to be updated.
-#. Click on the menu item for the required operation:
-
-   -  Status - select the new status.
-   -  Bugs - enter the Bug ID.
-   -  Comment - input the comment.
-
-.. note::
-
-  It is important that you file bugs against Test Cases that fail. TCMS
-  reminds users of this by annotating failed Test Cases with "File Bug".
+#. Click **Save** button.
 
 Changing the status of a Test Run
 ---------------------------------
@@ -270,14 +131,11 @@ if all Test Cases have not been completed.
 
 If the check box **Set Status Automatically** is selected in the test
 run, when all the test cases in the run have a passed, failed or blocked
-result; the test run's status will be changed to **Finished**.
-
-Procedure: Changing Test Run status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+result the test run's status will be changed to **Finished**.
 
 To change the status of a Test Run:
 
-#. Browse to the Test Run.
+#. Open the Test Run.
 #. Click **Set to Finished**.
 
    |The Set to finished button|
@@ -286,15 +144,81 @@ To change the status of a Test Run:
 
    |The Set to running button|
 
-.. note:: **Change status in Edit Test Run**
+.. note::
 
   It is also possible to change the status of a Test Run from the Edit
   Test Run menu.
 
+Deleting a Test Run
+-------------------
+
+To delete a Test Run:
+
+#. Open the Test Run to be deleted.
+#. Click **Delete** button.
+#. Click **Ok** to delete or **Cancel** to return.
+
+   |The Delete confirmation screen.|
+
+
+Executing a Test Run
+--------------------
+
+Test Runs can be executed at any time. The user can execute any of the
+Test Cases within a run, regardless of the order they appear. Use the
+**Comment** field to make notes about a Test Case. All comments will be
+displayed when a report is generated for a Test Run.
+
+To execute a Test Run:
+
+#. From the Dashboard or a Test Runs list, click the Test Run to execute. The Test Run
+   summary is displayed.  You are able to change Test Case statuses from this page. 
+
+   |The Test Run summary|
+
+
+#. After executing a Test Case expand its widget, enter a **Comment** and
+   select the appropriate **Status** icon.
+
+   |A Test Case|
+
+
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| Icon        | Meaning                                                                                                                   |
++=============+===========================================================================================================================+
+| |image78|   | Idle - Default value. The Test Case has not been examined.                                                                |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| |image79|   | Running - Test Case is in progress.                                                                                       |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| |image80|   | Paused - This status is used to denote a problem with the test case itself that prevents the test from being completed.   |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| |image81|   | Passed - Test Case met all the expected results.                                                                          |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| |image82|   | Failed - Test Case did not meet all the expected results, or produced an unhandled exception.                             |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| |image83|   | Blocked - Test Case has a dependency that has failed.                                                                     |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| |image84|   | Error - Test environment has problems that prevent Test Case     execution.                                               |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+| |image85|   | Waived - Test Case is not suitable for this run or blocked by other cases.                                                |
++-------------+---------------------------------------------------------------------------------------------------------------------------+
+
+Bulk update of Test Cases
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Bulk operations include change case-runs status, add/remove bug by entering
+bug ID, add comment to case-run.
+
+#. Select the Test Cases to be updated.
+#. Click on the sub-menu for the required operation:
+
+    |Test Case-run bulk menu|
+
+
 Generating a Test Run report
 ----------------------------
 
-TCMS generates reports for Test Runs, regardless of their state. A
+Kiwi TCMS generates reports for Test Runs, regardless of their state. A
 report provides the following information:
 
 -  **Plan details:**
@@ -329,20 +253,16 @@ report provides the following information:
 -  **Bug List:**
 
    -  Individual bugs
-   -  View all bugs
-
-Procedure: Generating a report for a Test Run.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   -  View all bugs (if bug tracker allows it_
 
 To generate a report for a Test Run:
 
-#. Select the Test Run.
-#. From the **Case Status** box, click **Report**.
+#. Open the Test Run.
+#. From the **Case Status** widget, click **Report**.
 
    |The Report button|
 
-   A printable version displays.
-#. From the **File** menu in your Browser, click **Print**.
+#. A printer friendly version displays.
 
 .. |The New Run button| image:: ../_static/Click_Write_New_Run.png
 .. |The Create New Test Run screen| image:: ../_static/Create_New_Test_Run.png
@@ -351,9 +271,8 @@ To generate a report for a Test Run:
 .. |The Testing menu 2| image:: ../_static/Click_Runs.png
 .. |The Search Test Run screen| image:: ../_static/Runs_Home.png
 .. |Test Run search results| image:: ../_static/Search_Results.png
-.. |The Delete button| image:: ../_static/Click_Edit.png
 .. |The Delete confirmation screen.| image:: ../_static/Ok_Delete.png
-.. |The Clone button 2| image:: ../_static/Click_Edit.png
+.. |The Clone button 2| image:: ../_static/Clone_Test_Run.png
 .. |The Test Run summary| image:: ../_static/Runs_Details.png
 .. |A Test Case| image:: ../_static/Enter_Test_Results.png
 .. |image70| image:: ../_static/idle.png
@@ -375,5 +294,4 @@ To generate a report for a Test Run:
 .. |The Set to finished button| image:: ../_static/Set_To_Finished.png
 .. |The Set to running button| image:: ../_static/Set_To_Running.png
 .. |The Report button| image:: ../_static/Click_Report.png
-.. |The advanced search window.| image:: ../_static/Advanced_Search.png
-.. |The Edit button| image:: ../_static/Click_Edit.png
+.. |Test Case-run bulk menu| image:: ../_static/Test_Run_Bulk_Update_Menu.png
