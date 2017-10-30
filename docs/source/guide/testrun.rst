@@ -253,7 +253,7 @@ report provides the following information:
 -  **Bug List:**
 
    -  Individual bugs
-   -  View all bugs (if bug tracker allows it_
+   -  View all bugs (if bug tracker allows it)
 
 To generate a report for a Test Run:
 
