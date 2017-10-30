@@ -1,6 +1,11 @@
 Running Kiwi TCMS as a Docker container
 =========================================
 
+In order to run Kiwi TCMS as a production instance you will need
+`Docker <https://docs.docker.com/engine/installation/>`_ and
+`docker-compose <https://docs.docker.com/compose/install/>`_. Refer to
+their documentation about download and installation options.
+
 Build Docker image
 ------------------
 
@@ -32,6 +37,12 @@ The above command will create two containers:
 ``docker-compose`` will also create two volumes for persistent data storage:
 ``kiwi_db_data`` and ``kiwi_uploads``.
 
+.. note::
+
+    Kiwi TCMS container will bind to all network addresses on the system.
+    To use it across the organization simply distribute the FQDN of the system
+    running the Docker container to all associates.
+
 
 Initial configuration of running container
 ------------------------------------------
@@ -42,7 +53,6 @@ You need to do initial configuration by executing::
     docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
 
 This will create the database schema and create the first user in the system!
-
 
 Upgrading
 ---------
