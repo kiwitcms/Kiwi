@@ -3,20 +3,15 @@
 Reports
 =======
 
-This chapter explains how to generate reports in TCMS.
+This chapter explains how to generate reports in Kiwi TCMS.
 
 Reports by Product and Version
 ------------------------------
 
 TCMS can generate a list of Test Plans, Cases and Runs by product,
-version, component, and build.
+version, component, and build. To view a product report:
 
-Procedure: View a product report
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To view a product report:
-
-#. Click the **REPORTING** tab.
+#. From the **Main menu** click **REPORTING::Overall report**.
 
    |The Reporting button 1|
 
@@ -41,17 +36,9 @@ To view a product report:
 Custom Reports
 --------------
 
-TCMS can generate a custom report based on search conditions.
+Kiwi TCMS can generate a custom report based on search conditions.
 
-Procedure: Create a custom report
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To create a product report:
-
-#. From the **REPORTING** tab, click **Custom**
-
-   |The Reporting button 2|
-
+#. From the **Main menu** click **REPORTING::Custom report**.
 #. Enter the search details:
 
    -  Product
@@ -70,17 +57,9 @@ To create a product report:
 Testing Reports
 ---------------
 
-TCMS can generate testing reports based on search conditions.
+Kiwi TCMS can generate testing reports based on search conditions:
 
-Procedure: Creating a testing report
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To create a product report:
-
-#. From the **REPORTING** tab, click **Testing Report**.
-
-   |The Testing Report tab|
-
+#. From the **Main menu** click **REPORTING::Testing Report**.
 #. Select the product from the drop down box and either 1 or a range of
    versions.
 
@@ -94,13 +73,11 @@ To create a product report:
   if you want to provide values for Execute Date and Report Type you will
   get more specific results.
 
-.. |The Reporting button 1| image:: ../_static/Navigation_Tabs.png
+.. |The Reporting button 1| image:: ../_static/Reporting_Menu.png
 .. |The product selection screen.| image:: ../_static/Select_Product.png
 .. |The product overview screen.| image:: ../_static/Product_Overview.png
 .. |The product version screen.| image:: ../_static/Product_Versions.png
 .. |The product build screen.| image:: ../_static/Product_Builds.png
-.. |The Reporting button 2| image:: ../_static/Tab_Report_Custom.png
 .. |Search details. 1| image:: ../_static/Report_Custom_Search.png
 .. |Report Results.| image:: ../_static/Report_Custom_Results.png
-.. |The Testing Report tab| image:: ../_static/Tab_Report_Testing.png
 .. |Search details. 2| image:: ../_static/Testing_Report.png
