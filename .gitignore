@@ -10,6 +10,7 @@
 TAGS
 build/
 dist/
+docs/source/guide/*.dot
 docs/guide/target
 docs/target/
 env.sh
