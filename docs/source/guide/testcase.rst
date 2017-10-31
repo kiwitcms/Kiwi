@@ -270,6 +270,19 @@ PROPOSED. It is not possible to add such Test Cases to a Test Run for execution.
 The review functionality allows other associates to provide feedback and
 finally modify the status of a Test Case to CONFIRMED.
 
+.. note::
+
+    A Test Case should be executed by a tester in under 20 minutes. Refer to
+    the below checklist when reviewing a Test Case. Does the Test Case have:
+
+    -  All the environment setup information
+    -  All the test data needed for the test
+    -  A clear and concise summary
+    -  A prerequisite section
+    -  Clear actions with less than 15 steps
+    -  Clear effects
+
+
 To review a Test Case open the Test Plan view and:
 
 #. Click **Reviewing Cases** tab.
