@@ -3,75 +3,59 @@
 Use Cases
 =========
 
-The following Use Cases represent some common scenarios for using the
-TCMS.
+The following Use Cases represent some common scenarios for using Kiwi TCMS.
 
 Manual Testing
 --------------
 
-The Manual Testing use case is:
-
 #. QE Project / Team Lead assigns feature to be tested.
-#. QA searches TCMS for Test Plan. See the section Searching for Test
-   Plans.
-#. QA creates new Test Run. See the section Creating a Test Run.
-#. QA Executes Test Run. See the section Executing a Test Run.
-#. Test Run report available for viewing. See the section Generating a
-   Test Run report.
+#. QA searches TCMS for Test Plan. See the section :ref:`searching-testplans`.
+#. QA creates new Test Run to record execution results. See the section
+   :ref:`creating-testrun`.
+#. QA executes Test Run. See the section :ref:`executing-testrun`.
+#. Test Run report is available for viewing. See the section
+   :ref:`generate-testrun-report`.
 
 |Manual Testing Use Case.|
 
 Writing a Test Plan
 -------------------
 
-The Writing a Test Plan use case is:
-
 #. QE Project / Team Lead assigns feature to be tested.
-#. QA writes a new Test Plan. See the section Creating a Test Plan.
+#. QA writes a new Test Plan. See the section :ref:`creating-testplan`.
 #. QA adds Test Cases:
 
-   #. Create new Test Case. See the section Creating a Test Case.
-   #. Import XML Test Case. See the section Importing a Test Case.
-   #. Add existing Test Case. See the section Using an existing Test
-      Case.
+   #. Create new Test Case. See the section :ref:`create-test-case`.
+   #. Import XML Test Case. See the section :ref:`importing-test-case`.
+   #. Add existing Test Case. See the section :ref:`use-existing-test-case`.
 
-#. QA Executes Test Run. See the section Executing a Test Run.
+#. QA executes Test Run. See the section :ref:`executing-testrun`.
 
 |Writing a Test Plan Use Case.|
 
-PM Reporting
-------------
+Manager Assigns Testing Priorities
+----------------------------------
 
-The Project Manager use case is:
-
-#. PM assigns searches for a Test Plan. See the section Searching for
-   Test Plans.
-#. PM assigns priorities to Test Cases. See the section Editing a Test
-   Case.
-#. QA searches TCMS for Test Plan. See the section Searching for Test
-   Plans.
-#. QA creates new Test Run. See the section Creating a Test Run.
-#. QA Executes Test Run, based on Test Case priorities. See the section
-   Executing a Test Run.
-#. Test Run report available for viewing. See the section Generating a
-   Test Run report.
+#. Manager searches for a Test Plan. See the section :ref:`searching-testplans`.
+#. Manager assigns priorities to Test Cases. See the section :ref:`editing-testcase`.
+#. QA searches for Test Plan.
+#. QA creates new Test Run. See the section :ref:`creating-testrun`.
+#. QA executes Test Run, based on Test Case priorities. See the section
+   :ref:`executing-testrun`.
+#. Test Run report available for viewing. See the section :ref:`generate-testrun-report`.
 
 |PM Reporting Use Case.|
 
 Cloning a Test Plan
 -------------------
 
-The Cloning a Test Plan use case is:
-
 #. QE Project / Team Lead assigns feature to be tested in new version of
    product.
-#. QA searches TCMS for Test Plan. See the section Searching for Test
-   Plans.
-#. QA clones Test Plan. See the section Cloning a Test Plan.
-#. QA creates new Test Run. See the section Creating a Test Run.
-#. QA Executes Test Run. See the section Executing a Test Run.
-#. Test Run report available for viewing. See the section Generating a
-   Test Run report.
+#. QA searches TCMS for Test Plan. See the section :ref:`searching-testplans`.
+#. QA clones Test Plan. See the section :ref:`cloning-testplan`.
+#. QA creates new Test Run. See the section :ref:`creating-testrun`.
+#. QA executes Test Run. See the section :ref:`executing-testrun`.
+#. Test Run report available for viewing. See the section :ref:`generate-testrun-report`.
 
 |Cloning a Test Plan Use Case.|
 
