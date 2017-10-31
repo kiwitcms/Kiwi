@@ -98,18 +98,3 @@ When writing the effect:
    or fail a test.
 -  Break down the verification according to the steps outlined in
    Action.
-
-Test Case review checklist
---------------------------
-
-A Test Case should be executed by a tester in under 20 minutes. Refer to
-the below checklist when reviewing a Test Case.
-
-Does the Test Case have:
-
--  All the environment setup information
--  All the test data needed for the test
--  A clear and concise summary
--  A prerequisite section
--  Clear actions with less than 15 steps
--  Clear effects
