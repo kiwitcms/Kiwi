@@ -163,6 +163,7 @@ To import a Test Case, in the Test Plan screen:
 
    |The Import XML window|
 
+.. _editing-testcase:
 
 Editing a Test Case
 -------------------

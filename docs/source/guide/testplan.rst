@@ -6,6 +6,7 @@ Test Plans
 This chapter explains how to create, search, clone, edit, tag, print,
 disable, and export a Test Plan in Kiwi TCMS.
 
+.. _searching-testplans:
 
 Searching for Test Plans
 ------------------------
@@ -47,6 +48,8 @@ and Test Run. To use Advanced Search in the **Main menu** click on
 
    |The advanced search window.|
 
+.. _creating-testplan:
+
 Creating a Test Plan
 --------------------
 
@@ -81,6 +84,8 @@ format but you are free to enter any kind of text. To create a Test Plan:
    |The Create New Test Plans screen|
 
 #. Click the **Create Test Plan** button
+
+.. _cloning-testplan:
 
 Cloning a Test Plan
 -------------------

@@ -27,6 +27,7 @@ To search for Test Runs:
 
    |Test Run search results|
 
+.. _creating-testrun:
 
 Creating a Test Run
 -------------------
@@ -160,6 +161,7 @@ To delete a Test Run:
 
    |The Delete confirmation screen.|
 
+.. _executing-testrun:
 
 Executing a Test Run
 --------------------
@@ -214,6 +216,7 @@ bug ID, add comment to case-run.
 
     |Test Case-run bulk menu|
 
+.. _generate-testrun-report:
 
 Generating a Test Run report
 ----------------------------
