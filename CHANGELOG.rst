@@ -1,6 +1,25 @@
 Change Log
 ==========
 
+3.44 (Oct 31 2017)
+------------------
+
+- Use correct django_comment permission name. Allows non-admin users to enter
+  comments. Fixes `Issue #74 <https://github.com/MrSenko/Kiwi/issues/74>`_. (Mr. Senko)
+- Fix 500 ISE when viewing other user profiles (Mr. Senko)
+- Add a more visible link to account registration in the MOTD section
+  of the login page (Mr. Senko)
+- Use correct permission names when editting Test Plan Environment Group field.
+  Fixes `Issue #73 <https://github.com/MrSenko/Kiwi/issues/73>`_ (Mr. Senko)
+- Update how we render the XMLRPC info page. Fixes
+  `Issue #80 <https://github.com/MrSenko/Kiwi/issues/80>`_ (Mr. Senko)
+- Rename ``FOOTER_LINKS`` setting to ``HELP_MENU_ITEMS`` (Mr. Senko)
+- Update documentation with new screenshots (Mr. Senko)
+- Make documentation more lear on how to run Kiwi TCMS both in production
+  and in local development mode. Fixes
+  `Issue #89 <https://github.com/MrSenko/Kiwi/issues/89>`_ (Mr. Senko)
+
+
 3.41 (Oct 09 2017, released on MrSenko.com)
 -------------------------------------------
 
