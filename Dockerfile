@@ -1,6 +1,6 @@
 FROM centos/httpd
 
-RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm && \
+RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs install centos-release-scl && \
     yum -y --setopt=tsflags=nodocs install rh-python35 gcc mariadb-devel \
     libxml2-devel libxslt-devel httpd-devel mod_wsgi mod_ssl npm && \
