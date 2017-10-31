@@ -10,6 +10,7 @@ able to contribute in various areas, whatever you are a good and experienced
 developer, documentation writer or even a normal user.
 
 .. include:: set_dev_env.rst
+    :start-line: 2
 
 Testing
 -------
