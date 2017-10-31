@@ -11,7 +11,8 @@ Kiwi TCMS documentation
    :numbered:
 
    About Kiwi TCMS <about.rst>
-   installing_docker.rst
+   Running Kiwi TCMS in production with Docker <installing_docker.rst>
+   Running Kiwi TCMS locally for development <set_dev_env.rst>
    configuration.rst
    tutorial.rst
    contribution.rst
