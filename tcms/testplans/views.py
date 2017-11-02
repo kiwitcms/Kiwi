@@ -404,8 +404,7 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
         'num_runs',
         ''
     ]
-    return ajax_response(request, tps, column_names,
-                         'plan/common/json_plans.txt')
+    return ajax_response(request, tps, column_names, template_name)
 
 
 def ajax_response(request, queryset, column_names, template_name):
