@@ -26,5 +26,4 @@ urlpatterns = [
     url(r'^(?P<run_id>\d+)/cc/$', views.cc, name='testruns-cc'),
     url(r'^(?P<run_id>\d+)/update/$', views.update_case_run_text,
         name='testruns-update_case_run_text'),
-    url(r'^(?P<run_id>\d+)/export/$', views.export, name='testruns-export'),
 ]

@@ -237,12 +237,6 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('#btn_delete').bind('click', function() {
     window.location.href = jQ(this).data('param');
   });
-  jQ('#btn_export_csv').bind('click', function() {
-    window.location.href = jQ(this).data('param') + '?format=csv&' + jQ('#id_form_case_runs').serialize();
-  });
-  jQ('#btn_export_xml').bind('click', function() {
-    window.location.href = jQ(this).data('param') + '?format=xml&' + jQ('#id_form_case_runs').serialize();
-  });
   jQ('.js-remove-tag').bind('click', function() {
     var params = jQ(this).data('params');
     removeRuntag(jQ('.js-tag-ul')[0], params[0], params[1]);
