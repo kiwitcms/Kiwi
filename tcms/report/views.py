@@ -5,8 +5,6 @@ from django.urls import reverse
 from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import render
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.views.generic import View
 
@@ -35,11 +33,6 @@ from tcms.search import fmt_queries, remove_from_request_path
 
 MODULE_NAME = "report"
 
-# To cache report view for 10 minutes.
-# FIXME: this value is chosen in a very short thinking, not evaluated
-# enough. Choose a proper one in the future.
-REPORT_VIEW_CACHE_DURATION = 60 * 10
-
 
 def overall(request, template_name='report/list.html'):
     """Overall of products report"""
@@ -60,7 +53,6 @@ def overall(request, template_name='report/list.html'):
     return render(request, template_name, context_data)
 
 
-@cache_page(REPORT_VIEW_CACHE_DURATION)
 def overview(request, product_id, template_name='report/overview.html'):
     """Product for a product"""
     try:
@@ -100,7 +92,6 @@ class ProductVersionReport(TemplateView, ProductVersionReportData):
     submodule_name = 'version'
     template_name = 'report/version.html'
 
-    @method_decorator(cache_page(REPORT_VIEW_CACHE_DURATION))
     def get(self, request, product_id):
         try:
             self.product = Product.objects.only('name').get(pk=product_id)
@@ -166,7 +157,6 @@ class ProductBuildReport(TemplateView, ProductBuildReportData):
     submodule_name = 'build'
     template_name = 'report/build.html'
 
-    @method_decorator(cache_page(REPORT_VIEW_CACHE_DURATION))
     def get(self, request, product_id):
         try:
             self.product = Product.objects.only('name').get(pk=product_id)
@@ -226,7 +216,6 @@ class ProductComponentReport(TemplateView, ProductComponentReportData):
     submodule_name = 'component'
     template_name = 'report/component.html'
 
-    @method_decorator(cache_page(REPORT_VIEW_CACHE_DURATION))
     def get(self, request, product_id):
         try:
             self.product = Product.objects.only('name').get(pk=product_id)
@@ -289,7 +278,6 @@ class CustomReport(TemplateView):
     form_class = CustomSearchForm
     data_class = CustomReportData
 
-    @method_decorator(cache_page(REPORT_VIEW_CACHE_DURATION))
     def get(self, request):
         return super(CustomReport, self).get(request)
 
@@ -470,7 +458,6 @@ class TestingReportBase(TemplateView):
 
     form_class = TestingReportForm
 
-    @method_decorator(cache_page(REPORT_VIEW_CACHE_DURATION))
     def get(self, *args, **kwargs):
         return super(TestingReportBase, self).get(*args, **kwargs)
 
@@ -593,7 +580,6 @@ class TestingReport(View):
         else:
             return view_class.as_view()
 
-    @method_decorator(cache_page(REPORT_VIEW_CACHE_DURATION))
     def get(self, request, *args, **kwargs):
         report_type = request.GET.get('report_type', None)
         view = self._get_testing_report_view(report_type)
