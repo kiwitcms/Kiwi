@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
 import json
 import http.client
 from datetime import timedelta
-from mock import patch
-from xml.etree import ElementTree
 
 from django.utils import formats
 from django.urls import reverse
@@ -1021,43 +1018,6 @@ class TestEnvValue(BaseCaseRun):
         rel = TCMSEnvRunValueMap.objects.filter(run=self.test_run_1,
                                                 value=self.value_linux)
         self.assertFalse(rel.exists())
-
-
-class TestExportTestRunCases(BaseCaseRun):
-    """Test export view method to export test case runs"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestExportTestRunCases, cls).setUpTestData()
-
-        cls.export_url = reverse('testruns-export',
-                                 args=[cls.test_run.pk])
-
-    @patch('tcms.testruns.views.time.strftime', return_value='2017-06-17')
-    def test_export_to_xml_file(self, strftime):
-        response = self.client.get(self.export_url, {'format': 'xml'})
-        self.assertEqual(
-            'attachment; filename=tcms-testcase-runs-2017-06-17.xml',
-            response['Content-Disposition'])
-
-    @patch('tcms.testruns.views.time.strftime', return_value='2017-06-17')
-    def test_export_to_csv_file(self, strftime):
-        response = self.client.get(self.export_url, {'format': 'csv'})
-        self.assertEqual(
-            'attachment; filename=tcms-testcase-runs-2017-06-17.csv',
-            response['Content-Disposition'])
-
-    def test_export_all_case_runs_to_csv_by_default(self):
-        response = self.client.get(self.export_url, {'format': 'csv'})
-        self.assertEqual(self.test_run.case_run.count(),
-                         # Do not count header line
-                         len(str(response.content, encoding=settings.DEFAULT_CHARSET).strip().split(os.linesep)) - 1)
-
-    def test_export_all_case_runs_to_xml_by_default(self):
-        response = self.client.get(self.export_url, {'format': 'xml'})
-        xmldoc = ElementTree.fromstring(response.content)
-        case_run_nodes = xmldoc.findall('testcaserun')
-        self.assertEqual(self.test_run.case_run.count(), len(case_run_nodes))
 
 
 class TestBugActions(BaseCaseRun):

@@ -66,8 +66,6 @@ jQ(function() {
 		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'testruns-delete' test_run.pk %}">
 		{% endifequal %}
 		{% endifequal %}
-		<input id="btn_export_csv" type="button" value="Export To CSV" title="Export cases in this run" data-param="{% url 'testruns-export' test_run.pk %}" >
-		<input id="btn_export_xml" type="button" value="Export To XML" title="Export cases in this run" data-param="{% url 'testruns-export' test_run.pk %}" >
 		{% endif %}
 	</div>
 	<h2 id="display_title">{{ test_run.summary }}</h2>

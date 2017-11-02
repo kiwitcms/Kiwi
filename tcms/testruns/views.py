@@ -3,7 +3,6 @@
 import datetime
 import itertools
 import json
-import time
 from urllib.parse import urlencode
 from functools import reduce
 
@@ -47,7 +46,6 @@ from tcms.testruns.data import stats_caseruns_status
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
-from tcms.testruns.helpers.serializer import TCR2File
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TCMSEnvRunValueMap
 from tcms.issuetracker.types import IssueTrackerType
 
@@ -1384,31 +1382,6 @@ def update_case_run_text(request, run_id):
         info=info,
         next=reverse('testruns-get', args=[run_id, ]),
     )
-
-
-@require_GET
-def export(request, run_id):
-    timestamp_str = time.strftime('%Y-%m-%d')
-    case_runs = request.GET.getlist('case_run')
-    format = request.GET.get('format', 'csv')
-    # Export selected case runs
-    if case_runs:
-        tcrs = TestCaseRun.objects.filter(case_run_id__in=case_runs)
-    # Export all case runs
-    else:
-        tcrs = TestCaseRun.objects.filter(run=run_id)
-    response = HttpResponse()
-    writer = TCR2File(tcrs)
-    if format == 'csv':
-        writer.write_to_csv(response)
-        response['Content-Disposition'] = \
-            'attachment; filename=tcms-testcase-runs-%s.csv' % timestamp_str
-    else:
-        writer.write_to_xml(response)
-        response['Content-Disposition'] = \
-            'attachment; filename=tcms-testcase-runs-%s.xml' % timestamp_str
-
-    return response
 
 
 @require_GET
