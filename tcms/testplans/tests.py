@@ -851,11 +851,20 @@ class TestAJAXSearch(BasePlanCase):
         super(TestAJAXSearch, cls).setUpTestData()
 
         # Add more plans for testing search
-        for i in range(25):
+        for i in range(24):
             TestPlanFactory(author=cls.tester,
                             owner=cls.tester,
                             product=cls.product,
                             product_version=cls.version)
+
+        # test data for Issue #78
+        # https://github.com/kiwitcms/Kiwi/issues/78
+        cls.plan_bogus_name = TestPlanFactory(
+            name="""A name with backslash(\), single quotes(') and double quotes(")""",
+            author=cls.tester,
+            owner=cls.tester,
+            product=cls.product,
+            product_version=cls.version)
 
         # So far, each test has 26 plans
 
@@ -881,6 +890,18 @@ class TestAJAXSearch(BasePlanCase):
             'bSortable_3': 'true',
             'bSortable_4': 'true',
         }
+
+    def test_search_all_runs(self):
+        response = self.client.get(self.search_url, {'is_active': 'on'})
+
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertEqual(0, data['sEcho'])
+        self.assertEqual(TestPlan.objects.count(), data['iTotalRecords'])
+        self.assertEqual(TestPlan.objects.count(), data['iTotalDisplayRecords'])
+        for i, plan in enumerate(TestPlan.objects.all()):
+            self.assertEqual(
+                "<a href='{}'>{}</a>".format(plan.get_absolute_url(), plan.pk),
+                data['aaData'][i]['1'])
 
     def test_emtpy_plans(self):
         response = self.client.get(self.search_url, {})

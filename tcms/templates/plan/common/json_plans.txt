@@ -9,7 +9,7 @@
         "DT_RowClass": {% if not test_plan.is_active %}"line-through inactive"{%else%}""{% endif %},
         "0":"<input type='checkbox' name='plan' value='{{ test_plan.pk }}' title='Select/Unselect'>",
         "1":"<a href='{{ test_plan.get_absolute_url }}'>{{ test_plan.plan_id }}</a>",
-        "2":"<a href='{{ test_plan.get_absolute_url }}' title='Go to {{ test_plan.name }}'>{{ test_plan }} </a>",
+        "2":"<a href='{{ test_plan.get_absolute_url }}' title='Go to {{ test_plan.name|escapejs|escape }}'>{{ test_plan|escapejs|escape }} </a>",
         "3":"<a href='{% url "tcms-profile" test_plan.author.username %}'>{{ test_plan.author }}</a>",
         {% if test_plan.owner %}
             "4":"<a href='{% url "tcms-profile" test_plan.owner.username %}'>{{ test_plan.owner }}</a>"

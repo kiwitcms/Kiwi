@@ -656,6 +656,13 @@ class TestAJAXSearchRuns(BaseCaseRun):
             default_tester=cls.run_tester,
             tag=[TestTagFactory(name='rhel')])
 
+        # test data for Issue #78
+        # https://github.com/kiwitcms/Kiwi/issues/78
+        cls.run_bogus_summary = TestRunFactory(
+            summary="""A summary with backslash(\), single quotes(') and double quotes(")""",
+            manager=cls.tester,
+            default_tester=UserFactory(username='bogus_tester', email='bogus@example.com'))
+
         cls.search_data = {
             'action': 'search',
             # Add criteria for searching runs in each test
@@ -841,6 +848,35 @@ class TestAJAXSearchRuns(BaseCaseRun):
         search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assert_found_runs([self.run_hotfix, self.run_daily],
                                search_result)
+
+
+class TestLoadRunsOfOnePlan(BaseCaseRun):
+    """
+    When the user goes to Test Plan -> Runs tab this view gets loaded.
+    It also uses a JSON template like AJAX search and it is succeptible to
+    bad characters in the Test Run summary.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        super(TestLoadRunsOfOnePlan, cls).setUpTestData()
+
+        # test data for Issue #78
+        # https://github.com/kiwitcms/Kiwi/issues/78
+        cls.run_bogus_summary = TestRunFactory(
+            summary="""A summary with backslash(\), single quotes(') and double quotes(")""",
+            plan=cls.plan)
+
+    def test_load_runs(self):
+        load_url = reverse('load_runs_of_one_plan_url', args=[self.plan.pk])
+        response = self.client.get(load_url, {'plan': self.plan.pk})
+
+        # verify JSON can be parsed correctly (for #78)
+        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
+
+        # verify there is the same number of objects loaded
+        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalRecords'])
+        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalDisplayRecords'])
 
 
 class TestAddRemoveRunCC(BaseCaseRun):
