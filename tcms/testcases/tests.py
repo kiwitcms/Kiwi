@@ -69,7 +69,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
 
         self.assertContains(
             response,
-            '<textarea name="comment" cols="40" required id="id_comment" maxlength="10000" rows="10">\n</textarea>',
+            '<textarea name="comment" cols="40" id="id_comment" maxlength="10000" rows="10">\n</textarea>',
             html=True)
 
         for status in TestCaseRunStatus.objects.all():

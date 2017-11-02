@@ -24,6 +24,7 @@ class SimpleForm(CommentDetailsForm):
         label=_('Comment'),
         widget=forms.Textarea,
         max_length=COMMENT_MAX_LENGTH,
+        required=False,
     )
 
     def clean_timestamp(self):
