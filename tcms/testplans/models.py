@@ -101,7 +101,7 @@ class TestPlan(TCMSActionModel):
                          Q(name__icontains=new_query['search']))
             del new_query['search']
 
-        return q.filter(**new_query).distinct()
+        return q.filter(**new_query).order_by('pk').distinct()
 
     def confirmed_case(self):
         return self.case.filter(case_status__name='CONFIRMED')

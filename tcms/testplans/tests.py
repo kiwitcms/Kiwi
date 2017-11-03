@@ -898,7 +898,7 @@ class TestAJAXSearch(BasePlanCase):
         self.assertEqual(0, data['sEcho'])
         self.assertEqual(TestPlan.objects.count(), data['iTotalRecords'])
         self.assertEqual(TestPlan.objects.count(), data['iTotalDisplayRecords'])
-        for i, plan in enumerate(TestPlan.objects.all()):
+        for i, plan in enumerate(TestPlan.objects.all().order_by('pk')):
             self.assertEqual(
                 "<a href='{}'>{}</a>".format(plan.get_absolute_url(), plan.pk),
                 data['aaData'][i]['1'])
