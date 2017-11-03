@@ -160,11 +160,14 @@ class JIRA(IssueTrackerType):
         else:
             options = None
 
-        self.rpc = jira.JIRA(
-            tracker.api_url,
-            basic_auth=(self.tracker.api_username, self.tracker.api_password),
-            options=options,
-        )
+        # b/c jira.JIRA tries to connect when object is created
+        # see https://github.com/kiwitcms/Kiwi/issues/100
+        if not self.is_adding_testcase_to_issue_disabled():
+            self.rpc = jira.JIRA(
+                tracker.api_url,
+                basic_auth=(self.tracker.api_username, self.tracker.api_password),
+                options=options,
+            )
 
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
