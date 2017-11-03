@@ -3,6 +3,7 @@ sudo: required
 language: python
 python:
   - "3.5"
+  - "3.6"
 cache: pip
 env:
   - TEST_DB=SQLite
@@ -16,6 +17,10 @@ addons:
 matrix:
   include:
     - python: 3.5
+      env: TEST_DB=MariaDB
+      addons:
+        mariadb: 10.1
+    - python: 3.6
       env: TEST_DB=MariaDB
       addons:
         mariadb: 10.1
