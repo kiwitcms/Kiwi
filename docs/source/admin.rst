@@ -1,7 +1,7 @@
 .. _admin:
 
-Administration
-==============
+Administration guide
+====================
 
 The **ADMIN** menu allows administrators to manage:
 
@@ -641,21 +641,21 @@ This screen provides a list of all the test cases in Kiwi TCMS. The **Add
 test case** link can be used to create a test case. For more
 information, see :ref:`create-test-case`.
 
-.. |The Administration screen| image:: ../_static/Admin_Home.png
-.. |The Auth screen| image:: ../_static/Auth_Home.png
-.. |The Admin menu 1| image:: ../_static/Click_Auth.png
-.. |The Add group link| image:: ../_static/Groups_Home.png
-.. |The Add Group button| image:: ../_static/Group_Add.png
-.. |The Staff Status check box| image:: ../_static/Select_Staff_Status.png
-.. |The Active checkbox| image:: ../_static/Disable_User.png
-.. |The Management screen| image:: ../_static/Mgmt_Home.png
-.. |The Add build screen| image:: ../_static/Add_Test_Build.png
-.. |The Add classification screen| image:: ../_static/Add_Classification.png
-.. |The Add component screen| image:: ../_static/Add_Component.png
-.. |The Add priority screen| image:: ../_static/Add_Priority.png
-.. |The Add product screen| image:: ../_static/Add_Product.png
-.. |The Add version screen| image:: ../_static/Add_Version.png
-.. |The Test Plan management screen| image:: ../_static/TP_Home.png
-.. |The Add test plan type screen| image:: ../_static/Add_TP_Type.png
-.. |The Test Case management screen| image:: ../_static/TC_Home.png
-.. |The Add test case category screen| image:: ../_static/Add_TC_Category.png
+.. |The Administration screen| image:: ./_static/Admin_Home.png
+.. |The Auth screen| image:: ./_static/Auth_Home.png
+.. |The Admin menu 1| image:: ./_static/Click_Auth.png
+.. |The Add group link| image:: ./_static/Groups_Home.png
+.. |The Add Group button| image:: ./_static/Group_Add.png
+.. |The Staff Status check box| image:: ./_static/Select_Staff_Status.png
+.. |The Active checkbox| image:: ./_static/Disable_User.png
+.. |The Management screen| image:: ./_static/Mgmt_Home.png
+.. |The Add build screen| image:: ./_static/Add_Test_Build.png
+.. |The Add classification screen| image:: ./_static/Add_Classification.png
+.. |The Add component screen| image:: ./_static/Add_Component.png
+.. |The Add priority screen| image:: ./_static/Add_Priority.png
+.. |The Add product screen| image:: ./_static/Add_Product.png
+.. |The Add version screen| image:: ./_static/Add_Version.png
+.. |The Test Plan management screen| image:: ./_static/TP_Home.png
+.. |The Add test plan type screen| image:: ./_static/Add_TP_Type.png
+.. |The Test Case management screen| image:: ./_static/TC_Home.png
+.. |The Add test case category screen| image:: ./_static/Add_TC_Category.png
