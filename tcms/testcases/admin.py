@@ -71,7 +71,7 @@ class IssueTrackerTypeField(forms.ChoiceField):
 class BugSystemAdminForm(forms.ModelForm):
     # make password show asterisks
     api_password = forms.CharField(
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(render_value=True),
         label='API password or token',
         required=False
     )
