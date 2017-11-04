@@ -3,13 +3,9 @@
 from json import dumps as json_dumps
 from itertools import groupby
 
-try:
-    from django.db import IntegrityError
-except:
-    pass
-
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError
 from django.http import Http404
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -284,7 +280,7 @@ def environment_properties(request, template_name='environment/property.html'):
         env_property.name = new_name
         try:
             env_property.save(update_fields=['name'])
-        except:
+        except Exception:
             return JsonResponse({'rc': 1, 'response': 'Cannot save property.'})
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
@@ -352,7 +348,7 @@ def environment_property_values(request):
         for value in request.GET['value'].split(','):
             try:
                 property.value.create(value=value)
-            except IntegrityError, error:
+            except IntegrityError as error:
                 if error[1].startswith('Duplicate'):
                     duplicated_property_value.append(value)
 
@@ -365,7 +361,7 @@ def environment_property_values(request):
             property_value.value = request.GET.get('value', property_value.value)
             try:
                 property_value.save()
-            except IntegrityError, error:
+            except IntegrityError as error:
                 if error[1].startswith('Duplicate'):
                     duplicated_property_value.append(property_value.value)
 

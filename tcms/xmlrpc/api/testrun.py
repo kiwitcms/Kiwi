@@ -274,7 +274,7 @@ def env_value(request, action, run_ids, env_value_ids):
                 func(env_value=ev)
             except ObjectDoesNotExist:
                 pass
-            except:
+            except Exception:
                 raise
 
     return
@@ -455,10 +455,7 @@ def get_tags(request, run_id):
     Example:
     >>> TestRun.get_tags(1193)
     """
-    try:
-        tr = TestRun.objects.get(run_id=run_id)
-    except:
-        raise
+    tr = TestRun.objects.get(run_id=run_id)
 
     tag_ids = tr.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
@@ -560,7 +557,7 @@ def remove_tag(request, run_ids, tags):
                 tr.remove_tag(tag=tg)
             except ObjectDoesNotExist:
                 pass
-            except:
+            except Exception:
                 raise
 
     return

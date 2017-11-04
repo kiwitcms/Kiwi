@@ -247,7 +247,7 @@ def tag(request, template_name="management/get_tag.html"):
                     tag, c = TestTag.objects.get_or_create(name=tag_str)
                     for o in self.obj:
                         o.add_tag(tag)
-                except:
+                except Exception:
                     return "Error when adding %s" % self.tag
 
             return True, self.obj
@@ -269,7 +269,7 @@ def tag(request, template_name="management/get_tag.html"):
                     for o in self.obj:
                         try:
                             o.remove_tag(tag)
-                        except:
+                        except Exception:
                             return "Remove tag %s error." % tag
                 return True, self.obj
 
@@ -444,7 +444,7 @@ def update(request):
             mail_context['context']['user'] = request.user
             try:
                 mailto(**mail_context)
-            except:
+            except Exception:
                 pass
 
     # Special hacking for updating test case run status
@@ -548,7 +548,7 @@ def update_case_run_status(request):
             mail_context['context']['user'] = request.user
             try:
                 mailto(**mail_context)
-            except:
+            except Exception:
                 pass
 
     # Special hacking for updating test case run status
@@ -655,7 +655,7 @@ class TestCaseUpdateActions(ModelUpdateActions):
             mail_context['context']['user'] = self.request.user
             try:
                 mailto(**mail_context)
-            except:
+            except Exception:
                 pass
 
     def _update_priority(self):

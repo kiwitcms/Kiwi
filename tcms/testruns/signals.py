@@ -86,7 +86,7 @@ def qpid_run_created(sender, *args, **kwargs):
         }
         try:
             Producer().send(run_create_info, "testrun.created", False)
-        except:
+        except Exception:
             pass
 
     else:

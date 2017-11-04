@@ -118,14 +118,14 @@ class PlanFileField(forms.FileField):
         if data.content_type in self.ODT_CONTENT_TYPES:
             try:
                 return UploadedODTFile(data).get_content()
-            except:
+            except Exception:
                 raise forms.ValidationError(
                     self.error_messages['unexcept_odf_error'])
 
         if data.content_type == MIMETYPE_HTML:
             try:
                 return UploadedHTMLFile(data).get_content()
-            except:
+            except Exception:
                 raise forms.ValidationError(
                     self.error_messages['unexpected_html_error'])
 

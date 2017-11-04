@@ -127,14 +127,9 @@ def add_component(request, case_ids, component_ids):
     cs = Component.objects.filter(
         id__in=pre_process_ids(value=component_ids))
 
-    try:
-        for tc in tcs.iterator():
-            for c in cs.iterator():
-                tc.add_component(component=c)
-    except:
-        raise
-
-    return
+    for tc in tcs.iterator():
+        for c in cs.iterator():
+            tc.add_component(component=c)
 
 
 @log_call(namespace=__xmlrpc_namespace__)
@@ -593,10 +588,7 @@ def get(request, case_id):
     Example:
     >>> TestCase.get(1193)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    tc = TestCase.objects.get(case_id=case_id)
 
     tc_latest_text = tc.latest_text().serialize()
 
@@ -727,10 +719,7 @@ def get_components(request, case_id):
     """
     from tcms.management.models import Component
 
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    tc = TestCase.objects.get(case_id=case_id)
 
     component_ids = tc.component.values_list('id', flat=True)
     query = {'id__in': component_ids}
@@ -749,10 +738,7 @@ def get_plans(request, case_id):
     Example:
     >>> TestCase.get_plans(12345)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    tc = TestCase.objects.get(case_id=case_id)
 
     plan_ids = tc.plan.values_list('plan_id', flat=True)
     query = {'plan_id__in': plan_ids}
@@ -771,10 +757,7 @@ def get_tags(request, case_id):
     Example:
     >>> TestCase.get_tags(12345)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    tc = TestCase.objects.get(case_id=case_id)
 
     tag_ids = tc.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
@@ -800,10 +783,7 @@ def get_text(request, case_id, case_text_version=None):
     # Get all case text with version 4
     >>> TestCase.get_text(12345, 4)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    tc = TestCase.objects.get(case_id=case_id)
 
     return tc.get_text_with_version(
         case_text_version=case_text_version).serialize()
@@ -1018,7 +998,7 @@ def remove_tag(request, case_ids, tags):
                 tc.remove_tag(tg)
             except ObjectDoesNotExist:
                 pass
-            except:
+            except Exception:
                 raise
 
     return
@@ -1046,10 +1026,7 @@ def store_text(request, case_id, action, effect='', setup='', breakdown='',
     """
     from django.contrib.auth.models import User
 
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    tc = TestCase.objects.get(case_id=case_id)
 
     if author_id:
         author = User.objects.get(id=author_id)

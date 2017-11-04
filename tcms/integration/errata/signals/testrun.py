@@ -18,7 +18,7 @@ def testrun_created_handler(sender, *args, **kwargs):
         }
         try:
             p().send(run_create_info, "testrun.created", False)
-        except:
+        except Exception:
             pass
 
     else:
@@ -47,14 +47,14 @@ def testrun_progress_handler(sender, *args, **kwargs):
             run_info["completed_percent"] = completed_percent
             try:
                 p().send(run_info, "testrun.progress", False)
-            except:
+            except Exception:
                 pass
 
         else:
             # testrun is finished
             try:
                 p().send(run_info, "testrun.finished", False)
-            except:
+            except Exception:
                 pass
     else:
         # FIXME: log, plugin and other editing functions

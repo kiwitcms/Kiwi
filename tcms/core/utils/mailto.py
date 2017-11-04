@@ -37,7 +37,7 @@ def blocking_mailto(template_name, subject, to_mail, context=None,
             and list(set(to_mail)) or [to_mail, ]
         EmailMessage(subject, mail_content, from_email, recipient_list,
                      connection=connection, bcc=cc).send()
-    except:
+    except Exception:
         if settings.DEBUG:
             raise
 

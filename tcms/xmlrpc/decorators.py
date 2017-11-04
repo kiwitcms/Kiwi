@@ -59,7 +59,7 @@ def log_call(*args, **kwargs):
                 create_log(user=request.user,
                            method='%s%s' % (namespace, function.__name__),
                            args=str(known_args + unknown_args + keyword_args))
-            except:
+            except Exception:
                 pass
             return function(request, *args, **kwargs)
 

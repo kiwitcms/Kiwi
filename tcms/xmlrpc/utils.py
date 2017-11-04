@@ -169,11 +169,8 @@ class Comment(object):
 
         comment_form = comments.get_form()
 
-        try:
-            model = models.get_model(*self.content_type.split('.', 1))
-            targets = model._default_manager.filter(pk__in=self.object_pks)
-        except:
-            raise
+        model = models.get_model(*self.content_type.split('.', 1))
+        targets = model._default_manager.filter(pk__in=self.object_pks)
 
         for target in targets.iterator():
             d_form = comment_form(target)

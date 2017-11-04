@@ -1499,7 +1499,7 @@ def clone(request, template_name='case/clone.html'):
 
                         try:
                             tp.add_case(tc_dest, sortkey)
-                        except:
+                        except Exception:
                             pass
 
                 # Add the cases to plan
@@ -1537,7 +1537,7 @@ def clone(request, template_name='case/clone.html'):
 
                             try:
                                 tc_dest.add_component(new_c)
-                            except:
+                            except Exception:
                                 pass
 
             # Detect the number of items and redirect to correct one

@@ -174,7 +174,7 @@ def delete(request, plan_id):
                 "<script>window.location.href='%s'</script>" % reverse(
                     'tcms.testplans.views.all')
             )
-        except:
+        except Exception:
             return HttpResponse(Prompt.render(
                 request=request,
                 info_type=Prompt.Info,

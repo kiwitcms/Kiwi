@@ -23,7 +23,7 @@ def bug_added_handler(sender, *args, **kwargs):
         # qpid message send
         try:
             p().send(qpid_bug_add, "bugs.added", False)
-        except:
+        except Exception:
             pass
     else:
         # FIXME
@@ -49,7 +49,7 @@ def bug_removed_handler(sender, *args, **kwargs):
         # qpid message send
         try:
             p().send(qpid_bug_remove, "bugs.dropped", False)
-        except:
+        except Exception:
             pass
     else:
         # FIXME

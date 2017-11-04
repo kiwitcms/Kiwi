@@ -116,8 +116,10 @@ class ComponentActions(BaseActions):
             for c in form.cleaned_data['o_component']:
                 try:
                     tc.add_component(component=c)
-                except:
-                    self.ajax_response['errors_list'].append({'case': tc.pk, 'component': c.pk})
+                except Exception:
+                    self.ajax_response['errors_list'].append({
+                        'case': tc.pk, 'component': c.pk
+                    })
 
         return self.render_ajax(self.ajax_response)
 
@@ -135,8 +137,10 @@ class ComponentActions(BaseActions):
             for c in form.cleaned_data['o_component']:
                 try:
                     tc.remove_component(component=c)
-                except:
-                    self.ajax_response['errors_list'].append({'case': tc.pk, 'component': c.pk})
+                except Exception:
+                    self.ajax_response['errors_list'].append({
+                        'case': tc.pk, 'component': c.pk
+                    })
 
         return self.render_ajax(self.ajax_response)
 

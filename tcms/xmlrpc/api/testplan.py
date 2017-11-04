@@ -354,10 +354,7 @@ def get_tags(request, plan_id):
     Example:
     >>> TestPlan.get_tags(137)
     """
-    try:
-        tp = TestPlan.objects.get(plan_id=plan_id)
-    except:
-        raise
+    tp = TestPlan.objects.get(plan_id=plan_id)
 
     tag_ids = tp.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
@@ -376,10 +373,7 @@ def get_components(request, plan_id):
     Example:
     >>> TestPlan.get_components(12345)
     """
-    try:
-        tp = TestPlan.objects.get(plan_id=plan_id)
-    except:
-        raise
+    tp = TestPlan.objects.get(plan_id=plan_id)
 
     component_ids = tp.component.values_list('id', flat=True)
     query = {'id__in': component_ids}
@@ -398,10 +392,7 @@ def get_all_cases_tags(request, plan_id):
     Example:
     >>> TestPlan.get_all_cases_tags(137)
     """
-    try:
-        tp = TestPlan.objects.get(plan_id=plan_id)
-    except:
-        raise
+    tp = TestPlan.objects.get(plan_id=plan_id)
 
     tcs = tp.case.all()
     tag_ids = []
@@ -532,7 +523,7 @@ def remove_tag(request, plan_ids, tags):
                 tp.remove_tag(tag=tg)
             except ObjectDoesNotExist:
                 pass
-            except:
+            except Exception:
                 raise
 
     return
@@ -572,7 +563,7 @@ def remove_component(request, plan_ids, component_ids):
                 tp.remove_component(component=c)
             except ObjectDoesNotExist:
                 pass
-            except:
+            except Exception:
                 raise
 
     return
@@ -734,7 +725,7 @@ def import_case_via_XML(request, plan_id, values):
 
     try:
         new_case_from_xml = clean_xml_file(values)
-    except:
+    except Exception:
         raise TypeError("Invalid XML File")
 
     i = 0

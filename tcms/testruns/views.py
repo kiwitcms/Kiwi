@@ -270,7 +270,7 @@ def delete(request, run_id):
             return HttpResponseRedirect(
                 reverse('tcms.testplans.views.get', args=(plan_id, ))
             )
-        except:
+        except Exception:
             return HttpResponse(Prompt.render(
                 request=request,
                 info_type=Prompt.Info,
@@ -1454,7 +1454,7 @@ def env_value(request):
                         }
             except ObjectDoesNotExist as errors:
                 self.ajax_response = {'rc': 1, 'response': errors}
-            except:
+            except Exception:
                 raise
 
             fragment = render_to_response("run/get_environment.html",
@@ -1473,7 +1473,7 @@ def env_value(request):
                     tr.remove_env_value(env_value=self.get_env_value(
                         request.GET.get('env_value_id')
                     ))
-            except:
+            except Exception:
                 pass
 
             return HttpResponse(json.dumps(self.ajax_response))
@@ -1483,17 +1483,14 @@ def env_value(request):
             if chk_perm:
                 return HttpResponse(json.dumps(chk_perm))
 
-            try:
-                for tr in self.trs:
-                    tr.remove_env_value(env_value=self.get_env_value(
-                        request.GET.get('old_env_value_id')
-                    ))
+            for tr in self.trs:
+                tr.remove_env_value(env_value=self.get_env_value(
+                    request.GET.get('old_env_value_id')
+                ))
 
-                    tr.add_env_value(env_value=self.get_env_value(
-                        request.GET.get('new_env_value_id')
-                    ))
-            except:
-                raise
+                tr.add_env_value(env_value=self.get_env_value(
+                    request.GET.get('new_env_value_id')
+                ))
 
             return HttpResponse(json.dumps(self.ajax_response))
 
