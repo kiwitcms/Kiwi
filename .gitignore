@@ -10,6 +10,8 @@
 TAGS
 build/
 dist/
+docs/source/modules.rst
+docs/source/tcms.*rst
 docs/source/guide/*.dot
 docs/guide/target
 docs/target/
