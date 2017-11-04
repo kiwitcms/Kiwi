@@ -4,6 +4,9 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
+SPHINXAPIDOC  = sphinx-apidoc
+SOURCEDIR     = ../tcms
+
 PAPER         =
 BUILDDIR      = target
 
@@ -49,7 +52,10 @@ help:
 clean:
 	rm -rf $(BUILDDIR)/*
 
-html:
+apidoc:
+	$(SPHINXAPIDOC) -o source/ $(SOURCEDIR)
+
+html: apidoc
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
