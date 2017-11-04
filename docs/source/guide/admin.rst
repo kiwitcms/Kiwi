@@ -29,16 +29,27 @@ In the text field enter the domain name or IR address, including port if
 necessary and click the Save button!
 
 
-Adding bug trackers
--------------------
+.. _configure-bug-trackers:
+
+Configure external bug trackers
+-------------------------------
 
 One of the first steps when working with Kiwi TCMS is to configure bug
-tracking systems. This can be done via the interface located via the menu
-``ADMIN -> Test cases -> Bug trackers``. Each bug tracker is given a
-name, short description, URL format string and a regular expression
-which is used to validate bug ID strings sent from the user.
+tracking systems. This can be done via the interface located at
+``ADMIN -> Everything else -> Test cases -> Bug trackers``.
+Each bug tracker is given a name, short description, URL format string,
+regular expression which is used to validate bug ID strings, API credentials
+and integration type.
 
-Users can add or remove bugs to test cases and test case runs if they
+.. important::
+
+    Details on what each field means can be found at
+    :class:`tcms.testcases.models.TestCaseBugSystem`. Integration details for supported
+    bug trackers can be found at :mod:`tcms.issuetracker.types`! Please read
+    these sections carefully before configuring integration with external bug tracking
+    systems!
+
+Users can add or remove bugs to TestCase Runs if they
 have the `testcases.add_testcasebug` and/or `testcases.delete_testcasebug`
 permissions!
 

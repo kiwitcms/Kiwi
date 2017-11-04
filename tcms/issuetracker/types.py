@@ -1,3 +1,10 @@
+"""
+    This module implements Kiwi TCMS interface to external issue tracking systems.
+    :class:`tcms.issuetracker.types.IssueTrackerType` provides the interface
+    while the rest of the classes in this module implement it! Refer to each
+    implementor class for integration specifics!
+"""
+
 import os
 from urllib.parse import urlencode
 import bugzilla
@@ -12,20 +19,20 @@ from django.conf import settings
 class IssueTrackerType(object):
     """
         Represents actions which can be performed with issue trackers.
-        This is a common interfce for all issue trackers that Kiwi TCMS
+        This is a common interface for all issue trackers that Kiwi TCMS
         supports!
     """
 
     def __init__(self, tracker):
         """
-            @tracker - TestCaseBugSystem object
+            :tracker: - TestCaseBugSystem object
         """
         self.tracker = tracker
 
     @classmethod
     def from_name(cls, name):
         """
-            Return the class which matches @name if it exists inside this
+            Return the class which matches ``name`` if it exists inside this
             module or raise an exception.
         """
         if name not in globals():
@@ -34,30 +41,40 @@ class IssueTrackerType(object):
 
     def report_issue_from_testcase(self, caserun):
         """
-            When merking results inside a test case run there is a
-            'Report' link. When clicked this method is called to automatically
-            report new issue and provide all the details, like steps to reproduce,
-            from the test case.
+            When marking Test Case results inside a Test Run there is a
+            'Report' link. When the `Report' link is clicked this method is called
+            to help the user report an issue in the IT.
 
-            @caserun - TestCaseRun object
+            This is implemented by constructing an URL string which will pre-fill
+            bug details like steps to reproduce, product, version, etc from the
+            test case. Then we open this URL into another browser window!
+
+            :caserun: - TestCaseRun object
+            :return: - string - URL
         """
         raise NotImplementedError()
 
     def add_testcase_to_issue(self, testcases, issue):
         """
-            When adding issues to test case run results there is a
+            When adding issues to TestCase Run results there is a
             'Check to add test cases to Issue tracker' checkbox. If
-            checked this method is called to link the bug report to the
+            selected this method is called to link the bug report to the
             test case which was used to discover the bug.
 
-            @testcases - list of TestCase objects
-            @issue - TestCaseBug object
+            Usually this is implemented by adding a new comment pointing
+            back to the test case via the internal RPC object.
+
+            :testcases: - list of TestCase objects
+            :issue: - TestCaseBug object
         """
         raise NotImplementedError()
 
     def is_adding_testcase_to_issue_disabled(self):
         """
-            When is linking a TC to a Bug disabled?
+            When is linking a TC to a Bug report disabled?
+            Usually when all the required credentials are provided.
+
+            :return: - boolean
         """
         return not (self.tracker.api_url and self.tracker.api_username and self.tracker.api_password)
 
@@ -69,14 +86,21 @@ class IssueTrackerType(object):
             multiple bugs into a table. GitHub on the other hand doesn't
             support this functionality.
 
-            @ids - list if issues reported against test case runs
+            :ids: - list of issues reported against test case runs
 
-            @return - None if not suported or string representing the URL
+            :return: - None if not suported or string representing the URL
         """
         return None
 
 
 class Bugzilla(IssueTrackerType):
+    """
+        Support for Bugzilla. Requires:
+
+        :api_url: - the XML-RPC URL for your Bugzilla instance
+        :api_username: - a username registered in Bugzilla
+        :api_password: - the password for this username
+    """
     def __init__(self, tracker):
         super(Bugzilla, self).__init__(tracker)
 
@@ -152,6 +176,17 @@ class Bugzilla(IssueTrackerType):
 
 
 class JIRA(IssueTrackerType):
+    """
+        Support for JIRA. Requires:
+
+        :api_url: - the API URL for your JIRA instance
+        :api_username: - a username registered in JIRA
+        :api_password: - the password for this username
+
+        Additional control can be applied via the ``JIRA_OPTIONS`` configuration
+        setting (in ``product.py``). By default this setting is not provided and
+        the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
+    """
     def __init__(self, tracker):
         super(JIRA, self).__init__(tracker)
 
@@ -248,6 +283,24 @@ class JIRA(IssueTrackerType):
 
 
 class GitHub(IssueTrackerType):
+    """
+        Support for GitHub. Requires:
+
+        :base_url: - URL to a GitHub repository for which we're going to report issues
+        :api_password: - GitHub API token.
+
+        .. note::
+
+            You can leave the ``api_url`` and ``api_username`` fields blank because
+            the integration code doesn't use them!
+
+        .. note::
+
+            GitHub does not support displaying multiple issues in a table format like
+            Bugzilla and JIRA do. This means that in Test Case Run Report view you will
+            see GitHub issues listed one by one and there will not be a link to open all
+            of them inside GitHub's interface!
+    """
     def __init__(self, tracker):
         super(GitHub, self).__init__(tracker)
 
@@ -259,9 +312,6 @@ class GitHub(IssueTrackerType):
             github_integration.GitHubThread(self.rpc, self.tracker, case, issue).start()
 
     def is_adding_testcase_to_issue_disabled(self):
-        """
-            Only disabled if we don't have an authentication token
-        """
         return not (self.tracker.base_url and self.tracker.api_password)
 
     def report_issue_from_testcase(self, caserun):

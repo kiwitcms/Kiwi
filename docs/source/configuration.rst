@@ -8,7 +8,7 @@ to update some of them for your particular production environment.
 
     After adjusting settings for your environment you have to configure
     Kiwi TCMS via its web interface! As a minimum you have to
-    :ref:`configure-kiwi-base-url`!
+    :ref:`configure-kiwi-base-url` and :ref:`configure-bug-trackers`!
 
 .. literalinclude:: ../../tcms/settings/common.py
    :language: python
@@ -17,34 +17,6 @@ to update some of them for your particular production environment.
 
     Information how to override the default settings and Docker image are
     available at `<https://github.com/MrSenko/kiwi-docker>`_!
-
-
-JIRA options
-------------
-
-JIRA integration can be controlled via the ``JIRA_OPTIONS`` configuration
-setting. By default this setting is not provided and the code uses
-``jira.JIRA.DEFAULT_OPTIONS``.
-
-
-Integration with GitHub Issues
-------------------------------
-
-When configuring a GitHub Issue Tracker you can leave the ``API URL`` and
-``API username`` fields empty. The code uses the ``Base URL`` field to figure
-out to which repository you want to communicate.
-
-.. important::
-
-    GitHub authentication is performed via token which needs to be configured
-    in the ``API password or token`` field!
-
-.. note::
-
-    GitHub does not support displaying multiple issues in a table format like
-    Bugzilla and JIRA do. This means that in Test Case Run Report view you will
-    see GitHub issues listed one by one and there will not be a link to open all
-    of them inside GitHub's interface!
 
 
 Using Amazon SES instead of SMTP email
