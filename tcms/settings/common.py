@@ -82,7 +82,7 @@ MOTD_LOGIN = """<em>If it is not in Kiwi TCMS, then we don't test it!</em>"""
 HELP_MENU_ITEMS = [
     ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
     ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User guide'),
-    ('http://kiwitcms.readthedocs.io/en/latest/guide/admin.html', 'Administration guide'),
+    ('http://kiwitcms.readthedocs.io/en/latest/admin.html', 'Administration guide'),
     ('/xmlrpc/', 'XML-RPC service'),
 ]
 

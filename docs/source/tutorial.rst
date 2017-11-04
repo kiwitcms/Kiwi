@@ -13,6 +13,5 @@ Tutorial
    guide/testrun.rst
    guide/environment.rst
    guide/report.rst
-   guide/admin.rst
    guide/db.rst
    guide/appendix.rst
