@@ -622,6 +622,47 @@ class TestCaseTag(models.Model):
 
 
 class TestCaseBugSystem(TCMSActionModel):
+    """
+        This model describes a bug tracking system used in
+        Kiwi TCMS. Fields below can be configured via
+        the admin interface and their meaning is:
+
+        #. **name:** a visual name for this bug tracker, e.g. `Kiwi TCMS GitHub';
+        #. **description:** a longer description shown in the admin;
+        #. **url_reg_exp:** shown as **URL format string** in the UI - a format string
+           used to construct URLs from bug IDs;
+        #. **validate_reg_exp:** regular expression used for bug ID validation;
+        #. **tracker_type:** a select menu to specify what kind of external
+           system we interface with, e.g. Bugzilla, JIRA, others;
+           The available options for this field are automatically populated
+           by Kiwi TCMS;
+
+           .. warning::
+
+                Once this field is set it can't be reset to ``NULL``. Although
+                Kiwi TCMS takes care to handle misconfigurations we advise you to
+                configure your API credentials properly!
+
+        #. **base_url:** base URL of this bug tracker. This is used to construct
+           other links to the issue tracker, e.g. link to view multiple bugs at once
+           or when a user tries to report a bug directly from a TestCase. The browser will open
+           another window with pre-defined values based on the test case being
+           executed and the type of the external issue tracking system.
+
+           .. warning::
+
+                If this field is left empty funtionality that depends on it will be disabled!
+
+        #. **api_url, api_username, api_password:** configuration for an internal RPC object
+           that communicate to the issue tracking system when necessary. Depending on the
+           actual type of IT we're interfacing with some of these values may not be necessary.
+           Refer to :mod:`tcms.issuetracker.types` for more information!
+
+           .. warning::
+
+                This is saved as plain-text in the database because it needs to be passed
+                to the internal RPC object!
+    """
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
     url_reg_exp = models.CharField(

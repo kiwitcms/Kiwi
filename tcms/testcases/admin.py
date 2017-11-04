@@ -90,6 +90,17 @@ class BugSystemAdminForm(forms.ModelForm):
 class TestCaseBugSystemAdmin(admin.ModelAdmin):
     search_fields = (('name',))
     list_display = ('id', 'name', 'url_reg_exp')
+    fieldsets = [
+        ('', {
+            'fields': ('name', 'description', 'url_reg_exp', 'validate_reg_exp'),
+        }),
+        ('External Issue Tracker Integration', {
+            'fields':('tracker_type', 'base_url', 'api_url', 'api_username', 'api_password'),
+            'description': """<h1>Warning: read the
+<a href="http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers">
+Configure external bug trackers</a> section before editting the values below!</h1>""",
+        }),
+    ]
     form = BugSystemAdminForm
 
 
