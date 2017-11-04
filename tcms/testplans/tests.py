@@ -926,7 +926,7 @@ class TestAJAXSearch(BasePlanCase):
         self.assertEqual(plans_count, data['iTotalDisplayRecords'])
         self.assertEqual(search_data['iDisplayLength'], len(data['aaData']))
 
-        expected_plans = TestPlan.objects.all()[0:3]
+        expected_plans = TestPlan.objects.all().order_by('pk')[0:3]
 
         for i, plan in enumerate(expected_plans):
             self.assertEqual(
