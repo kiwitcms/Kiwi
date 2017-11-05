@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="305.34586mm"
+   height="286.0191mm"
+   viewBox="0 0 1081.9341 1013.4535"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="kiwi_data.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.73"
+     inkscape:cx="615.16119"
+     inkscape:cy="655.6807"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1403"
+     inkscape:window-height="873"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-54.18931,-9.0473952)">
+    <g
+       id="g3983">
+      <flowRoot
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot4603"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4605"><rect
+             y="88.725838"
+             x="665.15149"
+             height="40.909092"
+             width="325.75757"
+             id="rect4607" /></flowRegion><flowPara
+           id="flowPara4609">prpro</flowPara></flowRoot>      <rect
+         y="11.524227"
+         x="56.666142"
+         height="1008.4998"
+         width="1076.9805"
+         id="rect3336"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#4769aa;stroke-width:4.95366383;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3575"
+         y="71.308723"
+         x="180.78516"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3577"
+           y="71.308723"
+           x="180.78516"
+           sodipodi:role="line"><tspan
+             id="tspan3579"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="71.308723"
+             x="180.78516">Test Plan</tspan></tspan></text>
+      <rect
+         y="171.4216"
+         x="82.869751"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#4db449;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3977"
+         y="215.10709"
+         x="145.53273"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3979"
+           y="215.10709"
+           x="145.53273"
+           sodipodi:role="line"><tspan
+             id="tspan3981"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="215.10709"
+             x="145.53273">Test Case #1</tspan></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194"
+         y="242.87943"
+         x="113.76882"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="242.87943"
+           x="113.76882"
+           id="tspan4196"
+           sodipodi:role="line">summary, setup, breakdown, actions, etc</tspan></text>
+      <rect
+         y="275.33539"
+         x="82.869751"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-4"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#4db449;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3971"
+         y="319.0209"
+         x="145.98195"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3973"
+           y="319.0209"
+           x="145.98195"
+           sodipodi:role="line"><tspan
+             id="tspan3975"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="319.0209"
+             x="145.98195">Test Case #2</tspan></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-2"
+         y="346.79321"
+         x="113.76882"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="346.79321"
+           x="113.76882"
+           id="tspan4196-2"
+           sodipodi:role="line">summary, setup, breakdown, actions, etc</tspan></text>
+      <rect
+         y="379.57678"
+         x="82.869751"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-43"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#4db449;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3965"
+         y="423.26227"
+         x="145.83546"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3967"
+           y="423.26227"
+           x="145.83546"
+           sodipodi:role="line"><tspan
+             id="tspan3969"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="423.26227"
+             x="145.83546">Test Case #3</tspan></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-8"
+         y="451.03461"
+         x="113.76882"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="451.03461"
+           x="113.76882"
+           id="tspan4196-7"
+           sodipodi:role="line">summary, setup, breakdown, actions, etc</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3959"
+         y="419.20413"
+         x="676.30316"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3961"
+           y="419.20413"
+           x="676.30316"
+           sodipodi:role="line"><tspan
+             id="tspan3963"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="419.20413"
+             x="676.30316">Test Case Run #1.3</tspan></tspan></text>
+      <rect
+         y="69.93943"
+         x="626.88391"
+         height="414.87177"
+         width="475.6868"
+         id="rect3336-0"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#8a075a;stroke-width:7.7614851;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3953"
+         y="115.61182"
+         x="733.05737"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3955"
+           y="115.61182"
+           x="733.05737"
+           sodipodi:role="line"><tspan
+             id="tspan3957"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="115.61182"
+             x="733.05737">Test Run #1</tspan></tspan></text>
+      <rect
+         y="168.27016"
+         x="658.37286"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-8"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#ec1e16;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3947"
+         y="207.36241"
+         x="676.03827"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3949"
+           y="207.36241"
+           x="676.03827"
+           sodipodi:role="line"><tspan
+             id="tspan3951"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="207.36241"
+             x="676.03827">Test Case Run #1.1</tspan></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-4"
+         y="239.72798"
+         x="716.20306"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="239.72798"
+           x="716.20306"
+           id="tspan4196-4"
+           sodipodi:role="line">status, notes, comments, assignee</tspan></text>
+      <rect
+         y="273.47549"
+         x="658.37286"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-8-1"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#ec1e16;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3941"
+         y="312.56775"
+         x="676.43134"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3943"
+           y="312.56775"
+           x="676.43134"
+           sodipodi:role="line"><tspan
+             id="tspan3945"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="312.56775"
+             x="676.43134">Test Case Run #1.2</tspan></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-4-5"
+         y="344.93332"
+         x="716.20312"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="344.93332"
+           x="716.20312"
+           id="tspan4196-4-9"
+           sodipodi:role="line">status, notes, comments, assignee</tspan></text>
+      <rect
+         y="380.11188"
+         x="658.37286"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-8-3"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#ec1e16;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-4-4"
+         y="451.5697"
+         x="716.20312"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="451.5697"
+           x="716.20312"
+           id="tspan4196-4-1"
+           sodipodi:role="line">status, notes, comments, assignee</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4611"
+         y="143.87735"
+         x="738.92651"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="143.87735"
+           x="738.92651"
+           id="tspan4613"
+           sodipodi:role="line">product build, environment</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:connector-type="polyline"
+         id="path4822"
+         d="M 658.37289,213.25454 495.57852,214.146"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 5;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:connector-type="polyline"
+         id="path4826"
+         d="M 658.37289,423.7744 495.57852,423.62303"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 5;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:connector-type="polyline"
+         id="path4828"
+         d="M 658.37289,317.99678 495.57852,318.5229"
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:10, 5;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3935"
+         y="917.26508"
+         x="676.30316"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3937"
+           y="917.26508"
+           x="676.30316"
+           sodipodi:role="line"><tspan
+             id="tspan3939"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="917.26508"
+             x="676.30316">Test Case Run #2.3</tspan></tspan></text>
+      <rect
+         y="568.00037"
+         x="626.88391"
+         height="414.87177"
+         width="475.6868"
+         id="rect3336-0-8"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#8a075a;stroke-width:7.7614851;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3929"
+         y="613.67279"
+         x="733.05737"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3931"
+           y="613.67279"
+           x="733.05737"
+           sodipodi:role="line"><tspan
+             id="tspan3933"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="613.67279"
+             x="733.05737">Test Run #2</tspan></tspan></text>
+      <rect
+         y="666.33112"
+         x="658.37292"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-8-11"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#ec1e16;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3923"
+         y="705.42334"
+         x="676.03827"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3925"
+           y="705.42334"
+           x="676.03827"
+           sodipodi:role="line"><tspan
+             id="tspan3927"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="705.42334"
+             x="676.03827">Test Case Run #2.1</tspan></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-4-47"
+         y="737.78894"
+         x="716.20312"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="737.78894"
+           x="716.20312"
+           id="tspan4196-4-0"
+           sodipodi:role="line">status, notes, comments, assignee</tspan></text>
+      <rect
+         y="771.53644"
+         x="658.37292"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-8-1-7"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#ec1e16;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3917"
+         y="810.62872"
+         x="676.4314"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           id="tspan3919"
+           y="810.62872"
+           x="676.4314"
+           sodipodi:role="line"><tspan
+             id="tspan3921"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:35px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+             y="810.62872"
+             x="676.4314">Test Case Run #2.2</tspan></tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-4-5-4"
+         y="842.99426"
+         x="716.20312"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="842.99426"
+           x="716.20312"
+           id="tspan4196-4-9-7"
+           sodipodi:role="line">status, notes, comments, assignee</tspan></text>
+      <rect
+         y="878.17279"
+         x="658.37292"
+         height="87.708778"
+         width="412.70877"
+         id="rect4184-8-3-9"
+         style="opacity:1;fill:none;fill-opacity:0;fill-rule:evenodd;stroke:#ec1e16;stroke-width:4.3601861;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4194-4-4-8"
+         y="949.63062"
+         x="716.20312"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="949.63062"
+           x="716.20312"
+           id="tspan4196-4-1-0"
+           sodipodi:role="line">status, notes, comments, assignee</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4611-7"
+         y="641.93829"
+         x="738.92651"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono'"
+           y="641.93829"
+           x="738.92651"
+           id="tspan4613-8"
+           sodipodi:role="line">product build, environment</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3911"
+         y="105.57065"
+         x="127.43948"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Alegreya SC';-inkscape-font-specification:'Alegreya SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-size:15px"
+           id="tspan3913"
+           y="105.57065"
+           x="127.43948"
+           sodipodi:role="line"><tspan
+             id="tspan3915"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono';font-size:15px"
+             y="105.57065"
+             x="127.43948">document, product, cases, executions</tspan></tspan></text>
+    </g>
+  </g>
+</svg>
