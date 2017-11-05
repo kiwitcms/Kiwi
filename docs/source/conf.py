@@ -25,7 +25,7 @@ import tcms
 import subprocess
 
 manage_py = os.path.abspath(os.path.join('..', '..', 'manage.py'))
-docs_dir = os.path.abspath(os.path.join('..', '..', 'docs/source/guide'))
+docs_dir = os.path.abspath(os.path.join('..', '..', 'docs/source'))
 
 # generate source images for model diagrams
 subprocess.run([manage_py, 'graph_models', '--pydot', '-g', 'testplans', '-o', '%s/testplans.dot' % docs_dir], check=True)

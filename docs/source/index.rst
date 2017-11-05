@@ -19,6 +19,7 @@ Kiwi TCMS documentation
    contribution.rst
    support.rst
    changelog.rst
+   db.rst
    Kiwi TCMS modules and classes <modules.rst>
 
 Indices and tables
