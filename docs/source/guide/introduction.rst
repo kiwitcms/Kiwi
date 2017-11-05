@@ -19,6 +19,40 @@ Kiwi TCMS provides:
 -  Increased productivity - Associates are able to identify and work on
    gaps in product coverage.
 
+Data organization within Kiwi TCMS
+----------------------------------
+
+In order to successfully model your testing workflow with Kiwi TCMS you need to
+understand how internal data structures relate to one another. The image below
+represents a high level overview. More information can be found in section
+:ref:`db`.
+
+|Models relations|
+
+
+A Test Plan is a high-level container object which is used to describe
+testing activities. The most important scalar properties are the
+document text and the product which is being tested. The most important
+aggregate properties are the list of test cases and test runs
+(aka test executions).
+
+A Test Case describes how to perform a specific scenario.
+This object is used to record scenarios in the database.
+
+For every distinct product build that is being tested you have to create
+a Test Run artifact. The Test Run holds a collection of Test Case Run objects,
+information about the testing environment (via tags and/or properties),
+who the default tester is, start/finish timestamps, etc.
+
+A Test Case Run object is the container that links together the actual
+testing scenario with its execution status, additional comments and bugs
+found during testing! A Test Case Run object has a 1-to-1 relation to the
+Test Case for which it holds status. Thus a Test Case Run object represents
+the actual Test Cases that will be/were executed against a particular product build
+and environment combination!
+
+
+
 Getting to know the TCMS home page
 ----------------------------------
 
@@ -84,5 +118,6 @@ The **Help menu** provides additional links to help pages:
     The items in the Help menu are configurable via the ``HELP_MENU_ITEMS``
     setting in ``product.py``.
 
+.. |Models relations| image:: ../_static/kiwi_models_relations_overview.svg
 .. |The TCMS home page| image:: ../_static/Home_Screen.png
 .. |The TCMS menu bar and breadcrumbs| image:: ../_static/Navigation_Tabs.png
