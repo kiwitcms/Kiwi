@@ -52,6 +52,62 @@ the actual Test Cases that will be/were executed against a particular product bu
 and environment combination!
 
 
+Testing workflow example
+------------------------
+
+Based on the information above we propose the following way to organize testing
+activities within your team:
+
+#. Create Test Plan for individual areas you'd like to test, for example
+  *performance testing* or *cross-browser testing*;
+#. Add all necessary Test Cases to your Test Plan;
+#. When a new product build is available:
+
+   - Create Test Run for that build including the Test Cases that need to be
+     executed.
+   - If you don't want to execute all Test Cases you can leave their status
+     as IDLE or remove them from the Test Run!
+   - In case you test in multiple environments then create a Test Run for each
+     environment/build combination. Annotate the Test Run with tags or environment
+     properties to be able to search for it later!
+   - QA engineers will execute the Test Runs and update statuses as appropriate.
+
+**Question:** How do I show all executions for a given Test Case?
+
+**Answer:** Open the Test Case view, click **Case Runs** tab and expand the widget.
+All executions from all Test Plans are shown.
+
+**Question:** When did a Test Case started to fail?
+
+**Answer:** Navigate to the page which shows all executions of that test case as
+instructed above. Find the failing result. Here you have timestamp information and
+link to the Test Run (with possible product build and environment) which recorded
+the failure.
+
+**Question:** How do I show all test executions for a particular
+Product/Plan/Build/Environment ?
+
+**Answer:** Navigate to Advanced Search and filter Test Runs by desired properties.
+If you want to filter runs from a particular Test Plan make sure to specify Test Plan
+filtering conditions as well. You can also filter Test Runs by tags and environment
+if necessary.
+
+**Question:** Is this the first time that Test Case is failing on envrionment X/Y/Z ?
+
+**Answer 1:** Open **Case Runs** tab for that particular Test Case and examine the
+results by hand.
+
+**Answer 2:** Perform the advanced search described above and use the product build
+and environment information to answer this question. This is the preferred way to do
+this!
+
+**Answer 3:** Go to REPORTING -> Testing report, select product/versions and select
+the ``By Plan & Build Per Plan View option``. You can see your Test Plans with Runs
+grouped by builds and an execution status table on the right of each Test Run.
+**WARNING:** This is not recommended because the reporting views query the entire
+database and are very inefficient at the moment!
+
+
 
 Getting to know the TCMS home page
 ----------------------------------
