@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import itertools
 import json
 from urllib.parse import urlencode
 from functools import reduce
@@ -463,39 +462,14 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
 
         # Get associated statistics data
         run_ids = [run.pk for run in searched_runs]
-        qs = TestCaseRun.objects \
-            .filter(case_run_status=TestCaseRunStatus.id_failed(), run__in=run_ids) \
-            .values('run', 'case_run_status') \
-            .annotate(count=Count('pk')) \
-            .order_by('run', 'case_run_status')
-        failure_subtotal = magic_convert(qs, key_name='run', value_name='count')
-
-        completed_status_ids = TestCaseRunStatus._get_completed_status_ids()
-        qs = TestCaseRun.objects \
-            .filter(case_run_status__in=completed_status_ids, run__in=run_ids) \
-            .values('run', 'case_run_status') \
-            .annotate(count=Count('pk')) \
-            .order_by('run', 'case_run_status')
-        completed_subtotal = dict((
-            (run_id, sum((item['count'] for item in stats_rows)))
-            for run_id, stats_rows
-            in itertools.groupby(qs.iterator(), key=lambda row: row['run'])))
-
         qs = TestCaseRun.objects.filter(run__in=run_ids).values('run').annotate(cases_count=Count('case'))
         cases_subtotal = magic_convert(qs, key_name='run', value_name='cases_count')
 
         for run in searched_runs:
             run_id = run.pk
             cases_count = cases_subtotal.get(run_id, 0)
-            if cases_count:
-                completed_percent = completed_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
-                failure_percent = failure_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
-            else:
-                completed_percent = failure_percent = 0
             run.nitrate_stats = {
                 'cases': cases_count,
-                'completed_percent': completed_percent,
-                'failure_percent': failure_percent,
             }
     else:
         response_data = {
