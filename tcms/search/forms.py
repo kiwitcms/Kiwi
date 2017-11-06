@@ -169,12 +169,14 @@ class RunForm(forms.Form):
     r_manager = LooseCF()
     r_tester = LooseCF()
     r_tags = LooseCF()
+    r_tags_exclude = LooseBF()
+    r_env = forms.CharField(required=False, max_length=200)
+    r_env_exclude = forms.BooleanField(required=False)
     r_running = LooseCF()
     r_begin = LooseDF()
     r_finished = LooseDF()
     r_created_since = LooseDF()
     r_created_before = LooseDF()
-    r_tags_exclude = LooseBF()
     r_real_tester = LooseCF()
     r_build = BuildF()
     r_product = ProductF()
@@ -188,6 +190,9 @@ class RunForm(forms.Form):
 
     def clean_r_tags(self):
         return get_choice(self.cleaned_data['r_tags'])
+
+    def clean_r_env(self):
+        return get_choice(self.cleaned_data['r_env'])
 
     def clean_r_tester(self):
         return get_choice(self.cleaned_data['r_tester'])
