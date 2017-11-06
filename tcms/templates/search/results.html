@@ -28,17 +28,16 @@
 	</div>
 	<h2 class="clear">Search Results<span style="font-weight:normal; font-size:12px; padding:0 0 0 15px;">Time cost: {{ time_cost }} sec(s).</span></h2>
 
-	{% if test_plans %}
+	{% ifequal search_target "test_plans" %}
 		{% include "search/plans.html" %}
-	{% endif %}
+	{% endifequal %}
 
-	{% if test_cases %}
+	{% ifequal search_target "test_cases" %}
 		{% include "search/cases.html" %}
-	{% endif %}
+	{% endifequal %}
 
-	{% if test_runs %}
+	{% ifequal search_target "test_runs" %}
 		{% include "search/runs.html" %}
-	{% endif %}
+	{% endifequal %}
 
 {% endblock %}
-

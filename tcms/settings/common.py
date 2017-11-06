@@ -129,7 +129,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'tcms.urls'
@@ -159,7 +158,6 @@ INSTALLED_APPS = (
 
     'djcelery',
     'kombu.transport.django',
-    'pagination',
     'tinymce',
 
     'tcms.core',

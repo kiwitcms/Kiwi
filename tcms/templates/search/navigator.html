@@ -1,0 +1,17 @@
+<div class="pagination paging_full_numbers">
+  {% if this_page.has_previous %}
+  <a href="{{ navigate_url }}&page=1" class="first paginate_button paginate_button_disabled">First</a>
+  <a href="{{ navigate_url }}&page={{ this_page.previous_page_number }}" class="previous paginate_button paginate_button_disabled">Previous</a>
+  {% else %}
+  <a href="javascript:avoid(0)" class="first paginate_button paginate_button_disabled">First</a>
+  <a href="javascript:avoid(0)" class="first paginate_button paginate_button_disabled">Previous</a>
+  {% endif %}
+  <span><strong>{{ page_start }} - {{ page_end }}</strong> of <strong>{{ this_page.paginator.count }}</strong></span>
+  {% if this_page.has_next %}
+  <a href="{{ navigate_url }}&page={{ this_page.next_page_number }}" class="next paginate_button">Next</a>
+  <a href="{{ navigate_url }}&page={{ this_page.paginator.num_pages }}" class="last paginate_button">Last</a>
+  {% else %}
+  <a href="javascript:avoid(0)" class="next paginate_button">Next</a>
+  <a href="javascript:avoid(0)" class="last paginate_button">Last</a>
+  {% endif %}
+</div>

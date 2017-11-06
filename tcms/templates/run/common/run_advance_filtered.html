@@ -1,62 +1,75 @@
-<table id="testruns_table" class="list border-bottom js-advance-search-runs" cellpadding="0" cellspacing="0" border="0">
-	<thead>
-		<tr >
-			<th width="30"><input id='id_check_all_runs' type="checkbox" title="Select all/Select none" /></th>
-			<th class="widthID"><a href="{{query_url}}&order_by=run_id" title="Sort by Run ID">ID</a></th>
-			<th><a href="{{query_url}}&order_by=summary" title="Sort by Summary">Summary</a></th>
-			<th width="80"><a href="{{query_url}}&order_by=manager__username" title="Sort by Manager Name">Manager</a></th>
-			<th width="100"><a href="{{query_url}}&order_by=default_tester__username" title="Sort by Default Tester">Default Tester</a></th>
-			<th class="text" style="display:none" id="col_plan_head" ><a href="{{query_url}}&order_by=plan__name" title="Sort by Plan">Plan</a></th>
-			<th width="130"><a href="{{query_url}}&order_by=plan__product__name" title="Sort by Product">Product</a></th>
-			<th width="120"><a href="{{query_url}}&order_by=product_version" title="Sort by Product Version">Product version</a></th>
-			<th width="100" title='Plan Environment Group'><a href="{{query_url}}&order_by=environment_id" title="Sort by Environment">Environment</a></th>
-			<th width="40"><a href="{{query_url}}&order_by=total_num_caseruns" title="Sort by Cases">Cases</a></th>
-			<th width="80">Status</th>
-			<th width="110">Completed</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for test_run in test_runs %}
-		<tr class="{% cycle 'rowodd' 'roweven' %}" id="run_{{test_run.run_id}}">
-			<td><input type='checkbox' name="run" value="{{ test_run.pk }}" class="run_selector" /></td>
-			<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.run_id }}</a></td>
-			<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.summary }}</a></td>
-			<td><a href="{% url "tcms.profiles.views.profile" test_run.manager.username %}">{{ test_run.manager }}</a></td>
-			<td>{% if test_run.default_tester_id %}<a href="{% url "tcms.profiles.views.profile" test_run.default_tester.username %}">{% endif %}{{ test_run.default_tester }}{% if test_run.default_tester_id %}</a>{% endif %}</td>
-			<td style="display:none" class="col_plan_content"><a href="{{ test_run.plan.get_absolute_url }}" >{{ test_run.plan }}</a></td>
-			<td>{{ test_run.build.product }}</td>
-			<td>{{ test_run.product_version }}</td>
-			<td>{{ test_run.env_groups }}</td>
-			<td>{{ test_run.total_num_caseruns }}</td>
-			<td>
-				{% if test_run.stop_date %}
-				<span class="pauselink">Finished</span>
-				{% else %}
-				<span class="runninglink">Running</span>
-				{% endif %}
-			</td>
-			{% comment %}
-			<td>
-				<div class="progress-bar" title="failed:{{ test_run.failed_case_run_percent|default:"0" }}%">
-					<div class="progress-inner" style="width:{{ test_run.completed_case_run_percent|default:"0" }}%;">
-							<div class="progress-failed" style="width:{{ test_run.failed_case_run_percent|default:"0" }}%;">
-								
-							</div>
+<form id='runs_form'>
+	<div id="contentTab" class="mixbar">
+		<span class="tit"><a href="{% url "tcms.testruns.views.all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
+		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param="{% url "tcms.testruns.views.clone" %}" />
+	</div>
+	<table id="testruns_table" class="list border-bottom js-advance-search-runs" cellpadding="0" cellspacing="0" border="0">
+		<thead>
+			<tr >
+				<th width="30"><input id='id_check_all_runs' type="checkbox" title="Select all/Select none" /></th>
+				<th class="widthID"><a href="{{query_url}}&order_by=run_id" title="Sort by Run ID">ID</a></th>
+				<th><a href="{{query_url}}&order_by=summary" title="Sort by Summary">Summary</a></th>
+				<th width="80"><a href="{{query_url}}&order_by=manager__username" title="Sort by Manager Name">Manager</a></th>
+				<th width="100"><a href="{{query_url}}&order_by=default_tester__username" title="Sort by Default Tester">Default Tester</a></th>
+				<th class="text" style="display:none" id="col_plan_head" ><a href="{{query_url}}&order_by=plan__name" title="Sort by Plan">Plan</a></th>
+				<th width="130"><a href="{{query_url}}&order_by=plan__product__name" title="Sort by Product">Product</a></th>
+				<th width="120"><a href="{{query_url}}&order_by=product_version" title="Sort by Product Version">Product version</a></th>
+				<th width="100" title='Plan Environment Group'><a href="{{query_url}}&order_by=environment_id" title="Sort by Environment">Environment</a></th>
+				<th width="40"><a href="{{query_url}}&order_by=total_num_caseruns" title="Sort by Cases">Cases</a></th>
+				<th width="80">Status</th>
+				<th width="110">Completed</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for test_run in this_page %}
+			<tr class="{% cycle 'rowodd' 'roweven' %}" id="run_{{test_run.run_id}}">
+				<td><input type='checkbox' name="run" value="{{ test_run.pk }}" class="run_selector" /></td>
+				<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.run_id }}</a></td>
+				<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.summary }}</a></td>
+				<td><a href="{% url "tcms.profiles.views.profile" test_run.manager.username %}">{{ test_run.manager }}</a></td>
+				<td>{% if test_run.default_tester_id %}<a href="{% url "tcms.profiles.views.profile" test_run.default_tester.username %}">{% endif %}{{ test_run.default_tester }}{% if test_run.default_tester_id %}</a>{% endif %}</td>
+				<td style="display:none" class="col_plan_content"><a href="{{ test_run.plan.get_absolute_url }}" >{{ test_run.plan }}</a></td>
+				<td>{{ test_run.build.product }}</td>
+				<td>{{ test_run.product_version }}</td>
+				<td>{{ test_run.env_groups }}</td>
+				<td>{{ test_run.total_num_caseruns }}</td>
+				<td>
+					{% if test_run.stop_date %}
+					<span class="pauselink">Finished</span>
+					{% else %}
+					<span class="runninglink">Running</span>
+					{% endif %}
+				</td>
+
+				{% comment %}
+				<td>
+					<div class="progress-bar" title="failed:{{ test_run.failed_case_run_percent|default:"0" }}%">
+						<div class="progress-inner" style="width:{{ test_run.completed_case_run_percent|default:"0" }}%;">
+								<div class="progress-failed" style="width:{{ test_run.failed_case_run_percent|default:"0" }}%;">
+
+								</div>
+						</div>
+						<div class="percent">{{ test_run.completed_case_run_percent|default:"0" }}%</div>
 					</div>
-					<div class="percent">{{ test_run.completed_case_run_percent|default:"0" }}%</div>
-				</div>
-			</td>
-            {% endcomment %}
-			<td>
-				<a href="#statistics" class="btn-statistics" run="{{test_run.run_id}}">calculate</a>
-				<div class="progress-bar" style="display: none;">
-					<div class="progress-inner" status="completed_case_run_percent">
-						<div class="progress-failed" status="failed_case_run_percent"></div>
+				</td>
+				{% endcomment %}
+
+				<td>
+					<a href="#statistics" class="btn-statistics" run="{{test_run.run_id}}">calculate</a>
+					<div class="progress-bar" style="display: none;">
+						<div class="progress-inner" status="completed_case_run_percent">
+							<div class="progress-failed" status="failed_case_run_percent"></div>
+						</div>
+						<div class="percent">{#{{ test_run.completed_case_run_percent|default:"0" }}%#}</div>
 					</div>
-					<div class="percent">{#{{ test_run.completed_case_run_percent|default:"0" }}%#}</div>
-				</div>
-			</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+				</td>
+			</tr>
+			{% empty %}
+			<tr>
+				<td colspan="12"><center>No test cases found.</center></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</form>
+{% include "search/navigator.html" %}

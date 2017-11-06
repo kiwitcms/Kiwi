@@ -11,6 +11,8 @@ from django.http import HttpRequest
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.http import require_GET
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
 
 from tcms.core.helpers.cache import cached_entities
 from tcms.core.utils.raw_sql import RawSQL
@@ -125,7 +127,8 @@ def sum_orm_queries(plans, cases, runs, target):
         return cases
 
 
-def render_results(request, results, time_cost, queries, tmpl='search/results.html'):
+def render_results(request, results, time_cost, queries,
+                   tmpl='search/results.html'):
     """Using a SQL "in" query and PKs as the arguments"""
     klasses = {
         'plan': {'class': TestPlan, 'result_key': 'test_plans'},
@@ -133,18 +136,38 @@ def render_results(request, results, time_cost, queries, tmpl='search/results.ht
         'run': {'class': TestRun, 'result_key': 'test_runs'}
     }
     asc = bool(request.GET.get('asc', None))
+    navigate_url = remove_from_request_path(request, 'page')
     query_url = remove_from_request_path(request, 'order_by')
     if asc:
         query_url = remove_from_request_path(query_url, 'asc')
     else:
         query_url = '%s&asc=True' % query_url
+
+    paginator = Paginator(results, 20)
+    page = request.GET.get('page')
+    try:
+        this_page = paginator.page(page)
+    except PageNotAnInteger:
+        this_page = paginator.page(1)
+
+    page_start = paginator.per_page * (this_page.number - 1) + 1
+    page_end = page_start + min(len(this_page.object_list),
+                                paginator.per_page) - 1
     context_data = {
-        klasses[request.GET['target']]['result_key']: results,
+        'search_target': klasses[request.GET['target']]['result_key'],
         'time_cost': time_cost,
         'queries': queries,
         'query_url': query_url,
+        # For navigation
+        'navigate_url': navigate_url,
+        'this_page': this_page,
+        'page_start': page_start,
+        'page_end': page_end,
     }
-    return render_to_response(tmpl, context_data, context_instance=RequestContext(request))
+    return render_to_response(
+        tmpl,
+        context_data,
+        context_instance=RequestContext(request))
 
 
 def remove_from_request_path(request, name):
