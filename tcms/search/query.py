@@ -35,7 +35,7 @@ class SmartDjangoQuery(object):
             'cs_category', 'cs_summary', 'cs_script'),
         TestRun.__name__: (
             'r_id', 'r_product', 'r_manager', 'r_tester', 'r_real_tester',
-            'r_assginee', 'r_build', 'r_version', 'r_running', 'r_tags',
+            'r_assginee', 'r_build', 'r_version', 'r_running', 'r_tags', 'r_env',
             'r_created_since', 'r_created_before', 'r_summary',)
     }
 
@@ -86,6 +86,8 @@ class SmartDjangoQuery(object):
             'r_running': 'stop_date__isnull',
             'r_tags': 'tag__name__in',
             'r_tags_distinct': True,
+            'r_env': 'env_value__value__in',
+            'r_env_distinct': True,
             'r_created_since': 'start_date__gte',
             'r_created_before': 'start_date__lte',
             'r_real_tester': 'case_run__tested_by__username__in',

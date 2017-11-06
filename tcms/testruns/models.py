@@ -92,6 +92,7 @@ class TestRun(TCMSActionModel):
             'manager': lambda value: Q(manager=value),
             'default_tester': lambda value: Q(default_tester=value),
             'tag__name__in': lambda value: Q(tag__name__in=value),
+            'env_value__value__in': lambda value: Q(env_value__value__in=value),
             'case_run__assignee': lambda value: Q(case_run__assignee=value),
             'status': lambda value: {
                 'running': Q(stop_date__isnull=True),

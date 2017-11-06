@@ -87,17 +87,17 @@ the failure.
 **Question:** How do I show all test executions for a particular
 Product/Plan/Build/Environment ?
 
-**Answer:** Navigate to Advanced Search and filter Test Runs by desired properties.
-If you want to filter runs from a particular Test Plan make sure to specify Test Plan
-filtering conditions as well. You can also filter Test Runs by tags and environment
-if necessary.
+**Answer:** Navigate to **Search::Search Test Runs** and filter Test Runs by desired properties.
+If you want to filter runs from a particular Test Plan make sure to specify the plan
+name in the **Plan** field. You can also filter Test Runs by tags and environment
+if necessary, specifying multiple values separated by comma.
 
 **Question:** Is this the first time that Test Case is failing on envrionment X/Y/Z ?
 
 **Answer 1:** Open **Case Runs** tab for that particular Test Case and examine the
 results by hand.
 
-**Answer 2:** Perform the advanced search described above and use the product build
+**Answer 2:** Perform the search described above and use the product version
 and environment information to answer this question. This is the preferred way to do
 this!
 

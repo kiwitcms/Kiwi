@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from tcms.core.utils import string_to_list
 from tcms.core.forms import UserField, DurationField
 from tcms.management.models import Product, Version, TestBuild, TCMSEnvGroup, \
     TestTag
@@ -212,11 +213,15 @@ class SearchRunForm(forms.Form):
     default_tester = UserField(required=False)
     status = forms.ChoiceField(choices=STATUS_CHOICES, required=False)
     tag__name__in = forms.CharField(label='Tag', required=False)
+    env_value__value__in = forms.CharField(label='Environment', required=False)
 
     case_run__assignee = UserField(required=False)
 
     def clean_tag__name__in(self):
         return TestTag.string_to_list(self.cleaned_data['tag__name__in'])
+
+    def clean_env_value__value__in(self):
+        return string_to_list(self.cleaned_data['env_value__value__in'])
 
     def populate(self, product_id=None):
         # We can dynamically set choices for a form field:
@@ -235,7 +240,7 @@ class SearchRunForm(forms.Form):
             self.fields['build'].queryset = TestBuild.list_active()
 
 
-# =========== Mist forms ==============
+# =========== Misc forms ==============
 
 class RunCloneForm(BaseRunForm):
     build = forms.ModelChoiceField(
