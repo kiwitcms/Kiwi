@@ -32,12 +32,6 @@ TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
 
 
 class TestRun(TCMSActionModel):
-    # Attribute names to get testrun statistics
-    PERCENTAGES = (
-        'failed_case_run_percent',
-        'passed_case_run_percent',
-        'completed_case_run_percent')
-
     run_id = models.AutoField(primary_key=True)
 
     product_version = models.ForeignKey('management.Version', related_name='version_run', on_delete=models.CASCADE)
@@ -268,43 +262,6 @@ class TestRun(TCMSActionModel):
         return percentage
 
     completed_case_run_percent = property(_get_completed_case_run_percentage)
-
-    def _get_failed_case_run_num(self):
-        failed_status_id = TestCaseRunStatus.id_failed()
-        failed_caserun = self.case_run.filter(
-            case_run_status=failed_status_id
-        )
-        return failed_caserun.count()
-
-    failed_case_run_num = property(_get_failed_case_run_num)
-
-    def _get_failed_case_run_percentage(self):
-        percentage = self.get_percentage(self.failed_case_run_num)
-        return percentage
-
-    failed_case_run_percent = property(_get_failed_case_run_percentage)
-
-    def _get_passed_case_run_num(self):
-        passed_status_id = TestCaseRunStatus.id_passed()
-        passed_caserun = self.case_run.filter(
-            case_run_status=passed_status_id
-        )
-        return passed_caserun.count()
-
-    passed_case_run_num = property(_get_passed_case_run_num)
-
-    def _get_passed_case_run_percentage(self):
-        percentage = self.get_percentage(self.passed_case_run_num)
-        return percentage
-
-    passed_case_run_percent = property(_get_passed_case_run_percentage)
-
-    def get_status_case_run_num(self, status_name):
-        status_id = TestCaseRunStatus._status_to_id(status_name)
-        caserun = self.case_run.filter(
-            case_run_status=status_id
-        )
-        return caserun.count()
 
     def _get_total_case_run_num(self):
         return self.case_run.count()
