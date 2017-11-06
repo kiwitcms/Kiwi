@@ -103,15 +103,6 @@ class RawSQL:
     total_num_review_cases = 'SELECT COUNT(*) FROM tcms_review_cases \
         WHERE tcms_reviews.id = tcms_review_cases.review_id'
 
-    environment_group_for_run = 'SELECT GROUP_CONCAT(teg.name) \
-        AS env_name FROM test_runs tr \
-        LEFT JOIN tcms_env_plan_map tepm \
-        ON tr.plan_id=tepm.plan_id \
-        LEFT JOIN tcms_env_groups teg \
-        ON tepm.group_id=teg.id \
-        WHERE tr.run_id = test_runs.run_id \
-        GROUP BY tr.run_id'
-
 
 class ReportSQL(object):
     # Index
