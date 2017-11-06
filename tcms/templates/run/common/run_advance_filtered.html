@@ -12,7 +12,7 @@
 			<th width="100" title='Plan Environment Group'><a href="{{query_url}}&order_by=environment_id" title="Sort by Environment">Environment</a></th>
 			<th width="40"><a href="{{query_url}}&order_by=total_num_caseruns" title="Sort by Cases">Cases</a></th>
 			<th width="80">Status</th>
-			<th width="110">Completed</th>
+			<th width="110">Completed %</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -48,13 +48,7 @@
 			</td>
             {% endcomment %}
 			<td>
-				<a href="#statistics" class="btn-statistics" run="{{test_run.run_id}}">calculate</a>
-				<div class="progress-bar" style="display: none;">
-					<div class="progress-inner" status="completed_case_run_percent">
-						<div class="progress-failed" status="failed_case_run_percent"></div>
-					</div>
-					<div class="percent">{#{{ test_run.completed_case_run_percent|default:"0" }}%#}</div>
-				</div>
+                            {% include "run/status_progress.html" with status_stats=test_run.stats_caseruns_status %}
 			</td>
 		</tr>
 		{% endfor %}

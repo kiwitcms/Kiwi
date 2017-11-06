@@ -24,7 +24,7 @@
 		{% else %}
 			"<span class='runninglink'>Running</span>"
 		{% endif %},
-			"<div style='' class='progress-bar'><div class='progress-inner' style='width: {{ run.nitrate_stats.completed_percent|floatformat:2 }}px;'><div class='progress-failed' style='width: {{ run.nitrate_stats.failed_percent|floatformat:2 }}px;'></div></div><div class='percent'>{{ run.nitrate_stats.completed_percent|floatformat:2 }}%</div></div>"
+		"{% include "run/status_progress.html" with status_stats=run.stats_caseruns_status %}"
 		]{% if not forloop.last %},{% endif %}
 	{% endfor %}
 	]
