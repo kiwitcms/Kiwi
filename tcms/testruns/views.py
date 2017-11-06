@@ -42,7 +42,6 @@ from tcms.testcases.models import TestCasePlan, TestCaseStatus, TestCaseBugSyste
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
-from tcms.testruns.data import stats_caseruns_status
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
@@ -593,7 +592,7 @@ def get(request, run_id, template_name='run/get.html'):
 
     # Count the status
     # 3. calculate number of case runs of each status
-    status_stats_result = stats_caseruns_status(run_id, case_run_statuss)
+    status_stats_result = tr.stats_caseruns_status(case_run_statuss)
 
     # Get the test case run bugs summary
     # 6. get the number of bugs of this run

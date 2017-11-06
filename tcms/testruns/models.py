@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import datetime
+from collections import namedtuple
 
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
 from django.core.cache import cache
 from django.urls import reverse
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.db.models.signals import post_save, post_delete, pre_save
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -21,6 +22,13 @@ try:
     from tcms.core.contrib.plugins_support.signals import register_model
 except ImportError:
     register_model = None
+
+
+TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
+                                       'StatusSubtotal '
+                                       'CaseRunsTotalCount '
+                                       'CompletedPercentage '
+                                       'FailurePercentage')
 
 
 class TestRun(TCMSActionModel):
@@ -326,6 +334,61 @@ class TestRun(TCMSActionModel):
         for ev in self.env_value.all():
             result += "%s:%s\n" % (ev.property.name, ev.value)
         return result
+
+    def stats_caseruns_status(self, case_run_statuses=None):
+        """Get statistics based on case runs' status
+
+        @param case_run_statuss: iterable object containing TestCaseRunStatus
+            objects representing PASS, FAIL, WAIVED, etc.
+        @type case_run_statuses: iterable object
+        @return: the statistics including the number of each status mapping,
+            total number of case runs, complete percent, and failure percent.
+        @rtype: namedtuple
+        """
+        if case_run_statuses is None:
+            case_run_statuses = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')
+
+        rows = TestCaseRun.objects.filter(
+            run=self.pk
+        ).values(
+            'case_run_status'
+        ).annotate(status_count=Count('case_run_status'))
+
+        caserun_statuses_subtotal = dict((status.pk, [0, status])
+                                         for status in case_run_statuses)
+
+        for row in rows:
+            status_pk = row['case_run_status']
+            caserun_statuses_subtotal[status_pk][0] = row['status_count']
+
+        complete_count = 0
+        failure_count = 0
+        caseruns_total_count = 0
+
+        for status_pk, total_info in caserun_statuses_subtotal.items():
+            status_caseruns_count, caserun_status = total_info
+            status_name = caserun_status.name
+
+            caseruns_total_count += status_caseruns_count
+
+            if status_name in TestCaseRunStatus.complete_status_names:
+                complete_count += status_caseruns_count
+            if status_name in TestCaseRunStatus.failure_status_names:
+                failure_count += status_caseruns_count
+
+        # Final calculation
+        complete_percent = .0
+        if caseruns_total_count:
+            complete_percent = complete_count * 100.0 / caseruns_total_count
+        failure_percent = .0
+        if complete_count:
+            failure_percent = failure_count * 100.0 / complete_count
+
+        return TestCaseRunStatusSubtotal(caserun_statuses_subtotal,
+                                         caseruns_total_count,
+                                         complete_percent,
+                                         failure_percent)
+
 
 # FIXME: replace TestCaseRunStatus' internal cache with Django's cache
 # machanism

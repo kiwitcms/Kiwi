@@ -6,7 +6,6 @@ from tcms.core.helpers.comments import add_comment
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.data import get_run_bug_ids
-from tcms.testruns.data import stats_caseruns_status
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import TestCaseRunFactory
@@ -26,8 +25,7 @@ class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):
         cls.case_run_statuss = TestCaseRunStatus.objects.all().order_by('pk')
 
     def test_get_from_empty_case_runs(self):
-        data = stats_caseruns_status(self.empty_test_run.pk,
-                                     self.case_run_statuss)
+        data = self.empty_test_run.stats_caseruns_status(self.case_run_statuss)
 
         subtotal = dict((status.pk, [0, status])
                         for status in self.case_run_statuss)
@@ -63,7 +61,7 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
                                run=cls.test_run, case=case, case_run_status=status)
 
     def test_get_stats(self):
-        data = stats_caseruns_status(self.test_run.pk, self.case_run_statuss)
+        data = self.test_run.stats_caseruns_status(self.case_run_statuss)
 
         subtotal = dict((status.pk, [0, status])
                         for status in self.case_run_statuss)
