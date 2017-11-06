@@ -22,14 +22,7 @@
 				{% for test_run in last_15_test_runs %}
 				<tr>
 					<td class="sprites home_table_bar" width="120" align="center">
-						<div class="progress-bar" style="float:none">
-							<div class="percent">{{ test_run.completed_case_run_percent|default:"0" }}%</div>
-							<div class="progress-inner" style="width:{{ test_run.completed_case_run_percent|default:"0" }}%; ">
-								<div class="progress-failed" style="width:{{ test_run.failed_case_run_percent|default:"0" }}%; ">
-								</div>
-							</div>
-						</div>
-						
+                                            {% include "run/status_progress.html" with status_stats=test_run.stats_caseruns_status %}
 					</td>
 					<td colspan="3">
 						<a	class="link" href="{% url "testruns-get" test_run.run_id %}">
