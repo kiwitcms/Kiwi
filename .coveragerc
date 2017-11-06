@@ -7,3 +7,8 @@ omit =
     */tests.py
     */tests/test_*.py
     */migrations/*.py
+    tcms/wsgi.py
+    tcms/settings/*.py
+    tcms/tests/*.py
+    */urls.py
+    */urls/*.py
