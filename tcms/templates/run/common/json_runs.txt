@@ -17,7 +17,7 @@
 		"{{ run.plan }}",
 		"{{ run.build.product }}",
 		"{{ run.product_version }}",
-		"{{ run.env_groups }}",
+		"{{ run.env_values_str|escapejs }}",
 		"{{ run.total_num_caseruns }}",
 		{% if run.stop_date %}
 			"<span class='pauselink'>Finished</span>"

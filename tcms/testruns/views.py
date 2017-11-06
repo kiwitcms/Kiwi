@@ -438,7 +438,7 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
                           'default_tester__id',
                           'default_tester__username',
                           'plan__name',
-                          'plan__env_group__name',
+                          'env_value',
                           'build__product__name',
                           'stop_date',
                           'product_version__value')
@@ -453,7 +453,6 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
             'plan',
             'build__product__name',
             'product_version',
-            'plan__env_group__name',
             'total_num_caseruns',
             'stop_date',
             'completed',
@@ -486,14 +485,7 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
         qs = TestCaseRun.objects.filter(run__in=run_ids).values('run').annotate(cases_count=Count('case'))
         cases_subtotal = magic_convert(qs, key_name='run', value_name='cases_count')
 
-        env_groups = {}
-        for grp in TestPlan.objects.filter(
-                pk__in=[run.plan_id for run in trs]).prefetch_related(
-                'env_group').values('pk', 'env_group__name'):
-            env_groups[grp['pk']] = grp['env_group__name']
-
         for run in searched_runs:
-            run.env_groups = env_groups[run.plan_id]
             run_id = run.pk
             cases_count = cases_subtotal.get(run_id, 0)
             if cases_count:

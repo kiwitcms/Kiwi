@@ -317,6 +317,15 @@ class TestRun(TCMSActionModel):
                 self.stop_date = None
             self.save()
 
+    def env_values_str(self):
+        """
+            Return a string representation of environment properties
+            used for display purposes.
+        """
+        result = ""
+        for ev in self.env_value.all():
+            result += "%s:%s\n" % (ev.property.name, ev.value)
+        return result
 
 # FIXME: replace TestCaseRunStatus' internal cache with Django's cache
 # machanism

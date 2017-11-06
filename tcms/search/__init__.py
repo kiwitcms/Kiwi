@@ -90,11 +90,6 @@ def sum_orm_queries(plans, cases, runs, target):
             runs = runs.filter(case_run__case__in=cases).distinct()
         if plans:
             runs = runs.filter(plan__in=plans).distinct()
-        runs = runs.extra(
-            select={
-                'env_groups': RawSQL.environment_group_for_run,
-            }
-        )
         return runs
     if target == 'plan':
         if not cases and not runs:

@@ -26,7 +26,7 @@
 			<td style="display:none" class="col_plan_content"><a href="{{ test_run.plan.get_absolute_url }}" >{{ test_run.plan }}</a></td>
 			<td>{{ test_run.build.product }}</td>
 			<td>{{ test_run.product_version }}</td>
-			<td>{{ test_run.env_groups }}</td>
+			<td>{{ test_run.env_values_str }}</td>
 			<td>{{ test_run.total_num_caseruns }}</td>
 			<td>
 				{% if test_run.stop_date %}
