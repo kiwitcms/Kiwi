@@ -677,6 +677,8 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
 
         for row in query:
             tested_by_id = row['tested_by']
+            if tested_by_id is None:
+                tested_by_id = 0
             name = row['case_run_status__name']
             total_count = row['total_count']
 
