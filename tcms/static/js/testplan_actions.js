@@ -1923,7 +1923,7 @@ function onTestCaseDefaultTesterClick(options) {
       constructPlanDetailsCasesZone(container, plan_id, params);
     };
 
-    var email_or_username = window.prompt('Please type new email or username');
+    var email_or_username = window.prompt('Please enter new email or username');
     if (!email_or_username) {
       return false;
     }
