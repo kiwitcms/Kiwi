@@ -111,6 +111,7 @@ the performance test suite use --performance command line option.
 
 from __future__ import print_function
 
+import six
 import sys
 import types
 import random
@@ -373,11 +374,11 @@ class PlanTypeTests(unittest.TestCase):
         set_cache_level(CACHE_OBJECTS)
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype1.name, basestring))
+        self.assertTrue(isinstance(plantype1.name, six.string_types))
         self.assertEqual(Nitrate._requests, self.requests + 1)
         # The second round (there should be no more requests)
         plantype2 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype2.name, basestring))
+        self.assertTrue(isinstance(plantype2.name, six.string_types))
         self.assertEqual(Nitrate._requests, self.requests + 1)
         # The third round (fetching by plan type name)
         plantype3 = PlanType(self.plantype.name)
@@ -392,11 +393,11 @@ class PlanTypeTests(unittest.TestCase):
         set_cache_level(CACHE_NONE)
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype1.name, basestring))
+        self.assertTrue(isinstance(plantype1.name, six.string_types))
         self.assertEqual(Nitrate._requests, self.requests + 1)
         # The second round (there should be another request)
         plantype2 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype2.name, basestring))
+        self.assertTrue(isinstance(plantype2.name, six.string_types))
         self.assertEqual(Nitrate._requests, self.requests + 2)
         # The third round (fetching by plan type name)
         plantype3 = PlanType(self.plantype.name)
@@ -523,7 +524,7 @@ class UserTests(unittest.TestCase):
         """ Current user available & sane """
         user = User()
         for data in [user.login, user.email, user.name]:
-            self.assertTrue(isinstance(data, basestring))
+            self.assertTrue(isinstance(data, six.string_types))
         self.assertTrue(isinstance(user.id, int))
 
     def test_cache_none(self):
@@ -697,11 +698,11 @@ class ComponentTests(unittest.TestCase):
         requests = Nitrate._requests
         # The first round (fetch component data from server)
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, basestring))
+        self.assertTrue(isinstance(component.name, six.string_types))
         self.assertEqual(Nitrate._requests, requests + 1)
         # The second round (there should be no more requests)
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, basestring))
+        self.assertTrue(isinstance(component.name, six.string_types))
         self.assertEqual(Nitrate._requests, requests + 1)
         # Restore cache level
         set_cache_level(original)
@@ -714,12 +715,12 @@ class ComponentTests(unittest.TestCase):
         requests = Nitrate._requests
         # The first round (fetch component data from server)
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, basestring))
+        self.assertTrue(isinstance(component.name, six.string_types))
         self.assertEqual(Nitrate._requests, requests + 1)
         del component
         # The second round (there should be another request)
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, basestring))
+        self.assertTrue(isinstance(component.name, six.string_types))
         self.assertEqual(Nitrate._requests, requests + 2)
         # Restore cache level
         set_cache_level(original)

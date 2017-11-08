@@ -22,6 +22,7 @@
 Mutable Nitrate objects
 """
 
+import six
 import datetime
 
 try:
@@ -217,7 +218,7 @@ class TestPlan(Mutable):
         # Product
         if product is None:
             raise NitrateError("Product required for creating new test plan")
-        elif isinstance(product, (int, basestring)):
+        elif isinstance(product, (int, six.string_types)):
             product = Product(product)
         hash["product"] = product.id
 
@@ -226,14 +227,14 @@ class TestPlan(Mutable):
             raise NitrateError("Version required for creating new test plan")
         elif isinstance(version, int):
             version = Version(version)
-        elif isinstance(version, basestring):
+        elif isinstance(version, six.string_types):
             version = Version(name=version, product=product)
         hash["default_product_version"] = version.id
 
         # Type
         if type is None:
             raise NitrateError("Type required for creating new test plan")
-        elif isinstance(type, (int, basestring)):
+        elif isinstance(type, (int, six.string_types)):
             type = PlanType(type)
         hash["type"] = type.id
 
@@ -558,7 +559,7 @@ class TestRun(Mutable):
         # Build & errata
         if build is None:
             build = "unspecified"
-        if isinstance(build, basestring):
+        if isinstance(build, six.string_types):
             build = Build(build=build, product=product)
         hash["build"] = build.id
         hash["errata_id"] = errata
@@ -912,11 +913,11 @@ class TestCase(Mutable):
 
         # If category provided as text, we need product as well
         product = kwargs.get("product")
-        if isinstance(category, basestring) and not kwargs.get("product"):
+        if isinstance(category, six.string_types) and not kwargs.get("product"):
             raise NitrateError(
                     "Need product when category specified by name")
         # Category & Product
-        if isinstance(category, basestring):
+        if isinstance(category, six.string_types):
             category = Category(category=category, product=product)
         elif not isinstance(category, Category):
             raise NitrateError("Invalid category '{0}'".format(category))
@@ -934,7 +935,7 @@ class TestCase(Mutable):
         # User
         tester = kwargs.get("tester")
         if tester:
-            if isinstance(tester, basestring):
+            if isinstance(tester, six.string_types):
                 tester = User(login=tester)
             hash["default_tester"] = tester.login
 
@@ -947,7 +948,7 @@ class TestCase(Mutable):
         # Case Status
         status = kwargs.get("status")
         if status:
-            if isinstance(status, basestring):
+            if isinstance(status, six.string_types):
                 status = CaseStatus(status)
             hash["case_status"] = status.id
 
@@ -1017,7 +1018,7 @@ class TestCase(Mutable):
         self._arguments = inject["arguments"]
         self._author = User(inject["author_id"])
         self._category = Category(inject["category_id"])
-        if isinstance(inject["create_date"], basestring):
+        if isinstance(inject["create_date"], six.string_types):
             self._created = datetime.datetime.strptime(
                     inject["create_date"], "%Y-%m-%d %H:%M:%S")
         else:
@@ -1226,14 +1227,14 @@ class CaseRun(Mutable):
         # TestCase
         if testcase is None:
             raise NitrateError("Case ID required for new case run")
-        elif isinstance(testcase, basestring):
+        elif isinstance(testcase, six.string_types):
             testcase = TestCase(testcase)
         hash["case"] = testcase.id
 
         # TestRun
         if testrun is None:
             raise NitrateError("Run ID required for new case run")
-        elif isinstance(testrun, basestring):
+        elif isinstance(testrun, six.string_types):
             testrun = TestRun(testrun)
         hash["run"] = testrun.id
 

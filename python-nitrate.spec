@@ -11,7 +11,7 @@ Source0: http://psss.fedorapeople.org/python-nitrate/%{name}-%{version}.tar.bz2
 
 BuildArch: noarch
 BuildRequires: python-devel
-Requires: python-kerberos python-psycopg2
+Requires: python-six python-kerberos python-psycopg2
 
 %description
 python-nitrate is a Python interface to the Nitrate test case

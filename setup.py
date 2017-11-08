@@ -28,6 +28,7 @@ setup(name='nitrate',
       author_email='psplicha@redhat.com',
       license='LGPLv2+',
       install_requires=[
+          'six',
           'pykerberos',
           'psycopg2',
           ],
