@@ -166,7 +166,6 @@ INSTALLED_APPS = (
     'tcms.core.contrib.linkreference',
     'tcms.core.logs',
     'tcms.integration.bugzilla',
-    'tcms.integration.djqpid',
     'tcms.integration.errata',
     'tcms.management',
     'tcms.profiles',

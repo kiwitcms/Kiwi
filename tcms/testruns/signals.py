@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 # FIXME: Use signal to handle log
 import threading
-import datetime
-
-from tcms.integration.djqpid import Producer
 
 
 # Reference from
 # http://www.chrisdpratt.com/2008/02/16/signals-in-django-stuff-thats-not-documented-well/
+
 
 class NewRunEmailThread(threading.Thread):
     def __init__(self, instance, is_created):
@@ -76,19 +74,6 @@ def pre_save_clean(sender, **kwargs):
 
 # new testrun created info for qpid
 def qpid_run_created(sender, *args, **kwargs):
-    tr = kwargs['instance']
-    if kwargs.get('created'):
-        run_create_info = {
-            "plan_id": tr.plan_id,
-            "run_id": tr.run_id,
-            "errata_id": tr.errata_id,
-            "when": datetime.datetime.now().strftime("%Y-%m-%d %X")
-        }
-        try:
-            Producer().send(run_create_info, "testrun.created", False)
-        except Exception:
-            pass
-
-    else:
-        # FIXME: Log, Plugin and other editing functions
-        pass
+    # TODO: Send message to message bus when test run is created.
+    # Topic: testrun.created
+    pass
