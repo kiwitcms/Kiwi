@@ -97,7 +97,11 @@ class CookieTransport(xmlrpclib.Transport):
         #log.debug("request_url is %s" % request_url)
         cookie_request  = urllib2.Request(request_url) 
 
-        self.send_request(h,handler,request_body)
+        if sys.version_info.major == 2:
+            self.send_request(h,handler,request_body)
+        else:
+            self.send_request(h,handler,request_body,False)
+
         self.send_host(h,host) 
         self.send_cookies(h,cookie_request) # ADDED. creates cookiejar if None.
         self.send_user_agent(h)
@@ -155,7 +159,11 @@ class CookieTransport(xmlrpclib.Transport):
         cookie_request  = urllib2.Request(request_url)
 
         try:
-            self.send_request(h,handler,request_body)
+            if sys.version_info.major == 2:
+                self.send_request(h,handler,request_body)
+            else:
+                self.send_request(h,handler,request_body,False)
+
             self.send_host(h,host)
             self.send_cookies(h,cookie_request) # ADDED. creates cookiejar if None.
             self.send_user_agent(h)
