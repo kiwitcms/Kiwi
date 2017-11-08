@@ -343,7 +343,7 @@ class NitrateXmlrpc(object):
         returns "'datetime': '2007-12-05 13:01:03'"
         """
         if value:
-            if type(value) is not type(datetime(2000,01,01,12,00,00)):
+            if not isinstance(value, datetime):
                 raise NitrateError("The option '%s' is not a valid datetime object." % option)
             return "\'%s\':\'%s\', " % (option, value.strftime("%Y-%m-%d %H:%M:%S"))
         return ''
