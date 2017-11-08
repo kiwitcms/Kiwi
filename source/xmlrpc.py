@@ -113,7 +113,7 @@ class CookieTransport(xmlrpclib.Transport):
         if hasattr(self.cookiejar,'save'):
             try:
                 self.cookiejar.save(self.cookiejar.filename)
-            except Exception, e:
+            except Exception as e:
                 raise
                 #log.error("Couldn't write cookiefile %s: %s" % \
                 #        (self.cookiejar.filename,str(e)))
@@ -171,7 +171,7 @@ class CookieTransport(xmlrpclib.Transport):
             if hasattr(self.cookiejar,'save'):
                 try:
                     self.cookiejar.save(self.cookiejar.filename)
-                except Exception, e:
+                except Exception as e:
                     raise
                     #log.error("Couldn't write cookiefile %s: %s" % \
                     #        (self.cookiejar.filename,str(e)))
@@ -221,12 +221,12 @@ class KerbTransport(SafeCookieTransport):
         
         try:
             rc, vc = kerberos.authGSSClientInit(service);
-        except kerberos.GSSError, e:
+        except kerberos.GSSError as e:
             raise kerberos.GSSError(e)
         
         try:
             kerberos.authGSSClientStep(vc, "");
-        except kerberos.GSSError, e:
+        except kerberos.GSSError as e:
             raise kerberos.GSSError(e)
         
         extra_headers = [
@@ -470,7 +470,7 @@ class NitrateXmlrpc(object):
         
         try:
             return eval(cmd)
-        except xmlrpclib.Error, e:
+        except xmlrpclib.Error as e:
             raise NitrateXmlrpcError(verb, params, e)
     
     ############################## Build #######################################

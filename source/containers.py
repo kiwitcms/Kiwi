@@ -844,7 +844,7 @@ class RunCases(Container):
             injects = self._teiid.run_cases(self.id)
         except teiid.TeiidNotConfigured:
             injects = self._server.TestRun.get_test_cases(self.id)
-        except psycopg2.DatabaseError, error:
+        except psycopg2.DatabaseError as error:
             log.debug("Failed to fetch data from Teiid: {0}".format(error))
             injects = self._server.TestRun.get_test_cases(self.id)
         self._current = set([TestCase(inject) for inject in injects])
@@ -863,7 +863,7 @@ class RunCases(Container):
         try:
             self._server.TestRun.add_cases(self.id, data)
         # Handle duplicate entry errors by adding test cases one by one
-        except xmlrpclib.Fault, error:
+        except xmlrpclib.Fault as error:
             if not "Duplicate entry" in unicode(error):
                 raise
             log.warn(error)
@@ -917,7 +917,7 @@ class RunCaseRuns(Container):
             injects = self._teiid.run_case_runs(self.id)
         except teiid.TeiidNotConfigured:
             injects = self._server.TestRun.get_test_case_runs(self.id)
-        except psycopg2.DatabaseError, error:
+        except psycopg2.DatabaseError as error:
             log.debug("Failed to fetch data from Teiid: {0}".format(error))
             injects = self._server.TestRun.get_test_case_runs(self.id)
         # Feed the TestRun.testcases container with the initial object
