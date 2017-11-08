@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import threading
 
-from celery import task
+from celery import shared_task
 
 from django.conf import settings
 from django.core.mail import get_connection
@@ -9,7 +9,7 @@ from django.core.mail import EmailMessage
 from django.template import loader, Context, RequestContext
 
 
-@task()
+@shared_task
 def blocking_mailto(template_name, subject, to_mail, context=None,
                     request=None, from_mail=None, cc=None):
     """

@@ -35,10 +35,6 @@ sys.path.append(os.path.join(tcms.__path__[0], 'core', 'lib'))
 from django.core.wsgi import get_wsgi_application
 _application = get_wsgi_application()
 
-# Celery async queue for apache mod_wsgi
-import djcelery
-djcelery.setup_loader()
-
 
 def application(environ, start_response):
     environ['PATH_INFO'] = environ['SCRIPT_NAME'] + environ['PATH_INFO']

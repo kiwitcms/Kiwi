@@ -3,11 +3,11 @@ import warnings
 
 import xmlrpclib
 
-from celery import task
+from celery import shared_task
 from django.conf import settings
 
 
-@task
+@shared_task
 def bugzilla_external_track(bug):
     if bug.bug_system.pk == settings.DEFAULT_BUG_SYSTEM_ID:
         try:

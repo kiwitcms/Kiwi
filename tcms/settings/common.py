@@ -156,8 +156,6 @@ INSTALLED_APPS = (
     'django_comments',
     'kobo.django.xmlrpc',
 
-    'djcelery',
-    'kombu.transport.django',
     'tinymce',
 
     'tcms.core',
@@ -250,12 +248,13 @@ EMAIL_FROM = 'noreply@foo.com'
 EMAIL_SUBJECT_PREFIX = '[TCMS] '
 
 EMAILS_FOR_DEBUG = []
-BROKER_URL = 'django://'
 ENABLE_ASYNC_EMAIL = True
+
+CELERY_BROKER_URL = 'redis://'
 
 # Celery worker settings
 CELERY_TASK_RESULT_EXPIRES = 60 * 2
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERY_RESULT_BACKEND = 'db+sqlite:///celery-results.db'
 CELERYD_TIMER_PRECISION = 120
 CELERY_IGNORE_RESULT = True
 CELERY_MAX_CACHED_RESULTS = -1
@@ -266,10 +265,6 @@ PLAN_EMAIL_TEMPLATE = 'mail/change_plan.txt'
 PLAN_DELELE_EMAIL_TEMPLATE = 'mail/delete_plan.txt'
 CASE_EMAIL_TEMPLATE = 'mail/edit_case.txt'
 CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
-
-# Celery async queue
-import djcelery
-djcelery.setup_loader()
 
 # TCMS Bug System settings
 # Set default bug system to bugzilla
