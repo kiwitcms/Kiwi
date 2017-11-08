@@ -210,29 +210,22 @@ class SafeCookieTransport(xmlrpclib.SafeTransport,CookieTransport):
 # Stolen from FreeIPA source freeipa-1.2.1/ipa-python/krbtransport.py
 class KerbTransport(SafeCookieTransport):
     """Handles Kerberos Negotiation authentication to an XML-RPC server."""
-    
+
     def get_host_info(self, host):
         host, extra_headers, x509 = xmlrpclib.Transport.get_host_info(self, host)
-        
+
         # Set the remote host principal
         h = host
         hostinfo = h.split(':')
         service = "HTTP@" + hostinfo[0]
-        
-        try:
-            rc, vc = kerberos.authGSSClientInit(service);
-        except kerberos.GSSError as e:
-            raise kerberos.GSSError(e)
-        
-        try:
-            kerberos.authGSSClientStep(vc, "");
-        except kerberos.GSSError as e:
-            raise kerberos.GSSError(e)
-        
+
+        rc, vc = kerberos.authGSSClientInit(service);
+        kerberos.authGSSClientStep(vc, "");
+
         extra_headers = [
             ("Authorization", "negotiate %s" % kerberos.authGSSClientResponse(vc) )
         ]
-        
+
         return host, extra_headers, x509
 
     def _python_ver_larger_than_2_6(self):
