@@ -68,7 +68,11 @@ status use 'print Nitrate()' which gives a short summary like this:
     Total requests handled: 0
 """
 
-import ConfigParser
+try:
+    import ConfigParser
+except ImportError:
+    import configparser as ConfigParser
+
 import datetime
 import logging
 import sys

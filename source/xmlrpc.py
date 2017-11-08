@@ -32,11 +32,22 @@ n = NitrateXmlrpc(
 n.testplan_get(10)
 """
 
-import xmlrpclib, urllib2, httplib, kerberos
+import sys
+if sys.version_info.major == 2:
+    import xmlrpclib
+    import urllib2
+    import httplib
+    from cookielib import CookieJar
+else:
+    import xmlrpc.client as xmlrpclib
+    import urllib.request as urllib2
+    import http.client as httplib
+    from http.cookiejar import CookieJar
+
+import kerberos
+
 from types import *
 from datetime import datetime, time
-
-from cookielib import CookieJar
 
 VERBOSE = 0
 DEBUG = 0

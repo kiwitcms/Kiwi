@@ -23,7 +23,12 @@ Immutable Nitrate objects
 """
 
 import re
-import xmlrpclib
+
+try:
+    import xmlrpclib
+except ImportError:
+    import xmlrpc.client as xmlrpclib
+
 import nitrate.config as config
 
 from nitrate.config import log

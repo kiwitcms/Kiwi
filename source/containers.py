@@ -58,7 +58,12 @@ Container overview (objects contained are listed in brackets):
 """
 
 import psycopg2
-import xmlrpclib
+
+try:
+    import xmlrpclib
+except ImportError:
+    import xmlrpc.client as xmlrpclib
+
 import nitrate.config as config
 import nitrate.teiid as teiid
 
