@@ -109,6 +109,8 @@ prepare the structure of test plans, test runs and test cases. To run
 the performance test suite use --performance command line option.
 """
 
+from __future__ import print_function
+
 import sys
 import types
 import random
@@ -1834,7 +1836,7 @@ if __name__ == "__main__":
     config = Config()
     try:
         config.nitrate = config.test
-        print "Testing against {0}".format(config.nitrate.url)
+        print("Testing against {0}".format(config.nitrate.url))
     except AttributeError:
         raise NitrateError("No test server provided in the config file")
 
@@ -1878,7 +1880,7 @@ if __name__ == "__main__":
             continue
         # Prepare suite, print header and run it
         suite = unittest.TestSuite(suite)
-        print header(name)
+        print(header(name))
         log_level = get_log_level()
         if VERBOSE_UNITTEST:
             results[name] = unittest.TextTestRunner(
@@ -1891,12 +1893,12 @@ if __name__ == "__main__":
     failures = sum([len(result.failures) for result in results.itervalues()])
     errors = sum([len(result.errors) for result in results.itervalues()])
     testsrun = sum([result.testsRun for result in results.itervalues()])
-    print header("Summary")
-    print "{0} tested".format(listed(results, "class", "classes"))
-    print "{0} passed".format(listed(testsrun - failures - errors, "test"))
-    print "{0} failed".format(listed(failures, "test"))
-    print "{0} found".format(listed(errors, "error"))
+    print(header("Summary"))
+    print("{0} tested".format(listed(results, "class", "classes")))
+    print("{0} passed".format(listed(testsrun - failures - errors, "test")))
+    print("{0} failed".format(listed(failures, "test")))
+    print("{0} found".format(listed(errors, "error")))
     if failures:
-        print "Failures in: {0}".format(listed([name
+        print("Failures in: {0}".format(listed([name
                 for name, result in results.iteritems()
-                if not result.wasSuccessful()]))
+                if not result.wasSuccessful()])))

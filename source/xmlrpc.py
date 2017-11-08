@@ -32,6 +32,8 @@ n = NitrateXmlrpc(
 n.testplan_get(10)
 """
 
+from __future__ import print_function
+
 import sys
 if sys.version_info.major == 2:
     import xmlrpclib
@@ -45,7 +47,6 @@ else:
     from http.cookiejar import CookieJar
 
 import kerberos
-
 from types import *
 from datetime import datetime, time
 
@@ -302,7 +303,7 @@ class NitrateXmlrpc(object):
             raise NitrateError("Unrecognized URL scheme")
         
         self._transport.cookiejar = CookieJar()
-        # print "COOKIES:", self._transport.cookiejar._cookies
+        # print("COOKIES:", self._transport.cookiejar._cookies)
         self.server = xmlrpclib.ServerProxy(
             url,
             transport = self._transport,
@@ -318,8 +319,8 @@ class NitrateXmlrpc(object):
         
         # Record the user ID in case the script wants this
         # self.user_id = login_dict['id']
-        # print 'Logged in with cookie for user %i' % self.userId
-        # print "COOKIES:", self._transport.cookiejar._cookies
+        # print('Logged in with cookie for user %i' % self.userId)
+        # print("COOKIES:", self._transport.cookiejar._cookies)
     
     def _boolean_option(self, option, value):
         """Returns the boolean option when value is True or False, else ''
@@ -459,7 +460,7 @@ class NitrateXmlrpc(object):
             params = ("%s" % str(arg), "%s, %s" % (params, str(arg)))[params!='']
         cmd = "self.server." + verb + "(" + params + ")"
         if DEBUG:
-            print cmd
+            print(cmd)
         
         try:
             return eval(cmd)
@@ -503,7 +504,7 @@ class NitrateKerbXmlrpc(NitrateXmlrpc):
             raise NitrateError("Unrecognized URL scheme: {0}".format(url))
         
         self._transport.cookiejar = CookieJar()
-        # print "COOKIES:", self._transport.cookiejar._cookies
+        # print("COOKIES:", self._transport.cookiejar._cookies)
         self.server = xmlrpclib.ServerProxy(
             url,
             transport = self._transport,
