@@ -10,4 +10,4 @@ beautifulsoup4>=4.1.1
 six
 django-contrib-comments==1.8.0
 django-preserialize==1.2.1
-kobo==0.5.2
+kobo==0.7.0
