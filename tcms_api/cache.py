@@ -135,10 +135,12 @@ from tcms_api.base import Nitrate, NitrateNone
 #  MultiCall methods
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 def multicall_start():
     """ Enter MultiCall mode and queue following xmlrpc calls """
     log.info("Starting multicall session, gathering updates...")
     Nitrate._multicall_proxy = xmlrpclib.MultiCall(Nitrate()._server)
+
 
 def multicall_end():
     """ Execute xmlrpc call queue and exit MultiCall mode """
@@ -152,12 +154,13 @@ def multicall_end():
     Nitrate._multicall_proxy = None
     Nitrate._requests += 1
     log.info("Multicall session finished, {0} completed".format(
-            listed(entries, "update")))
+        listed(entries, "update")))
     return response
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Cache Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Cache(object):
     """
@@ -169,15 +172,15 @@ class Cache(object):
 
     # List of classes with persistent cache support
     _immutable = [immutable.Bug, immutable.Build, immutable.Version,
-            immutable.Category, immutable.Component, immutable.PlanType,
-            immutable.Product, immutable.Tag, immutable.User]
+                  immutable.Category, immutable.Component, immutable.PlanType,
+                  immutable.Product, immutable.Tag, immutable.User]
     _mutable = [mutable.TestCase, mutable.TestPlan, mutable.TestRun,
-            mutable.CaseRun, mutable.CasePlan]
+                mutable.CaseRun, mutable.CasePlan]
     _containers = [containers.CaseBugs, containers.CaseComponents,
-            containers.CasePlans, containers.CaseRunBugs, containers.CaseTags,
-            containers.ChildPlans, containers.PlanCasePlans,
-            containers.PlanCases, containers.PlanRuns, containers.PlanTags,
-            containers.RunCases, containers.RunCaseRuns, containers.RunTags]
+                   containers.CasePlans, containers.CaseRunBugs, containers.CaseTags,
+                   containers.ChildPlans, containers.PlanCasePlans,
+                   containers.PlanCases, containers.PlanRuns, containers.PlanTags,
+                   containers.RunCases, containers.RunCaseRuns, containers.RunTags]
     _classes = _immutable + _mutable + _containers
 
     # File path, lock and open mode (read-only or read-write)
@@ -224,15 +227,14 @@ class Cache(object):
                 self._filename = config.Config().cache.file
             except AttributeError:
                 log.warn("Persistent caching off "
-                        "(cache filename not found in the config)")
+                         "(cache filename not found in the config)")
         self._lock = "{0}.lock".format(self._filename)
 
         # Initialize user-defined expiration times from the config
-        for klass in self._classes + [Nitrate, mutable.Mutable,
-                containers.Container]:
+        for klass in self._classes + [Nitrate, mutable.Mutable, containers.Container]:
             try:
                 expiration = getattr(
-                        config.Config().expiration, klass.__name__.lower())
+                    config.Config().expiration, klass.__name__.lower())
             except AttributeError:
                 continue
             # Convert from seconds, handle special values
@@ -246,7 +248,7 @@ class Cache(object):
             if isinstance(expiration, datetime.timedelta):
                 klass._expiration = expiration
                 log.debug("User defined expiration for {0}: {1}".format(
-                        klass.__name__, expiration))
+                    klass.__name__, expiration))
             else:
                 log.warn("Invalid expiration time '{0}'".format(expiration))
 
@@ -273,12 +275,12 @@ class Cache(object):
             # Use temporary file to minimize the time during which
             # the real cache is inconsistent
             output_file = tempfile.NamedTemporaryFile(
-                    mode="wb", delete=False, prefix="nitrate-cache.",
-                    dir=os.path.dirname(self._filename))
+                mode="wb", delete=False, prefix="nitrate-cache.",
+                dir=os.path.dirname(self._filename))
             log.cache("Temporary cache file: {0}".format(output_file.name))
             output_file = gzip.open(output_file.name, "wb")
             log.debug("Saving persistent cache into {0}".format(
-                    self._filename))
+                self._filename))
             pickle.dump(data, output_file)
             output_file.close()
             os.rename(output_file.name, self._filename)
@@ -296,7 +298,7 @@ class Cache(object):
         # Load the saved cache from file
         try:
             log.debug("Loading persistent cache from {0}".format(
-                    self._filename))
+                self._filename))
             input_file = gzip.open(self._filename, 'rb')
             data = pickle.load(input_file)
             input_file.close()
@@ -318,21 +320,21 @@ class Cache(object):
         for current_class in self._immutable + self._mutable:
             try:
                 log.cache("Loading cache for {0}".format(
-                        current_class.__name__))
+                    current_class.__name__))
                 current_class._cache = data[current_class.__name__]
             except KeyError:
                 log.cache("Failed to load cache for {0}, starting "
-                        "with empty".format(current_class.__name__))
+                          "with empty".format(current_class.__name__))
                 current_class._cache = {}
         # Containers to be loaded last (to prevent object duplicates)
         for current_class in self._containers:
             try:
                 log.cache("Loading cache for {0}".format(
-                        current_class.__name__))
+                    current_class.__name__))
                 current_class._cache = data[current_class.__name__]
             except KeyError:
                 log.cache("Failed to load cache for {0}, starting "
-                        "with empty".format(current_class.__name__))
+                          "with empty".format(current_class.__name__))
                 current_class._cache = {}
             # Wake up container objects from the id-sleep
             for container in current_class._cache.itervalues():
@@ -377,7 +379,7 @@ class Cache(object):
             os.remove(self._lock)
         except OSError as error:
             log.error("Failed to remove the cache lock {0} ({1})".format(
-                    self._lock, error))
+                self._lock, error))
 
     def enter(self, filename=None):
         """ Perform setup, create lock, load the cache """
@@ -412,7 +414,7 @@ class Cache(object):
         empty cache of all mutable objects.
         """
         # Wipe everything
-        if classes == None:
+        if classes is None:
             log.cache("Wiping out all objects memory cache")
             classes = self._classes
         # Wipe selected classes only
@@ -422,9 +424,9 @@ class Cache(object):
                 classes = [classes]
             # Prepare the list of given classes and their subclasses
             classes = [cls for cls in self._classes
-                if any([issubclass(cls, klass) for klass in classes])]
+                       if any([issubclass(cls, klass) for klass in classes])]
             log.cache("Wiping out {0} memory cache".format(
-                    listed([klass.__name__ for klass in classes])))
+                listed([klass.__name__ for klass in classes])))
         # For each class re-initialize objects and remove from index
         for current_class in classes:
             for current_object in current_class._cache.itervalues():
@@ -484,8 +486,8 @@ class Cache(object):
             after = len(current_class._cache)
             if before != after:
                 log.cache("Wiped {0} from the {1} cache".format(
-                        listed(before - after, "expired object"),
-                        current_class.__name__))
+                    listed(before - after, "expired object"),
+                    current_class.__name__))
 
     def update(self):
         """
@@ -501,16 +503,16 @@ class Cache(object):
 
         for klass in self._mutable + self._containers:
             modified = [mutable for mutable in klass._cache.itervalues()
-                    if mutable._modified]
+                        if mutable._modified]
             if not modified:
                 continue
             log.info("Found {0} in the {1} cache, updating...".format(
-                    listed(modified, "modified object"),
-                    klass.__name__))
+                listed(modified, "modified object"),
+                klass.__name__))
             for slice in sliced(modified, config.MULTICALL_MAX):
                 multicall_start()
-                for mutable in slice:
-                    mutable.update()
+                for _mutable in slice:
+                    _mutable.update()
                 multicall_end()
 
     def stats(self):
@@ -518,7 +520,7 @@ class Cache(object):
         result = "class          objects       expiration\n"
         for current_class in sorted(self._classes, key=lambda x: x.__name__):
             result += "{0}{1}       {2}\n".format(
-                   current_class.__name__.ljust(15),
-                   str(len(set(current_class._cache.itervalues()))).rjust(7),
-                   human(current_class._expiration))
+                current_class.__name__.ljust(15),
+                str(len(set(current_class._cache.itervalues()))).rjust(7),
+                human(current_class._expiration))
         return result

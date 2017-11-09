@@ -120,13 +120,13 @@ import tempfile
 import unittest
 import datetime
 
-from tcms_api.utils import *
-from tcms_api.cache import *
-from tcms_api.config import *
-from tcms_api.base import *
-from tcms_api.immutable import *
-from tcms_api.mutable import *
-from tcms_api.containers import *
+from tcms_api.utils import *       # noqa: F403
+from tcms_api.cache import *       # noqa: F403
+from tcms_api.config import *      # noqa: F403
+from tcms_api.base import *        # noqa: F403
+from tcms_api.immutable import *   # noqa: F403
+from tcms_api.mutable import *     # noqa: F403
+from tcms_api.containers import *  # noqa: F403
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Constants
@@ -139,6 +139,7 @@ VERBOSE_UNITTEST = sys.version_info >= (2, 7)
 #  Internal Utilities
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 def _print_time(elapsed_time):
     """ Human readable time format for performance tests """
     converted_time = str(datetime.timedelta(seconds=elapsed_time)).split('.')
@@ -148,8 +149,10 @@ def _print_time(elapsed_time):
 #  Utils
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class UtilsTests(unittest.TestCase):
     """ Tests for utility functions """
+
     def test_listed(self):
         """ Function listed() sanity """
         self.assertEqual(listed(range(1)), "0")
@@ -157,7 +160,7 @@ class UtilsTests(unittest.TestCase):
         self.assertEqual(listed(range(3), quote='"'), '"0", "1" and "2"')
         self.assertEqual(listed(range(4), max=3), "0, 1, 2 and 1 more")
         self.assertEqual(listed(range(5), 'number', max=3),
-                "0, 1, 2 and 2 more numbers")
+                         "0, 1, 2 and 2 more numbers")
         self.assertEqual(listed(range(6), 'category'), "6 categories")
         self.assertEqual(listed(7, "leaf", "leaves"), "7 leaves")
 
@@ -172,9 +175,9 @@ class UtilsTests(unittest.TestCase):
         loaf = range(9)
         self.assertEqual(list(sliced(loaf, 9)), [loaf])
         self.assertEqual(
-                list(sliced(loaf, 5)), [[0, 1, 2, 3, 4], [5, 6, 7, 8]])
+            list(sliced(loaf, 5)), [[0, 1, 2, 3, 4], [5, 6, 7, 8]])
         self.assertEqual(
-                list(sliced(loaf, 3)), [[0, 1, 2], [3, 4, 5], [6, 7, 8]])
+            list(sliced(loaf, 3)), [[0, 1, 2], [3, 4, 5], [6, 7, 8]])
 
     def test_get_set_log_level(self):
         """ Get & set the logging level """
@@ -207,6 +210,7 @@ class UtilsTests(unittest.TestCase):
 #  Build
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class BuildTests(unittest.TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
@@ -236,12 +240,14 @@ class BuildTests(unittest.TestCase):
 
     def test_invalid_build_id(self):
         """ Invalid build id should raise exception """
-        fun = lambda: Build(-1).name
+        def fun():
+            return Build(-1).name
         self.assertRaises(NitrateError, fun)
 
     def test_invalid_build_name(self):
         """ Invalid build name should raise exception """
-        fun = lambda: Build(name="bbbad-bbbuild", product=self.product.name).id
+        def fun():
+            return Build(name="bbbad-bbbuild", product=self.product.name).id
         self.assertRaises(NitrateError, fun)
 
     def test_cache_none(self):
@@ -269,6 +275,7 @@ class BuildTests(unittest.TestCase):
 #  Category
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class CategoryTests(unittest.TestCase):
 
     def setUp(self):
@@ -292,11 +299,11 @@ class CategoryTests(unittest.TestCase):
         """ Fetch by name and product """
         # Named arguments
         category = Category(
-                name=self.category.name, product=self.product.name)
+            name=self.category.name, product=self.product.name)
         self.assertEqual(category.id, self.category.id)
         # Backward compatibility
         category = Category(
-                category=self.category.name, product=self.product.name)
+            category=self.category.name, product=self.product.name)
         self.assertEqual(category.id, self.category.id)
 
     def test_cache_objects(self):
@@ -335,6 +342,7 @@ class CategoryTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanType
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanTypeTests(unittest.TestCase):
     def setUp(self):
@@ -410,6 +418,7 @@ class PlanTypeTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Product
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class ProductTests(unittest.TestCase):
     def setUp(self):
@@ -500,6 +509,7 @@ class ProductTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  User
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class UserTests(unittest.TestCase):
     def setUp(self):
@@ -595,6 +605,7 @@ class UserTests(unittest.TestCase):
 #  Version
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class VersionTests(unittest.TestCase):
     def setUp(self):
         """ Set up version from the config """
@@ -617,11 +628,11 @@ class VersionTests(unittest.TestCase):
         """ Fetch by name and product """
         # Named arguments
         version = Version(
-                name=self.version.name, product=self.product.name)
+            name=self.version.name, product=self.product.name)
         self.assertEqual(version.id, self.version.id)
         # Backward compatibility
         version = Version(
-                version=self.version.name, product=self.product.name)
+            version=self.version.name, product=self.product.name)
         self.assertEqual(version.id, self.version.id)
 
     def test_cache_none(self):
@@ -664,6 +675,7 @@ class VersionTests(unittest.TestCase):
 #  Component
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class ComponentTests(unittest.TestCase):
     def setUp(self):
         """ Set up component from the config """
@@ -679,7 +691,7 @@ class ComponentTests(unittest.TestCase):
     def testFetchByName(self):
         """ Fetch component by name and product """
         component = Component(
-                name=self.component.name, product=self.component.product)
+            name=self.component.name, product=self.component.product)
         self.assertTrue(isinstance(component, Component))
         self.assertEqual(component.id, self.component.id)
 
@@ -729,6 +741,7 @@ class ComponentTests(unittest.TestCase):
 #  Tag
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class TagTests(unittest.TestCase):
     def setUp(self):
         """ Set up component from the config """
@@ -773,6 +786,7 @@ class TagTests(unittest.TestCase):
 #  TestPlan
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class TestPlanTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
@@ -792,10 +806,10 @@ class TestPlanTests(unittest.TestCase):
     def test_create_valid(self):
         """ Create a new test plan (valid) """
         testplan = TestPlan(
-                name="Test plan",
-                type=self.testplan.type,
-                product=self.testplan.product,
-                version=self.testplan.version)
+            name="Test plan",
+            type=self.testplan.type,
+            product=self.testplan.product,
+            version=self.testplan.version)
         self.assertTrue(isinstance(testplan, TestPlan))
         self.assertEqual(testplan.name, "Test plan")
 
@@ -875,6 +889,7 @@ class TestPlanTests(unittest.TestCase):
 #  TestRun
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class TestRunTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
@@ -895,7 +910,7 @@ class TestRunTests(unittest.TestCase):
     def testCreateOptionalFields(self):
         """ Create a new test run, including optional fields """
         testrun = TestRun(
-                summary="Test run", testplan=self.testplan.id, errata=1234)
+            summary="Test run", testplan=self.testplan.id, errata=1234)
         self.assertTrue(isinstance(testrun, TestRun))
         self.assertEqual(testrun.summary, "Test run")
         self.assertEqual(testrun.errata, 1234)
@@ -934,7 +949,7 @@ class TestRunTests(unittest.TestCase):
         # Create the test run, make sure the test case is not there
         testrun = TestRun(testplan=self.testplan.id)
         self.assertTrue(testcase.id not in
-                [caserun.testcase.id for caserun in testrun])
+                        [caserun.testcase.id for caserun in testrun])
         # Restore the original status
         testcase.status = original
         testcase.update()
@@ -946,15 +961,15 @@ class TestRunTests(unittest.TestCase):
         # No test case should be linked
         testrun = TestRun(testplan=testplan, testcases=[])
         self.assertTrue(testcase.id not in
-                [caserun.testcase.id for caserun in testrun])
+                        [caserun.testcase.id for caserun in testrun])
         # Select test case by test case object
         testrun = TestRun(testplan=testplan, testcases=[testcase])
         self.assertTrue(testcase.id in
-                [caserun.testcase.id for caserun in testrun])
+                        [caserun.testcase.id for caserun in testrun])
         # Select test case by id
         testrun = TestRun(testplan=testplan, testcases=[testcase.id])
         self.assertTrue(testcase.id in
-                [caserun.testcase.id for caserun in testrun])
+                        [caserun.testcase.id for caserun in testrun])
 
     def testTestRunCaching(self):
         """ Test caching in TestRun class """
@@ -980,6 +995,7 @@ class TestRunTests(unittest.TestCase):
 #  TestCase
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class TestCaseTests(unittest.TestCase):
     def setUp(self):
         """ Set up test case from the config """
@@ -989,14 +1005,14 @@ class TestCaseTests(unittest.TestCase):
     def testCreateInvalid(self):
         """ Create a new test case (missing required parameters) """
         self.assertRaises(
-                NitrateError, TestCase, summary="Test case summary")
+            NitrateError, TestCase, summary="Test case summary")
 
     def testCreateValid(self):
         """ Create a new test case (valid) """
         case = TestCase(summary="Test case summary",
-                product="Red Hat Enterprise Linux 6", category="Sanity")
+                        product="Red Hat Enterprise Linux 6", category="Sanity")
         self.assertTrue(
-                isinstance(case, TestCase), "Check created instance")
+            isinstance(case, TestCase), "Check created instance")
         self.assertEqual(case.summary, "Test case summary")
         self.assertEqual(case.priority, Priority("P3"))
         self.assertEqual(str(case.category), "Sanity")
@@ -1005,19 +1021,19 @@ class TestCaseTests(unittest.TestCase):
         """ Create a new test case, include optional fields """
         # High-priority automated security-related test case
         case = TestCase(
-                summary="High-priority automated test case",
-                product=self.testcase.product,
-                category="Security",
-                automated=True,
-                manual=False,
-                autoproposed=False,
-                priority=Priority("P1"),
-                script="/path/to/test/script",
-                arguments="SOME_ARGUMENT=42",
-                requirement="dependency",
-                link="http://example.com/test-case-link")
+            summary="High-priority automated test case",
+            product=self.testcase.product,
+            category="Security",
+            automated=True,
+            manual=False,
+            autoproposed=False,
+            priority=Priority("P1"),
+            script="/path/to/test/script",
+            arguments="SOME_ARGUMENT=42",
+            requirement="dependency",
+            link="http://example.com/test-case-link")
         self.assertTrue(
-                isinstance(case, TestCase), "Check created instance")
+            isinstance(case, TestCase), "Check created instance")
         self.assertEqual(case.summary, "High-priority automated test case")
         self.assertEqual(case.script, "/path/to/test/script")
         self.assertEqual(case.arguments, "SOME_ARGUMENT=42")
@@ -1029,16 +1045,16 @@ class TestCaseTests(unittest.TestCase):
         self.assertFalse(case.manual)
         # Low-priority manual sanity test case
         case = TestCase(
-                summary="Low-priority manual test case",
-                product=self.testcase.product,
-                category="Sanity",
-                manual=True,
-                autoproposed=True,
-                automated=False,
-                priority=Priority("P5"),
-                link="http://example.com/another-case-link")
+            summary="Low-priority manual test case",
+            product=self.testcase.product,
+            category="Sanity",
+            manual=True,
+            autoproposed=True,
+            automated=False,
+            priority=Priority("P5"),
+            link="http://example.com/another-case-link")
         self.assertTrue(
-                isinstance(case, TestCase), "Check created instance")
+            isinstance(case, TestCase), "Check created instance")
         self.assertEqual(case.summary, "Low-priority manual test case")
         self.assertEqual(case.script, None)
         self.assertEqual(case.link, "http://example.com/another-case-link")
@@ -1059,7 +1075,7 @@ class TestCaseTests(unittest.TestCase):
         self.assertEqual(testcase.summary, self.testcase.summary)
         self.assertEqual(testcase.category.name, self.testcase.category)
         created = datetime.datetime.strptime(
-                self.testcase.created, "%Y-%m-%d %H:%M:%S")
+            self.testcase.created, "%Y-%m-%d %H:%M:%S")
         self.assertEqual(testcase.created, created)
 
     def testGetByInvalidId(self):
@@ -1146,6 +1162,7 @@ class TestCaseTests(unittest.TestCase):
 #  CaseRuns
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class CaseRunsTests(unittest.TestCase):
     def setUp(self):
         """ Set up performance test configuration from the config """
@@ -1161,7 +1178,7 @@ class CaseRunsTests(unittest.TestCase):
         start_time = time.time()
         for caserun in TestRun(self.performance.testrun):
             log.info("{0} {1}".format(caserun.id, caserun.status))
-            caserun.status = Status(random.randint(1,8))
+            caserun.status = Status(random.randint(1, 8))
             caserun.update()
         _print_time(time.time() - start_time)
 
@@ -1175,7 +1192,7 @@ class CaseRunsTests(unittest.TestCase):
         start_time = time.time()
         for caserun in TestRun(self.performance.testrun):
             log.debug("{0} {1}".format(caserun.id, caserun.status))
-            caserun.status = Status(random.randint(1,8))
+            caserun.status = Status(random.randint(1, 8))
             caserun.update()
         multicall_end()
         _print_time(time.time() - start_time)
@@ -1194,21 +1211,23 @@ class CaseRunsTests(unittest.TestCase):
             log.info("{0}".format(testplan.name))
             for testrun in testplan.testruns:
                 log.info("  {0} {1} {2}".format(
-                        testrun, testrun.manager, testrun.status))
+                    testrun, testrun.manager, testrun.status))
                 for caserun in testrun.caseruns:
                     log.info("    {0} {1} {2}".format(
-                            caserun, caserun.testcase, caserun.status))
+                        caserun, caserun.testcase, caserun.status))
         _print_time(time.time() - start_time)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CasePlan
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class CasePlanTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
         self.testplan = config.testplan
         self.testcase = config.testcase
+
     def test_sortkey_update(self):
         """ Sort key update """
         testcase = self.testcase.id
@@ -1220,13 +1239,15 @@ class CasePlanTests(unittest.TestCase):
             caseplan.update()
             self.assertEqual(caseplan.sortkey, sortkey)
             # Check the cache content
-            if get_cache_level() < CACHE_OBJECTS: continue
+            if get_cache_level() < CACHE_OBJECTS:
+                continue
             requests = Nitrate._requests
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
             self.assertEqual(caseplan.sortkey, sortkey)
             self.assertEqual(requests, Nitrate._requests)
             # Check persistent cache
-            if get_cache_level() < CACHE_PERSISTENT: continue
+            if get_cache_level() < CACHE_PERSISTENT:
+                continue
             cache.save()
             cache.clear()
             cache.load()
@@ -1237,6 +1258,7 @@ class CasePlanTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseComponents
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseComponentsTests(unittest.TestCase):
     def setUp(self):
@@ -1288,6 +1310,7 @@ class CaseComponentsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanComponents
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 '''
 Disabled until BZ#866974 is fixed.
@@ -1344,6 +1367,7 @@ class PlanComponentsTests(unittest.TestCase):
 #  CaseBugs
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class CaseBugsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test case from the config """
@@ -1395,6 +1419,7 @@ class CaseBugsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseRunBugs
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseRunBugsTests(unittest.TestCase):
     def setUp(self):
@@ -1448,6 +1473,7 @@ class CaseRunBugsTests(unittest.TestCase):
 #  PlanTags
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class PlanTagsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
@@ -1499,6 +1525,7 @@ class PlanTagsTests(unittest.TestCase):
 #  RunTags
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class RunTagsTests(unittest.TestCase):
     def setUp(self):
         """ Set up test run from the config """
@@ -1549,6 +1576,7 @@ class RunTagsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseTags
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseTagsTests(unittest.TestCase):
     def setUp(self):
@@ -1641,6 +1669,7 @@ class CaseTagsTests(unittest.TestCase):
 #  ChildPlans
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class ChildPlansTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
@@ -1651,7 +1680,7 @@ class ChildPlansTests(unittest.TestCase):
         parent = TestPlan(self.testplan.id)
         # Create a new separate plan, make sure it's not child
         child = TestPlan(name="Child test plan", type=parent.type,
-                product=parent.product, version=parent.version)
+                         product=parent.product, version=parent.version)
         self.assertTrue(child not in parent.children)
         # Add the new test plan to the children, reload, check
         parent.children.add(child)
@@ -1660,14 +1689,15 @@ class ChildPlansTests(unittest.TestCase):
         self.assertTrue(child in parent.children)
         # Remove the child again, update, reload, check
         # FIXME Currently disabled because if BZ#885232
-        #parent.children.remove(child)
-        #parent.update()
-        #parent = TestPlan(parent.id)
-        #self.assertTrue(child not in parent.children)
+        # parent.children.remove(child)
+        # parent.update()
+        # parent = TestPlan(parent.id)
+        # self.assertTrue(child not in parent.children)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanRuns
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanRunsTests(unittest.TestCase):
     def setUp(self):
@@ -1711,11 +1741,13 @@ class PlanRunsTests(unittest.TestCase):
 #  PlanCasePlans
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class PlanCasePlansTests(unittest.TestCase):
     def setUp(self):
         """ Set up test plan from the config """
         self.testplan = config.testplan
         self.testcase = config.testcase
+
     def test_sortkey_update(self):
         """ Get/set sortkey using the TestPlan.sortkey() method """
         testcase = TestCase(self.testcase.id)
@@ -1729,13 +1761,15 @@ class PlanCasePlansTests(unittest.TestCase):
             testplan.update()
             self.assertEqual(testplan.sortkey(testcase), sortkey)
             # Check the cache content
-            if get_cache_level() < CACHE_OBJECTS: continue
+            if get_cache_level() < CACHE_OBJECTS:
+                continue
             requests = Nitrate._requests
             testplan = TestPlan(self.testplan.id)
             self.assertEqual(testplan.sortkey(testcase), sortkey)
             self.assertEqual(requests, Nitrate._requests)
             # Check persistent cache
-            if get_cache_level() < CACHE_PERSISTENT: continue
+            if get_cache_level() < CACHE_PERSISTENT:
+                continue
             cache.save()
             cache.clear()
             cache.load()
@@ -1746,6 +1780,7 @@ class PlanCasePlansTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunCases
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class RunCasesTests(unittest.TestCase):
     def setUp(self):
@@ -1760,7 +1795,7 @@ class RunCasesTests(unittest.TestCase):
         testrun = TestRun(self.testrun.id)
         self.assertTrue(testcase in testrun.testcases)
         self.assertTrue(testcase in
-                [caserun.testcase for caserun in testrun.caseruns])
+                        [caserun.testcase for caserun in testrun.caseruns])
 
     def test_add_remove(self):
         """ Add and remove test case """
@@ -1773,31 +1808,32 @@ class RunCasesTests(unittest.TestCase):
         testrun.update()
         self.assertTrue(testcase not in testrun.testcases)
         self.assertTrue(testcase not in
-                [caserun.testcase for caserun in testrun.caseruns])
+                        [caserun.testcase for caserun in testrun.caseruns])
         # Now make sure the same data reached the server as well
         if get_cache_level() >= CACHE_OBJECTS:
             cache.clear([RunCases, RunCaseRuns])
         testrun = TestRun(testrun.id)
         self.assertTrue(testcase not in testrun.testcases)
         self.assertTrue(testcase not in
-                [caserun.testcase for caserun in testrun.caseruns])
+                        [caserun.testcase for caserun in testrun.caseruns])
         # Add back and check it's in both testcases or caseruns
         testrun.testcases.add(testcase)
         testrun.update()
         self.assertTrue(testcase in testrun.testcases)
         self.assertTrue(testcase in
-                [caserun.testcase for caserun in testrun.caseruns])
+                        [caserun.testcase for caserun in testrun.caseruns])
         # Again make sure the same data reached the server as well
         if get_cache_level() >= CACHE_OBJECTS:
             cache.clear([RunCases, RunCaseRuns])
         testrun = TestRun(testrun.id)
         self.assertTrue(testcase in testrun.testcases)
         self.assertTrue(testcase in
-                [caserun.testcase for caserun in testrun.caseruns])
+                        [caserun.testcase for caserun in testrun.caseruns])
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunCaseRuns
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class RunCaseRunsTests(unittest.TestCase):
     def setUp(self):
@@ -1815,22 +1851,24 @@ class RunCaseRunsTests(unittest.TestCase):
     def test_cases_fetched_just_once(self):
         """ Test cases are fetched just once """
         # This test is relevant when caching is turned on
-        if get_cache_level() < CACHE_OBJECTS: return
+        if get_cache_level() < CACHE_OBJECTS:
+            return
         cache.clear()
         testplan = TestPlan(self.testplan.id)
         testrun = TestRun(self.testrun.id)
         # Make sure plan, run and cases are fetched
-        text = "{0}{1}{2}".format(testplan, testrun, listed(
-                [testcase for testcase in testplan]))
+        "{0}{1}{2}".format(testplan, testrun, listed(
+            [testcase for testcase in testplan]))
         # Now fetching case runs should be a single query to the
         # server because all test cases have already been fetched
         requests = Nitrate._requests
-        statuses = listed([caserun.status for caserun in testrun])
+        listed([caserun.status for caserun in testrun])
         self.assertEqual(Nitrate._requests, requests + 1)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Self Test
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 if __name__ == "__main__":
     # Override the server config with the testing instance
@@ -1847,10 +1885,10 @@ if __name__ == "__main__":
 
     # Parse options
     parser = optparse.OptionParser(
-            usage="python tcms_api.api [--performance] [class [...]]")
+        usage="python tcms_api.api [--performance] [class [...]]")
     parser.add_option("--performance",
-            action="store_true",
-            help="Run performance tests")
+                      action="store_true",
+                      help="Run performance tests")
     (options, arguments) = parser.parse_args()
 
     # Custom (more concise) test result class for python 2.7 and newer
@@ -1875,8 +1913,8 @@ if __name__ == "__main__":
         suite = unittest.TestLoader().loadTestsFromTestCase(object)
         # Filter only performance test cases when --performance given
         suite = [case for case in suite
-                if options.performance and "performance" in str(case)
-                or not options.performance and "performance" not in str(case)]
+                 if options.performance and "performance" in str(case) or
+                 not options.performance and "performance" not in str(case)]
         if not suite:
             continue
         # Prepare suite, print header and run it
@@ -1885,7 +1923,7 @@ if __name__ == "__main__":
         log_level = get_log_level()
         if VERBOSE_UNITTEST:
             results[name] = unittest.TextTestRunner(
-                        verbosity=2, resultclass=ShortResult).run(suite)
+                verbosity=2, resultclass=ShortResult).run(suite)
         else:
             results[name] = unittest.TextTestRunner(verbosity=2).run(suite)
         set_log_level(log_level)
@@ -1901,5 +1939,5 @@ if __name__ == "__main__":
     print("{0} found".format(listed(errors, "error")))
     if failures:
         print("Failures in: {0}".format(listed([name
-                for name, result in results.iteritems()
-                if not result.wasSuccessful()])))
+                                                for name, result in results.iteritems()
+                                                if not result.wasSuccessful()])))

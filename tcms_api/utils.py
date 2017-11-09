@@ -25,11 +25,10 @@ import math
 import sys
 import unicodedata
 
-from pprint import pformat as pretty
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Public Utilities
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def listed(items, singular=None, plural=None, max=None, quote=""):
     """
@@ -88,9 +87,11 @@ def listed(items, singular=None, plural=None, max=None, quote=""):
     else:
         return ", ".join(items[0:-2] + [" and ".join(items[-2:])])
 
+
 def unlisted(text):
     """ Convert human readable list into python list """
     return re.split(r"\s*,\s*|\s+and\s+|\s+", text)
+
 
 def sliced(loaf, max):
     """
@@ -111,15 +112,16 @@ def sliced(loaf, max):
         slice, loaf = loaf[0:width], loaf[width:]
         yield slice
 
+
 def color(text, color=None, background=None, light=False, enabled=True):
     """
     Return text in desired color if coloring enabled
-    
+
     Available colors: black red green yellow blue magenta cyan white.
     Alternatively color can be prefixed with "light", e.g. lightgreen.
     """
     colors = {"black": 30, "red": 31, "green": 32, "yellow": 33,
-            "blue": 34, "magenta": 35, "cyan": 36, "white": 37}
+              "blue": 34, "magenta": 35, "cyan": 36, "white": 37}
     # Nothing do do if coloring disabled
     if not enabled:
         return text
@@ -131,9 +133,10 @@ def color(text, color=None, background=None, light=False, enabled=True):
     background = background and ";{0}".format(colors[background] + 10) or ""
     light = light and 1 or 0
     # Starting and finishing sequence
-    start = "\033[{0}{1}{2}m".format(light , color, background)
+    start = "\033[{0}{1}{2}m".format(light, color, background)
     finish = "\033[1;m"
     return "".join([start, text, finish])
+
 
 def human(time):
     """ Convert timedelta into a human readable format """
@@ -144,22 +147,22 @@ def human(time):
     count["hour"] = time.seconds / 3600
     count["minute"] = (time.seconds - 3600 * count["hour"]) / 60
     count["second"] = (
-            time.seconds - 3600 * count["hour"] - 60 * count["minute"])
+        time.seconds - 3600 * count["hour"] - 60 * count["minute"])
     return listed([
-            listed(count[period], period)
-            for period in ["year", "month", "day", "hour", "minute", "second"]
-            if count[period] > 0
-            or time.seconds == time.days == 0 and period == "second"])
+        listed(count[period], period)
+        for period in ["year", "month", "day", "hour", "minute", "second"]
+        if count[period] > 0 or time.seconds == time.days == 0 and period == "second"])
+
 
 def ascii(text):
     """ Transliterate special unicode characters into pure ascii """
-    if not isinstance(text, unicode):
-        text = unicode(text)
-    return unicodedata.normalize('NFKD', text).encode('ascii','ignore')
+    return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore')
+
 
 def info(message, newline=True):
     """ Log provided info message to the standard error output """
     sys.stderr.write(message + ("\n" if newline else ""))
+
 
 def header(text, width=70):
     """ Print a simple header (text with tilde underline) """

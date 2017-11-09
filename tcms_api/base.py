@@ -51,6 +51,7 @@ from tcms_api.xmlrpc import NitrateError
 #  Internal Utilities
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 def _getter(field):
     """
     Simple getter factory function.
@@ -67,6 +68,7 @@ def _getter(field):
         return getattr(self, "_" + field)
 
     return getter
+
 
 def _setter(field):
     """
@@ -85,7 +87,7 @@ def _setter(field):
         if getattr(self, "_" + field) != value:
             setattr(self, "_" + field, value)
             log.info(u"Updating {0}'s {1} to '{2}'".format(
-                    self.identifier, field, value))
+                self.identifier, field, value))
             # Remember modified state if caching
             if config.get_cache_level() != config.CACHE_NONE:
                 self._modified = True
@@ -94,6 +96,7 @@ def _setter(field):
                 self._update()
 
     return setter
+
 
 def _idify(id):
     """
@@ -127,6 +130,7 @@ def _idify(id):
 #  NitrateNone Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class NitrateNone(object):
     """ Used for distinguishing uninitialized values from regular 'None' """
     pass
@@ -135,6 +139,7 @@ class NitrateNone(object):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Nitrate Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Nitrate(object):
     """
@@ -184,7 +189,7 @@ class Nitrate(object):
             else:
                 id = "UNKNOWN"
         return "{0}#{1}".format(
-                self._prefix, str(id).rjust(self._identifier_width, "0"))
+            self._prefix, str(id).rjust(self._identifier_width, "0"))
 
     @property
     def _server(self):
@@ -193,17 +198,17 @@ class Nitrate(object):
         # Connect to the server unless already connected
         if Nitrate._connection is None:
             log.debug(u"Contacting server {0}".format(
-                    Config().nitrate.url))
+                Config().nitrate.url))
             # Plain authentication if username & password given
             try:
                 Nitrate._connection = xmlrpc.NitrateXmlrpc(
-                        Config().nitrate.username,
-                        Config().nitrate.password,
-                        Config().nitrate.url).server
+                    Config().nitrate.username,
+                    Config().nitrate.password,
+                    Config().nitrate.url).server
             # Kerberos otherwise
             except AttributeError:
                 Nitrate._connection = xmlrpc.NitrateKerbXmlrpc(
-                        Config().nitrate.url).server
+                    Config().nitrate.url).server
 
         # Return existing connection
         Nitrate._requests += 1
@@ -256,7 +261,7 @@ class Nitrate(object):
     def _is_expired(self):
         """ Check if cached object has expired """
         return self._fetched is None or (
-                datetime.datetime.now() - self._fetched) > self._expiration
+            datetime.datetime.now() - self._fetched) > self._expiration
 
     def _is_initialized(self, id_or_inject, **kwargs):
         """
@@ -272,7 +277,7 @@ class Nitrate(object):
             inject = id_or_inject
         # Object identified by name
         elif isinstance(id_or_inject, six.string_types):
-            name =  id_or_inject
+            name = id_or_inject
         # Regular object id
         else:
             id = id_or_inject
@@ -326,7 +331,7 @@ class Nitrate(object):
                 cls._cache[id] = new
             elif isinstance(id, six.string_types) or "name" in kwargs:
                 log.cache("Caching {0} '{1}'".format(
-                        cls.__name__, (id or kwargs.get("name"))))
+                    cls.__name__, (id or kwargs.get("name"))))
             return new
 
     def __init__(self, id=None, prefix="ID"):
@@ -346,16 +351,12 @@ class Nitrate(object):
                 self._id = int(id)
             except ValueError:
                 raise NitrateError("Invalid {0} id: '{1}'".format(
-                        self.__class__.__name__, id))
+                    self.__class__.__name__, id))
 
     def __str__(self):
         """ Provide ascii string representation """
-        return utils.ascii(unicode(self))
-
-    def __unicode__(self):
-        """ Short summary about the connection """
-        return u"Nitrate server: {0}\nTotal requests handled: {1}".format(
-                Config().nitrate.url, self._requests)
+        return utils.ascii("Nitrate server: {0}\nTotal requests handled: {1}".format(
+            Config().nitrate.url, self._requests))
 
     def __eq__(self, other):
         """ Objects are compared based on their id """
@@ -419,5 +420,6 @@ class Nitrate(object):
         for key in keys:
             self.__class__._cache[key] = self
 
+
 # We need to import cache only here because of cyclic import
-from tcms_api.cache import Cache
+from tcms_api.cache import Cache  # noqa: E402

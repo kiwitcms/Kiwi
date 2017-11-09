@@ -41,9 +41,11 @@ from tcms_api.xmlrpc import NitrateError
 #  Exceptions
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class TeiidError(NitrateError):
     """ General Teiid Error """
     pass
+
 
 class TeiidNotConfigured(TeiidError):
     """ Teiid not configured """
@@ -52,6 +54,7 @@ class TeiidNotConfigured(TeiidError):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Teiid Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Teiid(object):
     """ Teiid interface for Nitrate """
@@ -72,10 +75,10 @@ class Teiid(object):
             return
         # Initialize the connection
         log.debug("Connecting as {0} to database {1} at {2}:{3}".format(
-                user, database, host, port))
+                  user, database, host, port))
         try:
             self.connection = psycopg2.connect(database=database,
-                    user=user, password=password, host=host, port=port)
+                                               user=user, password=password, host=host, port=port)
         except psycopg2.DatabaseError as error:
             log.error("Teiid connect error: {0}".format(error))
             raise TeiidError("Failed to connect to the Teiid instance")
@@ -95,9 +98,7 @@ class Teiid(object):
         # Parse columns, fetch rows
         columns = [desc[0] for desc in cursor.description]
         rows = cursor.fetchall()
-        # Convert longs into ints and dictify the table
-        rows = [[int(item) if isinstance(item, long) else item
-                for item in row] for row in rows]
+        # dictify the table
         return [dict(zip(columns, row)) for row in rows]
 
     def run_case_runs(self, testrun):

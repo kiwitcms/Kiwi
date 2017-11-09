@@ -37,11 +37,12 @@ from tcms_api.base import Nitrate, NitrateNone, _getter, _setter, _idify
 from tcms_api.utils import pretty
 from tcms_api.xmlrpc import NitrateError
 from tcms_api.immutable import (Build, CaseStatus, Category, PlanStatus,
-        PlanType, Priority, Product, RunStatus, Status, Tag, User, Version)
+                                PlanType, Priority, Product, RunStatus, Status, Tag, User, Version)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Mutable Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Mutable(Nitrate):
     """
@@ -72,10 +73,10 @@ class Mutable(Nitrate):
             # Data are now in sync with the server
             self._fetched = datetime.datetime.now()
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestPlan Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class TestPlan(Mutable):
     """
@@ -90,52 +91,48 @@ class TestPlan(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["author", "caseplans", "children", "components", "name",
-            "owner", "parent", "product", "status", "tags", "testcases",
-            "testruns", "type", "version"]
+                   "owner", "parent", "product", "status", "tags", "testcases",
+                   "testruns", "type", "version"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TestPlan Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     # Read-only properties
-    id = property(_getter("id"),
-            doc="Test plan id.")
-    author = property(_getter("author"),
-            doc="Test plan author.")
-    children = property(_getter("children"),
-            doc="Child test plans.")
-    components = property(_getter("components"),
-            doc="Relevant components.")
-    tags = property(_getter("tags"),
-            doc="Attached tags.")
+    id = property(_getter("id"), doc="Test plan id.")
+    author = property(_getter("author"), doc="Test plan author.")
+    children = property(_getter("children"), doc="Child test plans.")
+    components = property(_getter("components"), doc="Relevant components.")
+    tags = property(_getter("tags"), doc="Attached tags.")
     testcases = property(_getter("testcases"),
-            doc="Container with test cases linked to this plan.")
+                         doc="Container with test cases linked to this plan.")
     caseplans = property(_getter("caseplans"),
-            doc="Test case plan objects related to this plan.")
+                         doc="Test case plan objects related to this plan.")
     testruns = property(_getter("testruns"),
-            doc="Test runs related to this plan.")
+                        doc="Test runs related to this plan.")
 
     # Read-write properties
     name = property(_getter("name"), _setter("name"),
-            doc="Test plan name.")
+                    doc="Test plan name.")
     owner = property(_getter("owner"), _setter("owner"),
-            doc="Test plan owner.")
+                     doc="Test plan owner.")
     parent = property(_getter("parent"), _setter("parent"),
-            doc="Parent test plan.")
+                      doc="Parent test plan.")
     product = property(_getter("product"), _setter("product"),
-            doc="Test plan product.")
+                       doc="Test plan product.")
     type = property(_getter("type"), _setter("type"),
-            doc="Test plan type.")
+                    doc="Test plan type.")
     status = property(_getter("status"), _setter("status"),
-            doc="Test plan status.")
+                      doc="Test plan status.")
     version = property(_getter("version"), _setter("version"),
-            doc="Default product version.")
+                       doc="Default product version.")
 
     @property
     def synopsis(self):
         """ One line test plan overview """
-        return "{0} - {1} ({2} cases, {3} runs)".format(self.identifier,
-                self.name, len(self.testcases), len(self.testruns))
+        return "{0} - {1} ({2} cases, {3} runs)".format(
+               self.identifier,
+               self.name, len(self.testcases), len(self.testruns))
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
@@ -155,7 +152,7 @@ class TestPlan(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __init__(self, id=None, name=None, product=None, version=None,
-            type=None, **kwargs):
+                 type=None, **kwargs):
         """
         Initialize a test plan or create a new one.
 
@@ -170,7 +167,8 @@ class TestPlan(Mutable):
 
         # Initialize (unless already done)
         id, ignore, inject, initialized = self._is_initialized(id)
-        if initialized: return
+        if initialized:
+            return
         Mutable.__init__(self, id, prefix="TP")
 
         # If inject given, fetch test case data from it
@@ -179,12 +177,12 @@ class TestPlan(Mutable):
         # Create a new test plan if name, type, product and version provided
         elif name and type and product and version:
             self._create(name=name, product=product, version=version,
-                    type=type, **kwargs)
+                         type=type, **kwargs)
         # Otherwise just check that the test plan id was provided
         elif not id:
             raise NitrateError(
-                    "Need either id or name, product, version "
-                    "and type to initialize the test plan")
+                "Need either id or name, product, version "
+                "and type to initialize the test plan")
 
     def __iter__(self):
         """ Provide test cases as the default iterator """
@@ -290,7 +288,7 @@ class TestPlan(Mutable):
             self._id = inject["plan_id"]
         log.debug("Initializing test plan " + self.identifier)
         log.data(pretty(inject))
-        if not "plan_id" in inject:
+        if "plan_id" not in inject:
             log.data(pretty(inject))
             raise NitrateError("Failed to initialize " + self.identifier)
 
@@ -302,12 +300,12 @@ class TestPlan(Mutable):
             self._owner = None
         self._name = inject["name"]
         self._product = Product({
-                "id": inject["product_id"],
-                "name": inject["product"]})
+            "id": inject["product_id"],
+            "name": inject["product"]})
         self._version = Version({
-                "id": inject["product_version_id"],
-                "value": inject["product_version"],
-                "product_id": inject["product_id"]})
+            "id": inject["product_version_id"],
+            "value": inject["product_version"],
+            "product_id": inject["product_id"]})
         self._type = PlanType(inject["type_id"])
         self._status = PlanStatus(inject["is_active"] in ["True", True])
         if inject["parent_id"] is not None:
@@ -324,7 +322,7 @@ class TestPlan(Mutable):
         # If all tags are cached, initialize them directly from the inject
         if "tag" in inject and Tag._is_cached(inject["tag"]):
             self._tags = PlanTags(
-                    self, inset=[Tag(tag) for tag in inject["tag"]])
+                self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
             self._tags = PlanTags(self)
 
@@ -379,10 +377,10 @@ class TestPlan(Mutable):
         # Pick the correct CasePlan object
         try:
             caseplan = [caseplan for caseplan in self.caseplans
-                    if caseplan.testcase == testcase][0]
+                        if caseplan.testcase == testcase][0]
         except LookupError:
             raise NitrateError("No CasePlan for {0} in {1} found".format(
-                    testcase.identifier, self.identifier))
+                testcase.identifier, self.identifier))
         # Modify the sortkey if requested
         if sortkey is not None:
             caseplan.sortkey = sortkey
@@ -392,6 +390,7 @@ class TestPlan(Mutable):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestRun Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class TestRun(Mutable):
     """
@@ -406,8 +405,8 @@ class TestRun(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["build", "caseruns", "errata", "finished", "manager",
-            "notes", "product", "started", "status", "summary", "tags",
-            "tester", "testcases", "testplan", "time"]
+                   "notes", "product", "started", "status", "summary", "tags",
+                   "tester", "testcases", "testplan", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TestRun Properties
@@ -415,45 +414,45 @@ class TestRun(Mutable):
 
     # Read-only properties
     id = property(_getter("id"),
-            doc="Test run id.")
+                  doc="Test run id.")
     testplan = property(_getter("testplan"),
-            doc="Test plan related to this test run.")
+                        doc="Test plan related to this test run.")
     tags = property(_getter("tags"),
-            doc="Attached tags.")
+                    doc="Attached tags.")
     started = property(_getter("started"),
-            doc="Timestamp when the test run was started (datetime).")
+                       doc="Timestamp when the test run was started (datetime).")
     finished = property(_getter("finished"),
-            doc="Timestamp when the test run was finished (datetime).")
+                        doc="Timestamp when the test run was finished (datetime).")
     caseruns = property(_getter("caseruns"),
-            doc="CaseRun objects related to this test run.")
+                        doc="CaseRun objects related to this test run.")
     testcases = property(_getter("testcases"),
-            doc="""TestCase objects related to this test run\n
-            Supports common container methods add(), remove() and clear()
-            for adding and removing testcases to/from the test run.""")
+                         doc="""TestCase objects related to this test run\n
+                         Supports common container methods add(), remove() and clear()
+                         for adding and removing testcases to/from the test run.""")
 
     # Read-write properties
     build = property(_getter("build"), _setter("build"),
-            doc="Build relevant for this test run.")
+                     doc="Build relevant for this test run.")
     manager = property(_getter("manager"), _setter("manager"),
-            doc="Manager responsible for this test run.")
+                       doc="Manager responsible for this test run.")
     notes = property(_getter("notes"), _setter("notes"),
-            doc="Test run notes.")
+                     doc="Test run notes.")
     status = property(_getter("status"), _setter("status"),
-            doc="Test run status")
+                      doc="Test run status")
     summary = property(_getter("summary"), _setter("summary"),
-            doc="Test run summary.")
+                       doc="Test run summary.")
     tester = property(_getter("tester"), _setter("tester"),
-            doc="Default tester.")
+                      doc="Default tester.")
     time = property(_getter("time"), _setter("time"),
-            doc="Estimated time.")
+                    doc="Estimated time.")
     errata = property(_getter("errata"), _setter("errata"),
-            doc="Errata related to this test run.")
+                      doc="Errata related to this test run.")
 
     @property
     def synopsis(self):
         """ One-line test run overview """
         return "{0} - {1} ({2} cases)".format(
-                self.identifier, self.summary, len(self.caseruns))
+            self.identifier, self.summary, len(self.caseruns))
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
@@ -497,7 +496,8 @@ class TestRun(Mutable):
 
         # Initialize (unless already done)
         id, name, inject, initialized = self._is_initialized(id)
-        if initialized: return
+        if initialized:
+            return
         Mutable.__init__(self, id, prefix="TR")
 
         # If inject given, fetch test case data from it
@@ -509,7 +509,7 @@ class TestRun(Mutable):
         # Otherwise just check that the test run id was provided
         elif not id:
             raise NitrateError(
-                    "Need either id or test plan to initialize the test run")
+                "Need either id or test plan to initialize the test run")
 
     def __iter__(self):
         """ Provide test case runs as the default iterator """
@@ -531,8 +531,8 @@ class TestRun(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _create(self, testplan, product=None, version=None, build=None,
-            summary=None, notes=None, manager=None, tester=None, tags=None,
-            errata=None, testcases=None, **kwargs):
+                summary=None, notes=None, manager=None, tester=None, tags=None,
+                errata=None, testcases=None, **kwargs):
         """ Create a new test run """
 
         hash = {}
@@ -585,13 +585,14 @@ class TestRun(Mutable):
         # be added, otherwise all CONFIRMED cases will be linked.
         if testcases is not None:
             hash["case"] = [case.id if isinstance(case, TestCase) else case
-                    for case in testcases]
+                            for case in testcases]
         else:
             hash["case"] = [case.id for case in testplan
-                    if case.status == CaseStatus("CONFIRMED")]
+                            if case.status == CaseStatus("CONFIRMED")]
 
         # Tag with supplied tags
-        if tags: hash["tag"] = ",".join(tags)
+        if tags:
+            hash["tag"] = ",".join(tags)
 
         # Submit to the server and initialize
         log.info(u"Creating a new test run based on {0}".format(testplan))
@@ -602,7 +603,7 @@ class TestRun(Mutable):
             self._id = testrunhash["run_id"]
         except TypeError:
             log.debug(u"Failed to create a new test run based on {0}".format(
-                    testplan))
+                      testplan))
             log.data(pretty(hash))
             log.data(pretty(testrunhash))
             raise NitrateError("Failed to create test run")
@@ -649,12 +650,12 @@ class TestRun(Mutable):
         self._errata = inject["errata_id"]
         try:
             self._started = datetime.datetime.strptime(
-                    inject["start_date"], "%Y-%m-%d %H:%M:%S")
+                inject["start_date"], "%Y-%m-%d %H:%M:%S")
         except TypeError:
             self._started = None
         try:
             self._finished = datetime.datetime.strptime(
-                    inject["stop_date"], "%Y-%m-%d %H:%M:%S")
+                inject["stop_date"], "%Y-%m-%d %H:%M:%S")
         except TypeError:
             self._finished = None
 
@@ -664,7 +665,7 @@ class TestRun(Mutable):
         # If all tags are cached, initialize them directly from the inject
         if "tag" in inject and Tag._is_cached(inject["tag"]):
             self._tags = RunTags(
-                    self, inset=[Tag(tag) for tag in inject["tag"]])
+                self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
             self._tags = RunTags(self)
 
@@ -715,6 +716,7 @@ class TestRun(Mutable):
 #  TestCase Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class TestCase(Mutable):
     """
     Test case.
@@ -729,10 +731,10 @@ class TestCase(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["action", "arguments", "author", "automated",
-            "autoproposed", "breakdown", "bugs", "category", "components",
-            "created", "effect", "link", "manual", "notes", "plans",
-            "priority", "script", "setup", "sortkey", "status", "summary",
-            "tags", "tester", "testplans", "time"]
+                   "autoproposed", "breakdown", "bugs", "category", "components",
+                   "created", "effect", "link", "manual", "notes", "plans",
+                   "priority", "script", "setup", "sortkey", "status", "summary",
+                   "tags", "tester", "testplans", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TestCase Properties
@@ -740,67 +742,67 @@ class TestCase(Mutable):
 
     # Read-only properties
     id = property(_getter("id"),
-            doc="Test case id (read-only).")
+                  doc="Test case id (read-only).")
     author = property(_getter("author"),
-            doc="Test case author.")
+                      doc="Test case author.")
     created = property(_getter("created"),
-            doc="Test case creation date (datetime).")
+                       doc="Test case creation date (datetime).")
     tags = property(_getter("tags"),
-            doc="Attached tags.")
+                    doc="Attached tags.")
     bugs = property(_getter("bugs"),
-            doc="Attached bugs.")
+                    doc="Attached bugs.")
     testplans = property(_getter("testplans"),
-            doc="Test plans linked to this test case.")
+                         doc="Test plans linked to this test case.")
     components = property(_getter("components"),
-            doc="Components related to this test case.")
+                          doc="Components related to this test case.")
     setup = property(_getter("setup"),
-            doc="Setup steps to prepare the machine for the test case.")
+                     doc="Setup steps to prepare the machine for the test case.")
     action = property(_getter("action"),
-            doc="Actions to be performed.")
+                      doc="Actions to be performed.")
     effect = property(_getter("effect"),
-            doc="Expected Results to be measured.")
+                      doc="Expected Results to be measured.")
     breakdown = property(_getter("breakdown"),
-            doc="Breakdown steps to return machine to original state.")
+                         doc="Breakdown steps to return machine to original state.")
 
     @property
     def synopsis(self):
         """ Short summary about the test case """
         plans = len(self.testplans)
         return "{0} ({1}, {2}, {3}, {4} {5})".format(
-                self, self.category, self.priority, self.status,
-                plans, "test plan" if plans == 1 else "test plans")
+            self, self.category, self.priority, self.status,
+            plans, "test plan" if plans == 1 else "test plans")
 
     # Read-write properties
     automated = property(_getter("automated"), _setter("automated"),
-            doc="Automation flag. True if the test case is automated.")
+                         doc="Automation flag. True if the test case is automated.")
     autoproposed = property(_getter("autoproposed"), _setter("autoproposed"),
-            doc="True if the test case is proposed for automation.")
+                            doc="True if the test case is proposed for automation.")
     arguments = property(_getter("arguments"), _setter("arguments"),
-            doc="Test script arguments (used for automation).")
+                         doc="Test script arguments (used for automation).")
     category = property(_getter("category"), _setter("category"),
-            doc="Test case category.")
+                        doc="Test case category.")
     link = property(_getter("link"), _setter("link"),
-            doc="Test case reference link.")
+                    doc="Test case reference link.")
     manual = property(_getter("manual"), _setter("manual"),
-            doc="Manual flag. True if the test case is manual.")
+                      doc="Manual flag. True if the test case is manual.")
     notes = property(_getter("notes"), _setter("notes"),
-            doc="Test case notes.")
+                     doc="Test case notes.")
     priority = property(_getter("priority"), _setter("priority"),
-            doc="Test case priority.")
+                        doc="Test case priority.")
     requirement = property(_getter("requirement"), _setter("requirement"),
-            doc="Test case requirements.")
+                           doc="Test case requirements.")
     script = property(_getter("script"), _setter("script"),
-            doc="Test script (used for automation).")
+                      doc="Test script (used for automation).")
     # XXX sortkey = property(_getter("sortkey"), _setter("sortkey"),
     #        doc="Sort key.")
     status = property(_getter("status"), _setter("status"),
-            doc="Current test case status.")
+                      doc="Current test case status.")
     summary = property(_getter("summary"), _setter("summary"),
-            doc="Summary describing the test case.")
+                       doc="Summary describing the test case.")
     tester = property(_getter("tester"), _setter("tester"),
-            doc="Default tester.")
+                      doc="Default tester.")
     time = property(_getter("time"), _setter("time"),
-            doc="Estimated time.")
+                    doc="Estimated time.")
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
@@ -850,7 +852,8 @@ class TestCase(Mutable):
 
         # Initialize (unless already done)
         id, name, inject, initialized = self._is_initialized(id)
-        if initialized: return
+        if initialized:
+            return
         Mutable.__init__(self, id, prefix="TC")
 
         # If inject given, fetch test case data from it
@@ -862,7 +865,7 @@ class TestCase(Mutable):
         # Otherwise just check that the test case id was provided
         elif not id:
             raise NitrateError("Need either id or both summary and category "
-                    "to initialize the test case")
+                               "to initialize the test case")
 
     def __unicode__(self):
         """ Test case id & summary for printing """
@@ -881,18 +884,18 @@ class TestCase(Mutable):
             del query["manual"]
         # Map to appropriate value of 'is_automated' attribute
         if manual is not None or automated is not None:
-            if automated == False and manual == False:
+            if automated is False and manual is False:
                 raise NitrateError("Invalid search "
-                        "('manual' and 'automated' cannot be both False)")
-            elif automated == False:
+                                   "('manual' and 'automated' cannot be both False)")
+            elif automated is False:
                 query["is_automated"] = 0
-            elif manual == False:
+            elif manual is False:
                 query["is_automated"] = 1
-            elif automated == True and manual == True:
+            elif automated is True and manual is True:
                 query["is_automated"] = 2
-            elif automated == True:
+            elif automated is True:
                 query["is_automated__in"] = [1, 2]
-            elif manual == True:
+            elif manual is True:
                 query["is_automated__in"] = [0, 2]
         log.debug("Searching for test cases")
         log.data(pretty(query))
@@ -915,7 +918,7 @@ class TestCase(Mutable):
         product = kwargs.get("product")
         if isinstance(category, six.string_types) and not kwargs.get("product"):
             raise NitrateError(
-                    "Need product when category specified by name")
+                "Need product when category specified by name")
         # Category & Product
         if isinstance(category, six.string_types):
             category = Category(category=category, product=product)
@@ -989,7 +992,6 @@ class TestCase(Mutable):
         self._fetch(testcasehash)
         log.info(u"Successfully created {0}".format(self))
 
-
     def _fetch(self, inject=None):
         """ Initialize / refresh test case data.
 
@@ -1020,7 +1022,7 @@ class TestCase(Mutable):
         self._category = Category(inject["category_id"])
         if isinstance(inject["create_date"], six.string_types):
             self._created = datetime.datetime.strptime(
-                    inject["create_date"], "%Y-%m-%d %H:%M:%S")
+                inject["create_date"], "%Y-%m-%d %H:%M:%S")
         else:
             self._created = inject["create_date"]
         self._link = inject["extra_link"]
@@ -1062,7 +1064,7 @@ class TestCase(Mutable):
         # If all tags are cached, initialize them directly from the inject
         if "tag" in inject and Tag._is_cached(inject["tag"]):
             self._tags = CaseTags(
-                    self, inset=[Tag(tag) for tag in inject["tag"]])
+                self, inset=[Tag(tag) for tag in inject["tag"]])
         else:
             self._tags = CaseTags(self)
 
@@ -1115,10 +1117,10 @@ class TestCase(Mutable):
         # Update self (if modified)
         Mutable.update(self)
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseRun Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseRun(Mutable):
     """
@@ -1136,7 +1138,7 @@ class CaseRun(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["assignee", "bugs", "build", "notes", "sortkey", "status",
-            "testcase", "testrun"]
+                   "testcase", "testrun"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Case Run Properties
@@ -1144,25 +1146,25 @@ class CaseRun(Mutable):
 
     # Read-only properties
     id = property(_getter("id"),
-            doc="Test case run id.")
+                  doc="Test case run id.")
     testcase = property(_getter("testcase"),
-            doc = "Test case object.")
+                        doc="Test case object.")
     testrun = property(_getter("testrun"),
-            doc = "Test run object.")
+                       doc="Test run object.")
     bugs = property(_getter("bugs"),
-            doc = "Attached bugs.")
+                    doc="Attached bugs.")
 
     # Read-write properties
     assignee = property(_getter("assignee"), _setter("assignee"),
-            doc = "Test case run assignee object.")
+                        doc="Test case run assignee object.")
     build = property(_getter("build"), _setter("build"),
-            doc = "Test case run build object.")
+                     doc="Test case run build object.")
     notes = property(_getter("notes"), _setter("notes"),
-            doc = "Test case run notes (string).")
+                     doc="Test case run notes (string).")
     sortkey = property(_getter("sortkey"), _setter("sortkey"),
-            doc = "Test case sort key (int).")
+                       doc="Test case sort key (int).")
     status = property(_getter("status"), _setter("status"),
-            doc = "Test case run status object.")
+                      doc="Test case run status object.")
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
@@ -1190,7 +1192,8 @@ class CaseRun(Mutable):
 
         # Initialize (unless already done)
         id, name, inject, initialized = self._is_initialized(id, **kwargs)
-        if initialized: return
+        if initialized:
+            return
         Mutable.__init__(self, id, prefix="CR")
 
         # If inject given, fetch test case run data from it
@@ -1202,12 +1205,12 @@ class CaseRun(Mutable):
         # Otherwise just check that the test case run id was provided
         elif not id:
             raise NitrateError("Need either id or testcase and testrun "
-                    "to initialize the case run")
+                               "to initialize the case run")
 
     def __unicode__(self):
         """ Case run id, status & summary for printing """
         return u"{0} - {1} - {2}".format(
-                self.status.shortname, self.identifier, self.testcase.summary)
+            self.status.shortname, self.identifier, self.testcase.summary)
 
     @staticmethod
     def search(**query):
@@ -1259,9 +1262,9 @@ class CaseRun(Mutable):
 
         # And finally add to testcases and caseruns containers
         self.testrun.testcases._fetch(
-                [self.testcase] + list(self.testrun.testcases))
+            [self.testcase] + list(self.testrun.testcases))
         self.testrun.caseruns._fetch(
-                [self] + list(self.testrun.caseruns))
+            [self] + list(self.testrun.caseruns))
 
     def _fetch(self, inject=None, **kwargs):
         """ Initialize / refresh test case run data.
@@ -1316,7 +1319,8 @@ class CaseRun(Mutable):
         hash["notes"] = self.notes
         hash["sortkey"] = self.sortkey
         # Work around BZ#715596
-        if self.notes is None: hash["notes"] = ""
+        if self.notes is None:
+            hash["notes"] = ""
         log.info("Updating case run " + self.identifier)
         log.data(pretty(hash))
         # Use custom proxy if given
@@ -1337,6 +1341,7 @@ class CaseRun(Mutable):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CasePlan Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CasePlan(Mutable):
     """
@@ -1363,7 +1368,7 @@ class CasePlan(Mutable):
 
     # Read-write properties
     sortkey = property(_getter("sortkey"), _setter("sortkey"),
-            doc="Test case plan sort key (int).")
+                       doc="Test case plan sort key (int).")
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  CasePlan Special
@@ -1373,7 +1378,7 @@ class CasePlan(Mutable):
         """ Create a new object, handle caching if enabled """
         # Parse our internal fake id if both testcase and testplan given
         id = CasePlan._fake_id(
-                id, kwargs.get("testcase"), kwargs.get("testplan"))
+            id, kwargs.get("testcase"), kwargs.get("testplan"))
         return super(CasePlan, cls).__new__(cls, id, *args, **kwargs)
 
     def __init__(self, id=None, testcase=None, testplan=None, **kwargs):
@@ -1386,7 +1391,8 @@ class CasePlan(Mutable):
         id = CasePlan._fake_id(id, testcase, testplan)
         # Initialize (unless already done)
         id, ignore, inject, initialized = self._is_initialized(id, **kwargs)
-        if initialized: return
+        if initialized:
+            return
         Mutable.__init__(self, id, prefix="CP")
         # If inject given, fetch test case plan data from it
         if inject:
@@ -1394,14 +1400,14 @@ class CasePlan(Mutable):
         # Otherwise just make sure all requested parameter were given
         elif not id and (testcase is None or testplan is None):
             raise NitrateError("Need either internal id or both test case "
-                    "and test plan to initialize the CasePlan object")
+                               "and test plan to initialize the CasePlan object")
 
     def __unicode__(self):
         """ Test case, test plan and sortkey for printing """
         return u"{0} in {1} with sortkey {2}".format(
-                self.testcase.identifier,
-                self.testplan.identifier,
-                self.sortkey)
+            self.testcase.identifier,
+            self.testplan.identifier,
+            self.sortkey)
 
     @staticmethod
     def _fake_id(id, testcase, testplan):
@@ -1450,14 +1456,16 @@ class CasePlan(Mutable):
         """ Save test case plan data to the server """
         log.info("Updating case plan {0}".format(self.identifier))
         log.data("{0}, {1}, {2}".format(
-                self.testcase.id, self.testplan.id, self.sortkey))
+            self.testcase.id, self.testplan.id, self.sortkey))
         # Use custom proxy if given
         if proxy is None:
             proxy = self._multicall
         proxy.TestCasePlan.update(
-                self.testcase.id, self.testplan.id, self.sortkey)
+            self.testcase.id, self.testplan.id, self.sortkey)
+
 
 # We need to import containers here because of cyclic import
-from tcms_api.containers import (CaseBugs, CaseComponents, CasePlans,
-        CaseRunBugs, CaseTags, ChildPlans, PlanCasePlans, PlanCases,
-        PlanComponents, PlanRuns, PlanTags, RunCaseRuns, RunCases, RunTags)
+from tcms_api.containers import (
+    CaseBugs, CaseComponents, CasePlans,
+    CaseRunBugs, CaseTags, ChildPlans, PlanCasePlans, PlanCases,
+    PlanComponents, PlanRuns, PlanTags, RunCaseRuns, RunCases, RunTags)  # noqa: E402

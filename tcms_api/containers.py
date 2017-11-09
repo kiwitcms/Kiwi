@@ -74,11 +74,12 @@ from tcms_api.base import Nitrate, NitrateNone, _getter, _idify
 from tcms_api.immutable import Component, Bug, Tag
 from tcms_api.xmlrpc import NitrateError
 from tcms_api.mutable import (
-        Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
+    Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Container Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Container(Mutable):
     """
@@ -180,7 +181,7 @@ class Container(Mutable):
         # Create copies of the initial set (if given)
         if inset is not None:
             log.debug("Initializing {0} for {1} from the inset".format(
-                    self.__class__.__name__, self._identifier))
+                self.__class__.__name__, self._identifier))
             log.debug(pretty(inset))
             self._current = set(inset)
             self._original = set(inset)
@@ -203,10 +204,10 @@ class Container(Mutable):
         add_items = items - self._items
         if add_items:
             log.info("Adding {0} to {1}'s {2}".format(
-                    listed([item.identifier for item in add_items],
-                        self._class.__name__, max=10),
-                    self._object.identifier,
-                    self.__class__.__name__))
+                listed([item.identifier for item in add_items],
+                       self._class.__name__, max=10),
+                self._object.identifier,
+                self.__class__.__name__))
             self._items.update(items)
             if config.get_cache_level() != config.CACHE_NONE:
                 self._modified = True
@@ -226,10 +227,10 @@ class Container(Mutable):
         remove_items = items.intersection(self._items)
         if remove_items:
             log.info("Removing {0} from {1}'s {2}".format(
-                    listed([item.identifier for item in remove_items],
-                        self._class.__name__, max=10),
-                    self._object.identifier,
-                    self.__class__.__name__))
+                listed([item.identifier for item in remove_items],
+                       self._class.__name__, max=10),
+                self._object.identifier,
+                self.__class__.__name__))
             self._items.difference_update(items)
             if config.get_cache_level() != config.CACHE_NONE:
                 self._modified = True
@@ -252,11 +253,13 @@ class Container(Mutable):
         """ Update container changes to the server """
         # Added items
         added = self._current - self._original
-        if added: self._add(added)
+        if added:
+            self._add(added)
 
         # Removed items
         removed = self._original - self._current
-        if removed: self._remove(removed)
+        if removed:
+            self._remove(removed)
 
         # Save the current state as the original (for future updates)
         self._original = set(self._current)
@@ -268,27 +271,32 @@ class Container(Mutable):
         # fully rebuild yet (__hash__ failed because of missing self._id).
         # So we need to convert containers into list of ids before the
         # cache dump and instantiate the objects back after cache restore.
-        if self._current is NitrateNone: return
+        if self._current is NitrateNone:
+            return
+
         self._original = [item.id for item in self._original]
         self._current = [item.id for item in self._current]
 
     def _wake(self):
         """ Restore container object after loading from cache """
         # See _sleep() method above for explanation why this is necessary
-        if self._current is NitrateNone: return
+        if self._current is NitrateNone:
+            return
+
         if self._class._is_cached(list(self._original)):
             log.cache("Waking up {0} for {1}".format(
-                    self.__class__.__name__, self._identifier))
+                self.__class__.__name__, self._identifier))
             self._original = set([self._class(id) for id in self._original])
             self._current = set([self._class(id) for id in self._current])
         else:
             log.cache("Skipping wake up of {0} for {1}".format(
-                    self.__class__.__name__, self._identifier))
+                self.__class__.__name__, self._identifier))
             self._init()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   Case Components Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseComponents(Container):
     """ Components linked to a test case """
@@ -320,13 +328,14 @@ class CaseComponents(Container):
             return
         log.info("Fetching {0}'s components".format(self._identifier))
         self._current = set([Component(inject)
-                for inject in self._server.TestCase.get_components(self.id)])
+                            for inject in self._server.TestCase.get_components(self.id)])
         self._original = set(self._current)
 
     def _add(self, components):
         """ Link provided components to the test case """
-        log.info(u"Linking {1} to {0}".format(self._identifier,
-                    listed([component.name for component in components])))
+        log.info(u"Linking {1} to {0}".format(
+            self._identifier,
+            listed([component.name for component in components])))
         data = [component.id for component in components]
         log.data(data)
         self._server.TestCase.add_component(self.id, data)
@@ -335,12 +344,13 @@ class CaseComponents(Container):
         """ Unlink provided components from the test case """
         for component in components:
             log.info(u"Unlinking {0} from {1}".format(
-                    component.name, self._identifier))
+                component.name, self._identifier))
             self._server.TestCase.remove_component(self.id, component.id)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   Plan Components Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanComponents(Container):
     """ Components linked to a test plan """
@@ -372,13 +382,14 @@ class PlanComponents(Container):
             return
         log.info("Fetching {0}'s components".format(self._identifier))
         self._current = set([Component(inject)
-                for inject in self._server.TestPlan.get_components(self.id)])
+                            for inject in self._server.TestPlan.get_components(self.id)])
         self._original = set(self._current)
 
     def _add(self, components):
         """ Link provided components to the test plan """
-        log.info(u"Linking {1} to {0}".format(self._identifier,
-                    listed([component.name for component in components])))
+        log.info(u"Linking {1} to {0}".format(
+            self._identifier,
+            listed([component.name for component in components])))
         data = [component.id for component in components]
         log.data(data)
         self._server.TestPlan.add_component(self.id, data)
@@ -387,12 +398,13 @@ class PlanComponents(Container):
         """ Unlink provided components from the test plan """
         for component in components:
             log.info(u"Unlinking {0} from {1}".format(
-                    component.name, self._identifier))
+                component.name, self._identifier))
             self._server.TestPlan.remove_component(self.id, component.id)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Case Bugs Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseBugs(Container):
     """ Bugs attached to a test case """
@@ -417,7 +429,7 @@ class CaseBugs(Container):
     def _add(self, bugs):
         """ Attach provided bugs to the test case """
         log.info(u"Attaching {0} to {1}".format(
-                listed(bugs), self._identifier))
+            listed(bugs), self._identifier))
         data = [{
                 "bug_id": bug.bug,
                 "bug_system_id": bug.system,
@@ -430,7 +442,7 @@ class CaseBugs(Container):
     def _remove(self, bugs):
         """ Detach provided bugs from the test case """
         log.info(u"Detaching {0} from {1}".format(
-                listed(bugs), self._identifier))
+            listed(bugs), self._identifier))
         data = [bug.bug for bug in bugs]
         log.data(pretty(data))
         self._server.TestCase.detach_bug(self.id, data)
@@ -442,6 +454,7 @@ class CaseBugs(Container):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Case Run Bugs Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseRunBugs(Container):
     """ Bugs attached to a test case run """
@@ -466,7 +479,7 @@ class CaseRunBugs(Container):
     def _add(self, bugs):
         """ Attach provided bugs to the test case """
         log.info(u"Attaching {0} to {1}".format(
-                listed(bugs), self._identifier))
+            listed(bugs), self._identifier))
         data = [{
                 "bug_id": bug.bug,
                 "bug_system_id": bug.system,
@@ -479,7 +492,7 @@ class CaseRunBugs(Container):
     def _remove(self, bugs):
         """ Detach provided bugs from the test case """
         log.info(u"Detaching {0} from {1}".format(
-                listed(bugs), self._identifier))
+            listed(bugs), self._identifier))
         data = [bug.bug for bug in bugs]
         log.data(pretty(data))
         self._server.TestCaseRun.detach_bug(self.id, data)
@@ -491,6 +504,7 @@ class CaseRunBugs(Container):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TagContainer Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class TagContainer(Container):
     """ Tag container with support for string tags """
@@ -518,6 +532,7 @@ class TagContainer(Container):
 #  Plan Tags Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class PlanTags(TagContainer):
     """ Test plan tags """
 
@@ -540,15 +555,15 @@ class PlanTags(TagContainer):
     def _add(self, tags):
         """ Attach provided tags to the test plan """
         log.info(u"Tagging {0} with {1}".format(
-                self._identifier, listed(tags, quote="'")))
+            self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test plan """
         log.info(u"Untagging {0} of {1}".format(
-                self._identifier, listed(tags, quote="'")))
+            self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.remove_tag(self.id, list(
-                tag.name for tag in tags))
+            tag.name for tag in tags))
 
     # Print unicode list of tags
     def __unicode__(self):
@@ -558,6 +573,7 @@ class PlanTags(TagContainer):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Run Tags Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class RunTags(TagContainer):
     """ Test run tags """
@@ -581,15 +597,15 @@ class RunTags(TagContainer):
     def _add(self, tags):
         """ Attach provided tags to the test run """
         log.info(u"Tagging {0} with {1}".format(
-                self._identifier, listed(tags, quote="'")))
+            self._identifier, listed(tags, quote="'")))
         self._server.TestRun.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test run """
         log.info(u"Untagging {0} of {1}".format(
-                self._identifier, listed(tags, quote="'")))
+            self._identifier, listed(tags, quote="'")))
         self._server.TestRun.remove_tag(self.id, list(
-                tag.name for tag in tags))
+            tag.name for tag in tags))
 
     # Print unicode list of tags
     def __unicode__(self):
@@ -599,6 +615,7 @@ class RunTags(TagContainer):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Case Tags Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CaseTags(TagContainer):
     """ Test case tags """
@@ -622,15 +639,14 @@ class CaseTags(TagContainer):
     def _add(self, tags):
         """ Attach provided tags to the test case """
         log.info(u"Tagging {0} with {1}".format(
-                self._identifier, listed(tags, quote="'")))
+            self._identifier, listed(tags, quote="'")))
         self._server.TestCase.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test case """
         log.info(u"Untagging {0} of {1}".format(
-                self._identifier, listed(tags, quote="'")))
-        self._server.TestCase.remove_tag(self.id, list(
-                tag.name for tag in tags))
+            self._identifier, listed(tags, quote="'")))
+        self._server.TestCase.remove_tag(self.id, list(tag.name for tag in tags))
 
     # Print unicode list of tags
     def __unicode__(self):
@@ -639,6 +655,7 @@ class CaseTags(TagContainer):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Case Plans Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class CasePlans(Container):
     """ Test plans linked to a test case """
@@ -655,13 +672,14 @@ class CasePlans(Container):
             return
         log.info("Fetching {0}'s plans".format(self._identifier))
         self._current = set([TestPlan(inject)
-                    for inject in self._server.TestCase.get_plans(self.id)])
+                            for inject in self._server.TestCase.get_plans(self.id)])
         self._original = set(self._current)
 
     def _add(self, plans):
         """ Link provided plans to the test case """
-        log.info("Linking {1} to {0}".format(self._identifier,
-                    listed([plan.identifier for plan in plans])))
+        log.info("Linking {1} to {0}".format(
+            self._identifier,
+            listed([plan.identifier for plan in plans])))
         self._server.TestCase.link_plan(self.id, [plan.id for plan in plans])
 
     def _remove(self, plans):
@@ -669,13 +687,14 @@ class CasePlans(Container):
         multicall = xmlrpclib.MultiCall(self._server)
         for plan in plans:
             log.info("Unlinking {0} from {1}".format(
-                    plan.identifier, self._identifier))
+                plan.identifier, self._identifier))
             multicall.TestCase.unlink_plan(self.id, plan.id)
         multicall()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Plan Runs Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanRuns(Container):
     """ Test runs related to a test plan """
@@ -700,7 +719,7 @@ class PlanRuns(Container):
     def _add(self, testruns):
         """ New test runs are created using TestRun() constructor """
         raise NitrateError(
-                "Use TestRun(testplan=X) for creating a new test run")
+            "Use TestRun(testplan=X) for creating a new test run")
 
     def _remove(self, testruns):
         """ Currently no support for removing test runs from test plans """
@@ -714,6 +733,7 @@ class PlanRuns(Container):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Test Cases Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanCases(Container):
     """ Test cases linked to a test plan """
@@ -744,25 +764,26 @@ class PlanCases(Container):
         # Initialize case plans if not already cached
         if not PlanCasePlans._is_cached(self._object.caseplans):
             inset = [CasePlan({
-                    # Fake our own internal id from testplan & testcase
-                    "id": _idify([self._object.id, inject["case_id"]]),
-                    "case_id": inject["case_id"],
-                    "plan_id": self._object.id,
-                    "sortkey": inject["sortkey"]
-                    }) for inject in injects]
+                # Fake our own internal id from testplan & testcase
+                "id": _idify([self._object.id, inject["case_id"]]),
+                "case_id": inject["case_id"],
+                "plan_id": self._object.id,
+                "sortkey": inject["sortkey"]
+            }) for inject in injects]
             self._object.caseplans._fetch(inset)
 
     def _add(self, cases):
         """ Link provided cases to the test plan """
         # Link provided cases on the server
-        log.info("Linking {1} to {0}".format(self._identifier,
-                    listed([case.identifier for case in cases])))
+        log.info("Linking {1} to {0}".format(
+            self._identifier,
+            listed([case.identifier for case in cases])))
         self._server.TestCase.link_plan([case.id for case in cases], self.id)
         # Add corresponding CasePlan objects to the PlanCasePlans container
         if PlanCasePlans._is_cached(self._object.caseplans):
             self._object.caseplans.add([
-                    CasePlan(testcase=case, testplan=self._object)
-                    for case in cases])
+                CasePlan(testcase=case, testplan=self._object)
+                for case in cases])
 
     def _remove(self, cases):
         """ Unlink provided cases from the test plan """
@@ -770,14 +791,14 @@ class PlanCases(Container):
         multicall = xmlrpclib.MultiCall(self._server)
         for case in cases:
             log.info("Unlinking {0} from {1}".format(
-                    case.identifier, self._identifier))
+                case.identifier, self._identifier))
             multicall.TestCase.unlink_plan(case.id, self.id)
         multicall()
         # Add corresponding CasePlan objects from the PlanCasePlans container
         if PlanCasePlans._is_cached(self._object.caseplans):
             self._object.caseplans.remove([
-                    CasePlan(testcase=case, testplan=self._object)
-                    for case in cases])
+                CasePlan(testcase=case, testplan=self._object)
+                for case in cases])
 
     def __iter__(self):
         """ Iterate over all included test cases ordered by sortkey """
@@ -788,6 +809,7 @@ class PlanCases(Container):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Child Plans
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class ChildPlans(Container):
     """ Child test plans of a parent plan """
@@ -808,16 +830,18 @@ class ChildPlans(Container):
 
     def _add(self, plans):
         """ Set self as parent of given test plans """
-        log.info("Setting {1} as parent of {0}".format(self._identifier,
-                listed([plan.identifier for plan in plans])))
+        log.info("Setting {1} as parent of {0}".format(
+            self._identifier,
+            listed([plan.identifier for plan in plans])))
         for plan in plans:
             plan.parent = TestPlan(self.id)
             plan.update()
 
     def _remove(self, plans):
         """ Remove self as parent of given test plans """
-        log.info("Removing {1} as parent of {0}".format(self._identifier,
-                listed([plan.identifier for plan in plans])))
+        log.info("Removing {1} as parent of {0}".format(
+            self._identifier,
+            listed([plan.identifier for plan in plans])))
         for plan in plans:
             plan.parent = None
             plan.update()
@@ -825,6 +849,7 @@ class ChildPlans(Container):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunCases Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class RunCases(Container):
     """ Test case objects related to a test run """
@@ -838,7 +863,8 @@ class RunCases(Container):
     def _fetch(self, inset=None):
         """ Fetch test run cases from the server """
         # If data initialized from the inset ---> we're done
-        if Container._fetch(self, inset): return
+        if Container._fetch(self, inset):
+            return
         # Fetch attached test cases from the server
         log.info("Fetching {0}'s test cases".format(self._identifier))
         try:
@@ -856,8 +882,8 @@ class RunCases(Container):
         # Short info about the action
         identifiers = [testcase.identifier for testcase in testcases]
         log.info("Adding {0} to {1}".format(
-                listed(identifiers, "testcase", max=3),
-                self._object.identifier))
+            listed(identifiers, "testcase", max=3),
+            self._object.identifier))
         # Prepare data and push
         data = [testcase.id for testcase in testcases]
         log.data(pretty(data))
@@ -865,7 +891,7 @@ class RunCases(Container):
             self._server.TestRun.add_cases(self.id, data)
         # Handle duplicate entry errors by adding test cases one by one
         except xmlrpclib.Fault as error:
-            if not "Duplicate entry" in unicode(error):
+            if "Duplicate entry" not in str(error):
                 raise
             log.warn(error)
             for id in data:
@@ -882,8 +908,8 @@ class RunCases(Container):
         # Short info about the action
         identifiers = [testcase.identifier for testcase in testcases]
         log.info("Removing {0} from {1}".format(
-                listed(identifiers, "testcase", max=3),
-                self._object.identifier))
+            listed(identifiers, "testcase", max=3),
+            self._object.identifier))
         data = [testcase.id for testcase in testcases]
         log.data(pretty(data))
         self._server.TestRun.remove_cases(self.id, data)
@@ -899,6 +925,7 @@ class RunCases(Container):
 #  RunCaseRuns Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class RunCaseRuns(Container):
     """ Test case run objects related to a test run """
 
@@ -911,7 +938,8 @@ class RunCaseRuns(Container):
     def _fetch(self, inset=None):
         """ Fetch case runs from the server """
         # If data initialized from the inset ---> we're done
-        if Container._fetch(self, inset): return
+        if Container._fetch(self, inset):
+            return
         # Fetch test case runs from the server
         log.info("Fetching {0}'s case runs".format(self._identifier))
         try:
@@ -929,20 +957,20 @@ class RunCaseRuns(Container):
             self._object.testcases._fetch([TestCase(id) for id in testcaseids])
         # And finally create the initial object set
         self._current = set([CaseRun(inject, testcaseinject=testcase)
-                for inject in injects
-                for testcase in self._object.testcases._items
-                if int(inject["case_id"]) == testcase.id])
+                            for inject in injects
+                            for testcase in self._object.testcases._items
+                            if int(inject["case_id"]) == testcase.id])
         self._original = set(self._current)
 
     def _add(self, caseruns):
         """ Adding supported by CaseRun() or TestRun.testcases.add() """
         raise NitrateError(
-                "Use TestRun.testcases.add([testcases]) to add new test cases")
+            "Use TestRun.testcases.add([testcases]) to add new test cases")
 
     def _remove(self, caseruns):
         """ Removing supported by TestRun.testcases.remove() """
         raise NitrateError(
-                "Use TestRun.testcases.remove([testcases]) to remove cases")
+            "Use TestRun.testcases.remove([testcases]) to remove cases")
 
     def __iter__(self):
         """ Iterate over all included case runs ordered by sortkey """
@@ -953,7 +981,8 @@ class RunCaseRuns(Container):
         """ Update modified case runs in multicall batches """
         # Check for modified case runs
         modified = [caserun for caserun in self if caserun._modified]
-        if not modified: return
+        if not modified:
+            return
         log.info("Updating {0}'s case runs".format(self._identifier))
         # Update modified caseruns in slices
         for slice in sliced(modified, config.MULTICALL_MAX):
@@ -966,6 +995,7 @@ class RunCaseRuns(Container):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanCasePlans Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanCasePlans(Container):
     """ Test case plan objects related to a test plan """
@@ -981,7 +1011,8 @@ class PlanCasePlans(Container):
     def _fetch(self, inset=None):
         """ Fetch case plans from the server """
         # If data initialized from the inset ---> we're done
-        if Container._fetch(self, inset): return
+        if Container._fetch(self, inset):
+            return
 
         # Fetch test case plans from the server using multicall
         log.info("Fetching case plans for {0}".format(self._identifier))
@@ -1023,7 +1054,8 @@ class PlanCasePlans(Container):
         """ Update case plans with modified sortkey """
         modified = [caseplan for caseplan in self if caseplan._modified]
         # Nothing to do if there are no sortkey changes
-        if not modified: return
+        if not modified:
+            return
         # Update all modified caseplans in a single multicall
         log.info("Updating {0}'s case plans".format(self._identifier))
         multicall = xmlrpclib.MultiCall(self._server)

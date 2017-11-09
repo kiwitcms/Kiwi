@@ -40,6 +40,7 @@ from tcms_api.xmlrpc import NitrateError
 #  Build Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class Build(Nitrate):
     """ Product build """
 
@@ -84,7 +85,8 @@ class Build(Nitrate):
 
         # Initialize (unless already done)
         id, ignore, inject, initialized = self._is_initialized(id or name)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id)
 
         # If inject given, fetch build data from it
@@ -101,11 +103,11 @@ class Build(Nitrate):
             # Index by name-product (only when the product name is known)
             if self.product._name is not NitrateNone:
                 self._index("{0}---in---{1}".format(
-                        self.name, self.product.name))
+                    self.name, self.product.name))
         # Otherwise just check that the id was provided
         elif not id:
             raise NitrateError("Need either build id or both build name "
-                    "and product to initialize the Build object.")
+                               "and product to initialize the Build object.")
 
     def __unicode__(self):
         """ Build name for printing """
@@ -121,7 +123,7 @@ class Build(Nitrate):
         # Directly fetch from the initial object dict
         if inject is not None:
             log.info("Processing build ID#{0} inject".format(
-                    inject["build_id"]))
+                inject["build_id"]))
         # Search by build id
         elif self._id is not NitrateNone:
             try:
@@ -130,14 +132,14 @@ class Build(Nitrate):
             except xmlrpclib.Fault as error:
                 log.debug(error)
                 raise NitrateError(
-                        "Cannot find build for " + self.identifier)
+                    "Cannot find build for " + self.identifier)
         # Search by build name and product
         else:
             try:
                 log.info(u"Fetching build '{0}' of '{1}'".format(
-                        self.name, self.product.name))
+                    self.name, self.product.name))
                 inject = self._server.Build.check_build(
-                        self.name, self.product.id)
+                    self.name, self.product.id)
                 self._id = inject["build_id"]
             except xmlrpclib.Fault as error:
                 log.debug(error)
@@ -156,13 +158,14 @@ class Build(Nitrate):
         self._id = inject["build_id"]
         self._name = inject["name"]
         self._product = Product(
-                {"id": inject["product_id"], "name": inject["product"]})
+            {"id": inject["product_id"], "name": inject["product"]})
         self._index("{0}---in---{1}".format(self.name, self.product.name))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Category Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Category(Nitrate):
     """ Test case category """
@@ -214,7 +217,8 @@ class Category(Nitrate):
 
         # Initialize (unless already done)
         id, ignore, inject, initialized = self._is_initialized(id or name)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id)
 
         # If inject given, fetch tag data from it
@@ -231,11 +235,11 @@ class Category(Nitrate):
             # Index by name-product (only when the product name is known)
             if self.product._name is not NitrateNone:
                 self._index("{0}---in---{1}".format(
-                        self.name, self.product.name))
+                    self.name, self.product.name))
         # Otherwise just check that the id was provided
         elif not id:
             raise NitrateError("Need either category id or both category "
-                    "name and product to initialize the Category object.")
+                               "name and product to initialize the Category object.")
 
     def __unicode__(self):
         """ Category name for printing """
@@ -260,18 +264,18 @@ class Category(Nitrate):
             except xmlrpclib.Fault as error:
                 log.debug(error)
                 raise NitrateError(
-                        "Cannot find category for " + self.identifier)
+                    "Cannot find category for " + self.identifier)
         # Search by category name and product
         else:
             try:
                 log.info(u"Fetching category '{0}' of '{1}'".format(
-                        self.name, self.product.name))
+                    self.name, self.product.name))
                 inject = self._server.Product.check_category(
-                        self.name, self.product.id)
+                    self.name, self.product.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
                 raise NitrateError("Category '{0}' not found in"
-                        " '{1}'".format(self.name, self.product.name))
+                                   " '{1}'".format(self.name, self.product.name))
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing category ID#{0}".format(inject["id"]))
@@ -280,13 +284,14 @@ class Category(Nitrate):
         self._id = inject["id"]
         self._name = inject["name"]
         self._product = Product(
-                {"id": inject["product_id"], "name": inject["product"]})
+            {"id": inject["product_id"], "name": inject["product"]})
         self._index("{0}---in---{1}".format(self.name, self.product.name))
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanType Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanType(Nitrate):
     """ Plan type """
@@ -330,7 +335,8 @@ class PlanType(Nitrate):
 
         # Initialize (unless already done)
         id, name, inject, initialized = self._is_initialized(id or name)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id)
 
         # If inject given, fetch data from it
@@ -343,7 +349,7 @@ class PlanType(Nitrate):
         # Otherwise just check that the test plan type id was provided
         elif not id:
             raise NitrateError(
-                    "Need either id or name to initialize the PlanType object")
+                "Need either id or name to initialize the PlanType object")
 
     def __unicode__(self):
         """ PlanType name for printing """
@@ -368,7 +374,7 @@ class PlanType(Nitrate):
             except xmlrpclib.Fault as error:
                 log.debug(error)
                 raise NitrateError(
-                        "Cannot find test plan type for " + self.identifier)
+                    "Cannot find test plan type for " + self.identifier)
         # Search by test plan type name
         else:
             try:
@@ -377,7 +383,7 @@ class PlanType(Nitrate):
             except xmlrpclib.Fault as error:
                 log.debug(error)
                 raise NitrateError("PlanType '{0}' not found".format(
-                        self.name))
+                    self.name))
         # Initialize data from the inject and index into cache
         log.debug("Initializing PlanType ID#{0}".format(inject["id"]))
         log.data(pretty(inject))
@@ -390,6 +396,7 @@ class PlanType(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Priority Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Priority(Nitrate):
     """ Test case priority """
@@ -405,7 +412,7 @@ class Priority(Nitrate):
         if isinstance(priority, int):
             if priority < 1 or priority > 5:
                 raise NitrateError(
-                        "Not a valid Priority id: '{0}'".format(priority))
+                    "Not a valid Priority id: '{0}'".format(priority))
             self._id = priority
         else:
             try:
@@ -427,11 +434,10 @@ class Priority(Nitrate):
         """ Human readable priority name """
         return self._priorities[self._id]
 
-
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Product Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Product(Nitrate):
     """ Product """
@@ -478,7 +484,8 @@ class Product(Nitrate):
 
         # Initialize (unless already done)
         id, name, inject, initialized = self._is_initialized(id or name)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id)
 
         # If inject given, fetch test case data from it
@@ -527,7 +534,7 @@ class Product(Nitrate):
                 self._name = inject["name"]
             except IndexError:
                 raise NitrateError(
-                        "Cannot find product for " + self.identifier)
+                    "Cannot find product for " + self.identifier)
         # Search by product name
         else:
             try:
@@ -539,15 +546,14 @@ class Product(Nitrate):
                 self._id = inject["id"]
             except IndexError:
                 raise NitrateError(
-                        "Cannot find product for '{0}'".format(self.name))
+                    "Cannot find product for '{0}'".format(self.name))
         # Index the fetched object into cache
         self._index(self.name)
-
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanStatus Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class PlanStatus(Nitrate):
     """ Test plan status (is_active field) """
@@ -564,9 +570,9 @@ class PlanStatus(Nitrate):
         """
 
         if isinstance(status, int):
-            if not status in [0, 1]:
+            if status not in [0, 1]:
                 raise NitrateError(
-                        "Not a valid plan status id: '{0}'".format(status))
+                    "Not a valid plan status id: '{0}'".format(status))
             # Save id (and convert possible bool to int)
             self._id = int(status)
         else:
@@ -592,12 +598,13 @@ class PlanStatus(Nitrate):
     def name(self):
         """ Human readable plan status name """
         return color(self._statuses[self.id], color=self._colors[self.id],
-                enabled=config.Coloring().enabled())
+                     enabled=config.Coloring().enabled())
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunStatus Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class RunStatus(Nitrate):
     """ Test run status """
@@ -616,7 +623,7 @@ class RunStatus(Nitrate):
         if isinstance(status, int):
             if status not in [0, 1]:
                 raise NitrateError(
-                        "Not a valid run status id: '{0}'".format(status))
+                    "Not a valid run status id: '{0}'".format(status))
             self._id = status
         else:
             # Running or no stop date
@@ -647,6 +654,7 @@ class RunStatus(Nitrate):
 #  CaseStatus Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class CaseStatus(Nitrate):
     """ Test case status """
 
@@ -660,14 +668,14 @@ class CaseStatus(Nitrate):
         if isinstance(casestatus, int):
             if casestatus < 1 or casestatus > 4:
                 raise NitrateError(
-                        "Not a valid casestatus id: '{0}'".format(casestatus))
+                    "Not a valid casestatus id: '{0}'".format(casestatus))
             self._id = casestatus
         else:
             try:
                 self._id = self._casestatuses.index(casestatus)
             except ValueError:
                 raise NitrateError(
-                        "Invalid casestatus '{0}'".format(casestatus))
+                    "Invalid casestatus '{0}'".format(casestatus))
 
     def __unicode__(self):
         """ Return casestatus name for printing """
@@ -688,6 +696,7 @@ class CaseStatus(Nitrate):
 #  Status Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class Status(Nitrate):
     """
     Test case run status.
@@ -696,10 +705,10 @@ class Status(Nitrate):
     """
 
     _statuses = ['PAD', 'IDLE', 'PASSED', 'FAILED', 'RUNNING', 'PAUSED',
-            'BLOCKED', 'ERROR', 'WAIVED']
+                 'BLOCKED', 'ERROR', 'WAIVED']
 
     _colors = [None, "blue", "lightgreen", "lightred", "green", "yellow",
-            "red", "magenta", "lightcyan"]
+               "red", "magenta", "lightcyan"]
 
     def __init__(self, status):
         """
@@ -709,7 +718,7 @@ class Status(Nitrate):
         if isinstance(status, int):
             if status < 1 or status > 8:
                 raise NitrateError(
-                        "Not a valid Status id: '{0}'".format(status))
+                    "Not a valid Status id: '{0}'".format(status))
             self._id = status
         else:
             try:
@@ -735,18 +744,19 @@ class Status(Nitrate):
     def name(self):
         """ Human readable status name """
         return color(self._name, color=self._colors[self.id],
-                enabled=config.Coloring().enabled())
+                     enabled=config.Coloring().enabled())
 
     @property
     def shortname(self):
         """ Short same-width status string (4 chars) """
         return color(self._name[0:4], color=self._colors[self.id],
-                enabled=config.Coloring().enabled())
+                     enabled=config.Coloring().enabled())
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  User Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class User(Nitrate):
     """ User """
@@ -814,9 +824,9 @@ class User(Nitrate):
         """
 
         # Initialize (unless already done)
-        id, name, inject, initialized = self._is_initialized(
-                id or login or email)
-        if initialized: return
+        id, name, inject, initialized = self._is_initialized(id or login or email)
+        if initialized:
+            return
         Nitrate.__init__(self, id, prefix="UID")
 
         # If inject given, fetch data from it
@@ -850,26 +860,21 @@ class User(Nitrate):
                     inject = self._server.User.filter({"id": self.id})[0]
                 except IndexError:
                     raise NitrateError(
-                            "Cannot find user for " + self.identifier)
+                        "Cannot find user for " + self.identifier)
             # Search by login
             elif self._login is not NitrateNone:
                 try:
-                    log.info(
-                            "Fetching user for login '{0}'".format(self.login))
-                    inject = self._server.User.filter(
-                            {"username": self.login})[0]
+                    log.info("Fetching user for login '{0}'".format(self.login))
+                    inject = self._server.User.filter({"username": self.login})[0]
                 except IndexError:
-                    raise NitrateError("No user found for login '{0}'".format(
-                            self.login))
+                    raise NitrateError("No user found for login '{0}'".format(self.login))
             # Search by email
             elif self._email is not NitrateNone:
                 try:
-                    log.info("Fetching user for email '{0}'".format(
-                            self.email))
+                    log.info("Fetching user for email '{0}'".format(self.email))
                     inject = self._server.User.filter({"email": self.email})[0]
                 except IndexError:
-                    raise NitrateError("No user found for email '{0}'".format(
-                            self.email))
+                    raise NitrateError("No user found for email '{0}'".format(self.email))
             # Otherwise initialize to the current user
             else:
                 log.info("Fetching the current user")
@@ -893,6 +898,7 @@ class User(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Version Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Version(Nitrate):
     """ Product version """
@@ -939,7 +945,8 @@ class Version(Nitrate):
 
         # Initialize (unless already done)
         id, ignore, inject, initialized = self._is_initialized(id)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id)
 
         # If inject given, fetch tag data from it
@@ -955,12 +962,11 @@ class Version(Nitrate):
                 self._product = Product(product)
             # Index by name/product (but only when the product name is known)
             if self.product._name is not NitrateNone:
-                self._index("{0}---in---{1}".format(
-                        self.name, self.product.name))
+                self._index("{0}---in---{1}".format(self.name, self.product.name))
         # Otherwise just make sure the version id was provided
         elif not id:
             raise NitrateError("Need either version id or both product "
-                    "and version name to initialize the Version object.")
+                               "and version name to initialize the Version object.")
 
     def __unicode__(self):
         """ Version name for printing """
@@ -981,21 +987,20 @@ class Version(Nitrate):
         elif self._id is not NitrateNone:
             try:
                 log.info("Fetching version {0}".format(self.identifier))
-                inject = self._server.Product.filter_versions(
-                        {'id': self.id})[0]
+                inject = self._server.Product.filter_versions({'id': self.id})[0]
             except IndexError:
                 raise NitrateError(
-                        "Cannot find version for {0}".format(self.identifier))
+                    "Cannot find version for {0}".format(self.identifier))
         # Search by product and name
         else:
             try:
                 log.info(u"Fetching version '{0}' of '{1}'".format(
-                        self.name, self.product.name))
+                    self.name, self.product.name))
                 inject = self._server.Product.filter_versions(
-                        {'product': self.product.id, 'value': self.name})[0]
+                    {'product': self.product.id, 'value': self.name})[0]
             except IndexError:
                 raise NitrateError(
-                        "Cannot find version for '{0}'".format(self.name))
+                    "Cannot find version for '{0}'".format(self.name))
         # Initialize data from the inject and index into cache
         log.debug("Initializing Version ID#{0}".format(inject["id"]))
         log.data(pretty(inject))
@@ -1013,6 +1018,7 @@ class Version(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Component Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Component(Nitrate):
     """ Test case component """
@@ -1061,7 +1067,8 @@ class Component(Nitrate):
 
         # Initialize (unless already done)
         id, ignore, inject, initialized = self._is_initialized(id)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id)
 
         # If inject given, fetch component data from it
@@ -1078,11 +1085,11 @@ class Component(Nitrate):
             # Index by name-product (only when the product name is known)
             if self.product._name is not NitrateNone:
                 self._index("{0}---in---{1}".format(
-                        self.name, self.product.name))
+                    self.name, self.product.name))
         # Otherwise just check that the id was provided
         elif id is None:
             raise NitrateError("Need either component id or both product "
-                    "and component name to initialize the Component object.")
+                               "and component name to initialize the Component object.")
 
     def __unicode__(self):
         """ Component name for printing """
@@ -1107,18 +1114,18 @@ class Component(Nitrate):
             except xmlrpclib.Fault as error:
                 log.debug(error)
                 raise NitrateError(
-                        "Cannot find component for " + self.identifier)
+                    "Cannot find component for " + self.identifier)
         # Search by component name and product
         else:
             try:
                 log.info(u"Fetching component '{0}' of '{1}'".format(
-                        self.name, self.product.name))
+                    self.name, self.product.name))
                 inject = self._server.Product.check_component(
-                        self.name, self.product.id)
+                    self.name, self.product.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
                 raise NitrateError("Component '{0}' not found in"
-                        " '{1}'".format(self.name, self.product.name))
+                                   " '{1}'".format(self.name, self.product.name))
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing component ID#{0}".format(inject["id"]))
@@ -1127,7 +1134,7 @@ class Component(Nitrate):
         self._id = inject["id"]
         self._name = inject["name"]
         self._product = Product(
-                {"id": inject["product_id"], "name": inject["product"]})
+            {"id": inject["product_id"], "name": inject["product"]})
         self._index("{0}---in---{1}".format(self.name, self.product.name))
 
     @staticmethod
@@ -1140,6 +1147,7 @@ class Component(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Bug Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Bug(Nitrate):
     """ Bug related to a test case or a case run """
@@ -1170,8 +1178,8 @@ class Bug(Nitrate):
         """ Short summary about the bug """
         # Summary in the form: BUG#123456 (BZ#123, TC#456, CR#789)
         return "{0} ({1})".format(self.identifier, ", ".join([str(self)] +
-                [obj.identifier for obj in (self.testcase, self.caserun)
-                if obj is not None]))
+                                  [obj.identifier for obj in (self.testcase, self.caserun)
+                                  if obj is not None]))
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Bug Special
@@ -1186,7 +1194,8 @@ class Bug(Nitrate):
 
         # Initialize (unless already done)
         id, ignore, inject, initialized = self._is_initialized(id)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id, prefix="BUG")
 
         # If inject given, fetch bug data from it
@@ -1219,7 +1228,7 @@ class Bug(Nitrate):
         except KeyError:
             prefix = "BZ"
         return u"{0}#{1}".format(prefix, str(self.bug).rjust(
-                self._identifier_width, "0"))
+            self._identifier_width, "0"))
 
     def __hash__(self):
         """ Construct the uniqe hash from bug id and bug system id """
@@ -1249,6 +1258,7 @@ class Bug(Nitrate):
 #  Tag Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class Tag(Nitrate):
     """ Tag Class """
 
@@ -1275,7 +1285,8 @@ class Tag(Nitrate):
 
         # Initialize (unless already done)
         id, name, inject, initialized = self._is_initialized(id or name)
-        if initialized: return
+        if initialized:
+            return
         Nitrate.__init__(self, id)
 
         # If inject given, fetch tag data from it
@@ -1288,7 +1299,7 @@ class Tag(Nitrate):
         # Otherwise just check that the tag name or id was provided
         elif not id:
             raise NitrateError("Need either tag id or tag name "
-                    "to initialize the Tag object.")
+                               "to initialize the Tag object.")
 
     def __unicode__(self):
         """ Tag name for printing """
@@ -1324,7 +1335,7 @@ class Tag(Nitrate):
                 self._name = inject[0]["name"]
             except IndexError:
                 raise NitrateError(
-                        "Cannot find tag for {0}".format(self.identifier))
+                    "Cannot find tag for {0}".format(self.identifier))
         # Search by tag name
         else:
             try:
@@ -1336,9 +1347,10 @@ class Tag(Nitrate):
                 self._id = inject[0]["id"]
             except IndexError:
                 raise NitrateError(
-                        "Cannot find tag '{0}'".format(self.name))
+                    "Cannot find tag '{0}'".format(self.name))
         # Index the fetched object into cache
         self._index(self.name)
 
+
 # We need to import mutable here because of cyclic import
-from tcms_api.mutable import TestCase, CaseRun
+from tcms_api.mutable import TestCase, CaseRun  # noqa: E402

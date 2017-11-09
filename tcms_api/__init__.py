@@ -66,31 +66,31 @@ For details see pydoc documentation for individual modules:
 # Nitrate objects
 from tcms_api.base import Nitrate
 from tcms_api.immutable import (
-        Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
-        Priority, Product, RunStatus, Status, Tag, User, Version)
+    Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
+    Priority, Product, RunStatus, Status, Tag, User, Version)
 from tcms_api.mutable import (
-        Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
+    Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
 from tcms_api.containers import (
-        Container, CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
-        ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
-        PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer)
+    Container, CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
+    ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
+    PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer)
 
 # Various useful utilities
 from tcms_api.utils import (
-        ascii, color, header, human, info, listed, pretty, sliced, unlisted)
+    ascii, color, header, human, info, listed, pretty, sliced, unlisted)
 
 # Logging, coloring and caching configuration
 from tcms_api.config import (
-        Config,
-        Logging, get_log_level, set_log_level, log,
-        LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL,
+    Config,
+    Logging, get_log_level, set_log_level, log,
+    LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL,
 
-        Coloring, get_color_mode, set_color_mode,
-        COLOR_ON, COLOR_OFF, COLOR_AUTO,
+    Coloring, get_color_mode, set_color_mode,
+    COLOR_ON, COLOR_OFF, COLOR_AUTO,
 
-        Caching, get_cache_level, set_cache_level,
-        CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, CACHE_PERSISTENT,
-        NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX)
+    Caching, get_cache_level, set_cache_level,
+    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, CACHE_PERSISTENT,
+    NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX)
 
 # Data communication exceptions
 from tcms_api.xmlrpc import NitrateError
@@ -99,31 +99,31 @@ from tcms_api.teiid import TeiidError
 # Persistent cache and Multicall support
 from tcms_api.cache import Cache, multicall_start, multicall_end
 
-__all__ = """
-        Nitrate Mutable Container
+__all__ = [
+    Nitrate, Mutable, Container,
 
-        Bug Build CaseStatus Category Component PlanStatus PlanType
-        Priority Product RunStatus Status Tag User Version
-        TestPlan TestRun TestCase CaseRun CasePlan
+    Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
+    Priority, Product, RunStatus, Status, Tag, User, Version,
+    TestPlan, TestRun, TestCase, CaseRun, CasePlan,
 
-        CaseBugs CaseComponents CasePlans CaseRunBugs CaseTags
-        ChildPlans PlanCasePlans PlanCases PlanComponents PlanRuns
-        PlanTags RunCaseRuns RunCases RunTags TagContainer
+    CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
+    ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
+    PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer,
 
-        ascii color header human info listed pretty sliced unlisted
+    ascii, color, header, human, info, listed, pretty, sliced, unlisted,
 
-        Config
-        Logging get_log_level set_log_level log
-        LOG_ERROR LOG_WARN LOG_INFO LOG_DEBUG LOG_CACHE LOG_DATA LOG_ALL
+    Config,
+    Logging, get_log_level, set_log_level, log,
+    LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL,
 
-        Coloring get_color_mode set_color_mode
-        COLOR_ON COLOR_OFF COLOR_AUTO
+    Coloring, get_color_mode, set_color_mode,
+    COLOR_ON, COLOR_OFF, COLOR_AUTO,
 
-        Caching get_cache_level set_cache_level
-        CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_PERSISTENT
-        NEVER_EXPIRE NEVER_CACHE MULTICALL_MAX
+    Caching, get_cache_level, set_cache_level,
+    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, CACHE_PERSISTENT,
+    NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX,
 
-        NitrateError TeiidError
+    NitrateError, TeiidError,
 
-        Cache multicall_start multicall_end
-        """.split()
+    Cache, multicall_start, multicall_end,
+]

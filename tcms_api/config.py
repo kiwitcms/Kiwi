@@ -117,27 +117,28 @@ _MAX_ID = 1000000000
 #  Logging Configuration
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class Logging(object):
     """ Logging Configuration """
 
     # Color mapping
     COLORS = {
-            LOG_ERROR: "red",
-            LOG_WARN: "yellow",
-            LOG_INFO: "blue",
-            LOG_DEBUG: "green",
-            LOG_CACHE: "cyan",
-            LOG_DATA: "magenta",
-            }
+        LOG_ERROR: "red",
+        LOG_WARN: "yellow",
+        LOG_INFO: "blue",
+        LOG_DEBUG: "green",
+        LOG_CACHE: "cyan",
+        LOG_DATA: "magenta",
+    }
     # Environment variable mapping
     MAPPING = {
-            0: LOG_WARN,
-            1: LOG_INFO,
-            2: LOG_DEBUG,
-            3: LOG_CACHE,
-            4: LOG_DATA,
-            5: LOG_ALL,
-            }
+        0: LOG_WARN,
+        1: LOG_INFO,
+        2: LOG_DEBUG,
+        3: LOG_CACHE,
+        4: LOG_DATA,
+        5: LOG_ALL,
+    }
     # All levels
     LEVELS = "CRITICAL DEBUG ERROR FATAL INFO NOTSET WARN WARNING".split()
 
@@ -221,6 +222,7 @@ class Logging(object):
         """ Get the current log level """
         return Logging._level
 
+
 # Create the logger and detect the log level
 log = Logging._create_logger()
 set_log_level = Logging.set
@@ -232,6 +234,7 @@ set_log_level()
 #  Config Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 class Config(object):
     """ User configuration """
 
@@ -242,8 +245,8 @@ class Config(object):
     path = os.path.expanduser("~/.nitrate")
     # Minimal config example
     example = ("Please, provide at least a minimal config file {0}:\n"
-                "[nitrate]\n"
-                "url = https://nitrate.server/xmlrpc/".format(path))
+               "[nitrate]\n"
+               "url = https://nitrate.server/xmlrpc/".format(path))
 
     def __new__(cls, *args, **kwargs):
         """ Make sure we create a single instance only """
@@ -256,6 +259,7 @@ class Config(object):
         # Nothing to do if already parsed
         if self._parsed:
             return
+
         class Section(object):
             """ Trivial class for sections """
         # Try system settings when the config does not exist in user directory
@@ -288,7 +292,7 @@ class Config(object):
         except ConfigParser.Error:
             log.error(self.example)
             raise NitrateError(
-                    "Cannot read the config file")
+                "Cannot read the config file")
 
         # Make sure the server URL is set
         try:
@@ -301,6 +305,7 @@ class Config(object):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Color Configuration
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Coloring(object):
     """ Coloring configuration """
@@ -341,8 +346,8 @@ class Coloring(object):
             raise NitrateError("Invalid color mode '{0}'".format(mode))
         self._mode = mode
         log.debug("Coloring {0} ({1})".format(
-                "enabled" if self.enabled() else "disabled",
-                self.MODES[self._mode]))
+            "enabled" if self.enabled() else "disabled",
+            self.MODES[self._mode]))
 
     def get(self):
         """ Get the current color mode """
@@ -354,6 +359,7 @@ class Coloring(object):
         if self._mode == COLOR_AUTO:
             return sys.stdout.isatty()
         return self._mode == COLOR_ON
+
 
 def set_color_mode(mode):
     """
@@ -372,6 +378,7 @@ def set_color_mode(mode):
     """
     Coloring().set(mode)
 
+
 def get_color_mode():
     """ Get the current coloring mode """
     return Coloring().get()
@@ -379,6 +386,7 @@ def get_color_mode():
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Caching Configuration
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 class Caching(object):
     """ Caching level configuration """
@@ -426,11 +434,12 @@ class Caching(object):
         else:
             raise NitrateError("Invalid cache level '{0}'".format(level))
         log.debug("Caching on level {0} ({1})".format(
-                self._level, self.LEVELS[self._level]))
+            self._level, self.LEVELS[self._level]))
 
     def get(self):
         """ Get the current caching level """
         return self._level
+
 
 def set_cache_level(level):
     """
@@ -449,6 +458,7 @@ def set_cache_level(level):
     of the caching mechanism.
     """
     Caching().set(level)
+
 
 def get_cache_level():
     """ Get the current caching level """
