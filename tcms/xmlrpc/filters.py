@@ -97,11 +97,11 @@ def wrap_exceptions(func):
             return func(*args, **kwargs)
         except django.core.exceptions.PermissionDenied as e:
             # 403 Forbidden
-            fault_code = http.client.FORBIDDEN
+            fault_code = http.client.FORBIDDEN.value
             fault_string = str(e)
         except django.db.models.ObjectDoesNotExist as e:
             # 404 Not Found
-            fault_code = http.client.NOT_FOUND
+            fault_code = http.client.NOT_FOUND.value
             fault_string = str(e)
         except (django.db.models.FieldDoesNotExist,
                 django.core.exceptions.FieldError,
@@ -110,18 +110,18 @@ def wrap_exceptions(func):
                 ValueError,
                 TypeError) as e:
             # 400 Bad Request
-            fault_code = http.client.BAD_REQUEST
+            fault_code = http.client.BAD_REQUEST.value
             fault_string = str(e)
         except django.db.utils.IntegrityError as e:
             # 409 Duplicate
-            fault_code = http.client.CONFLICT
+            fault_code = http.client.CONFLICT.value
             fault_string = str(e)
         except NotImplementedError as e:
-            fault_code = http.client.NOT_IMPLEMENTED
+            fault_code = http.client.NOT_IMPLEMENTED.value
             fault_string = str(e)
         except Exception as e:
             # 500 Server Error
-            fault_code = http.client.INTERNAL_SERVER_ERROR
+            fault_code = http.client.INTERNAL_SERVER_ERROR.value
             fault_string = str(e)
 
         if settings.DEBUG:
