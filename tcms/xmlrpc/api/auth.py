@@ -47,7 +47,7 @@ def login(request, parameters):
 
     for backend_str in settings.AUTHENTICATION_BACKENDS:
         backend = get_backend(backend_str)
-        user = backend.authenticate(*check_user_name(parameters))
+        user = backend.authenticate(request, *check_user_name(parameters))
 
         if user:
             user.backend = "%s.%s" % (backend.__module__,
