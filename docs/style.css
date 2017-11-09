@@ -1,0 +1,54 @@
+body {
+    font-family: "dejavu sans", sans-serif;
+    width: 80ex;
+    margin: 3em auto;
+    background-color: #eee;
+    border: 3px solid #ddd;
+}
+
+div.document {
+    padding: 3em;
+    background-color: white;
+}
+
+h1.title {
+    font-size: 200%;
+    background-color: white;
+    border: 0px;
+    margin: 0px;
+}
+
+h2.subtitle {
+    margin-top: 1ex;
+    font-size: 110%;
+}
+
+h1 {
+    font-size: 130%;
+    border-bottom: 3px solid #eee;
+    margin: 3ex 0em 0em 0em;
+}
+
+p, li {
+    line-height: 140%;
+    list-style-type: square;
+}
+
+blockquote {
+    margin: 1em;
+}
+
+pre {
+    margin-left: 3em;
+    color: #777;
+    font-size: 111%;
+}
+
+table.docinfo {
+    display: none;
+}
+
+a {
+    color: #c00;
+    text-decoration: none;
+}

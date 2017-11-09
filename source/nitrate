@@ -1,0 +1,9 @@
+#!/usr/bin/python -i
+
+# readline & tab completion support
+import sys, rlcompleter, readline
+readline.parse_and_bind("tab: complete")
+readline.parse_and_bind("set editing-mode vi")
+
+# import all nitrate names
+from nitrate import *
