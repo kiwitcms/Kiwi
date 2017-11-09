@@ -30,13 +30,13 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
-import nitrate.config as config
+import tcms_api.config as config
 
-from nitrate.config import log
-from nitrate.base import Nitrate, NitrateNone, _getter, _setter, _idify
-from nitrate.utils import pretty
-from nitrate.xmlrpc import NitrateError
-from nitrate.immutable import (Build, CaseStatus, Category, PlanStatus,
+from tcms_api.config import log
+from tcms_api.base import Nitrate, NitrateNone, _getter, _setter, _idify
+from tcms_api.utils import pretty
+from tcms_api.xmlrpc import NitrateError
+from tcms_api.immutable import (Build, CaseStatus, Category, PlanStatus,
         PlanType, Priority, Product, RunStatus, Status, Tag, User, Version)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1458,6 +1458,6 @@ class CasePlan(Mutable):
                 self.testcase.id, self.testplan.id, self.sortkey)
 
 # We need to import containers here because of cyclic import
-from nitrate.containers import (CaseBugs, CaseComponents, CasePlans,
+from tcms_api.containers import (CaseBugs, CaseComponents, CasePlans,
         CaseRunBugs, CaseTags, ChildPlans, PlanCasePlans, PlanCases,
         PlanComponents, PlanRuns, PlanTags, RunCaseRuns, RunCases, RunTags)

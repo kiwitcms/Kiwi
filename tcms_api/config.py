@@ -36,7 +36,7 @@ password are provided plain authentication will be used instead. E.g.
     password = secret
 
 It's also possible to provide system-wide config in /etc/nitrate.conf.
-See "pydoc nitrate.teiid" for Teiid configuration details.
+See "pydoc tcms_api.teiid" for Teiid configuration details.
 
 
 Logging
@@ -78,8 +78,8 @@ import logging
 import sys
 import os
 
-from nitrate.xmlrpc import NitrateError
-from nitrate.utils import color
+from tcms_api.xmlrpc import NitrateError
+from tcms_api.utils import color
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Constants
@@ -445,7 +445,7 @@ def set_cache_level(level):
         CACHE=2 ... CACHE_OBJECTS
         CACHE=3 ... CACHE_PERSISTENT
 
-    See nitrate.cache module documentation for detailed description
+    See tcms_api.cache module documentation for detailed description
     of the caching mechanism.
     """
     Caching().set(level)

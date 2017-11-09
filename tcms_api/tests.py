@@ -88,10 +88,10 @@ data of existing objects to be tested, for example:
     id = 123456
     status = PASSED
 
-To exercise the whole test suite run "python -m nitrate.tests". To test
+To exercise the whole test suite run "python -m tcms_api.tests". To test
 only subset of tests pick the desired classes on the command line:
 
-    python -m nitrate.tests TestCase
+    python -m tcms_api.tests TestCase
 
 
 Performance tests
@@ -120,13 +120,13 @@ import tempfile
 import unittest
 import datetime
 
-from nitrate.utils import *
-from nitrate.cache import *
-from nitrate.config import *
-from nitrate.base import *
-from nitrate.immutable import *
-from nitrate.mutable import *
-from nitrate.containers import *
+from tcms_api.utils import *
+from tcms_api.cache import *
+from tcms_api.config import *
+from tcms_api.base import *
+from tcms_api.immutable import *
+from tcms_api.mutable import *
+from tcms_api.containers import *
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Constants
@@ -1847,7 +1847,7 @@ if __name__ == "__main__":
 
     # Parse options
     parser = optparse.OptionParser(
-            usage="python nitrate.api [--performance] [class [...]]")
+            usage="python tcms_api.api [--performance] [class [...]]")
     parser.add_option("--performance",
             action="store_true",
             help="Run performance tests")

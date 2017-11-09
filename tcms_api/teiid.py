@@ -34,8 +34,8 @@ Use the following config snippet to enable access via psycopg2 module:
 
 import psycopg2
 
-from nitrate.config import log, Config
-from nitrate.xmlrpc import NitrateError
+from tcms_api.config import log, Config
+from tcms_api.xmlrpc import NitrateError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Exceptions

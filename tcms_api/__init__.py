@@ -51,36 +51,36 @@ Synopsis:
 
 For details see pydoc documentation for individual modules:
 
-    nitrate.base ......... Nitrate class, search support
-    nitrate.cache ........ Persistent cache, multicall support
-    nitrate.config ....... Configuration, logging, coloring, caching
-    nitrate.containers ... Container classes implementation
-    nitrate.immutable .... Immutable Nitrate objects
-    nitrate.mutable ...... Mutable Nitrate objects
-    nitrate.teiid ........ Teiid support
-    nitrate.tests ........ Test suite
-    nitrate.utils ........ Utilities
-    nitrate.xmlrpc ....... XMLRPC driver
+    tcms_api.base ......... Nitrate class, search support
+    tcms_api.cache ........ Persistent cache, multicall support
+    tcms_api.config ....... Configuration, logging, coloring, caching
+    tcms_api.containers ... Container classes implementation
+    tcms_api.immutable .... Immutable Nitrate objects
+    tcms_api.mutable ...... Mutable Nitrate objects
+    tcms_api.teiid ........ Teiid support
+    tcms_api.tests ........ Test suite
+    tcms_api.utils ........ Utilities
+    tcms_api.xmlrpc ....... XMLRPC driver
 """
 
 # Nitrate objects
-from nitrate.base import Nitrate
-from nitrate.immutable import (
+from tcms_api.base import Nitrate
+from tcms_api.immutable import (
         Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
         Priority, Product, RunStatus, Status, Tag, User, Version)
-from nitrate.mutable import (
+from tcms_api.mutable import (
         Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
-from nitrate.containers import (
+from tcms_api.containers import (
         Container, CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
         ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
         PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer)
 
 # Various useful utilities
-from nitrate.utils import (
+from tcms_api.utils import (
         ascii, color, header, human, info, listed, pretty, sliced, unlisted)
 
 # Logging, coloring and caching configuration
-from nitrate.config import (
+from tcms_api.config import (
         Config,
         Logging, get_log_level, set_log_level, log,
         LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL,
@@ -93,11 +93,11 @@ from nitrate.config import (
         NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX)
 
 # Data communication exceptions
-from nitrate.xmlrpc import NitrateError
-from nitrate.teiid import TeiidError
+from tcms_api.xmlrpc import NitrateError
+from tcms_api.teiid import TeiidError
 
 # Persistent cache and Multicall support
-from nitrate.cache import Cache, multicall_start, multicall_end
+from tcms_api.cache import Cache, multicall_start, multicall_end
 
 __all__ = """
         Nitrate Mutable Container

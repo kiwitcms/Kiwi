@@ -6,4 +6,4 @@ readline.parse_and_bind("tab: complete")
 readline.parse_and_bind("set editing-mode vi")
 
 # import all nitrate names
-from nitrate import *
+from tcms_api import *

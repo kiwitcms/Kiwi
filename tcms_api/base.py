@@ -39,13 +39,13 @@ https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups
 
 import six
 import datetime
-import nitrate.config as config
-import nitrate.utils as utils
-import nitrate.xmlrpc as xmlrpc
-import nitrate.teiid as teiid
+import tcms_api.config as config
+import tcms_api.utils as utils
+import tcms_api.xmlrpc as xmlrpc
+import tcms_api.teiid as teiid
 
-from nitrate.config import log, Config
-from nitrate.xmlrpc import NitrateError
+from tcms_api.config import log, Config
+from tcms_api.xmlrpc import NitrateError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Internal Utilities
@@ -420,4 +420,4 @@ class Nitrate(object):
             self.__class__._cache[key] = self
 
 # We need to import cache only here because of cyclic import
-from nitrate.cache import Cache
+from tcms_api.cache import Cache

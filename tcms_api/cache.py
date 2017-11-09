@@ -106,7 +106,7 @@ Cache object instance to perform the update for you:
     Cache().update()
 
 If run in this way, changes will be pushed to the server in MultiCall
-batches, size of which is controlled by nitrate.config.MULTICALL_MAX.
+batches, size of which is controlled by tcms_api.config.MULTICALL_MAX.
 """
 
 import os
@@ -122,14 +122,14 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
-import nitrate.immutable as immutable
-import nitrate.mutable as mutable
-import nitrate.containers as containers
-import nitrate.config as config
+import tcms_api.immutable as immutable
+import tcms_api.mutable as mutable
+import tcms_api.containers as containers
+import tcms_api.config as config
 
-from nitrate.config import log, get_cache_level, set_cache_level
-from nitrate.utils import pretty, listed, sliced, human
-from nitrate.base import Nitrate, NitrateNone
+from tcms_api.config import log, get_cache_level, set_cache_level
+from tcms_api.utils import pretty, listed, sliced, human
+from tcms_api.base import Nitrate, NitrateNone
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  MultiCall methods

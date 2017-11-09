@@ -29,12 +29,12 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
-import nitrate.config as config
+import tcms_api.config as config
 
-from nitrate.config import log
-from nitrate.base import Nitrate, NitrateNone, _getter, _idify
-from nitrate.utils import pretty, color
-from nitrate.xmlrpc import NitrateError
+from tcms_api.config import log
+from tcms_api.base import Nitrate, NitrateNone, _getter, _idify
+from tcms_api.utils import pretty, color
+from tcms_api.xmlrpc import NitrateError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Build Class
@@ -1341,4 +1341,4 @@ class Tag(Nitrate):
         self._index(self.name)
 
 # We need to import mutable here because of cyclic import
-from nitrate.mutable import TestCase, CaseRun
+from tcms_api.mutable import TestCase, CaseRun
