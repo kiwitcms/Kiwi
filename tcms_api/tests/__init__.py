@@ -1,6 +1,6 @@
 import random
 
-from django import test
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 import tcms_api
 
@@ -8,7 +8,7 @@ from tcms.tests.factories import UserFactory
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
-class BaseAPIClient_TestCase(test.TestCase):
+class BaseAPIClient_TestCase(StaticLiveServerTestCase):
     """
         Bring up a local Django instance and
         prepare test data - create Test Cases, Test Plans and Test Runs
@@ -20,7 +20,9 @@ class BaseAPIClient_TestCase(test.TestCase):
     num_runs = 1
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpClass(cls):
+        super(StaticLiveServerTestCase, cls).setUpClass()
+
         # NB: for now these need to be the same as in ~/.tcms.conf
         cls.api_user = UserFactory(username='api-tester')
         cls.api_user.set_password('testing')
