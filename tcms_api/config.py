@@ -242,7 +242,7 @@ class Config(object):
     _instance = None
     _parsed = False
     # Config path
-    path = os.path.expanduser("~/.nitrate")
+    path = os.path.expanduser("~/.tcms.conf")
     # Minimal config example
     example = ("Please, provide at least a minimal config file {0}:\n"
                "[nitrate]\n"
@@ -265,7 +265,7 @@ class Config(object):
         # Try system settings when the config does not exist in user directory
         if not os.path.exists(self.path):
             log.debug("User config file not found, trying /etc/nitrate.conf")
-            self.path = "/etc/nitrate.conf"
+            self.path = "/etc/tcms.conf"
         if not os.path.exists(self.path):
             log.error(self.example)
             raise NitrateError("No config file found")
