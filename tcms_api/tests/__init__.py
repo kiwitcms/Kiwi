@@ -18,15 +18,16 @@ class BaseAPIClient_TestCase(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.MASTER_TESTPLAN_NAME = "Master Test Plan"
-        cls.PRODUCT = tcms_api.Product(name="RHEL Tests")
-        cls.VERSION = tcms_api.Version(product=cls.PRODUCT, version="unspecified")
-        cls.PLANTYPE = tcms_api.PlanType(name="Function")
-        cls.CATEGORY = tcms_api.Category(category="Regression", product=cls.PRODUCT)
-        cls.CASESTATUS = tcms_api.CaseStatus("CONFIRMED")
-        cls.BUILD = tcms_api.Build(product=cls.PRODUCT, build="unspecified")
 
-        cls.TAGS = [tcms_api.Tag(id) for id in range(3000, 3200)]
+        cls.product = tcms_api.Product(name="Kiwi TCMS")
+        cls.version = tcms_api.Version(product=cls.product, version="unspecified")
+        cls.plantype = tcms_api.PlanType(name="Function")
+        cls.category = tcms_api.Category(category="Regression", product=cls.product)
+        cls.component = tcms_api.Component(name='tcms_api', product=cls.product)
+        cls.CASESTATUS = tcms_api.CaseStatus("CONFIRMED")
+        cls.build = tcms_api.Build(product=cls.product, build="unspecified")
+
+        cls.tags = [tcms_api.Tag(id) for id in range(3000, 3200)]
         cls.TESTERS = [tcms_api.User(id) for id in range(1000, 1050)]
 
         # Create test cases
@@ -34,34 +35,35 @@ class BaseAPIClient_TestCase(test.TestCase):
         for case_count in range(cls.num_cases):
             testcase = tcms_api.TestCase(
                 name="Test Case {0}".format(case_count + 1),
-                category=cls.CATEGORY,
-                product=cls.PRODUCT,
+                category=cls.category,
+                product=cls.product,
                 summary="Test Case {0}".format(case_count + 1),
                 status=cls.CASESTATUS)
             # Add a couple of random tags and the default tester
-            testcase.tags.add([random.choice(cls.TAGS) for counter in range(10)])
+            testcase.tags.add([random.choice(cls.tags) for counter in range(10)])
             testcase.tester = random.choice(cls.TESTERS)
             testcase.update()
             cls.cases.append(testcase)
 
         # Create master test plan (parent of all)
         cls.master = tcms_api.TestPlan(
-            name=cls.MASTER_TESTPLAN_NAME,
-            product=cls.PRODUCT,
-            version=cls.VERSION,
-            type=cls.PLANTYPE)
+            name="API client Test Plan",
+            product=cls.product,
+            version=cls.version,
+            type=cls.plantype)
         tcms_api.info("* {0}".format(cls.master))
         cls.master.testcases.add(cls.cases)
         cls.master.update()
 
         # Create child test plans
+        cls.testruns = []
         for plan_count in range(cls.num_plans):
             testplan = tcms_api.TestPlan(
                 name="Test Plan {0}".format(plan_count + 1),
-                product=cls.PRODUCT,
-                version=cls.VERSION,
+                product=cls.product,
+                version=cls.version,
                 parent=cls.master,
-                type=cls.PLANTYPE)
+                type=cls.plantype)
             # Link all test cases to the test plan
             testplan.testcases.add(cls.cases)
             testplan.update()
@@ -71,8 +73,9 @@ class BaseAPIClient_TestCase(test.TestCase):
             for run_count in range(cls.num_runs):
                 testrun = tcms_api.TestRun(
                     testplan=testplan,
-                    build=cls.BUILD,
-                    product=cls.PRODUCT,
+                    build=cls.build,
+                    product=cls.product,
                     summary="Test Run {0}".format(run_count + 1),
-                    version=cls.VERSION)
+                    version=cls.version)
                 tcms_api.info("    * {0}".format(testrun))
+                cls.testruns.append(testrun)

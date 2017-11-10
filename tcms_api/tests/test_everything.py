@@ -33,61 +33,6 @@ data of existing objects to be tested, for example:
     login = username
     email = username@example.com
 
-    [product]
-    id = 60
-    name = Red Hat Enterprise Linux 6
-
-    [version]
-    id = 1234
-    name = 6.0
-
-    [build]
-    id = 12345
-    name = RHEL6.6-20140404
-
-    [component]
-    id = 123
-    name = wget
-    product = Red Hat Enterprise Linux 6
-
-    [category]
-    id = 123
-    name = Integration
-
-    [plantype]
-    id = 1
-    name = General
-
-    [tag]
-    id = 1234
-    name = TestTag
-
-    [testplan]
-    id = 1234
-    name = Test plan
-    type = Function
-    product = Red Hat Enterprise Linux 6
-    version = 6.1
-    status = ENABLED
-    owner = login
-
-    [testrun]
-    id = 6757
-    summary = Test Run Summary
-    started = 2012-12-12 12:12:12
-    finished = None
-
-    [testcase]
-    id = 1234
-    summary = Test case summary
-    product = Red Hat Enterprise Linux 6
-    category = Sanity
-    created = 2012-12-12 12:12:12
-
-    [caserun]
-    id = 123456
-    status = PASSED
-
 To exercise the whole test suite run "python -m tcms_api.tests". To test
 only subset of tests pick the desired classes on the command line:
 
@@ -127,6 +72,8 @@ from tcms_api.base import *        # noqa: F403
 from tcms_api.immutable import *   # noqa: F403
 from tcms_api.mutable import *     # noqa: F403
 from tcms_api.containers import *  # noqa: F403
+
+from tcms_api.tests import BaseAPIClient_TestCase
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Constants
@@ -211,11 +158,9 @@ class UtilsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class BuildTests(unittest.TestCase):
+class BuildTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        self.product = config.product
-        self.build = config.build
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
         cache.clear()
@@ -276,14 +221,12 @@ class BuildTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CategoryTests(unittest.TestCase):
+class CategoryTests(BaseAPIClient_TestCase):
 
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
         cache.clear()
         self.cache_level = get_cache_level()
-        self.product = config.product
-        self.category = config.category
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -344,12 +287,11 @@ class CategoryTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class PlanTypeTests(unittest.TestCase):
+class PlanTypeTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
         cache.clear()
         self.original_cache_level = get_cache_level()
-        self.plantype = config.plantype
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -420,10 +362,7 @@ class PlanTypeTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class ProductTests(unittest.TestCase):
-    def setUp(self):
-        """ Set up test product from the config """
-        self.product = config.product
+class ProductTests(BaseAPIClient_TestCase):
 
     def testGetById(self):
         """ Get product by id """
@@ -511,7 +450,7 @@ class ProductTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class UserTests(unittest.TestCase):
+class UserTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
         cache.clear()
@@ -606,13 +545,11 @@ class UserTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class VersionTests(unittest.TestCase):
+class VersionTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up version from the config """
         cache.clear()
         self.cache_level = get_cache_level()
-        self.version = config.version
-        self.product = config.product
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -676,10 +613,7 @@ class VersionTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class ComponentTests(unittest.TestCase):
-    def setUp(self):
-        """ Set up component from the config """
-        self.component = config.component
+class ComponentTests(BaseAPIClient_TestCase):
 
     def testFetchById(self):
         """ Fetch component by id """
@@ -742,10 +676,9 @@ class ComponentTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class TagTests(unittest.TestCase):
+class TagTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up component from the config """
-        self.tag = config.tag
+        self.tag = self.tags[0]
 
     def test_fetch_by_id(self):
         """ Fetch component by id """
@@ -787,10 +720,8 @@ class TagTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class TestPlanTests(unittest.TestCase):
+class TestPlanTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
         cache.clear()
@@ -807,9 +738,9 @@ class TestPlanTests(unittest.TestCase):
         """ Create a new test plan (valid) """
         testplan = TestPlan(
             name="Test plan",
-            type=self.testplan.type,
-            product=self.testplan.product,
-            version=self.testplan.version)
+            type=self.master.type,
+            product=self.master.product,
+            version=self.master.version)
         self.assertTrue(isinstance(testplan, TestPlan))
         self.assertEqual(testplan.name, "Test plan")
 
@@ -820,60 +751,60 @@ class TestPlanTests(unittest.TestCase):
 
     def test_get_by_id(self):
         """ Fetch an existing test plan by id """
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(isinstance(testplan, TestPlan))
-        self.assertEqual(testplan.name, self.testplan.name)
-        self.assertEqual(testplan.type.name, self.testplan.type)
-        self.assertEqual(testplan.product.name, self.testplan.product)
-        self.assertEqual(testplan.version.name, self.testplan.version)
-        self.assertEqual(testplan.owner.login, self.testplan.owner)
+        self.assertEqual(testplan.name, self.master.name)
+        self.assertEqual(testplan.type.name, self.master.type)
+        self.assertEqual(testplan.product.name, self.master.product)
+        self.assertEqual(testplan.version.name, self.master.version)
+        self.assertEqual(testplan.owner.login, self.master.owner)
 
     def test_plan_status(self):
         """ Test read/write access to the test plan status """
         # Prepare original and negated status
-        original = PlanStatus(self.testplan.status)
+        original = PlanStatus(self.master.status)
         negated = PlanStatus(not original.id)
         # Test original value
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.status, original)
         testplan.status = negated
         testplan.update()
         del testplan
         # Test negated value
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.status, negated)
         testplan.status = original
         testplan.update()
         del testplan
         # Back to the original value
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.status, original)
 
     def test_cache_none(self):
         """ Cache none """
         # Fetch test plan twice ---> two requests
         set_cache_level(CACHE_NONE)
-        testplan = TestPlan(self.testplan.id)
-        self.assertEqual(testplan.name, self.testplan.name)
-        testplan = TestPlan(self.testplan.id)
-        self.assertEqual(testplan.name, self.testplan.name)
+        testplan = TestPlan(self.master.id)
+        self.assertEqual(testplan.name, self.master.name)
+        testplan = TestPlan(self.master.id)
+        self.assertEqual(testplan.name, self.master.name)
         self.assertEqual(Nitrate._requests, self.requests + 2)
 
     def test_cache_objects(self):
         """ Cache objects """
         # Fetch test plan twice --->  just one request
         set_cache_level(CACHE_OBJECTS)
-        testplan = TestPlan(self.testplan.id)
-        self.assertEqual(testplan.name, self.testplan.name)
-        testplan = TestPlan(self.testplan.id)
-        self.assertEqual(testplan.name, self.testplan.name)
+        testplan = TestPlan(self.master.id)
+        self.assertEqual(testplan.name, self.master.name)
+        testplan = TestPlan(self.master.id)
+        self.assertEqual(testplan.name, self.master.name)
         self.assertEqual(Nitrate._requests, self.requests + 1)
 
     def test_cache_persistent(self):
         """ Cache persistent """
         set_cache_level(CACHE_PERSISTENT)
         # Fetch the test plan (populate the cache)
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         log.debug(testplan.name)
         # Save, clear & load cache
         cache.save()
@@ -881,8 +812,8 @@ class TestPlanTests(unittest.TestCase):
         cache.load()
         requests = Nitrate._requests
         # Fetch once again ---> no additional request
-        testplan = TestPlan(self.testplan.id)
-        self.assertEqual(testplan.name, self.testplan.name)
+        testplan = TestPlan(self.master.id)
+        self.assertEqual(testplan.name, self.master.name)
         self.assertEqual(Nitrate._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -890,12 +821,11 @@ class TestPlanTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class TestRunTests(unittest.TestCase):
+class TestRunTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testplan = config.testplan
-        self.testcase = config.testcase
-        self.testrun = config.testrun
+        self.testcase = self.case[0]
+        self.testrun = self.testruns[0]
 
     def testCreateInvalid(self):
         """ Create a new test run (missing required parameters) """
@@ -903,14 +833,14 @@ class TestRunTests(unittest.TestCase):
 
     def testCreateValid(self):
         """ Create a new test run (valid) """
-        testrun = TestRun(summary="Test run", testplan=self.testplan.id)
+        testrun = TestRun(summary="Test run", testplan=self.master.id)
         self.assertTrue(isinstance(testrun, TestRun))
         self.assertEqual(testrun.summary, "Test run")
 
     def testCreateOptionalFields(self):
         """ Create a new test run, including optional fields """
         testrun = TestRun(
-            summary="Test run", testplan=self.testplan.id, errata=1234)
+            summary="Test run", testplan=self.master.id, errata=1234)
         self.assertTrue(isinstance(testrun, TestRun))
         self.assertEqual(testrun.summary, "Test run")
         self.assertEqual(testrun.errata, 1234)
@@ -947,7 +877,7 @@ class TestRunTests(unittest.TestCase):
         testcase.status = CaseStatus("DISABLED")
         testcase.update()
         # Create the test run, make sure the test case is not there
-        testrun = TestRun(testplan=self.testplan.id)
+        testrun = TestRun(testplan=self.master.id)
         self.assertTrue(testcase.id not in
                         [caserun.testcase.id for caserun in testrun])
         # Restore the original status
@@ -957,7 +887,7 @@ class TestRunTests(unittest.TestCase):
     def test_include_only_selected_cases(self):
         """ Include only selected test cases in the new run """
         testcase = TestCase(self.testcase.id)
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         # No test case should be linked
         testrun = TestRun(testplan=testplan, testcases=[])
         self.assertTrue(testcase.id not in
@@ -996,10 +926,9 @@ class TestRunTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class TestCaseTests(unittest.TestCase):
+class TestCaseTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test case from the config """
-        self.testcase = config.testcase
+        self.testcase = self.cases[0]
         self.performance = config.performance
 
     def testCreateInvalid(self):
@@ -1224,14 +1153,12 @@ class CaseRunsTests(unittest.TestCase):
 
 class CasePlanTests(unittest.TestCase):
     def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
-        self.testcase = config.testcase
+        self.testcase = self.cases[0]
 
     def test_sortkey_update(self):
         """ Sort key update """
         testcase = self.testcase.id
-        testplan = self.testplan.id
+        testplan = self.master.id
         for sortkey in [100, 200, 300]:
             # Update the sortkey
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
@@ -1260,11 +1187,9 @@ class CasePlanTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CaseComponentsTests(unittest.TestCase):
+class CaseComponentsTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up component from the config """
-        self.component = config.component
-        self.testcase = config.testcase
+        self.testcase = self.cases[0]
 
     def test1(self):
         """ Unlinking a component from a test case """
@@ -1319,47 +1244,47 @@ class PlanComponentsTests(unittest.TestCase):
     def setUp(self):
         """ Set up component from the config """
         self.component = config.component
-        self.testplan = config.testplan
+        self.master = config.testplan
 
     def test1(self):
         """ Unlinking a component from a  test plan """
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         component = Component(self.component.id)
         testplan.components.remove(component)
         testplan.update()
         # Check cache content
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(component not in testplan.components)
         # Check server content
         cache.clear()
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(component not in testplan.components)
 
     def test2(self):
         """ Linking a component to a  test plan """
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         component = Component(self.component.id)
         testplan.components.add(component)
         testplan.update()
         # Check cache content
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(component in testplan.components)
         # Check server content
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(component in testplan.components)
 
     def test3(self):
         """ Unlinking a component from a  test plan """
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         component = Component(self.component.id)
         testplan.components.remove(component)
         testplan.update()
         # Check cache content
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(component not in testplan.components)
         # Check server content
         cache.clear()
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(component not in testplan.components)
 '''
 
@@ -1368,10 +1293,10 @@ class PlanComponentsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CaseBugsTests(unittest.TestCase):
+class CaseBugsTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up test case from the config """
-        self.testcase = config.testcase
+        self.testcase = self.cases[0]
         self.bug = Bug(bug=1234)
 
     def test_bugging1(self):
@@ -1474,51 +1399,48 @@ class CaseRunBugsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class PlanTagsTests(unittest.TestCase):
-    def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
+class PlanTagsTests(BaseAPIClient_TestCase):
 
     def testTagging1(self):
         """ Untagging a test plan """
         # Remove tag and check
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         testplan.tags.remove(Tag("TestTag"))
         testplan.update()
         # Check cache content
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
         # Check server content
         cache.clear()
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
 
     def testTagging2(self):
         """ Tagging a test plan """
         # Add tag and check
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         testplan.tags.add(Tag("TestTag"))
         testplan.update()
         # Check cache content
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") in testplan.tags)
         # Check server content
         cache.clear()
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") in testplan.tags)
 
     def testTagging3(self):
         """ Untagging a test plan """
         # Remove tag and check
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         testplan.tags.remove(Tag("TestTag"))
         testplan.update()
         # Check cache content
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
         # Check server content
         cache.clear()
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1526,10 +1448,9 @@ class PlanTagsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class RunTagsTests(unittest.TestCase):
+class RunTagsTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test run from the config """
-        self.testrun = config.testrun
+        self.testrun = self.testruns[0]
 
     def testTagging1(self):
         """ Untagging a test run """
@@ -1578,12 +1499,11 @@ class RunTagsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CaseTagsTests(unittest.TestCase):
+class CaseTagsTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test case from the config """
-        self.testcase = config.testcase
+        self.testcase = self.cases[0]
         self.performance = config.performance
-        self.tag = config.tag
+        self.tag = self.tags[0]
 
     def testTagging1(self):
         """ Untagging a test case """
@@ -1670,14 +1590,11 @@ class CaseTagsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class ChildPlansTests(unittest.TestCase):
-    def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
+class ChildPlansTests(BaseAPIClient_TestCase):
 
     def test_add_and_remove_child_plan(self):
         """ Add and remove child test plan """
-        parent = TestPlan(self.testplan.id)
+        parent = TestPlan(self.master.id)
         # Create a new separate plan, make sure it's not child
         child = TestPlan(name="Child test plan", type=parent.type,
                          product=parent.product, version=parent.version)
@@ -1699,15 +1616,13 @@ class ChildPlansTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class PlanRunsTests(unittest.TestCase):
+class PlanRunsTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
         self.testrun = config.testrun
 
     def test_inclusion(self):
         """ Test run included in the container"""
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         testrun = TestRun(self.testrun.id)
         self.assertTrue(testrun in testplan.testruns)
         # Everything should be kept in the persistent cache
@@ -1716,14 +1631,14 @@ class PlanRunsTests(unittest.TestCase):
             cache.clear()
             cache.load()
             requests = Nitrate._requests
-            testplan = TestPlan(self.testplan.id)
+            testplan = TestPlan(self.master.id)
             testrun = TestRun(self.testrun.id)
             self.assertTrue(testrun in testplan.testruns)
             self.assertEqual(requests, Nitrate._requests)
 
     def test_new_test_run(self):
         """ New test runs should be linked """
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         testrun = TestRun(testplan=testplan)
         self.assertTrue(testrun in testplan.testruns)
         # Everything should be kept in the persistent cache
@@ -1732,7 +1647,7 @@ class PlanRunsTests(unittest.TestCase):
             cache.clear()
             cache.load()
             requests = Nitrate._requests
-            testplan = TestPlan(self.testplan.id)
+            testplan = TestPlan(self.master.id)
             testrun = TestRun(self.testrun.id)
             self.assertTrue(testrun in testplan.testruns)
             self.assertEqual(requests, Nitrate._requests)
@@ -1742,16 +1657,14 @@ class PlanRunsTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class PlanCasePlansTests(unittest.TestCase):
+class PlanCasePlansTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
-        self.testcase = config.testcase
+        self.testcase = self.cases[0]
 
     def test_sortkey_update(self):
         """ Get/set sortkey using the TestPlan.sortkey() method """
         testcase = TestCase(self.testcase.id)
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         for sortkey in [100, 200, 300]:
             # Compare current sortkey value
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
@@ -1764,7 +1677,7 @@ class PlanCasePlansTests(unittest.TestCase):
             if get_cache_level() < CACHE_OBJECTS:
                 continue
             requests = Nitrate._requests
-            testplan = TestPlan(self.testplan.id)
+            testplan = TestPlan(self.master.id)
             self.assertEqual(testplan.sortkey(testcase), sortkey)
             self.assertEqual(requests, Nitrate._requests)
             # Check persistent cache
@@ -1773,7 +1686,7 @@ class PlanCasePlansTests(unittest.TestCase):
             cache.save()
             cache.clear()
             cache.load()
-            testplan = TestPlan(self.testplan.id)
+            testplan = TestPlan(self.master.id)
             self.assertEqual(testplan.sortkey(testcase), sortkey)
             self.assertEqual(requests, Nitrate._requests)
 
@@ -1782,12 +1695,10 @@ class PlanCasePlansTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class RunCasesTests(unittest.TestCase):
+class RunCasesTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
         self.testrun = config.testrun
-        self.testcase = config.testcase
+        self.testcase = self.cases[0]
 
     def test_present(self):
         """ Check test case presence """
@@ -1801,7 +1712,7 @@ class RunCasesTests(unittest.TestCase):
         """ Add and remove test case """
         # Create a new test run, make sure our test case is there
         testcase = TestCase(self.testcase.id)
-        testrun = TestRun(testplan=self.testplan.id)
+        testrun = TestRun(testplan=self.master.id)
         self.assertTrue(testcase in testrun.testcases)
         # Remove and check it's not either in testcases or caseruns
         testrun.testcases.remove(testcase)
@@ -1835,11 +1746,9 @@ class RunCasesTests(unittest.TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class RunCaseRunsTests(unittest.TestCase):
+class RunCaseRunsTests(BaseAPIClient_TestCase):
     def setUp(self):
-        """ Set up test plan from the config """
-        self.testplan = config.testplan
-        self.testrun = config.testrun
+        self.testrun = self.testruns[0]
         self.caserun = config.caserun
 
     def test_present(self):
@@ -1854,7 +1763,7 @@ class RunCaseRunsTests(unittest.TestCase):
         if get_cache_level() < CACHE_OBJECTS:
             return
         cache.clear()
-        testplan = TestPlan(self.testplan.id)
+        testplan = TestPlan(self.master.id)
         testrun = TestRun(self.testrun.id)
         # Make sure plan, run and cases are fetched
         "{0}{1}{2}".format(testplan, testrun, listed(
@@ -1871,14 +1780,6 @@ class RunCaseRunsTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # Override the server config with the testing instance
-    config = Config()
-    try:
-        config.nitrate = config.test
-        print("Testing against {0}".format(config.nitrate.url))
-    except AttributeError:
-        raise NitrateError("No test server provided in the config file")
-
     # Use temporary cache file for testing
     temporary_cache = tempfile.NamedTemporaryFile()
     cache = Cache(temporary_cache.name)
