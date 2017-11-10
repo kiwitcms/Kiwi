@@ -30,11 +30,12 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
+from pprint import pformat as pretty
+
 import tcms_api.config as config
 
 from tcms_api.config import log
 from tcms_api.base import Nitrate, NitrateNone, _getter, _setter, _idify
-from tcms_api.utils import pretty
 from tcms_api.xmlrpc import NitrateError
 from tcms_api.immutable import (Build, CaseStatus, Category, PlanStatus,
                                 PlanType, Priority, Product, RunStatus, Status, Tag, User, Version)

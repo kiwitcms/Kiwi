@@ -29,11 +29,13 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
+from pprint import pformat as pretty
+
 import tcms_api.config as config
 
 from tcms_api.config import log
 from tcms_api.base import Nitrate, NitrateNone, _getter, _idify
-from tcms_api.utils import pretty, color
+from tcms_api.utils import color
 from tcms_api.xmlrpc import NitrateError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

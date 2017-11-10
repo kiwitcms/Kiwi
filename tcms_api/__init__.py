@@ -77,7 +77,7 @@ from tcms_api.containers import (
 
 # Various useful utilities
 from tcms_api.utils import (
-    ascii, color, header, human, info, listed, pretty, sliced, unlisted)
+    ascii, color, header, human, info, listed, sliced, unlisted)
 
 # Logging, coloring and caching configuration
 from tcms_api.config import (
@@ -110,7 +110,7 @@ __all__ = [
     ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
     PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer,
 
-    ascii, color, header, human, info, listed, pretty, sliced, unlisted,
+    ascii, color, header, human, info, listed, sliced, unlisted,
 
     Config,
     Logging, get_log_level, set_log_level, log,

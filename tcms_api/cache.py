@@ -122,13 +122,15 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
+from pprint import pformat as pretty
+
 import tcms_api.immutable as immutable
 import tcms_api.mutable as mutable
 import tcms_api.containers as containers
 import tcms_api.config as config
 
 from tcms_api.config import log, get_cache_level, set_cache_level
-from tcms_api.utils import pretty, listed, sliced, human
+from tcms_api.utils import listed, sliced, human
 from tcms_api.base import Nitrate, NitrateNone
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

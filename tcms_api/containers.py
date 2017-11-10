@@ -65,11 +65,13 @@ try:
 except ImportError:
     import xmlrpc.client as xmlrpclib
 
+from pprint import pformat as pretty
+
 import tcms_api.config as config
 import tcms_api.teiid as teiid
 
 from tcms_api.config import log
-from tcms_api.utils import pretty, listed, sliced
+from tcms_api.utils import listed, sliced
 from tcms_api.base import Nitrate, NitrateNone, _getter, _idify
 from tcms_api.immutable import Component, Bug, Tag
 from tcms_api.xmlrpc import NitrateError
