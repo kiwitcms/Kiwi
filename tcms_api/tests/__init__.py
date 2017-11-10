@@ -1,3 +1,4 @@
+import os
 import random
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -23,10 +24,20 @@ class BaseAPIClient_TestCase(StaticLiveServerTestCase):
     def setUpClass(cls):
         super(StaticLiveServerTestCase, cls).setUpClass()
 
-        # NB: for now these need to be the same as in ~/.tcms.conf
         cls.api_user = UserFactory(username='api-tester')
         cls.api_user.set_password('testing')
         initiate_user_with_default_setups(cls.api_user)
+
+        # WARNING: for now we override the config file
+        # until we can pass the testing configuration
+        conf_path = os.path.expanduser('~/.tcms.conf')
+        conf_fh = open(conf_path, 'w')
+        conf_fh.write("""[nitrate]
+url = %s/xmlrpc/
+username = %s
+password = %s
+""" % (cls.live_server_url, cls.api_user.username, 'testing'))
+        conf_fh.close()
 
         cls.product = tcms_api.Product(name="Kiwi TCMS")
         cls.version = tcms_api.Version(product=cls.product, version="unspecified")

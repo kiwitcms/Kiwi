@@ -254,7 +254,7 @@ class KerbTransport(SafeCookieTransport):
         return host, extra_headers, x509
 
     def _python_ver_larger_than_2_6(self):
-        return sys.version_info >= (2,6)
+        return sys.version_info >= (2, 6)
 
     def make_connection(self, host):
         '''
