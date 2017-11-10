@@ -4,6 +4,9 @@ from django import test
 
 import tcms_api
 
+from tcms.tests.factories import UserFactory
+from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+
 
 class BaseAPIClient_TestCase(test.TestCase):
     """
@@ -18,6 +21,10 @@ class BaseAPIClient_TestCase(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        # NB: for now these need to be the same as in ~/.tcms.conf
+        cls.api_user = UserFactory(username='api-tester')
+        cls.api_user.set_password('testing')
+        initiate_user_with_default_setups(cls.api_user)
 
         cls.product = tcms_api.Product(name="Kiwi TCMS")
         cls.version = tcms_api.Version(product=cls.product, version="unspecified")
