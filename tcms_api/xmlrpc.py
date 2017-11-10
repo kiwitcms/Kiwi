@@ -207,7 +207,10 @@ class CookieTransport(xmlrpclib.Transport):
             h.close()
 
     # Override the appropriate request method
-    if hasattr(xmlrpclib.Transport, 'single_request'):
+    if sys.version_info.major >= 3:
+        # Python3 single_request() makes it impossible to implement cookies
+        pass
+    elif hasattr(xmlrpclib.Transport, 'single_request'):
         single_request = single_request_with_cookies  # python 2.7+
     else:
         request = request_with_cookies  # python 2.6 and earlier
@@ -217,7 +220,10 @@ class SafeCookieTransport(xmlrpclib.SafeTransport, CookieTransport):
     '''SafeTransport subclass that supports cookies.'''
     scheme = 'https'
     # Override the appropriate request method
-    if hasattr(xmlrpclib.Transport, 'single_request'):
+    if sys.version_info.major >= 3:
+        # Python3 single_request() makes it impossible to implement cookies
+        pass
+    elif hasattr(xmlrpclib.Transport, 'single_request'):
         single_request = CookieTransport.single_request_with_cookies
     else:
         request = CookieTransport.request_with_cookies
