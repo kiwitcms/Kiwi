@@ -39,23 +39,23 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
 		{% if test_plan %}
 		>>Plan: <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
-		>>Case: <a href="{% url "tcms.testcases.views.get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
+		>>Case: <a href="{% url "case-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
 		{% else %}
-		>> Case:<a href="{% url "tcms.testcases.views.get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
+		>> Case:<a href="{% url "case-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
 		{% endif %}
 		>> Edit
 	</div>
-  
-	
+
+
 	<span class="right-action">
-		<a href="{% url "tcms.testcases.views.text_history" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="historylink">
+		<a href="{% url "case-text-history" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="historylink">
 			Edit History
 		</a>
 	</span>
-	<form action="{% url "tcms.testcases.views.edit" test_case.case_id %}" method="post">
+	<form action="{% url "case-edit" test_case.case_id %}" method="post">
 		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}">
 		<div class="Detailform border-1" >
 			<fieldset class="no-border background-light-grey">
@@ -77,7 +77,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 						<span >{{ form.default_tester }}</span>
 						<div class="errors">{{ form.default_tester.errors }}</div>
 					</div>
-					
+
 					<div class="data_row">
 						<label>Estimated Time</label>
 						<div id="form_estimated_time" >
@@ -104,7 +104,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 						<span id="form_notes" >{{ form.notes }}</span>
 						<div class="errors">{{ form.notes.errors }}</div>
 					</div>
-					
+
 				</div>
 				<div class="editor-side">
 					{% if testplan %}
@@ -133,8 +133,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 						<label >Last Modified</label>
 						<div id="display_modify_date" >{{ test_case.latest_text.create_date }}</div>
 					</div>
-					
-					
+
+
 					<div class="data_row">
 						<label>Automated</label>
 							{{ form.is_automated }}
@@ -216,4 +216,3 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 	</form>
 </div>
 {% endblock %}
-

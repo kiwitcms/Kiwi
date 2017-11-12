@@ -10,9 +10,9 @@
         "0":"<input type='checkbox' name='plan' value='{{ test_plan.pk }}' title='Select/Unselect'>",
         "1":"<a href='{{ test_plan.get_absolute_url }}'>{{ test_plan.plan_id }}</a>",
         "2":"<a href='{{ test_plan.get_absolute_url }}' title='Go to {{ test_plan.name }}'>{{ test_plan }} </a>",
-        "3":"<a href='{% url "tcms.profiles.views.profile" test_plan.author.username %}'>{{ test_plan.author }}</a>",
+        "3":"<a href='{% url "user-profile" test_plan.author.username %}'>{{ test_plan.author }}</a>",
         {% if test_plan.owner %}
-            "4":"<a href='{% url "tcms.profiles.views.profile" test_plan.owner.username %}'>{{ test_plan.owner }}</a>"
+            "4":"<a href='{% url "user-profile" test_plan.owner.username %}'>{{ test_plan.owner }}</a>"
         {% else %}
             "4":"No owner"
         {% endif %},
@@ -22,7 +22,7 @@
         "8":"<a href='{{ test_plan.get_absolute_url }}' title='{{ test_plan.cal_cases_count }} test cases'>{{ test_plan.cal_cases_count }}</a>",
         "9":"<a href='{{ test_plan.get_absolute_url }}#testruns' title='{{ test_plan.cal_runs_count }} test runs'>{{ test_plan.cal_runs_count }}</a>",
         {% if perms.testplans.change_testplan %}
-            "10":"<a class='editlink' href='{% url "tcms.testplans.views.edit" test_plan.plan_id %}'>Edit</a>"
+            "10":"<a class='editlink' href='{% url "plan-edit" test_plan.plan_id %}'>Edit</a>"
         {% else %}
             "10":""
         {% endif %}

@@ -26,24 +26,24 @@
 				<input type="hidden" name="case_text_version" value="{{ test_case_run.case_text_version }}" />
 			</td>
 			<td class="expandable">
-				<a href="{% url "tcms.testcases.views.get" test_case_run.case_id %}?from_plan={{ test_case_run.run__plan_id }}">{{ test_case_run.pk }}</a>
+				<a href="{% url "case-get" test_case_run.case_id %}?from_plan={{ test_case_run.run__plan_id }}">{{ test_case_run.pk }}</a>
 			</td>
 			<td>
-				<a href="{% url "tcms.testruns.views.get" test_case_run.run_id %}">{{ test_case_run.run_id }}</a>
+				<a href="{% url "run-get" test_case_run.run_id %}">{{ test_case_run.run_id }}</a>
 			</td>
 			<td class="expandable">
 				<p>{{ test_case_run.run__summary }}</p>
 			</td>
 			<td>
 				{% if test_case_run.tested_by__username %}
-				<a href="{% url "tcms.profiles.views.profile" test_case_run.tested_by__username %}">{{ test_case_run.tested_by__username }}</a>
+				<a href="{% url "user-profile" test_case_run.tested_by__username %}">{{ test_case_run.tested_by__username }}</a>
 				{% else %}
 				<label>None</label>
 				{% endif %}
 			</td>
 			<td>
 				{% if test_case_run.assignee__username %}
-				<a href="{% url "tcms.profiles.views.profile" test_case_run.assignee__username %}">{{ test_case_run.assignee__username }}</a>
+				<a href="{% url "user-profile" test_case_run.assignee__username %}">{{ test_case_run.assignee__username }}</a>
 				{% else%}
 				None
 				{% endif %}

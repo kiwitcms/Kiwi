@@ -4,7 +4,6 @@ from common import *
 
 # Debug settings
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 # Database settings
 DATABASES = {

@@ -31,60 +31,68 @@ class TestQuickSearch(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super(TestQuickSearch, cls).setUpTestData()
-
-        cls.search_url = reverse('tcms.core.views.search')
+        cls.search_url = reverse('nitrate-search')
 
     def test_goto_plan(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'plans', 'search_content': self.plan.pk})
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'plans', 'search_content': self.plan.pk})
         self.assertRedirects(
             response,
-            reverse('tcms.testplans.views.get', args=[self.plan.pk]),
+            reverse('plan-get', args=[self.plan.pk]),
             target_status_code=http_client.MOVED_PERMANENTLY)
 
     def test_goto_case(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'cases', 'search_content': self.case_1.pk})
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'cases', 'search_content': self.case_1.pk})
 
         self.assertRedirects(
             response,
-            reverse('tcms.testcases.views.get', args=[self.case_1.pk]))
+            reverse('case-get', args=[self.case_1.pk]))
 
     def test_goto_run(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'runs', 'search_content': self.test_run.pk})
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'runs', 'search_content': self.test_run.pk})
         self.assertRedirects(
             response,
-            reverse('tcms.testruns.views.get', args=[self.test_run.pk]))
+            reverse('run-get', args=[self.test_run.pk]))
 
     def test_goto_plan_search(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'plans', 'search_content': 'keyword'})
-        url = '{}?a=search&search=keyword'.format(reverse('tcms.testplans.views.all'))
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'plans', 'search_content': 'keyword'})
+        url = '{}?a=search&search=keyword'.format(reverse('plans-all'))
         self.assertRedirects(response, url)
 
     def test_goto_case_search(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'cases', 'search_content': 'keyword'})
-        url = '{}?a=search&search=keyword'.format(reverse('tcms.testcases.views.all'))
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'cases', 'search_content': 'keyword'})
+        url = '{}?a=search&search=keyword'.format(reverse('cases-all'))
         self.assertRedirects(response, url)
 
     def test_goto_run_search(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'runs', 'search_content': 'keyword'})
-        url = '{}?a=search&search=keyword'.format(reverse('tcms.testruns.views.all'))
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'runs', 'search_content': 'keyword'})
+        url = '{}?a=search&search=keyword'.format(reverse('runs-all'))
         self.assertRedirects(response, url)
 
     def test_goto_search_if_no_object_is_found(self):
         non_existing_pk = 9999999
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'cases', 'search_content': non_existing_pk})
-        url = '{}?a=search&search={}'.format(reverse('tcms.testcases.views.all'), non_existing_pk)
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'cases', 'search_content': non_existing_pk})
+        url = '{}?a=search&search={}'.format(
+            reverse('cases-all'), non_existing_pk)
         self.assertRedirects(response, url)
 
     def test_404_if_unknown_search_type(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'unknown type', 'search_content': self.plan.pk})
+        response = self.client.get(
+            self.search_url,
+            {'search_type': 'unknown type', 'search_content': self.plan.pk})
         self.assertEqual(http_client.NOT_FOUND, response.status_code)
 
 
@@ -94,8 +102,7 @@ class TestCommentCaseRuns(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super(TestCommentCaseRuns, cls).setUpTestData()
-
-        cls.many_comments_url = reverse('tcms.core.ajax.comment_case_runs')
+        cls.many_comments_url = reverse('caserun-comment-caseruns')
 
     def test_refuse_if_missing_comment(self):
         self.client.login(username=self.tester.username, password='password')
@@ -157,7 +164,7 @@ class TestUpdateObject(BasePlanCase):
         super(TestUpdateObject, cls).setUpTestData()
 
         cls.permission = 'testplans.change_testplan'
-        cls.update_url = reverse('tcms.core.ajax.update')
+        cls.update_url = reverse('ajax-update')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -206,7 +213,7 @@ class TestUpdateCaseRunStatus(BaseCaseRun):
         super(TestUpdateCaseRunStatus, cls).setUpTestData()
 
         cls.permission = 'testruns.change_testcaserun'
-        cls.update_url = reverse('tcms.core.ajax.update_case_run_status')
+        cls.update_url = reverse('ajax-update-caserun-status')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -246,7 +253,7 @@ class TestGetForm(test.TestCase):
     """Test case for form"""
 
     def test_get_form(self):
-        response = self.client.get(reverse('tcms.core.ajax.form'),
+        response = self.client.get(reverse('ajax-form'),
                                    {'app_form': 'testcases.CaseAutomatedForm'})
         form = CaseAutomatedForm()
         self.assertHTMLEqual(response.content, form.as_p())
@@ -260,7 +267,7 @@ class TestUpdateCasePriority(BasePlanCase):
         super(TestUpdateCasePriority, cls).setUpTestData()
 
         cls.permission = 'testcases.change_testcase'
-        cls.case_update_url = reverse('tcms.core.ajax.update_cases_default_tester')
+        cls.case_update_url = reverse('ajax-update-cases-default-tester')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -309,7 +316,7 @@ class TestGetObjectInfo(BasePlanCase):
     def setUpTestData(cls):
         super(TestGetObjectInfo, cls).setUpTestData()
 
-        cls.get_info_url = reverse('tcms.core.ajax.info')
+        cls.get_info_url = reverse('ajax-getinfo')
 
         cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate')
         cls.group_new = TCMSEnvGroupFactory(name='NewGroup')

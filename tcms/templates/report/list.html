@@ -16,7 +16,7 @@ Nitrate.Utils.after_page_load(Nitrate.Report.List.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
 		>> Reporting
 	</div>
 	<h1>Product</h1>
@@ -32,7 +32,7 @@ Nitrate.Utils.after_page_load(Nitrate.Report.List.on_load);
 			<tr class="{% cycle 'even' 'odd' %}">
 				<td>
 					{% if product.plans_count %}
-					<a href="{% url "tcms.report.views.overview" product.id %}">{{ product }}</a>
+					<a href="{% url "report-overview" product.id %}">{{ product }}</a>
 					{% else %}
 					{{ product }}
 					{% endif %}

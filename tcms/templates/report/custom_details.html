@@ -18,7 +18,7 @@ Nitrate.Utils.after_page_load(Nitrate.Report.CustomDetails.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
 		&gt;&gt; <a href="{% url "report-custom" %}">Custom</a>
 		&gt;&gt; {% for build in builds %}{{ build }}{% endfor %}
 	</div>

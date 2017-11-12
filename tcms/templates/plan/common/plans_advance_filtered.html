@@ -3,15 +3,15 @@
 		{#<span class="tit">{{ this_page.object_list|length }} Plans</span>#}
 		<span>
 			{% if perms.testplans.add_testplan %}
-			<input type="button" title="Create new test plan" value="New Test Plan" class="js-new-plan" data-param="{% url 'tcms.testplans.views.new' %}" />
-			<input type="button" value="Clone" title="clone selected test plans." class="js-clone-plan" data-param="{% url 'tcms.testplans.views.clone' %}" />
+			<input type="button" title="Create new test plan" value="New Test Plan" class="js-new-plan" data-param="{% url "plans-new" %}" />
+			<input type="button" value="Clone" title="clone selected test plans." class="js-clone-plan" data-param="{% url "plans-clone" %}" />
 			{% endif %}
 			<input type="button" value="Printable copy" id="plan_advance_printable" disabled="disabled"
         title="Create the printable copy for selected plans."
-        data-param="{% url 'tcms.testplans.views.printable' %}" />
+        data-param="{% url "plans-printable" %}" />
 			<input type="button" value="Export" title="Export the cases for selected plans."
         class="js-export-cases"
-        data-param="{% url 'tcms.testplans.views.export' %}" />
+        data-param="{% url "plans-export" %}" />
 		</span>
 	</div>
 	<table id="testplans_table" class="list border-bottom" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">
@@ -36,10 +36,10 @@
 				<td><input type="checkbox" name="plan" value="{{ test_plan.pk }}" title="Select/Unselect"></td>
 				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}</a></td>
 				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_absolute_url }}" title="Go to {{ test_plan.name }}">{{ test_plan }} </a></td>
-				<td><a href="{% url "tcms.profiles.views.profile" test_plan.author.username %}">{{ test_plan.author }}</a></td>
+				<td><a href="{% url "user-profile" test_plan.author.username %}">{{ test_plan.author }}</a></td>
 				<td>
 					{% if test_plan.owner %}
-					<a href="{% url "tcms.profiles.views.profile" test_plan.owner.username %}">{{ test_plan.owner }}</a>
+					<a href="{% url "user-profile" test_plan.owner.username %}">{{ test_plan.owner }}</a>
 					{% else %}
 					No owner
 					{% endif %}
@@ -51,7 +51,7 @@
 				<td><a href="{{ test_plan.get_absolute_url }}#testruns" title="{{ test_plan.num_runs }} test runs">{{ test_plan.num_runs }}</a></td>
 				<td>
 					{% if perms.testplans.change_testplan %}
-					<a class="editlink" href="{% url "tcms.testplans.views.edit" test_plan.plan_id %}">Edit</a>
+					<a class="editlink" href="{% url "plan-edit" test_plan.plan_id %}">Edit</a>
 					{% endif %}
 				</td>
 			</tr>

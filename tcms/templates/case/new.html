@@ -25,16 +25,16 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 <!--add new case -->
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
 		{% if test_plan %}
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.name }}</a>
 		{% else %}
-		>> <a href="{% url "tcms.testcases.views.search" %}">Testing</a>
+		>> <a href="{% url "cases-search" %}">Testing</a>
 		{% endif %}
 		>> Create new case
 	</div>
-	<form action="{% url "tcms.testcases.views.new" %}{% if test_plan %}?from_plan={{ test_plan.plan_id }}{% endif %}" method="POST">
+	<form action="{% url "cases-new" %}{% if test_plan %}?from_plan={{ test_plan.plan_id }}{% endif %}" method="POST">
 		{% if test_plan %}
 		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}" />
 		{% endif %}

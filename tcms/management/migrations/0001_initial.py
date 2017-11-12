@@ -153,7 +153,7 @@ class Migration(migrations.Migration):
             name='TestAttachmentData',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('contents', tcms.core.models.fields.BlobField(blank=True)),
+                ('contents', models.BinaryField(blank=True)),
                 ('attachment', models.ForeignKey(to='management.TestAttachment')),
             ],
             options={

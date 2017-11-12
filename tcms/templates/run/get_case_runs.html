@@ -1,6 +1,6 @@
 {% load extra_filters %}
 <form id="id_form_case_runs">
-<div class="mixbar"> 
+<div class="mixbar">
 	<span class="tit" style='float:left'>Cases: {{ test_case_runs_count }}</span>
 	<ul class="btnBlue btnBlueFilter" id="showFilterBtn">
 		<li class="btnBlueL"></li>
@@ -25,7 +25,7 @@
 				{% endif %}
 				{% if perms.testruns.change_testcaserun %}
 				<li><a id="id_sort" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes" href="#" class="reorderBlue9">Re-order</a></li>
-				<li><a href="#" title="Update the IDLE case runs to newest case text" href="javascript:void(0)" data-param="{% url 'tcms.testruns.views.update_case_run_text' test_run.pk %}" class="updateBlue9 js-update-case">Update</a></li>
+				<li><a href="#" title="Update the IDLE case runs to newest case text" href="javascript:void(0)" data-param="{% url 'run-update' test_run.pk %}" class="updateBlue9 js-update-case">Update</a></li>
 				{% endif %}
 				{% if perms.testruns.change_testcaserun %}
 				<li><a href="#" title="Assignee this case(s) to other people" class="assigneeBlue9 js-change-assignee">Assignee</a></li>

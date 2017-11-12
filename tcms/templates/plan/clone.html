@@ -17,10 +17,10 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		{% ifequal testplans|length 1 %}
-		>> <a href="{{ testplans.0.get_absolute_url }}">{{ testplans.0.plan_id }}: {{ testplans.0.name }}</a> 
+		>> <a href="{{ testplans.0.get_absolute_url }}">{{ testplans.0.plan_id }}: {{ testplans.0.name }}</a>
 		>> Clone Plan
 		{% else %}
 		>> Clone plans
@@ -28,14 +28,14 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 	</div>
 	<h2>Clone Test Plan</h2>
 	<p class="help">
-		select different product 
+		select different product
 	</p>
 	<div class="Detailform border-1">
-		<form action="{% url "tcms.testplans.views.clone" %}" method="post">
+		<form action="{% url "plans-clone" %}" method="post">
 			{% for testplan in testplans %}
 			<input type="hidden" name="plan" value="{{ testplan.pk }}" />
 			{% endfor %}
-			<table	class="editor" cellspacing="0" cellspan="0"> 
+			<table	class="editor" cellspacing="0" cellspan="0">
 				<tr>
 					{% ifequal testplans|length 1 %}
 					<td width="20%" ><label class="strong" for="id_name">New Plan Name</label> </td>
@@ -92,7 +92,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 									</ul>
 								</fieldset>
 							</li>
-						</ul>	
+						</ul>
 					</td>
 				</tr>
 			</table>

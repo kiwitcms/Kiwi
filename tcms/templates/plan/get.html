@@ -51,15 +51,15 @@ Nitrate.TestPlans.Instance = {
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> {{ test_plan.plan_id }}: {{ test_plan.name }}
 	</div>
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
 	<div class="control">
 		<span id="id_buttons" class="button">
-			<input id="btn_edit" type="button" value="Edit Plan " title="Edit test plan" data-param="{% url 'tcms.testplans.views.edit' test_plan.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
-			<input id="btn_clone" type="button" value="Clone Plan" title="Clone this plan to other product" data-params='["{% url "tcms.testplans.views.clone" %}", {{ test_plan.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
+			<input id="btn_edit" type="button" value="Edit Plan " title="Edit test plan" data-param="{% url "plan-edit" test_plan.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
+			<input id="btn_clone" type="button" value="Clone Plan" title="Clone this plan to other product" data-params='["{% url "plans-clone" %}", {{ test_plan.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
 			{% if test_plan.is_active %}
 			<input id="btn_disable" type="button" value="Disable Plan " title="Disabled this plan" {% if not perms.testplans.change_testplan %}disabled="true"{% endif %}>
 			{% else %}
@@ -67,14 +67,14 @@ Nitrate.TestPlans.Instance = {
 			{% endif %}
 			<input id="btn_export" type="button" value="Export All Cases "
                    title="Export all cases to XML file"
-                   data-params='["{% url "tcms.testplans.views.export" %}", {{ test_plan.pk }}]'>
+                   data-params='["{% url "plans-export" %}", {{ test_plan.pk }}]'>
 			<input id="btn_print" type="button" value="Print Plan "
                    title="Print Plan"
-                   data-params='["{% url "tcms.testplans.views.printable" %}", {{ test_plan.pk }}]'>
+                   data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>
 			{% comment %}
 			<span class="right-action">
 				<img src="{{ STATIC_URL }}images/icon_printer.png" width="16px">
-				<a href="{% url "tcms.testplans.views.printable" %}?plan={{ test_plan.pk }}">Print Plan</a>
+				<a href="{% url "plans-printable" %}?plan={{ test_plan.pk }}">Print Plan</a>
 			</span>
             {% endcomment %}
 		</span>
@@ -86,19 +86,19 @@ Nitrate.TestPlans.Instance = {
 		<div class="leftlistinfo">
 			<div class="listinfo">
 				<div class="title grey">Author&nbsp;:</div>
-				<div id="display_author"  class="name " > <a href="{% url "tcms.profiles.views.profile" test_plan.author.username %}">{{ test_plan.author }}</a></div>
+				<div id="display_author"  class="name " > <a href="{% url "user-profile" test_plan.author.username %}">{{ test_plan.author }}</a></div>
 			</div>
 			{% comment %}
             <div class="listinfo">
 				<div class="title grey">Doc Author/Manager&nbsp;:</div>
-				<div id="display_author"  class="name" ><a href="{% url "tcms.profiles.views.profile" test_plan.latest_text.author.username|default:"unknown" %}">{{ test_plan.latest_text.author }}</a></div>
+				<div id="display_author"  class="name" ><a href="{% url "user-profile" test_plan.latest_text.author.username|default:"unknown" %}">{{ test_plan.latest_text.author }}</a></div>
 			</div>
             {% endcomment %}
 			<div class="listinfo">
 				<div class="title grey">Owner&nbsp;:</div>
 				<div id="display_author"  class="name" >
 				{% if test_plan.owner %}
-				<a href="{% url "tcms.profiles.views.profile" test_plan.owner.username|default:"unknown" %}">{{ test_plan.owner }}</a>
+				<a href="{% url "user-profile" test_plan.owner.username|default:"unknown" %}">{{ test_plan.owner }}</a>
 				{% else %}
 				{{ test_plan.owner }}
 				{% endif %}
@@ -106,7 +106,7 @@ Nitrate.TestPlans.Instance = {
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Product&nbsp;:</div>
-				<div id="display_product"  class="name "><a href="{% url "tcms.testplans.views.all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&is_active=on&product={{ test_plan.product_id }}&product_version=&env_group=&create_date__gte=&create_date__lte=" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
+				<div id="display_product"  class="name "><a href="{% url "plans-all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&is_active=on&product={{ test_plan.product_id }}&product_version=&env_group=&create_date__gte=&create_date__lte=" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Version&nbsp;:</div>
@@ -122,7 +122,7 @@ Nitrate.TestPlans.Instance = {
 				<div class="title grey">Environment Group&nbsp;:</div>
 				<div class="name">
 					{% for env_group in test_plan.env_group.all %}
-					<span class="blue strong"><a href="{% url "tcms.testplans.views.all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&product=&product_version=&env_group={{ env_group.id }}&create_date__gte=&create_date__lte=" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
+					<span class="blue strong"><a href="{% url "plans-all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&product=&product_version=&env_group={{ env_group.id }}&create_date__gte=&create_date__lte=" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
 					{% endfor %}
 				</div>
 				<div id="display_summary" >
@@ -144,7 +144,7 @@ Nitrate.TestPlans.Instance = {
 			<div class="listinfo">
 				<div class="title grey">Create Time&nbsp;:</div>
 				<div class="name ">{{test_plan.create_date}}</div>
-				
+
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Parent&nbsp;:</div>
@@ -223,9 +223,9 @@ Nitrate.TestPlans.Instance = {
 		<div class="submit-row">
 			<input type="button" value="x" class="js-close-zone" >
 		</div>
-		<form action="{% url "tcms.testplans.views.cases" test_plan.plan_id %}" method="POST" enctype="multipart/form-data">
+		<form action="{% url "plan-cases" test_plan.plan_id %}" method="POST" enctype="multipart/form-data">
 			<div  class="right-bar" >
-				<label class="errors" id="import-error">{{ xml_form.xml_file.errors }}</label>	
+				<label class="errors" id="import-error">{{ xml_form.xml_file.errors }}</label>
 				{{ xml_form.a }}
 				<label><b>Import XML File:</b></label>
 				{{ xml_form.xml_file }}

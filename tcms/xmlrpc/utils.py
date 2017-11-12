@@ -3,6 +3,7 @@
 import re
 from django.db.models import Count, FieldDoesNotExist
 
+from tcms import utils
 from tcms.management.models import Product
 
 
@@ -95,12 +96,12 @@ def _lookup_fields_in_model(cls, fields):
     """
     for field in fields:
         try:
-            field_info = cls._meta.get_field_by_name(field)
-            if field_info[-1]:
+            field = cls._meta.get_field(field)
+            if field.many_to_many:
                 yield True
             else:
-                if getattr(field_info[0], 'related', None):
-                    cls = field_info[0].related.model
+                if getattr(field, 'related_model', None):
+                    cls = field.related_model
         except FieldDoesNotExist:
             pass
 
@@ -165,11 +166,10 @@ class Comment(object):
     def add(self):
         import time
         import django_comments as comments
-        from django.db import models
 
         comment_form = comments.get_form()
 
-        model = models.get_model(*self.content_type.split('.', 1))
+        model = utils.get_model(self.content_type)
         targets = model._default_manager.filter(pk__in=self.object_pks)
 
         for target in targets.iterator():

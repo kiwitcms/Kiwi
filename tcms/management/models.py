@@ -3,7 +3,6 @@
 from django.core.cache import cache
 from django.db import models
 
-from tcms.core.models import BlobField
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import calc_percent
 
@@ -413,7 +412,7 @@ class TestAttachment(models.Model):
 
 class TestAttachmentData(models.Model):
     attachment = models.ForeignKey(TestAttachment)
-    contents = BlobField(blank=True)
+    contents = models.BinaryField(blank=True)
 
     class Meta:
         db_table = u'test_attachment_data'

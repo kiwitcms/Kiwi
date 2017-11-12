@@ -30,7 +30,7 @@ class TestUploadFile(BasePlanCase):
     def setUpTestData(cls):
         super(TestUploadFile, cls).setUpTestData()
 
-        cls.upload_file_url = reverse('tcms.core.files.upload_file')
+        cls.upload_file_url = reverse('upload-file')
 
         cls.password = 'password'
         cls.user = create_request_user(username='uploader', password=cls.password)
@@ -65,17 +65,17 @@ class TestUploadFile(BasePlanCase):
     def test_no_file_is_posted(self):
         self.client.login(username=self.user.username, password=self.password)
 
-        response = self.client.post(reverse('tcms.core.files.upload_file'),
+        response = self.client.post(reverse('upload-file'),
                                     {'to_plan_id': self.plan.pk})
         self.assertRedirects(
             response,
-            reverse('tcms.testplans.views.attachment', args=[self.plan.pk]))
+            reverse('plan-attachment', args=[self.plan.pk]))
 
-        response = self.client.post(reverse('tcms.core.files.upload_file'),
+        response = self.client.post(reverse('upload-file'),
                                     {'to_case_id': self.case_1.pk})
         self.assertRedirects(
             response,
-            reverse('tcms.testcases.views.attachment', args=[self.case_1.pk]))
+            reverse('case-attachment', args=[self.case_1.pk]))
 
     @patch('tcms.core.files.settings.MAX_UPLOAD_SIZE', new=10)
     def test_refuse_if_file_is_too_big(self):
@@ -100,7 +100,7 @@ class TestUploadFile(BasePlanCase):
 
         self.assertRedirects(
             response,
-            reverse('tcms.testplans.views.attachment', args=[self.plan.pk]))
+            reverse('plan-attachment', args=[self.plan.pk]))
 
         attachments = list(TestAttachment.objects.filter(
             file_name=os.path.basename(self.upload_filename)))
@@ -125,7 +125,7 @@ class TestUploadFile(BasePlanCase):
 
         self.assertRedirects(
             response,
-            reverse('tcms.testcases.views.attachment', args=[self.case_1.pk]))
+            reverse('case-attachment', args=[self.case_1.pk]))
 
         attachments = list(TestAttachment.objects.filter(
             file_name=os.path.basename(self.upload_filename)))
@@ -161,42 +161,42 @@ class TestAbleToDeleteFile(BasePlanCase):
         self.request = RequestFactory()
 
     def test_superuser_can(self):
-        request = self.request.get(reverse('tcms.core.files.delete_file',
-                                           args=[self.fake_file_id]))
+        request = self.request.get(
+            reverse('delete-file', args=[self.fake_file_id]))
         request.user = self.superuser
         self.assertTrue(able_to_delete_attachment(request, self.fake_file_id))
 
     def test_attachment_submitter_can(self):
-        request = self.request.get(reverse('tcms.core.files.delete_file',
-                                           args=[self.fake_file_id]))
+        request = self.request.get(
+            reverse('delete-file', args=[self.fake_file_id]))
         request.user = self.attachment.submitter
         self.assertTrue(able_to_delete_attachment(request, self.fake_file_id))
 
     def test_plan_author_can(self):
-        request = self.request.get(reverse('tcms.core.files.delete_file',
-                                           args=[self.fake_file_id]),
-                                   data={'from_plan': self.plan.pk})
+        request = self.request.get(
+            reverse('delete-file', args=[self.fake_file_id]),
+            data={'from_plan': self.plan.pk})
         request.user = self.plan.author
         self.assertTrue(able_to_delete_attachment(request, self.fake_file_id))
 
     def test_plan_owner_can(self):
-        request = self.request.get(reverse('tcms.core.files.delete_file',
-                                           args=[self.fake_file_id]),
-                                   data={'from_plan': self.plan.pk})
+        request = self.request.get(
+            reverse('delete-file', args=[self.fake_file_id]),
+            data={'from_plan': self.plan.pk})
         request.user = self.plan.owner
         self.assertTrue(able_to_delete_attachment(request, self.fake_file_id))
 
     def test_case_owner_can(self):
-        request = self.request.get(reverse('tcms.core.files.delete_file',
-                                           args=[self.fake_file_id]),
-                                   data={'from_case': self.case_1.pk})
+        request = self.request.get(
+            reverse('delete-file', args=[self.fake_file_id]),
+            data={'from_case': self.case_1.pk})
         request.user = self.case_1.author
         self.assertTrue(able_to_delete_attachment(request, self.fake_file_id))
 
     def test_cannot_delete_by_others(self):
-        request = self.request.get(reverse('tcms.core.files.delete_file',
-                                           args=[self.fake_file_id]),
-                                   data={'from_case': self.case_1.pk})
+        request = self.request.get(
+            reverse('delete-file', args=[self.fake_file_id]),
+            data={'from_case': self.case_1.pk})
         request.user = self.anyone_else
         self.assertFalse(able_to_delete_attachment(request, self.fake_file_id))
 
@@ -235,7 +235,7 @@ class TestDeleteFileAuthorization(BasePlanCase):
         self.client.login(username=self.anyone_else.username,
                           password=self.anyone_else_pwd)
 
-        url = reverse('tcms.core.files.delete_file', args=[self.plan_attachment.pk])
+        url = reverse('delete-file', args=[self.plan_attachment.pk])
         response = self.client.get(url, {'from_plan': self.plan.pk})
 
         self.assertEqual({'rc': 2, 'response': 'auth_failure'}, json.loads(response.content))
@@ -244,7 +244,7 @@ class TestDeleteFileAuthorization(BasePlanCase):
         self.client.login(username=self.plan_attachment.submitter.username,
                           password=self.submitter_pwd)
 
-        url = reverse('tcms.core.files.delete_file', args=[self.plan_attachment.pk])
+        url = reverse('delete-file', args=[self.plan_attachment.pk])
         response = self.client.get(url, {'from_plan': self.plan.pk})
 
         self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))
@@ -257,7 +257,7 @@ class TestDeleteFileAuthorization(BasePlanCase):
         self.client.login(username=self.case_attachment.submitter.username,
                           password=self.submitter_pwd)
 
-        url = reverse('tcms.core.files.delete_file', args=[self.case_attachment.pk])
+        url = reverse('delete-file', args=[self.case_attachment.pk])
         response = self.client.get(url, {'from_case': self.case_1.pk})
 
         self.assertEqual({'rc': 0, 'response': 'ok'}, json.loads(response.content))

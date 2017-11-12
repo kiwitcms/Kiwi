@@ -43,24 +43,24 @@ class TestOrderCases(BaseCaseRun):
 
     def test_404_if_run_does_not_exist(self):
         nonexisting_run_pk = TestRun.objects.count() + 1
-        url = reverse('tcms.testruns.views.order_case', args=[nonexisting_run_pk])
+        url = reverse('run-order-case', args=[nonexisting_run_pk])
         response = self.client.post(url)
         self.assert404(response)
 
     def test_prompt_if_no_case_run_is_passed(self):
-        url = reverse('tcms.testruns.views.order_case', args=[self.test_run.pk])
+        url = reverse('run-order-case', args=[self.test_run.pk])
         response = self.client.post(url)
         self.assertIn(
             'At least one case is required by re-oder in run',
             response.content)
 
     def test_order_case_runs(self):
-        url = reverse('tcms.testruns.views.order_case', args=[self.test_run.pk])
+        url = reverse('run-order-case', args=[self.test_run.pk])
         response = self.client.post(url, {'case_run': [self.case_run_1.pk,
                                                        self.case_run_2.pk,
                                                        self.case_run_3.pk]})
 
-        redirect_to = reverse('tcms.testruns.views.get', args=[self.test_run.pk])
+        redirect_to = reverse('run-get', args=[self.test_run.pk])
         self.assertRedirects(response, redirect_to)
 
         test_sortkeys = [
@@ -79,12 +79,12 @@ class TestGetRun(BaseCaseRun):
         super(TestGetRun, cls).setUpTestData()
 
     def test_404_if_non_existing_pk(self):
-        url = reverse('tcms.testruns.views.get', args=[99999999])
+        url = reverse('run-get', args=[99999999])
         response = self.client.get(url)
         self.assertEqual(http_client.NOT_FOUND, response.status_code)
 
     def test_get_a_run(self):
-        url = reverse('tcms.testruns.views.get', args=[self.test_run.pk])
+        url = reverse('run-get', args=[self.test_run.pk])
         response = self.client.get(url)
 
         self.assertEqual(http_client.OK, response.status_code)
@@ -112,13 +112,13 @@ class TestCreateNewRun(BasePlanCase):
         cls.permission = 'testruns.add_testrun'
         user_should_have_perm(cls.tester, cls.permission)
 
-        cls.url = reverse('tcms.testruns.views.new')
+        cls.url = reverse('run-new')
         cls.build_fast = TestBuildFactory(name='fast', product=cls.product)
 
     def test_refuse_if_missing_plan_pk(self):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.post(self.url, {})
-        self.assertRedirects(response, reverse('tcms.testplans.views.all'))
+        self.assertRedirects(response, reverse('plans-all'))
 
     def test_refuse_if_missing_cases_pks(self):
         self.client.login(username=self.tester.username, password='password')
@@ -166,14 +166,14 @@ class TestCreateNewRun(BasePlanCase):
             'POSTING_TO_CREATE': 'YES',
         }
 
-        url = reverse('tcms.testruns.views.new')
+        url = reverse('run-new')
         response = self.client.post(url, clone_data)
 
         new_run = TestRun.objects.last()
 
         self.assertRedirects(
             response,
-            reverse('tcms.testruns.views.get', args=[new_run.pk]))
+            reverse('run-get', args=[new_run.pk]))
 
         self.assertEqual(self.plan.name, new_run.summary)
         self.assertEqual(self.plan, new_run.plan)
@@ -208,7 +208,8 @@ class CloneRunBaseTest(BaseCaseRun):
         self.assertContains(
             response,
             '<input id="id_summary" maxlength="255" name="summary" '
-            'type="text" value="{}">'.format(self.test_run.summary),
+            'required type="text" value="{}" />'.format(
+                self.test_run.summary),
             html=True)
 
         for case_run in (self.case_run_1, self.case_run_2):
@@ -236,7 +237,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
     def test_refuse_without_selecting_case_runs(self):
         self.client.login(username=self.tester.username, password='password')
-        url = reverse('tcms.testruns.views.new_run_with_caseruns', args=[self.test_run.pk])
+        url = reverse('run-clone', args=[self.test_run.pk])
 
         response = self.client.post(url, {})
 
@@ -246,16 +247,19 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
     def test_open_clone_page_by_selecting_case_runs(self):
         self.client.login(username=self.tester.username, password='password')
-        url = reverse('tcms.testruns.views.new_run_with_caseruns', args=[self.test_run.pk])
+        url = reverse('run-clone', args=[self.test_run.pk])
 
-        response = self.client.post(url, {'case_run': [self.case_run_1.pk, self.case_run_2.pk]})
+        response = self.client.post(url, {
+            'case_run': [self.case_run_1.pk, self.case_run_2.pk]
+        })
 
         self.assert_one_run_clone_page(response)
 
     def assert_clone_a_run(self, reserve_status=False, reserve_assignee=True):
         self.client.login(username=self.tester.username, password='password')
 
-        new_summary = 'Clone {} - {}'.format(self.test_run.pk, self.test_run.summary)
+        new_summary = 'Clone {} - {}'.format(
+            self.test_run.pk, self.test_run.summary)
 
         clone_data = {
             'summary': new_summary,
@@ -283,14 +287,14 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         if reserve_assignee:
             clone_data['keep_assignee'] = 'on'
 
-        url = reverse('tcms.testruns.views.new')
+        url = reverse('run-new')
         response = self.client.post(url, clone_data)
 
         cloned_run = TestRun.objects.get(summary=new_summary)
 
         self.assertRedirects(
             response,
-            reverse('tcms.testruns.views.get', args=[cloned_run.pk]))
+            reverse('run-get', args=[cloned_run.pk]))
 
         self.assert_cloned_run(self.test_run, cloned_run,
                                reserve_status=reserve_status,
@@ -352,7 +356,7 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
     def setUpTestData(cls):
         super(TestStartCloneRunFromRunsSearchPage, cls).setUpTestData()
 
-        cls.clone_url = reverse('tcms.testruns.views.clone')
+        cls.clone_url = reverse('runs-clone')
         cls.permission = 'testruns.add_testrun'
 
         cls.origin_run = TestRunFactory(product_version=cls.version,
@@ -503,7 +507,7 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
             # Finally, redirect to the new cloned test run
             self.assertRedirects(
                 response,
-                reverse('tcms.testruns.views.get', args=[cloned_runs[0].pk]))
+                reverse('run-get', args=[cloned_runs[0].pk]))
         else:
             self.assertEqual(http_client.FOUND, response.status_code)
 
@@ -563,7 +567,7 @@ class TestSearchRuns(BaseCaseRun):
     def setUpTestData(cls):
         super(TestSearchRuns, cls).setUpTestData()
 
-        cls.search_runs_url = reverse('tcms.testruns.views.all')
+        cls.search_runs_url = reverse('runs-all')
 
     def test_only_show_search_form(self):
         response = self.client.get(self.search_runs_url)
@@ -597,7 +601,7 @@ class TestAJAXSearchRuns(BaseCaseRun):
     def setUpTestData(cls):
         super(TestAJAXSearchRuns, cls).setUpTestData()
 
-        cls.search_url = reverse('tcms.testruns.views.ajax_search')
+        cls.search_url = reverse('runs-ajax-search')
 
         # Add more test runs for testing different search criterias
 
@@ -686,11 +690,11 @@ class TestAJAXSearchRuns(BaseCaseRun):
         for run, row in zip(expected_found_runs, search_result['aaData']):
             self.assertEqual(
                 "<a href='{}'>{}</a>".format(
-                    reverse('tcms.testruns.views.get', args=[run.pk]), run.pk),
+                    reverse('run-get', args=[run.pk]), run.pk),
                 row[1])
             self.assertEqual(
                 "<a href='{}'>{}</a>".format(
-                    reverse('tcms.testruns.views.get', args=[run.pk]), run.summary),
+                    reverse('run-get', args=[run.pk]), run.summary),
                 row[2])
 
     def test_search_all_runs(self):
@@ -839,7 +843,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
     def setUpTestData(cls):
         super(TestAddRemoveRunCC, cls).setUpTestData()
 
-        cls.cc_url = reverse('tcms.testruns.views.cc', args=[cls.test_run.pk])
+        cls.cc_url = reverse('run-cc', args=[cls.test_run.pk])
 
         cls.cc_user_1 = UserFactory(username='cc-user-1',
                                     email='cc-user-1@example.com')
@@ -852,7 +856,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
         cls.test_run.add_cc(cls.cc_user_3)
 
     def test_404_if_run_not_exist(self):
-        cc_url = reverse('tcms.testruns.views.cc', args=[999999])
+        cc_url = reverse('run-cc', args=[999999])
         response = self.client.get(cc_url)
         self.assert404(response)
 
@@ -932,7 +936,7 @@ class TestEnvValue(BaseCaseRun):
         cls.test_run.add_env_value(cls.value_linux)
         cls.test_run_1.add_env_value(cls.value_linux)
 
-        cls.env_value_url = reverse('tcms.testruns.views.env_value')
+        cls.env_value_url = reverse('runs-env-value')
         user_should_have_perm(cls.tester, 'testruns.add_tcmsenvrunvaluemap')
         user_should_have_perm(cls.tester, 'testruns.delete_tcmsenvrunvaluemap')
 
@@ -1014,9 +1018,7 @@ class TestExportTestRunCases(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super(TestExportTestRunCases, cls).setUpTestData()
-
-        cls.export_url = reverse('tcms.testruns.views.export',
-                                 args=[cls.test_run.pk])
+        cls.export_url = reverse('run-export', args=[cls.test_run.pk])
 
     @patch('tcms.testruns.views.time.strftime', return_value='2017-06-17')
     def test_export_to_xml_file(self, strftime):
@@ -1058,8 +1060,7 @@ class TestBugActions(BaseCaseRun):
         cls.bugzilla = TestCaseBugSystem.objects.get(name='Bugzilla')
         cls.jira = TestCaseBugSystem.objects.get(name='JIRA')
 
-        cls.case_run_bug_url = reverse('tcms.testruns.views.bug',
-                                       args=[cls.test_run.pk])
+        cls.case_run_bug_url = reverse('caserun-bug', args=[cls.test_run.pk])
 
         cls.bug_12345 = '12345'
         cls.jira_nitrate_100 = 'NITRATE-100'
@@ -1068,7 +1069,7 @@ class TestBugActions(BaseCaseRun):
 
     def test_404_if_case_run_id_not_exist(self):
         self.login_tester()
-        self.case_run_bug_url = reverse('tcms.testruns.views.bug', args=[999])
+        self.case_run_bug_url = reverse('caserun-bug', args=[999])
 
         response = self.client.get(self.case_run_bug_url, {})
         self.assert404(response)
@@ -1118,20 +1119,18 @@ class TestRemoveCaseRuns(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super(TestRemoveCaseRuns, cls).setUpTestData()
-
         user_should_have_perm(cls.tester, 'testruns.delete_testcaserun')
-
-        cls.remove_case_run_url = reverse('tcms.testruns.views.remove_case_run',
-                                          args=[cls.test_run.pk])
+        cls.remove_case_run_url = reverse(
+            'run-remove-caserun', args=[cls.test_run.pk])
 
     def test_nothing_change_if_no_case_run_passed(self):
         self.login_tester()
 
         response = self.client.post(self.remove_case_run_url, {})
 
-        self.assertRedirects(response,
-                             reverse('tcms.testruns.views.get',
-                                     args=[self.test_run.pk]))
+        self.assertRedirects(
+            response,
+            reverse('run-get', args=[self.test_run.pk]))
 
     def test_ignore_non_integer_case_run_ids(self):
         self.login_tester()
@@ -1165,9 +1164,9 @@ class TestRemoveCaseRuns(BaseCaseRun):
         response = self.client.post(self.remove_case_run_url,
                                     {'case_run': [self.case_run_1.pk]})
 
-        self.assertRedirects(response,
-                             reverse('tcms.testruns.views.get',
-                                     args=[self.test_run.pk]))
+        self.assertRedirects(
+            response,
+            reverse('run-get', args=[self.test_run.pk]))
 
     def test_redirect_to_add_case_runs_if_all_case_runs_are_removed(self):
         self.login_tester()
@@ -1192,8 +1191,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
     def setUpTestData(cls):
         super(TestUpdateCaseRunText, cls).setUpTestData()
 
-        cls.update_url = reverse('tcms.testruns.views.update_case_run_text',
-                                 args=[cls.test_run.pk])
+        cls.update_url = reverse('run-update', args=[cls.test_run.pk])
 
         # To increase case text version
         cls.case_run_1.case.add_text(action='action',
@@ -1208,7 +1206,9 @@ class TestUpdateCaseRunText(BaseCaseRun):
     def test_update_selected_case_runs(self):
         self.login_tester()
 
-        response = self.client.post(self.update_url, {'case_run': [self.case_run_1.pk]})
+        response = self.client.post(self.update_url, {
+            'case_run': [self.case_run_1.pk]
+        })
 
         self.assertContains(
             response,
@@ -1226,8 +1226,7 @@ class TestEditRun(BaseCaseRun):
         super(TestEditRun, cls).setUpTestData()
 
         user_should_have_perm(cls.tester, 'testruns.change_testrun')
-        cls.edit_url = reverse('tcms.testruns.views.edit',
-                               args=[cls.test_run.pk])
+        cls.edit_url = reverse('run-edit', args=[cls.test_run.pk])
 
         cls.new_product = ProductFactory(name='Nitrate Dev')
         cls.new_build = TestBuildFactory(name='FastTest',
@@ -1240,7 +1239,7 @@ class TestEditRun(BaseCaseRun):
     def test_404_if_edit_non_existing_run(self):
         self.login_tester()
 
-        url = reverse('tcms.testruns.views.edit', args=[9999])
+        url = reverse('run-edit', args=[9999])
         response = self.client.get(url)
 
         self.assert404(response)
@@ -1267,8 +1266,7 @@ class TestEditRun(BaseCaseRun):
         self.assertEqual(self.new_version, run.product_version)
         self.assertEqual(self.new_build, run.build)
 
-        self.assertRedirects(response,
-                             reverse('tcms.testruns.views.get', args=[run.pk]))
+        self.assertRedirects(response, reverse('run-get', args=[run.pk]))
 
 
 class TestAddCasesToRun(BaseCaseRun):
@@ -1295,8 +1293,7 @@ class TestAddCasesToRun(BaseCaseRun):
         self.assertNotContains(
             response,
             '<a href="{0}">{1}</a>'.format(
-                reverse('tcms.testcases.views.get',
-                        args=[self.proposed_case.pk]),
+                reverse('case-get', args=[self.proposed_case.pk]),
                 self.proposed_case.pk),
             html=True
         )
@@ -1326,8 +1323,7 @@ class TestAddCasesToRun(BaseCaseRun):
         for loop_counter, case in enumerate(confirmed_cases, 1):
             html_pieces = [
                 '<a href="{0}">{1}</a>'.format(
-                    reverse('tcms.testcases.views.get', args=[case.pk]),
-                    case.pk),
+                    reverse('case-get', args=[case.pk]), case.pk),
 
                 '<td class="js-case-summary" data-param="{0}">'
                 '<a id="link_{0}" class="blind_title_link" '

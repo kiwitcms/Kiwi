@@ -61,10 +61,9 @@ def autowrap_xmlrpc_apis(path, package):
     If you want to add new decorators, please append it in this module and
     insert it into __filters__.
     """
-    our_dir = path[0]
     enable_apis = _get_enable_apis()
-    for dir_path, dir_names, file_names in os.walk(our_dir):
-        rel_path = os.path.relpath(dir_path, our_dir)
+    for dir_path, dir_names, file_names in os.walk(path):
+        rel_path = os.path.relpath(dir_path, path)
         if rel_path == '.':
             rel_pkg = ''
         else:

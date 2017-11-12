@@ -12,7 +12,7 @@
 	<div id="index" >
 		<br clear="all">
 		<div class="login radius">
-			<form id="id_register_form" action="{% url "tcms.core.contrib.auth.views.register" %}" method="POST">
+			<form id="id_register_form" action="{% url "nitrate-register" %}" method="POST">
 				{% if SETTINGS.MOTD_LOGIN %}
 				<div class="cc">{{ SETTINGS.MOTD_LOGIN|safe}}</div>
 				{% endif %}

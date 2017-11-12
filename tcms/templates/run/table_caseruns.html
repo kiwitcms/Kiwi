@@ -38,7 +38,7 @@
 				<a href="#caserun_{{ test_case_run.pk }}">#{{ test_case_run.pk }}</a>
 			</td>
 			<td "{{ test_case_run.case_id }}" class="case_title expandable">
-				<a href="{% url "tcms.testcases.views.get" test_case_run.case_id %}?from_plan={{ test_case_run.run.plan_id }}">{{ test_case_run.case_id }}</a>
+				<a href="{% url "case-get" test_case_run.case_id %}?from_plan={{ test_case_run.run.plan_id }}">{{ test_case_run.case_id }}</a>
 			</td>
 			
 			<td class="expandable">
@@ -46,14 +46,14 @@
 			</td>
 			<td>
 				{% if tester %}
-				<a href="{% url "tcms.profiles.views.profile" tester %}" class="link_tested_by">{{ tester }}</a>
+				<a href="{% url "user-profile" tester %}" class="link_tested_by">{{ tester }}</a>
 				{% else %}
 				<a class="link_tested_by">None</a>
 				{% endif %}
 			</td>
 			<td>
 				{% if assignee %}
-				<a href="{% url "tcms.profiles.views.profile" assignee %}" class="link_assignee">{{ assignee }}</a>
+				<a href="{% url "user-profile" assignee %}" class="link_assignee">{{ assignee }}</a>
 				{% else %}None{% endif %}
 			</td>
 			<td class="expandable">{{ test_case_run.case.get_is_automated_status }}</td>

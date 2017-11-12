@@ -30,13 +30,13 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 		<input id="value_sub_module" type="hidden" name="sub_module" value="{{ sub_module }}" />
 	</div>
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">...</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
+		>> <a href="{% url "plans-all" %}">...</a>
 		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		>> New Test Run
 	</div>
 	<h2>Create New Test Run</h2>
-	<form action="{% url "tcms.testruns.views.new" %}" method="post">
+	<form action="{% url "run-new" %}" method="post">
 		<input type="hidden" id="id_plan_id" name="from_plan" value="{{ from_plan }}" />
 		{# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
 		<input type="hidden" name="POSTING_TO_CREATE" value="YES" />
@@ -91,7 +91,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 						<div id="estimated_time" data-time="{{ run_estimated_time|timedelta2seconds }}">
 							{{ form.estimated_time }}
 							<div class="errors">{{ form.estimated_time.errors }}</div>
-						</div> 
+						</div>
 					</td>
 				</tr>
 				<tr>

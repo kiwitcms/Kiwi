@@ -37,36 +37,36 @@ jQ(function() {
 		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_run.build.product_id }}" />
 	</div>
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
 		{% if request.GET.from_plan %}
-		&gt;&gt; <a href="{% url "tcms.testplans.views.all" %}">Seach Plan</a>
+		&gt;&gt; <a href="{% url "plans-all" %}">Seach Plan</a>
 		&gt;&gt; Test Plan: <a href="{{ test_run.plan.get_absolute_url }}">[{{ test_run.plan.plan_id }}] {{ test_run.plan.name }}</a>
 		{% else %}
-		&gt;&gt; <a href="{% url "tcms.testruns.views.all" %}">Search Runs</a>
+		&gt;&gt; <a href="{% url "runs-all" %}">Search Runs</a>
 		{% endif %}
 		&gt;&gt; [{{ test_run.run_id }}] {{ test_run.summary }}
 	</div>
 	<div class="control">
 		{% if perms.testruns.change_testcaserun %}
-		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'tcms.testruns.views.edit' test_run.run_id %}", "{{ request.GET.from_plan }}"]'>
+		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url "run-edit" test_run.run_id %}", "{{ request.GET.from_plan }}"]'>
 		{% else %}
 		<input id="btn_edit" type="button" value="Edit" disabled="true">
 		{% endif %}
 		{% if perms.testruns.add_testrun %}
-		<input id="btn_clone" type="button" value="Clone" title="Clone test run to other test build" data-param="{% url 'tcms.testruns.views.new_run_with_caseruns' test_run.pk %}" />
+		<input id="btn_clone" type="button" value="Clone" title="Clone test run to other test build" data-param="{% url 'run-clone' test_run.pk %}" />
 		{% else %}
 		<input type="button" value="Clone" disabled="true"/>
 		{% endif %}
 		{% if perms.testruns.delete_testrun %}
 		{% ifequal test_run.manager user %}
-		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'tcms.testruns.views.delete' test_run.pk %}">
+		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url "run-delete" test_run.pk %}">
 		{% else %}
 		{% ifequal test_run.plan.author user %}
-		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'tcms.testruns.views.delete' test_run.pk %}">
+		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url "run-delete" test_run.pk %}">
 		{% endifequal %}
 		{% endifequal %}
-		<input id="btn_export_csv" type="button" value="Export To CSV" title="Export cases in this run" data-param="{% url 'tcms.testruns.views.export' test_run.pk %}" >
-		<input id="btn_export_xml" type="button" value="Export To XML" title="Export cases in this run" data-param="{% url 'tcms.testruns.views.export' test_run.pk %}" >
+		<input id="btn_export_csv" type="button" value="Export To CSV" title="Export cases in this run" data-param="{% url "run-export" test_run.pk %}" >
+		<input id="btn_export_xml" type="button" value="Export To XML" title="Export cases in this run" data-param="{% url "run-export" test_run.pk %}" >
 		{% endif %}
 	</div>
 	<h2 id="display_title">{{ test_run.summary }}</h2>
@@ -83,13 +83,13 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Product Version&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.testruns.views.all" %}?product={{ test_run.build.product_id }}&product_version={{ test_run.product_version_id }}" title="Search test runs of {{ test_run.product_version }}">{{ test_run.product_version }}</a>
+					<a href="{% url "runs-all" %}?product={{ test_run.build.product_id }}&product_version={{ test_run.product_version_id }}" title="Search test runs of {{ test_run.product_version }}">{{ test_run.product_version }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Manager&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.profiles.views.profile" test_run.manager.username %}">{{ test_run.manager.email }}</a>
+					<a href="{% url "user-profile" test_run.manager.username %}">{{ test_run.manager.email }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
@@ -138,13 +138,13 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Product&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.testruns.views.all" %}?product={{ test_run.product_version.product_id }}" title="Search test runs of {{ test_run.product_version.product }}">{{ test_run.product_version.product }}</a>
+					<a href="{% url "runs-all" %}?product={{ test_run.product_version.product_id }}" title="Search test runs of {{ test_run.product_version.product }}">{{ test_run.product_version.product }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Build&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms.testruns.views.all" %}?build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
+					<a href="{% url "runs-all" %}?build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
@@ -159,7 +159,7 @@ jQ(function() {
 				<div class="title grey">Default Tester&nbsp;:</div>
 				<div class="name">
 					{% if test_run.default_tester %}
-					<a href="{% url "tcms.profiles.views.profile" test_run.default_tester.username %}">{{ test_run.default_tester.email }}</a>
+					<a href="{% url "user-profile" test_run.default_tester.username %}">{{ test_run.default_tester.email }}</a>
 					{% else %}
 					{{ test_run.default_tester }}
 					{% endif %}
@@ -172,12 +172,12 @@ jQ(function() {
 					{% if test_run.stop_date %}
 					<span class="pauselink"> Finished </span>
 					{% if perms.testruns.change_testrun %}
-					<input type="button"  class="spadelink js-set-running" value="Set to Running" data-param="{% url 'tcms.testruns.views.change_status' test_run.run_id %}">
+					<input type="button"  class="spadelink js-set-running" value="Set to Running" data-param="{% url "run-change-status" test_run.run_id %}">
 					{% endif %}
 					{% else %}
 					<span class="runninglink">Running</span>
 					{% if perms.testruns.change_testrun %}
-					<input type="button"class="spadelink js-set-finished" value="Set to Finished" data-param="{% url 'tcms.testruns.views.change_status' test_run.run_id %}">
+					<input type="button"class="spadelink js-set-finished" value="Set to Finished" data-param="{% url "run-change-status" test_run.run_id %}">
 					{% endif %}
 					{% endif %}
 				</div>

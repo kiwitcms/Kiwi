@@ -37,8 +37,11 @@ def search(request):
         objects = model.objects.filter(pk=pk).only('pk')
         if objects:
             return HttpResponseRedirect(
-                reverse('tcms.{}.views.get'.format(model._meta.app_label), args=[pk]))
+                reverse('{}-get'.format(
+                    model._meta.app_label.strip('s').replace('test', '')),
+                    args=[pk]))
 
     url = '{}?a=search&search={}'.format(
-        reverse('tcms.{}.views.all'.format(model._meta.app_label)), search_content)
+        reverse('{}-all'.format(model._meta.app_label.replace('test', ''))),
+        search_content)
     return HttpResponseRedirect(url)

@@ -58,7 +58,7 @@
 						<br>
 						{% if perms.comments.can_moderate %}
 						{% ifequal comment.user__pk request.user.pk %}
-						<form action="{% url "tcms.core.contrib.comments.views.delete" %}" method="post" class="form_comment" style="display:inline;">
+						<form action="{% url "comments-delete" %}" method="post" class="form_comment" style="display:inline;">
 							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
 							<input type="hidden" name="object_pk" value="{{ test_case_run.case_id }}" />
 							<input class='commentdelete sprites' value='' type='submit' title="Remove Comment" />
@@ -76,12 +76,12 @@
 				<div><span class="detail_title">Build:</span>{{ test_case_run.build }} <span class="detail_title marginLeft">Text Version:</span>{{ test_case_run.case_text_version }}</div>
 				{% if test_case_run.notes %}
 				<div><div class="detail_title">Notes</div>{{ test_case_run.notes|urlize|linebreaksbr }}</div>
-				{% endif %}	
+				{% endif %}
 			</div>
 			<div class="container">
 				<h4 class="borderB">bug
 					<span>
-						[ <a href="{% url "tcms.testruns.views.bug" test_case_run.pk %}?a=file" target="_blank" class="buglink" title="File a bug on bugzilla">File</a>&nbsp;|&nbsp;
+						[ <a href="{% url "caserun-bug" test_case_run.pk %}?a=file" target="_blank" class="buglink" title="File a bug on bugzilla">File</a>&nbsp;|&nbsp;
 						{% if perms.testcases.add_testcasebug %}
 						<a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Add</a>
 						{% endif %} ]
@@ -96,13 +96,13 @@
 								<td>
 								{% for bug in bugs %}
 								    {% if bug.case_run_id %}
-								        <span class="grey">From Run</span><a href="{% url "tcms.testruns.views.get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
+								        <span class="grey">From Run</span><a href="{% url "run-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
 								        {% ifequal bug.case_run_id test_case_run.pk %}
 								        <a href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'><img width="9" height="9" title="remove this bug" src="{{ STATIC_URL }}images/remove_small.png"></a>
 								        {% endifequal %}
 								    {% else %}
 								        <span class="grey">From Case</span>
-								        <a href="{% url "tcms.testcases.views.get" bug.case_id %}">{{ bug.case_id }}</a>
+								        <a href="{% url "case-get" bug.case_id %}">{{ bug.case_id }}</a>
 								    {% endif %}
 								{% endfor %}
 								</td>
@@ -151,7 +151,7 @@
 							<h4>Actions</h4>
 							<div class="content">{{ test_case_text.action|safe }}</div>
 						</div>
-						
+
 					</td>
 					<td style="width:5px;"></td>
 					<td>
@@ -170,14 +170,14 @@
 								Attachment
 								<span>[
 								{% if perms.management.add_testattachment %}
-								<a href="{% url "tcms.testcases.views.attachment" test_case_run.case_id %}?from_plan={{ testrun.plan_id }}" target="_blank">Add</a>
+								<a href="{% url "case-attachment" test_case_run.case_id %}?from_plan={{ testrun.plan_id }}" target="_blank">Add</a>
 								{% endif %}
 								]</span>
 							</h4>
 							<ul class="ul-no-format">
 								{% for attachment_file in test_case.attachment.all %}
 								<li>
-									<a href="{% url "tcms.core.files.check_file" attachment_file.attachment_id %}">
+									<a href="{% url "check-file" attachment_file.attachment_id %}">
 										{{ attachment_file.file_name }}
 									</a>
 								</li>

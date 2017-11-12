@@ -1,37 +1,30 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url, patterns
+from __future__ import absolute_import
+from django.conf.urls import url
 
-from tcms.testcases.views import SimpleTestCaseView
-from tcms.testcases.views import TestCaseCaseRunDetailPanelView
-from tcms.testcases.views import TestCaseCaseRunListPaneView
-from tcms.testcases.views import TestCaseReviewPaneView
-from tcms.testcases.views import TestCaseSimpleCaseRunView
+from .. import views
+from tcms.testruns import views as testruns_views
 
-urlpatterns = patterns(
-    'tcms.testcases.views',
-    url(r'^(?P<case_id>\d+)/$', 'get'),
-    url(r'^(?P<case_id>\d+)/edit/$', 'edit'),
-    url(r'^(?P<case_id>\d+)/history/$', 'text_history'),
-    url(r'^(?P<case_id>\d+)/attachment/$', 'attachment'),
-    url(r'^(?P<case_id>\d+)/log/$', 'get_log'),
-    url(r'^(?P<case_id>\d+)/bug/$', 'bug'),
-    url(r'^(?P<case_id>\d+)/plan/$', 'plan'),
-    url(r'^(?P<case_id>\d+)/readonly-pane/$', SimpleTestCaseView.as_view(),
+urlpatterns = [
+    url(r'^(?P<case_id>\d+)/$', views.get, name='case-get'),
+    url(r'^(?P<case_id>\d+)/edit/$', views.edit, name='case-edit'),
+    url(r'^(?P<case_id>\d+)/history/$', views.text_history, name='case-text-history'),
+    url(r'^(?P<case_id>\d+)/attachment/$', views.attachment, name='case-attachment'),
+    url(r'^(?P<case_id>\d+)/log/$', views.get_log, name='case-get-log'),
+    url(r'^(?P<case_id>\d+)/bug/$', views.bug, name='case-bug'),
+    url(r'^(?P<case_id>\d+)/plan/$', views.plan, name='case-plan'),
+    url(r'^(?P<case_id>\d+)/readonly-pane/$', views.SimpleTestCaseView.as_view(),
         name='case-readonly-pane'),
-    url(r'^(?P<case_id>\d+)/review-pane/$', TestCaseReviewPaneView.as_view(),
+    url(r'^(?P<case_id>\d+)/review-pane/$', views.TestCaseReviewPaneView.as_view(),
         name='case-review-pane'),
-    url(r'^(?P<case_id>\d+)/caserun-list-pane/$', TestCaseCaseRunListPaneView.as_view(),
+    url(r'^(?P<case_id>\d+)/caserun-list-pane/$', views.TestCaseCaseRunListPaneView.as_view(),
         name='caserun-list-pane'),
-    url(r'^(?P<case_id>\d+)/caserun-simple-pane/$', TestCaseSimpleCaseRunView.as_view(),
+    url(r'^(?P<case_id>\d+)/caserun-simple-pane/$', views.TestCaseSimpleCaseRunView.as_view(),
         name='caserun-simple-pane'),
-    url(r'^(?P<case_id>\d+)/caserun-detail-pane/$', TestCaseCaseRunDetailPanelView.as_view(),
+    url(r'^(?P<case_id>\d+)/caserun-detail-pane/$', views.TestCaseCaseRunDetailPanelView.as_view(),
         name='caserun-detail-pane'),
-)
 
-
-urlpatterns += patterns(
-    'tcms.testruns.views',
-    url(r'^(?P<plan_id>\d+)/runs/$', 'load_runs_of_one_plan',
+    url(r'^(?P<plan_id>\d+)/runs/$', testruns_views.load_runs_of_one_plan,
         name='load_runs_of_one_plan_url'),
-)
+]

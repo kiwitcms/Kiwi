@@ -2,67 +2,67 @@
 <div class="sprites menu">
 	<ul id="nav">
 		<li class="nav_li {% ifequal module 'index' %} current {% endifequal %}">
-			<a href="{% url "tcms.core.views.index" %}">{% trans "HOME" %}</a>
+			<a href="{% url "nitrate-index" %}">{% trans "HOME" %}</a>
 		</li>
 		<li class="sprites menuline"></li>
 		<li class="nav_li{% ifequal module 'testplans' %} current{% endifequal %}">
-			<a href="{% url "tcms.testplans.views.all" %}">{% trans "PLANNING" %}</a>
+			<a href="{% url "plans-all" %}">{% trans "PLANNING" %}</a>
 			<ul class="nav_sub sub_plan" style="display: none;">
 				<li {% ifequal sub_module 'plans' %} class="subcurrent"{% endifequal %} >
-					<a href="{% url "tcms.testplans.views.all" %}">Search Plans</a>
+					<a href="{% url "plans-all" %}">Search Plans</a>
 				</li>
 				{% if user.is_authenticated %}
 				<li {% ifequal sub_module 'my_plans' %} class="subcurrent"{% endifequal %} >
-					<a href="{% url "tcms.testplans.views.all" %}?author__email__startswith={{ user.email }}">My Plans</a>
+					<a href="{% url "plans-all" %}?author__email__startswith={{ user.email }}">My Plans</a>
 				</li>
 				{% endif %}
 				{% if perms.testplans.add_testplan %}
 				<li {% ifequal sub_module 'new_plan' %} class="subcurrent"{% endifequal %} >
-					<a href="{% url "tcms.testplans.views.new" %}">New Plan</a>
+					<a href="{% url "plans-new" %}">New Plan</a>
 				</li>
 				{% endif %}
 			</ul>
 		</li>
 		<li class="sprites menuline"></li>
 		<li class="nav_li{% ifequal module 'testruns' %} current{% endifequal %}">
-			<a href="{% url "tcms.testruns.views.all" %}">{% trans "TESTING" %}</a>
+			<a href="{% url "runs-all" %}">{% trans "TESTING" %}</a>
 			<ul id="submenu_test" class="nav_sub" style="display:none;">
 				<li {% ifequal sub_module 'runs' %} class="subcurrent"{% endifequal %} >
-					<a href="{% url "tcms.testruns.views.all" %}">Search Runs</a>
+					<a href="{% url "runs-all" %}">Search Runs</a>
 				</li>
 				<li {% ifequal sub_module 'cases' %} class="subcurrent"{% endifequal %} >
-					<a href="{% url "tcms.testcases.views.search" %}">Search Cases</a>
+					<a href="{% url "cases-search" %}">Search Cases</a>
 				</li>
 				{% if user.is_authenticated %}
 				<li {% ifequal sub_module 'my_runs' %} class="subcurrent"{% endifequal %} >
-					<a href="{% url "tcms.testruns.views.all" %}?people={{ user.email }}">My Runs</a>
+					<a href="{% url "runs-all" %}?people={{ user.email }}">My Runs</a>
 				</li>
 				{% endif %}
 				{% if perms.testcases.add_testcase %}
 				<li>
-					<a href="{% url "tcms.testcases.views.new" %}">New Case</a>
+					<a href="{% url "cases-new" %}">New Case</a>
 				</li>
 				{% endif %}
 			</ul>
 		</li>
 		<li class="sprites menuline"></li>
 		<li class="nav_li{% ifequal module 'env' %} current{% endifequal %} ">
-			<a href="{% url "tcms.management.views.environment_groups" %}">{% trans "ENVIRONMENT" %}</a>
+			<a href="{% url "management-env-groups" %}">{% trans "ENVIRONMENT" %}</a>
 			<ul	 id="submenu_environment" class="nav_sub"  style="display:none;">
 				<li>
-					<a href="{% url "tcms.management.views.environment_groups" %}">Groups</a>
+					<a href="{% url "management-env-groups" %}">Groups</a>
 				</li>
 				<li>
-					<a href="{% url "tcms.management.views.environment_properties" %}">Properties</a>
+					<a href="{% url "management-env-properties" %}">Properties</a>
 				</li>
 			</ul>
 		</li>
 		<li class="sprites menuline"></li>
 		<li class="nav_li {% ifequal module 'report' %} current{% endifequal %}">
-		<a href="{% url "tcms.report.views.overall" %}">{% trans "REPORTING" %}</a>
+		<a href="{% url "report-overall" %}">{% trans "REPORTING" %}</a>
 			<ul	 id="submenu_report" class="nav_sub"  style="display:none;">
 				<li>
-					<a href="{% url "tcms.report.views.overall" %}">Overall</a>
+					<a href="{% url "report-overall" %}">Overall</a>
 				</li>
 				<li>
 					<a href="{% url "report-custom" %}">Custom</a>
@@ -103,7 +103,7 @@
 		{% endif %}
 	</ul>
 	<div class="right-action">
-		<form action="{% url "tcms.core.views.search" %}" method="get">
+		<form action="{% url "nitrate-search" %}" method="get">
 			<span>
 				<select id="search_type" name="search_type">
 					<option value="plans"{% ifequal module 'testplans' %} selected{% endifequal %}>Test Plan</option>
@@ -115,6 +115,6 @@
 			</span>
 			<label class="linkAdvancedSearch">&nbsp;&nbsp;<a href="/advance-search/">Advanced Search</a></label>
 		</form>
-		
+
 	</div>
 </div>

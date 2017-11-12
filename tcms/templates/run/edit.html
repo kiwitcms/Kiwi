@@ -29,17 +29,17 @@
 		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_run.product_id }}" />
 	</div>
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
 		{% if request.GET.from_plan %}
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> <a href="{{ test_run.plan.get_absolute_url }}">Test Plan :{{ test_run.plan.plan_id }}: {{ test_run.plan }}</a>
 		{% else %}
-		>> <a href="{% url "tcms.testruns.views.all" %}">Test Runs</a>
+		>> <a href="{% url "runs-all" %}">Test Runs</a>
 		{% endif %}
-		>> <a href="{% url "tcms.testruns.views.get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run }}</a> >>Edit
+		>> <a href="{% url "run-get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run }}</a> >>Edit
 	</div>
 	<h2>Edit Test Run</h2>
-	<form action="{% url "tcms.testruns.views.edit" test_run.run_id %}" method="post">
+	<form action="{% url "run-edit" test_run.run_id %}" method="post">
 	<div class="Detailform border-1">
 		<table border="0" cellspacing="1" cellpadding="0" class="editor" >
 			<tr>
@@ -160,7 +160,7 @@
 		<div id="control_box" class="submit-row">
 			<input type="submit" value="Save" />
 			<input type="reset" value="Reset" />
-			<input type="button" value="Back" onclick="window.location.href='{% url "tcms.testruns.views.get" test_run.run_id %}'" />
+			<input type="button" value="Back" onclick="window.location.href='{% url "run-get" test_run.run_id %}'" />
 		</div>
 	</div>
 	</form>

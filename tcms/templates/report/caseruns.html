@@ -12,7 +12,7 @@
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble"><a href="{% url "tcms.core.views.index" %}">Home</a> &gt;&gt; <a href="{% url "testing-report" %}">Testing Report</a></div>
+	<div class="sprites crumble"><a href="{% url "nitrate-index" %}">Home</a> &gt;&gt; <a href="{% url "testing-report" %}">Testing Report</a></div>
 	{% if form_errors %}
 	<div>{{ form_errors }}</div>
 	{% else %}

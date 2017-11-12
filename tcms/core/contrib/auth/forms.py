@@ -45,8 +45,7 @@ class RegistrationForm(UserCreationForm):
         s = Site.objects.get_current()
         cu = '%s%s' % (
             request_host_link(request, s.domain),
-            reverse('tcms.core.contrib.auth.views.confirm',
-                    args=[active_key.activation_key, ])
+            reverse('nitrate-activation-confirm', args=[active_key.activation_key])
         )
         mailto(
             template_name=template_name, to_mail=self.cleaned_data['email'],

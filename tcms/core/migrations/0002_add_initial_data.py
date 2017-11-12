@@ -26,8 +26,7 @@ def reverse_remove_initial_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0001_django_comments__object_pk'),
-        ('sites', '__latest__'),
+        ('sites', '0001_initial'),
     ]
 
     operations = [

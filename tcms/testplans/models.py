@@ -230,7 +230,7 @@ class TestPlan(TCMSActionModel):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('test_plan_url', (), {
+        return ('plan-get', (), {
             'plan_id': self.plan_id,
             'slug': slugify(self.name),
         })

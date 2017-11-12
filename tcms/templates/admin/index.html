@@ -8,11 +8,10 @@
 
 {% block bodyclass %}dashboard{% endblock %}
 
-
 {% block contents %}
 <div id="content-main">
     <div class="sprites crumble">
-        <a href="{% url "tcms.core.views.index" %}">Home</a>
+        <a href="{% url "nitrate-index" %}">Home</a>
         >> <a href="/admin/">Admin</a>
         >>{{ title }}
     </div>
@@ -23,7 +22,7 @@
             <table class="index" summary="{% blocktrans with app.name as name %}Models available in the {{ name }} application.{% endblocktrans %}" cellspacing="0" cellspan="0">
             <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with app.name as name %}{{ name }}{% endblocktrans %}</a></caption>
              {% for model in app.models %}
-                 <tr class="{% cycle row1,row2 %}">
+                 <tr class="{% cycle "row1" "row2" %}">
                 {% if model.perms.change %}
                     <th scope="row" align="left" width="70%"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
                 {% else %}
@@ -35,7 +34,7 @@
                 {% else %}
                     <td>&nbsp;</td>
                 {% endif %}
-    
+
                 {% if model.perms.change %}
                     <td ><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
                 {% else %}

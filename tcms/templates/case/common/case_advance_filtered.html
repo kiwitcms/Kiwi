@@ -1,4 +1,4 @@
-<form id="cases_form" action="{% url "tcms.testcases.views.clone" %}" method="post">
+<form id="cases_form" action="{% url "cases-clone" %}" method="post">
 	<div id="contentTab" class="mixbar">
 		{#}<span class="tit">{{ this_page.object_list|length }} Cases</span>{#}
 		<span>
@@ -41,10 +41,10 @@
 					<img class="expand blind_icon" src="{{ STATIC_URL }}images/t1.gif" border="0" alt="">
 				</td>
 				<td valign="top"><input type="checkbox" name="case" value="{{ test_case.case_id }}"></td>
-				<td valign="top"><a href="{% url "tcms.testcases.views.get" test_case.case_id %}">{{ test_case.case_id }}</a></td>
-				<td valign="top" class="expandable"><a id="link_{{ test_case.case_id }}" href="{% url "tcms.testcases.views.get" test_case.case_id %}">{{ test_case.summary }}</a></td>
-				<td valign="top"><a href="{% url "tcms.profiles.views.profile" test_case.author.username %}">{{ test_case.author }}</a></td>
-				<td valign="top">{% if test_case.default_tester_id %}<a href="{% url "tcms.profiles.views.profile" test_case.default_tester.username %}">{{ test_case.default_tester }}</a>{% else %}None{% endif %}</td>
+				<td valign="top"><a href="{% url "case-get" test_case.case_id %}">{{ test_case.case_id }}</a></td>
+				<td valign="top" class="expandable"><a id="link_{{ test_case.case_id }}" href="{% url "case-get" test_case.case_id %}">{{ test_case.summary }}</a></td>
+				<td valign="top"><a href="{% url "user-profile" test_case.author.username %}">{{ test_case.author }}</a></td>
+				<td valign="top">{% if test_case.default_tester_id %}<a href="{% url "user-profile" test_case.default_tester.username %}">{{ test_case.default_tester }}</a>{% else %}None{% endif %}</td>
 				<td valign="top">{{ test_case.get_is_automated_status }}</td>
 				<td valign="top">{{ test_case.case_status }}</td>
 				<td valign="top">{{ test_case.category }}</td>

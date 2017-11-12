@@ -2,9 +2,7 @@
 import datetime
 
 from MySQLdb.constants import FIELD_TYPE
-from django.conf import settings
 from django.db.models.fields import IntegerField
-from django.db import models
 from django.db.backends.mysql.base import django_conversions
 
 from tcms.core.forms.fields import DurationField as DurationFormField
@@ -31,45 +29,15 @@ class BlobValueWrapper(object):
         return u'blobdata_unicode'
 
 
-class BlobField(models.Field):
-    """A field for persisting binary data in databases that we support."""
-    __metaclass__ = models.SubfieldBase
-
-    def db_type(self, connection):
-        engine = connection.settings_dict['ENGINE']
-        if engine == 'django.db.backends.mysql':
-            return 'LONGBLOB'
-        elif engine == 'django.db.backends.postgresql_psycopg2':
-            return 'bytea'
-        elif engine == 'django.db.backends.sqlite3':
-            return 'bytea'
-        else:
-            raise NotImplementedError
-
-    def to_python(self, value):
-        if settings.DATABASE_ENGINE == 'postgresql_psycopg2':
-            if value is None:
-                return value
-            return str(value)
-        else:
-            return value
-
-    def get_db_prep_save(self, value, connection):
-        if value is None:
-            return None
-        if settings.DATABASE_ENGINE == 'postgresql_psycopg2':
-            try:
-                import psycopg2
-            except ImportError:
-                raise
-
-            return psycopg2.Binary(value)
-        else:
-            return str(value)
-
-
 class DurationField(IntegerField):
-    __metaclass__ = models.SubfieldBase
+    """Duration field for test run
+
+    Value is stored as number of seconds in database and presents in Nitrate in
+    timedelta type.
+
+    Value should also be able to be serialized to integer as seconds, and then
+    deserialized from value of seconds.
+    """
 
     def to_python(self, value):
         if isinstance(value, (int, long)):
@@ -79,7 +47,12 @@ class DurationField(IntegerField):
         else:
             raise TypeError('Unable to convert %s to timedelta.' % value)
 
-    def get_db_prep_value(self, value, connection, prepared):
+    def from_db_value(self, value, expression, connection, context):
+        if value is None:
+            return value
+        return datetime.timedelta(seconds=value)
+
+    def get_db_prep_value(self, value, connection, prepared=True):
         """convert datetime.timedelta to seconds.
 
         1 day equal to 86400 seconds
@@ -87,9 +60,8 @@ class DurationField(IntegerField):
         if isinstance(value, datetime.timedelta):
             return value.seconds + (86400 * value.days)
         else:
-            value = super(DurationField, self).get_db_prep_value(value,
-                                                                 connection,
-                                                                 prepared)
+            value = super(DurationField, self).get_db_prep_value(
+                value, connection, prepared)
             return value
 
     def formfield(self, form_class=DurationFormField, **kwargs):

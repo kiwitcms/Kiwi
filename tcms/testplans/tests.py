@@ -63,22 +63,22 @@ class PlanTests(test.TestCase):
         cls.plan_id = cls.test_plan.pk
 
     def test_open_plans_search(self):
-        location = reverse('tcms.testplans.views.all')
+        location = reverse('plans-all')
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_search_plans(self):
-        location = reverse('tcms.testplans.views.all')
+        location = reverse('plans-all')
         response = self.c.get(location, {'action': 'search', 'type': self.test_plan.type.pk})
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_new_get(self):
-        location = reverse('tcms.testplans.views.new')
+        location = reverse('plans-new')
         response = self.c.get(location, follow=True)
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_details(self):
-        location = reverse('tcms.testplans.views.get', args=[self.plan_id])
+        location = reverse('plan-get', args=[self.plan_id])
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.MOVED_PERMANENTLY)
 
@@ -86,12 +86,12 @@ class PlanTests(test.TestCase):
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_cases(self):
-        location = reverse('tcms.testplans.views.cases', args=[self.plan_id])
+        location = reverse('plan-cases', args=[self.plan_id])
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_importcase(self):
-        location = reverse('tcms.testplans.views.cases', args=[self.plan_id])
+        location = reverse('plan-cases', args=[self.plan_id])
         filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
         with open(filename, 'r') as fin:
             response = self.c.post(location, {'a': 'import_cases', 'xml_file': fin}, follow=True)
@@ -104,7 +104,7 @@ class PlanTests(test.TestCase):
     def test_plan_delete(self):
         tp_pk = self.test_plan.pk
 
-        location = reverse('tcms.testplans.views.delete', args=[tp_pk])
+        location = reverse('plan-delete', args=[tp_pk])
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.OK)
 
@@ -118,17 +118,17 @@ class PlanTests(test.TestCase):
                      'TestPlan {0} should be deleted. But, not.'.format(tp_pk))
 
     def test_plan_edit(self):
-        location = reverse('tcms.testplans.views.edit', args=[self.plan_id])
+        location = reverse('plan-edit', args=[self.plan_id])
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_printable(self):
-        location = reverse('tcms.testplans.views.printable')
+        location = reverse('plans-printable')
         response = self.c.get(location, {'plan_id': self.plan_id})
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_export(self):
-        location = reverse('tcms.testplans.views.export')
+        location = reverse('plans-export')
         response = self.c.get(location, {'plan': self.plan_id})
         self.assertEquals(response.status_code, httplib.OK)
 
@@ -139,13 +139,12 @@ class PlanTests(test.TestCase):
             self.fail('XML document exported from test plan is invalid.')
 
     def test_plan_attachment(self):
-        location = reverse('tcms.testplans.views.attachment',
-                           args=[self.plan_id])
+        location = reverse('plan-attachment', args=[self.plan_id])
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.OK)
 
     def test_plan_history(self):
-        location = reverse('tcms.testplans.views.text_history',
+        location = reverse('plan-text-history',
                            args=[self.plan_id])
         response = self.c.get(location)
         self.assertEquals(response.status_code, httplib.OK)
@@ -180,7 +179,7 @@ class TestUnknownActionOnCases(BasePlanCase):
     """Test case for unknown action on a plan's cases"""
 
     def setUp(self):
-        self.cases_url = reverse('tcms.testplans.views.cases', args=[self.plan.pk])
+        self.cases_url = reverse('plan-cases', args=[self.plan.pk])
 
     def test_ajax_request(self):
         response = self.client.get(self.cases_url, {'a': 'unknown action', 'format': 'json'})
@@ -202,8 +201,7 @@ class TestDeleteCasesFromPlan(BasePlanCase):
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
-        cls.cases_url = reverse('tcms.testplans.views.cases',
-                                args=[cls.plan.pk])
+        cls.cases_url = reverse('plan-cases', args=[cls.plan.pk])
 
     def test_missing_cases_ids(self):
         self.client.login(username=self.plan_tester.username, password='password')
@@ -246,8 +244,7 @@ class TestSortCases(BasePlanCase):
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
-        cls.cases_url = reverse('tcms.testplans.views.cases',
-                                args=[cls.plan.pk])
+        cls.cases_url = reverse('plan-cases', args=[cls.plan.pk])
 
     def test_missing_cases_ids(self):
         self.client.login(username=self.plan_tester.username, password='password')
@@ -303,8 +300,7 @@ class TestLinkCases(BasePlanCase):
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
-        cls.cases_url = reverse('tcms.testplans.views.cases',
-                                args=[cls.plan.pk])
+        cls.cases_url = reverse('plan-cases', args=[cls.plan.pk])
 
     def tearDown(self):
         # Ensure permission is removed whenever it was added during tests
@@ -336,14 +332,14 @@ class TestLinkCases(BasePlanCase):
         self.assertContains(
             response,
             '<a href="{}">{}</a>'.format(
-                reverse('tcms.testcases.views.get', args=[self.another_case_2.pk]),
+                reverse('case-get', args=[self.another_case_2.pk]),
                 self.another_case_2.pk))
 
         # Assert: Do not list case that already belongs to the plan
         self.assertNotContains(
             response,
             '<a href="{}">{}</a>'.format(
-                reverse('tcms.testcases.views.get', args=[self.case_2.pk]),
+                reverse('case-get', args=[self.case_2.pk]),
                 self.case_2.pk))
 
     def test_quick_search(self):
@@ -385,7 +381,7 @@ class TestLinkCases(BasePlanCase):
 
         self.assertRedirects(
             response,
-            reverse('tcms.testplans.views.get', args=[self.plan.pk]),
+            reverse('plan-get', args=[self.plan.pk]),
             target_status_code=http_client.MOVED_PERMANENTLY)
 
         self.assertTrue(
@@ -439,7 +435,7 @@ class TestCloneView(BasePlanCase):
             email='tester@example.com',
             password='password')
         user_should_have_perm(cls.plan_tester, 'testplans.add_testplan')
-        cls.plan_clone_url = reverse('tcms.testplans.views.clone')
+        cls.plan_clone_url = reverse('plans-clone')
 
     def test_refuse_if_missing_a_plan(self):
         self.client.login(username=self.plan_tester.username, password='password')
@@ -573,7 +569,7 @@ class TestCloneView(BasePlanCase):
 
         self.assertRedirects(
             response,
-            reverse('tcms.testplans.views.get', args=[cloned_plan.pk]),
+            reverse('plan-get', args=[cloned_plan.pk]),
             target_status_code=http_client.MOVED_PERMANENTLY)
 
         self.verify_cloned_plan(self.third_plan, cloned_plan)
@@ -648,7 +644,7 @@ class TestCloneView(BasePlanCase):
         })
         self.assertRedirects(
             response,
-            '{}?{}'.format(reverse('tcms.testplans.views.all'), url_querystr))
+            '{}?{}'.format(reverse('plans-all'), url_querystr))
 
         for origin_plan in (self.plan, self.another_plan):
             cloned_plan = TestPlan.objects.get(name=origin_plan.make_cloned_name())
@@ -671,7 +667,7 @@ class TestAJAXSearch(BasePlanCase):
 
         # So far, each test has 26 plans
 
-        cls.search_url = reverse('tcms.testplans.views.ajax_search')
+        cls.search_url = reverse('plans-ajax-search')
 
         # By default, search active plans. Search by other fields if needed,
         # copy this dict and add other fields.

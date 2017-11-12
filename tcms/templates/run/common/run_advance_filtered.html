@@ -1,7 +1,7 @@
 <form id='runs_form'>
 	<div id="contentTab" class="mixbar">
-		<span class="tit"><a href="{% url "tcms.testruns.views.all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
-		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param="{% url "tcms.testruns.views.clone" %}" />
+		<span class="tit"><a href="{% url "runs-all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
+		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param="{% url "runs-clone" %}" />
 	</div>
 	<table id="testruns_table" class="list border-bottom js-advance-search-runs" cellpadding="0" cellspacing="0" border="0">
 		<thead>
@@ -24,10 +24,10 @@
 			{% for test_run in this_page %}
 			<tr class="{% cycle 'rowodd' 'roweven' %}" id="run_{{test_run.run_id}}">
 				<td><input type='checkbox' name="run" value="{{ test_run.pk }}" class="run_selector" /></td>
-				<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.run_id }}</a></td>
-				<td><a href="{% url "tcms.testruns.views.get" test_run.run_id %}" >{{ test_run.summary }}</a></td>
-				<td><a href="{% url "tcms.profiles.views.profile" test_run.manager.username %}">{{ test_run.manager }}</a></td>
-				<td>{% if test_run.default_tester_id %}<a href="{% url "tcms.profiles.views.profile" test_run.default_tester.username %}">{% endif %}{{ test_run.default_tester }}{% if test_run.default_tester_id %}</a>{% endif %}</td>
+				<td><a href="{% url "run-get" test_run.run_id %}" >{{ test_run.run_id }}</a></td>
+				<td><a href="{% url "run-get" test_run.run_id %}" >{{ test_run.summary }}</a></td>
+				<td><a href="{% url "user-profile" test_run.manager.username %}">{{ test_run.manager }}</a></td>
+				<td>{% if test_run.default_tester_id %}<a href="{% url "user-profile" test_run.default_tester.username %}">{% endif %}{{ test_run.default_tester }}{% if test_run.default_tester_id %}</a>{% endif %}</td>
 				<td style="display:none" class="col_plan_content"><a href="{{ test_run.plan.get_absolute_url }}" >{{ test_run.plan }}</a></td>
 				<td>{{ test_run.build.product }}</td>
 				<td>{{ test_run.product_version }}</td>

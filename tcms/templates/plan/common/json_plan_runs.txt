@@ -6,11 +6,11 @@
 		{% for run in querySet %}
 		[
 			"<input type='checkbox' name='run' value='{{ run.pk }}' class='run_selector'>",
-			"<a href='{% url "tcms.testruns.views.get" run.run_id %}' >{{ run.run_id }}</a>",
-			"<a href='{% url "tcms.testruns.views.get" run.run_id %}' >{{ run.summary }}</a>",
-			"<a href='{% url "tcms.profiles.views.profile" run.manager.username %}'>{{ run.manager }}</a>",
+			"<a href='{% url "run-get" run.run_id %}' >{{ run.run_id }}</a>",
+			"<a href='{% url "run-get" run.run_id %}' >{{ run.summary }}</a>",
+			"<a href='{% url "user-profile" run.manager.username %}'>{{ run.manager }}</a>",
 			{% if run.default_tester_id %}
-				"<a href='{% url "tcms.profiles.views.profile" run.default_tester.username %}'>{{ run.default_tester }}</a>"
+				"<a href='{% url "user-profile" run.default_tester.username %}'>{{ run.default_tester }}</a>"
 			{% else %}
 				"{{ run.default_tester }}"
 			{% endif %},

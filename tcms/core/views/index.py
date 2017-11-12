@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -9,8 +10,8 @@ def index(request, template_name='index.html'):
     """
 
     if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('django.contrib.auth.views.login'))
+        return HttpResponseRedirect(reverse('nitrate-login'))
 
     return HttpResponseRedirect(
-        reverse('tcms.profiles.views.recent', args=[request.user.username])
+        reverse('user-recent', args=[request.user.username])
     )

@@ -12,8 +12,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
@@ -28,7 +27,7 @@ from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils import DataTableResult
 from tcms.core.views import Prompt
-from tcms.search import remove_from_request_path
+from tcms.search.views import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
 from tcms.testcases import data
@@ -209,13 +208,12 @@ def new(request, template_name='case/new.html'):
 
                 def _continue(self):
                     if self.plan:
-                        return HttpResponseRedirect(
-                            '%s?from_plan=%s' % (reverse('tcms.testcases.views.edit',
-                                                         args=[self.case.case_id]),
-                                                 self.plan.plan_id))
+                        return HttpResponseRedirect('%s?from_plan=%s' % (
+                            reverse('case-edit', args=[self.case.case_id]),
+                            self.plan.plan_id))
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testcases.views.edit', args=[tc.case_id]))
+                        reverse('case-edit', args=[tc.case_id]))
 
                 def _addanother(self):
                     form = NewCaseForm(initial=default_form_parameters)
@@ -228,20 +226,19 @@ def new(request, template_name='case/new.html'):
                 def _returntocase(self):
                     if self.plan:
                         return HttpResponseRedirect(
-                            '%s?from_plan=%s' % (reverse('tcms.testcases.views.get',
-                                                         args=[self.case.pk]),
-                                                 self.plan.plan_id))
+                            '%s?from_rlan=%s' % (
+                                reverse('case-get', args=[self.case.pk]),
+                                self.plan.plan_id))
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testcases.views.get', args=[self.case.pk]))
+                        reverse('case-get', args=[self.case.pk]))
 
                 def _returntoplan(self):
                     if not self.plan:
                         raise Http404
 
-                    return HttpResponseRedirect(
-                        '%s#reviewcases' % reverse('tcms.testplans.views.get',
-                                                   args=[self.plan.pk]))
+                    return HttpResponseRedirect('%s#reviewcases' % reverse(
+                        'plan-get', args=[self.plan.pk]))
 
             # Genrate the instance of actions
             ras = ReturnActions(case=tc, plan=tp)
@@ -271,8 +268,7 @@ def new(request, template_name='case/new.html'):
         'test_plan': tp,
         'form': form
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
@@ -498,8 +494,7 @@ def load_more_cases(request, template_name='plan/cases_rows.html'):
         'selected_case_ids': selected_case_ids,
         'case_status': TestCaseStatus.objects.all(),
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def get_selected_cases_ids(request):
@@ -618,8 +613,7 @@ def all(request, template_name="case/all.html"):
         'search_criterias': request.body,
         'total_cases_count': total_cases_count,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -637,8 +631,7 @@ def search(request, template_name='case/all.html'):
         'module': MODULE_NAME,
         'search_form': search_form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def ajax_search(request, template_name='case/common/json_cases.txt'):
@@ -735,9 +728,7 @@ def ajax_response(request, queryset, column_names, template_name):
     # prepare the JSON with the response, consider using :
     # from django.template.defaultfilters import escapejs
     json_result = render_to_string(
-        template_name,
-        dt.get_response_data(),
-        context_instance=RequestContext(request))
+        template_name, context=dt.get_response_data())
     return HttpJSONResponse(json_result)
 
 
@@ -955,10 +946,7 @@ def get(request, case_id, template_name='case/get.html'):
     """Get the case content"""
     # Get the case
     try:
-        tc = TestCase.objects.select_related(
-            'author', 'default_tester',
-            'category__name', 'category__product__name',
-            'priority__value', 'case_status__name').get(case_id=case_id)
+        tc = TestCase.objects.get(case_id=case_id)
     except ObjectDoesNotExist:
         raise Http404
 
@@ -982,17 +970,16 @@ def get(request, case_id, template_name='case/get.html'):
                 info_type=Prompt.Info,
                 info='''This case has been removed from the plan, but you
                           can view the case detail''',
-                next=reverse('tcms.testcases.views.get',
-                             args=[case_id, ]),
+                next=reverse('case-get', args=[case_id, ]),
             ))
     else:
         tp = None
 
     # Get the test case runs
     tcrs = tc.case_run.select_related(
-        'run__summary', 'tested_by',
-        'assignee', 'case__category__name',
-        'case__priority__value', 'case_run_status__name').all()
+        'run', 'tested_by',
+        'assignee', 'case__category',
+        'case__priority', 'case_run_status').all()
     tcrs = tcrs.extra(select={
         'num_bug': RawSQL.num_case_run_bugs,
     }).order_by('run__plan')
@@ -1051,8 +1038,7 @@ def get(request, case_id, template_name='case/get.html'):
         'test_case_run_status': TestCaseRunStatus.objects.all(),
         'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 # TODO: better to split this method for TestPlan and TestCase respectively.
@@ -1080,8 +1066,7 @@ def printable(request, template_name='case/printable.html'):
     context_data = {
         'test_cases': tcs,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_POST
@@ -1102,8 +1087,7 @@ def export(request, template_name='case/export.xml'):
         'data_generator': generator_proxy(case_pks),
     }
 
-    response = render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+    response = render(request, template_name, context=context_data)
 
     response['Content-Disposition'] = \
         'attachment; filename=tcms-testcases-%s.xml' % timestamp_str
@@ -1253,7 +1237,7 @@ def edit(request, case_id, template_name='case/edit.html'):
             # Returns
             if request.POST.get('_continue'):
                 return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('tcms.testcases.views.edit', args=[case_id, ]),
+                    reverse('case-edit', args=[case_id]),
                     request.POST.get('from_plan', None),
                 ))
 
@@ -1275,7 +1259,7 @@ def edit(request, case_id, template_name='case/edit.html'):
                 # Get the previous and next case
                 p_tc, n_tc = tc.get_previous_and_next(pk_list=pk_list)
                 return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('tcms.testcases.views.edit', args=[n_tc.pk, ]),
+                    reverse('case-edit', args=[n_tc.pk, ]),
                     tp.pk,
                 ))
 
@@ -1285,15 +1269,15 @@ def edit(request, case_id, template_name='case/edit.html'):
                 confirm_status_name = 'CONFIRMED'
                 if tc.case_status.name == confirm_status_name:
                     return HttpResponseRedirect('%s#testcases' % (
-                        reverse('tcms.testplans.views.get', args=[tp.pk, ]),
+                        reverse('plan-get', args=[tp.pk, ]),
                     ))
                 else:
                     return HttpResponseRedirect('%s#reviewcases' % (
-                        reverse('tcms.testplans.views.get', args=[tp.pk, ]),
+                        reverse('plan-get', args=[tp.pk, ]),
                     ))
 
             return HttpResponseRedirect('%s?from_plan=%s' % (
-                reverse('tcms.testcases.views.get', args=[case_id, ]),
+                reverse('case-get', args=[case_id]),
                 request.POST.get('from_plan', None),
             ))
 
@@ -1346,8 +1330,7 @@ def edit(request, case_id, template_name='case/edit.html'):
         'notify_form': n_form,
         'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def text_history(request, case_id, template_name='case/history.html'):
@@ -1386,8 +1369,7 @@ def text_history(request, case_id, template_name='case/history.html'):
         # selected text history
         pass
 
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testcases.add_testcase'))
@@ -1546,18 +1528,18 @@ def clone(request, template_name='case/clone.html'):
 
             if cases_count == 1 and plans_count == 1:
                 return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('tcms.testcases.views.get', args=[tc_dest.pk, ]),
+                    reverse('case-get', args=[tc_dest.pk]),
                     tp.pk
                 ))
 
             if cases_count == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testcases.views.get', args=[tc_dest.pk, ])
+                    reverse('case-get', args=[tc_dest.pk, ])
                 )
 
             if plans_count == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[tp.pk, ])
+                    reverse('plan-get', args=[tp.pk, ])
                 )
 
             # Otherwise it will prompt to user the clone action is successful.
@@ -1566,7 +1548,7 @@ def clone(request, template_name='case/clone.html'):
                 info_type=Prompt.Info,
                 info='Test case successful to clone, click following link '
                      'to return to plans page.',
-                next=reverse('tcms.testplans.views.all')
+                next=reverse('plans-all')
             ))
     else:
         selected_cases = get_selected_testcases(request)
@@ -1597,8 +1579,7 @@ def clone(request, template_name='case/clone.html'):
         'clone_form': clone_form,
         'submit_action': submit_action,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_POST
@@ -1677,8 +1658,7 @@ def attachment(request, case_id, template_name='case/attachment.html'):
         'limit': file_size_limit,
         'limit_readable': str(limit_readable) + "Mb",
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def get_log(request, case_id, template_name="management/get_log.html"):
@@ -1688,8 +1668,7 @@ def get_log(request, case_id, template_name="management/get_log.html"):
     context_data = {
         'object': tc
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(template_name, context=context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testcases.change_testcasebug'))
@@ -1720,8 +1699,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
                 'test_case': self.case,
                 'response': response
             }
-            return render_to_response(template_name, context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, template_name, context=context_data)
 
         def add(self):
             # FIXME: It's may use ModelForm.save() method here.
@@ -1785,10 +1763,7 @@ def plan(request, case_id):
                 'message': 'The case must specific one plan at leaset for '
                            'some action',
             }
-            return render_to_response(
-                'case/get_plan.html',
-                context_data,
-                context_instance=RequestContext(request))
+            return render(request, 'case/get_plan.html', context=context_data)
 
         tps = TestPlan.objects.filter(pk__in=request.GET.getlist('plan_id'))
 
@@ -1797,10 +1772,7 @@ def plan(request, case_id):
                 'testplans': tps,
                 'message': 'The plan id are not exist in database at all.'
             }
-            return render_to_response(
-                'case/get_plan.html',
-                context_data,
-                context_instance=RequestContext(request))
+            return render(request, 'case/get_plan.html', context=context_data)
 
         # Add case plan action
         if request.GET['a'] == 'add':
@@ -1810,10 +1782,8 @@ def plan(request, case_id):
                     'test_plans': tps,
                     'message': 'Permission denied',
                 }
-                return render_to_response(
-                    'case/get_plan.html',
-                    context_data,
-                    context_instance=RequestContext(request))
+                return render(
+                    request, 'case/get_plan.html', context=context_data)
 
             for tp in tps:
                 tc.add_to_plan(tp)
@@ -1826,25 +1796,17 @@ def plan(request, case_id):
                     'test_plans': tps,
                     'message': 'Permission denied',
                 }
-                return render_to_response(
-                    'case/get_plan.html',
-                    context_data,
-                    context_instance=RequestContext(request))
+                return render(
+                    request, 'case/get_plan.html', context=context_data)
 
             for tp in tps:
                 tc.remove_plan(tp)
 
     tps = tc.plan.all()
-    tps = tps.select_related('author__username',
-                             'author__email',
-                             'type__name',
-                             'product__name')
+    tps = tps.select_related('author', 'type', 'product')
 
     context_data = {
         'test_case': tc,
         'test_plans': tps,
     }
-    return render_to_response(
-        'case/get_plan.html',
-        context_data,
-        context_instance=RequestContext(request))
+    return render(request, 'case/get_plan.html', context=context_data)

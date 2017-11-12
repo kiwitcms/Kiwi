@@ -23,8 +23,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 		<input id="value_product_id" type="hidden" mame="product_id" value="{{ test_plan.product_id }}">
 	</div>
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">Planning</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
+		>> <a href="{% url "plans-all" %}">Planning</a>
 		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		>> Add cases from other plans
 	</div>
@@ -33,7 +33,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 	<div class="Detailform border-1">
 		<div class="Detailform-variety_0">
 			<div class="grey tit">Search cases to add into this test plan.</div>
-			<form action="{% url "tcms.testplans.views.cases" test_plan.plan_id %}" method="post">
+			<form action="{% url "plan-cases" test_plan.plan_id %}" method="post">
 				<fieldset class="no-border">
 				<input type="hidden" name="a" value="link_cases" />
 				<input type="hidden" name="action" value="search" />
@@ -72,7 +72,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 			</form>
 			</fieldset>
 		</div>
-		<form id="id_form_cases" action="{% url "tcms.testplans.views.cases" test_plan.plan_id %}" method="post">
+		<form id="id_form_cases" action="{% url "plan-cases" test_plan.plan_id %}" method="post">
 			<input type="hidden" name="a" value="link_cases">
 			<input type="hidden" name="action" value="add_to_plan">
 			{% if test_cases %}
@@ -98,7 +98,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 					{% for test_case in test_cases %}
 					<tr class="{% cycle 'odd' 'even' %}">
 						<td align="left"><input id="id_checkbox_case_{{ forloop.counter }}" type="checkbox" name="case" value="{{ test_case.case_id }}"></td>
-						<td><a href="{% url "tcms.testcases.views.get" test_case.case_id %}">{{ test_case.case_id }}</a></td>
+						<td><a href="{% url "case-get" test_case.case_id %}">{{ test_case.case_id }}</a></td>
 						<td valign="top" >{{ test_case.summary }}</td>
 						<td valign="top" >{{ test_case.author.email }}</td>
 						<td valign="top" >{{ test_case.default_tester.email }}</td>

@@ -9,9 +9,9 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/management_actions.js"></script>
 <script type="text/javascript">
 	Nitrate.Management.Environment.Param = {
-		'add_group': '{% url "tcms.management.views.environment_groups" %}',
-		'edit_group': '{% url "tcms.management.views.environment_group_edit" %}',
-		'delete_group': '{% url "tcms.management.views.environment_groups" %}'
+		'add_group': '{% url "management-env-groups" %}',
+		'edit_group': '{% url "management-env-group-edit" %}',
+		'delete_group': '{% url "management-env-groups" %}'
 	};
 
 	Nitrate.Utils.after_page_load(Nitrate.Management.Environment.on_load);
@@ -22,11 +22,11 @@
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a> 
+		<a href="{% url "nitrate-index" %}">Home</a>
 		>> Environment Groups
 	</div>
 	<div class="mixbar">
-		<form method="get" action="{% url "tcms.management.views.environment_groups" %}" id="changelist-search">
+		<form method="get" action="{% url "management-env-groups" %}" id="changelist-search">
 			<input type="hidden" name="action" value="search">
             <label for="searchbar"><img alt="Search" height="20px" src="{{ STATIC_URL }}images/search.png"/></label>
 			<input type="text" id="searchbar" value="{{ REQUEST_CONTENTS.name }}" name="name" size="40"/>
@@ -55,7 +55,7 @@
 				<th align="center" height="26px">
 					<label class=" {% if env.is_active %}{% else %}disable line-through{% endif %}">
 						{% if perms.management.change_tcmsenvgroup %}
-						<a href="{% url "tcms.management.views.environment_group_edit" %}?id={{ env.id }}" >
+						<a href="{% url "management-env-group-edit" %}?id={{ env.id }}" >
 							{{ env.name }}
 						</a>
 						{% else %}
@@ -78,7 +78,7 @@
 				</td>
 				<td align="center">
 					{% if perms.management.change_tcmsenvgroup %}
-					<a href="{% url "tcms.management.views.environment_group_edit" %}?id={{ env.id }}" class="editlink">Edit</a>
+					<a href="{% url "management-env-group-edit" %}?id={{ env.id }}" class="editlink">Edit</a>
 					<a href="?id={{ env.id }}&action=modify&status=0" class="disablelink {% if env.is_active %}{% else %}hidden{% endif %}">Disable</a>
 					<a href="?id={{ env.id }}&action=modify&status=1" class="enablelink {% if env.is_active %}hidden{% endif %} ">Enable</a>
 					<a href="#" class="editlink js-del-env-group">Delete</a>
@@ -104,4 +104,3 @@
 	</table>
 </div>
 {% endblock %}
-

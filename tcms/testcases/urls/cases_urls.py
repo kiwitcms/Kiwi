@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url, patterns
+from __future__ import absolute_import
+from django.conf.urls import url
+from .. import views
 
-urlpatterns = patterns(
-    'tcms.testcases.views',
-    url(r'^new/$', 'new'),
-    url(r'^$', 'all'),
-    url(r'^search/$', 'search'),
-    url(r'^load-more/$', 'load_more_cases'),
-    url(r'^ajax/$', 'ajax_search'),
-    url(r'^automated/$', 'automated'),
-    url(r'^tag/$', 'tag'),
-    url(r'^component/$', 'component'),
-    url(r'^category/$', 'category'),
-    url(r'^clone/$', 'clone'),
-    url(r'^printable/$', 'printable'),
-    url(r'^export/$', 'export'),
-)
+urlpatterns = [
+    url(r'^new/$', views.new, name='cases-new'),
+    url(r'^$', views.all, name='cases-all'),
+    url(r'^search/$', views.search, name='cases-search'),
+    url(r'^load-more/$', views.load_more_cases, name='cases-load-more'),
+    url(r'^ajax/$', views.ajax_search, name='cases-ajax-search'),
+    url(r'^automated/$', views.automated, name='cases-automated'),
+    url(r'^tag/$', views.tag, name='cases-tag'),
+    url(r'^component/$', views.component, name='cases-component'),
+    url(r'^category/$', views.category, name='cases-category'),
+    url(r'^clone/$', views.clone, name='cases-clone'),
+    url(r'^printable/$', views.printable, name='cases-printable'),
+    url(r'^export/$', views.export, name='cases-export'),
+]

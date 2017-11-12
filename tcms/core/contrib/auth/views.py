@@ -4,8 +4,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import redirect, render_to_response
-from django.template import RequestContext
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_http_methods
 
@@ -19,7 +18,7 @@ from tcms.core.views import Prompt
 def logout(request):
     """Logout method of account"""
     auth.logout(request)
-    return redirect(request.GET.get('next', reverse('tcms.core.views.index')))
+    return redirect(request.GET.get('next', settings.LOGIN_URL))
 
 
 @require_http_methods(['GET', 'POST'])
@@ -36,7 +35,7 @@ def register(request, template_name='registration/registration_form.html'):
             request=request,
             info_type=Prompt.Alert,
             info='The backend is not allowed to register.',
-            next=request_data.get('next', reverse('tcms.core.views.index'))
+            next=request_data.get('next', reverse('nitrate-index'))
         ))
 
     if request.method == 'POST':
@@ -68,7 +67,7 @@ def register(request, template_name='registration/registration_form.html'):
                 request=request,
                 info_type=Prompt.Info,
                 info=msg,
-                next=request.POST.get('next', reverse('tcms.core.views.index'))
+                next=request.POST.get('next', reverse('nitrate-index'))
             ))
     else:
         form = RegistrationForm()
@@ -76,8 +75,7 @@ def register(request, template_name='registration/registration_form.html'):
     context_data = {
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -94,7 +92,7 @@ def confirm(request, activation_key):
             request=request,
             info_type=Prompt.Info,
             info=msg,
-            next=request.GET.get('next', reverse('tcms.core.views.index'))
+            next=request.GET.get('next', reverse('nitrate-index'))
         ))
 
     # All thing done, start to active the user and use the user login
@@ -111,6 +109,5 @@ def confirm(request, activation_key):
         request=request,
         info_type=Prompt.Info,
         info=msg,
-        next=request.GET.get('next', reverse(
-            'tcms.profiles.views.redirect_to_profile'))
+        next=request.GET.get('next', reverse('user-profile-redirect'))
     ))

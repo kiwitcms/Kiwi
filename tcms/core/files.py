@@ -95,8 +95,7 @@ def upload_file(request):
             )
 
             return HttpResponseRedirect(
-                reverse('tcms.testplans.views.attachment',
-                        args=[request.POST['to_plan_id']])
+                reverse('plan-attachment', args=[request.POST['to_plan_id']])
             )
         elif request.POST.get('to_case_id'):
             TestCaseAttachment.objects.create(
@@ -105,19 +104,17 @@ def upload_file(request):
             )
 
             return HttpResponseRedirect(
-                reverse('tcms.testcases.views.attachment',
-                        args=[request.POST['to_case_id']])
+                reverse('case-attachment', args=[request.POST['to_case_id']])
             )
     else:
         try:
             return HttpResponseRedirect(
-                reverse('tcms.testplans.views.attachment',
+                reverse('plan-attachment',
                         args=[request.POST['to_plan_id']])
             )
         except KeyError:
             return HttpResponseRedirect(
-                reverse('tcms.testcases.views.attachment',
-                        args=[request.POST['to_case_id']])
+                reverse('case-attachment', args=[request.POST['to_case_id']])
             )
 
 

@@ -11,11 +11,11 @@
 			<tbody>
 				{% for attachment in test_case.attachment.all %}
 				<tr id="{{ attachment.attachment_id }}" class="{% cycle 'odd' 'even' %}">
-					<td><a href="{% url "tcms.core.files.check_file" attachment.attachment_id %}">{{ attachment.file_name }}</a></td>
+					<td><a href="{% url "check-file" attachment.attachment_id %}">{{ attachment.file_name }}</a></td>
 					<td>{{ attachment.submitter }}</td>
 					<td>{{ attachment.create_date }}</td>
 					<td>{{ attachment.mime_type }}</td>
-					<td><a href="{% url "tcms.core.files.check_file" attachment.attachment_id %}">View</a> | <a class="js-del-button" data-params='{"attachmentId": {{ attachment.attachment_id }}, "source": "from_case", "sourceId": {{ test_case.case_id }}}' href="#">Delete</a></td>
+					<td><a href="{% url "check-file" attachment.attachment_id %}">View</a> | <a class="js-del-button" data-params='{"attachmentId": {{ attachment.attachment_id }}, "source": "from_case", "sourceId": {{ test_case.case_id }}}' href="#">Delete</a></td>
 				</tr>
 				 {% empty %}
 				 <tr><td colspan="5" align="center"><span class="grey">No attachments</span></td></tr>
@@ -25,7 +25,7 @@
 					<td colspan="5" style="padding:0;">
 						<div class="addtag">
 							<span class="tit">Add attachment</span>
-							<a href="{% url "tcms.testcases.views.attachment" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="addlink">add</a> 
+							<a href="{% url "case-attachment" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="addlink">add</a>
 						</div>
 					</td>
 				</tr>

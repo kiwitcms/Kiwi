@@ -16,8 +16,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
@@ -31,7 +30,7 @@ from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.views import Prompt
 from tcms.management.models import TCMSEnvGroup, Component
-from tcms.search import remove_from_request_path
+from tcms.search.views import remove_from_request_path
 from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
 from tcms.testcases.models import TestCaseStatus, TestCaseCategory
@@ -101,8 +100,7 @@ def new(request, template_name='plan/new.html'):
                     'sub_module': SUB_MODULE_NAME,
                     'form': form,
                 }
-                return render_to_response(template_name, context_data,
-                                          context_instance=RequestContext(request))
+                return render(request, template_name, context=context_data)
 
         # Process the test plan submit to the form
 
@@ -134,7 +132,7 @@ def new(request, template_name='plan/new.html'):
                         tp.add_env_group(env_group=env_group)
 
             return HttpResponseRedirect(
-                reverse('tcms.testplans.views.get', args=[tp.plan_id, ])
+                reverse('plan-get', args=[tp.plan_id])
             )
     else:
         form = NewPlanForm()
@@ -144,8 +142,7 @@ def new(request, template_name='plan/new.html'):
         'sub_module': SUB_MODULE_NAME,
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -161,10 +158,7 @@ def delete(request, plan_id):
                 window.location.href='%s?sure=yes' \
             } else { \
                 history.go(-1) \
-            };</script>" % (plan_id, reverse(
-            'tcms.testplans.views.delete', args=[plan_id, ]
-        ))
-        )
+            };</script>" % (plan_id, reverse('plan-delete', args=[plan_id])))
     elif request.GET.get('sure') == 'yes':
         tp = get_object_or_404(TestPlan, plan_id=plan_id)
 
@@ -285,8 +279,7 @@ def all(request, template_name='plan/all.html'):
         'query_url_page_type': query_url_page_type,
         'page_type': page_type
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def get_number_of_plans_cases(plan_ids):
@@ -417,10 +410,7 @@ def ajax_response(request, queryset, column_names, template_name):
 
     # prepare the JSON with the response, consider using :
     # from django.template.defaultfilters import escapejs
-    json_result = render_to_string(
-        template_name,
-        data,
-        context_instance=RequestContext(request))
+    json_result = render_to_string(template_name, context=data)
     return HttpJSONResponse(json_result)
 
 
@@ -449,8 +439,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
         'test_plan': tp,
         'xml_form': ImportCasesViaXMLForm(initial={'a': 'import_cases'}),
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -467,10 +456,8 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
         except IndexError:
             raise Http404
 
-        testruns = TestRun.objects.filter(plan=plan_id).values('pk',
-                                                               'summary',
-                                                               'build__name',
-                                                               'manager__username')
+        testruns = TestRun.objects.filter(plan=plan_id).values(
+            'pk', 'summary', 'build__name', 'manager__username')
 
         # Ready to write cases to test plan
         tcs = get_selected_testcases(request)
@@ -488,8 +475,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
             'test_runs': testruns.iterator(),
             'test_cases': tcs.iterator(),
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context=context_data)
 
     # Add cases to runs
     if request.method == 'POST':
@@ -502,7 +488,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
                 request=request,
                 info_type=Prompt.Info,
                 info='At least one test run and one case is required to add cases to runs.',
-                next=reverse('tcms.testplans.views.get', args=[plan_id]),
+                next=reverse('plan-get', args=[plan_id]),
             ))
 
         # Adding cases to runs by recursion
@@ -520,7 +506,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
             testrun.estimated_time = testrun.estimated_time + estimated_time
             testrun.save()
 
-        return HttpResponseRedirect(reverse('tcms.testplans.views.get', args=[plan_id]))
+        return HttpResponseRedirect(reverse('plan-get', args=[plan_id]))
 
 
 @require_http_methods(['GET', 'POST'])
@@ -556,8 +542,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                     'form': form,
                     'test_plan': tp,
                 }
-                return render_to_response(template_name, context_data,
-                                          context_instance=RequestContext(request))
+                return render(request, template_name, context=context_data)
 
             if request.user.has_perm('testplans.change_testplan'):
                 tp.name = form.cleaned_data['name']
@@ -596,7 +581,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             # Update plan email settings
             update_plan_email_settings(tp, form)
             return HttpResponseRedirect(
-                reverse('tcms.testplans.views.get', args=[plan_id, slugify(tp.name)]))
+                reverse('plan-get', args=[plan_id, slugify(tp.name)]))
     else:
         # Generate a blank form
         # Temporary use one environment group in this case
@@ -634,8 +619,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
         'test_plan': tp,
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -718,7 +702,7 @@ def clone(request, template_name='plan/clone.html'):
 
             if len(tps) == 1:
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[cloned_plan.plan_id]))
+                    reverse('plan-get', args=[cloned_plan.plan_id]))
             else:
                 args = {
                     'action': 'search',
@@ -727,7 +711,7 @@ def clone(request, template_name='plan/clone.html'):
                 }
                 url_args = urllib.urlencode(args)
                 return HttpResponseRedirect(
-                    '{}?{}'.format(reverse('tcms.testplans.views.all'), url_args))
+                    '{}?{}'.format(reverse('plans-all'), url_args))
     else:
         # Generate the default values for the form
         if len(tps) == 1:
@@ -762,8 +746,7 @@ def clone(request, template_name='plan/clone.html'):
         'testplans': tps,
         'clone_form': clone_form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):
@@ -781,8 +764,7 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
         'limit': file_size_limit,
         'limit_readable': str(limit_readable) + "Mb",
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -804,8 +786,7 @@ def text_history(request, plan_id, template_name='plan/history.html'):
         'test_plan_texts': tptxts,
         'select_plan_text_version': selected_plan_text_version,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -835,7 +816,7 @@ def cases(request, plan_id):
                     return HttpResponse("Permission Denied")
 
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[plan_id]))
+                    reverse('plan-get', args=[plan_id]))
 
             search_mode = request.POST.get('search_mode')
             if request.POST.get('action') == 'search':
@@ -872,8 +853,7 @@ def cases(request, plan_id):
                 'quick_form': quick_form,
                 'search_mode': search_mode
             }
-            return render_to_response(template_name, context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, template_name, context=context_data)
 
         def delete_cases(self):
             if not request.POST.get('case'):
@@ -921,7 +901,7 @@ def cases(request, plan_id):
                         request=request,
                         info_type=Prompt.Alert,
                         info='Permission denied',
-                        next=reverse('tcms.testplans.views.get', args=[plan_id]),
+                        next=reverse('plan-get', args=[plan_id]),
                     ))
 
                 xml_form = ImportCasesViaXMLForm(request.POST, request.FILES)
@@ -973,17 +953,17 @@ def cases(request, plan_id):
                         tc.add_to_plan(plan=tp)
 
                     return HttpResponseRedirect(
-                        reverse('tcms.testplans.views.get', args=[plan_id]) + '#testcases')
+                        reverse('plan-get', args=[plan_id]) + '#testcases')
                 else:
                     return HttpResponse(Prompt.render(
                         request=request,
                         info_type=Prompt.Alert,
                         info=xml_form.errors,
-                        next=reverse('tcms.testplans.views.get', args=[plan_id]) + '#testcases'
+                        next=reverse('plan-get', args=[plan_id]) + '#testcases'
                     ))
             else:
                 return HttpResponseRedirect(
-                    reverse('tcms.testplans.views.get', args=[plan_id]) + '#testcases')
+                    reverse('plan-get', args=[plan_id]) + '#testcases')
 
     # tp = get_object_or_404(TestPlan, plan_id=plan_id)
     cas = CaseActions(request, tp)
@@ -1000,7 +980,7 @@ def cases(request, plan_id):
             request=request,
             info_type=Prompt.Alert,
             info='Unrecognizable actions',
-            next=reverse('tcms.testplans.views.get', args=[plan_id]),
+            next=reverse('plan-get', args=[plan_id]),
         ))
 
     func = getattr(cas, action)
@@ -1100,8 +1080,7 @@ def component(request, template_name='plan/get_component.html'):
                 return HttpResponse(serializers.serialize(request.GET['type'], obj))
 
             context_data = {'test_plan': self.tps[0]}
-            return render_to_response(template_name, context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, template_name, context=context_data)
 
     if not request.GET.get('plan'):
         raise Http404
@@ -1152,8 +1131,7 @@ def printable(request, template_name='plan/printable.html'):
         'test_plans': plan_generator(),
     }
 
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -1172,8 +1150,7 @@ def export(request, template_name='plan/export.xml'):
         'data_generator': generator_proxy(plan_pks),
     }
 
-    response = render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+    response = render(request, template_name, context=context_data)
     response['Content-Disposition'] = 'attachment; filename=tcms-testcases-%s.xml' % timestamp_str
     return response
 

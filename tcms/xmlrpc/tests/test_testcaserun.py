@@ -171,7 +171,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         self.assertEquals(tcr['case_id'], self.case.pk)
         self.assertEquals(tcr['assignee_id'], None)
         self.assertEquals(tcr['case_text_version'], 2)
-        self.assertEquals(tcr['notes'], large_str)
+        self.assertEquals(tcr['notes'], large_str.strip())
 
     def test_create_with_no_perm(self):
         values = {

@@ -12,15 +12,14 @@ from django import http
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
 from django.dispatch import Signal
 from django.http import Http404
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 
+from tcms import utils
 from tcms.management.models import Component, TestBuild, Version
 from tcms.management.models import Priority
 from tcms.management.models import TestTag
@@ -318,8 +317,7 @@ def tag(request, template_name="management/get_tag.html"):
             'tags': tags,
             'object': obj[0],
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context=context_data)
     return HttpResponse('')
 
 
@@ -412,7 +410,7 @@ def update(request):
     if not has_perms:
         return say_no('Permission Dinied.')
 
-    model = models.get_model(*ctype.split(".", 1))
+    model = utils.get_model(ctype)
     targets = model._default_manager.filter(pk__in=object_pk)
 
     if not targets:
@@ -516,7 +514,7 @@ def update_case_run_status(request):
     if not has_perms:
         return say_no('Permission Dinied.')
 
-    model = models.get_model(*ctype.split(".", 1))
+    model = utils.get_model(ctype)
     targets = model._default_manager.filter(pk__in=object_pk)
 
     if not targets:

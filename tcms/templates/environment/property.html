@@ -10,12 +10,12 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/management_actions.js"></script>
 <script type="text/javascript">
 	Nitrate.Management.Environment.Property.Param = {
-		'add_property': '{% url "tcms.management.views.environment_properties" %}',
-		'edit_property': '{% url "tcms.management.views.environment_properties" %}',
-		'del_property': '{% url "tcms.management.views.environment_properties" %}',
-		'modify_property': '{% url "tcms.management.views.environment_properties" %}',
-		'list_property_values': '{% url "tcms.management.views.environment_property_values" %}',
-		'add_property_value': '{% url "tcms.management.views.environment_property_values" %}'
+		'add_property': '{% url "management-env-properties" %}',
+		'edit_property': '{% url "management-env-properties" %}',
+		'del_property': '{% url "management-env-properties" %}',
+		'modify_property': '{% url "management-env-properties" %}',
+		'list_property_values': '{% url "management-env-properties-values" %}',
+		'add_property_value': '{% url "management-env-properties-values" %}'
 	};
 	Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Property.on_load);
 </script>
@@ -24,8 +24,8 @@
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a> 
-		>> <a href="{% url "tcms.management.views.environment_groups" %}">Environment groups</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
+		>> <a href="{% url "management-env-groups" %}">Environment groups</a>
 		>> Environment Properties
 	</div>
 	<h2>Environment Properties</h2>
@@ -83,4 +83,3 @@
 {% endverbatim %}
 
 {% endblock %}
-

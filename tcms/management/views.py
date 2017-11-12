@@ -9,8 +9,7 @@ from django.db import IntegrityError
 from django.http import Http404
 from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
 from tcms.core.logs.models import TCMSLogModel
@@ -136,8 +135,7 @@ def environment_groups(request, template_name='environment/groups.html'):
         'environments': env_groups,
         'module': 'env',
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -172,8 +170,7 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
                 'selected_properties': environment.property.all(),
                 'message': response,
             }
-            return render_to_response(template_name, context_data,
-                                      context_instance=RequestContext(request))
+            return render(request, template_name, context=context_data)
     except TCMSEnvGroup.DoesNotExist:
         pass
 
@@ -187,7 +184,7 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
                                                       environment_name))
 
         if environment.is_active != request.GET.get('enabled', False):
-            environment.is_active = request.GET.get('enabled', False)
+            environment.is_active = bool(request.GET.get('enabled', False))
             environment.log_action(
                 who=request.user,
                 action='Change env group status to %s' % environment.is_active)
@@ -216,8 +213,7 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
         'selected_properties': environment.property.all(),
         'message': response,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -318,8 +314,7 @@ def environment_properties(request, template_name='environment/property.html'):
         'message': message,
         'properties': TCMSEnvProperty.objects.all().order_by('-is_active')
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_GET
@@ -391,5 +386,4 @@ def environment_property_values(request):
         'values': values,
         'message': message,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)

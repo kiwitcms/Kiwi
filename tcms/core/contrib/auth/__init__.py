@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.contrib.auth.models import Group
 from importlib import import_module
 
 
@@ -33,6 +32,7 @@ def initiate_user_with_default_setups(user):
     Add default groups, permissions, status to a newly
     created user.
     '''
+    from django.contrib.auth.models import Group
     default_groups = Group.objects.filter(name__in=settings.DEFAULT_GROUPS)
     user.is_active = True
     for grp in default_groups:

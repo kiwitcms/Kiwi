@@ -27,7 +27,7 @@ class TestVisitAndSearchGroupPage(TestCase):
     def setUpTestData(cls):
         super(TestVisitAndSearchGroupPage, cls).setUpTestData()
 
-        cls.group_url = reverse('tcms.management.views.environment_groups')
+        cls.group_url = reverse('management-env-groups')
 
         cls.new_tester = User.objects.create_user(username='new-tester',
                                                   email='new-tester@example.com',
@@ -91,7 +91,7 @@ class TestVisitAndSearchGroupPage(TestCase):
         self.client.login(username=self.new_tester.username, password='password')
 
         user_should_have_perm(self.new_tester, 'management.change_tcmsenvgroup')
-        group_edit_url = reverse('tcms.management.views.environment_group_edit')
+        group_edit_url = reverse('management-env-group-edit')
 
         response = self.client.get(self.group_url)
 
@@ -123,7 +123,7 @@ class TestAddGroup(TestCase):
     def setUpTestData(cls):
         super(TestAddGroup, cls).setUpTestData()
 
-        cls.group_add_url = reverse('tcms.management.views.environment_groups')
+        cls.group_add_url = reverse('management-env-groups')
 
         cls.tester = User.objects.create_user(username='new-tester',
                                               email='new-tester@example.com',
@@ -195,7 +195,7 @@ class TestDeleteGroup(TestCase):
     def setUpTestData(cls):
         super(TestDeleteGroup, cls).setUpTestData()
 
-        cls.group_delete_url = reverse('tcms.management.views.environment_groups')
+        cls.group_delete_url = reverse('management-env-groups')
         cls.permission = 'management.delete_tcmsenvgroup'
 
         cls.tester = User.objects.create_user(username='tester',
@@ -266,7 +266,7 @@ class TestModifyGroup(TestCase):
         cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
 
         cls.permission = 'management.change_tcmsenvgroup'
-        cls.group_modify_url = reverse('tcms.management.views.environment_groups')
+        cls.group_modify_url = reverse('management-env-groups')
 
     def tearDown(self):
         remove_perm_from_user(self.tester, self.permission)
@@ -327,7 +327,7 @@ class TestVisitEnvironmentGroupPage(TestCase):
                                               password='password')
         user_should_have_perm(cls.tester, 'management.change_tcmsenvgroup')
 
-        cls.group_edit_url = reverse('tcms.management.views.environment_group_edit')
+        cls.group_edit_url = reverse('management-env-group-edit')
         cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
         cls.disabled_group = TCMSEnvGroupFactory(name='disabled-group',
                                                  is_active=False,
@@ -393,7 +393,7 @@ class TestEditEnvironmentGroup(TestCase):
         cls.property_2 = TCMSEnvPropertyFactory()
         cls.property_3 = TCMSEnvPropertyFactory()
 
-        cls.group_edit_url = reverse('tcms.management.views.environment_group_edit')
+        cls.group_edit_url = reverse('management-env-group-edit')
 
     def test_refuse_if_there_is_duplicate_group_name(self):
         self.client.login(username=self.tester.username, password='password')
@@ -436,7 +436,7 @@ class TestAddProperty(TestCase):
         super(TestAddProperty, cls).setUpTestData()
 
         cls.permission = 'management.add_tcmsenvproperty'
-        cls.group_properties_url = reverse('tcms.management.views.environment_properties')
+        cls.group_properties_url = reverse('management-env-properties')
 
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
@@ -511,7 +511,7 @@ class TestEditProperty(TestCase):
         super(TestEditProperty, cls).setUpTestData()
 
         cls.permission = 'management.change_tcmsenvproperty'
-        cls.group_properties_url = reverse('tcms.management.views.environment_properties')
+        cls.group_properties_url = reverse('management-env-properties')
 
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
@@ -571,7 +571,7 @@ class TestEnableDisableProperty(TestCase):
         super(TestEnableDisableProperty, cls).setUpTestData()
 
         cls.permission = 'management.change_tcmsenvproperty'
-        cls.group_properties_url = reverse('tcms.management.views.environment_properties')
+        cls.group_properties_url = reverse('management-env-properties')
 
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',

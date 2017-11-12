@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import datetime
+
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericRelation
@@ -44,7 +45,7 @@ class TestRun(TCMSActionModel):
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     summary = models.TextField()
     notes = models.TextField(blank=True)
-    estimated_time = DurationField(default=0)
+    estimated_time = DurationField(default=timedelta(seconds=0))
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run')
     environment_id = models.IntegerField(default=0)
@@ -148,7 +149,7 @@ class TestRun(TCMSActionModel):
         # Upward compatibility code
         if request:
             return request.build_absolute_uri(
-                reverse('tcms.testruns.views.get', args=[self.pk, ])
+                reverse('run-get', args=[self.pk, ])
             )
 
         return self.get_url(request)
@@ -168,7 +169,7 @@ class TestRun(TCMSActionModel):
         return list(set(to))
 
     def get_url_path(self):
-        return reverse('tcms.testruns.views.get', args=[self.pk, ])
+        return reverse('run-get', args=[self.pk])
 
     # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, case_run_status=1, assignee=None,
@@ -315,13 +316,13 @@ class TestRun(TCMSActionModel):
     def update_completion_status(self, is_auto_updated, is_finish=None):
         if is_auto_updated and self.auto_update_run_status:
             if self.completed_case_run_percent == 100.0:
-                self.stop_date = datetime.datetime.now()
+                self.stop_date = datetime.now()
             else:
                 self.stop_date = None
             self.save()
         if not is_auto_updated and not self.auto_update_run_status:
             if is_finish:
-                self.stop_date = datetime.datetime.now()
+                self.stop_date = datetime.now()
             else:
                 self.stop_date = None
             self.save()

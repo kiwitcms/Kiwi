@@ -1,6 +1,6 @@
 {% load ifin %}
 {% load testcase_tags %}
-<form id="js-cases-nav-form" action="{% url "tcms.testcases.views.all" %}" method="get">
+<form id="js-cases-nav-form" action="{% url "cases-all" %}" method="get">
 	<input type="hidden" name="type" value="case" />
 	<input type="hidden" name="case_sort_by" value="{{ REQUEST_CONTENTS.case_sort_by }}" />
 	<input type="hidden" name="plan" value="{{ REQUEST_CONTENTS.from_plan }}" />
@@ -13,24 +13,24 @@
 			<ul>
 				<li>
 					{% if perms.testcases.add_testcase %}
-					<span id="js-case-menu" class='sprites toolbar_case icon_plan' data-params='["{% url "tcms.testcases.views.new" %}", {{ test_plan.plan_id }}]'>Case</span>
+					<span id="js-case-menu" class='sprites toolbar_case icon_plan' data-params='["{% url "cases-new" %}", {{ test_plan.plan_id }}]'>Case</span>
 					{% else %}
 					<span class='sprites toolbar_case icon_plan'>Case</span>
 					{% endif %}
 					<ul>
 						{% if perms.testcases.add_testcase %}
-						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="Write new case" data-params='["{% url "tcms.testcases.views.new" %}", {{ test_plan.plan_id }}]'/></li>
+						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="Write new case" data-params='["{% url "cases-new" %}", {{ test_plan.plan_id }}]'/></li>
 						<li><input id="js-import-case" type="button" class="import icon_plan" value="Import cases from XML" /></li>
-						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="Add cases from other plans" data-param="{% url "tcms.testplans.views.cases" test_plan.plan_id %}" /></li>
+						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="Add cases from other plans" data-param="{% url "plan-cases" test_plan.plan_id %}" /></li>
 						{% else %}
 						<li><input type="button" class="add_new icon_plan" disabled="true" value="Write new case"/></li>
 						<li><input type="button" class="import icon_plan" disabled="true" value="Import cases from XML"	/></li>
 						<li><input type="button" class="search icon_plan" disabled="true" value="Add cases from other plans" /></li>
 						{% endif %}
-						<li><input type="button" id="js-export-case" class="export icon_plan" title="Export selected cases into XML file" value="Export" data-param="{% url "tcms.testcases.views.export" %}" /></li>
-						<li><input type="button" id="js-print-case" class="print_view icon_plan" value="Print"  title="print view of selected cases" data-param="{% url "tcms.testcases.views.printable" %}" /></li>
+						<li><input type="button" id="js-export-case" class="export icon_plan" title="Export selected cases into XML file" value="Export" data-param="{% url "cases-export" %}" /></li>
+						<li><input type="button" id="js-print-case" class="print_view icon_plan" value="Print"  title="print view of selected cases" data-param="{% url "cases-printable" %}" /></li>
 						{% if perms.testcases.add_testcase %}
-						<li><input type="button" id="js-clone-case" class="clone icon_plan" value="Clone" title="Clone selected cases to another test plan" data-param="{% url "tcms.testcases.views.clone" %}" /></li>
+						<li><input type="button" id="js-clone-case" class="clone icon_plan" value="Clone" title="Clone selected cases to another test plan" data-param="{% url "cases-clone" %}" /></li>
 						{% else %}
 						<li><input type="button" class="clone icon_plan" value="Clone" title="Clone selected cases to another test plan" disabled="true"/></li>
 						{% endif %}
@@ -54,8 +54,8 @@
                 {% endif %}
                     <ul>
 			{% if perms.testruns.add_testrun %}
-                        <li><input id="js-new-run" class="new_run icon_plan" type="button" value="Write new run" data-param="{% url "tcms.testruns.views.new" %}"/></li>
-                        <li><input type= "button" id="js-add-case-to-run" class="search icon_plan" value="Add cases to run" data-param="{% url "tcms.testplans.views.choose_run" test_plan.plan_id %}" /></li>
+                        <li><input id="js-new-run" class="new_run icon_plan" type="button" value="Write new run" data-param="{% url "run-new" %}"/></li>
+                        <li><input type= "button" id="js-add-case-to-run" class="search icon_plan" value="Add cases to run" data-param="{% url "plan-choose-run" test_plan.plan_id %}" /></li>
 			{% else %}
 			<li><input type="button" class="new_run icon_plan" title="Make new test run from selected cases" value="Write new run" disabled="true" /></li>
                         <li><input type="button" class="search icon_plan" value="Add cases to run" disabled="true"></li>
@@ -71,7 +71,7 @@
 					<ul>
 						{% if perms.testcases.add_testcasetag %}
 						<li><input type="button" value="Add Tag" class="tag_add sprites icon_plan" /></li>
-						{% else %} 
+						{% else %}
 						<li><input type="button" value="Add Tag" class="tag_add_disabled sprites icon_plan" disabled="disabled" /></li>
 						{% endif %}
 						{% if perms.testcases.delete_testcasetag %}
@@ -112,7 +112,7 @@
 				<a class="btn_sort sortlink" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes">Re-order cases</a>
 				{% endif %}
 			</span>
-			
+
 		</div>
 		<div class="mixbar fixed">
 			<div class="tit" style="width: 50px; float: left; height: 100%; margin: 0px; text-align: center;">Tags:</div>

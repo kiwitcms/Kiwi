@@ -28,11 +28,11 @@ Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
-		>> <a href="{% url "tcms.management.views.environment_groups" %}">Environment groups</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
+		>> <a href="{% url "management-env-groups" %}">Environment groups</a>
 		>> Edit group - {{ environment.name }}
 	</div>
-	<form id="js-edit-group" action="{% url "tcms.management.views.environment_group_edit" %}" method="GET">
+	<form id="js-edit-group" action="{% url "management-env-group-edit" %}" method="GET">
 		<input type="hidden" name="action" value="modify">
 		<input type="hidden" name="id" value="{{ environment.id }}">
 		<h2>Edit Environment Group</h2>
@@ -51,7 +51,7 @@ Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 				<td class="manage-tit">
 					<label>
 						Properties<br />
-						<a class="editlink" href="{% url "tcms.management.views.environment_properties" %}">Edit</a>
+						<a class="editlink" href="{% url "management-env-properties" %}">Edit</a>
 					</label>
 				</td>
 				<td>

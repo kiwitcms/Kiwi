@@ -11,11 +11,11 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
 		{% if test_plan %}
 		>>Plan: <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		{% else %}
-		>> <a href="{% url "tcms.testcases.views.search" %}">Search Cases</a>
+		>> <a href="{% url "cases-search" %}">Search Cases</a>
 		{% endif %}
 		>> Clone case
 	</div>
@@ -39,7 +39,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 					<input type="radio" id="id_use_filterplan" checked="checked"  name="selectplan"/>
 					<label for="id_use_filterplan" class="strong">Filter another plan</label>
 					<div id="id_filterPlan">
-					<form id="id_form_search_plan" action="{% url "tcms.testplans.views.all" %}" method="get">
+					<form id="id_form_search_plan" action="{% url "plans-all" %}" method="get">
 						<input type="hidden" name="action" value="clone_case" />
 						{% include 'plan/form/filter.html' %}
 						<div class="cell" style=" margin-left:0">
@@ -52,7 +52,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 				{% endif %}
 				</div>
 			</div>
-			<form id="id_clone_form" action="{% url "tcms.testcases.views.clone" %}" method="post">
+			<form id="id_clone_form" action="{% url "cases-clone" %}" method="post">
 				{{ form.case_id }}
 				<div class="listinfo">
 					<label class="strong title"></label>

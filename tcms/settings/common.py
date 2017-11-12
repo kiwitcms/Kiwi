@@ -7,7 +7,6 @@ import tcms
 NITRATE_VERSION = tcms.__version__
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 # Administrators error report email settings
 ADMINS = (
@@ -56,7 +55,7 @@ ALLOWED_HOSTS = ['*']
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'UTC'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -87,6 +86,10 @@ MEDIA_URL = ''
 # URL prefix for admin absolute URL
 ADMIN_PREFIX = '/admin'
 
+LOGIN_URL = 'nitrate-login'
+LOGIN_REDIRECT_URL = 'user-profile-redirect'
+LOGOUT_REDIRECT_URL = 'nitrate-login'
+
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
@@ -115,11 +118,35 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\', '/'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'debug': True,
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+
+                # Added for Nitrate
+                'django.template.context_processors.request',
+                'tcms.core.context_processors.admin_prefix_processor',
+                'tcms.core.context_processors.auth_backend_processor',
+                'tcms.core.context_processors.request_contents_processor',
+                'tcms.core.context_processors.settings_processor',
+            ],
+        },
+    },
+]
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,13 +163,6 @@ ROOT_URLCONF = 'tcms.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'tcms.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(TCMS_ROOT_PATH, 'templates/').replace('\\', '/'),
-)
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
@@ -155,7 +175,6 @@ INSTALLED_APPS = (
 
     'django_comments',
     'kobo.django.xmlrpc',
-
     'tinymce',
 
     'tcms.core',
@@ -170,19 +189,10 @@ INSTALLED_APPS = (
     'tcms.testcases',
     'tcms.testplans',
     'tcms.testruns',
-
     'tcms.xmlrpc.apps.AppConfig',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
-TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-    'tcms.core.context_processors.admin_prefix_processor',
-    'tcms.core.context_processors.auth_backend_processor',
-    'tcms.core.context_processors.request_contents_processor',
-    'tcms.core.context_processors.settings_processor',
-)
 
 #
 # Default apps settings

@@ -18,8 +18,7 @@ from django.db.models import Count
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
@@ -69,7 +68,7 @@ def new(request, template_name='run/new.html'):
 
     # If from_plan does not exist will redirect to plans for select a plan
     if not request.POST.get('from_plan'):
-        return HttpResponseRedirect(reverse('tcms.testplans.views.all'))
+        return HttpResponseRedirect(reverse('plans-all'))
 
     plan_id = request.POST.get('from_plan')
     # Case is required by a test run
@@ -78,7 +77,7 @@ def new(request, template_name='run/new.html'):
             request=request,
             info_type=Prompt.Info,
             info='At least one case is required by a run.',
-            next=reverse('tcms.testplans.views.get', args=[plan_id, ]),
+            next=reverse('plan-get', args=[plan_id]),
         ))
 
     # Ready to write cases to test plan
@@ -198,7 +197,7 @@ def new(request, template_name='run/new.html'):
                 TCMSEnvRunValueMap.objects.bulk_create(args)
 
             return HttpResponseRedirect(
-                reverse('tcms.testruns.views.get', args=[tr.run_id, ])
+                reverse('run-get', args=[tr.run_id])
             )
 
     else:
@@ -228,8 +227,7 @@ def new(request, template_name='run/new.html'):
         'num_unconfirmed_cases': num_unconfirmed_cases,
         'run_estimated_time': estimated_time,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.delete_testrun'))
@@ -267,9 +265,7 @@ def delete(request, run_id):
             tr.env_value.clear()
             tr.case_run.all().delete()
             tr.delete()
-            return HttpResponseRedirect(
-                reverse('tcms.testplans.views.get', args=(plan_id, ))
-            )
+            return HttpResponseRedirect(reverse('plan-get', args=[plan_id]))
         except Exception:
             return HttpResponse(Prompt.render(
                 request=request,
@@ -310,8 +306,7 @@ def all(request, template_name='run/all.html'):
         'query_result': query_result,
         'search_form': search_form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 def run_queryset_from_querystring(querystring):
@@ -427,9 +422,7 @@ def load_runs_of_one_plan(request, plan_id,
             'querySet': TestRun.objects.none(),
         }
 
-    json_data = render_to_string(template_name,
-                                 response_data,
-                                 context_instance=RequestContext(request))
+    json_data = render_to_string(template_name, context=response_data)
     return HttpJSONResponse(json_data)
 
 
@@ -449,7 +442,7 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
             'default_tester',
             'build',
             'plan',
-            'build__product__name'
+            'build__product'
         ).only(
             'run_id',
             'summary',
@@ -540,9 +533,7 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
             'runs': TestRun.objects.none(),
         }
 
-    json_data = render_to_string(template_name,
-                                 response_data,
-                                 context_instance=RequestContext(request))
+    json_data = render_to_string(template_name, context=response_data)
     return HttpJSONResponse(json_data)
 
 
@@ -675,8 +666,7 @@ def get(request, run_id, template_name='run/get.html'):
         'case_own_tags': ttags,
         'errata_url_prefix': settings.ERRATA_URL_PREFIX,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
@@ -734,9 +724,7 @@ def edit(request, run_id, template_name='run/edit.html'):
             if finish_field_changed:
                 tr.update_completion_status(is_auto_updated=False,
                                             is_finish=is_finish)
-            return HttpResponseRedirect(
-                reverse('tcms.testruns.views.get', args=[run_id, ])
-            )
+            return HttpResponseRedirect(reverse('run-get', args=[run_id]))
     else:
         # Generate a blank form
         form = EditRunForm(initial={
@@ -761,8 +749,7 @@ def edit(request, run_id, template_name='run/edit.html'):
         'test_run': tr,
         'form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
@@ -995,8 +982,7 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
             'test_run': tr,
             'cases_run': tcrs,
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context=context_data)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -1048,8 +1034,7 @@ def clone(request, template_name='run/clone.html'):
             'test_run': tr,
             'cases_run': tcrs,
         }
-        return render_to_response(template_name, context_data,
-                                  context_instance=RequestContext(request))
+        return render(request, template_name, context=context_data)
 
     # Process multiple runs clone page
     template_name = 'run/clone_multiple.html'
@@ -1107,9 +1092,7 @@ def clone(request, template_name='run/clone.html'):
                         n_tr.add_tag(tag=tag)
 
             if len(trs) == 1:
-                return HttpResponseRedirect(
-                    reverse('tcms.testruns.views.get', args=[n_tr.pk])
-                )
+                return HttpResponseRedirect(reverse('run-get', args=[n_tr.pk]))
 
             params = {
                 'product': form.cleaned_data['product'].pk,
@@ -1117,7 +1100,7 @@ def clone(request, template_name='run/clone.html'):
                 'build': form.cleaned_data['build'].pk}
 
             return HttpResponseRedirect('%s?%s' % (
-                reverse('tcms.testruns.views.all'),
+                reverse('runs-all'),
                 urllib.urlencode(params, True)
             ))
     else:
@@ -1139,8 +1122,7 @@ def clone(request, template_name='run/clone.html'):
         'sub_module': SUB_MODULE_NAME,
         'clone_form': form,
     }
-    return render_to_response(template_name, context_data,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context=context_data)
 
 
 @require_POST
@@ -1156,7 +1138,7 @@ def order_case(request, run_id):
             request=request,
             info_type=Prompt.Info,
             info='At least one case is required by re-oder in run.',
-            next=reverse('tcms.testruns.views.get', args=[run_id, ]),
+            next=reverse('run-get', args=[run_id]),
         ))
 
     case_run_ids = request.POST.getlist('case_run')
@@ -1180,7 +1162,7 @@ def order_case(request, run_id):
             cursor = connection.writer_cursor
             cursor.execute(sql, key_id_pair)
 
-    return HttpResponseRedirect(reverse('tcms.testruns.views.get', args=[run_id]))
+    return HttpResponseRedirect(reverse('run-get', args=[run_id]))
 
 
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
@@ -1193,9 +1175,7 @@ def change_status(request, run_id):
     else:
         tr.update_completion_status(is_auto_updated=False, is_finish=False)
 
-    return HttpResponseRedirect(
-        reverse('tcms.testruns.views.get', args=[run_id, ])
-    )
+    return HttpResponseRedirect(reverse('run-get', args=[run_id]))
 
 
 @require_POST
@@ -1214,8 +1194,7 @@ def remove_case_run(request, run_id):
     # If no case run to remove, no further operation is required, just return
     # back to run page immediately.
     if not case_run_ids:
-        return HttpResponseRedirect(reverse('tcms.testruns.views.get',
-                                            args=[run_id, ]))
+        return HttpResponseRedirect(reverse('run-get', args=[run_id]))
 
     run = get_object_or_404(TestRun.objects.only('pk'), pk=run_id)
 
@@ -1224,11 +1203,11 @@ def remove_case_run(request, run_id):
 
     caseruns_exist = TestCaseRun.objects.filter(run_id=run.pk).exists()
     if caseruns_exist:
-        redirect_to = 'tcms.testruns.views.get'
+        redirect_to = 'run-get'
     else:
         redirect_to = 'add-cases-to-run'
 
-    return HttpResponseRedirect(reverse(redirect_to, args=[run_id, ]))
+    return HttpResponseRedirect(reverse(redirect_to, args=[run_id]))
 
 
 class AddCasesToRunView(View):
@@ -1298,8 +1277,7 @@ class AddCasesToRunView(View):
             for nc in ncs:
                 tr.add_case_run(case=nc)
 
-        return HttpResponseRedirect(reverse('tcms.testruns.views.get',
-                                            args=[tr.run_id, ]))
+        return HttpResponseRedirect(reverse('run-get', args=[tr.run_id]))
 
     def get(self, request, run_id):
         # information about TestRun, used in the page header
@@ -1333,9 +1311,7 @@ class AddCasesToRunView(View):
             'exist_case_run_ids': etcrs_id,
         }
 
-        return render_to_response(self.template_name,
-                                  data,
-                                  context_instance=RequestContext(request))
+        return render(request, self.template_name, context=data)
 
 
 @require_GET
@@ -1365,9 +1341,7 @@ def cc(request, run_id):
                 if do == 'remove':
                     tr.remove_cc(user=user)
 
-    return render_to_response('run/get_cc.html',
-                              context_data,
-                              context_instance=RequestContext(request))
+    return render(request, 'run/get_cc.html', context=context_data)
 
 
 @require_POST
@@ -1402,7 +1376,7 @@ def update_case_run_text(request, run_id):
         request=request,
         info_type=Prompt.Info,
         info=info,
-        next=reverse('tcms.testruns.views.get', args=[run_id, ]),
+        next=reverse('run-get', args=[run_id]),
     ))
 
 
@@ -1473,9 +1447,10 @@ def env_value(request):
             except Exception:
                 raise
 
-            fragment = render_to_response("run/get_environment.html",
-                                          {"test_run": self.trs[0], "is_ajax": True},
-                                          context_instance=RequestContext(request))
+            fragment = render(
+                request,
+                "run/get_environment.html",
+                context={"test_run": self.trs[0], "is_ajax": True})
             self.ajax_response.update({"fragment": fragment.content})
             return HttpResponse(json.dumps(self.ajax_response))
 
@@ -1532,8 +1507,7 @@ def caseruns(request, templ='report/caseruns.html'):
         caseruns = get_caseruns_of_runs(runs, queries)
         context['test_case_runs'] = caseruns
         context['runs'] = runs
-    return render_to_response(templ, context,
-                              context_instance=RequestContext(request))
+    return render(request, templ, context=context)
 
 
 def get_caseruns_of_runs(runs, kwargs=None):

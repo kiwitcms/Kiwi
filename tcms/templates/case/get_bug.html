@@ -8,12 +8,12 @@
 		<th class="widthID">Run ID</th>
 		<th>Bug URL</th>
         <th>Action</th>
-       
+
 	</tr>
 	{% for bug in test_case.get_bugs %}
 	<tr class="{% cycle 'even' 'odd' %}">
 		<td>{{ bug.case_run_id }}</td>
-		<td>{% if bug.case_run_id %}<a href="{% url "tcms.testruns.views.get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>{% else %}None{% endif %}</td>
+		<td>{% if bug.case_run_id %}<a href="{% url "run-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>{% else %}None{% endif %}</td>
 		<td><a href="{{ bug.get_absolute_url }}">{{ bug.get_absolute_url }}</a></td>
         <td>
 			{% if perms.testcases.delete_testcasebug %}
@@ -31,7 +31,7 @@
 	{% if perms.testcases.add_testcasebug %}
 	<tr>
 		<td colspan="4" style="padding:0;">
-			<form id="id_case_bug_form" action="{% url "tcms.testcases.views.bug" test_case.case_id %}" method="get">
+			<form id="id_case_bug_form" action="{% url "case-bug" test_case.case_id %}" method="get">
 				<div class="addtag">
 					<span class="tit">Add Bug</span>
 					<input type="hidden" name="handle" value="add" />

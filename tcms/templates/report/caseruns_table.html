@@ -19,22 +19,22 @@
 		{% for test_case_run, status_name, priority_value, tester, assignee in test_case_runs %}
 		<tr class="{% cycle 'odd' 'even' %} {% ifequal assignee.0 user.pk %} mine {%endifequal%}">
 			<td>
-				<a target="_blank" href="{% url "tcms.testruns.views.get" test_case_run.run.pk %}#caserun_{{ test_case_run.pk }}">#{{ test_case_run.pk }}</a>
+				<a target="_blank" href="{% url "run-get" test_case_run.run.pk %}#caserun_{{ test_case_run.pk }}">#{{ test_case_run.pk }}</a>
 			</td>
 			<td "{{ test_case_run.case_id }}" class="case_title expandable">
-				<a href="{% url 'tcms.testcases.views.get' test_case_run.case_id %}?from_plan={{ test_case_run.run.plan_id }}">{{ test_case_run.case_id }}</a>
+				<a href="{% url "case-get" test_case_run.case_id %}?from_plan={{ test_case_run.run.plan_id }}">{{ test_case_run.case_id }}</a>
 			</td>
 			<td>
-				<a id="link_{{ forloop.counter }}" target="_blank" href="{% url 'tcms.testruns.views.get' test_case_run.run.pk %}?#caserun_{{ test_case_run.pk }}" title="Expand test case">{{ test_case_run.case.summary }}</a>
+				<a id="link_{{ forloop.counter }}" target="_blank" href="{% url "run-get" test_case_run.run.pk %}?#caserun_{{ test_case_run.pk }}" title="Expand test case">{{ test_case_run.case.summary }}</a>
 			</td>
 			<td>
 				{% if tester.1 %}
-				<a target="_blank" href="{% url "tcms.profiles.views.profile" tester.1 %}" class="link_tested_by">{{ tester.1 }}</a>
+				<a target="_blank" href="{% url "user-profile" tester.1 %}" class="link_tested_by">{{ tester.1 }}</a>
 				{% else %}None{% endif %}
 			</td>
 			<td>
 				{% if assignee.1 %}
-				<a href="{% url "tcms.profiles.views.profile" assignee.1 %}" class="link_assignee">{{ assignee.1 }}</a>
+				<a href="{% url "user-profile" assignee.1 %}" class="link_assignee">{{ assignee.1 }}</a>
 				{% else %}None{% endif %}
 			</td>
 			<td>{{ test_case_run.case.get_is_automated_status }}</td>

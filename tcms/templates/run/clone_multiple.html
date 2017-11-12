@@ -16,12 +16,12 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 {% block contents %}
 <div id="content">
 	<div class="sprites crumble">
-		<a href="{% url "tcms.core.views.index" %}">Home</a>
-		>> <a href="{% url "tcms.testplans.views.all" %}">Test Runs</a>
+		<a href="{% url "nitrate-index" %}">Home</a>
+		>> <a href="{% url "plans-all" %}">Test Runs</a>
 		>> Clone mulitple
 	</div>
 
-	<form action="{% url "tcms.testruns.views.clone" %}" method="post">
+	<form action="{% url "runs-clone" %}" method="post">
 		<div class="boxnotype">
         	<div class="boxtitle">The runs you have choosed</div>
             {{ clone_form.run }}
