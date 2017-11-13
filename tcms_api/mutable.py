@@ -405,7 +405,7 @@ class TestRun(Mutable):
     _identifier_width = 6
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["build", "caseruns", "errata", "finished", "manager",
+    _attributes = ["build", "caseruns", "finished", "manager",
                    "notes", "product", "started", "status", "summary", "tags",
                    "tester", "testcases", "testplan", "time"]
 
@@ -446,8 +446,6 @@ class TestRun(Mutable):
                       doc="Default tester.")
     time = property(_getter("time"), _setter("time"),
                     doc="Estimated time.")
-    errata = property(_getter("errata"), _setter("errata"),
-                      doc="Errata related to this test run.")
 
     @property
     def synopsis(self):
@@ -480,7 +478,6 @@ class TestRun(Mutable):
         parameters are optional and have the following defaults:
 
             build ....... "unspecified"
-            errata....... related errata
             product ..... test run product
             version ..... test run product version
             summary ..... <test plan name> on <build>
@@ -533,7 +530,7 @@ class TestRun(Mutable):
 
     def _create(self, testplan, product=None, version=None, build=None,
                 summary=None, notes=None, manager=None, tester=None, tags=None,
-                errata=None, testcases=None, **kwargs):
+                testcases=None, **kwargs):
         """ Create a new test run """
 
         hash = {}
@@ -557,13 +554,12 @@ class TestRun(Mutable):
             version = Version(name=version, product=product)
         hash["product_version"] = version.id
 
-        # Build & errata
+        # Build
         if build is None:
             build = "unspecified"
         if isinstance(build, six.string_types):
             build = Build(build=build, product=product)
         hash["build"] = build.id
-        hash["errata_id"] = errata
 
         # Summary & notes
         if summary is None:
@@ -648,7 +644,6 @@ class TestRun(Mutable):
         self._tester = User(inject["default_tester_id"])
         self._testplan = TestPlan(inject["plan_id"])
         self._time = inject["estimated_time"]
-        self._errata = inject["errata_id"]
         try:
             self._started = datetime.datetime.strptime(
                 inject["start_date"], "%Y-%m-%d %H:%M:%S")
@@ -683,7 +678,6 @@ class TestRun(Mutable):
         hash["estimated_time"] = self.time
         hash["manager"] = self.manager.id
         hash["notes"] = self.notes
-        hash["errata_id"] = self.errata
         # This is required until BZ#731982 is fixed
         hash["product"] = self.build.product.id
         hash["summary"] = self.summary
