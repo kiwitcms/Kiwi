@@ -466,7 +466,6 @@ class UserTests(BaseAPIClient_TestCase):
         """ User with no name set in preferences """
         user = User()
         user._name = None
-        self.assertEqual(unicode(user), u"No Name")
         self.assertEqual(str(user), "No Name")
 
     def test_current_user(self):

@@ -190,9 +190,9 @@ class TestPlan(Mutable):
         for testcase in self.testcases:
             yield testcase
 
-    def __unicode__(self):
+    def __str__(self):
         """ Test plan id & summary for printing """
-        return u"{0} - {1}".format(self.identifier, self.name)
+        return "{0} - {1}".format(self.identifier, self.name)
 
     @staticmethod
     def search(**query):
@@ -263,7 +263,7 @@ class TestPlan(Mutable):
             log.data(pretty(inject))
             raise NitrateError("Failed to create test plan")
         self._fetch(inject)
-        log.info(u"Successfully created {0}".format(self))
+        log.info("Successfully created {0}".format(self))
 
     def _fetch(self, inject=None):
         """ Initialize / refresh test plan data.
@@ -517,9 +517,9 @@ class TestRun(Mutable):
         for caserun in self.caseruns:
             yield caserun
 
-    def __unicode__(self):
+    def __str__(self):
         """ Test run id & summary for printing """
-        return u"{0} - {1}".format(self.identifier, self.summary)
+        return "{0} - {1}".format(self.identifier, self.summary)
 
     @staticmethod
     def search(**query):
@@ -596,14 +596,14 @@ class TestRun(Mutable):
             hash["tag"] = ",".join(tags)
 
         # Submit to the server and initialize
-        log.info(u"Creating a new test run based on {0}".format(testplan))
+        log.info("Creating a new test run based on {0}".format(testplan))
         log.data(pretty(hash))
         testrunhash = self._server.TestRun.create(hash)
         log.data(pretty(testrunhash))
         try:
             self._id = testrunhash["run_id"]
         except TypeError:
-            log.debug(u"Failed to create a new test run based on {0}".format(
+            log.debug("Failed to create a new test run based on {0}".format(
                       testplan))
             log.data(pretty(hash))
             log.data(pretty(testrunhash))
@@ -612,7 +612,7 @@ class TestRun(Mutable):
         # Add newly created test run to testplan.testruns container
         if PlanRuns._is_cached(testplan.testruns):
             testplan.testruns._fetch(list(testplan.testruns) + [self])
-        log.info(u"Successfully created {0}".format(self))
+        log.info("Successfully created {0}".format(self))
 
     def _fetch(self, inject=None):
         """ Initialize / refresh test run data.
@@ -868,9 +868,9 @@ class TestCase(Mutable):
             raise NitrateError("Need either id or both summary and category "
                                "to initialize the test case")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Test case id & summary for printing """
-        return u"{0} - {1}".format(self.identifier, self.summary)
+        return "{0} - {1}".format(self.identifier, self.summary)
 
     @staticmethod
     def search(**query):
@@ -991,7 +991,7 @@ class TestCase(Mutable):
             log.data(pretty(testcasehash))
             raise NitrateError("Failed to create test case")
         self._fetch(testcasehash)
-        log.info(u"Successfully created {0}".format(self))
+        log.info("Successfully created {0}".format(self))
 
     def _fetch(self, inject=None):
         """ Initialize / refresh test case data.
@@ -1208,9 +1208,9 @@ class CaseRun(Mutable):
             raise NitrateError("Need either id or testcase and testrun "
                                "to initialize the case run")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Case run id, status & summary for printing """
-        return u"{0} - {1} - {2}".format(
+        return "{0} - {1} - {2}".format(
             self.status.shortname, self.identifier, self.testcase.summary)
 
     @staticmethod
@@ -1259,7 +1259,7 @@ class CaseRun(Mutable):
             log.data(pretty(inject))
             raise NitrateError("Failed to create case run")
         self._fetch(inject)
-        log.info(u"Successfully created {0}".format(self))
+        log.info("Successfully created {0}".format(self))
 
         # And finally add to testcases and caseruns containers
         self.testrun.testcases._fetch(
@@ -1403,9 +1403,9 @@ class CasePlan(Mutable):
             raise NitrateError("Need either internal id or both test case "
                                "and test plan to initialize the CasePlan object")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Test case, test plan and sortkey for printing """
-        return u"{0} in {1} with sortkey {2}".format(
+        return "{0} in {1} with sortkey {2}".format(
             self.testcase.identifier,
             self.testplan.identifier,
             self.sortkey)
