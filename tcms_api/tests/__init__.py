@@ -6,6 +6,10 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import tcms_api
 
 from tcms.tests.factories import UserFactory
+from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TestCaseCategoryFactory
+
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
@@ -39,22 +43,28 @@ password = %s
 """ % (cls.live_server_url, cls.api_user.username, 'testing'))
         conf_fh.close()
 
+        # create the product first so we can fetch it via API
+        f_product = ProductFactory(name="Kiwi TCMS")
         cls.product = tcms_api.Product(name="Kiwi TCMS")
         cls.version = tcms_api.Version(product=cls.product, version="unspecified")
         cls.plantype = tcms_api.PlanType(name="Function")
+
+        TestCaseCategoryFactory(name="Regression", product=f_product)
         cls.category = tcms_api.Category(category="Regression", product=cls.product)
         cls.component = tcms_api.Component(name='tcms_api', product=cls.product)
         cls.CASESTATUS = tcms_api.CaseStatus("CONFIRMED")
         cls.build = tcms_api.Build(product=cls.product, build="unspecified")
 
-        cls.tags = [tcms_api.Tag(id) for id in range(3000, 3200)]
-        cls.TESTERS = [tcms_api.User(id) for id in range(1000, 1050)]
+        f_tags = [TestTagFactory() for i in range(20)]
+        cls.tags = [tcms_api.Tag(t.pk) for t in f_tags]
+
+        f_users = [UserFactory() for i in range(50)]
+        cls.TESTERS = [tcms_api.User(u.pk) for u in f_users]
 
         # Create test cases
         cls.cases = []
         for case_count in range(cls.num_cases):
             testcase = tcms_api.TestCase(
-                name="Test Case {0}".format(case_count + 1),
                 category=cls.category,
                 product=cls.product,
                 summary="Test Case {0}".format(case_count + 1),
@@ -68,6 +78,7 @@ password = %s
         # Create master test plan (parent of all)
         cls.master = tcms_api.TestPlan(
             name="API client Test Plan",
+            document='plan creted from API',
             product=cls.product,
             version=cls.version,
             type=cls.plantype)
@@ -80,6 +91,7 @@ password = %s
         for plan_count in range(cls.num_plans):
             testplan = tcms_api.TestPlan(
                 name="Test Plan {0}".format(plan_count + 1),
+                document='plan creted from API',
                 product=cls.product,
                 version=cls.version,
                 parent=cls.master,
