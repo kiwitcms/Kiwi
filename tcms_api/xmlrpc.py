@@ -72,8 +72,36 @@ class CookieTransport(xmlrpclib.Transport):
     cookiejar = None
     scheme = 'http'
 
+    def __init__(self):
+        super(CookieTransport, self).__init__()
+        self._cookies = []
+
+    def send_headers(self, connection, headers):
+        """
+            Cookie handling on Python 3!
+        """
+        if self._cookies and sys.version_info >= (3,):
+            connection.putheader("Cookie", "; ".join(self._cookies))
+        super(CookieTransport, self).send_headers(connection, headers)
+
+    def parse_response(self, response):
+        """
+            Cookie handling on Python 3!
+        """
+        if sys.version_info >= (3,):
+            for header in response.msg.get_all("Set-Cookie", []):
+                cookie = header.split(";", 1)[0]
+                self._cookies.append(cookie)
+        return super(CookieTransport, self).parse_response(response)
+
     # Cribbed from xmlrpclib.Transport.send_user_agent
     def send_cookies(self, connection, cookie_request):
+        """
+            NOTE: Only used on Python 2!
+        """
+        if sys.version_info >= (3,):
+            return
+
         if self.cookiejar is None:
             self.cookiejar = CookieJar()
         elif self.cookiejar:
@@ -88,9 +116,17 @@ class CookieTransport(xmlrpclib.Transport):
             for h, v in cookielist:
                 connection.putheader(h, v)
 
-    # This is the same request() method from xmlrpclib.Transport,
-    # with a couple additions noted below
+
     def request_with_cookies(self, host, handler, request_body, verbose=0):
+        """
+            NOTE: Only used on Python 2.6 and earlier!
+
+            This is the same request() method from xmlrpclib.Transport,
+            with a couple additions noted below
+        """
+        if sys.version_info >= (3,):
+            return
+
         h = self.make_connection(host)
         if verbose:
             h.set_debuglevel(1)
@@ -100,11 +136,7 @@ class CookieTransport(xmlrpclib.Transport):
         # log.debug("request_url is %s" % request_url)
         cookie_request = urllib2.Request(request_url)
 
-        if sys.version_info.major == 2:
-            self.send_request(h, handler, request_body)
-        else:
-            self.send_request(h, handler, request_body, False)
-
+        self.send_request(h, handler, request_body)
         self.send_host(h, host)
         # ADDED. creates cookiejar if None.
         self.send_cookies(h, cookie_request)
@@ -150,9 +182,17 @@ class CookieTransport(xmlrpclib.Transport):
         finally:
             h.close()
 
-    # This is just python 2.7's xmlrpclib.Transport.single_request, with
-    # send additions noted below to send cookies along with the request
+
     def single_request_with_cookies(self, host, handler, request_body, verbose=0):
+        """
+            NOTE: Only used on Python 2.7!
+
+            This is just python 2.7's xmlrpclib.Transport.single_request, with
+            send additions noted below to send cookies along with the request
+        """
+        if sys.version_info >= (3,):
+            return
+
         h = self.make_connection(host)
         if verbose:
             h.set_debuglevel(1)
@@ -163,11 +203,7 @@ class CookieTransport(xmlrpclib.Transport):
         cookie_request = urllib2.Request(request_url)
 
         try:
-            if sys.version_info.major == 2:
-                self.send_request(h, handler, request_body)
-            else:
-                self.send_request(h, handler, request_body, False)
-
+            self.send_request(h, handler, request_body)
             self.send_host(h, host)
             # ADDED. creates cookiejar if None.
             self.send_cookies(h, cookie_request)
@@ -208,7 +244,6 @@ class CookieTransport(xmlrpclib.Transport):
 
     # Override the appropriate request method
     if sys.version_info.major >= 3:
-        # Python3 single_request() makes it impossible to implement cookies
         pass
     elif hasattr(xmlrpclib.Transport, 'single_request'):
         single_request = single_request_with_cookies  # python 2.7+
@@ -221,7 +256,6 @@ class SafeCookieTransport(xmlrpclib.SafeTransport, CookieTransport):
     scheme = 'https'
     # Override the appropriate request method
     if sys.version_info.major >= 3:
-        # Python3 single_request() makes it impossible to implement cookies
         pass
     elif hasattr(xmlrpclib.Transport, 'single_request'):
         single_request = CookieTransport.single_request_with_cookies
