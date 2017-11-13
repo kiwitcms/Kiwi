@@ -163,7 +163,6 @@ class BuildTests(BaseAPIClient_TestCase):
         """ Clear cache, save cache level and initialize test data """
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
-        cache.clear()
 
     def tearDown(self):
         """ Restore cache level """
@@ -225,7 +224,6 @@ class CategoryTests(BaseAPIClient_TestCase):
 
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        cache.clear()
         self.cache_level = get_cache_level()
         self.requests = Nitrate._requests
 
@@ -290,7 +288,6 @@ class CategoryTests(BaseAPIClient_TestCase):
 class PlanTypeTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        cache.clear()
         self.original_cache_level = get_cache_level()
         self.requests = Nitrate._requests
 
@@ -453,7 +450,6 @@ class ProductTests(BaseAPIClient_TestCase):
 class UserTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        cache.clear()
         self.original_cache_level = get_cache_level()
         self.user = config.user
         self.requests = Nitrate._requests
@@ -547,7 +543,6 @@ class UserTests(BaseAPIClient_TestCase):
 class VersionTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up version from the config """
-        cache.clear()
         self.cache_level = get_cache_level()
         self.requests = Nitrate._requests
 
@@ -723,7 +718,6 @@ class TestPlanTests(BaseAPIClient_TestCase):
     def setUp(self):
         self.requests = Nitrate._requests
         self.cache_level = get_cache_level()
-        cache.clear()
 
     def tierDown(self):
         """ Restore cache level """
@@ -836,14 +830,6 @@ class TestRunTests(BaseAPIClient_TestCase):
         self.assertTrue(isinstance(testrun, TestRun))
         self.assertEqual(testrun.summary, "Test run")
 
-    def testCreateOptionalFields(self):
-        """ Create a new test run, including optional fields """
-        testrun = TestRun(
-            summary="Test run", testplan=self.master.id, errata=1234)
-        self.assertTrue(isinstance(testrun, TestRun))
-        self.assertEqual(testrun.summary, "Test run")
-        self.assertEqual(testrun.errata, 1234)
-
     def test_fetch_nonexistent(self):
         """ Fetch non-existent test run """
         with self.assertRaises(NitrateError):
@@ -856,17 +842,6 @@ class TestRunTests(BaseAPIClient_TestCase):
         self.assertEqual(testrun.summary, self.testrun.summary)
         self.assertEqual(str(testrun.started), self.testrun.started)
         self.assertEqual(str(testrun.finished), self.testrun.finished)
-
-    def testErrata(self):
-        """ Set, get and change errata """
-        for errata in [111, 222, 333]:
-            # Update the errata field, push to the server
-            testrun = TestRun(self.testrun.id)
-            testrun.errata = errata
-            testrun.update()
-            # Fetch the test run again, check for correct errata
-            testrun = TestRun(self.testrun.id)
-            self.assertEqual(testrun.errata, errata)
 
     def testDisabledCasesOmitted(self):
         """ Disabled test cases should be omitted """
@@ -1772,72 +1747,3 @@ class RunCaseRunsTests(BaseAPIClient_TestCase):
         requests = Nitrate._requests
         listed([caserun.status for caserun in testrun])
         self.assertEqual(Nitrate._requests, requests + 1)
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Self Test
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-if __name__ == "__main__":
-    # Use temporary cache file for testing
-    temporary_cache = tempfile.NamedTemporaryFile()
-    cache = Cache(temporary_cache.name)
-
-    # Parse options
-    parser = optparse.OptionParser(
-        usage="python tcms_api.api [--performance] [class [...]]")
-    parser.add_option("--performance",
-                      action="store_true",
-                      help="Run performance tests")
-    (options, arguments) = parser.parse_args()
-
-    # Custom (more concise) test result class for python 2.7 and newer
-    if VERBOSE_UNITTEST:
-        class ShortResult(unittest.TextTestResult):
-            def getDescription(self, test):
-                return test.shortDescription() or str(test)
-
-    # Walk through all unit test classes
-    import __main__
-    results = {}
-    for name in dir(__main__):
-        # Pick only unittest classes
-        object = getattr(__main__, name)
-        if not (isinstance(object, (type, types.ClassType)) and
-                issubclass(object, unittest.TestCase)):
-            continue
-        # Handle test selection on the command line
-        name = re.sub("Tests$", "", object.__name__)
-        if arguments and name not in arguments:
-            continue
-        suite = unittest.TestLoader().loadTestsFromTestCase(object)
-        # Filter only performance test cases when --performance given
-        suite = [case for case in suite
-                 if options.performance and "performance" in str(case) or
-                 not options.performance and "performance" not in str(case)]
-        if not suite:
-            continue
-        # Prepare suite, print header and run it
-        suite = unittest.TestSuite(suite)
-        print(header(name))
-        log_level = get_log_level()
-        if VERBOSE_UNITTEST:
-            results[name] = unittest.TextTestRunner(
-                verbosity=2, resultclass=ShortResult).run(suite)
-        else:
-            results[name] = unittest.TextTestRunner(verbosity=2).run(suite)
-        set_log_level(log_level)
-
-    # Check for failed tests and give a short test summary
-    failures = sum([len(result.failures) for result in results.itervalues()])
-    errors = sum([len(result.errors) for result in results.itervalues()])
-    testsrun = sum([result.testsRun for result in results.itervalues()])
-    print(header("Summary"))
-    print("{0} tested".format(listed(results, "class", "classes")))
-    print("{0} passed".format(listed(testsrun - failures - errors, "test")))
-    print("{0} failed".format(listed(failures, "test")))
-    print("{0} found".format(listed(errors, "error")))
-    if failures:
-        print("Failures in: {0}".format(listed([name
-                                                for name, result in results.iteritems()
-                                                if not result.wasSuccessful()])))
