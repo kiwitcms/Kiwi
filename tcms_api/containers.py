@@ -160,7 +160,7 @@ class Container(Mutable):
         """ Number of container items """
         return len(self._items)
 
-    def __unicode__(self):
+    def __str__(self):
         """ Display items as a list for printing """
         if self._items:
             # List of identifiers
@@ -312,7 +312,7 @@ class CaseComponents(Container):
     #  Case Components Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __unicode__(self):
+    def __str__(self):
         """ The list of linked components' names """
         if self._items:
             return listed(sorted([component.name for component in self]))
@@ -335,7 +335,7 @@ class CaseComponents(Container):
 
     def _add(self, components):
         """ Link provided components to the test case """
-        log.info(u"Linking {1} to {0}".format(
+        log.info("Linking {1} to {0}".format(
             self._identifier,
             listed([component.name for component in components])))
         data = [component.id for component in components]
@@ -345,7 +345,7 @@ class CaseComponents(Container):
     def _remove(self, components):
         """ Unlink provided components from the test case """
         for component in components:
-            log.info(u"Unlinking {0} from {1}".format(
+            log.info("Unlinking {0} from {1}".format(
                 component.name, self._identifier))
             self._server.TestCase.remove_component(self.id, component.id)
 
@@ -366,7 +366,7 @@ class PlanComponents(Container):
     #  Plan Components Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    def __unicode__(self):
+    def __str__(self):
         """ The list of linked components' names """
         if self._items:
             return listed(sorted([component.name for component in self]))
@@ -389,7 +389,7 @@ class PlanComponents(Container):
 
     def _add(self, components):
         """ Link provided components to the test plan """
-        log.info(u"Linking {1} to {0}".format(
+        log.info("Linking {1} to {0}".format(
             self._identifier,
             listed([component.name for component in components])))
         data = [component.id for component in components]
@@ -399,7 +399,7 @@ class PlanComponents(Container):
     def _remove(self, components):
         """ Unlink provided components from the test plan """
         for component in components:
-            log.info(u"Unlinking {0} from {1}".format(
+            log.info("Unlinking {0} from {1}".format(
                 component.name, self._identifier))
             self._server.TestPlan.remove_component(self.id, component.id)
 
@@ -430,7 +430,7 @@ class CaseBugs(Container):
 
     def _add(self, bugs):
         """ Attach provided bugs to the test case """
-        log.info(u"Attaching {0} to {1}".format(
+        log.info("Attaching {0} to {1}".format(
             listed(bugs), self._identifier))
         data = [{
                 "bug_id": bug.bug,
@@ -443,14 +443,14 @@ class CaseBugs(Container):
 
     def _remove(self, bugs):
         """ Detach provided bugs from the test case """
-        log.info(u"Detaching {0} from {1}".format(
+        log.info("Detaching {0} from {1}".format(
             listed(bugs), self._identifier))
         data = [bug.bug for bug in bugs]
         log.data(pretty(data))
         self._server.TestCase.detach_bug(self.id, data)
 
     # Print unicode list of bugs
-    def __unicode__(self):
+    def __str__(self):
         return listed(self._items)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -480,7 +480,7 @@ class CaseRunBugs(Container):
 
     def _add(self, bugs):
         """ Attach provided bugs to the test case """
-        log.info(u"Attaching {0} to {1}".format(
+        log.info("Attaching {0} to {1}".format(
             listed(bugs), self._identifier))
         data = [{
                 "bug_id": bug.bug,
@@ -493,14 +493,14 @@ class CaseRunBugs(Container):
 
     def _remove(self, bugs):
         """ Detach provided bugs from the test case """
-        log.info(u"Detaching {0} from {1}".format(
+        log.info("Detaching {0} from {1}".format(
             listed(bugs), self._identifier))
         data = [bug.bug for bug in bugs]
         log.data(pretty(data))
         self._server.TestCaseRun.detach_bug(self.id, data)
 
     # Print unicode list of bugs
-    def __unicode__(self):
+    def __str__(self):
         return listed(self._items)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -556,19 +556,19 @@ class PlanTags(TagContainer):
 
     def _add(self, tags):
         """ Attach provided tags to the test plan """
-        log.info(u"Tagging {0} with {1}".format(
+        log.info("Tagging {0} with {1}".format(
             self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test plan """
-        log.info(u"Untagging {0} of {1}".format(
+        log.info("Untagging {0} of {1}".format(
             self._identifier, listed(tags, quote="'")))
         self._server.TestPlan.remove_tag(self.id, list(
             tag.name for tag in tags))
 
     # Print unicode list of tags
-    def __unicode__(self):
+    def __str__(self):
         return listed(self._items, quote="'")
 
 
@@ -598,19 +598,19 @@ class RunTags(TagContainer):
 
     def _add(self, tags):
         """ Attach provided tags to the test run """
-        log.info(u"Tagging {0} with {1}".format(
+        log.info("Tagging {0} with {1}".format(
             self._identifier, listed(tags, quote="'")))
         self._server.TestRun.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test run """
-        log.info(u"Untagging {0} of {1}".format(
+        log.info("Untagging {0} of {1}".format(
             self._identifier, listed(tags, quote="'")))
         self._server.TestRun.remove_tag(self.id, list(
             tag.name for tag in tags))
 
     # Print unicode list of tags
-    def __unicode__(self):
+    def __str__(self):
         return listed(self._items, quote="'")
 
 
@@ -640,18 +640,18 @@ class CaseTags(TagContainer):
 
     def _add(self, tags):
         """ Attach provided tags to the test case """
-        log.info(u"Tagging {0} with {1}".format(
+        log.info("Tagging {0} with {1}".format(
             self._identifier, listed(tags, quote="'")))
         self._server.TestCase.add_tag(self.id, list(tag.name for tag in tags))
 
     def _remove(self, tags):
         """ Detach provided tags from the test case """
-        log.info(u"Untagging {0} of {1}".format(
+        log.info("Untagging {0} of {1}".format(
             self._identifier, listed(tags, quote="'")))
         self._server.TestCase.remove_tag(self.id, list(tag.name for tag in tags))
 
     # Print unicode list of tags
-    def __unicode__(self):
+    def __str__(self):
         return listed(self._items, quote="'")
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -111,7 +111,7 @@ class Build(Nitrate):
             raise NitrateError("Need either build id or both build name "
                                "and product to initialize the Build object.")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Build name for printing """
         return self.name
 
@@ -138,7 +138,7 @@ class Build(Nitrate):
         # Search by build name and product
         else:
             try:
-                log.info(u"Fetching build '{0}' of '{1}'".format(
+                log.info("Fetching build '{0}' of '{1}'".format(
                     self.name, self.product.name))
                 inject = self._server.Build.check_build(
                     self.name, self.product.id)
@@ -243,7 +243,7 @@ class Category(Nitrate):
             raise NitrateError("Need either category id or both category "
                                "name and product to initialize the Category object.")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Category name for printing """
         return self.name
 
@@ -270,7 +270,7 @@ class Category(Nitrate):
         # Search by category name and product
         else:
             try:
-                log.info(u"Fetching category '{0}' of '{1}'".format(
+                log.info("Fetching category '{0}' of '{1}'".format(
                     self.name, self.product.name))
                 inject = self._server.Product.check_category(
                     self.name, self.product.id)
@@ -353,7 +353,7 @@ class PlanType(Nitrate):
             raise NitrateError(
                 "Need either id or name to initialize the PlanType object")
 
-    def __unicode__(self):
+    def __str__(self):
         """ PlanType name for printing """
         return self.name
 
@@ -380,7 +380,7 @@ class PlanType(Nitrate):
         # Search by test plan type name
         else:
             try:
-                log.info(u"Fetching test plan type '{0}'".format(self.name))
+                log.info("Fetching test plan type '{0}'".format(self.name))
                 inject = self._server.TestPlan.check_plan_type(self.name)
             except xmlrpclib.Fault as error:
                 log.debug(error)
@@ -422,7 +422,7 @@ class Priority(Nitrate):
             except ValueError:
                 raise NitrateError("Invalid priority '{0}'".format(priority))
 
-    def __unicode__(self):
+    def __str__(self):
         """ Return priority name for printing """
         return self.name
 
@@ -501,7 +501,7 @@ class Product(Nitrate):
         elif not id:
             raise NitrateError("Need id or name to initialize Product")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Product name for printing """
         return self.name
 
@@ -540,9 +540,9 @@ class Product(Nitrate):
         # Search by product name
         else:
             try:
-                log.info(u"Fetching product '{0}'".format(self.name))
+                log.info("Fetching product '{0}'".format(self.name))
                 inject = self._server.Product.filter({'name': self.name})[0]
-                log.debug(u"Initializing product '{0}'".format(self.name))
+                log.debug("Initializing product '{0}'".format(self.name))
                 log.data(pretty(inject))
                 self._inject = inject
                 self._id = inject["id"]
@@ -583,7 +583,7 @@ class PlanStatus(Nitrate):
             except ValueError:
                 raise NitrateError("Invalid plan status '{0}'".format(status))
 
-    def __unicode__(self):
+    def __str__(self):
         """ Return plan status name for printing """
         return self.name
 
@@ -637,7 +637,7 @@ class RunStatus(Nitrate):
             else:
                 raise NitrateError("Invalid run status '{0}'".format(status))
 
-    def __unicode__(self):
+    def __str__(self):
         """ Return run status name for printing """
         return self.name
 
@@ -679,7 +679,7 @@ class CaseStatus(Nitrate):
                 raise NitrateError(
                     "Invalid casestatus '{0}'".format(casestatus))
 
-    def __unicode__(self):
+    def __str__(self):
         """ Return casestatus name for printing """
         return self.name
 
@@ -728,7 +728,7 @@ class Status(Nitrate):
             except ValueError:
                 raise NitrateError("Invalid status '{0}'".format(status))
 
-    def __unicode__(self):
+    def __str__(self):
         """ Return status name for printing """
         return self.name
 
@@ -842,9 +842,9 @@ class User(Nitrate):
                 self._login = name
             self._index(name)
 
-    def __unicode__(self):
+    def __str__(self):
         """ User login for printing """
-        return self.name if self.name is not None else u"No Name"
+        return self.name if self.name is not None else "No Name"
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Methods
@@ -970,7 +970,7 @@ class Version(Nitrate):
             raise NitrateError("Need either version id or both product "
                                "and version name to initialize the Version object.")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Version name for printing """
         return self.name
 
@@ -996,7 +996,7 @@ class Version(Nitrate):
         # Search by product and name
         else:
             try:
-                log.info(u"Fetching version '{0}' of '{1}'".format(
+                log.info("Fetching version '{0}' of '{1}'".format(
                     self.name, self.product.name))
                 inject = self._server.Product.filter_versions(
                     {'product': self.product.id, 'value': self.name})[0]
@@ -1093,7 +1093,7 @@ class Component(Nitrate):
             raise NitrateError("Need either component id or both product "
                                "and component name to initialize the Component object.")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Component name for printing """
         return self.name
 
@@ -1120,7 +1120,7 @@ class Component(Nitrate):
         # Search by component name and product
         else:
             try:
-                log.info(u"Fetching component '{0}' of '{1}'".format(
+                log.info("Fetching component '{0}' of '{1}'".format(
                     self.name, self.product.name))
                 inject = self._server.Product.check_component(
                     self.name, self.product.id)
@@ -1223,13 +1223,13 @@ class Bug(Nitrate):
         # Compare external id and bug system id
         return self.bug == other.bug and self.system == other.system
 
-    def __unicode__(self):
+    def __str__(self):
         """ Bug name for printing """
         try:
             prefix = self._prefixes[self.system]
         except KeyError:
             prefix = "BZ"
-        return u"{0}#{1}".format(prefix, str(self.bug).rjust(
+        return "{0}#{1}".format(prefix, str(self.bug).rjust(
             self._identifier_width, "0"))
 
     def __hash__(self):
@@ -1303,7 +1303,7 @@ class Tag(Nitrate):
             raise NitrateError("Need either tag id or tag name "
                                "to initialize the Tag object.")
 
-    def __unicode__(self):
+    def __str__(self):
         """ Tag name for printing """
         return self.name
 
@@ -1341,9 +1341,9 @@ class Tag(Nitrate):
         # Search by tag name
         else:
             try:
-                log.info(u"Fetching tag '{0}'".format(self.name))
+                log.info("Fetching tag '{0}'".format(self.name))
                 inject = self._server.Tag.get_tags({'names': [self.name]})
-                log.debug(u"Initializing tag '{0}'".format(self.name))
+                log.debug("Initializing tag '{0}'".format(self.name))
                 log.data(pretty(inject))
                 self._inject = inject
                 self._id = inject[0]["id"]

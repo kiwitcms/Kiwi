@@ -86,7 +86,7 @@ def _setter(field):
         # Update only if changed
         if getattr(self, "_" + field) != value:
             setattr(self, "_" + field, value)
-            log.info(u"Updating {0}'s {1} to '{2}'".format(
+            log.info("Updating {0}'s {1} to '{2}'".format(
                 self.identifier, field, value))
             # Remember modified state if caching
             if config.get_cache_level() != config.CACHE_NONE:
@@ -197,7 +197,7 @@ class Nitrate(object):
 
         # Connect to the server unless already connected
         if Nitrate._connection is None:
-            log.debug(u"Contacting server {0}".format(
+            log.debug("Contacting server {0}".format(
                 Config().nitrate.url))
             # Plain authentication if username & password given
             try:
@@ -354,9 +354,8 @@ class Nitrate(object):
                     self.__class__.__name__, id))
 
     def __str__(self):
-        """ Provide ascii string representation """
-        return utils.ascii("Nitrate server: {0}\nTotal requests handled: {1}".format(
-            Config().nitrate.url, self._requests))
+        return "Nitrate server: {0}\nTotal requests handled: {1}".format(
+            Config().nitrate.url, self._requests)
 
     def __eq__(self, other):
         """ Objects are compared based on their id """

@@ -167,7 +167,7 @@ class Logging(object):
                 level = color(" " + levelname + " ", "lightwhite", colour)
             else:
                 level = "[{0}]".format(levelname)
-            return u"{0} {1}".format(level, record.getMessage())
+            return "{0} {1}".format(level, record.getMessage())
 
     @staticmethod
     def _create_logger():

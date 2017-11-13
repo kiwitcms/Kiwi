@@ -23,7 +23,6 @@
 import re
 import math
 import sys
-import unicodedata
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Public Utilities
@@ -152,11 +151,6 @@ def human(time):
         listed(count[period], period)
         for period in ["year", "month", "day", "hour", "minute", "second"]
         if count[period] > 0 or time.seconds == time.days == 0 and period == "second"])
-
-
-def ascii(text):
-    """ Transliterate special unicode characters into pure ascii """
-    return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore')
 
 
 def info(message, newline=True):

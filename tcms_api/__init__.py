@@ -77,7 +77,7 @@ from tcms_api.containers import (
 
 # Various useful utilities
 from tcms_api.utils import (
-    ascii, color, header, human, info, listed, sliced, unlisted)
+    color, header, human, info, listed, sliced, unlisted)
 
 # Logging, coloring and caching configuration
 from tcms_api.config import (
