@@ -116,7 +116,6 @@ class CookieTransport(xmlrpclib.Transport):
             for h, v in cookielist:
                 connection.putheader(h, v)
 
-
     def request_with_cookies(self, host, handler, request_body, verbose=0):
         """
             NOTE: Only used on Python 2.6 and earlier!
@@ -181,7 +180,6 @@ class CookieTransport(xmlrpclib.Transport):
             return self._parse_response(h.getfile(), sock)
         finally:
             h.close()
-
 
     def single_request_with_cookies(self, host, handler, request_body, verbose=0):
         """
