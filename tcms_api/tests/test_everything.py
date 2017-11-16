@@ -18,22 +18,6 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-"""
-Performance tests
-~~~~~~~~~~~~~~~~~~
-
-For running the performance test suite an additional section containing
-information about the test bed is required:
-
-    [performance]
-    testplan = 1234
-    testrun = 12345
-
-Use the test-bed-prepare.py script attached in the test directory to
-prepare the structure of test plans, test runs and test cases. To run
-the performance test suite use --performance command line option.
-"""
-
 from __future__ import print_function
 
 import six
@@ -882,7 +866,6 @@ class TestRunTests(BaseAPIClient_TestCase):
 class TestCaseTests(BaseAPIClient_TestCase):
     def setUp(self):
         self.testcase = self.cases[0]
-        self.performance = config.performance
 
     def testCreateInvalid(self):
         """ Create a new test case (missing required parameters) """
@@ -1021,7 +1004,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
         fetching users from the database (one by one).
         """
         start_time = time.time()
-        for testcase in TestPlan(self.performance.testplan):
+        for testcase in TestPlan(self.master):
             log.info("{0}: {1}".format(testcase.tester, testcase))
         _print_time(time.time() - start_time)
 
@@ -1034,7 +1017,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
         the set.
         """
         start_time = time.time()
-        for testcase in TestPlan(self.performance.testplan):
+        for testcase in TestPlan(self.master):
             log.info("{0} is in test plans:".format(testcase))
             for testplan in testcase.testplans:
                 log.info("  {0}".format(testplan.name))
@@ -1046,10 +1029,6 @@ class TestCaseTests(BaseAPIClient_TestCase):
 
 
 class CaseRunsTests(unittest.TestCase):
-    def setUp(self):
-        """ Set up performance test configuration from the config """
-        self.performance = config.performance
-
     def test_performance_update_caseruns(self):
         """ Updating multiple CaseRun statuses (MultiCall off)
 
@@ -1058,7 +1037,7 @@ class CaseRunsTests(unittest.TestCase):
         CaseRun state update.
         """
         start_time = time.time()
-        for caserun in TestRun(self.performance.testrun):
+        for caserun in TestRun(self.testruns[0]):
             log.info("{0} {1}".format(caserun.id, caserun.status))
             caserun.status = Status(random.randint(1, 8))
             caserun.update()
@@ -1072,7 +1051,7 @@ class CaseRunsTests(unittest.TestCase):
         """
         multicall_start()
         start_time = time.time()
-        for caserun in TestRun(self.performance.testrun):
+        for caserun in TestRun(self.testruns[0]):
             log.debug("{0} {1}".format(caserun.id, caserun.status))
             caserun.status = Status(random.randint(1, 8))
             caserun.update()
@@ -1089,7 +1068,7 @@ class CaseRunsTests(unittest.TestCase):
         been fetched).
         """
         start_time = time.time()
-        for testplan in TestPlan(self.performance.testplan).children:
+        for testplan in TestPlan(self.master).children:
             log.info("{0}".format(testplan.name))
             for testrun in testplan.testruns:
                 log.info("  {0} {1} {2}".format(
@@ -1486,7 +1465,6 @@ class RunTagsTests(BaseAPIClient_TestCase):
 class CaseTagsTests(BaseAPIClient_TestCase):
     def setUp(self):
         self.testcase = self.cases[0]
-        self.performance = config.performance
         self.tag = self.tags[0]
 
     def testTagging1(self):
@@ -1570,7 +1548,7 @@ class CaseTagsTests(BaseAPIClient_TestCase):
         for every test case (one query per case).
         """
         start_time = time.time()
-        for case in TestPlan(self.performance.testplan):
+        for case in TestPlan(self.master):
             log.info("{0}: {1}".format(case, case.tags))
         _print_time(time.time() - start_time)
 
