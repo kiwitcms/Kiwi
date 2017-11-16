@@ -56,7 +56,9 @@ class BaseAPIClient_TestCase(StaticLiveServerTestCase):
         tcms_api.Config._instance = None
 
         # API user
-        self.api_user, _ = User.objects.get_or_create(username='api-tester')
+        self.api_user, _ = User.objects.get_or_create(
+            username='api-tester',
+            email='api@example.com')
         self.api_user.set_password('testing')
         initiate_user_with_default_setups(self.api_user)
 

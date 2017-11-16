@@ -19,26 +19,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Test Suite
-
-For running the unit test suite additional sections are required in the
-configuration file. These contain the url of the test server and the
-data of existing objects to be tested, for example:
-
-    [test]
-    url = https://test.server/xmlrpc/
-
-    [user]
-    id = 1234
-    login = username
-    email = username@example.com
-
-To exercise the whole test suite run "python -m tcms_api.tests". To test
-only subset of tests pick the desired classes on the command line:
-
-    python -m tcms_api.tests TestCase
-
-
 Performance tests
 ~~~~~~~~~~~~~~~~~~
 
@@ -448,7 +428,6 @@ class UserTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
         self.original_cache_level = get_cache_level()
-        self.user = config.user
         self.requests = Nitrate._requests
 
     def tierDown(self):
@@ -464,7 +443,7 @@ class UserTests(BaseAPIClient_TestCase):
     def test_current_user(self):
         """ Current user available & sane """
         user = User()
-        for data in [user.login, user.email, user.name]:
+        for data in [user.login, user.email]:
             self.assertTrue(isinstance(data, six.string_types))
         self.assertTrue(isinstance(user.id, int))
 
@@ -472,19 +451,19 @@ class UserTests(BaseAPIClient_TestCase):
         """ Cache none """
         set_cache_level(CACHE_NONE)
         # Initialize the same user by id, login and email
-        user1 = User(self.user.id)
+        user1 = User(self.api_user.pk)
         log.info(user1.name)
-        user2 = User(self.user.login)
+        user2 = User(self.api_user.username)
         log.info(user2.name)
-        user3 = User(self.user.email)
+        user3 = User(self.api_user.email)
         log.info(user3.name)
         # Three requests to the server should be performed
         self.assertEqual(Nitrate._requests, self.requests + 3)
         # User data should be the same
         for user in [user1, user2, user3]:
-            self.assertEqual(user.id, self.user.id)
-            self.assertEqual(user.login, self.user.login)
-            self.assertEqual(user.email, self.user.email)
+            self.assertEqual(user.id, self.api_user.pk)
+            self.assertEqual(user.login, self.api_user.username)
+            self.assertEqual(user.email, self.api_user.email)
         # Users should be different objects in memory
         self.assertNotEqual(id(user1), id(user2))
         self.assertNotEqual(id(user1), id(user3))
@@ -493,11 +472,11 @@ class UserTests(BaseAPIClient_TestCase):
         """ Cache objects """
         set_cache_level(CACHE_OBJECTS)
         # Initialize the same user by id, login and email
-        user1 = User(self.user.id)
+        user1 = User(self.api_user.pk)
         log.info(user1.name)
-        user2 = User(self.user.login)
+        user2 = User(self.api_user.username)
         log.info(user2.name)
-        user3 = User(self.user.email)
+        user3 = User(self.api_user.email)
         log.info(user3.name)
         # Single request to the server should be performed
         self.assertEqual(Nitrate._requests, self.requests + 1)
@@ -507,30 +486,30 @@ class UserTests(BaseAPIClient_TestCase):
 
     def test_initialization_by_id(self):
         """ Initializate by id """
-        user = User(self.user.id)
-        self.assertEqual(user.id, self.user.id)
-        self.assertEqual(user.login, self.user.login)
-        self.assertEqual(user.email, self.user.email)
+        user = User(self.api_user.pk)
+        self.assertEqual(user.id, self.api_user.pk)
+        self.assertEqual(user.login, self.api_user.username)
+        self.assertEqual(user.email, self.api_user.email)
 
     def test_initialization_by_login(self):
         """ Initializate by login """
         # Check both explicit parameter and autodetection
-        user1 = User(login=self.user.login)
-        user2 = User(self.user.login)
+        user1 = User(login=self.api_user.username)
+        user2 = User(self.api_user.username)
         for user in [user1, user2]:
-            self.assertEqual(user.id, self.user.id)
-            self.assertEqual(user.login, self.user.login)
-            self.assertEqual(user.email, self.user.email)
+            self.assertEqual(user.id, self.api_user.pk)
+            self.assertEqual(user.login, self.api_user.username)
+            self.assertEqual(user.email, self.api_user.email)
 
     def test_initialization_by_email(self):
         """ Initializate by email """
         # Check both explicit parameter and autodetection
-        user1 = User(email=self.user.email)
-        user2 = User(self.user.email)
+        user1 = User(email=self.api_user.email)
+        user2 = User(self.api_user.email)
         for user in [user1, user2]:
-            self.assertEqual(user.id, self.user.id)
-            self.assertEqual(user.login, self.user.login)
-            self.assertEqual(user.email, self.user.email)
+            self.assertEqual(user.id, self.api_user.pk)
+            self.assertEqual(user.login, self.api_user.username)
+            self.assertEqual(user.email, self.api_user.email)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Version
