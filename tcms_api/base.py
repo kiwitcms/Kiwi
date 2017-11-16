@@ -40,7 +40,6 @@ https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups
 import six
 import datetime
 import tcms_api.config as config
-import tcms_api.utils as utils
 import tcms_api.xmlrpc as xmlrpc
 import tcms_api.teiid as teiid
 
