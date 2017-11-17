@@ -2,9 +2,8 @@
 
 import django.conf.global_settings as DEFAULT_SETTINGS
 import os.path
-import tcms
 
-NITRATE_VERSION = tcms.__version__
+NITRATE_VERSION = '3.8.18'
 
 DEBUG = True
 

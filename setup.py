@@ -2,7 +2,8 @@
 
 from setuptools import setup, find_packages
 
-import tcms
+with open('VERSION.txt', 'r') as f:
+    pkg_version = f.read().strip()
 
 
 def get_install_requires():
@@ -30,7 +31,7 @@ def get_long_description():
 
 setup(
     name='nitrate',
-    version=tcms.__version__,
+    version=pkg_version,
     description='Test Case Management System',
     long_description=get_long_description(),
     author='Nitrate Team',

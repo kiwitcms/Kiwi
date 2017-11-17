@@ -1,4 +1,4 @@
-include AUTHORS CHANGELOG.rst README.rst LICENSE
+include AUTHORS CHANGELOG.rst README.rst LICENSE VERSION.txt
 include nitrate.spec Makefile Vagrantfile
 
 graft contrib
