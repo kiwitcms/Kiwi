@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from MySQLdb.constants import FIELD_TYPE
+from pymysql.constants import FIELD_TYPE
 from django.db.models.fields import IntegerField
 from django.db.backends.mysql.base import django_conversions
 

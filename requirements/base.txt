@@ -7,6 +7,6 @@ django-tinymce==2.6.0
 django-uuslug==1.1.8
 kerberos==1.2.5
 kobo==0.7.0
-MySQL-python==1.2.5
 odfpy>=0.9.6
+PyMySQL==0.7.11
 six
