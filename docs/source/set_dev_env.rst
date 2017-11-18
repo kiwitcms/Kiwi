@@ -58,7 +58,9 @@ Then install dependencies for development::
 
 The user interface needs the `PatternFly <http://www.patternfly.org/>`_ library so::
 
-    npm install patternfly
+    npm install
+
+inside the project directory.
 
 
 Initialize database

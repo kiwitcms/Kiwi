@@ -43,7 +43,7 @@ RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py
 
 # install patternfly
 COPY package.json /Kiwi/
-RUN cd /Kiwi/ && npm install patternfly && \
+RUN cd /Kiwi/ && npm install && \
     find ./node_modules -type f -not -path "*/dist/*" -delete && \
     find ./node_modules -type d -empty -delete
 
