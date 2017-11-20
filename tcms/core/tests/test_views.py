@@ -27,6 +27,23 @@ from tcms.tests.factories import TCMSEnvGroupPropertyMapFactory
 from tcms.tests.factories import TCMSEnvPropertyFactory
 
 
+class TestIndex(BaseCaseRun):
+    def test_when_not_logged_in_index_page_redirects_to_login(self):
+        response = self.client.get(reverse('core-views-index'))
+        self.assertRedirects(
+            response,
+            reverse('tcms-login'),
+            target_status_code=http.client.OK)
+
+    def test_when_logged_in_index_page_redirects_to_dashboard(self):
+        self.client.login(username=self.tester.username, password='password')
+        response = self.client.get(reverse('core-views-index'))
+        self.assertRedirects(
+            response,
+            reverse('tcms-recent', args=[self.tester.username]),
+            target_status_code=http.client.OK)
+
+
 class TestQuickSearch(BaseCaseRun):
 
     @classmethod
