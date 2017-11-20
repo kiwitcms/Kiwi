@@ -44,6 +44,7 @@ install:
   - pip install -r $REQUIREMENTS_TXT
   - pip install -r requirements/devel.txt
   - pip install coveralls
+  - npm install
 script: make check
 after_success:
   - coveralls
