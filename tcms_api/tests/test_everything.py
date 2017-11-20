@@ -50,7 +50,7 @@ VERBOSE_UNITTEST = sys.version_info >= (2, 7)
 
 def _print_time(elapsed_time):
     """ Human readable time format for performance tests """
-    converted_time = str(datetime.timedelta(seconds=elapsed_time)).split('.')
+    converted_time = str(elapsed_time).split('.')
     sys.stderr.write("{0} ... ".format(converted_time[0]))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -575,7 +575,7 @@ class ComponentTests(BaseAPIClient_TestCase):
         component = Component(self.component.id)
         self.assertTrue(isinstance(component, Component))
         self.assertEqual(component.name, self.component.name)
-        self.assertEqual(component.product.name, self.component.product)
+        self.assertEqual(component.product.name, self.component.product.name)
 
     def testFetchByName(self):
         """ Fetch component by name and product """
@@ -693,6 +693,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
         """ Create a new test plan (valid) """
         testplan = TestPlan(
             name="Test plan",
+            document='Testing',
             type=self.master.type,
             product=self.master.product,
             version=self.master.version)
@@ -709,15 +710,15 @@ class TestPlanTests(BaseAPIClient_TestCase):
         testplan = TestPlan(self.master.id)
         self.assertTrue(isinstance(testplan, TestPlan))
         self.assertEqual(testplan.name, self.master.name)
-        self.assertEqual(testplan.type.name, self.master.type)
-        self.assertEqual(testplan.product.name, self.master.product)
-        self.assertEqual(testplan.version.name, self.master.version)
-        self.assertEqual(testplan.owner.login, self.master.owner)
+        self.assertEqual(testplan.type.name, self.master.type.name)
+        self.assertEqual(testplan.product.name, self.master.product.name)
+        self.assertEqual(testplan.version.name, self.master.version.name)
+        self.assertEqual(testplan.owner.login, self.api_user.username)
 
     def test_plan_status(self):
         """ Test read/write access to the test plan status """
         # Prepare original and negated status
-        original = PlanStatus(self.master.status)
+        original = PlanStatus(self.master.status.id)
         negated = PlanStatus(not original.id)
         # Test original value
         testplan = TestPlan(self.master.id)
@@ -780,7 +781,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
 class TestRunTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up test plan from the config """
-        self.testcase = self.case[0]
+        self.testcase = self.cases[0]
         self.testrun = self.testruns[0]
 
     def testCreateInvalid(self):
@@ -803,8 +804,8 @@ class TestRunTests(BaseAPIClient_TestCase):
         testrun = TestRun(self.testrun.id)
         self.assertTrue(isinstance(testrun, TestRun))
         self.assertEqual(testrun.summary, self.testrun.summary)
-        self.assertEqual(str(testrun.started), self.testrun.started)
-        self.assertEqual(str(testrun.finished), self.testrun.finished)
+        self.assertEqual(testrun.started, self.testrun.started)
+        self.assertEqual(testrun.finished, self.testrun.finished)
 
     def testDisabledCasesOmitted(self):
         """ Disabled test cases should be omitted """
@@ -875,19 +876,19 @@ class TestCaseTests(BaseAPIClient_TestCase):
     def testCreateValid(self):
         """ Create a new test case (valid) """
         case = TestCase(summary="Test case summary",
-                        product="Red Hat Enterprise Linux 6", category="Sanity")
+                        product=self.product.name, category=self.category.name)
         self.assertTrue(
             isinstance(case, TestCase), "Check created instance")
         self.assertEqual(case.summary, "Test case summary")
         self.assertEqual(case.priority, Priority("P3"))
-        self.assertEqual(str(case.category), "Sanity")
+        self.assertEqual(str(case.category), self.category.name)
 
     def testCreateValidWithOptionalFields(self):
         """ Create a new test case, include optional fields """
         # High-priority automated security-related test case
         case = TestCase(
             summary="High-priority automated test case",
-            product=self.testcase.product,
+            product=self.product,
             category="Security",
             automated=True,
             manual=False,
@@ -911,7 +912,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
         # Low-priority manual sanity test case
         case = TestCase(
             summary="Low-priority manual test case",
-            product=self.testcase.product,
+            product=self.product,
             category="Sanity",
             manual=True,
             autoproposed=True,
@@ -938,10 +939,8 @@ class TestCaseTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(isinstance(testcase, TestCase))
         self.assertEqual(testcase.summary, self.testcase.summary)
-        self.assertEqual(testcase.category.name, self.testcase.category)
-        created = datetime.datetime.strptime(
-            self.testcase.created, "%Y-%m-%d %H:%M:%S")
-        self.assertEqual(testcase.created, created)
+        self.assertEqual(testcase.category.name, self.testcase.category.name)
+        self.assertEqual(testcase.created, self.testcase.created)
 
     def testGetByInvalidId(self):
         """ Fetch an existing test case by id (invalid id) """
@@ -1003,10 +1002,10 @@ class TestCaseTests(BaseAPIClient_TestCase):
         displays the result with their testers. The slowdown here is
         fetching users from the database (one by one).
         """
-        start_time = time.time()
-        for testcase in TestPlan(self.master):
+        start_time = datetime.datetime.now()
+        for testcase in TestPlan(self.master.id):
             log.info("{0}: {1}".format(testcase.tester, testcase))
-        _print_time(time.time() - start_time)
+        _print_time(datetime.datetime.now() - start_time)
 
     def test_performance_testcases_and_testplans(self):
         """ Checking test plans linked to test cases
@@ -1016,19 +1015,19 @@ class TestCaseTests(BaseAPIClient_TestCase):
         multiple times if they contain more than one test case in
         the set.
         """
-        start_time = time.time()
-        for testcase in TestPlan(self.master):
+        start_time = datetime.datetime.now()
+        for testcase in TestPlan(self.master.id):
             log.info("{0} is in test plans:".format(testcase))
             for testplan in testcase.testplans:
                 log.info("  {0}".format(testplan.name))
-        _print_time(time.time() - start_time)
+        _print_time(datetime.datetime.now() - start_time)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseRuns
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CaseRunsTests(unittest.TestCase):
+class CaseRunsTests(BaseAPIClient_TestCase):
     def test_performance_update_caseruns(self):
         """ Updating multiple CaseRun statuses (MultiCall off)
 
@@ -1036,12 +1035,12 @@ class CaseRunsTests(unittest.TestCase):
         on the updating part. The performance issue is isolated
         CaseRun state update.
         """
-        start_time = time.time()
-        for caserun in TestRun(self.testruns[0]):
+        start_time = datetime.datetime.now()
+        for caserun in TestRun(self.testruns[0].id):
             log.info("{0} {1}".format(caserun.id, caserun.status))
             caserun.status = Status(random.randint(1, 8))
             caserun.update()
-        _print_time(time.time() - start_time)
+        _print_time(datetime.datetime.now() - start_time)
 
     def test_performance_update_caseruns_multicall(self):
         """ Updating multiple CaseRun statuses (MultiCall on)
@@ -1050,13 +1049,13 @@ class CaseRunsTests(unittest.TestCase):
         on the updating part with MultiCall.
         """
         multicall_start()
-        start_time = time.time()
-        for caserun in TestRun(self.testruns[0]):
+        start_time = datetime.datetime.now()
+        for caserun in TestRun(self.testruns[0].id):
             log.debug("{0} {1}".format(caserun.id, caserun.status))
             caserun.status = Status(random.randint(1, 8))
             caserun.update()
         multicall_end()
-        _print_time(time.time() - start_time)
+        _print_time(datetime.datetime.now() - start_time)
 
     def test_performance_testcases_in_caseruns(self):
         """ Checking CaseRuns in TestRuns in TestPlans
@@ -1067,8 +1066,8 @@ class CaseRunsTests(unittest.TestCase):
         connected to case runs (although some of them may have already
         been fetched).
         """
-        start_time = time.time()
-        for testplan in TestPlan(self.master).children:
+        start_time = datetime.datetime.now()
+        for testplan in TestPlan(self.master.id).children:
             log.info("{0}".format(testplan.name))
             for testrun in testplan.testruns:
                 log.info("  {0} {1} {2}".format(
@@ -1076,21 +1075,21 @@ class CaseRunsTests(unittest.TestCase):
                 for caserun in testrun.caseruns:
                     log.info("    {0} {1} {2}".format(
                         caserun, caserun.testcase, caserun.status))
-        _print_time(time.time() - start_time)
+        _print_time(datetime.datetime.now() - start_time)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CasePlan
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CasePlanTests(unittest.TestCase):
+class CasePlanTests(BaseAPIClient_TestCase):
     def setUp(self):
         self.testcase = self.cases[0]
 
     def test_sortkey_update(self):
         """ Sort key update """
         testcase = self.testcase.id
-        testplan = self.master.id
+        testplan = self.testcase.testplans[0].id
         for sortkey in [100, 200, 300]:
             # Update the sortkey
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
@@ -1147,7 +1146,6 @@ class CaseComponentsTests(BaseAPIClient_TestCase):
         # see the commented out portion above and below
         pass
 
-
     def test2(self):
         """ Linking a component to a test case """
         testcase = TestCase(self.testcase.id)
@@ -1183,11 +1181,10 @@ class CaseComponentsTests(BaseAPIClient_TestCase):
 '''
 Disabled until BZ#866974 is fixed.
 
-class PlanComponentsTests(unittest.TestCase):
+class PlanComponentsTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up component from the config """
         self.component = config.component
-        self.master = config.testplan
 
     def test1(self):
         """ Unlinking a component from a  test plan """
@@ -1294,24 +1291,23 @@ class CaseBugsTests(BaseAPIClient_TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CaseRunBugsTests(unittest.TestCase):
+class CaseRunBugsTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up test case from the config """
-        self.caserun = config.caserun
         self.bug = Bug(bug=1234)
 
     def test_bugging1(self):
         """ Detaching bug from a test case run """
         # Detach bug and check
-        caserun = CaseRun(self.caserun.id)
+        caserun = CaseRun(self.caserun.pk)
         caserun.bugs.remove(self.bug)
         caserun.update()
         # Check cache content
-        caserun = CaseRun(self.caserun.id)
+        caserun = CaseRun(self.caserun.pk)
         self.assertTrue(self.bug not in caserun.bugs)
         # Check server content
         # cache.clear()
-        # caserun = CaseRun(self.caserun.id)
+        # caserun = CaseRun(self.caserun.pk)
         # self.assertTrue(self.bug not in caserun.bugs)
 
     @unittest.skip('skip caching tests')
@@ -1322,29 +1318,29 @@ class CaseRunBugsTests(unittest.TestCase):
     def test_bugging2(self):
         """ Attaching bug to a test case run """
         # Attach bug and check
-        caserun = CaseRun(self.caserun.id)
+        caserun = CaseRun(self.caserun.pk)
         caserun.bugs.add(self.bug)
         caserun.update()
         # Check cache content
-        caserun = CaseRun(self.caserun.id)
+        caserun = CaseRun(self.caserun.pk)
         self.assertTrue(self.bug in caserun.bugs)
         # Check server content
         # cache.clear()
-        # caserun = CaseRun(self.caserun.id)
+        # caserun = CaseRun(self.caserun.pk)
         # self.assertTrue(self.bug in caserun.bugs)
 
     def test_bugging3(self):
         """ Detaching bug from a test case run """
         # Detach bug and check
-        caserun = CaseRun(self.caserun.id)
+        caserun = CaseRun(self.caserun.pk)
         caserun.bugs.remove(self.bug)
         caserun.update()
         # Check cache content
-        caserun = CaseRun(self.caserun.id)
+        caserun = CaseRun(self.caserun.pk)
         self.assertTrue(self.bug not in caserun.bugs)
         # Check server content
         # cache.clear()
-        # caserun = CaseRun(self.caserun.id)
+        # caserun = CaseRun(self.caserun.pk)
         # self.assertTrue(self.bug not in caserun.bugs)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1547,10 +1543,10 @@ class CaseTagsTests(BaseAPIClient_TestCase):
         The problem in this case is separate fetching of tag names
         for every test case (one query per case).
         """
-        start_time = time.time()
-        for case in TestPlan(self.master):
+        start_time = datetime.datetime.now()
+        for case in TestPlan(self.master.id):
             log.info("{0}: {1}".format(case, case.tags))
-        _print_time(time.time() - start_time)
+        _print_time(datetime.datetime.now() - start_time)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  ChildPlans
@@ -1564,6 +1560,7 @@ class ChildPlansTests(BaseAPIClient_TestCase):
         parent = TestPlan(self.master.id)
         # Create a new separate plan, make sure it's not child
         child = TestPlan(name="Child test plan", type=parent.type,
+                         document='Nothing to document here',
                          product=parent.product, version=parent.version)
         self.assertTrue(child not in parent.children)
         # Add the new test plan to the children, reload, check
@@ -1585,12 +1582,12 @@ class ChildPlansTests(BaseAPIClient_TestCase):
 
 class PlanRunsTests(BaseAPIClient_TestCase):
     def setUp(self):
-        self.testrun = config.testrun
+        self.testrun = self.testruns[0]
 
     def test_inclusion(self):
         """ Test run included in the container"""
-        testplan = TestPlan(self.master.id)
         testrun = TestRun(self.testrun.id)
+        testplan = TestPlan(self.testrun.testplan.id)
         self.assertTrue(testrun in testplan.testruns)
         # Everything should be kept in the persistent cache
         # if get_cache_level() >= CACHE_PERSISTENT:
@@ -1674,7 +1671,7 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
 
 class RunCasesTests(BaseAPIClient_TestCase):
     def setUp(self):
-        self.testrun = config.testrun
+        self.testrun = self.testruns[0]
         self.testcase = self.cases[0]
 
     def test_present(self):
@@ -1731,12 +1728,11 @@ class RunCasesTests(BaseAPIClient_TestCase):
 class RunCaseRunsTests(BaseAPIClient_TestCase):
     def setUp(self):
         self.testrun = self.testruns[0]
-        self.caserun = config.caserun
 
     def test_present(self):
         """ Check case run presence """
-        caserun = CaseRun(self.caserun.id)
-        testrun = TestRun(self.testrun.id)
+        caserun = CaseRun(self.caserun.pk)
+        testrun = TestRun(self.caserun.run_id)
         self.assertTrue(caserun in testrun)
 
     @unittest.skip('skip caching tests')

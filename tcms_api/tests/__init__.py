@@ -5,13 +5,15 @@ from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 import tcms_api
-
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import ComponentFactory
+from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseCategoryFactory
 
+from tcms.testcases.models import TestCaseBugSystem
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
@@ -81,10 +83,13 @@ password = %s
         self.version = tcms_api.Version(product=self.product, version=f_version.value)
         self.plantype = tcms_api.PlanType(name="Function")
 
+        TestCaseCategoryFactory(name='Security', product=f_product)
+        TestCaseCategoryFactory(name='Sanity', product=f_product)
         f_category = TestCaseCategoryFactory(product=f_product)
         self.category = tcms_api.Category(category=f_category.name, product=self.product)
 
-        self.component = tcms_api.Component(name='tcms_api', product=self.product)
+        f_component = ComponentFactory(product=f_product)
+        self.component = tcms_api.Component(name=f_component.name, product=self.product)
         self.CASESTATUS = tcms_api.CaseStatus("CONFIRMED")
         self.build = tcms_api.Build(product=self.product, build="unspecified")
 
@@ -111,11 +116,11 @@ password = %s
         # Create master test plan (parent of all)
         self.master = tcms_api.TestPlan(
             name="API client Test Plan",
-            document='plan creted from API',
+            document='Master TP created from API',
             product=self.product,
             version=self.version,
             type=self.plantype)
-        tcms_api.info("* {0}".format(self.master))
+        self.master.owner = self.api_user
         self.master.testcases.add(self.cases)
         self.master.update()
 
@@ -124,7 +129,7 @@ password = %s
         for plan_count in range(self.num_plans):
             testplan = tcms_api.TestPlan(
                 name="Test Plan {0}".format(plan_count + 1),
-                document='plan creted from API',
+                document='Child TP created from API',
                 product=self.product,
                 version=self.version,
                 parent=self.master,
@@ -132,7 +137,6 @@ password = %s
             # Link all test cases to the test plan
             testplan.testcases.add(self.cases)
             testplan.update()
-            tcms_api.info("  * {0}".format(testplan))
 
             # Create test runs
             for run_count in range(self.num_runs):
@@ -142,5 +146,8 @@ password = %s
                     product=self.product,
                     summary="Test Run {0}".format(run_count + 1),
                     version=self.version.name)
-                tcms_api.info("    * {0}".format(testrun))
                 self.testruns.append(testrun)
+
+        # Create a TestCaseRun object
+        self.caserun = TestCaseRunFactory()
+        self.caserun.add_bug(1234, TestCaseBugSystem.objects.first().pk)
