@@ -13,4 +13,4 @@ DATABASES = {
 
 LISTENING_MODEL_SIGNAL = False
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'tcms.tests.storage.RaiseWhenFileNotFound'
