@@ -36,7 +36,6 @@ n.testplan_get(10)
 from __future__ import print_function
 
 import sys
-import kerberos
 from datetime import datetime, time
 
 if sys.version_info.major == 2:
@@ -267,6 +266,8 @@ class KerbTransport(SafeCookieTransport):
     """Handles Kerberos Negotiation authentication to an XML-RPC server."""
 
     def get_host_info(self, host):
+        import kerberos
+
         host, extra_headers, x509 = xmlrpclib.Transport.get_host_info(
             self, host)
 
