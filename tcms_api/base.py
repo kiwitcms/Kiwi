@@ -118,7 +118,7 @@ def _idify(id):
         result = []
         while id > 0:
             remainder = id % config._MAX_ID
-            id = id / config._MAX_ID
+            id = int(id / config._MAX_ID)
             result.append(int(remainder))
         result.reverse()
         return result
