@@ -41,7 +41,6 @@ import six
 import datetime
 import tcms_api.config as config
 import tcms_api.xmlrpc as xmlrpc
-import tcms_api.teiid as teiid
 
 from tcms_api.config import log, Config
 from tcms_api.xmlrpc import NitrateError
@@ -163,7 +162,6 @@ class Nitrate(object):
     _attributes = []
 
     _connection = None
-    _teiid_instance = None
     _requests = 0
     _multicall_proxy = None
     _identifier_width = 0
@@ -212,15 +210,6 @@ class Nitrate(object):
         # Return existing connection
         Nitrate._requests += 1
         return Nitrate._connection
-
-    @property
-    def _teiid(self):
-        """ Connection to the Teiid instance """
-        # Create the instance unless already exist
-        if Nitrate._teiid_instance is None:
-            Nitrate._teiid_instance = teiid.Teiid()
-        # Return the instance
-        return Nitrate._teiid_instance
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
