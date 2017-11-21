@@ -594,7 +594,6 @@ class ComponentTests(BaseAPIClient_TestCase):
         # Make sure the cache is empty
         Component._cache = {}
         # Enable cache, remember current number of requests
-        original = get_cache_level()
         set_cache_level(CACHE_OBJECTS)
         requests = Nitrate._requests
         # The first round (fetch component data from server)
@@ -605,26 +604,28 @@ class ComponentTests(BaseAPIClient_TestCase):
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
         self.assertEqual(Nitrate._requests, requests + 1)
-        # Restore cache level
-        set_cache_level(original)
 
     def testCachingOff(self):
         """ Component caching off """
+        # Make sure the cache is empty
+        Component._cache = {}
         # Enable cache, remember current number of requests
-        original = get_cache_level()
         set_cache_level(CACHE_NONE)
         requests = Nitrate._requests
+
         # The first round (fetch component data from server)
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
-        self.assertEqual(Nitrate._requests, requests + 1)
+        self.assertGreater(Nitrate._requests, requests)
+        requests = Nitrate._requests
+
+        # delete component to cause re-fetch from the server
         del component
+
         # The second round (there should be another request)
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
-        self.assertEqual(Nitrate._requests, requests + 2)
-        # Restore cache level
-        set_cache_level(original)
+        self.assertGreater(Nitrate._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Tag
