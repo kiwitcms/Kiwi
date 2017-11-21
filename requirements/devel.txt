@@ -11,6 +11,3 @@ factory_boy
 mock
 django-extensions
 pydot
-# workaround for api tests
-django-nose
-django-coverage
