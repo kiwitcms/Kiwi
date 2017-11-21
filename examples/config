@@ -6,14 +6,6 @@ url = https://nitrate.server/xmlrpc/
 #username = login
 #password = xxxxx
 
-# Teiid support
-#[teiid]
-#database = name
-#user = login
-#password = xxxxx
-#host = teiid.server.com
-#port = 5432
-
 # Cache level and persistent cache file
 #[cache]
 #level = 3

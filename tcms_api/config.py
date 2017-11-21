@@ -36,7 +36,6 @@ password are provided plain authentication will be used instead. E.g.
     password = secret
 
 It's also possible to provide system-wide config in /etc/nitrate.conf.
-See "pydoc tcms_api.teiid" for Teiid configuration details.
 
 
 Logging
@@ -51,7 +50,7 @@ added for logging cache handling details and xmlrpc communication:
     log.info(msg) ..... high-level info, useful for progress tracking
     log.debug(msg) .... low-level details useful for investigation
     log.cache(msg) .... cache-related stuff and object initialization
-    log.data(msg) ..... data sent to/from the xmlrpc/teiid server
+    log.data(msg) ..... data sent to/from the xmlrpc server
     log.all(msg) ...... any other possibly useful debugging details
 
 By default, messages of level WARN and up are only displayed. This can

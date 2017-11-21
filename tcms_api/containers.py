@@ -58,7 +58,6 @@ Container overview (objects contained are listed in brackets):
 """
 
 import six
-import psycopg2
 
 try:
     import xmlrpclib
@@ -68,7 +67,6 @@ except ImportError:
 from pprint import pformat as pretty
 
 import tcms_api.config as config
-import tcms_api.teiid as teiid
 
 from tcms_api.config import log
 from tcms_api.utils import listed, sliced
@@ -869,13 +867,7 @@ class RunCases(Container):
             return
         # Fetch attached test cases from the server
         log.info("Fetching {0}'s test cases".format(self._identifier))
-        try:
-            injects = self._teiid.run_cases(self.id)
-        except teiid.TeiidNotConfigured:
-            injects = self._server.TestRun.get_test_cases(self.id)
-        except psycopg2.DatabaseError as error:
-            log.debug("Failed to fetch data from Teiid: {0}".format(error))
-            injects = self._server.TestRun.get_test_cases(self.id)
+        injects = self._server.TestRun.get_test_cases(self.id)
         self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
 
@@ -944,13 +936,7 @@ class RunCaseRuns(Container):
             return
         # Fetch test case runs from the server
         log.info("Fetching {0}'s case runs".format(self._identifier))
-        try:
-            injects = self._teiid.run_case_runs(self.id)
-        except teiid.TeiidNotConfigured:
-            injects = self._server.TestRun.get_test_case_runs(self.id)
-        except psycopg2.DatabaseError as error:
-            log.debug("Failed to fetch data from Teiid: {0}".format(error))
-            injects = self._server.TestRun.get_test_case_runs(self.id)
+        injects = self._server.TestRun.get_test_case_runs(self.id)
         # Feed the TestRun.testcases container with the initial object
         # set if all cases are already cached (saving unnecesary fetch)
         testcaseids = [inject["case_id"] for inject in injects]

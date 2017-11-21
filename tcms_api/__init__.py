@@ -57,7 +57,6 @@ For details see pydoc documentation for individual modules:
     tcms_api.containers ... Container classes implementation
     tcms_api.immutable .... Immutable Nitrate objects
     tcms_api.mutable ...... Mutable Nitrate objects
-    tcms_api.teiid ........ Teiid support
     tcms_api.tests ........ Test suite
     tcms_api.utils ........ Utilities
     tcms_api.xmlrpc ....... XMLRPC driver
@@ -94,7 +93,6 @@ from tcms_api.config import (
 
 # Data communication exceptions
 from tcms_api.xmlrpc import NitrateError
-from tcms_api.teiid import TeiidError
 
 # Persistent cache and Multicall support
 from tcms_api.cache import Cache, multicall_start, multicall_end
@@ -123,7 +121,7 @@ __all__ = [
     CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, CACHE_PERSISTENT,
     NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX,
 
-    NitrateError, TeiidError,
+    NitrateError,
 
     Cache, multicall_start, multicall_end,
 ]
