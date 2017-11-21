@@ -420,7 +420,7 @@ class Caching(object):
                 return
             # Attempt to detect the level from the environment
             try:
-                self._level = int(os.environ["CACHE"])
+                self._level = int(os.environ.get("CACHE", CACHE_NONE))
             except Exception:
                 # Inspect the [cache] section of the config file
                 try:
