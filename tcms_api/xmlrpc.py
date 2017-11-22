@@ -18,17 +18,17 @@ n.testplan_get(10)
 
 where config.cfg looks like:
 [tcms]
-username=xkuang@redhat.com
-password=foobar
-url=https://tcms.engineering.redhat.com/xmlrpc/
-use_mod_kerb=False
+username = myusername
+password = foobar
+url = https://tcms.example.com/xmlrpc/
+use_mod_kerb = False
 
 Or, more directly:
 
 t = TCMSXmlrpc(
-    'xkuang@redhat.com',
+    'myusername',
     'foobar',
-    'https://tcms.engineering.redhat.com/xmlrpc/',
+    'https://tcms.example.com/xmlrpc/',
 )
 t.testplan_get(10)
 """
@@ -585,9 +585,3 @@ class TCMSKerbXmlrpc(TCMSXmlrpc):
 
         # Login, get a cookie into our cookie jar (login_dict):
         self.do_command("Auth.login_krbv", [])
-
-
-if __name__ == "__main__":
-    from pprint import pprint
-    n = TCMSKerbXmlrpc('https://tcms.englab.nay.redhat.com/xmlrpc/')
-    pprint(n.get_me())
