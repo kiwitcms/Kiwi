@@ -61,7 +61,6 @@ object creation, attribute setting, adjusting logs and caching.
 For area-specific details see respective module documentation::
 
     tcms_api.base ......... TCMS class, search support
-    tcms_api.cache ........ Persistent cache, multicall support
     tcms_api.config ....... Configuration, logging, coloring, caching
     tcms_api.containers ... Container classes implementation
     tcms_api.immutable .... Immutable TCMS objects

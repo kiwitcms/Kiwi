@@ -42,8 +42,8 @@ Logging
 ~~~~~~~~
 
 Standard log methods from the python 'logging' module are available
-under the short name 'log'. In addition two special levels have been
-added for logging cache handling details and xmlrpc communication:
+under the short name 'log'. In addition special levels have been
+added for logging xmlrpc communication:
 
     log.error(msg) .... fatal issues which prevent task completion
     log.warn(msg) ..... non-fatal problems, not blocking execution
@@ -105,9 +105,6 @@ CACHE_NONE = 0
 CACHE_CHANGES = 1
 CACHE_OBJECTS = 2
 CACHE_PERSISTENT = 3
-
-# Max number of objects updated by multicall at once when using Cache.update()
-MULTICALL_MAX = 10
 
 # Maximum id value (used for idifying)
 _MAX_ID = 1000000000

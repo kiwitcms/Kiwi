@@ -52,7 +52,6 @@ Synopsis:
 For details see pydoc documentation for individual modules:
 
     tcms_api.base ......... TCMS class, search support
-    tcms_api.cache ........ Persistent cache, multicall support
     tcms_api.config ....... Configuration, logging, coloring, caching
     tcms_api.containers ... Container classes implementation
     tcms_api.immutable .... Immutable TCMS objects
@@ -76,7 +75,7 @@ from tcms_api.containers import (
 
 # Various useful utilities
 from tcms_api.utils import (
-    color, header, human, info, listed, sliced, unlisted)
+    color, header, human, info, listed, unlisted)
 
 # Logging, coloring and caching configuration
 from tcms_api.config import (
@@ -88,14 +87,10 @@ from tcms_api.config import (
     COLOR_ON, COLOR_OFF, COLOR_AUTO,
 
     Caching, get_cache_level, set_cache_level,
-    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, CACHE_PERSISTENT,
-    NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX)
+    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, NEVER_CACHE, NEVER_EXPIRE)
 
 # Data communication exceptions
 from tcms_api.xmlrpc import TCMSError
-
-# Persistent cache and Multicall support
-from tcms_api.cache import Cache, multicall_start, multicall_end
 
 __all__ = [
     TCMS, Mutable, Container,
@@ -108,7 +103,7 @@ __all__ = [
     ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
     PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer,
 
-    ascii, color, header, human, info, listed, sliced, unlisted,
+    ascii, color, header, human, info, listed, unlisted,
 
     Config,
     Logging, get_log_level, set_log_level, log,
@@ -118,10 +113,8 @@ __all__ = [
     COLOR_ON, COLOR_OFF, COLOR_AUTO,
 
     Caching, get_cache_level, set_cache_level,
-    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, CACHE_PERSISTENT,
-    NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX,
+    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS,
+    NEVER_EXPIRE, NEVER_CACHE,
 
     TCMSError,
-
-    Cache, multicall_start, multicall_end,
 ]

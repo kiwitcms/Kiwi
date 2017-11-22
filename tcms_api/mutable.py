@@ -347,7 +347,7 @@ class TestPlan(Mutable):
 
         log.info("Updating test plan " + self.identifier)
         log.data(pretty(hash))
-        self._multicall.TestPlan.update(self.id, hash)
+        self._server.TestPlan.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -691,7 +691,7 @@ class TestRun(Mutable):
 
         log.info("Updating test run " + self.identifier)
         log.data(pretty(hash))
-        self._multicall.TestRun.update(self.id, hash)
+        self._server.TestRun.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -1094,7 +1094,7 @@ class TestCase(Mutable):
 
         log.info("Updating test case " + self.identifier)
         log.data(pretty(hash))
-        self._multicall.TestCase.update(self.id, hash)
+        self._server.TestCase.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -1303,7 +1303,7 @@ class CaseRun(Mutable):
         # Index the fetched object into cache
         self._index()
 
-    def _update(self, proxy=None):
+    def _update(self):
         """ Save test case run data to the server """
 
         # Prepare the update hash
@@ -1318,10 +1318,7 @@ class CaseRun(Mutable):
             hash["notes"] = ""
         log.info("Updating case run " + self.identifier)
         log.data(pretty(hash))
-        # Use custom proxy if given
-        if proxy is None:
-            proxy = self._multicall
-        proxy.TestCaseRun.update(self.id, hash)
+        self._server.TestCaseRun.update(self.id, hash)
 
     def update(self):
         """ Update self and containers, if modified, to the server """
@@ -1447,15 +1444,12 @@ class CasePlan(Mutable):
         # Index the fetched object into cache
         self._index()
 
-    def _update(self, proxy=None):
+    def _update(self):
         """ Save test case plan data to the server """
         log.info("Updating case plan {0}".format(self.identifier))
         log.data("{0}, {1}, {2}".format(
             self.testcase.id, self.testplan.id, self.sortkey))
-        # Use custom proxy if given
-        if proxy is None:
-            proxy = self._multicall
-        proxy.TestCasePlan.update(
+        self._server.TestCasePlan.update(
             self.testcase.id, self.testplan.id, self.sortkey)
 
 

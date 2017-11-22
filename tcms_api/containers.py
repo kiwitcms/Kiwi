@@ -69,7 +69,7 @@ from pprint import pformat as pretty
 import tcms_api.config as config
 
 from tcms_api.config import log
-from tcms_api.utils import listed, sliced
+from tcms_api.utils import listed
 from tcms_api.base import TCMS, TCMSNone, _getter, _idify
 from tcms_api.immutable import Component, Bug, Tag
 from tcms_api.xmlrpc import TCMSError
@@ -185,7 +185,7 @@ class Container(Mutable):
             log.debug(pretty(inset))
             self._current = set(inset)
             self._original = set(inset)
-        # Cache into container class
+        # cache into container class
         if config.get_cache_level() >= config.CACHE_OBJECTS:
             self.__class__._cache[self._id] = self
         # Return True if the data are already initialized
@@ -684,12 +684,10 @@ class CasePlans(Container):
 
     def _remove(self, plans):
         """ Unlink provided plans from the test case """
-        multicall = xmlrpclib.MultiCall(self._server)
         for plan in plans:
             log.info("Unlinking {0} from {1}".format(
                 plan.identifier, self._identifier))
-            multicall.TestCase.unlink_plan(self.id, plan.id)
-        multicall()
+            self._server.TestCase.unlink_plan(self.id, plan.id)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Plan Runs Class
@@ -788,12 +786,10 @@ class PlanCases(Container):
     def _remove(self, cases):
         """ Unlink provided cases from the test plan """
         # Unlink provided cases on the server
-        multicall = xmlrpclib.MultiCall(self._server)
         for case in cases:
             log.info("Unlinking {0} from {1}".format(
                 case.identifier, self._identifier))
-            multicall.TestCase.unlink_plan(case.id, self.id)
-        multicall()
+            self._server.TestCase.unlink_plan(case.id, self.id)
         # Add corresponding CasePlan objects from the PlanCasePlans container
         if PlanCasePlans._is_cached(self._object.caseplans):
             self._object.caseplans.remove([
@@ -966,19 +962,16 @@ class RunCaseRuns(Container):
             yield caserun
 
     def update(self):
-        """ Update modified case runs in multicall batches """
+        """ Update modified case runs"""
         # Check for modified case runs
         modified = [caserun for caserun in self if caserun._modified]
         if not modified:
             return
         log.info("Updating {0}'s case runs".format(self._identifier))
-        # Update modified caseruns in slices
-        for slice in sliced(modified, config.MULTICALL_MAX):
-            multicall = xmlrpclib.MultiCall(self._server)
-            for caserun in slice:
-                caserun._update(multicall)
-                caserun._modified = False
-            multicall()
+        # Update modified caseruns
+        for caserun in modified:
+            caserun._update()
+            caserun._modified = False
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanCasePlans Class
@@ -1002,12 +995,11 @@ class PlanCasePlans(Container):
         if Container._fetch(self, inset):
             return
 
-        # Fetch test case plans from the server using multicall
+        # Fetch test case plans from the server
         log.info("Fetching case plans for {0}".format(self._identifier))
-        multicall = xmlrpclib.MultiCall(self._server)
+        injects = []
         for testcase in self._object.testcases._items:
-            multicall.TestCasePlan.get(testcase.id, self._object.id)
-        injects = [inject for inject in multicall()]
+            injects.append(self._server.TestCasePlan.get(testcase.id, self._object.id))
         log.data(pretty(injects))
 
         # And finally create the initial object set
@@ -1044,10 +1036,8 @@ class PlanCasePlans(Container):
         # Nothing to do if there are no sortkey changes
         if not modified:
             return
-        # Update all modified caseplans in a single multicall
+        # Update all modified caseplans
         log.info("Updating {0}'s case plans".format(self._identifier))
-        multicall = xmlrpclib.MultiCall(self._server)
         for caseplan in modified:
-            caseplan._update(multicall)
+            caseplan._update()
             caseplan._modified = False
-        multicall()

@@ -27,7 +27,6 @@ import unittest
 import datetime
 
 from tcms_api.utils import *       # noqa: F403
-from tcms_api.cache import *       # noqa: F403
 from tcms_api.config import *      # noqa: F403
 from tcms_api.base import *        # noqa: F403
 from tcms_api.immutable import *   # noqa: F403
@@ -77,15 +76,6 @@ class UtilsTests(unittest.TestCase):
         self.assertEqual(unlisted("1, 2 and 3"), ["1", "2", "3"])
         self.assertEqual(unlisted("1, 2, 3"), ["1", "2", "3"])
         self.assertEqual(unlisted("1 2 3"), ["1", "2", "3"])
-
-    def test_sliced(self):
-        """ Function sliced() sanity """
-        loaf = list(range(9))
-        self.assertEqual(list(sliced(loaf, 9)), [loaf])
-        self.assertEqual(
-            list(sliced(loaf, 5)), [[0, 1, 2, 3, 4], [5, 6, 7, 8]])
-        self.assertEqual(
-            list(sliced(loaf, 3)), [[0, 1, 2], [3, 4, 5], [6, 7, 8]])
 
     def test_get_set_log_level(self):
         """ Get & set the logging level """
@@ -546,23 +536,6 @@ class VersionTests(BaseAPIClient_TestCase):
         # Should fetch version just once ---> 1 request
         self.assertEqual(TCMS._requests, self.requests + 1)
 
-    @unittest.skip('skip caching tests')
-    def test_cache_persistent(self):
-        """ Cache persistent """
-        set_cache_level(CACHE_PERSISTENT)
-        # Fetch the version (populate the cache)
-        version = Version(self.version.id)
-        self.assertEqual(version.name, self.version.name)
-        # Save, clear & load cache
-        cache.save()
-        cache.clear()
-        cache.load()
-        requests = TCMS._requests
-        # Fetch once again ---> no additional request
-        version = Version(self.version.id)
-        self.assertEqual(version.name, self.version.name)
-        self.assertEqual(TCMS._requests, requests)
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Component
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -756,23 +729,6 @@ class TestPlanTests(BaseAPIClient_TestCase):
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
         self.assertEqual(TCMS._requests, self.requests + 1)
-
-    @unittest.skip('skip caching tests')
-    def test_cache_persistent(self):
-        """ Cache persistent """
-        set_cache_level(CACHE_PERSISTENT)
-        # Fetch the test plan (populate the cache)
-        testplan = TestPlan(self.master.id)
-        log.debug(testplan.name)
-        # Save, clear & load cache
-        cache.save()
-        cache.clear()
-        cache.load()
-        requests = TCMS._requests
-        # Fetch once again ---> no additional request
-        testplan = TestPlan(self.master.id)
-        self.assertEqual(testplan.name, self.master.name)
-        self.assertEqual(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestRun
@@ -1030,7 +986,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
 
 class CaseRunsTests(BaseAPIClient_TestCase):
     def test_performance_update_caseruns(self):
-        """ Updating multiple CaseRun statuses (MultiCall off)
+        """ Updating multiple CaseRun statuses
 
         Test for fetching caserun states and updating them focusing
         on the updating part. The performance issue is isolated
@@ -1041,21 +997,6 @@ class CaseRunsTests(BaseAPIClient_TestCase):
             log.info("{0} {1}".format(caserun.id, caserun.status))
             caserun.status = Status(random.randint(1, 8))
             caserun.update()
-        _print_time(datetime.datetime.now() - start_time)
-
-    def test_performance_update_caseruns_multicall(self):
-        """ Updating multiple CaseRun statuses (MultiCall on)
-
-        Test for fetching caserun states and updating them focusing
-        on the updating part with MultiCall.
-        """
-        multicall_start()
-        start_time = datetime.datetime.now()
-        for caserun in TestRun(self.testruns[0].id):
-            log.debug("{0} {1}".format(caserun.id, caserun.status))
-            caserun.status = Status(random.randint(1, 8))
-            caserun.update()
-        multicall_end()
         _print_time(datetime.datetime.now() - start_time)
 
     def test_performance_testcases_in_caseruns(self):
@@ -1607,7 +1548,7 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
         # see commented out section above and below
         pass
 
-    def test_sortkey_update(self):
+    def test_sortkey_update_cache_objects(self):
         """ Get/set sortkey using the TestPlan.sortkey() method """
         testcase = TestCase(self.testcase.id)
         testplan = TestPlan(self.master.id)

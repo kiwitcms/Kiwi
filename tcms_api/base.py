@@ -163,7 +163,6 @@ class TCMS(object):
 
     _connection = None
     _requests = 0
-    _multicall_proxy = None
     _identifier_width = 0
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -276,19 +275,6 @@ class TCMS(object):
             self._fetch(inject, **kwargs)
         return id, name, inject, True
 
-    @property
-    def _multicall(self):
-        """
-        Enqueue xmlrpc calls if MultiCall enabled otherwise send directly
-
-        If MultiCall mode enabled, put xmlrpc calls to the queue, otherwise
-        send them directly to server.
-        """
-        if TCMS._multicall_proxy is not None:
-            return self._multicall_proxy
-        else:
-            return self._server
-
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TCMS Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -299,8 +285,6 @@ class TCMS(object):
         if (config.get_cache_level() < config.CACHE_OBJECTS or
                 getattr(cls, "_cache", None) is None):
             return super(TCMS, cls).__new__(cls)
-        # Make sure that cache has been initialized
-        Cache()
         # Look up cached object by id (or other arguments in kwargs)
         try:
             # If found, we get instance and key by which it was found
@@ -405,7 +389,3 @@ class TCMS(object):
         # Index each given key
         for key in keys:
             self.__class__._cache[key] = self
-
-
-# We need to import cache only here because of cyclic import
-from tcms_api.cache import Cache  # noqa: E402
