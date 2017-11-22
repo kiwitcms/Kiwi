@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import re, sys, optparse
-from nitrate import *
+from tcms_api import *
 
 if __name__ == "__main__":
     parser = optparse.OptionParser(usage="matrix.py --plan PLAN [options]")
