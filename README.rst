@@ -38,6 +38,8 @@ Brief history
   started migrating to modern UI using Patternfly
 * Oct 2017 - Kiwi TCMS has an official website at http://kiwitcms.org and
   will be developed as a community project sponsored by Mr. Senko, Ltd.
+* Nov 2017 - merge the python-nitrate API client sources and modify them
+  to work with the current code base.
 
 
 Documentation
