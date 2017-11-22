@@ -43,11 +43,13 @@ if sys.version_info.major == 2:
     import urllib2
     import httplib
     from cookielib import CookieJar
+    from ConfigParser import SafeConfigParser as ConfigParser
 else:
     import xmlrpc.client as xmlrpclib
     import urllib.request as urllib2
     import http.client as httplib
     from http.cookiejar import CookieJar
+    from configparser import ConfigParser
 
 VERBOSE = 0
 DEBUG = 0
@@ -342,8 +344,7 @@ class TCMSXmlrpc(object):
     """
     @classmethod
     def from_config(cls, filename):
-        from ConfigParser import SafeConfigParser
-        cp = SafeConfigParser()
+        cp = ConfigParser()
         cp.read([filename])
         kwargs = dict(
             [(key, cp.get('tcms', key)) for key in [

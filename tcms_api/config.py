@@ -68,9 +68,9 @@ status use 'print TCMS()' which gives a short summary like this:
 """
 
 try:
-    import ConfigParser
+    from ConfigParser import SafeConfigParser as ConfigParser
 except ImportError:
-    import configparser as ConfigParser
+    from configparser import ConfigParser
 
 import datetime
 import logging
@@ -272,7 +272,7 @@ class Config(object):
 
         # Parse the config
         try:
-            parser = ConfigParser.SafeConfigParser()
+            parser = ConfigParser()
             parser.read([self.path])
             for section in parser.sections():
                 # Create a new section object for each section
