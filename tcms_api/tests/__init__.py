@@ -52,7 +52,7 @@ class BaseAPIClient_TestCase(StaticLiveServerTestCase):
 
         # reset connection to server b/c the address changes for
         # every test and the client caches this as a class attribute
-        tcms_api.Nitrate._connection = None
+        tcms_api.TCMS._connection = None
         # also the config is a singleton so reset that too
         # to force config reload
         tcms_api.Config._instance = None
@@ -69,7 +69,7 @@ class BaseAPIClient_TestCase(StaticLiveServerTestCase):
         # TODO: change config values instead of overwriting files on disk
         conf_path = os.path.expanduser('~/.tcms.conf')
         conf_fh = open(conf_path, 'w')
-        conf_fh.write("""[nitrate]
+        conf_fh.write("""[tcms]
 url = %s/xmlrpc/
 username = %s
 password = %s

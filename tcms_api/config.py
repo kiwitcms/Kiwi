@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -21,21 +21,21 @@
 """
 Configuration, logging, coloring & caching
 
-To be able to contact the Nitrate server a minimal user configuration
-file ~/.nitrate has to be provided in the user home directory:
+To be able to contact the TCMS server a minimal user configuration
+file ~/.tcms.conf has to be provided in the user home directory:
 
-    [nitrate]
-    url = https://nitrate.server/xmlrpc/
+    [tcms]
+    url = https://tcms.server/xmlrpc/
 
 In that case Kerberos will be used for authentication. If username and
 password are provided plain authentication will be used instead. E.g.
 
-    [nitrate]
-    url = https://nitrate.server/xmlrpc/
+    [tcms]
+    url = https://tcms.server/xmlrpc/
     username = login
     password = secret
 
-It's also possible to provide system-wide config in /etc/nitrate.conf.
+It's also possible to provide system-wide config in /etc/tcms.conf.
 
 
 Logging
@@ -61,9 +61,9 @@ more details. In addition, you can easily display info messages using:
 
 which prints provided message (to the standard error output) always,
 regardless the current log level. To get a brief overview about current
-status use 'print Nitrate()' which gives a short summary like this:
+status use 'print TCMS()' which gives a short summary like this:
 
-    Nitrate server: https://nitrate.server/xmlrpc/
+    TCMS server: https://tcms.server/xmlrpc/
     Total requests handled: 0
 """
 
@@ -77,7 +77,7 @@ import logging
 import sys
 import os
 
-from tcms_api.xmlrpc import NitrateError
+from tcms_api.xmlrpc import TCMSError
 from tcms_api.utils import color
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -170,9 +170,9 @@ class Logging(object):
 
     @staticmethod
     def _create_logger():
-        """ Create nitrate logger """
+        """ Create logger """
         # Create logger, handler and formatter
-        logger = logging.getLogger('nitrate')
+        logger = logging.getLogger('tcms')
         handler = logging.StreamHandler()
         handler.setLevel(logging.NOTSET)
         handler.setFormatter(Logging.ColoredFormatter())
@@ -244,8 +244,8 @@ class Config(object):
     path = os.path.expanduser("~/.tcms.conf")
     # Minimal config example
     example = ("Please, provide at least a minimal config file {0}:\n"
-               "[nitrate]\n"
-               "url = https://nitrate.server/xmlrpc/".format(path))
+               "[tcms]\n"
+               "url = https://tcms.server/xmlrpc/".format(path))
 
     def __new__(cls, *args, **kwargs):
         """ Make sure we create a single instance only """
@@ -263,11 +263,11 @@ class Config(object):
             """ Trivial class for sections """
         # Try system settings when the config does not exist in user directory
         if not os.path.exists(self.path):
-            log.debug("User config file not found, trying /etc/nitrate.conf")
+            log.debug("User config file not found, trying /etc/tcms.conf")
             self.path = "/etc/tcms.conf"
         if not os.path.exists(self.path):
             log.error(self.example)
-            raise NitrateError("No config file found")
+            raise TCMSError("No config file found")
         log.debug("Parsing config file {0}".format(self.path))
 
         # Parse the config
@@ -290,15 +290,15 @@ class Config(object):
                     setattr(getattr(self, section), name, value)
         except ConfigParser.Error:
             log.error(self.example)
-            raise NitrateError(
+            raise TCMSError(
                 "Cannot read the config file")
 
         # Make sure the server URL is set
         try:
-            self.nitrate.url is not None
+            self.tcms.url is not None
         except AttributeError:
             log.error(self.example)
-            raise NitrateError("No url found in the config file")
+            raise TCMSError("No url found in the config file")
         self._parsed = True
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -342,7 +342,7 @@ class Coloring(object):
             except Exception:
                 mode = COLOR_AUTO
         elif mode < 0 or mode > 2:
-            raise NitrateError("Invalid color mode '{0}'".format(mode))
+            raise TCMSError("Invalid color mode '{0}'".format(mode))
         self._mode = mode
         log.debug("Coloring {0} ({1})".format(
             "enabled" if self.enabled() else "disabled",
@@ -431,7 +431,7 @@ class Caching(object):
         elif level >= CACHE_NONE and level <= CACHE_PERSISTENT:
             self._level = level
         else:
-            raise NitrateError("Invalid cache level '{0}'".format(level))
+            raise TCMSError("Invalid cache level '{0}'".format(level))
         log.debug("Caching on level {0} ({1})".format(
             self._level, self.LEVELS[self._level]))
 

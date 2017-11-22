@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -122,7 +122,7 @@ class UtilsTests(unittest.TestCase):
 class BuildTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
-        self.requests = Nitrate._requests
+        self.requests = TCMS._requests
         self.cache_level = get_cache_level()
 
     def tearDown(self):
@@ -147,13 +147,13 @@ class BuildTests(BaseAPIClient_TestCase):
         """ Invalid build id should raise exception """
         def fun():
             return Build(-1).name
-        self.assertRaises(NitrateError, fun)
+        self.assertRaises(TCMSError, fun)
 
     def test_invalid_build_name(self):
         """ Invalid build name should raise exception """
         def fun():
             return Build(name="bbbad-bbbuild", product=self.product.name).id
-        self.assertRaises(NitrateError, fun)
+        self.assertRaises(TCMSError, fun)
 
     def test_cache_none(self):
         """ Cache none """
@@ -163,7 +163,7 @@ class BuildTests(BaseAPIClient_TestCase):
         build2 = Build(self.build.id)
         self.assertEqual(build2.name, self.build.name)
         self.assertEqual(build1, build2)
-        self.assertEqual(Nitrate._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, self.requests + 2)
 
     def test_cache_objects(self):
         """ Cache objects """
@@ -174,7 +174,7 @@ class BuildTests(BaseAPIClient_TestCase):
         self.assertEqual(build2.name, self.build.name)
         self.assertEqual(build1, build2)
         self.assertEqual(id(build1), id(build2))
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Category
@@ -186,7 +186,7 @@ class CategoryTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
         self.cache_level = get_cache_level()
-        self.requests = Nitrate._requests
+        self.requests = TCMS._requests
 
     def tierDown(self):
         """ Restore cache level """
@@ -214,11 +214,11 @@ class CategoryTests(BaseAPIClient_TestCase):
         # The first round (fetch category data from server)
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
         # The second round (there should be no more requests)
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
 
     def test_cache_none(self):
         """ Cache none """
@@ -226,11 +226,11 @@ class CategoryTests(BaseAPIClient_TestCase):
         # The first round (fetch category data from server)
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
         # The second round (there should be another request)
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(Nitrate._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, self.requests + 2)
 
     def test_invalid_category(self):
         """ Invalid category should raise exception """
@@ -238,7 +238,7 @@ class CategoryTests(BaseAPIClient_TestCase):
             Category(category="Bad", product=self.product.name).id
         original_log_level = get_log_level()
         set_log_level(log.CRITICAL)
-        self.assertRaises(NitrateError, fun)
+        self.assertRaises(TCMSError, fun)
         set_log_level(original_log_level)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -250,7 +250,7 @@ class PlanTypeTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
         self.original_cache_level = get_cache_level()
-        self.requests = Nitrate._requests
+        self.requests = TCMS._requests
 
     def tierDown(self):
         """ Restore cache level """
@@ -262,7 +262,7 @@ class PlanTypeTests(BaseAPIClient_TestCase):
             PlanType(name="Bad Plan Type").id
         original_log_level = get_log_level()
         set_log_level(log.CRITICAL)
-        self.assertRaises(NitrateError, fun)
+        self.assertRaises(TCMSError, fun)
         set_log_level(original_log_level)
 
     def test_valid_type(self):
@@ -283,15 +283,15 @@ class PlanTypeTests(BaseAPIClient_TestCase):
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype1.name, six.string_types))
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
         # The second round (there should be no more requests)
         plantype2 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype2.name, six.string_types))
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
         # The third round (fetching by plan type name)
         plantype3 = PlanType(self.plantype.name)
         self.assertTrue(isinstance(plantype3.id, int))
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
         # All plan types should point to the same object
         self.assertEqual(id(plantype1), id(plantype2))
         self.assertEqual(id(plantype1), id(plantype3))
@@ -302,15 +302,15 @@ class PlanTypeTests(BaseAPIClient_TestCase):
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype1.name, six.string_types))
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
         # The second round (there should be another request)
         plantype2 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype2.name, six.string_types))
-        self.assertEqual(Nitrate._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, self.requests + 2)
         # The third round (fetching by plan type name)
         plantype3 = PlanType(self.plantype.name)
         self.assertTrue(isinstance(plantype3.id, int))
-        self.assertEqual(Nitrate._requests, self.requests + 3)
+        self.assertEqual(TCMS._requests, self.requests + 3)
         # Plan types should be different objects in memory
         self.assertNotEqual(id(plantype1), id(plantype2))
         self.assertNotEqual(id(plantype1), id(plantype3))
@@ -342,14 +342,14 @@ class ProductTests(BaseAPIClient_TestCase):
 
     def testProductCaching(self):
         """ Test caching in Product class """
-        requests = Nitrate._requests
+        requests = TCMS._requests
         # Turn off caching
         set_cache_level(CACHE_NONE)
         product = Product(self.product.id)
         log.info(product.name)
         product = Product(self.product.id)
         log.info(product.name)
-        self.assertEqual(Nitrate._requests, requests + 2)
+        self.assertEqual(TCMS._requests, requests + 2)
         # Turn on caching
         Product._cache = {}
         set_cache_level(CACHE_OBJECTS)
@@ -357,11 +357,11 @@ class ProductTests(BaseAPIClient_TestCase):
         log.info(product.name)
         product = Product(self.product.id)
         log.info(product.name)
-        self.assertEqual(Nitrate._requests, requests + 3)
+        self.assertEqual(TCMS._requests, requests + 3)
 
     def testProductAdvancedCachingID(self):
         """ Advanced caching (init by ID) """
-        requests = Nitrate._requests
+        requests = TCMS._requests
         Product._cache = {}
         # Turn off caching
         set_cache_level(CACHE_NONE)
@@ -369,7 +369,7 @@ class ProductTests(BaseAPIClient_TestCase):
         log.info(product.name)
         product2 = Product(self.product.name)
         log.info(product2.id)
-        self.assertEqual(Nitrate._requests, requests + 2)
+        self.assertEqual(TCMS._requests, requests + 2)
         self.assertNotEqual(id(product), id(product2))
         # Turn on caching
         Product._cache = {}
@@ -378,12 +378,12 @@ class ProductTests(BaseAPIClient_TestCase):
         log.info(product.name)
         product2 = Product(self.product.name)
         log.info(product2.id)
-        self.assertEqual(Nitrate._requests, requests + 3)
+        self.assertEqual(TCMS._requests, requests + 3)
         self.assertEqual(id(product), id(product2))
 
     def testProductAdvancedCachingName(self):
         """ Advanced caching (init by name) """
-        requests = Nitrate._requests
+        requests = TCMS._requests
         Product._cache = {}
         # Turn off caching
         set_cache_level(CACHE_NONE)
@@ -391,7 +391,7 @@ class ProductTests(BaseAPIClient_TestCase):
         log.info(product.id)
         product2 = Product(self.product.id)
         log.info(product2.name)
-        self.assertEqual(Nitrate._requests, requests + 2)
+        self.assertEqual(TCMS._requests, requests + 2)
         self.assertNotEqual(id(product), id(product2))
         # Turn on caching
         Product._cache = {}
@@ -400,7 +400,7 @@ class ProductTests(BaseAPIClient_TestCase):
         log.info(product.id)
         product2 = Product(self.product.id)
         log.info(product2.name)
-        self.assertEqual(Nitrate._requests, requests + 3)
+        self.assertEqual(TCMS._requests, requests + 3)
         self.assertEqual(id(product), id(product2))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -412,7 +412,7 @@ class UserTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Clear cache, save cache level and initialize test data """
         self.original_cache_level = get_cache_level()
-        self.requests = Nitrate._requests
+        self.requests = TCMS._requests
 
     def tierDown(self):
         """ Restore cache level """
@@ -442,7 +442,7 @@ class UserTests(BaseAPIClient_TestCase):
         user3 = User(self.api_user.email)
         log.info(user3.name)
         # Three requests to the server should be performed
-        self.assertEqual(Nitrate._requests, self.requests + 3)
+        self.assertEqual(TCMS._requests, self.requests + 3)
         # User data should be the same
         for user in [user1, user2, user3]:
             self.assertEqual(user.id, self.api_user.pk)
@@ -463,7 +463,7 @@ class UserTests(BaseAPIClient_TestCase):
         user3 = User(self.api_user.email)
         log.info(user3.name)
         # Single request to the server should be performed
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
         # All users objects should be identical
         self.assertEqual(id(user1), id(user2))
         self.assertEqual(id(user1), id(user3))
@@ -504,7 +504,7 @@ class VersionTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up version from the config """
         self.cache_level = get_cache_level()
-        self.requests = Nitrate._requests
+        self.requests = TCMS._requests
 
     def tierDown(self):
         """ Restore cache level """
@@ -534,7 +534,7 @@ class VersionTests(BaseAPIClient_TestCase):
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
         # Fetches the version twice ---> 2 requests
-        self.assertEqual(Nitrate._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, self.requests + 2)
 
     def test_cache_objects(self):
         """ Cache objects """
@@ -544,7 +544,7 @@ class VersionTests(BaseAPIClient_TestCase):
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
         # Should fetch version just once ---> 1 request
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
 
     @unittest.skip('skip caching tests')
     def test_cache_persistent(self):
@@ -557,11 +557,11 @@ class VersionTests(BaseAPIClient_TestCase):
         cache.save()
         cache.clear()
         cache.load()
-        requests = Nitrate._requests
+        requests = TCMS._requests
         # Fetch once again ---> no additional request
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
-        self.assertEqual(Nitrate._requests, requests)
+        self.assertEqual(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Component
@@ -595,15 +595,15 @@ class ComponentTests(BaseAPIClient_TestCase):
         Component._cache = {}
         # Enable cache, remember current number of requests
         set_cache_level(CACHE_OBJECTS)
-        requests = Nitrate._requests
+        requests = TCMS._requests
         # The first round (fetch component data from server)
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
-        self.assertEqual(Nitrate._requests, requests + 1)
+        self.assertEqual(TCMS._requests, requests + 1)
         # The second round (there should be no more requests)
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
-        self.assertEqual(Nitrate._requests, requests + 1)
+        self.assertEqual(TCMS._requests, requests + 1)
 
     def testCachingOff(self):
         """ Component caching off """
@@ -611,13 +611,13 @@ class ComponentTests(BaseAPIClient_TestCase):
         Component._cache = {}
         # Enable cache, remember current number of requests
         set_cache_level(CACHE_NONE)
-        requests = Nitrate._requests
+        requests = TCMS._requests
 
         # The first round (fetch component data from server)
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
-        self.assertGreater(Nitrate._requests, requests)
-        requests = Nitrate._requests
+        self.assertGreater(TCMS._requests, requests)
+        requests = TCMS._requests
 
         # delete component to cause re-fetch from the server
         del component
@@ -625,7 +625,7 @@ class ComponentTests(BaseAPIClient_TestCase):
         # The second round (there should be another request)
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
-        self.assertGreater(Nitrate._requests, requests)
+        self.assertGreater(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Tag
@@ -658,10 +658,10 @@ class TagTests(BaseAPIClient_TestCase):
         # Object caching
         if get_cache_level() < CACHE_OBJECTS:
             return
-        requests = Nitrate._requests
+        requests = TCMS._requests
         tag = Tag(self.tag.id)
         self.assertEqual(tag.name, self.tag.name)
-        self.assertEqual(requests, Nitrate._requests)
+        self.assertEqual(requests, TCMS._requests)
         # Persistent caching
         if get_cache_level() < CACHE_PERSISTENT:
             return
@@ -670,7 +670,7 @@ class TagTests(BaseAPIClient_TestCase):
         cache.load()
         tag = Tag(self.tag.id)
         self.assertEqual(tag.name, self.tag.name)
-        self.assertEqual(requests, Nitrate._requests)
+        self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestPlan
@@ -679,7 +679,7 @@ class TagTests(BaseAPIClient_TestCase):
 
 class TestPlanTests(BaseAPIClient_TestCase):
     def setUp(self):
-        self.requests = Nitrate._requests
+        self.requests = TCMS._requests
         self.cache_level = get_cache_level()
 
     def tierDown(self):
@@ -688,7 +688,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
 
     def test_create_invalid(self):
         """ Create a new test plan (missing required parameters) """
-        self.assertRaises(NitrateError, TestPlan, name="Test plan")
+        self.assertRaises(TCMSError, TestPlan, name="Test plan")
 
     def test_create_valid(self):
         """ Create a new test plan (valid) """
@@ -703,7 +703,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
 
     def test_fetch_nonexistent(self):
         """ Fetch non-existent test plan """
-        with self.assertRaises(NitrateError):
+        with self.assertRaises(TCMSError):
             TestPlan(-1).name
 
     def test_get_by_id(self):
@@ -745,7 +745,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
         self.assertEqual(testplan.name, self.master.name)
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
-        self.assertEqual(Nitrate._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, self.requests + 2)
 
     def test_cache_objects(self):
         """ Cache objects """
@@ -755,7 +755,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
         self.assertEqual(testplan.name, self.master.name)
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
-        self.assertEqual(Nitrate._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, self.requests + 1)
 
     @unittest.skip('skip caching tests')
     def test_cache_persistent(self):
@@ -768,11 +768,11 @@ class TestPlanTests(BaseAPIClient_TestCase):
         cache.save()
         cache.clear()
         cache.load()
-        requests = Nitrate._requests
+        requests = TCMS._requests
         # Fetch once again ---> no additional request
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
-        self.assertEqual(Nitrate._requests, requests)
+        self.assertEqual(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestRun
@@ -787,7 +787,7 @@ class TestRunTests(BaseAPIClient_TestCase):
 
     def testCreateInvalid(self):
         """ Create a new test run (missing required parameters) """
-        self.assertRaises(NitrateError, TestRun, summary="Test run")
+        self.assertRaises(TCMSError, TestRun, summary="Test run")
 
     def testCreateValid(self):
         """ Create a new test run (valid) """
@@ -797,7 +797,7 @@ class TestRunTests(BaseAPIClient_TestCase):
 
     def test_fetch_nonexistent(self):
         """ Fetch non-existent test run """
-        with self.assertRaises(NitrateError):
+        with self.assertRaises(TCMSError):
             TestRun(-1).notes
 
     def testGetById(self):
@@ -843,14 +843,14 @@ class TestRunTests(BaseAPIClient_TestCase):
     def testTestRunCaching(self):
         """ Test caching in TestRun class """
         TestRun._cache = {}
-        requests = Nitrate._requests
+        requests = TCMS._requests
         # Turn off caching
         set_cache_level(CACHE_NONE)
         testrun = TestRun(self.testrun.id)
         log.info(testrun.summary)
         testrun = TestRun(self.testrun.id)
         log.info(testrun.summary)
-        self.assertEqual(Nitrate._requests, requests + 2)
+        self.assertEqual(TCMS._requests, requests + 2)
         # Turn on caching
         TestRun._cache = {}
         set_cache_level(CACHE_OBJECTS)
@@ -858,7 +858,7 @@ class TestRunTests(BaseAPIClient_TestCase):
         log.info(testrun.summary)
         testrun = TestRun(self.testrun.id)
         log.info(testrun.summary)
-        self.assertEqual(Nitrate._requests, requests + 3)
+        self.assertEqual(TCMS._requests, requests + 3)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestCase
@@ -872,7 +872,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
     def testCreateInvalid(self):
         """ Create a new test case (missing required parameters) """
         self.assertRaises(
-            NitrateError, TestCase, summary="Test case summary")
+            TCMSError, TestCase, summary="Test case summary")
 
     def testCreateValid(self):
         """ Create a new test case (valid) """
@@ -932,7 +932,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
 
     def test_fetch_nonexistent(self):
         """ Fetch non-existent test case """
-        with self.assertRaises(NitrateError):
+        with self.assertRaises(TCMSError):
             TestCase(-1).summary
 
     def testGetById(self):
@@ -945,7 +945,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
 
     def testGetByInvalidId(self):
         """ Fetch an existing test case by id (invalid id) """
-        self.assertRaises(NitrateError, TestCase, 'invalid-id')
+        self.assertRaises(TCMSError, TestCase, 'invalid-id')
 
     def testReferenceLink(self):
         """ Fetch and update test case reference link """
@@ -979,14 +979,14 @@ class TestCaseTests(BaseAPIClient_TestCase):
 
     def testTestCaseCaching(self):
         """ Test caching in TestCase class """
-        requests = Nitrate._requests
+        requests = TCMS._requests
         # Turn off caching
         set_cache_level(CACHE_NONE)
         testcase = TestCase(self.testcase.id)
         log.info(testcase.summary)
         testcase = TestCase(self.testcase.id)
         log.info(testcase.summary)
-        self.assertEqual(Nitrate._requests, requests + 2)
+        self.assertEqual(TCMS._requests, requests + 2)
         # Turn on caching
         TestCase._cache = {}
         set_cache_level(CACHE_OBJECTS)
@@ -994,7 +994,7 @@ class TestCaseTests(BaseAPIClient_TestCase):
         log.info(testcase.summary)
         testcase = TestCase(self.testcase.id)
         log.info(testcase.summary)
-        self.assertEqual(Nitrate._requests, requests + 3)
+        self.assertEqual(TCMS._requests, requests + 3)
 
     def test_performance_testcases_and_testers(self):
         """ Checking test cases and their default testers
@@ -1100,10 +1100,10 @@ class CasePlanTests(BaseAPIClient_TestCase):
             # Check the cache content
             if get_cache_level() < CACHE_OBJECTS:
                 continue
-            requests = Nitrate._requests
+            requests = TCMS._requests
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
             self.assertEqual(caseplan.sortkey, sortkey)
-            self.assertEqual(requests, Nitrate._requests)
+            self.assertEqual(requests, TCMS._requests)
             # Check persistent cache
             # if get_cache_level() < CACHE_PERSISTENT:
             #     continue
@@ -1112,7 +1112,7 @@ class CasePlanTests(BaseAPIClient_TestCase):
             # cache.load()
             # caseplan = CasePlan(testcase=testcase, testplan=testplan)
             # self.assertEqual(caseplan.sortkey, sortkey)
-            # self.assertEqual(requests, Nitrate._requests)
+            # self.assertEqual(requests, TCMS._requests)
 
     @unittest.skip('skip caching tests')
     def test_persistent_cache(self):
@@ -1595,11 +1595,11 @@ class PlanRunsTests(BaseAPIClient_TestCase):
         #    cache.save()
         #    cache.clear()
         #    cache.load()
-        #    requests = Nitrate._requests
+        #    requests = TCMS._requests
         #    testplan = TestPlan(self.master.id)
         #    testrun = TestRun(self.testrun.id)
         #    self.assertTrue(testrun in testplan.testruns)
-        #    self.assertEqual(requests, Nitrate._requests)
+        #    self.assertEqual(requests, TCMS._requests)
 
     @unittest.skip('skip caching tests')
     def test_cache(self):
@@ -1616,11 +1616,11 @@ class PlanRunsTests(BaseAPIClient_TestCase):
         #    cache.save()
         #    cache.clear()
         #    cache.load()
-        #    requests = Nitrate._requests
+        #    requests = TCMS._requests
         #    testplan = TestPlan(self.master.id)
         #    testrun = TestRun(self.testrun.id)
         #    self.assertTrue(testrun in testplan.testruns)
-        #    self.assertEqual(requests, Nitrate._requests)
+        #    self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanCasePlans
@@ -1651,10 +1651,10 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
             # Check the cache content
             if get_cache_level() < CACHE_OBJECTS:
                 continue
-            requests = Nitrate._requests
+            requests = TCMS._requests
             testplan = TestPlan(self.master.id)
             self.assertEqual(testplan.sortkey(testcase), sortkey)
-            self.assertEqual(requests, Nitrate._requests)
+            self.assertEqual(requests, TCMS._requests)
             # Check persistent cache
             # if get_cache_level() < CACHE_PERSISTENT:
             #    continue
@@ -1663,7 +1663,7 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
             # cache.load()
             # testplan = TestPlan(self.master.id)
             # self.assertEqual(testplan.sortkey(testcase), sortkey)
-            # self.assertEqual(requests, Nitrate._requests)
+            # self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunCases
@@ -1750,6 +1750,6 @@ class RunCaseRunsTests(BaseAPIClient_TestCase):
             [testcase for testcase in testplan]))
         # Now fetching case runs should be a single query to the
         # server because all test cases have already been fetched
-        requests = Nitrate._requests
+        requests = TCMS._requests
         listed([caserun.status for caserun in testrun])
-        self.assertEqual(Nitrate._requests, requests + 1)
+        self.assertEqual(TCMS._requests, requests + 1)

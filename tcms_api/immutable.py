@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -19,7 +19,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Immutable Nitrate objects
+Immutable TCMS objects
 """
 
 import re
@@ -34,16 +34,16 @@ from pprint import pformat as pretty
 import tcms_api.config as config
 
 from tcms_api.config import log
-from tcms_api.base import Nitrate, NitrateNone, _getter, _idify
+from tcms_api.base import TCMS, TCMSNone, _getter, _idify
 from tcms_api.utils import color
-from tcms_api.xmlrpc import NitrateError
+from tcms_api.xmlrpc import TCMSError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Build Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Build(Nitrate):
+class Build(TCMS):
     """ Product build """
 
     # Local cache of Build
@@ -89,7 +89,7 @@ class Build(Nitrate):
         id, ignore, inject, initialized = self._is_initialized(id or name)
         if initialized:
             return
-        Nitrate.__init__(self, id)
+        TCMS.__init__(self, id)
 
         # If inject given, fetch build data from it
         if inject:
@@ -103,13 +103,13 @@ class Build(Nitrate):
             else:
                 self._product = Product(product)
             # Index by name-product (only when the product name is known)
-            if self.product._name is not NitrateNone:
+            if self.product._name is not TCMSNone:
                 self._index("{0}---in---{1}".format(
                     self.name, self.product.name))
         # Otherwise just check that the id was provided
         elif not id:
-            raise NitrateError("Need either build id or both build name "
-                               "and product to initialize the Build object.")
+            raise TCMSError("Need either build id or both build name "
+                            "and product to initialize the Build object.")
 
     def __str__(self):
         """ Build name for printing """
@@ -121,19 +121,19 @@ class Build(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing build data """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
         # Directly fetch from the initial object dict
         if inject is not None:
             log.info("Processing build ID#{0} inject".format(
                 inject["build_id"]))
         # Search by build id
-        elif self._id is not NitrateNone:
+        elif self._id is not TCMSNone:
             try:
                 log.info("Fetching build " + self.identifier)
                 inject = self._server.Build.get(self.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find build for " + self.identifier)
         # Search by build name and product
         else:
@@ -145,12 +145,12 @@ class Build(Nitrate):
                 self._id = inject["build_id"]
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError("Build '{0}' not found in '{1}'".format(
+                raise TCMSError("Build '{0}' not found in '{1}'".format(
                     self.name, self.product.name))
             except KeyError:
                 if "args" in inject:
                     log.debug(inject["args"])
-                raise NitrateError("Build '{0}' not found in '{1}'".format(
+                raise TCMSError("Build '{0}' not found in '{1}'".format(
                     self.name, self.product.name))
 
         # Initialize data from the inject and index into cache
@@ -169,7 +169,7 @@ class Build(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Category(Nitrate):
+class Category(TCMS):
     """ Test case category """
 
     # Local cache of Category objects indexed by category id
@@ -221,7 +221,7 @@ class Category(Nitrate):
         id, ignore, inject, initialized = self._is_initialized(id or name)
         if initialized:
             return
-        Nitrate.__init__(self, id)
+        TCMS.__init__(self, id)
 
         # If inject given, fetch tag data from it
         if inject:
@@ -235,13 +235,13 @@ class Category(Nitrate):
             else:
                 self._product = Product(product)
             # Index by name-product (only when the product name is known)
-            if self.product._name is not NitrateNone:
+            if self.product._name is not TCMSNone:
                 self._index("{0}---in---{1}".format(
                     self.name, self.product.name))
         # Otherwise just check that the id was provided
         elif not id:
-            raise NitrateError("Need either category id or both category "
-                               "name and product to initialize the Category object.")
+            raise TCMSError("Need either category id or both category "
+                            "name and product to initialize the Category object.")
 
     def __str__(self):
         """ Category name for printing """
@@ -253,19 +253,19 @@ class Category(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing category data """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
             log.info("Processing category ID#{0} inject".format(inject["id"]))
         # Search by category id
-        elif self._id is not NitrateNone:
+        elif self._id is not TCMSNone:
             try:
                 log.info("Fetching category {0}".format(self.identifier))
                 inject = self._server.Product.get_category(self.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find category for " + self.identifier)
         # Search by category name and product
         else:
@@ -276,8 +276,8 @@ class Category(Nitrate):
                     self.name, self.product.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError("Category '{0}' not found in"
-                                   " '{1}'".format(self.name, self.product.name))
+                raise TCMSError("Category '{0}' not found in"
+                                " '{1}'".format(self.name, self.product.name))
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing category ID#{0}".format(inject["id"]))
@@ -295,7 +295,7 @@ class Category(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class PlanType(Nitrate):
+class PlanType(TCMS):
     """ Plan type """
 
     # Local cache of PlanType objects indexed by plan type id
@@ -339,7 +339,7 @@ class PlanType(Nitrate):
         id, name, inject, initialized = self._is_initialized(id or name)
         if initialized:
             return
-        Nitrate.__init__(self, id)
+        TCMS.__init__(self, id)
 
         # If inject given, fetch data from it
         if inject:
@@ -350,7 +350,7 @@ class PlanType(Nitrate):
             self._index(name)
         # Otherwise just check that the test plan type id was provided
         elif not id:
-            raise NitrateError(
+            raise TCMSError(
                 "Need either id or name to initialize the PlanType object")
 
     def __str__(self):
@@ -363,19 +363,19 @@ class PlanType(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing test plan type data """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
             log.info("Processing PlanType ID#{0} inject".format(inject["id"]))
         # Search by test plan type id
-        elif self._id is not NitrateNone:
+        elif self._id is not TCMSNone:
             try:
                 log.info("Fetching test plan type " + self.identifier)
                 inject = self._server.TestPlan.get_plan_type(self.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find test plan type for " + self.identifier)
         # Search by test plan type name
         else:
@@ -384,7 +384,7 @@ class PlanType(Nitrate):
                 inject = self._server.TestPlan.check_plan_type(self.name)
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError("PlanType '{0}' not found".format(
+                raise TCMSError("PlanType '{0}' not found".format(
                     self.name))
         # Initialize data from the inject and index into cache
         log.debug("Initializing PlanType ID#{0}".format(inject["id"]))
@@ -400,7 +400,7 @@ class PlanType(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Priority(Nitrate):
+class Priority(TCMS):
     """ Test case priority """
 
     _priorities = ['P0', 'P1', 'P2', 'P3', 'P4', 'P5']
@@ -413,14 +413,14 @@ class Priority(Nitrate):
 
         if isinstance(priority, int):
             if priority < 1 or priority > 5:
-                raise NitrateError(
+                raise TCMSError(
                     "Not a valid Priority id: '{0}'".format(priority))
             self._id = priority
         else:
             try:
                 self._id = self._priorities.index(priority)
             except ValueError:
-                raise NitrateError("Invalid priority '{0}'".format(priority))
+                raise TCMSError("Invalid priority '{0}'".format(priority))
 
     def __str__(self):
         """ Return priority name for printing """
@@ -441,7 +441,7 @@ class Priority(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Product(Nitrate):
+class Product(TCMS):
     """ Product """
 
     # Local cache of Product
@@ -488,7 +488,7 @@ class Product(Nitrate):
         id, name, inject, initialized = self._is_initialized(id or name)
         if initialized:
             return
-        Nitrate.__init__(self, id)
+        TCMS.__init__(self, id)
 
         # If inject given, fetch test case data from it
         if inject:
@@ -499,7 +499,7 @@ class Product(Nitrate):
             self._index(name)
         # Otherwise just check that the product id was provided
         elif not id:
-            raise NitrateError("Need id or name to initialize Product")
+            raise TCMSError("Need id or name to initialize Product")
 
     def __str__(self):
         """ Product name for printing """
@@ -509,7 +509,7 @@ class Product(Nitrate):
     def search(**query):
         """ Search for products """
         return [Product(hash["id"])
-                for hash in Nitrate()._server.Product.filter(dict(query))]
+                for hash in TCMS()._server.Product.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  Product Methods
@@ -517,7 +517,7 @@ class Product(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch product data from the server """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -526,7 +526,7 @@ class Product(Nitrate):
             self._id = inject["id"]
             self._name = inject["name"]
         # Search by product id
-        elif self._id is not NitrateNone:
+        elif self._id is not TCMSNone:
             try:
                 log.info("Fetching product " + self.identifier)
                 inject = self._server.Product.filter({'id': self.id})[0]
@@ -535,7 +535,7 @@ class Product(Nitrate):
                 self._inject = inject
                 self._name = inject["name"]
             except IndexError:
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find product for " + self.identifier)
         # Search by product name
         else:
@@ -547,7 +547,7 @@ class Product(Nitrate):
                 self._inject = inject
                 self._id = inject["id"]
             except IndexError:
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find product for '{0}'".format(self.name))
         # Index the fetched object into cache
         self._index(self.name)
@@ -557,7 +557,7 @@ class Product(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class PlanStatus(Nitrate):
+class PlanStatus(TCMS):
     """ Test plan status (is_active field) """
 
     _statuses = ["DISABLED", "ENABLED"]
@@ -573,7 +573,7 @@ class PlanStatus(Nitrate):
 
         if isinstance(status, int):
             if status not in [0, 1]:
-                raise NitrateError(
+                raise TCMSError(
                     "Not a valid plan status id: '{0}'".format(status))
             # Save id (and convert possible bool to int)
             self._id = int(status)
@@ -581,7 +581,7 @@ class PlanStatus(Nitrate):
             try:
                 self._id = self._statuses.index(status)
             except ValueError:
-                raise NitrateError("Invalid plan status '{0}'".format(status))
+                raise TCMSError("Invalid plan status '{0}'".format(status))
 
     def __str__(self):
         """ Return plan status name for printing """
@@ -608,7 +608,7 @@ class PlanStatus(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class RunStatus(Nitrate):
+class RunStatus(TCMS):
     """ Test run status """
 
     _statuses = ['RUNNING', 'FINISHED']
@@ -624,7 +624,7 @@ class RunStatus(Nitrate):
         """
         if isinstance(status, int):
             if status not in [0, 1]:
-                raise NitrateError(
+                raise TCMSError(
                     "Not a valid run status id: '{0}'".format(status))
             self._id = status
         else:
@@ -635,7 +635,7 @@ class RunStatus(Nitrate):
             elif status == "FINISHED" or re.match("^[-0-9: ]+$", status):
                 self._id = 1
             else:
-                raise NitrateError("Invalid run status '{0}'".format(status))
+                raise TCMSError("Invalid run status '{0}'".format(status))
 
     def __str__(self):
         """ Return run status name for printing """
@@ -657,7 +657,7 @@ class RunStatus(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class CaseStatus(Nitrate):
+class CaseStatus(TCMS):
     """ Test case status """
 
     _casestatuses = ['PAD', 'PROPOSED', 'CONFIRMED', 'DISABLED', 'NEED_UPDATE']
@@ -669,14 +669,14 @@ class CaseStatus(Nitrate):
         """
         if isinstance(casestatus, int):
             if casestatus < 1 or casestatus > 4:
-                raise NitrateError(
+                raise TCMSError(
                     "Not a valid casestatus id: '{0}'".format(casestatus))
             self._id = casestatus
         else:
             try:
                 self._id = self._casestatuses.index(casestatus)
             except ValueError:
-                raise NitrateError(
+                raise TCMSError(
                     "Invalid casestatus '{0}'".format(casestatus))
 
     def __str__(self):
@@ -699,7 +699,7 @@ class CaseStatus(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Status(Nitrate):
+class Status(TCMS):
     """
     Test case run status.
 
@@ -719,14 +719,14 @@ class Status(Nitrate):
         """
         if isinstance(status, int):
             if status < 1 or status > 8:
-                raise NitrateError(
+                raise TCMSError(
                     "Not a valid Status id: '{0}'".format(status))
             self._id = status
         else:
             try:
                 self._id = self._statuses.index(status)
             except ValueError:
-                raise NitrateError("Invalid status '{0}'".format(status))
+                raise TCMSError("Invalid status '{0}'".format(status))
 
     def __str__(self):
         """ Return status name for printing """
@@ -760,7 +760,7 @@ class Status(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class User(Nitrate):
+class User(TCMS):
     """ User """
 
     # Local cache of User objects indexed by user id
@@ -801,7 +801,7 @@ class User(Nitrate):
     def search(**query):
         """ Search for users """
         return [User(hash)
-                for hash in Nitrate()._server.User.filter(dict(query))]
+                for hash in TCMS()._server.User.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  User Special
@@ -812,9 +812,9 @@ class User(Nitrate):
         # Convert login or email into name for better logging
         if "login" in kwargs or "email" in kwargs:
             name = kwargs.get("login", kwargs.get("email"))
-            return Nitrate.__new__(cls, id=id, name=name, *args, **kwargs)
+            return TCMS.__new__(cls, id=id, name=name, *args, **kwargs)
         else:
-            return Nitrate.__new__(cls, id=id, *args, **kwargs)
+            return TCMS.__new__(cls, id=id, *args, **kwargs)
 
     def __init__(self, id=None, login=None, email=None):
         """
@@ -829,7 +829,7 @@ class User(Nitrate):
         id, name, inject, initialized = self._is_initialized(id or login or email)
         if initialized:
             return
-        Nitrate.__init__(self, id, prefix="UID")
+        TCMS.__init__(self, id, prefix="UID")
 
         # If inject given, fetch data from it
         if inject:
@@ -852,31 +852,31 @@ class User(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch user data from the server """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         if inject is None:
             # Search by id
-            if self._id is not NitrateNone:
+            if self._id is not TCMSNone:
                 try:
                     log.info("Fetching user " + self.identifier)
                     inject = self._server.User.filter({"id": self.id})[0]
                 except IndexError:
-                    raise NitrateError(
+                    raise TCMSError(
                         "Cannot find user for " + self.identifier)
             # Search by login
-            elif self._login is not NitrateNone:
+            elif self._login is not TCMSNone:
                 try:
                     log.info("Fetching user for login '{0}'".format(self.login))
                     inject = self._server.User.filter({"username": self.login})[0]
                 except IndexError:
-                    raise NitrateError("No user found for login '{0}'".format(self.login))
+                    raise TCMSError("No user found for login '{0}'".format(self.login))
             # Search by email
-            elif self._email is not NitrateNone:
+            elif self._email is not TCMSNone:
                 try:
                     log.info("Fetching user for email '{0}'".format(self.email))
                     inject = self._server.User.filter({"email": self.email})[0]
                 except IndexError:
-                    raise NitrateError("No user found for email '{0}'".format(self.email))
+                    raise TCMSError("No user found for email '{0}'".format(self.email))
             # Otherwise initialize to the current user
             else:
                 log.info("Fetching the current user")
@@ -902,7 +902,7 @@ class User(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Version(Nitrate):
+class Version(TCMS):
     """ Product version """
 
     # Local cache of Version
@@ -949,7 +949,7 @@ class Version(Nitrate):
         id, ignore, inject, initialized = self._is_initialized(id)
         if initialized:
             return
-        Nitrate.__init__(self, id)
+        TCMS.__init__(self, id)
 
         # If inject given, fetch tag data from it
         if inject:
@@ -963,12 +963,12 @@ class Version(Nitrate):
             else:
                 self._product = Product(product)
             # Index by name/product (but only when the product name is known)
-            if self.product._name is not NitrateNone:
+            if self.product._name is not TCMSNone:
                 self._index("{0}---in---{1}".format(self.name, self.product.name))
         # Otherwise just make sure the version id was provided
         elif not id:
-            raise NitrateError("Need either version id or both product "
-                               "and version name to initialize the Version object.")
+            raise TCMSError("Need either version id or both product "
+                            "and version name to initialize the Version object.")
 
     def __str__(self):
         """ Version name for printing """
@@ -980,18 +980,18 @@ class Version(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch version data from the server """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
             log.debug("Processing Version ID#{0} inject".format(inject["id"]))
         # Search by version id
-        elif self._id is not NitrateNone:
+        elif self._id is not TCMSNone:
             try:
                 log.info("Fetching version {0}".format(self.identifier))
                 inject = self._server.Product.filter_versions({'id': self.id})[0]
             except IndexError:
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find version for {0}".format(self.identifier))
         # Search by product and name
         else:
@@ -1001,7 +1001,7 @@ class Version(Nitrate):
                 inject = self._server.Product.filter_versions(
                     {'product': self.product.id, 'value': self.name})[0]
             except IndexError:
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find version for '{0}'".format(self.name))
         # Initialize data from the inject and index into cache
         log.debug("Initializing Version ID#{0}".format(inject["id"]))
@@ -1011,7 +1011,7 @@ class Version(Nitrate):
         self._name = inject["value"]
         self._product = Product(inject["product_id"])
         # Index by product name & version name (if product is cached)
-        if self.product._name is not NitrateNone:
+        if self.product._name is not TCMSNone:
             self._index("{0}---in---{1}".format(self.name, self.product.name))
         # Otherwise index by id only
         else:
@@ -1022,7 +1022,7 @@ class Version(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Component(Nitrate):
+class Component(TCMS):
     """ Test case component """
 
     # Local cache of Component objects indexed by component id plus
@@ -1071,7 +1071,7 @@ class Component(Nitrate):
         id, ignore, inject, initialized = self._is_initialized(id)
         if initialized:
             return
-        Nitrate.__init__(self, id)
+        TCMS.__init__(self, id)
 
         # If inject given, fetch component data from it
         if inject:
@@ -1085,13 +1085,13 @@ class Component(Nitrate):
                 self._product = Product(product)
             self._name = name
             # Index by name-product (only when the product name is known)
-            if self.product._name is not NitrateNone:
+            if self.product._name is not TCMSNone:
                 self._index("{0}---in---{1}".format(
                     self.name, self.product.name))
         # Otherwise just check that the id was provided
         elif id is None:
-            raise NitrateError("Need either component id or both product "
-                               "and component name to initialize the Component object.")
+            raise TCMSError("Need either component id or both product "
+                            "and component name to initialize the Component object.")
 
     def __str__(self):
         """ Component name for printing """
@@ -1103,19 +1103,19 @@ class Component(Nitrate):
 
     def _fetch(self, inject=None):
         """ Get the missing component data """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
             log.info("Processing component ID#{0} inject".format(inject["id"]))
         # Search by component id
-        elif self._id is not NitrateNone:
+        elif self._id is not TCMSNone:
             try:
                 log.info("Fetching component " + self.identifier)
                 inject = self._server.Product.get_component(self.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find component for " + self.identifier)
         # Search by component name and product
         else:
@@ -1126,8 +1126,8 @@ class Component(Nitrate):
                     self.name, self.product.id)
             except xmlrpclib.Fault as error:
                 log.debug(error)
-                raise NitrateError("Component '{0}' not found in"
-                                   " '{1}'".format(self.name, self.product.name))
+                raise TCMSError("Component '{0}' not found in"
+                                " '{1}'".format(self.name, self.product.name))
 
         # Initialize data from the inject and index into cache
         log.debug("Initializing component ID#{0}".format(inject["id"]))
@@ -1143,7 +1143,7 @@ class Component(Nitrate):
     def search(**query):
         """ Search for components """
         return [Component(hash) for hash in
-                Nitrate()._server.Product.filter_components(dict(query))]
+                TCMS()._server.Product.filter_components(dict(query))]
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1151,7 +1151,7 @@ class Component(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Bug(Nitrate):
+class Bug(TCMS):
     """ Bug related to a test case or a case run """
 
     # Local cache of Bug objects indexed by internal bug id
@@ -1198,7 +1198,7 @@ class Bug(Nitrate):
         id, ignore, inject, initialized = self._is_initialized(id)
         if initialized:
             return
-        Nitrate.__init__(self, id, prefix="BUG")
+        TCMS.__init__(self, id, prefix="BUG")
 
         # If inject given, fetch bug data from it
         if inject:
@@ -1209,7 +1209,7 @@ class Bug(Nitrate):
             self._system = system
         # Otherwise just check that the id was provided
         elif id is None:
-            raise NitrateError("Need bug id to initialize the Bug object.")
+            raise TCMSError("Need bug id to initialize the Bug object.")
 
     def __eq__(self, other):
         """
@@ -1218,7 +1218,7 @@ class Bug(Nitrate):
         Primarily decided by id. If unknown, compares by bug id & bug system.
         """
         # Decide by internal id
-        if self._id is not NitrateNone and other._id is not NitrateNone:
+        if self._id is not TCMSNone and other._id is not TCMSNone:
             return self.id == other.id
         # Compare external id and bug system id
         return self.bug == other.bug and self.system == other.system
@@ -1242,7 +1242,7 @@ class Bug(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch bug info from the server """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
         # No direct xmlrpc function for fetching so far
         if inject is None:
             raise NotImplementedError("Direct bug fetching not implemented")
@@ -1261,7 +1261,7 @@ class Bug(Nitrate):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Tag(Nitrate):
+class Tag(TCMS):
     """ Tag Class """
 
     # List of all object attributes (used for init & expiration)
@@ -1289,7 +1289,7 @@ class Tag(Nitrate):
         id, name, inject, initialized = self._is_initialized(id or name)
         if initialized:
             return
-        Nitrate.__init__(self, id)
+        TCMS.__init__(self, id)
 
         # If inject given, fetch tag data from it
         if inject:
@@ -1300,8 +1300,8 @@ class Tag(Nitrate):
             self._index(name)
         # Otherwise just check that the tag name or id was provided
         elif not id:
-            raise NitrateError("Need either tag id or tag name "
-                               "to initialize the Tag object.")
+            raise TCMSError("Need either tag id or tag name "
+                            "to initialize the Tag object.")
 
     def __str__(self):
         """ Tag name for printing """
@@ -1318,7 +1318,7 @@ class Tag(Nitrate):
 
     def _fetch(self, inject=None):
         """ Fetch tag data from the server """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Directly fetch from the initial object dict
         if inject is not None:
@@ -1327,7 +1327,7 @@ class Tag(Nitrate):
             self._id = inject["id"]
             self._name = inject["name"]
         # Search by tag id
-        elif self._id is not NitrateNone:
+        elif self._id is not TCMSNone:
             try:
                 log.info("Fetching tag " + self.identifier)
                 inject = self._server.Tag.get_tags({'ids': [self.id]})
@@ -1336,7 +1336,7 @@ class Tag(Nitrate):
                 self._inject = inject
                 self._name = inject[0]["name"]
             except IndexError:
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find tag for {0}".format(self.identifier))
         # Search by tag name
         else:
@@ -1348,7 +1348,7 @@ class Tag(Nitrate):
                 self._inject = inject
                 self._id = inject[0]["id"]
             except IndexError:
-                raise NitrateError(
+                raise TCMSError(
                     "Cannot find tag '{0}'".format(self.name))
         # Index the fetched object into cache
         self._index(self.name)
