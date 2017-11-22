@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -19,18 +19,18 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Python API for the Nitrate test case management system
+Python API for the Kiwi TCMS test case management system
 
-This module provides a high-level python interface for the nitrate
-module. Handles connection to the server automatically, allows to set
+This module provides a high-level python interface.
+Handles connection to the server automatically, allows to set
 custom level of logging and data caching. Supports results coloring.
 
 Synopsis:
 
-    Minimal config file ~/.nitrate::
+    Minimal config file ~/.tcms.conf::
 
-        [nitrate]
-        url = https://nitrate.server/xmlrpc/
+        [tcms]
+        url = https://tcms.server/xmlrpc/
 
     Initialize or create an object::
 
@@ -51,19 +51,19 @@ Synopsis:
 
 For details see pydoc documentation for individual modules:
 
-    tcms_api.base ......... Nitrate class, search support
+    tcms_api.base ......... TCMS class, search support
     tcms_api.cache ........ Persistent cache, multicall support
     tcms_api.config ....... Configuration, logging, coloring, caching
     tcms_api.containers ... Container classes implementation
-    tcms_api.immutable .... Immutable Nitrate objects
-    tcms_api.mutable ...... Mutable Nitrate objects
+    tcms_api.immutable .... Immutable TCMS objects
+    tcms_api.mutable ...... Mutable TCMS objects
     tcms_api.tests ........ Test suite
     tcms_api.utils ........ Utilities
     tcms_api.xmlrpc ....... XMLRPC driver
 """
 
-# Nitrate objects
-from tcms_api.base import Nitrate
+# TCMS objects
+from tcms_api.base import TCMS
 from tcms_api.immutable import (
     Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
     Priority, Product, RunStatus, Status, Tag, User, Version)
@@ -92,13 +92,13 @@ from tcms_api.config import (
     NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX)
 
 # Data communication exceptions
-from tcms_api.xmlrpc import NitrateError
+from tcms_api.xmlrpc import TCMSError
 
 # Persistent cache and Multicall support
 from tcms_api.cache import Cache, multicall_start, multicall_end
 
 __all__ = [
-    Nitrate, Mutable, Container,
+    TCMS, Mutable, Container,
 
     Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
     Priority, Product, RunStatus, Status, Tag, User, Version,
@@ -121,7 +121,7 @@ __all__ = [
     CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, CACHE_PERSISTENT,
     NEVER_EXPIRE, NEVER_CACHE, MULTICALL_MAX,
 
-    NitrateError,
+    TCMSError,
 
     Cache, multicall_start, multicall_end,
 ]

@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -21,7 +21,7 @@
 """
 Container classes implementation
 
-All container classes are mutable objects which contain other Nitrate
+All container classes are mutable objects which contain other TCMS
 objects and have methods for adding and removing objects to/from the
 container, for example adding a tag to a test case:
 
@@ -70,9 +70,9 @@ import tcms_api.config as config
 
 from tcms_api.config import log
 from tcms_api.utils import listed, sliced
-from tcms_api.base import Nitrate, NitrateNone, _getter, _idify
+from tcms_api.base import TCMS, TCMSNone, _getter, _idify
 from tcms_api.immutable import Component, Bug, Tag
-from tcms_api.xmlrpc import NitrateError
+from tcms_api.xmlrpc import TCMSError
 from tcms_api.mutable import (
     Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
 
@@ -105,7 +105,7 @@ class Container(Mutable):
     @property
     def _items(self):
         """ Set representation containing the items """
-        if self._current is NitrateNone:
+        if self._current is TCMSNone:
             self._fetch()
         # Fetch the whole container if there are uncached items (except when
         # the container is modified otherwise we would lose local changes).
@@ -177,7 +177,7 @@ class Container(Mutable):
 
     def _fetch(self, inset=None):
         """ Save cache timestamp and initialize from inset if given """
-        Nitrate._fetch(self)
+        TCMS._fetch(self)
         # Create copies of the initial set (if given)
         if inset is not None:
             log.debug("Initializing {0} for {1} from the inset".format(
@@ -243,11 +243,11 @@ class Container(Mutable):
 
     def _add(self, items):
         """ Add provided items to the server """
-        raise NitrateError("To be implemented by respective class.")
+        raise TCMSError("To be implemented by respective class.")
 
     def _remove(self, items):
         """ Remove provided items from the server """
-        raise NitrateError("To be implemented by respective class.")
+        raise TCMSError("To be implemented by respective class.")
 
     def _update(self):
         """ Update container changes to the server """
@@ -271,7 +271,7 @@ class Container(Mutable):
         # fully rebuild yet (__hash__ failed because of missing self._id).
         # So we need to convert containers into list of ids before the
         # cache dump and instantiate the objects back after cache restore.
-        if self._current is NitrateNone:
+        if self._current is TCMSNone:
             return
 
         self._original = [item.id for item in self._original]
@@ -280,7 +280,7 @@ class Container(Mutable):
     def _wake(self):
         """ Restore container object after loading from cache """
         # See _sleep() method above for explanation why this is necessary
-        if self._current is NitrateNone:
+        if self._current is TCMSNone:
             return
 
         if self._class._is_cached(list(self._original)):
@@ -718,12 +718,12 @@ class PlanRuns(Container):
 
     def _add(self, testruns):
         """ New test runs are created using TestRun() constructor """
-        raise NitrateError(
+        raise TCMSError(
             "Use TestRun(testplan=X) for creating a new test run")
 
     def _remove(self, testruns):
         """ Currently no support for removing test runs from test plans """
-        raise NitrateError("Sorry, no support for removing test runs yet")
+        raise TCMSError("Sorry, no support for removing test runs yet")
 
     def __iter__(self):
         """ Iterate over test runs ordered by their id/creation """
@@ -952,12 +952,12 @@ class RunCaseRuns(Container):
 
     def _add(self, caseruns):
         """ Adding supported by CaseRun() or TestRun.testcases.add() """
-        raise NitrateError(
+        raise TCMSError(
             "Use TestRun.testcases.add([testcases]) to add new test cases")
 
     def _remove(self, caseruns):
         """ Removing supported by TestRun.testcases.remove() """
-        raise NitrateError(
+        raise TCMSError(
             "Use TestRun.testcases.remove([testcases]) to remove cases")
 
     def __iter__(self):

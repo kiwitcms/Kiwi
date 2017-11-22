@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -19,12 +19,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Nitrate class and internal utilities
+Kiwi TCMS class and internal utilities
 
 Search support
 ~~~~~~~~~~~~~~
 
-Multiple Nitrate classes provide the static method 'search' which takes
+Multiple Kiwi TCMS classes provide the static method 'search' which takes
 the search query in the Django QuerySet format which gives an easy
 access to the foreign keys and basic search operators. For example:
 
@@ -43,7 +43,7 @@ import tcms_api.config as config
 import tcms_api.xmlrpc as xmlrpc
 
 from tcms_api.config import log, Config
-from tcms_api.xmlrpc import NitrateError
+from tcms_api.xmlrpc import TCMSError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Internal Utilities
@@ -60,7 +60,7 @@ def _getter(field):
 
     def getter(self):
         # Initialize the attribute unless already done
-        if getattr(self, "_" + field) is NitrateNone:
+        if getattr(self, "_" + field) is TCMSNone:
             self._fetch()
         # Return self._field
         return getattr(self, "_" + field)
@@ -79,7 +79,7 @@ def _setter(field):
 
     def setter(self, value):
         # Initialize the attribute unless already done
-        if getattr(self, "_" + field) is NitrateNone:
+        if getattr(self, "_" + field) is TCMSNone:
             self._fetch()
         # Update only if changed
         if getattr(self, "_" + field) != value:
@@ -122,33 +122,33 @@ def _idify(id):
         result.reverse()
         return result
     else:
-        raise NitrateError("Invalid id for idifying: '{0}'".format(id))
+        raise TCMSError("Invalid id for idifying: '{0}'".format(id))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  NitrateNone Class
+#  TCMSNone Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class NitrateNone(object):
+class TCMSNone(object):
     """ Used for distinguishing uninitialized values from regular 'None' """
     pass
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Nitrate Class
+#  TCMS Class
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Nitrate(object):
+class TCMS(object):
     """
-    General Nitrate Object.
+    General TCMS Object.
 
-    Takes care of initiating the connection to the Nitrate server and
+    Takes care of initiating the connection to the TCMS server and
     parses user configuration.
     """
 
     # Unique object identifier. If not None ---> object is initialized
-    # (all unknown attributes are set to special value NitrateNone)
+    # (all unknown attributes are set to special value TCMSNone)
     _id = None
 
     # Timestamp when the object data were fetched from the server.
@@ -167,7 +167,7 @@ class Nitrate(object):
     _identifier_width = 0
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Nitrate Properties
+    #  TCMS Properties
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     id = property(_getter("id"), doc="Object identifier.")
@@ -176,12 +176,12 @@ class Nitrate(object):
     def identifier(self):
         """ Consistent identifier string """
         # Use id if known
-        if self._id not in [None, NitrateNone]:
+        if self._id not in [None, TCMSNone]:
             id = self._id
         # When unknown use 'ID#UNKNOWN' or 'ID#UNKNOWN (name)'
         else:
             name = getattr(self, "_name", None)
-            if name not in [None, NitrateNone]:
+            if name not in [None, TCMSNone]:
                 id = "UNKNOWN ({0})".format(name)
             else:
                 id = "UNKNOWN"
@@ -193,23 +193,23 @@ class Nitrate(object):
         """ Connection to the server """
 
         # Connect to the server unless already connected
-        if Nitrate._connection is None:
+        if TCMS._connection is None:
             log.debug("Contacting server {0}".format(
-                Config().nitrate.url))
+                Config().tcms.url))
             # Plain authentication if username & password given
             try:
-                Nitrate._connection = xmlrpc.NitrateXmlrpc(
-                    Config().nitrate.username,
-                    Config().nitrate.password,
-                    Config().nitrate.url).server
+                TCMS._connection = xmlrpc.TCMSXmlrpc(
+                    Config().tcms.username,
+                    Config().tcms.password,
+                    Config().tcms.url).server
             # Kerberos otherwise
             except AttributeError:
-                Nitrate._connection = xmlrpc.NitrateKerbXmlrpc(
-                    Config().nitrate.url).server
+                TCMS._connection = xmlrpc.TCMSKerbXmlrpc(
+                    Config().tcms.url).server
 
         # Return existing connection
-        Nitrate._requests += 1
-        return Nitrate._connection
+        TCMS._requests += 1
+        return TCMS._connection
 
     @classmethod
     def _cache_lookup(cls, id, **kwargs):
@@ -234,7 +234,7 @@ class Nitrate(object):
         all attributes. For ids, cache index is checked for presence.
         """
         # Check fetch timestamp if object given
-        if isinstance(id, Nitrate):
+        if isinstance(id, TCMS):
             return id._fetched is not None
         # Check for presence in cache, make sure the object is fetched
         if isinstance(id, int) or isinstance(id, six.string_types):
@@ -285,13 +285,13 @@ class Nitrate(object):
         If MultiCall mode enabled, put xmlrpc calls to the queue, otherwise
         send them directly to server.
         """
-        if Nitrate._multicall_proxy is not None:
+        if TCMS._multicall_proxy is not None:
             return self._multicall_proxy
         else:
             return self._server
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Nitrate Special
+    #  TCMS Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __new__(cls, id=None, *args, **kwargs):
@@ -299,7 +299,7 @@ class Nitrate(object):
         # No caching when turned of or class does not support it
         if (config.get_cache_level() < config.CACHE_OBJECTS or
                 getattr(cls, "_cache", None) is None):
-            return super(Nitrate, cls).__new__(cls)
+            return super(TCMS, cls).__new__(cls)
         # Make sure that cache has been initialized
         Cache()
         # Look up cached object by id (or other arguments in kwargs)
@@ -313,7 +313,7 @@ class Nitrate(object):
             return instance
         # Object not cached yet, create a new one and cache it
         except KeyError:
-            new = super(Nitrate, cls).__new__(cls)
+            new = super(TCMS, cls).__new__(cls)
             if isinstance(id, int):
                 log.cache("Caching {0} ID#{1}".format(cls.__name__, id))
                 cls._cache[id] = new
@@ -331,19 +331,19 @@ class Nitrate(object):
 
         # Check and set the object id
         if id is None:
-            self._id = NitrateNone
+            self._id = TCMSNone
         elif isinstance(id, int):
             self._id = id
         else:
             try:
                 self._id = int(id)
             except ValueError:
-                raise NitrateError("Invalid {0} id: '{1}'".format(
+                raise TCMSError("Invalid {0} id: '{1}'".format(
                     self.__class__.__name__, id))
 
     def __str__(self):
-        return "Nitrate server: {0}\nTotal requests handled: {1}".format(
-            Config().nitrate.url, self._requests)
+        return "TCMS server: {0}\nTotal requests handled: {1}".format(
+            Config().tcms.url, self._requests)
 
     def __eq__(self, other):
         """ Objects are compared based on their id """
@@ -352,7 +352,7 @@ class Nitrate(object):
             return False
         # We can only compare objects of the same type
         if self.__class__ != other.__class__:
-            raise NitrateError("Cannot compare '{0}' with '{1}'".format(
+            raise TCMSError("Cannot compare '{0}' with '{1}'".format(
                 self.__class__.__name__, other.__class__.__name__))
         return self.id == other.id
 
@@ -367,23 +367,23 @@ class Nitrate(object):
     def __repr__(self):
         """ Object(id) or Object('name') representation """
         # Use the object id by default, name (if available) otherwise
-        if self._id is not NitrateNone:
+        if self._id is not TCMSNone:
             id = self._id
-        elif getattr(self, "_name", NitrateNone) is not NitrateNone:
+        elif getattr(self, "_name", TCMSNone) is not TCMSNone:
             id = "'{0}'".format(self._name)
         else:
             id = "<unknown>"
         return "{0}({1})".format(self.__class__.__name__, id)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Nitrate Methods
+    #  TCMS Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _init(self):
-        """ Set all object attributes to NitrateNone, reset fetch timestamp """
+        """ Set all object attributes to TCMSNone, reset fetch timestamp """
         # Each class is expected to have a list of attributes defined
         for attribute in self._attributes:
-            setattr(self, "_" + attribute, NitrateNone)
+            setattr(self, "_" + attribute, TCMSNone)
         # And reset the fetch timestamp
         self._fetched = None
 
@@ -401,7 +401,7 @@ class Nitrate(object):
         if config.get_cache_level() < config.CACHE_OBJECTS:
             return
         # Index by ID
-        if self._id is not NitrateNone:
+        if self._id is not TCMSNone:
             self.__class__._cache[self._id] = self
         # Index each given key
         for key in keys:

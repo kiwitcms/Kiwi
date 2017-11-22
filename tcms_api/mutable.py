@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -19,7 +19,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Mutable Nitrate objects
+Mutable TCMS objects
 """
 
 import six
@@ -35,8 +35,8 @@ from pprint import pformat as pretty
 import tcms_api.config as config
 
 from tcms_api.config import log
-from tcms_api.base import Nitrate, NitrateNone, _getter, _setter, _idify
-from tcms_api.xmlrpc import NitrateError
+from tcms_api.base import TCMS, TCMSNone, _getter, _setter, _idify
+from tcms_api.xmlrpc import TCMSError
 from tcms_api.immutable import (Build, CaseStatus, Category, PlanStatus,
                                 PlanType, Priority, Product, RunStatus, Status, Tag, User, Version)
 
@@ -45,12 +45,12 @@ from tcms_api.immutable import (Build, CaseStatus, Category, PlanStatus,
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-class Mutable(Nitrate):
+class Mutable(TCMS):
     """
-    General class for all mutable Nitrate objects.
+    General class for all mutable TCMS objects.
 
     Provides the update() method which pushes the changes (if any
-    happened) to the Nitrate server and the _update() method performing
+    happened) to the TCMS server and the _update() method performing
     the actual update (to be implemented by respective class).
     """
 
@@ -60,11 +60,11 @@ class Mutable(Nitrate):
     def __init__(self, id=None, prefix="ID"):
         """ Initially set up to unmodified state """
         self._modified = False
-        Nitrate.__init__(self, id, prefix)
+        TCMS.__init__(self, id, prefix)
 
     def _update(self):
         """ Save data to server (to be implemented by respective class) """
-        raise NitrateError("Data update not implemented")
+        raise TCMSError("Data update not implemented")
 
     def update(self):
         """ Update the data, if modified, to the server """
@@ -181,7 +181,7 @@ class TestPlan(Mutable):
                          type=type, **kwargs)
         # Otherwise just check that the test plan id was provided
         elif not id:
-            raise NitrateError(
+            raise TCMSError(
                 "Need either id or name, product, version "
                 "and type to initialize the test plan")
 
@@ -198,7 +198,7 @@ class TestPlan(Mutable):
     def search(**query):
         """ Search for test plans """
         return [TestPlan(hash)
-                for hash in Nitrate()._server.TestPlan.filter(dict(query))]
+                for hash in TCMS()._server.TestPlan.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TestPlan Methods
@@ -211,19 +211,19 @@ class TestPlan(Mutable):
 
         # Name
         if name is None:
-            raise NitrateError("Name required for creating new test plan")
+            raise TCMSError("Name required for creating new test plan")
         hash["name"] = name
 
         # Product
         if product is None:
-            raise NitrateError("Product required for creating new test plan")
+            raise TCMSError("Product required for creating new test plan")
         elif isinstance(product, (int, six.string_types)):
             product = Product(product)
         hash["product"] = product.id
 
         # Version
         if version is None:
-            raise NitrateError("Version required for creating new test plan")
+            raise TCMSError("Version required for creating new test plan")
         elif isinstance(version, int):
             version = Version(version)
         elif isinstance(version, six.string_types):
@@ -232,7 +232,7 @@ class TestPlan(Mutable):
 
         # Type
         if type is None:
-            raise NitrateError("Type required for creating new test plan")
+            raise TCMSError("Type required for creating new test plan")
         elif isinstance(type, (int, six.string_types)):
             type = PlanType(type)
         hash["type"] = type.id
@@ -261,7 +261,7 @@ class TestPlan(Mutable):
             log.debug("Failed to create a new test plan")
             log.data(pretty(hash))
             log.data(pretty(inject))
-            raise NitrateError("Failed to create test plan")
+            raise TCMSError("Failed to create test plan")
         self._fetch(inject)
         log.info("Successfully created {0}".format(self))
 
@@ -270,7 +270,7 @@ class TestPlan(Mutable):
 
         Either fetch them from the server or use provided hash.
         """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Fetch the data hash from the server unless provided
         if inject is None:
@@ -281,7 +281,7 @@ class TestPlan(Mutable):
                     raise ValueError("No data fetched")
             except (xmlrpclib.Fault, ValueError) as error:
                 log.debug(error)
-                raise NitrateError(
+                raise TCMSError(
                     "Failed to fetch test plan TP#{0}".format(self.id))
             self._inject = inject
         # Otherwise just initialize the id from inject
@@ -291,7 +291,7 @@ class TestPlan(Mutable):
         log.data(pretty(inject))
         if "plan_id" not in inject:
             log.data(pretty(inject))
-            raise NitrateError("Failed to initialize " + self.identifier)
+            raise TCMSError("Failed to initialize " + self.identifier)
 
         # Set up attributes
         self._author = User(inject["author_id"])
@@ -353,17 +353,17 @@ class TestPlan(Mutable):
         """ Update self and containers, if modified, to the server """
 
         # Update containers (if initialized)
-        if self._tags is not NitrateNone:
+        if self._tags is not TCMSNone:
             self.tags.update()
-        if self._testcases is not NitrateNone:
+        if self._testcases is not TCMSNone:
             self.testcases.update()
-        if self._caseplans is not NitrateNone:
+        if self._caseplans is not TCMSNone:
             self.caseplans.update()
-        if self._testruns is not NitrateNone:
+        if self._testruns is not TCMSNone:
             self.testruns.update()
-        if self._components is not NitrateNone:
+        if self._components is not TCMSNone:
             self.components.update()
-        if self._children is not NitrateNone:
+        if self._children is not TCMSNone:
             self.children.update()
 
         # Update self (if modified)
@@ -373,14 +373,14 @@ class TestPlan(Mutable):
         """ Get or set sortkey for given test case """
         # Make sure the test case we got belongs to the test plan
         if testcase not in self.testcases:
-            raise NitrateError("Test case {0} not in test plan {1}".format(
+            raise TCMSError("Test case {0} not in test plan {1}".format(
                 testcase.identifier, self.identifier))
         # Pick the correct CasePlan object
         try:
             caseplan = [caseplan for caseplan in self.caseplans
                         if caseplan.testcase == testcase][0]
         except LookupError:
-            raise NitrateError("No CasePlan for {0} in {1} found".format(
+            raise TCMSError("No CasePlan for {0} in {1} found".format(
                 testcase.identifier, self.identifier))
         # Modify the sortkey if requested
         if sortkey is not None:
@@ -506,7 +506,7 @@ class TestRun(Mutable):
             self._create(testplan=testplan, **kwargs)
         # Otherwise just check that the test run id was provided
         elif not id:
-            raise NitrateError(
+            raise TCMSError(
                 "Need either id or test plan to initialize the test run")
 
     def __iter__(self):
@@ -522,7 +522,7 @@ class TestRun(Mutable):
     def search(**query):
         """ Search for test runs """
         return [TestRun(hash)
-                for hash in Nitrate()._server.TestRun.filter(dict(query))]
+                for hash in TCMS()._server.TestRun.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TestRun Methods
@@ -603,7 +603,7 @@ class TestRun(Mutable):
                       testplan))
             log.data(pretty(hash))
             log.data(pretty(testrunhash))
-            raise NitrateError("Failed to create test run")
+            raise TCMSError("Failed to create test run")
         self._fetch(testrunhash)
         # Add newly created test run to testplan.testruns container
         if PlanRuns._is_cached(testplan.testruns):
@@ -615,7 +615,7 @@ class TestRun(Mutable):
 
         Either fetch them from the server or use the provided hash.
         """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Fetch the data hash from the server unless provided
         if inject is None:
@@ -626,7 +626,7 @@ class TestRun(Mutable):
                     raise ValueError("No data fetched")
             except (xmlrpclib.Fault, ValueError) as error:
                 log.debug(error)
-                raise NitrateError(
+                raise TCMSError(
                     "Failed to fetch test run TR#{0}".format(self.id))
             self._inject = inject
         else:
@@ -684,7 +684,7 @@ class TestRun(Mutable):
 
         # Update status field only if its value has changed. This is to avoid
         # updating the 'Finished at' field, which is done automatically by
-        # Nitrate even when "switching" from 'Finished' to 'Finished'.
+        # TCMS even when "switching" from 'Finished' to 'Finished'.
         if self._status != self._old_status:
             self._old_status = self._status
             hash["status"] = self.status.id
@@ -697,11 +697,11 @@ class TestRun(Mutable):
         """ Update self and containers, if modified, to the server """
 
         # Update containers (if initialized)
-        if self._tags is not NitrateNone:
+        if self._tags is not TCMSNone:
             self.tags.update()
-        if self._caseruns is not NitrateNone:
+        if self._caseruns is not TCMSNone:
             self._caseruns.update()
-        if self._testcases is not NitrateNone:
+        if self._testcases is not TCMSNone:
             self._testcases.update()
 
         # Update self (if modified)
@@ -859,8 +859,8 @@ class TestCase(Mutable):
             self._create(summary=summary, category=category, **kwargs)
         # Otherwise just check that the test case id was provided
         elif not id:
-            raise NitrateError("Need either id or both summary and category "
-                               "to initialize the test case")
+            raise TCMSError("Need either id or both summary and category "
+                            "to initialize the test case")
 
     def __str__(self):
         """ Test case id & summary for printing """
@@ -880,8 +880,8 @@ class TestCase(Mutable):
         # Map to appropriate value of 'is_automated' attribute
         if manual is not None or automated is not None:
             if automated is False and manual is False:
-                raise NitrateError("Invalid search "
-                                   "('manual' and 'automated' cannot be both False)")
+                raise TCMSError("Invalid search "
+                                "('manual' and 'automated' cannot be both False)")
             elif automated is False:
                 query["is_automated"] = 0
             elif manual is False:
@@ -895,7 +895,7 @@ class TestCase(Mutable):
         log.debug("Searching for test cases")
         log.data(pretty(query))
         return [TestCase(inject)
-                for inject in Nitrate()._server.TestCase.filter(dict(query))]
+                for inject in TCMS()._server.TestCase.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  TestCase Methods
@@ -912,13 +912,13 @@ class TestCase(Mutable):
         # If category provided as text, we need product as well
         product = kwargs.get("product")
         if isinstance(category, six.string_types) and not kwargs.get("product"):
-            raise NitrateError(
+            raise TCMSError(
                 "Need product when category specified by name")
         # Category & Product
         if isinstance(category, six.string_types):
             category = Category(category=category, product=product)
         elif not isinstance(category, Category):
-            raise NitrateError("Invalid category '{0}'".format(category))
+            raise TCMSError("Invalid category '{0}'".format(category))
         hash["category"] = category.id
         hash["product"] = category.product.id
 
@@ -983,7 +983,7 @@ class TestCase(Mutable):
             log.debug("Failed to create a new test case")
             log.data(pretty(hash))
             log.data(pretty(testcasehash))
-            raise NitrateError("Failed to create test case")
+            raise TCMSError("Failed to create test case")
         self._fetch(testcasehash)
         log.info("Successfully created {0}".format(self))
 
@@ -992,7 +992,7 @@ class TestCase(Mutable):
 
         Either fetch them from the server or use provided hash.
         """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Fetch the data hash from the server unless provided
         if inject is None:
@@ -1003,7 +1003,7 @@ class TestCase(Mutable):
                     raise ValueError("No data fetched")
             except (xmlrpclib.Fault, ValueError) as error:
                 log.debug(error)
-                raise NitrateError(
+                raise TCMSError(
                     "Failed to fetch test case TC#{0}".format(self.id))
             self._inject = inject
         else:
@@ -1100,13 +1100,13 @@ class TestCase(Mutable):
         """ Update self and containers, if modified, to the server """
 
         # Update containers (if initialized)
-        if self._bugs is not NitrateNone:
+        if self._bugs is not TCMSNone:
             self.bugs.update()
-        if self._tags is not NitrateNone:
+        if self._tags is not TCMSNone:
             self.tags.update()
-        if self._testplans is not NitrateNone:
+        if self._testplans is not TCMSNone:
             self.testplans.update()
-        if self._components is not NitrateNone:
+        if self._components is not TCMSNone:
             self._components.update()
 
         # Update self (if modified)
@@ -1199,8 +1199,8 @@ class CaseRun(Mutable):
             self._create(testcase=testcase, testrun=testrun, **kwargs)
         # Otherwise just check that the test case run id was provided
         elif not id:
-            raise NitrateError("Need either id or testcase and testrun "
-                               "to initialize the case run")
+            raise TCMSError("Need either id or testcase and testrun "
+                            "to initialize the case run")
 
     def __str__(self):
         """ Case run id, status & summary for printing """
@@ -1211,7 +1211,7 @@ class CaseRun(Mutable):
     def search(**query):
         """ Search for case runs """
         return [CaseRun(inject) for inject in
-                Nitrate()._server.TestCaseRun.filter(dict(query))]
+                TCMS()._server.TestCaseRun.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     #  CaseRun Methods
@@ -1224,14 +1224,14 @@ class CaseRun(Mutable):
 
         # TestCase
         if testcase is None:
-            raise NitrateError("Case ID required for new case run")
+            raise TCMSError("Case ID required for new case run")
         elif isinstance(testcase, six.string_types):
             testcase = TestCase(testcase)
         hash["case"] = testcase.id
 
         # TestRun
         if testrun is None:
-            raise NitrateError("Run ID required for new case run")
+            raise TCMSError("Run ID required for new case run")
         elif isinstance(testrun, six.string_types):
             testrun = TestRun(testrun)
         hash["run"] = testrun.id
@@ -1251,7 +1251,7 @@ class CaseRun(Mutable):
             log.debug("Failed to create new case run")
             log.data(pretty(hash))
             log.data(pretty(inject))
-            raise NitrateError("Failed to create case run")
+            raise TCMSError("Failed to create case run")
         self._fetch(inject)
         log.info("Successfully created {0}".format(self))
 
@@ -1266,7 +1266,7 @@ class CaseRun(Mutable):
 
         Either fetch them from the server or use the supplied hashes.
         """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Fetch the data from the server unless inject provided
         if inject is None:
@@ -1327,7 +1327,7 @@ class CaseRun(Mutable):
         """ Update self and containers, if modified, to the server """
 
         # Update containers (if initialized)
-        if self._bugs is not NitrateNone:
+        if self._bugs is not TCMSNone:
             self.bugs.update()
 
         # Update self (if modified)
@@ -1394,8 +1394,8 @@ class CasePlan(Mutable):
             self._fetch(inject, **kwargs)
         # Otherwise just make sure all requested parameter were given
         elif not id and (testcase is None or testplan is None):
-            raise NitrateError("Need either internal id or both test case "
-                               "and test plan to initialize the CasePlan object")
+            raise TCMSError("Need either internal id or both test case "
+                            "and test plan to initialize the CasePlan object")
 
     def __str__(self):
         """ Test case, test plan and sortkey for printing """
@@ -1426,7 +1426,7 @@ class CasePlan(Mutable):
 
     def _fetch(self, inject=None, **kwargs):
         """ Initialize / refresh test case plan data """
-        Nitrate._fetch(self, inject)
+        TCMS._fetch(self, inject)
 
         # Fetch data from the server if no inject given
         if inject is None:

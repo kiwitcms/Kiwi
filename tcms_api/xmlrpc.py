@@ -1,7 +1,7 @@
 """
 XMLRPC driver
 
-Use this class to access Nitrate via XML-RPC
+Use this class to access Kiwi TCMS via XML-RPC
 This code is based on
 http://landfill.bugzilla.org/testopia2/testopia/contrib/drivers/python/testopia.py
 and https://fedorahosted.org/python-bugzilla/browser/bugzilla/base.py
@@ -11,26 +11,26 @@ History:
 
 Example on how to access this library,
 
-from nitrate import NitrateXmlrpc
+from tcms_api import TCMSXmlrpc
 
-n = NitrateXmlrpc.from_config('config.cfg')
+n = TCMSXmlrpc.from_config('config.cfg')
 n.testplan_get(10)
 
 where config.cfg looks like:
-[nitrate]
-username: xkuang@redhat.com
-password: foobar
-url:      https://tcms.engineering.redhat.com/xmlrpc/
-use_mod_kerb: False
+[tcms]
+username=xkuang@redhat.com
+password=foobar
+url=https://tcms.engineering.redhat.com/xmlrpc/
+use_mod_kerb=False
 
 Or, more directly:
 
-n = NitrateXmlrpc(
+t = TCMSXmlrpc(
     'xkuang@redhat.com',
     'foobar',
     'https://tcms.engineering.redhat.com/xmlrpc/',
 )
-n.testplan_get(10)
+t.testplan_get(10)
 """
 
 from __future__ import print_function
@@ -308,7 +308,7 @@ class KerbTransport(SafeCookieTransport):
                 )
             else:
                 chost, self._extra_headers, x509 = self.get_host_info(host)
-                # nitrate isn't ready to use HTTP/1.1 persistent connection mechanism.
+                # Kiwi TCMS isn't ready to use HTTP/1.1 persistent connection mechanism.
                 # So tell server current opened HTTP connection should be closed after
                 # request is handled. And there will be a new connection for next request.
                 self._extra_headers.append(('Connection', 'close'))
@@ -320,11 +320,11 @@ class KerbTransport(SafeCookieTransport):
             return SafeCookieTransport.make_connection(self, host)
 
 
-class NitrateError(Exception):
+class TCMSError(Exception):
     pass
 
 
-class NitrateXmlrpcError(Exception):
+class TCMSXmlrpcError(Exception):
     def __init__(self, verb, params, wrappedError):
         self.verb = verb
         self.params = params
@@ -335,9 +335,9 @@ class NitrateXmlrpcError(Exception):
                % (self.verb + "(" + self.params + ")", self.wrappedError)
 
 
-class NitrateXmlrpc(object):
+class TCMSXmlrpc(object):
     """
-    NitrateXmlrpc - Nitrate XML-RPC client
+    TCMSXmlrpc - TCMS XML-RPC client
                     for server deployed without BASIC authentication
     """
     @classmethod
@@ -346,12 +346,12 @@ class NitrateXmlrpc(object):
         cp = SafeConfigParser()
         cp.read([filename])
         kwargs = dict(
-            [(key, cp.get('nitrate', key)) for key in [
+            [(key, cp.get('tcms', key)) for key in [
                 'username', 'password', 'url'
             ]]
         )
 
-        return NitrateXmlrpc(**kwargs)
+        return TCMSXmlrpc(**kwargs)
 
     def __init__(self, username, password, url, use_mod_auth_kerb=False):
         if url.startswith('https://'):
@@ -359,7 +359,7 @@ class NitrateXmlrpc(object):
         elif url.startswith('http://'):
             self._transport = CookieTransport()
         else:
-            raise NitrateError("Unrecognized URL scheme")
+            raise TCMSError("Unrecognized URL scheme")
 
         self._transport.cookiejar = CookieJar()
         # print("COOKIES:", self._transport.cookiejar._cookies)
@@ -388,7 +388,7 @@ class NitrateXmlrpc(object):
         """
         if value or str(value) == 'False':
             if not isinstance(value, bool):
-                raise NitrateError(
+                raise TCMSError(
                     "The value for the option '%s' is not boolean." % option)
             elif value is False:
                 return "\'%s\':0, " % option
@@ -405,7 +405,7 @@ class NitrateXmlrpc(object):
         """
         if value:
             if not isinstance(value, datetime):
-                raise NitrateError(
+                raise TCMSError(
                     "The option '%s' is not a valid datetime object." % option)
             return "\'%s\':\'%s\', " % (option, value.strftime("%Y-%m-%d %H:%M:%S"))
         return ''
@@ -419,13 +419,13 @@ class NitrateXmlrpc(object):
         """
         if value:  # Verify that value is a type of list
             if not isinstance(value, list):
-                raise NitrateError(
+                raise TCMSError(
                     "The option '%s' is not a valid list of dictionaries." % option)
             else:
                 # Verify that the content of value are dictionaries,
                 for item in value:
                     if not isinstance(item, dict):
-                        raise NitrateError(
+                        raise TCMSError(
                             "The option '%s' is not a valid list of dictionaries." % option)
             return "\'%s\': %s" % (option, value)
         return ''
@@ -439,7 +439,7 @@ class NitrateXmlrpc(object):
         """
         if value:
             if not isinstance(value, int):
-                raise NitrateError(
+                raise TCMSError(
                     "The option '%s' is not a valid integer." % option)
             return "\'%s\':%d, " % (option, value)
         return ''
@@ -450,7 +450,7 @@ class NitrateXmlrpc(object):
         Example: self._number_no_option(1) returns 1
         """
         if not isinstance(number, int):
-            raise NitrateError("The 'number' parameter is not an integer.")
+            raise TCMSError("The 'number' parameter is not an integer.")
         return str(number)
 
     _number_noop = _number_no_option
@@ -472,7 +472,7 @@ class NitrateXmlrpc(object):
         If args is empty, then we raise an error.
         """
         if not args:
-            raise NitrateError("At least one variable must be set.")
+            raise TCMSError("At least one variable must be set.")
         return "{%s}" % ''.join(args)
 
     _options_ne_dict = _options_non_empty_dict
@@ -485,7 +485,7 @@ class NitrateXmlrpc(object):
         """
         if value:
             if not isinstance(value, str):
-                raise NitrateError(
+                raise TCMSError(
                     "The option '%s' is not a valid string." % option)
             return "\'%s\':\'%s\', " % (option, value)
         return ''
@@ -497,7 +497,7 @@ class NitrateXmlrpc(object):
         """
         if option:
             if not isinstance(option, str):
-                raise NitrateError(
+                raise TCMSError(
                     "The option '%s' is not a valid string." % option)
             return "\'%s\'" % option
         return ''
@@ -512,7 +512,7 @@ class NitrateXmlrpc(object):
         """
         if value:
             if not isinstance(value, time):
-                raise NitrateError(
+                raise TCMSError(
                     "The option '%s' is not a valid time object." % option)
             return "\'%s\':\'%s\', " % (option, value.strftime("%H:%M:%S"))
         return ''
@@ -534,7 +534,7 @@ class NitrateXmlrpc(object):
         try:
             return eval(cmd)
         except xmlrpclib.Error as e:
-            raise NitrateXmlrpcError(verb, params, e)
+            raise TCMSXmlrpcError(verb, params, e)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
@@ -559,9 +559,9 @@ class NitrateXmlrpc(object):
         return self.do_command("User.get_me")
 
 
-class NitrateKerbXmlrpc(NitrateXmlrpc):
+class TCMSKerbXmlrpc(TCMSXmlrpc):
     """
-    NitrateXmlrpc - Nitrate XML-RPC client
+    TCMSXmlrpc - TCMS XML-RPC client
                     for server deployed with mod_auth_kerb
     """
 
@@ -569,10 +569,10 @@ class NitrateKerbXmlrpc(NitrateXmlrpc):
         if url.startswith('https://'):
             self._transport = KerbTransport()
         elif url.startswith('http://'):
-            raise NitrateError("Encrypted https communication required for "
-                               "Kerberos authentication.\nURL provided: {0}".format(url))
+            raise TCMSError("Encrypted https communication required for "
+                            "Kerberos authentication.\nURL provided: {0}".format(url))
         else:
-            raise NitrateError("Unrecognized URL scheme: {0}".format(url))
+            raise TCMSError("Unrecognized URL scheme: {0}".format(url))
 
         self._transport.cookiejar = CookieJar()
         # print("COOKIES:", self._transport.cookiejar._cookies)
@@ -589,5 +589,5 @@ class NitrateKerbXmlrpc(NitrateXmlrpc):
 
 if __name__ == "__main__":
     from pprint import pprint
-    n = NitrateKerbXmlrpc('https://tcms.englab.nay.redhat.com/xmlrpc/')
+    n = TCMSKerbXmlrpc('https://tcms.englab.nay.redhat.com/xmlrpc/')
     pprint(n.get_me())

@@ -1,6 +1,6 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Python API for the Nitrate test case management system.
+#   Python API for the Kiwi TCMS test case management system.
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
@@ -59,7 +59,7 @@ activate this feature specify cache level and file name in the config:
 
     [cache]
     level = 3
-    file = /home/user/.cache/nitrate
+    file = /home/user/.cache/tcms
 
 Cache expiration is a way how to prevent using probably obsoleted object
 (for example caserun). Every class has its own default expiration time,
@@ -131,7 +131,7 @@ import tcms_api.config as config
 
 from tcms_api.config import log, get_cache_level, set_cache_level
 from tcms_api.utils import listed, sliced, human
-from tcms_api.base import Nitrate, NitrateNone
+from tcms_api.base import TCMS, TCMSNone
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  MultiCall methods
@@ -141,20 +141,20 @@ from tcms_api.base import Nitrate, NitrateNone
 def multicall_start():
     """ Enter MultiCall mode and queue following xmlrpc calls """
     log.info("Starting multicall session, gathering updates...")
-    Nitrate._multicall_proxy = xmlrpclib.MultiCall(Nitrate()._server)
+    TCMS._multicall_proxy = xmlrpclib.MultiCall(TCMS()._server)
 
 
 def multicall_end():
     """ Execute xmlrpc call queue and exit MultiCall mode """
     log.info("Ending multicall session, sending to the server...")
-    response = Nitrate._multicall_proxy()
+    response = TCMS._multicall_proxy()
     log.data("Server response:")
     entries = 0
     for entry in response:
         log.data(pretty(entry))
         entries += 1
-    Nitrate._multicall_proxy = None
-    Nitrate._requests += 1
+    TCMS._multicall_proxy = None
+    TCMS._requests += 1
     log.info("Multicall session finished, {0} completed".format(
         listed(entries, "update")))
     return response
@@ -233,7 +233,7 @@ class Cache(object):
         self._lock = "{0}.lock".format(self._filename)
 
         # Initialize user-defined expiration times from the config
-        for klass in self._classes + [Nitrate, mutable.Mutable, containers.Container]:
+        for klass in self._classes + [TCMS, mutable.Mutable, containers.Container]:
             try:
                 expiration = getattr(
                     config.Config().expiration, klass.__name__.lower())
@@ -277,7 +277,7 @@ class Cache(object):
             # Use temporary file to minimize the time during which
             # the real cache is inconsistent
             output_file = tempfile.NamedTemporaryFile(
-                mode="wb", delete=False, prefix="nitrate-cache.",
+                mode="wb", delete=False, prefix="tcms-cache.",
                 dir=os.path.dirname(self._filename))
             log.cache("Temporary cache file: {0}".format(output_file.name))
             output_file = gzip.open(output_file.name, "wb")
@@ -451,7 +451,7 @@ class Cache(object):
             for id, current_object in current_class._cache.iteritems():
                 expire = False
                 # Check if object is uninitialized
-                if (current_object._id is NitrateNone or
+                if (current_object._id is TCMSNone or
                         current_object._fetched is None):
                     log.all("Wiping uninitialized {0} {1} from cache".format(
                             current_object.__class__.__name__,
