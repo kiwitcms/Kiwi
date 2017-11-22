@@ -635,15 +635,6 @@ class TagTests(BaseAPIClient_TestCase):
         tag = Tag(self.tag.id)
         self.assertEqual(tag.name, self.tag.name)
         self.assertEqual(requests, TCMS._requests)
-        # Persistent caching
-        if get_cache_level() < CACHE_PERSISTENT:
-            return
-        cache.save()
-        cache.clear()
-        cache.load()
-        tag = Tag(self.tag.id)
-        self.assertEqual(tag.name, self.tag.name)
-        self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestPlan
@@ -1045,20 +1036,6 @@ class CasePlanTests(BaseAPIClient_TestCase):
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
             self.assertEqual(caseplan.sortkey, sortkey)
             self.assertEqual(requests, TCMS._requests)
-            # Check persistent cache
-            # if get_cache_level() < CACHE_PERSISTENT:
-            #     continue
-            # cache.save()
-            # cache.clear()
-            # cache.load()
-            # caseplan = CasePlan(testcase=testcase, testplan=testplan)
-            # self.assertEqual(caseplan.sortkey, sortkey)
-            # self.assertEqual(requests, TCMS._requests)
-
-    @unittest.skip('skip caching tests')
-    def test_persistent_cache(self):
-        # see the commented out portion above
-        pass
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseComponents
@@ -1075,18 +1052,9 @@ class CaseComponentsTests(BaseAPIClient_TestCase):
         component = Component(self.component.id)
         testcase.components.remove(component)
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component not in testcase.components)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(component not in testcase.components)
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see the commented out portion above and below
-        pass
 
     def test2(self):
         """ Linking a component to a test case """
@@ -1107,13 +1075,9 @@ class CaseComponentsTests(BaseAPIClient_TestCase):
         component = Component(self.component.id)
         testcase.components.remove(component)
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component not in testcase.components)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(component not in testcase.components)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanComponents
@@ -1158,18 +1122,9 @@ class CaseBugsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         testcase.bugs.remove(self.bug)
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug not in testcase.bugs)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(self.bug not in testcase.bugs)
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
 
     def test_bugging2(self):
         """ Attaching bug to a test case """
@@ -1177,13 +1132,9 @@ class CaseBugsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         testcase.bugs.add(self.bug)
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug in testcase.bugs)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(self.bug in testcase.bugs)
 
     def test_bugging3(self):
         """ Detaching bug from a test case """
@@ -1191,13 +1142,9 @@ class CaseBugsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         testcase.bugs.remove(self.bug)
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(self.bug not in testcase.bugs)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(self.bug not in testcase.bugs)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseRunBugs
@@ -1215,18 +1162,9 @@ class CaseRunBugsTests(BaseAPIClient_TestCase):
         caserun = CaseRun(self.caserun.pk)
         caserun.bugs.remove(self.bug)
         caserun.update()
-        # Check cache content
+        # Refetch content
         caserun = CaseRun(self.caserun.pk)
         self.assertTrue(self.bug not in caserun.bugs)
-        # Check server content
-        # cache.clear()
-        # caserun = CaseRun(self.caserun.pk)
-        # self.assertTrue(self.bug not in caserun.bugs)
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
 
     def test_bugging2(self):
         """ Attaching bug to a test case run """
@@ -1234,13 +1172,9 @@ class CaseRunBugsTests(BaseAPIClient_TestCase):
         caserun = CaseRun(self.caserun.pk)
         caserun.bugs.add(self.bug)
         caserun.update()
-        # Check cache content
+        # Refetch content
         caserun = CaseRun(self.caserun.pk)
         self.assertTrue(self.bug in caserun.bugs)
-        # Check server content
-        # cache.clear()
-        # caserun = CaseRun(self.caserun.pk)
-        # self.assertTrue(self.bug in caserun.bugs)
 
     def test_bugging3(self):
         """ Detaching bug from a test case run """
@@ -1248,13 +1182,9 @@ class CaseRunBugsTests(BaseAPIClient_TestCase):
         caserun = CaseRun(self.caserun.pk)
         caserun.bugs.remove(self.bug)
         caserun.update()
-        # Check cache content
+        # Refetch content
         caserun = CaseRun(self.caserun.pk)
         self.assertTrue(self.bug not in caserun.bugs)
-        # Check server content
-        # cache.clear()
-        # caserun = CaseRun(self.caserun.pk)
-        # self.assertTrue(self.bug not in caserun.bugs)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanTags
@@ -1269,18 +1199,9 @@ class PlanTagsTests(BaseAPIClient_TestCase):
         testplan = TestPlan(self.master.id)
         testplan.tags.remove(Tag("TestTag"))
         testplan.update()
-        # Check cache content
+        # Refetch content
         testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
-        # Check server content
-        # cache.clear()
-        # testplan = TestPlan(self.master.id)
-        # self.assertTrue(Tag("TestTag") not in testplan.tags)
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
 
     def testTagging2(self):
         """ Tagging a test plan """
@@ -1288,13 +1209,9 @@ class PlanTagsTests(BaseAPIClient_TestCase):
         testplan = TestPlan(self.master.id)
         testplan.tags.add(Tag("TestTag"))
         testplan.update()
-        # Check cache content
+        # Refetch content
         testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") in testplan.tags)
-        # Check server content
-        # cache.clear()
-        # testplan = TestPlan(self.master.id)
-        # self.assertTrue(Tag("TestTag") in testplan.tags)
 
     def testTagging3(self):
         """ Untagging a test plan """
@@ -1302,13 +1219,9 @@ class PlanTagsTests(BaseAPIClient_TestCase):
         testplan = TestPlan(self.master.id)
         testplan.tags.remove(Tag("TestTag"))
         testplan.update()
-        # Check cache content
+        # refetch content
         testplan = TestPlan(self.master.id)
         self.assertTrue(Tag("TestTag") not in testplan.tags)
-        # Check server content
-        # cache.clear()
-        # testplan = TestPlan(self.master.id)
-        # self.assertTrue(Tag("TestTag") not in testplan.tags)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunTags
@@ -1325,18 +1238,9 @@ class RunTagsTests(BaseAPIClient_TestCase):
         testrun = TestRun(self.testrun.id)
         testrun.tags.remove(Tag("TestTag"))
         testrun.update()
-        # Check cache content
+        # Refetch content
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") not in testrun.tags)
-        # Check server content
-        # cache.clear()
-        # testrun = TestRun(self.testrun.id)
-        # self.assertTrue(Tag("TestTag") not in testrun.tags)
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
 
     def testTagging2(self):
         """ Tagging a test run """
@@ -1344,13 +1248,9 @@ class RunTagsTests(BaseAPIClient_TestCase):
         testrun = TestRun(self.testrun.id)
         testrun.tags.add(Tag("TestTag"))
         testrun.update()
-        # Check cache content
+        # Refetch content
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") in testrun.tags)
-        # Check server content
-        # cache.clear()
-        # testrun = TestRun(self.testrun.id)
-        # self.assertTrue(Tag("TestTag") in testrun.tags)
 
     def testTagging3(self):
         """ Untagging a test run """
@@ -1358,13 +1258,9 @@ class RunTagsTests(BaseAPIClient_TestCase):
         testrun = TestRun(self.testrun.id)
         testrun.tags.remove(Tag("TestTag"))
         testrun.update()
-        # Check cache content
+        # Refetch content
         testrun = TestRun(self.testrun.id)
         self.assertTrue(Tag("TestTag") not in testrun.tags)
-        # Check server content
-        # cache.clear()
-        # testrun = TestRun(self.testrun.id)
-        # self.assertTrue(Tag("TestTag") not in testrun.tags)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseTags
@@ -1382,18 +1278,9 @@ class CaseTagsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         testcase.tags.remove(Tag("TestTag"))
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") not in testcase.tags)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(Tag("TestTag") not in testcase.tags)
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
 
     def testTagging2(self):
         """ Tagging a test case """
@@ -1401,13 +1288,9 @@ class CaseTagsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         testcase.tags.add(Tag("TestTag"))
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") in testcase.tags)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(Tag("TestTag") in testcase.tags)
 
     def testTagging3(self):
         """ Untagging a test case """
@@ -1415,13 +1298,9 @@ class CaseTagsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         testcase.tags.remove(Tag("TestTag"))
         testcase.update()
-        # Check cache content
+        # Refetch content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(Tag("TestTag") not in testcase.tags)
-        # Check server content
-        # cache.clear()
-        # testcase = TestCase(self.testcase.id)
-        # self.assertTrue(Tag("TestTag") not in testcase.tags)
 
     def test_string_tags(self):
         """ Support for string tags """
@@ -1444,7 +1323,6 @@ class CaseTagsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         testcase.tags.remove(self.tag.name)
         testcase.update()
-        # cache.clear()
         # Add tag by name, then immediately check whether it's present
         testcase.tags.add(self.tag.name)
         self.assertTrue(self.tag.name in testcase.tags)
@@ -1502,37 +1380,12 @@ class PlanRunsTests(BaseAPIClient_TestCase):
         testrun = TestRun(self.testrun.id)
         testplan = TestPlan(self.testrun.testplan.id)
         self.assertTrue(testrun in testplan.testruns)
-        # Everything should be kept in the persistent cache
-        # if get_cache_level() >= CACHE_PERSISTENT:
-        #    cache.save()
-        #    cache.clear()
-        #    cache.load()
-        #    requests = TCMS._requests
-        #    testplan = TestPlan(self.master.id)
-        #    testrun = TestRun(self.testrun.id)
-        #    self.assertTrue(testrun in testplan.testruns)
-        #    self.assertEqual(requests, TCMS._requests)
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
 
     def test_new_test_run(self):
         """ New test runs should be linked """
         testplan = TestPlan(self.master.id)
         testrun = TestRun(testplan=testplan)
         self.assertTrue(testrun in testplan.testruns)
-        # Everything should be kept in the persistent cache
-        # if get_cache_level() >= CACHE_PERSISTENT:
-        #    cache.save()
-        #    cache.clear()
-        #    cache.load()
-        #    requests = TCMS._requests
-        #    testplan = TestPlan(self.master.id)
-        #    testrun = TestRun(self.testrun.id)
-        #    self.assertTrue(testrun in testplan.testruns)
-        #    self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  PlanCasePlans
@@ -1543,12 +1396,7 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
     def setUp(self):
         self.testcase = self.cases[0]
 
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
-
-    def test_sortkey_update_cache_objects(self):
+    def test_sortkey_update(self):
         """ Get/set sortkey using the TestPlan.sortkey() method """
         testcase = TestCase(self.testcase.id)
         testplan = TestPlan(self.master.id)
@@ -1567,15 +1415,6 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
             testplan = TestPlan(self.master.id)
             self.assertEqual(testplan.sortkey(testcase), sortkey)
             self.assertEqual(requests, TCMS._requests)
-            # Check persistent cache
-            # if get_cache_level() < CACHE_PERSISTENT:
-            #    continue
-            # cache.save()
-            # cache.clear()
-            # cache.load()
-            # testplan = TestPlan(self.master.id)
-            # self.assertEqual(testplan.sortkey(testcase), sortkey)
-            # self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunCases
