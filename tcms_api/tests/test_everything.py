@@ -1179,55 +1179,26 @@ class CaseComponentsTests(BaseAPIClient_TestCase):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-'''
-Disabled until BZ#866974 is fixed.
-
 class PlanComponentsTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        """ Set up component from the config """
-        self.component = config.component
-
-    def test1(self):
-        """ Unlinking a component from a  test plan """
+    def test_unlinking_component_from_test_plan(self):
+        """ Unlinking a component from a test plan """
         testplan = TestPlan(self.master.id)
-        component = Component(self.component.id)
-        testplan.components.remove(component)
+        testplan.components.remove(self.component)
         testplan.update()
-        # Check cache content
+        # Check server content by re-fetching the TestPlan
+        # remember that we don't cache by default!
         testplan = TestPlan(self.master.id)
-        self.assertTrue(component not in testplan.components)
-        # Check server content
-        cache.clear()
-        testplan = TestPlan(self.master.id)
-        self.assertTrue(component not in testplan.components)
+        self.assertTrue(self.component not in testplan.components)
 
-    def test2(self):
-        """ Linking a component to a  test plan """
+    def test_linking_component_to_test_plan(self):
+        """ Linking a component to a test plan """
         testplan = TestPlan(self.master.id)
-        component = Component(self.component.id)
-        testplan.components.add(component)
+        testplan.components.add(self.component)
         testplan.update()
-        # Check cache content
+        # Check server content by re-fetching the TestPlan
+        # remember that we don't cache by default!
         testplan = TestPlan(self.master.id)
-        self.assertTrue(component in testplan.components)
-        # Check server content
-        testplan = TestPlan(self.master.id)
-        self.assertTrue(component in testplan.components)
-
-    def test3(self):
-        """ Unlinking a component from a  test plan """
-        testplan = TestPlan(self.master.id)
-        component = Component(self.component.id)
-        testplan.components.remove(component)
-        testplan.update()
-        # Check cache content
-        testplan = TestPlan(self.master.id)
-        self.assertTrue(component not in testplan.components)
-        # Check server content
-        cache.clear()
-        testplan = TestPlan(self.master.id)
-        self.assertTrue(component not in testplan.components)
-'''
+        self.assertTrue(self.component in testplan.components)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseBugs
