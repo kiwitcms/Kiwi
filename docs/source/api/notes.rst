@@ -1,6 +1,13 @@
 Release Notes
 -------------
 
+unreleased yet
+~~~~~~~~~~~~~~
+
+- Remove persistent caching via the Cache() class
+- Also removed multicall support. Some of the container objects
+  still use multicall XMLRPC requests though!
+
 1.0 (released as python-nitrate on February 2012)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

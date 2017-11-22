@@ -21,7 +21,6 @@
 """ Utilities """
 
 import re
-import math
 import sys
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,26 +89,6 @@ def listed(items, singular=None, plural=None, max=None, quote=""):
 def unlisted(text):
     """ Convert human readable list into python list """
     return re.split(r"\s*,\s*|\s+and\s+|\s+", text)
-
-
-def sliced(loaf, max):
-    """
-    Slice loafs into slices of maximum width
-
-    Accepts large list (loaf) and cuts it into small lists of roughly
-    even size (slices) less than max. Then yields each slice.
-    """
-    # Nothing to slice when the loaf is empty
-    if not loaf:
-        yield []
-        return
-    # Count necessary number of slices and the optimal slice width
-    slices = math.ceil(1.0 * len(loaf) / max)
-    width = int(math.ceil(len(loaf) / slices))
-    # Yield individual slices
-    while loaf:
-        slice, loaf = loaf[0:width], loaf[width:]
-        yield slice
 
 
 def color(text, color=None, background=None, light=False, enabled=True):
