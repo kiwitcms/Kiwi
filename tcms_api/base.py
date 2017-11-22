@@ -194,17 +194,16 @@ class TCMS(object):
 
         # Connect to the server unless already connected
         if TCMS._connection is None:
-            log.debug("Contacting server {0}".format(
-                Config().tcms.url))
-            # Plain authentication if username & password given
-            try:
+            log.debug("Contacting server {0}".format(Config().tcms.url))
+            if hasattr(Config().tcms, 'use_mod_kerb') and Config().tcms.use_mod_kerb:
+                # use Kerberos
+                TCMS._connection = xmlrpc.TCMSKerbXmlrpc(
+                    Config().tcms.url).server
+            else:
+                # use plain authentication otherwise
                 TCMS._connection = xmlrpc.TCMSXmlrpc(
                     Config().tcms.username,
                     Config().tcms.password,
-                    Config().tcms.url).server
-            # Kerberos otherwise
-            except AttributeError:
-                TCMS._connection = xmlrpc.TCMSKerbXmlrpc(
                     Config().tcms.url).server
 
         # Return existing connection
