@@ -331,7 +331,7 @@ def environment_property_values(request):
 
     try:
         property = TCMSEnvProperty.objects.get(id=request.GET['property_id'])
-    except TCMSEnvProperty.DoesNotExist, error:
+    except TCMSEnvProperty.DoesNotExist as error:
         return HttpResponse(error)
 
     user_action = request.GET.get('action')
@@ -360,7 +360,7 @@ def environment_property_values(request):
                 if error[1].startswith('Duplicate'):
                     duplicated_property_value.append(property_value.value)
 
-        except TCMSEnvValue.DoesNotExist, error:
+        except TCMSEnvValue.DoesNotExist as error:
             return HttpResponse(error[1])
 
     if user_action == 'modify' and request.GET.get('id'):

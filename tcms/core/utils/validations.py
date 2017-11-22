@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import six
 
 from tcms.core.exceptions import InvalidBugIdException
 from tcms.core.exceptions import InvalidBugSystemException
@@ -13,7 +14,7 @@ __all__ = (
 
 
 def validate_bug_id(bug_id, bug_system_id):
-    if not isinstance(bug_id, (basestring, list, tuple)):
+    if not isinstance(bug_id, (six.string_types, list, tuple)):
         raise TypeError('Type error of bug_id.')
 
     if not bug_system_id:

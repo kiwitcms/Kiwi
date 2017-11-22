@@ -2,8 +2,8 @@
 
 import unittest
 
-from httplib import BAD_REQUEST
-from httplib import NOT_FOUND
+from six.moves.http_client import BAD_REQUEST
+from six.moves.http_client import NOT_FOUND
 
 from tcms.xmlrpc.api import testcaseplan
 from tcms.tests.factories import TestCaseFactory

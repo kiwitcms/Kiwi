@@ -2,6 +2,8 @@
 
 import inspect
 import logging
+import six
+
 from functools import wraps
 
 from django.conf import settings
@@ -53,7 +55,7 @@ def log_call(*args, **kwargs):
                 known_args = zip(arg_names, args)
                 unknown_args = list(enumerate(args[len(arg_names):]))
                 keyword_args = [(key, value) for key, value in
-                                kwargs.iteritems()
+                                six.iteritems(kwargs)
                                 if (key, value) not in known_args]
 
                 create_log(user=request.user,

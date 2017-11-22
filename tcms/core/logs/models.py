@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from tcms.core.models import TCMSContentTypeBaseModel
-from managers import TCMSLogManager
+from .managers import TCMSLogManager
 
 
 # Create your models here.
@@ -20,7 +23,7 @@ class TCMSLogModel(TCMSContentTypeBaseModel):
         db_table = u'tcms_logs'
         index_together = (('content_type', 'object_pk', 'site'),)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.action
 
     @classmethod

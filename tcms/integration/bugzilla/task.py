@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import warnings
 
-import xmlrpclib
+from six.moves import xmlrpc_client
 
 from celery import shared_task
 from django.conf import settings
@@ -11,7 +11,7 @@ from django.conf import settings
 def bugzilla_external_track(bug):
     if bug.bug_system.pk == settings.DEFAULT_BUG_SYSTEM_ID:
         try:
-            proxy = xmlrpclib.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
+            proxy = xmlrpc_client.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
             proxy.ExternalBugs.add_external_bug({
                 'Bugzilla_login': settings.BUGZILLA_USER,
                 'Bugzilla_password': settings.BUGZILLA_PASSWORD,

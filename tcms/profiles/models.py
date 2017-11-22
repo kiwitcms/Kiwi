@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+
 from django.db import models
 
 from tcms.core.models import TCMSContentTypeBaseModel
@@ -65,7 +67,7 @@ class UserProfile(models.Model):
         db_table = u'tcms_user_profiles'
 
     def get_im(self):
-        from forms import IM_CHOICES
+        from .forms import IM_CHOICES
 
         if not self.im:
             return None
@@ -90,7 +92,7 @@ class BookmarkCategory(models.Model):
     class Meta:
         db_table = u'tcms_bookmark_categories'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -106,5 +108,5 @@ class Bookmark(TCMSContentTypeBaseModel):
         db_table = u'tcms_bookmarks'
         index_together = (('content_type', 'object_pk', 'site'),)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

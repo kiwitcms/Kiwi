@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
+import six
+
 from django import forms
 from django.contrib.auth.models import User
 
@@ -7,7 +12,7 @@ from tcms.management.models import Product, Version, TestBuild, TCMSEnvGroup, \
     TestTag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
-from models import TestRun, TestCaseRunStatus
+from .models import TestRun, TestCaseRunStatus
 
 
 STATUS_CHOICES = (
@@ -345,15 +350,15 @@ class PlanFilterRunForm(forms.Form):
 
     def __init__(self, request_data):
         super(PlanFilterRunForm, self).__init__(
-            dict((k, v) for k, v in request_data.iteritems() if v.strip())
+            dict((k, v) for k, v in six.iteritems(request_data) if v.strip())
         )
 
     def clean(self):
         cleaned_data = {}
-        for key, value in self.cleaned_data.iteritems():
+        for key, value in six.iteritems(self.cleaned_data):
             if not value:
                 continue
-            if not (isinstance(value, basestring) and not value.strip()):
+            if not (isinstance(value, six.string_types) and not value.strip()):
                 cleaned_data[key] = value
         return cleaned_data
 

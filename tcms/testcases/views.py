@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import datetime
 import json
 import itertools
+import six
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
@@ -44,7 +47,7 @@ from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
     CloneCaseForm, CaseBugForm, CaseTagForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_group_by_dict as create_dict
-from fields import CC_LIST_DEFAULT_DELIMITER
+from .fields import CC_LIST_DEFAULT_DELIMITER
 
 
 MODULE_NAME = "testcases"
@@ -996,7 +999,7 @@ def get(request, case_id, template_name='case/get.html'):
     case_run_plan_id = request.GET.get('case_run_plan_id', None)
     if case_run_plan_id:
         for item in runs_ordered_by_plan:
-            if item[0].pk == long(case_run_plan_id):
+            if item[0].pk == int(case_run_plan_id):
                 case_runs_by_plan = item[1]
                 break
             else:
@@ -1710,7 +1713,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             form = CaseBugForm(request.GET)
             if not form.is_valid():
                 errors = []
-                for field_name, messages in form.errors.iteritems():
+                for field_name, messages in six.iteritems(form.errors):
                     for item in messages:
                         errors.append(item)
                 response = '\n'.join(errors)
@@ -1734,7 +1737,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
 
             try:
                 self.case.remove_bug(request.GET.get('id'), request.GET.get('run_id'))
-            except ObjectDoesNotExist, error:
+            except ObjectDoesNotExist as error:
                 return self.render(response=error)
 
             return self.render()

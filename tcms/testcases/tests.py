@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import json
+from __future__ import absolute_import
+
 import unittest
 import xml.etree.ElementTree
 
@@ -16,8 +17,8 @@ from django.test import RequestFactory
 
 from uuslug import slugify
 
-from fields import MultipleEmailField
-from forms import CaseTagForm
+from .fields import MultipleEmailField
+from .forms import CaseTagForm
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseTag
@@ -38,6 +39,7 @@ from tcms.tests.factories import TestTagFactory
 from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
+from tcms.tests import json_loads
 
 
 class TestMultipleEmailField(unittest.TestCase):
@@ -323,7 +325,7 @@ class TestOperateComponentView(BasePlanCase):
         }
         response = self.client.post(self.cases_component_url, post_data)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
 
         for comp in (self.comp_application, self.comp_database):
@@ -340,7 +342,7 @@ class TestOperateComponentView(BasePlanCase):
             'a': 'remove',
         }
         response = self.client.post(self.cases_component_url, post_data)
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual(
             {'rc': 1, 'response': 'Permission denied - delete', 'errors_list': []},
             data)
@@ -357,7 +359,7 @@ class TestOperateComponentView(BasePlanCase):
         }
         response = self.client.post(self.cases_component_url, post_data)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
 
         for comp in (self.comp_cli, self.comp_api):
@@ -412,7 +414,7 @@ class TestOperateCategoryView(BasePlanCase):
         }
         response = self.client.post(self.case_category_url, post_data)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
 
         for pk in (self.case_1.pk, self.case_3.pk):
@@ -607,7 +609,7 @@ class TestOperateCaseTag(BasePlanCase):
             self.cases_tag_url,
             {'a': 'remove', 'o_tag': tags_to_remove, 'case': remove_from_cases})
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
 
         self.assertFalse(
@@ -633,7 +635,7 @@ class TestOperateCaseTag(BasePlanCase):
 
         remove_tag.assert_called_once()
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual(
             {
                 'rc': 1,
@@ -815,7 +817,7 @@ class TestAJAXSearchCases(BasePlanCase):
     def test_search_all_cases(self):
         response = self.client.get(self.search_url, self.search_data)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         cases_count = self.plan.case.count()
         self.assertEqual(cases_count, data['iTotalRecords'])
@@ -1065,7 +1067,7 @@ class TestAJAXResponse(BasePlanCase):
         empty_cases = TestCase.objects.none()
         response = ajax_response(request, empty_cases, self.column_names, self.template)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         self.assertEqual(0, data['sEcho'])
         self.assertEqual(0, data['iTotalRecords'])
@@ -1091,7 +1093,7 @@ class TestAJAXResponse(BasePlanCase):
         cases = self.plan.case.all()
         response = ajax_response(request, cases, self.column_names, self.template)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         total = self.plan.case.count()
         self.assertEqual(1, data['sEcho'])

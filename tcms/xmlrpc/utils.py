@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
+import six
+
 from django.db.models import Count, FieldDoesNotExist
 
 from tcms import utils
@@ -33,13 +35,13 @@ def pre_check_product(values):
     else:
         product_str = values
 
-    value_type = type(product_str)
-
-    if value_type == str:
+    if isinstance(product_str, six.string_types):
         if not product_str:
             raise ValueError('Got empty product name.')
         return Product.objects.get(name=product_str)
-    elif value_type in [int, long]:
+    elif isinstance(product_str, bool):
+        raise ValueError('The type of product is not recognizable.')
+    elif isinstance(product_str, six.integer_types):
         return Product.objects.get(pk=product_str)
     else:
         raise ValueError('The type of product is not recognizable.')
@@ -49,14 +51,13 @@ def pre_process_ids(value):
     # FIXME: Add more type checks, e.g. value cannot be a boolean value.
 
     if isinstance(value, list):
-        return [isinstance(c, int) and c or
-                isinstance(c, long) and c or
-                int(c.strip()) for c in value if c]
+        return [isinstance(c, six.integer_types) and c or int(c.strip())
+                for c in value if c]
 
     if isinstance(value, str):
         return [int(c.strip()) for c in value.split(',') if c]
 
-    if isinstance(value, int) or isinstance(value, long):
+    if isinstance(value, six.integer_types):
         return [value]
 
     raise TypeError('Unrecognizable type of ids')
@@ -132,7 +133,7 @@ def distinct_m2m_rows(cls, values, op_type):
     @rtype: django.db.models.query.QuerySet
     """
     flag = False
-    for field in values.iterkeys():
+    for field in six.iterkeys(values):
         if '__' in field:
             if _need_distinct_m2m_rows(cls, field.split('__')):
                 flag = True
@@ -229,7 +230,7 @@ def pre_process_estimated_time(value):
     support value - HH:MM:SS & xdxhxmxs
     return xdxhxmxs
     '''
-    if isinstance(value, basestring):
+    if isinstance(value, six.string_types):
         match = estimated_time_re.match(value.replace(' ', ''))
         if match:
             return value

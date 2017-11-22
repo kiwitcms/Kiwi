@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+
 import re
+import six
 
 from django import forms
 from django.db.models import Q
@@ -87,7 +89,7 @@ class MultipleEmailField(forms.EmailField):
 
 class StripURLField(forms.URLField):
     def to_python(self, value):
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             value = value.strip()
         return super(StripURLField, self).to_python(value)
 

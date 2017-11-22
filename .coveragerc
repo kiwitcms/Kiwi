@@ -4,6 +4,7 @@ branch = True
 [report]
 #show_missing = True
 omit =
+    .tox/*
     */tests.py
     */tests/test_*.py
     */migrations/*.py

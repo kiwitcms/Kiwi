@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import json
 
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_GET, require_POST
 
-from forms import AddLinkReferenceForm, BasicValidationForm
-from models import create_link, LinkReference
+from .forms import AddLinkReferenceForm, BasicValidationForm
+from .models import create_link, LinkReference
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.responses import HttpJSONResponseBadRequest
 from tcms.core.responses import HttpJSONResponseServerError
@@ -102,7 +104,7 @@ def remove(request, link_id):
     field = IntegerField(min_value=1)
     try:
         value = field.clean(link_id)
-    except ValidationError, err:
+    except ValidationError as err:
         jd = json.dumps({'rc': 1, 'response': '\n'.join(err.messages)})
         return HttpJSONResponseBadRequest(content=jd)
 

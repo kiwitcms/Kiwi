@@ -2,10 +2,10 @@
 
 import unittest
 
-from httplib import BAD_REQUEST
-from httplib import FORBIDDEN
-from httplib import NOT_FOUND
-from httplib import NOT_IMPLEMENTED
+from six.moves.http_client import BAD_REQUEST
+from six.moves.http_client import FORBIDDEN
+from six.moves.http_client import NOT_FOUND
+from six.moves.http_client import NOT_IMPLEMENTED
 from datetime import datetime
 
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -14,6 +14,7 @@ from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.models import TestCaseBugSystem
 
+from tcms.tests import encode_if_py3
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
@@ -921,9 +922,9 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         self.assertIsNotNone(tcr)
         self.assertIsInstance(tcr, list)
         self.assertEqual(1, len(tcr))
-        self.assertEqual(tcr[0]['build'], self.build.name)
+        self.assertEqual(tcr[0]['build'], encode_if_py3(self.build.name))
         self.assertEqual(tcr[0]['assignee'], self.user.username)
-        self.assertEqual(tcr[0]['case_run_status'], 'RUNNING')
+        self.assertEqual(tcr[0]['case_run_status'], encode_if_py3('RUNNING'))
         self.assertEqual(tcr[0]['notes'], "AAAAAAAA")
         self.assertEqual(tcr[0]['sortkey'], 90)
 

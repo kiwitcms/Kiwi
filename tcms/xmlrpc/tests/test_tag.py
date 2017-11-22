@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from httplib import BAD_REQUEST
+from six.moves.http_client import BAD_REQUEST
 
 from tcms.xmlrpc.api import tag
 from tcms.tests.factories import TestTagFactory

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import six
 import unittest
 from django import test
 
@@ -13,6 +14,7 @@ from tcms.xmlrpc.serializer import do_nothing
 from tcms.xmlrpc.serializer import encode_utf8
 from tcms.xmlrpc.serializer import to_str
 
+from tcms.tests import encode_if_py3
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
@@ -149,13 +151,13 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assertEqual(mapping, MockTestCaseSerializer.values_fields_mapping)
 
     def test_get_values_fields(self):
-        fields = self.case_serializer._get_values_fields()
+        fields = list(self.case_serializer._get_values_fields())
         fields.sort()
-        expected_fields = MockTestCaseSerializer.values_fields_mapping.keys()
+        expected_fields = list(MockTestCaseSerializer.values_fields_mapping.keys())
         expected_fields.sort()
         self.assertEqual(expected_fields, fields)
 
-        fields = self.product_serializer._get_values_fields()
+        fields = list(self.product_serializer._get_values_fields())
         fields.sort()
         expected_fields = [field.name for field in Product._meta.fields]
         expected_fields.sort()
@@ -189,7 +191,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assertEqual(expected_field_name, field_name)
 
     def verify_m2m_field_query_result(self, m2m_field_name, result):
-        for object_pk, objects in result.iteritems():
+        for object_pk, objects in six.iteritems(result):
             self.assert_(isinstance(objects, tuple))
             for object_value in objects:
                 self.assertEqual(object_pk, object_value['pk'])
@@ -208,7 +210,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assert_(isinstance(result, dict))
         self.assertEqual(len(result), len(MockTestPlanSerializer.m2m_fields))
 
-        for m2m_field_name, this_query_result in result.iteritems():
+        for m2m_field_name, this_query_result in six.iteritems(result):
             self.assert_(m2m_field_name in MockTestPlanSerializer.m2m_fields)
             self.assert_(isinstance(this_query_result, dict))
 
@@ -272,7 +274,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
             self.assertEqual(expected_plan.author.username, plan['author'])
             self.assertEqual(expected_plan.product_version_id,
                              plan['product_version_id'])
-            self.assertEqual(expected_plan.product_version.value,
+            self.assertEqual(encode_if_py3(expected_plan.product_version.value),
                              plan['product_version'])
 
     def test_serialize_queryset_with_empty_querset(self):

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import httplib
+import six
+from six.moves import http_client
 
 from django.test import TestCase
 
@@ -16,7 +17,7 @@ class TestFaultCode(XmlrpcAPIBaseTest):
             raise PermissionDenied()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.FORBIDDEN, wrapper)
+        self.assertRaisesXmlrpcFault(http_client.FORBIDDEN, wrapper)
 
     def test_404(self):
         def raise_exception(*args, **kwargs):
@@ -24,10 +25,10 @@ class TestFaultCode(XmlrpcAPIBaseTest):
             raise ObjectDoesNotExist()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.NOT_FOUND, wrapper)
+        self.assertRaisesXmlrpcFault(http_client.NOT_FOUND, wrapper)
 
     def test_400(self):
-        exceptions = [v for k, v in locals().copy().iteritems() if k != 'self']
+        exceptions = [v for k, v in six.iteritems(locals().copy()) if k != 'self']
         exceptions.extend((TypeError, ValueError))
 
         def raise_exception(cls):
@@ -35,7 +36,7 @@ class TestFaultCode(XmlrpcAPIBaseTest):
 
         wrapper = wrap_exceptions(raise_exception)
         for clazz in exceptions:
-            self.assertRaisesXmlrpcFault(httplib.BAD_REQUEST, wrapper, clazz)
+            self.assertRaisesXmlrpcFault(http_client.BAD_REQUEST, wrapper, clazz)
 
     def test_409(self):
         def raise_exception(*args, **kwargs):
@@ -43,21 +44,21 @@ class TestFaultCode(XmlrpcAPIBaseTest):
             raise IntegrityError()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.CONFLICT, wrapper)
+        self.assertRaisesXmlrpcFault(http_client.CONFLICT, wrapper)
 
     def test_500(self):
         def raise_exception(*args, **kwargs):
             raise Exception()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.INTERNAL_SERVER_ERROR, wrapper)
+        self.assertRaisesXmlrpcFault(http_client.INTERNAL_SERVER_ERROR, wrapper)
 
     def test_501(self):
         def raise_exception(*args, **kwargs):
             raise NotImplementedError()
 
         wrapper = wrap_exceptions(raise_exception)
-        self.assertRaisesXmlrpcFault(httplib.NOT_IMPLEMENTED, wrapper)
+        self.assertRaisesXmlrpcFault(http_client.NOT_IMPLEMENTED, wrapper)
 
 
 class TestAutoWrap(TestCase):
@@ -68,5 +69,5 @@ class TestAutoWrap(TestCase):
 
         for func_name in func_names:
             func = getattr(auth, func_name)
-            code = func.func_code
+            code = six.get_function_code(func)
             self.assertEqual(code.co_name, "_decorator")

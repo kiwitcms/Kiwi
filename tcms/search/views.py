@@ -4,6 +4,7 @@
 Advance search implementations
 '''
 
+import six
 import time
 
 from django.db.models.query import QuerySet
@@ -191,7 +192,7 @@ def fmt_errors(form_errors):
     '''
     errors = []
     for error in form_errors:
-        for k, v in error.iteritems():
+        for k, v in six.iteritems(error):
             k = k.replace('p_product', 'product')
             k = k.replace('p_', 'product ')
             k = k.replace('cs_', 'case ')
@@ -210,7 +211,7 @@ def fmt_queries(*queries):
     '''
     results = {}
     for query in queries:
-        for k, v in query.iteritems():
+        for k, v in six.iteritems(query):
             k = k.replace('p_product', 'product')
             k = k.replace('p_', 'product ')
             k = k.replace('cs_', 'case ')

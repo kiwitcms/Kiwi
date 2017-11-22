@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
 import unittest
 
 from django.http import HttpResponse
 
-from forms import TargetCharField
+from .forms import TargetCharField
 from tcms.core.responses import (HttpJSONResponse,
                                  HttpJSONResponseBadRequest,
                                  HttpJSONResponseServerError)

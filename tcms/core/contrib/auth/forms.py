@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
+
+from .models import UserActivateKey
 
 
 class RegistrationForm(UserCreationForm):
@@ -31,8 +36,6 @@ class RegistrationForm(UserCreationForm):
         return user
 
     def set_active_key(self):
-        from models import UserActivateKey
-
         return UserActivateKey.set_random_key_for_user(user=self.instance)
 
     def send_confirm_mail(self, request, active_key,

@@ -14,9 +14,3 @@ def html2text(value):
     except OSError:
         # something bad happened, so just return the input
         return value
-
-
-if __name__ == "__main__":
-    from urllib import urlopen
-
-    print html2text(urlopen("http://www.w3.org/TR/REC-html40/").read())

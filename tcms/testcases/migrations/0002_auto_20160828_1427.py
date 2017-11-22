@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contact',
             name='content_type',
-            field=models.ForeignKey(related_name='content_type_set_for_contact', verbose_name=b'content type', blank=True, to='contenttypes.ContentType', null=True),
+            field=models.ForeignKey(related_name='content_type_set_for_contact', verbose_name='content type', blank=True, to='contenttypes.ContentType', null=True),
         ),
         migrations.AddField(
             model_name='contact',

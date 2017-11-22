@@ -160,7 +160,6 @@ def info(request):
             response_str += '</ul>'
             return HttpResponse(response_str)
 
-        # import pdb; pdb.set_trace()
         return HttpResponse(serializers.serialize(
             request.GET.get('format', 'json'),
             obj(),
@@ -187,7 +186,7 @@ def form(request):
 
     # Get the form
     q_app, q_form = q_app_form.split('.')[0], q_app_form.split('.')[1]
-    exec ('from tcms.%s.forms import %s as form' % (q_app, q_form))
+    exec('from tcms.%s.forms import %s as form' % (q_app, q_form))
     try:
         __import__('tcms.%s.forms' % q_app)
     except ImportError:
@@ -786,7 +785,7 @@ def clean_bug_form(request):
     try:
         data['bugs'] = request.GET.get('bug_id', '').split(',')
         data['runs'] = map(int, request.GET.get('case_runs', '').split(','))
-    except (TypeError, ValueError), e:
+    except (TypeError, ValueError) as e:
         return (None, 'Please specify only integers for bugs, '
                       'caseruns(using comma to seperate IDs), '
                       'and bug_system. (DEBUG INFO: %s)' % str(e))

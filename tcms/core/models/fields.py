@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import six
 
 from pymysql.constants import FIELD_TYPE
 from django.db.models.fields import IntegerField
@@ -8,25 +9,6 @@ from django.db.backends.mysql.base import django_conversions
 from tcms.core.forms.fields import DurationField as DurationFormField
 
 django_conversions.update({FIELD_TYPE.TIME: None})
-
-
-class BlobValueWrapper(object):
-    """
-    Wrap the blob value so that we can override the unicode method.
-    After the query succeeds, Django attempts to record the last query
-    executed, and at that point it attempts to force the query string
-    to unicode. This does not work for binary data and generates an
-    uncaught exception.
-    """
-
-    def __init__(self, val):
-        self.val = val
-
-    def __str__(self):
-        return self.val
-
-    def __unicode__(self):
-        return u'blobdata_unicode'
 
 
 class DurationField(IntegerField):
@@ -40,7 +22,7 @@ class DurationField(IntegerField):
     """
 
     def to_python(self, value):
-        if isinstance(value, (int, long)):
+        if isinstance(value, six.integer_types):
             return datetime.timedelta(seconds=value)
         elif isinstance(value, datetime.timedelta):
             return value

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
 from django import forms
 
 from tinymce.widgets import TinyMCE
@@ -8,9 +11,9 @@ from tcms.core.exceptions import NitrateException
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.management.models import Priority, Product, Component, TestTag
-from models import TestCase, TestCaseCategory, TestCaseStatus
-from models import TestCaseBug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
-from fields import MultipleEmailField
+from .models import TestCase, TestCaseCategory, TestCaseStatus
+from .models import TestCaseBug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
+from .fields import MultipleEmailField
 
 AUTOMATED_CHOICES = (
     (0, 'Manual'),
@@ -47,7 +50,7 @@ class BugField(forms.CharField):
         for bug_id in bug_ids:
             try:
                 bug_id = int(bug_id)
-            except ValueError, error:
+            except ValueError as error:
                 raise forms.ValidationError(error)
             if abs(bug_id) > 8388607:
                 raise forms.ValidationError(error)
@@ -401,7 +404,7 @@ class BaseCaseSearchForm(forms.Form):
         for d in data:
             try:
                 int(d)
-            except ValueError, error:
+            except ValueError as error:
                 raise forms.ValidationError(error)
 
         return data

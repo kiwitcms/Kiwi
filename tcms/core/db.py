@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from itertools import izip
+
+import six
 
 from tcms.core.utils.tcms_router import connection
 
@@ -65,7 +66,7 @@ class SQLExecution(object):
             row = self.cursor.fetchone()
             if row is None:
                 break
-            yield dict(izip(self.field_names, row))
+            yield dict(six.moves.zip(self.field_names, row))
 
     @property
     def _raw_rows(self):
@@ -78,7 +79,7 @@ class SQLExecution(object):
     @property
     def scalar(self):
         row = self.rows.next()
-        for key, value in row.iteritems():
+        for key, value in six.iteritems(row):
             return value
 
 
@@ -150,7 +151,7 @@ class GroupByResult(object):
         return self._data.get(key, default)
 
     def iteritems(self):
-        return self._data.iteritems()
+        return six.iteritems(self._data)
 
     def setdefault(self, key, default=None):
         return self._data.setdefault(key, default)
@@ -181,10 +182,10 @@ class GroupByResult(object):
             total = self[self._total_name]
         else:
             total = 0
-            for name, subtotal in self._data.iteritems():
+            for name, subtotal in six.iteritems(self._data):
                 # NOTE: is it possible do such judgement in advance when adding
                 # element
-                if isinstance(subtotal, int) or isinstance(subtotal, long):
+                if isinstance(subtotal, six.integer_types):
                     total += subtotal
                 elif isinstance(subtotal, GroupByResult):
                     total += subtotal.total

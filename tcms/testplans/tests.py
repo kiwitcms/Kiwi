@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import json
-import httplib
+from __future__ import division
+
 import os
 import xml.etree.ElementTree as et
-
-from itertools import izip
 
 from six.moves import http_client
 from six.moves import map
 from six.moves import urllib
+from six.moves import zip
 
 from django import test
 from django.contrib.auth.models import User
@@ -35,6 +34,7 @@ from tcms.tests.factories import VersionFactory
 from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
+from tcms.tests import json_loads
 
 
 class PlanTests(test.TestCase):
@@ -65,37 +65,37 @@ class PlanTests(test.TestCase):
     def test_open_plans_search(self):
         location = reverse('plans-all')
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_search_plans(self):
         location = reverse('plans-all')
         response = self.c.get(location, {'action': 'search', 'type': self.test_plan.type.pk})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_plan_new_get(self):
         location = reverse('plans-new')
         response = self.c.get(location, follow=True)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_plan_details(self):
         location = reverse('plan-get', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.MOVED_PERMANENTLY)
+        self.assertEquals(response.status_code, http_client.MOVED_PERMANENTLY)
 
         response = self.c.get(location, follow=True)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_plan_cases(self):
         location = reverse('plan-cases', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_plan_importcase(self):
         location = reverse('plan-cases', args=[self.plan_id])
         filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
         with open(filename, 'r') as fin:
             response = self.c.post(location, {'a': 'import_cases', 'xml_file': fin}, follow=True)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
         summary = 'Remove this case from a test plan'
         has_case = TestCase.objects.filter(summary=summary).exists()
@@ -106,13 +106,13 @@ class PlanTests(test.TestCase):
 
         location = reverse('plan-delete', args=[tp_pk])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
         response = self.c.get(location, {'sure': 'no'})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
         response = self.c.get(location, {'sure': 'yes'})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
         deleted = not TestPlan.objects.filter(pk=tp_pk).exists()
         self.assert_(deleted,
                      'TestPlan {0} should be deleted. But, not.'.format(tp_pk))
@@ -120,17 +120,17 @@ class PlanTests(test.TestCase):
     def test_plan_edit(self):
         location = reverse('plan-edit', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_plan_printable(self):
         location = reverse('plans-printable')
         response = self.c.get(location, {'plan_id': self.plan_id})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_plan_export(self):
         location = reverse('plans-export')
         response = self.c.get(location, {'plan': self.plan_id})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
         xml_doc = response.content
         try:
@@ -141,16 +141,16 @@ class PlanTests(test.TestCase):
     def test_plan_attachment(self):
         location = reverse('plan-attachment', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
     def test_plan_history(self):
         location = reverse('plan-text-history',
                            args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
         response = self.c.get(location, {'plan_text_version': 1})
-        self.assertEquals(response.status_code, httplib.OK)
+        self.assertEquals(response.status_code, http_client.OK)
 
 
 class TestPlanModel(test.TestCase):
@@ -183,7 +183,7 @@ class TestUnknownActionOnCases(BasePlanCase):
 
     def test_ajax_request(self):
         response = self.client.get(self.cases_url, {'a': 'unknown action', 'format': 'json'})
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual('Unrecognizable actions', data['response'])
 
     def test_request_from_webui(self):
@@ -207,7 +207,7 @@ class TestDeleteCasesFromPlan(BasePlanCase):
         self.client.login(username=self.plan_tester.username, password='password')
 
         response = self.client.post(self.cases_url, {'a': 'delete_cases'})
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual(1, data['rc'])
         self.assertEqual('At least one case is required to delete.', data['response'])
 
@@ -216,7 +216,7 @@ class TestDeleteCasesFromPlan(BasePlanCase):
 
         post_data = {'a': 'delete_cases', 'case': [self.case_1.pk, self.case_3.pk]}
         response = self.client.post(self.cases_url, post_data)
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         self.assertEqual(0, data['rc'])
         self.assertEqual('ok', data['response'])
@@ -250,7 +250,7 @@ class TestSortCases(BasePlanCase):
         self.client.login(username=self.plan_tester.username, password='password')
 
         response = self.client.post(self.cases_url, {'a': 'order_cases'})
-        data = json.loads(response.content)
+        data = json_loads(response.content)
         self.assertEqual(1, data['rc'])
         self.assertEqual('At least one case is required to re-order.', data['response'])
 
@@ -259,7 +259,7 @@ class TestSortCases(BasePlanCase):
 
         post_data = {'a': 'order_cases', 'case': [self.case_1.pk, self.case_3.pk]}
         response = self.client.post(self.cases_url, post_data)
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         self.assertEqual(0, data['rc'])
         self.assertEqual('ok', data['response'])
@@ -499,8 +499,8 @@ class TestCloneView(BasePlanCase):
 
         # Verify option copy_texts
         self.assertEqual(cloned_plan.text.count(), original_plan.text.count())
-        for copied_text, original_text in izip(cloned_plan.text.all(),
-                                               original_plan.text.all()):
+        for copied_text, original_text in zip(cloned_plan.text.all(),
+                                              original_plan.text.all()):
             self.assertEqual(copied_text.plan_text_version, original_text.plan_text_version)
             self.assertEqual(copied_text.author, original_text.author)
             self.assertEqual(copied_text.create_date, original_text.create_date)
@@ -533,8 +533,8 @@ class TestCloneView(BasePlanCase):
             self.assertEqual(cloned_plan.case.count(), original_plan.case.count())
 
             # Verify if case' author and default tester are set properly
-            for original_case, copied_case in izip(original_plan.case.all(),
-                                                   cloned_plan.case.all()):
+            for original_case, copied_case in zip(original_plan.case.all(),
+                                                  cloned_plan.case.all()):
                 if maintain_case_orignal_author:
                     self.assertEqual(original_case.author, copied_case.author)
                 else:
@@ -693,7 +693,7 @@ class TestAJAXSearch(BasePlanCase):
     def test_emtpy_plans(self):
         response = self.client.get(self.search_url, {})
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         self.assertEqual(0, data['sEcho'])
         self.assertEqual(0, data['iTotalRecords'])
@@ -705,7 +705,7 @@ class TestAJAXSearch(BasePlanCase):
 
         response = self.client.get(self.search_url, search_data)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         plans_count = TestPlan.objects.count()
         self.assertEqual(1, data['sEcho'])
@@ -724,12 +724,12 @@ class TestAJAXSearch(BasePlanCase):
         search_data = self.search_data.copy()
         plans_count = TestPlan.objects.count()
         # To request last page
-        search_data['iDisplayStart'] = plans_count / 3 * 3
+        search_data['iDisplayStart'] = int((round(plans_count / 3.0) - 1) * 3)
         search_data['iSortCol_0'] = 2
 
         response = self.client.get(self.search_url, search_data)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         self.assertEqual(1, data['sEcho'])
         self.assertEqual(plans_count, data['iTotalRecords'])
@@ -753,7 +753,7 @@ class TestAJAXSearch(BasePlanCase):
 
         response = self.client.get(self.search_url, search_data)
 
-        data = json.loads(response.content)
+        data = json_loads(response.content)
 
         plans_count = TestPlan.objects.count()
         self.assertEqual(1, data['sEcho'])

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+
+import six
+
 from collections import defaultdict
 from collections import namedtuple
 from itertools import chain
 from itertools import groupby
-from itertools import imap
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
@@ -249,7 +251,7 @@ class CustomReportData(object):
             joins = []
             where_conditions = []
             where_params = []
-            for field_name, value in self._form.cleaned_data.iteritems():
+            for field_name, value in six.iteritems(self._form.cleaned_data):
                 if not value:
                     continue
                 query_info = self.report_criteria[field_name]
@@ -282,7 +284,7 @@ class CustomReportData(object):
 
         sql = sql_statement.sql_template % {
             'joins': '\n'.join(_joins),
-            'where': ' AND '.join(imap(str, _where_conditions)),
+            'where': ' AND '.join(six.moves.imap(str, _where_conditions)),
         }
         return sql, where_params
 
@@ -477,7 +479,7 @@ class TestingReportBaseData(object):
         '''cache criteria to avoid generating repeately'''
         where_clause = []
         params = []
-        for field, condition in self.report_criteria.iteritems():
+        for field, condition in six.iteritems(self.report_criteria):
             param = form.cleaned_data[field]
             if param:
                 expr, value_conv = condition
@@ -560,7 +562,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
         tested_by_usernames = self.get_usernames(status_matrix.keys())
 
         def walk_status_matrix_rows():
-            tested_by_ids = sorted(status_matrix.iteritems(),
+            tested_by_ids = sorted(six.iteritems(status_matrix),
                                    key=lambda item: item[0])
             for tested_by_id, status_subtotal in tested_by_ids:
                 tested_by_username = tested_by_usernames.get(tested_by_id,
@@ -597,7 +599,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
 
         # Get related tested_by's username. Don't need duplicated user ids.
         tested_by_ids = []
-        for build_id, tested_bys in status_matrix.iteritems():
+        for build_id, tested_bys in six.iteritems(status_matrix):
             tested_by_ids += tested_bys.keys()
         tested_by_ids = set(tested_by_ids)
 
@@ -607,11 +609,11 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
         def walk_status_matrix_rows():
             '''For rendering template, walk through status matrix row by row'''
             prev_build = None
-            builds = sorted(status_matrix.iteritems(),
+            builds = sorted(six.iteritems(status_matrix),
                             key=lambda item: item[0])
             for build_id, tested_by_ids in builds:
                 build_rowspan = len(tested_by_ids)
-                tested_by_ids = sorted(tested_by_ids.iteritems(),
+                tested_by_ids = sorted(six.iteritems(tested_by_ids),
                                        key=lambda item: item[0])
                 for tested_by_id, status_subtotal in tested_by_ids:
                     if build_id not in runs_subtotal:
@@ -712,11 +714,11 @@ class TestingReportByCasePriorityData(TestingReportBaseData):
 
         def walk_status_matrix_rows():
             prev_build_id = None
-            ordered_builds = sorted(status_matrix.iteritems(),
+            ordered_builds = sorted(six.iteritems(status_matrix),
                                     key=lambda item: item[0])
             for build_id, priorities in ordered_builds:
                 build_rowspan = len(priorities)
-                ordered_priorities = sorted(priorities.iteritems(),
+                ordered_priorities = sorted(six.iteritems(priorities),
                                             key=lambda item: item[0].value)
                 build_name = builds_names.get(build_id, '')
                 for priority, status_subtotal in ordered_priorities:
@@ -770,7 +772,7 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
         tags_names = self.get_tags_names(status_matrix.keys())
 
         def walk_status_matrix_rows():
-            ordered_tags = sorted(status_matrix.iteritems(),
+            ordered_tags = sorted(six.iteritems(status_matrix),
                                   key=lambda item: item[0])
             for tag_id, status_subtotal in ordered_tags:
                 yield tags_names.get(tag_id, ''), \
@@ -841,7 +843,7 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
 
         def walk_status_matrix():
             status_matrix.leaf_values_count(value_in_row=True)
-            ordered_builds = sorted(status_matrix.iteritems(),
+            ordered_builds = sorted(six.iteritems(status_matrix),
                                     key=lambda item: item[0])
             for tag_id, builds in ordered_builds:
                 # Data on top of each status matrix under each tag
@@ -870,12 +872,12 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
         prev_build = None
         prev_plan = None
 
-        ordered_builds = sorted(root_matrix.iteritems(), key=sort_key)
+        ordered_builds = sorted(six.iteritems(root_matrix), key=sort_key)
         for build, plans in ordered_builds:
-            ordered_plans = sorted(plans.iteritems(), key=sort_key)
+            ordered_plans = sorted(six.iteritems(plans), key=sort_key)
             build_rowspan = plans.leaf_values_count(value_in_row=True)
             for plan, runs in ordered_plans:
-                ordered_runs = sorted(runs.iteritems(), key=sort_key)
+                ordered_runs = sorted(six.iteritems(runs), key=sort_key)
                 plan_rowspan = runs.leaf_values_count(value_in_row=True)
                 for run, status_subtotal in ordered_runs:
                     if build == prev_build:
@@ -930,7 +932,7 @@ class TestingReportByPlanBuildData(TestingReportBaseData):
         status_matrix = self.status_matrix(form)
 
         def walk_status_matrix_rows():
-            ordered_plans = sorted(status_matrix.iteritems(),
+            ordered_plans = sorted(six.iteritems(status_matrix),
                                    key=lambda item: item[0].pk)
             for plan, status_subtotal in ordered_plans:
                 yield plan, \
@@ -945,7 +947,7 @@ class TestingReportByPlanBuildData(TestingReportBaseData):
 
             # only for displaying plan names
             'plans': (plan.name for plan, value in
-                      sorted(status_matrix.iteritems(),
+                      sorted(six.iteritems(status_matrix),
                              key=lambda item: item[0].pk))
         }
 
@@ -995,7 +997,7 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
         status_matrix.leaf_values_count(value_in_row=True)
 
         def walk_status_matrix_rows():
-            ordered_plans = sorted(status_matrix.iteritems(),
+            ordered_plans = sorted(six.iteritems(status_matrix),
                                    key=lambda item: item[0].pk)
             for plan, builds in ordered_plans:
                 builds_count = builds_subtotal.get(plan, 0)
@@ -1015,12 +1017,12 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
     def walk_status_matrix_section(self, status_matrix_section):
         prev_build = None
 
-        ordered_builds = sorted(status_matrix_section.iteritems(),
+        ordered_builds = sorted(six.iteritems(status_matrix_section),
                                 key=lambda item: item[0].pk)
         for build, runs in ordered_builds:
             build_rowspan = runs.leaf_values_count(value_in_row=True)
 
-            ordered_runs = sorted(runs.iteritems(),
+            ordered_runs = sorted(six.iteritems(runs),
                                   key=lambda item: item[0].pk)
 
             for run, status_subtotal in ordered_runs:
@@ -1121,7 +1123,7 @@ class TestingReportCaseRunsData(object):
 
     def runs_filter_criteria(self, form):
         result = {}
-        for criteria_field, expr in self.run_filter_criteria.iteritems():
+        for criteria_field, expr in six.iteritems(self.run_filter_criteria):
             value = form.cleaned_data[criteria_field]
             if value:
                 result[expr[0]] = expr[1](value)

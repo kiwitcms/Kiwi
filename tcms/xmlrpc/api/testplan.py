@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import six
+
 from django.core.exceptions import ObjectDoesNotExist
 from kobo.django.xmlrpc.decorators import user_passes_test
 
@@ -792,9 +794,9 @@ def clean_xml_file(xml_file):
     case_elements = root_element.get('testcase', None)
     if case_elements is not None:
         if isinstance(case_elements, list):
-            return map(process_case, case_elements)
+            return six.moves.map(process_case, case_elements)
         elif isinstance(case_elements, dict):
-            return map(process_case, (case_elements,))
+            return six.moves.map(process_case, (case_elements,))
         else:
             raise
     else:

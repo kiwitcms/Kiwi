@@ -5,7 +5,9 @@ import itertools
 import json
 import re
 import time
-import urllib
+import six
+
+from six.moves import urllib
 
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
@@ -201,8 +203,9 @@ def new(request, template_name='run/new.html'):
             )
 
     else:
-        estimated_time = reduce(lambda x, y: x + y,
-                                (tc.estimated_time for tc in tcs_values))
+        estimated_time = six.moves.reduce(
+            lambda x, y: x + y,
+            (tc.estimated_time for tc in tcs_values))
         form = NewRunForm(initial={
             'summary': 'Test run for %s on %s' % (
                 tp.name,
@@ -289,7 +292,7 @@ def all(request, template_name='run/all.html'):
 
     query_result = len(request.GET) > 0
 
-    if request.GET.items():
+    if list(request.GET.items()):
         search_form = SearchRunForm(request.GET)
         if request.GET.get('product'):
             search_form.populate(product_id=request.GET['product'])
@@ -324,7 +327,7 @@ def run_queryset_from_querystring(querystring):
         filter_keywords.pop('page_size')
 
     filter_keywords = dict(
-        (str(k), v) for (k, v) in filter_keywords.iteritems() if v.strip())
+        (str(k), v) for (k, v) in six.iteritems(filter_keywords) if v.strip())
 
     trs = TestRun.objects.filter(**filter_keywords)
     return trs
@@ -372,7 +375,7 @@ def load_runs_of_one_plan(request, plan_id,
 
         # Get associated statistics data
         run_filters = dict(('run__{0}'.format(key), value)
-                           for key, value in form.cleaned_data.iteritems())
+                           for key, value in six.iteritems(form.cleaned_data))
 
         qs = TestCaseRun.objects.filter(
             case_run_status=TestCaseRunStatus.id_failed(),
@@ -899,7 +902,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 bug_id = self.request.GET.get('bug_id')
                 run_id = self.request.GET.get('case_run')
                 self.case_run.remove_bug(bug_id, run_id)
-            except ObjectDoesNotExist, error:
+            except ObjectDoesNotExist as error:
                 response = {'rc': 1, 'response': str(error)}
                 return self.ajax_response(response=response)
 
@@ -957,8 +960,9 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
             info_type=Prompt.Info,
             info='At least one case is required by a run',
             next=request.META.get('HTTP_REFERER', '/')))
-    estimated_time = reduce(lambda x, y: x + y,
-                            [tcr.case.estimated_time for tcr in tcrs])
+    estimated_time = six.moves.reduce(
+        lambda x, y: x + y,
+        [tcr.case.estimated_time for tcr in tcrs])
 
     if not request.POST.get('submit'):
         form = RunCloneForm(initial={
@@ -1101,7 +1105,7 @@ def clone(request, template_name='run/clone.html'):
 
             return HttpResponseRedirect('%s?%s' % (
                 reverse('runs-all'),
-                urllib.urlencode(params, True)
+                urllib.parse.urlencode(params, True)
             ))
     else:
         form = MulitpleRunsCloneForm(initial={
@@ -1155,8 +1159,8 @@ def order_case(request, run_id):
     #         (20, 10294)
     #         (30, 10315)
     #         (40, 10443)
-    new_sort_keys = xrange(10, (len(case_run_ids) + 1) * 10, 10)
-    key_id_pairs = itertools.izip(new_sort_keys, (int(pk) for pk in case_run_ids))
+    new_sort_keys = six.moves.xrange(10, (len(case_run_ids) + 1) * 10, 10)
+    key_id_pairs = six.moves.zip(new_sort_keys, (int(pk) for pk in case_run_ids))
     with transaction.atomic():
         for key_id_pair in key_id_pairs:
             cursor = connection.writer_cursor
@@ -1259,8 +1263,9 @@ class AddCasesToRunView(View):
                                                         'estimated_time')
         ncs = tcs.filter(case_id__in=ncs_id)
 
-        estimated_time = reduce(lambda x, y: x + y,
-                                (nc.estimated_time for nc in ncs))
+        estimated_time = six.moves.reduce(
+            lambda x, y: x + y,
+            (nc.estimated_time for nc in ncs))
         tr.estimated_time = tr.estimated_time + estimated_time
         tr.save(update_fields=['estimated_time'])
 
@@ -1451,7 +1456,12 @@ def env_value(request):
                 request,
                 "run/get_environment.html",
                 context={"test_run": self.trs[0], "is_ajax": True})
-            self.ajax_response.update({"fragment": fragment.content})
+            if isinstance(fragment.content, six.binary_type):
+                self.ajax_response.update({
+                    "fragment": fragment.content.decode('utf-8')
+                })
+            else:
+                self.ajax_response.update({"fragment": fragment.content})
             return HttpResponse(json.dumps(self.ajax_response))
 
         def remove(self):

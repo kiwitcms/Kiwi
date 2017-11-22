@@ -29,8 +29,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('plan_id', models.AutoField(max_length=11, serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=255, db_index=True)),
-                ('create_date', models.DateTimeField(auto_now_add=True, db_column=b'creation_date')),
-                ('is_active', models.BooleanField(default=True, db_index=True, db_column=b'isactive')),
+                ('create_date', models.DateTimeField(auto_now_add=True, db_column='creation_date')),
+                ('is_active', models.BooleanField(default=True, db_index=True, db_column='isactive')),
                 ('extra_link', models.CharField(default=None, max_length=1024, null=True, blank=True)),
             ],
             options={
@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 ('oldvalue', models.TextField(blank=True)),
                 ('newvalue', models.TextField(blank=True)),
                 ('plan', models.ForeignKey(to='testplans.TestPlan')),
-                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who')),
+                ('who', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column='who')),
             ],
             options={
                 'db_table': 'test_plan_activity',
@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
             name='TestPlanTag',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('user', models.IntegerField(default=b'1', db_column=b'userid')),
+                ('user', models.IntegerField(default='1', db_column='userid')),
                 ('plan', models.ForeignKey(to='testplans.TestPlan')),
                 ('tag', models.ForeignKey(to='management.TestTag')),
             ],
@@ -118,10 +118,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('plan_text_version', models.IntegerField()),
-                ('create_date', models.DateTimeField(auto_now_add=True, db_column=b'creation_ts')),
+                ('create_date', models.DateTimeField(auto_now_add=True, db_column='creation_ts')),
                 ('plan_text', models.TextField(blank=True)),
                 ('checksum', models.CharField(max_length=32)),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column=b'who')),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column='who')),
                 ('plan', models.ForeignKey(related_name='text', to='testplans.TestPlan')),
             ],
             options={
@@ -133,7 +133,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestPlanType',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, db_column=b'type_id')),
+                ('id', models.AutoField(serialize=False, primary_key=True, db_column='type_id')),
                 ('name', models.CharField(unique=True, max_length=64)),
                 ('description', models.TextField(null=True, blank=True)),
             ],

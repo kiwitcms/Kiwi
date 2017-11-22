@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^product/(?P<product_id>\d+)/component/$',
         views.ProductComponentReport.as_view(),
         name='report-overall-product-component'),
-    url(r'custom/$', views.CustomReport.as_view(), name='report-custom'),
+    url(r'^custom/$', views.CustomReport.as_view(), name='report-custom'),
     url(r'^custom/details/$', views.CustomDetailReport.as_view(),
         name='report-custom-details'),
 

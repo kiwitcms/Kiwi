@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+
+import six
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import Http404
@@ -9,7 +13,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.views.generic import View
 
-from forms import CustomSearchDetailsForm
+from .forms import CustomSearchDetailsForm
 from tcms.management.models import Priority
 from tcms.management.models import Product
 from tcms.testruns.models import TestCaseRunStatus
@@ -405,12 +409,12 @@ class CustomDetailReport(CustomReport):
         prev_plan = None
         # TODO: replace this with collections.OrderedDict after
         # upgrading to Python 2.7
-        ordered_plans = sorted(matrix_dataset.iteritems(),
+        ordered_plans = sorted(six.iteritems(matrix_dataset),
                                key=lambda item: item[0].pk)
         for plan, runs in ordered_plans:
             plan_runs_count = len(runs)
             # TODO: and also this line
-            ordered_runs = sorted(runs.iteritems(),
+            ordered_runs = sorted(six.iteritems(runs),
                                   key=lambda item: item[0].pk)
             for run, status_subtotal in ordered_runs:
                 if plan == prev_plan:

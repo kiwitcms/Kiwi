@@ -2,7 +2,7 @@
 import threading
 import warnings
 
-import xmlrpclib
+from six.moves import xmlrpc_client
 
 from django.conf import settings
 
@@ -16,7 +16,7 @@ class BZ_Externer_Track_Thread(threading.Thread):
     def run(self):
         if self.is_add:
             try:
-                proxy = xmlrpclib.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
+                proxy = xmlrpc_client.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
                 proxy.ExternalBugs.add_external_bug({
                     'Bugzilla_login': settings.BUGZILLA_USER,
                     'Bugzilla_password': settings.BUGZILLA_PASSWORD,

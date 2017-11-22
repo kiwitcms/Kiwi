@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import xmlrpclib
+
 import kerberos
 
-from django.conf import settings
+from six.moves import xmlrpc_client
 
+from django.conf import settings
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -70,7 +71,7 @@ class BugzillaBackend(ModelBackend):
     #            )
 
     def authenticate(self, username=None, password=None):
-        server = xmlrpclib.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
+        server = xmlrpc_client.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
 
         try:
             validate_email(username)
@@ -79,7 +80,7 @@ class BugzillaBackend(ModelBackend):
         else:
             try:
                 server.bugzilla.login(username, password)
-            except xmlrpclib.Fault:
+            except xmlrpc_client.Fault:
                 return None
 
             try:

@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
+import six
+
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -11,7 +16,7 @@ from tinymce.widgets import TinyMCE
 from tcms.management.models import Component, Product, Version, TCMSEnvGroup, \
     Priority, TestTag
 from tcms.testcases.models import TestCaseStatus
-from models import TestPlan, TestPlanType
+from .models import TestPlan, TestPlanType
 # ===========Plan Fields==============
 
 
@@ -74,7 +79,7 @@ class UploadedHTMLFile(UploadedFile):
             pop('id', None)
             pop('ID', None)
 
-        return unicode(soup.body)
+        return soup.body
 
 
 class UploadedODTFile(UploadedFile):
@@ -287,6 +292,8 @@ class CasePlanXMLField(forms.FileField):
         # We need to get a file object for PIL. We might have a path or we
         # might have to read the data into memory.
         if hasattr(data, 'temporary_file_path'):
+            # FIXME: bug here. xml_file will get a full path name. Missing code
+            #        to read content from that file.
             xml_file = data.temporary_file_path()
         else:
             if hasattr(data, 'read'):
@@ -294,6 +301,7 @@ class CasePlanXMLField(forms.FileField):
             else:
                 xml_file = data['content']
 
+        xml_file = xml_file.decode('utf-8') if six.binary_type else xml_file
         # Replace line breaks for XML interpret
         xml_file = xml_file.replace('\n', '')
         xml_file = xml_file.replace('&testopia_', '&')

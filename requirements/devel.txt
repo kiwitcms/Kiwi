@@ -3,9 +3,7 @@
 django-debug-toolbar==1.7
 Sphinx>=1.1.2
 flake8
-epydoc==3.0.1
-pytest-django
-pytest-cov
 coverage
 factory_boy
 mock
+tox

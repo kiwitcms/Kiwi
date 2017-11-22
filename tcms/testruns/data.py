@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import six
+
 from collections import namedtuple
 from itertools import groupby
 
@@ -49,7 +51,7 @@ def stats_caseruns_status(run_id, case_run_statuss):
     status_complete_names = TestCaseRunStatus.complete_status_names
     status_failure_names = TestCaseRunStatus.failure_status_names
 
-    for status_pk, total_info in caserun_statuss_subtotal.iteritems():
+    for status_pk, total_info in six.iteritems(caserun_statuss_subtotal):
         status_caseruns_count, caserun_status = total_info
         status_name = caserun_status.name
 

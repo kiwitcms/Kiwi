@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import six
 import unittest
-from httplib import BAD_REQUEST
-from httplib import FORBIDDEN
-from httplib import NOT_FOUND
+
+from six.moves.http_client import BAD_REQUEST
+from six.moves.http_client import FORBIDDEN
+from six.moves.http_client import NOT_FOUND
 
 from django.test import TestCase
 
 from tcms.xmlrpc.api import build
 from tcms.xmlrpc.tests.utils import make_http_request
 
+from tcms.tests import encode_if_py3
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseRunFactory
@@ -89,8 +92,12 @@ class TestBuildCreate(XmlrpcAPIBaseTest):
         self.assertIsNotNone(b)
         self.assertEqual(b['product_id'], self.product.pk)
         self.assertEqual(b['name'], "B99")
-        self.assertEqual(b['description'],
-                         '\xe5\xbc\x80\xe6\xba\x90\xe4\xb8\xad\xe5\x9b\xbd')
+        if six.PY3:
+            self.assertEqual(b['description'], '开源中国')
+        else:
+            self.assertEqual(
+                b['description'],
+                '\xe5\xbc\x80\xe6\xba\x90\xe4\xb8\xad\xe5\x9b\xbd')
         self.assertEqual(b['is_active'], False)
 
     def test_build_create(self):
@@ -232,7 +239,7 @@ class TestBuildGetCaseRuns(XmlrpcAPIBaseTest):
         b = build.get_caseruns(None, self.build.pk)
         self.assertIsNotNone(b)
         self.assertEqual(2, len(b))
-        self.assertEqual(b[0]['case'], self.case_run_1.case.summary)
+        self.assertEqual(b[0]['case'], encode_if_py3(self.case_run_1.case.summary))
 
 
 class TestBuildGetRuns(XmlrpcAPIBaseTest):

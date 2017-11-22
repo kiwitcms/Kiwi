@@ -44,8 +44,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 			<div class="clear"></div>
 		</div>
 	</form>
-	<form id='runs_form'>
-	{% if REQUEST_CONTENTS.items %}
+	<form id="runs_form">
+	{% if query_result %}
 	<div id="contentTab" class="mixbar">
 		{# <span class="tit">{{ test_runs.count }} Test Runs</span> #}
 		<span class="tit"><a href="{% url "runs-all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>

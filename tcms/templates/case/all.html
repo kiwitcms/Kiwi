@@ -46,7 +46,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.List.on_load);
 		</div>
 	</form>
 	<!--case list-->
-    {% if REQUEST_CONTENTS.items %}
+    {% if REQUEST_CONTENTS.items|length > 0 %}
 	    {% include "case/common/case_filtered.html" %}
     {% endif %}
 </div>

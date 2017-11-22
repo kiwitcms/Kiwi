@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import six
+
 from datetime import datetime, timedelta
 
 from django.conf import settings
@@ -68,7 +70,7 @@ class TestRun(TCMSActionModel):
         db_table = u'test_runs'
         unique_together = ('run_id', 'product_version', 'plan_text_version')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.summary
 
     @classmethod
@@ -114,7 +116,7 @@ class TestRun(TCMSActionModel):
             }[query.get('people_type')],
         }
 
-        conditions = [mapping[key](value) for key, value in query.iteritems()
+        conditions = [mapping[key](value) for key, value in six.iteritems(query)
                       if value and key in mapping]
 
         runs = cls.objects.filter(*conditions)
@@ -346,8 +348,8 @@ class TestCaseRunStatus(TCMSActionModel):
     class Meta:
         db_table = u'test_case_run_status'
 
-    def __unicode__(self):
-        return unicode(self.name)
+    def __str__(self):
+        return self.name
 
     cache_key_names = 'case_run_status__names'
 
@@ -363,7 +365,7 @@ class TestCaseRunStatus(TCMSActionModel):
     @classmethod
     def get_names_ids(cls):
         '''Get all status names in reverse mapping between name and id'''
-        return dict((name, _id) for _id, name in cls.get_names().iteritems())
+        return dict((name, _id) for _id, name in six.iteritems(cls.get_names()))
 
     def is_finished(self):
         if self.name in ['PASSED', 'FAILED', 'ERROR', 'WAIVED']:
@@ -551,7 +553,7 @@ class TestCaseRun(TCMSActionModel):
         db_table = u'test_case_runs'
         unique_together = ('case', 'run', 'case_text_version')
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s: %s' % (self.pk, self.case_id)
 
     @classmethod

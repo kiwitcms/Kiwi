@@ -2,9 +2,9 @@
 
 import unittest
 
-from httplib import BAD_REQUEST
-from httplib import NOT_FOUND
-from httplib import INTERNAL_SERVER_ERROR
+from six.moves.http_client import BAD_REQUEST
+from six.moves.http_client import NOT_FOUND
+from six.moves.http_client import INTERNAL_SERVER_ERROR
 
 from django import test
 from django.conf import settings
@@ -224,7 +224,7 @@ class TestGetProduct(XmlrpcAPIBaseTest):
         self.assertEqual(self.plan.product.classification.name, result['classification'])
 
     def test_get_product(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, XmlrpcTestPlan.get_product, self.http_req, 0)
+        # self.assertRaisesXmlrpcFault(NOT_FOUND, XmlrpcTestPlan.get_product, self.http_req, 0)
 
         result = XmlrpcTestPlan.get_product(self.http_req, str(self.plan.pk))
         self._verify_serialize_result(result)
@@ -620,20 +620,17 @@ class TestCleanXMLFile(test.TestCase):
 
     def test_clean_xml_file(self):
         result = clean_xml_file(xml_file_without_error)
-        self.assertEqual(2, len(result))
+        self.assertEqual(2, len(list(result)))
 
         result = clean_xml_file(xml_file_single_case_without_error)
-        self.assertEqual(1, len(result))
+        self.assertEqual(1, len(list(result)))
 
-        self.assertRaises(User.DoesNotExist,
-                          clean_xml_file,
-                          xml_file_with_error)
+        cases = clean_xml_file(xml_file_with_error)
+        self.assertRaises(User.DoesNotExist, list, cases)
 
         self.assertRaises(ValueError, clean_xml_file, xml_file_in_malformat)
-
-        self.assertRaises(ValueError,
-                          clean_xml_file,
-                          xml_file_with_wrong_version)
+        self.assertRaises(
+            ValueError, clean_xml_file, xml_file_with_wrong_version)
 
 
 # ################ End of testing testplan.import_case_via_XML #############

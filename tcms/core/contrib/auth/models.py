@@ -2,9 +2,9 @@
 
 import datetime
 import random
+import six
 
 from hashlib import sha1
-
 from django.db import models
 
 
@@ -18,8 +18,13 @@ class UserActivateKey(models.Model):
 
     @classmethod
     def set_random_key_for_user(cls, user, force=False):
-        salt = sha1(str(random.random())).hexdigest()[:5]
-        activation_key = sha1(salt + user.username).hexdigest()
+        if six.PY3:
+            salt = sha1(str(random.random()).encode('utf-8')).hexdigest()[:5]
+            activation_key = sha1(
+                (salt + user.username).encode('utf-8')).hexdigest()
+        else:
+            salt = sha1(str(random.random())).hexdigest()[:5]
+            activation_key = sha1(salt + user.username).hexdigest()
 
         # Create and save their profile
         k, c = cls.objects.get_or_create(user=user)

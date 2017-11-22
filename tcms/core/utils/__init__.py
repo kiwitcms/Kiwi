@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import six
 
 numeric_re = re.compile(r'^\d+$')
 
@@ -12,9 +13,15 @@ def is_int(s):
 def string_to_list(strs, spliter=','):
     """Convert the string to list"""
     if isinstance(strs, list):
-        str_list = (unicode(item).strip() for item in strs)
+        str_list = (
+            six.u(item).strip() if isinstance(item, six.binary_type) else item
+            for item in strs
+        )
     elif strs.find(spliter):
-        str_list = (unicode(item).strip() for item in strs.split(spliter))
+        str_list = (
+            six.u(item).strip() if isinstance(item, six.binary_type) else item
+            for item in strs.split(spliter)
+        )
     else:
         str_list = (strs,)
     return [s for s in str_list if s]
@@ -25,7 +32,7 @@ def form_errors_to_list(form):
     Convert errors of form to list
     Use for Ajax.Request response
     """
-    return [(k, unicode(v[0])) for k, v in form.errors.items()]
+    return [(k, six.u(v[0])) for k, v in form.errors.items()]
 
 
 def get_string_combinations(s):
@@ -72,7 +79,7 @@ def clean_request(request, keys=None):
 
             v = request.GET[k]
             # Convert the value to be list if it's __in filter.
-            if k.endswith('__in') and isinstance(v, unicode):
+            if k.endswith('__in') and isinstance(v, six.string_types):
                 v = string_to_list(v)
             rt[k] = v
     return rt
@@ -124,14 +131,16 @@ class QuerySetIterationProxy(object):
         return self
 
     def next(self):
-        next_one = self._iterable.next()
-        for name, lookup_table in self._associated_data.iteritems():
+        next_one = six.next(self._iterable)
+        for name, lookup_table in six.iteritems(self._associated_data):
             setattr(next_one,
                     name,
                     lookup_table.get(
                         getattr(next_one, self._associate_name, None),
                         ()))
         return next_one
+
+    __next__ = next
 
 
 class DataTableResult(object):

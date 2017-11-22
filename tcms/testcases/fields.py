@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from itertools import ifilterfalse
+
+import six
+from six.moves import filterfalse
 
 from django.forms import EmailField
 from django.forms import ValidationError
@@ -26,11 +28,11 @@ class MultipleEmailField(EmailField):
         if not value:
             return []
 
-        if not isinstance(value, unicode):
+        if not isinstance(value, six.string_types):
             raise ValidationError(
                 '%s is not a valid string value.' % str(value))
 
-        result = [item.strip() for item in ifilterfalse(
+        result = [item.strip() for item in filterfalse(
             lambda item: item.strip() == '', value.split(self.delimiter))]
         return result
 

@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
+import six
+
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.utils.encoding import smart_unicode
 
-from models import TCMSLogModel
+from .models import TCMSLogModel
+
+if six.PY3:
+    from django.utils.encoding import smart_text as smart_unicode
+else:
+    from django.utils.encoding import smart_unicode
 
 
 class TCMSLog(object):

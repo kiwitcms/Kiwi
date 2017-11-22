@@ -2,8 +2,9 @@
 
 import datetime
 import itertools
-import urllib
+import six
 
+from six.moves import urllib
 from json import dumps as json_dumps
 
 from django.conf import settings
@@ -197,7 +198,7 @@ def all(request, template_name='plan/all.html'):
     order_by = request.GET.get('order_by', 'create_date')
     asc = bool(request.GET.get('asc', None))
     # if it's a search request the page will be fill
-    if request.GET.items():
+    if list(request.GET.items()):
         search_form = SearchPlanForm(request.GET)
         if request.GET.get('product'):
             search_form.populate(product_id=request.GET['product'])
@@ -362,7 +363,7 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
     # If it's not a search the page will be blank
     tps = TestPlan.objects.none()
     # if it's a search request the page will be fill
-    if request.GET.items():
+    if list(request.GET.items()):
         search_form = SearchPlanForm(request.GET)
         if request.GET.get('product'):
             search_form.populate(product_id=request.GET['product'])
@@ -501,8 +502,9 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
                 if testcase.case_id not in exist_cases_id:
                     testrun.add_case_run(case=testcase)
 
-            estimated_time = reduce(lambda x, y: x + y,
-                                    [nc.estimated_time for nc in to_be_added_cases])
+            estimated_time = six.moves.reduce(
+                lambda x, y: x + y,
+                [nc.estimated_time for nc in to_be_added_cases])
             testrun.estimated_time = testrun.estimated_time + estimated_time
             testrun.save()
 
@@ -709,7 +711,7 @@ def clone(request, template_name='plan/clone.html'):
                     'product': clone_form.cleaned_data['product'].id,
                     'product_version': clone_form.cleaned_data['product_version'].id,
                 }
-                url_args = urllib.urlencode(args)
+                url_args = urllib.parse.urlencode(args)
                 return HttpResponseRedirect(
                     '{}?{}'.format(reverse('plans-all'), url_args))
     else:

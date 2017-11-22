@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import json
+import six
+import sys
 
 from six.moves import http_client
 
@@ -23,11 +25,37 @@ __all__ = (
     'user_should_have_perm',
     'remove_perm_from_user',
     'BasePlanCase',
+    'encode_if_py3',
 )
 
 
+# This is for running tests under Python 3.4 and 3.5, where json_loads needs
+# passed-in string should be decoded to str in UTF-8.
+# This is safe for removing support of these older Python versions. But, remove
+# calls to json_loads would be nice obviously.
+if sys.version_info.major == 3 and sys.version_info.minor in (4, 5):
+    def json_loads(s):
+        return json.loads(s.decode('utf-8'))
+else:
+    def json_loads(s):
+        return json.loads(s)
+
+
+def encode_if_py3(s):
+    """For running tests in Python 3
+
+    This is added for running tests successfully with Python 3 while porting to
+    Python 3 compatibility. But, it is really necessary to think about the
+    XMLPRC API that strings returned should be in bytestring or not.
+    """
+    if six.PY3 and isinstance(s, six.text_type):
+        return s.encode()
+    else:
+        return s
+
+
 def user_should_have_perm(user, perm):
-    if isinstance(perm, basestring):
+    if isinstance(perm, six.string_types):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
@@ -47,7 +75,7 @@ def user_should_have_perm(user, perm):
 def remove_perm_from_user(user, perm):
     """Remove a permission from an user"""
 
-    if isinstance(perm, basestring):
+    if isinstance(perm, six.string_types):
         try:
             app_label, codename = perm.split('.')
         except ValueError:
@@ -85,7 +113,7 @@ class HelperAssertions(object):
 
     def assertJsonResponse(self, response, expected, status_code=200):
         self.assertEqual(status_code, response.status_code)
-        self.assertEqual(expected, json.loads(response.content))
+        self.assertEqual(expected, json_loads(response.content))
 
 
 class BasePlanCase(HelperAssertions, test.TestCase):

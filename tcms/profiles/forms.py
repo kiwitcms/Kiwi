@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
+
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import get_backends
 
-from models import UserProfile
+from .models import Bookmark, UserProfile
 from tcms.core.forms import StripURLField
 
 
@@ -152,7 +155,7 @@ class BookmarkForm(forms.Form):
                 )
                 cleaned_data['content_type'] = ct
                 cleaned_data['object_pk'] = target.pk
-            except ObjectDoesNotExist, error:
+            except ObjectDoesNotExist as error:
                 raise ValidationError(error)
 
         cleaned_data['user'] = User.objects.get(pk=cleaned_data['user'])
@@ -163,8 +166,6 @@ class BookmarkForm(forms.Form):
         pass
 
     def save(self):
-        from models import Bookmark
-
         cleaned_data = self.cleaned_data.copy()
         del cleaned_data['a']
         if not cleaned_data['content_type']:

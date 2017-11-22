@@ -6,8 +6,8 @@ from django.db import connections
 
 class RWRouter(object):
     def __init__(self):
-        self.db_list = settings.DATABASES.keys()
-        self.db_read = settings.DATABASES.keys()
+        self.db_list = list(settings.DATABASES.keys())
+        self.db_read = list(settings.DATABASES.keys())
         self.db_read.remove('default')
 
     def db_for_read(self, model, **hints):

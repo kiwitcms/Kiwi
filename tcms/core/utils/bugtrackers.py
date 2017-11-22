@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+from six.moves import urllib
 # The following was obtained by clicking on "Remember values as
 # bookmarkable template" in Bugzilla:
 from tcms.testcases.models import TestCaseText
@@ -18,8 +20,6 @@ class Bugzilla(BugTracker):
         self.base_url = base_url
 
     def make_url(self, run, caserun, case_text_version):
-        import urllib
-
         args = {}
         args['cf_build_id'] = run.build.name
 
@@ -56,7 +56,7 @@ class Bugzilla(BugTracker):
         # internal)" flag, but don't go filing this example bug.
         args['bit-11'] = '1'
 
-        return self.base_url + 'enter_bug.cgi?' + urllib.urlencode(args, True)
+        return self.base_url + 'enter_bug.cgi?' + urllib.parse.urlencode(args, True)
 
 
 cr = {
