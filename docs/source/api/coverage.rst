@@ -1,3 +1,5 @@
+XMl-RPC object/attribute coverage
+---------------------------------
 
 This is an overview of the object/attribute coverage. Useful to
 compare the actual names used for different xmlrpc calls.
