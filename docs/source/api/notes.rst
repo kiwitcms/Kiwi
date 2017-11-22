@@ -1,19 +1,10 @@
+Release Notes
+-------------
 
-======================
-    Release Notes
-======================
+1.0 (released as python-nitrate on February 2012)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    python-nitrate release notes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-:Manual section: 1
-:Manual group: User Commands
-:Date: February 2012
-
-python-nitrate 1.0
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There have been many substantial changes in the python-nitrate
+There have been many substantial changes in the API client
 implementation and a bunch of new features have been added. Many
 thanks to Filip Holec for contributing substantial part of the new
 caching implementation. Here's the summary of important changes:

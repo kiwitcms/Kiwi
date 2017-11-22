@@ -16,6 +16,7 @@ Kiwi TCMS documentation
    configuration.rst
    admin.rst
    tutorial.rst
+   api/index.rst
    contribution.rst
    support.rst
    changelog.rst
