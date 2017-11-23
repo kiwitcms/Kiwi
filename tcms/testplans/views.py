@@ -18,7 +18,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
+from django.template.loader import get_template
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
 from uuslug import slugify
@@ -411,8 +411,8 @@ def ajax_response(request, queryset, column_names, template_name):
 
     # prepare the JSON with the response, consider using :
     # from django.template.defaultfilters import escapejs
-    json_result = render_to_string(template_name, context=data)
-    return HttpJSONResponse(json_result)
+    t = get_template(template_name)
+    return HttpJSONResponse(t.render(data, request))
 
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):

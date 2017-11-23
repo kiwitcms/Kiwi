@@ -21,7 +21,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-from django.template.loader import render_to_string
+from django.template.loader import get_template
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
@@ -425,8 +425,8 @@ def load_runs_of_one_plan(request, plan_id,
             'querySet': TestRun.objects.none(),
         }
 
-    json_data = render_to_string(template_name, context=response_data)
-    return HttpJSONResponse(json_data)
+    return HttpJSONResponse(
+        get_template(template_name).render(response_data, request))
 
 
 @require_GET
@@ -536,8 +536,8 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
             'runs': TestRun.objects.none(),
         }
 
-    json_data = render_to_string(template_name, context=response_data)
-    return HttpJSONResponse(json_data)
+    return HttpJSONResponse(
+        get_template(template_name).render(response_data, request))
 
 
 def open_run_get_case_runs(request, run):

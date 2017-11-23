@@ -16,7 +16,7 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
+from django.template.loader import get_template
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
@@ -735,9 +735,8 @@ def ajax_response(request, queryset, column_names, template_name):
 
     # prepare the JSON with the response, consider using :
     # from django.template.defaultfilters import escapejs
-    json_result = render_to_string(
-        template_name, context=dt.get_response_data())
-    return HttpJSONResponse(json_result)
+    t = get_template(template_name)
+    return HttpJSONResponse(t.render(dt.get_response_data(), request))
 
 
 class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
