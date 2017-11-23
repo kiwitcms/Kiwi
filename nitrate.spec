@@ -3,7 +3,7 @@
 %define  debug_package %{nil}
 
 Name:           nitrate
-Version:        3.8.18
+Version:        4.0.0
 Release:        1%{?dist}
 Summary:        Test Case Management System
 
@@ -11,40 +11,37 @@ Group:          Development/Languages
 License:        GPLv2+
 URL:            https://github.com/Nitrate/Nitrate/
 Source0:        %{name}-%{version}.tar.bz2
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
-BuildRequires:  python-devel
+BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 
-Requires:       Django = 1.8.14
-Requires:       django-contrib-comments = 1.6.2
-Requires:       django-celery >= 3.1.10
-Requires:       django-pagination = 1.0.7
-Requires:       django-tinymce = 2.4.0
+Requires:       python2-django > 1.9
+# This is not available in Fedora repository yet.
+Requires:       python2-django-contrib-comments
+Requires:       python2-celery
+Requires:       python2-django-tinymce
 Requires:       django-uuslug
-Requires:       kobo-django >= 0.2.0-3
+Requires:       python2-kobo-django
 Requires:       mod_auth_kerb
-Requires:       mod_ssl
-Requires:       mod_wsgi >= 3.2
-Requires:       MySQL-python == 1.2.5
-Requires:       odfpy >= 0.9.6
-Requires:       python-beautifulsoup4 >= 4.1.1
-Requires:       python-kerberos
-Requires:       python-qpid
+Requires:       mod_wsgi
+Requires:       python2-PyMySQL
+Requires:       python2-odfpy
+Requires:       python-beautifulsoup4
+Requires:       python2-kerberos
 Requires:       w3m
 
 %description
 Nitrate is a tool for tracking testing being done on a product.
 
-It is a database-backed web application, implemented using Django
+It is a database-backed web application built on top of Django.
 
 
 %package doc
 Summary:        Documentation of Nitrate
 Group:          Documentation
 URL:            http://nitrate.readthedocs.org/en/latest/
-BuildRequires:  python-sphinx >= 1.1.2
+BuildRequires:  python2-sphinx
 
 
 %description doc
@@ -107,8 +104,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr(-,root,root,-)
-%doc AUTHORS CHANGELOG.rst README.rst LICENSE
+%doc AUTHORS CHANGELOG.rst README.rst VERSION.rst
+%license LICENSE
 %{python_sitelib}/tcms/
 %{python_sitelib}/nitrate-%{version}-py*.egg-info/
 %{_datadir}/%{name}
@@ -120,11 +117,16 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files doc
-%defattr(-,root,root,-)
 %doc docs/target/html
 
 
 %changelog
+* Thu Nov 23 2017 Chenxiong Qi <qcxhome@gmail.com> 4.0.0-1
+- Upgrade django to 1.10.8
+- Compatible with Python 3
+- Update documentation
+- Many fixes
+
 * Sun Aug 21 2016 Chenxiong Qi <qcxhome@gmail.com> 3.8.18-1
 - Relayout indentation in urls (Chenxiong Qi)
 - Ignore .vagrant/ (Chenxiong Qi)

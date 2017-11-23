@@ -19,11 +19,10 @@ Dependencies
 
 Basic dependences::
 
-    Python >= 2.6.5
+    Python >= 2.7
 
 .. literalinclude:: ../../requirements/base.txt
 
 Additional recommended dependences for development:
 
 .. literalinclude:: ../../requirements/devel.txt
-

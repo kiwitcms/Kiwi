@@ -3,7 +3,7 @@
 import django.conf.global_settings as DEFAULT_SETTINGS
 import os.path
 
-NITRATE_VERSION = '3.8.18'
+NITRATE_VERSION = '4.0.0'
 
 DEBUG = True
 

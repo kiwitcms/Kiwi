@@ -12,7 +12,7 @@ Contents
 --------
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :numbered:
 
    about.rst
@@ -30,6 +30,7 @@ Contents
    bug_reporting.rst
    xmlrpc-api.rst
    changelog.rst
+   releasenotes.rst
    support.rst
    authors.rst
    license.rst
@@ -40,4 +41,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
