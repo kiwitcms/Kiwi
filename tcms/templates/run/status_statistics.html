@@ -6,7 +6,7 @@
 		</div>
 	</div>
 	<ul>
-		{% for status_pk, total_info in status_stats.StatusSubtotal.iteritems %}
+		{% for status_pk, total_info in status_stats.StatusSubtotal.items %}
 		<li>
 			<label>{{ total_info.1.name }}</label>
 			{% ifnotequal total_info.0 0 %}
