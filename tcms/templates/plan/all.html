@@ -49,7 +49,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.List.on_load);
 			<div class="clear"></div>
 		</form>
 	</div>
-	{% if REQUEST_CONTENTS.items|length > 0 %}
+	{% if query_result %}
 		{% include 'plan/common/plans_filtered.html' %}
 	{% endif %}
 </div>

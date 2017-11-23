@@ -624,6 +624,10 @@ def search(request, template_name='case/all.html'):
     """
     generate the function of searching cases with search criteria
     """
+    # This is ugly, but it's not a big deal at this moment because I'm going go
+    # rewrite the search functionality as well as for runs and plans.
+    search_criterias = len(list(request.GET.items())) > 0
+
     search_form = SearchCaseForm(request.GET)
     if request.GET.get('product'):
         search_form.populate(product_id=request.GET['product'])
@@ -633,6 +637,7 @@ def search(request, template_name='case/all.html'):
     context_data = {
         'module': MODULE_NAME,
         'search_form': search_form,
+        'search_criterias': search_criterias,
     }
     return render(request, template_name, context=context_data)
 
