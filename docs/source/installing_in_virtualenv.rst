@@ -76,7 +76,7 @@ Create the following files.
 
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = 'top-secret'
-    
+
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = False
 
@@ -92,15 +92,15 @@ Create the following files.
     }
     # Nitrate defines a 'slave_1' connection
     DATABASES['slave_1'] = DATABASES['default']
-    
+
     STATIC_ROOT = '/var/www/html/mynitrate/static'
 
 
 ``/var/www/html/mynitrate/wsgi.py``::
 
     import os
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
-    
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tcms.settings.product")
+
     from django.core.wsgi import get_wsgi_application
     application = get_wsgi_application()
 
@@ -108,13 +108,13 @@ Create the following files.
 Create tables, create super user and collect static files::
 
     (venv)# cd /var/www/html/mynitrate
-    (venv)# django-admin.py migrate --settings=settings
-    (venv)# django-admin.py createsuperuser --settings=settings
-    (venv)# django-admin.py collectstatic --settings=settings
+    (venv)# django-admin.py migrate --settings=tcms.settings.product
+    (venv)# django-admin.py createsuperuser --settings=tcms.settings.product
+    (venv)# django-admin.py collectstatic --settings=tcms.settings.product
 
 Verify that your configuration works by::
 
-    (venv)# django-admin.py runserver --settings=settings
+    (venv)# django-admin.py runserver --settings=tcms.settings.product
 
 .. note::
 
