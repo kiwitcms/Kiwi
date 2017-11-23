@@ -229,7 +229,7 @@ def new(request, template_name='case/new.html'):
                 def _returntocase(self):
                     if self.plan:
                         return HttpResponseRedirect(
-                            '%s?from_rlan=%s' % (
+                            '%s?from_plan=%s' % (
                                 reverse('case-get', args=[self.case.pk]),
                                 self.plan.plan_id))
 
