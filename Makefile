@@ -31,11 +31,9 @@ install:
 	python setup.py install
 
 
-FLAKE8_EXCLUDE=.git,tcms/settings,*sqls.py,urls.py,wsgi.py,*settings.py,*raw_sql.py,*xml2dict*
-
 .PHONY: flake8
 flake8:
-	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms *.py
+	@flake8 tcms *.py
 
 
 ifeq ($(strip $(TEST_TARGET)),)
