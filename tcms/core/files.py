@@ -7,6 +7,7 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.utils.encoding import smart_str
 from django.http import JsonResponse
@@ -19,8 +20,18 @@ from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TestPlanAttachment
 
 
+@require_POST
 @permission_required('management.add_testattachment')
 def upload_file(request):
+    if 'to_plan_id' not in request.POST and 'to_case_id' not in request.POST:
+        return Prompt.render(
+            request=request,
+            info_type=Prompt.Alert,
+            info='Uploading file works with plan or case. Nitrate cannot '
+                 'proceed with no plan or case ID.',
+            next='javascript:window.history.go(-1);',
+        )
+
     if request.FILES.get('upload_file'):
         upload_file = request.FILES['upload_file']
 
@@ -42,35 +53,28 @@ def upload_file(request):
             settings.FILE_UPLOAD_DIR, stored_name).replace('\\', '/')
         stored_file_name = smart_str(stored_file_name)
 
-        if upload_file._size > settings.MAX_UPLOAD_SIZE:
+        if upload_file.size > settings.MAX_UPLOAD_SIZE:
             return Prompt.render(
                 request=request,
                 info_type=Prompt.Alert,
-                info='You upload entity is too large. \
-                    Please ensure the file is less than %s bytes. \
-                    ' % settings.MAX_UPLOAD_SIZE,
+                info='You upload entity is too large. Please ensure the file is'
+                     ' less than {} bytes.'.format(settings.MAX_UPLOAD_SIZE),
                 next='javascript:window.history.go(-1);',
             )
 
         # Create the upload directory when it's not exist
-        try:
-            os.listdir(settings.FILE_UPLOAD_DIR)
-        except OSError:
+        if not os.path.exists(settings.FILE_UPLOAD_DIR):
             os.mkdir(settings.FILE_UPLOAD_DIR)
 
-        # Write to a temporary file
-        try:
-            open(stored_file_name, 'r')
+        if os.path.exists(stored_file_name):
             return Prompt.render(
                 request=request,
                 info_type=Prompt.Alert,
-                info='File named \'%s\' already exist in upload folder, \
-                    please rename to another name for solve conflict.\
-                    ' % upload_file.name,
+                info="File named '{}' already exists in upload folder, please "
+                     "rename to another name for solve conflict.".format(
+                         upload_file.name),
                 next='javascript:window.history.go(-1);',
             )
-        except IOError:
-            pass
 
         dest = open(stored_file_name, 'wb+')
         for chunk in upload_file.chunks():
@@ -93,28 +97,26 @@ def upload_file(request):
                 plan_id=int(request.POST['to_plan_id']),
                 attachment_id=ta.attachment_id,
             )
-
             return HttpResponseRedirect(
                 reverse('plan-attachment',
                         args=[request.POST['to_plan_id']])
             )
-        elif request.POST.get('to_case_id'):
+
+        if request.POST.get('to_case_id'):
             TestCaseAttachment.objects.create(
                 attachment_id=ta.attachment_id,
                 case_id=int(request.POST['to_case_id'])
             )
-
             return HttpResponseRedirect(
                 reverse('testcases-attachment',
                         args=[request.POST['to_case_id']])
             )
     else:
-        try:
+        if 'to_plan_id' in request.POST:
             return HttpResponseRedirect(
-                reverse('plan-attachment',
-                        args=[request.POST['to_plan_id']])
+                reverse('plan-attachment', args=[request.POST['to_plan_id']])
             )
-        except KeyError:
+        if 'to_case_id' in request.POST:
             return HttpResponseRedirect(
                 reverse('testcases-attachment',
                         args=[request.POST['to_case_id']])
