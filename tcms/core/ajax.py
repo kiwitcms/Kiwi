@@ -30,7 +30,7 @@ from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import plan_from_request_or_none
 from tcms.testplans.models import TestPlan, TestCasePlan
 from tcms.testruns import signals as run_watchers
-from tcms.testruns.models import TestRun, TestCaseRun
+from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
 from tcms.core.exceptions import NitrateException
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils import get_string_combinations
@@ -521,8 +521,10 @@ def update_case_run_status(request):
             try:
                 t.log_action(
                     who=request.user,
-                    action='Field %s changed from %s to %s.' % (
-                        field, getattr(t, field), value
+                    action='Field {} changed from {} to {}.'.format(
+                        field,
+                        getattr(t, field),
+                        TestCaseRunStatus.id_to_string(value),
                     )
                 )
             except (AttributeError, User.DoesNotExist):
