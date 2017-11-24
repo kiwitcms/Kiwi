@@ -24,7 +24,6 @@ MODULE_NAME = 'profile'
 
 
 @require_http_methods(['GET', 'POST'])
-# @user_passes_test(lambda u: u.username == username)
 @login_required
 def bookmark(request, username, template_name='profile/bookmarks.html'):
     """

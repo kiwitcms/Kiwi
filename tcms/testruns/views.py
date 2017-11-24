@@ -10,7 +10,7 @@ import six
 from six.moves import urllib
 
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
@@ -62,7 +62,7 @@ MODULE_NAME = "testruns"
 
 
 @require_POST
-@user_passes_test(lambda u: u.has_perm('testruns.add_testrun'))
+@permission_required('testruns.add_testrun')
 def new(request, template_name='run/new.html'):
     """Display the create test run page."""
 
@@ -233,7 +233,7 @@ def new(request, template_name='run/new.html'):
     return render(request, template_name, context=context_data)
 
 
-@user_passes_test(lambda u: u.has_perm('testruns.delete_testrun'))
+@permission_required('testruns.delete_testrun')
 def delete(request, run_id):
     """Delete the test run
 
@@ -672,7 +672,7 @@ def get(request, run_id, template_name='run/get.html'):
     return render(request, template_name, context=context_data)
 
 
-@user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
+@permission_required('testruns.change_testrun')
 def edit(request, run_id, template_name='run/edit.html'):
     """Edit test plan view"""
     # Define the default sub module
@@ -755,7 +755,7 @@ def edit(request, run_id, template_name='run/edit.html'):
     return render(request, template_name, context=context_data)
 
 
-@user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
+@permission_required('testruns.change_testcaserun')
 def execute(request, run_id, template_name='run/execute.html'):
     """Execute test run"""
     return get(request, run_id, template_name)
@@ -830,7 +830,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
 
 
 @require_GET
-@user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
+@permission_required('testruns.change_testrun')
 def bug(request, case_run_id, template_name='run/execute_case_run.html'):
     """Process the bugs for case runs."""
 
@@ -1169,7 +1169,7 @@ def order_case(request, run_id):
     return HttpResponseRedirect(reverse('run-get', args=[run_id]))
 
 
-@user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
+@permission_required('testruns.change_testrun')
 def change_status(request, run_id):
     """Change test run finished or running"""
     tr = get_object_or_404(TestRun, run_id=run_id)
@@ -1183,7 +1183,7 @@ def change_status(request, run_id):
 
 
 @require_POST
-@user_passes_test(lambda u: u.has_perm('testruns.delete_testcaserun'))
+@permission_required('testruns.delete_testcaserun')
 def remove_case_run(request, run_id):
     """Remove specific case run from the run"""
 
@@ -1217,11 +1217,9 @@ def remove_case_run(request, run_id):
 class AddCasesToRunView(View):
     """Add cases to a TestRun"""
 
-    permission = 'testruns.add_testcaserun'
     template_name = 'run/assign_case.html'
 
-    @method_decorator(user_passes_test(
-        lambda u: u.has_perm(AddCasesToRunView.permission)))
+    @method_decorator(permission_required('testruns.add_testcaserun'))
     def dispatch(self, *args, **kwargs):
         return super(AddCasesToRunView, self).dispatch(*args, **kwargs)
 

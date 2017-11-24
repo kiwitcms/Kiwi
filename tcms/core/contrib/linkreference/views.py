@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 import json
 
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.views.decorators.http import require_GET, require_POST
 
 from .forms import AddLinkReferenceForm, BasicValidationForm
@@ -16,8 +16,8 @@ from tcms.core.responses import HttpJSONResponseServerError
 __all__ = ('add', 'get', 'remove', )
 
 
-@user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
 @require_POST
+@permission_required('testruns.change_testcaserun')
 def add(request):
     """Add new link to a specific target
 
@@ -93,8 +93,8 @@ def get(request):
         return HttpJSONResponseBadRequest(content=jd)
 
 
-@user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
 @require_GET
+@permission_required('testruns.change_testcaserun')
 def remove(request, link_id):
     """Remove a specific link with ID ``link_id``"""
 

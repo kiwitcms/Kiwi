@@ -8,7 +8,7 @@ from six.moves import urllib
 from json import dumps as json_dumps
 
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.core import serializers
@@ -77,7 +77,7 @@ def update_plan_email_settings(tp, form):
 
 
 @require_http_methods(['GET', 'POST'])
-@user_passes_test(lambda u: u.has_perm('testplans.add_testplan'))
+@permission_required('testplans.add_testplan')
 def new(request, template_name='plan/new.html'):
     """New testplan"""
 
@@ -147,7 +147,7 @@ def new(request, template_name='plan/new.html'):
 
 
 @require_GET
-@user_passes_test(lambda u: u.has_perm('testplans.delete_testplan'))
+@permission_required('testplans.delete_testplan')
 def delete(request, plan_id):
     """Delete testplan"""
     if request.GET.get('sure', 'no') == 'no':
@@ -444,7 +444,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 
 
 @require_http_methods(['GET', 'POST'])
-@user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
+@permission_required('testruns.change_testrun')
 def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
     """Choose one run to add cases"""
 
@@ -512,7 +512,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
 
 
 @require_http_methods(['GET', 'POST'])
-@user_passes_test(lambda u: u.has_perm('testplans.change_testplan'))
+@permission_required('testplans.change_testplan')
 def edit(request, plan_id, template_name='plan/edit.html'):
     """Edit test plan view"""
     # Define the default sub module
@@ -625,7 +625,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 
 
 @require_http_methods(['GET', 'POST'])
-@user_passes_test(lambda u: u.has_perm('testplans.add_testplan'))
+@permission_required('testplans.add_testplan')
 def clone(request, template_name='plan/clone.html'):
     """Clone testplan"""
     SUB_MODULE_NAME = 'plans'
