@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import json
+import six
+
 from django import test
 from django.contrib.contenttypes.models import ContentType
 from django.core import serializers
@@ -255,7 +258,12 @@ class TestGetForm(test.TestCase):
         response = self.client.get(reverse('ajax-form'),
                                    {'app_form': 'testcases.CaseAutomatedForm'})
         form = CaseAutomatedForm()
-        self.assertHTMLEqual(response.content, form.as_p())
+
+        if six.PY3:
+            resp_content = response.content.decode('utf-8')
+        else:
+            resp_content = response.content
+        self.assertHTMLEqual(resp_content, form.as_p())
 
 
 class TestUpdateCasePriority(BasePlanCase):
@@ -334,7 +342,7 @@ class TestGetObjectInfo(BasePlanCase):
     def test_get_env_properties(self):
         response = self.client.get(self.get_info_url, {'info_type': 'env_properties'})
 
-        expected_json = json_loads(
+        expected_json = json.loads(
             serializers.serialize(
                 'json',
                 TCMSEnvProperty.objects.all(),
@@ -347,7 +355,7 @@ class TestGetObjectInfo(BasePlanCase):
                                     'env_group_id': self.group_new.pk})
 
         group = TCMSEnvGroup.objects.get(pk=self.group_new.pk)
-        expected_json = json_loads(
+        expected_json = json.loads(
             serializers.serialize(
                 'json',
                 group.property.all(),

@@ -60,7 +60,8 @@ def upload_file(request):
 
         # Write to a temporary file
         try:
-            open(stored_file_name, 'ro')
+            with open(stored_file_name, 'r'):
+                pass
             return HttpResponse(Prompt.render(
                 request=request,
                 info_type=Prompt.Alert,
@@ -72,10 +73,9 @@ def upload_file(request):
         except IOError:
             pass
 
-        dest = open(stored_file_name, 'wb+')
-        for chunk in upload_file.chunks():
-            dest.write(chunk)
-        dest.close()
+        with open(stored_file_name, 'wb+') as f:
+            for chunk in upload_file.chunks():
+                f.write(chunk)
 
         # Write the file to database
         # store_file = open(upload_file_name, 'ro')

@@ -3,7 +3,10 @@
 django-debug-toolbar==1.7
 Sphinx>=1.1.2
 flake8
-coverage
 factory_boy
+coverage
+pytest
+pytest-django
+pytest-cov
 mock
 tox
