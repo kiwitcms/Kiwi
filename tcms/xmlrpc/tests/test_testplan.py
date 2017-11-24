@@ -113,7 +113,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
         cls.tag_name = 'xmlrpc_tag_name_1'
 
     def test_single_id(self):
-        '''Test with singal plan id and tag id'''
+        """Test with singal plan id and tag id"""
         self.assertRaisesXmlrpcFault(INTERNAL_SERVER_ERROR, XmlrpcTestPlan.add_tag,
                                      self.http_req, self.plans[0].pk, self.tag1.pk)
 
@@ -238,16 +238,16 @@ class TestGetProduct(XmlrpcAPIBaseTest):
 
 @unittest.skip('TODO: test case is not implemented yet.')
 class TestComponentMethods(test.TestCase):
-    '''TODO: '''
+    """TODO: """
 
 
 @unittest.skip('TODO: test case is not implemented yet.')
 class TestGetAllCasesTags(test.TestCase):
-    '''TODO: '''
+    """TODO: """
 
 
 class TestGetTestCases(XmlrpcAPIBaseTest):
-    '''Test testplan.get_test_cases method'''
+    """Test testplan.get_test_cases method"""
 
     @classmethod
     def setUpTestData(cls):
@@ -298,22 +298,22 @@ class TestGetTestCases(XmlrpcAPIBaseTest):
 
 @unittest.skip('TODO: test case is not implemented yet.')
 class TestGetTestRuns(test.TestCase):
-    '''TODO: '''
+    """TODO: """
 
 
 @unittest.skip('TODO: test case is not implemented yet.')
 class TestGetText(test.TestCase):
-    '''TODO: '''
+    """TODO: """
 
 
 @unittest.skip('TODO: test case is not implemented yet.')
 class TestRemoveTag(test.TestCase):
-    '''TODO: '''
+    """TODO: """
 
 
 @unittest.skip('TODO: test case is not implemented yet.')
 class TestImportCaseViaXML(test.TestCase):
-    '''TODO: '''
+    """TODO: """
 
 
 class TestUpdate(test.TestCase):
@@ -507,7 +507,7 @@ xml_file_in_malformat = u'''
 
 
 class TestProcessCase(test.TestCase):
-    '''Test process_case'''
+    """Test process_case"""
 
     @classmethod
     def setUpTestData(cls):
@@ -605,7 +605,7 @@ class TestProcessCase(test.TestCase):
 
 
 class TestCleanXMLFile(test.TestCase):
-    '''Test for testplan.clean_xml_file'''
+    """Test for testplan.clean_xml_file"""
 
     @classmethod
     def setUpTestData(cls):

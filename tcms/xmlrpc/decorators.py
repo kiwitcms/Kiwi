@@ -27,7 +27,7 @@ else:
 
 
 def log_call(*args, **kwargs):
-    '''Log XMLRPC-specific invocations
+    """Log XMLRPC-specific invocations
 
     This is copied from kobo.django.xmlrpc.decorators to add custom abitlities,
     so that we don't have to wait upstream to make the changes.
@@ -38,7 +38,7 @@ def log_call(*args, **kwargs):
         @log_call(namespace='TestNamespace')
         def func(request):
             return None
-    '''
+    """
     namespace = kwargs.get('namespace', '')
     if namespace:
         namespace = namespace + '.'

@@ -143,14 +143,14 @@ class XMLRPCSerializer(object):
 
 
 class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
-    '''XMLRPC serializer specific for TestPlan
+    """XMLRPC serializer specific for TestPlan
 
     To configure the serialization, developer can specify following class
     attribute, values_fields_mapping, m2m_fields, and primary_key.
 
     An unknown issue is that the primary key must appear in the
     values_fields_mapping. If doesn't, error would happen.
-    '''
+    """
 
     # Define the mapping relationship of names from ORM side to XMLRPC output
     # side.
@@ -172,21 +172,21 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         self.queryset = queryset
 
     def get_extra_fields(self):
-        '''Get definition of extra fields mappings
+        """Get definition of extra fields mappings
 
         By default, user defined extra fields will be used. If not exist, an
         empty extra fields mapping is returned as to do nothing.
 
         This method can also be override in subclass to provide the extra
         fields programatically.
-        '''
+        """
         fields = getattr(self, 'extra_fields', None)
         if fields is None:
             fields = {}
         return fields
 
     def _get_values_fields_mapping(self):
-        '''Return values fields mapping definition
+        """Return values fields mapping definition
 
         Values fields mapping can be also provided by overriding this method in
         subclass.
@@ -194,18 +194,18 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :return: the mapping defined in class if presents, otherwise an empty
         dictionary object.
         :rtype: dict
-        '''
+        """
         return getattr(self.__class__, 'values_fields_mapping', {})
 
     def _get_values_fields(self):
-        '''Return ORM side field names defined in the values fields mapping
+        """Return ORM side field names defined in the values fields mapping
 
         :return: list of fields in the ORM side. If `values_fields_mapping` is
         not defined in class, fields will be retrieved from coresponding Model
         class.
         :rtype: list
 
-        '''
+        """
         values_fields_mapping = self._get_values_fields_mapping()
         if values_fields_mapping:
             return values_fields_mapping.keys()
@@ -213,7 +213,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
             return [field.name for field in self.model_class._meta.fields]
 
     def _get_m2m_fields(self):
-        '''Return names of fields with type ManyToManyField in ORM side
+        """Return names of fields with type ManyToManyField in ORM side
 
         By default, field names will be retreived from `m2m_fields` defined in
         class. If it does not present there, all fields with type
@@ -224,7 +224,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
 
         :return: names of fields with type ManyToManyField
         :rtype: list
-        '''
+        """
         if hasattr(self.__class__, 'm2m_fields'):
             return self.__class__.m2m_fields
         else:
@@ -234,7 +234,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
     # TODO: how to deal with the situation that is primary key does not appear
     # in values fields, although such thing could not happen.
     def _get_primary_key_field(self):
-        '''Return the primary key field name
+        """Return the primary key field name
 
         The primary key field name can be specified by defining `primary_key`
         in class. Otherwise, QuerySetBasedXMLRPCSerializer will attempt to get
@@ -246,7 +246,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :rtype: str
         :raises ValueError: if model does not have a primary key field during
         the process of inspecting primary key from model's field.
-        '''
+        """
         if hasattr(self.__class__, 'primary_key'):
             return self.__class__.primary_key
         else:
@@ -259,7 +259,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
             return fields[0]
 
     def _query_m2m_field(self, field_name):
-        '''Query ManyToManyField order by model's pk
+        """Query ManyToManyField order by model's pk
 
         Return value's format:
         {
@@ -276,7 +276,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :param str field_name: field name of a ManyToManyField
         :return: dictionary mapping between model's pk and related object's pk
         :rtype: dict
-        '''
+        """
         qs = self.queryset.values('pk', field_name).order_by('pk')
         return dict((pk, tuple(values)) for pk, values in
                     groupby(qs.iterator(), lambda item: item['pk']))
@@ -292,7 +292,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
                 if item[field_name]]
 
     def _get_related_object_pks(self, m2m_fields_query, model_pk, field_name):
-        '''Return related object pks from query result via ManyToManyFields
+        """Return related object pks from query result via ManyToManyFields
 
         Any object pk with value 0 or None values will be excluded in the final
         list.
@@ -303,19 +303,19 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :param str field_name: field name of the related object
         :return: list of related objects' pks
         :rtype: list
-        '''
+        """
         data = m2m_fields_query[field_name]
         return self._get_single_field_related_object_pks(data, model_pk, field_name)
 
     def _handle_extra_fields(self, data):
-        '''Add extra fields
+        """Add extra fields
 
         Currently, alias is supported.
 
             - alias: add alias for any other serialized field name. If the
               specified field name does not exist in serialization result, it
               will be ignored.
-        '''
+        """
         extra_fields = self.get_extra_fields()
 
         for handle_name, value in six.iteritems(extra_fields):
@@ -325,7 +325,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
                         data[alias] = data[original_name]
 
     def serialize_queryset(self):
-        '''Core of QuerySet based serialization
+        """Core of QuerySet based serialization
 
         The process of serialization has following steps
 
@@ -340,7 +340,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         - During the process of the above transfer, data associated with
           ManyToManyField should be retrieved from database and attached to
           each serialized data object.
-        '''
+        """
         qs = self.queryset.values(*self._get_values_fields())
         primary_key_field = self._get_primary_key_field()
         values_fields_mapping = self._get_values_fields_mapping()
@@ -390,7 +390,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
 
 
 class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    '''XMLRPC serializer specific for TestPlan'''
+    """XMLRPC serializer specific for TestPlan"""
 
     values_fields_mapping = {
         'create_date': ('create_date', datetime_to_str),
@@ -421,7 +421,7 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    '''XMLRPC serializer specific for TestCaseRun'''
+    """XMLRPC serializer specific for TestCaseRun"""
 
     values_fields_mapping = {
         'case_run_id': ('case_run_id', do_nothing),
@@ -448,7 +448,7 @@ class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    '''Serializer for TestRun'''
+    """Serializer for TestRun"""
 
     values_fields_mapping = {
         'auto_update_run_status': ('auto_update_run_status', do_nothing),
@@ -476,7 +476,7 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    '''Serializer for TestCase'''
+    """Serializer for TestCase"""
 
     values_fields_mapping = {
         'alias': ('alias', do_nothing),
@@ -508,7 +508,7 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    '''Serializer for Product'''
+    """Serializer for Product"""
 
     values_fields_mapping = {
         'id': ('id', do_nothing),
@@ -527,7 +527,7 @@ class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class TestBuildXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    '''Serializer for TestBuild'''
+    """Serializer for TestBuild"""
 
     values_fields_mapping = {
         'build_id': ('build_id', do_nothing),

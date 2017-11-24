@@ -27,7 +27,7 @@ MIMETYPE_OPENDOCUMENT = 'application/vnd.oasis.opendocument.text'
 
 
 class UploadedFile(object):
-    '''Base class for all classes representing a concrete uploaded file'''
+    """Base class for all classes representing a concrete uploaded file"""
 
     def __init__(self, uploaded_file):
         self.uploaded_file = uploaded_file
@@ -37,14 +37,14 @@ class UploadedFile(object):
 
 
 class UploadedPlainTextFile(UploadedFile):
-    '''Represent an uploaded plain text file'''
+    """Represent an uploaded plain text file"""
 
     def get_content(self):
         return '<pre>{0}</pre>'.format(self.uploaded_file.read())
 
 
 class UploadedHTMLFile(UploadedFile):
-    '''Represent an uploaded HTML file
+    """Represent an uploaded HTML file
 
     While uploading an HTML file, several tags, attributee have to be deleted,
     because they would break Nitrate internal JavaScript features and styles
@@ -54,7 +54,7 @@ class UploadedHTMLFile(UploadedFile):
 
     Currently, tags SCRIPT, STYLE AND LINK are removed. And attributes class,
     style and id are removed.
-    '''
+    """
 
     def get_content(self):
         def remove_tag(tag):
@@ -83,7 +83,7 @@ class UploadedHTMLFile(UploadedFile):
 
 
 class UploadedODTFile(UploadedFile):
-    '''Represent an uploaded ODT file'''
+    """Represent an uploaded ODT file"""
 
     def get_content(self):
         generatecss = True

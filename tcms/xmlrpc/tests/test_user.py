@@ -16,7 +16,7 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
 class TestUserSerializer(TestCase):
-    '''Test User.get_user_dict'''
+    """Test User.get_user_dict"""
 
     @classmethod
     def setUpTestData(cls):
@@ -31,7 +31,7 @@ class TestUserSerializer(TestCase):
 
 
 class TestUserFilter(TestCase):
-    '''Test User.filter'''
+    """Test User.filter"""
 
     @classmethod
     def setUpTestData(cls):
@@ -67,7 +67,7 @@ class TestUserFilter(TestCase):
 
 
 class TestUserGet(XmlrpcAPIBaseTest):
-    '''Test User.get'''
+    """Test User.get"""
 
     @classmethod
     def setUpTestData(cls):
@@ -89,7 +89,7 @@ class TestUserGet(XmlrpcAPIBaseTest):
 
 
 class TestUserGetMe(TestCase):
-    '''Test User.get_me'''
+    """Test User.get_me"""
 
     @classmethod
     def setUpTestData(cls):
@@ -104,7 +104,7 @@ class TestUserGetMe(TestCase):
 
 
 class TestUserJoin(XmlrpcAPIBaseTest):
-    '''Test User.join'''
+    """Test User.join"""
 
     @classmethod
     def setUpTestData(cls):
@@ -131,7 +131,7 @@ class TestUserJoin(XmlrpcAPIBaseTest):
 
 
 class TestUserUpdate(XmlrpcAPIBaseTest):
-    '''Test User.update'''
+    """Test User.update"""
 
     @classmethod
     def setUpTestData(cls):

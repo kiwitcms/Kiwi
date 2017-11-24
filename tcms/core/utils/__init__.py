@@ -86,7 +86,7 @@ def clean_request(request, keys=None):
 
 
 class QuerySetIterationProxy(object):
-    '''Iterate a series of object and its associated objects at once
+    """Iterate a series of object and its associated objects at once
 
     This iteration proxy applies to this kind of structure especially.
 
@@ -106,10 +106,10 @@ class QuerySetIterationProxy(object):
 
     where, in each row of the table, one or more than one properties and logs
     to be shown along with the group.
-    '''
+    """
 
     def __init__(self, iterable, associate_name=None, **associated_data):
-        '''Initialize proxy
+        """Initialize proxy
 
         Arguments:
         - iterable: an iterable object representing the main set of objects.
@@ -120,7 +120,7 @@ class QuerySetIterationProxy(object):
           item in the set referenced by iterable. You can pass mulitple
           associated data as the way of Python **kwargs. The associated data
           must be grouped by the value of associate_name.
-        '''
+        """
         self._iterable = iter(iterable)
         self._associate_name = associate_name
         if self._associate_name is None:

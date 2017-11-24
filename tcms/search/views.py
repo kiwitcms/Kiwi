@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-'''
+"""
 Advance search implementations
-'''
+"""
 
 import six
 import time
@@ -167,10 +167,10 @@ def render_results(request, results, time_cost, queries,
 
 
 def remove_from_request_path(request, name):
-    '''
-    Remove a parameter from request.get_full_path()\n
-    and return the modified path afterwards.
-    '''
+    """
+    Remove a parameter from request.get_full_path() and return the modified
+    path afterwards.
+    """
     if isinstance(request, HttpRequest):
         path = request.get_full_path()
     else:
@@ -186,10 +186,9 @@ def remove_from_request_path(request, name):
 
 
 def fmt_errors(form_errors):
-    '''
-    Format errors collected in a Django Form
-    for a better appearance.
-    '''
+    """
+    Format errors collected in a Django Form for a better appearance.
+    """
     errors = []
     for error in form_errors:
         for k, v in six.iteritems(error):
@@ -206,9 +205,7 @@ def fmt_errors(form_errors):
 
 
 def fmt_queries(*queries):
-    '''
-    Format the queries string.
-    '''
+    """Format the queries string."""
     results = {}
     for query in queries:
         for k, v in six.iteritems(query):

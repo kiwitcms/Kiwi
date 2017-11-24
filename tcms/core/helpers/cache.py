@@ -4,11 +4,11 @@ from django.core.cache import cache
 
 
 def cached_entities(ctype_name):
-    '''
+    """
     Some entities are frequently used.\n
     Cache them for reuse.\n
     Retrieve using model names.
-    '''
+    """
     ctype_key = 'ctt_type_' + ctype_name
     c_type = cache.get(ctype_key)
     if not c_type:

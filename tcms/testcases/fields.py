@@ -12,7 +12,7 @@ CC_LIST_DEFAULT_DELIMITER = ','
 
 
 class MultipleEmailField(EmailField):
-    ''' Holding mulitple email addresses '''
+    """Holding mulitple email addresses"""
 
     default_error_messages = {
         'invalid': u'%(value)s is/are not valid email addresse(s).',

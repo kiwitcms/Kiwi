@@ -42,7 +42,7 @@ def create_http_user():
 
 
 def make_http_request(user=None, user_perm=None, data=None):
-    '''Factory method to make instance of FakeHTTPRequest'''
+    """Factory method to make instance of FakeHTTPRequest"""
     _user = user
     if _user is None:
         _user = create_http_user()

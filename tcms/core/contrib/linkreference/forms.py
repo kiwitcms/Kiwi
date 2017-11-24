@@ -17,7 +17,7 @@ LINKREF_TARGET = {
 
 
 class TargetCharField(forms.CharField):
-    ''' Return clean Model class besides all of CharField '''
+    """Return clean Model class besides all of CharField"""
 
     default_error_messages = {
         'invalid_target':
@@ -30,7 +30,7 @@ class TargetCharField(forms.CharField):
         self.targets = targets
 
     def clean(self, value):
-        ''' Return the Model class object associated with the value '''
+        """Return the Model class object associated with the value"""
 
         super(TargetCharField, self).clean(value)
         model_class = self.targets.get(value, None)
@@ -41,7 +41,7 @@ class TargetCharField(forms.CharField):
 
 
 class BasicValidationForm(forms.Form):
-    ''' Validate target and target ID basically '''
+    """Validate target and target ID basically"""
 
     target = TargetCharField(
         targets=LINKREF_TARGET,
@@ -56,7 +56,7 @@ class BasicValidationForm(forms.Form):
 
 
 class AddLinkReferenceForm(BasicValidationForm):
-    ''' Validate the argument within the request for adding new link '''
+    """Validate the argument within the request for adding new link"""
 
     name = forms.CharField(
         error_messages={

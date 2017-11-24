@@ -102,14 +102,14 @@ class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class MockProductSerializer(QuerySetBasedXMLRPCSerializer):
-    '''Empty definition to test some method's default behavior'''
+    """Empty definition to test some method's default behavior"""
 
 
 # ################### Mock serializer classes for testing ####################
 
 
 class TestQuerySetBasedSerializer(test.TestCase):
-    '''Test QuerySetBasedXMLRPCSerializer'''
+    """Test QuerySetBasedXMLRPCSerializer"""
 
     @classmethod
     def setUpTestData(cls):

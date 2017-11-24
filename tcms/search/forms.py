@@ -32,11 +32,10 @@ VersionF = partial(forms.ModelMultipleChoiceField, required=False,
 
 
 def get_choice(value, _type=str, deli=','):
-    '''
-    Used to clean a form field where multiple\n
-    choices are seperated using a delimiter such as comma.\n
-    Removing the empty value.
-    '''
+    """
+    Used to clean a form field where multiple choices are seperated using a
+    delimiter such as comma. Removing the empty value.
+    """
     try:
         results = value.split(deli)
         return [_type(r.strip()) for r in results if r]

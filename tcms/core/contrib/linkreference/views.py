@@ -19,7 +19,7 @@ __all__ = ('add', 'get', 'remove', )
 @user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
 @require_POST
 def add(request):
-    '''Add new link to a specific target
+    """Add new link to a specific target
 
     The target should be a valid model within TCMS, which are documented in
     ``LINKREF_TARGET``.
@@ -34,7 +34,7 @@ def add(request):
     - name: a short description to this new link, and accept 64 characters at
       most.
     - url: the actual URL.
-    '''
+    """
 
     form = AddLinkReferenceForm(request.POST)
     if form.is_valid():
@@ -59,13 +59,13 @@ def add(request):
 
 @require_GET
 def get(request):
-    '''Get links of specific instance of content type
+    """Get links of specific instance of content type
 
     - target: The model name of the instance being searched
     - target_id: The ID of the instance
 
     Only accept GET request from client.
-    '''
+    """
 
     form = BasicValidationForm(request.GET)
 
@@ -96,7 +96,7 @@ def get(request):
 @user_passes_test(lambda u: u.has_perm('testruns.change_testcaserun'))
 @require_GET
 def remove(request, link_id):
-    ''' Remove a specific link with ID ``link_id`` '''
+    """Remove a specific link with ID ``link_id``"""
 
     from django.forms import IntegerField
     from django.forms import ValidationError

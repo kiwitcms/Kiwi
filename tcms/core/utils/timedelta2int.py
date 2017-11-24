@@ -3,7 +3,7 @@ import re
 
 
 def timedelta2int(value):
-    '''convert string nh(ay):nh(our):nm(inute) to integer seconds.'''
+    """convert string nh(ay):nh(our):nm(inute) to integer seconds."""
     value = value.replace(' ', '')
     second_regex = re.compile(r'\d+s')
     minute_regex = re.compile(r'\d+m')

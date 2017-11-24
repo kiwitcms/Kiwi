@@ -340,10 +340,10 @@ class TestCase(TCMSActionModel):
         return TestCaseTag.objects.get_or_create(case=self, tag=tag)
 
     def update_tags(self, new_tags):
-        '''
+        """
         Update case.tag
         so that case.tag == new_tags
-        '''
+        """
         if new_tags is None or not isinstance(new_tags, list):
             return
         owning_tags = set(self.tag.iterator())
@@ -637,7 +637,7 @@ class TestCaseBug(TCMSActionModel):
                            ('bug_id', 'case_run'))
 
     def unique_error_message(self, model_class, unique_check):
-        '''Specific to invalid bug id'''
+        """Specific to invalid bug id"""
         bug_id_uniques = (('bug_id', 'case_run', 'case'),
                           ('bug_id', 'case_run'))
         if unique_check in bug_id_uniques:
@@ -663,7 +663,7 @@ class TestCaseBug(TCMSActionModel):
 
 
 class Contact(TCMSContentTypeBaseModel):
-    ''' A Contact that can be added into Email settings' CC list '''
+    """A Contact that can be added into Email settings' CC list"""
 
     name = models.CharField(max_length=50)
     email = models.EmailField(db_index=True)
@@ -678,7 +678,7 @@ class Contact(TCMSContentTypeBaseModel):
 
     @classmethod
     def create(cls, email, content_object, name=None):
-        ''' Factory method to create a new Contact '''
+        """Factory method to create a new Contact"""
 
         if not name:
             store_name = email.split('@')[0]
@@ -709,11 +709,11 @@ class TestCaseEmailSettings(models.Model):
         pass
 
     def add_cc(self, email_addrs):
-        '''Add email addresses to CC list
+        """Add email addresses to CC list
 
         Arguments:
         - email_addrs: str or list, holding one or more email addresses
-        '''
+        """
 
         emailaddr_list = []
         if not isinstance(email_addrs, list):
@@ -725,18 +725,18 @@ class TestCaseEmailSettings(models.Model):
             Contact.create(email=email_addr, content_object=self)
 
     def get_cc_list(self):
-        ''' Return the whole CC list '''
+        """Return the whole CC list"""
 
         return [c.email for c in self.cc_list.all()]
 
     def remove_cc(self, email_addrs):
-        '''Remove one or more email addresses from EmailSettings' CC list
+        """Remove one or more email addresses from EmailSettings' CC list
 
         If any email_addr is unknown, remove_cc will keep quiet.
 
         Arguments:
         - email_addrs: str or list, holding one or more email addresses
-        '''
+        """
 
         emailaddr_list = []
         if not isinstance(email_addrs, list):
@@ -747,22 +747,22 @@ class TestCaseEmailSettings(models.Model):
         self.cc_list.filter(email__in=emailaddr_list).using(None).delete()
 
     def filter_new_emails(self, origin_emails, new_emails):
-        ''' Find out the new email addresses to be added '''
+        """Find out the new email addresses to be added"""
 
         return list(set(new_emails) - set(origin_emails))
 
     def filter_unnecessary_emails(self, origin_emails, new_emails):
-        ''' Find out the unnecessary addresses to be delete '''
+        """Find out the unnecessary addresses to be delete"""
 
         return list(set(origin_emails) - set(new_emails))
 
     def update_cc_list(self, email_addrs):
-        '''Add the new emails and delete unnecessary ones
+        """Add the new emails and delete unnecessary ones
 
         Arguments:
         - email_addrs: list, a instance of list holding emails user
         input via UI
-        '''
+        """
 
         origin_emails = self.get_cc_list()
 
@@ -773,7 +773,7 @@ class TestCaseEmailSettings(models.Model):
 
 
 def _listen():
-    """ signals listen """
+    """signals listen"""
 
     # case save/delete listen for email notify
     post_save.connect(case_watchers.on_case_save, TestCase)

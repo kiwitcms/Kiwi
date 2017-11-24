@@ -57,7 +57,7 @@ MODULE_NAME = "testplans"
 
 
 def update_plan_email_settings(tp, form):
-    '''Update testplan's email settings'''
+    """Update testplan's email settings"""
     tp.emailing.notify_on_plan_update = form.cleaned_data[
         'notify_on_plan_update']
     tp.emailing.notify_on_plan_delete = form.cleaned_data[
@@ -149,7 +149,7 @@ def new(request, template_name='plan/new.html'):
 @require_GET
 @user_passes_test(lambda u: u.has_perm('testplans.delete_testplan'))
 def delete(request, plan_id):
-    '''Delete testplan'''
+    """Delete testplan"""
     if request.GET.get('sure', 'no') == 'no':
         # TODO: rewrite the response
         return HttpResponse("\
@@ -187,7 +187,7 @@ def delete(request, plan_id):
 
 @require_GET
 def all(request, template_name='plan/all.html'):
-    '''Display all testplans'''
+    """Display all testplans"""
     # Define the default sub module
     SUB_MODULE_NAME = 'plans'
     # TODO: this function now only performs a forward feature, no queries
@@ -284,7 +284,7 @@ def all(request, template_name='plan/all.html'):
 
 
 def get_number_of_plans_cases(plan_ids):
-    '''Get the number of cases related to each plan
+    """Get the number of cases related to each plan
 
     Arguments:
     - plan_ids: a tuple or list of TestPlans' id
@@ -292,7 +292,7 @@ def get_number_of_plans_cases(plan_ids):
     Return value:
     Return value is an dict object, where key is plan_id and the value is the
     total count.
-    '''
+    """
     qs = TestCasePlan.objects.filter(plan__in=plan_ids)
     qs = qs.values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
@@ -300,7 +300,7 @@ def get_number_of_plans_cases(plan_ids):
 
 
 def get_number_of_plans_runs(plan_ids):
-    '''Get the number of runs related to each plan
+    """Get the number of runs related to each plan
 
     Arguments:
     - plan_ids: a tuple or list of TestPlans' id
@@ -308,7 +308,7 @@ def get_number_of_plans_runs(plan_ids):
     Return value:
     Return value is an dict object, where key is plan_id and the value is the
     total count.
-    '''
+    """
     qs = TestRun.objects.filter(plan__in=plan_ids)
     qs = qs.values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
@@ -316,7 +316,7 @@ def get_number_of_plans_runs(plan_ids):
 
 
 def get_number_of_children_plans(plan_ids):
-    '''Get the number of children plans related to each plan
+    """Get the number of children plans related to each plan
 
     Arguments:
     - plan_ids: a tuple or list of TestPlans' id
@@ -324,7 +324,7 @@ def get_number_of_children_plans(plan_ids):
     Return value:
     Return value is an dict object, where key is plan_id and the value is the
     total count.
-    '''
+    """
     qs = TestPlan.objects.filter(parent__in=plan_ids)
     qs = qs.values('parent').annotate(
         total_count=Count('parent')).order_by('-parent')
@@ -332,7 +332,7 @@ def get_number_of_children_plans(plan_ids):
 
 
 def calculate_stats_for_testplans(plans):
-    '''Attach the number of cases and runs for each TestPlan
+    """Attach the number of cases and runs for each TestPlan
 
     Arguments:
     - plans: the queryset of TestPlans
@@ -340,7 +340,7 @@ def calculate_stats_for_testplans(plans):
     Return value:
     A list of TestPlans, each of which is attached the statistics which is
     with prefix cal meaning calculation result.
-    '''
+    """
     plan_ids = [plan.pk for plan in plans]
     cases_counts = get_number_of_plans_cases(plan_ids)
     runs_counts = get_number_of_plans_runs(plan_ids)
@@ -357,7 +357,7 @@ def calculate_stats_for_testplans(plans):
 
 @require_GET
 def ajax_search(request, template_name='plan/common/json_plans.txt'):
-    '''Display all testplans'''
+    """Display all testplans"""
     # Define the default sub module
 
     # If it's not a search the page will be blank
@@ -416,7 +416,7 @@ def ajax_response(request, queryset, column_names, template_name):
 
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):
-    '''Display the plan details.'''
+    """Display the plan details."""
     SUB_MODULE_NAME = 'plans'
 
     try:
@@ -446,7 +446,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 @require_http_methods(['GET', 'POST'])
 @user_passes_test(lambda u: u.has_perm('testruns.change_testrun'))
 def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
-    '''Choose one run to add cases'''
+    """Choose one run to add cases"""
 
     # Define the default sub module
     SUB_MODULE_NAME = 'runs'
@@ -514,7 +514,7 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
 @require_http_methods(['GET', 'POST'])
 @user_passes_test(lambda u: u.has_perm('testplans.change_testplan'))
 def edit(request, plan_id, template_name='plan/edit.html'):
-    '''Edit test plan view'''
+    """Edit test plan view"""
     # Define the default sub module
     SUB_MODULE_NAME = 'plans'
 
@@ -752,7 +752,7 @@ def clone(request, template_name='plan/clone.html'):
 
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):
-    '''Manage attached files'''
+    """Manage attached files"""
     SUB_MODULE_NAME = 'plans'
 
     file_size_limit = settings.MAX_UPLOAD_SIZE
@@ -771,7 +771,7 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 
 @require_GET
 def text_history(request, plan_id, template_name='plan/history.html'):
-    '''View test plan text history'''
+    """View test plan text history"""
     SUB_MODULE_NAME = 'plans'
 
     tp = get_object_or_404(TestPlan, plan_id=int(plan_id))
@@ -991,7 +991,7 @@ def cases(request, plan_id):
 
 @require_GET
 def component(request, template_name='plan/get_component.html'):
-    '''Manage the component template for plan
+    """Manage the component template for plan
 
     Parameters:
       plan - Necessary, to determine which plan you need to modify the
@@ -1006,7 +1006,7 @@ def component(request, template_name='plan/get_component.html'):
 
     Returns:
       HTML page by default, or a JSON when the 'multiple' parameter specific.
-    '''
+    """
     ajax_response = {'rc': 0, 'response': 'ok'}
 
     class ComponentActions(object):
@@ -1101,13 +1101,13 @@ def component(request, template_name='plan/get_component.html'):
 
 
 def tree_view(request):
-    '''Whole tree view for plans'''
+    """Whole tree view for plans"""
     # FIXME:
 
 
 @require_GET
 def printable(request, template_name='plan/printable.html'):
-    '''Create the printable copy for plan'''
+    """Create the printable copy for plan"""
     plan_pks = request.GET.getlist('plan')
 
     if not plan_pks:
@@ -1138,7 +1138,7 @@ def printable(request, template_name='plan/printable.html'):
 
 @require_GET
 def export(request, template_name='plan/export.xml'):
-    '''Export the plan'''
+    """Export the plan"""
     plan_pks = request.GET.getlist('plan')
     if not plan_pks:
         return HttpResponse(Prompt.render(

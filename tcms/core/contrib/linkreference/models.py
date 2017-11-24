@@ -10,10 +10,10 @@ __all__ = ('create_link', 'LinkReference', )
 
 
 def create_link(name, url, link_to):
-    '''Create new link reference and attach to the specific object
+    """Create new link reference and attach to the specific object
 
     The target object may be any model object.
-    '''
+    """
 
     link = LinkReference(
         content_object=link_to, name=name, url=url, site_id=settings.SITE_ID)
@@ -35,7 +35,7 @@ class LinkReference(TCMSContentTypeBaseModel):
 
     @classmethod
     def get_from(cls, target):
-        ''' Retrieve all links attached to the target object already '''
+        """Retrieve all links attached to the target object already"""
 
         target_type = ContentType.objects.get_for_model(target)
         return cls.objects.filter(
@@ -43,9 +43,9 @@ class LinkReference(TCMSContentTypeBaseModel):
 
     @classmethod
     def unlink(cls, link_id):
-        '''Remove the link
+        """Remove the link
 
         If the link with link_id does not exist, unlink will keep quiet
-        '''
+        """
 
         cls.objects.filter(id__in=[link_id, ]).delete()

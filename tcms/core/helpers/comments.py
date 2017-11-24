@@ -16,7 +16,7 @@ from datetime import datetime
 
 
 def add_comment(objs, comments, user, submit_date=None):
-    '''
+    """
     Generic approach adding django.comment for an object.
     params:
         @objs: [model, model,]
@@ -27,7 +27,7 @@ def add_comment(objs, comments, user, submit_date=None):
     >>> testrun = Run.objects.get(pk=171675)
     >>> comments = 'stupid comments by Homer'
     >>> add_comment([testrun,], comments, testuser)
-    '''
+    """
     site = Site.objects.get(pk=settings.SITE_ID)
     c_type = ContentType.objects.get_for_model(model=objs[0].__class__)
     create_comment = Comment.objects.create

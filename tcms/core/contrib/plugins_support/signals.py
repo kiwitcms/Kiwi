@@ -11,9 +11,9 @@ REGISTERED_MODELS = {}
 
 # The global signal processor
 class GlobalSignalProcessor(object):
-    '''
+    """
     This class is responsible for handling all of signals trigger by model
-    '''
+    """
 
     def __init__(self, model):
         self.model = model
@@ -30,10 +30,10 @@ class GlobalSignalProcessor(object):
         pstp.push(self.model, entry, tcms_signals.delete)
 
     def apply_parents(self, instance, func):
-        '''
+        """
         Iterates through all non-abstract inherited parents and applies the
         supplied function
-        '''
+        """
         for field in instance._meta.parents.values():
             if field and getattr(instance, field.name, None):
                 func(getattr(instance, field.name))

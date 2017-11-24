@@ -225,11 +225,11 @@ estimated_time_hms_re = re.compile(r'^(\d+):(\d+):(\d+)$')
 
 
 def pre_process_estimated_time(value):
-    '''pre process estiamted_time.
+    """pre process estiamted_time.
 
     support value - HH:MM:SS & xdxhxmxs
     return xdxhxmxs
-    '''
+    """
     if isinstance(value, six.string_types):
         match = estimated_time_re.match(value.replace(' ', ''))
         if match:

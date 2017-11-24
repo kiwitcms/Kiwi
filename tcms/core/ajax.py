@@ -321,7 +321,7 @@ def tag(request, template_name="management/get_tag.html"):
 
 
 def get_value_by_type(val, v_type):
-    '''
+    """
     Exampls:
     1. get_value_by_type('True', 'bool')
     (1, None)
@@ -337,7 +337,7 @@ def get_value_by_type(val, v_type):
     (None, 'Unsupported value type.')
     7. get_value_by_type('string', 'int')
     (None, "invalid literal for int() with base 10: 'string'")
-    '''
+    """
     value = error = None
 
     def get_time(time):
@@ -378,10 +378,7 @@ def say_yes():
 # Deprecated. Not flexible.
 @require_POST
 def update(request):
-    '''
-    Generic approach to update a model,\n
-    based on contenttype.
-    '''
+    """Generic approach to update a model, based on contenttype."""
     now = datetime.datetime.now()
 
     data = request.POST.copy()
@@ -483,9 +480,7 @@ def update(request):
 
 @require_POST
 def update_case_run_status(request):
-    '''
-    Update Case Run status.
-    '''
+    """Update Case Run status."""
     now = datetime.datetime.now()
 
     data = request.POST.copy()
@@ -591,11 +586,11 @@ class ModelUpdateActions(object):
 
 
 class TestCaseUpdateActions(ModelUpdateActions):
-    '''Actions to update each possible proprety of TestCases
+    """Actions to update each possible proprety of TestCases
 
     Define your own method named _update_[property name] to hold specific
     update logic.
-    '''
+    """
 
     ctype = 'testcases.testcase'
 
@@ -744,7 +739,7 @@ class TestCaseUpdateActions(ModelUpdateActions):
 # FIXME: find a good chance to map all TestCase property change request to this
 @require_POST
 def update_cases_default_tester(request):
-    '''Update default tester upon selected TestCases'''
+    """Update default tester upon selected TestCases"""
     proxy = TestCaseUpdateActions(request)
     return proxy.update()
 
@@ -775,12 +770,10 @@ def comment_case_runs(request):
 
 
 def clean_bug_form(request):
-    '''
-    Verify the form data, return a tuple\n
-    (None, ERROR_MSG) on failure\n
-    or\n
-    (data_dict, '') on success.\n
-    '''
+    """
+    Verify the form data, return a tuple (None, ERROR_MSG) on failure or
+    (data_dict, '') on success
+    """
     data = {}
     try:
         data['bugs'] = request.GET.get('bug_id', '').split(',')
@@ -803,10 +796,10 @@ def clean_bug_form(request):
 
 
 def update_bugs_to_caseruns(request):
-    '''
+    """
     Add one or more bugs to or remove that from\n
     one or more caserun at a time.
-    '''
+    """
     data, error = clean_bug_form(request)
     if error:
         return say_no(error)
@@ -840,10 +833,9 @@ def update_bugs_to_caseruns(request):
 
 
 def get_prod_related_objs(p_pks, target):
-    '''
-    Get Component, Version, Category, and Build\n
-    Return [(id, name), (id, name)]
-    '''
+    """
+    Get Component, Version, Category, and Build Return [(id, name), (id, name)]
+    """
     ctypes = {
         'component': (Component, 'name'),
         'version': (Version, 'value'),
@@ -857,10 +849,7 @@ def get_prod_related_objs(p_pks, target):
 
 
 def get_prod_related_obj_json(request):
-    '''
-    View for updating product drop-down\n
-    in a Ajax way.
-    '''
+    """View for updating product drop-down in a Ajax way"""
     data = request.GET.copy()
     target = data.get('target', None)
     p_pks = data.get('p_ids', None)

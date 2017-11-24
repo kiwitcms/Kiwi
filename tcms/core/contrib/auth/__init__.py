@@ -28,10 +28,10 @@ def get_using_backend():
 
 
 def initiate_user_with_default_setups(user):
-    '''
+    """
     Add default groups, permissions, status to a newly
     created user.
-    '''
+    """
     from django.contrib.auth.models import Group
     default_groups = Group.objects.filter(name__in=settings.DEFAULT_GROUPS)
     user.is_active = True

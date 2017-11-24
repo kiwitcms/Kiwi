@@ -1133,13 +1133,13 @@ def update(request, case_ids, values):
 
 @log_call(namespace=__xmlrpc_namespace__)
 def validate_cc_list(cc_list):
-    '''Validate each email in cc_list argument
+    """Validate each email in cc_list argument
 
     This is called by ``notification_*`` methods internally.
 
     No return value, and if any email in cc_list is not valid, ValidationError
     will be raised.
-    '''
+    """
 
     if not isinstance(cc_list, list):
         raise TypeError('cc_list should be a list object.')
@@ -1162,7 +1162,7 @@ def validate_cc_list(cc_list):
 @log_call(namespace=__xmlrpc_namespace__)
 @user_passes_test(lambda u: u.has_perm('testcases.change_testcase'))
 def notification_add_cc(request, case_ids, cc_list):
-    '''
+    """
     Description: Add email addresses to the notification CC list of specific TestCases
 
     Params:      $case_ids - Integer/Array: one or more TestCase IDs
@@ -1174,7 +1174,7 @@ def notification_add_cc(request, case_ids, cc_list):
                  anything else that depends on the implementation. If something
                  wrong, status will be 1 and message will be a short description
                  to the error.
-    '''
+    """
 
     try:
         validate_cc_list(cc_list)
@@ -1198,7 +1198,7 @@ def notification_add_cc(request, case_ids, cc_list):
 @log_call(namespace=__xmlrpc_namespace__)
 @user_passes_test(lambda u: u.has_perm('testcases.change_testcase'))
 def notification_remove_cc(request, case_ids, cc_list):
-    '''
+    """
     Description: Remove email addresses from the notification CC list of specific TestCases
 
     Params:      $case_ids - Integer/Array: one or more TestCase IDs
@@ -1210,7 +1210,7 @@ def notification_remove_cc(request, case_ids, cc_list):
                  anything else that depends on the implementation. If something
                  wrong, status will be 1 and message will be a short description
                  to the error.
-    '''
+    """
 
     try:
         validate_cc_list(cc_list)
@@ -1230,14 +1230,14 @@ def notification_remove_cc(request, case_ids, cc_list):
 @log_call(namespace=__xmlrpc_namespace__)
 @user_passes_test(lambda u: u.has_perm('testcases.change_testcase'))
 def notification_get_cc_list(request, case_ids):
-    '''
+    """
     Description: Return whole CC list of each TestCase
 
     Params:      $case_ids - Integer/Array: one or more TestCase IDs
 
     Returns:     An dictionary object with case_id as key and a list of CC as the value
                  Each case_id will be converted to a str object in the result.
-    '''
+    """
 
     result = {}
 

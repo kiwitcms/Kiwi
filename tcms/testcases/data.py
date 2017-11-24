@@ -11,7 +11,7 @@ from tcms.testruns.models import TestCaseRun
 
 
 class TestCaseViewDataMixin(object):
-    '''Mixin class to get view data of test case'''
+    """Mixin class to get view data of test case"""
 
     def get_case_contenttype(self):
         return ContentType.objects.get_for_model(TestCase)
@@ -25,7 +25,7 @@ class TestCaseViewDataMixin(object):
         return logs.order_by('date')
 
     def get_case_comments(self, case):
-        '''Get a case' comments'''
+        """Get a case' comments"""
         ct = self.get_case_contenttype()
         comments = Comment.objects.filter(content_type=ct,
                                           object_pk=case.pk,
@@ -40,7 +40,7 @@ class TestCaseViewDataMixin(object):
 
 
 class TestCaseRunViewDataMixin(object):
-    '''Mixin class to get view data of test case run'''
+    """Mixin class to get view data of test case run"""
 
     def get_caserun_contenttype(self):
         return ContentType.objects.get_for_model(TestCaseRun)

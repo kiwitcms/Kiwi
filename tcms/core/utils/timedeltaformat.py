@@ -3,7 +3,7 @@ import datetime
 
 
 def format_timedelta(timedelta):
-    '''convert instance of datetime.timedelta to d(ay), h(our), m(inute)'''
+    """convert instance of datetime.timedelta to d(ay), h(our), m(inute)"""
     if isinstance(timedelta, datetime.timedelta):
         m, s = divmod(timedelta.seconds, 60)
         h, m = divmod(m, 60)

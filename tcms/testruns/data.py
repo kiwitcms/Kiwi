@@ -93,17 +93,17 @@ def get_run_bug_ids(run_id):
 
 
 class TestCaseRunDataMixin(object):
-    '''Data for test case runs'''
+    """Data for test case runs"""
 
     def stats_mode_caseruns(self, case_runs):
-        '''Statistics from case runs mode
+        """Statistics from case runs mode
 
         @param case_runs: iteratable object to access each case run
         @type case_runs: iterable, list, tuple
         @return: mapping between mode and the count. Example return value is
             { 'manual': I, 'automated': J, 'manual_automated': N }
         @rtype: dict
-        '''
+        """
         manual_count = 0
         automated_count = 0
         manual_automated_count = 0
@@ -171,7 +171,7 @@ class TestCaseRunDataMixin(object):
         ])
 
     def get_summary_stats(self, case_runs):
-        '''Get summary statistics from case runs
+        """Get summary statistics from case runs
 
         Statistics targets:
         - the number of pending test case runs, whose status is IDLE
@@ -182,7 +182,7 @@ class TestCaseRunDataMixin(object):
         @type case_runs: iterable
         @return: a mapping between statistics target and its value
         @rtype: dict
-        '''
+        """
         idle_count = 0
         complete_count = 0
         complete_status_names = TestCaseRunStatus.complete_status_names

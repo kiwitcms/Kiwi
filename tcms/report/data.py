@@ -69,7 +69,7 @@ def overview_view_get_case_run_status_count(product_id):
 
 
 class ProductBuildReportData(object):
-    '''Report data by builds of a Product'''
+    """Report data by builds of a Product"""
 
     def total_runs_count(self, product_id):
         return get_groupby_result(sqls.build_builds_total_runs_count,
@@ -132,7 +132,7 @@ class ProductComponentReportData(object):
 
 
 class ProductVersionReportData(object):
-    '''Report data by versions of a Product'''
+    """Report data by versions of a Product"""
 
     def plans_subtotal(self, product_id):
         return get_groupby_result(sqls.version_plans_subtotal,
@@ -181,7 +181,7 @@ SQLQueryInfo = namedtuple('SQLQueryInfo',
 
 
 class CustomReportData(object):
-    '''Data for custom report
+    """Data for custom report
 
     In this data class, a major task is to construct INNER JOINS dynamically
     according to criteria selected by user.
@@ -191,7 +191,7 @@ class CustomReportData(object):
 
     One important thing is to ensure final INNER JOINS should be unique, so
     that no unnecessary table-join operation happens in database.
-    '''
+    """
 
     # All data are selected FROM test_builds, so following INNER JOINS are
     # relative to test_builds.
@@ -241,11 +241,11 @@ class CustomReportData(object):
         self._form = form
 
     def _filter_criteria(self):
-        '''Singleton method ensures criteria are constructed only once
+        """Singleton method ensures criteria are constructed only once
 
         @return: a tuple containing joins, where conditions, and where params
         @rtype: tuple
-        '''
+        """
         filter_criteria = getattr(self, '__filter_criteria', None)
         if filter_criteria is None:
             joins = []
@@ -267,7 +267,7 @@ class CustomReportData(object):
         return filter_criteria
 
     def _prepare_sql(self, sql_statement):
-        '''Prepare SQL statement by constructing JOINS and WHERE clause'''
+        """Prepare SQL statement by constructing JOINS and WHERE clause"""
 
         joins, where_conditions, where_params = self._filter_criteria()
 
@@ -290,13 +290,13 @@ class CustomReportData(object):
 
     # especially when filter builds with component.
     def _get_builds(self):
-        '''Get builds from valid form
+        """Get builds from valid form
 
         @param form: the form containing valid data
         @type form: L{CustomSearchForm}
         @return: queried test builds
         @rtype: L{QuerySet}
-        '''
+        """
         sql, params = self._prepare_sql(sqls.custom_builds)
         rows = SQLExecution(sql, params).rows
         return [TestBuild(pk=row['build_id'], name=row['name'])
@@ -330,7 +330,7 @@ class CustomReportData(object):
     # ## Case run status matrix to show progress bar for each build ###
 
     def status_matrix(self):
-        '''Case run status matrix used to render progress bar'''
+        """Case run status matrix used to render progress bar"""
         sql, params = self._prepare_sql(
             sqls.custom_builds_case_runs_subtotal_by_status)
         rows = SQLExecution(sql, params, with_field_name=False).rows
@@ -344,7 +344,7 @@ class CustomReportData(object):
 
 
 class CustomDetailsReportData(CustomReportData):
-    '''Data for custom details report
+    """Data for custom details report
 
     Inherits from CustomReportData is becuase details report also need the
     summary header data and the progress bar for being viewed test build. You
@@ -352,7 +352,7 @@ class CustomDetailsReportData(CustomReportData):
 
     Besides above same data, details report also defines following methods to
     get specific data for detailed information to show to user.
-    '''
+    """
 
     # In detail report, there is only one selected test build at a time.
     report_criteria = CustomReportData.report_criteria.copy()
@@ -396,7 +396,7 @@ class CustomDetailsReportData(CustomReportData):
         return matrix_dataset
 
     def get_case_runs(self, build_ids, status_ids):
-        '''Get case runs according to builds and status
+        """Get case runs according to builds and status
 
         @param build_ids: IDs of builds
         @type build_ids: list or tuple
@@ -404,7 +404,7 @@ class CustomDetailsReportData(CustomReportData):
         @type status_ids: list or tuple
         @return: queried case runs
         @rtype: L{QuerySet}
-        '''
+        """
         tcrs = TestCaseRun.objects.filter(run__build__in=build_ids,
                                           case_run_status_id__in=status_ids)
         tcrs = tcrs.select_related('run', 'case',
@@ -416,7 +416,7 @@ class CustomDetailsReportData(CustomReportData):
         return tcrs
 
     def get_case_runs_bugs(self, build_ids, status_ids):
-        '''Get case runs' bugs according to builds and status
+        """Get case runs' bugs according to builds and status
 
         @param build_ids: IDs of builds
         @type build_ids: list or tuple
@@ -424,7 +424,7 @@ class CustomDetailsReportData(CustomReportData):
         @type status_ids: list or tuple
         @return: mapping between case run ID and its bugs
         @rtype: dict
-        '''
+        """
         bugs = TestCaseBug.objects.filter(
             case_run__run__build__in=build_ids,
             case_run__case_run_status_id__in=status_ids)
@@ -436,7 +436,7 @@ class CustomDetailsReportData(CustomReportData):
                     groupby(bugs, key=lambda bug: bug.case_run_id))
 
     def get_case_runs_comments(self, build_ids, status_ids):
-        '''Get case runs' bugs according to builds and status
+        """Get case runs' bugs according to builds and status
 
         @param build_ids: IDs of builds
         @type build_ids: list or tuple
@@ -444,7 +444,7 @@ class CustomDetailsReportData(CustomReportData):
         @type status_ids: list or tuple
         @return: mapping between case run ID and its comments
         @rtype: dict
-        '''
+        """
         ct = ContentType.objects.get_for_model(TestCaseRun)
         rows = SQLExecution(sqls.custom_details_case_runs_comments,
                             (ct.pk, build_ids, status_ids)).rows
@@ -453,7 +453,7 @@ class CustomDetailsReportData(CustomReportData):
 
 
 class TestingReportBaseData(object):
-    '''Base data of various testing report'''
+    """Base data of various testing report"""
 
     report_criteria = {
         'r_product': ('test_builds.product_id = %s', lambda obj: obj.pk),
@@ -476,7 +476,7 @@ class TestingReportBaseData(object):
     # ## SQL preparation ###
 
     def _report_criteria(self, form):
-        '''cache criteria to avoid generating repeately'''
+        """cache criteria to avoid generating repeately"""
         where_clause = []
         params = []
         for field, condition in six.iteritems(self.report_criteria):
@@ -494,7 +494,7 @@ class TestingReportBaseData(object):
     # ## Report data generation ###
 
     def _get_report_data(self, form, builds, builds_selected):
-        '''
+        """
         The core method to generate report data. Remain for subclass to
         implement
 
@@ -507,11 +507,11 @@ class TestingReportBaseData(object):
         @type builds_selected: bool
         @return: the report data
         @rtype: dict
-        '''
+        """
         raise NotImplementedError
 
     def _get_builds(self, form):
-        '''Get selected or all product's builds for display'''
+        """Get selected or all product's builds for display"""
         builds = form.cleaned_data['r_build']
         builds_selected = len(builds) > 0
         if len(builds) == 0:
@@ -520,7 +520,7 @@ class TestingReportBaseData(object):
         return builds, builds_selected
 
     def get_report_data(self, form):
-        '''Core method to get report data exported to testing report view'''
+        """Core method to get report data exported to testing report view"""
         builds, builds_selected = self._get_builds(form)
         data = self._get_report_data(form, builds, builds_selected)
         data.update({
@@ -544,7 +544,7 @@ class TestingReportBaseData(object):
 
 
 class TestingReportByCaseRunTesterData(TestingReportBaseData):
-    '''Data for testing report of By Case Run Tester'''
+    """Data for testing report of By Case Run Tester"""
 
     def _get_report_data(self, form, builds, builds_selected):
         if builds_selected:
@@ -553,7 +553,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
             return self._get_report_data_without_builds_selected(form)
 
     def _get_report_data_without_builds_selected(self, form):
-        '''Get report data when user does not select any build'''
+        """Get report data when user does not select any build"""
         plans_count = self.plans_count(form)
         runs_count = self.runs_count(form)
         status_matrix = self.status_matrix(form)
@@ -582,7 +582,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
         }
 
     def _get_report_data_with_builds(self, form, builds):
-        '''Get report data when user selects one or more builds
+        """Get report data when user selects one or more builds
 
         @param form: the valid form containing report criteria
         @type form: L{RunForm}
@@ -591,7 +591,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
         @return: report data containing all necessary data grouped by selected
             builds and tested_bys
         @rtype: dict
-        '''
+        """
         plans_count = self.plans_count(form)
         runs_count = self.runs_count(form)
         status_matrix = self.status_matrix_groupby_builds(form)
@@ -607,7 +607,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
         tested_by_names = self.get_usernames(tested_by_ids)
 
         def walk_status_matrix_rows():
-            '''For rendering template, walk through status matrix row by row'''
+            """For rendering template, walk through status matrix row by row"""
             prev_build = None
             builds = sorted(six.iteritems(status_matrix),
                             key=lambda item: item[0])
@@ -702,7 +702,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
 
 
 class TestingReportByCasePriorityData(TestingReportBaseData):
-    '''Data for testing report By Case Priority'''
+    """Data for testing report By Case Priority"""
 
     def _get_report_data(self, form, builds, builds_selected):
         plans_count = self.plans_count(form)
@@ -761,7 +761,7 @@ class TestingReportByCasePriorityData(TestingReportBaseData):
 
 
 class TestingReportByPlanTagsData(TestingReportBaseData):
-    '''Data for testing report By Plan Tag'''
+    """Data for testing report By Plan Tag"""
 
     def _get_report_data(self, form, builds, builds_selected):
         plans_count = self.plans_count(form)
@@ -814,7 +814,7 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
         return tags
 
     def get_tags_names(self, tag_ids):
-        '''Get tags names from status matrix'''
+        """Get tags names from status matrix"""
         from tcms.management.models import TestTag
 
         names = dict(TestTag.objects.filter(
@@ -827,7 +827,7 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
 
 
 class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
-    '''Detail data for testing report By Plan Tag'''
+    """Detail data for testing report By Plan Tag"""
 
     def _get_report_data(self, form, builds, builds_selected):
         # Total section containing the number of plans, runs, and case runs
@@ -865,7 +865,7 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
         }
 
     def walk_status_matrix_rows(self, root_matrix):
-        '''Walk status matrix row by row'''
+        """Walk status matrix row by row"""
         def sort_key(item):
             return item[0].pk
 
@@ -923,7 +923,7 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
 
 
 class TestingReportByPlanBuildData(TestingReportBaseData):
-    '''Data of testing report By Plan Build'''
+    """Data of testing report By Plan Build"""
 
     def _get_report_data(self, form, builds, builds_selected):
         plans_count = self.plans_count(form)
@@ -984,7 +984,7 @@ class TestingReportByPlanBuildData(TestingReportBaseData):
 
 
 class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
-    '''Detail data of testing report By Plan Build Detail'''
+    """Detail data of testing report By Plan Build Detail"""
 
     def _get_report_data(self, form, builds, builds_selected):
         plans_count = self.plans_count(form)
@@ -1059,7 +1059,7 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
 
 
 class TestingReportCaseRunsData(object):
-    '''Data of case runs from testing report
+    """Data of case runs from testing report
 
     Case runs will be search by following criteria,
 
@@ -1073,7 +1073,7 @@ class TestingReportCaseRunsData(object):
           no need to treat tester as a search criteria.
         - status, case run status
         - plan_tag
-    '''
+    """
 
     run_filter_criteria = {
         'r_product': ('run__build__product', do_nothing),
@@ -1085,7 +1085,7 @@ class TestingReportCaseRunsData(object):
     }
 
     def _get_filter_criteria(self, form):
-        '''Get filter criteria, only once during single request'''
+        """Get filter criteria, only once during single request"""
         filter_criteria = getattr(self, '__filter_criteria', None)
         if filter_criteria is None:
             filter_criteria = self.runs_filter_criteria(form)

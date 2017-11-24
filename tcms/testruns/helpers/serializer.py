@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 A serializer to import/export between model objects and file formats.
-'''
+"""
 
 import csv
 
@@ -9,13 +9,13 @@ from xml.sax.saxutils import escape
 
 
 def escape_entities(text):
-    '''Convert all XML entities
+    """Convert all XML entities
 
     @param text: a string containing entities possibly
     @type text: str
     @return: converted version of text
     @rtype: str
-    '''
+    """
     return escape(text, {'"': '&quot;'}) if text else text
 
 
@@ -24,9 +24,9 @@ def escape_entities(text):
 
 
 class TCR2File(object):
-    '''
+    """
     Write TestCaseRun queryset into CSV or XML.
-    '''
+    """
     ROOT = 'testcaseruns'
     HEADERS = ("Case Run ID", "Case ID",
                "Category", "Status", "Summary",
@@ -64,20 +64,14 @@ class TCR2File(object):
         return line
 
     def log_links(self, tcr):
-        '''
-        Wrap log links into a single cell by
-        joining log links.
-        '''
+        """Wrap log links into a single cell by joining log links"""
         return '\n'.join(
             (url.encode('utf-8')
              for url in tcr.links.values_list('url', flat=True))
         )
 
     def bug_ids(self, tcr):
-        '''
-        Wrap bugs into a single cell by
-        joining bug IDs.
-        '''
+        """Wrap bugs into a single cell by joining bug IDs"""
         bug_ids = tcr.case_run_bug.values_list('bug_id', flat=True)
         return ' '.join((str(pk) for pk in bug_ids.iterator()))
 

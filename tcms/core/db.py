@@ -11,15 +11,15 @@ __all__ = ('SQLExecution',
 
 
 def workaround_single_value_for_in_clause(build_ids):
-    '''Workaround for using MySQL-python 1.2.4
+    """Workaround for using MySQL-python 1.2.4
 
     This workaround is not necessary after upgrading MySQL-python to 1.2.5
-    '''
+    """
     return build_ids * 2 if len(build_ids) == 1 else build_ids
 
 
 class SQLExecution(object):
-    '''Cursor.execute proxy class
+    """Cursor.execute proxy class
 
     This proxy class provides two major abilities.
 
@@ -33,17 +33,17 @@ class SQLExecution(object):
     Compatibility: the second item above relies on cursor.rowcount attribute
     described in PEP-0249. Cannot guarantee all database backends supports this
     by following 249 specification. But, at least, MySQLdb and psycopg2 does.
-    '''
+    """
 
     def __init__(self, sql, params=None, with_field_name=True):
-        '''Initialize and execute SQL query
+        """Initialize and execute SQL query
 
         @param sql: the SQL query to execute
         @type sql: str
         @param params: optional, parameters for the SQL
             tuple
         @type sql: list or tuple
-        '''
+        """
         self.cursor = connection.reader_cursor
         if params is None:
             self.cursor.execute(sql)
@@ -88,7 +88,7 @@ class SQLExecution(object):
 
 
 class GroupByResult(object):
-    '''Group By result
+    """Group By result
 
     This object can be used as a normal dict object with less support of stock
     dictionary methods. Consumers can do
@@ -114,7 +114,7 @@ class GroupByResult(object):
     To get subtotal of A, `gbr.A`
 
     To get percentage of B, `gbr.B_percent`
-    '''
+    """
 
     def __init__(self, data=None, total_name=None):
         self._total_name = total_name
@@ -166,13 +166,13 @@ class GroupByResult(object):
         return len(self._data) == 0
 
     def _get_total(self):
-        '''Get the total value of this GROUP BY result
+        """Get the total value of this GROUP BY result
 
         Total value comes from two situations. One is that there is no total
         value computed in database side by issuing GROUP BY with ROLLUP. In
         this case, total value will be calculated from all subtotal values.
         Inversely, the total value will be returned directly.
-        '''
+        """
         if self.empty:
             return 0
 
@@ -195,13 +195,13 @@ class GroupByResult(object):
     total = property(_get_total)
 
     def _get_percent(self, key):
-        '''Percentage of a subtotal
+        """Percentage of a subtotal
 
         @param key: name of subtotal whose percentage will be calculated
         @type key: str
         @return: a float number representing the percentage
         @rtype: float
-        '''
+        """
         total = self._total_result
         subtotal = self[key]
         if total == 0:
@@ -217,7 +217,7 @@ class GroupByResult(object):
         return 0
 
     def leaf_values_count(self, value_in_row=False, refresh=False):
-        '''Calculate the total number of leaf values under this level
+        """Calculate the total number of leaf values under this level
 
         After the first time this method gets call, the result will be cached
         as meta data of this level node. So, any number of subsequent
@@ -232,7 +232,7 @@ class GroupByResult(object):
         @type refresh: bool
         @return: the total number of leaf values under this level
         @rtype: int
-        '''
+        """
         if refresh:
             necessary_to_count = True
         else:
@@ -259,7 +259,7 @@ def get_groupby_result(sql, params,
                        key_name=None, key_conv=None,
                        value_name=None,
                        with_rollup=False, rollup_name=None):
-    '''Get mapping between GROUP BY field and total count
+    """Get mapping between GROUP BY field and total count
 
     Example, to execute SQL `SELECT objtype, count(*) from t1 GROUP by name`.
 
@@ -293,7 +293,7 @@ def get_groupby_result(sql, params,
     @type rollup_name: str
     @return: mapping between GROUP BY field and the total count
     @rtype: dict
-    '''
+    """
     def _key_conv(value):
         if key_conv is not None:
             if not hasattr(key_conv, '__call__'):
