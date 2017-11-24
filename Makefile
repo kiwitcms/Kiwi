@@ -33,22 +33,12 @@ install:
 
 .PHONY: flake8
 flake8:
-	@flake8 tcms *.py
-
-
-ifeq ($(strip $(TEST_TARGET)),)
-	TEST_TARGET=
-else
-	TEST_TARGET=$(strip (TEST_TARGET))
-endif
-
-.PHONY: test
-test:
-	@pytest $(TEST_TARGET)
+	@tox -e flake8
 
 
 .PHONY: check
-check: flake8 test
+check:
+	@tox
 
 
 .PHONY: tags
@@ -75,7 +65,7 @@ help:
 	@echo '  srpm             - Create SRPM'
 	@echo '  tarball          - Create tarball. Run command: python setup.py sdist'
 	@echo '  flake8           - Check Python code style throughout whole source code tree'
-	@echo '  test             - Run all tests default. Set TEST_TARGET to run part tests of specific apps'
+	@echo '  test             - Run all tests default'
 	@echo '  build            - Run command: python setup.py build'
 	@echo '  install          - Run command: python setup.py install'
 	@echo '  tags             - Refresh tags for VIM. Default filename is .tags'
