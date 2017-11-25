@@ -44,15 +44,15 @@ check:
 .PHONY: tags
 tags:
 	@rm -f .tags
-	@ctags -R --languages=Python,CSS,Javascript --python-kinds=-im \
-		--exclude=build --exclude=tcms/static/js/lib -f .tags
+	@ctags -R --languages=Python,Javascript --python-kinds=-im \
+		--exclude=build --exclude=tcms/static/js/lib --exclude=dist --exclude=.tox -f .tags
 
 
 .PHONY: etags
 etags:
 	@rm -f TAGS
-	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-im \
-		--exclude=build --exclude=tcms/static/js/lib -f TAGS
+	@ctags -R -e --languages=Python,Javascript --python-kinds=-im \
+		--exclude=build --exclude=tcms/static/js/lib --exclude=dist --exclude=.tox -f TAGS
 
 
 .PHONY: help
