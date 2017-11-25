@@ -587,11 +587,12 @@ class CaseComponentForm(forms.Form):
     )
 
     def populate(self, product_id=None):
+        component_field = self.fields['o_component']
         if product_id:
-            self.fields['o_component'].queryset = Component.objects.filter(
-                product__id=product_id)
+            component_field.queryset = Component.objects.filter(
+                product__id=product_id).order_by('pk')
         else:
-            self.fields['o_component'].queryset = Component.objects.all()
+            component_field.queryset = Component.objects.order_by('pk')
 
 
 class CaseCategoryForm(forms.Form):

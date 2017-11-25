@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import threading
 
 from celery import shared_task
@@ -6,7 +7,7 @@ from celery import shared_task
 from django.conf import settings
 from django.core.mail import get_connection
 from django.core.mail import EmailMessage
-from django.template import loader, Context, RequestContext
+from django.template import loader
 
 
 @shared_task
@@ -23,9 +24,9 @@ def blocking_mailto(template_name, subject, to_mail, context=None,
     try:
         t = loader.get_template(template_name)
         if request:
-            mail_content = t.render(RequestContext(request, context))
+            mail_content = t.render(context=context, request=request)
         else:
-            mail_content = t.render(Context(context))
+            mail_content = t.render(context=context)
 
         connection = get_connection(username=None,
                                     password=None,
@@ -46,7 +47,7 @@ def non_blocking_mailto(template_name, subject, recipients=None,
                         context=None, sender=settings.EMAIL_FROM,
                         cc=None):
     t = loader.get_template(template_name)
-    body = t.render(Context(context))
+    body = t.render(context)
     if settings.DEBUG:
         recipients = settings.EMAILS_FOR_DEBUG
 
