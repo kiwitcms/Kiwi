@@ -104,7 +104,6 @@ NEVER_EXPIRE = datetime.timedelta(days=365)
 CACHE_NONE = 0
 CACHE_CHANGES = 1
 CACHE_OBJECTS = 2
-CACHE_PERSISTENT = 3
 
 # Maximum id value (used for idifying)
 _MAX_ID = 1000000000
@@ -389,7 +388,7 @@ class Caching(object):
 
     # Current caching level and the list of all levels
     _level = None
-    LEVELS = "CACHE_NONE CACHE_CHANGES CACHE_OBJECTS CACHE_PERSISTENT".split()
+    LEVELS = "CACHE_NONE CACHE_CHANGES CACHE_OBJECTS".split()
 
     # We need only a single config instance
     _instance = None
@@ -425,7 +424,7 @@ class Caching(object):
                 # Use default if no cache section or no config file
                 except AttributeError:
                     self._level = CACHE_OBJECTS
-        elif level >= CACHE_NONE and level <= CACHE_PERSISTENT:
+        elif level >= CACHE_NONE and level <= CACHE_OBJECTS:
             self._level = level
         else:
             raise TCMSError("Invalid cache level '{0}'".format(level))
@@ -448,7 +447,6 @@ def set_cache_level(level):
         CACHE=0 ... CACHE_NONE
         CACHE=1 ... CACHE_CHANGES
         CACHE=2 ... CACHE_OBJECTS
-        CACHE=3 ... CACHE_PERSISTENT
 
     See tcms_api.cache module documentation for detailed description
     of the caching mechanism.
