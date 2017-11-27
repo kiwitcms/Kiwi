@@ -110,15 +110,6 @@ class UtilsTests(unittest.TestCase):
 
 
 class BuildTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        """ Clear cache, save cache level and initialize test data """
-        self.requests = TCMS._requests
-        self.cache_level = get_cache_level()
-
-    def tearDown(self):
-        """ Restore cache level """
-        set_cache_level(self.cache_level)
-
     def test_fetch_by_id(self):
         """ Fetch by id """
         build = Build(self.build.id)
@@ -150,21 +141,26 @@ class BuildTests(BaseAPIClient_TestCase):
         set_cache_level(CACHE_NONE)
         build1 = Build(self.build.id)
         self.assertEqual(build1.name, self.build.name)
+
+        requests = TCMS._requests
         build2 = Build(self.build.id)
         self.assertEqual(build2.name, self.build.name)
         self.assertEqual(build1, build2)
-        self.assertEqual(TCMS._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, requests + 1)
 
     def test_cache_objects(self):
         """ Cache objects """
         set_cache_level(CACHE_OBJECTS)
+
         build1 = Build(self.build.id)
         self.assertEqual(build1.name, self.build.name)
+
+        requests = TCMS._requests
         build2 = Build(self.build.id)
         self.assertEqual(build2.name, self.build.name)
         self.assertEqual(build1, build2)
         self.assertEqual(id(build1), id(build2))
-        self.assertEqual(TCMS._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Category
@@ -172,16 +168,6 @@ class BuildTests(BaseAPIClient_TestCase):
 
 
 class CategoryTests(BaseAPIClient_TestCase):
-
-    def setUp(self):
-        """ Clear cache, save cache level and initialize test data """
-        self.cache_level = get_cache_level()
-        self.requests = TCMS._requests
-
-    def tierDown(self):
-        """ Restore cache level """
-        set_cache_level(self.cache_level)
-
     def test_fetch_by_id(self):
         """ Fetch by id """
         category = Category(self.category.id)
@@ -201,26 +187,30 @@ class CategoryTests(BaseAPIClient_TestCase):
     def test_cache_objects(self):
         """ Cache objects """
         set_cache_level(CACHE_OBJECTS)
+
         # The first round (fetch category data from server)
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(TCMS._requests, self.requests + 1)
+
         # The second round (there should be no more requests)
+        requests = TCMS._requests
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(TCMS._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, requests)
 
     def test_cache_none(self):
         """ Cache none """
         set_cache_level(CACHE_NONE)
+
         # The first round (fetch category data from server)
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(TCMS._requests, self.requests + 1)
+
         # The second round (there should be another request)
+        requests = TCMS._requests
         category = Category(self.category.id)
         self.assertEqual(category.name, self.category.name)
-        self.assertEqual(TCMS._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, requests + 1)
 
     def test_invalid_category(self):
         """ Invalid category should raise exception """
@@ -237,15 +227,6 @@ class CategoryTests(BaseAPIClient_TestCase):
 
 
 class PlanTypeTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        """ Clear cache, save cache level and initialize test data """
-        self.original_cache_level = get_cache_level()
-        self.requests = TCMS._requests
-
-    def tierDown(self):
-        """ Restore cache level """
-        set_cache_level(self.original_cache_level)
-
     def test_invalid_type(self):
         """ Invalid plan type should raise exception """
         def fun():
@@ -270,18 +251,22 @@ class PlanTypeTests(BaseAPIClient_TestCase):
     def test_cache_objects(self):
         """ Cache objects """
         set_cache_level(CACHE_OBJECTS)
+
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype1.name, six.string_types))
-        self.assertEqual(TCMS._requests, self.requests + 1)
+
         # The second round (there should be no more requests)
+        requests = TCMS._requests
         plantype2 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype2.name, six.string_types))
-        self.assertEqual(TCMS._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, requests)
+
         # The third round (fetching by plan type name)
         plantype3 = PlanType(self.plantype.name)
         self.assertTrue(isinstance(plantype3.id, int))
-        self.assertEqual(TCMS._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, requests)
+
         # All plan types should point to the same object
         self.assertEqual(id(plantype1), id(plantype2))
         self.assertEqual(id(plantype1), id(plantype3))
@@ -289,18 +274,22 @@ class PlanTypeTests(BaseAPIClient_TestCase):
     def test_cache_none(self):
         """ Cache none """
         set_cache_level(CACHE_NONE)
+
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype1.name, six.string_types))
-        self.assertEqual(TCMS._requests, self.requests + 1)
+
         # The second round (there should be another request)
+        requests = TCMS._requests
         plantype2 = PlanType(self.plantype.id)
         self.assertTrue(isinstance(plantype2.name, six.string_types))
-        self.assertEqual(TCMS._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, requests + 1)
+
         # The third round (fetching by plan type name)
         plantype3 = PlanType(self.plantype.name)
         self.assertTrue(isinstance(plantype3.id, int))
-        self.assertEqual(TCMS._requests, self.requests + 3)
+        self.assertEqual(TCMS._requests, requests + 2)
+
         # Plan types should be different objects in memory
         self.assertNotEqual(id(plantype1), id(plantype2))
         self.assertNotEqual(id(plantype1), id(plantype3))
@@ -330,24 +319,29 @@ class ProductTests(BaseAPIClient_TestCase):
         self.assertEqual(len(products), 1, "Single product returned")
         self.assertEqual(products[0].id, self.product.id)
 
-    def testProductCaching(self):
+    def test_cache_none(self):
         """ Test caching in Product class """
-        requests = TCMS._requests
-        # Turn off caching
         set_cache_level(CACHE_NONE)
+
         product = Product(self.product.id)
-        log.info(product.name)
+        self.assertEqual(product.name, self.product.name)
+
+        requests = TCMS._requests
         product = Product(self.product.id)
-        log.info(product.name)
-        self.assertEqual(TCMS._requests, requests + 2)
-        # Turn on caching
+        self.assertEqual(product.name, self.product.name)
+        self.assertEqual(TCMS._requests, requests + 1)
+
+    def test_cache_objects(self):
         Product._cache = {}
         set_cache_level(CACHE_OBJECTS)
+
         product = Product(self.product.id)
-        log.info(product.name)
+        self.assertEqual(product.name, self.product.name)
+        requests = TCMS._requests
+
         product = Product(self.product.id)
-        log.info(product.name)
-        self.assertEqual(TCMS._requests, requests + 3)
+        self.assertEqual(product.name, self.product.name)
+        self.assertEqual(TCMS._requests, requests)
 
     def testProductAdvancedCachingID(self):
         """ Advanced caching (init by ID) """
@@ -399,15 +393,6 @@ class ProductTests(BaseAPIClient_TestCase):
 
 
 class UserTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        """ Clear cache, save cache level and initialize test data """
-        self.original_cache_level = get_cache_level()
-        self.requests = TCMS._requests
-
-    def tierDown(self):
-        """ Restore cache level """
-        set_cache_level(self.original_cache_level)
-
     def test_no_name(self):
         """ User with no name set in preferences """
         user = User()
@@ -424,39 +409,59 @@ class UserTests(BaseAPIClient_TestCase):
     def test_cache_none(self):
         """ Cache none """
         set_cache_level(CACHE_NONE)
+        User._cache = {}
+
+        requests = TCMS._requests
         # Initialize the same user by id, login and email
         user1 = User(self.api_user.pk)
-        log.info(user1.name)
         user2 = User(self.api_user.username)
-        log.info(user2.name)
         user3 = User(self.api_user.email)
-        log.info(user3.name)
-        # Three requests to the server should be performed
-        self.assertEqual(TCMS._requests, self.requests + 3)
-        # User data should be the same
+        # User data should be the same.
+        # NOTE: _fetch is called when trying to access property that
+        # isn't initialized so we assert the requests numbers after
+        # this loop!!!
         for user in [user1, user2, user3]:
             self.assertEqual(user.id, self.api_user.pk)
             self.assertEqual(user.login, self.api_user.username)
             self.assertEqual(user.email, self.api_user.email)
+        # Three requests to the server should be performed
+        self.assertEqual(TCMS._requests, requests + 3)
+
         # Users should be different objects in memory
         self.assertNotEqual(id(user1), id(user2))
         self.assertNotEqual(id(user1), id(user3))
+        self.assertNotEqual(id(user2), id(user3))
 
     def test_cache_objects(self):
         """ Cache objects """
         set_cache_level(CACHE_OBJECTS)
+
         # Initialize the same user by id, login and email
         user1 = User(self.api_user.pk)
-        log.info(user1.name)
+        # does _fetch()
+        self.assertEqual(user1.id, self.api_user.pk)
+        self.assertEqual(user1.login, self.api_user.username)
+        self.assertEqual(user1.email, self.api_user.email)
+        requests = TCMS._requests
+
+        # use cached objects to initialize other instances
         user2 = User(self.api_user.username)
-        log.info(user2.name)
         user3 = User(self.api_user.email)
-        log.info(user3.name)
-        # Single request to the server should be performed
-        self.assertEqual(TCMS._requests, self.requests + 1)
+
+        # NOTE: _fetch is called when trying to access property that
+        # isn't initialized so we assert the requests numbers after
+        # this loop!!!
+        for user in [user1, user2, user3]:
+            self.assertEqual(user.id, self.api_user.pk)
+            self.assertEqual(user.login, self.api_user.username)
+            self.assertEqual(user.email, self.api_user.email)
+
+        # No other requests to the server should be performed
+        self.assertEqual(TCMS._requests, requests)
         # All users objects should be identical
         self.assertEqual(id(user1), id(user2))
         self.assertEqual(id(user1), id(user3))
+        self.assertEqual(id(user2), id(user3))
 
     def test_initialization_by_id(self):
         """ Initializate by id """
@@ -491,15 +496,6 @@ class UserTests(BaseAPIClient_TestCase):
 
 
 class VersionTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        """ Set up version from the config """
-        self.cache_level = get_cache_level()
-        self.requests = TCMS._requests
-
-    def tierDown(self):
-        """ Restore cache level """
-        set_cache_level(self.cache_level)
-
     def test_fetch_by_id(self):
         """ Fetch by id """
         version = Version(self.version.id)
@@ -519,22 +515,28 @@ class VersionTests(BaseAPIClient_TestCase):
     def test_cache_none(self):
         """ Cache none """
         set_cache_level(CACHE_NONE)
+
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
+
+        requests = TCMS._requests
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
-        # Fetches the version twice ---> 2 requests
-        self.assertEqual(TCMS._requests, self.requests + 2)
+        # Fetches the version twice
+        self.assertEqual(TCMS._requests, requests + 1)
 
     def test_cache_objects(self):
         """ Cache objects """
         set_cache_level(CACHE_OBJECTS)
+
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
+
+        requests = TCMS._requests
         version = Version(self.version.id)
         self.assertEqual(version.name, self.version.name)
-        # Should fetch version just once ---> 1 request
-        self.assertEqual(TCMS._requests, self.requests + 1)
+        # Should fetch version just once
+        self.assertEqual(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Component
@@ -568,15 +570,18 @@ class ComponentTests(BaseAPIClient_TestCase):
         Component._cache = {}
         # Enable cache, remember current number of requests
         set_cache_level(CACHE_OBJECTS)
-        requests = TCMS._requests
+
         # The first round (fetch component data from server)
+        requests = TCMS._requests
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
         self.assertEqual(TCMS._requests, requests + 1)
+
         # The second round (there should be no more requests)
+        requests = TCMS._requests
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
-        self.assertEqual(TCMS._requests, requests + 1)
+        self.assertEqual(TCMS._requests, requests)
 
     def testCachingOff(self):
         """ Component caching off """
@@ -584,18 +589,19 @@ class ComponentTests(BaseAPIClient_TestCase):
         Component._cache = {}
         # Enable cache, remember current number of requests
         set_cache_level(CACHE_NONE)
+
         requests = TCMS._requests
 
         # The first round (fetch component data from server)
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
         self.assertGreater(TCMS._requests, requests)
-        requests = TCMS._requests
 
         # delete component to cause re-fetch from the server
         del component
 
         # The second round (there should be another request)
+        requests = TCMS._requests
         component = Component(self.component.id)
         self.assertTrue(isinstance(component.name, six.string_types))
         self.assertGreater(TCMS._requests, requests)
@@ -607,6 +613,8 @@ class ComponentTests(BaseAPIClient_TestCase):
 
 class TagTests(BaseAPIClient_TestCase):
     def setUp(self):
+        # re-sets to CACHE_NONE
+        super(TagTests, self).setUp()
         self.tag = self.tags[0]
 
     def test_fetch_by_id(self):
@@ -621,16 +629,16 @@ class TagTests(BaseAPIClient_TestCase):
             self.assertTrue(isinstance(tag, Tag))
             self.assertEqual(tag.id, self.tag.id)
 
-    @unittest.skip('skip caching tests')
     def test_caching(self):
         """ Tag caching """
+        # start caching objects
+        set_cache_level(CACHE_OBJECTS)
+
         # First fetch
-        cache.clear()
         tag = Tag(self.tag.id)
         self.assertEqual(tag.name, self.tag.name)
-        # Object caching
-        if get_cache_level() < CACHE_OBJECTS:
-            return
+
+        # verify no request was made to the server
         requests = TCMS._requests
         tag = Tag(self.tag.id)
         self.assertEqual(tag.name, self.tag.name)
@@ -642,14 +650,6 @@ class TagTests(BaseAPIClient_TestCase):
 
 
 class TestPlanTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        self.requests = TCMS._requests
-        self.cache_level = get_cache_level()
-
-    def tierDown(self):
-        """ Restore cache level """
-        set_cache_level(self.cache_level)
-
     def test_create_invalid(self):
         """ Create a new test plan (missing required parameters) """
         self.assertRaises(TCMSError, TestPlan, name="Test plan")
@@ -705,21 +705,29 @@ class TestPlanTests(BaseAPIClient_TestCase):
         """ Cache none """
         # Fetch test plan twice ---> two requests
         set_cache_level(CACHE_NONE)
+
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
+        requests = TCMS._requests
+
+        # second time
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
-        self.assertEqual(TCMS._requests, self.requests + 2)
+        self.assertEqual(TCMS._requests, requests + 1)
 
     def test_cache_objects(self):
         """ Cache objects """
         # Fetch test plan twice --->  just one request
         set_cache_level(CACHE_OBJECTS)
+
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
+        requests = TCMS._requests
+
+        # second time
         testplan = TestPlan(self.master.id)
         self.assertEqual(testplan.name, self.master.name)
-        self.assertEqual(TCMS._requests, self.requests + 1)
+        self.assertEqual(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestRun
@@ -729,6 +737,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
 class TestRunTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up test plan from the config """
+        super(TestRunTests, self).setUp()
         self.testcase = self.cases[0]
         self.testrun = self.testruns[0]
 
@@ -787,25 +796,39 @@ class TestRunTests(BaseAPIClient_TestCase):
         self.assertTrue(testcase.id in
                         [caserun.testcase.id for caserun in testrun])
 
-    def testTestRunCaching(self):
+    def test_TestRun_cache_none(self):
         """ Test caching in TestRun class """
-        TestRun._cache = {}
-        requests = TCMS._requests
         # Turn off caching
         set_cache_level(CACHE_NONE)
-        testrun = TestRun(self.testrun.id)
-        log.info(testrun.summary)
-        testrun = TestRun(self.testrun.id)
-        log.info(testrun.summary)
-        self.assertEqual(TCMS._requests, requests + 2)
-        # Turn on caching
         TestRun._cache = {}
+        RunTags._cache = {}
+        requests = TCMS._requests
+
+        testrun1 = TestRun(self.testrun.id)
+        self.assertEqual(testrun1.summary, self.testrun.summary)
+
+        testrun2 = TestRun(self.testrun.id)
+        self.assertEqual(testrun2.summary, self.testrun.summary)
+
+        # finally assert there have been 2 more requests to the server
+        self.assertEqual(TCMS._requests, requests + 2)
+
+    def test_TestRun_cache_objects(self):
+        # Turn on caching
         set_cache_level(CACHE_OBJECTS)
-        testrun = TestRun(self.testrun.id)
-        log.info(testrun.summary)
-        testrun = TestRun(self.testrun.id)
-        log.info(testrun.summary)
-        self.assertEqual(TCMS._requests, requests + 3)
+        TestRun._cache = {}
+        RunTags._cache = {}
+
+        testrun1 = TestRun(self.testrun.id)
+        self.assertEqual(testrun1.summary, self.testrun.summary)
+        requests = TCMS._requests
+
+        # try to fetch from cache
+        testrun2 = TestRun(self.testrun.id)
+        self.assertEqual(testrun2.summary, self.testrun.summary)
+
+        # assert there have been no other requests to the server
+        self.assertEqual(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestCase
@@ -814,6 +837,7 @@ class TestRunTests(BaseAPIClient_TestCase):
 
 class TestCaseTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(TestCaseTests, self).setUp()
         self.testcase = self.cases[0]
 
     def testCreateInvalid(self):
@@ -929,19 +953,30 @@ class TestCaseTests(BaseAPIClient_TestCase):
         requests = TCMS._requests
         # Turn off caching
         set_cache_level(CACHE_NONE)
-        testcase = TestCase(self.testcase.id)
-        log.info(testcase.summary)
-        testcase = TestCase(self.testcase.id)
-        log.info(testcase.summary)
+
+        testcase1 = TestCase(self.testcase.id)
+        testcase2 = TestCase(self.testcase.id)
+        # fetch 2 cases
+        self.assertEqual(testcase1.summary, self.testcase.summary)
+        self.assertEqual(testcase2.summary, self.testcase.summary)
+
+        # assert there have been 2 more requests
         self.assertEqual(TCMS._requests, requests + 2)
+
         # Turn on caching
         TestCase._cache = {}
         set_cache_level(CACHE_OBJECTS)
-        testcase = TestCase(self.testcase.id)
-        log.info(testcase.summary)
-        testcase = TestCase(self.testcase.id)
-        log.info(testcase.summary)
-        self.assertEqual(TCMS._requests, requests + 3)
+        requests = TCMS._requests
+
+        testcase1 = TestCase(self.testcase.id)
+        testcase2 = TestCase(self.testcase.id)
+
+        # fetch 2 cases
+        self.assertEqual(testcase1.summary, self.testcase.summary)
+        self.assertEqual(testcase2.summary, self.testcase.summary)
+
+        # assert only 1 request was made to the server
+        self.assertEqual(TCMS._requests, requests + 1)
 
     def test_performance_testcases_and_testers(self):
         """ Checking test cases and their default testers
@@ -1017,9 +1052,11 @@ class CaseRunsTests(BaseAPIClient_TestCase):
 
 class CasePlanTests(BaseAPIClient_TestCase):
     def setUp(self):
+        # reset to CACHE_NONE
+        super(CasePlanTests, self).setUp()
         self.testcase = self.cases[0]
 
-    def test_sortkey_update(self):
+    def test_sortkey_update_cache_none(self):
         """ Sort key update """
         testcase = self.testcase.id
         testplan = self.testcase.testplans[0].id
@@ -1029,9 +1066,20 @@ class CasePlanTests(BaseAPIClient_TestCase):
             caseplan.sortkey = sortkey
             caseplan.update()
             self.assertEqual(caseplan.sortkey, sortkey)
-            # Check the cache content
-            if get_cache_level() < CACHE_OBJECTS:
-                continue
+
+    def test_sortkey_update_cache_objects(self):
+        """ Sort key update """
+        set_cache_level(CACHE_OBJECTS)
+
+        testcase = self.testcase.id
+        testplan = self.testcase.testplans[0].id
+        for sortkey in [100, 200, 300]:
+            # Update the sortkey
+            caseplan = CasePlan(testcase=testcase, testplan=testplan)
+            caseplan.sortkey = sortkey
+            caseplan.update()
+            self.assertEqual(caseplan.sortkey, sortkey)
+
             requests = TCMS._requests
             caseplan = CasePlan(testcase=testcase, testplan=testplan)
             self.assertEqual(caseplan.sortkey, sortkey)
@@ -1044,6 +1092,7 @@ class CasePlanTests(BaseAPIClient_TestCase):
 
 class CaseComponentsTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(CaseComponentsTests, self).setUp()
         self.testcase = self.cases[0]
 
     def test1(self):
@@ -1062,9 +1111,7 @@ class CaseComponentsTests(BaseAPIClient_TestCase):
         component = Component(self.component.id)
         testcase.components.add(component)
         testcase.update()
-        # Check cache content
-        testcase = TestCase(self.testcase.id)
-        self.assertTrue(component in testcase.components)
+
         # Check server content
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component in testcase.components)
@@ -1113,6 +1160,7 @@ class PlanComponentsTests(BaseAPIClient_TestCase):
 class CaseBugsTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up test case from the config """
+        super(CaseBugsTests, self).setUp()
         self.testcase = self.cases[0]
         self.bug = Bug(bug=1234)
 
@@ -1154,6 +1202,7 @@ class CaseBugsTests(BaseAPIClient_TestCase):
 class CaseRunBugsTests(BaseAPIClient_TestCase):
     def setUp(self):
         """ Set up test case from the config """
+        super(CaseRunBugsTests, self).setUp()
         self.bug = Bug(bug=1234)
 
     def test_bugging1(self):
@@ -1230,6 +1279,7 @@ class PlanTagsTests(BaseAPIClient_TestCase):
 
 class RunTagsTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(RunTagsTests, self).setUp()
         self.testrun = self.testruns[0]
 
     def testTagging1(self):
@@ -1269,6 +1319,7 @@ class RunTagsTests(BaseAPIClient_TestCase):
 
 class CaseTagsTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(CaseTagsTests, self).setUp()
         self.testcase = self.cases[0]
         self.tag = self.tags[0]
 
@@ -1373,6 +1424,7 @@ class ChildPlansTests(BaseAPIClient_TestCase):
 
 class PlanRunsTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(PlanRunsTests, self).setUp()
         self.testrun = self.testruns[0]
 
     def test_inclusion(self):
@@ -1394,9 +1446,10 @@ class PlanRunsTests(BaseAPIClient_TestCase):
 
 class PlanCasePlansTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(PlanCasePlansTests, self).setUp()
         self.testcase = self.cases[0]
 
-    def test_sortkey_update(self):
+    def test_sortkey_update_cache_none(self):
         """ Get/set sortkey using the TestPlan.sortkey() method """
         testcase = TestCase(self.testcase.id)
         testplan = TestPlan(self.master.id)
@@ -1408,9 +1461,24 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
             testplan.sortkey(testcase, sortkey)
             testplan.update()
             self.assertEqual(testplan.sortkey(testcase), sortkey)
+
+    @unittest.skip('skip updates with cache tuned on')
+    def test_sortkey_update_cache_objects(self):
+        """ Get/set sortkey using the TestPlan.sortkey() method """
+        set_cache_level(CACHE_OBJECTS)
+
+        testcase = TestCase(self.testcase.id)
+        testplan = TestPlan(self.master.id)
+        for sortkey in [100, 200, 300]:
+            # Compare current sortkey value
+            caseplan = CasePlan(testcase=testcase, testplan=testplan)
+            self.assertEqual(testplan.sortkey(testcase), caseplan.sortkey)
+            # Update the sortkey
+            testplan.sortkey(testcase, sortkey)
+            testplan.update()
+            self.assertEqual(testplan.sortkey(testcase), sortkey)
+
             # Check the cache content
-            if get_cache_level() < CACHE_OBJECTS:
-                continue
             requests = TCMS._requests
             testplan = TestPlan(self.master.id)
             self.assertEqual(testplan.sortkey(testcase), sortkey)
@@ -1423,6 +1491,7 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
 
 class RunCasesTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(RunCasesTests, self).setUp()
         self.testrun = self.testruns[0]
         self.testcase = self.cases[0]
 
@@ -1433,11 +1502,6 @@ class RunCasesTests(BaseAPIClient_TestCase):
         self.assertTrue(testcase in testrun.testcases)
         self.assertTrue(testcase in
                         [caserun.testcase for caserun in testrun.caseruns])
-
-    @unittest.skip('skip caching tests')
-    def test_cache(self):
-        # see commented out section above and below
-        pass
 
     def test_add_remove(self):
         """ Add and remove test case """
@@ -1451,9 +1515,6 @@ class RunCasesTests(BaseAPIClient_TestCase):
         self.assertTrue(testcase not in testrun.testcases)
         self.assertTrue(testcase not in
                         [caserun.testcase for caserun in testrun.caseruns])
-        # Now make sure the same data reached the server as well
-        # if get_cache_level() >= CACHE_OBJECTS:
-        #    cache.clear([RunCases, RunCaseRuns])
         testrun = TestRun(testrun.id)
         self.assertTrue(testcase not in testrun.testcases)
         self.assertTrue(testcase not in
@@ -1464,9 +1525,6 @@ class RunCasesTests(BaseAPIClient_TestCase):
         self.assertTrue(testcase in testrun.testcases)
         self.assertTrue(testcase in
                         [caserun.testcase for caserun in testrun.caseruns])
-        # Again make sure the same data reached the server as well
-        # if get_cache_level() >= CACHE_OBJECTS:
-        #    cache.clear([RunCases, RunCaseRuns])
         testrun = TestRun(testrun.id)
         self.assertTrue(testcase in testrun.testcases)
         self.assertTrue(testcase in
@@ -1479,6 +1537,7 @@ class RunCasesTests(BaseAPIClient_TestCase):
 
 class RunCaseRunsTests(BaseAPIClient_TestCase):
     def setUp(self):
+        super(RunCaseRunsTests, self).setUp()
         self.testrun = self.testruns[0]
 
     def test_present(self):
@@ -1487,18 +1546,17 @@ class RunCaseRunsTests(BaseAPIClient_TestCase):
         testrun = TestRun(self.caserun.run_id)
         self.assertTrue(caserun in testrun)
 
-    @unittest.skip('skip caching tests')
-    def test_cases_fetched_just_once(self):
+    def test_cases_fetched_just_once_when_cached(self):
         """ Test cases are fetched just once """
         # This test is relevant when caching is turned on
-        if get_cache_level() < CACHE_OBJECTS:
-            return
-        cache.clear()
+        set_cache_level(CACHE_OBJECTS)
+
         testplan = TestPlan(self.master.id)
         testrun = TestRun(self.testrun.id)
         # Make sure plan, run and cases are fetched
         "{0}{1}{2}".format(testplan, testrun, listed(
             [testcase for testcase in testplan]))
+
         # Now fetching case runs should be a single query to the
         # server because all test cases have already been fetched
         requests = TCMS._requests
