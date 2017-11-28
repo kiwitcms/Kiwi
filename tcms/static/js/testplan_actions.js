@@ -1147,7 +1147,6 @@ function unlinkCasesFromPlan(container, form, table) {
   }
 
   var parameters = serialzeCaseForm(form, table, true);
-  parameters.a = 'delete_cases';
   if (selection.selectAll) {
     parameters.selectAll = selection.selectAll;
   }
@@ -1168,7 +1167,7 @@ function unlinkCasesFromPlan(container, form, table) {
     window.alert(returnobj.response);
   };
 
-  var url = new String('cases/');
+  var url = 'delete-cases/';
   jQ.ajax({
     'url': url,
     'type': 'POST',
@@ -2092,7 +2091,7 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
         window.location.href = params[0] + '?from_plan=' + params[1];
       });
       jQ('#js' + type + 'add-case-to-plan').bind('click', function() {
-        window.location.href = jQ(this).data('param') + '?a=link_cases';
+        window.location.href = jQ(this).data('param');
       });
       jQ('#js' + type + 'export-case').bind('click', function() {
         exportCase(jQ(this).data('param'), navForm, casesTable);
@@ -2212,9 +2211,7 @@ function resortCasesDragAndDrop(container, button, form, table, parameters, call
       this.disabled = false;
     });
 
-    parameters.a = 'order_cases';
-    parameters.case_sort_by = 'sortkey';
-    var url = 'cases/';
+    var url = 'reorder-cases/';
 
     jQ.ajax({
       'url': url,
