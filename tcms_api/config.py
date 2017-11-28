@@ -102,8 +102,7 @@ COLOR_AUTO = 2
 NEVER_CACHE = datetime.timedelta(seconds=0)
 NEVER_EXPIRE = datetime.timedelta(days=365)
 CACHE_NONE = 0
-CACHE_CHANGES = 1
-CACHE_OBJECTS = 2
+CACHE_OBJECTS = 1
 
 # Maximum id value (used for idifying)
 _MAX_ID = 1000000000
@@ -388,7 +387,7 @@ class Caching(object):
 
     # Current caching level and the list of all levels
     _level = None
-    LEVELS = "CACHE_NONE CACHE_CHANGES CACHE_OBJECTS".split()
+    LEVELS = "CACHE_NONE CACHE_OBJECTS".split()
 
     # We need only a single config instance
     _instance = None
@@ -445,7 +444,6 @@ def set_cache_level(level):
     levels available.
 
         CACHE=0 ... CACHE_NONE
-        CACHE=1 ... CACHE_CHANGES
         CACHE=2 ... CACHE_OBJECTS
 
     See tcms_api.cache module documentation for detailed description
