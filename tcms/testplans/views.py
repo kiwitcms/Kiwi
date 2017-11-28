@@ -7,20 +7,22 @@ import six
 from six.moves import urllib
 from json import dumps as json_dumps
 
+from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
+from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.core import serializers
 from django.db.models import Count
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import get_template
-from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_http_methods
+from django.views.generic import View
 from uuslug import slugify
 
 from tcms.core.db import SQLExecution
@@ -438,7 +440,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
         'module': MODULE_NAME,
         'sub_module': SUB_MODULE_NAME,
         'test_plan': tp,
-        'xml_form': ImportCasesViaXMLForm(initial={'a': 'import_cases'}),
+        'xml_form': ImportCasesViaXMLForm(),
     }
     return render(request, template_name, context=context_data)
 
@@ -791,202 +793,198 @@ def text_history(request, plan_id, template_name='plan/history.html'):
     return render(request, template_name, context=context_data)
 
 
-@require_http_methods(['GET', 'POST'])
-def cases(request, plan_id):
-    """Process the xml with import"""
+class ReorderCasesView(View):
+    """Reorder cases"""
 
-    ajax_response = {'rc': 0, 'response': 'ok'}
-    tp = get_object_or_404(TestPlan, plan_id=plan_id)
+    http_method_names = ['post']
 
-    class CaseActions(object):
-        def __init__(self, request, tp):
-            self.__all__ = ['link_cases', 'delete_cases', 'order_cases', 'import_cases']
-            self.request = request
-            self.tp = tp
+    def post(self, request, plan_id):
+        # Current we should rewrite all of cases belong to the plan.
+        # Because the cases sortkey in database is chaos,
+        # Most of them are None.
 
-        def link_cases(self, template_name='plan/search_case.html'):
-            """Handle to form to add case to plans"""
-            SUB_MODULE_NAME = 'plans'
-            tcs = None
+        if 'case' not in request.POST:
+            return JsonResponse({
+                'rc': 1,
+                'response': 'At least one case is required to re-order.'
+            })
 
-            if request.POST.get('action') == 'add_to_plan':
-                if request.user.has_perm('testcases.add_testcaseplan'):
-                    tcs = TestCase.objects.filter(case_id__in=request.POST.getlist('case'))
-                    for tc in tcs:
-                        tp.add_case(tc)
-                else:
-                    return HttpResponse("Permission Denied")
+        plan = get_object_or_404(TestPlan, pk=int(plan_id))
 
-                return HttpResponseRedirect(
-                    reverse('plan-get', args=[plan_id]))
+        case_ids = [int(id) for id in request.POST.getlist('case')]
+        cases = TestCase.objects.filter(pk__in=case_ids).only('pk')
 
-            search_mode = request.POST.get('search_mode')
-            if request.POST.get('action') == 'search':
+        for case in cases:
+            new_sort_key = (case_ids.index(case.pk) + 1) * 10
+            TestCasePlan.objects.filter(
+                plan=plan, case=case).update(sortkey=new_sort_key)
 
-                if search_mode == 'quick':
-                    form = quick_form = QuickSearchCaseForm(request.POST)
-                    normal_form = SearchCaseForm()
-                else:
-                    form = normal_form = SearchCaseForm(request.POST)
-                    form.populate(product_id=request.POST.get('product'))
-                    quick_form = QuickSearchCaseForm()
+        return JsonResponse({'rc': 0, 'response': 'ok'})
 
-                if form.is_valid():
-                    tcs = TestCase.list(form.cleaned_data)
-                    tcs = tcs.select_related(
-                        'author', 'default_tester', 'case_status', 'priority').only(
-                            'pk', 'summary', 'create_date', 'author__email',
-                            'default_tester__email', 'case_status__name', 'priority__value')
-                    tcs = tcs.exclude(case_id__in=tp.case.values_list('case_id', flat=True))
-            else:
-                normal_form = SearchCaseForm(initial={
-                    'product': tp.product_id,
-                    'product_version': tp.product_version_id,
-                    'case_status_id': TestCaseStatus.get_CONFIRMED()
-                })
-                quick_form = QuickSearchCaseForm()
 
-            context_data = {
-                'module': MODULE_NAME,
-                'sub_module': SUB_MODULE_NAME,
-                'test_plan': tp,
-                'test_cases': tcs,
-                'search_form': normal_form,
-                'quick_form': quick_form,
-                'search_mode': search_mode
-            }
-            return render(request, template_name, context=context_data)
+class LinkCasesView(View):
+    """Link cases to plan"""
 
-        def delete_cases(self):
-            if not request.POST.get('case'):
-                ajax_response['rc'] = 1
-                ajax_response['response'] = 'At least one case is required to delete.'
-                return JsonResponse(ajax_response)
+    @method_decorator(permission_required('testcases.add_testcaseplan'))
+    def post(self, request, plan_id):
+        plan = get_object_or_404(TestPlan.objects.only('pk'), pk=int(plan_id))
+        case_ids = [int(id) for id in request.POST.getlist('case')]
+        cases = TestCase.objects.filter(case_id__in=case_ids).only('pk')
+        for case in cases:
+            plan.add_case(case)
+        return HttpResponseRedirect(reverse('plan-get', args=[plan_id]))
 
-            tcs = get_selected_testcases(request)
 
-            # Log Action
-            tp_log = TCMSLog(model=tp)
-            for tc in tcs:
-                tp_log.make(who=request.user,
-                            action='Remove case %s from plan %s' % (tc.case_id, tp.plan_id))
-                tc.log_action(who=request.user, action='Remove from plan %s' % tp.plan_id)
-                tp.delete_case(case=tc)
+class LinkCasesSearchView(View):
+    """Search cases for linking to plan"""
 
-            return JsonResponse(ajax_response)
+    template_name = 'plan/search_case.html'
+    SUB_MODULE_NAME = 'plans'
 
-        def order_cases(self):
-            """Resort case with new order"""
-            # Current we should rewrite all of cases belong to the plan.
-            # Because the cases sortkey in database is chaos,
-            # Most of them are None.
+    def get(self, request, plan_id):
+        plan = get_object_or_404(TestPlan, pk=int(plan_id))
 
-            if not request.POST.get('case'):
-                ajax_response['rc'] = 1
-                ajax_response['response'] = 'At least one case is required to re-order.'
-                return JsonResponse(ajax_response)
+        normal_form = SearchCaseForm(initial={
+            'product': plan.product_id,
+            'product_version': plan.product_version_id,
+            'case_status_id': TestCaseStatus.get_CONFIRMED()
+        })
+        quick_form = QuickSearchCaseForm()
+        return render(self.request, self.template_name, {
+            'module': MODULE_NAME,
+            'sub_module': self.SUB_MODULE_NAME,
+            'search_form': normal_form,
+            'quick_form': quick_form,
+            'test_plan': plan,
+        })
 
-            tc_pks = request.POST.getlist('case')
-            tcs = TestCase.objects.filter(pk__in=tc_pks)
+    def post(self, request, plan_id):
+        plan = get_object_or_404(TestPlan, pk=int(plan_id))
 
-            for tc in tcs:
-                new_sort_key = (tc_pks.index(str(tc.pk)) + 1) * 10
-                TestCasePlan.objects.filter(plan=tp, case=tc).update(sortkey=new_sort_key)
+        search_mode = request.POST.get('search_mode')
+        if search_mode == 'quick':
+            form = quick_form = QuickSearchCaseForm(request.POST)
+            normal_form = SearchCaseForm()
+        else:
+            form = normal_form = SearchCaseForm(request.POST)
+            form.populate(product_id=request.POST.get('product'))
+            quick_form = QuickSearchCaseForm()
 
-            return JsonResponse(ajax_response)
+        if form.is_valid():
+            cases = TestCase.list(form.cleaned_data)
+            cases = cases.select_related(
+                'author', 'default_tester', 'case_status', 'priority'
+            ).only(
+                'pk', 'summary', 'create_date', 'author__email',
+                'default_tester__email', 'case_status__name',
+                'priority__value'
+            ).exclude(
+                case_id__in=plan.case.values_list('case_id', flat=True))
 
-        def import_cases(self):
-            if request.method == 'POST':
-                # Process import case from XML action
-                if not request.user.has_perm('testcases.add_testcaseplan'):
-                    return HttpResponse(Prompt.render(
-                        request=request,
-                        info_type=Prompt.Alert,
-                        info='Permission denied',
-                        next=reverse('plan-get', args=[plan_id]),
-                    ))
+        context = {
+            'module': MODULE_NAME,
+            'sub_module': self.SUB_MODULE_NAME,
+            'test_plan': plan,
+            'test_cases': cases,
+            'search_form': normal_form,
+            'quick_form': quick_form,
+            'search_mode': search_mode
+        }
+        return render(request, self.template_name, context=context)
 
-                xml_form = ImportCasesViaXMLForm(request.POST, request.FILES)
 
-                if xml_form.is_valid():
-                    i = 0
-                    for case in xml_form.cleaned_data['xml_file']:
-                        i += 1
+class ImportCasesView(View):
+    """Import cases to a plan"""
 
-                        # Get the case category from the case and related to
-                        # the product of the plan
-                        try:
-                            category = TestCaseCategory.objects.get(product=tp.product,
-                                                                    name=case['category_name'])
-                        except TestCaseCategory.DoesNotExist:
-                            category = TestCaseCategory.objects.create(product=tp.product,
-                                                                       name=case['category_name'])
+    @method_decorator(permission_required('testcases.add_testcaseplan'))
+    def post(self, request, plan_id):
+        plan = get_object_or_404(TestPlan.objects.only('pk'), pk=int(plan_id))
 
-                        # Start to create the objects
-                        tc = TestCase.objects.create(
-                            is_automated=case['is_automated'],
-                            script='',
-                            arguments='',
-                            summary=case['summary'],
-                            requirement='',
-                            alias='',
-                            estimated_time=0,
-                            case_status_id=case['case_status_id'],
-                            category_id=category.id,
-                            priority_id=case['priority_id'],
-                            author_id=case['author_id'],
-                            default_tester_id=case['default_tester_id'],
-                            notes=case['notes'],
-                        )
-                        TestCasePlan.objects.create(plan=tp, case=tc, sortkey=i * 10)
+        # Process import case from XML action
+        xml_form = ImportCasesViaXMLForm(request.POST, request.FILES)
 
-                        tc.add_text(case_text_version=1,
-                                    author=case['author'],
-                                    action=case['action'],
-                                    effect=case['effect'],
-                                    setup=case['setup'],
-                                    breakdown=case['breakdown'])
+        if xml_form.is_valid():
+            i = 0
+            for case in xml_form.cleaned_data['xml_file']:
+                i += 1
 
-                        # handle tags
-                        if case['tags']:
-                            for tag in case['tags']:
-                                tc.add_tag(tag=tag)
+                # Get the case category from the case and related to
+                # the product of the plan
+                try:
+                    category = TestCaseCategory.objects.get(
+                        product=plan.product, name=case['category_name'])
+                except TestCaseCategory.DoesNotExist:
+                    category = TestCaseCategory.objects.create(
+                        product=plan.product, name=case['category_name'])
 
-                        tc.add_to_plan(plan=tp)
+                # Start to create the objects
+                tc = TestCase.objects.create(
+                    is_automated=case['is_automated'],
+                    script='',
+                    arguments='',
+                    summary=case['summary'],
+                    requirement='',
+                    alias='',
+                    estimated_time=0,
+                    case_status_id=case['case_status_id'],
+                    category_id=category.id,
+                    priority_id=case['priority_id'],
+                    author_id=case['author_id'],
+                    default_tester_id=case['default_tester_id'],
+                    notes=case['notes'],
+                )
+                TestCasePlan.objects.create(plan=plan, case=tc, sortkey=i * 10)
 
-                    return HttpResponseRedirect(
-                        reverse('plan-get', args=[plan_id]) + '#testcases')
-                else:
-                    return HttpResponse(Prompt.render(
-                        request=request,
-                        info_type=Prompt.Alert,
-                        info=xml_form.errors,
-                        next=reverse('plan-get', args=[plan_id]) + '#testcases'
-                    ))
-            else:
-                return HttpResponseRedirect(
-                    reverse('plan-get', args=[plan_id]) + '#testcases')
+                tc.add_text(case_text_version=1,
+                            author=case['author'],
+                            action=case['action'],
+                            effect=case['effect'],
+                            setup=case['setup'],
+                            breakdown=case['breakdown'])
 
-    # tp = get_object_or_404(TestPlan, plan_id=plan_id)
-    cas = CaseActions(request, tp)
-    req_data = request.GET or request.POST
-    action = req_data.get('a')
+                # handle tags
+                if case['tags']:
+                    for tag in case['tags']:
+                        tc.add_tag(tag=tag)
 
-    if action not in cas.__all__:
-        if request.GET.get('format') == 'json':
-            ajax_response['rc'] = 1
-            ajax_response['response'] = 'Unrecognizable actions'
-            return HttpResponse(json_dumps(ajax_response))
+                tc.add_to_plan(plan=plan)
 
-        return HttpResponse(Prompt.render(
-            request=request,
-            info_type=Prompt.Alert,
-            info='Unrecognizable actions',
-            next=reverse('plan-get', args=[plan_id]),
-        ))
+            return HttpResponseRedirect(
+                reverse('plan-get', args=[plan_id]) + '#testcases')
+        else:
+            return HttpResponse(Prompt.render(
+                request=request,
+                info_type=Prompt.Alert,
+                info=xml_form.errors,
+                next=reverse('plan-get', args=[plan_id]) + '#testcases'
+            ))
 
-    func = getattr(cas, action)
-    return func()
+
+class DeleteCasesView(View):
+    """Delete selected cases from plan"""
+
+    def post(self, request, plan_id):
+        plan = get_object_or_404(TestPlan.objects.only('pk'), pk=int(plan_id))
+
+        if 'case' not in request.POST:
+            return JsonResponse({
+                'rc': 1,
+                'response': 'At least one case is required to delete.'
+            })
+
+        cases = get_selected_testcases(request).only('pk')
+
+        # Log Action
+        plan_log = TCMSLog(model=plan)
+        for case in cases:
+            plan_log.make(
+                who=request.user,
+                action='Remove case {} from plan {}'.format(case.pk, plan.pk))
+            case.log_action(who=request.user,
+                            action='Remove from plan {}'.format(plan.pk))
+            plan.delete_case(case=case)
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 @require_GET

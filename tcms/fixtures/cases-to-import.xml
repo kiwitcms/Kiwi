@@ -4,101 +4,101 @@
         <!ENTITY testopia_gt ">">
         ]>
 <testopia version="1.1">
-    
+
     <testcase author="admin@example.com"
               priority="P1"
               automated="0"
               status="CONFIRMED">
         <summary>Remove this case from a test plan</summary>
         <categoryname>--default--</categoryname>
-        
+
         <defaulttester></defaulttester>
         <notes></notes>
         <action></action>
         <expectedresults></expectedresults>
         <setup></setup>
         <breakdown></breakdown>
-        
+
     </testcase>
-    
+
     <testcase author="admin@example.com"
               priority="P1"
               automated="0"
               status="CONFIRMED">
         <summary>Remove this another case from a test plan</summary>
         <categoryname>--default--</categoryname>
-        
+
         <defaulttester></defaulttester>
         <notes></notes>
         <action></action>
         <expectedresults></expectedresults>
         <setup></setup>
         <breakdown></breakdown>
-        
+
     </testcase>
-    
+
     <testcase author="admin@example.com"
               priority="P1"
               automated="0"
               status="CONFIRMED">
         <summary>Test link cases to a test plan</summary>
         <categoryname>--default--</categoryname>
-        
+
         <defaulttester></defaulttester>
         <notes></notes>
         <action></action>
         <expectedresults></expectedresults>
         <setup></setup>
         <breakdown></breakdown>
-        
+
     </testcase>
-    
+
     <testcase author="admin@example.com"
               priority="P1"
               automated="0"
               status="CONFIRMED">
         <summary>Test delete (unlink) cases from a test plan</summary>
         <categoryname>--default--</categoryname>
-        
+
         <defaulttester></defaulttester>
         <notes></notes>
         <action></action>
         <expectedresults></expectedresults>
         <setup></setup>
         <breakdown></breakdown>
-        
+
     </testcase>
-    
+
     <testcase author="admin@example.com"
               priority="P1"
               automated="0"
               status="CONFIRMED">
         <summary>Remove this case from a test plan</summary>
         <categoryname>--default--</categoryname>
-        
+
         <defaulttester></defaulttester>
         <notes></notes>
         <action></action>
         <expectedresults></expectedresults>
         <setup></setup>
         <breakdown></breakdown>
-        
+
     </testcase>
-    
+
     <testcase author="admin@example.com"
               priority="P1"
               automated="0"
               status="CONFIRMED">
         <summary>Remove this another case from a test plan</summary>
         <categoryname>--default--</categoryname>
-        
+
         <defaulttester></defaulttester>
         <notes></notes>
         <action></action>
         <expectedresults></expectedresults>
         <setup></setup>
         <breakdown></breakdown>
-        
+
     </testcase>
-    
+
 </testopia>

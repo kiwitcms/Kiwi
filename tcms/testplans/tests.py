@@ -85,22 +85,6 @@ class PlanTests(test.TestCase):
         response = self.c.get(location, follow=True)
         self.assertEquals(response.status_code, http_client.OK)
 
-    def test_plan_cases(self):
-        location = reverse('plan-cases', args=[self.plan_id])
-        response = self.c.get(location)
-        self.assertEquals(response.status_code, http_client.OK)
-
-    def test_plan_importcase(self):
-        location = reverse('plan-cases', args=[self.plan_id])
-        filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
-        with open(filename, 'r') as fin:
-            response = self.c.post(location, {'a': 'import_cases', 'xml_file': fin}, follow=True)
-        self.assertEquals(response.status_code, http_client.OK)
-
-        summary = 'Remove this case from a test plan'
-        has_case = TestCase.objects.filter(summary=summary).exists()
-        self.assertTrue(has_case)
-
     def test_plan_delete(self):
         tp_pk = self.test_plan.pk
 
@@ -175,20 +159,36 @@ class TestPlanModel(test.TestCase):
 # ### Test cases for view methods ### #
 
 
-class TestUnknownActionOnCases(BasePlanCase):
-    """Test case for unknown action on a plan's cases"""
+class TestImportCasesToPlan(BasePlanCase):
+    """Test import cases to a plan"""
 
-    def setUp(self):
-        self.cases_url = reverse('plan-cases', args=[self.plan.pk])
+    @classmethod
+    def setUpTestData(cls):
+        super(TestImportCasesToPlan, cls).setUpTestData()
 
-    def test_ajax_request(self):
-        response = self.client.get(self.cases_url, {'a': 'unknown action', 'format': 'json'})
-        data = json_loads(response.content)
-        self.assertEqual('Unrecognizable actions', data['response'])
+        cls.plan_tester = User.objects.create_user(
+            username='plan_tester',
+            email='admin@example.com',
+            password='password')
 
-    def test_request_from_webui(self):
-        response = self.client.get(self.cases_url, {'a': 'unknown action'})
-        self.assertContains(response, 'Unrecognizable actions')
+        user_should_have_perm(cls.plan_tester, 'testcases.add_testcaseplan')
+
+    def test_import_cases(self):
+        self.client.login(username=self.plan_tester.username,
+                          password='password')
+
+        location = reverse('plan-import-cases', args=[self.plan.pk])
+        filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
+        with open(filename, 'r') as fin:
+            response = self.client.post(location, {'xml_file': fin})
+        self.assertRedirects(
+            response,
+            reverse('plan-get', args=[self.plan.pk]) + '#testcases',
+            target_status_code=301)
+
+        summary = 'Remove this case from a test plan'
+        has_case = TestCase.objects.filter(summary=summary).exists()
+        self.assertTrue(has_case)
 
 
 class TestDeleteCasesFromPlan(BasePlanCase):
@@ -201,26 +201,30 @@ class TestDeleteCasesFromPlan(BasePlanCase):
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
-        cls.cases_url = reverse('plan-cases', args=[cls.plan.pk])
+        cls.cases_url = reverse('plan-delete-cases', args=[cls.plan.pk])
 
     def test_missing_cases_ids(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(username=self.plan_tester.username,
+                          password='password')
 
-        response = self.client.post(self.cases_url, {'a': 'delete_cases'})
+        response = self.client.post(self.cases_url, {})
         data = json_loads(response.content)
         self.assertEqual(1, data['rc'])
-        self.assertEqual('At least one case is required to delete.', data['response'])
+        self.assertEqual('At least one case is required to delete.',
+                         data['response'])
 
     def test_delete_cases(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(username=self.plan_tester.username,
+                          password='password')
 
-        post_data = {'a': 'delete_cases', 'case': [self.case_1.pk, self.case_3.pk]}
+        post_data = {'case': [self.case_1.pk, self.case_3.pk]}
         response = self.client.post(self.cases_url, post_data)
         data = json_loads(response.content)
 
         self.assertEqual(0, data['rc'])
         self.assertEqual('ok', data['response'])
-        self.assertFalse(self.plan.case.filter(pk__in=[self.case_1.pk, self.case_3.pk]).exists())
+        self.assertFalse(self.plan.case.filter(
+            pk__in=[self.case_1.pk, self.case_3.pk]).exists())
 
         # Assert action logs are recorded for plan and case correctly
 
@@ -229,9 +233,12 @@ class TestDeleteCasesFromPlan(BasePlanCase):
             log = TCMSLogModel.get_logs_for_model(TestCase, pk)[0]
             self.assertEqual(expected_log, log.action)
 
-        for plan_pk, case_pk in ((self.plan.pk, self.case_1.pk), (self.plan.pk, self.case_3.pk)):
-            expected_log = 'Remove case {} from plan {}'.format(case_pk, plan_pk)
-            self.assertTrue(TCMSLogModel.objects.filter(action=expected_log).exists())
+        for plan_pk, case_pk in ((self.plan.pk, self.case_1.pk),
+                                 (self.plan.pk, self.case_3.pk)):
+            expected_log = 'Remove case {} from plan {}'.format(
+                case_pk, plan_pk)
+            self.assertTrue(
+                TCMSLogModel.objects.filter(action=expected_log).exists())
 
 
 class TestSortCases(BasePlanCase):
@@ -244,12 +251,12 @@ class TestSortCases(BasePlanCase):
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
-        cls.cases_url = reverse('plan-cases', args=[cls.plan.pk])
+        cls.cases_url = reverse('plan-reorder-cases', args=[cls.plan.pk])
 
     def test_missing_cases_ids(self):
         self.client.login(username=self.plan_tester.username, password='password')
 
-        response = self.client.post(self.cases_url, {'a': 'order_cases'})
+        response = self.client.post(self.cases_url, {})
         data = json_loads(response.content)
         self.assertEqual(1, data['rc'])
         self.assertEqual('At least one case is required to re-order.', data['response'])
@@ -257,17 +264,16 @@ class TestSortCases(BasePlanCase):
     def test_order_cases(self):
         self.client.login(username=self.plan_tester.username, password='password')
 
-        post_data = {'a': 'order_cases', 'case': [self.case_1.pk, self.case_3.pk]}
+        post_data = {'case': [self.case_3.pk, self.case_1.pk]}
         response = self.client.post(self.cases_url, post_data)
         data = json_loads(response.content)
 
-        self.assertEqual(0, data['rc'])
-        self.assertEqual('ok', data['response'])
-
-        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_1)
-        self.assertEqual(10, case_plan_rel.sortkey)
+        self.assertEqual({'rc': 0, 'response': 'ok'}, data)
 
         case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_3)
+        self.assertEqual(10, case_plan_rel.sortkey)
+
+        case_plan_rel = TestCasePlan.objects.get(plan=self.plan, case=self.case_1)
         self.assertEqual(20, case_plan_rel.sortkey)
 
 
@@ -300,7 +306,9 @@ class TestLinkCases(BasePlanCase):
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
-        cls.cases_url = reverse('plan-cases', args=[cls.plan.pk])
+        cls.search_cases_for_link_url = reverse('plan-search-cases-for-link',
+                                                args=[cls.plan.pk])
+        cls.link_cases_url = reverse('plan-link-cases', args=[cls.plan.pk])
 
     def tearDown(self):
         # Ensure permission is removed whenever it was added during tests
@@ -323,7 +331,7 @@ class TestLinkCases(BasePlanCase):
     def test_show_quick_search_by_default(self):
         self.client.login(username=self.plan_tester.username, password='password')
 
-        response = self.client.post(self.cases_url, {'a': 'link_cases'})
+        response = self.client.post(self.search_cases_for_link_url, {})
         self.assert_quick_search_is_shown(response)
 
     def assert_search_result(self, response):
@@ -345,9 +353,12 @@ class TestLinkCases(BasePlanCase):
     def test_quick_search(self):
         self.client.login(username=self.plan_tester.username, password='password')
 
-        post_data = {'a': 'link_cases', 'action': 'search', 'search_mode': 'quick',
-                     'case_id_set': ','.join(map(str, [self.case_1.pk, self.another_case_2.pk]))}
-        response = self.client.post(self.cases_url, post_data)
+        post_data = {
+            'search_mode': 'quick',
+            'case_id_set': ','.join(
+                map(str, [self.case_1.pk, self.another_case_2.pk]))
+        }
+        response = self.client.post(self.search_cases_for_link_url, post_data)
 
         self.assert_quick_search_is_shown(response)
         self.assert_search_result(response)
@@ -355,29 +366,25 @@ class TestLinkCases(BasePlanCase):
     def test_normal_search(self):
         self.client.login(username=self.plan_tester.username, password='password')
 
-        post_data = {'a': 'link_cases', 'action': 'search', 'search_mode': 'normal',
-                     'case_id_set': ','.join(map(str, [self.case_1.pk, self.another_case_2.pk]))}
-        response = self.client.post(self.cases_url, post_data)
+        post_data = {
+            'search_mode': 'normal',
+            'case_id_set': ','.join(
+                map(str, [self.case_1.pk, self.another_case_2.pk]))
+        }
+        response = self.client.post(self.search_cases_for_link_url, post_data)
 
         self.assert_normal_search_is_shown(response)
         self.assert_search_result(response)
-
-    def test_missing_permission_to_link_cases(self):
-        self.client.login(username=self.plan_tester.username, password='password')
-
-        post_data = {'a': 'link_cases', 'action': 'add_to_plan',
-                     'case': [self.another_case_1.pk, self.another_case_2.pk]}
-        response = self.client.post(self.cases_url, post_data)
-        self.assertContains(response, 'Permission Denied')
 
     def test_link_cases(self):
         self.client.login(username=self.plan_tester.username, password='password')
 
         user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
 
-        post_data = {'a': 'link_cases', 'action': 'add_to_plan',
-                     'case': [self.another_case_1.pk, self.another_case_2.pk]}
-        response = self.client.post(self.cases_url, post_data)
+        post_data = {
+            'case': [self.another_case_1.pk, self.another_case_2.pk]
+        }
+        response = self.client.post(self.link_cases_url, post_data)
 
         self.assertRedirects(
             response,
@@ -385,9 +392,11 @@ class TestLinkCases(BasePlanCase):
             target_status_code=http_client.MOVED_PERMANENTLY)
 
         self.assertTrue(
-            TestCasePlan.objects.filter(plan=self.plan, case=self.another_case_1).exists())
+            TestCasePlan.objects.filter(
+                plan=self.plan, case=self.another_case_1).exists())
         self.assertTrue(
-            TestCasePlan.objects.filter(plan=self.plan, case=self.another_case_2).exists())
+            TestCasePlan.objects.filter(
+                plan=self.plan, case=self.another_case_2).exists())
 
 
 class TestCloneView(BasePlanCase):

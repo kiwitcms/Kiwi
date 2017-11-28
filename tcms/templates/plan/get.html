@@ -223,7 +223,7 @@ Nitrate.TestPlans.Instance = {
 		<div class="submit-row">
 			<input type="button" value="x" class="js-close-zone" >
 		</div>
-		<form action="{% url "plan-cases" test_plan.plan_id %}" method="POST" enctype="multipart/form-data">
+		<form action="{% url "plan-import-cases" test_plan.plan_id %}" method="POST" enctype="multipart/form-data">
 			<div  class="right-bar" >
 				<label class="errors" id="import-error">{{ xml_form.xml_file.errors }}</label>
 				{{ xml_form.a }}

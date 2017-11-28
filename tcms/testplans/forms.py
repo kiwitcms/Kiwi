@@ -638,7 +638,6 @@ class XMLRPCEditPlanForm(EditPlanForm):
 
 
 class ImportCasesViaXMLForm(forms.Form):
-    a = forms.CharField(widget=forms.HiddenInput)
     xml_file = CasePlanXMLField(
         label='Upload XML file:',
         help_text='XML file is export with TCMS or Testopia.'
