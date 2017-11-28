@@ -21,7 +21,7 @@
 					<ul>
 						{% if perms.testcases.add_testcase %}
 						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="Write new case" data-params='["{% url "testcases-new" %}", {{ test_plan.plan_id }}]'/></li>
-						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="Add cases from other plans" data-param="{% url "plan-cases" test_plan.plan_id %}" /></li>
+						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="Add cases from other plans" data-param="{% url "plan-search-cases-for-link" test_plan.plan_id %}" /></li>
 						{% else %}
 						<li><input type="button" class="add_new icon_plan" disabled="true" value="Write new case"/></li>
 						<li><input type="button" class="search icon_plan" disabled="true" value="Add cases from other plans" /></li>
