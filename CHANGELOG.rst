@@ -1,6 +1,49 @@
 Change Log
 ==========
 
+3.48 (Nov 28 2017)
+------------------
+
+- Update to Django 1.11.7 (Mr. Senko)
+- Update documentation including high level information
+  about how data is organized within Kiwi TCMS and how to work
+  with the system. (Mr. Senko)
+- Stop caching report views. (Mr. Senko)
+- Make test execution comments optional. Fixes
+  `Issue #77 <https://github.com/MrSenko/Kiwi/issues/77>`_. (Mr. Senko)
+- Escape special symbols when exporting JSON.
+  Fixes `Issue #78 <https://github.com/MrSenko/Kiwi/issues/78>`_. (Mr. Senko)
+- Remove Test Run export to XML functionality in favor of API.
+  Fixes `Issue #79 <https://github.com/MrSenko/Kiwi/issues/79>`_. (Mr. Senko)
+- Make it possible to search Test Runs via Env properties.
+  Fixes `Issue #82 <https://github.com/MrSenko/Kiwi/issues/82>`_. (Mr. Senko)
+- Display Environment properties in Test Run search results. (Mr. Senko)
+- Allow bulk update TestCase.default_tester via email.
+  Fixes `Issue #85 <https://github.com/MrSenko/Kiwi/issues/85>`_. (Mr. Senko)
+- Don't crash reports when there are untested TestCaseRuns.
+  Fixes `Issue #88 <https://github.com/MrSenko/Kiwi/issues/88>`_. (Mr. Senko)
+- Bind localhost:80 to container:80.
+  Fixes `Issue #99 <https://github.com/MrSenko/Kiwi/issues/99>`_. (Mr. Senko)
+- Enable testing with Python 3.6 in preparation for migration. (Mr. Senko)
+- If JIRA isn't fully configured then don't connect. Fixes
+  Fixes `Issue #100 <https://github.com/MrSenko/Kiwi/issues/100>`_. (Mr. Senko)
+- Pin patternfly version to 3.30 and update templates.
+  Fixes `Issue #120 <https://github.com/MrSenko/Kiwi/issues/120>`_. (Mr. Senko)
+- Show status name rather than status id in TestCaseRun change log. (Chenxiong Qi)
+- [api] Adds a Python API client with changes that make it possible to
+  execute on both Python 2 and Python 3. For now take a look at
+  ``tcms_api/script_examples/`` for examples how to use it.
+  NOTE: API client has been initially developed as the *python-nitrate*
+  project by Petr Splichal and other contributors.
+- [api] Remove experimental support for Teiid. (Mr. Senko)
+- [api] Cache level defaults to ``CACHE_NONE`` if not set. (Mr. Senko)
+- [api] Remove persistent cache, in-memory caching is still available. (Mr. Senko)
+- [api] Remove multicall support. (Mr. Senko)
+
+
+IMPORTANT: this release introduces new database migrations!
+
+
 3.44 (Oct 31 2017)
 ------------------
 
@@ -15,7 +58,7 @@ Change Log
   `Issue #80 <https://github.com/MrSenko/Kiwi/issues/80>`_ (Mr. Senko)
 - Rename ``FOOTER_LINKS`` setting to ``HELP_MENU_ITEMS`` (Mr. Senko)
 - Update documentation with new screenshots (Mr. Senko)
-- Make documentation more lear on how to run Kiwi TCMS both in production
+- Make documentation more clear on how to run Kiwi TCMS both in production
   and in local development mode. Fixes
   `Issue #89 <https://github.com/MrSenko/Kiwi/issues/89>`_ (Mr. Senko)
 
