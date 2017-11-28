@@ -89,7 +89,7 @@ class UtilsTests(unittest.TestCase):
     def test_get_set_cache_level(self):
         """ Get & set the caching level """
         original = Caching().get()
-        for level in [CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS]:
+        for level in [CACHE_NONE, CACHE_OBJECTS]:
             set_cache_level(level)
             self.assertEqual(Caching().get(), level)
             self.assertEqual(get_cache_level(), level)

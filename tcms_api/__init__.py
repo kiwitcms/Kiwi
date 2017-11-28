@@ -87,7 +87,7 @@ from tcms_api.config import (
     COLOR_ON, COLOR_OFF, COLOR_AUTO,
 
     Caching, get_cache_level, set_cache_level,
-    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS, NEVER_CACHE, NEVER_EXPIRE)
+    CACHE_NONE, CACHE_OBJECTS, NEVER_CACHE, NEVER_EXPIRE)
 
 # Data communication exceptions
 from tcms_api.xmlrpc import TCMSError
@@ -113,7 +113,7 @@ __all__ = [
     COLOR_ON, COLOR_OFF, COLOR_AUTO,
 
     Caching, get_cache_level, set_cache_level,
-    CACHE_NONE, CACHE_CHANGES, CACHE_OBJECTS,
+    CACHE_NONE, CACHE_OBJECTS,
     NEVER_EXPIRE, NEVER_CACHE,
 
     TCMSError,
