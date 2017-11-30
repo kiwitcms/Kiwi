@@ -132,7 +132,7 @@ class TestRegistration(TestCase):
         return response
 
     @patch('tcms.core.utils.mailto.send_mail')
-    @patch('tcms.core.contrib.auth.views.settings.EMAIL_HOST', new='smtp.example.com')
+    @patch('tcms.core.contrib.auth.views.settings.DEFAULT_FROM_EMAIL', new='kiwi@example.com')
     def test_register_user_by_email_confirmation(self, send_mail):
         response = self.assert_user_registration('new-tester')
 
@@ -151,9 +151,9 @@ class TestRegistration(TestCase):
 
 %s
 """ % confirm_url,
-            settings.EMAIL_FROM, ['new-tester@example.com'], fail_silently=False)
+            settings.DEFAULT_FROM_EMAIL, ['new-tester@example.com'], fail_silently=False)
 
-    @patch('tcms.core.contrib.auth.views.settings.EMAIL_HOST', new='')
+    @patch('tcms.core.contrib.auth.views.settings.DEFAULT_FROM_EMAIL', new='')
     @patch('tcms.core.contrib.auth.views.settings.ADMINS',
            new=[('admin1', 'admin1@example.com'),
                 ('admin2', 'admin2@example.com')])
