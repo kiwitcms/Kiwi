@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 
 
 def mailto(template_name, subject, recipients=None,
-           context=None, sender=settings.EMAIL_FROM,
+           context=None, sender=settings.DEFAULT_FROM_EMAIL,
            cc=None):
     # make a list with recipients and filter out duplicates
     if isinstance(recipients, list):

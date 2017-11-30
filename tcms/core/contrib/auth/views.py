@@ -37,8 +37,8 @@ def register(request, template_name='registration/registration_form.html'):
             form.save()
             ak = form.set_active_key()
 
-            # Send email to user if mail server is available.
-            if form.cleaned_data['email'] and settings.EMAIL_HOST:
+            # Send email to user if email is configured.
+            if form.cleaned_data['email'] and settings.DEFAULT_FROM_EMAIL:
                 form.send_confirm_mail(request=request, active_key=ak)
 
                 msg = 'Your account has been created, please check your ' \

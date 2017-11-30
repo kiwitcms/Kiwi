@@ -25,17 +25,18 @@ Using Amazon SES instead of SMTP email
 Kiwi TCMS supports email notifications which by default are sent over SMTP and
 need to be configured via the following settings::
 
-    EMAIL_HOST = ''
+    # standard Django settings
+    EMAIL_HOST = 'smtp.example.com'
     EMAIL_PORT = 25
-    EMAIL_FROM = 'kiwi@example.com'
+    DEFAULT_FROM_EMAIL = 'kiwi@example.com'
+    
+    # additional Kiwi TCMS setting
     EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 
-If you'd like to use an external email service, like Amazon SES you have to
-configure the following settings instead::
+If you'd like to use an external email service, like Amazon SES you also need to
+configure the following settings::
 
-    EMAIL_HOST = 'example.com'
-    EMAIL_FROM = 'kiwi@example.com'
-    DEFAULT_FROM_EMAIL = EMAIL_FROM
+
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
     AWS_SES_SECRET_ACCESS_KEY = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
