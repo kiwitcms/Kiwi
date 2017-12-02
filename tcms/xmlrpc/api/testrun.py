@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import TestTag
@@ -259,20 +258,15 @@ def env_value(request, action, run_ids, env_value_ids):
     """
     from tcms.management.models import TCMSEnvValue
 
-    trs = TestRun.objects.filter(pk__in=pre_process_ids(value=run_ids))
-    evs = TCMSEnvValue.objects.filter(
+    test_runs = TestRun.objects.filter(pk__in=pre_process_ids(value=run_ids))
+    env_values = TCMSEnvValue.objects.filter(
         pk__in=pre_process_ids(value=env_value_ids)
     )
 
-    for tr in trs.iterator():
-        for ev in evs.iterator():
-            try:
-                func = getattr(tr, action + '_env_value')
-                func(env_value=ev)
-            except ObjectDoesNotExist:
-                pass
-            except:
-                raise
+    for test_run in test_runs.iterator():
+        for env_value in env_values.iterator():
+            func = getattr(test_run, action + '_env_value')
+            func(env_value=env_value)
 
     return
 
@@ -452,12 +446,9 @@ def get_tags(request, run_id):
     Example:
     >>> TestRun.get_tags(1193)
     """
-    try:
-        tr = TestRun.objects.get(run_id=run_id)
-    except:
-        raise
+    test_run = TestRun.objects.get(run_id=run_id)
 
-    tag_ids = tr.tag.values_list('id', flat=True)
+    tag_ids = test_run.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
 
@@ -544,21 +535,16 @@ def remove_tag(request, run_ids, tags):
     # Remove tag 'foo' and 'bar' from run list '56789, 12345' with String
     >>> TestRun.remove_tag('56789, 12345', 'foo, bar')
     """
-    trs = TestRun.objects.filter(
+    test_runs = TestRun.objects.filter(
         run_id__in=pre_process_ids(value=run_ids)
     )
-    tgs = TestTag.objects.filter(
+    test_tags = TestTag.objects.filter(
         name__in=TestTag.string_to_list(tags)
     )
 
-    for tr in trs.iterator():
-        for tg in tgs.iterator():
-            try:
-                tr.remove_tag(tag=tg)
-            except ObjectDoesNotExist:
-                pass
-            except:
-                raise
+    for test_run in test_runs.iterator():
+        for test_tag in test_tags.iterator():
+            test_run.remove_tag(tag=test_tag)
 
     return
 

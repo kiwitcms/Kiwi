@@ -95,7 +95,7 @@ class DjangoXMLRPCDispatcher(SimpleXMLRPCDispatcher):
         except xmlrpc.client.Fault as fault:
             response = xmlrpc.client.dumps(fault, allow_none=self.allow_none, encoding=self.encoding)
 
-        except:
+        except Exception:
             e_type, e_value, _ = sys.exc_info()
             response = xmlrpc.client.dumps(
                 xmlrpc.client.Fault(1, "%s: %s" % (e_type.__name__, e_value)),

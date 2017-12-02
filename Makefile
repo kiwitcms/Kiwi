@@ -22,7 +22,7 @@ FLAKE8_EXCLUDE=.git,*raw_sql.py
 
 .PHONY: flake8
 flake8:
-	@flake8 --exclude=$(FLAKE8_EXCLUDE) --ignore=E722,E501 tcms *.py
+	@flake8 --exclude=$(FLAKE8_EXCLUDE) --ignore=E501 tcms *.py
 	@flake8 --exclude=$(FLAKE8_EXCLUDE) --ignore=F405 tcms_api
 
 

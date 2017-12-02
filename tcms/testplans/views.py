@@ -172,7 +172,7 @@ def delete(request, plan_id):
                 "<script>window.location.href='%s'</script>" % reverse(
                     'plans-all')
             )
-        except:
+        except Exception:
             return Prompt.render(
                 request=request,
                 info_type=Prompt.Info,

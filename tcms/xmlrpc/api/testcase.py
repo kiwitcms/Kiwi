@@ -118,17 +118,12 @@ def add_component(request, case_ids, component_ids):
     """
     from tcms.management.models import Component
 
-    tcs = TestCase.objects.filter(
-        case_id__in=pre_process_ids(value=case_ids))
-    cs = Component.objects.filter(
-        id__in=pre_process_ids(value=component_ids))
+    test_cases = TestCase.objects.filter(case_id__in=pre_process_ids(value=case_ids))
+    components = Component.objects.filter(id__in=pre_process_ids(value=component_ids))
 
-    try:
-        for tc in tcs.iterator():
-            for c in cs.iterator():
-                tc.add_component(component=c)
-    except:
-        raise
+    for test_case in test_cases.iterator():
+        for component in components.iterator():
+            test_case.add_component(component=component)
 
     return
 
@@ -578,17 +573,14 @@ def get(request, case_id):
     Example:
     >>> TestCase.get(1193)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    test_case = TestCase.objects.get(case_id=case_id)
 
-    tc_latest_text = tc.latest_text().serialize()
+    test_case_latest_text = test_case.latest_text().serialize()
 
-    response = tc.serialize()
-    response['text'] = tc_latest_text
+    response = test_case.serialize()
+    response['text'] = test_case_latest_text
     # get the xmlrpc tags
-    tag_ids = tc.tag.values_list('id', flat=True)
+    tag_ids = test_case.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     tags = TestTag.to_xmlrpc(query)
     # cut 'id' attribute off, only leave 'name' here
@@ -712,12 +704,9 @@ def get_components(request, case_id):
     """
     from tcms.management.models import Component
 
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    test_case = TestCase.objects.get(case_id=case_id)
 
-    component_ids = tc.component.values_list('id', flat=True)
+    component_ids = test_case.component.values_list('id', flat=True)
     query = {'id__in': component_ids}
     return Component.to_xmlrpc(query)
 
@@ -734,12 +723,9 @@ def get_plans(request, case_id):
     Example:
     >>> TestCase.get_plans(12345)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    test_case = TestCase.objects.get(case_id=case_id)
 
-    plan_ids = tc.plan.values_list('plan_id', flat=True)
+    plan_ids = test_case.plan.values_list('plan_id', flat=True)
     query = {'plan_id__in': plan_ids}
     return TestPlan.to_xmlrpc(query)
 
@@ -756,12 +742,9 @@ def get_tags(request, case_id):
     Example:
     >>> TestCase.get_tags(12345)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    test_case = TestCase.objects.get(case_id=case_id)
 
-    tag_ids = tc.tag.values_list('id', flat=True)
+    tag_ids = test_case.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
 
@@ -785,12 +768,9 @@ def get_text(request, case_id, case_text_version=None):
     # Get all case text with version 4
     >>> TestCase.get_text(12345, 4)
     """
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    test_case = TestCase.objects.get(case_id=case_id)
 
-    return tc.get_text_with_version(
+    return test_case.get_text_with_version(
         case_text_version=case_text_version).serialize()
 
 
@@ -990,21 +970,16 @@ def remove_tag(request, case_ids, tags):
     # Remove tag 'foo' and 'bar' from cases list '56789, 12345' with String
     >>> TestCase.remove_tag('56789, 12345', 'foo, bar')
     """
-    tcs = TestCase.objects.filter(
+    test_cases = TestCase.objects.filter(
         case_id__in=pre_process_ids(value=case_ids)
     )
-    tgs = TestTag.objects.filter(
+    test_tags = TestTag.objects.filter(
         name__in=TestTag.string_to_list(tags)
     )
 
-    for tc in tcs.iterator():
-        for tg in tgs.iterator():
-            try:
-                tc.remove_tag(tg)
-            except ObjectDoesNotExist:
-                pass
-            except:
-                raise
+    for test_case in test_cases.iterator():
+        for test_tag in test_tags.iterator():
+            test_case.remove_tag(test_tag)
 
     return
 
@@ -1031,17 +1006,14 @@ def store_text(request, case_id, action, effect='', setup='', breakdown='',
     """
     from django.contrib.auth.models import User
 
-    try:
-        tc = TestCase.objects.get(case_id=case_id)
-    except:
-        raise
+    test_case = TestCase.objects.get(case_id=case_id)
 
     if author_id:
         author = User.objects.get(id=author_id)
     else:
         author = request.user
 
-    return tc.add_text(
+    return test_case.add_text(
         author=author,
         action=action and action.strip(),
         effect=effect and effect.strip(),
