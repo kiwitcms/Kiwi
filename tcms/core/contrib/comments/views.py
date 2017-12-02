@@ -31,11 +31,8 @@ def post(request, template_name='comments/comments.html'):
     ctype = data.get("content_type")
     object_pk = data.get("object_pk")
 
-    try:
-        model = apps.get_model(*ctype.split(".", 1))
-        target = model._default_manager.get(pk=object_pk)
-    except:
-        raise
+    model = apps.get_model(*ctype.split(".", 1))
+    target = model._default_manager.get(pk=object_pk)
 
     # Construct the comment form
     form = comments.get_form()(target, data=data)

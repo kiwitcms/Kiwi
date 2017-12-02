@@ -111,13 +111,13 @@ class ComponentActions(BaseActions):
         if not is_valid:
             return form
 
-        tcs = self.get_testcases()
-        for tc in tcs:
-            for c in form.cleaned_data['o_component']:
+        test_cases = self.get_testcases()
+        for test_case in test_cases:
+            for component in form.cleaned_data['o_component']:
                 try:
-                    tc.add_component(component=c)
-                except:
-                    self.ajax_response['errors_list'].append({'case': tc.pk, 'component': c.pk})
+                    test_case.add_component(component=component)
+                except Exception:
+                    self.ajax_response['errors_list'].append({'case': test_case.pk, 'component': component.pk})
 
         return self.render_ajax(self.ajax_response)
 
@@ -130,13 +130,13 @@ class ComponentActions(BaseActions):
         if not is_valid:
             return form
 
-        tcs = self.get_testcases()
-        for tc in tcs:
-            for c in form.cleaned_data['o_component']:
+        test_cases = self.get_testcases()
+        for test_case in test_cases:
+            for component in form.cleaned_data['o_component']:
                 try:
-                    tc.remove_component(component=c)
-                except:
-                    self.ajax_response['errors_list'].append({'case': tc.pk, 'component': c.pk})
+                    test_case.remove_component(component=component)
+                except Exception:
+                    self.ajax_response['errors_list'].append({'case': test_case.pk, 'component': component.pk})
 
         return self.render_ajax(self.ajax_response)
 

@@ -222,11 +222,7 @@ class TestRun(TCMSActionModel):
         TestRunCC.objects.filter(run=self, user=user).delete()
 
     def remove_env_value(self, env_value):
-        run_env_value = TCMSEnvRunValueMap.objects.get(
-            run=self,
-            value=env_value,
-        )
-        run_env_value.delete()
+        TCMSEnvRunValueMap.objects.filter(run=self, value=env_value).delete()
 
     def mail(self, template, subject, context, to=[], request=None):
         from tcms.core.utils.mailto import mailto

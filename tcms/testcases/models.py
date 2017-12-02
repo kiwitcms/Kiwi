@@ -390,23 +390,20 @@ class TestCase(TCMSActionModel):
                 or old_breakdown != new_breakdown_checksum:
             case_text_version = self.latest_text_version() + 1
 
-            try:
-                latest_text = TestCaseText.objects.create(
-                    case=self,
-                    case_text_version=case_text_version,
-                    create_date=create_date,
-                    author=author,
-                    action=action,
-                    effect=effect,
-                    setup=setup,
-                    breakdown=breakdown,
-                    action_checksum=action_checksum or new_action_checksum,
-                    effect_checksum=effect_checksum or new_effect_checksum,
-                    setup_checksum=setup_checksum or new_setup_checksum,
-                    breakdown_checksum=breakdown_checksum or
-                    new_breakdown_checksum)
-            except:
-                raise
+            latest_text = TestCaseText.objects.create(
+                case=self,
+                case_text_version=case_text_version,
+                create_date=create_date,
+                author=author,
+                action=action,
+                effect=effect,
+                setup=setup,
+                breakdown=breakdown,
+                action_checksum=action_checksum or new_action_checksum,
+                effect_checksum=effect_checksum or new_effect_checksum,
+                setup_checksum=setup_checksum or new_setup_checksum,
+                breakdown_checksum=breakdown_checksum or new_breakdown_checksum
+            )
         else:
             latest_text = self.latest_text()
 
@@ -416,12 +413,9 @@ class TestCase(TCMSActionModel):
         TestCasePlan.objects.get_or_create(case=self, plan=plan)
 
     def clear_components(self):
-        try:
-            return TestCaseComponent.objects.filter(
-                case=self,
-            ).delete()
-        except:
-            raise
+        return TestCaseComponent.objects.filter(
+            case=self,
+        ).delete()
 
     def clear_estimated_time(self):
         """Converts a integer to time"""

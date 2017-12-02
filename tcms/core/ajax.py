@@ -11,6 +11,7 @@ from distutils.util import strtobool
 
 from django import http
 from django.db.models import Q
+from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
@@ -246,7 +247,10 @@ def tag(request, template_name="management/get_tag.html"):
                     tag, c = TestTag.objects.get_or_create(name=tag_str)
                     for o in self.obj:
                         o.add_tag(tag)
-                except:
+                except IntegrityError:
+                    return "Error when adding %s " \
+                           "Tag with this key already exists in the database." % self.tag
+                except Exception:
                     return "Error when adding %s" % self.tag
 
             return True, self.obj
@@ -257,20 +261,17 @@ def tag(request, template_name="management/get_tag.html"):
             if not self.obj:
                 return "Tags does not exist in current selected plan."
 
-            else:
-                for tag_str in self.tag:
+            for tag_str in self.tag:
+                try:
+                    tag = TestTag.objects.filter(name=tag_str)[0]
+                except IndexError:
+                    return "Tag %s does not exist in current selected plan." % tag_str
+                for object in self.obj:
                     try:
-                        tag = TestTag.objects.filter(name=tag_str)[0]
-                    except IndexError:
-                        return "Tag %s does not exist in current selected " \
-                               "plan." % tag_str
-
-                    for o in self.obj:
-                        try:
-                            o.remove_tag(tag)
-                        except:
-                            return "Remove tag %s error." % tag
-                return True, self.obj
+                        object.remove_tag(tag)
+                    except Exception:
+                        return "Remove tag %s error." % tag
+            return True, self.obj
 
     objects = Objects(request, template_name)
     template_name, obj = objects.get()
@@ -442,7 +443,7 @@ def update(request):
             mail_context['context']['user'] = request.user
             try:
                 mailto(**mail_context)
-            except:
+            except Exception:
                 pass
 
     # Special hacking for updating test case run status
@@ -548,7 +549,7 @@ def update_case_run_status(request):
             mail_context['context']['user'] = request.user
             try:
                 mailto(**mail_context)
-            except:
+            except Exception:
                 pass
 
     # Special hacking for updating test case run status
@@ -655,7 +656,7 @@ class TestCaseUpdateActions(ModelUpdateActions):
             mail_context['context']['user'] = self.request.user
             try:
                 mailto(**mail_context)
-            except:
+            except Exception:
                 pass
 
     def _update_priority(self):

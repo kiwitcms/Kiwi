@@ -186,7 +186,7 @@ class TestPlan(TCMSActionModel):
                 plan=self,
                 component=component,
             )
-        except:
+        except Exception:
             return False
 
     def add_env_group(self, env_group):
@@ -216,7 +216,7 @@ class TestPlan(TCMSActionModel):
             return TestPlanComponent.objects.get(
                 plan=self, component=component
             ).delete()
-        except:
+        except Exception:
             return False
 
     def clear_env_groups(self):

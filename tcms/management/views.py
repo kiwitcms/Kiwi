@@ -4,10 +4,7 @@ from distutils.util import strtobool
 from json import dumps as json_dumps
 from itertools import groupby
 
-try:
-    from django.db import IntegrityError
-except:
-    pass
+from django.db import IntegrityError
 
 from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
@@ -281,7 +278,7 @@ def environment_properties(request, template_name='environment/property.html'):
         env_property.name = new_name
         try:
             env_property.save(update_fields=['name'])
-        except:
+        except Exception:
             return JsonResponse({'rc': 1, 'response': 'Cannot save property.'})
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

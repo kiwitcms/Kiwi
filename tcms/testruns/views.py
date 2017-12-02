@@ -230,13 +230,11 @@ def delete(request, run_id):
 
     '''
     try:
-        tr = TestRun.objects.select_related('manager', 'plan').get(
-            run_id=run_id
-        )
+        test_run = TestRun.objects.select_related('manager', 'plan').get(run_id=run_id)
     except ObjectDoesNotExist:
         raise Http404
 
-    if not tr.belong_to(request.user):
+    if not test_run.belong_to(request.user):
         return Prompt.render(
             request=request,
             info_type=Prompt.Info,
@@ -253,14 +251,14 @@ def delete(request, run_id):
             else { history.go(-1) };</script>" % (run_id, run_id))
     elif request.GET.get('sure') == 'yes':
         try:
-            plan_id = tr.plan_id
-            tr.env_value.clear()
-            tr.case_run.all().delete()
-            tr.delete()
+            plan_id = test_run.plan_id
+            test_run.env_value.clear()
+            test_run.case_run.all().delete()
+            test_run.delete()
             return HttpResponseRedirect(
                 reverse('test_plan_url_short', args=(plan_id, ))
             )
-        except:
+        except Exception:
             return Prompt.render(
                 request=request,
                 info_type=Prompt.Info,
@@ -1352,14 +1350,14 @@ def update_case_run_text(request, run_id):
 @require_GET
 def env_value(request):
     """Run environment property edit function"""
-    trs = TestRun.objects.filter(run_id__in=request.GET.getlist('run_id'))
+    test_runs = TestRun.objects.filter(run_id__in=request.GET.getlist('run_id'))
 
     class RunEnvActions(object):
-        def __init__(self, requet, trs):
+        def __init__(self, requet, test_runs):
             self.__all__ = ['add', 'remove', 'change']
             self.ajax_response = {'rc': 0, 'response': 'ok'}
             self.request = request
-            self.trs = trs
+            self.test_runs = test_runs
 
         def has_no_perm(self, perm):
             if not self.request.user.has_perm('testruns.' + perm + '_tcmsenvrunvaluemap'):
@@ -1378,21 +1376,19 @@ def env_value(request):
 
             try:
                 value = self.get_env_value(request.GET.get('env_value_id'))
-                for tr in self.trs:
-                    o, c = tr.add_env_value(env_value=value)
+                for test_run in self.test_runs:
+                    obj, created = test_run.add_env_value(env_value=value)
 
-                    if not c:
+                    if not created:
                         self.ajax_response = {
                             'rc': 1,
                             'response': 'The value is exist for this run'
                         }
             except ObjectDoesNotExist as errors:
                 self.ajax_response = {'rc': 1, 'response': errors}
-            except:
-                raise
 
             fragment = render(request, "run/get_environment.html",
-                              {"test_run": self.trs[0], "is_ajax": True})
+                              {"test_run": self.test_runs[0], "is_ajax": True})
             self.ajax_response.update({"fragment": str(fragment.content, encoding=settings.DEFAULT_CHARSET)})
             return HttpResponse(json.dumps(self.ajax_response))
 
@@ -1401,13 +1397,13 @@ def env_value(request):
             if chk_perm:
                 return HttpResponse(json.dumps(chk_perm))
 
-            try:
-                for tr in self.trs:
-                    tr.remove_env_value(env_value=self.get_env_value(
+            for test_run in self.test_runs:
+                try:
+                    test_run.remove_env_value(env_value=self.get_env_value(
                         request.GET.get('env_value_id')
                     ))
-            except:
-                pass
+                except Exception:
+                    continue
 
             return HttpResponse(json.dumps(self.ajax_response))
 
@@ -1416,21 +1412,17 @@ def env_value(request):
             if chk_perm:
                 return HttpResponse(json.dumps(chk_perm))
 
-            try:
-                for tr in self.trs:
-                    tr.remove_env_value(env_value=self.get_env_value(
-                        request.GET.get('old_env_value_id')
-                    ))
-
-                    tr.add_env_value(env_value=self.get_env_value(
-                        request.GET.get('new_env_value_id')
-                    ))
-            except:
-                raise
+            for test_run in self.test_runs:
+                test_run.remove_env_value(env_value=self.get_env_value(
+                    request.GET.get('old_env_value_id')
+                ))
+                test_run.add_env_value(env_value=self.get_env_value(
+                    request.GET.get('new_env_value_id')
+                ))
 
             return HttpResponse(json.dumps(self.ajax_response))
 
-    run_env_actions = RunEnvActions(request, trs)
+    run_env_actions = RunEnvActions(request, test_runs)
 
     if request.GET.get('a') not in run_env_actions.__all__:
         ajax_response = {'rc': 1, 'response': 'Unrecognizable actions'}
