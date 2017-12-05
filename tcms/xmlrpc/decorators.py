@@ -4,6 +4,7 @@ import inspect
 import logging
 from functools import wraps
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 __all__ = ('log_call',)
@@ -49,13 +50,19 @@ def log_call(*args, **kwargs):
         @wraps(function)
         def _new_function(request, *args, **kwargs):
             try:
-                known_args = zip(arg_names, args)
+                known_args = list(zip(arg_names, args))
                 unknown_args = list(enumerate(args[len(arg_names):]))
                 keyword_args = [(key, value) for key, value in
                                 kwargs.items()
                                 if (key, value) not in known_args]
-
-                create_log(user=request.user,
+                request_user = request.user
+                if not request_user.is_authenticated:
+                    # create an anonymous 'User' object for XML-RPC logging
+                    # purposes !
+                    request_user, _ = get_user_model().objects.get_or_create(
+                        username='Anonymous',
+                        is_active=False)
+                create_log(user=request_user,
                            method='%s%s' % (namespace, function.__name__),
                            args=str(known_args + unknown_args + keyword_args))
             except:
