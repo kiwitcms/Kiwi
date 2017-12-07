@@ -73,7 +73,7 @@ For area-specific details see respective module documentation::
 INSTALLATION
 ------------
 
-    pip install tcms_api
+    pip install tcms-api
 
 
 CONFIGURATION
