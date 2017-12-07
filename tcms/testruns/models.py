@@ -34,7 +34,8 @@ TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
 class TestRun(TCMSActionModel):
     run_id = models.AutoField(primary_key=True)
 
-    product_version = models.ForeignKey('management.Version', related_name='version_run', on_delete=models.CASCADE)
+    product_version = models.ForeignKey('management.Version', related_name='version_run',
+                                        on_delete=models.CASCADE)
     plan_text_version = models.IntegerField()
 
     start_date = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -43,9 +44,11 @@ class TestRun(TCMSActionModel):
     notes = models.TextField(blank=True)
     estimated_time = DurationField(default=0)
 
-    plan = models.ForeignKey('testplans.TestPlan', related_name='run', on_delete=models.CASCADE)
+    plan = models.ForeignKey('testplans.TestPlan', related_name='run',
+                             on_delete=models.CASCADE)
     environment_id = models.IntegerField(default=0)
-    build = models.ForeignKey('management.TestBuild', related_name='build_run', on_delete=models.CASCADE)
+    build = models.ForeignKey('management.TestBuild', related_name='build_run',
+                              on_delete=models.CASCADE)
     manager = models.ForeignKey('auth.User', related_name='manager', on_delete=models.CASCADE)
     default_tester = models.ForeignKey('auth.User',
                                        null=True, blank=True,
@@ -87,7 +90,8 @@ class TestRun(TCMSActionModel):
             'summary': lambda value: Q(summary__icontains=value),
             'product': lambda value: Q(build__product=value),
             'product_version': lambda value: Q(product_version=value),
-            'plan': lambda value: Q(plan__plan_id=int(value)) if is_int(value) else Q(plan__name__icontains=value),
+            'plan': lambda value:
+            Q(plan__plan_id=int(value)) if is_int(value) else Q(plan__name__icontains=value),
             'build': lambda value: Q(build=value),
             'env_group': lambda value: Q(plan__env_group=value),
             'people_id': lambda value: Q(manager__id=value) | Q(default_tester__id=value),
@@ -550,7 +554,8 @@ class TestCaseRun(TCMSActionModel):
     sortkey = models.IntegerField(null=True, blank=True)
 
     run = models.ForeignKey(TestRun, related_name='case_run', on_delete=models.CASCADE)
-    case = models.ForeignKey('testcases.TestCase', related_name='case_run', on_delete=models.CASCADE)
+    case = models.ForeignKey('testcases.TestCase', related_name='case_run',
+                             on_delete=models.CASCADE)
     case_run_status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
     build = models.ForeignKey('management.TestBuild', on_delete=models.CASCADE)
     environment_id = models.IntegerField(default=0)

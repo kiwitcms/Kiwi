@@ -876,7 +876,8 @@ class TestLoadRunsOfOnePlan(BaseCaseRun):
 
         # verify there is the same number of objects loaded
         self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalRecords'])
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalDisplayRecords'])
+        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(),
+                         data['iTotalDisplayRecords'])
 
 
 class TestAddRemoveRunCC(BaseCaseRun):

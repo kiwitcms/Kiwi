@@ -23,7 +23,8 @@ def clean_xml_file(xml_file):
 
     version = root_element.get('@version', None)
     if version != settings.TESTOPIA_XML_VERSION:
-        raise ValueError('Testopia XML version "%s" should be "%s"' % (version, settings.TESTOPIA_XML_VERSION))
+        raise ValueError('Testopia XML version "%s" should be "%s"'
+                         % (version, settings.TESTOPIA_XML_VERSION))
 
     case_elements = root_element.get('testcase', None)
     if case_elements is not None:

@@ -141,7 +141,8 @@ class TestRegistration(TestCase):
             'Your account has been created, please check your mailbox for confirmation')
 
         s = Site.objects.get_current()
-        confirm_url = 'http://%s%s' % (s.domain, reverse('tcms-confirm', args=[self.fake_activate_key]))
+        confirm_url = 'http://%s%s' % (s.domain, reverse('tcms-confirm',
+                                                         args=[self.fake_activate_key]))
 
         # Verify notification mail
         send_mail.assert_called_once_with(

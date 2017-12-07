@@ -112,7 +112,8 @@ class TestBuildUpdate(XmlrpcAPIBaseTest):
     @classmethod
     def setUpTestData(cls):
         cls.admin = UserFactory()
-        cls.admin_request = make_http_request(user=cls.admin, user_perm='management.change_testbuild')
+        cls.admin_request = make_http_request(user=cls.admin,
+                                              user_perm='management.change_testbuild')
 
         cls.staff = UserFactory()
         cls.staff_request = make_http_request(user=cls.staff)

@@ -345,7 +345,8 @@ class ExportTestPlanTests(test.TestCase):
         location = reverse('plans-export')
         response = self.c.get(location)
         self.assertEqual(response.status_code, http.client.OK)
-        self.assertIn('At least one target is required.', str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertIn('At least one target is required.', str(response.content,
+                                                              encoding=settings.DEFAULT_CHARSET))
 
 
 class TestPlanModel(test.TestCase):

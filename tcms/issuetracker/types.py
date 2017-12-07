@@ -76,7 +76,9 @@ class IssueTrackerType(object):
 
             :return: - boolean
         """
-        return not (self.tracker.api_url and self.tracker.api_username and self.tracker.api_password)
+        return not (self.tracker.api_url
+                    and self.tracker.api_username
+                    and self.tracker.api_password)
 
     def all_issues_link(self, ids):
         """

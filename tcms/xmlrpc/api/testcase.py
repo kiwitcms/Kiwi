@@ -360,36 +360,37 @@ def create(request, values):
 
     Params:      $values - Array/Hash: A reference to a hash or array of hashes with keys and values
                  matching the fields of the test case to be created.
-      +----------------------------+----------------+-----------+---------------------------------------+
-      | Field                      | Type           | Null      | Description                           |
-      +----------------------------+----------------+-----------+---------------------------------------+
-      | product                    | Integer        | Required  | ID of Product                         |
-      | category                   | Integer        | Required  | ID of Category                        |
-      | priority                   | Integer        | Required  | ID of Priority                        |
-      | summary                    | String         | Required  |                                       |
-      | case_status                | Integer        | Optional  | ID of case status                     |
-      | plan                       | Array/Str/Int  | Optional  | ID or List of plan_ids                |
-      | component                  | Integer/String | Optional  | ID of Priority                        |
-      | default_tester             | String         | Optional  | Login of tester                       |
-      | estimated_time             | String         | Optional  | 2h30m30s(recommend) or HH:MM:SS Format|
-      | is_automated               | Integer        | Optional  | 0: Manual, 1: Auto, 2: Both           |
-      | is_automated_proposed      | Boolean        | Optional  | Default 0                             |
-      | script                     | String         | Optional  |                                       |
-      | arguments                  | String         | Optional  |                                       |
-      | requirement                | String         | Optional  |                                       |
-      | alias                      | String         | Optional  | Must be unique                        |
-      | action                     | String         | Optional  |                                       |
-      | effect                     | String         | Optional  | Expected Result                       |
-      | setup                      | String         | Optional  |                                       |
-      | breakdown                  | String         | Optional  |                                       |
-      | tag                        | Array/String   | Optional  | String Comma separated                |
-      | bug                        | Array/String   | Optional  | String Comma separated                |
-      | extra_link                 | String         | Optional  | reference link                        |
-      +----------------------------+----------------+-----------+---------------------------------------+
+      +----------------------------+----------------+-----------+----------------------------+
+      | Field                      | Type           | Null      | Description                |
+      +----------------------------+----------------+-----------+----------------------------+
+      | product                    | Integer        | Required  | ID of Product              |
+      | category                   | Integer        | Required  | ID of Category             |
+      | priority                   | Integer        | Required  | ID of Priority             |
+      | summary                    | String         | Required  |                            |
+      | case_status                | Integer        | Optional  | ID of case status          |
+      | plan                       | Array/Str/Int  | Optional  | ID or List of plan_ids     |
+      | component                  | Integer/String | Optional  | ID of Priority             |
+      | default_tester             | String         | Optional  | Login of tester            |
+      | estimated_time             | String         | Optional  | 2h30m30s(recommend)        |
+      |                            |                |           |  or HH:MM:SS Format        |
+      | is_automated               | Integer        | Optional  | 0: Manual, 1: Auto, 2: Both|
+      | is_automated_proposed      | Boolean        | Optional  | Default 0                  |
+      | script                     | String         | Optional  |                            |
+      | arguments                  | String         | Optional  |                            |
+      | requirement                | String         | Optional  |                            |
+      | alias                      | String         | Optional  | Must be unique             |
+      | action                     | String         | Optional  |                            |
+      | effect                     | String         | Optional  | Expected Result            |
+      | setup                      | String         | Optional  |                            |
+      | breakdown                  | String         | Optional  |                            |
+      | tag                        | Array/String   | Optional  | String Comma separated     |
+      | bug                        | Array/String   | Optional  | String Comma separated     |
+      | extra_link                 | String         | Optional  | reference link             |
+      +----------------------------+----------------+-----------+----------------------------+
 
-    Returns:     Array/Hash: The newly created object hash if a single case was created, or
-                             an array of objects if more than one was created. If any single case threw an
-                             error during creation, a hash with an ERROR key will be set in its place.
+    Returns: Array/Hash: The newly created object hash if a single case was created, or
+             an array of objects if more than one was created. If any single case
+             threw an error during creation, a hash with an ERROR key will be set in its place.
 
     Example:
     # Minimal test case parameters
@@ -455,11 +456,10 @@ def detach_bug(request, case_ids, bug_ids):
     """
     Description: Remove one or more bugs to the selected test cases.
 
-    Params:      $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of case_ids, or a string of comma separated case_ids
-
-                 $bug_ids - Integer/Array/String: An integer representing the ID in the database,
-                           an array of bug_ids, or a string of comma separated primary key of bug_ids.
+    Params: $case_ids - Integer/Array/String: An integer representing the ID in the database,
+                          an array of case_ids, or a string of comma separated case_ids
+            $bug_ids - Integer/Array/String: An integer representing the ID in the database,
+                        an array of bug_ids, or a string of comma separated primary key of bug_ids.
 
     Returns:     Array: empty on success or an array of hashes with failure
                  codes if a failure occured.
@@ -955,12 +955,13 @@ def remove_tag(request, case_ids, tags):
     """
     Description: Remove a tag from a case.
 
-    Params:      $case_ids - Integer/Array/String: An integer or alias representing the ID in the database,
-                             an array of case_ids, or a string of comma separated case_ids.
+    Params: $case_ids - Integer/Array/String: An integer or alias representing the ID
+                         in the database, an array of case_ids,
+                         or a string of comma separated case_ids.
 
-                 $tags - String/Array - A single or multiple tag to be removed.
+            $tags - String/Array - A single or multiple tag to be removed.
 
-    Returns:     Array: Empty on success.
+    Returns: Array: Empty on success.
 
     Example:
     # Remove tag 'foo' from case 1234
@@ -991,10 +992,10 @@ def store_text(request, case_id, action, effect='', setup='', breakdown='',
     """
     Description: Update the large text fields of a case.
 
-    Params:      $case_id - Integer: An integer or alias representing the ID in the database.
-                 $action, $effect, $setup, $breakdown - String: Text for these fields.
-                 [$author_id] = Integer/String: (OPTIONAL) The numeric ID or the login of the author.
-                                Defaults to logged in user
+    Params:    $case_id - Integer: An integer or alias representing the ID in the database.
+               $action, $effect, $setup, $breakdown - String: Text for these fields.
+               [$author_id] = Integer/String: (OPTIONAL) The numeric ID or the login of the author.
+                              Defaults to logged in user
 
     Returns:     Hash: case text object hash.
 
@@ -1026,13 +1027,13 @@ def store_text(request, case_id, action, effect='', setup='', breakdown='',
 @permission_required('testcases.delete_testcaseplan', raise_exception=True)
 def unlink_plan(requst, case_id, plan_id):
     """
-    Description: Unlink a test case from the given plan. If only one plan is linked, this will delete
-                 the test case.
+    Description: Unlink a test case from the given plan.
+                 If only one plan is linked, this will delete the test case.
 
-    Params:      $case_id - Integer/String: An integer or alias representing the ID in the database.
-                 $plan_id - Integer: An integer representing the ID in the database.
+    Params:     $case_id - Integer/String: An integer or alias representing the ID in the database.
+                $plan_id - Integer: An integer representing the ID in the database.
 
-    Returns:     Array: Array of plans hash still linked if any, empty if not.
+    Returns:    Array: Array of plans hash still linked if any, empty if not.
 
     Example:
     >>> TestCase.unlink_plan(12345, 137)

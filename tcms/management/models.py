@@ -312,7 +312,8 @@ class TestEnvironment(TCMSActionModel):
 
 class TestEnvironmentCategory(models.Model):
     env_category_id = models.AutoField(primary_key=True)
-    product = models.ForeignKey(Product, related_name='environment_categories', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='environment_categories',
+                                on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=255, blank=True)
 
     class Meta:
@@ -327,7 +328,8 @@ class TestEnvironmentElement(models.Model):
     element_id = models.AutoField(max_length=10, primary_key=True)
     env_category = models.ForeignKey(TestEnvironmentCategory, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=255, blank=True)
-    parent = models.ForeignKey('self', null=True, related_name='parent_set', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, related_name='parent_set',
+                               on_delete=models.CASCADE)
     is_private = models.BooleanField(db_column='isprivate', default=False)
 
     class Meta:
@@ -398,7 +400,8 @@ class TestTag(TCMSActionModel):
 
 class TestAttachment(models.Model):
     attachment_id = models.AutoField(max_length=10, primary_key=True)
-    submitter = models.ForeignKey('auth.User', related_name='attachments', blank=True, null=True, on_delete=models.CASCADE)
+    submitter = models.ForeignKey('auth.User', related_name='attachments', blank=True, null=True,
+                                  on_delete=models.CASCADE)
     description = models.CharField(max_length=1024, blank=True, null=True)
     file_name = models.CharField(db_column='filename', max_length=255, unique=True, blank=True)
     stored_name = models.CharField(max_length=128, unique=True, blank=True, null=True)
@@ -426,7 +429,8 @@ class TestAttachmentData(models.Model):
 
 class TCMSEnvGroup(TCMSActionModel):
     name = models.CharField(unique=True, max_length=255)
-    manager = models.ForeignKey('auth.User', related_name='env_group_manager', on_delete=models.CASCADE)
+    manager = models.ForeignKey('auth.User', related_name='env_group_manager',
+                                on_delete=models.CASCADE)
     modified_by = models.ForeignKey(
         'auth.User',
         related_name='env_group_modifier',

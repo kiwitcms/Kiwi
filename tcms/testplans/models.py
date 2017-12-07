@@ -50,11 +50,14 @@ class TestPlan(TCMSActionModel):
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
     product_version = models.ForeignKey(Version, related_name='plans', on_delete=models.CASCADE)
-    owner = models.ForeignKey('auth.User', blank=True, null=True, related_name='myplans', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', blank=True, null=True, related_name='myplans',
+                              on_delete=models.CASCADE)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    product = models.ForeignKey('management.Product', related_name='plan', on_delete=models.CASCADE)
+    product = models.ForeignKey('management.Product', related_name='plan',
+                                on_delete=models.CASCADE)
     type = models.ForeignKey(TestPlanType, on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
+                               on_delete=models.CASCADE)
 
     attachment = models.ManyToManyField('management.TestAttachment',
                                         through='testplans.TestPlanAttachment')

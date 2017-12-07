@@ -47,7 +47,8 @@ def add_tag(request, plan_ids, tags):
     """
     Description: Add one or more tags to the selected test plans.
 
-    Params:      $plan_ids - Integer/Array/String: An integer representing the ID of the plan in the database,
+    Params:      $plan_ids - Integer/Array/String: An integer representing the ID of the plan
+                      in the database,
                       an arry of plan_ids, or a string of comma separated plan_ids.
 
                   $tags - String/Array - A single tag, an array of tags,
@@ -83,9 +84,10 @@ def add_component(request, plan_ids, component_ids):
     """
     Description: Adds one or more components to the selected test plan.
 
-    Params:      $plan_ids - Integer/Array/String: An integer representing the ID of the plan in the database.
-                 $component_ids - Integer/Array/String - The component ID, an array of Component IDs
-                                  or a comma separated list of component IDs.
+    Params:      $plan_ids - Integer/Array/String: An integer representing the ID of the plan
+                             in the database.
+                 $component_ids - Integer/Array/String - The component ID, an array of
+                                  Component IDs or a comma separated list of component IDs.
 
     Returns:     Array: empty on success or an array of hashes with failure
                         codes if a failure occured.
@@ -135,19 +137,19 @@ def create(request, values):
 
     Params:      $values - Hash: A reference to a hash with keys and values
                   matching the fields of the test plan to be created.
-      +-------------------------------------------+----------------+-----------+-------------------------------------------+
-      | Field                                     | Type           | Null      | Description                               |
-      +-------------------------------------------+----------------+-----------+-------------------------------------------+
-      | product                                   | Integer        | Required  | ID of product                             |
-      | name                                      | String         | Required  |                                           |
-      | type                                      | Integer        | Required  | ID of plan type                           |
-      | product_version(default_product_version)  | Integer        | Required  | ID of version, product_version(recommend),|
-      |                                           |                |           | default_product_version will be deprecated|
-      |                                           |                |           | in future release.                        |
-      | text                                      | String         | Required  | Plan documents, HTML acceptable.          |
-      | parent                                    | Integer        | Optional  | Parent plan ID                            |
-      | is_active                                 | Boolean        | Optional  | 0: Archived 1: Active (Default 0)         |
-      +-------------------------------------------+----------------+-----------+-------------------------------------------+
+     +--------------------------+---------+-----------+-------------------------------------------+
+     | Field                    | Type    | Null      | Description                               |
+     +--------------------------+---------+-----------+-------------------------------------------+
+     | product                  | Integer | Required  | ID of product                             |
+     | name                     | String  | Required  |                                           |
+     | type                     | Integer | Required  | ID of plan type                           |
+     | product_version          | Integer | Required  | ID of version, product_version(recommend),|
+     | (default_product_version)|         |           | default_product_version will be deprecated|
+     |                          |         |           | in future release.                        |
+     | text                     | String  | Required  | Plan documents, HTML acceptable.          |
+     | parent                   | Integer | Optional  | Parent plan ID                            |
+     | is_active                | Boolean | Optional  | 0: Archived 1: Active (Default 0)         |
+     +--------------------------+---------+-----------+-------------------------------------------+
 
     Returns:     The newly created object hash.
 
@@ -494,8 +496,9 @@ def remove_tag(request, plan_ids, tags):
     """
     Description: Remove a tag from a plan.
 
-    Params:      $plan_ids - Integer/Array/String: An integer or alias representing the ID in the database,
-                                                   an array of plan_ids, or a string of comma separated plan_ids.
+    Params:      $plan_ids - Integer/Array/String: An integer or alias representing the ID
+                                                   in the database, an array of plan_ids,
+                                                   or a string of comma separated plan_ids.
 
                  $tag - String - A single tag to be removed.
 
@@ -601,20 +604,20 @@ def update(request, plan_ids, values):
 
                  $values - Hash of keys matching TestPlan fields and the new values
                            to set each field to.
-      +-------------------------------------------+----------------+--------------------------------------------+
-      | Field                                     | Type           | Description                                |
-      +-------------------------------------------+----------------+--------------------------------------------+
-      | product                                   | Integer        | ID of product                              |
-      | name                                      | String         |                                            |
-      | type                                      | Integer        | ID of plan type                            |
-      | product_version(default_product_version)  | Integer        | ID of version, product_version(recommend), |
-      |                                           |                | default_product_version will be deprecated |
-      |                                           |                | in future release.                         |
-      | owner                                     | String/Integer | user_name/user_id                          |
-      | parent                                    | Integer        | Parent plan ID                             |
-      | is_active                                 | Boolean        | True/False                                 |
-      | env_group                                 | Integer        | New environment group ID                   |
-      +-------------------------+----------------+--------------------------------------------------------------+
+      +---------------------------+----------------+--------------------------------------------+
+      | Field                     | Type           | Description                                |
+      +---------------------------+----------------+--------------------------------------------+
+      | product                   | Integer        | ID of product                              |
+      | name                      | String         |                                            |
+      | type                      | Integer        | ID of plan type                            |
+      | product_version           | Integer        | ID of version, product_version(recommend), |
+      |  (default_product_version)|                | default_product_version will be deprecated |
+      |                           |                | in future release.                         |
+      | owner                     | String/Integer | user_name/user_id                          |
+      | parent                    | Integer        | Parent plan ID                             |
+      | is_active                 | Boolean        | True/False                                 |
+      | env_group                 | Integer        | New environment group ID                   |
+      +---------------------------+-------------------------------------------------------------+
 
     Returns:     Hash: The updated test plan object.
 

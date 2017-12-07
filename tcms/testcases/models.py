@@ -105,7 +105,8 @@ class TestCaseStatus(TCMSActionModel):
 class TestCaseCategory(TCMSActionModel):
     id = models.AutoField(db_column='category_id', primary_key=True)
     name = models.CharField(max_length=255)
-    product = models.ForeignKey('management.Product', related_name="category", on_delete=models.CASCADE)
+    product = models.ForeignKey('management.Product', related_name="category",
+                                on_delete=models.CASCADE)
     description = models.TextField(blank=True)
 
     class Meta:
@@ -132,9 +133,12 @@ class TestCase(TCMSActionModel):
     notes = models.TextField(blank=True, null=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
-    category = models.ForeignKey(TestCaseCategory, related_name='category_case', on_delete=models.CASCADE)
-    priority = models.ForeignKey('management.Priority', related_name='priority_case', on_delete=models.CASCADE)
-    author = models.ForeignKey('auth.User', related_name='cases_as_author', on_delete=models.CASCADE)
+    category = models.ForeignKey(TestCaseCategory, related_name='category_case',
+                                 on_delete=models.CASCADE)
+    priority = models.ForeignKey('management.Priority', related_name='priority_case',
+                                 on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User', related_name='cases_as_author',
+                               on_delete=models.CASCADE)
     default_tester = models.ForeignKey('auth.User',
                                        related_name='cases_as_default_tester',
                                        blank=True,
@@ -348,7 +352,8 @@ class TestCase(TCMSActionModel):
                 if not it.is_adding_testcase_to_issue_disabled():
                     it.add_testcase_to_issue([self], bug)
                 else:
-                    raise ValueError('Enable linking test cases by configuring API parameters for this Issue Tracker!')
+                    raise ValueError('Enable linking test cases by configuring API parameters '
+                                     'for this Issue Tracker!')
         else:
             raise ValueError('Bug %s already exist.' % bug_id)
 
@@ -597,7 +602,8 @@ class TestCasePlan(models.Model):
 
 class TestCaseAttachment(models.Model):
     attachment = models.ForeignKey('management.TestAttachment', on_delete=models.CASCADE)
-    case = models.ForeignKey(TestCase, default=None, related_name='case_attachment', on_delete=models.CASCADE)
+    case = models.ForeignKey(TestCase, default=None, related_name='case_attachment',
+                             on_delete=models.CASCADE)
     case_run = models.ForeignKey('testruns.TestCaseRun', default=None,
                                  null=True, blank=True,
                                  related_name='case_run_attachment',

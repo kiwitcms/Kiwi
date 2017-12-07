@@ -340,9 +340,11 @@ def add_component(request, product, name, initial_owner_id=None, initial_qa_cont
                             Integer: product_id of the product in the Database
                             String: Product name
                  $name    - String: Component name
-                 [$initial_owner_id] - Integer: (OPTIONAL) The numeric ID or the login of the author.
+                 [$initial_owner_id] - Integer: (OPTIONAL) The numeric ID or the login
+                                                           of the author.
                                     Defaults to logged in user.
-                 [$initial_qa_contact_id] - Integer: (OPTIONAL) The numeric ID or the login of the author.
+                 [$initial_qa_contact_id] - Integer: (OPTIONAL) The numeric ID or the login
+                                                                of the author.
                                          Defaults to logged in user.
 
 
@@ -425,9 +427,11 @@ def update_component(request, component_id, values):
 
     component = Component.objects.get(pk=int(component_id))
     component.name = name
-    if values.get('initial_owner_id') and User.objects.filter(pk=values['initial_owner_id']).exists():
+    if values.get('initial_owner_id') and \
+            User.objects.filter(pk=values['initial_owner_id']).exists():
         component.initial_owner_id = values['initial_owner_id']
-    if values.get('initial_qa_contact_id') and User.objects.filter(pk=values['initial_qa_contact_id']).exists():
+    if values.get('initial_qa_contact_id') and \
+            User.objects.filter(pk=values['initial_qa_contact_id']).exists():
         component.initial_qa_contact_id = values['initial_qa_contact_id']
     component.save()
     return component.serialize()

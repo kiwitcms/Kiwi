@@ -57,9 +57,11 @@ def create(request, values):
 
     Example:
     # Create build by product ID and set the build active.
-    >>> Build.create({'product': 234, 'name': 'tcms_testing', 'description': 'None', 'is_active': 1})
+    >>> Build.create({'product': 234, 'name': 'tcms_testing', 'description': 'None',
+                      'is_active': 1})
     # Create build by product name and set the build to inactive.
-    >>> Build.create({'product': 'TCMS', 'name': 'tcms_testing 2', 'description': 'None', 'is_active': 0})
+    >>> Build.create({'product': 'TCMS', 'name': 'tcms_testing 2', 'description': 'None',
+                      'is_active': 0})
     """
     if not values.get('product') or not values.get('name'):
         raise ValueError('Product and name are both required.')
