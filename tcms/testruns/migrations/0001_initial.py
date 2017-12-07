@@ -18,7 +18,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TCMSEnvRunValueMap',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True,
+                                        primary_key=True)),
             ],
             options={
                 'db_table': 'tcms_env_run_value_map',
@@ -34,9 +35,12 @@ class Migration(migrations.Migration):
                 ('notes', models.TextField(null=True, blank=True)),
                 ('sortkey', models.IntegerField(null=True, blank=True)),
                 ('environment_id', models.IntegerField(default=0)),
-                ('assignee', models.ForeignKey(related_name='case_run_assignee', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)),
+                ('assignee', models.ForeignKey(related_name='case_run_assignee', blank=True,
+                                               to=settings.AUTH_USER_MODEL, null=True,
+                                               on_delete=models.CASCADE)),
                 ('build', models.ForeignKey(to='management.TestBuild', on_delete=models.CASCADE)),
-                ('case', models.ForeignKey(related_name='case_run', to='testcases.TestCase', on_delete=models.CASCADE)),
+                ('case', models.ForeignKey(related_name='case_run', to='testcases.TestCase',
+                                           on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_case_runs',
@@ -46,7 +50,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestCaseRunStatus',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, db_column='case_run_status_id')),
+                ('id', models.AutoField(serialize=False, primary_key=True,
+                                        db_column='case_run_status_id')),
                 ('name', models.CharField(unique=True, max_length=60, blank=True)),
                 ('sortkey', models.IntegerField(default=0, null=True, blank=True)),
                 ('description', models.TextField(null=True, blank=True)),
@@ -70,7 +75,8 @@ class Migration(migrations.Migration):
                 ('estimated_time', tcms.core.models.fields.DurationField(default=0, max_length=11)),
                 ('environment_id', models.IntegerField(default=0)),
                 ('auto_update_run_status', models.BooleanField(default=False)),
-                ('build', models.ForeignKey(related_name='build_run', to='management.TestBuild', on_delete=models.CASCADE)),
+                ('build', models.ForeignKey(related_name='build_run', to='management.TestBuild',
+                                            on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_runs',
@@ -80,9 +86,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestRunCC',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('run', models.ForeignKey(related_name='cc_list', to='testruns.TestRun', on_delete=models.CASCADE)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True,
+                                        primary_key=True)),
+                ('run', models.ForeignKey(related_name='cc_list', to='testruns.TestRun',
+                                          on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, db_column='who',
+                                           on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_run_cc',
@@ -91,7 +100,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestRunTag',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True,
+                                        primary_key=True)),
                 ('user', models.IntegerField(default='0', db_column='userid')),
                 ('run', models.ForeignKey(to='testruns.TestRun', on_delete=models.CASCADE)),
                 ('tag', models.ForeignKey(to='management.TestTag', on_delete=models.CASCADE)),
@@ -108,27 +118,33 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testrun',
             name='default_tester',
-            field=models.ForeignKey(related_name='default_tester', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='default_tester', blank=True,
+                                    to=settings.AUTH_USER_MODEL, null=True,
+                                    on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testrun',
             name='env_value',
-            field=models.ManyToManyField(to='management.TCMSEnvValue', through='testruns.TCMSEnvRunValueMap'),
+            field=models.ManyToManyField(to='management.TCMSEnvValue',
+                                         through='testruns.TCMSEnvRunValueMap'),
         ),
         migrations.AddField(
             model_name='testrun',
             name='manager',
-            field=models.ForeignKey(related_name='manager', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='manager', to=settings.AUTH_USER_MODEL,
+                                    on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testrun',
             name='plan',
-            field=models.ForeignKey(related_name='run', to='testplans.TestPlan', on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='run', to='testplans.TestPlan',
+                                    on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testrun',
             name='product_version',
-            field=models.ForeignKey(related_name='version_run', to='management.Version', on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='version_run', to='management.Version',
+                                    on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testrun',
@@ -143,12 +159,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcaserun',
             name='run',
-            field=models.ForeignKey(related_name='case_run', to='testruns.TestRun', on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='case_run', to='testruns.TestRun',
+                                    on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='testcaserun',
             name='tested_by',
-            field=models.ForeignKey(related_name='case_run_tester', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='case_run_tester', blank=True,
+                                    to=settings.AUTH_USER_MODEL, null=True,
+                                    on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='tcmsenvrunvaluemap',

@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='testruntag',
             name='run',
-            field=models.ForeignKey(related_name='tags', to='testruns.TestRun', on_delete=models.CASCADE),
+            field=models.ForeignKey(related_name='tags', to='testruns.TestRun',
+                                    on_delete=models.CASCADE),
         ),
     ]

@@ -5,7 +5,8 @@ from tcms.core.models import TCMSContentTypeBaseModel
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField('auth.User', unique=True, related_name='profile', on_delete=models.CASCADE)
+    user = models.OneToOneField('auth.User', unique=True, related_name='profile',
+                                on_delete=models.CASCADE)
     phone_number = models.CharField(blank=True, default='', max_length=128)
     url = models.URLField(blank=True, default='')
     im = models.CharField(blank=True, default='', max_length=128)

@@ -61,4 +61,5 @@ class TCMSActionModel(models.Model, UrlMixin):
             if not (field.name is 'notes') and isinstance(field, strip_types):
                 value = getattr(self, field.name)
                 if value:
-                    setattr(self, field.name, value.replace('\t', ' ').replace('\n', ' ').replace('\r', ' '))
+                    setattr(self, field.name,
+                            value.replace('\t', ' ').replace('\n', ' ').replace('\r', ' '))

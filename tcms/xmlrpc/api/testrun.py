@@ -46,8 +46,9 @@ def add_cases(request, run_ids, case_ids):
     Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database
                                                   an array of IDs, or a comma separated list of IDs.
 
-                 $case_ids - Integer/Array/String: An integer or alias representing the ID in the database,
-                                                  an arry of case_ids or aliases, or a string of comma separated case_ids.
+                 $case_ids - Integer/Array/String: An integer or alias representing the ID in the
+                                                   database, an array of case_ids or aliases, or a
+                                                   string of comma separated case_ids.
 
     Returns:     Array: empty on success or an array of hashes with failure
                         codes if a failure occured.
@@ -79,8 +80,9 @@ def remove_cases(request, run_ids, case_ids):
     Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database
                                                   an array of IDs, or a comma separated list of IDs.
 
-                 $case_ids - Integer/Array/String: An integer or alias representing the ID in the database,
-                                                  an arry of case_ids or aliases, or a string of comma separated case_ids.
+                 $case_ids - Integer/Array/String: An integer or alias representing the ID in the
+                                                   database, an arry of case_ids or aliases, or a
+                                                   string of comma separated case_ids.
 
     Returns:     Array: empty on success
 
@@ -119,7 +121,8 @@ def add_tag(request, run_ids, tags):
     Description: Add one or more tags to the selected test runs.
 
     Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database,
-                                                  an arry of run_ids, or a string of comma separated run_ids.
+                                                  an arry of run_ids, or a string of
+                                                  comma separated run_ids.
 
                  $tags - String/Array - A single tag, an array of tags,
                                         or a comma separated list of tags.
@@ -240,14 +243,17 @@ def create(request, values):
 @permission_required('testruns.change_tcmsenvrunvaluemap', raise_exception=True)
 def env_value(request, action, run_ids, env_value_ids):
     """
-    Description: add/remove env values to the given runs, function is same as link_env_value/unlink_env_value
+    Description: add/remove env values to the given runs,
+                 function is same as link_env_value/unlink_env_value
 
     Params:      $action        - String: 'add' or 'remove'.
-                 $run_ids       - Integer/Array/String: An integer representing the ID in the database,
-                                  an array of run_ids, or a string of comma separated run_ids.
+                 $run_ids       - Integer/Array/String: An integer representing the ID
+                                  in the database, an array of run_ids,
+                                  or a string of comma separated run_ids.
 
-                 $env_value_ids - Integer/Array/String: An integer representing the ID in the database,
-                                  an array of env_value_ids, or a string of comma separated env_value_ids.
+                 $env_value_ids - Integer/Array/String: An integer representing the ID
+                                  in the database, an array of env_value_ids,
+                                  or a string of comma separated env_value_ids.
 
     Returns:     Array: empty on success or an array of hashes with failure
                         codes if a failure occured.
@@ -361,7 +367,8 @@ def get_bugs(request, run_ids):
     Description: Get the list of bugs attached to this run.
 
     Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database
-                                                  an array of integers or a comma separated list of integers.
+                                                  an array of integers or a comma separated list
+                                                  of integers.
 
     Returns:     Array: An array of bug object hashes.
 
@@ -520,8 +527,8 @@ def remove_tag(request, run_ids, tags):
     """
     Description: Remove a tag from a run.
 
-    Params:      $run_ids - Integer/Array/String: An integer or alias representing the ID in the database,
-                             an array of run_ids, or a string of comma separated run_ids.
+    Params:      $run_ids - Integer/Array/String: An integer or alias representing the ID in the
+                             database, an array of run_ids, or a string of comma separated run_ids.
 
                  $tag - String - A single tag to be removed.
 
@@ -555,8 +562,8 @@ def update(request, run_ids, values):
     """
     Description: Updates the fields of the selected test run.
 
-    Params:      $run_ids - Integer/Array/String: An integer or alias representing the ID in the database,
-                            an array of run_ids, or a string of comma separated run_ids.
+    Params:      $run_ids - Integer/Array/String: An integer or alias representing the ID in the
+                             database, an array of run_ids, or a string of comma separated run_ids.
 
                  $values - Hash of keys matching TestRun fields and the new values
                            to set each field to. See params of TestRun.create for description
@@ -654,11 +661,13 @@ def link_env_value(request, run_ids, env_value_ids):
     """
     Description: Link env values to the given runs.
 
-    Params:      $run_ids       - Integer/Array/String: An integer representing the ID in the database,
-                                  an array of run_ids, or a string of comma separated run_ids.
+    Params:      $run_ids       - Integer/Array/String: An integer representing the ID in the
+                                   database, an array of run_ids, or a string of
+                                   comma separated run_ids.
 
-                 $env_value_ids - Integer/Array/String: An integer representing the ID in the database,
-                                  an array of env_value_ids, or a string of comma separated env_value_ids.
+                 $env_value_ids - Integer/Array/String: An integer representing the ID in the
+                                   database, an array of env_value_ids, or a string of
+                                   comma separated env_value_ids.
 
     Returns:     Array: empty on success or an array of hashes with failure
                         codes if a failure occured.
@@ -676,11 +685,13 @@ def unlink_env_value(request, run_ids, env_value_ids):
     """
     Description: Unlink env values to the given runs.
 
-    Params:      $run_ids       - Integer/Array/String: An integer representing the ID in the database,
-                                  an array of run_ids, or a string of comma separated run_ids.
+    Params:      $run_ids       - Integer/Array/String: An integer representing the ID in the
+                                   database, an array of run_ids, or a string of
+                                   comma separated run_ids.
 
-                 $env_value_ids - Integer/Array/String: An integer representing the ID in the database,
-                                  an array of env_value_ids, or a string of comma separated env_value_ids.
+                 $env_value_ids - Integer/Array/String: An integer representing the ID in the
+                                   database, an array of env_value_ids, or a string of
+                                   comma separated env_value_ids.
 
     Returns:     Array: empty on success or an array of hashes with failure
                         codes if a failure occured.

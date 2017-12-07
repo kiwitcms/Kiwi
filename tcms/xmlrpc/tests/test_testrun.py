@@ -107,7 +107,8 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.assertFalse(tag_exists)
 
     def test_array_argument(self):
-        XmlrpcTestRun.remove_tag(self.http_req, self.test_runs[0].pk, [self.tag0.name, self.tag_name])
+        XmlrpcTestRun.remove_tag(self.http_req, self.test_runs[0].pk,
+                                 [self.tag0.name, self.tag_name])
         tag_exists = TestRun.objects.filter(pk=self.test_runs[0].pk,
                                             tag__name__in=[self.tag0.name, self.tag_name])
         self.assertFalse(tag_exists.exists())

@@ -72,7 +72,8 @@ class XMLRPCHandlerFactory(object):
                 pass
 
             if path.count(".") == 0:
-                raise ImproperlyConfigured("Error registering XML-RPC method: '%s' must be one of (function, 'module' or 'module.function')" % path)
+                raise ImproperlyConfigured("Error registering XML-RPC method: '%s' must be one of "
+                                           "(function, 'module' or 'module.function')" % path)
 
             # try to find callable function
             module_name, fn = path.rsplit(".", 1)
@@ -80,15 +81,18 @@ class XMLRPCHandlerFactory(object):
             try:
                 module = __import__(module_name, {}, {}, [fn])
             except ImportError as ex:
-                raise ImproperlyConfigured("Error registering XML-RPC method: module '%s' cannot be imported: %s" % (module_name, ex))
+                raise ImproperlyConfigured("Error registering XML-RPC method: module '%s' "
+                                           "cannot be imported: %s" % (module_name, ex))
 
             try:
                 func = getattr(module, fn)
             except AttributeError:
-                raise ImproperlyConfigured("Error registering XML-RPC method: module '%s' doesn't define function '%s'" % (module, fn))
+                raise ImproperlyConfigured("Error registering XML-RPC method: module '%s' doesn't"
+                                           " define function '%s'" % (module, fn))
 
             if not callable(func):
-                raise ImproperlyConfigured("Error registering XML-RPC method: '%s' is not callable in module '%s'" % (fn, module_name))
+                raise ImproperlyConfigured("Error registering XML-RPC method: '%s' is not callable"
+                                           " in module '%s'" % (fn, module_name))
 
             # *path* is a module.function, register it as *name*
             self.xmlrpc_dispatcher.register_function(func, name)
@@ -106,7 +110,8 @@ class XMLRPCHandlerFactory(object):
             django.db.reset_queries()
 
         if request.method == "POST":
-            return HttpResponse(self.xmlrpc_dispatcher._marshaled_dispatch(request), content_type="text/xml")
+            return HttpResponse(self.xmlrpc_dispatcher._marshaled_dispatch(request),
+                                content_type="text/xml")
         else:
             method_list = []
             for method in self.xmlrpc_dispatcher.system_listMethods():

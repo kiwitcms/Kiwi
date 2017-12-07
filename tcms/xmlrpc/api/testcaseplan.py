@@ -16,8 +16,10 @@ def get(request, case_id, plan_id):
     """
     Description: Used to load an existing test-case-plan from the database.
 
-    Params:      $case_id - Integer: An integer representing the ID of the test case in the database.
-                 $plan_id - Integer: An integer representing the ID of the test plan in the database.
+    Params:      $case_id - Integer: An integer representing the ID of the test case
+                                     in the database.
+                 $plan_id - Integer: An integer representing the ID of the test plan
+                                     in the database.
 
     Returns:     A blessed TestCasePlan object hash
 
@@ -35,9 +37,12 @@ def update(request, case_id, plan_id, sortkey):
     """
     Description: Updates the sortkey of the selected test-case-plan.
 
-    Params:      $case_id - Integer: An integer representing the ID of the test case in the database.
-                 $plan_id - Integer: An integer representing the ID of the test plan in the database.
-                 $sortkey - Integer: An integer representing the ID of the sortkey in the database.
+    Params:      $case_id - Integer: An integer representing the ID of the test case
+                                     in the database.
+                 $plan_id - Integer: An integer representing the ID of the test plan
+                                     in the database.
+                 $sortkey - Integer: An integer representing the ID of the sortkey
+                                     in the database.
 
     Returns:     A blessed TestCasePlan object hash
 

@@ -66,13 +66,15 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
 
         self.assertContains(
             response,
-            '<textarea name="comment" cols="40" id="id_comment" maxlength="10000" rows="10">\n</textarea>',
+            '<textarea name="comment" cols="40" id="id_comment" maxlength="10000" '
+            'rows="10">\n</textarea>',
             html=True)
 
         for status in TestCaseRunStatus.objects.all():
             self.assertContains(
                 response,
-                "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" title=\"%s\"" % (status.name.lower(), status.name),
+                "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" "
+                "title=\"%s\"" % (status.name.lower(), status.name),
                 html=False
             )
 

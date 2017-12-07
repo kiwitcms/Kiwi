@@ -27,5 +27,6 @@ INSTALLED_APPS += ['debug_toolbar', 'django_extensions']  # noqa: F405
 FILE_UPLOAD_DIR = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')  # noqa: F405
 
 # Needed by django.template.context_processors.debug:
-# See http://docs.djangoproject.com/en/dev/ref/templates/api/#django-template-context-processors-debug
+# See:
+# http://docs.djangoproject.com/en/dev/ref/templates/api/#django-template-context-processors-debug
 INTERNAL_IPS = ('127.0.0.1', )

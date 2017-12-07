@@ -90,10 +90,12 @@ class DjangoXMLRPCDispatcher(SimpleXMLRPCDispatcher):
                 response = self._dispatch(method, params)
             # wrap response in a singleton tuple
             response = (response,)
-            response = xmlrpc.client.dumps(response, methodresponse=1, allow_none=self.allow_none, encoding=self.encoding)
+            response = xmlrpc.client.dumps(response, methodresponse=1,
+                                           allow_none=self.allow_none, encoding=self.encoding)
 
         except xmlrpc.client.Fault as fault:
-            response = xmlrpc.client.dumps(fault, allow_none=self.allow_none, encoding=self.encoding)
+            response = xmlrpc.client.dumps(fault, allow_none=self.allow_none,
+                                           encoding=self.encoding)
 
         except Exception:
             e_type, e_value, _ = sys.exc_info()

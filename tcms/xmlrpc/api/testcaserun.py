@@ -63,8 +63,9 @@ def add_comment(request, case_run_ids, comment):
     """
     Description: Adds comments to selected test case runs.
 
-    Params:      $case_run_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of case_run_ids, or a string of comma separated case_run_ids.
+    Params:      $case_run_ids - Integer/Array/String: An integer representing the ID
+                             in the database, an array of case_run_ids, or a string of
+                             comma separated case_run_ids.
 
                  $comment - String - The comment
 
@@ -173,18 +174,18 @@ def create(request, values):
 
     Params:      $values - Hash: A reference to a hash with keys and values
                            matching the fields of the test case to be created.
-  +--------------------+----------------+-----------+------------------------------------------------+
-  | Field              | Type           | Null      | Description                                    |
-  +--------------------+----------------+-----------+------------------------------------------------+
-  | run                | Integer        | Required  | ID of Test Run                                 |
-  | case               | Integer        | Required  | ID of test case                                |
-  | build              | Integer        | Required  | ID of a Build in plan's product                |
-  | assignee           | Integer        | Optional  | ID of assignee                                 |
-  | case_run_status    | Integer        | Optional  | Defaults to "IDLE"                             |
-  | case_text_version  | Integer        | Optional  | Default to latest case text version            |
-  | notes              | String         | Optional  |                                                |
-  | sortkey            | Integer        | Optional  | a.k.a. Index, Default to 0                     |
-  +--------------------+----------------+-----------+------------------------------------------------+
+  +--------------------+----------------+-----------+---------------------------------------+
+  | Field              | Type           | Null      | Description                           |
+  +--------------------+----------------+-----------+---------------------------------------+
+  | run                | Integer        | Required  | ID of Test Run                        |
+  | case               | Integer        | Required  | ID of test case                       |
+  | build              | Integer        | Required  | ID of a Build in plan's product       |
+  | assignee           | Integer        | Optional  | ID of assignee                        |
+  | case_run_status    | Integer        | Optional  | Defaults to "IDLE"                    |
+  | case_text_version  | Integer        | Optional  | Default to latest case text version   |
+  | notes              | String         | Optional  |                                       |
+  | sortkey            | Integer        | Optional  | a.k.a. Index, Default to 0            |
+  +--------------------+----------------+-----------+---------------------------------------+
 
     Returns:     The newly created object hash.
 
@@ -231,11 +232,12 @@ def detach_bug(request, case_run_ids, bug_ids):
     """
     Description: Remove one or more bugs to the selected test case-runs.
 
-    Params:      $case_run_ids - Integer/Array/String: An integer or alias representing the ID in the database,
-                                                       an array of case_run_ids, or a string of comma separated case_run_ids.
+    Params:      $case_run_ids - Integer/Array/String: An integer or alias representing the ID
+                                                       in the database, an array of case_run_ids,
+                                                       or a string of comma separated case_run_ids.
 
                  $bug_ids - Integer/Array/String: An integer representing the ID in the database,
-                           an array of bug_ids, or a string of comma separated primary key of bug_ids.
+                        an array of bug_ids, or a string of comma separated primary key of bug_ids.
 
     Returns:     Array: empty on success or an array of hashes with failure
                         codes if a failure occured.
@@ -334,10 +336,11 @@ def get_s(request, case_id, run_id, build_id, environment_id=0):
     """
     Description: Used to load an existing test case from the database.
 
-    Params:      $case_id - Integer: An integer representing the ID of the test case in the database.
-                 $run_id - Integer: An integer representing the ID of the test run in the database.
-                 $build_id - Integer: An integer representing the ID of the test build in the database.
-                 $environment_id - Optional Integer: An integer representing the ID of the environment in the database.
+    Params:  $case_id - Integer: An integer representing the ID of the test case in the database.
+             $run_id - Integer: An integer representing the ID of the test run in the database.
+             $build_id - Integer: An integer representing the ID of the test build in the database.
+             $environment_id - Optional Integer: An integer representing the ID of the environment
+                               in the database.
 
     Returns:     A blessed TestCaseRun object hash
 
@@ -370,10 +373,11 @@ def get_bugs_s(request, run_id, case_id, build_id, environment_id=0):
     """
     Description: Get the list of bugs that are associated with this test case.
 
-    Params:      $run_id - Integer: An integer representing the ID of the test run in the database.
-                 $case_id - Integer: An integer representing the ID of the test case in the database.
-                 $build_id - Integer: An integer representing the ID of the test build in the database.
-                 $environment_id - Optional Integer: An integer representing the ID of the environment in the database.
+    Params:  $run_id - Integer: An integer representing the ID of the test run in the database.
+             $case_id - Integer: An integer representing the ID of the test case in the database.
+             $build_id - Integer: An integer representing the ID of the test build in the database.
+             $environment_id - Optional Integer: An integer representing the ID of the environment
+                               in the database.
 
     Returns:     Array: An array of bug object hashes.
 
@@ -398,11 +402,11 @@ def get_bugs_s(request, run_id, case_id, build_id, environment_id=0):
 @log_call(namespace=__xmlrpc_namespace__)
 def get_case_run_status(request, id=None):
     """
-    Params:      $case_run_status_id - Integer(Optional): ID of the status to return
+    Params:    $case_run_status_id - Integer(Optional): ID of the status to return
 
-    Returns:     Hash: Matching case run status object hash when your specific the case_run_status_id
-                       or return all of case run status.
-                       It will return error the case run status you specific id not found.
+    Returns:   Hash: Matching case run status object hash when your specific the case_run_status_id
+                   or return all of case run status.
+                   It will return error the case run status you specific id not found.
 
     Example:
     # Get all of case run status
@@ -447,10 +451,11 @@ def get_completion_time_s(request, run_id, case_id, build_id, environment_id=0):
     """
     Description: Returns the time in seconds that it took for this case to complete.
 
-    Params:      $case_id - Integer: An integer representing the ID of the test case in the database.
-                 $run_id - Integer: An integer representing the ID of the test run in the database.
-                 $build_id - Integer: An integer representing the ID of the test build in the database.
-                 $environment_id - Optional Integer: An integer representing the ID of the environment in the database.
+    Params: $case_id - Integer: An integer representing the ID of the test case in the database.
+            $run_id - Integer: An integer representing the ID of the test run in the database.
+            $build_id - Integer: An integer representing the ID of the test build in the database.
+            $environment_id - Optional Integer: An integer representing the ID of the environment
+                                                in the database.
 
     Returns:     Integer: Seconds since run was started till this case was completed.
                           Or empty hash for insufficent data.
@@ -496,10 +501,11 @@ def get_history_s(request, run_id, build_id, environment_id):
     Description: Get the list of case-runs for all runs this case appears in.
                   To limit this list by build or other attribute, see TestCaseRun.filter.
 
-    Params:      $case_id - Integer: An integer representing the ID of the test case in the database.
-                 $run_id - Integer: An integer representing the ID of the test run in the database.
-                 $build_id - Integer: An integer representing the ID of the test build in the database.
-                 $environment_id - Integer: An integer representing the ID of the environment in the database.
+    Params: $case_id - Integer: An integer representing the ID of the test case in the database.
+            $run_id - Integer: An integer representing the ID of the test run in the database.
+            $build_id - Integer: An integer representing the ID of the test build in the database.
+            $environment_id - Integer: An integer representing the ID of the environment
+                                       in the database.
 
     Returns:     Array: An array of case-run object hashes.
     """
@@ -602,7 +608,8 @@ def attach_log(request, case_run_id, name, url):
     Description: Add new log link to TestCaseRun
 
     Params:     $caserun_id - Integer
-                $name       - String: A short description to this new link, and accept 64 characters at most.
+                $name       - String: A short description to this new link, and accept
+                                      64 characters at most.
                 $url        - String: The actual URL.
     """
     test_case_run = TestCaseRun.objects.get(pk=case_run_id)

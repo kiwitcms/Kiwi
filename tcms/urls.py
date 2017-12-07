@@ -40,7 +40,8 @@ urlpatterns = [
     # Ajax call responder
     url(r'^ajax/update/$', ajax.update, name='ajax-update'),
     url(r'^ajax/update/case-status/$', ajax.update_cases_case_status),
-    url(r'^ajax/update/case-run-status$', ajax.update_case_run_status, name='ajax-update_case_run_status'),
+    url(r'^ajax/update/case-run-status$', ajax.update_case_run_status,
+        name='ajax-update_case_run_status'),
     url(r'^ajax/update/cases-priority/$', ajax.update_cases_priority),
     url(r'^ajax/update/cases-default-tester/$', ajax.update_cases_default_tester,
         name='ajax-update_cases_default_tester'),

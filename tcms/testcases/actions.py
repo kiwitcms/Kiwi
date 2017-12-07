@@ -117,7 +117,8 @@ class ComponentActions(BaseActions):
                 try:
                     test_case.add_component(component=component)
                 except Exception:
-                    self.ajax_response['errors_list'].append({'case': test_case.pk, 'component': component.pk})
+                    self.ajax_response['errors_list'].append({'case': test_case.pk,
+                                                              'component': component.pk})
 
         return self.render_ajax(self.ajax_response)
 
@@ -136,7 +137,8 @@ class ComponentActions(BaseActions):
                 try:
                     test_case.remove_component(component=component)
                 except Exception:
-                    self.ajax_response['errors_list'].append({'case': test_case.pk, 'component': component.pk})
+                    self.ajax_response['errors_list'].append({'case': test_case.pk,
+                                                              'component': component.pk})
 
         return self.render_ajax(self.ajax_response)
 

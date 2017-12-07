@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
             model_name='testcasebugsystem',
             name='api_url',
             field=models.CharField(
-                help_text='This is the URL to which API requests will be sent. Leave empty to disable!',
+                help_text='This is the URL to which API requests will be sent. '
+                          'Leave empty to disable!',
                 max_length=1024,
                 null=True,
                 verbose_name='API URL',
@@ -22,12 +23,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testcasebugsystem',
             name='api_password',
-            field=models.CharField(max_length=256, null=True, verbose_name='API password or token', blank=True),
+            field=models.CharField(max_length=256, null=True, verbose_name='API password or token',
+                                   blank=True),
         ),
         migrations.AddField(
             model_name='testcasebugsystem',
             name='api_username',
-            field=models.CharField(max_length=256, null=True, verbose_name='API username', blank=True),
+            field=models.CharField(max_length=256, null=True, verbose_name='API username',
+                                   blank=True),
         ),
         migrations.AddField(
             model_name='testcasebugsystem',

@@ -386,7 +386,8 @@ class TestUpdate(test.TestCase):
         # plan_1 and plan_2 point to self.env_group_1
         # and there are only 2 objects in the many-to-many table
         # so we issue XMLRPC request to modify the env_group of self.plan_2
-        plans = XmlrpcTestPlan.update(self.http_req, self.plan_2.pk, {'env_group': self.env_group_2.pk})
+        plans = XmlrpcTestPlan.update(self.http_req, self.plan_2.pk,
+                                      {'env_group': self.env_group_2.pk})
         plan = plans[0]
 
         # now verify that the returned TP (plan_2) has been updated to env_group_2
@@ -400,7 +401,8 @@ class TestUpdate(test.TestCase):
 
         # and there are still only 2 objects in the many-to-many table
         # iow no dangling objects left
-        self.assertEqual(2, TCMSEnvPlanMap.objects.filter(plan__in=[self.plan_1, self.plan_2]).count())
+        self.assertEqual(2, TCMSEnvPlanMap.objects.filter(plan__in=[self.plan_1,
+                                                                    self.plan_2]).count())
 
 
 # ################ Section for testing testplan.import_case_via_XML ########
@@ -597,7 +599,8 @@ class TestProcessCase(test.TestCase):
         case_data = sample_case_data.copy()
         case_data['author'] = 'another_user@example.com'
         xmldict = self._create_xml_dict(case_data)
-        with self.assertRaisesRegex(ValueError, 'Author "another_user@example.com" not found in DB!'):
+        with self.assertRaisesRegex(ValueError,
+                                    'Author "another_user@example.com" not found in DB!'):
             process_case(xmldict['testcase'])
 
         case_data = sample_case_data.copy()

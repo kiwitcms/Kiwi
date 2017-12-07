@@ -460,7 +460,13 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
 
         # Get associated statistics data
         run_ids = [run.pk for run in searched_runs]
-        qs = TestCaseRun.objects.filter(run__in=run_ids).values('run').annotate(cases_count=Count('case'))
+        qs = TestCaseRun.objects.filter(
+            run__in=run_ids
+        ).values(
+            'run'
+        ).annotate(
+            cases_count=Count('case')
+        )
         cases_subtotal = magic_convert(qs, key_name='run', value_name='cases_count')
 
         for run in searched_runs:
@@ -849,7 +855,8 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 url = tracker.report_issue_from_testcase(self.case_run)
                 response = {'rc': 0, 'response': url}
             else:
-                response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker by configuring its base_url!'}
+                response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker '
+                                                 'by configuring its base_url!'}
 
             return self.ajax_response(response)
 
@@ -1389,7 +1396,8 @@ def env_value(request):
 
             fragment = render(request, "run/get_environment.html",
                               {"test_run": self.test_runs[0], "is_ajax": True})
-            self.ajax_response.update({"fragment": str(fragment.content, encoding=settings.DEFAULT_CHARSET)})
+            self.ajax_response.update({"fragment": str(fragment.content,
+                                                       encoding=settings.DEFAULT_CHARSET)})
             return HttpResponse(json.dumps(self.ajax_response))
 
         def remove(self):

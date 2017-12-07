@@ -535,13 +535,16 @@ class TestGetPlans(XmlrpcAPIBaseTest):
         cls.starcraft_version_0_1 = VersionFactory(value='0.1', product=cls.product_starcraft)
         cls.starcraft_version_0_2 = VersionFactory(value='0.2', product=cls.product_starcraft)
         cls.product_streetfighter = ProductFactory(name='StreetFighter')
-        cls.streetfighter_version_0_1 = VersionFactory(value='0.1', product=cls.product_streetfighter)
+        cls.streetfighter_version_0_1 = VersionFactory(value='0.1',
+                                                       product=cls.product_streetfighter)
         cls.plans = [
             TestPlanFactory(name='StarCraft: Init',
-                            product=cls.product_starcraft, product_version=cls.starcraft_version_0_1,
+                            product=cls.product_starcraft,
+                            product_version=cls.starcraft_version_0_1,
                             author=cls.user, owner=cls.user),
             TestPlanFactory(name='StarCraft: Start',
-                            product=cls.product_starcraft, product_version=cls.starcraft_version_0_2,
+                            product=cls.product_starcraft,
+                            product_version=cls.starcraft_version_0_2,
                             author=cls.user, owner=cls.user),
             TestPlanFactory(name='StreetFighter',
                             product=cls.product_streetfighter,

@@ -756,21 +756,26 @@ class ProductTests(TestCase):
             }, follow=True)
             self.assertEqual(http.client.OK, response.status_code)
             # verify test plan was created
-            self.assertTrue(test_plan_name in str(response.content, encoding=settings.DEFAULT_CHARSET))
+            self.assertTrue(test_plan_name in str(response.content,
+                                                  encoding=settings.DEFAULT_CHARSET))
             self.assertEqual(previous_plans_count + 1, TestPlan.objects.count())
 
             # now delete the product
-            admin_delete_url = "admin:%s_%s_delete" % (product._meta.app_label, product._meta.model_name)
+            admin_delete_url = "admin:%s_%s_delete" % (product._meta.app_label,
+                                                       product._meta.model_name)
             location = reverse(admin_delete_url, args=[product.pk])
             response = self.c.get(location)
             self.assertEqual(http.client.OK, response.status_code)
-            self.assertTrue('Are you sure you want to delete the product "%s"' % product.name in str(response.content, encoding=settings.DEFAULT_CHARSET))
-            self.assertTrue("Yes, I'm sure" in str(response.content, encoding=settings.DEFAULT_CHARSET))
+            self.assertTrue('Are you sure you want to delete the product "%s"' % product.name
+                            in str(response.content, encoding=settings.DEFAULT_CHARSET))
+            self.assertTrue("Yes, I'm sure" in str(response.content,
+                                                   encoding=settings.DEFAULT_CHARSET))
 
             # confirm that we're sure we want to delete it
             response = self.c.post(location, {'post': 'yes'})
             self.assertEqual(302, response.status_code)
-            self.assertTrue('/admin/%s/%s/' % (product._meta.app_label, product._meta.model_name) in response['Location'])
+            self.assertTrue('/admin/%s/%s/' % (product._meta.app_label, product._meta.model_name)
+                            in response['Location'])
 
             # verify everything has been deleted
             self.assertFalse(Product.objects.filter(pk=product.pk).exists())
