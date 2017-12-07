@@ -1985,7 +1985,6 @@ function onTestCaseComponentClick(options) {
         'casesSelection': selection
       });
 
-      var url = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
       var cbAfterComponentChanged = function(response) {
         returnobj = jQ.parseJSON(response.responseText);
         if (returnobj.rc != 0) {
@@ -1997,6 +1996,7 @@ function onTestCaseComponentClick(options) {
         clearDialog(c);
       };
 
+      var url = '/cases/add-component/';
       updateCaseComponent(url, params, cbAfterComponentChanged);
     };
     renderComponentForm(c, params, form_observe);

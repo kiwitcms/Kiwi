@@ -204,7 +204,7 @@ Nitrate.TestCases.Details.on_load = function() {
     fireEvent(jQ('a[href=\"' + window.location.hash + '\"]')[0], 'click');
   }
 
-  jQ('#id_update_component').bind('click', function(e) {
+  jQ('#id_add_component').bind('click', function(e) {
     if (this.diabled) {
       return false;
     }
@@ -222,7 +222,7 @@ Nitrate.TestCases.Details.on_load = function() {
       var params = Nitrate.Utils.formSerialize(this);
       params['case'] = Nitrate.TestCases.Instance.pk;
 
-      var url = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
+      var url = '/cases/add-component/';
       var success = function(t) {
         returnobj = jQ.parseJSON(t.responseText);
 
@@ -251,28 +251,23 @@ Nitrate.TestCases.Details.on_load = function() {
     renderComponentForm(getDialog(), params, form_observe);
   });
 
-  jQ('#id_form_case_component').bind('submit', function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    var params = Nitrate.Utils.formSerialize(this);
-    var submitButton = jQ(this).find(':submit')[0];
-    params[submitButton.name] = submitButton.value;
-    var parameters = {
-      'a': params['a'],
-      'case': Nitrate.TestCases.Instance.pk,
-      'o_component': params['component']
-    };
-
-    if (!parameters['o_component']) {
-      return false;
-    }
-
+  jQ('#id_remove_component').bind('click', function() {
     var c = window.confirm(default_messages.confirm.remove_case_component);
     if (!c) {
       return false;
     }
 
-    updateCaseComponent(this.action, parameters, json_success_refresh_page);
+    var params = Nitrate.Utils.formSerialize(this.form);
+    if (!params['component']) {
+      return false;
+    }
+
+    var parameters = {
+        'case': Nitrate.TestCases.Instance.pk,
+        'o_component': params['component']
+    };
+
+    updateCaseComponent('/cases/remove-component/', parameters, json_success_refresh_page);
   });
 
   jQ('.link_remove_component').bind('click', function(e) {
@@ -283,11 +278,10 @@ Nitrate.TestCases.Details.on_load = function() {
 
     var form = jQ('#id_form_case_component')[0];
     var parameters = {
-      'a': 'Remove',
       'case': Nitrate.TestCases.Instance.pk,
       'o_component': jQ('input[name="component"]')[jQ('.link_remove_component').index(this)].value
     };
-    updateCaseComponent(form.action, parameters, json_success_refresh_page);
+    updateCaseComponent('/cases/remove-component/', parameters, json_success_refresh_page);
   });
 
   bindSelectAllCheckbox(jQ('#id_checkbox_all_components')[0], jQ('#id_form_case_component')[0], 'component');
@@ -967,20 +961,17 @@ function renderComponentForm(container, parameters, form_observe) {
   jQ(container).show();
 
   var callback = function(t) {
-    var action = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
+    var action = '/cases/add-component/';
     var notice = 'Press "Ctrl" to select multiple default component';
-    var h = jQ('<input>', {'type': 'hidden', 'name': 'a', 'value': 'add'});
     var a = jQ('<input>', {'type': 'submit', 'value': 'Add'});
     var c = jQ('<label>');
-    c.append(h);
     c.append(a);
-    a.bind('click', function(e) { h.val('add'); });
     var f = constructForm(d.html(), action, form_observe, notice, c[0]);
     jQ(container).html(f);
     bind_component_selector_to_product(false, false, jQ('#id_product')[0], jQ('#id_o_component')[0]);
   };
 
-  var url = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
+  var url = '/cases/get-component-form/';
 
   jQ.ajax({
     'url': url,

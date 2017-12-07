@@ -5,7 +5,6 @@ import itertools
 import six
 
 from six.moves import urllib
-from json import dumps as json_dumps
 
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -17,7 +16,7 @@ from django.db.models import Count
 from django.db.models import Q
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.http import JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import get_template
 from django.views.decorators.http import require_GET
@@ -987,115 +986,80 @@ class DeleteCasesView(View):
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
-@require_GET
-def component(request, template_name='plan/get_component.html'):
-    """Manage the component template for plan
+class PlanComponentsActionView(View):
+    """Manage a plan's components"""
 
-    Parameters:
-      plan - Necessary, to determine which plan you need to modify the
-             component template
-      a - Optional, Actions for the plan, now it have 'add', 'remove', 'update'
-          and 'render' actions. 'render' is default, use for render the page.
-          'update' is use for clean the components then add the new components
-          you specific.
-      component - Optional, The component ID you wish to operate.
-      multiple - Optional, When you modify multiple, the parameter need to
-                 post. It will response a JSON not a page.
+    template_name = 'plan/get_component.html'
 
-    Returns:
-      HTML page by default, or a JSON when the 'multiple' parameter specific.
-    """
-    ajax_response = {'rc': 0, 'response': 'ok'}
+    def get(self, request):
+        if 'plan' not in request.GET:
+            return HttpResponseBadRequest('Plan ID is not in request.')
+        plans = TestPlan.objects.filter(pk=int(request.GET['plan']))
+        if not plans:
+            return Http404('Plan ID {} does not exist.'.format(
+                ', '.join(plans)))
 
-    class ComponentActions(object):
-        def __init__(self, request, tps, cs):
-            self.__all__ = ['add', 'clear', 'get_form', 'remove', 'update', 'render']
-            self.__msgs__ = {
-                'permission_denied': {'rc': 1, 'response': 'Permisson denied'},
-            }
+        action = request.GET.get('a', 'get_component_list').lower()
 
-            self.request = request
-            self.tps = tps
-            self.cs = cs
+        if action == 'get_form':
+            return self.get_manage_form(request, plans)
+        elif action == 'get_component_list':
+            return self.get_default_component_list(request, plans[0])
+        elif action == 'add':
+            return self.add(request, plans[0], self._get_components())
+        elif action == 'remove':
+            components = self._get_components()
+            return self.remove_components_from_plan(request, plans[0], components)
+        elif action == 'update':
+            return self.update_components(request, plans[0])
 
-        def add(self):
-            if not self.request.user.has_perm('testplans.add_testplancomponent'):
-                if self.is_ajax():
-                    return HttpResponse(json_dumps(self.__msgs__['permission_denied']))
+    def _get_components(self):
+        if 'component' not in self.request.GET:
+            return HttpResponseBadRequest('Component ID is not in request.')
+        component_ids = [
+            int(id) for id in self.request.GET.getlist('component')]
+        return Component.objects.filter(pk__in=component_ids)
 
-                return self.render(message=self.__msgs__['permission_denied']['response'])
+    @method_decorator(permission_required('testplans.add_testplancomponent'))
+    def add(self, request, plan, components):
+        """Add components to given plans"""
+        list(six.moves.map(plan.add_component, components))
 
-            for tp in self.tps:
-                for c in cs:
-                    tp.add_component(c)
+    @method_decorator(permission_required('testplans.delete_testplancomponent'))
+    def remove_components_from_plan(self, request, plan, components=None):
+        """Remove existing components from plans
 
-            return self.render()
+        :param plan: instance of TestPlan, from which to remove components
+            from this plan.
+        :param components: instances of Component, which will be removed.
+        """
+        if components is None:
+            TestPlanComponent.objects.filter(plan=plan).delete()
+        else:
+            list(six.moves.map(plan.remove_component, components))
 
-        def clear(self):
-            if not self.request.user.has_perm('testplans.delete_testplancomponent'):
-                pass
+        return self.get_default_component_list(request, plan)
 
-            # Remove the exist components
-            TestPlanComponent.objects.filter(plan__in=self.tps,).delete()
+    def update_components(self, request, plan):
+        self.remove_components_from_plan(request, plan)
+        self.add(request, plan, self._get_components())
+        return self.get_default_component_list(request, plan)
 
-        def get_form(self):
-            tpcs = TestPlanComponent.objects.filter(plan=self.tps)
+    def get_manage_form(self, request, plans):
+        """Return form content in order to select components"""
+        plan_comps = TestPlanComponent.objects.filter(plan__in=plans)
 
-            form = PlanComponentForm(tps=self.tps, initial={
-                'component': tpcs.values_list('component_id', flat=True),
-            })
+        form = PlanComponentForm(tps=plans, initial={
+            'component': plan_comps.values_list('component_id', flat=True),
+        })
 
-            q_format = request.GET.get('format')
-            if not q_format:
-                q_format = 'p'
-            html = getattr(form, 'as_' + q_format)
+        q_format = request.GET.get('format', 'p')
+        html = getattr(form, 'as_' + q_format)
 
-            return HttpResponse(html())
+        return HttpResponse(html())
 
-        def remove(self):
-            if not self.request.user.has_perm('testplans.delete_testplancomponent'):
-                if self.request.is_ajax():
-                    return HttpResponse(json_dumps(self.__msgs__['permission_denied']))
-
-                return self.render(message=self.__msgs__['permission_denied']['response'])
-
-            for tp in self.tps:
-                for c in cs:
-                    tp.remove_component(c)
-
-            return self.render()
-
-        def update(self):
-            self.clear()
-            self.add()
-            return self.render()
-
-        def render(self, message=None):
-            if request.GET.get('multiple'):
-                return HttpResponse(json_dumps(ajax_response))
-
-            if request.GET.get('type'):
-                from django.core import serializers
-                obj = TestPlanComponent.objects.filter(plan__in=self.tps)
-                return HttpResponse(serializers.serialize(request.GET['type'], obj))
-
-            context_data = {'test_plan': self.tps[0]}
-            return render(request, template_name, context=context_data)
-
-    if not request.GET.get('plan'):
-        raise Http404
-
-    tps = TestPlan.objects.filter(pk__in=request.GET.getlist('plan'))
-
-    if request.GET.get('component'):
-        cs = Component.objects.filter(pk__in=request.GET.getlist('component'))
-    else:
-        cs = Component.objects.none()
-
-    cas = ComponentActions(request=request, tps=tps, cs=cs)
-
-    action = getattr(cas, request.GET.get('a', 'render').lower())
-    return action()
+    def get_default_component_list(self, request, plan):
+        return render(request, self.template_name, context={'test_plan': plan})
 
 
 def tree_view(request):

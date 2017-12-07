@@ -171,19 +171,24 @@ class TestCaseRemoveComponent(BasePlanCase):
                                            initial_owner=cls.tester,
                                            initial_qa_contact=cls.tester)
 
-        cls.cc_rel_1 = TestCaseComponentFactory(case=cls.case, component=cls.component_1)
-        cls.cc_rel_2 = TestCaseComponentFactory(case=cls.case, component=cls.component_2)
+        cls.cc_rel_1 = TestCaseComponentFactory(case=cls.case,
+                                                component=cls.component_1)
+        cls.cc_rel_2 = TestCaseComponentFactory(case=cls.case,
+                                                component=cls.component_2)
 
     def test_remove_a_component(self):
         self.case.remove_component(self.component_1)
 
         found = self.case.component.filter(pk=self.component_1.pk).exists()
         self.assertFalse(
-            found, 'Component {0} exists. But, it should be removed.'.format(self.component_1.pk))
+            found,
+            'Component {0} exists. But, it should be removed.'.format(
+                self.component_1.pk))
         found = self.case.component.filter(pk=self.component_2.pk).exists()
         self.assertTrue(
             found,
-            'Component {0} does not exist. It should not be removed.'.format(self.component_2.pk))
+            'Component {0} does not exist. It should not be removed.'.format(
+                self.component_2.pk))
 
 
 class TestCaseRemovePlan(BasePlanCase):
@@ -286,15 +291,14 @@ class TestOperateComponentView(BasePlanCase):
 
         user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
 
-        cls.cases_component_url = reverse('cases-component')
-
     def tearDown(self):
-        remove_perm_from_user(self.tester, 'testcases.delete_testcasecomponent')
+        remove_perm_from_user(self.tester,
+                              'testcases.delete_testcasecomponent')
 
     def test_show_components_form(self):
         self.client.login(username=self.tester.username, password='password')
 
-        response = self.client.post(self.cases_component_url,
+        response = self.client.post(reverse('cases-get-component-form'),
                                     {'product': self.product.pk})
 
         self.assertContains(
@@ -303,9 +307,13 @@ class TestOperateComponentView(BasePlanCase):
                 self.product.pk, self.product.name),
             html=True)
 
-        comp_options = ('<option value="{}">{}</option>'.format(comp.pk, comp.name)
-                        for comp in (self.comp_application, self.comp_database,
-                                     self.comp_cli, self.comp_api))
+        comp_options = (
+            '<option value="{}">{}</option>'.format(comp.pk, comp.name)
+            for comp in (self.comp_application,
+                         self.comp_database,
+                         self.comp_cli,
+                         self.comp_api)
+        )
         self.assertContains(
             response,
             '''<select multiple="multiple" id="id_o_component" name="o_component">
@@ -323,44 +331,42 @@ class TestOperateComponentView(BasePlanCase):
             'a': 'add',
             'from_plan': self.plan.pk,
         }
-        response = self.client.post(self.cases_component_url, post_data)
+        response = self.client.post(reverse('cases-add-component'), post_data)
 
         data = json_loads(response.content)
-        self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
+        self.assertEqual(
+            {
+                'rc': 0,
+                'response': 'Succeed to add component(s) Application, Database.',
+            },
+            data)
 
         for comp in (self.comp_application, self.comp_database):
             case_components = TestCaseComponent.objects.filter(
                 case=self.case_1, component=comp)
             self.assertTrue(case_components.exists())
 
-    def test_missing_delete_perm(self):
-        self.client.login(username=self.tester.username, password='password')
-
-        post_data = {
-            'o_component': [self.comp_cli.pk, self.comp_api.pk],
-            'case': [self.case_1.pk],
-            'a': 'remove',
-        }
-        response = self.client.post(self.cases_component_url, post_data)
-        data = json_loads(response.content)
-        self.assertEqual(
-            {'rc': 1, 'response': 'Permission denied - delete', 'errors_list': []},
-            data)
-
     def test_remove_components(self):
         self.client.login(username=self.tester.username, password='password')
 
-        user_should_have_perm(self.tester, 'testcases.delete_testcasecomponent')
+        user_should_have_perm(self.tester,
+                              'testcases.delete_testcasecomponent')
 
         post_data = {
             'o_component': [self.comp_cli.pk, self.comp_api.pk],
             'case': [self.case_1.pk],
             'a': 'remove',
         }
-        response = self.client.post(self.cases_component_url, post_data)
+        response = self.client.post(reverse('cases-remove-component'),
+                                    post_data)
 
         data = json_loads(response.content)
-        self.assertEqual({'rc': 0, 'response': 'ok', 'errors_list': []}, data)
+        self.assertEqual(
+            {
+                'rc': 0,
+                'response': 'Succeed to remove component(s) CLI, API.'
+            },
+            data)
 
         for comp in (self.comp_cli, self.comp_api):
             case_components = TestCaseComponent.objects.filter(

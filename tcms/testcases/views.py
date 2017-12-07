@@ -6,6 +6,7 @@ import datetime
 import json
 import itertools
 import six
+import logging
 
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
@@ -19,7 +20,8 @@ from django.shortcuts import get_object_or_404, render
 from django.template.loader import get_template
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
+from django.utils.decorators import method_decorator
 
 from django_comments.models import Comment
 
@@ -47,8 +49,10 @@ from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
     CloneCaseForm, CaseBugForm, CaseTagForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_group_by_dict as create_dict
-from .fields import CC_LIST_DEFAULT_DELIMITER
+from tcms.testcases.fields import CC_LIST_DEFAULT_DELIMITER
+from tcms.testcases.forms import CaseComponentForm
 
+logger = logging.getLogger(__name__)
 
 MODULE_NAME = "testcases"
 
@@ -1621,18 +1625,101 @@ def tag(request):
     return HttpResponse(form.as_p())
 
 
-@require_POST
-@permission_required('testcases.add_testcasecomponent')
-def component(request):
-    """
-    Management test case components
-    """
-    # FIXME: It will update product/category/component at one time so far.
-    # We may disconnect the component from case product in future.
-    cas = actions.ComponentActions(request)
-    action = request.POST.get('a', 'render_form')
-    func = getattr(cas, action.lower())
-    return func()
+class AddComponentView(View):
+    """Add component view"""
+
+    @method_decorator(permission_required('testcases.add_testcasecomponent'))
+    def post(self, request):
+        form = CaseComponentForm(request.POST)
+        form.populate(product_id=request.POST['product'])
+        if not form.is_valid():
+            return JsonResponse({
+                'rc': 1,
+                'response': 'Cannot add component. Some data is incorrect.',
+                'error_list': form.errors,
+            })
+
+        case_ids = [int(case_id) for case_id in request.POST.getlist('case')]
+        cases = TestCase.objects.filter(pk__in=case_ids)
+        errors = []
+        for case in cases:
+            for component in form.cleaned_data['o_component']:
+                try:
+                    case.add_component(component=component)
+                except Exception as e:
+                    logger.exception('Failed to add component %r from case %r',
+                                     component, case)
+                    errors.append(str(e))
+
+        if errors:
+            return JsonResponse({
+                'rc': 1,
+                'response': 'Error while adding component to case.',
+                'errors_list': errors,
+            })
+        else:
+            components = [c.name for c in form.cleaned_data['o_component']]
+            return JsonResponse({
+                'rc': 0,
+                'response': 'Succeed to add component(s) {}.'.format(
+                    ', '.join(components))
+            })
+
+
+class RemoveComponentView(View):
+    """Remove component view"""
+
+    @method_decorator(permission_required('testcases.delete_testcasecomponent'))
+    def post(self, request):
+        form = CaseComponentForm(request.POST)
+        form.populate()
+
+        if not form.is_valid():
+            return JsonResponse({
+                'rc': 1,
+                'response': 'Cannot add component. Some data is incorrect.',
+                'error_list': form.errors,
+            })
+
+        errors = []
+        case_ids = [int(case_id) for case_id in request.POST.getlist('case')]
+        cases = TestCase.objects.filter(pk__in=case_ids).only('pk')
+        for case in cases:
+            for c in form.cleaned_data['o_component']:
+                try:
+                    case.remove_component(component=c)
+                except Exception as e:
+                    logger.exception(
+                        'Failed to remove component %r from case %r', c, case)
+                    errors.append(str(e))
+
+        if errors:
+            return JsonResponse({
+                'rc': 1,
+                'response': 'Error while adding component to case.',
+                'errors_list': errors,
+            })
+        else:
+            components = [c.name for c in form.cleaned_data['o_component']]
+            return JsonResponse({
+                'rc': 0,
+                'response': 'Succeed to remove component(s) {}.'.format(
+                    ', '.join(components))
+            })
+
+
+class GetComponentFormView(View):
+    """Get component form view"""
+
+    @method_decorator(permission_required('testcases.add_testcasecomponent'))
+    def post(self, request):
+        product_id = request.POST['product']
+        form = CaseComponentForm(initial={
+            'product': product_id,
+            'component': request.POST.getlist('o_component'),
+        })
+        form.populate(product_id=product_id)
+        return HttpResponse(form.as_p())
 
 
 @require_POST

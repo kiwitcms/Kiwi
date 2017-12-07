@@ -1,4 +1,4 @@
-<form id="id_form_case_component" action="{% url "cases-component" %}">
+<form id="id_form_case_component">
 	<table class="list" cellspacing="0" cellspan="0" width="100%">
 		<thead>
 			<tr>
@@ -31,13 +31,13 @@
 				<td colspan="4">
 					<div class="addtag">
 						{% if perms.testcases.change_testcasecomponent %}
-						<input id="id_update_component" type="button" value="Add Component" />
+						<input id="id_add_component" type="button" value="Add Component" />
 						{% else %}
-						<input id="id_update_component" type="button" value="Add Component" disabled />
+						<input id="id_add_component" type="button" value="Add Component" disabled />
 						{% endif %}
 
 						{% if perms.testcases.delete_testcasecomponent %}
-						<input id="id_remove_component" type="submit" name="a" value="Remove" />
+						<input id="id_remove_component" type="button" name="a" value="Remove" />
 						{% else %}
 						<input id="id_remove_component" type="button" value="Remove" disabled />
 						{% endif %}
