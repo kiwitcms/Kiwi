@@ -50,7 +50,6 @@ help:
 
 clean:
 	rm -rf $(BUILDDIR)/*
-	rm -rf source/tcms.*rst source/tcms_api.*rst source/modules.rst
 
 apidoc:
 	$(SPHINXAPIDOC) -o source/ ../ ../manage.py ../setup.py

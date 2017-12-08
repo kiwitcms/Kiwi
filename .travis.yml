@@ -17,9 +17,15 @@ services:
   - mysql
   - postgresql
 addons:
-  - postgresql: 9.5
+  postgresql: 9.5
 matrix:
   include:
+    - python: 3.6
+      env: DOCS_TEST=1 TEST_DB=SQLite
+      addons:
+        apt:
+          packages:
+            - graphviz
     - python: 3.5
       env: TEST_DB=MariaDB
       addons:
@@ -50,7 +56,7 @@ install:
   - if [ -n "$DJANGO" ]; then pip install --upgrade Django==$DJANGO; fi
   - pip install coveralls
   - npm install
-script: make check
+script: if [ -n "$DOCS_TEST" ]; then make check-docs-source-in-git; else make check; fi
 after_success:
   - coveralls
 notifications:
