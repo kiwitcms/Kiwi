@@ -90,6 +90,28 @@ docker-image:
 run:
 	docker-compose up
 
+.PHONY: docs
+docs:
+	make -C docs/ html
+
+.PHONY: doctest
+doctest: docs
+	make -C docs/ doctest
+
+# checks if all of our documentation/source files are under git!
+# this is necessary because ReadTheDocs doesn't call `make' but uses
+# conf.py and builds the documentation itself! Since we have some
+# auto-generated API docs we want to make sure that we didn't forget
+# to regenerate them after code changes!
+.PHONY: check-docs-source-in-git
+check-docs-source-in-git: doctest
+	git status
+	if [ -n "$$(git status --short)" ]; then \
+	    echo "FAIL: unmerged docs changes. Pobably auto-generated!"; \
+	    echo "HELP: execute make docs && git add && git commit to fix this"; \
+	    exit 1; \
+	fi
+
 
 .PHONY: help
 help:
