@@ -32,7 +32,7 @@ Install dependencies
 
 Install devel packages that should be installed first::
 
-    sudo yum install gcc w3m python-devel mysql-devel krb5-devel libxml2-devel libxslt-devel
+    sudo yum install gcc python-devel mysql-devel krb5-devel libxml2-devel libxslt-devel
 
 Install dependencies from ``requirements/base.txt``::
 

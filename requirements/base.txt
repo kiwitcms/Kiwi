@@ -9,3 +9,4 @@ kobo==0.7.0
 odfpy>=0.9.6
 PyMySQL==0.7.11
 six
+html2text

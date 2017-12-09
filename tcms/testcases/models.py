@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+
 from datetime import datetime
+from html2text import html2text
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -7,6 +9,7 @@ from django.db import models
 from django.db.models import ObjectDoesNotExist
 from django.db.models.signals import post_save, post_delete, pre_save
 from django.contrib.contenttypes.fields import GenericRelation
+from django.utils.encoding import smart_str
 
 from tcms.core.models import TCMSActionModel
 from tcms.core.models import TCMSContentTypeBaseModel
@@ -552,14 +555,10 @@ class TestCaseText(TCMSActionModel):
         unique_together = ('case', 'case_text_version')
 
     def get_plain_text(self):
-        from tcms.core.utils.html import html2text
-        from django.utils.encoding import smart_str
-
         self.action = html2text(smart_str(self.action))
         self.effect = html2text(smart_str(self.effect))
         self.setup = html2text(smart_str(self.setup))
         self.breakdown = html2text(smart_str(self.breakdown))
-
         return self
 
 

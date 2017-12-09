@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from html2text import html2text
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -416,8 +417,6 @@ class TestPlanText(TCMSActionModel):
         unique_together = ('plan', 'plan_text_version')
 
     def get_plain_text(self):
-        from tcms.core.utils.html import html2text
-
         self.plan_text = html2text(self.plan_text)
         return self
 

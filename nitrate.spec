@@ -29,7 +29,7 @@ Requires:       python2-PyMySQL
 Requires:       python2-odfpy
 Requires:       python-beautifulsoup4
 Requires:       python2-kerberos
-Requires:       w3m
+Requires:       python2-html2text
 
 %description
 Nitrate is a tool for tracking testing being done on a product.
