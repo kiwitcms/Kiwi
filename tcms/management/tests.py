@@ -734,7 +734,7 @@ class ProductTests(TestCase):
             2) Test Plan is deleted
 
             NOTE: we manually connect signals handlers here
-            b/c in est mode LISTENING_MODEL_SIGNAL = False
+            b/c in test mode LISTENING_MODEL_SIGNAL = False
         """
         # connect signal handlers
         _listen()
