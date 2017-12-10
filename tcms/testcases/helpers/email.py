@@ -6,14 +6,13 @@ from tcms.core.utils.mailto import mailto
 
 def email_case_update(case):
     recipients = get_case_notification_recipients(case)
-    cc = case.emailing.get_cc_list()
     if len(recipients) == 0:
         return
+    cc = case.emailing.get_cc_list()
     subject = 'TestCase %s has been updated.' % case.pk
     txt = case.latest_text()
     context = {
         'test_case': case, 'test_case_text': txt,
-        'test_case_plain_text': txt.get_plain_text(),
     }
     template = settings.CASE_EMAIL_TEMPLATE
     mailto(template, subject, recipients, context, cc=cc)
@@ -48,4 +47,4 @@ def get_case_notification_recipients(case):
     if case.emailing.auto_to_case_run_assignee:
         assignees = case.case_run.values_list('assignee__email', flat=True)
         recipients.update(assignees)
-    return filter(lambda e: bool(e), recipients)
+    return list(filter(lambda e: bool(e), recipients))

@@ -1,9 +1,9 @@
 TestCase [{{ test_case.summary }}] has been updated by {{ test_case.current_user.username|default:"someone" }}
 
-Case - 
+Case -
 {{ test_case.get_url }}?#log
 
--- 
+--
 Configure mail: {{test_case.get_url}}/edit/
 ------- You are receiving this mail because: -------
 You have subscribed to the changes of this TestCase

@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
+from mock import patch
 
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from ..models import TestCaseBugSystem
 from ..models import TestCaseText
 from tcms.core.utils.checksum import checksum
+from tcms.testcases.models import _listen, _disconnect_signals
+from ..helpers.email import get_case_notification_recipients
+from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseComponentFactory
+from tcms.tests.factories import TestCaseEmailSettingsFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestTagFactory
-from tcms.tests import BasePlanCase
 
 
 class TestCaseRemoveBug(BasePlanCase):
@@ -193,7 +197,60 @@ class TestGetPlainText(BasePlanCase):
         plain_text = case_text.get_plain_text()
 
         # These expected values were converted from html2text.
-        self.assertEqual('First step:\n\n', plain_text.action)
-        self.assertEqual('  * effect 1\n  * effect 2\n\n', plain_text.effect)
-        self.assertEqual('[setup](/setup_guide)\n\n', plain_text.setup)
-        self.assertEqual('breakdown\n\n', plain_text.breakdown)
+        self.assertEqual('First step:', plain_text.action)
+        self.assertEqual('  * effect 1\n  * effect 2', plain_text.effect)
+        self.assertEqual('[setup](/setup_guide)', plain_text.setup)
+        self.assertEqual('breakdown', plain_text.breakdown)
+
+
+class TestSendMailOnCaseIsUpdated(BasePlanCase):
+    """Test send mail on case post_save signal is triggered"""
+    @classmethod
+    def setUpTestData(cls):
+        super(TestSendMailOnCaseIsUpdated, cls).setUpTestData()
+
+        cls.case.add_text('action', 'effect', 'setup', 'breakdown')
+
+        cls.email_setting = TestCaseEmailSettingsFactory(
+            case=cls.case,
+            notify_on_case_update=True,
+            auto_to_case_author=True)
+
+        cls.case_editor = User.objects.create_user(username='editor')
+        # This is actually done when update a case. Setting current_user
+        # explicitly here aims to mock that behavior.
+        cls.case.current_user = cls.case_editor
+
+    @patch('tcms.core.utils.mailto.send_mail')
+    def test_send_mail_to_case_author(self, send_mail):
+        # connect signal handlers
+        _listen()
+
+        try:
+            self.case.summary = 'New summary for running test'
+            self.case.save()
+
+            expected_mail_body = '''TestCase [{0}] has been updated by {1}
+
+Case -
+{2}?#log
+
+--
+Configure mail: {2}/edit/
+------- You are receiving this mail because: -------
+You have subscribed to the changes of this TestCase
+You are related to this TestCase'''.format(self.case.summary,
+                                           'editor',
+                                           self.case.get_url())
+
+            recipients = get_case_notification_recipients(self.case)
+
+            # Verify notification mail
+            send_mail.assert_called_once_with(
+                settings.EMAIL_SUBJECT_PREFIX + "TestCase %s has been updated." % self.case.pk,
+                expected_mail_body,
+                settings.DEFAULT_FROM_EMAIL, recipients,
+                fail_silently=False)
+        finally:
+            # disconnect signals
+            _disconnect_signals()
