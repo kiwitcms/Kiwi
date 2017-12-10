@@ -46,6 +46,16 @@ class NoneText:
         return {}
 
 
+class PlainText(object):
+    """Contains plain text converted from four text"""
+
+    def __init__(self, action, setup, effect, breakdown):
+        self.action = action
+        self.setup = setup
+        self.effect = effect
+        self.breakdown = breakdown
+
+
 class TestCaseStatus(TCMSActionModel):
     id = models.AutoField(
         db_column='case_status_id', max_length=6, primary_key=True
@@ -555,11 +565,12 @@ class TestCaseText(TCMSActionModel):
         unique_together = ('case', 'case_text_version')
 
     def get_plain_text(self):
-        self.action = html2text(smart_str(self.action))
-        self.effect = html2text(smart_str(self.effect))
-        self.setup = html2text(smart_str(self.setup))
-        self.breakdown = html2text(smart_str(self.breakdown))
-        return self
+        action = html2text(smart_str(self.action)).rstrip()
+        effect = html2text(smart_str(self.effect)).rstrip()
+        setup = html2text(smart_str(self.setup)).rstrip()
+        breakdown = html2text(smart_str(self.breakdown)).rstrip()
+        return PlainText(action=action, setup=setup,
+                         effect=effect, breakdown=breakdown)
 
 
 class TestCasePlan(models.Model):

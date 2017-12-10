@@ -37,15 +37,23 @@ class Bugzilla(BugTracker):
             action = 'None'
             effect = 'None'
 
-        comment = "Filed from caserun (INSERT URL HERE)\n\n"
-        comment += "Version-Release number of selected " \
-                   "component (if applicable):\n"
-        comment += '%s\n\n' % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n%s\n\n" % (setup, action)
-        # FIXME+ caseinfo['actual_results'] + "\n\n"
-        comment += "Actual results: \n#FIXME\n\n"
-        comment += "Expected results:\n%s\n\n" % effect
-        args['comment'] = comment
+        args['comment'] = '''Filed from caserun (INSERT URL HERE)
+
+Version-Release number of selected component (if applicable):
+{build_name}
+
+Steps to Reproduce:
+{setup}
+{action}
+
+Actual results:
+#FIXME
+
+Expected results:
+{effect}
+
+'''.format(build_name=caserun.build.name,
+           setup=setup, action=action, effect=effect)
         args['component'] = caserun.case.component.values_list('name',
                                                                flat=True)
         args['op_sys'] = 'Linux'
