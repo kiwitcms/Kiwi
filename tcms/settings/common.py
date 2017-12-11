@@ -81,9 +81,10 @@ MOTD_LOGIN = """<em>If it is not in Kiwi TCMS, then we don't test it!</em>"""
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
     ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
-    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User guide'),
-    ('http://kiwitcms.readthedocs.io/en/latest/admin.html', 'Administration guide'),
-    ('/xmlrpc/', 'XML-RPC service'),
+    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User Guide'),
+    ('http://kiwitcms.readthedocs.io/en/latest/admin.html', 'Administration Guide'),
+    ('http://kiwitcms.readthedocs.io/en/latest/modules/tcms.xmlrpc.api.html', 'XML-RPC Help'),
+    ('/xmlrpc/', 'Enabled XML-RPC methods'),
 ]
 
 
@@ -247,6 +248,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 COMMENTS_APP = 'tcms.core.contrib.comments'
 
 # XML-RPC interface settings
+# NOTE: you may also use this setting to enable/disable certain methods
 XMLRPC_METHODS = {
     'TCMS_XML_RPC': (
         ('tcms.xmlrpc.api.auth', 'Auth'),
