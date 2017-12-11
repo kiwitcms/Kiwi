@@ -416,36 +416,12 @@ class TestPlanText(TCMSActionModel):
         unique_together = ('plan', 'plan_text_version')
 
 
-class TestPlanPermission(models.Model):
-    userid = models.IntegerField(unique=True, primary_key=True)
-    permissions = models.IntegerField()
-    grant_type = models.IntegerField(unique=True)
-
-    plan = models.ForeignKey(TestPlan)
-
-    class Meta:
-        db_table = u'test_plan_permissions'
-        unique_together = ('plan', 'userid')
-
-
 class TestPlanAttachment(models.Model):
     attachment = models.ForeignKey('management.TestAttachment')
     plan = models.ForeignKey(TestPlan)
 
     class Meta:
         db_table = u'test_plan_attachments'
-
-
-class TestPlanActivity(models.Model):
-    plan = models.ForeignKey(TestPlan)
-    fieldid = models.IntegerField()
-    who = models.ForeignKey('auth.User', db_column='who')
-    changed = models.DateTimeField(primary_key=True)
-    oldvalue = models.TextField(blank=True)
-    newvalue = models.TextField(blank=True)
-
-    class Meta:
-        db_table = u'test_plan_activity'
 
 
 class TestPlanTag(models.Model):
