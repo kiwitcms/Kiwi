@@ -28,6 +28,14 @@ tcms\.testplans\.migrations\.0003\_delete\_testplanpermissions\_model module
     :undoc-members:
     :show-inheritance:
 
+tcms\.testplans\.migrations\.0004\_remove\_model\_TestPlanActivity module
+-------------------------------------------------------------------------
+
+.. automodule:: tcms.testplans.migrations.0004_remove_model_TestPlanActivity
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -53,14 +53,6 @@ tcms\.testplans\.signals module
     :undoc-members:
     :show-inheritance:
 
-tcms\.testplans\.tests module
------------------------------
-
-.. automodule:: tcms.testplans.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.testplans\.views module
 -----------------------------
 

@@ -8,6 +8,7 @@ Subpackages
 
     tcms.testcases.helpers
     tcms.testcases.migrations
+    tcms.testcases.tests
     tcms.testcases.urls
 
 Submodules
@@ -65,14 +66,6 @@ tcms\.testcases\.signals module
 -------------------------------
 
 .. automodule:: tcms.testcases.signals
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-tcms\.testcases\.tests module
------------------------------
-
-.. automodule:: tcms.testcases.tests
     :members:
     :undoc-members:
     :show-inheritance:

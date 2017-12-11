@@ -27,14 +27,6 @@ tcms\.profiles\.models module
     :undoc-members:
     :show-inheritance:
 
-tcms\.profiles\.tests module
-----------------------------
-
-.. automodule:: tcms.profiles.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.profiles\.urls module
 ---------------------------
 
