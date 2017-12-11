@@ -422,18 +422,6 @@ class TestPlanAttachment(models.Model):
         db_table = u'test_plan_attachments'
 
 
-class TestPlanActivity(models.Model):
-    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
-    fieldid = models.IntegerField()
-    who = models.ForeignKey('auth.User', db_column='who', on_delete=models.CASCADE)
-    changed = models.DateTimeField(primary_key=True)
-    oldvalue = models.TextField(blank=True)
-    newvalue = models.TextField(blank=True)
-
-    class Meta:
-        db_table = u'test_plan_activity'
-
-
 class TestPlanTag(models.Model):
     tag = models.ForeignKey('management.TestTag', on_delete=models.CASCADE)
     plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
