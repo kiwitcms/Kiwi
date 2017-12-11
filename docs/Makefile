@@ -52,7 +52,7 @@ clean:
 	rm -rf $(BUILDDIR)/*
 
 apidoc:
-	$(SPHINXAPIDOC) -o source/ ../ ../manage.py ../setup.py
+	$(SPHINXAPIDOC) -o source/ ../ ../manage.py ../setup.py ../*/tests.py ../*/tests/*.py ../*/test_*.py
 
 html: apidoc
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

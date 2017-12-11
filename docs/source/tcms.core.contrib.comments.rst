@@ -36,14 +36,6 @@ tcms\.core\.contrib\.comments\.models module
     :undoc-members:
     :show-inheritance:
 
-tcms\.core\.contrib\.comments\.tests module
--------------------------------------------
-
-.. automodule:: tcms.core.contrib.comments.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.core\.contrib\.comments\.views module
 -------------------------------------------
 

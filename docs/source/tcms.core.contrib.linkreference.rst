@@ -27,14 +27,6 @@ tcms\.core\.contrib\.linkreference\.models module
     :undoc-members:
     :show-inheritance:
 
-tcms\.core\.contrib\.linkreference\.tests module
-------------------------------------------------
-
-.. automodule:: tcms.core.contrib.linkreference.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.core\.contrib\.linkreference\.views module
 ------------------------------------------------
 

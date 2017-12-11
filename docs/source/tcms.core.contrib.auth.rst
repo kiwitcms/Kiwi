@@ -43,14 +43,6 @@ tcms\.core\.contrib\.auth\.models module
     :undoc-members:
     :show-inheritance:
 
-tcms\.core\.contrib\.auth\.tests module
----------------------------------------
-
-.. automodule:: tcms.core.contrib.auth.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.core\.contrib\.auth\.views module
 ---------------------------------------
 

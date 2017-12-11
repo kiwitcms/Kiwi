@@ -27,14 +27,6 @@ tcms\.core\.logs\.models module
     :undoc-members:
     :show-inheritance:
 
-tcms\.core\.logs\.tests module
-------------------------------
-
-.. automodule:: tcms.core.logs.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.core\.logs\.views module
 ------------------------------
 

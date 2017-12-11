@@ -28,14 +28,6 @@ tcms\.report\.models module
     :undoc-members:
     :show-inheritance:
 
-tcms\.report\.tests module
---------------------------
-
-.. automodule:: tcms.report.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.report\.urls module
 -------------------------
 

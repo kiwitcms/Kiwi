@@ -35,14 +35,6 @@ tcms\.management\.models module
     :undoc-members:
     :show-inheritance:
 
-tcms\.management\.tests module
-------------------------------
-
-.. automodule:: tcms.management.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 tcms\.management\.views module
 ------------------------------
 
