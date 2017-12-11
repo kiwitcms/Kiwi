@@ -10,7 +10,6 @@
 """
 USAGE:
 Add following structure to your Django settings file:
-XMLRPC_TEMPLATE = "xmlrpc.html"
 XMLRPC_METHODS = {
     'xmlrpc1': (
         ('module.xmlrpc.method', 'exported_name'),
@@ -36,44 +35,12 @@ import django.db
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
-from django.template import Template, loader
 
 from .dispatcher import DjangoXMLRPCDispatcher
 
 
 # this has to be list, since new handlers are appended when the module is loaded
 __all__ = []
-
-
-XMLRPC_TEMPLATE = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Language" content="en-us" />
-  <meta name="robots" content="NONE,NOARCHIVE" />
-  <title>XML-RPC Service</title>
-</head>
-
-<body style="font-size: small;">
-  <h2>This is an XML-RPC Service</h2>
-  You need to invoke it using an XML-RPC Client!<br />
-
-  <h2>Available methods</h2>
-  <ul>
-  {% for method in method_list %}
-    <li><a href="#{{ method.name|lower }}">{{ method.name|escape }}</a></li>
-  {% endfor %}
-  </ul>
-
-  <h2>Details</h2>
-  {% for method in method_list %}
-    <h3><a name="{{ method.name|lower }}">{{ method.name|escape }}</a></h3>
-    {% ifnotequal method.signature "signatures not supported" %}<strong>Signature: </strong>{{ method.signature|escape }}<br />{% endifnotequal %}
-    <pre>{% for line in method.help %}{{ line|escape }}<br />{% endfor %}</pre>
-  {% endfor %}
-</body>
-</html>
-"""
 
 
 class XMLRPCHandlerFactory(object):
@@ -143,26 +110,10 @@ class XMLRPCHandlerFactory(object):
         else:
             method_list = []
             for method in self.xmlrpc_dispatcher.system_listMethods():
-                method_list.append({
-                    "name": method,
-                    "signature": self.xmlrpc_dispatcher.system_methodSignature(method),
-                    "help": self.xmlrpc_dispatcher.system_methodHelp(method).split("\n"),
-                })
+                method_list.append(method)
 
-            template = getattr(settings, "XMLRPC_TEMPLATE", None)
-            if template is not None:
-                t = loader.get_template(template)
-            else:
-                t = Template(XMLRPC_TEMPLATE, name="XML-RPC template")
-
-            return HttpResponse(
-                t.render(
-                    context={
-                        "method_list": method_list,
-                    },
-                    request=request
-                )
-            )
+            return HttpResponse("\n".join(method_list),
+                                content_type="text/plain")
 
 
 for var in ("XMLRPC_METHODS", ):

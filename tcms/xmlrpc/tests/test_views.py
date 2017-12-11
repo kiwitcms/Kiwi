@@ -8,5 +8,5 @@ class XMLRPCViewTest(TestCase):
         response = self.client.get('/xmlrpc/')
 
         self.assertEqual(http.client.OK, response.status_code)
-        self.assertContains(response, 'Kiwi TCMS XML-RPC Service')
-        self.assertContains(response, '<li class="xmlrpc_method">')
+        self.assertContains(response, 'Auth.login')
+        self.assertContains(response, 'TestPlan.get')

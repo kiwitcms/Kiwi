@@ -8,7 +8,6 @@ Kiwi TCMS documentation
 
 .. toctree::
    :maxdepth: 1
-   :numbered:
 
    About Kiwi TCMS <about.rst>
    Running Kiwi TCMS in production with Docker <installing_docker.rst>

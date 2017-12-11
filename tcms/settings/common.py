@@ -265,8 +265,6 @@ XMLRPC_METHODS = {
     ),
 }
 
-XMLRPC_TEMPLATE = 'xmlrpc.html'
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Authentication backends
