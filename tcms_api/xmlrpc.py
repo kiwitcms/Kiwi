@@ -372,10 +372,7 @@ class TCMSXmlrpc(object):
         )
 
         # Login, get a cookie into our cookie jar (login_dict):
-        self.do_command("Auth.login", [dict(
-            username=username,
-            password=password,
-        )])
+        self.server.Auth.login(username, password)
 
         # Record the user ID in case the script wants this
         # self.user_id = login_dict['id']
@@ -518,25 +515,6 @@ class TCMSXmlrpc(object):
             return "\'%s\':\'%s\', " % (option, value.strftime("%H:%M:%S"))
         return ''
 
-    def do_command(self, verb, args=[]):
-        """Submit a command to the server proxy.
-
-        'verb' -- string, the xmlrpc verb,
-        'args' -- list, the argument list,
-        """
-        params = ''
-        for arg in args:
-            params = ("%s" % str(arg), "%s, %s" %
-                      (params, str(arg)))[params != '']
-        cmd = "self.server." + verb + "(" + params + ")"
-        if DEBUG:
-            print(cmd)
-
-        try:
-            return eval(cmd)
-        except xmlrpclib.Error as e:
-            raise TCMSXmlrpcError(verb, params, e)
-
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
     def build_get(self, build_id):
@@ -548,7 +526,7 @@ class TCMSXmlrpc(object):
 
         Result: A dictionary of key/value pairs for the attributes listed above
         """
-        return self.do_command("Build.get", [self._number_noop(build_id)])
+        return self.server.Build.get(self._number_noop(build_id))
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
     def get_me(self):
@@ -557,7 +535,7 @@ class TCMSXmlrpc(object):
 
         Returns:     A blessed User object Hash
         """
-        return self.do_command("User.get_me")
+        return self.server.User.get_me()
 
 
 class TCMSKerbXmlrpc(TCMSXmlrpc):
@@ -585,4 +563,4 @@ class TCMSKerbXmlrpc(TCMSXmlrpc):
         )
 
         # Login, get a cookie into our cookie jar (login_dict):
-        self.do_command("Auth.login_krbv", [])
+        self.server.Auth.login_krbv()
