@@ -7,61 +7,52 @@ from tcms.management.models import TestBuild
 from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 
 __all__ = (
-    'check_build', 'create', 'get', 'get_runs', 'get_caseruns',
-    'lookup_id_by_name', 'lookup_name_by_id', 'update'
+    'check_build', 'create', 'get', 'get_runs', 'get_caseruns', 'update'
 )
 
-__xmlrpc_namespace__ = 'TestBuild'
+__xmlrpc_namespace__ = 'Build'
 
 
 @log_call(namespace=__xmlrpc_namespace__)
 def check_build(request, name, product):
     """
-    Description: Looks up and returns a build by name.
+    .. function:: XML-RPC Build.check_build(name, product)
 
-    Params:      $name - String: name of the build.
-                 $product - product_id of the product in the Database
+        Looks up and returns a build by name.
 
-    Returns:     Hash: Matching Build object hash or error if not found.
-
-    Example:
-    # Get with product ID
-    >>> Build.check_build('2008-02-25', 61)
-    # Get with product name
-    >>> Build.check_build('2008-02-25', 'Red Hat Enterprise Linux 5')
+        :param name: name of the build
+        :type name: str
+        :param product: Product ID or name to which this build belongs
+        :type product: int or str
+        :return: Serialized :class:`tcms.management.models.TestBuild` object
+        :rtype: dict
+        :raises: TestBuild.DoesNotExist if build not found
     """
     p = pre_check_product(values=product)
-    tb = TestBuild.objects.get(name=name, product=p)
-    return tb.serialize()
+    return TestBuild.objects.get(name=name, product=p).serialize()
 
 
 @log_call(namespace=__xmlrpc_namespace__)
 @permission_required('management.add_testbuild', raise_exception=True)
 def create(request, values):
     """
-    Description: Creates a new build object and stores it in the database
+    .. function:: XML-RPC Build.create(values)
 
-    Params:      $values - Hash: A reference to a hash with keys and values
-                 matching the fields of the build to be created.
+        Creates a new build object and stores it in the database.
+        ``values`` is a dict matching the fields of the TestBuild object:
 
-        +-------------+----------------+-----------+---------------------------+
-        | Field       | Type           | Null      | Description               |
-        +-------------+----------------+-----------+---------------------------+
-        | product     | Integer/String | Required  | ID or Name of product     |
-        | name        | String         | Required  |                           |
-        | description | String         | Optional  |                           |
-        | is_active   | Boolean        | Optional  | Defaults to True (1)      |
-        +-------------+----------------+-----------+---------------------------+
-
-    Returns:     The newly created object hash.
-
-    Example:
-    # Create build by product ID and set the build active.
-    >>> Build.create({'product': 234, 'name': 'tcms_testing', 'description': 'None',
-                      'is_active': 1})
-    # Create build by product name and set the build to inactive.
-    >>> Build.create({'product': 'TCMS', 'name': 'tcms_testing 2', 'description': 'None',
-                      'is_active': 0})
+        :param product: **required** ID or name of Product to which this Build belongs
+        :type product: int or str
+        :param name: **required** name of the build (aka build version string)
+        :type name: str
+        :param description: optional description
+        :type str:
+        :param is_active: Optional, default to True
+        :type is_active: bool
+        :return: Serialized :class:`tcms.management.models.TestBuild` object
+        :rtype: dict
+        :raises: ValueError if product or name not specified
+        :raises: PermissionDenied if missing *management.add_testbuild* permission
     """
     if not values.get('product') or not values.get('name'):
         raise ValueError('Product and name are both required.')
@@ -79,14 +70,15 @@ def create(request, values):
 @log_call(namespace=__xmlrpc_namespace__)
 def get(request, build_id):
     """
-    Description: Used to load an existing build from the database.
+    .. function:: XML-RPC Build.get(build_id)
 
-    Params:      $id - An integer representing the ID in the database
+        Get an existing build from the database.
 
-    Returns:     A blessed Build object hash
-
-    Example:
-    >>> Build.get(1234)
+        :param build_id: the object ID
+        :type build_id: int
+        :return: Serialized :class:`tcms.management.models.TestBuild` object
+        :rtype: dict
+        :raises: TestBuild.DoesNotExist if build not found
     """
     return TestBuild.objects.get(build_id=build_id).serialize()
 
@@ -94,14 +86,15 @@ def get(request, build_id):
 @log_call(namespace=__xmlrpc_namespace__)
 def get_runs(request, build_id):
     """
-    Description: Returns the list of runs that this Build is used in.
+    .. function:: XML-RPC Build.get_runs(build_id)
 
-    Params:      $id -  Integer: Build ID.
+        Returns the list of TestRuns that this Build is used in.
 
-    Returns:     Array: List of run object hashes.
-
-    Example:
-    >>> Build.get_runs(1234)
+        :param build_id: the object ID
+        :type build_id: int
+        :return: List of serialized :class:`tcms.testruns.models.TestRun` objects
+        :rtype: list(dict)
+        :raises: TestBuild.DoesNotExist if build not found
     """
     from tcms.testruns.models import TestRun
 
@@ -114,14 +107,15 @@ def get_runs(request, build_id):
 @log_call(namespace=__xmlrpc_namespace__)
 def get_caseruns(request, build_id):
     """
-    Description: Returns the list of case-runs that this Build is used in.
+    .. function:: XML-RPC Build.get_caseruns(build_id)
 
-    Params:      $id -  Integer: Build ID.
+        Returns the list of case-runs that this Build is used in.
 
-    Returns:     Array: List of case-run object hashes.
-
-    Example:
-    >>> Build.get_caseruns(1234)
+        :param build_id: the object ID
+        :type build_id: int
+        :return: List of serialized :class:`tcms.testruns.models.TestCaseRun` objects
+        :rtype: list(dict)
+        :raises: TestBuild.DoesNotExist if build not found
     """
     from tcms.testruns.models import TestCaseRun
 
@@ -132,48 +126,26 @@ def get_caseruns(request, build_id):
 
 
 @log_call(namespace=__xmlrpc_namespace__)
-def lookup_id_by_name(request, name, product):
-    """
-    DEPRECATED - CONSIDERED HARMFUL Use Build.check_build instead
-    """
-    return check_build(request, name, product)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_name_by_id(request, build_id):
-    """
-    DEPRECATED Use Build.get instead
-    """
-    return get(request, build_id)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
 @permission_required('management.change_testbuild', raise_exception=True)
 def update(request, build_id, values):
     """
-    Description: Updates the fields of the selected build or builds.
+    .. function:: XML-RPC Build.update(build_id, values)
 
-    Params:      $id - Integer: A single build ID.
+        Updates the fields of the selected build.
+        ``values`` is a dict matching the fields of the TestBuild object:
 
-                 $values - Hash of keys matching Build fields and the new values
-                 to set each field to.
-
-        +-------------+----------------+-----------+---------------------------+
-        | Field       | Type           | Null      | Description               |
-        +-------------+----------------+-----------+---------------------------+
-        | product     | Integer/String | Optional  | ID or Name of product     |
-        | name        | String         | Optional  |                           |
-        | description | String         | Optional  |                           |
-        | is_active   | Boolean        | Optional  | True/False                |
-        +-------------+----------------+-----------+---------------------------+
-
-    Returns:     Hash: The updated Build object hash.
-
-    Example:
-    # Update name to 'foo' for build id 702
-    >>> Build.update(702, {'name': 'foo'})
-    # Update status to inactive for build id 702
-    >>> Build.update(702, {'is_active': 0})
+        :param product: ID or name of Product to which this Build belongs
+        :type product: int or str
+        :param name: Name of the build (aka build version string)
+        :type name: str
+        :param description: Description
+        :type str:
+        :param is_active: If the Build is active
+        :type is_active: bool
+        :return: Serialized :class:`tcms.management.models.TestBuild` object
+        :rtype: dict
+        :raises: TestBuild.DoesNotExist if build not found
+        :raises: PermissionDenied if missing *management.change_testbuild* permission
     """
     tb = TestBuild.objects.get(build_id=build_id)
 
