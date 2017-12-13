@@ -7,12 +7,6 @@ from tcms.core.models import BlobField
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import calc_percent
 
-# FIXME: plugins_support is no longer available. dead code here.
-try:
-    from tcms.core.contrib.plugins_support.signals import register_model
-except ImportError:
-    register_model = None
-
 # Products zone
 
 
@@ -494,17 +488,3 @@ class TCMSEnvValue(TCMSActionModel):
     @classmethod
     def get_active(cls):
         return cls.objects.filter(is_active=True)
-
-
-# FIXME: plugins_support is no longer available, this is dead code.
-if register_model:
-    register_model(Classification)
-    register_model(Product)
-    register_model(Priority)
-    register_model(Version)
-    register_model(TestBuild)
-    register_model(TestTag)
-    register_model(Component)
-    register_model(TCMSEnvGroup)
-    register_model(TCMSEnvValue)
-    register_model(TestAttachment)

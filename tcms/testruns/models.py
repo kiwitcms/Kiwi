@@ -18,11 +18,6 @@ from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.testcases.models import TestCaseBug, TestCaseText, NoneText
 from tcms.testruns import signals as run_watchers
 
-try:
-    from tcms.core.contrib.plugins_support.signals import register_model
-except ImportError:
-    register_model = None
-
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
                                        'StatusSubtotal '
@@ -707,8 +702,3 @@ def _run_listen():
 
 if settings.LISTENING_MODEL_SIGNAL:
     _run_listen()
-
-if register_model:
-    register_model(TestRun)
-    register_model(TestCaseRun)
-    register_model(TestRunTag)

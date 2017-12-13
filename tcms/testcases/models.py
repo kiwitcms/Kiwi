@@ -19,11 +19,6 @@ from tcms.testcases import signals as case_watchers
 from tcms.issuetracker.types import IssueTrackerType
 
 
-try:
-    from tcms.core.contrib.plugins_support.signals import register_model
-except ImportError:
-    register_model = None
-
 AUTOMATED_CHOICES = (
     (0, 'Manual'),
     (1, 'Auto'),
@@ -902,10 +897,3 @@ def _disconnect_signals():
 
 if settings.LISTENING_MODEL_SIGNAL:
     _listen()
-
-if register_model:
-    register_model(TestCase)
-    register_model(TestCaseText)
-    register_model(TestCasePlan)
-    register_model(TestCaseBug)
-    register_model(TestCaseComponent)
