@@ -21,11 +21,6 @@ from tcms.testcases.models import TestCasePlan
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans import signals as plan_watchers
 
-try:
-    from tcms.core.contrib.plugins_support.signals import register_model
-except ImportError:
-    register_model = None
-
 
 class TestPlanType(TCMSActionModel):
     id = models.AutoField(db_column='type_id', primary_key=True)
@@ -459,14 +454,6 @@ class TCMSEnvPlanMap(models.Model):
 
     class Meta:
         db_table = u'tcms_env_plan_map'
-
-
-if register_model:
-    register_model(TestPlan)
-    register_model(TestPlanText)
-    register_model(TestPlanType)
-    register_model(TestPlanTag)
-    register_model(TestPlanComponent)
 
 
 def _listen():
