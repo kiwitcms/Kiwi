@@ -93,28 +93,28 @@ from tcms_api.config import (
 from tcms_api.xmlrpc import TCMSError
 
 __all__ = [
-    TCMS, Mutable, Container,
+    'TCMS', 'Mutable', 'Container',
 
-    Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
-    Priority, Product, RunStatus, Status, Tag, User, Version,
-    TestPlan, TestRun, TestCase, CaseRun, CasePlan,
+    'Bug', 'Build', 'CaseStatus', 'Category', 'Component', 'PlanStatus', 'PlanType',
+    'Priority', 'Product', 'RunStatus', 'Status', 'Tag', 'User', 'Version',
+    'TestPlan', 'TestRun', 'TestCase', 'CaseRun', 'CasePlan',
 
-    CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
-    ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
-    PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer,
+    'CaseBugs', 'CaseComponents', 'CasePlans', 'CaseRunBugs', 'CaseTags',
+    'ChildPlans', 'PlanCasePlans', 'PlanCases', 'PlanComponents', 'PlanRuns',
+    'PlanTags', 'RunCaseRuns', 'RunCases', 'RunTags', 'TagContainer',
 
-    ascii, color, header, human, info, listed, unlisted,
+    'color', 'header', 'human', 'info', 'listed', 'unlisted',
 
-    Config,
-    Logging, get_log_level, set_log_level, log,
-    LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL,
+    'Config',
+    'Logging', 'get_log_level', 'set_log_level', 'log',
+    'LOG_ERROR', 'LOG_WARN', 'LOG_INFO', 'LOG_DEBUG', 'LOG_CACHE', 'LOG_DATA', 'LOG_ALL',
 
-    Coloring, get_color_mode, set_color_mode,
-    COLOR_ON, COLOR_OFF, COLOR_AUTO,
+    'Coloring', 'get_color_mode', 'set_color_mode',
+    'COLOR_ON', 'COLOR_OFF', 'COLOR_AUTO',
 
-    Caching, get_cache_level, set_cache_level,
-    CACHE_NONE, CACHE_OBJECTS,
-    NEVER_EXPIRE, NEVER_CACHE,
+    'Caching', 'get_cache_level', 'set_cache_level',
+    'CACHE_NONE', 'CACHE_OBJECTS',
+    'NEVER_EXPIRE', 'NEVER_CACHE',
 
-    TCMSError,
+    'TCMSError',
 ]
