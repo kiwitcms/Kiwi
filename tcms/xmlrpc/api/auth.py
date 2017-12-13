@@ -14,40 +14,31 @@ __all__ = (
 __xmlrpc_namespace__ = 'Auth'
 
 
-def check_user_name(parameters):
-    username = parameters.get('username')
-    password = parameters.get('password')
-    if not username or not password:
-        raise PermissionDenied('Username and password is required')
-
-    return username, password
-
-
 @log_call(namespace=__xmlrpc_namespace__)
-def login(request, parameters):
+def login(request, username, password):
     """
-    Description: Login into Kiwi TCMS
-    Params:      $parameters - Hash: keys must match valid search fields.
-    +-------------------------------------------------------------------+
-    |                    Login Parameters                               |
-    +-------------------------------------------------------------------+
-    |        Key          |          Valid Values                       |
-    | username            | A Kiwi TCMS login (email address)         |
-    | password            | String                                      |
-    +-------------------------------------------------------------------+
+    .. function:: XML-RPC Auth.login(username, password)
 
-    Returns:     String: Session ID.
+        Login into Kiwi TCMS.
 
-    Example:
-    >>> Auth.login({'username': 'foo', 'password': 'bar'})
+        :param username: A Kiwi TCMS login or email address
+        :type username: str
+        :param password: The password
+        :type password: str
+        :return: Session ID
+        :rtype: str
+        :raises PermissionDenied: if username or password doesn't match or missing
     """
     from tcms.core.contrib.auth import get_backend
 
     user = None
 
+    if not username or not password:
+        raise PermissionDenied('Username and password is required')
+
     for backend_str in settings.AUTHENTICATION_BACKENDS:
         backend = get_backend(backend_str)
-        user = backend.authenticate(request, *check_user_name(parameters))
+        user = backend.authenticate(request, username, password)
 
         if user:
             user.backend = "%s.%s" % (backend.__module__,
@@ -62,16 +53,12 @@ def login(request, parameters):
 @log_call(namespace=__xmlrpc_namespace__)
 def login_krbv(request):
     """
-    Description: Login into Kiwi TCMS deployed with mod_auth_kerb
+    .. function:: XML-RPC Auth.login_krbv()
 
-    Returns:     String: Session ID.
+        Login into Kiwi TCMS deployed with Kerberos.
 
-    Example:
-    $ kinit
-    Password for username@example.com:
-
-    $ python
-    >>> Auth.login_krbv()
+        :return: Session ID
+        :rtype: str
     """
     from django.contrib.auth.middleware import RemoteUserMiddleware
 
@@ -83,6 +70,11 @@ def login_krbv(request):
 
 @log_call(namespace=__xmlrpc_namespace__)
 def logout(request):
-    """Description: Delete session information."""
+    """
+    .. function:: XML-RPC Auth.logout()
+
+        Delete session information
+
+        :return: None
+    """
     django.contrib.auth.logout(request)
-    return
