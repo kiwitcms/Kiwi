@@ -56,7 +56,7 @@ apidoc:
 	                ../*/tests.py ../*/tests/*.py ../*/test_*.py \
 	                ../settings/test/*.py ../*/migrations/*.py ../tcms_api/setup.py
 
-html: apidoc
+html: clean apidoc
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
