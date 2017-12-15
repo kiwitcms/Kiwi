@@ -1,3 +1,3 @@
 files:
   - source: /tcms/locale/*/LC_MESSAGES/django.po
-    translation: '%original_path%'
+    translation: /tcms/locale/%two_letters_code%/LC_MESSAGES/%file_name%.%file_extension%
