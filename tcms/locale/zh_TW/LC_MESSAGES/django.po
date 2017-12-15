@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-15 10:06+0000\n"
-"PO-Revision-Date: 2017-12-15 05:21-0500\n"
+"PO-Revision-Date: 2017-12-15 05:22-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: kiwitcms\n"
 "X-Crowdin-Language: zh-TW\n"
-"X-Crowdin-File: /master/tcms/locale/zh_CN/LC_MESSAGES/django.po\n"
+"X-Crowdin-File: /master/tcms/locale/zh_TW/LC_MESSAGES/django.po\n"
 
 #: tcms/core/contrib/auth/apps.py:7
 msgid "Core auth"
@@ -248,22 +248,4 @@ msgstr ""
 #: tcms/templates/registration/password_change_form.html:43
 msgid "Change my password"
 msgstr ""
-
-#~ msgid "HOME"
-#~ msgstr "首页"
-
-#~ msgid "PLANNING"
-#~ msgstr "测试计划"
-
-#~ msgid "TESTING"
-#~ msgstr "测试执行"
-
-#~ msgid "ENVIRONMENT"
-#~ msgstr "环境"
-
-#~ msgid "REPORTING"
-#~ msgstr "报表"
-
-#~ msgid "ADMIN"
-#~ msgstr "系统管理"
 
