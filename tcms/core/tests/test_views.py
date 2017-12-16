@@ -2,6 +2,7 @@
 
 import json
 import http.client
+from urllib.parse import urlencode
 
 from django import test
 from django.conf import settings
@@ -22,9 +23,29 @@ from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
+from tcms.tests.factories import UserFactory
 from tcms.tests.factories import TCMSEnvGroupFactory
 from tcms.tests.factories import TCMSEnvGroupPropertyMapFactory
 from tcms.tests.factories import TCMSEnvPropertyFactory
+
+
+class TestNavigation(test.TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super(TestNavigation, cls).setUpTestData()
+        cls.user = UserFactory(email='user+1@example.com')
+        cls.user.set_password('testing')
+        cls.user.save()
+
+    def test_urls_for_emails_with_pluses(self):
+        # test for https://github.com/Nitrate/Nitrate/issues/262
+        # when email contains + sign it needs to be properly urlencoded
+        # before passing it as query string argument to the search views
+        self.client.login(username=self.user.username, password='testing')
+        response = self.client.get(reverse('iframe-navigation'))
+
+        self.assertContains(response, urlencode({'people': self.user.email}))
+        self.assertContains(response, urlencode({'author__email__startswith': self.user.email}))
 
 
 class TestIndex(BaseCaseRun):
