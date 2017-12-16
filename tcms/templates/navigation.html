@@ -30,11 +30,11 @@
                     <ul class="dropdown-menu">
                     {% if user.is_authenticated %}
                         <li>
-                            <a href="{% url "testruns-all" %}?people={{ user.email }}" target="_parent">My Test Runs</a>
+                            <a href="{% url "testruns-all" %}?people={{ user.email|urlencode }}" target="_parent">My Test Runs</a>
                         </li>
 
                         <li>
-                            <a href="{% url "plans-all" %}?author__email__startswith={{ user.email }}" target="_parent">My Test Plans</a>
+                            <a href="{% url "plans-all" %}?author__email__startswith={{ user.email|urlencode }}" target="_parent">My Test Plans</a>
                         </li>
 
                         <li>
