@@ -29,8 +29,6 @@ __all__ = (
     'get_all_cases_tags',
     'get_test_runs',
     'get_text',
-    'lookup_type_id_by_name',
-    'lookup_type_name_by_id',
     'remove_tag',
     'remove_component',
     'store_text',
@@ -476,18 +474,6 @@ def get_text(request, plan_id, plan_text_version=None):
         return test_plan_text.serialize()
     else:
         return "No plan text with version '%s' found." % plan_text_version
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_type_id_by_name(request, name):
-    """DEPRECATED - CONSIDERED HARMFUL Use TestPlan.check_plan_type instead"""
-    return check_plan_type(request=request, name=name)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_type_name_by_id(request, id):
-    """DEPRECATED - CONSIDERED HARMFUL Use TestPlan.get_plan_type instead"""
-    return get_plan_type(request=request, id=id)
 
 
 @log_call(namespace=__xmlrpc_namespace__)

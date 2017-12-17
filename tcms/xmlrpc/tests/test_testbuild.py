@@ -5,8 +5,6 @@ from http.client import BAD_REQUEST
 from http.client import FORBIDDEN
 from http.client import NOT_FOUND
 
-from django.test import TestCase
-
 from tcms.xmlrpc.api import build
 from tcms.xmlrpc.tests.utils import make_http_request
 
@@ -266,16 +264,6 @@ class TestBuildGetRuns(XmlrpcAPIBaseTest):
         self.assertIsNotNone(b)
         self.assertEqual(len(b), 1)
         self.assertEqual(b[0]['summary'], self.test_run.summary)
-
-
-@unittest.skip('Ignored. API is deprecated.')
-class TestBuildLookupID(TestCase):
-    """DEPRECATED API"""
-
-
-@unittest.skip('Ignored. API is deprecated.')
-class TestBuildLookupName(TestCase):
-    """DEPRECATED API"""
 
 
 class TestBuildCheck(XmlrpcAPIBaseTest):
