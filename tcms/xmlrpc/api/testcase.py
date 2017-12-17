@@ -40,12 +40,6 @@ __all__ = (
     'get_text',
     'get_priority',
     'link_plan',
-    'lookup_category_name_by_id',
-    'lookup_category_id_by_name',
-    'lookup_priority_name_by_id',
-    'lookup_priority_id_by_name',
-    'lookup_status_name_by_id',
-    'lookup_status_id_by_name',
     'notification_add_cc',
     'notification_get_cc_list',
     'notification_remove_cc',
@@ -861,52 +855,6 @@ def link_plan(request, case_ids, plan_ids):
         TestCasePlan(plan_id=_plan_id, case_id=_case_id)
         for _plan_id, _case_id in _generate_link_plan_value()
     ])
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_category_name_by_id(request, id):
-    """DEPRECATED - CONSIDERED HARMFUL Use Product.get_category instead"""
-    from product import get_category
-
-    return get_category(request=request, id=id)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_category_id_by_name(request, name, product):
-    """
-    DEPRECATED - CONSIDERED HARMFUL Use Product.check_category instead
-    """
-    from product import check_category
-
-    return check_category(request=request, name=name, product=product)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_priority_name_by_id(request, id):
-    """
-    DEPRECATED - CONSIDERED HARMFUL Use TestCase.get_priority instead
-    """
-    return get_priority(request=request, id=id)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_priority_id_by_name(request, value):
-    """
-    DEPRECATED - CONSIDERED HARMFUL Use TestCase.check_priority instead
-    """
-    return check_priority(request=request, value=value)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_status_name_by_id(request, id):
-    """DEPRECATED - CONSIDERED HARMFUL Use TestCase.get_case_status instead"""
-    return get_case_status(request=request, id=id)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_status_id_by_name(request, name):
-    """DEPRECATED - CONSIDERED HARMFUL Use TestCase.check_case_status instead"""
-    return check_case_status(request=request, name=name)
 
 
 @log_call(namespace=__xmlrpc_namespace__)

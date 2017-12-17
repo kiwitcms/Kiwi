@@ -31,8 +31,6 @@ __all__ = (
     'get_tag',
     'add_version',
     'get_versions',
-    'lookup_name_by_id',
-    'lookup_id_by_name',
 )
 
 __xmlrpc_namespace__ = 'Product'
@@ -597,15 +595,3 @@ def get_versions(request, product):
     p = pre_check_product(values=product)
     query = {'product': p}
     return Version.to_xmlrpc(query)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_name_by_id(request, id):
-    """DEPRECATED Use Product.get instead"""
-    return get(request, id)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_id_by_name(request, name):
-    """DEPRECATED - CONSIDERED HARMFUL Use Product.check_product instead"""
-    return check_product(request, name)

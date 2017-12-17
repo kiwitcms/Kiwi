@@ -30,8 +30,6 @@ __all__ = (
     'get_history',
     'get_history_s',
     'get_logs',
-    'lookup_status_name_by_id',
-    'lookup_status_id_by_name',
     'update',
 )
 
@@ -510,22 +508,6 @@ def get_history_s(request, run_id, build_id, environment_id):
     Returns:     Array: An array of case-run object hashes.
     """
     raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_status_name_by_id(request, id):
-    """
-    DEPRECATED - CONSIDERED HARMFUL Use TestCaseRun.get_case_run_status instead
-    """
-    return get_case_run_status(request=request, id=id)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def lookup_status_id_by_name(request, name):
-    """
-    DEPRECATED - CONSIDERED HARMFUL Use TestCaseRun.check_case_run_status instead
-    """
-    return check_case_run_status(request=request, name=name)
 
 
 @log_call(namespace=__xmlrpc_namespace__)
