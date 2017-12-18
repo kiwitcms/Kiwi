@@ -70,7 +70,7 @@ class BaseAPIClient_TestCase(StaticLiveServerTestCase):
         conf_path = os.path.expanduser('~/.tcms.conf')
         conf_fh = open(conf_path, 'w')
         conf_fh.write("""[tcms]
-url = %s/xmlrpc/
+url = %s/xml-rpc/
 username = %s
 password = %s
 """ % (self.live_server_url, self.api_user.username, 'testing'))

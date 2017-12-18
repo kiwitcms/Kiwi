@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth.decorators import permission_required
+from modernrpc.core import rpc_method
 
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
-from tcms.xmlrpc.decorators import log_call
 from tcms.xmlrpc.utils import distinct_count
 from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.utils import pre_process_ids
+from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
     'add_cases',
@@ -20,8 +20,6 @@ __all__ = (
     'filter_count',
     'get',
     'get_bugs',
-    'get_change_history',
-    'get_completion_report',
     'get_env_values',
     'get_tags',
     'get_test_case_runs',
@@ -34,12 +32,10 @@ __all__ = (
     'update',
 )
 
-__xmlrpc_namespace__ = 'TestRun'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.add_testcaserun', raise_exception=True)
-def add_cases(request, run_ids, case_ids):
+@permissions_required('testruns.add_testcaserun')
+@rpc_method(name='TestRun.add_cases')
+def add_cases(run_ids, case_ids):
     """
     Description: Add one or more cases to the selected test runs.
 
@@ -71,9 +67,9 @@ def add_cases(request, run_ids, case_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.delete_testcaserun', raise_exception=True)
-def remove_cases(request, run_ids, case_ids):
+@permissions_required('testruns.delete_testcaserun')
+@rpc_method(name='TestRun.remove_cases')
+def remove_cases(run_ids, case_ids):
     """
     Description: Remove one or more cases from the selected test runs.
 
@@ -114,9 +110,9 @@ def remove_cases(request, run_ids, case_ids):
         raise
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.add_testruntag', raise_exception=True)
-def add_tag(request, run_ids, tags):
+@permissions_required('testruns.add_testruntag')
+@rpc_method(name='TestRun.add_tag')
+def add_tag(run_ids, tags):
     """
     Description: Add one or more tags to the selected test runs.
 
@@ -149,9 +145,9 @@ def add_tag(request, run_ids, tags):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.add_testrun', raise_exception=True)
-def create(request, values):
+@permissions_required('testruns.add_testrun')
+@rpc_method(name='TestRun.create')
+def create(values):
     """
     Description: Creates a new Test Run object and stores it in the database.
 
@@ -239,9 +235,9 @@ def create(request, values):
     return tr.serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.change_tcmsenvrunvaluemap', raise_exception=True)
-def env_value(request, action, run_ids, env_value_ids):
+@permissions_required('testruns.change_tcmsenvrunvaluemap')
+@rpc_method(name='TestRun.env_value')
+def env_value(action, run_ids, env_value_ids):
     """
     Description: add/remove env values to the given runs,
                  function is same as link_env_value/unlink_env_value
@@ -277,8 +273,8 @@ def env_value(request, action, run_ids, env_value_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter(request, values={}):
+@rpc_method(name='TestRun.filter')
+def filter(values={}):
     """
     Description: Performs a search and returns the resulting list of test runs.
 
@@ -316,8 +312,8 @@ def filter(request, values={}):
     return TestRun.to_xmlrpc(values)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_count(request, values={}):
+@rpc_method(name='TestRun.filter_count')
+def filter_count(values={}):
     """
     Description: Performs a search and returns the resulting count of runs.
 
@@ -331,8 +327,8 @@ def filter_count(request, values={}):
     return distinct_count(TestRun, values)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, run_id):
+@rpc_method(name='TestRun.get')
+def get(run_id):
     """
     Description: Used to load an existing test run from the database.
 
@@ -360,8 +356,8 @@ def get(request, run_id):
     return response
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_bugs(request, run_ids):
+@rpc_method(name='TestRun.get_bugs')
+def get_bugs(run_ids):
     """
     *** FIXME: BUGGY IN SERIALISER - List can not be serialize. ***
     Description: Get the list of bugs attached to this run.
@@ -394,37 +390,8 @@ def get_bugs(request, run_ids):
     return TestCaseBug.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_change_history(request, run_id):
-    """
-    *** FIXME: NOT IMPLEMENTED - History is different than before ***
-    Description: Get the list of changes to the fields of this run.
-
-    Params:      $run_id - Integer: An integer representing the ID of the run in the database
-
-    Returns:     Array: An array of hashes with changed fields and their details.
-    """
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_completion_report(request, run_ids):
-    """
-    *** FIXME: NOT IMPLEMENTED ***
-    Description: Get a report of the current status of the selected runs combined.
-
-    Params:      $runs - Integer/Array/String: An integer representing the ID in the database
-                        an array of integers or a comma separated list of integers.
-
-    Returns:     Hash: A hash containing counts and percentages of the combined totals of
-                        case-runs in the run. Counts only the most recently statused case-run
-                        for a given build and environment.
-    """
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_env_values(request, run_id):
+@rpc_method(name='TestRun.get_env_values')
+def get_env_values(run_id):
     """
     Description: Get the list of env values to this run.
 
@@ -441,8 +408,8 @@ def get_env_values(request, run_id):
     return TCMSEnvValue.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_tags(request, run_id):
+@rpc_method(name='TestRun.get_tags')
+def get_tags(run_id):
     """
     Description: Get the list of tags attached to this run.
 
@@ -460,8 +427,8 @@ def get_tags(request, run_id):
     return TestTag.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_test_case_runs(request, run_id):
+@rpc_method(name='TestRun.get_test_case_runs')
+def get_test_case_runs(run_id):
     """
     Description: Get the list of cases that this run is linked to.
 
@@ -477,8 +444,8 @@ def get_test_case_runs(request, run_id):
     return TestCaseRun.to_xmlrpc({'run__run_id': run_id})
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_test_cases(request, run_id):
+@rpc_method(name='TestRun.get_test_cases')
+def get_test_cases(run_id):
     """
     Description: Get the list of cases that this run is linked to.
 
@@ -504,8 +471,8 @@ def get_test_cases(request, run_id):
     return tcs_serializer
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_test_plan(request, run_id):
+@rpc_method(name='TestRun.get_test_plan')
+def get_test_plan(run_id):
     """
     Description: Get the plan that this run is associated with.
 
@@ -521,9 +488,9 @@ def get_test_plan(request, run_id):
         run_id=run_id).plan.serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.delete_testruntag', raise_exception=True)
-def remove_tag(request, run_ids, tags):
+@permissions_required('testruns.delete_testruntag')
+@rpc_method(name='TestRun.remove_tag')
+def remove_tag(run_ids, tags):
     """
     Description: Remove a tag from a run.
 
@@ -556,9 +523,9 @@ def remove_tag(request, run_ids, tags):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.change_testrun', raise_exception=True)
-def update(request, run_ids, values):
+@permissions_required('testruns.change_testrun')
+@rpc_method(name='TestRun.update')
+def update(run_ids, values):
     """
     Description: Updates the fields of the selected test run.
 
@@ -655,9 +622,9 @@ def update(request, run_ids, values):
     return TestRun.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.add_tcmsenvrunvaluemap', raise_exception=True)
-def link_env_value(request, run_ids, env_value_ids):
+@permissions_required('testruns.add_tcmsenvrunvaluemap')
+@rpc_method(name='TestRun.link_env_value')
+def link_env_value(run_ids, env_value_ids):
     """
     Description: Link env values to the given runs.
 
@@ -676,12 +643,12 @@ def link_env_value(request, run_ids, env_value_ids):
     # Add env value 13 to run id 8748
     >>> TestRun.link_env_value(8748, 13)
     """
-    return env_value(request, 'add', run_ids, env_value_ids)
+    return env_value('add', run_ids, env_value_ids)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.delete_tcmsenvrunvaluemap', raise_exception=True)
-def unlink_env_value(request, run_ids, env_value_ids):
+@permissions_required('testruns.delete_tcmsenvrunvaluemap')
+@rpc_method(name='TestRun.unlink_env_value')
+def unlink_env_value(run_ids, env_value_ids):
     """
     Description: Unlink env values to the given runs.
 
@@ -700,4 +667,4 @@ def unlink_env_value(request, run_ids, env_value_ids):
     # Unlink env value 13 to run id 8748
     >>> TestRun.unlink_env_value(8748, 13)
     """
-    return env_value(request, 'remove', run_ids, env_value_ids)
+    return env_value('remove', run_ids, env_value_ids)

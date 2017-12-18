@@ -30,7 +30,7 @@ Synopsis:
     Minimal config file ~/.tcms.conf::
 
         [tcms]
-        url = https://tcms.server/xmlrpc/
+        url = https://tcms.server/xml-rpc/
 
     Initialize or create an object::
 

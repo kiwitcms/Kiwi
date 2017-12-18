@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from modernrpc.core import rpc_method
+
 from tcms.management.models import TestTag
-from tcms.xmlrpc.decorators import log_call
 
 __all__ = ('get_tags', )
 
-__xmlrpc_namespace__ = 'Tag'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_tags(request, values):
+@rpc_method(name='Tag.get_tags')
+def get_tags(values):
     """
     Description:  Get the list of tags.
 
@@ -30,7 +29,8 @@ def get_tags(request, values):
     >>> Tag.get_tags(values)
     """
     if not isinstance(values, dict):
-        raise TypeError('Argument values must be an dictionary.')
+        raise TypeError('Argument values must be a dictionary.')
+
     if values.get('ids'):
         query = {'id__in': values.get('ids')}
         return TestTag.to_xmlrpc(query)

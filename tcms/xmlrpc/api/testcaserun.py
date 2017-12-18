@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from django.db.models import ObjectDoesNotExist
-from django.contrib.auth.decorators import permission_required
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.contrib.linkreference.models import create_link, LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun, TestCaseRunStatus
-from tcms.xmlrpc.decorators import log_call
 from tcms.xmlrpc.utils import pre_process_ids, distinct_count
+from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
     'add_comment',
@@ -27,13 +27,9 @@ __all__ = (
     'get_case_run_status',
     'get_completion_time',
     'get_completion_time_s',
-    'get_history',
-    'get_history_s',
     'get_logs',
     'update',
 )
-
-__xmlrpc_namespace__ = 'TestCaseRun'
 
 
 class GetCaseRun(object):
@@ -56,8 +52,8 @@ class GetCaseRun(object):
 gcr = GetCaseRun()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def add_comment(request, case_run_ids, comment):
+@rpc_method(name='TestCaseRun.add_comment')
+def add_comment(case_run_ids, comment, **kwargs):
     """
     Description: Adds comments to selected test case runs.
 
@@ -82,6 +78,7 @@ def add_comment(request, case_run_ids, comment):
 
     # FIXME: empty object_pks should be an ValueError
     object_pks = pre_process_ids(value=case_run_ids)
+    request = kwargs.get(REQUEST_KEY)
     c = Comment(
         request=request,
         content_type='testruns.testcaserun',
@@ -92,9 +89,9 @@ def add_comment(request, case_run_ids, comment):
     return c.add()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.add_testcasebug', raise_exception=True)
-def attach_bug(request, values):
+@permissions_required('testcases.add_testcasebug')
+@rpc_method(name='TestCaseRun.attach_bug')
+def attach_bug(values):
     """
     Description: Add one or more bugs to the selected test cases.
 
@@ -149,8 +146,8 @@ def attach_bug(request, values):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def check_case_run_status(request, name):
+@rpc_method(name='TestCaseRun.check_case_run_status')
+def check_case_run_status(name):
     """
     Params:      $name - String: the status name.
 
@@ -162,9 +159,9 @@ def check_case_run_status(request, name):
     return TestCaseRunStatus.objects.get(name=name).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.add_testcaserun', raise_exception=True)
-def create(request, values):
+@permissions_required('testruns.add_testcaserun')
+@rpc_method(name='TestCaseRun.create')
+def create(values):
     """
     *** It always report - ValueError: invalid literal for int() with base 10: '' ***
 
@@ -224,9 +221,9 @@ def create(request, values):
     return tcr.serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.delete_testcasebug', raise_exception=True)
-def detach_bug(request, case_run_ids, bug_ids):
+@permissions_required('testcases.delete_testcasebug')
+@rpc_method(name='TestCaseRun.detach_bug')
+def detach_bug(case_run_ids, bug_ids):
     """
     Description: Remove one or more bugs to the selected test case-runs.
 
@@ -264,8 +261,8 @@ def detach_bug(request, case_run_ids, bug_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter(request, values={}):
+@rpc_method(name='TestCaseRun.filter')
+def filter(values={}):
     """
     Description: Performs a search and returns the resulting list of test cases.
 
@@ -296,8 +293,8 @@ def filter(request, values={}):
     return TestCaseRun.to_xmlrpc(values)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_count(request, values={}):
+@rpc_method(name='TestCaseRun.filter_count')
+def filter_count(values={}):
     """
     Description: Performs a search and returns the resulting count of cases.
 
@@ -313,8 +310,8 @@ def filter_count(request, values={}):
     return distinct_count(TestCaseRun, values)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, case_run_id):
+@rpc_method(name='TestCaseRun.get')
+def get(case_run_id):
     """
     Description: Used to load an existing test case-run from the database.
 
@@ -329,8 +326,8 @@ def get(request, case_run_id):
     return gcr.pre_process_tcr(case_run_id=case_run_id).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_s(request, case_id, run_id, build_id, environment_id=0):
+@rpc_method(name='TestCaseRun.get_s')
+def get_s(case_id, run_id, build_id, environment_id=0):
     """
     Description: Used to load an existing test case from the database.
 
@@ -349,8 +346,8 @@ def get_s(request, case_id, run_id, build_id, environment_id=0):
                                  environment_id).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_bugs(request, case_run_id):
+@rpc_method(name='TestCaseRun.get_bugs')
+def get_bugs(case_run_id):
     """
     Description: Get the list of bugs that are associated with this test case.
 
@@ -366,8 +363,8 @@ def get_bugs(request, case_run_id):
     return TestCaseBug.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_bugs_s(request, run_id, case_id, build_id, environment_id=0):
+@rpc_method(name='TestCaseRun.get_bugs_s')
+def get_bugs_s(run_id, case_id, build_id, environment_id=0):
     """
     Description: Get the list of bugs that are associated with this test case.
 
@@ -397,8 +394,8 @@ def get_bugs_s(request, run_id, case_id, build_id, environment_id=0):
     return TestCaseBug.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_case_run_status(request, id=None):
+@rpc_method(name='TestCaseRun.get_case_run_status')
+def get_case_run_status(id=None):
     """
     Params:    $case_run_status_id - Integer(Optional): ID of the status to return
 
@@ -418,8 +415,8 @@ def get_case_run_status(request, id=None):
     return TestCaseRunStatus.to_xmlrpc()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_completion_time(request, case_run_id):
+@rpc_method(name='TestCaseRun.get_completion_time')
+def get_completion_time(case_run_id):
     """
     Description: Returns the time in seconds that it took for this case to complete.
 
@@ -444,8 +441,8 @@ def get_completion_time(request, case_run_id):
     return time
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_completion_time_s(request, run_id, case_id, build_id, environment_id=0):
+@rpc_method(name='TestCaseRun.get_completion_time_s')
+def get_completion_time_s(run_id, case_id, build_id, environment_id=0):
     """
     Description: Returns the time in seconds that it took for this case to complete.
 
@@ -477,42 +474,9 @@ def get_completion_time_s(request, run_id, case_id, build_id, environment_id=0):
     return time
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_history(request, case_run_id):
-    """
-    *** FIXME: NOT IMPLEMENTED - Case history is different than before ***
-    Description: Get the list of case-runs for all runs this case appears in.
-                  To limit this list by build or other attribute, see TestCaseRun.query
-
-    Params:      $caserun_id - Integer: An integer representing the ID in
-                                        the database for this case-run.
-
-    Returns:     Array: An array of case-run object hashes.
-    """
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_history_s(request, run_id, build_id, environment_id):
-    """
-    *** FIXME: NOT IMPLEMENTED - Case history is different than before ***
-    Description: Get the list of case-runs for all runs this case appears in.
-                  To limit this list by build or other attribute, see TestCaseRun.filter.
-
-    Params: $case_id - Integer: An integer representing the ID of the test case in the database.
-            $run_id - Integer: An integer representing the ID of the test run in the database.
-            $build_id - Integer: An integer representing the ID of the test build in the database.
-            $environment_id - Integer: An integer representing the ID of the environment
-                                       in the database.
-
-    Returns:     Array: An array of case-run object hashes.
-    """
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.change_testcaserun', raise_exception=True)
-def update(request, case_run_ids, values):
+@permissions_required('testruns.change_testcaserun')
+@rpc_method(name='TestCaseRun.update')
+def update(case_run_ids, values, **kwargs):
     """
     Description: Updates the fields of the selected case-runs.
 
@@ -563,6 +527,7 @@ def update(request, case_run_ids, values):
 
         if form.cleaned_data['case_run_status']:
             data['case_run_status'] = form.cleaned_data['case_run_status']
+            request = kwargs.get(REQUEST_KEY)
             data['tested_by'] = request.user
             data['close_date'] = datetime.now()
 
@@ -584,8 +549,8 @@ def update(request, case_run_ids, values):
     return TestCaseRun.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def attach_log(request, case_run_id, name, url):
+@rpc_method(name='TestCaseRun.attach_log')
+def attach_log(case_run_id, name, url):
     """
     Description: Add new log link to TestCaseRun
 
@@ -598,8 +563,8 @@ def attach_log(request, case_run_id, name, url):
     create_link(name=name, url=url, link_to=test_case_run)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def detach_log(request, case_run_id, link_id):
+@rpc_method(name='TestCaseRun.dettach_log')
+def detach_log(case_run_id, link_id):
     """
     Description: Remove log link to TestCaseRun
 
@@ -610,8 +575,8 @@ def detach_log(request, case_run_id, link_id):
     LinkReference.unlink(link_id)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_logs(request, case_run_id):
+@rpc_method(name='TestCaseRun.get_logs')
+def get_logs(case_run_id):
     """
     Description:  Get log links to TestCaseRun
 

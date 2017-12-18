@@ -226,6 +226,7 @@ INSTALLED_APPS = [
 
     'django_comments',
     'dj_pagination',
+    'modernrpc',
     'tinymce',
 
     'tcms.core',
@@ -264,6 +265,22 @@ XMLRPC_METHODS = {
         ('tcms.xmlrpc.api.tag', 'Tag'),
     ),
 }
+
+MODERNRPC_METHODS_MODULES = [
+        'tcms.xmlrpc.api.auth',
+        'tcms.xmlrpc.api.build',
+        'tcms.xmlrpc.api.env',
+        'tcms.xmlrpc.api.product',
+        'tcms.xmlrpc.api.testcase',
+        'tcms.xmlrpc.api.testcaserun',
+        'tcms.xmlrpc.api.testcaseplan',
+        'tcms.xmlrpc.api.testplan',
+        'tcms.xmlrpc.api.testrun',
+        'tcms.xmlrpc.api.user',
+        'tcms.xmlrpc.api.tag',
+]
+# RPC handlers which can log RPC calls to the database
+MODERNRPC_HANDLERS = ['tcms.xmlrpc.handlers.XMLRPCHandler', 'tcms.xmlrpc.handlers.JSONRPCHandler']
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 

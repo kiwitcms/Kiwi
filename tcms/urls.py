@@ -6,6 +6,9 @@ from django.contrib import admin
 from django.contrib.admindocs import urls as admindocs_urls
 from django.views.i18n import JavaScriptCatalog
 
+from modernrpc.core import JSONRPC_PROTOCOL
+from modernrpc.core import XMLRPC_PROTOCOL
+from modernrpc.views import RPCEntryPoint
 from tinymce import urls as tinymce_urls
 from tcms.core import ajax
 from tcms.core import files
@@ -20,7 +23,6 @@ from tcms.testruns import views as testruns_views
 from tcms.management import views as management_views
 from tcms.report import urls as report_urls
 from tcms.search import advance_search
-from tcms.xmlrpc import urls as xmlrpc_urls
 
 
 urlpatterns = [
@@ -35,7 +37,8 @@ urlpatterns = [
     # Index and static zone
     url(r'^$', core_views.index, name='core-views-index'),
     url(r'^search/$', core_views.search, name='core-views-search'),
-    url(r'^xmlrpc/', include(xmlrpc_urls)),
+    url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
+    url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
 
     # Ajax call responder
     url(r'^ajax/update/$', ajax.update, name='ajax-update'),

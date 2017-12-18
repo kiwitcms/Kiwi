@@ -2,11 +2,12 @@
 
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.decorators import permission_required
+
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.xmlrpc.serializer import XMLRPCSerializer
-from tcms.xmlrpc.decorators import log_call
 from tcms.xmlrpc.utils import parse_bool_value
+from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
     'filter',
@@ -15,8 +16,6 @@ __all__ = (
     'update',
     'join'
 )
-
-__xmlrpc_namespace__ = 'User'
 
 
 def get_user_dict(user):
@@ -27,8 +26,8 @@ def get_user_dict(user):
     return u
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter(request, query):
+@rpc_method(name='User.filter')
+def filter(query):
     """
     Description: Performs a search and returns the resulting list of test cases
 
@@ -58,8 +57,8 @@ def filter(request, query):
     return [get_user_dict(u) for u in users]
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, id):
+@rpc_method(name='User.get')
+def get(id):
     """
     Description: Used to load an existing test case from the database.
 
@@ -74,8 +73,8 @@ def get(request, id):
     return get_user_dict(User.objects.get(pk=id))
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_me(request):
+@rpc_method(name='User.get_me')
+def get_me(**kwargs):
     """
     Description: Get the information of myself.
 
@@ -84,11 +83,12 @@ def get_me(request):
     Example:
     >>> User.get_me()
     """
+    request = kwargs.get(REQUEST_KEY)
     return get_user_dict(request.user)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def update(request, values=None, id=None):
+@rpc_method(name='User.update')
+def update(values, **kwargs):
     """
     Description: Updates the fields of the selected user. it also can change
                  the informations of other people if you have permission.
@@ -118,6 +118,8 @@ def update(request, values=None, id=None):
     >>> User.update({'password': 'foo', 'old_password': '123'})
     >>> User.update({'password': 'foo', 'old_password': '123'}, 2206)
     """
+    id = kwargs.get('id', None)
+    request = kwargs.get(REQUEST_KEY)
     if id:
         user_being_updated = User.objects.get(pk=id)
     else:
@@ -161,9 +163,9 @@ def update(request, values=None, id=None):
     return get_user_dict(user_being_updated)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('auth.change_user', raise_exception=True)
-def join(request, username, groupname):
+@permissions_required('auth.change_user')
+@rpc_method(name='User.join')
+def join(username, groupname):
     """
     Description: Add user to a group specified by name.
 

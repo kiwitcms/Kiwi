@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
+from modernrpc.core import rpc_method
+
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testplans.models import TestPlan
-from tcms.xmlrpc.decorators import log_call
-
 
 __all__ = ('get', 'update')
 
-__xmlrpc_namespace__ = 'TestCasePlan'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, case_id, plan_id):
+@rpc_method(name='TestCasePlan.get')
+def get(case_id, plan_id):
     """
     Description: Used to load an existing test-case-plan from the database.
 
@@ -32,8 +30,8 @@ def get(request, case_id, plan_id):
     return XMLRPCSerializer(model=tcp).serialize_model()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def update(request, case_id, plan_id, sortkey):
+@rpc_method(name='TestCasePlan.update')
+def update(case_id, plan_id, sortkey):
     """
     Description: Updates the sortkey of the selected test-case-plan.
 
