@@ -248,24 +248,6 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
 COMMENTS_APP = 'tcms.core.contrib.comments'
 
-# XML-RPC interface settings
-# NOTE: you may also use this setting to enable/disable certain methods
-XMLRPC_METHODS = {
-    'TCMS_XML_RPC': (
-        ('tcms.xmlrpc.api.auth', 'Auth'),
-        ('tcms.xmlrpc.api.build', 'Build'),
-        ('tcms.xmlrpc.api.env', 'Env'),
-        ('tcms.xmlrpc.api.product', 'Product'),
-        ('tcms.xmlrpc.api.testcase', 'TestCase'),
-        ('tcms.xmlrpc.api.testcaserun', 'TestCaseRun'),
-        ('tcms.xmlrpc.api.testcaseplan', 'TestCasePlan'),
-        ('tcms.xmlrpc.api.testplan', 'TestPlan'),
-        ('tcms.xmlrpc.api.testrun', 'TestRun'),
-        ('tcms.xmlrpc.api.user', 'User'),
-        ('tcms.xmlrpc.api.tag', 'Tag'),
-    ),
-}
-
 MODERNRPC_METHODS_MODULES = [
         'tcms.xmlrpc.api.auth',
         'tcms.xmlrpc.api.build',
