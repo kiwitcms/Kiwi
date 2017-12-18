@@ -2,17 +2,19 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import EmailField, ValidationError
-from django.contrib.auth.decorators import permission_required
+
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
-from tcms.xmlrpc.decorators import log_call
 from tcms.xmlrpc.utils import distinct_count
 from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.utils import pre_process_ids
+from tcms.xmlrpc.decorators import permissions_required
+
 
 __all__ = (
     'add_comment',
@@ -31,9 +33,7 @@ __all__ = (
     'get',
     'get_bug_systems',
     'get_bugs',
-    'get_case_run_history',
     'get_case_status',
-    'get_change_history',
     'get_components',
     'get_plans',
     'get_tags',
@@ -50,11 +50,9 @@ __all__ = (
     'update',
 )
 
-__xmlrpc_namespace__ = 'TestCase'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-def add_comment(request, case_ids, comment):
+@rpc_method(name='TestCase.add_comment')
+def add_comment(case_ids, comment, **kwargs):
     """
     Description: Adds comments to selected test cases.
 
@@ -76,6 +74,7 @@ def add_comment(request, case_ids, comment):
     """
     from tcms.xmlrpc.utils import Comment
 
+    request = kwargs.get(REQUEST_KEY)
     object_pks = pre_process_ids(value=case_ids)
     c = Comment(
         request=request,
@@ -87,9 +86,9 @@ def add_comment(request, case_ids, comment):
     return c.add()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.add_testcasecomponent', raise_exception=True)
-def add_component(request, case_ids, component_ids):
+@permissions_required('testcases.add_testcasecomponent')
+@rpc_method(name='TestCase.add_component')
+def add_component(case_ids, component_ids):
     """
     Description: Adds one or more components to the selected test cases.
 
@@ -122,9 +121,9 @@ def add_component(request, case_ids, component_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.add_testcasetag', raise_exception=True)
-def add_tag(request, case_ids, tags):
+@permissions_required('testcases.add_testcasetag')
+@rpc_method(name='TestCase.add_tag')
+def add_tag(case_ids, tags):
     """
     Description: Add one or more tags to the selected test cases.
 
@@ -158,9 +157,9 @@ def add_tag(request, case_ids, tags):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testruns.add_testcaserun', raise_exception=True)
-def add_to_run(request, case_ids, run_ids):
+@permissions_required('testruns.add_testcaserun')
+@rpc_method(name='TestCase.add_to_run')
+def add_to_run(case_ids, run_ids):
     """
     Description: Add one or more cases to the selected test runs.
 
@@ -201,9 +200,9 @@ def add_to_run(request, case_ids, run_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.add_testcasebug', raise_exception=True)
-def attach_bug(request, values):
+@permissions_required('testcases.add_testcasebug')
+@rpc_method(name='TestCase.attach_bug')
+def attach_bug(values):
     """
     Description: Add one or more bugs to the selected test cases.
 
@@ -254,8 +253,8 @@ def attach_bug(request, values):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def check_case_status(request, name):
+@rpc_method(name='TestCase.check_case_status')
+def check_case_status(name):
     """
     Description: Looks up and returns a case status by name.
 
@@ -271,8 +270,8 @@ def check_case_status(request, name):
     return TestCaseStatus.objects.get(name=name).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def check_priority(request, value):
+@rpc_method(name='TestCase.check_priority')
+def check_priority(value):
     """
     Description: Looks up and returns a priority by name.
 
@@ -288,8 +287,8 @@ def check_priority(request, value):
     return Priority.objects.get(value=value).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def calculate_average_estimated_time(request, case_ids):
+@rpc_method(name='TestCase.calculate_average_estimated_time')
+def calculate_average_estimated_time(case_ids):
     """
     Description: Returns an average estimated time for cases.
 
@@ -317,8 +316,8 @@ def calculate_average_estimated_time(request, case_ids):
     return '%02i:%02i:%02i' % (h, m, s)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def calculate_total_estimated_time(request, case_ids):
+@rpc_method(name='TestCase.calculate_total_estimated_time')
+def calculate_total_estimated_time(case_ids):
     """
     Description: Returns an total estimated time for cases.
 
@@ -346,9 +345,9 @@ def calculate_total_estimated_time(request, case_ids):
     return '%02i:%02i:%02i' % (h, m, s)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.add_testcase', raise_exception=True)
-def create(request, values):
+@permissions_required('testcases.add_testcase')
+@rpc_method(name='TestCase.create')
+def create(values, **kwargs):
     """
     Description: Creates a new Test Case object and stores it in the database.
 
@@ -399,6 +398,8 @@ def create(request, values):
     from tcms.core import forms
     from tcms.xmlrpc.forms import NewCaseForm
 
+    request = kwargs.get(REQUEST_KEY)
+
     if not (values.get('category') or values.get('summary')):
         raise ValueError()
 
@@ -441,12 +442,12 @@ def create(request, values):
         # Print the errors if the form is not passed validation.
         raise ValueError(forms.errors_to_list(form))
 
-    return get(request, tc.case_id)
+    return get(tc.case_id)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.delete_testcasebug', raise_exception=True)
-def detach_bug(request, case_ids, bug_ids):
+@permissions_required('testcases.delete_testcasebug')
+@rpc_method(name='TestCase.detach_bug')
+def detach_bug(case_ids, bug_ids):
     """
     Description: Remove one or more bugs to the selected test cases.
 
@@ -480,8 +481,8 @@ def detach_bug(request, case_ids, bug_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter(request, query):
+@rpc_method(name='TestCase.filter')
+def filter(query):
     """
     Description: Performs a search and returns the resulting list of test cases.
 
@@ -534,8 +535,8 @@ def filter(request, query):
     return TestCase.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_count(request, values={}):
+@rpc_method(name='TestCase.filter_count')
+def filter_count(values={}):
     """
     Description: Performs a search and returns the resulting count of cases.
 
@@ -555,8 +556,8 @@ def filter_count(request, values={}):
     return distinct_count(TestCase, values)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, case_id):
+@rpc_method(name='TestCase.get')
+def get(case_id):
     """
     Description: Used to load an existing test case from the database.
 
@@ -584,8 +585,8 @@ def get(request, case_id):
     return response
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_bug_systems(request, id):
+@rpc_method(name='TestCase.get_bug_systems')
+def get_bug_systems(id):
     """
     Description: Used to load an existing test case bug system from the database.
 
@@ -601,8 +602,8 @@ def get_bug_systems(request, id):
     return TestCaseBugSystem.objects.get(pk=id).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_bugs(request, case_ids):
+@rpc_method(name='TestCase.get_bugs')
+def get_bugs(case_ids):
     """
     Description: Get the list of bugs that are associated with this test case.
 
@@ -628,25 +629,8 @@ def get_bugs(request, case_ids):
     return TestCaseBug.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_case_run_history(request, case_id):
-    """
-    *** FIXME: NOT IMPLEMENTED - Case run history is different than before***
-    Description: Get the list of case-runs for all runs this case appears in.
-                 To limit this list by build or other attribute, see TestCaseRun.filter.
-
-    Params:      $case_id - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of case-run object hashes.
-
-    Example:
-    >>> TestCase.get_case_run_history(12345)
-    """
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_case_status(request, id=None):
+@rpc_method(name='TestCase.get_case_status')
+def get_case_status(id=None):
     """
     Description: Get the case status matching the given id.
 
@@ -668,25 +652,9 @@ def get_case_status(request, id=None):
     return TestCaseStatus.to_xmlrpc()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_change_history(request, case_id):
+@rpc_method(name='TestCase.get_components')
+def get_components(case_id):
     """
-    *** FIXME: NOT IMPLEMENTED - Case history is different than before***
-    Description: Get the list of changes to the fields of this case.
-
-    Params:      $case_id - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of hashes with changed fields and their details.
-
-    Example:
-    >>> TestCase.get_change_history(12345)
-    """
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_components(request, case_id):
-    """"
     Description: Get the list of components attached to this case.
 
     Params:      $case_id - Integer/String: An integer representing the ID in the database
@@ -705,8 +673,8 @@ def get_components(request, case_id):
     return Component.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_plans(request, case_id):
+@rpc_method(name='TestCase.get_plans')
+def get_plans(case_id):
     """
     Description: Get the list of plans that this case is linked to.
 
@@ -724,8 +692,8 @@ def get_plans(request, case_id):
     return TestPlan.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_tags(request, case_id):
+@rpc_method(name='TestCase.get_tags')
+def get_tags(case_id):
     """
     Description: Get the list of tags attached to this case.
 
@@ -743,8 +711,8 @@ def get_tags(request, case_id):
     return TestTag.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_text(request, case_id, case_text_version=None):
+@rpc_method(name='TestCase.get_text')
+def get_text(case_id, case_text_version=None):
     """
     Description: The associated large text fields: Action, Expected Results, Setup, Breakdown
                  for a given version.
@@ -768,8 +736,8 @@ def get_text(request, case_id, case_text_version=None):
         case_text_version=case_text_version).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_priority(request, id):
+@rpc_method(name='TestCase.get_priority')
+def get_priority(id):
     """
     Description: Get the priority matching the given id.
 
@@ -785,10 +753,10 @@ def get_priority(request, id):
     return Priority.objects.get(id=id).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.add_testcaseplan', raise_exception=True)
-def link_plan(request, case_ids, plan_ids):
-    """"
+@permissions_required('testcases.add_testcaseplan')
+@rpc_method(name='TestCase.link_plan')
+def link_plan(case_ids, plan_ids):
+    """
     Description: Link test cases to the given plan.
 
     Params:      $case_ids - Integer/Array/String: An integer representing the ID in the database,
@@ -857,9 +825,9 @@ def link_plan(request, case_ids, plan_ids):
     ])
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.delete_testcasecomponent', raise_exception=True)
-def remove_component(request, case_ids, component_ids):
+@permissions_required('testcases.delete_testcasecomponent')
+@rpc_method(name='TestCase.remove_component')
+def remove_component(case_ids, component_ids):
     """
     Description: Removes selected component from the selected test case.
 
@@ -897,9 +865,9 @@ def remove_component(request, case_ids, component_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.delete_testcasetag', raise_exception=True)
-def remove_tag(request, case_ids, tags):
+@permissions_required('testcases.delete_testcasetag')
+@rpc_method(name='TestCase.remove_tag')
+def remove_tag(case_ids, tags):
     """
     Description: Remove a tag from a case.
 
@@ -933,10 +901,9 @@ def remove_tag(request, case_ids, tags):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.add_testcasetext', raise_exception=True)
-def store_text(request, case_id, action, effect='', setup='', breakdown='',
-               author_id=None):
+@permissions_required('testcases.add_testcasetext')
+@rpc_method(name='TestCase.store_text')
+def store_text(case_id, action, **kwargs):
     """
     Description: Update the large text fields of a case.
 
@@ -957,9 +924,14 @@ def store_text(request, case_id, action, effect='', setup='', breakdown='',
 
     test_case = TestCase.objects.get(case_id=case_id)
 
+    effect = kwargs.get('effect', '')
+    setup = kwargs.get('setup', '')
+    breakdown = kwargs.get('breakdown', '')
+    author_id = kwargs.get('author_id', None)
     if author_id:
         author = User.objects.get(id=author_id)
     else:
+        request = kwargs.get(REQUEST_KEY)
         author = request.user
 
     return test_case.add_text(
@@ -971,9 +943,9 @@ def store_text(request, case_id, action, effect='', setup='', breakdown='',
     ).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.delete_testcaseplan', raise_exception=True)
-def unlink_plan(requst, case_id, plan_id):
+@permissions_required('testcases.delete_testcaseplan')
+@rpc_method(name='TestCase.unlink_plan')
+def unlink_plan(case_id, plan_id):
     """
     Description: Unlink a test case from the given plan.
                  If only one plan is linked, this will delete the test case.
@@ -992,9 +964,9 @@ def unlink_plan(requst, case_id, plan_id):
     return TestPlan.to_xmlrpc(query={'pk__in': plan_pks})
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.change_testcase', raise_exception=True)
-def update(request, case_ids, values):
+@permissions_required('testcases.change_testcase')
+@rpc_method(name='TestCase.update')
+def update(case_ids, values):
     """
     Description: Updates the fields of the selected case or cases.
 
@@ -1060,7 +1032,7 @@ def update(request, case_ids, values):
     return TestCase.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
+@rpc_method(name='TestCase.validate_cc_list')
 def validate_cc_list(cc_list):
     '''Validate each email in cc_list argument
 
@@ -1088,9 +1060,9 @@ def validate_cc_list(cc_list):
                 'value': ', '.join(invalid_emails)})
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.change_testcase', raise_exception=True)
-def notification_add_cc(request, case_ids, cc_list):
+@permissions_required('testcases.change_testcase')
+@rpc_method(name='TestCase.notification_add_cc')
+def notification_add_cc(case_ids, cc_list):
     '''
     Description: Add email addresses to the notification CC list of specific TestCases
 
@@ -1124,9 +1096,9 @@ def notification_add_cc(request, case_ids, cc_list):
         raise
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.change_testcase', raise_exception=True)
-def notification_remove_cc(request, case_ids, cc_list):
+@permissions_required('testcases.change_testcase')
+@rpc_method(name='TestCase.notification_remove_cc')
+def notification_remove_cc(case_ids, cc_list):
     '''
     Description: Remove email addresses from the notification CC list of specific TestCases
 
@@ -1156,9 +1128,9 @@ def notification_remove_cc(request, case_ids, cc_list):
         raise
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testcases.change_testcase', raise_exception=True)
-def notification_get_cc_list(request, case_ids):
+@permissions_required('testcases.change_testcase')
+@rpc_method(name='TestCase.notification_get_cc_list')
+def notification_get_cc_list(case_ids):
     '''
     Description: Return whole CC list of each TestCase
 

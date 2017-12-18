@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth.decorators import permission_required
+from modernrpc.core import rpc_method
 
-from tcms.xmlrpc.decorators import log_call
 from tcms.management.models import TestBuild
+from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 
 __all__ = (
     'check_build', 'create', 'get', 'get_runs', 'get_caseruns', 'update'
 )
 
-__xmlrpc_namespace__ = 'Build'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-def check_build(request, name, product):
+@rpc_method(name='Build.check_build')
+def check_build(name, product):
     """
     .. function:: XML-RPC Build.check_build(name, product)
 
@@ -32,9 +30,9 @@ def check_build(request, name, product):
     return TestBuild.objects.get(name=name, product=p).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('management.add_testbuild', raise_exception=True)
-def create(request, values):
+@rpc_method(name='Build.create')
+@permissions_required('management.add_testbuild')
+def create(values):
     """
     .. function:: XML-RPC Build.create(values)
 
@@ -67,8 +65,8 @@ def create(request, values):
     ).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, build_id):
+@rpc_method(name='Build.get')
+def get(build_id):
     """
     .. function:: XML-RPC Build.get(build_id)
 
@@ -83,8 +81,8 @@ def get(request, build_id):
     return TestBuild.objects.get(build_id=build_id).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_runs(request, build_id):
+@rpc_method(name='Build.get_runs')
+def get_runs(build_id):
     """
     .. function:: XML-RPC Build.get_runs(build_id)
 
@@ -104,8 +102,8 @@ def get_runs(request, build_id):
     return TestRun.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_caseruns(request, build_id):
+@rpc_method(name='Build.get_caseruns')
+def get_caseruns(build_id):
     """
     .. function:: XML-RPC Build.get_caseruns(build_id)
 
@@ -125,9 +123,9 @@ def get_caseruns(request, build_id):
     return TestCaseRun.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('management.change_testbuild', raise_exception=True)
-def update(request, build_id, values):
+@permissions_required('management.change_testbuild')
+@rpc_method(name='Build.update')
+def update(build_id, values):
     """
     .. function:: XML-RPC Build.update(build_id, values)
 

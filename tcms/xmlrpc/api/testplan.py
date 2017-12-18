@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.decorators import permission_required
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.management.models import Component
 from tcms.management.models import TestTag
 from tcms.management.models import Product
 from tcms.testplans.models import TestPlan, TestPlanType, TCMSEnvPlanMap
-from tcms.xmlrpc.decorators import log_call
+from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_process_ids, distinct_count
-from tcms.utils.xml import clean_xml_file
 
 __all__ = (
     'add_tag',
@@ -19,7 +17,6 @@ __all__ = (
     'filter',
     'filter_count',
     'get',
-    'get_change_history',
     'get_env_groups',
     'get_plan_type',
     'get_product',
@@ -33,15 +30,12 @@ __all__ = (
     'remove_component',
     'store_text',
     'update',
-    'import_case_via_XML',
 )
 
-__xmlrpc_namespace__ = 'TestPlan'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testplans.add_testplantag', raise_exception=True)
-def add_tag(request, plan_ids, tags):
+@permissions_required('testplans.add_testplantag')
+@rpc_method(name='TestPlan.add_tag')
+def add_tag(plan_ids, tags):
     """
     Description: Add one or more tags to the selected test plans.
 
@@ -76,9 +70,9 @@ def add_tag(request, plan_ids, tags):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testplans.add_testplancomponent', raise_exception=True)
-def add_component(request, plan_ids, component_ids):
+@permissions_required('testplans.add_testplancomponent')
+@rpc_method(name='TestPlan.add_component')
+def add_component(plan_ids, component_ids):
     """
     Description: Adds one or more components to the selected test plan.
 
@@ -114,8 +108,8 @@ def add_component(request, plan_ids, component_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def check_plan_type(request, name):
+@rpc_method(name='TestPlan.check_plan_type')
+def check_plan_type(name):
     """
     Params:      $name - String: the plan type.
 
@@ -127,9 +121,9 @@ def check_plan_type(request, name):
     return TestPlanType.objects.get(name=name).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testplans.add_testplan', raise_exception=True)
-def create(request, values):
+@permissions_required('testplans.add_testplan')
+@rpc_method(name='TestPlan.create')
+def create(values, **kwargs):
     """
     Description: Creates a new Test Plan object and stores it in the database.
 
@@ -176,6 +170,7 @@ def create(request, values):
     form.populate(product_id=values['product'])
 
     if form.is_valid():
+        request = kwargs.get(REQUEST_KEY)
         tp = TestPlan.objects.create(
             product=form.cleaned_data['product'],
             name=form.cleaned_data['name'],
@@ -196,8 +191,8 @@ def create(request, values):
         raise ValueError(forms.errors_to_list(form))
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter(request, values={}):
+@rpc_method(name='TestPlan.filter')
+def filter(values={}):
     """
     Description: Performs a search and returns the resulting list of test plans.
 
@@ -236,8 +231,8 @@ def filter(request, values={}):
     return TestPlan.to_xmlrpc(values)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_count(request, values={}):
+@rpc_method(name='TestPlan.filter_count')
+def filter_count(values={}):
     """
     Description: Performs a search and returns the resulting count of plans.
 
@@ -251,8 +246,8 @@ def filter_count(request, values={}):
     return distinct_count(TestPlan, values)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, plan_id):
+@rpc_method(name='TestPlan.get')
+def get(plan_id):
     """
     Description: Used to load an existing test plan from the database.
 
@@ -281,21 +276,8 @@ def get(request, plan_id):
     return response
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_change_history(request, plan_id):
-    """
-    *** FIXME: NOT IMPLEMENTED - History is different than before ***
-    Description: Get the list of changes to the fields of this plan.
-
-    Params:      $plan_id - Integer: An integer representing the ID of this plan in the database
-
-    Returns:     Array: An array of hashes with changed fields and their details.
-    """
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_env_groups(request, plan_id):
+@rpc_method(name='TestPlan.get_env_groups')
+def get_env_groups(plan_id):
     """
     Description: Get the list of env groups to the fields of this plan.
 
@@ -309,8 +291,8 @@ def get_env_groups(request, plan_id):
     return TCMSEnvGroup.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_plan_type(request, id):
+@rpc_method(name='TestPlan.get_plan_type')
+def get_plan_type(id):
     """
     Params:      $id - Integer: ID of the plan type to return
 
@@ -322,8 +304,8 @@ def get_plan_type(request, id):
     return TestPlanType.objects.get(id=id).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_product(request, plan_id):
+@rpc_method(name='TestPlan.get_product')
+def get_product(plan_id):
     """
     Description: Get the Product the plan is assiciated with.
 
@@ -343,8 +325,8 @@ def get_product(request, plan_id):
         return products[0].serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_tags(request, plan_id):
+@rpc_method(name='TestPlan.get_tags')
+def get_tags(plan_id):
     """
     Description: Get the list of tags attached to this plan.
 
@@ -362,8 +344,8 @@ def get_tags(request, plan_id):
     return TestTag.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_components(request, plan_id):
+@rpc_method(name='TestPlan.get_components')
+def get_components(plan_id):
     """
     Description: Get the list of components attached to this plan.
 
@@ -381,8 +363,8 @@ def get_components(request, plan_id):
     return Component.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_all_cases_tags(request, plan_id):
+@rpc_method(name='TestPlan.get_all_cases_tags')
+def get_all_cases_tags(plan_id):
     """
     Description: Get the list of tags attached to this plan's testcases.
 
@@ -404,8 +386,8 @@ def get_all_cases_tags(request, plan_id):
     return TestTag.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_test_cases(request, plan_id):
+@rpc_method(name='TestPlan.get_test_cases')
+def get_test_cases(plan_id):
     """
     Description: Get the list of cases that this plan is linked to.
 
@@ -431,8 +413,8 @@ def get_test_cases(request, plan_id):
     return serialized_tcs
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_test_runs(request, plan_id):
+@rpc_method(name='TestPlan.get_test_runs')
+def get_test_runs(plan_id):
     """
     Description: Get the list of runs in this plan.
 
@@ -449,8 +431,8 @@ def get_test_runs(request, plan_id):
     return TestRun.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_text(request, plan_id, plan_text_version=None):
+@rpc_method(name='TestPlan.get_text')
+def get_text(plan_id, plan_text_version=None):
     """
     Description: The plan document for a given test plan.
 
@@ -476,9 +458,9 @@ def get_text(request, plan_id, plan_text_version=None):
         return "No plan text with version '%s' found." % plan_text_version
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testplans.delete_testplantag', raise_exception=True)
-def remove_tag(request, plan_ids, tags):
+@permissions_required('testplans.delete_testplantag')
+@rpc_method(name='TestPlan.remove_tag')
+def remove_tag(plan_ids, tags):
     """
     Description: Remove a tag from a plan.
 
@@ -514,9 +496,9 @@ def remove_tag(request, plan_ids, tags):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testplans.delete_testplancomponent', raise_exception=True)
-def remove_component(request, plan_ids, component_ids):
+@permissions_required('testplans.delete_testplancomponent')
+@rpc_method(name='TestPlan.remove_component')
+def remove_component(plan_ids, component_ids):
     """
     Description: Removes selected component from the selected test plan.
 
@@ -549,9 +531,9 @@ def remove_component(request, plan_ids, component_ids):
     return
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testplans.add_testplantext', raise_exception=True)
-def store_text(request, plan_id, text, author=None):
+@permissions_required('testplans.add_testplantext')
+@rpc_method(name='TestPlan.store_text')
+def store_text(plan_id, text, **kwargs):
     """
     Description: Update the document field of a plan.
 
@@ -569,9 +551,11 @@ def store_text(request, plan_id, text, author=None):
 
     tp = TestPlan.objects.get(plan_id=plan_id)
 
+    author = kwargs.get('author', None)
     if author:
         author = User.objects.get(id=author)
     else:
+        request = kwargs.get(REQUEST_KEY)
         author = request.user
 
     return tp.add_text(
@@ -580,9 +564,9 @@ def store_text(request, plan_id, text, author=None):
     ).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('testplans.change_testplan', raise_exception=True)
-def update(request, plan_ids, values):
+@permissions_required('testplans.change_testplan')
+@rpc_method(name='TestPlan.update')
+def update(plan_ids, values):
     """
     Description: Updates the fields of the selected test plan.
 
@@ -676,79 +660,3 @@ def update(request, plan_ids, values):
 
     query = {'pk__in': tps.values_list('pk', flat=True)}
     return TestPlan.to_xmlrpc(query)
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def import_case_via_XML(request, plan_id, values):
-    """
-    Description: Add cases to plan via XML file
-
-    Params:      $plan_id - Integer: A single TestPlan ID.
-
-                 $values - String: String which read from XML file object.
-
-    Returns:     String: Success update cases
-
-    Example:
-    # Update product to 61 for plan 207 and 208
-    >>> fb = open('tcms.xml', 'rb')
-    >>> TestPlan.import_case_via_XML(3798, fb.read())
-    """
-    from tcms.testplans.models import TestPlan
-    from tcms.testcases.models import TestCase, TestCasePlan, \
-        TestCaseCategory
-
-    try:
-        tp = TestPlan.objects.get(pk=plan_id)
-    except ObjectDoesNotExist:
-        raise
-
-    try:
-        new_case_from_xml = clean_xml_file(values)
-    except Exception:
-        raise TypeError("Invalid XML File")
-
-    i = 0
-    for case in new_case_from_xml:
-        i += 1
-        # Get the case category from the case and related to the product of the plan
-        try:
-            category = TestCaseCategory.objects.get(
-                product=tp.product, name=case['category_name']
-            )
-        except TestCaseCategory.DoesNotExist:
-            category = TestCaseCategory.objects.create(
-                product=tp.product, name=case['category_name']
-            )
-        # Start to create the objects
-        tc = TestCase.objects.create(
-            is_automated=case['is_automated'],
-            script=None,
-            arguments=None,
-            summary=case['summary'],
-            requirement=None,
-            alias=None,
-            estimated_time=0,
-            case_status_id=case['case_status_id'],
-            category_id=category.id,
-            priority_id=case['priority_id'],
-            author_id=case['author_id'],
-            default_tester_id=case['default_tester_id'],
-            notes=case['notes'],
-        )
-        TestCasePlan.objects.create(plan=tp, case=tc, sortkey=i * 10)
-
-        tc.add_text(case_text_version=1,
-                    author=case['author'],
-                    action=case['action'],
-                    effect=case['effect'],
-                    setup=case['setup'],
-                    breakdown=case['breakdown'], )
-
-        # handle tags
-        if case['tags']:
-            for tag in case['tags']:
-                tc.add_tag(tag=tag)
-
-        tc.add_to_plan(plan=tp)
-    return "Success update %d cases" % (i, )

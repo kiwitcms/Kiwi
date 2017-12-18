@@ -20,7 +20,7 @@ where config.cfg looks like:
 [tcms]
 username = myusername
 password = foobar
-url = https://tcms.example.com/xmlrpc/
+url = https://tcms.example.com/xml-rpc/
 use_mod_kerb = False
 
 Or, more directly:
@@ -28,7 +28,7 @@ Or, more directly:
 t = TCMSXmlrpc(
     'myusername',
     'foobar',
-    'https://tcms.example.com/xmlrpc/',
+    'https://tcms.example.com/xml-rpc/',
 )
 t.testplan_get(10)
 """

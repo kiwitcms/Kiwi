@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth.decorators import permission_required
+from modernrpc.core import rpc_method, REQUEST_KEY
+
 from django.contrib.auth.models import User
 
 from tcms.management.models import Product
-from tcms.xmlrpc.decorators import log_call
+from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 
 __all__ = (
@@ -24,8 +25,6 @@ __all__ = (
     'get_component',
     'update_component',
     'get_components',
-    'get_environments',
-    'get_milestones',
     'get_plans',
     'get_runs',
     'get_tag',
@@ -33,11 +32,9 @@ __all__ = (
     'get_versions',
 )
 
-__xmlrpc_namespace__ = 'Product'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-def check_category(request, name, product):
+@rpc_method(name='Product.check_category')
+def check_category(name, product):
     """
     Description: Looks up and returns a category by name.
 
@@ -60,8 +57,8 @@ def check_category(request, name, product):
     return TestCaseCategory.objects.get(name=name, product=p).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def check_component(request, name, product):
+@rpc_method(name='Product.check_component')
+def check_component(name, product):
     """
     Description: Looks up and returns a component by name.
 
@@ -84,8 +81,8 @@ def check_component(request, name, product):
     return Component.objects.get(name=name, product=p).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def check_product(request, name):
+@rpc_method(name='Product.check_product')
+def check_product(name):
     """
     Description: Looks up and returns a validated product.
 
@@ -105,8 +102,8 @@ def check_product(request, name):
     return p.serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter(request, query):
+@rpc_method(name='Product.filter')
+def filter(query):
     """
     Description: Performs a search and returns the resulting list of products.
 
@@ -131,8 +128,8 @@ def filter(request, query):
     return Product.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_categories(request, query):
+@rpc_method(name='Product.filter_categories')
+def filter_categories(query):
     """
     Description: Performs a search and returns the resulting list of categories.
 
@@ -161,8 +158,8 @@ def filter_categories(request, query):
     return TestCaseCategory.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_components(request, query):
+@rpc_method(name='Product.filter_components')
+def filter_components(query):
     """
     Description: Performs a search and returns the resulting list of components.
 
@@ -193,8 +190,8 @@ def filter_components(request, query):
     return Component.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_versions(request, query):
+@rpc_method(name='Product.filter_versions')
+def filter_versions(query):
     """
     Description: Performs a search and returns the resulting list of versions.
 
@@ -222,8 +219,8 @@ def filter_versions(request, query):
     return Version.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get(request, id):
+@rpc_method(name='Product.get')
+def get(id):
     """
     Description: Used to load an existing product from the database.
 
@@ -237,8 +234,8 @@ def get(request, id):
     return Product.objects.get(id=int(id)).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_builds(request, product, is_active=True):
+@rpc_method(name='Product.get_builds')
+def get_builds(product, is_active=True):
     """
     Description: Get the list of builds associated with this product.
 
@@ -262,8 +259,8 @@ def get_builds(request, product, is_active=True):
     return TestBuild.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_cases(request, product):
+@rpc_method(name='Product.get_cases')
+def get_cases(product):
     """
     Description: Get the list of cases associated with this product.
 
@@ -286,8 +283,8 @@ def get_cases(request, product):
     return TestCase.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_categories(request, product):
+@rpc_method(name='Product.get_categories')
+def get_categories(product):
     """
     Description: Get the list of categories associated with this product.
 
@@ -310,8 +307,8 @@ def get_categories(request, product):
     return TestCaseCategory.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_category(request, id):
+@rpc_method(name='Product.get_category')
+def get_category(id):
     """
     Description: Get the category matching the given id.
 
@@ -327,9 +324,9 @@ def get_category(request, id):
     return TestCaseCategory.objects.get(id=int(id)).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('management.add_component', raise_exception=True)
-def add_component(request, product, name, initial_owner_id=None, initial_qa_contact_id=None):
+@permissions_required('management.add_component')
+@rpc_method(name='Product.add_component')
+def add_component(product, name, **kwargs):
     """
     Description: Add component to selected product.
 
@@ -353,6 +350,10 @@ def add_component(request, product, name, initial_owner_id=None, initial_qa_cont
     """
     from tcms.management.models import Component
 
+    initial_owner_id = kwargs.get('initial_owner_id', None)
+    initial_qa_contact_id = kwargs.get('initial_qa_contact_id', None)
+    request = kwargs.get(REQUEST_KEY)
+
     product = pre_check_product(values=product)
 
     if User.objects.filter(pk=initial_owner_id).exists():
@@ -373,8 +374,8 @@ def add_component(request, product, name, initial_owner_id=None, initial_qa_cont
     ).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_component(request, id):
+@rpc_method(name='Product.get_component')
+def get_component(id):
     """
     Description: Get the component matching the given id.
 
@@ -390,9 +391,9 @@ def get_component(request, id):
     return Component.objects.get(id=int(id)).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('management.change_component', raise_exception=True)
-def update_component(request, component_id, values):
+@permissions_required('management.change_component')
+@rpc_method(name='Product.update_component')
+def update_component(component_id, values):
     """
     Description: Update component to selected product.
 
@@ -435,8 +436,8 @@ def update_component(request, component_id, values):
     return component.serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_components(request, product):
+@rpc_method(name='Product.get_components')
+def get_components(product):
     """
     Description: Get the list of components associated with this product.
 
@@ -459,20 +460,8 @@ def get_components(request, product):
     return Component.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_environments(request, product):
-    """FIXME: NOT IMPLEMENTED"""
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_milestones(request, product):
-    """FIXME: NOT IMPLEMENTED"""
-    raise NotImplementedError('Not implemented RPC method')
-
-
-@log_call(namespace=__xmlrpc_namespace__)
-def get_plans(request, product):
+@rpc_method(name='Product.get_plans')
+def get_plans(product):
     """
     Description: Get the list of plans associated with this product.
 
@@ -495,8 +484,8 @@ def get_plans(request, product):
     return TestPlan.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_runs(request, product):
+@rpc_method(name='Product.get_runs')
+def get_runs(product):
     """
     Description: Get the list of runs associated with this product.
 
@@ -519,8 +508,8 @@ def get_runs(request, product):
     return TestRun.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_tag(request, id):
+@rpc_method(name='Product.get_tag')
+def get_tag(id):
     """
     Description: Get the list of tags.
 
@@ -536,9 +525,9 @@ def get_tag(request, id):
     return TestTag.objects.get(pk=int(id)).serialize()
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-@permission_required('management.add_version', raise_exception=True)
-def add_version(request, values):
+@permissions_required('management.add_version')
+@rpc_method(name='Product.add_version')
+def add_version(values):
     """
     Description: Add version to specified product.
 
@@ -573,8 +562,8 @@ def add_version(request, values):
         raise ValueError(forms.errors_to_list(form))
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def get_versions(request, product):
+@rpc_method(name='Product.get_versions')
+def get_versions(product):
     """
     Description: Get the list of versions associated with this product.
 

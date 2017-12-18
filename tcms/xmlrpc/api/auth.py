@@ -3,19 +3,17 @@
 import django.contrib.auth
 
 from django.conf import settings
+from modernrpc.core import rpc_method
+from modernrpc.core import REQUEST_KEY
 from django.core.exceptions import PermissionDenied
-
-from tcms.xmlrpc.decorators import log_call
 
 __all__ = (
     'login', 'logout', 'login_krbv'
 )
 
-__xmlrpc_namespace__ = 'Auth'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-def login(request, username, password):
+@rpc_method(name='Auth.login')
+def login(username, password, **kwargs):
     """
     .. function:: XML-RPC Auth.login(username, password)
 
@@ -32,6 +30,8 @@ def login(request, username, password):
     from tcms.core.contrib.auth import get_backend
 
     user = None
+    # Get the current request
+    request = kwargs.get(REQUEST_KEY)
 
     if not username or not password:
         raise PermissionDenied('Username and password is required')
@@ -50,8 +50,8 @@ def login(request, username, password):
         raise PermissionDenied('Wrong username or password')
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def login_krbv(request):
+@rpc_method(name='Auth.login_krbv')
+def login_krbv(**kwargs):
     """
     .. function:: XML-RPC Auth.login_krbv()
 
@@ -62,14 +62,17 @@ def login_krbv(request):
     """
     from django.contrib.auth.middleware import RemoteUserMiddleware
 
+    # Get the current request
+    request = kwargs.get(REQUEST_KEY)
+
     middleware = RemoteUserMiddleware()
     middleware.process_request(request)
 
     return request.session.session_key
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def logout(request):
+@rpc_method(name='Auth.logout')
+def logout(**kwargs):
     """
     .. function:: XML-RPC Auth.logout()
 
@@ -77,4 +80,6 @@ def logout(request):
 
         :return: None
     """
+    # Get the current request
+    request = kwargs.get(REQUEST_KEY)
     django.contrib.auth.logout(request)

@@ -10,3 +10,4 @@ beautifulsoup4
 django-contrib-comments
 html2text
 xmltodict
+django-modern-rpc

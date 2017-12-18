@@ -83,7 +83,7 @@ To be able to contact the Kiwi TCMS server a minimal user config
 file ``~/.tcms.conf`` has to be provided in the user home directory::
 
     [tcms]
-    url = https://kiwi.server/xmlrpc/
+    url = https://kiwi.server/xml-rpc/
     username = myusername
     password = mypassword
 

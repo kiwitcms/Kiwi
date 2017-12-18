@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from tcms.xmlrpc.decorators import log_call
+from modernrpc.core import rpc_method
+
 from tcms.management.models import TCMSEnvGroup
 from tcms.management.models import TCMSEnvProperty
 from tcms.management.models import TCMSEnvValue
@@ -12,11 +13,9 @@ __all__ = (
     'filter_values',
 )
 
-__xmlrpc_namespace__ = 'Env'
 
-
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_groups(request, query):
+@rpc_method(name='Env.filter_groups')
+def filter_groups(query):
     """
     .. function:: XML-RPC Env.filter_groups(query)
 
@@ -49,8 +48,8 @@ def filter_groups(request, query):
     return TCMSEnvGroup.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_properties(request, query):
+@rpc_method(name='Env.filter_properties')
+def filter_properties(query):
     """
     .. function:: XML-RPC Env.filter_properties(query)
 
@@ -80,8 +79,8 @@ def filter_properties(request, query):
     return TCMSEnvProperty.to_xmlrpc(query)
 
 
-@log_call(namespace=__xmlrpc_namespace__)
-def filter_values(request, query):
+@rpc_method(name='Env.filter_values')
+def filter_values(query):
     """
     .. function:: XML-RPC Env.filter_values(query)
 

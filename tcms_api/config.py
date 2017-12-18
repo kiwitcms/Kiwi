@@ -25,13 +25,13 @@ To be able to contact the TCMS server a minimal user configuration
 file ~/.tcms.conf has to be provided in the user home directory:
 
     [tcms]
-    url = https://tcms.server/xmlrpc/
+    url = https://tcms.server/xml-rpc/
 
 In that case Kerberos will be used for authentication. If username and
 password are provided plain authentication will be used instead. E.g.
 
     [tcms]
-    url = https://tcms.server/xmlrpc/
+    url = https://tcms.server/xml-rpc/
     username = login
     password = secret
 
@@ -63,7 +63,7 @@ which prints provided message (to the standard error output) always,
 regardless the current log level. To get a brief overview about current
 status use 'print TCMS()' which gives a short summary like this:
 
-    TCMS server: https://tcms.server/xmlrpc/
+    TCMS server: https://tcms.server/xml-rpc/
     Total requests handled: 0
 """
 
@@ -240,7 +240,7 @@ class Config(object):
     # Minimal config example
     example = ("Please, provide at least a minimal config file {0}:\n"
                "[tcms]\n"
-               "url = https://tcms.server/xmlrpc/".format(path))
+               "url = https://tcms.server/xml-rpc/".format(path))
 
     def __new__(cls, *args, **kwargs):
         """ Make sure we create a single instance only """
