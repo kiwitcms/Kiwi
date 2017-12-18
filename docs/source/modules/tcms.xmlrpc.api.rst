@@ -19,9 +19,7 @@ Submodules
    tcms.xmlrpc.api.testcase
    tcms.xmlrpc.api.testcaseplan
    tcms.xmlrpc.api.testcaserun
-   tcms.xmlrpc.api.testopia
    tcms.xmlrpc.api.testplan
    tcms.xmlrpc.api.testrun
    tcms.xmlrpc.api.user
-   tcms.xmlrpc.api.version
 

@@ -258,11 +258,9 @@ XMLRPC_METHODS = {
         ('tcms.xmlrpc.api.testcase', 'TestCase'),
         ('tcms.xmlrpc.api.testcaserun', 'TestCaseRun'),
         ('tcms.xmlrpc.api.testcaseplan', 'TestCasePlan'),
-        ('tcms.xmlrpc.api.testopia', 'Testopia'),
         ('tcms.xmlrpc.api.testplan', 'TestPlan'),
         ('tcms.xmlrpc.api.testrun', 'TestRun'),
         ('tcms.xmlrpc.api.user', 'User'),
-        ('tcms.xmlrpc.api.version', 'Version'),
         ('tcms.xmlrpc.api.tag', 'Tag'),
     ),
 }
