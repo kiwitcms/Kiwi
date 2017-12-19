@@ -135,6 +135,8 @@ def add_tag(run_ids, tags):
     >>> TestPlan.add_tag('12345, 67890', 'foo, bar')
     """
     trs = TestRun.objects.filter(pk__in=pre_process_ids(value=run_ids))
+    if not isinstance(tags, str) and not isinstance(tags, list):
+        raise ValueError('Parameter tags must be a string or list(string)')
     tags = TestTag.string_to_list(tags)
 
     for tag in tags:
@@ -512,6 +514,10 @@ def remove_tag(run_ids, tags):
     test_runs = TestRun.objects.filter(
         run_id__in=pre_process_ids(value=run_ids)
     )
+
+    if not isinstance(tags, str) and not isinstance(tags, list):
+        raise ValueError('Parameter tags must be a string or list(string)')
+
     test_tags = TestTag.objects.filter(
         name__in=TestTag.string_to_list(tags)
     )
