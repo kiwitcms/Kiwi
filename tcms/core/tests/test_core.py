@@ -31,11 +31,9 @@ class TestUtilsFunctions(unittest.TestCase):
         result.sort()
         self.assertEqual(expected_strings, result)
 
-        strings = 1
-        self.assertRaises(AttributeError, string_to_list, strings)
+        self.assertEqual([1], string_to_list(1))
 
-        strings = ()
-        self.assertRaises(AttributeError, string_to_list, strings)
+        self.assertEqual([], string_to_list(()))
 
         strings = 'abcdefg'
         result = string_to_list(strings)

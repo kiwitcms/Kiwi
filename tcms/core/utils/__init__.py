@@ -14,7 +14,7 @@ def string_to_list(strs, spliter=','):
     """Convert the string to list"""
     if isinstance(strs, list):
         str_list = (str(item).strip() for item in strs)
-    elif strs.find(spliter):
+    elif isinstance(strs, str) and strs.find(spliter):
         str_list = (str(item).strip() for item in strs.split(spliter))
     else:
         str_list = (strs,)
