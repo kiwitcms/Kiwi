@@ -1,53 +1,51 @@
 # -*- coding: utf-8 -*-
 
-from xmlrpc.client import Fault
-
+import os
 from django import test
-from django.contrib.auth.models import User
 
-from tcms.tests import user_should_have_perm
-
-
-class XmlrpcAPIBaseTest(test.TestCase):
-
-    def assertRaisesXmlrpcFault(self, faultCode, method, *args, **kwargs):
-        assert callable(method)
-        try:
-            method(*args, **kwargs)
-        except Fault as f:
-            self.assertEqual(f.faultCode, faultCode,
-                             'Except raising fault error with code {0}, but {1} is raised'.format(
-                                 faultCode, f.faultCode))
-        except Exception as e:
-            self.fail('Expect raising xmlrpc.client.Fault, but {0} is raised and '
-                      'message is "{1}".'.format(e.__class__.__name__, str(e)))
-        else:
-            self.fail('Expect to raise Fault error with faultCode {0}, '
-                      'but no exception is raised.'.format(faultCode))
+import tcms_api
+from tcms.tests.factories import UserFactory
+from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
-class FakeHTTPRequest(object):
+class XmlrpcAPIBaseTest(test.LiveServerTestCase):
+    serialized_rollback = True
 
-    def __init__(self, user, data=None):
-        self.user = user
-        self.META = {}
+    # NOTE: we setup the required DB data and API objects here
+    # because this method is executed *AFTER* setUpClass() and the
+    # serialized rollback is not yet available during setUpClass()
+    # execution
+    def _fixture_setup(self):
+        # restore the serialized data from initial migrations
+        # this includes default groups and permissions
+        super(XmlrpcAPIBaseTest, self)._fixture_setup()
+        self.api_user = UserFactory()
+        self.api_user.set_password('api-testing')
+        initiate_user_with_default_setups(self.api_user)
 
+        # reset connection to server b/c the address changes for
+        # every test and the client caches this as a class attribute
+        tcms_api.TCMS._connection = None
+        # also the config is a singleton so reset that too
+        # to force config reload
+        tcms_api.Config._instance = None
 
-def create_http_user():
-    user, _ = User.objects.get_or_create(username='http_user',
-                                         email='http_user@example.com')
-    user.set_password(user.username)
-    user.save()
-    return user
+        # WARNING: for now we override the config file
+        # until we can pass the testing configuration
+        # TODO: change config values instead of overwriting files on disk
+        conf_path = os.path.expanduser('~/.tcms.conf')
+        conf_fh = open(conf_path, 'w')
+        conf_fh.write("""[tcms]
+url = %s/xml-rpc/
+username = %s
+password = %s
+""" % (self.live_server_url, self.api_user.username, 'api-testing'))
+        conf_fh.close()
 
+        # this is the XML-RPC ServerProxy with cookies support
+        self.rpc_client = tcms_api.TCMS()._server
 
-def make_http_request(user=None, user_perm=None, data=None):
-    '''Factory method to make instance of FakeHTTPRequest'''
-    _user = user
-    if _user is None:
-        _user = create_http_user()
-
-    if user_perm is not None:
-        user_should_have_perm(_user, user_perm)
-
-    return FakeHTTPRequest(_user, data)
+    def setUp(self):
+        # make sure we're logged-in before each test
+        super(XmlrpcAPIBaseTest, self).setUp()
+        self.rpc_client.Auth.login(self.api_user.username, 'api-testing')
