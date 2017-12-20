@@ -12,7 +12,6 @@ from tcms.xmlrpc.decorators import permissions_required
 __all__ = (
     'filter',
     'get',
-    'get_me',
     'update',
     'join'
 )
@@ -58,37 +57,28 @@ def filter(query):
 
 
 @rpc_method(name='User.get')
-def get(id):
+def get(id=None, **kwargs):
     """
-    Description: Used to load an existing test case from the database.
+    Description: Used to load an existing user from the database.
 
     Params:      $id - Integer/String: An integer representing the ID in the
-                       database
+                       database. If parameter is None then return information
+                       about the currently logged in user.
 
     Returns:     A blessed User object Hash
 
     Example:
     >>> User.get(2206)
     """
-    return get_user_dict(User.objects.get(pk=id))
-
-
-@rpc_method(name='User.get_me')
-def get_me(**kwargs):
-    """
-    Description: Get the information of myself.
-
-    Returns:     A blessed User object Hash
-
-    Example:
-    >>> User.get_me()
-    """
-    request = kwargs.get(REQUEST_KEY)
-    return get_user_dict(request.user)
+    if id is None:
+        user = kwargs.get(REQUEST_KEY).user
+    else:
+        user = User.objects.get(pk=id)
+    return get_user_dict(user)
 
 
 @rpc_method(name='User.update')
-def update(values, **kwargs):
+def update(values, id=None, **kwargs):
     """
     Description: Updates the fields of the selected user. it also can change
                  the informations of other people if you have permission.
@@ -118,24 +108,18 @@ def update(values, **kwargs):
     >>> User.update({'password': 'foo', 'old_password': '123'})
     >>> User.update({'password': 'foo', 'old_password': '123'}, 2206)
     """
-    id = kwargs.get('id', None)
     request = kwargs.get(REQUEST_KEY)
     if id:
         user_being_updated = User.objects.get(pk=id)
     else:
         user_being_updated = request.user
 
-    if values is None:
-        values = {}
-
     editable_fields = ('first_name', 'last_name', 'email', 'password')
     can_change_user = request.user.has_perm('auth.change_user')
 
     is_updating_other = request.user != user_being_updated
-    # If change other's attributes, current user must have proper permission
-    # Otherwise, to allow to update my own attribute without specific
-    # permission assignment
-    if not can_change_user and is_updating_other:
+    # If changing other's attributes, current user must have proper permission
+    if is_updating_other and not can_change_user:
         raise PermissionDenied('Permission denied')
 
     update_fields = []
@@ -145,14 +129,14 @@ def update(values, **kwargs):
 
         update_fields.append(field)
         if field == 'password':
-            # FIXME: here, permission control has bug, that cause changing
-            # password is not controlled under permission.
+            if is_updating_other:
+                raise PermissionDenied('Password updates for other users are not allowed via RPC!')
+
             old_password = values.get('old_password')
-            if not can_change_user and not old_password:
+            if not old_password:
                 raise PermissionDenied('Old password is required')
 
-            if not can_change_user and not \
-                    user_being_updated.check_password(old_password):
+            if not user_being_updated.check_password(old_password):
                 raise PermissionDenied('Password is incorrect')
 
             user_being_updated.set_password(values['password'])
@@ -177,14 +161,7 @@ def join(username, groupname):
     Example:
     >>> User.join('username', 'groupname')
     """
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
-        raise User.DoesNotExist('User "%s" does not exist' % username)
-    else:
-        try:
-            group = Group.objects.get(name=groupname)
-        except Group.DoesNotExist:
-            raise Group.DoesNotExist('Group "%s" does not exist' % groupname)
-        else:
-            user.groups.add(group)
+    user = User.objects.get(username=username)
+    group = Group.objects.get(name=groupname)
+
+    user.groups.add(group)
