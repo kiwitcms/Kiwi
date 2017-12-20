@@ -515,28 +515,6 @@ class TCMSXmlrpc(object):
             return "\'%s\':\'%s\', " % (option, value.strftime("%H:%M:%S"))
         return ''
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Build ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-
-    def build_get(self, build_id):
-        """Get A Build by ID.
-
-        'build_id' -- integer, Must be greater than 0
-
-        Example: build_get(10)
-
-        Result: A dictionary of key/value pairs for the attributes listed above
-        """
-        return self.server.Build.get(self._number_noop(build_id))
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-    def get_me(self):
-        """
-        Description: Get the information of myself
-
-        Returns:     A blessed User object Hash
-        """
-        return self.server.User.get_me()
-
 
 class TCMSKerbXmlrpc(TCMSXmlrpc):
     """
