@@ -2,9 +2,8 @@
 
 from modernrpc.core import rpc_method
 
+from tcms.testcases.models import TestCasePlan
 from tcms.xmlrpc.serializer import XMLRPCSerializer
-from tcms.testcases.models import TestCase, TestCasePlan
-from tcms.testplans.models import TestPlan
 
 __all__ = ('get', 'update')
 
@@ -24,9 +23,13 @@ def get(case_id, plan_id):
     Example:
     >>> TestCasePlan.get(81307, 3551)
     """
-    tc = TestCase.objects.get(pk=case_id)
-    tp = TestPlan.objects.get(pk=plan_id)
-    tcp = TestCasePlan.objects.get(plan=tp, case=tc)
+    if not isinstance(case_id, int):
+        raise ValueError('Parameter case_id must be an integer')
+
+    if not isinstance(plan_id, int):
+        raise ValueError('Parameter plan_id must be an integer')
+
+    tcp = TestCasePlan.objects.get(plan_id=plan_id, case_id=case_id)
     return XMLRPCSerializer(model=tcp).serialize_model()
 
 
@@ -48,9 +51,14 @@ def update(case_id, plan_id, sortkey):
     # Update sortkey of selected test-case-plan to 450
     >>> TestCasePlan.update(81307, 3551, 450)
     """
-    tc = TestCase.objects.get(pk=case_id)
-    tp = TestPlan.objects.get(pk=plan_id)
-    tcp = TestCasePlan.objects.get(plan=tp, case=tc)
+
+    if not isinstance(case_id, int):
+        raise ValueError('Parameter case_id must be an integer')
+
+    if not isinstance(plan_id, int):
+        raise ValueError('Parameter plan_id must be an integer')
+
+    tcp = TestCasePlan.objects.get(plan_id=plan_id, case_id=case_id)
 
     if isinstance(sortkey, int):
         tcp.sortkey = sortkey
