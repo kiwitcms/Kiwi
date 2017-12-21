@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 import json
 import http.client
 import xml.etree.ElementTree as et
@@ -15,7 +14,6 @@ from django.test.client import Client
 from tcms.core.logs.models import TCMSLogModel
 from tcms.management.models import Product
 from tcms.management.models import Version
-from tcms.settings.common import TCMS_ROOT_PATH
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TCMSEnvPlanMap
@@ -167,24 +165,6 @@ class PlanTests(test.TestCase):
         location = reverse('plan-cases', args=[self.plan_id])
         response = self.c.get(location)
         self.assertEqual(response.status_code, http.client.OK)
-
-    def test_plan_importcase(self):
-        self.assertFalse(
-            TestCase.objects.filter(
-                summary='Remove this case from a test plan'
-            ).exists()
-        )
-
-        # now try to import
-        location = reverse('plan-cases', args=[self.plan_id])
-        filename = os.path.join(TCMS_ROOT_PATH, 'fixtures', 'cases-to-import.xml')
-        with open(filename, 'r') as fin:
-            response = self.c.post(location, {'a': 'import_cases', 'xml_file': fin}, follow=True)
-            self.assertEqual(response.status_code, http.client.OK)
-
-        summary = 'Remove this case from a test plan'
-        has_case = TestCase.objects.filter(summary=summary).exists()
-        self.assertTrue(has_case)
 
     def test_plan_delete(self):
         tp_pk = self.test_plan.pk

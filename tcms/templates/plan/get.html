@@ -219,21 +219,5 @@ Nitrate.TestPlans.Instance = {
 			</div>
 		</div>
 	</div>
-	<div class="popup" id="id_import_case_zone" {% if xml_form.xml_file.errors %}{% else %}style="display:none;"{% endif %}>
-		<div class="submit-row">
-			<input type="button" value="x" class="js-close-zone" >
-		</div>
-		<form action="{% url "plan-cases" test_plan.plan_id %}" method="POST" enctype="multipart/form-data">
-			<div  class="right-bar" >
-				<label class="errors" id="import-error">{{ xml_form.xml_file.errors }}</label>	
-				{{ xml_form.a }}
-				<label><b>Import XML File:</b></label>
-				{{ xml_form.xml_file }}
-				<input type="submit" value="Import" />
-				<br/>
-				<label class="grey">{{ xml_form.xml_file.help_text }}</label>
-			</div>
-		</form>
-	</div>
 </div>
 {% endblock %}
