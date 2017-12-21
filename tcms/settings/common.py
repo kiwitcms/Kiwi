@@ -414,7 +414,3 @@ TINYMCE_DEFAULT_CONFIG = {
 LOCALE_PATHS = [
     os.path.join(TCMS_ROOT_PATH, 'locale'),
 ]
-
-# when importing test cases from XML exported by Testopia
-# this is the version we're looking for
-TESTOPIA_XML_VERSION = '1.1'
