@@ -60,6 +60,10 @@ def add_tag(plan_ids, tags):
     # FIXME: this could be optimized to reduce possible huge number of SQLs
 
     tps = TestPlan.objects.filter(plan_id__in=pre_process_ids(value=plan_ids))
+
+    if not isinstance(tags, (str, list)):
+        raise ValueError('Parameter tags must be a string or list(string)')
+
     tags = TestTag.string_to_list(tags)
 
     for tag in tags:
@@ -320,7 +324,7 @@ def get_product(plan_id):
     products = products.select_related('classification')
     products = products.defer('classification__description')
     if len(products) == 0:
-        raise Product.DoesNotExist
+        raise Product.DoesNotExist('Product matching query does not exist')
     else:
         return products[0].serialize()
 
@@ -401,6 +405,7 @@ def get_test_cases(plan_id):
     from tcms.testcases.models import TestCase
     from tcms.testplans.models import TestPlan
     from tcms.xmlrpc.serializer import XMLRPCSerializer
+
     tp = TestPlan.objects.get(pk=plan_id)
     tcs = TestCase.objects.filter(plan=tp).order_by('testcaseplan__sortkey')
     serialized_tcs = XMLRPCSerializer(tcs.iterator()).serialize_queryset()
@@ -485,6 +490,10 @@ def remove_tag(plan_ids, tags):
     test_plans = TestPlan.objects.filter(
         plan_id__in=pre_process_ids(value=plan_ids)
     )
+
+    if not isinstance(tags, (str, list)):
+        raise ValueError('Parameter tags must be a string or list(string)')
+
     test_tags = TestTag.objects.filter(
         name__in=TestTag.string_to_list(tags)
     )
