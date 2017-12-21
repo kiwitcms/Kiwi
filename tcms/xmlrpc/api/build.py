@@ -129,7 +129,7 @@ def update(build_id, values):
     """
     .. function:: XML-RPC Build.update(build_id, values)
 
-        Updates the fields of the selected build.
+        Updates the fields of the selected ``build_id``.
         ``values`` is a dict matching the fields of the TestBuild object:
 
         :param product: ID or name of Product to which this Build belongs
