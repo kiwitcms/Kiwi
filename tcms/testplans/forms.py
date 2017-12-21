@@ -7,7 +7,6 @@ from tcms.core.forms.fields import UserField, StripURLField
 from tinymce.widgets import TinyMCE
 from tcms.management.models import Component, Product, Version, TCMSEnvGroup, TestTag
 from .models import TestPlan, TestPlanType
-from tcms.utils.xml import clean_xml_file, process_case
 # ===========Plan Fields==============
 
 
@@ -127,67 +126,6 @@ class PlanFileField(forms.FileField):
 
         if data.content_type == MIMETYPE_PLAIN:
             return UploadedPlainTextFile(data).get_content()
-
-
-class CasePlanXMLField(forms.FileField):
-    """
-    Custom field for the XML file.
-    Based on ImageField built-in Django source code.
-    """
-    default_error_messages = {
-        'invalid_file': 'The file you uploaded is not a correct XML file.',
-        'interpret_error': 'The file you uploaded unable to interpret.',
-    }
-
-    def process_case(self, case):
-        try:
-            return process_case(case)
-        except ValueError as err:
-            forms.ValidationError(err.message)
-
-    def clean(self, data, initial=None):
-        """
-        Check the file content type is XML or not
-        """
-        f = super(CasePlanXMLField, self).clean(data, initial)
-        if f is None:
-            return None
-        elif not data and initial:
-            return initial
-
-        if not data.content_type == 'text/xml' and not data.content_type == 'application/xml':
-            raise forms.ValidationError(self.error_messages['invalid_file'])
-
-        # We need to get a file object for PIL. We might have a path or we
-        # might have to read the data into memory.
-        if hasattr(data, 'temporary_file_path'):
-            xml_file = data.temporary_file_path()
-        else:
-            if hasattr(data, 'read'):
-                xml_file = data.read()
-            else:
-                xml_file = data['content']
-
-        # Insert clean code here
-        try:
-            new_case_from_xml = clean_xml_file(xml_file)
-        except ValueError as error:
-            raise forms.ValidationError(error)
-        except Exception as error:
-            raise forms.ValidationError('%s: %s' % (
-                self.error_messages['interpret_error'],
-                error
-            ))
-        except SyntaxError as error:
-            raise forms.ValidationError('%s: %s' % (
-                self.error_messages['interpret_error'],
-                error
-            ))
-
-        if hasattr(f, 'seek') and callable(f.seek):
-            f.seek(0)
-
-        return new_case_from_xml
 
 
 # =========== New Plan ModelForm ==============
@@ -474,15 +412,7 @@ class XMLRPCEditPlanForm(EditPlanForm):
     )
 
 
-# =========== Mist forms ==============
-
-
-class ImportCasesViaXMLForm(forms.Form):
-    a = forms.CharField(widget=forms.HiddenInput)
-    xml_file = CasePlanXMLField(
-        label='Upload XML file:',
-        help_text='XML file is exported from Kiwi or Testopia.'
-    )
+# =========== Misc forms ==============
 
 
 class PlanComponentForm(forms.Form):

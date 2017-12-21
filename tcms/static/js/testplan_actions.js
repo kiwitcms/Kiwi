@@ -990,9 +990,6 @@ Nitrate.TestPlans.Details = {
     Nitrate.TestPlans.Details.observeEvents(plan_id);
     Nitrate.TestPlans.Details.initTabs();
 
-    // Make the import case dialog draggable.
-    jQ('#id_import_case_zone').draggable({ containment: '#content' });
-
     // Bind for run form
     jQ('#id_form_run').bind('submit', function(e) {
       if(!Nitrate.Utils.formSerialize(this)['run']) {
@@ -1018,10 +1015,6 @@ Nitrate.TestPlans.Details = {
     jQ('#btn_clone, #btn_export, #btn_print').bind('click', function() {
       var params = jQ(this).data('params');
       window.location.href = params[0] + '?plan=' + params[1];
-    });
-    jQ('#id_import_case_zone').find('.js-close-zone').bind('click', function() {
-      jQ('#id_import_case_zone').hide();
-      jQ('#import-error').empty();
     });
     jQ('.js-del-attach').bind('click', function() {
       var params = jQ(this).data('params');
@@ -2295,9 +2288,6 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
       jQ('#js' + type + 'case-menu, #js' + type + 'new-case').bind('click', function() {
         var params = jQ(this).data('params');
         window.location.href = params[0] + '?from_plan=' + params[1];
-      });
-      jQ('#js' + type + 'import-case').bind('click', function() {
-        jQ('#id_import_case_zone').toggle();
       });
       jQ('#js' + type + 'add-case-to-plan').bind('click', function() {
         window.location.href = jQ(this).data('param') + '?a=link_cases';
