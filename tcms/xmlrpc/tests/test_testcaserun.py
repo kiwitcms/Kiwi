@@ -363,32 +363,32 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
 
 
 class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
-    """Test testcaserun.check_case_run_status"""
+    """Test testcaserun.get_case_run_status_by_name"""
 
     @unittest.skip('TODO: fix code to make this test pass.')
     def test_check_status_with_no_args(self):
         bad_args = (None, [], {}, ())
         for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, arg)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status_by_name, None, arg)
 
     @unittest.skip('TODO: fix code to make this test pass.')
     def test_check_status_with_empty_name(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, '')
+        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status_by_name, None, '')
 
     @unittest.skip('TODO: fix code to make this test pass.')
     def test_check_status_with_non_str(self):
         bad_args = (True, False, 1, 0, -1, [1], (1,), dict(a=1), 0.7)
         for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.check_case_run_status, None, arg)
+            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status_by_name, None, arg)
 
     def test_check_status_with_name(self):
-        status = testcaserun.check_case_run_status(None, "IDLE")
+        status = testcaserun.get_case_run_status_by_name(None, "IDLE")
         self.assertIsNotNone(status)
         self.assertEqual(status['id'], 1)
         self.assertEqual(status['name'], "IDLE")
 
     def test_check_status_with_non_exist_name(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.check_case_run_status, None, "ABCDEFG")
+        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_case_run_status_by_name, None, "ABCDEFG")
 
 
 class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
@@ -568,73 +568,6 @@ class TestCaseRunGet(XmlrpcAPIBaseTest):
         self.assertEqual(tcr['case_run_status_id'], self.status_idle.pk)
 
 
-class TestCaseRunGetSet(XmlrpcAPIBaseTest):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
-        cls.tester = UserFactory()
-        cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=None,
-                                          notes='testing ...',
-                                          case_run_status=cls.status_idle)
-
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_get_with_no_args(self):
-        bad_args = (None, [], (), {})
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(
-                BAD_REQUEST, testcaserun.get_s,
-                None, arg, self.case_run.run.pk, self.case_run.build.pk, 0)
-            self.assertRaisesXmlrpcFault(
-                BAD_REQUEST, testcaserun.get_s,
-                None, self.case_run.case.pk, arg, self.case_run.build.pk, 0)
-            self.assertRaisesXmlrpcFault(
-                BAD_REQUEST, testcaserun.get_s,
-                None, self.case_run.case.pk, self.case_run.run.pk, arg, 0)
-            self.assertRaisesXmlrpcFault(
-                BAD_REQUEST, testcaserun.get_s,
-                None, self.case_run.case.pk, self.case_run.run.pk, self.case_run.build.pk, arg)
-
-    def test_get_with_non_exist_run(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
-                                     None, self.case_run.case.pk, 1111111, self.case_run.build.pk,
-                                     0)
-
-    def test_get_with_non_exist_case(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
-                                     None, 11111111, self.case_run.run.pk, self.case_run.build.pk,
-                                     0)
-
-    def test_get_with_non_exist_build(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
-                                     None, self.case_run.case.pk, self.case_run.run.pk, 1111111,
-                                     0)
-
-    def test_get_with_non_exist_env(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_s,
-                                     None,
-                                     self.case_run.case.pk,
-                                     self.case_run.run.pk,
-                                     self.case_run.build.pk,
-                                     999999)
-
-    def test_get_with_no_env(self):
-        tcr = testcaserun.get_s(None,
-                                self.case_run.case.pk,
-                                self.case_run.run.pk,
-                                self.case_run.build.pk)
-        self.assertIsNotNone(tcr)
-        self.assertEqual(tcr['case_run_id'], self.case_run.pk)
-        self.assertEqual(tcr['run_id'], self.case_run.run.pk)
-        self.assertEqual(tcr['case_id'], self.case_run.case.pk)
-        self.assertEqual(tcr['assignee_id'], self.tester.pk)
-        self.assertEqual(tcr['tested_by_id'], None)
-        self.assertEqual(tcr['build_id'], self.case_run.build.pk)
-        self.assertEqual(tcr['notes'], 'testing ...')
-        self.assertEqual(tcr['case_run_status_id'], self.status_idle.pk)
-        self.assertEqual(tcr['environment_id'], 0)
-
-
 class TestCaseRunGetBugs(XmlrpcAPIBaseTest):
 
     @classmethod
@@ -675,160 +608,6 @@ class TestCaseRunGetBugs(XmlrpcAPIBaseTest):
         self.assertEqual(1, len(bugs))
         self.assertEqual(bugs[0]['summary'], 'Testing TCMS')
         self.assertEqual(bugs[0]['bug_id'], '67890')
-
-
-class TestCaseRunGetBugsSet(XmlrpcAPIBaseTest):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.admin = UserFactory(username='update_admin', email='update_admin@example.com')
-        cls.admin_request = make_http_request(user=cls.admin,
-                                              user_perm='testcases.add_testcasebug')
-
-        cls.case_run = TestCaseRunFactory()
-        cls.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
-        testcaserun.attach_bug(cls.admin_request, {
-            'case_run_id': cls.case_run.pk,
-            'bug_id': '67890',
-            'bug_system_id': cls.bug_system_bz.pk,
-            'summary': 'Testing TCMS',
-            'description': 'Just foo and bar',
-        })
-
-    def test_get_bug_set_with_no_args(self):
-        bad_args = (None, [], (), {})
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
-                                         None, arg, self.case_run.case.pk, self.case_run.build.pk,
-                                         0)
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
-                                         None, self.case_run.run.pk, arg, self.case_run.build.pk,
-                                         0)
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
-                                         None, self.case_run.run.pk, self.case_run.case.pk, arg,
-                                         0)
-
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_get_bug_set_with_invalid_environment_value(self):
-        bad_args = (None, [], (), {})
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs_s,
-                                         None,
-                                         self.case_run.run.pk,
-                                         self.case_run.case.pk,
-                                         self.case_run.build.pk,
-                                         arg)
-
-    def test_get_bug_set_with_non_exist_run(self):
-        tcr = testcaserun.get_bugs_s(None,
-                                     1111111,
-                                     self.case_run.case.pk,
-                                     self.case_run.build.pk,
-                                     0)
-        self.assertIsNotNone(tcr)
-        self.assertIsInstance(tcr, list)
-        self.assertEqual(len(tcr), 0)
-
-    def test_get_bug_set_with_non_exist_case(self):
-        tcr = testcaserun.get_bugs_s(None,
-                                     self.case_run.run.pk,
-                                     11111111,
-                                     self.case_run.build.pk,
-                                     0)
-        self.assertIsNotNone(tcr)
-        self.assertIsInstance(tcr, list)
-        self.assertEqual(len(tcr), 0)
-
-    def test_get_bug_set_with_non_exist_build(self):
-        tcr = testcaserun.get_bugs_s(None,
-                                     self.case_run.run.pk,
-                                     self.case_run.case.pk,
-                                     1111111,
-                                     0)
-        self.assertIsNotNone(tcr)
-        self.assertIsInstance(tcr, list)
-        self.assertEqual(len(tcr), 0)
-
-    def test_get_bug_set_with_non_exist_env(self):
-        tcr = testcaserun.get_bugs_s(None,
-                                     self.case_run.run.pk,
-                                     self.case_run.case.pk,
-                                     self.case_run.build.pk,
-                                     999999)
-        self.assertIsNotNone(tcr)
-        self.assertIsInstance(tcr, list)
-        self.assertEqual(len(tcr), 0)
-
-    def test_get_bug_set_by_omitting_argument_environment(self):
-        tcr = testcaserun.get_bugs_s(None,
-                                     self.case_run.run.pk,
-                                     self.case_run.case.pk,
-                                     self.case_run.build.pk)
-        self.assertIsNotNone(tcr)
-        self.assertIsInstance(tcr, list)
-        self.assertEqual(len(tcr), 1)
-        self.assertEqual(tcr[0]['bug_id'], '67890')
-        self.assertEqual(tcr[0]['summary'], 'Testing TCMS')
-
-
-class TestCaseRunGetStatus(XmlrpcAPIBaseTest):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.status_running = TestCaseRunStatus.objects.get(name='RUNNING')
-
-    def test_get_all_status(self):
-        rows = testcaserun.get_case_run_status(None)
-        self.assertEqual(8, len(rows))
-        names = [row['name'] for row in rows]
-        self.assertTrue("IDLE" in names)
-        self.assertTrue("PASSED" in names)
-        self.assertTrue("FAILED" in names)
-        self.assertTrue("RUNNING" in names)
-        self.assertTrue("PAUSED" in names)
-        self.assertTrue("BLOCKED" in names)
-        self.assertTrue("ERROR" in names)
-        self.assertTrue("WAIVED" in names)
-
-        rows = testcaserun.get_case_run_status(None, None)
-        self.assertEqual(8, len(rows))
-        names = [row['name'] for row in rows]
-        self.assertTrue("IDLE" in names)
-        self.assertTrue("PASSED" in names)
-        self.assertTrue("FAILED" in names)
-        self.assertTrue("RUNNING" in names)
-        self.assertTrue("PAUSED" in names)
-        self.assertTrue("BLOCKED" in names)
-        self.assertTrue("ERROR" in names)
-        self.assertTrue("WAIVED" in names)
-
-    @unittest.skip('TODO: fix method to make this test pass.')
-    def test_get_status_with_no_args(self):
-        bad_args = ([], {}, (), "", "AAAA", self)
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status, None, arg)
-
-    def test_get_status_with_non_exist_id(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_case_run_status, None, 999999)
-
-    def test_get_status_with_id(self):
-        status = testcaserun.get_case_run_status(None, self.status_running.pk)
-        self.assertIsNotNone(status)
-        self.assertEqual(status['id'], self.status_running.pk)
-        self.assertEqual(status['name'], "RUNNING")
-
-    def test_get_status_with_name(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status, None, 'PROPOSED')
-
-
-@unittest.skip('not implemented yet.')
-class TestCaseRunGetCompletionTime(XmlrpcAPIBaseTest):
-    pass
-
-
-@unittest.skip('not implemented yet.')
-class TestCaseRunGetCompletionTimeSet(XmlrpcAPIBaseTest):
-    pass
 
 
 @unittest.skip('not implemented yet.')

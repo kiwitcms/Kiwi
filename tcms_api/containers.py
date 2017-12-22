@@ -471,7 +471,7 @@ class CaseRunBugs(Container):
         if Container._fetch(self, inset):
             return
         log.info("Fetching bugs for {0}".format(self._identifier))
-        injects = self._server.TestCaseRun.get_bugs(self.id)
+        injects = self._server.TestCaseRun.get_bugs({'case_run': self.id})
         log.data(pretty(injects))
         self._current = set([Bug(inject) for inject in injects])
         self._original = set(self._current)

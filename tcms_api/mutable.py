@@ -1271,7 +1271,7 @@ class CaseRun(Mutable):
         # Fetch the data from the server unless inject provided
         if inject is None:
             log.info("Fetching case run {0}".format(self.identifier))
-            inject = self._server.TestCaseRun.get(self.id)
+            inject = self._server.TestCaseRun.get({'pk': self.id})
             self._inject = inject
         else:
             self._id = inject["case_run_id"]
