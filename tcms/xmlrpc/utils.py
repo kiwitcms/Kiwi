@@ -27,7 +27,7 @@ def parse_bool_value(value):
 def pre_check_product(values):
     if isinstance(values, dict):
         if not values.get('product'):
-            raise ValueError('No product name to know what product to get.')
+            raise ValueError('No product given.')
         product_str = values['product']
     else:
         product_str = values

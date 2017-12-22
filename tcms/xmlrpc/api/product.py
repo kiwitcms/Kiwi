@@ -24,12 +24,7 @@ __all__ = (
     'add_component',
     'get_component',
     'update_component',
-    'get_components',
-    'get_plans',
-    'get_runs',
-    'get_tag',
     'add_version',
-    'get_versions',
 )
 
 
@@ -108,6 +103,8 @@ def filter(query):
     Description: Performs a search and returns the resulting list of products.
 
     Params:      $query - Hash: keys must match valid search fields.
+
+TODO: query keys match the product class
 
     +------------------------------------------------------------------+
     |               Product Search Parameters                          |
@@ -238,6 +235,7 @@ def get(id):
 def get_builds(product, is_active=True):
     """
     Description: Get the list of builds associated with this product.
+TODO: there's testbuilds.get for this ????
 
     Params:      $product  -  Integer/String
                               Integer: product_id of the product in the Database
@@ -262,6 +260,7 @@ def get_builds(product, is_active=True):
 @rpc_method(name='Product.get_cases')
 def get_cases(product):
     """
+TODO: duplicate with api/testcases.py ???
     Description: Get the list of cases associated with this product.
 
     Params:      $product - Integer/String
@@ -436,95 +435,6 @@ def update_component(component_id, values):
     return component.serialize()
 
 
-@rpc_method(name='Product.get_components')
-def get_components(product):
-    """
-    Description: Get the list of components associated with this product.
-
-    Params:      $product - Integer/String
-                            Integer: product_id of the product in the Database
-                            String: Product name
-
-    Returns:     Array: Returns an array of Component objects.
-
-    Example:
-    # Get with product id
-    >>> Product.get_components(61)
-    # Get with product name
-    >>> Product.get_components('Red Hat Enterprise Linux 5')
-    """
-    from tcms.management.models import Component
-
-    p = pre_check_product(values=product)
-    query = {'product': p}
-    return Component.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.get_plans')
-def get_plans(product):
-    """
-    Description: Get the list of plans associated with this product.
-
-    Params:      $product - Integer/String
-                            Integer: product_id of the product in the Database
-                            String: Product name
-
-    Returns:     Array: Returns an array of Test Plan objects.
-
-    Example:
-    # Get with product id
-    >>> Product.get_plans(61)
-    # Get with product name
-    >>> Product.get_plans('Red Hat Enterprise Linux 5')
-    """
-    from tcms.testplans.models import TestPlan
-
-    p = pre_check_product(values=product)
-    query = {'product': p}
-    return TestPlan.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.get_runs')
-def get_runs(product):
-    """
-    Description: Get the list of runs associated with this product.
-
-    Params:      $product - Integer/String
-                            Integer: product_id of the product in the Database
-                            String: Product name
-
-    Returns:     Array: Returns an array of Test Run objects.
-
-    Example:
-    # Get with product id
-    >>> Product.get_runs(61)
-    # Get with product name
-    >>> Product.get_runs('Red Hat Enterprise Linux 5')
-    """
-    from tcms.testruns.models import TestRun
-
-    p = pre_check_product(values=product)
-    query = {'build__product': p}
-    return TestRun.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.get_tag')
-def get_tag(id):
-    """
-    Description: Get the list of tags.
-
-    Params:      $id   - Integer: ID of the tag in the database.
-
-    Returns:     Array: Returns an array of Tags objects.
-
-    Example:
-    >>> Product.get_tag(10)
-    """
-    from tcms.management.models import TestTag
-
-    return TestTag.objects.get(pk=int(id)).serialize()
-
-
 @permissions_required('management.add_version')
 @rpc_method(name='Product.add_version')
 def add_version(values):
@@ -560,27 +470,3 @@ def add_version(values):
         return version.serialize()
     else:
         raise ValueError(forms.errors_to_list(form))
-
-
-@rpc_method(name='Product.get_versions')
-def get_versions(product):
-    """
-    Description: Get the list of versions associated with this product.
-
-    Params:      $product - Integer/String
-                            Integer: product_id of the product in the Database
-                            String: Product name
-
-    Returns:     Array: Returns an array of Version objects.
-
-    Example:
-    # Get with product id
-    >>> Product.get_runs(61)
-    # Get with product name
-    >>> Product.get_runs('Red Hat Enterprise Linux 5')
-    """
-    from tcms.management.models import Version
-
-    p = pre_check_product(values=product)
-    query = {'product': p}
-    return Version.to_xmlrpc(query)
