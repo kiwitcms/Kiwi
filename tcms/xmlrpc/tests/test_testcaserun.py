@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault as XmlRPCFault
 
-from http.client import BAD_REQUEST
-from http.client import FORBIDDEN
-from http.client import NOT_FOUND
-from http.client import NOT_IMPLEMENTED
 from datetime import datetime
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.xmlrpc.api import testcaserun
-from tcms.xmlrpc.tests.utils import make_http_request
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.models import TestCaseBugSystem
 
@@ -28,27 +24,21 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 class TestCaseRunCreate(XmlrpcAPIBaseTest):
     """Test testcaserun.create"""
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.admin = UserFactory(username='tcr_admin', email='tcr_admin@example.com')
-        cls.staff = UserFactory(username='tcr_staff', email='tcr_staff@example.com')
-        cls.admin_request = make_http_request(user=cls.admin, user_perm='testruns.add_testcaserun')
-        cls.staff_request = make_http_request(user=cls.staff)
-        cls.product = ProductFactory(name='Nitrate')
-        cls.version = VersionFactory(value='0.1', product=cls.product)
-        cls.build = cls.product.build.all()[0]
-        cls.plan = TestPlanFactory(author=cls.admin, owner=cls.admin, product=cls.product)
-        cls.test_run = TestRunFactory(product_version=cls.version, build=cls.build,
-                                      default_tester=None, plan=cls.plan)
-        cls.case_run_status = TestCaseRunStatus.objects.get(name='IDLE')
-        cls.case = TestCaseFactory(author=cls.admin, default_tester=None, plan=[cls.plan])
+    def _fixture_setup(self):
+        super(TestCaseRunCreate, self)._fixture_setup()
 
-        cls.case_run_pks = []
+        self.staff = UserFactory(username='staff', email='staff@example.com')
 
-    def test_create_with_no_args(self):
-        bad_args = (None, [], {}, (), 1, 0, -1, True, False, '', 'aaaa', object)
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.create, self.admin_request, arg)
+        self.product = ProductFactory(name='Nitrate')
+        self.version = VersionFactory(value='0.1', product=self.product)
+        self.build = self.product.build.all()[0]
+        self.plan = TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product)
+        self.test_run = TestRunFactory(product_version=self.version, build=self.build,
+                                       default_tester=None, plan=self.plan)
+        self.case_run_status = TestCaseRunStatus.objects.get(name='IDLE')
+        self.case = TestCaseFactory(author=self.api_user, default_tester=None, plan=[self.plan])
+
+        self.case_run_pks = []
 
     def test_create_with_no_required_fields(self):
         values = [
@@ -72,10 +62,11 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
             },
         ]
         for value in values:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.create, self.admin_request, value)
+            with self.assertRaisesRegex(XmlRPCFault, 'This field is required'):
+                self.rpc_client.TestCaseRun.create(value)
 
     def test_create_with_required_fields(self):
-        tcr = testcaserun.create(self.admin_request, {
+        tcr = self.rpc_client.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -88,11 +79,11 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         self.assertEqual(tcr['run_id'], self.test_run.pk)
 
     def test_create_with_all_fields(self):
-        tcr = testcaserun.create(self.admin_request, {
+        tcr = self.rpc_client.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
-            "assignee": self.admin.pk,
+            "assignee": self.api_user.pk,
             "notes": "test_create_with_all_fields",
             "sortkey": 90,
             "case_run_status": self.case_run_status.pk,
@@ -102,7 +93,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         self.case_run_pks.append(tcr['case_run_id'])
         self.assertEqual(tcr['build_id'], self.build.pk)
         self.assertEqual(tcr['case_id'], self.case.pk)
-        self.assertEqual(tcr['assignee_id'], self.admin.pk)
+        self.assertEqual(tcr['assignee_id'], self.api_user.pk)
         self.assertEqual(tcr['notes'], "test_create_with_all_fields")
         self.assertEqual(tcr['sortkey'], 90)
         self.assertEqual(tcr['case_run_status'], 'IDLE')
@@ -127,10 +118,11 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
             },
         ]
         for value in values:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.create, self.admin_request, value)
+            with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
+                self.rpc_client.TestCaseRun.create(value)
 
     def test_create_with_chinese(self):
-        tcr = testcaserun.create(self.admin_request, {
+        tcr = self.rpc_client.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -157,7 +149,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"""
-        tcr = testcaserun.create(self.admin_request, {
+        tcr = self.rpc_client.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -177,78 +169,62 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
-            "assignee": self.admin.pk,
+            "assignee": self.api_user.pk,
             "notes": "test_create_with_all_fields",
             "sortkey": 2,
             "case_run_status": self.case_run_status.pk,
         }
-        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.create, self.staff_request, values)
+        self.rpc_client.Auth.logout()
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCaseRun.create(values)
 
 
 class TestCaseRunAddComment(XmlrpcAPIBaseTest):
     """Test testcaserun.add_comment"""
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.admin = UserFactory(username='update_admin', email='update_admin@example.com')
-        cls.admin_request = make_http_request(user=cls.admin,
-                                              user_perm='testruns.change_testcaserun')
+    def _fixture_setup(self):
+        super(TestCaseRunAddComment, self)._fixture_setup()
 
-        cls.case_run_1 = TestCaseRunFactory()
-        cls.case_run_2 = TestCaseRunFactory()
-
-    @unittest.skip('TODO: not implemented yet.')
-    def test_add_comment_with_no_args(self):
-        pass
-
-    @unittest.skip('TODO: not implemented yet.')
-    def test_add_comment_with_illegal_args(self):
-        pass
+        self.case_run_1 = TestCaseRunFactory()
+        self.case_run_2 = TestCaseRunFactory()
 
     def test_add_comment_with_string(self):
-        comment = testcaserun.add_comment(self.admin_request,
-                                          "{0},{1}".format(self.case_run_1.pk, self.case_run_2.pk),
-                                          "Hello World!")
+        comment = self.rpc_client.TestCaseRun.add_comment(
+            "{0},{1}".format(self.case_run_1.pk, self.case_run_2.pk),
+            "Hello World!")
         self.assertIsNone(comment)
 
-        comment = testcaserun.add_comment(self.admin_request,
-                                          str(self.case_run_1.pk),
-                                          "Hello World!")
+        comment = self.rpc_client.TestCaseRun.add_comment(
+            str(self.case_run_1.pk),
+            "Hello World!")
         self.assertIsNone(comment)
 
     def test_add_comment_with_list(self):
-        comment = testcaserun.add_comment(self.admin_request,
-                                          [self.case_run_1.pk, self.case_run_2.pk],
-                                          "Hello World!")
+        comment = self.rpc_client.TestCaseRun.add_comment(
+            [self.case_run_1.pk, self.case_run_2.pk],
+            "Hello World!")
         self.assertIsNone(comment)
 
     def test_add_comment_with_int(self):
-        comment = testcaserun.add_comment(self.admin_request, self.case_run_2.pk, "Hello World!")
+        comment = self.rpc_client.TestCaseRun.add_comment(self.case_run_2.pk, "Hello World!")
         self.assertIsNone(comment)
 
 
 class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
     """Test testcaserun.attach_bug"""
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.admin = UserFactory(username='update_admin', email='update_admin@example.com')
-        cls.staff = UserFactory(username='update_staff', email='update_staff@example.com')
-        cls.admin_request = make_http_request(user=cls.admin,
-                                              user_perm='testcases.add_testcasebug')
-        cls.staff_request = make_http_request(user=cls.staff)
-        cls.case_run = TestCaseRunFactory()
-        cls.bug_system_jira = TestCaseBugSystem.objects.get(name='JIRA')
-        cls.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
+    def _fixture_setup(self):
+        super(TestCaseRunAttachBug, self)._fixture_setup()
+
+        self.case_run = TestCaseRunFactory()
+        self.bug_system_jira = TestCaseBugSystem.objects.get(name='JIRA')
+        self.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
 
     def test_attach_bug_with_no_perm(self):
-        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.attach_bug, self.staff_request, {})
+        self.rpc_client.Auth.logout()
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCaseRun.attach_bug({})
 
-    @unittest.skip('TODO: not implemented yet.')
-    def test_attach_bug_with_incorrect_type_value(self):
-        pass
-
-    @unittest.skip('TODO: fix code to make this test pass.')
     def test_attach_bug_with_no_required_args(self):
         values = [
             {
@@ -263,18 +239,18 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
             },
         ]
         for value in values:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_bug,
-                                         self.admin_request, value)
+            with self.assertRaisesRegex(XmlRPCFault, 'bug_id'):
+                self.rpc_client.TestCaseRun.attach_bug(value)
 
     def test_attach_bug_with_required_args(self):
-        bug = testcaserun.attach_bug(self.admin_request, {
+        bug = self.rpc_client.TestCaseRun.attach_bug({
             "case_run_id": self.case_run.pk,
             "bug_id": '1',
             "bug_system_id": self.bug_system_bz.pk,
         })
         self.assertIsNone(bug)
 
-        bug = testcaserun.attach_bug(self.admin_request, {
+        bug = self.rpc_client.TestCaseRun.attach_bug({
             "case_run_id": self.case_run.pk,
             "bug_id": "TCMS-123",
             "bug_system_id": self.bug_system_jira.pk,
@@ -282,7 +258,7 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
         self.assertIsNone(bug)
 
     def test_attach_bug_with_all_fields(self):
-        bug = testcaserun.attach_bug(self.admin_request, {
+        bug = self.rpc_client.TestCaseRun.attach_bug({
             "case_run_id": self.case_run.pk,
             "bug_id": '2',
             "bug_system_id": self.bug_system_bz.pk,
@@ -292,7 +268,7 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
         self.assertIsNone(bug)
 
     def test_succeed_to_attach_bug_by_passing_extra_data(self):
-        testcaserun.attach_bug(self.admin_request, {
+        self.rpc_client.TestCaseRun.attach_bug({
             "case_run_id": self.case_run.pk,
             "bug_id": '1200',
             "bug_system_id": self.bug_system_bz.pk,
@@ -301,7 +277,9 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
             "FFFF": "aaa"
         })
         bugs_added = self.case_run.case.case_bug.filter(
-            bug_id='1200', bug_system=self.bug_system_bz.pk).count()
+            bug_id='1200',
+            bug_system=self.bug_system_bz.pk
+        ).count()
         self.assertEqual(1, bugs_added)
 
     def test_attach_bug_with_non_existing_case_run(self):
@@ -310,7 +288,8 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
             "bug_id": '2',
             "bug_system_id": self.bug_system_bz.pk,
         }
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.attach_bug, self.admin_request, value)
+        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
+            self.rpc_client.TestCaseRun.attach_bug(value)
 
     def test_attach_bug_with_non_existing_bug_system(self):
         value = {
@@ -318,10 +297,11 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
             "bug_id": '2',
             "bug_system_id": 111111111,
         }
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_bug, self.admin_request, value)
+        with self.assertRaisesRegex(XmlRPCFault, 'Invalid bug system id'):
+            self.rpc_client.TestCaseRun.attach_bug(value)
 
     def test_attach_bug_with_chinese(self):
-        bug = testcaserun.attach_bug(self.admin_request, {
+        bug = self.rpc_client.TestCaseRun.attach_bug({
             "case_run_id": self.case_run.pk,
             "bug_id": '12',
             "bug_system_id": self.bug_system_bz.pk,
@@ -334,81 +314,54 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
 class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
     """Test testcaserun.attach_log"""
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.case_run = TestCaseRunFactory()
+    def _fixture_setup(self):
+        super(TestCaseRunAttachLog, self)._fixture_setup()
 
-    @unittest.skip('TODO: not implemented yet.')
-    def test_attach_log_with_bad_args(self):
-        pass
-
-    def test_attach_log_with_not_enough_args(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None, '', '')
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None, '')
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None)
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log, None, '', '', '')
+        self.case_run = TestCaseRunFactory()
 
     def test_attach_log_with_non_exist_id(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.attach_log, None, 5523533, '', '')
+        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
+            self.rpc_client.TestCaseRun.attach_log(5523533, '', '')
 
-    @unittest.skip('TODO: code should be fixed to make this test pass')
+    @unittest.skip('TODO: the url field needs to become models.URLField, not TextField')
     def test_attach_log_with_invalid_url(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.attach_log,
-                                     None, self.case_run.pk, "UT test logs", 'aaaaaaaaa')
+        with self.assertRaisesRegex(XmlRPCFault, 'aaaa'):
+            self.rpc_client.TestCaseRun.attach_log(self.case_run.pk, "UT test logs", 'aaaaaaaaa')
 
     def test_attach_log(self):
         url = "http://127.0.0.1/test/test-log.log"
-        log = testcaserun.attach_log(None, self.case_run.pk, "UT test logs", url)
+        log = self.rpc_client.TestCaseRun.attach_log(self.case_run.pk, "UT test logs", url)
         self.assertIsNone(log)
 
 
 class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
     """Test testcaserun.get_case_run_status_by_name"""
 
-    @unittest.skip('TODO: fix code to make this test pass.')
-    def test_check_status_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status_by_name, None, arg)
-
-    @unittest.skip('TODO: fix code to make this test pass.')
-    def test_check_status_with_empty_name(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status_by_name, None, '')
-
-    @unittest.skip('TODO: fix code to make this test pass.')
-    def test_check_status_with_non_str(self):
-        bad_args = (True, False, 1, 0, -1, [1], (1,), dict(a=1), 0.7)
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_case_run_status_by_name, None, arg)
-
     def test_check_status_with_name(self):
-        status = testcaserun.get_case_run_status_by_name(None, "IDLE")
+        status = self.rpc_client.TestCaseRun.get_case_run_status_by_name("IDLE")
         self.assertIsNotNone(status)
         self.assertEqual(status['id'], 1)
         self.assertEqual(status['name'], "IDLE")
 
     def test_check_status_with_non_exist_name(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_case_run_status_by_name, None, "ABCDEFG")
+        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRunStatus matching query does not exist'):
+            self.rpc_client.TestCaseRun.get_case_run_status_by_name("ABCDEFG")
 
 
 class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.admin = UserFactory()
-        cls.staff = UserFactory()
-        cls.admin_request = make_http_request(user=cls.admin,
-                                              user_perm='testcases.delete_testcasebug')
-        cls.staff_request = make_http_request(user=cls.staff,
-                                              user_perm='testcases.add_testcasebug')
+    def _fixture_setup(self):
+        super(TestCaseRunDetachBug, self)._fixture_setup()
 
-        cls.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
-        cls.bug_system_jira = TestCaseBugSystem.objects.get(name='JIRA')
-        cls.case_run = TestCaseRunFactory()
+        self.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
+        self.bug_system_jira = TestCaseBugSystem.objects.get(name='JIRA')
+        self.case_run = TestCaseRunFactory()
 
     def setUp(self):
+        super(TestCaseRunDetachBug, self).setUp()
+
         self.bug_id = '67890'
-        testcaserun.attach_bug(self.staff_request, {
+        self.rpc_client.TestCaseRun.attach_bug({
             'case_run_id': self.case_run.pk,
             'bug_id': self.bug_id,
             'bug_system_id': self.bug_system_bz.pk,
@@ -417,7 +370,7 @@ class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
         })
 
         self.jira_key = 'AWSDF-112'
-        testcaserun.attach_bug(self.staff_request, {
+        self.rpc_client.TestCaseRun.attach_bug({
             'case_run_id': self.case_run.pk,
             'bug_id': self.jira_key,
             'bug_system_id': self.bug_system_jira.pk,
@@ -427,136 +380,80 @@ class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
 
     def tearDown(self):
         self.case_run.case.case_bug.all().delete()
-
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_detach_bug_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
-                                         self.admin_request, arg, '12345')
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
-                                         self.admin_request, self.case_run.pk, arg)
+        super(TestCaseRunDetachBug, self).tearDown()
 
     def test_detach_bug_with_non_exist_id(self):
         original_links_count = self.case_run.case.case_bug.count()
-        testcaserun.detach_bug(self.admin_request, 9999999, '123456')
+        self.rpc_client.TestCaseRun.detach_bug(9999999, '123456')
         self.assertEqual(original_links_count, self.case_run.case.case_bug.count())
 
-    @unittest.skip('Refer to #148.')
     def test_detach_bug_with_non_exist_bug(self):
         original_links_count = self.case_run.case.case_bug.count()
         nonexisting_bug = '{0}111'.format(self.bug_id)
-        testcaserun.detach_bug(self.admin_request, self.case_run.pk, nonexisting_bug)
+        self.rpc_client.TestCaseRun.detach_bug(self.case_run.pk, nonexisting_bug)
         self.assertEqual(original_links_count, self.case_run.case.case_bug.count())
 
-    @unittest.skip('Refer to #148.')
     def test_detach_bug(self):
-        testcaserun.detach_bug(self.admin_request, self.case_run.pk, self.bug_id)
+        self.rpc_client.TestCaseRun.detach_bug(self.case_run.pk, self.bug_id)
         self.assertFalse(self.case_run.case.case_bug.filter(bug_id=self.bug_id).exists())
 
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_detach_bug_with_illegal_args(self):
-        bad_args = ("AAAA", ['A', 'B', 'C'], dict(A=1, B=2), True, False, (1, 2, 3, 4), -100)
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
-                                         self.admin_request, arg, self.bug_id)
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_bug,
-                                         self.admin_request, self.case_run.pk, arg)
-
     def test_detach_bug_with_no_perm(self):
-        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.detach_bug,
-                                     self.staff_request, self.case_run.pk, self.bug_id)
+        self.rpc_client.Auth.logout()
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCaseRun.detach_bug(self.case_run.pk, self.bug_id)
 
 
 class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
-        cls.tester = UserFactory()
-        cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=None,
-                                          notes='testing ...',
-                                          sortkey=10,
-                                          case_run_status=cls.status_idle)
+    def _fixture_setup(self):
+        super(TestCaseRunDetachLog, self)._fixture_setup()
+
+        self.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+        self.tester = UserFactory()
+        self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
+                                           notes='testing ...',
+                                           sortkey=10,
+                                           case_run_status=self.status_idle)
 
     def setUp(self):
-        testcaserun.attach_log(None, self.case_run.pk, 'Related issue', 'https://localhost/issue/1')
+        super(TestCaseRunDetachLog, self).setUp()
+
+        self.rpc_client.TestCaseRun.attach_log(
+            self.case_run.pk, 'Related issue', 'https://localhost/issue/1')
         self.link = self.case_run.links.all()[0]
 
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_detach_log_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
-                                         None, arg, self.link.pk)
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
-                                         None, self.case_run.pk, arg)
-
-    def test_detach_log_with_not_enough_args(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log, None, '')
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log, None)
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log, None, '', '', '')
-
     def test_detach_log_with_non_exist_id(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.detach_log, None, 9999999, self.link.pk)
+        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
+            self.rpc_client.TestCaseRun.detach_log(9999999, self.link.pk)
 
     def test_detach_log_with_non_exist_log(self):
-        testcaserun.detach_log(None, self.case_run.pk, 999999999)
+        self.rpc_client.TestCaseRun.detach_log(self.case_run.pk, 999999999)
         self.assertEqual(1, self.case_run.links.count())
         self.assertEqual(self.link.pk, self.case_run.links.all()[0].pk)
 
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_detach_log_with_invalid_type_args(self):
-        bad_args = ("", "AAA", (1,), [1], dict(a=1), True, False)
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
-                                         None, arg, self.link.pk)
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.detach_log,
-                                         None, self.case_run.pk, arg)
-
     def test_detach_log(self):
-        testcaserun.detach_log(None, self.case_run.pk, self.link.pk)
+        self.rpc_client.TestCaseRun.detach_log(self.case_run.pk, self.link.pk)
         self.assertEqual([], list(self.case_run.links.all()))
-
-
-@unittest.skip('not implemented yet.')
-class TestCaseRunFilter(XmlrpcAPIBaseTest):
-    pass
-
-
-@unittest.skip('not implemented yet.')
-class TestCaseRunFilterCount(XmlrpcAPIBaseTest):
-    pass
 
 
 class TestCaseRunGet(XmlrpcAPIBaseTest):
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
-        cls.tester = UserFactory()
-        cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=None,
-                                          notes='testing ...',
-                                          sortkey=10,
-                                          case_run_status=cls.status_idle)
+    def _fixture_setup(self):
+        super(TestCaseRunGet, self)._fixture_setup()
 
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_get_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get, None, arg)
-
-    @unittest.skip('TODO: fix get_bugs_s to make this test pass.')
-    def test_get_with_non_integer(self):
-        non_integer = (True, False, '', 'aaaa', self, [1], (1,), dict(a=1), 0.7)
-        for arg in non_integer:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get, None, arg)
+        self.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+        self.tester = UserFactory()
+        self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
+                                           notes='testing ...',
+                                           sortkey=10,
+                                           case_run_status=self.status_idle)
 
     def test_get_with_non_exist_id(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get, None, 11111111)
+        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
+            self.rpc_client.TestCaseRun.get({'pk': 11111111})
 
     def test_get_with_id(self):
-        tcr = testcaserun.get(None, self.case_run.pk)
+        tcr = self.rpc_client.TestCaseRun.get({'pk': self.case_run.pk})
         self.assertIsNotNone(tcr)
         self.assertEqual(tcr['build_id'], self.case_run.build.pk)
         self.assertEqual(tcr['case_id'], self.case_run.case.pk)
@@ -570,92 +467,58 @@ class TestCaseRunGet(XmlrpcAPIBaseTest):
 
 class TestCaseRunGetBugs(XmlrpcAPIBaseTest):
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.admin = UserFactory()
-        cls.admin_request = make_http_request(user=cls.admin,
-                                              user_perm='testcases.add_testcasebug')
+    def _fixture_setup(self):
+        super(TestCaseRunGetBugs, self)._fixture_setup()
 
-        cls.case_run = TestCaseRunFactory()
-        cls.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
-        testcaserun.attach_bug(cls.admin_request, {
-            'case_run_id': cls.case_run.pk,
+        self.case_run = TestCaseRunFactory()
+        self.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
+
+        self.rpc_client.TestCaseRun.attach_bug({
+            'case_run_id': self.case_run.pk,
             'bug_id': '67890',
-            'bug_system_id': cls.bug_system_bz.pk,
+            'bug_system_id': self.bug_system_bz.pk,
             'summary': 'Testing TCMS',
             'description': 'Just foo and bar',
         })
 
-    def test_get_bugs_with_no_args(self):
-        bad_args = (None, [], {}, ())
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs, None, arg)
-
-    @unittest.skip('TODO: fix get_bugs to make this test pass.')
-    def test_get_bugs_with_non_integer(self):
-        non_integer = (True, False, '', 'aaaa', self, [1], (1,), dict(a=1), 0.7)
-        for arg in non_integer:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_bugs, None, arg)
-
-    def test_get_bugs_with_non_exist_id(self):
-        bugs = testcaserun.get_bugs(None, 11111111)
+    def test_get_bugs_with_non_existing_caserun(self):
+        bugs = self.rpc_client.TestCaseRun.get_bugs({'case_run': 11111111})
         self.assertEqual(len(bugs), 0)
         self.assertIsInstance(bugs, list)
 
-    def test_get_bugs_with_id(self):
-        bugs = testcaserun.get_bugs(None, self.case_run.pk)
+    def test_get_bugs_for_caserun(self):
+        bugs = self.rpc_client.TestCaseRun.get_bugs({'case_run': self.case_run.pk})
         self.assertIsNotNone(bugs)
         self.assertEqual(1, len(bugs))
         self.assertEqual(bugs[0]['summary'], 'Testing TCMS')
         self.assertEqual(bugs[0]['bug_id'], '67890')
 
 
-@unittest.skip('not implemented yet.')
-class TestCaseRunGetHistory(XmlrpcAPIBaseTest):
-
-    def test_get_history(self):
-        self.assertRaisesXmlrpcFault(NOT_IMPLEMENTED, testcaserun.get_history, None, None)
-
-
-@unittest.skip('not implemented yet.')
-class TestCaseRunGetHistorySet(XmlrpcAPIBaseTest):
-
-    def test_get_history(self):
-        self.assertRaisesXmlrpcFault(NOT_IMPLEMENTED, testcaserun.get_history_s,
-                                     None, None, None, None)
-
-
 class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.case_run_1 = TestCaseRunFactory()
-        cls.case_run_2 = TestCaseRunFactory()
-        testcaserun.attach_log(None, cls.case_run_1.pk, "Test logs", "http://www.google.com")
+    def _fixture_setup(self):
+        super(TestCaseRunGetLogs, self)._fixture_setup()
 
-    @unittest.skip('TODO: fix method to make this test pass.')
-    def test_get_logs_with_no_args(self):
-        bad_args = (None, [], (), {}, "")
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_logs, None, arg)
+        self.case_run_1 = TestCaseRunFactory()
+        self.case_run_2 = TestCaseRunFactory()
 
-    @unittest.skip('TODO: fix method to make this test pass.')
-    def test_get_logs_with_non_integer(self):
-        bad_args = (True, False, "AAA", 0.7, -1)
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.get_logs, None, arg)
+        self.rpc_client.TestCaseRun.attach_log(
+            self.case_run_1.pk,
+            "Test logs",
+            "http://www.google.com")
 
     def test_get_logs_with_non_exist_id(self):
-        self.assertRaisesXmlrpcFault(NOT_FOUND, testcaserun.get_logs, None, 99999999)
+        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
+            self.rpc_client.TestCaseRun.get_logs(99999999)
 
     def test_get_empty_logs(self):
-        logs = testcaserun.get_logs(None, self.case_run_2.pk)
+        logs = self.rpc_client.TestCaseRun.get_logs(self.case_run_2.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 0)
 
     def test_get_logs(self):
         tcr_log = LinkReference.get_from(self.case_run_1)[0]
-        logs = testcaserun.get_logs(None, self.case_run_1.pk)
+        logs = self.rpc_client.TestCaseRun.get_logs(self.case_run_1.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)
         self.assertEqual(logs[0]['id'], tcr_log.pk)
@@ -665,31 +528,17 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
 
 class TestCaseRunUpdate(XmlrpcAPIBaseTest):
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.admin = UserFactory()
-        cls.staff = UserFactory()
-        cls.user = UserFactory()
-        cls.admin_request = make_http_request(user=cls.admin,
-                                              user_perm='testruns.change_testcaserun')
-        cls.staff_request = make_http_request(user=cls.staff)
+    def _fixture_setup(self):
+        super(TestCaseRunUpdate, self)._fixture_setup()
 
-        cls.build = TestBuildFactory()
-        cls.case_run_1 = TestCaseRunFactory()
-        cls.case_run_2 = TestCaseRunFactory()
-        cls.status_running = TestCaseRunStatus.objects.get(name='RUNNING')
-
-    @unittest.skip('TODO: fix method to make this test pass.')
-    def test_update_with_no_args(self):
-        bad_args = (None, [], (), {}, "")
-        for arg in bad_args:
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
-                                         self.admin_request, arg, {})
-            self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
-                                         self.admin_request, self.case_run_1.pk, arg)
+        self.user = UserFactory()
+        self.build = TestBuildFactory()
+        self.case_run_1 = TestCaseRunFactory()
+        self.case_run_2 = TestCaseRunFactory()
+        self.status_running = TestCaseRunStatus.objects.get(name='RUNNING')
 
     def test_update_with_single_caserun(self):
-        tcr = testcaserun.update(self.admin_request, self.case_run_1.pk, {
+        tcr = self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {
             "build": self.build.pk,
             "assignee": self.user.pk,
             "case_run_status": self.status_running.pk,
@@ -706,15 +555,14 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         self.assertEqual(tcr[0]['sortkey'], 90)
 
     def test_update_with_multi_caserun(self):
-        tcr = testcaserun.update(self.admin_request,
-                                 [self.case_run_1.pk, self.case_run_2.pk],
-                                 {
-                                     "build": self.build.pk,
-                                     "assignee": self.user.pk,
-                                     "case_run_status": self.status_running.pk,
-                                     "notes": "Hello World!",
-                                     "sortkey": 180
-                                 })
+        tcr = self.rpc_client.TestCaseRun.update([
+            self.case_run_1.pk, self.case_run_2.pk], {
+                "build": self.build.pk,
+                "assignee": self.user.pk,
+                "case_run_status": self.status_running.pk,
+                "notes": "Hello World!",
+                "sortkey": 180
+            })
         self.assertIsNotNone(tcr)
         self.assertIsInstance(tcr, list)
         self.assertEqual(len(tcr), 2)
@@ -724,21 +572,20 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         self.assertEqual(tcr[0]['notes'], tcr[1]['notes'])
         self.assertEqual(tcr[0]['sortkey'], tcr[1]['sortkey'])
 
-    def test_update_with_non_exist_build(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
-                                     self.admin_request, self.case_run_1.pk, {"build": 1111111})
+    def test_update_with_non_existing_build(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
+            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"build": 1111111})
 
-    def test_update_with_non_exist_assignee(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
-                                     self.admin_request, self.case_run_1.pk, {"assignee": 1111111})
+    def test_update_with_non_existing_assignee(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
+            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"assignee": 1111111})
 
-    def test_update_with_non_exist_status(self):
-        self.assertRaisesXmlrpcFault(BAD_REQUEST, testcaserun.update,
-                                     self.admin_request, self.case_run_1.pk,
-                                     {"case_run_status": 1111111})
+    def test_update_with_non_existing_status(self):
+        with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
+            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"case_run_status": 1111111})
 
-    def test_update_by_ignoring_undoced_fields(self):
-        case_run = testcaserun.update(self.admin_request, self.case_run_1.pk, {
+    def test_update_by_ignoring_undocumented_fields(self):
+        case_run = self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {
             "notes": "AAAA",
             "close_date": datetime.now(),
             'anotherone': 'abc',
@@ -746,5 +593,6 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         self.assertEqual('AAAA', case_run[0]['notes'])
 
     def test_update_with_no_perm(self):
-        self.assertRaisesXmlrpcFault(FORBIDDEN, testcaserun.update,
-                                     self.staff_request, self.case_run_1.pk, {"notes": "AAAA"})
+        self.rpc_client.Auth.logout()
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"notes": "AAAA"})

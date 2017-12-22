@@ -388,7 +388,7 @@ def attach_log(case_run_id, name, url):
     create_link(name=name, url=url, link_to=test_case_run)
 
 
-@rpc_method(name='TestCaseRun.dettach_log')
+@rpc_method(name='TestCaseRun.detach_log')
 def detach_log(case_run_id, link_id):
     """
     Description: Remove log link to TestCaseRun
