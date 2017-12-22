@@ -7,49 +7,23 @@ from tcms.core.contrib.linkreference.models import create_link, LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun, TestCaseRunStatus
-from tcms.xmlrpc.utils import pre_process_ids, distinct_count
+from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
     'add_comment',
     'attach_bug',
     'attach_log',
-    'check_case_run_status',
+    'get_case_run_status_by_name',
     'create',
     'detach_bug',
     'detach_log',
     'filter',
-    'filter_count',
     'get',
-    'get_s',
     'get_bugs',
-    'get_bugs_s',
-    'get_case_run_status',
-    'get_completion_time',
-    'get_completion_time_s',
     'get_logs',
     'update',
 )
-
-
-class GetCaseRun(object):
-    def pre_process_tcr(self, case_run_id):
-        return TestCaseRun.objects.get(pk=case_run_id)
-
-    def pre_process_tcr_s(self, run_id, case_id, build_id, environment_id=0):
-        query = {
-            'run__pk': run_id,
-            'case__pk': case_id,
-            'build__pk': build_id
-        }
-
-        if environment_id:
-            query['environment_id'] = environment_id
-
-        return TestCaseRun.objects.get(**query)
-
-
-gcr = GetCaseRun()
 
 
 @rpc_method(name='TestCaseRun.add_comment')
@@ -146,8 +120,8 @@ def attach_bug(values):
     return
 
 
-@rpc_method(name='TestCaseRun.check_case_run_status')
-def check_case_run_status(name):
+@rpc_method(name='TestCaseRun.get_case_run_status_by_name')
+def get_case_run_status_by_name(name):
     """
     Params:      $name - String: the status name.
 
@@ -293,185 +267,36 @@ def filter(values={}):
     return TestCaseRun.to_xmlrpc(values)
 
 
-@rpc_method(name='TestCaseRun.filter_count')
-def filter_count(values={}):
-    """
-    Description: Performs a search and returns the resulting count of cases.
-
-    Params:      $query - Hash: keys must match valid search fields (see filter).
-
-    Returns:     Integer - total matching cases.
-
-    Example:
-    # See distinct_count()
-    """
-    from tcms.testruns.models import TestCaseRun
-
-    return distinct_count(TestCaseRun, values)
-
-
 @rpc_method(name='TestCaseRun.get')
-def get(case_run_id):
+def get(query):
     """
     Description: Used to load an existing test case-run from the database.
 
-    Params:      $case_run_id - Integer: An integer representing the ID in
-                                         the database for this case-run.
+    Params:      query - dict
 
     Returns:     A blessed TestCaseRun object hash
 
     Example:
     >>> TestCaseRun.get(1193)
     """
-    return gcr.pre_process_tcr(case_run_id=case_run_id).serialize()
-
-
-@rpc_method(name='TestCaseRun.get_s')
-def get_s(case_id, run_id, build_id, environment_id=0):
-    """
-    Description: Used to load an existing test case from the database.
-
-    Params:  $case_id - Integer: An integer representing the ID of the test case in the database.
-             $run_id - Integer: An integer representing the ID of the test run in the database.
-             $build_id - Integer: An integer representing the ID of the test build in the database.
-             $environment_id - Optional Integer: An integer representing the ID of the environment
-                               in the database.
-
-    Returns:     A blessed TestCaseRun object hash
-
-    Example:
-    >>> TestCaseRun.get_s(3113, 565, 72, 90)
-    """
-    return gcr.pre_process_tcr_s(run_id, case_id, build_id,
-                                 environment_id).serialize()
+    return TestCaseRun.objects.get(**query).serialize()
 
 
 @rpc_method(name='TestCaseRun.get_bugs')
-def get_bugs(case_run_id):
+def get_bugs(query):
     """
+TODO: duplicate with TestCase.get_bugs
+
     Description: Get the list of bugs that are associated with this test case.
 
-    Params:      $case_run_ids - Integer: An integer representing the ID in
-                               the database for this case-run.
+    Params:      $query - dict
 
     Returns:     Array: An array of bug object hashes.
 
     Example:
     >>> TestCase.get_bugs(12345)
     """
-    query = {'case_run': int(case_run_id)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCaseRun.get_bugs_s')
-def get_bugs_s(run_id, case_id, build_id, environment_id=0):
-    """
-    Description: Get the list of bugs that are associated with this test case.
-
-    Params:  $run_id - Integer: An integer representing the ID of the test run in the database.
-             $case_id - Integer: An integer representing the ID of the test case in the database.
-             $build_id - Integer: An integer representing the ID of the test build in the database.
-             $environment_id - Optional Integer: An integer representing the ID of the environment
-                               in the database.
-
-    Returns:     Array: An array of bug object hashes.
-
-    Example:
-    >>> TestCaseRun.get_bugs_s(3113, 565, 72, 90)
-    """
-    query = {
-        'case_run__run': int(run_id),
-        'case_run__build': int(build_id),
-        'case_run__case': int(case_id),
-    }
-    # Just keep the same with original implementation that calls
-    # pre_process_tcr_s. In which following logical exists. I don't why this
-    # should happen there exactly.
-    # FIXME: seems it should be `if environment_id is not None`, otherwise such
-    # judgement should not happen.
-    if environment_id:
-        query['case_run__environment_id'] = int(environment_id)
-    return TestCaseBug.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCaseRun.get_case_run_status')
-def get_case_run_status(id=None):
-    """
-    Params:    $case_run_status_id - Integer(Optional): ID of the status to return
-
-    Returns:   Hash: Matching case run status object hash when your specific the case_run_status_id
-                   or return all of case run status.
-                   It will return error the case run status you specific id not found.
-
-    Example:
-    # Get all of case run status
-    >>> TestCaseRun.get_case_run_status()
-    # Get case run status by ID 1
-    >>> TestCaseRun.get_case_run_status(1)
-    """
-    if id:
-        return TestCaseRunStatus.objects.get(id=id).serialize()
-
-    return TestCaseRunStatus.to_xmlrpc()
-
-
-@rpc_method(name='TestCaseRun.get_completion_time')
-def get_completion_time(case_run_id):
-    """
-    Description: Returns the time in seconds that it took for this case to complete.
-
-    Params:      $case_run_id - Integer: An integer representing the ID in
-                                         the database for this case-run.
-
-    Returns:     Integer: Seconds since run was started till this case was completed.
-                          Or empty hash for insufficent data.
-
-    Example:
-    >>> TestCaseRun.get_completion_time(1193)
-
-    """
-    from tcms.core.forms.widgets import SECONDS_PER_DAY
-
-    tcr = gcr.pre_process_tcr(case_run_id=case_run_id)
-    if not tcr.running_date or not tcr.close_date:
-        return
-
-    time = tcr.close_date - tcr.running_date
-    time = time.days * SECONDS_PER_DAY + time.seconds
-    return time
-
-
-@rpc_method(name='TestCaseRun.get_completion_time_s')
-def get_completion_time_s(run_id, case_id, build_id, environment_id=0):
-    """
-    Description: Returns the time in seconds that it took for this case to complete.
-
-    Params: $case_id - Integer: An integer representing the ID of the test case in the database.
-            $run_id - Integer: An integer representing the ID of the test run in the database.
-            $build_id - Integer: An integer representing the ID of the test build in the database.
-            $environment_id - Optional Integer: An integer representing the ID of the environment
-                                                in the database.
-
-    Returns:     Integer: Seconds since run was started till this case was completed.
-                          Or empty hash for insufficent data.
-
-    Example:
-    >>> TestCaseRun.get_completion_time_s(3113, 565, 72, 90)
-    """
-    from tcms.core.forms.widgets import SECONDS_PER_DAY
-
-    tcr = gcr.pre_process_tcr_s(
-        run_id=run_id,
-        case_id=case_id,
-        build_id=build_id,
-        environment_id=environment_id,
-    )
-    if not tcr.running_date or not tcr.close_date:
-        return
-
-    time = tcr.close_date - tcr.running_date
-    time = time.days * SECONDS_PER_DAY + time.seconds
-    return time
 
 
 @permissions_required('testruns.change_testcaserun')
