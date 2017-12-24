@@ -15,5 +15,4 @@ Submodules
    tcms.utils.models
    tcms.utils.permissions
    tcms.utils.views
-   tcms.utils.xml
 
