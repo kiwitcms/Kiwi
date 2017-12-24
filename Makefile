@@ -26,12 +26,6 @@ flake8:
 	@flake8 --exclude=$(FLAKE8_EXCLUDE) --ignore=F405 tcms_api
 
 
-ifeq ($(strip $(TEST_TARGET)),)
-	TEST_TARGET=
-else
-	TEST_TARGET=$(strip (TEST_TARGET))
-endif
-
 DJANGO_SETTINGS_MODULE="tcms.settings.test"
 
 ifeq ($(TEST_DB),MySQL)
@@ -54,9 +48,8 @@ test:
 			TEST_DB=$$DB make test; \
 		done; \
 	else \
-		DJANGO_SETTINGS_MODULE=$(DJANGO_SETTINGS_MODULE) pytest $(TEST_TARGET); \
+		PYTHONWARNINGS=d coverage run --source='.' ./manage.py test --noinput --settings=$(DJANGO_SETTINGS_MODULE); \
 	fi
-
 
 .PHONY: check
 check: flake8 test
@@ -117,7 +110,7 @@ help:
 	@echo ''
 	@echo '  tarball          - Create tarball. Run command: python setup.py sdist'
 	@echo '  flake8           - Check Python code style throughout whole source code tree'
-	@echo '  test             - Run all tests default. Set TEST_TARGET to run part tests of specific apps'
+	@echo '  test             - Run all tests.'
 	@echo '  build            - Run command: python setup.py build'
 	@echo '  install          - Run command: python setup.py install'
 	@echo '  tags             - Refresh tags for VIM. Default filename is .tags'
