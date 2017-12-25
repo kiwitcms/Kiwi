@@ -18,13 +18,8 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-from __future__ import print_function
-
 import six
-import sys
-import random
 import unittest
-import datetime
 
 from tcms_api.utils import *       # noqa: F403
 from tcms_api.config import *      # noqa: F403
@@ -34,23 +29,6 @@ from tcms_api.mutable import *     # noqa: F403
 from tcms_api.containers import *  # noqa: F403
 
 from tcms_api.tests import BaseAPIClient_TestCase
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Constants
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# Since python 2.7 the test suite results are too verbose
-VERBOSE_UNITTEST = sys.version_info >= (2, 7)
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Internal Utilities
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-def _print_time(elapsed_time):
-    """ Human readable time format for performance tests """
-    converted_time = str(elapsed_time).split('.')
-    sys.stderr.write("{0} ... ".format(converted_time[0]))
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Utils
@@ -978,73 +956,6 @@ class TestCaseTests(BaseAPIClient_TestCase):
         # assert only 1 request was made to the server
         self.assertEqual(TCMS._requests, requests + 1)
 
-    def test_performance_testcases_and_testers(self):
-        """ Checking test cases and their default testers
-
-        Test checks all test cases linked to specified test plan and
-        displays the result with their testers. The slowdown here is
-        fetching users from the database (one by one).
-        """
-        start_time = datetime.datetime.now()
-        for testcase in TestPlan(self.master.id):
-            log.info("{0}: {1}".format(testcase.tester, testcase))
-        _print_time(datetime.datetime.now() - start_time)
-
-    def test_performance_testcases_and_testplans(self):
-        """ Checking test plans linked to test cases
-
-        Test checks test cases and plans which contain these test
-        cases.  The main problem is fetching the same test plans
-        multiple times if they contain more than one test case in
-        the set.
-        """
-        start_time = datetime.datetime.now()
-        for testcase in TestPlan(self.master.id):
-            log.info("{0} is in test plans:".format(testcase))
-            for testplan in testcase.testplans:
-                log.info("  {0}".format(testplan.name))
-        _print_time(datetime.datetime.now() - start_time)
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  CaseRuns
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class CaseRunsTests(BaseAPIClient_TestCase):
-    def test_performance_update_caseruns(self):
-        """ Updating multiple CaseRun statuses
-
-        Test for fetching caserun states and updating them focusing
-        on the updating part. The performance issue is isolated
-        CaseRun state update.
-        """
-        start_time = datetime.datetime.now()
-        for caserun in TestRun(self.testruns[0].id):
-            log.info("{0} {1}".format(caserun.id, caserun.status))
-            caserun.status = Status(random.randint(1, 8))
-            caserun.update()
-        _print_time(datetime.datetime.now() - start_time)
-
-    def test_performance_testcases_in_caseruns(self):
-        """ Checking CaseRuns in TestRuns in TestPlans
-
-        Test for checking test cases that test run contains in
-        specified test plan(s) that are children of a master
-        test plan. The delay is caused by repeatedly fetched testcases
-        connected to case runs (although some of them may have already
-        been fetched).
-        """
-        start_time = datetime.datetime.now()
-        for testplan in TestPlan(self.master.id).children:
-            log.info("{0}".format(testplan.name))
-            for testrun in testplan.testruns:
-                log.info("  {0} {1} {2}".format(
-                    testrun, testrun.manager, testrun.status))
-                for caserun in testrun.caseruns:
-                    log.info("    {0} {1} {2}".format(
-                        caserun, caserun.testcase, caserun.status))
-        _print_time(datetime.datetime.now() - start_time)
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CasePlan
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1377,18 +1288,6 @@ class CaseTagsTests(BaseAPIClient_TestCase):
         # Add tag by name, then immediately check whether it's present
         testcase.tags.add(self.tag.name)
         self.assertTrue(self.tag.name in testcase.tags)
-
-    def test_performance_testcase_tags(self):
-        """ Checking tags of test cases
-
-        Test checks tags from a test cases present in a test plan.
-        The problem in this case is separate fetching of tag names
-        for every test case (one query per case).
-        """
-        start_time = datetime.datetime.now()
-        for case in TestPlan(self.master.id):
-            log.info("{0}: {1}".format(case, case.tags))
-        _print_time(datetime.datetime.now() - start_time)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  ChildPlans
