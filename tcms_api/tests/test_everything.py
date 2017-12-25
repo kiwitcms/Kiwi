@@ -128,6 +128,7 @@ class BuildTests(BaseAPIClient_TestCase):
 
     def test_cache_objects(self):
         """ Cache objects """
+        Build._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         build1 = Build(self.build.id)
@@ -164,6 +165,7 @@ class CategoryTests(BaseAPIClient_TestCase):
 
     def test_cache_objects(self):
         """ Cache objects """
+        Category._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         # The first round (fetch category data from server)
@@ -228,6 +230,7 @@ class PlanTypeTests(BaseAPIClient_TestCase):
 
     def test_cache_objects(self):
         """ Cache objects """
+        PlanType._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         # The first round (fetch plantype data from server)
@@ -310,7 +313,7 @@ class ProductTests(BaseAPIClient_TestCase):
         self.assertEqual(TCMS._requests, requests + 1)
 
     def test_cache_objects(self):
-        Product._cache = {}
+        Product._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         product = Product(self.product.id)
@@ -412,6 +415,7 @@ class UserTests(BaseAPIClient_TestCase):
 
     def test_cache_objects(self):
         """ Cache objects """
+        User._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         # Initialize the same user by id, login and email
@@ -505,6 +509,7 @@ class VersionTests(BaseAPIClient_TestCase):
 
     def test_cache_objects(self):
         """ Cache objects """
+        Version._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         version = Version(self.version.id)
@@ -610,6 +615,7 @@ class TagTests(BaseAPIClient_TestCase):
     def test_caching(self):
         """ Tag caching """
         # start caching objects
+        Tag._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         # First fetch
@@ -695,6 +701,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
 
     def test_cache_objects(self):
         """ Cache objects """
+        TestPlan._cache = {}  # clear cache
         # Fetch test plan twice --->  just one request
         set_cache_level(CACHE_OBJECTS)
 
@@ -980,6 +987,7 @@ class CasePlanTests(BaseAPIClient_TestCase):
 
     def test_sortkey_update_cache_objects(self):
         """ Sort key update """
+        CasePlan._cache = {}  # clear cache
         set_cache_level(CACHE_OBJECTS)
 
         testcase = self.testcase.id
@@ -1361,9 +1369,10 @@ class PlanCasePlansTests(BaseAPIClient_TestCase):
             testplan.update()
             self.assertEqual(testplan.sortkey(testcase), sortkey)
 
-    @unittest.skip('skip updates with cache tuned on')
     def test_sortkey_update_cache_objects(self):
         """ Get/set sortkey using the TestPlan.sortkey() method """
+        TestCase._cache = {}  # clear cache
+        TestPlan._cache = {}
         set_cache_level(CACHE_OBJECTS)
 
         testcase = TestCase(self.testcase.id)
@@ -1448,6 +1457,8 @@ class RunCaseRunsTests(BaseAPIClient_TestCase):
     def test_cases_fetched_just_once_when_cached(self):
         """ Test cases are fetched just once """
         # This test is relevant when caching is turned on
+        TestPlan._cache = {}  # clear cache
+        TestRun._cache = {}
         set_cache_level(CACHE_OBJECTS)
 
         testplan = TestPlan(self.master.id)
