@@ -1,5 +1,5 @@
 files:
-  - source: /tcms/locale/%two_letters_code%/LC_MESSAGES/django.po
+  - source: /tcms/locale/django.pot
     translation: /tcms/locale/%two_letters_code%/LC_MESSAGES/django.po
     languages_mapping:
       two_letters_code:
