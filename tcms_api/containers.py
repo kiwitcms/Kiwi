@@ -57,8 +57,7 @@ Container overview (objects contained are listed in brackets):
     CaseRun.bugs = CaseRunBugs[Bug] ....................... done
 """
 
-import xmlrpc.client as xmlrpclib
-
+import xmlrpc.client
 from pprint import pformat as pretty
 
 import tcms_api.config as config
@@ -875,14 +874,14 @@ class RunCases(Container):
         try:
             self._server.TestRun.add_cases(self.id, data)
         # Handle duplicate entry errors by adding test cases one by one
-        except xmlrpclib.Fault as error:
+        except xmlrpc.client.Fault as error:
             if "Duplicate entry" not in str(error):
                 raise
             log.warn(error)
             for id in data:
                 try:
                     self._server.TestRun.add_cases(self.id, id)
-                except xmlrpclib.Fault:
+                except xmlrpc.client.Fault:
                     pass
 
         # RunCaseRuns will need update ---> erase current data

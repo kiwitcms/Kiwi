@@ -23,9 +23,7 @@ Immutable TCMS objects
 """
 
 import re
-
-import xmlrpc.client as xmlrpclib
-
+import xmlrpc.client
 from pprint import pformat as pretty
 
 import tcms_api.config as config
@@ -128,7 +126,7 @@ class Build(TCMS):
             try:
                 log.info("Fetching build " + self.identifier)
                 inject = self._server.Build.get(self.id)
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find build for " + self.identifier)
@@ -140,7 +138,7 @@ class Build(TCMS):
                 inject = self._server.Build.check_build(
                     self.name, self.product.id)
                 self._id = inject["build_id"]
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError("Build '{0}' not found in '{1}'".format(
                     self.name, self.product.name))
@@ -260,7 +258,7 @@ class Category(TCMS):
             try:
                 log.info("Fetching category {0}".format(self.identifier))
                 inject = self._server.Product.get_category(self.id)
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find category for " + self.identifier)
@@ -271,7 +269,7 @@ class Category(TCMS):
                     self.name, self.product.name))
                 inject = self._server.Product.check_category(
                     self.name, self.product.id)
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError("Category '{0}' not found in"
                                 " '{1}'".format(self.name, self.product.name))
@@ -370,7 +368,7 @@ class PlanType(TCMS):
             try:
                 log.info("Fetching test plan type " + self.identifier)
                 inject = self._server.TestPlan.get_plan_type(self.id)
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find test plan type for " + self.identifier)
@@ -379,7 +377,7 @@ class PlanType(TCMS):
             try:
                 log.info("Fetching test plan type '{0}'".format(self.name))
                 inject = self._server.TestPlan.check_plan_type(self.name)
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError("PlanType '{0}' not found".format(
                     self.name))
@@ -1110,7 +1108,7 @@ class Component(TCMS):
             try:
                 log.info("Fetching component " + self.identifier)
                 inject = self._server.Product.get_component(self.id)
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find component for " + self.identifier)
@@ -1121,7 +1119,7 @@ class Component(TCMS):
                     self.name, self.product.name))
                 inject = self._server.Product.check_component(
                     self.name, self.product.id)
-            except xmlrpclib.Fault as error:
+            except xmlrpc.client.Fault as error:
                 log.debug(error)
                 raise TCMSError("Component '{0}' not found in"
                                 " '{1}'".format(self.name, self.product.name))
