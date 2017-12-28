@@ -36,6 +36,8 @@ t.testplan_get(10)
 from __future__ import print_function
 
 import sys
+import errno
+import http.client
 from datetime import datetime, time
 
 if sys.version_info.major == 2:
@@ -76,6 +78,24 @@ class CookieTransport(xmlrpclib.Transport):
     def __init__(self):
         super(CookieTransport, self).__init__()
         self._cookies = []
+
+    def request(self, host, handler, request_body, verbose=False):
+        # retry request once if cached connection has gone cold
+        for i in (0, 1):
+            try:
+                return self.single_request(host, handler, request_body, verbose)
+            # the order of these except blocks is reversed in Python 3.5 which
+            # leads to errors, partially due to Django's 2.0 disabling of
+            # keep-alive connections. See
+            # https://code.djangoproject.com/ticket/28968
+            # https://bugs.python.org/issue26402
+            except http.client.RemoteDisconnected:
+                if i:
+                    raise
+            except OSError as e:
+                if i or e.errno not in (errno.ECONNRESET, errno.ECONNABORTED,
+                                        errno.EPIPE):
+                    raise
 
     def send_headers(self, connection, headers):
         """
