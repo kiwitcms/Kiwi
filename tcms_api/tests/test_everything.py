@@ -18,7 +18,6 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import six
 import unittest
 
 from tcms_api.utils import *       # noqa: F403
@@ -235,12 +234,12 @@ class PlanTypeTests(BaseAPIClient_TestCase):
 
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype1.name, six.string_types))
+        self.assertTrue(isinstance(plantype1.name, str))
 
         # The second round (there should be no more requests)
         requests = TCMS._requests
         plantype2 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype2.name, six.string_types))
+        self.assertTrue(isinstance(plantype2.name, str))
         self.assertEqual(TCMS._requests, requests)
 
         # The third round (fetching by plan type name)
@@ -258,12 +257,12 @@ class PlanTypeTests(BaseAPIClient_TestCase):
 
         # The first round (fetch plantype data from server)
         plantype1 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype1.name, six.string_types))
+        self.assertTrue(isinstance(plantype1.name, str))
 
         # The second round (there should be another request)
         requests = TCMS._requests
         plantype2 = PlanType(self.plantype.id)
-        self.assertTrue(isinstance(plantype2.name, six.string_types))
+        self.assertTrue(isinstance(plantype2.name, str))
         self.assertEqual(TCMS._requests, requests + 1)
 
         # The third round (fetching by plan type name)
@@ -384,7 +383,7 @@ class UserTests(BaseAPIClient_TestCase):
         """ Current user available & sane """
         user = User()
         for data in [user.login, user.email]:
-            self.assertTrue(isinstance(data, six.string_types))
+            self.assertTrue(isinstance(data, str))
         self.assertTrue(isinstance(user.id, int))
 
     def test_cache_none(self):
@@ -557,13 +556,13 @@ class ComponentTests(BaseAPIClient_TestCase):
         # The first round (fetch component data from server)
         requests = TCMS._requests
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, six.string_types))
+        self.assertTrue(isinstance(component.name, str))
         self.assertEqual(TCMS._requests, requests + 1)
 
         # The second round (there should be no more requests)
         requests = TCMS._requests
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, six.string_types))
+        self.assertTrue(isinstance(component.name, str))
         self.assertEqual(TCMS._requests, requests)
 
     def testCachingOff(self):
@@ -577,7 +576,7 @@ class ComponentTests(BaseAPIClient_TestCase):
 
         # The first round (fetch component data from server)
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, six.string_types))
+        self.assertTrue(isinstance(component.name, str))
         self.assertGreater(TCMS._requests, requests)
 
         # delete component to cause re-fetch from the server
@@ -586,7 +585,7 @@ class ComponentTests(BaseAPIClient_TestCase):
         # The second round (there should be another request)
         requests = TCMS._requests
         component = Component(self.component.id)
-        self.assertTrue(isinstance(component.name, six.string_types))
+        self.assertTrue(isinstance(component.name, str))
         self.assertGreater(TCMS._requests, requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

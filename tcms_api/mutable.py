@@ -22,13 +22,9 @@
 Mutable TCMS objects
 """
 
-import six
 import datetime
 
-try:
-    import xmlrpclib
-except ImportError:
-    import xmlrpc.client as xmlrpclib
+import xmlrpc.client as xmlrpclib
 
 from pprint import pformat as pretty
 
@@ -217,7 +213,7 @@ class TestPlan(Mutable):
         # Product
         if product is None:
             raise TCMSError("Product required for creating new test plan")
-        elif isinstance(product, (int, six.string_types)):
+        elif isinstance(product, (int, str)):
             product = Product(product)
         hash["product"] = product.id
 
@@ -226,14 +222,14 @@ class TestPlan(Mutable):
             raise TCMSError("Version required for creating new test plan")
         elif isinstance(version, int):
             version = Version(version)
-        elif isinstance(version, six.string_types):
+        elif isinstance(version, str):
             version = Version(name=version, product=product)
         hash["default_product_version"] = version.id
 
         # Type
         if type is None:
             raise TCMSError("Type required for creating new test plan")
-        elif isinstance(type, (int, six.string_types)):
+        elif isinstance(type, (int, str)):
             type = PlanType(type)
         hash["type"] = type.id
 
@@ -557,7 +553,7 @@ class TestRun(Mutable):
         # Build
         if build is None:
             build = "unspecified"
-        if isinstance(build, six.string_types):
+        if isinstance(build, str):
             build = Build(build=build, product=product)
         hash["build"] = build.id
 
@@ -911,11 +907,11 @@ class TestCase(Mutable):
 
         # If category provided as text, we need product as well
         product = kwargs.get("product")
-        if isinstance(category, six.string_types) and not kwargs.get("product"):
+        if isinstance(category, str) and not kwargs.get("product"):
             raise TCMSError(
                 "Need product when category specified by name")
         # Category & Product
-        if isinstance(category, six.string_types):
+        if isinstance(category, str):
             category = Category(category=category, product=product)
         elif not isinstance(category, Category):
             raise TCMSError("Invalid category '{0}'".format(category))
@@ -933,7 +929,7 @@ class TestCase(Mutable):
         # User
         tester = kwargs.get("tester")
         if tester:
-            if isinstance(tester, six.string_types):
+            if isinstance(tester, str):
                 tester = User(login=tester)
             hash["default_tester"] = tester.login
 
@@ -946,7 +942,7 @@ class TestCase(Mutable):
         # Case Status
         status = kwargs.get("status")
         if status:
-            if isinstance(status, six.string_types):
+            if isinstance(status, str):
                 status = CaseStatus(status)
             hash["case_status"] = status.id
 
@@ -1015,7 +1011,7 @@ class TestCase(Mutable):
         self._arguments = inject["arguments"]
         self._author = User(inject["author_id"])
         self._category = Category(inject["category_id"])
-        if isinstance(inject["create_date"], six.string_types):
+        if isinstance(inject["create_date"], str):
             self._created = datetime.datetime.strptime(
                 inject["create_date"], "%Y-%m-%d %H:%M:%S")
         else:
@@ -1225,14 +1221,14 @@ class CaseRun(Mutable):
         # TestCase
         if testcase is None:
             raise TCMSError("Case ID required for new case run")
-        elif isinstance(testcase, six.string_types):
+        elif isinstance(testcase, str):
             testcase = TestCase(testcase)
         hash["case"] = testcase.id
 
         # TestRun
         if testrun is None:
             raise TCMSError("Run ID required for new case run")
-        elif isinstance(testrun, six.string_types):
+        elif isinstance(testrun, str):
             testrun = TestRun(testrun)
         hash["run"] = testrun.id
 

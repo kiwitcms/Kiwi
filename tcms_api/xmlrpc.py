@@ -33,25 +33,15 @@ t = TCMSXmlrpc(
 t.testplan_get(10)
 """
 
-from __future__ import print_function
-
-import sys
 import errno
 import http.client
 from datetime import datetime, time
 
-if sys.version_info.major == 2:
-    import xmlrpclib
-    import urllib2
-    import httplib
-    from cookielib import CookieJar
-    from ConfigParser import SafeConfigParser as ConfigParser
-else:
-    import xmlrpc.client as xmlrpclib
-    import urllib.request as urllib2
-    import http.client as httplib
-    from http.cookiejar import CookieJar
-    from configparser import ConfigParser
+import xmlrpc.client as xmlrpclib
+import urllib.request as urllib2
+import http.client as httplib
+from http.cookiejar import CookieJar
+from configparser import ConfigParser
 
 VERBOSE = 0
 DEBUG = 0
@@ -98,192 +88,23 @@ class CookieTransport(xmlrpclib.Transport):
                     raise
 
     def send_headers(self, connection, headers):
-        """
-            Cookie handling on Python 3!
-        """
-        if self._cookies and sys.version_info >= (3,):
+        if self._cookies:
             connection.putheader("Cookie", "; ".join(self._cookies))
         super(CookieTransport, self).send_headers(connection, headers)
 
     def parse_response(self, response):
-        """
-            Cookie handling on Python 3!
-        """
-        if sys.version_info >= (3,):
-            for header in response.msg.get_all("Set-Cookie", []):
-                cookie = header.split(";", 1)[0]
-                self._cookies.append(cookie)
+        for header in response.msg.get_all("Set-Cookie", []):
+            cookie = header.split(";", 1)[0]
+            self._cookies.append(cookie)
         return super(CookieTransport, self).parse_response(response)
-
-    # Cribbed from xmlrpclib.Transport.send_user_agent
-    def send_cookies(self, connection, cookie_request):
-        """
-            NOTE: Only used on Python 2!
-        """
-        if sys.version_info >= (3,):
-            return
-
-        if self.cookiejar is None:
-            self.cookiejar = CookieJar()
-        elif self.cookiejar:
-            # Let the cookiejar figure out what cookies are appropriate
-            self.cookiejar.add_cookie_header(cookie_request)
-            # Pull the cookie headers out of the request object...
-            cookielist = list()
-            for h, v in cookie_request.header_items():
-                if h.startswith('Cookie'):
-                    cookielist.append([h, v])
-            # ...and put them over the connection
-            for h, v in cookielist:
-                connection.putheader(h, v)
-
-    def request_with_cookies(self, host, handler, request_body, verbose=0):
-        """
-            NOTE: Only used on Python 2.6 and earlier!
-
-            This is the same request() method from xmlrpclib.Transport,
-            with a couple additions noted below
-        """
-        if sys.version_info >= (3,):
-            return
-
-        h = self.make_connection(host)
-        if verbose:
-            h.set_debuglevel(1)
-
-        # ADDED: construct the URL and Request object for proper cookie handling
-        request_url = "%s://%s%s" % (self.scheme, host, handler)
-        # log.debug("request_url is %s" % request_url)
-        cookie_request = urllib2.Request(request_url)
-
-        self.send_request(h, handler, request_body)
-        self.send_host(h, host)
-        # ADDED. creates cookiejar if None.
-        self.send_cookies(h, cookie_request)
-        self.send_user_agent(h)
-        self.send_content(h, request_body)
-
-        errcode, errmsg, headers = h.getreply()
-
-        # ADDED: parse headers and get cookies here
-        cookie_response = CookieResponse(headers)
-        # Okay, extract the cookies from the headers
-        self.cookiejar.extract_cookies(cookie_response, cookie_request)
-        # log.debug("cookiejar now contains: %s" % self.cookiejar._cookies)
-        # And write back any changes
-        if hasattr(self.cookiejar, 'save'):
-            try:
-                self.cookiejar.save(self.cookiejar.filename)
-            except Exception as e:
-                raise
-                # log.error("Couldn't write cookiefile %s: %s" % \
-                #        (self.cookiejar.filename,str(e)))
-
-        if errcode != 200:
-            # When runs here, the HTTPS connection isn't useful any more
-            #   before raising an exception to caller
-            h.close()
-
-            raise xmlrpclib.ProtocolError(
-                host + handler,
-                errcode, errmsg,
-                headers
-            )
-
-        self.verbose = verbose
-
-        try:
-            sock = h._conn.sock
-        except AttributeError:
-            sock = None
-
-        try:
-            return self._parse_response(h.getfile(), sock)
-        finally:
-            h.close()
-
-    def single_request_with_cookies(self, host, handler, request_body, verbose=0):
-        """
-            NOTE: Only used on Python 2.7!
-
-            This is just python 2.7's xmlrpclib.Transport.single_request, with
-            send additions noted below to send cookies along with the request
-        """
-        if sys.version_info >= (3,):
-            return
-
-        h = self.make_connection(host)
-        if verbose:
-            h.set_debuglevel(1)
-
-        # ADDED: construct the URL and Request object for proper cookie handling
-        request_url = "%s://%s%s" % (self.scheme, host, handler)
-        # log.debug("request_url is %s" % request_url)
-        cookie_request = urllib2.Request(request_url)
-
-        try:
-            self.send_request(h, handler, request_body)
-            self.send_host(h, host)
-            # ADDED. creates cookiejar if None.
-            self.send_cookies(h, cookie_request)
-            self.send_user_agent(h)
-            self.send_content(h, request_body)
-
-            response = h.getresponse(buffering=True)
-
-            # ADDED: parse headers and get cookies here
-            cookie_response = CookieResponse(response.msg)
-            # Okay, extract the cookies from the headers
-            self.cookiejar.extract_cookies(cookie_response, cookie_request)
-            # log.debug("cookiejar now contains: %s" % self.cookiejar._cookies)
-            # And write back any changes
-            if hasattr(self.cookiejar, 'save'):
-                try:
-                    self.cookiejar.save(self.cookiejar.filename)
-                except Exception as e:
-                    raise
-                    # log.error("Couldn't write cookiefile %s: %s" % \
-                    #        (self.cookiejar.filename,str(e)))
-
-            if response.status == 200:
-                self.verbose = verbose
-                return self.parse_response(response)
-
-            if (response.getheader("content-length", 0)):
-                response.read()
-            raise xmlrpclib.ProtocolError(
-                host + handler,
-                response.status, response.reason,
-                response.msg,
-            )
-        except xmlrpclib.Fault:
-            raise
-        finally:
-            h.close()
-
-    # Override the appropriate request method
-    if sys.version_info.major >= 3:
-        pass
-    elif hasattr(xmlrpclib.Transport, 'single_request'):
-        single_request = single_request_with_cookies  # python 2.7+
-    else:
-        request = request_with_cookies  # python 2.6 and earlier
 
 
 class SafeCookieTransport(xmlrpclib.SafeTransport, CookieTransport):
     '''SafeTransport subclass that supports cookies.'''
     scheme = 'https'
-    # Override the appropriate request method
-    if sys.version_info.major >= 3:
-        pass
-    elif hasattr(xmlrpclib.Transport, 'single_request'):
-        single_request = CookieTransport.single_request_with_cookies
-    else:
-        request = CookieTransport.request_with_cookies
+
 
 # Stolen from FreeIPA source freeipa-1.2.1/ipa-python/krbtransport.py
-
-
 class KerbTransport(SafeCookieTransport):
     """Handles Kerberos Negotiation authentication to an XML-RPC server."""
 
@@ -308,9 +129,6 @@ class KerbTransport(SafeCookieTransport):
 
         return host, extra_headers, x509
 
-    def _python_ver_larger_than_2_6(self):
-        return sys.version_info >= (2, 6)
-
     def make_connection(self, host):
         '''
         For fixing bug #735937.
@@ -319,27 +137,22 @@ class KerbTransport(SafeCookieTransport):
         individual HTTPS connection for each request
         '''
 
-        if self._python_ver_larger_than_2_6():
-            # create a HTTPS connection object from a host descriptor
-            # host may be a string, or a (host, x509-dict) tuple
-            try:
-                HTTPS = httplib.HTTPSConnection
-            except AttributeError:
-                raise NotImplementedError(
-                    "your version of httplib doesn't support HTTPS"
-                )
-            else:
-                chost, self._extra_headers, x509 = self.get_host_info(host)
-                # Kiwi TCMS isn't ready to use HTTP/1.1 persistent connection mechanism.
-                # So tell server current opened HTTP connection should be closed after
-                # request is handled. And there will be a new connection for next request.
-                self._extra_headers.append(('Connection', 'close'))
-                self._connection = host, HTTPS(chost, None, **(x509 or {}))
-                return self._connection[1]
-
+        # create a HTTPS connection object from a host descriptor
+        # host may be a string, or a (host, x509-dict) tuple
+        try:
+            HTTPS = httplib.HTTPSConnection
+        except AttributeError:
+            raise NotImplementedError(
+                "your version of httplib doesn't support HTTPS"
+            )
         else:
-            # For Python 2.6, do the default behavior
-            return SafeCookieTransport.make_connection(self, host)
+            chost, self._extra_headers, x509 = self.get_host_info(host)
+            # Kiwi TCMS isn't ready to use HTTP/1.1 persistent connection mechanism.
+            # So tell server current opened HTTP connection should be closed after
+            # request is handled. And there will be a new connection for next request.
+            self._extra_headers.append(('Connection', 'close'))
+            self._connection = host, HTTPS(chost, None, **(x509 or {}))
+            return self._connection[1]
 
 
 class TCMSError(Exception):

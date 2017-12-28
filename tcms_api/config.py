@@ -67,10 +67,7 @@ status use 'print TCMS()' which gives a short summary like this:
     Total requests handled: 0
 """
 
-try:
-    from ConfigParser import SafeConfigParser as ConfigParser
-except ImportError:
-    from configparser import ConfigParser
+from configparser import ConfigParser
 
 import datetime
 import logging

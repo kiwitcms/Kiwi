@@ -37,7 +37,6 @@ For the complete list of available operators see Django documentation:
 https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups
 """
 
-import six
 import datetime
 import tcms_api.config as config
 import tcms_api.xmlrpc as xmlrpc
@@ -213,7 +212,7 @@ class TCMS(object):
     def _cache_lookup(cls, id, **kwargs):
         """ Look up cached objects, return found instance and search key """
         # ID check
-        if isinstance(id, int) or isinstance(id, six.string_types):
+        if isinstance(id, int) or isinstance(id, str):
             return cls._cache[id], id
 
         # Check injet (initial object dictionary) for id
@@ -235,7 +234,7 @@ class TCMS(object):
         if isinstance(id, TCMS):
             return id._fetched is not None
         # Check for presence in cache, make sure the object is fetched
-        if isinstance(id, int) or isinstance(id, six.string_types):
+        if isinstance(id, int) or isinstance(id, str):
             return id in cls._cache and cls._cache[id]._fetched is not None
         # Run recursively for each given id/object if list given
         if isinstance(id, list) or isinstance(id, set):
@@ -262,7 +261,7 @@ class TCMS(object):
         if isinstance(id_or_inject, dict):
             inject = id_or_inject
         # Object identified by name
-        elif isinstance(id_or_inject, six.string_types):
+        elif isinstance(id_or_inject, str):
             name = id_or_inject
         # Regular object id
         else:
@@ -300,7 +299,7 @@ class TCMS(object):
             if isinstance(id, int):
                 log.cache("Caching {0} ID#{1}".format(cls.__name__, id))
                 cls._cache[id] = new
-            elif isinstance(id, six.string_types) or "name" in kwargs:
+            elif isinstance(id, str) or "name" in kwargs:
                 log.cache("Caching {0} '{1}'".format(
                     cls.__name__, (id or kwargs.get("name"))))
             return new
