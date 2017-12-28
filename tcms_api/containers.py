@@ -57,12 +57,7 @@ Container overview (objects contained are listed in brackets):
     CaseRun.bugs = CaseRunBugs[Bug] ....................... done
 """
 
-import six
-
-try:
-    import xmlrpclib
-except ImportError:
-    import xmlrpc.client as xmlrpclib
+import xmlrpc.client as xmlrpclib
 
 from pprint import pformat as pretty
 
@@ -511,20 +506,20 @@ class TagContainer(Container):
 
     def __contains__(self, tag):
         """ Tag 'in' operator """
-        tag = Tag(tag) if isinstance(tag, six.string_types) else tag
+        tag = Tag(tag) if isinstance(tag, str) else tag
         return tag in self._items
 
     def add(self, tags):
         """ Add a tag or a list of tags """
         tags = [tags] if not isinstance(tags, list) else tags
-        tags = [Tag(tag) if isinstance(tag, six.string_types) else tag
+        tags = [Tag(tag) if isinstance(tag, str) else tag
                 for tag in tags]
         super(TagContainer, self).add(tags)
 
     def remove(self, tags):
         """ Remove a tag or a list of tags """
         tags = [tags] if not isinstance(tags, list) else tags
-        tags = [Tag(tag) if isinstance(tag, six.string_types) else tag
+        tags = [Tag(tag) if isinstance(tag, str) else tag
                 for tag in tags]
         super(TagContainer, self).remove(tags)
 

@@ -24,10 +24,7 @@ Immutable TCMS objects
 
 import re
 
-try:
-    import xmlrpclib
-except ImportError:
-    import xmlrpc.client as xmlrpclib
+import xmlrpc.client as xmlrpclib
 
 from pprint import pformat as pretty
 
