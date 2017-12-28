@@ -35,11 +35,8 @@ t.testplan_get(10)
 
 import errno
 import http.client
+import xmlrpc.client
 from datetime import datetime, time
-
-import xmlrpc.client as xmlrpclib
-import urllib.request as urllib2
-import http.client as httplib
 from http.cookiejar import CookieJar
 from configparser import ConfigParser
 
@@ -60,8 +57,8 @@ class CookieResponse:
         return self.headers
 
 
-class CookieTransport(xmlrpclib.Transport):
-    '''A subclass of xmlrpclib.Transport that supports cookies.'''
+class CookieTransport(xmlrpc.client.Transport):
+    '''A subclass of xmlrpc.client.Transport that supports cookies.'''
     cookiejar = None
     scheme = 'http'
 
@@ -99,7 +96,7 @@ class CookieTransport(xmlrpclib.Transport):
         return super(CookieTransport, self).parse_response(response)
 
 
-class SafeCookieTransport(xmlrpclib.SafeTransport, CookieTransport):
+class SafeCookieTransport(xmlrpc.client.SafeTransport, CookieTransport):
     '''SafeTransport subclass that supports cookies.'''
     scheme = 'https'
 
@@ -111,7 +108,7 @@ class KerbTransport(SafeCookieTransport):
     def get_host_info(self, host):
         import kerberos
 
-        host, extra_headers, x509 = xmlrpclib.Transport.get_host_info(
+        host, extra_headers, x509 = xmlrpc.client.Transport.get_host_info(
             self, host)
 
         # Set the remote host principal
@@ -133,17 +130,17 @@ class KerbTransport(SafeCookieTransport):
         '''
         For fixing bug #735937.
         When running on Python 2.7, make_connection will do the same behavior as that of
-        Python 2.6's xmlrpclib. That is in Python 2.6, make_connection will return an
+        Python 2.6's xmlrpc.client. That is in Python 2.6, make_connection will return an
         individual HTTPS connection for each request
         '''
 
         # create a HTTPS connection object from a host descriptor
         # host may be a string, or a (host, x509-dict) tuple
         try:
-            HTTPS = httplib.HTTPSConnection
+            HTTPS = http.client.HTTPSConnection
         except AttributeError:
             raise NotImplementedError(
-                "your version of httplib doesn't support HTTPS"
+                "your version of http.client doesn't support HTTPS"
             )
         else:
             chost, self._extra_headers, x509 = self.get_host_info(host)
@@ -197,7 +194,7 @@ class TCMSXmlrpc(object):
 
         self._transport.cookiejar = CookieJar()
         # print("COOKIES:", self._transport.cookiejar._cookies)
-        self.server = xmlrpclib.ServerProxy(
+        self.server = xmlrpc.client.ServerProxy(
             url,
             transport=self._transport,
             verbose=VERBOSE,
@@ -366,7 +363,7 @@ class TCMSKerbXmlrpc(TCMSXmlrpc):
 
         self._transport.cookiejar = CookieJar()
         # print("COOKIES:", self._transport.cookiejar._cookies)
-        self.server = xmlrpclib.ServerProxy(
+        self.server = xmlrpc.client.ServerProxy(
             url,
             transport=self._transport,
             verbose=VERBOSE,

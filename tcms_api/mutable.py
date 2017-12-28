@@ -23,9 +23,7 @@ Mutable TCMS objects
 """
 
 import datetime
-
-import xmlrpc.client as xmlrpclib
-
+import xmlrpc.client
 from pprint import pformat as pretty
 
 import tcms_api.config as config
@@ -275,7 +273,7 @@ class TestPlan(Mutable):
                 inject = self._server.TestPlan.get(self.id)
                 if not inject:
                     raise ValueError("No data fetched")
-            except (xmlrpclib.Fault, ValueError) as error:
+            except (xmlrpc.client.Fault, ValueError) as error:
                 log.debug(error)
                 raise TCMSError(
                     "Failed to fetch test plan TP#{0}".format(self.id))
@@ -620,7 +618,7 @@ class TestRun(Mutable):
                 inject = self._server.TestRun.get(self.id)
                 if not inject:
                     raise ValueError("No data fetched")
-            except (xmlrpclib.Fault, ValueError) as error:
+            except (xmlrpc.client.Fault, ValueError) as error:
                 log.debug(error)
                 raise TCMSError(
                     "Failed to fetch test run TR#{0}".format(self.id))
@@ -997,7 +995,7 @@ class TestCase(Mutable):
                 inject = self._server.TestCase.get(self.id)
                 if not inject:
                     raise ValueError("No data fetched")
-            except (xmlrpclib.Fault, ValueError) as error:
+            except (xmlrpc.client.Fault, ValueError) as error:
                 log.debug(error)
                 raise TCMSError(
                     "Failed to fetch test case TC#{0}".format(self.id))
