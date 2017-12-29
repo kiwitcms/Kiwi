@@ -49,7 +49,7 @@ class BlobField(models.Field):
         else:
             raise NotImplementedError
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         return self.to_python(value)
 
     def to_python(self, value):
@@ -71,7 +71,7 @@ class BlobField(models.Field):
 
 
 class DurationField(IntegerField):
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         return self.to_python(value)
 
     def to_python(self, value):
