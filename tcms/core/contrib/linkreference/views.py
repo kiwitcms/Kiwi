@@ -2,7 +2,8 @@
 
 import json
 
-from django.conf import settings
+from django.forms import IntegerField
+from django.forms import ValidationError
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.http import require_GET, require_POST
 
@@ -26,8 +27,6 @@ def create_link(data):
         :type name: str
         :param url: URL
         :type url: str
-        :param target: Model name of target class, i.e. the one we link to
-        :type url: str
         :param target_id: PK of the object we link to
         :type target_id: int
         :return: Data suitable for JSON response to clients
@@ -38,15 +37,11 @@ def create_link(data):
         name = form.cleaned_data['name']
         url = form.cleaned_data['url']
         target_id = form.cleaned_data['target_id']
-        model_class = form.cleaned_data['target']
-
-        model_instance = model_class.objects.get(pk=target_id)
 
         LinkReference.objects.create(
-            content_object=model_instance,
+            object_pk=target_id,
             name=name,
-            url=url,
-            site_id=settings.SITE_ID)
+            url=url)
 
         return {
             'rc': 0,
@@ -97,12 +92,10 @@ def get(request):
     form = BasicValidationForm(request.GET)
 
     if form.is_valid():
-        model_class = form.clean_data['target']
         target_id = form.clean_data['target_id']
 
         try:
-            model_instance = model_class.objects.get(pk=target_id)
-            links = LinkReference.get_from(model_instance)
+            links = LinkReference.objects.filter(object_pk=target_id)
         except Exception as err:
             jd = json.dumps({'rc': 1, 'response': str(err)})
             return HttpJSONResponseServerError(content=jd)
@@ -125,9 +118,6 @@ def get(request):
 def remove(request, link_id):
     ''' Remove a specific link with ID ``link_id`` '''
 
-    from django.forms import IntegerField
-    from django.forms import ValidationError
-
     field = IntegerField(min_value=1)
     try:
         value = field.clean(link_id)
@@ -135,11 +125,8 @@ def remove(request, link_id):
         jd = json.dumps({'rc': 1, 'response': '\n'.join(err.messages)})
         return HttpJSONResponseBadRequest(content=jd)
 
-    try:
-        LinkReference.unlink(value)
-    except Exception as err:
-        jd = json.dumps({'rc': 1, 'response': str(err)})
-        return HttpJSONResponseBadRequest(content=jd)
+    # this will silently ignore non-existing objects
+    LinkReference.objects.filter(pk=value).delete()
 
     return HttpJSONResponse(
         content=json.dumps(
