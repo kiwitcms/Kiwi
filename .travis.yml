@@ -6,13 +6,9 @@ python:
   - "3.6"
 cache: pip
 env:
-  - TEST_DB=SQLite   DJANGO=1.11.8
-  - TEST_DB=MySQL    DJANGO=1.11.8
-  - TEST_DB=Postgres DJANGO=1.11.8
-
-  - TEST_DB=SQLite   DJANGO=2.0
-  - TEST_DB=MySQL    DJANGO=2.0
-  - TEST_DB=Postgres DJANGO=2.0
+  - TEST_DB=SQLite
+  - TEST_DB=MySQL
+  - TEST_DB=Postgres
 services:
   - mysql
   - postgresql
@@ -62,7 +58,6 @@ install:
   - echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
   - pip install -r $REQUIREMENTS_TXT
   - pip install -r requirements/devel.txt
-  - if [ -n "$DJANGO" ]; then pip install --upgrade Django==$DJANGO; fi
   - pip install coveralls
   - npm install
 script: if [ -n "$DOCS_TEST" ]; then make check-docs-source-in-git; else make check; fi
