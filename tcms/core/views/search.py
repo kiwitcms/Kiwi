@@ -29,7 +29,7 @@ def search(request):
     if search_type not in models:
         raise Http404
 
-    try_to_get_object = re.match('^\d+$', search_content) is not None
+    try_to_get_object = re.match(r'^\d+$', search_content) is not None
     model = models[search_type]
 
     if try_to_get_object:

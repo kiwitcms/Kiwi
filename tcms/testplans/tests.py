@@ -841,7 +841,7 @@ class TestAJAXSearch(BasePlanCase):
         # test data for Issue #78
         # https://github.com/kiwitcms/Kiwi/issues/78
         cls.plan_bogus_name = TestPlanFactory(
-            name="""A name with backslash(\), single quotes(') and double quotes(")""",
+            name=r"""A name with backslash(\), single quotes(') and double quotes(")""",
             author=cls.tester,
             owner=cls.tester,
             product=cls.product,

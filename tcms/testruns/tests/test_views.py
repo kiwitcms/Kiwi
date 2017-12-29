@@ -659,7 +659,7 @@ class TestAJAXSearchRuns(BaseCaseRun):
         # test data for Issue #78
         # https://github.com/kiwitcms/Kiwi/issues/78
         cls.run_bogus_summary = TestRunFactory(
-            summary="""A summary with backslash(\), single quotes(') and double quotes(")""",
+            summary=r"""A summary with backslash(\), single quotes(') and double quotes(")""",
             manager=cls.tester,
             default_tester=UserFactory(username='bogus_tester', email='bogus@example.com'))
 
@@ -864,7 +864,7 @@ class TestLoadRunsOfOnePlan(BaseCaseRun):
         # test data for Issue #78
         # https://github.com/kiwitcms/Kiwi/issues/78
         cls.run_bogus_summary = TestRunFactory(
-            summary="""A summary with backslash(\), single quotes(') and double quotes(")""",
+            summary=r"""A summary with backslash(\), single quotes(') and double quotes(")""",
             plan=cls.plan)
 
     def test_load_runs(self):
@@ -1373,7 +1373,7 @@ class Test_TestRunReportUnconfiguredJIRA(BaseCaseRun):
         cls.it = TestCaseBugSystem.objects.create(
             name='Partially configured JIRA',
             url_reg_exp='https://jira.example.com/browse/%s',
-            validate_reg_exp='^[A-Z0-9]+-\d+$',
+            validate_reg_exp=r'^[A-Z0-9]+-\d+$',
             tracker_type='JIRA'
         )
 
@@ -1401,7 +1401,7 @@ class Test_TestRunReportUnconfiguredBugzilla(BaseCaseRun):
         cls.it = TestCaseBugSystem.objects.create(
             name='Partially configured Bugzilla',
             url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
-            validate_reg_exp='^\d{1,7}$',
+            validate_reg_exp=r'^\d{1,7}$',
             tracker_type='Bugzilla'
         )
 
@@ -1429,7 +1429,7 @@ class Test_TestRunReportUnconfiguredGitHub(BaseCaseRun):
         cls.it = TestCaseBugSystem.objects.create(
             name='Partially configured GitHub',
             url_reg_exp='https://github.com/kiwitcms/Kiwi/issues/%s',
-            validate_reg_exp='^\d+$',
+            validate_reg_exp=r'^\d+$',
             tracker_type='GitHub'
         )
 
