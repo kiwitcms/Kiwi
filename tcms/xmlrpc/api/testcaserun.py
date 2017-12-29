@@ -3,7 +3,8 @@
 from django.db.models import ObjectDoesNotExist
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from tcms.core.contrib.linkreference.models import create_link, LinkReference
+from tcms.core.contrib.linkreference.views import create_link
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun, TestCaseRunStatus
@@ -377,15 +378,26 @@ def update(case_run_ids, values, **kwargs):
 @rpc_method(name='TestCaseRun.attach_log')
 def attach_log(case_run_id, name, url):
     """
-    Description: Add new log link to TestCaseRun
+    .. function:: XML-RPC TestCaseRun.attach_log
 
-    Params:     $caserun_id - Integer
-                $name       - String: A short description to this new link, and accept
-                                      64 characters at most.
-                $url        - String: The actual URL.
+        Add new log link to a TestCaseRun
+
+        :param case_run_id: PK of a TestCaseRun object
+        :type case_run_id: int
+        :param name: Name/description of the log
+        :type name: str
+        :param url: URL of the log
+        :type url: str
+        :return: Nothing
     """
-    test_case_run = TestCaseRun.objects.get(pk=case_run_id)
-    create_link(name=name, url=url, link_to=test_case_run)
+    result = create_link({
+        'name': name,
+        'url': url,
+        'target': 'TestCaseRun',
+        'target_id': case_run_id
+    })
+    if result['rc'] != 0:
+        raise RuntimeError(result['response'])
 
 
 @rpc_method(name='TestCaseRun.detach_log')
