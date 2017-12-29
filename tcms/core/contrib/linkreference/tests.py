@@ -89,6 +89,22 @@ class TestAddView(test.TestCase):
         self.assertEqual(result['rc'], 1)
         self.assertIn('Enter a valid URL', result['response'])
 
+    def test_with_name_longer_than_64_chars(self):
+        self.client.login(username=self.tester.username, password='password')
+        response = self.client.post(self.url, {
+            'name': "Open source test case management system, with a lot of great features,"
+                    "such as bug tracker integration, fast search, powerful access control"
+                    "and external API.",
+            'url': 'http://example.com',
+            'target': 'TestCaseRun',
+            'target_id': self.testcaserun.pk,
+        })
+        self.assertEqual(http.client.BAD_REQUEST, response.status_code)
+        result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
+
+        self.assertEqual(result['rc'], 1)
+        self.assertIn('Ensure this value has at most 64 characters', result['response'])
+
 
 class TestCustomResponses(unittest.TestCase):
     def test_HttpJSONResponse(self):
