@@ -509,8 +509,8 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
             "http://www.google.com")
 
     def test_get_logs_with_non_exist_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
-            self.rpc_client.TestCaseRun.get_logs(99999999)
+        result = self.rpc_client.TestCaseRun.get_logs(-9)
+        self.assertEqual([], result)
 
     def test_get_empty_logs(self):
         logs = self.rpc_client.TestCaseRun.get_logs(self.case_run_2.pk)
@@ -518,7 +518,7 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
         self.assertEqual(len(logs), 0)
 
     def test_get_logs(self):
-        tcr_log = LinkReference.get_from(self.case_run_1)[0]
+        tcr_log = LinkReference.objects.get(object_pk=self.case_run_1.pk)
         logs = self.rpc_client.TestCaseRun.get_logs(self.case_run_1.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)
