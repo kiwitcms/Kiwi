@@ -10,7 +10,7 @@ __all__ = ('LinkReference', )
 
 class LinkReference(TCMSContentTypeBaseModel):
     name = models.CharField(max_length=64, blank=True, default='')
-    url = models.TextField()
+    url = models.URLField()
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
