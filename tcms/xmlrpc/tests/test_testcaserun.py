@@ -319,7 +319,7 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
         self.case_run = TestCaseRunFactory()
 
     def test_attach_log_with_non_existing_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
+        with self.assertRaisesRegex(XmlRPCFault, 'constraint fail|violates foreign key'):
             self.rpc_client.TestCaseRun.attach_log(-5, 'A test log', 'http://example.com')
 
     def test_attach_log_with_invalid_url(self):
@@ -518,7 +518,7 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
         self.assertEqual(len(logs), 0)
 
     def test_get_logs(self):
-        tcr_log = LinkReference.objects.get(object_pk=self.case_run_1.pk)
+        tcr_log = LinkReference.objects.get(test_case_run=self.case_run_1.pk)
         logs = self.rpc_client.TestCaseRun.get_logs(self.case_run_1.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)

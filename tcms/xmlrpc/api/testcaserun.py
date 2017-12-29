@@ -408,7 +408,7 @@ def detach_log(case_run_id, link_id):
     Params:     $case_run_id - Integer
                 $link_id     - Integer: Id of LinkReference instance
     """
-    LinkReference.objects.filter(pk=link_id, object_pk=case_run_id).delete()
+    LinkReference.objects.filter(pk=link_id, test_case_run=case_run_id).delete()
 
 
 @rpc_method(name='TestCaseRun.get_logs')
@@ -418,6 +418,6 @@ def get_logs(case_run_id):
 
     Params:     $case_run_id - Integer:
     """
-    links = LinkReference.objects.filter(object_pk=case_run_id)
+    links = LinkReference.objects.filter(test_case_run=case_run_id)
     s = XMLRPCSerializer(links)
     return s.serialize_queryset()
