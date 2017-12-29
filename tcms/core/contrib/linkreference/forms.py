@@ -59,6 +59,7 @@ class AddLinkReferenceForm(BasicValidationForm):
     ''' Validate the argument within the request for adding new link '''
 
     name = forms.CharField(
+        max_length=64,  # same as the model
         error_messages={
             'required': 'You should name this new link.'})
     url = StripURLField(
