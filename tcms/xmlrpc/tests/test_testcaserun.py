@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import unittest
 from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
 
@@ -319,13 +318,12 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
 
         self.case_run = TestCaseRunFactory()
 
-    def test_attach_log_with_non_exist_id(self):
+    def test_attach_log_with_non_existing_id(self):
         with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
-            self.rpc_client.TestCaseRun.attach_log(5523533, '', '')
+            self.rpc_client.TestCaseRun.attach_log(-5, 'A test log', 'http://example.com')
 
-    @unittest.skip('TODO: the url field needs to become models.URLField, not TextField')
     def test_attach_log_with_invalid_url(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'aaaa'):
+        with self.assertRaisesRegex(XmlRPCFault, 'Enter a valid URL'):
             self.rpc_client.TestCaseRun.attach_log(self.case_run.pk, "UT test logs", 'aaaaaaaaa')
 
     def test_attach_log(self):
