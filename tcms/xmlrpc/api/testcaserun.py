@@ -408,8 +408,11 @@ def detach_log(case_run_id, link_id):
     Params:     $case_run_id - Integer
                 $link_id     - Integer: Id of LinkReference instance
     """
-    TestCaseRun.objects.get(pk=case_run_id)
-    LinkReference.unlink(link_id)
+    # todo: the linkage in models is similar to the one for django_comments
+    # and uses object_pk and content_type and a FK to SITE! We need to
+    # refactor the LinkReference and underlying classes to make it more
+    # simple and don't rely on so many FKs
+    LinkReference.objects.filter(pk=link_id, object_pk=case_run_id).delete()
 
 
 @rpc_method(name='TestCaseRun.get_logs')
