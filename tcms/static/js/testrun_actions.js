@@ -1474,11 +1474,8 @@ function addLinkToCaseRun(sender, case_id, case_run_id) {
 /*
  * Initialize dialog for getting information about new link, which is attached
  * to an arbitrary instance of TestCaseRun
- *
- * - link_target: string, the name of Model to whose instance new link will be
- *   linked.
  */
-function initialize_addlink_dialog(link_target) {
+function initialize_addlink_dialog() {
   var dialog_p = get_addlink_dialog();
 
   dialog_p.dialog({
@@ -1499,13 +1496,12 @@ function initialize_addlink_dialog(link_target) {
         // TODO: validate name and url
         var name = jQ('#testlog_name').attr('value');
         var url = jQ('#testlog_url').attr('value');
-        var target = jQ(this).dialog('option', 'target');
         var target_id = jQ(this).dialog('option', 'target_id');
 
         jQ.ajax({
           url: '/linkref/add/',
           type: 'POST',
-          data: { name: name, url: url, target: target, target_id: target_id },
+          data: { name: name, url: url, target_id: target_id },
           dataType: 'json',
           success: function(data, textStatus, jqXHR) {
             if (data.rc !== 0) {
@@ -1537,9 +1533,6 @@ function initialize_addlink_dialog(link_target) {
 
       return true;
     },
-    // Customize variables
-    // Used for adding links to an instance of TestCaseRun
-    target: link_target,
     /* ATTENTION: target_id can be determined when open this dialog, and
      * this must be set
      */

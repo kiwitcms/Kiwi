@@ -85,7 +85,6 @@ urlpatterns = [
     url(r'^caserun/update-bugs-for-many/', ajax.update_bugs_to_caseruns),
 
     url(r'^linkref/add/$', linkreference_views.add, name='linkref-add'),
-    url(r'^linkref/get/$', linkreference_views.get),
     url(r'^linkref/remove/(?P<link_id>\d+)/$', linkreference_views.remove),
 
     # Management zone

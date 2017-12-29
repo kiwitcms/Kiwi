@@ -8,12 +8,11 @@ from django.contrib.auth.decorators import permission_required
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import LinkReference
-from .forms import AddLinkReferenceForm, BasicValidationForm
+from .forms import AddLinkReferenceForm
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.responses import HttpJSONResponseBadRequest
-from tcms.core.responses import HttpJSONResponseServerError
 
-__all__ = ('add', 'get', 'remove', 'create_link')
+__all__ = ('add', 'remove', 'create_link')
 
 
 def create_link(data):
@@ -77,40 +76,6 @@ def add(request):
         return HttpJSONResponse(content=json.dumps(jd))
     else:
         return HttpJSONResponseBadRequest(content=json.dumps(jd))
-
-
-@require_GET
-def get(request):
-    '''Get links of specific instance of content type
-
-    - target: The model name of the instance being searched
-    - target_id: The ID of the instance
-
-    Only accept GET request from client.
-    '''
-
-    form = BasicValidationForm(request.GET)
-
-    if form.is_valid():
-        target_id = form.clean_data['target_id']
-
-        try:
-            links = LinkReference.objects.filter(object_pk=target_id)
-        except Exception as err:
-            jd = json.dumps({'rc': 1, 'response': str(err)})
-            return HttpJSONResponseServerError(content=jd)
-
-        jd = []
-        for link in links:
-            jd.append({'name': link.name, 'url': link.url})
-        jd = json.dumps(jd)
-
-        return HttpJSONResponse(content=jd)
-
-    else:
-        jd = json.dumps(
-            {'rc': 1, 'response': form.errors.as_text()})
-        return HttpJSONResponseBadRequest(content=jd)
 
 
 @permission_required('testruns.change_testcaserun')

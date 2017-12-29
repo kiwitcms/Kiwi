@@ -5,13 +5,10 @@ import unittest
 import http.client
 
 from django import test
-from django.forms import Field
 from django.urls import reverse
 from django.conf import settings
 from django.http import HttpResponse
-from django.forms import ValidationError
 
-from .forms import TargetCharField
 from tcms.core.responses import (HttpJSONResponse,
                                  HttpJSONResponseBadRequest,
                                  HttpJSONResponseServerError)
@@ -44,7 +41,6 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target': 'TestCaseRun',
             'target_id': self.testcaserun.pk,
         })
         self.assertRedirects(response, reverse('tcms-login')+'?next=/linkref/add/')
@@ -54,7 +50,6 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target': 'TestCaseRun',
             'target_id': self.testcaserun.pk,
         })
         self.assertRedirects(response, reverse('tcms-login')+'?next=/linkref/add/')
@@ -64,7 +59,6 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target': 'TestCaseRun',
             'target_id': self.testcaserun.pk,
         })
         self.assertEqual(http.client.OK, response.status_code)
@@ -80,7 +74,6 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Log reference with invalid URL',
             'url': 'example dot com',
-            'target': 'TestCaseRun',
             'target_id': self.testcaserun.pk,
         })
         self.assertEqual(http.client.BAD_REQUEST, response.status_code)
@@ -96,7 +89,6 @@ class TestAddView(test.TestCase):
                     "such as bug tracker integration, fast search, powerful access control"
                     "and external API.",
             'url': 'http://example.com',
-            'target': 'TestCaseRun',
             'target_id': self.testcaserun.pk,
         })
         self.assertEqual(http.client.BAD_REQUEST, response.status_code)
@@ -127,24 +119,3 @@ class TestCustomResponses(unittest.TestCase):
         self.assertTrue(isinstance(resp, HttpResponse))
         self.assertEqual(resp['content-type'], 'application/json')
         self.assertEqual(resp.status_code, 500)
-
-
-class TestTargetCharField(unittest.TestCase):
-    class PseudoClass(object):
-        pass
-
-    def setUp(self):
-        test_targets = {'TestCaseRun': self.__class__.PseudoClass}
-        self.field = TargetCharField(targets=test_targets)
-
-    def test_type(self):
-        self.assertTrue(isinstance(self.field, Field))
-
-    def test_clean(self):
-        url_argu_value = 'TestCaseRun'
-        self.assertEqual(self.field.clean(url_argu_value),
-                         self.__class__.PseudoClass)
-
-        url_argu_value = 'TestCase'
-        with self.assertRaises(ValidationError):
-            self.field.clean(url_argu_value)
