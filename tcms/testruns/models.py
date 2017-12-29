@@ -3,7 +3,6 @@ import datetime
 from collections import namedtuple
 
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericRelation
 from django.core.cache import cache
 from django.urls import reverse
 from django.db import models
@@ -535,6 +534,7 @@ class TestCaseRunManager(models.Manager):
 
 class TestCaseRun(TCMSActionModel):
     objects = TestCaseRunManager()
+
     case_run_id = models.AutoField(primary_key=True)
     assignee = models.ForeignKey('auth.User', blank=True, null=True,
                                  related_name='case_run_assignee',
@@ -555,11 +555,15 @@ class TestCaseRun(TCMSActionModel):
     build = models.ForeignKey('management.TestBuild', on_delete=models.CASCADE)
     environment_id = models.IntegerField(default=0)
 
-    links = GenericRelation(LinkReference, object_id_field='object_pk')
-
     class Meta:
         db_table = u'test_case_runs'
         unique_together = ('case', 'run', 'case_text_version')
+
+    def links(self):
+        """
+            Returns all links attached to this object!
+        """
+        return LinkReference.objects.filter(object_pk=self.pk)
 
     def __str__(self):
         return '%s: %s' % (self.pk, self.case_id)

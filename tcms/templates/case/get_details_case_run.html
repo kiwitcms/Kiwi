@@ -219,7 +219,7 @@
 							<h4 class="borderB">Test Link <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Add</a>]</span></h4>
 							<div class="content">
 									<ul class="ul-format">
-										{% for link in test_case_run.links.all %}
+										{% for link in test_case_run.links %}
 										<li>
 											<a href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape }}</a>
 											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>
