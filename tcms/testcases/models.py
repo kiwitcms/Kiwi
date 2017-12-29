@@ -678,7 +678,7 @@ class TestCaseBugSystem(TCMSActionModel):
     validate_reg_exp = models.CharField(
         max_length=128,
         verbose_name='RegExp for ID validation',
-        help_text='A valid JavaScript regular expression such as ^\d$',
+        help_text=r'A valid JavaScript regular expression such as ^\d$',
     )
 
     tracker_type = models.CharField(

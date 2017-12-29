@@ -699,7 +699,7 @@ class TestAJAXSearchCases(BasePlanCase):
         # test data for Issue #78
         # https://github.com/kiwitcms/Kiwi/issues/78
         cls.case_bogus_summary = TestCaseFactory(
-            summary="""A Test Case with backslash(\), single quotes(') and double quotes(")""",
+            summary=r"""A Test Case with backslash(\), single quotes(') and double quotes(")""",
             plan=[cls.plan])
 
         cls.search_data = {

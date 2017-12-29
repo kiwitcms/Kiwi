@@ -40,7 +40,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
     def test_single_id(self):
         '''Test with singal plan id and tag id'''
         with self.assertRaisesRegex(XmlRPCFault,
-                                    ".*Parameter tags must be a string or list\(string\).*"):
+                                    r".*Parameter tags must be a string or list\(string\).*"):
             self.rpc_client.TestRun.add_tag(self.test_runs[0].pk, self.tag0.pk)
 
         self.rpc_client.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
@@ -89,7 +89,7 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         '''Test with single plan id and tag id'''
         # removing by ID raises an error
         with self.assertRaisesRegex(XmlRPCFault,
-                                    ".*Parameter tags must be a string or list\(string\).*"):
+                                    r".*Parameter tags must be a string or list\(string\).*"):
             self.rpc_client.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.pk)
 
         # removing by name works fine
