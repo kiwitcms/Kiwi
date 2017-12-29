@@ -420,9 +420,10 @@ class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
             self.case_run.pk, 'Related issue', 'https://localhost/issue/1')
         self.link = self.case_run.links.all()[0]
 
-    def test_detach_log_with_non_exist_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
-            self.rpc_client.TestCaseRun.detach_log(9999999, self.link.pk)
+    def test_doesnt_raise_with_non_existing_id(self):
+        self.rpc_client.TestCaseRun.detach_log(-9, self.link.pk)
+        self.assertEqual(1, self.case_run.links.count())
+        self.assertEqual(self.link.pk, self.case_run.links.all()[0].pk)
 
     def test_detach_log_with_non_exist_log(self):
         self.rpc_client.TestCaseRun.detach_log(self.case_run.pk, 999999999)
