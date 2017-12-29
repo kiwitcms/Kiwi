@@ -17,6 +17,15 @@ services:
   - mysql
   - postgresql
 addons:
+  apt:
+    sources:
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ artful main restricted'
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ artful-updates main restricted'
+    packages:
+      # update sqlite3 to get rid of segmentation faults with Django 2.0, for example:
+      # https://travis-ci.org/kiwitcms/Kiwi/jobs/322848116
+      # all sources I've read point to possible issues with sqlite itself
+      - sqlite3
   postgresql: 9.5
 matrix:
   include:
