@@ -6,7 +6,7 @@ __all__ = ('LinkReference', )
 
 
 class LinkReference(models.Model):
-    object_pk = models.PositiveIntegerField('object ID', blank=True, null=True, db_index=True)
+    test_case_run = models.ForeignKey('testruns.TestCaseRun', on_delete=models.CASCADE)
 
     name = models.CharField(max_length=64, blank=True, default='')
     url = models.URLField()
