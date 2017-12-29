@@ -1,24 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from tcms.core.models import TCMSContentTypeBaseModel
 
-__all__ = ('create_link', 'LinkReference', )
-
-
-def create_link(name, url, link_to):
-    '''Create new link reference and attach to the specific object
-
-    The target object may be any model object.
-    '''
-
-    link = LinkReference(
-        content_object=link_to, name=name, url=url, site_id=settings.SITE_ID)
-    link.save()
-    return link
+__all__ = ('LinkReference', )
 
 
 class LinkReference(TCMSContentTypeBaseModel):

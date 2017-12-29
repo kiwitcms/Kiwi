@@ -2,16 +2,59 @@
 
 import json
 
+from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.http import require_GET, require_POST
 
+from .models import LinkReference
 from .forms import AddLinkReferenceForm, BasicValidationForm
-from .models import create_link, LinkReference
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.responses import HttpJSONResponseBadRequest
 from tcms.core.responses import HttpJSONResponseServerError
 
-__all__ = ('add', 'get', 'remove', )
+__all__ = ('add', 'get', 'remove', 'create_link')
+
+
+def create_link(data):
+    """
+    .. function:: create_link(data)
+
+        Create a link reference to an object. ``data`` is a dict with the
+        following keys:
+
+        :param name: name of the reference
+        :type name: str
+        :param url: URL
+        :type url: str
+        :param target: Model name of target class, i.e. the one we link to
+        :type url: str
+        :param target_id: PK of the object we link to
+        :type target_id: int
+        :return: Data suitable for JSON response to clients
+        :rtype: dict
+    """
+    form = AddLinkReferenceForm(data)
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        url = form.cleaned_data['url']
+        target_id = form.cleaned_data['target_id']
+        model_class = form.cleaned_data['target']
+
+        model_instance = model_class.objects.get(pk=target_id)
+
+        LinkReference.objects.create(
+            content_object=model_instance,
+            name=name,
+            url=url,
+            site_id=settings.SITE_ID)
+
+        return {
+            'rc': 0,
+            'response': 'ok',
+            'data': {'name': name, 'url': url}
+        }
+    else:
+        return {'rc': 1, 'response': form.errors.as_text()}
 
 
 @permission_required('testruns.change_testcaserun')
@@ -34,25 +77,11 @@ def add(request):
     - url: the actual URL.
     '''
 
-    form = AddLinkReferenceForm(request.POST)
-    if form.is_valid():
-        name = form.cleaned_data['name']
-        url = form.cleaned_data['url']
-        target_id = form.cleaned_data['target_id']
-        model_class = form.cleaned_data['target']
-
-        model_instance = model_class.objects.get(pk=target_id)
-        create_link(name=name, url=url, link_to=model_instance)
-
-        jd = json.dumps(
-            {'rc': 0, 'response': 'ok',
-             'data': {'name': name, 'url': url}})
-        return HttpJSONResponse(content=jd)
-
+    jd = create_link(request.POST)
+    if jd['rc'] == 0:
+        return HttpJSONResponse(content=json.dumps(jd))
     else:
-        jd = json.dumps(
-            {'rc': 1, 'response': form.errors.as_text()})
-        return HttpJSONResponseBadRequest(content=jd)
+        return HttpJSONResponseBadRequest(content=json.dumps(jd))
 
 
 @require_GET
