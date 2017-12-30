@@ -493,12 +493,6 @@ class CloneCaseForm(forms.Form):
                   'Unchecking will remove components from copied test case)',
         required=False
     )
-    copy_attachment = forms.BooleanField(
-        label='Copy the attachments',
-        help_text='Copy test case attachments ('
-                  'Unchecking will remove attachments of copied test case)',
-        required=False
-    )
 
     def populate(self, case_ids, plan=None):
         self.fields['case'].queryset = TestCase.objects.filter(

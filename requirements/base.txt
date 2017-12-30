@@ -1,4 +1,5 @@
 Django==2.0
+django-attachments
 django-uuslug
 odfpy
 python-bugzilla

@@ -207,7 +207,6 @@ def filter(values={}):
         +----------------------------------------------------------+
         |        Key              |          Valid Values            |
         | author                  | ForeignKey: Auth.User            |
-        | attachment              | ForeignKey: Attachment           |
         | case                    | ForeignKey: Test Case            |
         | create_date             | DateTime                         |
         | env_group               | ForeignKey: Environment Group    |

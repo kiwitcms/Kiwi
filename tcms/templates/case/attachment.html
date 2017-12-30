@@ -1,5 +1,7 @@
 {% extends "tcms_base.html" %}
 {% load static %}
+{% load attachments_tags %}
+
 {% block subtitle %}{{ testplan.title }}{% endblock %}
 
 {% block custom_stylesheet %}
@@ -13,10 +15,6 @@
 {% block custom_javascript %}
 <script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/deleconfirm.js' %}"></script>
-<script type="text/javascript">
-Nitrate.Utils.after_page_load(Nitrate.TestPlans.Attachment.on_load);
-</script>
 {% endblock %}
 
 {% block contents %}
@@ -34,38 +32,31 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Attachment.on_load);
 	</div>
 	<h2>{{ testcase.summary }}</h2>
 	<div class="Detailform border-1">
-		<form action="{% url "mgmt-upload_file" %}" method="POST" enctype="multipart/form-data" >
-			<div class="mixbar">
-				<span class="tit">Upload New Attachment</span>
-				<input type="hidden" name="to_case_id" value="{{ testcase.case_id }}" />
-				<input type="file" name="upload_file" id="upload_file" limit="{{ limit }}"/>
-				<input type="submit" value="Upload" />
-                <input type="button" class="js-back-button" value="Back" />
-				<span class="right-action">
+                {% attachment_form testcase %}
+
+                <span class="right-action">
                     Note: Each attachment size limit is {{ limit_readable }}.
                 </span>
-			</div>
-		</form>
+
 		<table class="list" cellspacing="1" cellspan="0">
 			<thead>
 				<tr>
 					<th align="left">File name</th>
-					<th align="left" width="10%">Submitter</th>
+					<th align="left" width="20%">Submitter</th>
 					<th align="left" width="20%">Create date</th>
-					<th align="left" width="20%">Mimetype</th>
 					<th align="left" width="10%">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for attachment in testcase.attachment.all %}
-				<tr id="{{ attachment.attachment_id }}" class="{% cycle 'odd' 'even' %}">
-					<td><a href="{% url "mgmt-check_file" attachment.attachment_id %}">{{ attachment.file_name }}</a></td>
-					<td>{{ attachment.submitter }}</td>
-					<td>{{ attachment.create_date }}</td>
-					<td>{{ attachment.mime_type }}</td>
-					<td><a href="{% url "mgmt-check_file" attachment.attachment_id %}">View</a> | <a href="#" class="js-del-attach" data-params='[{{ attachment.attachment_id }}, "from_case", {{ testcase.case_id }}]'>Delete</a></td>
+                            {% get_attachments_for testcase as attachments_list %}
+                            {% for attachment in attachments_list %}
+				<tr class="{% cycle 'odd' 'even' %}">
+					<td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
+					<td>{{ attachment.creator }}</td>
+					<td>{{ attachment.created }}</td>
+					<td>{% attachment_delete_link attachment %}</td>
 				</tr>
-				{% endfor %}
+                            {% endfor %}
 			</tbody>
 		</table>
 	</div>

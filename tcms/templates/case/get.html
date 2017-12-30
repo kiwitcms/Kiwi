@@ -11,7 +11,6 @@
 <script type="text/javascript" src="{% static 'js/lib/jquery.dataTables.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lib/dataTables.numHTML.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/deleconfirm.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestCases.Details.on_load);
 
@@ -181,7 +180,7 @@ Nitrate.TestCases.Instance = {
 				<a href="#document" title="document">Document</a>
 			</li>
 			<li id="tab_attachment" class="tab">
-				<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>{{ test_case.attachment.count }}</span>)</a>
+				<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>??</span>)</a>
 			</li>
 			<li id="tab_case_plan" class="tab">
 				<a href="#plan" title="plan">Test plans (<span id='plan_count'>{{ test_case.plan.count }}</span>)</a>

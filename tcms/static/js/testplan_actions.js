@@ -6,7 +6,6 @@ Nitrate.TestPlans.Details = {};
 Nitrate.TestPlans.Edit = {};
 Nitrate.TestPlans.SearchCase = {};
 Nitrate.TestPlans.Clone = {};
-Nitrate.TestPlans.Attachment = {};
 
 /*
  * Hold container IDs
@@ -1016,10 +1015,6 @@ Nitrate.TestPlans.Details = {
       var params = jQ(this).data('params');
       window.location.href = params[0] + '?plan=' + params[1];
     });
-    jQ('.js-del-attach').bind('click', function() {
-      var params = jQ(this).data('params');
-      deleConfirm(params[0], 'from_plan', params[1]);
-    });
     jQ('#js-update-components').live('click', function() {
       constructPlanComponentModificationDialog();
     });
@@ -1127,29 +1122,6 @@ Nitrate.TestPlans.Clone.on_load = function() {
 
   jQ('.js-cancel-button').bind('click', function() {
     window.history.back();
-  });
-};
-
-Nitrate.TestPlans.Attachment.on_load = function() {
-  jQ(document).ready(function() {
-    jQ("#upload_file").change(function () {
-      var iSize = jQ("#upload_file")[0].files[0].size;
-      var limit = parseInt(jQ('#upload_file').attr('limit'));
-
-      if (iSize > limit) {
-        window.alert("Your attachment's size is beyond limit, please limit your attachments to under 5 megabytes (MB).");
-      }
-    });
-
-    jQ('.js-back-button').bind('click', function() {
-      window.history.go(-1);
-    });
-
-    jQ('.js-del-attach').bind('click', function() {
-      var params = jQ(this).data('params');
-      deleConfirm(params[0], params[1], params[2]);
-    });
-
   });
 };
 

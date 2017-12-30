@@ -169,26 +169,6 @@ class TestTagFactory(DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Tag %d' % n)
 
 
-class TestAttachmentFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.TestAttachment'
-
-    file_name = factory.LazyFunction(lambda: '%s.png' % str(datetime.now()))
-    submitter = factory.SubFactory(UserFactory)
-    create_date = factory.LazyFunction(datetime.now)
-    description = factory.Sequence(lambda n: 'Attachment Image %d' % n)
-
-
-class TestAttachmentDataFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.TestAttachmentData'
-
-    contents = factory.Sequence(lambda n: 'content %d' % n)
-    attachment = factory.SubFactory(TestAttachmentFactory)
-
-
 class TCMSEnvGroupFactory(DjangoModelFactory):
 
     class Meta:
@@ -259,14 +239,6 @@ class TestPlanFactory(DjangoModelFactory):
     # FIXME: How to create field for field parent
 
     @factory.post_generation
-    def attachment(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for attachment in extracted:
-                TestPlanAttachmentFactory(plan=self, attachment=attachment)
-
-    @factory.post_generation
     def component(self, create, extracted, **kwargs):
         if not create:
             return
@@ -289,15 +261,6 @@ class TestPlanFactory(DjangoModelFactory):
         if extracted:
             for tag in extracted:
                 TestPlanTagFactory(plan=self, tag=tag)
-
-
-class TestPlanAttachmentFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testplans.TestPlanAttachment'
-
-    plan = factory.SubFactory(TestPlanFactory)
-    attachment = factory.SubFactory(TestAttachmentFactory)
 
 
 class TestPlanTagFactory(DjangoModelFactory):
@@ -375,14 +338,6 @@ class TestCaseFactory(DjangoModelFactory):
     reviewer = factory.SubFactory(UserFactory)
 
     @factory.post_generation
-    def attachment(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for attachment in extracted:
-                TestCaseAttachmentFactory(case=self, attachment=attachment)
-
-    @factory.post_generation
     def plan(self, create, extracted, **kwargs):
         if not create:
             return
@@ -415,16 +370,6 @@ class TestCasePlanFactory(DjangoModelFactory):
     plan = factory.SubFactory(TestPlanFactory)
     case = factory.SubFactory(TestCaseFactory)
     sortkey = factory.Sequence(lambda n: n)
-
-
-class TestCaseAttachmentFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testcases.TestCaseAttachment'
-
-    attachment = factory.SubFactory(TestAttachmentFactory)
-    case = factory.SubFactory(TestCaseFactory)
-    case_run = factory.SubFactory('tcms.tests.factories.TestCaseRunFactory')
 
 
 class TestCaseComponentFactory(DjangoModelFactory):

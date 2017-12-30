@@ -493,7 +493,6 @@ def filter(query):
         +------------------------------------------------------------------+
         |        Key          |          Valid Values                      |
         | author              | A bugzilla login (email address)           |
-        | attachment          | ForeignKey: Attchment                      |
         | alias               | String                                     |
         | case_id             | Integer                                    |
         | case_status         | ForeignKey: Case Stat                      |

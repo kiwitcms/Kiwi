@@ -3,7 +3,6 @@
 from django.core.cache import cache
 from django.db import models
 
-from tcms.core.models import BlobField
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import calc_percent
 
@@ -387,34 +386,6 @@ class TestTag(TCMSActionModel):
             new_tag = cls.objects.get_or_create(name=name)[0]
             tags.append(new_tag)
         return tags
-
-
-# Test attachements file zone
-
-
-class TestAttachment(models.Model):
-    attachment_id = models.AutoField(max_length=10, primary_key=True)
-    submitter = models.ForeignKey('auth.User', related_name='attachments', blank=True, null=True,
-                                  on_delete=models.CASCADE)
-    description = models.CharField(max_length=1024, blank=True, null=True)
-    file_name = models.CharField(db_column='filename', max_length=255, unique=True, blank=True)
-    stored_name = models.CharField(max_length=128, unique=True, blank=True, null=True)
-    create_date = models.DateTimeField(db_column='creation_ts')
-    mime_type = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.file_name
-
-    class Meta:
-        db_table = u'test_attachments'
-
-
-class TestAttachmentData(models.Model):
-    attachment = models.ForeignKey(TestAttachment, on_delete=models.CASCADE)
-    contents = BlobField(blank=True)
-
-    class Meta:
-        db_table = u'test_attachment_data'
 
 # ============================
 # New TCMS Environments models

@@ -17,7 +17,6 @@ from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import UserFactory
-from tcms.tests.factories import TestAttachmentFactory
 
 
 class TestXMLSerializer(test.TestCase):
@@ -79,7 +78,7 @@ class MockTestPlanSerializer(QuerySetBasedXMLRPCSerializer):
         'alias': {'product_version': 'default_product_version'},
     }
 
-    m2m_fields = ('attachment', 'case')
+    m2m_fields = ('case',)
 
 
 class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
@@ -113,11 +112,9 @@ class TestQuerySetBasedSerializer(test.TestCase):
         cls.case_author = UserFactory()
 
         cls.plans = [
-            TestPlanFactory(attachment=[TestAttachmentFactory(), TestAttachmentFactory()]),
-            TestPlanFactory(attachment=[TestAttachmentFactory()]),
-            TestPlanFactory(attachment=[TestAttachmentFactory(),
-                                        TestAttachmentFactory(),
-                                        TestAttachmentFactory()]),
+            TestPlanFactory(),
+            TestPlanFactory(),
+            TestPlanFactory(),
         ]
         TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[0]])
         TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[0]])

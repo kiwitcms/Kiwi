@@ -1,28 +1,29 @@
+{% load attachments_tags %}
+
 <table class="list" cellspacing="0" cellspan="0" width="100%">
 			<thead>
 				<tr>
 					<th align="left">File name</th>
-					<th align="left" width="10%">Submitter</th>
+					<th align="left" width="20%">Submitter</th>
 					<th align="left" width="20%">Create date</th>
-					<th align="left" width="20%">Mimetype</th>
 					<th align="left" width="10%">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for attachment in test_case.attachment.all %}
-				<tr id="{{ attachment.attachment_id }}" class="{% cycle 'odd' 'even' %}">
-					<td><a href="{% url "mgmt-check_file" attachment.attachment_id %}">{{ attachment.file_name }}</a></td>
-					<td>{{ attachment.submitter }}</td>
-					<td>{{ attachment.create_date }}</td>
-					<td>{{ attachment.mime_type }}</td>
-					<td><a href="{% url "mgmt-check_file" attachment.attachment_id %}">View</a> | <a class="js-del-button" data-params='{"attachmentId": {{ attachment.attachment_id }}, "source": "from_case", "sourceId": {{ test_case.case_id }}}' href="#">Delete</a></td>
+                                {% get_attachments_for test_case as attachments_list %}
+				{% for attachment in attachments_list %}
+				<tr class="{% cycle 'odd' 'even' %}">
+					<td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
+					<td>{{ attachment.creator }}</td>
+					<td>{{ attachment.created }}</td>
+					<td>{% attachment_delete_link attachment %}</td>
 				</tr>
-				 {% empty %}
-				 <tr><td colspan="5" align="center"><span class="grey">No attachments</span></td></tr>
+				{% empty %}
+				 <tr><td colspan="4" align="center"><span class="grey">No attachments</span></td></tr>
 				{% endfor %}
-				{% if perms.management.add_testattachment %}
+				{% if perms.attachments.add_attachment %}
 				<tr>
-					<td colspan="5" style="padding:0;">
+					<td colspan="4" style="padding:0;">
 						<div class="addtag">
 							<span class="tit">Add attachment</span>
 							<a href="{% url "testcases-attachment" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="addlink">add</a> 

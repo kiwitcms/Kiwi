@@ -219,6 +219,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
+    'attachments',
     'django_comments',
     'dj_pagination',
     'modernrpc',
