@@ -63,6 +63,10 @@ DEFAULT_GROUPS = ['Tester']
 FILE_UPLOAD_MAX_SIZE = 5242880
 
 
+# Controls if django-attachments deletes files from disk
+DELETE_ATTACHMENTS_FROM_DISK = True
+
+
 # TCMS email templates
 PLAN_EMAIL_TEMPLATE = 'mail/change_plan.txt'
 PLAN_DELELE_EMAIL_TEMPLATE = 'mail/delete_plan.txt'
