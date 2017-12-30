@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-from tcms.core.models import TCMSContentTypeBaseModel
+from tcms.core.models.base import TCMSContentTypeBaseModel
 
 
 class UserProfile(models.Model):

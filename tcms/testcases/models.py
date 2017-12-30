@@ -11,7 +11,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.utils.encoding import smart_str
 
 from tcms.core.models import TCMSActionModel
-from tcms.core.models import TCMSContentTypeBaseModel
+from tcms.core.models.base import TCMSContentTypeBaseModel
 from tcms.core.models.fields import DurationField
 from tcms.core.utils.checksum import checksum
 from tcms.core.utils.timedeltaformat import format_timedelta

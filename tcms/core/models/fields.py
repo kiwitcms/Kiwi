@@ -9,65 +9,9 @@ try:
 except ImportError:
     pass
 
-from django.conf import settings
 from django.db.models.fields import IntegerField
-from django.db import models
 
 from tcms.core.forms.fields import DurationField as DurationFormField
-
-
-class BlobValueWrapper(object):
-    """
-    Wrap the blob value so that we can override the unicode method.
-    After the query succeeds, Django attempts to record the last query
-    executed, and at that point it attempts to force the query string
-    to unicode. This does not work for binary data and generates an
-    uncaught exception.
-    """
-
-    def __init__(self, val):
-        self.val = val
-
-    def __str__(self):
-        return self.val
-
-    def __unicode__(self):
-        return u'blobdata_unicode'
-
-
-class BlobField(models.Field):
-    """A field for persisting binary data in databases that we support."""
-
-    def db_type(self, connection):
-        engine = connection.settings_dict['ENGINE']
-        if engine == 'django.db.backends.mysql':
-            return 'LONGBLOB'
-        elif engine == 'django.db.backends.postgresql_psycopg2':
-            return 'bytea'
-        elif engine == 'django.db.backends.sqlite3':
-            return 'bytea'
-        else:
-            raise NotImplementedError
-
-    def from_db_value(self, value, expression, connection):
-        return self.to_python(value)
-
-    def to_python(self, value):
-        if settings.DATABASES['default']['ENGINE'].endswith('postgresql_psycopg2'):
-            if value is None:
-                return value
-            return str(value)
-        else:
-            return value
-
-    def get_db_prep_save(self, value, connection):
-        if value is None:
-            return None
-        if settings.DATABASES['default']['ENGINE'].endswith('postgresql_psycopg2'):
-            import psycopg2
-            return psycopg2.Binary(value)
-        else:
-            return str(value)
 
 
 class DurationField(IntegerField):
