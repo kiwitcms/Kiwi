@@ -761,16 +761,12 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
     '''Manage attached files'''
     SUB_MODULE_NAME = 'plans'
 
-    file_size_limit = settings.MAX_UPLOAD_SIZE
-    limit_readable = int(file_size_limit) / 2 ** 20  # Mb
-
     tp = get_object_or_404(TestPlan, plan_id=plan_id)
     context_data = {
         'module': MODULE_NAME,
         'sub_module': SUB_MODULE_NAME,
         'test_plan': tp,
-        'limit': file_size_limit,
-        'limit_readable': str(limit_readable) + "Mb",
+        'limit': settings.FILE_UPLOAD_MAX_SIZE,
     }
     return render(request, template_name, context_data)
 

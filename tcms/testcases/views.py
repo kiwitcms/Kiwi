@@ -1662,9 +1662,6 @@ def attachment(request, case_id, template_name='case/attachment.html'):
     """Manage test case attachments"""
     SUB_MODULE_NAME = 'cases'
 
-    file_size_limit = settings.MAX_UPLOAD_SIZE
-    limit_readable = int(file_size_limit) / 2 ** 20  # Mb
-
     tc = get_object_or_404(TestCase, case_id=case_id)
     tp = plan_from_request_or_none(request)
 
@@ -1673,8 +1670,7 @@ def attachment(request, case_id, template_name='case/attachment.html'):
         'sub_module': SUB_MODULE_NAME,
         'testplan': tp,
         'testcase': tc,
-        'limit': file_size_limit,
-        'limit_readable': str(limit_readable) + "Mb",
+        'limit': settings.FILE_UPLOAD_MAX_SIZE,
     }
     return render(request, template_name, context_data)
 
