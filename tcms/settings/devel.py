@@ -24,7 +24,7 @@ MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']  # noqa: F405
 
 INSTALLED_APPS += ['debug_toolbar', 'django_extensions']  # noqa: F405
 
-FILE_UPLOAD_DIR = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')  # noqa: F405
+MEDIA_ROOT = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')  # noqa: F405
 
 # Needed by django.template.context_processors.debug:
 # See:

@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.admindocs import urls as admindocs_urls
 from django.views.i18n import JavaScriptCatalog
@@ -112,6 +113,8 @@ urlpatterns = [
 # Debug zone
 
 if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
     try:
         import debug_toolbar
 

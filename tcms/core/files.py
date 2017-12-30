@@ -50,7 +50,7 @@ def upload_file(request):
         stored_name = '%s-%s-%s' % (request.user.username, now, upload_file.name)
 
         stored_file_name = os.path.join(
-            settings.FILE_UPLOAD_DIR, stored_name).replace('\\', '/')
+            settings.MEDIA_ROOT, stored_name).replace('\\', '/')
         stored_file_name = smart_str(stored_file_name)
 
         if upload_file.size > settings.MAX_UPLOAD_SIZE:
@@ -63,8 +63,8 @@ def upload_file(request):
             )
 
         # Create the upload directory when it's not exist
-        if not os.path.exists(settings.FILE_UPLOAD_DIR):
-            os.mkdir(settings.FILE_UPLOAD_DIR)
+        if not os.path.exists(settings.MEDIA_ROOT):
+            os.mkdir(settings.MEDIA_ROOT)
 
         if os.path.exists(stored_file_name):
             return Prompt.render(
@@ -143,7 +143,7 @@ def check_file(request, file_id):
     except TestAttachmentData.DoesNotExist:
         if attachment.stored_name:
             stored_file_name = os.path.join(
-                settings.FILE_UPLOAD_DIR, unquote(attachment.stored_name)
+                settings.MEDIA_ROOT, unquote(attachment.stored_name)
             ).replace('\\', '/')
             stored_file_name = stored_file_name.encode('utf-8')
             try:
@@ -153,7 +153,7 @@ def check_file(request, file_id):
                 raise Http404(error)
         else:
             stored_file_name = os.path.join(
-                settings.FILE_UPLOAD_DIR, unquote(attachment.file_name)
+                settings.MEDIA_ROOT, unquote(attachment.file_name)
             ).replace('\\', '/')
             stored_file_name = stored_file_name.encode('utf-8')
             try:
