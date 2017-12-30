@@ -16,6 +16,15 @@ def log_call(request, method_name, args):
     """
         Log an RPC call to the database or stdout in debug mode.
     """
+    # avoid logging passwords sent via RPC
+    if method_name in ['Auth.login', 'User.update']:
+        args = ''
+
+    # if passing arguments via dicts and one of the keys is named "password"
+    # also serves as fallback in case we've missed to blacklist a method above
+    if 'password' in str(args).lower():
+        args = ''
+
     request_user = request.user
     if not request_user.is_authenticated:
         # create an anonymous 'User' object for XML-RPC logging purposes !
