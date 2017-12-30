@@ -443,6 +443,7 @@ class TCMSEnvValue(TCMSActionModel):
     class Meta:
         db_table = u'tcms_env_values'
         unique_together = ('property', 'value')
+        ordering = ['property__name', 'value']
 
     def __str__(self):
         return self.value
