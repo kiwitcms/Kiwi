@@ -205,14 +205,6 @@ class Version(TCMSActionModel):
         return (self.id, self.value)
 
 
-#  Test builds zone
-class TestBuildManager(models.Manager):
-
-    pass
-#    def get_plans_count(self):
-#        return sum(self.values_list('plans_count', flat=True))
-
-
 class TestBuild(TCMSActionModel):
     build_id = models.AutoField(max_length=10, unique=True, primary_key=True)
     name = models.CharField(max_length=255)
@@ -220,7 +212,6 @@ class TestBuild(TCMSActionModel):
     milestone = models.CharField(max_length=20, default='---')
     description = models.TextField(blank=True)
     is_active = models.BooleanField(db_column='isactive', default=True)
-    objects = TestBuildManager()
 
     class Meta:
         db_table = u'test_builds'
