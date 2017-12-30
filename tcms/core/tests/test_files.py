@@ -92,7 +92,7 @@ class TestUploadFile(BasePlanCase):
     def test_upload_file_to_plan(self):
         self.client.login(username=self.user.username, password=self.password)
 
-        with patch('tcms.core.files.settings.FILE_UPLOAD_DIR',
+        with patch('tcms.core.files.settings.MEDIA_ROOT',
                    new=self.file_upload_dir):
             with open(self.upload_filename, 'r') as upload_file:
                 response = self.client.post(self.upload_file_url,
@@ -117,7 +117,7 @@ class TestUploadFile(BasePlanCase):
     def test_upload_file_to_case(self):
         self.client.login(username=self.user.username, password=self.password)
 
-        with patch('tcms.core.files.settings.FILE_UPLOAD_DIR',
+        with patch('tcms.core.files.settings.MEDIA_ROOT',
                    new=self.file_upload_dir):
             with open(self.upload_filename, 'r') as upload_file:
                 response = self.client.post(self.upload_file_url,

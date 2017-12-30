@@ -63,10 +63,6 @@ DEFAULT_GROUPS = ['Tester']
 MAX_UPLOAD_SIZE = 5242880
 
 
-# Attachement file download path
-FILE_UPLOAD_DIR = '/var/kiwi/uploads'
-
-
 # TCMS email templates
 PLAN_EMAIL_TEMPLATE = 'mail/change_plan.txt'
 PLAN_DELELE_EMAIL_TEMPLATE = 'mail/delete_plan.txt'
@@ -135,13 +131,12 @@ USE_TZ = False
 TIME_ZONE = 'Etc/UTC'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/var/www/example.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = '/var/kiwi/uploads'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = ''
+MEDIA_URL = '/uploads/'
 
 # URL prefix for admin absolute URL
 ADMIN_PREFIX = '/admin'
