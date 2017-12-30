@@ -1,5 +1,7 @@
 {% load static %}
 {% load comments %}
+{% load attachments_tags %}
+
 <td colspan="14" style="padding:10px;">
 	<div class="caserunDetail">
 		<div class="caserunInfo">
@@ -168,19 +170,18 @@
 					<tr>
 						<td>
 							<h4 class="borderB">
-								Attachment
+								Attachments
+								{% if perms.attachments.add_attachment %}
 								<span>[
-								{% if perms.management.add_testattachment %}
 								<a href="{% url "testcases-attachment" test_case_run.case_id %}?from_plan={{ testrun.plan_id }}" target="_blank">Add</a>
-								{% endif %}
 								]</span>
+								{% endif %}
 							</h4>
 							<ul class="ul-no-format">
-								{% for attachment_file in test_case.attachment.all %}
+                                                                {% get_attachments_for test_case as attachments_list %}
+								{% for attachment in attachments_list %}
 								<li>
-									<a href="{% url "mgmt-check_file" attachment_file.attachment_id %}">
-										{{ attachment_file.file_name }}
-									</a>
+                                                                    <a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a>
 								</li>
 								{% empty %}
 								<li class="grey">No attachment found</li>

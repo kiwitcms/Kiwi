@@ -30,7 +30,6 @@ Submodules
    tcms.core.context_processors
    tcms.core.db
    tcms.core.exceptions
-   tcms.core.files
    tcms.core.managers
    tcms.core.middleware
    tcms.core.responses

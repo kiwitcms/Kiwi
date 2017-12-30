@@ -345,11 +345,6 @@ Nitrate.TestCases.Details.on_load = function() {
     ]
   });
 
-  jQ('.js-del-button').bind('click', function(event) {
-    var params = jQ(event.target).data('params');
-    deleConfirm(params.attachmentId, params.source, params.sourceId);
-  });
-
   jQ('.js-remove-button').bind('click', function(event) {
     var params = jQ(event.target).data('params');
     removeCaseBug(params.id, params.caseId, params.caseRunId);

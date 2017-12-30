@@ -7,12 +7,12 @@ from django.contrib import admin
 from django.contrib.admindocs import urls as admindocs_urls
 from django.views.i18n import JavaScriptCatalog
 
+from attachments import urls as attachments_urls
 from modernrpc.core import JSONRPC_PROTOCOL
 from modernrpc.core import XMLRPC_PROTOCOL
 from modernrpc.views import RPCEntryPoint
 from tinymce import urls as tinymce_urls
 from tcms.core import ajax
-from tcms.core import files
 from tcms.core import views as core_views
 from tcms.core.contrib.comments import views as comments_views
 from tcms.core.contrib.linkreference import views as linkreference_views
@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^admin/doc/', include(admindocs_urls)),
 
+    url(r'^attachments/', include(attachments_urls, namespace='attachments')),
     url(r'^tinymce/', include(tinymce_urls)),
 
     # Index and static zone
@@ -55,11 +56,6 @@ urlpatterns = [
     url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
     url(r'^management/getinfo/$', ajax.info, name='ajax-info'),
     url(r'^management/tags/$', ajax.tag),
-
-    # Attached file zone
-    url(r'^management/uploadfile/$', files.upload_file, name='mgmt-upload_file'),
-    url(r'^management/checkfile/(?P<file_id>\d+)/$', files.check_file, name='mgmt-check_file'),
-    url(r'^management/deletefile/(?P<file_id>\d+)/$', files.delete_file, name='mgmt-delete_file'),
 
     # comments
     url(r'^comments/post/', comments_views.post, name='comments-post'),

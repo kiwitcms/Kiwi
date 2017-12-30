@@ -164,7 +164,6 @@ var default_messages = {
 
       get_form: '/ajax/form/',
       get_product_info: '/management/getinfo/',
-      upload_file: '/management/uploadfile/',
 
       modify_plan : '/plan/$id/modify/',
       plan_assign_case: '/plan/$id/assigncase/apply/',

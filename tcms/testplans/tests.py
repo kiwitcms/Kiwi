@@ -18,7 +18,6 @@ from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TCMSEnvPlanMap
 from tcms.testplans.models import TestPlan
-from tcms.testplans.models import TestPlanAttachment
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 from tcms.tests.factories import ComponentFactory
@@ -679,12 +678,6 @@ class TestCloneView(BasePlanCase):
             self.assertEqual(copied_text.create_date, original_text.create_date)
             self.assertEqual(copied_text.plan_text, original_text.plan_text)
 
-        # Verify option copy_attachments
-        for attachment in original_plan.attachment.all():
-            added = TestPlanAttachment.objects.filter(
-                plan=cloned_plan, attachment=attachment).exists()
-            self.assertTrue(added)
-
         # Verify option copy_environment_groups
         for env_group in original_plan.env_group.all():
             added = TCMSEnvPlanMap.objects.filter(plan=cloned_plan, group=env_group).exists()
@@ -728,7 +721,6 @@ class TestCloneView(BasePlanCase):
             'product_version': self.version.pk,
             'set_parent': 'on',
             'copy_texts': 'on',
-            'copy_attachments': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',
@@ -755,7 +747,6 @@ class TestCloneView(BasePlanCase):
             'product_version': self.version.pk,
             'set_parent': 'on',
             'copy_texts': 'on',
-            'copy_attachments': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',
@@ -780,7 +771,6 @@ class TestCloneView(BasePlanCase):
             'product_version': self.version.pk,
             'set_parent': 'on',
             'copy_texts': 'on',
-            'copy_attachments': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'submit': 'Clone',
@@ -800,7 +790,6 @@ class TestCloneView(BasePlanCase):
             'product_version': self.version.pk,
             'set_parent': 'on',
             'copy_texts': 'on',
-            'copy_attachments': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',

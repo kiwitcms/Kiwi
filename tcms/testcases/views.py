@@ -31,7 +31,7 @@ from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
 from tcms.testcases import data
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCaseAttachment, TestCasePlan, TestCaseBugSystem, \
+    TestCasePlan, TestCaseBugSystem, \
     TestCaseBug, TestCaseText, TestCaseComponent
 from tcms.management.models import Priority, TestTag
 from tcms.testplans.models import TestPlan
@@ -752,7 +752,6 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
         if case is not None:
             data.update({
                 'test_case_text': case.get_text_with_version(),
-                'attachments': case.attachment.only('file_name'),
                 'components': case.component.only('name'),
                 'tags': case.tag.only('name'),
                 'case_comments': self.get_case_comments(case),
@@ -903,8 +902,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView,
 
         try:
             qs = TestCase.objects.filter(pk=self.case_id)
-            qs = qs.prefetch_related('attachment',
-                                     'component',
+            qs = qs.prefetch_related('component',
                                      'tag').only('pk')
             case = qs[0]
 
@@ -1477,13 +1475,6 @@ def clone(request, template_name='case/clone.html'):
 
                     for tag in tc_src.tag.all():
                         tc_dest.add_tag(tag=tag)
-
-                    if clone_form.cleaned_data['copy_attachment']:
-                        for attachment in tc_src.attachment.all():
-                            TestCaseAttachment.objects.create(
-                                case=tc_dest,
-                                attachment=attachment,
-                            )
                 else:
                     tc_dest = tc_src
                     tc_dest.author = \
@@ -1587,7 +1578,6 @@ def clone(request, template_name='case/clone.html'):
             'maintain_case_orignal_author': False,
             'maintain_case_orignal_default_tester': False,
             'copy_component': True,
-            'copy_attachment': True,
         })
         clone_form.populate(case_ids=selected_cases)
 

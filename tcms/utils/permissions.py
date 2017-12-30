@@ -18,3 +18,10 @@ def assign_default_group_permissions():
         for app_name in ['django_comments', 'management', 'testcases', 'testplans', 'testruns']:
             app_perms = Permission.objects.filter(content_type__app_label__contains=app_name)
             tester.permissions.add(*app_perms)
+
+    # this app was introduced later and we don't want all of its permissions
+    if tester.permissions.filter(content_type__app_label='attachments').count() == 0:
+        attachment_perms = Permission.objects.filter(
+            content_type__app_label='attachments'
+        ).exclude(codename='delete_foreign_attachments')
+        tester.permissions.add(*attachment_perms)

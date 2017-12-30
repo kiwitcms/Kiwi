@@ -404,7 +404,7 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'alias': {'product_version': 'default_product_version'},
     }
 
-    m2m_fields = ('attachment', 'case', 'component', 'env_group', 'tag')
+    m2m_fields = ('case', 'component', 'env_group', 'tag')
 
 
 class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):

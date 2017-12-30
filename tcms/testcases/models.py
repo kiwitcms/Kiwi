@@ -144,9 +144,6 @@ class TestCase(TCMSActionModel):
                                  null=True,
                                  on_delete=models.CASCADE)
 
-    attachment = models.ManyToManyField('management.TestAttachment', related_name='cases',
-                                        through='testcases.TestCaseAttachment')
-
     # FIXME: related_name should be cases instead of case. But now keep it
     # named case due to historical reason.
     plan = models.ManyToManyField('testplans.TestPlan', related_name='case',
@@ -593,20 +590,6 @@ class TestCasePlan(models.Model):
     class Meta:
         db_table = u'test_case_plans'
         unique_together = ('plan', 'case')
-
-
-class TestCaseAttachment(models.Model):
-    attachment = models.ForeignKey('management.TestAttachment', on_delete=models.CASCADE)
-    case = models.ForeignKey(TestCase, default=None, related_name='case_attachment',
-                             on_delete=models.CASCADE)
-    case_run = models.ForeignKey('testruns.TestCaseRun', default=None,
-                                 null=True, blank=True,
-                                 related_name='case_run_attachment',
-                                 on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = u'test_case_attachments'
-        # FIXME: what unique constraints are needed against this model?
 
 
 class TestCaseComponent(models.Model):

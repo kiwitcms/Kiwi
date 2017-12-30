@@ -678,7 +678,6 @@ def clone(request, template_name='plan/clone.html'):
 
                     # Related data
                     copy_texts=clone_options['copy_texts'],
-                    copy_attachments=clone_options['copy_attachements'],
                     copy_environment_group=clone_options['copy_environment_group'],
 
                     # Link or copy cases

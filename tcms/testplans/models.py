@@ -54,8 +54,6 @@ class TestPlan(TCMSActionModel):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
                                on_delete=models.CASCADE)
 
-    attachment = models.ManyToManyField('management.TestAttachment',
-                                        through='testplans.TestPlanAttachment')
     component = models.ManyToManyField('management.Component',
                                        through='testplans.TestPlanComponent')
     env_group = models.ManyToManyField('management.TCMSEnvGroup', through='TCMSEnvPlanMap')
@@ -193,12 +191,6 @@ class TestPlan(TCMSActionModel):
             group=env_group,
         )
 
-    def add_attachment(self, attachment):
-        return TestPlanAttachment.objects.create(
-            plan=self,
-            attachment=attachment,
-        )
-
     def add_tag(self, tag):
         return TestPlanTag.objects.get_or_create(
             plan=self,
@@ -255,7 +247,6 @@ class TestPlan(TCMSActionModel):
     def clone(self, new_name=None, product=None, version=None,
               new_original_author=None, set_parent=True,
               copy_texts=True, default_text_author=None,
-              copy_attachments=True,
               copy_environment_group=True,
               link_cases=True, copy_cases=None,
               new_case_author=None,
@@ -275,7 +266,6 @@ class TestPlan(TCMSActionModel):
         :param bool copy_texts: Whether to copy the four text. Copy by default.
         :param default_text_author: When not copy the four text, new text will be created.
             This is the default author of new created text.
-        :param bool copy_attachments: Whether to copy attachments. Copy by default.
         :param bool copy_environment_group: Whether to copy environment groups. Copy by default.
         :param bool link_cases: Whether to link cases to cloned plan. Default is True.
         :param bool copy_cases: Whether to copy cases to cloned plan instead of just linking them.
@@ -319,11 +309,6 @@ class TestPlan(TCMSActionModel):
         # Copy the plan tags
         for tp_tag_src in self.tag.all():
             tp_dest.add_tag(tag=tp_tag_src)
-
-        # Copy the plan attachments
-        if copy_attachments:
-            for tp_attach_src in self.attachment.all():
-                tp_dest.add_attachment(attachment=tp_attach_src)
 
         # Copy the environment group
         if copy_environment_group:
@@ -405,14 +390,6 @@ class TestPlanText(TCMSActionModel):
         db_table = u'test_plan_texts'
         ordering = ['plan', '-plan_text_version']
         unique_together = ('plan', 'plan_text_version')
-
-
-class TestPlanAttachment(models.Model):
-    attachment = models.ForeignKey('management.TestAttachment', on_delete=models.CASCADE)
-    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = u'test_plan_attachments'
 
 
 class TestPlanTag(models.Model):

@@ -13,7 +13,6 @@
 <script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript" src="/jsi18n/"></script>
-<script type="text/javascript" src="{% static 'js/deleconfirm.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
@@ -178,7 +177,7 @@ Nitrate.TestPlans.Instance = {
 					<a href="#components" title="components">Default Components (<span id='component_count'>{{ test_plan.component.count }}</span>)</a>
 				</li>
 				<li id="tab_attachment" class="tab">
-					<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>{{ test_plan.attachment.count }}</span>)</a>
+					<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>??</span>)</a>
 				</li>
 				<li id="tab_tag" class="tab">
 					<a href="#tag" title="tag">Tags (<span id='tag_count'>{{ test_plan.tag.count }}</span>)</a>
