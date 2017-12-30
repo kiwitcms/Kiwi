@@ -60,7 +60,7 @@ DEFAULT_GROUPS = ['Tester']
 
 
 # Maximum upload file size, default set to 5MB.
-MAX_UPLOAD_SIZE = 5242880
+FILE_UPLOAD_MAX_SIZE = 5242880
 
 
 # TCMS email templates
