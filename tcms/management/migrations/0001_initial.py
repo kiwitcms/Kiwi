@@ -180,7 +180,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True,
                                         primary_key=True)),
-                ('contents', tcms.core.models.fields.BlobField(blank=True)),
+                # formerly a custom BlobField
+                ('contents', models.CharField(max_length=1, null=True, blank=True)),
                 ('attachment', models.ForeignKey(to='management.TestAttachment',
                                                  on_delete=models.CASCADE)),
             ],
