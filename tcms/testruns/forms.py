@@ -4,8 +4,7 @@ from django.contrib.auth.models import User
 
 from tcms.core.utils import string_to_list
 from tcms.core.forms import UserField, DurationField
-from tcms.management.models import Product, Version, TestBuild, TCMSEnvGroup, \
-    TestTag
+from tcms.management.models import Product, Version, TestBuild, TCMSEnvGroup
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
 from .models import TestRun, TestCaseRunStatus
@@ -218,7 +217,7 @@ class SearchRunForm(forms.Form):
     case_run__assignee = UserField(required=False)
 
     def clean_tag__name__in(self):
-        return TestTag.string_to_list(self.cleaned_data['tag__name__in'])
+        return string_to_list(self.cleaned_data['tag__name__in'])
 
     def clean_env_value__value__in(self):
         return string_to_list(self.cleaned_data['env_value__value__in'])

@@ -2,9 +2,10 @@
 from django import forms
 
 from odf.odf2xhtml import ODF2XHTML, load
-
-from tcms.core.forms.fields import UserField, StripURLField
 from tinymce.widgets import TinyMCE
+
+from tcms.core.utils import string_to_list
+from tcms.core.forms.fields import UserField, StripURLField
 from tcms.management.models import Component, Product, Version, TCMSEnvGroup, TestTag
 from .models import TestPlan, TestPlanType
 # ===========Plan Fields==============
@@ -234,7 +235,7 @@ class NewPlanForm(BasePlanForm):
 
     def clean_tag(self):
         return TestTag.objects.filter(
-            name__in=TestTag.string_to_list(self.cleaned_data['tag'])
+            name__in=string_to_list(self.cleaned_data['tag'])
         )
 
     def clean(self):
@@ -311,8 +312,6 @@ class SearchPlanForm(forms.Form):
     )
 
     def clean_pk__in(self):
-        from tcms.core.utils import string_to_list
-
         results = string_to_list(self.cleaned_data['pk__in'])
         try:
             return [int(r) for r in results]
@@ -320,7 +319,7 @@ class SearchPlanForm(forms.Form):
             raise forms.ValidationError(str(e))
 
     def clean_tag__name__in(self):
-        return TestTag.string_to_list(self.cleaned_data['tag__name__in'])
+        return string_to_list(self.cleaned_data['tag__name__in'])
 
     def populate(self, product_id=None):
         if product_id:

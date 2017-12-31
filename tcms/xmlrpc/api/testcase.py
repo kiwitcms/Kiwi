@@ -5,6 +5,7 @@ from django.forms import EmailField, ValidationError
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
+from tcms.core.utils import string_to_list
 from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
@@ -147,7 +148,7 @@ def add_tag(case_ids, tags):
     tcs = TestCase.objects.filter(
         case_id__in=pre_process_ids(value=case_ids))
 
-    tags = TestTag.string_to_list(tags)
+    tags = string_to_list(tags)
 
     for tag in tags:
         t, c = TestTag.objects.get_or_create(name=tag)
@@ -435,7 +436,7 @@ def create(values, **kwargs):
             del c
 
         # Add tag to the case
-        for tag in TestTag.string_to_list(values.get('tag', [])):
+        for tag in string_to_list(values.get('tag', [])):
             t, c = TestTag.objects.get_or_create(name=tag)
             tc.add_tag(tag=t)
     else:
@@ -890,7 +891,7 @@ def remove_tag(case_ids, tags):
         case_id__in=pre_process_ids(value=case_ids)
     )
     test_tags = TestTag.objects.filter(
-        name__in=TestTag.string_to_list(tags)
+        name__in=string_to_list(tags)
     )
 
     for test_case in test_cases.iterator():
