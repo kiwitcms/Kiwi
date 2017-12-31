@@ -2,6 +2,7 @@
 
 from modernrpc.core import rpc_method
 
+from tcms.core.utils import string_to_list
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
@@ -137,7 +138,7 @@ def add_tag(run_ids, tags):
     trs = TestRun.objects.filter(pk__in=pre_process_ids(value=run_ids))
     if not isinstance(tags, str) and not isinstance(tags, list):
         raise ValueError('Parameter tags must be a string or list(string)')
-    tags = TestTag.string_to_list(tags)
+    tags = string_to_list(tags)
 
     for tag in tags:
         t, c = TestTag.objects.get_or_create(name=tag)
@@ -519,7 +520,7 @@ def remove_tag(run_ids, tags):
         raise ValueError('Parameter tags must be a string or list(string)')
 
     test_tags = TestTag.objects.filter(
-        name__in=TestTag.string_to_list(tags)
+        name__in=string_to_list(tags)
     )
 
     for test_run in test_runs.iterator():

@@ -366,11 +366,6 @@ class TestTag(TCMSActionModel):
         return self.name
 
     @classmethod
-    def string_to_list(cls, string):
-        from tcms.core.utils import string_to_list
-        return string_to_list(string)
-
-    @classmethod
     def get_or_create_many_by_name(cls, names):
         tags = []
         for name in names:

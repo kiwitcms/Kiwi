@@ -3,6 +3,7 @@ from django import forms
 
 from tinymce.widgets import TinyMCE
 from tcms.core.forms import UserField, DurationField, StripURLField
+from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 from tcms.core.exceptions import NitrateException
 from tcms.testplans.models import TestPlan
@@ -38,8 +39,6 @@ class BugField(forms.CharField):
     """
 
     def validate(self, value):
-        from tcms.core.utils import string_to_list
-
         super(BugField, self).validate(value)
         error = 'Enter a valid Bug ID.'
         bug_ids = string_to_list(value)
@@ -251,7 +250,7 @@ class BaseCaseForm(forms.Form):
     def clean_tag(self):
         tags = []
         if self.cleaned_data['tag']:
-            tag_names = TestTag.string_to_list(self.cleaned_data['tag'])
+            tag_names = string_to_list(self.cleaned_data['tag'])
             tags = TestTag.get_or_create_many_by_name(tag_names)
         return tags
 
@@ -394,8 +393,6 @@ class BaseCaseSearchForm(forms.Form):
                                        choices=ITEMS_PER_PAGE_CHOICES)
 
     def clean_bug_id(self):
-        from tcms.core.utils import string_to_list
-
         data = self.cleaned_data['bug_id']
         data = string_to_list(data)
         for d in data:
@@ -407,7 +404,7 @@ class BaseCaseSearchForm(forms.Form):
         return data
 
     def clean_tag__name__in(self):
-        return TestTag.string_to_list(self.cleaned_data['tag__name__in'])
+        return string_to_list(self.cleaned_data['tag__name__in'])
 
     def populate(self, product_id=None):
         """Limit the query to fit the plan"""

@@ -36,6 +36,7 @@ from tcms.testruns import signals as run_watchers
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
 from tcms.core.exceptions import NitrateException
 from tcms.core.helpers.comments import add_comment
+from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 
 post_update = Signal(providing_args=["instances", "kwargs"])
@@ -238,7 +239,7 @@ def tag(request, template_name="management/get_tag.html"):
 
         def __init__(self, obj, tag):
             self.obj = obj
-            self.tag = TestTag.string_to_list(tag)
+            self.tag = string_to_list(tag)
             self.request = request
 
         def add(self):

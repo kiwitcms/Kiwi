@@ -2,6 +2,7 @@
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
+from tcms.core.utils import string_to_list
 from tcms.management.models import Component
 from tcms.management.models import TestTag
 from tcms.management.models import Product
@@ -64,7 +65,7 @@ def add_tag(plan_ids, tags):
     if not isinstance(tags, (str, list)):
         raise ValueError('Parameter tags must be a string or list(string)')
 
-    tags = TestTag.string_to_list(tags)
+    tags = string_to_list(tags)
 
     for tag in tags:
         t, c = TestTag.objects.get_or_create(name=tag)
@@ -494,7 +495,7 @@ def remove_tag(plan_ids, tags):
         raise ValueError('Parameter tags must be a string or list(string)')
 
     test_tags = TestTag.objects.filter(
-        name__in=TestTag.string_to_list(tags)
+        name__in=string_to_list(tags)
     )
 
     for test_plan in test_plans.iterator():
