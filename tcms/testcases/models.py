@@ -132,14 +132,14 @@ class TestCase(TCMSActionModel):
                                  on_delete=models.CASCADE)
     priority = models.ForeignKey('management.Priority', related_name='priority_case',
                                  on_delete=models.CASCADE)
-    author = models.ForeignKey('auth.User', related_name='cases_as_author',
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='cases_as_author',
                                on_delete=models.CASCADE)
-    default_tester = models.ForeignKey('auth.User',
+    default_tester = models.ForeignKey(settings.AUTH_USER_MODEL,
                                        related_name='cases_as_default_tester',
                                        blank=True,
                                        null=True,
                                        on_delete=models.CASCADE)
-    reviewer = models.ForeignKey('auth.User',
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL,
                                  related_name='cases_as_reviewer',
                                  null=True,
                                  on_delete=models.CASCADE)
@@ -554,7 +554,7 @@ class TestCase(TCMSActionModel):
 class TestCaseText(TCMSActionModel):
     case = models.ForeignKey(TestCase, related_name='text', on_delete=models.CASCADE)
     case_text_version = models.IntegerField()
-    author = models.ForeignKey('auth.User', db_column='who', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
     create_date = models.DateTimeField(db_column='creation_ts', auto_now_add=True)
     action = models.TextField(blank=True)
     effect = models.TextField(blank=True)

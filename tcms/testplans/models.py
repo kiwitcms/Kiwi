@@ -45,9 +45,9 @@ class TestPlan(TCMSActionModel):
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
     product_version = models.ForeignKey(Version, related_name='plans', on_delete=models.CASCADE)
-    owner = models.ForeignKey('auth.User', blank=True, null=True, related_name='myplans',
-                              on_delete=models.CASCADE)
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
+                              related_name='myplans', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey('management.Product', related_name='plan',
                                 on_delete=models.CASCADE)
     type = models.ForeignKey(TestPlanType, on_delete=models.CASCADE)
@@ -380,7 +380,7 @@ class TestPlan(TCMSActionModel):
 class TestPlanText(TCMSActionModel):
     plan = models.ForeignKey(TestPlan, related_name='text', on_delete=models.CASCADE)
     plan_text_version = models.IntegerField()
-    author = models.ForeignKey('auth.User', db_column='who', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True,
                                        db_column='creation_ts')
     plan_text = models.TextField(blank=True)

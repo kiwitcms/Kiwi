@@ -6,10 +6,11 @@ import random
 from hashlib import sha1
 
 from django.db import models
+from django.conf import settings
 
 
 class UserActivateKey(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     activation_key = models.CharField(max_length=40, null=True, blank=True)
     key_expires = models.DateTimeField(null=True, blank=True)
 

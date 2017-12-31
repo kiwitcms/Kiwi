@@ -43,8 +43,9 @@ class TestRun(TCMSActionModel):
     environment_id = models.IntegerField(default=0)
     build = models.ForeignKey('management.TestBuild', related_name='build_run',
                               on_delete=models.CASCADE)
-    manager = models.ForeignKey('auth.User', related_name='manager', on_delete=models.CASCADE)
-    default_tester = models.ForeignKey('auth.User',
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='manager',
+                                on_delete=models.CASCADE)
+    default_tester = models.ForeignKey(settings.AUTH_USER_MODEL,
                                        null=True, blank=True,
                                        related_name='default_tester',
                                        on_delete=models.CASCADE)
@@ -536,10 +537,10 @@ class TestCaseRun(TCMSActionModel):
     objects = TestCaseRunManager()
 
     case_run_id = models.AutoField(primary_key=True)
-    assignee = models.ForeignKey('auth.User', blank=True, null=True,
+    assignee = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                                  related_name='case_run_assignee',
                                  on_delete=models.CASCADE)
-    tested_by = models.ForeignKey('auth.User', blank=True, null=True,
+    tested_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                                   related_name='case_run_tester',
                                   on_delete=models.CASCADE)
     case_text_version = models.IntegerField()
@@ -679,7 +680,7 @@ class TestRunTag(models.Model):
 
 class TestRunCC(models.Model):
     run = models.ForeignKey(TestRun, related_name='cc_list', on_delete=models.CASCADE)
-    user = models.ForeignKey('auth.User', db_column='who', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'test_run_cc'
