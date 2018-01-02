@@ -20,7 +20,8 @@ How does the XML-RPC interface work?
   ``https://your-kiwi-instance.com/json-rpc/``.
 - Most of the RPC methods, like ``filter`` are wrappers around Django's
   QuerySet. They support field lookups as described in
-  `Django's documentation <https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups>`_.
+  `Django's documentation
+  <https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups>`_.
   For example to get all test cases with summary starting with 'test'::
 
         >>> TestCase.filter({'summary__startswith': 'test'})
@@ -59,14 +60,3 @@ please check out Kiwi TCMS's source code on
 `GitHub <https://github.com/kiwitcms/Kiwi>`_ and the corresponding model
 classes.
 """
-
-from .auth import *  # NOQA
-from .build import *  # NOQA
-from .env import *  # NOQA
-from .product import *  # NOQA
-from .tag import *  # NOQA
-from .testcaserun import *  # NOQA
-from .testcase import *  # NOQA
-from .testcaseplan import *  # NOQA
-from .testrun import *  # NOQA
-from .user import *  # NOQA
