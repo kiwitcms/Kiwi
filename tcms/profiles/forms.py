@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_backends
 
 from .models import UserProfile
-from tcms.core.forms import StripURLField
+from tcms.core.forms.fields import StripURLField
 
 
 IM_CHOICES = (

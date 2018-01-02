@@ -20,7 +20,7 @@ from django.views.generic.base import TemplateView
 
 from django_comments.models import Comment
 
-from tcms.core import forms
+from tcms.core.utils import form_errors_to_list
 from tcms.core.logs.models import TCMSLogModel
 from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
@@ -169,7 +169,7 @@ def automated(request):
                 tcs.update(is_automated_proposed=form.cleaned_data['is_automated_proposed'])
     else:
         ajax_response['rc'] = 1
-        ajax_response['response'] = forms.errors_to_list(form)
+        ajax_response['response'] = form_errors_to_list(form)
 
     return HttpResponse(json.dumps(ajax_response))
 

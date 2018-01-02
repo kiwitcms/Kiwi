@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 from django.db.models import ObjectDoesNotExist
 from modernrpc.core import rpc_method, REQUEST_KEY
 
+from tcms.core.utils import form_errors_to_list
 from tcms.core.contrib.linkreference.views import create_link
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
@@ -95,7 +97,6 @@ def attach_bug(values):
         'description': 'Just foo and bar',
     })
     """
-    from tcms.core import forms
     from tcms.testcases.models import TestCaseBugSystem
     from tcms.xmlrpc.forms import AttachCaseRunBugForm
 
@@ -117,7 +118,7 @@ def attach_bug(values):
                 description=form.cleaned_data['description']
             )
         else:
-            raise ValueError(forms.errors_to_list(form))
+            raise ValueError(form_errors_to_list(form))
     return
 
 
@@ -168,7 +169,6 @@ def create(values):
     }
     >>> TestCaseRun.create(values)
     """
-    from tcms.core import forms
     from tcms.testruns.forms import XMLRPCNewCaseRunForm
 
     form = XMLRPCNewCaseRunForm(values)
@@ -191,7 +191,7 @@ def create(values):
             sortkey=form.cleaned_data['sortkey']
         )
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
     return tcr.serialize()
 
@@ -333,8 +333,6 @@ def update(case_run_ids, values, **kwargs):
     # Update alias to 'tcms' for case 12345 and 23456
     >>> TestCaseRun.update([12345, 23456], {'assignee': 2206})
     """
-    from datetime import datetime
-    from tcms.core import forms
     from tcms.testruns.forms import XMLRPCUpdateCaseRunForm
 
     pks_to_update = pre_process_ids(case_run_ids)
@@ -369,7 +367,7 @@ def update(case_run_ids, values, **kwargs):
         tcrs.update(**data)
 
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
     query = {'pk__in': pks_to_update}
     return TestCaseRun.to_xmlrpc(query)

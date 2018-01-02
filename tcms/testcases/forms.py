@@ -2,7 +2,8 @@
 from django import forms
 
 from tinymce.widgets import TinyMCE
-from tcms.core.forms import UserField, DurationField, StripURLField
+
+from tcms.core.forms.fields import UserField, DurationField, StripURLField
 from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 from tcms.core.exceptions import NitrateException

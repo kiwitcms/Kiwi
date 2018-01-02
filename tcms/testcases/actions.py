@@ -3,7 +3,7 @@
 from django.http import HttpResponse
 from django.http import JsonResponse
 
-from tcms.core import forms
+from tcms.core.utils import form_errors_to_list
 from tcms.testcases.forms import CaseCategoryForm
 from tcms.testcases.forms import CaseComponentForm
 from tcms.testcases.models import TestCaseCategory
@@ -40,7 +40,7 @@ class CategoryActions(BaseActions):
     def __check_form_validation(self):
         form = self.__get_form()
         if not form.is_valid():
-            return 0, self.render_ajax(forms.errors_to_list(form))
+            return 0, self.render_ajax(form_errors_to_list(form))
 
         return 1, form
 
@@ -88,7 +88,7 @@ class ComponentActions(BaseActions):
     def __check_form_validation(self):
         form = self.__get_form()
         if not form.is_valid():
-            return 0, self.render_ajax(forms.errors_to_list(form))
+            return 0, self.render_ajax(form_errors_to_list(form))
 
         return 1, form
 

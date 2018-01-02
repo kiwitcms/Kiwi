@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 from modernrpc.core import rpc_method
 
-from tcms.core.utils import string_to_list
+from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
@@ -186,8 +187,6 @@ def create(values):
     }
     >>> TestRun.create(values)
     """
-    from datetime import datetime
-    from tcms.core import forms
     from tcms.testruns.forms import XMLRPCNewRunForm
 
     if not values.get('product'):
@@ -233,7 +232,7 @@ def create(values):
                 tr.add_tag(tag=t)
                 del tag, t, c
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
     return tr.serialize()
 
@@ -562,8 +561,6 @@ def update(run_ids, values):
     # Update status to finished for run 1193 and 1194
     >>> TestRun.update([1193, 1194], {'status': 1})
     """
-    from datetime import datetime
-    from tcms.core import forms
     from tcms.testruns.forms import XMLRPCUpdateRunForm
 
     if (values.get('product_version') and not values.get('product')):
@@ -623,7 +620,7 @@ def update(run_ids, values):
 
         trs.update(**_values)
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
     query = {'pk__in': trs.values_list('pk', flat=True)}
     return TestRun.to_xmlrpc(query)

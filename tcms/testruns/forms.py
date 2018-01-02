@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from tcms.core.utils import string_to_list
-from tcms.core.forms import UserField, DurationField
+from tcms.core.forms.fields import UserField, DurationField
 from tcms.management.models import Product, Version, TestBuild, TCMSEnvGroup
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase

@@ -2,7 +2,7 @@
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from tcms.core.utils import string_to_list
+from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.management.models import Component
 from tcms.management.models import TestTag
 from tcms.management.models import Product
@@ -162,7 +162,6 @@ def create(values, **kwargs):
     }
     >>> TestPlan.create(values)
     """
-    from tcms.core import forms
     from tcms.xmlrpc.forms import NewPlanForm
 
     if values.get('default_product_version'):
@@ -193,7 +192,7 @@ def create(values, **kwargs):
 
         return tp.serialize()
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
 
 @rpc_method(name='TestPlan.filter')
@@ -604,7 +603,6 @@ def update(plan_ids, values):
     # Update product to 61 for plan 207 and 208
     >>> TestPlan.update([207, 208], {'product': 61})
     """
-    from tcms.core import forms
     from tcms.xmlrpc.forms import EditPlanForm
 
     if values.get('default_product_version'):
@@ -665,7 +663,7 @@ def update(plan_ids, values):
             # then create all objects with 1 INSERT
             TCMSEnvPlanMap.objects.bulk_create(new_objects)
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
     query = {'pk__in': tps.values_list('pk', flat=True)}
     return TestPlan.to_xmlrpc(query)
