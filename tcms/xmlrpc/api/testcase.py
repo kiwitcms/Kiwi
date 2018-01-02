@@ -5,7 +5,7 @@ from django.forms import EmailField, ValidationError
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from tcms.core.utils import string_to_list
+from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
@@ -232,7 +232,6 @@ def attach_bug(values):
         'description': 'Just foo and bar',
     })
     """
-    from tcms.core import forms
     from tcms.xmlrpc.forms import AttachCaseBugForm
 
     if isinstance(values, dict):
@@ -250,7 +249,7 @@ def attach_bug(values):
                 description=form.cleaned_data['description']
             )
         else:
-            raise ValueError(forms.errors_to_list(form))
+            raise ValueError(form_errors_to_list(form))
     return
 
 
@@ -396,7 +395,6 @@ def create(values, **kwargs):
     }
     >>> TestCase.create(values)
     """
-    from tcms.core import forms
     from tcms.xmlrpc.forms import NewCaseForm
 
     request = kwargs.get(REQUEST_KEY)
@@ -441,7 +439,7 @@ def create(values, **kwargs):
             tc.add_tag(tag=t)
     else:
         # Print the errors if the form is not passed validation.
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
     return get(tc.case_id)
 
@@ -1006,7 +1004,6 @@ def update(case_ids, values):
     # Update alias to 'tcms' for case 12345 and 23456
     >>> TestCase.update([12345, 23456], {'alias': 'tcms'})
     """
-    from tcms.core import forms
     from tcms.xmlrpc.forms import UpdateCaseForm
 
     if values.get('estimated_time'):
@@ -1026,7 +1023,7 @@ def update(case_ids, values):
             values=form.cleaned_data,
         )
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
 
     query = {'pk__in': tcs.values_list('pk', flat=True)}
     return TestCase.to_xmlrpc(query)

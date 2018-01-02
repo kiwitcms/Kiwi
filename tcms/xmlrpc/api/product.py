@@ -5,8 +5,11 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from django.contrib.auth.models import User
 
 from tcms.management.models import Product
+from tcms.management.forms import VersionForm
+from tcms.core.utils import form_errors_to_list
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
+
 
 __all__ = (
     'check_category',
@@ -457,8 +460,6 @@ def add_version(values):
     >>> Product.add_version({'value': 'devel', 'product': 272})
     [['__all__', 'Version with this Product and Value already exists.']]
     """
-    from tcms.management.forms import VersionForm
-    from tcms.core import forms
 
     product = pre_check_product(values)
     form_values = values.copy()
@@ -469,4 +470,4 @@ def add_version(values):
         version = form.save()
         return version.serialize()
     else:
-        raise ValueError(forms.errors_to_list(form))
+        raise ValueError(form_errors_to_list(form))
