@@ -84,7 +84,6 @@ HELP_MENU_ITEMS = [
     ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User Guide'),
     ('http://kiwitcms.readthedocs.io/en/latest/admin.html', 'Administration Guide'),
     ('http://kiwitcms.readthedocs.io/en/latest/modules/tcms.xmlrpc.api.html', 'XML-RPC Help'),
-    ('/xmlrpc/', 'Enabled XML-RPC methods'),
 ]
 
 
