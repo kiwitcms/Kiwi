@@ -38,7 +38,7 @@ Refactoring
 - Remove unused class EditCaseNotifyThread (Chenxiong Qi)
 - Remove model TestPlanActivity  (Chenxiong Qi)
 - Remove many unused models and classes
-- Execute tests via ``manage.py test`` and drop pylint dependency
+- Execute tests via ``manage.py test`` and drop py.test dependency
 - Remove useless ``TestTag.string_to_list`` method. Fixes
   `Issue #106 <https://github.com/kiwitcms/Kiwi/issues/106>`_
 - Use ``settings.AUTH_USER_MODEL`` in ForeignKey definitions. Fixes
@@ -58,7 +58,7 @@ Server side API
 ~~~~~~~~~~~~~~~
 
 - Migrate to ``django-modern-rpc`` and remove home-grown XML-RPC handling code.
-  As part of this change the XML-RPC enpoint has been changed to ``/xml-rpc/``.
+  As part of this change the XML-RPC endpoint has been changed to ``/xml-rpc/``.
   There's also a new JSON-RPC endpoint at ``/json-rpc/``!
 - ``Auth.login`` method now accepts positional parameters ``username, password``
   instead of dict
@@ -93,7 +93,7 @@ Server side API
 tcms-api 1.5.0 (Jan 02 2018)
 ----------------------------
 
-- Update enpoint configuration, compatible with Kiwi TCMS 3.49
+- Update endpoint configuration, compatible with Kiwi TCMS 3.49
 - Drop support for Python 2
 - Remove the internal ``do_command`` method which eliminates use of ``eval()``
 - Remove ``TCMSXmlrpc.get_me()`` and ``TCMSXmlrpc.build_get()`` methods
