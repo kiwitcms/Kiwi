@@ -1,6 +1,104 @@
 Change Log
 ==========
 
+Kiwi TCMS 3.49 (Jan 02 2018)
+----------------------------
+
+Enhancements and bug fixes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Upgrade to Django 2.0.1
+- Don't log passwords sent via RPC
+- Log XML-RPC requests from anonymous users. Fixes
+  `Issue #126 <https://github.com/kiwitcms/Kiwi/issues/126>`_
+- Order ``TCMSEnvValue`` records by property name and value. Fixes
+  `Issue #155 <https://github.com/kiwitcms/Kiwi/issues/155>`_
+- flake8 fixes (Anton Sankov)
+- Start building source code documentation from Python doc strings
+- Properly urlencode emails in personal menu links
+- Remove test case import via XML files
+- Use django-attachments for user uploaded files. Fixes
+  `Issue #160 <https://github.com/kiwitcms/Kiwi/issues/160>`_
+  As part of this change we no longer copy Plan and Case attachments when
+  cloning these objects.
+
+  NOTE: Since django-attachments introduces new permission objects
+  you will have to adjust default permissions for existing users!
+  In order for them to be able to upload/delete their own files they
+  need to have ``attachments.add_attachment`` and ``atachments.delete_attachment``
+  permissions.
+
+  These same permissions are added by default to the 'Tester' group.
+  If you are running an existing installation registering a new user
+  with Kiwi TCMS will update the default permissions for this group!
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove unused class EditCaseNotifyThread (Chenxiong Qi)
+- Remove model TestPlanActivity  (Chenxiong Qi)
+- Remove many unused models and classes
+- Execute tests via ``manage.py test`` and drop pylint dependency
+- Remove useless ``TestTag.string_to_list`` method. Fixes
+  `Issue #106 <https://github.com/kiwitcms/Kiwi/issues/106>`_
+- Use ``settings.AUTH_USER_MODEL`` in ForeignKey definitions. Fixes
+  `Issue #143 <https://github.com/kiwitcms/Kiwi/issues/143>`_
+
+Settings
+~~~~~~~~
+
+- Rename ``EMAIL_FROM`` to ``DEFAULT_FROM_EMAIL``. Fixes
+  `Issue #128 <https://github.com/kiwitcms/Kiwi/issues/128>`_
+- Rename ``FILE_UPLOAD_DIR`` to ``MEDIA_ROOT``
+- Rename ``MAX_UPLOAD_SIZE`` to ``FILE_UPLOAD_MAX_SIZE``
+- New setting ``DELETE_ATTACHMENTS_FROM_DISK``
+- Remove unused ``XMLRPC_TEMPLATE`` and ``TESTOPIA_XML_VERSION``
+
+Server side API
+~~~~~~~~~~~~~~~
+
+- Migrate to ``django-modern-rpc`` and remove home-grown XML-RPC handling code.
+  As part of this change the XML-RPC enpoint has been changed to ``/xml-rpc/``.
+  There's also a new JSON-RPC endpoint at ``/json-rpc/``!
+- ``Auth.login`` method now accepts positional parameters ``username, password``
+  instead of dict
+- ``TestCaseRun.get`` method now accepts a query dict as parameter
+- ``TestCaseRun.get_bugs`` method now accepts a query dict as parameter
+
+- Remove ``Build.lookup_id_by_name``, ``Build.lookup_name_by_id`` RPC methods
+- Remove ``Product.lookup_name_by_id``, ``Product.lookup_id_by_name`` RPC methods
+- Remove ``Product.get_components``, use ``Product.filter_components`` instead
+- Remove ``Product.get_plans``, use ``TestPlan.filter`` instead
+- Remove ``Product.get_runs``, use ``TestRun.filter`` instead
+- Remove ``Product.get_tag``, use ``Tag.get_tags`` instead
+- Remove ``Product.get_versions``, use ``Product.filter_versions`` instead
+- Remove ``TestCaseRun.filter_count``, use ``TestCaseRun.filter`` instead
+- Remove ``TestCaseRun.get_s``, use ``TestCaseRun.get`` instead
+- Remove ``TestCaseRun.get_bugs_s``, use ``TestCaseRun.get_bugs`` instead
+- Remove ``TestCaseRun.get_case_run_status``, use
+  ``TestCaseRun.get_case_run_status_by_name`` instead
+- Remove ``TestCaseRun.get_completion_time``, ``TestCaseRun.get_completion_time_s``
+  RPC methods. Instead calculate them on the client side
+- Rename ``TestCaseRun.check_case_run_status`` to ``TestCaseRun.get_case_run_status_by_name``
+- ``TestCaseRun.detach_log`` will not raise exceptions when deleting logs from
+  non-existing TestCaseRun objects.
+- Remove ``User.get_me``, instead use ``User.get`` without parameters
+- Remove ``Version.`` and ``Testopia.`` RPC modules
+- Update documentation for RPC methods in ``Auth``, ``Build`` and ``Env`` namespaces.
+  Unformatted documentation is also available for the rest of the RPC methods
+
+**IMPORTANT:** this release introduces new database migrations!
+
+
+tcms-api 1.5.0 (Jan 02 2018)
+----------------------------
+
+- Update enpoint configuration, compatible with Kiwi TCMS 3.49
+- Drop support for Python 2
+- Remove the internal ``do_command`` method which eliminates use of ``eval()``
+- Remove ``TCMSXmlrpc.get_me()`` and ``TCMSXmlrpc.build_get()`` methods
+
+
 3.48 (Nov 28 2017)
 ------------------
 
