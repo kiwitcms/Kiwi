@@ -15,35 +15,34 @@ directly calling the XML-RPC methods below!
 How does the XML-RPC interface work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **[Model].filter** - the ``filter`` method is a full featured wrapper of Django
-  QuerySet's ``.filter()`` method. It has the following features:
-
-  - **Relationship** - for example to get all test cases belonging to 'RHEL 5' we
-    we use the category path for recommend::
-
-        >>> TestCase.filter({'category__product__name': 'Red Hat Enterprise Linux 5'})
-
-  - **Field lookups** - for example to get all test cases with summary starting with
-    'test'::
+- The XML-RPC enpoint is at ``https://your-kiwi-instance.com/xml-rpc/``.
+- There is also a JSON RPC endpoint at
+  ``https://your-kiwi-instance.com/json-rpc/``.
+- Most of the RPC methods, like ``filter`` are wrappers around Django's
+  QuerySet. They support field lookups as described in
+  `Django's documentation <https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups>`_.
+  For example to get all test cases with summary starting with 'test'::
 
         >>> TestCase.filter({'summary__startswith': 'test'})
 
-  Access
-  `this URL <https://docs.djangoproject.com/en/dev/ref/models/querysets/#field-lookups>`_
-  for more information.
+- All RPC methods accept positional parameters as described in their
+  documentation. This is the standard behavior for Python. Keyword
+  arguments, where supported will be documented explicitly!
 
+.. note::
 
-- **[Model].filter_count** - provides the count of filtered results.
+    When using the tcms-api client library make sure to pass arguments
+    in the way expected by its functions! In case the client library methods
+    have a different signature from their server-side counter parts
+    please report it as a bug so we can unify them!
 
 
 How to handle ForeignKey arguments?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to the basic types such as int, str and bool, there is a
-relationship type called ForeignKey. The syntax of using ForeignKey in this
-XMLRPC API is quite simple::
+The syntax of using ForeignKey in this XML-RPC API follows Django standards::
 
-    foreignkey + '__' + fieldname + '__' + query_syntax
+    foreignkeyname + '__' + fieldname + '__' + field_lookup_syntax
 
 Taking ``TestCase.filter()`` for example, if the query is based on a
 ``default_tester``'s username which starts with 'John', the syntax will look
@@ -51,17 +50,14 @@ like this::
 
     TestCase.filter({'user__username__startswith': 'John'})
 
-In this case the foreignkey is 'user', fieldname is 'username', and query_syntax
-is 'startswith'. They are joined together using double underscores '__'. This is
-the same syntax used by Django QuerySet!.
+In this example the ``foreignkeyname`` is 'user', ``fieldname`` is 'username',
+and ``field_lookup_syntax`` is 'startswith'. They are joined together using
+double underscores '__'.
 
-For all the XML-RPC methods we have listed the available ForeignKey, however
-for the available ForeignKey field names that can be used in a query
+For the available ForeignKey field names that can be used in a query
 please check out Kiwi TCMS's source code on
-`GitHub <https://github.com/kiwitcms/Kiwi>`_. The definitions are located in
-files named 'models.py'. For a detailed query syntax documentation, please
-check-out the
-`Django documentation <https://docs.djangoproject.com/en/dev/topics/db/queries/#field-lookups>`_.
+`GitHub <https://github.com/kiwitcms/Kiwi>`_ and the corresponding model
+classes.
 """
 
 from .auth import *  # NOQA
