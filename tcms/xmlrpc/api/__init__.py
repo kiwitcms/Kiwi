@@ -48,11 +48,11 @@ Taking ``TestCase.filter()`` for example, if the query is based on a
 ``default_tester``'s username which starts with 'John', the syntax will look
 like this::
 
-    TestCase.filter({'user__username__startswith': 'John'})
+    TestCase.filter({'default_tester__username__startswith': 'John'})
 
-In this example the ``foreignkeyname`` is 'user', ``fieldname`` is 'username',
-and ``field_lookup_syntax`` is 'startswith'. They are joined together using
-double underscores '__'.
+In this example the ``foreignkeyname`` is 'default_tester', ``fieldname`` is
+'username' and ``field_lookup_syntax`` is 'startswith'. They are joined
+together using double underscores '__'.
 
 For the available ForeignKey field names that can be used in a query
 please check out Kiwi TCMS's source code on
