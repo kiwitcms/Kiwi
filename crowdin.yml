@@ -1,7 +1,3 @@
 files:
-  - source: /tcms/locale/%two_letters_code%/LC_MESSAGES/django.po
-    translation: /tcms/locale/%two_letters_code%/LC_MESSAGES/django.po
-    languages_mapping:
-      two_letters_code:
-        zh-CN: zh_CN
-        zh-TW: zh_TW
+  - source: /tcms/locale/en/LC_MESSAGES/django.po
+    translation: /tcms/locale/%locale_with_underscore%/LC_MESSAGES/django.po
