@@ -90,12 +90,15 @@ Please read `Django's Translation documentation
 <https://docs.djangoproject.com/en/2.0/topics/i18n/translation/>`_ if
 you are not sure what these functions are!
 
-.. note::
+.. warning::
 
     To update .po files once translatable strings have been changed or updated
     you have to execute the following command and commit the results in git::
 
         ./manage.py makemessages
+
+    At the moment there is no test for this because Django doesn't make it easier
+    to implement a quick test based on 'git status'!
 
 .. note::
 
@@ -103,3 +106,5 @@ you are not sure what these functions are!
     you have to execute the following command and commit the results in git::
 
         ./manage.py compilemessages
+
+    There is also an automated test for this via ``make check-mo-files``!
