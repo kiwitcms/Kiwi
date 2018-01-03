@@ -27,7 +27,7 @@ following syntax is supported::
 .. note::
 
     If you want to execute testing against different DB engines on your local
-    development environment make sure the respecitve DB engines are installed
+    development environment make sure the respective DB engines are installed
     and configured! ``make check`` uses the configuration files under
     ``tcms/settings/test/``. Make sure to edit them if necessary!
 
@@ -56,3 +56,50 @@ reStructuredText format. To build the docs::
 
     $ cd docs/
     $ make html
+
+Translation
+-----------
+
+Kiwi TCMS is using Crowdin as our translation service. You can find the project
+at https://crowdin.com/project/kiwitcms. You need to register with Crowdin before
+you can work on any translations!
+
+To request a new language be added to Kiwi TCMS please
+`create an issue <https://github.com/kiwitcms/Kiwi/issues/new>`_. In the description
+let us know your Crowdin username!
+
+Before starting to translate please read the
+`Starting Translation how-to
+<https://support.crowdin.com/joining-translation-project/#starting-translation>`_
+and the `Online Editor guide <https://support.crowdin.com/online-editor/>`_.
+
+.. note::
+
+    All translations need to be proof-read before they are approved! If you do not
+    have sufficient Crowdin permissions to do so let us know that you have some new
+    translations that you'd like to be approved.
+
+Making strings translatable
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Before strings can be translated they need to be marked as translatable.
+This is done with the ``gettext()`` function or its shortcut ``_()``.
+For templates ``{% load i18n %}`` at the top of the template and then use
+the ``{% trans %}`` template tag to mark strings as translatable!
+Please read `Django's Translation documentation
+<https://docs.djangoproject.com/en/2.0/topics/i18n/translation/>`_ if
+you are not sure what these functions are!
+
+.. note::
+
+    To update .po files once translatable strings have been changed or updated
+    you have to execute the following command and commit the results in git::
+
+        ./manage.py makemessages
+
+.. note::
+
+    To update .mo files once new translations have been added or updated
+    you have to execute the following command and commit the results in git::
+
+        ./manage.py compilemessages
