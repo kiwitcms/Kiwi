@@ -20,6 +20,13 @@ class BaseActions(object):
         self.request = request
         self.product_id = request.POST.get('product')
 
+    def _check_form_validation(self):
+        form = self._get_form()
+        if not form.is_valid():
+            return 0, self.render_ajax(form_errors_to_list(form))
+
+        return 1, form
+
     def get_testcases(self):
         from tcms.testcases.views import get_selected_testcases
         return get_selected_testcases(self.request)
@@ -32,17 +39,10 @@ class BaseActions(object):
 class CategoryActions(BaseActions):
     """Category actions used by view function `category`"""
 
-    def __get_form(self):
+    def _get_form(self):
         self.form = CaseCategoryForm(self.request.POST)
         self.form.populate(product_id=self.product_id)
         return self.form
-
-    def __check_form_validation(self):
-        form = self.__get_form()
-        if not form.is_valid():
-            return 0, self.render_ajax(form_errors_to_list(form))
-
-        return 1, form
 
     def __check_perms(self, perm):
         return 1, True
@@ -52,7 +52,7 @@ class CategoryActions(BaseActions):
         if not is_valid:
             return perm
 
-        is_valid, form = self.__check_form_validation()
+        is_valid, form = self._check_form_validation()
         if not is_valid:
             return form
 
@@ -80,17 +80,10 @@ class CategoryActions(BaseActions):
 class ComponentActions(BaseActions):
     """Component actions used by view function `component`"""
 
-    def __get_form(self):
+    def _get_form(self):
         self.form = CaseComponentForm(self.request.POST)
         self.form.populate(product_id=self.product_id)
         return self.form
-
-    def __check_form_validation(self):
-        form = self.__get_form()
-        if not form.is_valid():
-            return 0, self.render_ajax(form_errors_to_list(form))
-
-        return 1, form
 
     def __check_perms(self, perm):
         perm_name = 'testcases.{}_testcasecomponent'.format(perm)
@@ -107,7 +100,7 @@ class ComponentActions(BaseActions):
         if not is_valid:
             return perm
 
-        is_valid, form = self.__check_form_validation()
+        is_valid, form = self._check_form_validation()
         if not is_valid:
             return form
 
@@ -127,7 +120,7 @@ class ComponentActions(BaseActions):
         if not is_valid:
             return perm
 
-        is_valid, form = self.__check_form_validation()
+        is_valid, form = self._check_form_validation()
         if not is_valid:
             return form
 
@@ -147,7 +140,7 @@ class ComponentActions(BaseActions):
         if not is_valid:
             return perm
 
-        is_valid, form = self.__check_form_validation()
+        is_valid, form = self._check_form_validation()
         if not is_valid:
             return form
 
