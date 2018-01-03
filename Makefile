@@ -52,7 +52,7 @@ test:
 	fi
 
 .PHONY: check
-check: flake8 test
+check: flake8 test check-mo-files
 
 
 .PHONY: tags
@@ -97,10 +97,20 @@ check-docs-source-in-git: docs
 	git status
 	if [ -n "$$(git status --short)" ]; then \
 	    echo "FAIL: unmerged docs changes. Pobably auto-generated!"; \
-	    echo "HELP: execute make docs && git add && git commit to fix this"; \
+	    echo "HELP: execute 'make docs' and commit to fix this"; \
 	    exit 1; \
 	fi
 
+# verify all .mo files have been compiled and up-to-date!
+.PHONY: check-mo-files
+check-mo-files:
+	./manage.py compilemessages
+	git status
+	if [ -n "$$(git status --short)" ]; then \
+	    echo "FAIL: Out-of-date .mo files!"; \
+	    echo "HELP: execute './manage.py compilemessages' and commit to fix this"; \
+	    exit 1; \
+	fi
 
 .PHONY: help
 help:
