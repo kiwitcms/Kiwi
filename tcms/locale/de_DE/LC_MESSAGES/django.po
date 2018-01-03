@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-03 20:55+0000\n"
-"PO-Revision-Date: 2018-01-03 16:02-0500\n"
+"PO-Revision-Date: 2018-01-03 16:11-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -22,7 +22,7 @@ msgstr "Basis Authentifizierung"
 
 #: tcms/core/contrib/auth/forms.py:24 tcms/profiles/forms.py:72
 msgid "A user with that email already exists."
-msgstr "Ein Benutzer mit dieser Emailadresse ist bereits vorhanden."
+msgstr "Ein Benutzer mit dieser E-Mail-Adresse ist bereits vorhanden."
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -34,7 +34,7 @@ msgstr "Name"
 
 #: tcms/core/contrib/comments/forms.py:17
 msgid "Email address"
-msgstr "Emailadresse"
+msgstr "E-Mail-Adresse"
 
 #: tcms/core/contrib/comments/forms.py:20
 msgid "URL"
@@ -62,7 +62,7 @@ msgstr "Der Wert darf nur Buchstaben, Zahlen und @.+-_ enthalten."
 
 #: tcms/profiles/forms.py:36
 msgid "E-mail"
-msgstr "Emailadresse"
+msgstr "E-Mail-Adresse"
 
 #: tcms/profiles/forms.py:81
 msgid "User error."
