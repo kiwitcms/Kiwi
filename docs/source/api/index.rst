@@ -1,8 +1,5 @@
-Command line interpreter for the Kiwi TCMS Python API
-=====================================================
-
-DESCRIPTION
-~~~~~~~~~~~
+Kiwi TCMS Python API client
+===========================
 
 :mod:`tcms_api` provides a high-level Python interface to the
 Kiwi TCMS test case management system. The package also provides
@@ -19,16 +16,19 @@ example::
     ...     print(case)
 
 
-CONFIGURATION
+Configuration
 ~~~~~~~~~~~~~
 
-To be able to contact the Kiwi TCMS server a minimal user config
+To be able to contact the Kiwi TCMS server a minimal configuration
 file ``~/.tcms.conf`` has to be provided in the user home directory::
 
     [tcms]
-    url = https://tcms.server/xmlrpc/
+    url = https://tcms.server/xml-rpc/
     username = your-username
     password = your-password
 
-.. include:: coverage.rst
-.. include:: notes.rst
+API documentation
+~~~~~~~~~~~~~~~~~
+
+Server side RPC methods are documented in :mod:`tcms.xmlrpc.api`.
+Client side classes and methods are documented in :mod:`tcms_api`.
