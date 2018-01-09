@@ -55,7 +55,7 @@ urlpatterns = [
     url(r'^ajax/form/$', ajax.form, name='ajax-form'),
     url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
     url(r'^management/getinfo/$', ajax.info, name='ajax-info'),
-    url(r'^management/tags/$', ajax.tag),
+    url(r'^management/tags/$', ajax.tag, name='ajax-tags'),
 
     # comments
     url(r'^comments/post/', comments_views.post, name='comments-post'),

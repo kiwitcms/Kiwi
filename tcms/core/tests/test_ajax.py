@@ -9,6 +9,11 @@ from django.conf import settings
 from tcms.testcases.models import TestCase
 from tcms.tests import BasePlanCase
 
+from tcms.tests.factories import TagFactory
+from tcms.tests.factories import TestRunFactory
+from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestPlanFactory
+
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
@@ -91,3 +96,92 @@ class Test_TestCaseUpdateActions(BasePlanCase):
         self.assertEqual(result['response'], 'Default tester not found!')
 
         self._assert_default_tester_is(None)
+
+
+class Test_Tag_Add(test.TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.url = reverse('ajax-tags')
+        cls.test_tag = TagFactory()
+        cls.test_plan = TestPlanFactory()
+        cls.test_case = TestCaseFactory()
+        cls.test_run = TestRunFactory()
+
+    def test_add_tag_to_test_plan(self):
+        response = self.client.get(self.url, {
+            'tags': self.test_tag,
+            'plan': self.test_plan.plan_id,
+            'a': 'add'
+        })
+
+        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(self.test_plan.tag.count(), 1)
+        self.assertTrue(self.test_tag in self.test_plan.tag.all())
+
+    def test_add_tag_to_test_case(self):
+        response = self.client.get(self.url, {
+            'tags': self.test_tag,
+            'case': self.test_case.case_id,
+            'a': 'add'
+        })
+
+        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(self.test_case.tag.count(), 1)
+        self.assertTrue(self.test_tag in self.test_case.tag.all())
+
+    def test_add_tag_to_test_run(self):
+        response = self.client.get(self.url, {
+            'tags': self.test_tag,
+            'run': self.test_run.run_id,
+            'a': 'add'
+        })
+
+        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(self.test_run.tag.count(), 1)
+        self.assertTrue(self.test_tag in self.test_run.tag.all())
+
+
+class Test_Tag_Remove(test.TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.url = reverse('ajax-tags')
+        cls.test_tag = TagFactory()
+        cls.test_plan = TestPlanFactory()
+        cls.test_case = TestCaseFactory()
+        cls.test_run = TestRunFactory()
+
+        cls.test_plan.add_tag(cls.test_tag)
+        cls.test_case.add_tag(cls.test_tag)
+        cls.test_run.add_tag(cls.test_tag)
+
+    def test_remove_tag_from_test_plan(self):
+        response = self.client.get(self.url, {
+            'tags': self.test_tag,
+            'plan': self.test_plan.plan_id,
+            'a': 'remove'
+        })
+
+        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(self.test_plan.tag.count(), 0)
+
+    def test_remove_tag_from_test_case(self):
+        response = self.client.get(self.url, {
+            'tags': self.test_tag,
+            'case': self.test_case.case_id,
+            'a': 'remove'
+        })
+
+        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(self.test_case.tag.count(), 0)
+
+    def test_remove_tag_from_test_run(self):
+        response = self.client.get(self.url, {
+            'tags': self.test_tag,
+            'run': self.test_run.run_id,
+            'a': 'remove'
+        })
+
+        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(self.test_run.tag.count(), 0)
