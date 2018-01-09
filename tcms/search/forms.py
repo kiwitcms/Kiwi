@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from functools import partial
-
 from django import forms
 
 from tcms.management.models import Product, TestBuild, Component, Version
@@ -9,26 +6,6 @@ from tcms.search.utils import cached_entities
 from tcms.testcases.forms import BugField
 from tcms.testcases.models import TestCaseCategory
 from tcms.testplans.models import TestPlanType
-
-# template-functions creating form field with required = False
-LooseCF = partial(forms.CharField, required=False, max_length=200)
-LooseIF = partial(forms.IntegerField, required=False)
-LooseBugF = partial(BugField, required=False, max_length=200)
-LooseDF = partial(forms.DateField, required=False)
-LooseBF = partial(forms.BooleanField, required=False)
-LooseMF = partial(forms.MultipleChoiceField, required=False, choices=())
-PlanTypeF = partial(forms.ModelMultipleChoiceField, required=False,
-                    queryset=TestPlanType.objects.all())
-ProductF = partial(forms.ModelMultipleChoiceField, required=False,
-                   queryset=Product.objects.none())
-BuildF = partial(forms.ModelMultipleChoiceField, required=False,
-                 queryset=TestBuild.objects.none())
-CategoryF = partial(forms.ModelMultipleChoiceField, required=False,
-                    queryset=TestCaseCategory.objects.none())
-ComponentF = partial(forms.ModelMultipleChoiceField, required=False,
-                     queryset=Component.objects.none())
-VersionF = partial(forms.ModelMultipleChoiceField, required=False,
-                   queryset=Version.objects.none())
 
 
 def get_choice(value, _type=str, deli=','):
@@ -52,19 +29,25 @@ def get_boolean_choice(value):
 
 
 class PlanForm(forms.Form):
-    pl_type = PlanTypeF()
-    pl_summary = LooseCF()
-    pl_id = LooseCF()
-    pl_authors = LooseCF()
-    pl_owners = LooseCF()
-    pl_tags = LooseCF()
-    pl_tags_exclude = LooseBF()
-    pl_active = LooseCF()
-    pl_created_since = LooseDF()
-    pl_created_before = LooseDF()
-    pl_product = ProductF()
-    pl_component = ComponentF()
-    pl_version = VersionF()
+    pl_type = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=TestPlanType.objects.all()
+    )
+    pl_summary = forms.CharField(required=False, max_length=200)
+    pl_id = forms.CharField(required=False, max_length=200)
+    pl_authors = forms.CharField(required=False, max_length=200)
+    pl_owners = forms.CharField(required=False, max_length=200)
+    pl_tags = forms.CharField(required=False, max_length=200)
+    pl_tags_exclude = forms.BooleanField(required=False)
+    pl_active = forms.CharField(required=False, max_length=200)
+    pl_created_since = forms.DateField(required=False)
+    pl_created_before = forms.DateField(required=False)
+    pl_product = forms.ModelMultipleChoiceField(required=False, queryset=Product.objects.none())
+    pl_component = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=Component.objects.none()
+    )
+    pl_version = forms.ModelMultipleChoiceField(required=False, queryset=Version.objects.none())
 
     def clean_pl_active(self):
         return get_boolean_choice(self.cleaned_data['pl_active'])
@@ -100,23 +83,29 @@ class PlanForm(forms.Form):
 
 
 class CaseForm(forms.Form):
-    cs_id = LooseCF()
-    cs_summary = LooseCF()
-    cs_authors = LooseCF()
-    cs_tester = LooseCF()
-    cs_tags = LooseCF()
-    cs_bugs = LooseBugF()
-    cs_status = LooseMF()
-    cs_priority = LooseMF()
-    cs_auto = LooseCF()
-    cs_proposed = LooseCF()
-    cs_script = LooseCF()
-    cs_created_since = LooseDF()
-    cs_created_before = LooseDF()
-    cs_tags_exclude = LooseBF()
-    cs_product = ProductF()
-    cs_component = ComponentF()
-    cs_category = CategoryF()
+    cs_id = forms.CharField(required=False, max_length=200)
+    cs_summary = forms.CharField(required=False, max_length=200)
+    cs_authors = forms.CharField(required=False, max_length=200)
+    cs_tester = forms.CharField(required=False, max_length=200)
+    cs_tags = forms.CharField(required=False, max_length=200)
+    cs_bugs = BugField(required=False, max_length=200)
+    cs_status = forms.MultipleChoiceField(required=False, choices=())
+    cs_priority = forms.MultipleChoiceField(required=False, choices=())
+    cs_auto = forms.CharField(required=False, max_length=200)
+    cs_proposed = forms.CharField(required=False, max_length=200)
+    cs_script = forms.CharField(required=False, max_length=200)
+    cs_created_since = forms.DateField(required=False)
+    cs_created_before = forms.DateField(required=False)
+    cs_tags_exclude = forms.BooleanField(required=False)
+    cs_product = forms.ModelMultipleChoiceField(required=False, queryset=Product.objects.none())
+    cs_component = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=Component.objects.none()
+    )
+    cs_category = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=TestCaseCategory.objects.none()
+    )
 
     def clean_cs_auto(self):
         return get_boolean_choice(self.cleaned_data['cs_auto'])
@@ -164,23 +153,23 @@ class CaseForm(forms.Form):
 
 
 class RunForm(forms.Form):
-    r_id = LooseCF()
-    r_summary = LooseCF()
-    r_manager = LooseCF()
-    r_tester = LooseCF()
-    r_tags = LooseCF()
-    r_tags_exclude = LooseBF()
+    r_id = forms.CharField(required=False, max_length=200)
+    r_summary = forms.CharField(required=False, max_length=200)
+    r_manager = forms.CharField(required=False, max_length=200)
+    r_tester = forms.CharField(required=False, max_length=200)
+    r_tags = forms.CharField(required=False, max_length=200)
+    r_tags_exclude = forms.BooleanField(required=False)
     r_env = forms.CharField(required=False, max_length=200)
     r_env_exclude = forms.BooleanField(required=False)
-    r_running = LooseCF()
-    r_begin = LooseDF()
-    r_finished = LooseDF()
-    r_created_since = LooseDF()
-    r_created_before = LooseDF()
-    r_real_tester = LooseCF()
-    r_build = BuildF()
-    r_product = ProductF()
-    r_version = VersionF()
+    r_running = forms.CharField(required=False, max_length=200)
+    r_begin = forms.DateField(required=False)
+    r_finished = forms.DateField(required=False)
+    r_created_since = forms.DateField(required=False)
+    r_created_before = forms.DateField(required=False)
+    r_real_tester = forms.CharField(required=False, max_length=200)
+    r_build = forms.ModelMultipleChoiceField(required=False, queryset=TestBuild.objects.none())
+    r_product = forms.ModelMultipleChoiceField(required=False, queryset=Product.objects.none())
+    r_version = forms.ModelMultipleChoiceField(required=False, queryset=Version.objects.none())
 
     def clean_r_running(self):
         return get_boolean_choice(self.cleaned_data['r_running'])
