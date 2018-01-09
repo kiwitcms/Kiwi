@@ -1,6 +1,7 @@
 {% extends "tcms_base.html" %}
 {% load static %}
 {% load extra_filters %}
+{% load attachments_tags %}
 
 {% block subtitle %}Test case - {{ test_case.case_id }}: {{ test_case.summary }}{% endblock %}
 
@@ -180,7 +181,7 @@ Nitrate.TestCases.Instance = {
 				<a href="#document" title="document">Document</a>
 			</li>
 			<li id="tab_attachment" class="tab">
-				<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>??</span>)</a>
+				<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>{% attachments_count test_case %}</span>)</a>
 			</li>
 			<li id="tab_case_plan" class="tab">
 				<a href="#plan" title="plan">Test plans (<span id='plan_count'>{{ test_case.plan.count }}</span>)</a>
