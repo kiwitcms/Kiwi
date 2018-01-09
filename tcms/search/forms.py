@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
+from tcms.core.helpers.cache import cached_entities
 from tcms.management.models import Product, TestBuild, Component, Version
-from tcms.search.utils import cached_entities
 from tcms.testcases.forms import BugField
 from tcms.testcases.models import TestCaseCategory
 from tcms.testplans.models import TestPlanType
