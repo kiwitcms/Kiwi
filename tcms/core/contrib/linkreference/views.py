@@ -2,6 +2,7 @@
 
 import json
 
+from django import http
 from django.forms import IntegerField
 from django.forms import ValidationError
 from django.contrib.auth.decorators import permission_required
@@ -9,8 +10,6 @@ from django.views.decorators.http import require_GET, require_POST
 
 from .models import LinkReference
 from .forms import AddLinkReferenceForm
-from tcms.core.responses import HttpJSONResponse
-from tcms.core.responses import HttpJSONResponseBadRequest
 
 __all__ = ('add', 'remove', 'create_link')
 
@@ -73,9 +72,9 @@ def add(request):
 
     jd = create_link(request.POST)
     if jd['rc'] == 0:
-        return HttpJSONResponse(content=json.dumps(jd))
+        return http.JsonResponse(jd)
     else:
-        return HttpJSONResponseBadRequest(content=json.dumps(jd))
+        return http.HttpResponseBadRequest(content=json.dumps(jd), content_type='application/json')
 
 
 @permission_required('testruns.change_testcaserun')
@@ -88,12 +87,12 @@ def remove(request, link_id):
         value = field.clean(link_id)
     except ValidationError as err:
         jd = json.dumps({'rc': 1, 'response': '\n'.join(err.messages)})
-        return HttpJSONResponseBadRequest(content=jd)
+        return http.HttpResponseBadRequest(content=jd, content_type='application/json')
 
     # this will silently ignore non-existing objects
     LinkReference.objects.filter(pk=value).delete()
 
-    return HttpJSONResponse(
-        content=json.dumps(
-            {'rc': 0,
-             'response': 'Link has been removed successfully.'}))
+    return http.JsonResponse({
+        'rc': 0,
+        'response': 'Link has been removed successfully.'
+    })

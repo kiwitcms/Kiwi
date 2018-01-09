@@ -22,7 +22,6 @@ from django_comments.models import Comment
 
 from tcms.core.utils import form_errors_to_list
 from tcms.core.logs.models import TCMSLogModel
-from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils import DataTableResult
 from tcms.core.views import Prompt
@@ -720,13 +719,13 @@ def ajax_response(request, queryset, column_names, template_name):
     """json template for the ajax request for searching"""
     dt = DataTableResult(request.GET, queryset, column_names)
 
-    # prepare the JSON with the response, consider using :
+    # todo: prepare the JSON with the response, consider using :
     # from django.template.defaultfilters import escapejs
     json_result = render_to_string(
         template_name,
         dt.get_response_data(),
         request=request)
-    return HttpJSONResponse(json_result)
+    return HttpResponse(json_result, content_type='application/json')
 
 
 class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):

@@ -24,7 +24,6 @@ from django.views.decorators.http import require_GET
 from uuslug import slugify
 
 from tcms.core.models import TCMSLog
-from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils.checksum import checksum
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
@@ -413,13 +412,13 @@ def ajax_response(request, queryset, column_names, template_name):
     data = dt.get_response_data()
     data['querySet'] = calculate_stats_for_testplans(data['querySet'])
 
-    # prepare the JSON with the response, consider using :
+    # todo: prepare the JSON with the response, consider using :
     # from django.template.defaultfilters import escapejs
     json_result = render_to_string(
         template_name,
         data,
         request=request)
-    return HttpJSONResponse(json_result)
+    return HttpResponse(json_result, content_type='application/json')
 
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):

@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import json
-import unittest
 import http.client
 
 from django import test
 from django.urls import reverse
 from django.conf import settings
-from django.http import HttpResponse
-
-from tcms.core.responses import (HttpJSONResponse,
-                                 HttpJSONResponseBadRequest,
-                                 HttpJSONResponseServerError)
 
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
@@ -96,26 +90,3 @@ class TestAddView(test.TestCase):
 
         self.assertEqual(result['rc'], 1)
         self.assertIn('Ensure this value has at most 64 characters', result['response'])
-
-
-class TestCustomResponses(unittest.TestCase):
-    def test_HttpJSONResponse(self):
-        resp = HttpJSONResponse(content='{}')
-
-        self.assertTrue(isinstance(resp, HttpResponse))
-        self.assertEqual(resp['content-type'], 'application/json')
-        self.assertEqual(resp.status_code, 200)
-
-    def test_HttpJSONResponseBadRequest(self):
-        resp = HttpJSONResponseBadRequest(content='{}')
-
-        self.assertTrue(isinstance(resp, HttpResponse))
-        self.assertEqual(resp['content-type'], 'application/json')
-        self.assertEqual(resp.status_code, 400)
-
-    def test_HttpJSONResponseServerError(self):
-        resp = HttpJSONResponseServerError(content='{}')
-
-        self.assertTrue(isinstance(resp, HttpResponse))
-        self.assertEqual(resp['content-type'], 'application/json')
-        self.assertEqual(resp.status_code, 500)
