@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
@@ -26,7 +26,6 @@ from django.views.generic.base import View
 from django_comments.models import Comment
 
 from tcms.core.exceptions import NitrateException
-from tcms.core.responses import HttpJSONResponse
 from tcms.core.utils import clean_request
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
@@ -410,7 +409,7 @@ def load_runs_of_one_plan(request, plan_id,
         }
 
     json_data = render_to_string(template_name, response_data, request=request)
-    return HttpJSONResponse(json_data)
+    return HttpResponse(json_data, content_type='application/json')
 
 
 @require_GET
@@ -484,7 +483,7 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
         }
 
     json_data = render_to_string(template_name, response_data, request=request)
-    return HttpJSONResponse(json_data)
+    return HttpResponse(json_data, content_type='application/json')
 
 
 def open_run_get_case_runs(request, run):
@@ -844,7 +843,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
         def ajax_response(self, response=None):
             if not response:
                 response = self.default_ajax_response
-            return HttpJSONResponse(json.dumps(response))
+            return JsonResponse(response)
 
         def file(self):
             bug_system_id = request.GET.get('bug_system_id')

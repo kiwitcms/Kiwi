@@ -2,7 +2,7 @@
 
 import json
 
-from tcms.core.response import HttpJSONResponse
+from django.http import JsonResponse
 
 __all__ = (
     'AjaxResponseMixin',
@@ -44,7 +44,7 @@ class AjaxResponseMixin(object):
             'msg': self.errors,
             'data': data
         }
-        return HttpJSONResponse(self.dumps(context))
+        return JsonResponse(context)
 
     def ajax_response(self, context=None, **kwargs):
         if context is None:

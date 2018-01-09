@@ -2,9 +2,6 @@
 
 import unittest
 
-from django import http
-
-from tcms.core import responses
 from tcms.core.db import GroupByResult
 from tcms.core.utils import string_to_list
 
@@ -212,22 +209,3 @@ class GroupByResultLevelTest(unittest.TestCase):
         level_node = self.levels_groupby_result['build_1']['plan_2']
         value_leaf_count = level_node.leaf_values_count(value_in_row=True)
         self.assertEqual(value_leaf_count, 2)
-
-
-class VariousResponsesTest(unittest.TestCase):
-    '''Test HttpJSONResponse'''
-
-    def test_json_response(self):
-        response = responses.HttpJSONResponse('{}')
-        self.assertTrue(isinstance(response, http.HttpResponse))
-        self.assertEqual(response['Content-Type'], 'application/json')
-
-    def test_json_response_badrequest(self):
-        response = responses.HttpJSONResponseBadRequest('{}')
-        self.assertTrue(isinstance(response, http.HttpResponseBadRequest))
-        self.assertEqual(response['Content-Type'], 'application/json')
-
-    def test_json_response_servererror(self):
-        response = responses.HttpJSONResponseServerError('{}')
-        self.assertTrue(isinstance(response, http.HttpResponseServerError))
-        self.assertEqual(response['Content-Type'], 'application/json')
