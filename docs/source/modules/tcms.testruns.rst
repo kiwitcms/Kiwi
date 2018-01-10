@@ -11,7 +11,6 @@ Subpackages
 
 .. toctree::
 
-    tcms.testruns.helpers
     tcms.testruns.migrations
     tcms.testruns.tests
     tcms.testruns.urls
