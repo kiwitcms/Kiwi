@@ -6,13 +6,6 @@ tcms\.core\.contrib\.auth package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    tcms.core.contrib.auth.migrations
-
 Submodules
 ----------
 

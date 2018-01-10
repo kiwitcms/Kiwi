@@ -12,8 +12,6 @@ Subpackages
 .. toctree::
 
     tcms.xmlrpc.api
-    tcms.xmlrpc.migrations
-    tcms.xmlrpc.tests
 
 Submodules
 ----------

@@ -11,9 +11,6 @@ Subpackages
 
 .. toctree::
 
-    tcms.testcases.helpers
-    tcms.testcases.migrations
-    tcms.testcases.tests
     tcms.testcases.urls
 
 Submodules

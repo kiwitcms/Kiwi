@@ -12,7 +12,6 @@ Subpackages
 .. toctree::
 
     tcms.testplans.helpers
-    tcms.testplans.migrations
     tcms.testplans.urls
 
 Submodules

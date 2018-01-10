@@ -6,13 +6,6 @@ tcms\.core\.contrib\.linkreference package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    tcms.core.contrib.linkreference.migrations
-
 Submodules
 ----------
 
