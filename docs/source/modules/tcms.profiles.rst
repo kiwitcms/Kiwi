@@ -6,13 +6,6 @@ tcms\.profiles package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    tcms.profiles.migrations
-
 Submodules
 ----------
 

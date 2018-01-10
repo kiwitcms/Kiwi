@@ -6,13 +6,6 @@ tcms\.management package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    tcms.management.migrations
-
 Submodules
 ----------
 

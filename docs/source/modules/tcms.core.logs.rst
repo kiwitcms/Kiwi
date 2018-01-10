@@ -6,13 +6,6 @@ tcms\.core\.logs package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    tcms.core.logs.migrations
-
 Submodules
 ----------
 

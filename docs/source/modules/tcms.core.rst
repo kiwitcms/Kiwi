@@ -12,10 +12,8 @@ Subpackages
 .. toctree::
 
     tcms.core.contrib
-    tcms.core.forms
     tcms.core.helpers
     tcms.core.logs
-    tcms.core.migrations
     tcms.core.models
     tcms.core.templatetags
     tcms.core.utils
