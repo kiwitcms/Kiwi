@@ -96,6 +96,7 @@ docs:
 check-docs-source-in-git: docs
 	git status
 	if [ -n "$$(git status --short)" ]; then \
+	    git diff; \
 	    echo "FAIL: unmerged docs changes. Pobably auto-generated!"; \
 	    echo "HELP: execute 'make docs' and commit to fix this"; \
 	    exit 1; \
