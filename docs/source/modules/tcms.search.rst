@@ -14,6 +14,5 @@ Submodules
    tcms.search.forms
    tcms.search.order
    tcms.search.query
-   tcms.search.utils
    tcms.search.views
 

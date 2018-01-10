@@ -32,5 +32,4 @@ Submodules
    tcms.core.exceptions
    tcms.core.managers
    tcms.core.middleware
-   tcms.core.responses
 
