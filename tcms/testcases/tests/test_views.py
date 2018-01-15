@@ -4,8 +4,8 @@ import json
 import unittest
 import http.client
 import xml.etree.ElementTree
-
 from datetime import datetime
+from urllib.parse import urlencode
 
 import mock
 
@@ -1014,3 +1014,22 @@ class TestAJAXResponse(BasePlanCase):
         ]
         expected_id_links.sort()
         self.assertEqual(expected_id_links, id_links)
+
+
+class TestGetCasesFromPlan(BasePlanCase):
+    def test_casetags_are_shown_in_template(self):
+        tag, _ = TestTag.objects.get_or_create(name='Linux')
+        self.case.add_tag(tag)
+
+        url = reverse('testcases-all')
+        # note: this is how the UI sends the request
+        response = self.client.post(url, data=urlencode({
+                'from_plan': self.plan.pk,
+                'template_type': 'case',
+                'a': 'initial',
+            }),
+            content_type='application/x-www-form-urlencoded; charset=UTF-8',
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(http.client.OK, response.status_code)
+        self.assertContains(response, 'Tags:')
+        self.assertContains(response, '<a href="#testcases">Linux</a>')
