@@ -4,7 +4,6 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.admindocs import urls as admindocs_urls
 from django.views.i18n import JavaScriptCatalog
 
 from attachments import urls as attachments_urls
@@ -31,7 +30,6 @@ urlpatterns = [
     url(r'^navigation/', core_views.navigation, name='iframe-navigation'),
 
     url(r'^admin/', admin.site.urls),
-    url(r'^admin/doc/', include(admindocs_urls)),
 
     url(r'^attachments/', include(attachments_urls, namespace='attachments')),
     url(r'^tinymce/', include(tinymce_urls)),
