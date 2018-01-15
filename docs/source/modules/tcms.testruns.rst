@@ -18,7 +18,6 @@ Submodules
 
 .. toctree::
 
-   tcms.testruns.admin
    tcms.testruns.data
    tcms.testruns.forms
    tcms.testruns.models
