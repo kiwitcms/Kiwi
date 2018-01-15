@@ -117,7 +117,7 @@
 			<div class="tit" style="width: 50px; float: left; height: 100%; margin: 0px; text-align: center;">Tags:</div>
 			<div style="margin-left: 50px; line-height:22px;" class="taglist">
 				{% for tag in case_own_tags %}
-				<a href="#testcases">{{ tag.tag_name }}</a>&nbsp;&nbsp;<span class="grey">-</span>&nbsp;&nbsp;
+				<a href="#testcases">{{ tag.name }}</a>&nbsp;&nbsp;<span class="grey">-</span>&nbsp;&nbsp;
 				{% empty %}
 				<span class="grey">No tags in cases</span>
 				{% endfor %}
