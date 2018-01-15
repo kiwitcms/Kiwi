@@ -218,7 +218,6 @@ WSGI_APPLICATION = 'tcms.wsgi.application'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
