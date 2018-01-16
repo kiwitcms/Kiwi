@@ -52,6 +52,16 @@ the actual Test Cases that will be/were executed against a particular product bu
 and environment combination!
 
 
+Explanation of additional data entities
+---------------------------------------
+
+In order to fully understand how Kiwi TCMS works and how it can be tailored to
+various testing workflows you need to be familiar with the different data
+entities within Kiwi. For more information please read
+:ref:`explanation-of-entities`.
+
+
+
 Testing workflow example
 ------------------------
 
