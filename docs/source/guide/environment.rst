@@ -8,6 +8,13 @@ Environment Group is the top level container object, it contains one or
 more Properties, each having a range of values. Properties can belong to
 more than one group.
 
+Environment Groups are assigned to Test Plans. Then when creating a Test Run
+using the environment group and its properties youmay select on what hardware,
+system software and other environmental background testing is executed.
+You may also assign environment properties, which are not part of group, to
+test runs directly via the test run page!
+
+
 +------------+----------------+-------------------------+
 | Group      | Property       | Value                   |
 +============+================+=========================+

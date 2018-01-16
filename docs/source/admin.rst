@@ -313,6 +313,12 @@ performed or convey additional information about the test case. Similar
 information may also be conveyed with tags, properties or in other way
 so it is up to you to decide how you want to organize your testing workflow!
 
+Environment groups and properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Environment groups and properties are explained in
+:ref:`environment`.
+
 
 .. |The Administration screen| image:: ./_static/Admin_Home.png
 .. |The Auth screen| image:: ./_static/Auth_Home.png
