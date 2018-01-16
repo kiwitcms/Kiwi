@@ -7,8 +7,6 @@ import xml.etree.ElementTree
 from datetime import datetime
 from urllib.parse import urlencode
 
-import mock
-
 from django import test
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -22,7 +20,6 @@ from ..fields import MultipleEmailField
 from ..forms import CaseTagForm
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCaseTag
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testcases.models import TestCaseComponent
 from tcms.testcases.models import TestCasePlan
@@ -32,7 +29,6 @@ from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestCaseCategoryFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestTagFactory
 from tcms.tests import BasePlanCase, BaseCaseRun
@@ -462,84 +458,6 @@ class TestOperateCasePlans(BasePlanCase):
             case=self.case_2, plan=self.plan_test_add).exists())
         self.assertTrue(TestCasePlan.objects.filter(
             case=self.case_2, plan=self.plan_test_remove).exists())
-
-
-class TestOperateCaseTag(BasePlanCase):
-    """Test remove tags to and from cases in a plan"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestOperateCaseTag, cls).setUpTestData()
-
-        cls.tag_fedora = TestTagFactory(name='fedora')
-        cls.tag_rhel = TestTagFactory(name='rhel')
-        cls.tag_python = TestTagFactory(name='python')
-
-        TestCaseTagFactory(case=cls.case_1, tag=cls.tag_fedora)
-        TestCaseTagFactory(case=cls.case_1, tag=cls.tag_rhel)
-        TestCaseTagFactory(case=cls.case_1, tag=cls.tag_python)
-        TestCaseTagFactory(case=cls.case_3, tag=cls.tag_rhel)
-        TestCaseTagFactory(case=cls.case_3, tag=cls.tag_python)
-
-        cls.cases_tag_url = reverse('testcases-tag')
-
-    def test_show_cases_list(self):
-        response = self.client.post(self.cases_tag_url,
-                                    {'case': [self.case_1.pk, self.case_3.pk]})
-
-        tags = TestTag.objects.filter(
-            cases__in=[self.case_1, self.case_3]).order_by('name').distinct()
-        tag_options = ['<option value="{}">{}</option>'.format(tag.pk, tag.name)
-                       for tag in tags]
-
-        self.assertContains(
-            response,
-            '''<p><label for="id_o_tag">Tags:</label>
-<select multiple="multiple" id="id_o_tag" name="o_tag">{}
-</select></p>'''.format(''.join(tag_options)),
-            html=True)
-
-    def test_remove_tags_from_cases(self):
-        tags_to_remove = [self.tag_rhel.pk, self.tag_python.pk]
-        remove_from_cases = [self.case_1.pk, self.case_3.pk]
-        response = self.client.post(
-            self.cases_tag_url,
-            {'a': 'remove', 'o_tag': tags_to_remove, 'case': remove_from_cases})
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok', 'errors_list': []})
-
-        self.assertFalse(
-            TestCaseTag.objects.filter(
-                case=self.case_1.pk, tag=self.tag_rhel.pk).exists())
-        self.assertFalse(
-            TestCaseTag.objects.filter(
-                case=self.case_1.pk, tag=self.tag_python.pk).exists())
-        self.assertFalse(
-            TestCaseTag.objects.filter(
-                case=self.case_3.pk, tag=self.tag_rhel.pk).exists())
-        self.assertFalse(
-            TestCaseTag.objects.filter(
-                case=self.case_3.pk, tag=self.tag_python.pk).exists())
-
-    @mock.patch('tcms.testcases.models.TestCase.remove_tag',
-                side_effect=ValueError('value error'))
-    def test_ensure_response_if_error_happens_when_remove_tag(self, remove_tag):
-        # This test does not care about what tags are removed from which cases
-        response = self.client.post(
-            self.cases_tag_url,
-            {'a': 'remove', 'o_tag': self.tag_fedora.pk, 'case': self.case_1.pk})
-
-        remove_tag.assert_called_once()
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {
-                'rc': 1,
-                'response': 'value error',
-                'errors_list': [{'case': self.case_1.pk, 'tag': self.tag_fedora.pk}],
-            })
 
 
 class TestEditCase(BasePlanCase):

@@ -560,12 +560,7 @@ a:link.edit,a:visited.edit{ color:#333;}
 
 /*Popup style*/
 #dialog{z-index:1000; position:fixed; left:50%; top:40%; margin-left:-250px; margin-top:-100px; background:url(../images/login_bg.png) repeat-x left top #e7e7e7;min-width:500px;min-height:200px;max-width:600px;max-height:400px;box-shadow: 2px 2px 2px #c5c3c3;-moz-border-radius: 5px;-khtml-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px; border:solid 1px #CCC;padding:10px; overflow:auto;}
-#dialog .dia_title{margin:10px 5px; font-weight: bold;}
-#dialog .dialog_content{ max-height:250px; overflow:auto}
-#dialog .dia_content{ margin:5px 10px;}
-#dialog .dia_content label{ margin:5px 10px;}
 #dialog .dia_close{position:absolute; right:3px; top:3px; background-position:0 -106px; width:16px;cursor:pointer}
-#dialog .dia_btn_close{ margin:10px 5px;background-position:0 -106px;cursor:pointer; padding-left:16px;padding-right:5px; height:24px; line-height:24px; }
 #dialog select[multiple='multiple']{ max-height:150px;}
 #dialog label{width:100px; text-align:right; display:inline-block; padding-right:5px;}
 #dialog p{vertical-align:top;}
@@ -574,9 +569,6 @@ a:link.edit,a:visited.edit{ color:#333;}
 .popup_window{ width:500px;height:400px; z-index:1000; position:fixed; left:50%; top:50%; margin-left:-250px; margin-top:-200px; border:solid 4px #CCC; background:#f5f5f5;-moz-border-radius:5px 5px 5px 5px;}
 /*end popup*/
 
-#id_tags_autocomplete ul,#id_batch_add_tags_autocomplete ul{ width:154px; max-height:180px;overflow:auto; border:solid 1px #ccc; margin:1px 0 0 -1px;padding-bottom:10px; background:#fff}
-#id_tags_autocomplete ul li,#id_batch_add_tags_autocomplete ul li{ padding:3px 0 3px 5px; border-bottom:dotted 1px #ccc;}
-#id_tags_autocomplete ul li:hover,#id_batch_add_tags_autocomplete ul li:hover{ cursor:pointer; background:#efefef;padding:3px 0 3px 5px; border-bottom:dotted 1px #ccc;}
 .automated_form ul { list-style:none}
 .automated_form ul li{ margin-top:3px;}
 .automated_form ul li input{ margin-right:7px;}
@@ -931,8 +923,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 
 .toolbar_case{background-position:0px 0px;}
 .toolbar_run{background-position:0px -345px;}
-.toolbar_tag{background-position:0px -391px;}
-.toolbar_tag_disabled{background-position:0px -414px ; color:graytext;;}
 .toolbar_status{background-position:0px -667px;}
 .toolbar_priority{background-position:0px -782px;}
 .automated{background-position:0 -529px;}
@@ -963,10 +953,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .new_run[disabled='true']{background-position:0px -368px; color:graytext;}
 .new_review{background-position:0px -224px; padding-left:16px;}
 .new_review[disabled='true']{background-position:0px -706px; color:graytext;}
-.tag_add{ background-position:0 -437px;}
-.tag_add_disabled{ background-position:0 -460px; color:graytext;}
-.tag_delete{background-position:0 -483px;}
-.tag_delete_disabled{ background-position:0 -506px; color:graytext;}
 .p1{background-position:0 -805px;}
 .p2{background-position:0 -828px;}
 .p3{background-position:0 -851px;}

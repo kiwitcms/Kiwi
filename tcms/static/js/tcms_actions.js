@@ -178,7 +178,6 @@ var default_messages = {
       cases_automated: '/cases/automated/',
       cases_category: '/cases/category/',
       cases_component: '/cases/component/',
-      cases_tag: '/cases/tag/',
       change_case_order: '/case/$id/changecaseorder/',
       change_case_run_order: '/run/$id/changecaserunorder/',
       change_case_run_status: '/run/$id/execute/changestatus/',
@@ -903,51 +902,6 @@ function editTag(container, tag) {
     }
   });
 }
-
-function addBatchTag(parameters, callback, format) {
-  parameters.a = 'add';
-  parameters.t = 'json';
-  parameters.f = format;
-  batchProcessTag(parameters, callback, format);
-}
-
-function removeBatchTag(parameters, callback, format) {
-  parameters.a = 'remove';
-  parameters.t = 'json';
-  parameters.f = format;
-  batchProcessTag(parameters, callback, format);
-}
-
-function batchProcessTag(parameters, callback, format) {
-  var success = function(t) {
-    if (!format) {
-      returnobj = jQ.parseJSON(t.responseText);
-
-      if (returnobj.response === 'ok') {
-        if (callback) {
-          callback.call();
-        }
-      } else {
-        window.alert(returnobj.response);
-        return false;
-      }
-    } else {
-      callback(t);
-    }
-  };
-
-  var url = '/management/tags/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': parameters,
-    'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    }
-  });
-}
-
 
 function removeComment(form, callback) {
   var url = form.action;

@@ -26,7 +26,7 @@ from django.views.decorators.http import require_POST
 from tcms.management.models import Component, TestBuild, Version
 from tcms.management.models import Priority
 from tcms.management.models import TestTag
-from tcms.testcases.models import TestCase, TestCaseBug, TestCaseTag
+from tcms.testcases.models import TestCase, TestCaseBug
 from tcms.testcases.models import TestCaseCategory
 from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
@@ -128,17 +128,6 @@ def info(request):
             return TCMSEnvValue.objects.filter(
                 property__id=self.request.GET.get('env_property_id')
             )
-
-        def tags(self):
-            query = strip_parameters(request.GET, self.internal_parameters)
-            tags = TestCaseTag.objects
-            # Generate the string combination, because we are using
-            # case sensitive table
-            if query.get('name__startswith'):
-                tags = tags.filter(tag__name__istartswith=query['name__startswith'])
-                del query['name__startswith']
-
-            return tags.filter(**query).distinct()
 
         def users(self):
             from django.contrib.auth.models import User

@@ -61,25 +61,6 @@
 			{% endif %}
                     </ul>
                 </li>
-				<li>
-					{% if perms.testcases.add_testcasetag %}
-					<span class='sprites toolbar_tag icon_plan'>Tag</span>
-					{% else %}
-					<span class='sprites toolbar_tag_disabled icon_plan'>Tag</span>
-					{% endif %}
-					<ul>
-						{% if perms.testcases.add_testcasetag %}
-						<li><input type="button" value="Add Tag" class="tag_add sprites icon_plan" /></li>
-						{% else %} 
-						<li><input type="button" value="Add Tag" class="tag_add_disabled sprites icon_plan" disabled="disabled" /></li>
-						{% endif %}
-						{% if perms.testcases.delete_testcasetag %}
-						<li><input type="button" value="Remove Tag" class="tag_delete sprites icon_plan" /> </li>
-						{% else %}
-						<li><input type="button" value="Remove Tag" class="tag_delete_disabled sprites icon_plan" disabled="disabled" /></li>
-						{% endif %}
-					</ul>
-				</li>
 				{% if perms.testcases.change_testcase %}
 				<li><input type="button" value="Automated" title="change automated" class="btn_automated automated sprites icon_plan" /></li>
 				<li><input type="button" value="Default Tester" title="change default tester" class="btn_default_tester assignee sprites icon_plan" /></li>
@@ -215,27 +196,3 @@
 	</span>
 	<span class="js-nomore-msg" style="display:none">All cases have been loaded.</span>
 </div>
-{% verbatim %}
-	<script id="batch_tag_form_template" type="text/x-handlebars-template">
-		<form id="id_batch_tag_form">
-			<div class="dia_title" style=" margin:30px 20px;">Please type tag name:</div>
-			<div class="dia_content" style=" margin:30px 20px;">
-				<input type="text" id="add_tag_plan" name="tags" style="width:300px; height:25px; border:solid  1px #ccc"/>
-				<div id="id_batch_add_tags_autocomplete"></div>
-			</div>
-			<div style=" margin:30px 20px;">
-				<input type="submit" value="Submit">
-				<input type="button" value="Cancel" class="js-cancel-button" >
-			</div>
-		</form>
-	</script>
-	<script id="batch_tag_summary_template" type="text/x-handlebars-template">
-		<div class="dia_title" style=" margin:10px 20px;">You have successfully updated tags for the following case(s):</div>
-		<div class="dialog_content">
-			{{# each tags }}
-			<div class="dia_content" style=" margin:10px 20px;">{{ this.pk }} &nbsp; {{ this.fields.summary }}</div>
-			{{/ each }}
-		</div>
-		<input class="dia_btn_close sprites js-close-button" type="button" value="Close" style=" margin:10px 20px;"/>
-	</script>
-{% endverbatim %}
