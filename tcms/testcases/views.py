@@ -11,7 +11,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET
@@ -38,7 +37,7 @@ from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
     SearchCaseForm, CaseFilterForm, EditCaseForm, CaseNotifyForm, \
-    CloneCaseForm, CaseBugForm, CaseTagForm
+    CloneCaseForm, CaseBugForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_dict_from_query
 from .fields import CC_LIST_DEFAULT_DELIMITER
@@ -1597,38 +1596,6 @@ def clone(request, template_name='case/clone.html'):
         'submit_action': submit_action,
     }
     return render(request, template_name, context_data)
-
-
-@require_POST
-def tag(request):
-    """Remove tags from selected cases in plan page"""
-
-    # FIXME: It's unnecessary to check existance of each case Id. Because, in
-    # the following iteration through queried testcases, this problem is solved
-    # naturally.
-    tcs = get_selected_testcases(request)
-    if not tcs:
-        raise Http404
-
-    # a == action
-    if request.POST.get('a') == 'remove':
-        tag_ids = request.POST.getlist('o_tag')
-        tags = TestTag.objects.filter(pk__in=tag_ids)
-        for tc in tcs:
-            for tag in tags:
-                try:
-                    tc.remove_tag(tag=tag)
-                except Exception as e:
-                    return JsonResponse({
-                        'rc': 1,
-                        'response': str(e),
-                        'errors_list': [{'case': tc.pk, 'tag': tag.pk}],
-                    })
-        return JsonResponse({'rc': 0, 'response': 'ok', 'errors_list': []})
-
-    form = CaseTagForm(initial={'tag': request.POST.get('o_tag')})
-    form.populate(case_ids=tcs)
-    return HttpResponse(form.as_p())
 
 
 @require_POST

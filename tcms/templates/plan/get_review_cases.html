@@ -45,25 +45,6 @@
 						{% endif %}
 					</ul>
 				</li>
-				<li>
-					{% if perms.testcases.add_testcasetag %}
-					<span class='sprites toolbar_tag icon_plan'>Tag</span>
-					{% else %}
-					<span class='sprites toolbar_tag_disabled icon_plan'>Tag</span>
-					{% endif %}
-					<ul>
-						{% if perms.testcases.add_testcasetag %}
-						<li><input type="button" value="Add Tag" class="tag_add sprites icon_plan" /></li>
-						{% else %} 
-						<li><input type="button" value="Add Tag" class="tag_add_disabled sprites icon_plan" disabled="disabled" /></li>
-						{% endif %}
-						{% if perms.testcases.delete_testcasetag %}
-						<li><input type="button" value="Remove Tag" class="tag_delete sprites icon_plan" /></li>
-						{% else %}
-						<li><input type="button" value="Remove Tag" class="tag_delete_disabled sprites icon_plan" disabled="disabled" /></li>
-						{% endif %}
-					</ul>
-				</li>
 				{% if perms.testcases.change_testcase %}
 				<li><input type="button" value="Automated" title="change automated" class="btn_automated automated sprites icon_plan" /></li>
 				<li><input type="button" value="Reviewer" title="change reviewer" class="btn_reviewer assignee sprites icon_plan" /></li>
