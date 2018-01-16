@@ -241,6 +241,8 @@ To disable a user:
 #. Click **Save**.
 
 
+.. _explanation-of-entities:
+
 Explanation of editable entities
 --------------------------------
 
