@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-03 20:55+0000\n"
+"POT-Creation-Date: 2018-01-17 10:43+0000\n"
 "PO-Revision-Date: 2018-01-03 15:58-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -72,180 +72,43 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr ""
 
-#: tcms/templates/admin/auth/user/change_password.html:12
-#: tcms/templates/admin/change_form.html:17
-#: tcms/templates/admin/change_list.html:10
-#: tcms/templates/admin/delete_confirmation.html:9
-#: tcms/templates/admin/object_history.html:9
 #: tcms/templates/registration/password_change_done.html:4
-#: tcms/templates/registration/password_change_form.html:6
-msgid "Home"
+#: tcms/templates/registration/password_change_done.html:8
+msgid "Password change successful"
 msgstr ""
 
-#: tcms/templates/admin/auth/user/change_password.html:16
-#: tcms/templates/admin/auth/user/change_password.html:49
-#: tcms/templates/registration/password_change_done.html:3
+#: tcms/templates/registration/password_change_done.html:10
+msgid "Your password was changed."
+msgstr ""
+
 #: tcms/templates/registration/password_change_form.html:5
-msgid "Change password"
+#: tcms/templates/registration/password_change_form.html:18
+msgid "Password change"
 msgstr ""
 
-#: tcms/templates/admin/auth/user/change_password.html:25
-#: tcms/templates/registration/password_change_form.html:18
+#: tcms/templates/registration/password_change_form.html:15
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] ""
 
-#: tcms/templates/admin/auth/user/change_password.html:29
-#, python-format
-msgid "Enter a new password for the user <strong>%(username)s</strong>."
+#: tcms/templates/registration/password_change_form.html:19
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
 msgstr ""
 
-#: tcms/templates/admin/auth/user/change_password.html:36
-msgid "Password"
-msgstr ""
-
-#: tcms/templates/admin/auth/user/change_password.html:42
-#: tcms/templates/registration/password_change_form.html:36
-msgid "Password (again)"
-msgstr ""
-
-#: tcms/templates/admin/auth/user/change_password.html:43
-msgid "Enter the same password as above, for verification."
-msgstr ""
-
-#: tcms/templates/admin/base_site.html:14
-msgid "Django administration"
-msgstr ""
-
-#: tcms/templates/admin/change_form.html:20 tcms/templates/admin/index.html:34
-msgid "Add"
-msgstr ""
-
-#: tcms/templates/admin/change_list.html:30
-#, python-format
-msgid "Add %(name)s"
-msgstr ""
-
-#: tcms/templates/admin/change_list.html:41
-msgid "Filter"
-msgstr ""
-
-#: tcms/templates/admin/delete_confirmation.html:13
-msgid "Delete"
-msgstr ""
-
-#: tcms/templates/admin/delete_confirmation.html:19
-#, python-format
-msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
-msgstr ""
-
-#: tcms/templates/admin/delete_confirmation.html:26
-#, python-format
-msgid "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? All of the following related items will be deleted:"
-msgstr ""
-
-#: tcms/templates/admin/delete_confirmation.html:31
-msgid "Yes, I'm sure"
-msgstr ""
-
-#: tcms/templates/admin/filter.html:2
-#, python-format
-msgid " By %(filter_title)s "
-msgstr ""
-
-#: tcms/templates/admin/index.html:23
-#, python-format
-msgid "Models available in the %(name)s application."
-msgstr ""
-
-#: tcms/templates/admin/index.html:24
-#, python-format
-msgid "%(name)s"
-msgstr ""
-
-#: tcms/templates/admin/index.html:40
-msgid "Change"
-msgstr ""
-
-#: tcms/templates/admin/index.html:51
-msgid "You don't have permission to edit anything."
-msgstr ""
-
-#: tcms/templates/admin/index.html:59
-msgid "Recent Actions"
-msgstr ""
-
-#: tcms/templates/admin/index.html:60
-msgid "My Actions"
-msgstr ""
-
-#: tcms/templates/admin/index.html:64
-msgid "None available"
-msgstr ""
-
-#: tcms/templates/admin/object_history.html:13
-msgid "History"
-msgstr ""
-
-#: tcms/templates/admin/object_history.html:25
-msgid "Date/time"
-msgstr ""
-
-#: tcms/templates/admin/object_history.html:26
-msgid "User"
-msgstr ""
-
-#: tcms/templates/admin/object_history.html:27
-msgid "Action"
-msgstr ""
-
-#: tcms/templates/admin/object_history.html:33
-msgid "DATETIME_FORMAT"
-msgstr ""
-
-#: tcms/templates/admin/object_history.html:41
-msgid "This object doesn't have a change history. It probably wasn't added via this admin site."
-msgstr ""
-
-#: tcms/templates/registration/password_change_done.html:3
-#: tcms/templates/registration/password_change_form.html:5
-msgid "Documentation"
-msgstr ""
-
-#: tcms/templates/registration/password_change_done.html:3
-#: tcms/templates/registration/password_change_form.html:5
-msgid "Log out"
-msgstr ""
-
-#: tcms/templates/registration/password_change_done.html:4
-#: tcms/templates/registration/password_change_form.html:6
-#: tcms/templates/registration/password_change_form.html:8
-#: tcms/templates/registration/password_change_form.html:21
-msgid "Password change"
-msgstr ""
-
-#: tcms/templates/registration/password_change_done.html:6
-#: tcms/templates/registration/password_change_done.html:11
-msgid "Password change successful"
-msgstr ""
-
-#: tcms/templates/registration/password_change_done.html:13
-msgid "Your password was changed."
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:22
-msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:26
+#: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"
 msgstr ""
 
-#: tcms/templates/registration/password_change_form.html:31
+#: tcms/templates/registration/password_change_form.html:28
 msgid "New password"
 msgstr ""
 
-#: tcms/templates/registration/password_change_form.html:43
-msgid "Change my password"
+#: tcms/templates/registration/password_change_form.html:33
+msgid "Password (again)"
 msgstr ""
 
+#: tcms/templates/registration/password_change_form.html:40
+msgid "Change my password"
+msgstr ""

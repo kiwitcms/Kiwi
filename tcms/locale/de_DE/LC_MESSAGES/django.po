@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-03 20:55+0000\n"
+"POT-Creation-Date: 2018-01-17 10:43+0000\n"
 "PO-Revision-Date: 2018-01-03 16:11-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
@@ -54,7 +54,8 @@ msgstr "Benutzername"
 
 #: tcms/profiles/forms.py:28
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr "Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
+msgstr ""
+"Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
 
 #: tcms/profiles/forms.py:31
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
@@ -72,181 +73,146 @@ msgstr "Benutzerfehler."
 msgid "A user with that username already exists."
 msgstr "Es gibt bereits einen Benutzer mit diesem Namen."
 
-#: tcms/templates/admin/auth/user/change_password.html:12
-#: tcms/templates/admin/change_form.html:17
-#: tcms/templates/admin/change_list.html:10
-#: tcms/templates/admin/delete_confirmation.html:9
-#: tcms/templates/admin/object_history.html:9
 #: tcms/templates/registration/password_change_done.html:4
-#: tcms/templates/registration/password_change_form.html:6
-msgid "Home"
-msgstr "Startseite"
+#: tcms/templates/registration/password_change_done.html:8
+msgid "Password change successful"
+msgstr "Passwort erfolgreich geändert"
 
-#: tcms/templates/admin/auth/user/change_password.html:16
-#: tcms/templates/admin/auth/user/change_password.html:49
-#: tcms/templates/registration/password_change_done.html:3
+#: tcms/templates/registration/password_change_done.html:10
+msgid "Your password was changed."
+msgstr "Ihr Passwort wurde geändert."
+
 #: tcms/templates/registration/password_change_form.html:5
-msgid "Change password"
-msgstr "Passwortänderung"
-
-#: tcms/templates/admin/auth/user/change_password.html:25
 #: tcms/templates/registration/password_change_form.html:18
+msgid "Password change"
+msgstr "Passwort ändern"
+
+#: tcms/templates/registration/password_change_form.html:15
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] "Bitte korrigieren Sie den Fehler unten."
 msgstr[1] "Bitte korrigieren Sie den Fehler unten."
 
-#: tcms/templates/admin/auth/user/change_password.html:29
-#, python-format
-msgid "Enter a new password for the user <strong>%(username)s</strong>."
-msgstr "Eingabe eines neuen Passworts für <strong>%(username)s</strong>."
+#: tcms/templates/registration/password_change_form.html:19
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
 
-#: tcms/templates/admin/auth/user/change_password.html:36
-msgid "Password"
-msgstr "Passwort"
-
-#: tcms/templates/admin/auth/user/change_password.html:42
-#: tcms/templates/registration/password_change_form.html:36
-msgid "Password (again)"
-msgstr "Passwort (Wiederholung)"
-
-#: tcms/templates/admin/auth/user/change_password.html:43
-msgid "Enter the same password as above, for verification."
-msgstr "Eingabe des gleichen Passworts wie oben."
-
-#: tcms/templates/admin/base_site.html:14
-msgid "Django administration"
-msgstr "Django Administration"
-
-#: tcms/templates/admin/change_form.html:20 tcms/templates/admin/index.html:34
-msgid "Add"
-msgstr "Hinzufügen"
-
-#: tcms/templates/admin/change_list.html:30
-#, python-format
-msgid "Add %(name)s"
-msgstr "%(name)s hinzufügen"
-
-#: tcms/templates/admin/change_list.html:41
-msgid "Filter"
-msgstr "Filter"
-
-#: tcms/templates/admin/delete_confirmation.html:13
-msgid "Delete"
-msgstr "Löschen"
-
-#: tcms/templates/admin/delete_confirmation.html:19
-#, python-format
-msgid "Deleting the %(object_name)s '%(escaped_object)s' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:"
-msgstr "Löschen von %(object_name)s '%(escaped_object)s' würde auch verbundene Objekte löschen, aber Ihr Konto hat keine Berechtigung zum Löschen folgender Objekte:"
-
-#: tcms/templates/admin/delete_confirmation.html:26
-#, python-format
-msgid "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? All of the following related items will be deleted:"
-msgstr "Sind Sie sicher, %(object_name)s '%(escaped_object)s' zu löschen? Alle der folgenden verbundenen Elemente werden gelöscht:"
-
-#: tcms/templates/admin/delete_confirmation.html:31
-msgid "Yes, I'm sure"
-msgstr "Ja, ich bin sicher"
-
-#: tcms/templates/admin/filter.html:2
-#, python-format
-msgid " By %(filter_title)s "
-msgstr " Von %(filter_title)s "
-
-#: tcms/templates/admin/index.html:23
-#, python-format
-msgid "Models available in the %(name)s application."
-msgstr "Modelle sind in der %(name)s Anwendung verfügbar."
-
-#: tcms/templates/admin/index.html:24
-#, python-format
-msgid "%(name)s"
-msgstr "%(name)s"
-
-#: tcms/templates/admin/index.html:40
-msgid "Change"
-msgstr "Änderung"
-
-#: tcms/templates/admin/index.html:51
-msgid "You don't have permission to edit anything."
-msgstr "Sie sind nicht zur Bearbeitung berechtigt."
-
-#: tcms/templates/admin/index.html:59
-msgid "Recent Actions"
-msgstr "Letzte Aktionen"
-
-#: tcms/templates/admin/index.html:60
-msgid "My Actions"
-msgstr "Meine Aktionen"
-
-#: tcms/templates/admin/index.html:64
-msgid "None available"
-msgstr "Keine verfügbar"
-
-#: tcms/templates/admin/object_history.html:13
-msgid "History"
-msgstr "Verlauf"
-
-#: tcms/templates/admin/object_history.html:25
-msgid "Date/time"
-msgstr "Datum/Uhrzeit"
-
-#: tcms/templates/admin/object_history.html:26
-msgid "User"
-msgstr "Benutzer"
-
-#: tcms/templates/admin/object_history.html:27
-msgid "Action"
-msgstr "Aktion"
-
-#: tcms/templates/admin/object_history.html:33
-msgid "DATETIME_FORMAT"
-msgstr "DATETIME_FORMAT"
-
-#: tcms/templates/admin/object_history.html:41
-msgid "This object doesn't have a change history. It probably wasn't added via this admin site."
-msgstr "Dieses Objekt hat keine Änderungshistorie. Es wurde vermutlich nicht über die Admin-Site hinzugefügt."
-
-#: tcms/templates/registration/password_change_done.html:3
-#: tcms/templates/registration/password_change_form.html:5
-msgid "Documentation"
-msgstr "Dokumentation"
-
-#: tcms/templates/registration/password_change_done.html:3
-#: tcms/templates/registration/password_change_form.html:5
-msgid "Log out"
-msgstr "Abmeldung"
-
-#: tcms/templates/registration/password_change_done.html:4
-#: tcms/templates/registration/password_change_form.html:6
-#: tcms/templates/registration/password_change_form.html:8
-#: tcms/templates/registration/password_change_form.html:21
-msgid "Password change"
-msgstr "Passwort ändern"
-
-#: tcms/templates/registration/password_change_done.html:6
-#: tcms/templates/registration/password_change_done.html:11
-msgid "Password change successful"
-msgstr "Passwort erfolgreich geändert"
-
-#: tcms/templates/registration/password_change_done.html:13
-msgid "Your password was changed."
-msgstr "Ihr Passwort wurde geändert."
-
-#: tcms/templates/registration/password_change_form.html:22
-msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
-msgstr "Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
-
-#: tcms/templates/registration/password_change_form.html:26
+#: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"
 msgstr "Altes Passwort"
 
-#: tcms/templates/registration/password_change_form.html:31
+#: tcms/templates/registration/password_change_form.html:28
 msgid "New password"
 msgstr "Neues Passwort"
 
-#: tcms/templates/registration/password_change_form.html:43
+#: tcms/templates/registration/password_change_form.html:33
+msgid "Password (again)"
+msgstr "Passwort (Wiederholung)"
+
+#: tcms/templates/registration/password_change_form.html:40
 msgid "Change my password"
 msgstr "Passwort ändern"
 
+#~ msgid "Home"
+#~ msgstr "Startseite"
+
+#~ msgid "Change password"
+#~ msgstr "Passwortänderung"
+
+#~ msgid "Enter a new password for the user <strong>%(username)s</strong>."
+#~ msgstr "Eingabe eines neuen Passworts für <strong>%(username)s</strong>."
+
+#~ msgid "Password"
+#~ msgstr "Passwort"
+
+#~ msgid "Enter the same password as above, for verification."
+#~ msgstr "Eingabe des gleichen Passworts wie oben."
+
+#~ msgid "Django administration"
+#~ msgstr "Django Administration"
+
+#~ msgid "Add"
+#~ msgstr "Hinzufügen"
+
+#~ msgid "Add %(name)s"
+#~ msgstr "%(name)s hinzufügen"
+
+#~ msgid "Filter"
+#~ msgstr "Filter"
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid ""
+#~ "Deleting the %(object_name)s '%(escaped_object)s' would result in "
+#~ "deleting related objects, but your account doesn't have permission to "
+#~ "delete the following types of objects:"
+#~ msgstr ""
+#~ "Löschen von %(object_name)s '%(escaped_object)s' würde auch verbundene "
+#~ "Objekte löschen, aber Ihr Konto hat keine Berechtigung zum Löschen "
+#~ "folgender Objekte:"
+
+#~ msgid ""
+#~ "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s"
+#~ "\"? All of the following related items will be deleted:"
+#~ msgstr ""
+#~ "Sind Sie sicher, %(object_name)s '%(escaped_object)s' zu löschen? Alle "
+#~ "der folgenden verbundenen Elemente werden gelöscht:"
+
+#~ msgid "Yes, I'm sure"
+#~ msgstr "Ja, ich bin sicher"
+
+#~ msgid " By %(filter_title)s "
+#~ msgstr " Von %(filter_title)s "
+
+#~ msgid "Models available in the %(name)s application."
+#~ msgstr "Modelle sind in der %(name)s Anwendung verfügbar."
+
+#~ msgid "%(name)s"
+#~ msgstr "%(name)s"
+
+#~ msgid "Change"
+#~ msgstr "Änderung"
+
+#~ msgid "You don't have permission to edit anything."
+#~ msgstr "Sie sind nicht zur Bearbeitung berechtigt."
+
+#~ msgid "Recent Actions"
+#~ msgstr "Letzte Aktionen"
+
+#~ msgid "My Actions"
+#~ msgstr "Meine Aktionen"
+
+#~ msgid "None available"
+#~ msgstr "Keine verfügbar"
+
+#~ msgid "History"
+#~ msgstr "Verlauf"
+
+#~ msgid "Date/time"
+#~ msgstr "Datum/Uhrzeit"
+
+#~ msgid "User"
+#~ msgstr "Benutzer"
+
+#~ msgid "Action"
+#~ msgstr "Aktion"
+
+#~ msgid "DATETIME_FORMAT"
+#~ msgstr "DATETIME_FORMAT"
+
+#~ msgid ""
+#~ "This object doesn't have a change history. It probably wasn't added via "
+#~ "this admin site."
+#~ msgstr ""
+#~ "Dieses Objekt hat keine Änderungshistorie. Es wurde vermutlich nicht über "
+#~ "die Admin-Site hinzugefügt."
+
+#~ msgid "Documentation"
+#~ msgstr "Dokumentation"
+
+#~ msgid "Log out"
+#~ msgstr "Abmeldung"
