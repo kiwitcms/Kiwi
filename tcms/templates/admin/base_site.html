@@ -1,27 +1,12 @@
-{% extends "tcms_base.html" %}
+{% extends "admin/base.html" %}
 {% load static %}
-{% load i18n %}
-{% block breadcrumbs %}
-    <div class="sprites crumble">
-        <a href="{% url "core-views-index" %}">Home</a>
-        >> <a href="/admin/">Admin</a>
-        >>{{ title }}
-    </div>
+{% load i18n grp_tags %}
+
+{% block title %}{{ title }} | {% get_site_title %}{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/admin.css' %}" media="screen" />
 {% endblock %}
-{% block subtitle %}{{ title }}{% endblock %}
-
-{% block branding %}
-<h1 id="site-name">{% trans 'Django administration' %}</h1>
-{% endblock %}
-
-{% block nav-global %}{% endblock %}
-
-{% block custom_javascript %}
-	<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+{% block navigation %}
+    <iframe src="{% url 'iframe-navigation' %}" width="100%" height="205px" scrolling="no" frameBorder="0"></iframe>
 {% endblock %}

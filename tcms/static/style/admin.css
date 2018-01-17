@@ -1,0 +1,7 @@
+header#grp-header {
+    position: static;
+}
+
+#grp-content {
+    top: 0;
+}
