@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.i18n import JavaScriptCatalog
 
+from grappelli import urls as grappelli_urls
 from attachments import urls as attachments_urls
 from modernrpc.core import JSONRPC_PROTOCOL
 from modernrpc.core import XMLRPC_PROTOCOL
@@ -29,6 +30,7 @@ urlpatterns = [
     # iframe navigation workaround
     url(r'^navigation/', core_views.navigation, name='iframe-navigation'),
 
+    url(r'^grappelli/', include(grappelli_urls)),
     url(r'^admin/', admin.site.urls),
 
     url(r'^attachments/', include(attachments_urls, namespace='attachments')),
