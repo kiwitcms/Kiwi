@@ -701,11 +701,14 @@ class Status(TCMS):
     Used for easy converting between id and name.
     """
 
-    _statuses = ['PAD', 'IDLE', 'PASSED', 'FAILED', 'RUNNING', 'PAUSED',
+    # FIXME: this relies on statuses in Db having the same order because
+    # we pass around IDs in other parts of the code. This can go wrong in
+    # so many ways
+    _statuses = ['PAD', 'IDLE', 'RUNNING', 'PAUSED', 'PASSED', 'FAILED',
                  'BLOCKED', 'ERROR', 'WAIVED']
 
-    _colors = [None, "blue", "lightgreen", "lightred", "green", "yellow",
-               "red", "magenta", "lightcyan"]
+    _colors = [None, "blue", "green", "yellow", "lightgreen", "red",
+               "lightred", "magenta", "lightcyan"]
 
     def __init__(self, status):
         """
