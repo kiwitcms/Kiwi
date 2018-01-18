@@ -1,6 +1,7 @@
 Django==2.0.1
 django-attachments>=1.3
 django-grappelli
+django-vinaigrette
 django-uuslug
 odfpy
 python-bugzilla

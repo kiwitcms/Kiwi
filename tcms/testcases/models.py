@@ -10,6 +10,8 @@ from django.db.models.signals import post_save, post_delete, pre_save
 from django.contrib.contenttypes.fields import GenericRelation
 from django.utils.encoding import smart_str
 
+import vinaigrette
+
 from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import TCMSContentTypeBaseModel
 from tcms.core.models.fields import DurationField
@@ -95,6 +97,10 @@ class TestCaseStatus(TCMSActionModel):
 
     def is_confirmed(self):
         return self.name == 'CONFIRMED'
+
+
+# register model for DB translations
+vinaigrette.register(TestCaseStatus, ['name'])
 
 
 class TestCaseCategory(TCMSActionModel):

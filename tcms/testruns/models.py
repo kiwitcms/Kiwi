@@ -9,6 +9,8 @@ from django.db import models
 from django.db.models import Q, Count
 from django.db.models.signals import post_save, post_delete, pre_save
 
+import vinaigrette
+
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.models.fields import DurationField
 from tcms.core.models import TCMSActionModel
@@ -518,6 +520,10 @@ class TestCaseRunStatus(TCMSActionModel):
         if self.cache_key_names in cache:
             del cache[self.cache_key_names]
         return result
+
+
+# register model for DB translations
+vinaigrette.register(TestCaseRunStatus, ['name'])
 
 
 class TestCaseRunManager(models.Manager):
