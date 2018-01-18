@@ -217,6 +217,7 @@ ROOT_URLCONF = 'tcms.urls'
 WSGI_APPLICATION = 'tcms.wsgi.application'
 
 INSTALLED_APPS = [
+    'vinaigrette',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
