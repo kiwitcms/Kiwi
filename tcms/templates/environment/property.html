@@ -48,7 +48,7 @@
 				</div>
 				<ul class="groupul" id="id_properties_container">
 					{% for property in properties %}
-					<li id="id_property_{{ property.id }}" data-param="{{ property.id }}"  class="{% cycle 'even' 'odd'} js-one-prop">
+					<li id="id_property_{{ property.id }}" data-param="{{ property.id }}"  class="{% cycle 'even' 'odd' %} js-one-prop">
 						<span class="lab" style="float:left; width:50%;">
 							<input type="checkbox" name="id" value="{{ property.id }}">
 							<a id="id_property_name_{{ property.id }}" class="{% if property.is_active %}{% else %}line-through{% endif %} js-prop-name" >{{ property.name }}</a>
