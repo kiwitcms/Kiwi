@@ -416,10 +416,6 @@ class BaseCaseSearchForm(forms.Form):
                 product__id=product_id)
 
 
-class CaseFilterForm(BaseCaseSearchForm):
-    pass
-
-
 class SearchCaseForm(BaseCaseSearchForm):
     search = forms.CharField(required=False)
     plan = forms.CharField(required=False)

@@ -36,7 +36,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
-    SearchCaseForm, CaseFilterForm, EditCaseForm, CaseNotifyForm, \
+    SearchCaseForm, BaseCaseSearchForm, EditCaseForm, CaseNotifyForm, \
     CloneCaseForm, CaseBugForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_dict_from_query
@@ -342,7 +342,7 @@ def build_cases_search_form(request, populate=None, plan=None):
     '''Build search form preparing for quering TestCases'''
     # Intial the plan in plan details page
     if request.POST.get('from_plan'):
-        SearchForm = CaseFilterForm
+        SearchForm = BaseCaseSearchForm
     else:
         SearchForm = SearchCaseForm
 
