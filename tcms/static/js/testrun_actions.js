@@ -993,6 +993,9 @@ function addProperty(run_id,env_group_id) {
     });
 
     set_up_choices(jQ('#id_add_env_property')[0], values, 0);
+    // load values for the first property in the group. See
+    // https://github.com/kiwitcms/Kiwi/issues/142
+    change_value(jQ('#id_add_env_property').val(), 'id_add_env_value');
   };
 
   var failure = function(t) { window.alert("Update properties failed"); };
