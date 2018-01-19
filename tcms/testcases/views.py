@@ -36,7 +36,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
-    SearchCaseForm, BaseCaseSearchForm, EditCaseForm, CaseNotifyForm, \
+    SearchCaseForm, EditCaseForm, CaseNotifyForm, \
     CloneCaseForm, CaseBugForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_dict_from_query
@@ -340,16 +340,10 @@ def get_case_status(template_type):
 @require_POST
 def build_cases_search_form(request, populate=None, plan=None):
     '''Build search form preparing for quering TestCases'''
-    # Intial the plan in plan details page
-    if request.POST.get('from_plan'):
-        SearchForm = BaseCaseSearchForm
-    else:
-        SearchForm = SearchCaseForm
-
     # Initial the form and template
     action = request.POST.get('a')
     if action in TESTCASE_OPERATION_ACTIONS:
-        search_form = SearchForm(request.POST)
+        search_form = SearchCaseForm(request.POST)
         request.session['items_per_page'] = \
             request.POST.get('items_per_page', settings.DEFAULT_PAGE_SIZE)
     else:
@@ -357,8 +351,9 @@ def build_cases_search_form(request, populate=None, plan=None):
         d_status_ids = d_status.values_list('pk', flat=True)
         items_per_page = request.session.get('items_per_page',
                                              settings.DEFAULT_PAGE_SIZE)
-        search_form = SearchForm(initial={'case_status': d_status_ids,
-                                          'items_per_page': items_per_page})
+        search_form = SearchCaseForm(initial={
+                                        'case_status': d_status_ids,
+                                        'items_per_page': items_per_page})
 
     if populate:
         if request.POST.get('product'):
@@ -630,15 +625,13 @@ def search(request, template_name='case/all.html'):
 def ajax_search(request, template_name='case/common/json_cases.txt'):
     """Generate the case list in search case and case zone in plan
     """
-    SearchForm = SearchCaseForm
-
     tp = plan_from_request_or_none(request)
 
     action = request.GET.get('a')
 
     # Initial the form and template
     if action in ('search', 'sort'):
-        search_form = SearchForm(request.GET)
+        search_form = SearchCaseForm(request.GET)
     else:
         # Hacking for case plan
         confirmed_status_name = 'CONFIRMED'
@@ -653,7 +646,7 @@ def ajax_search(request, template_name='case/common/json_cases.txt'):
 
         d_status_ids = d_status.values_list('pk', flat=True)
 
-        search_form = SearchForm(initial={'case_status': d_status_ids})
+        search_form = SearchCaseForm(initial={'case_status': d_status_ids})
 
     # Populate the form
     if request.GET.get('product'):
