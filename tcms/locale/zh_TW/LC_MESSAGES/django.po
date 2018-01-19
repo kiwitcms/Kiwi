@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-18 21:42+0000\n"
-"PO-Revision-Date: 2018-01-03 15:58-0500\n"
+"PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -92,9 +92,7 @@ msgid_plural "Please correct the errors below."
 msgstr[0] ""
 
 #: tcms/templates/registration/password_change_form.html:19
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
 msgstr ""
 
 #: tcms/templates/registration/password_change_form.html:23
@@ -160,3 +158,4 @@ msgstr ""
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr ""
+
