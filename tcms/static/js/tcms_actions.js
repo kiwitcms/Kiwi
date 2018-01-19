@@ -880,29 +880,6 @@ function removeTag(container, tag) {
   constructTagZone(container, parameters);
 }
 
-function editTag(container, tag) {
-  var nt = prompt(default_messages.prompt.edit_tag, tag);
-  if (!nt) {
-    return false;
-  }
-
-  var parameters = Nitrate.Utils.formSerialize(jQ('#id_tag_form')[0]);
-  parameters.tags = nt;
-  var complete = function(t) { removeTag(container, tag); };
-  var url = '/management/tags/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-    },
-    'complete': function () {
-      complete();
-    }
-  });
-}
-
 function removeComment(form, callback) {
   var url = form.action;
   var method = form.method;
