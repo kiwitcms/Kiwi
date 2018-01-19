@@ -73,11 +73,11 @@
 </div>
 {% verbatim %}
 	<script id="properties_container_template" type="text/x-handlebars-template">
-		<li id="id_property_{{ id }}" data-param="{{ id }}">
+		<li id="id_property_{{ id }}" class="js-one-prop" data-param="{{ id }}">
 			<input type="checkbox">
 			<a id="id_property_name_{{ id }}" class="js-prop-name" >{{ name }}</a>
 			<span class="right-action">
-			<a class="editlink js-rename-prop">Rename</a>
+			<a class="editlink js-edit-prop" href="#">Rename</a>
 		</li>
 	</script>
 {% endverbatim %}

@@ -140,8 +140,8 @@ function addEnvProperty() {
         .find('.js-prop-name').bind('click', function() {
           selectEnvProperty(jQ(this).parent().data('param'));
         })
-        .end().find('.js-rename-prop').bind('click', function() {
-          editEnvProperty(jQ(this).parent().data('param'));
+        .end().find('.js-edit-prop').bind('click', function() {
+          editEnvProperty(jQ(this).parents('.js-one-prop').data('param'));
         });
 
       selectEnvProperty(id);
