@@ -440,8 +440,6 @@ ul.runcc{ margin:0px;}
 .envlog_nocontent{ text-align:center; padding-top:3px;}
 .env_properties{ background:#f3f8fe;}
 
-.edit{ background:url(../images/edit.png) left center no-repeat; padding:0px 16px;cursor:pointer;border:none; font-size:12px; height:16px;margin: 3px;}
-a:link.edit,a:visited.edit{ color:#333;}
 .action_property{ margin-left:5px;}
 .detail_title{ margin-right:10px;color:#235D9F;}
 
