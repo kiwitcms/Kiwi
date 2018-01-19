@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-18 21:42+0000\n"
-"PO-Revision-Date: 2018-01-03 16:11-0500\n"
+"PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -54,8 +54,7 @@ msgstr "Benutzername"
 
 #: tcms/profiles/forms.py:28
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
-"Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
+msgstr "Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
 
 #: tcms/profiles/forms.py:31
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
@@ -94,11 +93,8 @@ msgstr[0] "Bitte korrigieren Sie den Fehler unten."
 msgstr[1] "Bitte korrigieren Sie den Fehler unten."
 
 #: tcms/templates/registration/password_change_form.html:19
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
-msgstr ""
-"Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgstr "Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
 
 #: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"
@@ -164,103 +160,3 @@ msgstr ""
 msgid "NEED_UPDATE"
 msgstr ""
 
-#~ msgid "Home"
-#~ msgstr "Startseite"
-
-#~ msgid "Change password"
-#~ msgstr "Passwortänderung"
-
-#~ msgid "Enter a new password for the user <strong>%(username)s</strong>."
-#~ msgstr "Eingabe eines neuen Passworts für <strong>%(username)s</strong>."
-
-#~ msgid "Password"
-#~ msgstr "Passwort"
-
-#~ msgid "Enter the same password as above, for verification."
-#~ msgstr "Eingabe des gleichen Passworts wie oben."
-
-#~ msgid "Django administration"
-#~ msgstr "Django Administration"
-
-#~ msgid "Add"
-#~ msgstr "Hinzufügen"
-
-#~ msgid "Add %(name)s"
-#~ msgstr "%(name)s hinzufügen"
-
-#~ msgid "Filter"
-#~ msgstr "Filter"
-
-#~ msgid "Delete"
-#~ msgstr "Löschen"
-
-#~ msgid ""
-#~ "Deleting the %(object_name)s '%(escaped_object)s' would result in "
-#~ "deleting related objects, but your account doesn't have permission to "
-#~ "delete the following types of objects:"
-#~ msgstr ""
-#~ "Löschen von %(object_name)s '%(escaped_object)s' würde auch verbundene "
-#~ "Objekte löschen, aber Ihr Konto hat keine Berechtigung zum Löschen "
-#~ "folgender Objekte:"
-
-#~ msgid ""
-#~ "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s"
-#~ "\"? All of the following related items will be deleted:"
-#~ msgstr ""
-#~ "Sind Sie sicher, %(object_name)s '%(escaped_object)s' zu löschen? Alle "
-#~ "der folgenden verbundenen Elemente werden gelöscht:"
-
-#~ msgid "Yes, I'm sure"
-#~ msgstr "Ja, ich bin sicher"
-
-#~ msgid " By %(filter_title)s "
-#~ msgstr " Von %(filter_title)s "
-
-#~ msgid "Models available in the %(name)s application."
-#~ msgstr "Modelle sind in der %(name)s Anwendung verfügbar."
-
-#~ msgid "%(name)s"
-#~ msgstr "%(name)s"
-
-#~ msgid "Change"
-#~ msgstr "Änderung"
-
-#~ msgid "You don't have permission to edit anything."
-#~ msgstr "Sie sind nicht zur Bearbeitung berechtigt."
-
-#~ msgid "Recent Actions"
-#~ msgstr "Letzte Aktionen"
-
-#~ msgid "My Actions"
-#~ msgstr "Meine Aktionen"
-
-#~ msgid "None available"
-#~ msgstr "Keine verfügbar"
-
-#~ msgid "History"
-#~ msgstr "Verlauf"
-
-#~ msgid "Date/time"
-#~ msgstr "Datum/Uhrzeit"
-
-#~ msgid "User"
-#~ msgstr "Benutzer"
-
-#~ msgid "Action"
-#~ msgstr "Aktion"
-
-#~ msgid "DATETIME_FORMAT"
-#~ msgstr "DATETIME_FORMAT"
-
-#~ msgid ""
-#~ "This object doesn't have a change history. It probably wasn't added via "
-#~ "this admin site."
-#~ msgstr ""
-#~ "Dieses Objekt hat keine Änderungshistorie. Es wurde vermutlich nicht über "
-#~ "die Admin-Site hinzugefügt."
-
-#~ msgid "Documentation"
-#~ msgstr "Dokumentation"
-
-#~ msgid "Log out"
-#~ msgstr "Abmeldung"
