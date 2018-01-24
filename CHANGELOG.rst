@@ -1,6 +1,49 @@
 Change Log
 ==========
 
+Kiwi TCMS 3.50 (Jan 24 2018)
+----------------------------
+
+Enhancements and bug fixes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Update documentation for XML-RPC and positional arguments, translations,
+  environment groups
+- Enable translations. Fixes
+  `Issue #129 <https://github.com/kiwitcms/Kiwi/issues/129>`_
+- Register models for DB translations. Fixes
+  `Issue #182 <https://github.com/kiwitcms/Kiwi/issues/182>`_
+- New German translations (@xbln)
+- Require django-attachments>=1.3 and restore attachments count in tabs
+- Fix missing tag names in TestPlan page
+- Hide admin forms for some models not supposed to be editted by users. Fixes
+  `Issue #174 <https://github.com/kiwitcms/Kiwi/issues/174>`_
+- Use django-grappelli for the admin templates: modern look and feel and
+  less template files overriden by Kiwi TCMS
+- Load values for default property in TestRun 'Add Property' dialog. Fixes
+  `Issue #142 <https://github.com/kiwitcms/Kiwi/issues/142>`_
+- Correctly find property ID when renaming environment properties. Fixes
+  `Issue #167 <https://github.com/kiwitcms/Kiwi/issues/167>`_
+- Convert request body to string. Fixes
+  `Issue #177 <https://github.com/kiwitcms/Kiwi/issues/177>`_
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove batch tag Add/Remove sub-menu in TestPlan view (Anton Sankov)
+- Remove Edit tag button in Tag tab (Anton Sankov)
+- Remove template functions. Fixes
+  `Issue #107 <https://github.com/kiwitcms/Kiwi/issues/107>`_
+- Remove custom HttpJSONResponse classes
+- Remove unused and duplicate code
+
+
+tcms-api 1.5.1 (Jan 24 2018)
+----------------------------
+
+- [api] Fix order of TestCaseRun statuses. Fixes #184
+
+
 Kiwi TCMS 3.49 (Jan 02 2018)
 ----------------------------
 
