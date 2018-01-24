@@ -77,6 +77,7 @@ ifeq ($(KIWI_VERSION),)
 endif
 
 docker-image:
+	find -name "*.pyc" -delete
 	docker build -t $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) .
 	docker tag $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) $(DOCKER_ORG)/kiwi:latest
 

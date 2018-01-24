@@ -49,7 +49,6 @@ RUN cd /Kiwi/ && npm install && \
 
 # Copy the application code to the virtual environment
 COPY ./tcms/ /venv/lib64/python3.5/site-packages/tcms/
-RUN find /venv/lib64/python3.5/site-packages/tcms/ -name "*.pyc" -delete
 
 # collect static files
 RUN /Kiwi/manage.py collectstatic --noinput
