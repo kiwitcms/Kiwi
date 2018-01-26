@@ -146,26 +146,19 @@ class TestBuildUpdate(XmlrpcAPIBaseTest):
         self.assertEqual(b['description'], 'Update from unittest.')
 
 
-class TestBuildGet(XmlrpcAPIBaseTest):
+class TestBuildFilter(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
-        super(TestBuildGet, self)._fixture_setup()
+        super(TestBuildFilter, self)._fixture_setup()
 
         self.product = ProductFactory()
         self.build = TestBuildFactory(description='for testing', product=self.product)
 
-    def test_build_get_with_no_args(self):
-        bad_args = ([], (), {})
-        for arg in bad_args:
-            with self.assertRaisesRegex(XmlRPCFault, 'Invalid parameter'):
-                self.rpc_client.Build.get(arg)
+    def test_build_filter_with_non_exist_id(self):
+        self.assertEqual(0, len(self.rpc_client.Build.filter({'pk': -9999})))
 
-    def test_build_get_with_non_exist_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestBuild matching query does not exist'):
-            self.rpc_client.Build.get(-9999)
-
-    def test_build_get_with_id(self):
-        b = self.rpc_client.Build.get(self.build.pk)
+    def test_build_filter_with_id(self):
+        b = self.rpc_client.Build.filter({'pk': self.build.pk})[0]
         self.assertIsNotNone(b)
         self.assertEqual(b['build_id'], self.build.pk)
         self.assertEqual(b['name'], self.build.name)
@@ -173,41 +166,14 @@ class TestBuildGet(XmlrpcAPIBaseTest):
         self.assertEqual(b['description'], 'for testing')
         self.assertTrue(b['is_active'])
 
-
-class TestBuildCheck(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestBuildCheck, self)._fixture_setup()
-
-        self.product = ProductFactory()
-        self.build = TestBuildFactory(description='testing ...', product=self.product)
-
-    def test_check_build_with_no_args(self):
-        bad_args = (None, [], (), {}, "")
-        for arg in bad_args:
-            with self.assertRaisesRegex(XmlRPCFault, 'TestBuild matching query does not exist'):
-                self.rpc_client.Build.check_build(arg, self.product.pk)
-
-            with self.assertRaisesRegex(XmlRPCFault, 'Internal error:'):
-                self.rpc_client.Build.check_build("B5", arg)
-
-    def test_check_build_with_non_exist_build_name(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestBuild matching query does not exist'):
-            self.rpc_client.Build.check_build("AAAAAAAAAAAAAA", self.product.pk)
-
-    def test_check_build_with_non_exist_product_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Product matching query does not exist'):
-            self.rpc_client.Build.check_build("B5", -9)
-
-    def test_check_build_with_non_exist_product_name(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Product matching query does not exist'):
-            self.rpc_client.Build.check_build("B5", "AAAAAAAAAAAAAAAA")
-
-    def test_check_build(self):
-        b = self.rpc_client.Build.check_build(self.build.name, self.product.pk)
+    def test_build_filter_with_name_and_product(self):
+        b = self.rpc_client.Build.filter({
+            'name': self.build.name,
+            'product': self.product.pk
+        })[0]
         self.assertIsNotNone(b)
         self.assertEqual(b['build_id'], self.build.pk)
         self.assertEqual(b['name'], self.build.name)
         self.assertEqual(b['product_id'], self.product.pk)
-        self.assertEqual(b['description'], 'testing ...')
+        self.assertEqual(b['description'], 'for testing')
         self.assertEqual(b['is_active'], True)
