@@ -13,7 +13,11 @@ Submodules
 
    tcms.xmlrpc.api.auth
    tcms.xmlrpc.api.build
-   tcms.xmlrpc.api.env
+   tcms.xmlrpc.api.category
+   tcms.xmlrpc.api.component
+   tcms.xmlrpc.api.env_group
+   tcms.xmlrpc.api.env_property
+   tcms.xmlrpc.api.env_value
    tcms.xmlrpc.api.product
    tcms.xmlrpc.api.tag
    tcms.xmlrpc.api.testcase
