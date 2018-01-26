@@ -9,7 +9,6 @@ Nitrate.CreateRunPage = {
         They may not be blank.
     */
     bind_build_selector_to_product(false);
-    // bind_env_selector_to_product(false);
     bind_version_selector_to_product(false);
 
     /*

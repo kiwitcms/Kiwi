@@ -115,52 +115,6 @@ class TestBuildFactory(DjangoModelFactory):
     product = factory.SubFactory(ProductFactory)
 
 
-class TestEnvironmentFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.TestEnvironment'
-
-    name = factory.Sequence(lambda n: 'Environment %d' % n)
-    product = factory.SubFactory(ProductFactory)
-
-
-class TestEnvironmentCategoryFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.TestEnvironmentCategory'
-
-    name = factory.Sequence(lambda n: 'Environment Category %d' % n)
-    product = factory.SubFactory(ProductFactory)
-
-
-class TestEnvironmentElementFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.TestEnvironmentElement'
-
-    name = factory.Sequence(lambda n: 'Environment Element %d' % n)
-    env_category = factory.SubFactory(TestEnvironmentCategoryFactory)
-
-
-class TestEnvironmentPropertyFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.TestEnvironmentProperty'
-
-    name = factory.Sequence(lambda n: 'Environment Property %d' % n)
-    element = factory.SubFactory(TestEnvironmentElementFactory)
-
-
-class TestEnvironmentMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.TestEnvironmentMap'
-
-    environment = factory.SubFactory(TestEnvironmentFactory)
-    property = factory.SubFactory(TestEnvironmentPropertyFactory)
-    element = factory.SubFactory(TestEnvironmentElementFactory)
-
-
 class TestTagFactory(DjangoModelFactory):
 
     class Meta:
