@@ -7,7 +7,7 @@ from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 
 __all__ = (
-    'check_build', 'create', 'get', 'get_runs', 'get_caseruns', 'update'
+    'check_build', 'create', 'get', 'update'
 )
 
 
@@ -37,7 +37,8 @@ def create(values):
     .. function:: XML-RPC Build.create(values)
 
         Creates a new build object and stores it in the database.
-        ``values`` is a dict matching the fields of the TestBuild object:
+        ``values`` is a dict matching the fields of the
+        :class:`tcms.management.models.TestBuild` model:
 
         :param product: **required** ID or name of Product to which this Build belongs
         :type product: int or str
@@ -81,48 +82,6 @@ def get(build_id):
     return TestBuild.objects.get(build_id=build_id).serialize()
 
 
-@rpc_method(name='Build.get_runs')
-def get_runs(build_id):
-    """
-    .. function:: XML-RPC Build.get_runs(build_id)
-
-        Returns the list of TestRuns that this Build is used in.
-
-        :param build_id: the object ID
-        :type build_id: int
-        :return: List of serialized :class:`tcms.testruns.models.TestRun` objects
-        :rtype: list(dict)
-        :raises: TestBuild.DoesNotExist if build not found
-    """
-    from tcms.testruns.models import TestRun
-
-    tb = TestBuild.objects.get(build_id=build_id)
-    query = {'build': tb}
-
-    return TestRun.to_xmlrpc(query)
-
-
-@rpc_method(name='Build.get_caseruns')
-def get_caseruns(build_id):
-    """
-    .. function:: XML-RPC Build.get_caseruns(build_id)
-
-        Returns the list of case-runs that this Build is used in.
-
-        :param build_id: the object ID
-        :type build_id: int
-        :return: List of serialized :class:`tcms.testruns.models.TestCaseRun` objects
-        :rtype: list(dict)
-        :raises: TestBuild.DoesNotExist if build not found
-    """
-    from tcms.testruns.models import TestCaseRun
-
-    tb = TestBuild.objects.get(build_id=build_id)
-    query = {'build': tb}
-
-    return TestCaseRun.to_xmlrpc(query)
-
-
 @permissions_required('management.change_testbuild')
 @rpc_method(name='Build.update')
 def update(build_id, values):
@@ -130,7 +89,8 @@ def update(build_id, values):
     .. function:: XML-RPC Build.update(build_id, values)
 
         Updates the fields of the selected ``build_id``.
-        ``values`` is a dict matching the fields of the TestBuild object:
+        ``values`` is a dict matching the fields of the
+        :class:`tcms.management.models.TestBuild` model:
 
         :param product: ID or name of Product to which this Build belongs
         :type product: int or str

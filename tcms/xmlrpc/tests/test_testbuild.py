@@ -6,10 +6,6 @@ from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestBuildFactory
-from tcms.tests.factories import TestCaseRunFactory
-from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
@@ -176,63 +172,6 @@ class TestBuildGet(XmlrpcAPIBaseTest):
         self.assertEqual(b['product_id'], self.product.pk)
         self.assertEqual(b['description'], 'for testing')
         self.assertTrue(b['is_active'])
-
-
-class TestBuildGetCaseRuns(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestBuildGetCaseRuns, self)._fixture_setup()
-
-        self.product = ProductFactory()
-        self.build = TestBuildFactory(product=self.product)
-        self.user = UserFactory()
-        self.case_run_1 = TestCaseRunFactory(assignee=self.user, build=self.build)
-        self.case_run_2 = TestCaseRunFactory(assignee=self.user, build=self.build)
-
-    def test_build_get_with_no_args(self):
-        bad_args = ([], (), {})
-        for arg in bad_args:
-            with self.assertRaisesRegex(XmlRPCFault, 'Invalid parameter'):
-                self.rpc_client.Build.get_caseruns(arg)
-
-    def test_build_get_with_non_exist_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestBuild matching query does not exist'):
-            self.rpc_client.Build.get_caseruns(-9999)
-
-    def test_build_get_with_id(self):
-        b = self.rpc_client.Build.get_caseruns(self.build.pk)
-        self.assertIsNotNone(b)
-        self.assertEqual(2, len(b))
-        self.assertEqual(b[0]['case'], self.case_run_1.case.summary)
-
-
-class TestBuildGetRuns(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestBuildGetRuns, self)._fixture_setup()
-
-        self.product = ProductFactory()
-        self.version = VersionFactory(value='0.1', product=self.product)
-        self.build = TestBuildFactory(product=self.product)
-        self.user = UserFactory()
-        self.test_run = TestRunFactory(manager=self.user, default_tester=None,
-                                       build=self.build)
-
-    def test_build_get_with_no_args(self):
-        bad_args = ([], (), {})
-        for arg in bad_args:
-            with self.assertRaisesRegex(XmlRPCFault, 'Invalid parameter'):
-                self.rpc_client.Build.get_runs(arg)
-
-    def test_build_get_with_non_exist_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestBuild matching query does not exist'):
-            self.rpc_client.Build.get_runs(-9999)
-
-    def test_build_get_with_id(self):
-        b = self.rpc_client.Build.get_runs(self.build.pk)
-        self.assertIsNotNone(b)
-        self.assertEqual(len(b), 1)
-        self.assertEqual(b[0]['summary'], self.test_run.summary)
 
 
 class TestBuildCheck(XmlrpcAPIBaseTest):
