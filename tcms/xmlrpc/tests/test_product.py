@@ -5,7 +5,6 @@ from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestBuildFactory
 from tcms.tests.factories import TestCaseCategoryFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
@@ -115,28 +114,6 @@ class TestFilterVersions(XmlrpcAPIBaseTest):
         ver = self.rpc_client.Product.filter_versions({'value': '0.7'})
         self.assertIsNotNone(ver)
         self.assertEqual(ver[0]['value'], "0.7")
-
-
-class TestGetBuilds(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestGetBuilds, self)._fixture_setup()
-
-        self.product = ProductFactory(name='StarCraft')
-        self.builds_count = 3
-        self.builds = [TestBuildFactory(product=self.product) for i in range(self.builds_count)]
-
-    def test_get_build_with_id(self):
-        builds = self.rpc_client.Product.get_builds(self.product.pk)
-        self.assertIsNotNone(builds)
-        self.assertEqual(len(builds), self.builds_count + 1)
-        self.assertEqual('unspecified', builds[0]['name'])
-
-    def test_get_build_with_name(self):
-        builds = self.rpc_client.Product.get_builds("StarCraft")
-        self.assertIsNotNone(builds)
-        self.assertEqual(len(builds), self.builds_count + 1)
-        self.assertEqual('unspecified', builds[0]['name'])
 
 
 class TestGetCases(XmlrpcAPIBaseTest):

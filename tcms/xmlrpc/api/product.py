@@ -8,7 +8,7 @@ from tcms.management.models import Product
 from tcms.management.forms import VersionForm
 from tcms.core.utils import form_errors_to_list
 from tcms.xmlrpc.decorators import permissions_required
-from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
+from tcms.xmlrpc.utils import pre_check_product
 
 
 __all__ = (
@@ -16,7 +16,6 @@ __all__ = (
     'filter',
     'filter_components',
     'filter_versions',
-    'get_builds',
     'get_cases',
     'add_component',
     'get_component',
@@ -136,32 +135,6 @@ def filter_versions(query):
     from tcms.management.models import Version
 
     return Version.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.get_builds')
-def get_builds(product, is_active=True):
-    """
-    Description: Get the list of builds associated with this product.
-TODO: there's testbuilds.get for this ????
-
-    Params:      $product  -  Integer/String
-                              Integer: product_id of the product in the Database
-                              String: Product name
-                 $is_active - Boolean: True to only include builds where is_active is true.
-                              Default: True
-    Returns:     Array: Returns an array of Build objects.
-
-    Example:
-    # Get with product id including all builds
-    >>> Product.get_builds(61)
-    # Get with product name excluding all inactive builds
-    >>> Product.get_builds('Red Hat Enterprise Linux 5', 0)
-    """
-    from tcms.management.models import TestBuild
-
-    p = pre_check_product(values=product)
-    query = {'product': p, 'is_active': parse_bool_value(is_active)}
-    return TestBuild.to_xmlrpc(query)
 
 
 @rpc_method(name='Product.get_cases')
