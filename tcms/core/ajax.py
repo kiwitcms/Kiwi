@@ -65,7 +65,7 @@ def info(request):
 
     class Objects(object):
         __all__ = [
-            'builds', 'categories', 'components', 'envs', 'env_groups',
+            'builds', 'categories', 'components', 'env_groups',
             'env_properties', 'env_values', 'tags', 'users', 'versions'
         ]
 
@@ -100,11 +100,6 @@ def info(request):
             from tcms.management.models import Component
 
             return Component.objects.filter(product__id=self.product_id)
-
-        def envs(self):
-            from tcms.management.models import TestEnvironment
-
-            return TestEnvironment.objects.filter(product__id=self.product_id)
 
         def env_groups(self):
             from tcms.management.models import TCMSEnvGroup

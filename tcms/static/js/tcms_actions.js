@@ -449,63 +449,6 @@ function getBuildsByProductId(allow_blank, product_field, build_field, is_active
   });
 }
 
-function getEnvsByProductId(allow_blank, product_field) {
-  if (!product_field) {
-    var product_field = jQ('#id_product')[0];
-  }
-
-  product_id = jQ(product_field).val();
-  var args = false;
-  if (jQ('#value_sub_module').length) {
-    if (jQ('#value_sub_module').val() === 'new_run') {
-      args = 'is_active';
-    }
-  }
-
-  if(product_id === '') {
-    jQ('#id_env_id').html('<option value="">---------</option>');
-    return true;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    debug_output('Get environments succeed get ready to replace the select widget inner html');
-
-    set_up_choices(
-      jQ('#id_env_id')[0],
-      returnobj.map(function(o) {
-        return [o.pk, o.fields.name];
-      }),
-      allow_blank
-    );
-
-    if (document.title === "Create new test run") {
-      if (jQ('#id_env_id').html() === '') {
-        window.alert('You should create new enviroment first before create new run');
-      }
-    }
-  };
-
-  var failure = function(jqXHR, textStatus, errorThrown) {
-    if (jqXHR.readyState != 0 && errorThrown != "") {
-        alert("Update builds and envs failed");
-    }
-  };
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
-  new Ajax.Request(url, {
-    method:'get',
-    parameters:{
-        info_type: 'envs',
-        product_id: product_id,
-        args: args,
-    },
-    requestHeaders: {Accept: 'application/json'},
-    onSuccess: success,
-    onFailure: failure
-  });
-}
 
 function getVersionsByProductId(allow_blank, product_field, version_field) {
   var product_field = jQ('#id_product')[0];
@@ -704,10 +647,6 @@ function bind_build_selector_to_product(allow_blank, product_field, build_field,
   }
 }
 
-function bind_env_selector_to_product(allow_blank) {
-  jQ('#id_product_id').bind('change', function() { getEnvsByProductId(allow_blank); });
-  getEnvsByProductId(allow_blank);
-}
 
 function bind_version_selector_to_product(allow_blank, load, product_field, version_field) {
   var product_field = checkProductField(product_field);

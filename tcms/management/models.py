@@ -275,87 +275,8 @@ class TestBuild(TCMSActionModel):
         else:
             return None
 
-# Test environments zone
-
-
-class TestEnvironment(TCMSActionModel):
-    environment_id = models.AutoField(
-        max_length=10,
-        primary_key=True
-    )
-    product = models.ForeignKey(Product, related_name='environments', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255, blank=True)
-    is_active = models.BooleanField(db_column="isactive", default=True)
-
-    class Meta:
-        db_table = u'test_environments'
-
-    def __str__(self):
-        return self.name
-
-    def as_choice(self):
-        return (self.environment_id, self.name)
-
-
-class TestEnvironmentCategory(models.Model):
-    env_category_id = models.AutoField(primary_key=True)
-    product = models.ForeignKey(Product, related_name='environment_categories',
-                                on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=255, blank=True)
-
-    class Meta:
-        db_table = u'test_environment_category'
-        index_together = (('env_category_id', 'product'), ('product', 'name'))
-
-    def __str__(self):
-        return self.name
-
-
-class TestEnvironmentElement(models.Model):
-    element_id = models.AutoField(max_length=10, primary_key=True)
-    env_category = models.ForeignKey(TestEnvironmentCategory, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=255, blank=True)
-    parent = models.ForeignKey('self', null=True, related_name='parent_set',
-                               on_delete=models.CASCADE)
-    is_private = models.BooleanField(db_column='isprivate', default=False)
-
-    class Meta:
-        db_table = u'test_environment_element'
-
-    def __str__(self):
-        return self.name
-
-
-class TestEnvironmentProperty(models.Model):
-    property_id = models.IntegerField(primary_key=True)
-    element = models.ForeignKey(TestEnvironmentElement, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=255, blank=True)
-    valid_express = models.TextField(db_column='validexp', blank=True)
-
-    class Meta:
-        db_table = u'test_environment_property'
-
-    def __str__(self):
-        return self.name
-
-
-class TestEnvironmentMap(models.Model):
-    environment = models.ForeignKey(TestEnvironment, on_delete=models.CASCADE)
-    property = models.ForeignKey(TestEnvironmentProperty, on_delete=models.CASCADE)
-    element = models.ForeignKey(TestEnvironmentElement, on_delete=models.CASCADE)
-    value_selected = models.TextField(blank=True)
-
-    class Meta:
-        db_table = u'test_environment_map'
-        # FIXME: is unique_together against environment and property necessary?
-
-    def __str__(self):
-        return self.value_selected
-
 
 # Test tag zone
-
-
 class TestTag(TCMSActionModel):
     id = models.AutoField(db_column='tag_id', max_length=10, primary_key=True)
     name = models.CharField(db_column='tag_name', max_length=255)
@@ -375,10 +296,6 @@ class TestTag(TCMSActionModel):
             new_tag = cls.objects.get_or_create(name=name)[0]
             tags.append(new_tag)
         return tags
-
-# ============================
-# New TCMS Environments models
-# ============================
 
 
 class TCMSEnvGroup(TCMSActionModel):
