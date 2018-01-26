@@ -12,45 +12,17 @@ from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 
 
 __all__ = (
-    'check_category',
     'check_component',
     'filter',
-    'filter_categories',
     'filter_components',
     'filter_versions',
     'get_builds',
     'get_cases',
-    'get_categories',
-    'get_category',
     'add_component',
     'get_component',
     'update_component',
     'add_version',
 )
-
-
-@rpc_method(name='Product.check_category')
-def check_category(name, product):
-    """
-    Description: Looks up and returns a category by name.
-
-    Params:      $name - String: name of the category.
-                 $product - Integer/String
-                            Integer: product_id of the product in the Database
-                            String: Product name
-
-    Returns:     Hash: Matching Category object hash or error if not found.
-
-    Example:
-    # Get with product ID
-    >>> Product.check_category('Feature', 61)
-    # Get with product name
-    >>> Product.check_category('Feature', 'Red Hat Enterprise Linux 5')
-    """
-    from tcms.testcases.models import TestCaseCategory
-
-    p = pre_check_product(values=product)
-    return TestCaseCategory.objects.get(name=name, product=p).serialize()
 
 
 @rpc_method(name='Product.check_component')
@@ -103,36 +75,6 @@ TODO: query keys match the product class
     >>> Product.filter({'name': 'Red Hat Enterprise Linux 5'})
     """
     return Product.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.filter_categories')
-def filter_categories(query):
-    """
-    Description: Performs a search and returns the resulting list of categories.
-
-    Params:      $query - Hash: keys must match valid search fields.
-
-    +------------------------------------------------------------------+
-    |              Component Search Parameters                         |
-    +------------------------------------------------------------------+
-    |        Key          |          Valid Values                      |
-    | id                  | Integer: ID of product                     |
-    | name                | String                                     |
-    | product             | ForeignKey: Product                        |
-    | description         | String                                     |
-    +------------------------------------------------------------------+
-
-    Returns:     Array: Matching categories are retuned in a list of hashes.
-
-    Example:
-    # Get all of categories named like 'libvirt'
-    >>> Product.filter_categories({'name__icontains': 'regression'})
-    # Get all of categories named in product 'Red Hat Enterprise Linux 5'
-    >>> Product.filter_categories({'product__name': 'Red Hat Enterprise Linux 5'})
-    """
-    from tcms.testcases.models import TestCaseCategory
-
-    return TestCaseCategory.to_xmlrpc(query)
 
 
 @rpc_method(name='Product.filter_components')
@@ -245,47 +187,6 @@ TODO: duplicate with api/testcases.py ???
     p = pre_check_product(values=product)
     query = {'category__product': p}
     return TestCase.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.get_categories')
-def get_categories(product):
-    """
-    Description: Get the list of categories associated with this product.
-
-    Params:      $product - Integer/String
-                            Integer: product_id of the product in the Database
-                            String: Product name
-
-    Returns:     Array: Returns an array of Case Category objects.
-
-    Example:
-    # Get with product id
-    >>> Product.get_categories(61)
-    # Get with product name
-    >>> Product.get_categories('Red Hat Enterprise Linux 5')
-    """
-    from tcms.testcases.models import TestCaseCategory
-
-    p = pre_check_product(values=product)
-    query = {'product': p}
-    return TestCaseCategory.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.get_category')
-def get_category(id):
-    """
-    Description: Get the category matching the given id.
-
-    Params:      $id - Integer: ID of the category in the database.
-
-    Returns:     Hash: Category object hash.
-
-    Example:
-    >>> Product.get_category(11)
-    """
-    from tcms.testcases.models import TestCaseCategory
-
-    return TestCaseCategory.objects.get(id=int(id)).serialize()
 
 
 @permissions_required('management.add_component')

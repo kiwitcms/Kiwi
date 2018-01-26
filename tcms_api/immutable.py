@@ -259,8 +259,8 @@ class Category(TCMS):
         elif self._id is not TCMSNone:
             try:
                 log.info("Fetching category {0}".format(self.identifier))
-                inject = self._server.Product.get_category(self.id)
-            except xmlrpc.client.Fault as error:
+                inject = self._server.Category.filter({'pk': self.id})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find category for " + self.identifier)
@@ -269,9 +269,11 @@ class Category(TCMS):
             try:
                 log.info("Fetching category '{0}' of '{1}'".format(
                     self.name, self.product.name))
-                inject = self._server.Product.check_category(
-                    self.name, self.product.id)
-            except xmlrpc.client.Fault as error:
+                inject = self._server.Category.filter({
+                    'name': self.name,
+                    'product': self.product.id
+                })[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError("Category '{0}' not found in"
                                 " '{1}'".format(self.name, self.product.name))
