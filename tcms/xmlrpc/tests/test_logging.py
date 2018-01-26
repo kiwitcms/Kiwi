@@ -20,22 +20,22 @@ class TestXMLRPCLogging(XmlrpcAPIBaseTest):
 
     @patch('tcms.xmlrpc.handlers.settings.DEBUG', new=False)
     def test_logging_with_authenticated_user(self):
-        log_count = XmlRpcLog.objects.filter(user=self.api_user, method='Env.filter_groups').count()
+        log_count = XmlRpcLog.objects.filter(user=self.api_user, method='Env.Group.filter').count()
 
-        self.rpc_client.Env.filter_groups({})
-        new_count = XmlRpcLog.objects.filter(user=self.api_user, method='Env.filter_groups').count()
+        self.rpc_client.Env.Group.filter({})
+        new_count = XmlRpcLog.objects.filter(user=self.api_user, method='Env.Group.filter').count()
 
         self.assertEqual(new_count, log_count + 1)
 
     @patch('tcms.xmlrpc.handlers.settings.DEBUG', new=False)
     def test_logging_with_anonymous_user(self):
         log_count = XmlRpcLog.objects.filter(user__username='Anonymous',
-                                             method='Env.filter_groups').count()
+                                             method='Env.Group.filter').count()
 
         self.rpc_client.Auth.logout()
-        self.rpc_client.Env.filter_groups({})
+        self.rpc_client.Env.Group.filter({})
         new_count = XmlRpcLog.objects.filter(user__username='Anonymous',
-                                             method='Env.filter_groups').count()
+                                             method='Env.Group.filter').count()
 
         self.assertEqual(new_count, log_count + 1)
 
