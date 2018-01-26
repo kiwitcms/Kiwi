@@ -125,8 +125,8 @@ class Build(TCMS):
         elif self._id is not TCMSNone:
             try:
                 log.info("Fetching build " + self.identifier)
-                inject = self._server.Build.get(self.id)
-            except xmlrpc.client.Fault as error:
+                inject = self._server.Build.filter({'pk': self.id})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find build for " + self.identifier)
@@ -135,10 +135,12 @@ class Build(TCMS):
             try:
                 log.info("Fetching build '{0}' of '{1}'".format(
                     self.name, self.product.name))
-                inject = self._server.Build.check_build(
-                    self.name, self.product.id)
+                inject = self._server.Build.filter({
+                    'name': self.name,
+                    'product': self.product.id
+                })[0]
                 self._id = inject["build_id"]
-            except xmlrpc.client.Fault as error:
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError("Build '{0}' not found in '{1}'".format(
                     self.name, self.product.name))

@@ -7,27 +7,23 @@ from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 
 __all__ = (
-    'check_build', 'create', 'get', 'update'
+    'filter', 'create', 'update'
 )
 
 
-@rpc_method(name='Build.check_build')
-def check_build(name, product):
+@rpc_method(name='Build.filter')
+def filter(values={}):
     """
-    .. function:: XML-RPC Build.check_build(name, product)
+    .. function:: XML-RPC Build.filter(values)
 
-        Looks up and returns a build by name.
+        Search and return builds matching query.
+        ``values`` is a dict matching the field lookups for the
+        :class:`tcms.management.models.TestBuild` model.
 
-        :param name: name of the build
-        :type name: str
-        :param product: Product ID or name to which this build belongs
-        :type product: int or str
-        :return: Serialized :class:`tcms.management.models.TestBuild` object
-        :rtype: dict
-        :raises: TestBuild.DoesNotExist if build not found
+        :return: List of serialized :class:`tcms.management.models.TestBuild` objects
+        :rtype: list(dict)
     """
-    p = pre_check_product(values=product)
-    return TestBuild.objects.get(name=name, product=p).serialize()
+    return TestBuild.to_xmlrpc(values)
 
 
 @rpc_method(name='Build.create')
@@ -36,18 +32,14 @@ def create(values):
     """
     .. function:: XML-RPC Build.create(values)
 
-        Creates a new build object and stores it in the database.
+        Create a new build object and store it in the database.
         ``values`` is a dict matching the fields of the
-        :class:`tcms.management.models.TestBuild` model:
+        :class:`tcms.management.models.TestBuild` model.
 
         :param product: **required** ID or name of Product to which this Build belongs
         :type product: int or str
         :param name: **required** name of the build (aka build version string)
         :type name: str
-        :param description: optional description
-        :type str:
-        :param is_active: Optional, default to True
-        :type is_active: bool
         :return: Serialized :class:`tcms.management.models.TestBuild` object
         :rtype: dict
         :raises: ValueError if product or name not specified
@@ -66,22 +58,6 @@ def create(values):
     ).serialize()
 
 
-@rpc_method(name='Build.get')
-def get(build_id):
-    """
-    .. function:: XML-RPC Build.get(build_id)
-
-        Get an existing build from the database.
-
-        :param build_id: the object ID
-        :type build_id: int
-        :return: Serialized :class:`tcms.management.models.TestBuild` object
-        :rtype: dict
-        :raises: TestBuild.DoesNotExist if build not found
-    """
-    return TestBuild.objects.get(build_id=build_id).serialize()
-
-
 @permissions_required('management.change_testbuild')
 @rpc_method(name='Build.update')
 def update(build_id, values):
@@ -92,14 +68,6 @@ def update(build_id, values):
         ``values`` is a dict matching the fields of the
         :class:`tcms.management.models.TestBuild` model:
 
-        :param product: ID or name of Product to which this Build belongs
-        :type product: int or str
-        :param name: Name of the build (aka build version string)
-        :type name: str
-        :param description: Description
-        :type str:
-        :param is_active: If the Build is active
-        :type is_active: bool
         :return: Serialized :class:`tcms.management.models.TestBuild` object
         :rtype: dict
         :raises: TestBuild.DoesNotExist if build not found
