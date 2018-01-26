@@ -74,6 +74,8 @@ class Product(TCMSActionModel):
 
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
+        # reverse many-to-one relations from other models
+        # which point to Product via FK
         self.category.get_or_create(name='--default--')
         self.version.get_or_create(value='unspecified')
         self.build.get_or_create(name='unspecified')
