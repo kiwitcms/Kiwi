@@ -14,12 +14,10 @@ from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 __all__ = (
     'check_category',
     'check_component',
-    'check_product',
     'filter',
     'filter_categories',
     'filter_components',
     'filter_versions',
-    'get',
     'get_builds',
     'get_cases',
     'get_categories',
@@ -77,27 +75,6 @@ def check_component(name, product):
 
     p = pre_check_product(values=product)
     return Component.objects.get(name=name, product=p).serialize()
-
-
-@rpc_method(name='Product.check_product')
-def check_product(name):
-    """
-    Description: Looks up and returns a validated product.
-
-    Params:      $name - Integer/String
-                         Integer: product_id of the product in the Database
-                         String: Product name
-
-    Returns:     Hash: Matching Product object hash or error if not found.
-
-    Example:
-    # Get with product ID
-    >>> Product.check_product(61)
-    # Get with product name
-    >>> Product.check_product('Red Hat Enterprise Linux 5')
-    """
-    p = pre_check_product(values=name)
-    return p.serialize()
 
 
 @rpc_method(name='Product.filter')
@@ -217,21 +194,6 @@ def filter_versions(query):
     from tcms.management.models import Version
 
     return Version.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.get')
-def get(id):
-    """
-    Description: Used to load an existing product from the database.
-
-    Params:      $id - An integer representing the ID in the database
-
-    Returns:     A blessed TCMS Product object hash
-
-    Example:
-    >>> Product.get(61)
-    """
-    return Product.objects.get(id=int(id)).serialize()
 
 
 @rpc_method(name='Product.get_builds')
