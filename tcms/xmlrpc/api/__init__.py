@@ -54,9 +54,4 @@ like this::
 In this example the ``foreignkeyname`` is 'default_tester', ``fieldname`` is
 'username' and ``field_lookup_syntax`` is 'startswith'. They are joined
 together using double underscores '__'.
-
-For the available ForeignKey field names that can be used in a query
-please check out Kiwi TCMS's source code on
-`GitHub <https://github.com/kiwitcms/Kiwi>`_ and the corresponding model
-classes.
 """

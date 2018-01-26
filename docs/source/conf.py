@@ -13,15 +13,15 @@
 # serve to show the default.
 
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'tcms.settings.devel'
-
 import sys
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../../'))
+
+
+# setup Django so we can generate documentation for models
+import django
+os.environ['DJANGO_SETTINGS_MODULE'] = 'tcms.settings.devel'
+django.setup()
+
 
 import tcms
 import subprocess
@@ -36,6 +36,7 @@ subprocess.run([manage_py, 'graph_models', '--pydot', '-g', 'testcases', '-o',
                 '%s/testcases.dot' % docs_dir], check=True)
 subprocess.run([manage_py, 'graph_models', '--pydot', '-g', 'testruns', '-o',
                 '%s/testruns.dot' % docs_dir], check=True)
+
 
 # -- General configuration ------------------------------------------------
 
