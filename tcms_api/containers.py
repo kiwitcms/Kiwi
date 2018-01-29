@@ -40,7 +40,6 @@ Container overview (objects contained are listed in brackets):
     TestPlan.children = ChildPlans[TestPlan] .............. done
     TestPlan.testcases = PlanCases[TestCase] .............. done
     TestPlan.testruns = PlanRuns[TestRun] ................. done
-    TestPlan.caseplans = PlanCasePlans[CasePlan] .......... done
 
     TestRun.tags = RunTags[Tag] ........................... done
     TestRun.caseruns = RunCaseRuns[CaseRun] ............... done
@@ -51,7 +50,6 @@ Container overview (objects contained are listed in brackets):
     TestCase.testplans = CasePlans[TestPlan] .............. done
     TestCase.testruns = CaseRuns[TestRun] ................. needed?
     TestCase.caseruns = CaseCaseRuns[CaseRun] ............. needed?
-    TestCase.caseplans = CaseCasePlans[CasePlan] .......... needed?
     TestCase.bugs = CaseBugs[Bug] ......................... done
 
     CaseRun.bugs = CaseRunBugs[Bug] ....................... done
@@ -64,11 +62,11 @@ import tcms_api.config as config
 
 from tcms_api.config import log
 from tcms_api.utils import listed
-from tcms_api.base import TCMS, TCMSNone, _getter, _idify
+from tcms_api.base import TCMS, TCMSNone, _getter
 from tcms_api.immutable import Component, Bug, Tag
 from tcms_api.xmlrpc import TCMSError
 from tcms_api.mutable import (
-    Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
+    Mutable, TestPlan, TestRun, TestCase, CaseRun)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Container Class
@@ -646,10 +644,6 @@ class CaseTags(TagContainer):
     def __str__(self):
         return listed(self._items, quote="'")
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Case Plans Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 class CasePlans(Container):
     """ Test plans linked to a test case """
@@ -682,6 +676,7 @@ class CasePlans(Container):
             log.info("Unlinking {0} from {1}".format(
                 plan.identifier, self._identifier))
             self._server.TestCase.unlink_plan(self.id, plan.id)
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Plan Runs Class
@@ -753,16 +748,6 @@ class PlanCases(Container):
         log.data("Fetched {0}".format(listed(injects, "inject")))
         self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
-        # Initialize case plans if not already cached
-        if not PlanCasePlans._is_cached(self._object.caseplans):
-            inset = [CasePlan({
-                # Fake our own internal id from testplan & testcase
-                "id": _idify([self._object.id, inject["case_id"]]),
-                "case_id": inject["case_id"],
-                "plan_id": self._object.id,
-                "sortkey": inject["sortkey"]
-            }) for inject in injects]
-            self._object.caseplans._fetch(inset)
 
     def _add(self, cases):
         """ Link provided cases to the test plan """
@@ -771,11 +756,6 @@ class PlanCases(Container):
             self._identifier,
             listed([case.identifier for case in cases])))
         self._server.TestCase.link_plan([case.id for case in cases], self.id)
-        # Add corresponding CasePlan objects to the PlanCasePlans container
-        if PlanCasePlans._is_cached(self._object.caseplans):
-            self._object.caseplans.add([
-                CasePlan(testcase=case, testplan=self._object)
-                for case in cases])
 
     def _remove(self, cases):
         """ Unlink provided cases from the test plan """
@@ -784,16 +764,10 @@ class PlanCases(Container):
             log.info("Unlinking {0} from {1}".format(
                 case.identifier, self._identifier))
             self._server.TestCase.unlink_plan(case.id, self.id)
-        # Add corresponding CasePlan objects from the PlanCasePlans container
-        if PlanCasePlans._is_cached(self._object.caseplans):
-            self._object.caseplans.remove([
-                CasePlan(testcase=case, testplan=self._object)
-                for case in cases])
 
     def __iter__(self):
-        """ Iterate over all included test cases ordered by sortkey """
-        for testcase in sorted(
-                self._items, key=lambda x: self._object.sortkey(x)):
+        """ Iterate over all included test cases """
+        for testcase in self._items:
             yield testcase
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -966,72 +940,3 @@ class RunCaseRuns(Container):
         for caserun in modified:
             caserun._update()
             caserun._modified = False
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  PlanCasePlans Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class PlanCasePlans(Container):
-    """ Test case plan objects related to a test plan """
-
-    # Local cache & class of contained objects
-    _cache = {}
-    _class = CasePlan
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  PlanCasePlans Methods
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _fetch(self, inset=None):
-        """ Fetch case plans from the server """
-        # If data initialized from the inset ---> we're done
-        if Container._fetch(self, inset):
-            return
-
-        # Fetch test case plans from the server
-        log.info("Fetching case plans for {0}".format(self._identifier))
-        injects = []
-        for testcase in self._object.testcases._items:
-            injects.append(self._server.TestCasePlan.get(testcase.id, self._object.id))
-        log.data(pretty(injects))
-
-        # And finally create the initial object set
-        self._current = set([CasePlan(inject) for inject in injects])
-        self._original = set(self._current)
-
-    def _add(self, caseplans):
-        """ Test case linking is handled by PlanCases class """
-        # Nothing to do on our side
-        pass
-
-    def _remove(self, caseplans):
-        """ Test case unlinking is handled by PlanCases class """
-        # Nothing to do on our side
-        pass
-
-    def add(self, caseplans):
-        """ Add case plans to the container """
-        # The method is used just for sync with PlanCases, we never add
-        # CasePlans to the server, thus we never get modified
-        super(PlanCasePlans, self).add(caseplans)
-        self._modified = False
-
-    def remove(self, caseplans):
-        """ Remove case plans from the container """
-        # The method is used just for sync with PlanCases, we never remove
-        # CasePlans to the server, thus we never get modified
-        super(PlanCasePlans, self).remove(caseplans)
-        self._modified = False
-
-    def update(self):
-        """ Update case plans with modified sortkey """
-        modified = [caseplan for caseplan in self if caseplan._modified]
-        # Nothing to do if there are no sortkey changes
-        if not modified:
-            return
-        # Update all modified caseplans
-        log.info("Updating {0}'s case plans".format(self._identifier))
-        for caseplan in modified:
-            caseplan._update()
-            caseplan._modified = False
