@@ -332,20 +332,6 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
         self.assertIsNone(log)
 
 
-class TestCaseRunCheckStatus(XmlrpcAPIBaseTest):
-    """Test testcaserun.get_case_run_status_by_name"""
-
-    def test_check_status_with_name(self):
-        status = self.rpc_client.TestCaseRun.get_case_run_status_by_name("IDLE")
-        self.assertIsNotNone(status)
-        self.assertEqual(status['id'], 1)
-        self.assertEqual(status['name'], "IDLE")
-
-    def test_check_status_with_non_exist_name(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRunStatus matching query does not exist'):
-            self.rpc_client.TestCaseRun.get_case_run_status_by_name("ABCDEFG")
-
-
 class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
@@ -437,10 +423,10 @@ class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
         self.assertEqual([], list(self.case_run.links()))
 
 
-class TestCaseRunGet(XmlrpcAPIBaseTest):
+class TestCaseRunFilter(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
-        super(TestCaseRunGet, self)._fixture_setup()
+        super(TestCaseRunFilter, self)._fixture_setup()
 
         self.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
         self.tester = UserFactory()
@@ -449,12 +435,12 @@ class TestCaseRunGet(XmlrpcAPIBaseTest):
                                            sortkey=10,
                                            case_run_status=self.status_idle)
 
-    def test_get_with_non_exist_id(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
-            self.rpc_client.TestCaseRun.get({'pk': 11111111})
+    def test_with_non_exist_id(self):
+        found = self.rpc_client.TestCaseRun.filter({'pk': -1})
+        self.assertEqual(0, len(found))
 
-    def test_get_with_id(self):
-        tcr = self.rpc_client.TestCaseRun.get({'pk': self.case_run.pk})
+    def test_filter_by_id(self):
+        tcr = self.rpc_client.TestCaseRun.filter({'pk': self.case_run.pk})[0]
         self.assertIsNotNone(tcr)
         self.assertEqual(tcr['build_id'], self.case_run.build.pk)
         self.assertEqual(tcr['case_id'], self.case_run.case.pk)
