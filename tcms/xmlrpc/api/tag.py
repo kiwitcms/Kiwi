@@ -4,38 +4,17 @@ from modernrpc.core import rpc_method
 
 from tcms.management.models import TestTag
 
-__all__ = ('get_tags', )
 
-
-@rpc_method(name='Tag.get_tags')
-def get_tags(values):
+@rpc_method(name='Tag.filter')
+def filter(values):
     """
-    Description:  Get the list of tags.
+    .. function:: XML-RPC Tag.filter(values)
 
-    Params:      $values - Hash: keys must match valid search fields.
-        +------------------------------------------------------------+
-        |                   tag Search Parameters                    |
-        +------------------------------------------------------------+
-        | Key                     | Valid Values                     |
-        | ids                     | List of Integer                  |
-        | names                   | List of String                   |
-        +------------------------------------------------------------+
+        Search and return a list of tags
 
-    Returns:     Array: An array of tag object hashes.
-
-    Example:
-
-    >>> values= {'ids': [121, 123]}
-    >>> Tag.get_tags(values)
+        :param values: Field lookups for :class:`tcms.management.models.TestTag`
+        :type values: dict
+        :return: Serialized list of :class:`tcms.management.models.TestTag` objects
+        :rtype: list(dict)
     """
-    if not isinstance(values, dict):
-        raise TypeError('Argument values must be a dictionary.')
-
-    if values.get('ids'):
-        query = {'id__in': values.get('ids')}
-        return TestTag.to_xmlrpc(query)
-    elif values.get('names'):
-        query = {'name__in': values.get('names')}
-        return TestTag.to_xmlrpc(query)
-    else:
-        raise ValueError('Must specify ids or names at least.')
+    return TestTag.to_xmlrpc(values)
