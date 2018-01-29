@@ -20,7 +20,6 @@ __all__ = (
     'filter',
     'get',
     'get_bugs',
-    'get_env_values',
     'get_tags',
     'get_test_case_runs',
     'get_test_cases',
@@ -373,24 +372,6 @@ def get_bugs(run_ids):
     query = {'case_run__case_run_id__in': tcrs.values_list('case_run_id',
                                                            flat=True)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@rpc_method(name='TestRun.get_env_values')
-def get_env_values(run_id):
-    """
-    Description: Get the list of env values to this run.
-
-    Params:      $run_id - Integer: An integer representing the ID of the run in the database
-
-    Returns:     Array: An array of tag object hashes.
-
-    Example:
-    >>> TestRun.get_env_values(8748)
-    """
-    from tcms.management.models import TCMSEnvValue
-
-    query = {'testrun__pk': run_id}
-    return TCMSEnvValue.to_xmlrpc(query)
 
 
 @rpc_method(name='TestRun.get_tags')
