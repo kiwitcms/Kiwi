@@ -1114,8 +1114,8 @@ class Component(TCMS):
         elif self._id is not TCMSNone:
             try:
                 log.info("Fetching component " + self.identifier)
-                inject = self._server.Product.get_component(self.id)
-            except xmlrpc.client.Fault as error:
+                inject = self._server.Component.filter({'pk': self.id})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find component for " + self.identifier)
@@ -1124,9 +1124,11 @@ class Component(TCMS):
             try:
                 log.info("Fetching component '{0}' of '{1}'".format(
                     self.name, self.product.name))
-                inject = self._server.Product.check_component(
-                    self.name, self.product.id)
-            except xmlrpc.client.Fault as error:
+                inject = self._server.Component.filter({
+                    'name': self.name,
+                    'product': self.product.id
+                })[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError("Component '{0}' not found in"
                                 " '{1}'".format(self.name, self.product.name))
@@ -1145,7 +1147,7 @@ class Component(TCMS):
     def search(**query):
         """ Search for components """
         return [Component(hash) for hash in
-                TCMS()._server.Product.filter_components(dict(query))]
+                TCMS()._server.Component.filter(dict(query))]
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
