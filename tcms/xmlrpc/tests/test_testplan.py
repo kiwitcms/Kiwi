@@ -18,17 +18,6 @@ from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
-__all__ = (
-    'TestAddComponent',
-    'TestAddTag',
-    'TestFilter',
-    'TestGetProduct',
-    'TestGetTestCases',
-    'TestPlanTypeMethods',
-    'TestRemoveTag',
-    'TestUpdate',
-)
-
 
 class TestFilter(XmlrpcAPIBaseTest):
 
@@ -170,33 +159,6 @@ class TestPlanTypeMethods(XmlrpcAPIBaseTest):
 
         with self.assertRaisesRegex(XmlRPCFault, 'TestPlanType matching query does not exist'):
             self.rpc_client.TestPlan.get_plan_type(0)
-
-
-class TestGetProduct(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestGetProduct, self)._fixture_setup()
-
-        self.product = ProductFactory()
-        self.plan = TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product)
-
-    def _verify_serialize_result(self, result):
-        self.assertEqual(self.plan.product.name, result['name'])
-        self.assertEqual(self.plan.product.description, result['description'])
-        self.assertEqual(self.plan.product.disallow_new, result['disallow_new'])
-        self.assertEqual(self.plan.product.vote_super_user, result['vote_super_user'])
-        self.assertEqual(self.plan.product.max_vote_super_bug, result['max_vote_super_bug'])
-        self.assertEqual(self.plan.product.votes_to_confirm, result['votes_to_confirm'])
-        self.assertEqual(self.plan.product.default_milestone, result['default_milestone'])
-        self.assertEqual(self.plan.product.classification.pk, result['classification_id'])
-        self.assertEqual(self.plan.product.classification.name, result['classification'])
-
-    def test_get_product(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'Product matching query does not exist'):
-            self.rpc_client.TestPlan.get_product(-1)
-
-        result = self.rpc_client.TestPlan.get_product(self.plan.pk)
-        self._verify_serialize_result(result)
 
 
 class TestGetTestCases(XmlrpcAPIBaseTest):

@@ -5,7 +5,6 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.management.models import Component
 from tcms.management.models import TestTag
-from tcms.management.models import Product
 from tcms.testplans.models import TestPlan, TestPlanType, TCMSEnvPlanMap
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_process_ids
@@ -17,9 +16,7 @@ __all__ = (
     'create',
     'filter',
     'get',
-    'get_env_groups',
     'get_plan_type',
-    'get_product',
     'get_tags',
     'get_components',
     'get_test_cases',
@@ -263,21 +260,6 @@ def get(plan_id):
     return response
 
 
-@rpc_method(name='TestPlan.get_env_groups')
-def get_env_groups(plan_id):
-    """
-    Description: Get the list of env groups to the fields of this plan.
-
-    Params:      $plan_id - Integer: An integer representing the ID of this plan in the database
-
-    Returns:     Array: An array of hashes with env groups.
-    """
-    from tcms.management.models import TCMSEnvGroup
-
-    query = {'testplan__pk': plan_id}
-    return TCMSEnvGroup.to_xmlrpc(query)
-
-
 @rpc_method(name='TestPlan.get_plan_type')
 def get_plan_type(id):
     """
@@ -289,27 +271,6 @@ def get_plan_type(id):
     >>> TestPlan.get_plan_type(3)
     """
     return TestPlanType.objects.get(id=id).serialize()
-
-
-@rpc_method(name='TestPlan.get_product')
-def get_product(plan_id):
-    """
-    Description: Get the Product the plan is assiciated with.
-
-    Params:      $plan_id - Integer: An integer representing the ID of the plan in the database.
-
-    Returns:     Hash: A blessed Product hash.
-
-    Example:
-    >>> TestPlan.get_product(137)
-    """
-    products = Product.objects.filter(plan=plan_id)
-    products = products.select_related('classification')
-    products = products.defer('classification__description')
-    if len(products) == 0:
-        raise Product.DoesNotExist('Product matching query does not exist')
-    else:
-        return products[0].serialize()
 
 
 @rpc_method(name='TestPlan.get_tags')
