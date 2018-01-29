@@ -8,7 +8,7 @@ from tcms.management.models import TestTag
 from tcms.management.models import Product
 from tcms.testplans.models import TestPlan, TestPlanType, TCMSEnvPlanMap
 from tcms.xmlrpc.decorators import permissions_required
-from tcms.xmlrpc.utils import pre_process_ids, distinct_count
+from tcms.xmlrpc.utils import pre_process_ids
 
 __all__ = (
     'add_tag',
@@ -16,7 +16,6 @@ __all__ = (
     'check_plan_type',
     'create',
     'filter',
-    'filter_count',
     'get',
     'get_env_groups',
     'get_plan_type',
@@ -232,21 +231,6 @@ def filter(values={}):
     >>> TestPlan.filter({'case__case_id__in': [12345, 23456, 34567]})
     """
     return TestPlan.to_xmlrpc(values)
-
-
-@rpc_method(name='TestPlan.filter_count')
-def filter_count(values={}):
-    """
-    Description: Performs a search and returns the resulting count of plans.
-
-    Params:      $values - Hash: keys must match valid search fields (see filter).
-
-    Returns:     Integer - total matching plans.
-
-    Example:
-    # See distinct_count()
-    """
-    return distinct_count(TestPlan, values)
 
 
 @rpc_method(name='TestPlan.get')

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import re
-from django.db.models import Count, FieldDoesNotExist
+from django.db.models import FieldDoesNotExist
 
 from tcms.management.models import Product
 
 
-COUNT_DISTINCT = 0
 QUERY_DISTINCT = 1
 
 ACCEPTABLE_BOOL_VALUES = ('0', '1', 0, 1, True, False)
@@ -135,17 +134,10 @@ def distinct_m2m_rows(cls, values, op_type):
                 break
 
     qs = cls.objects.filter(**values)
-    if op_type == COUNT_DISTINCT:
-        return qs.aggregate(Count('pk', distinct=True))['pk__count'] if flag \
-            else qs.count()
-    elif op_type == QUERY_DISTINCT:
+    if op_type == QUERY_DISTINCT:
         return qs.distinct() if flag else qs
     else:
         raise TypeError('Not implement op type %s' % op_type)
-
-
-def distinct_count(cls, values):
-    return distinct_m2m_rows(cls, values, op_type=COUNT_DISTINCT)
 
 
 def distinct_filter(cls, values):
