@@ -1334,7 +1334,7 @@ class Tag(TCMS):
         elif self._id is not TCMSNone:
             try:
                 log.info("Fetching tag " + self.identifier)
-                inject = self._server.Tag.get_tags({'ids': [self.id]})
+                inject = self._server.Tag.filter({'pk': self.id})
                 log.debug("Initializing tag " + self.identifier)
                 log.data(pretty(inject))
                 self._inject = inject
@@ -1346,7 +1346,7 @@ class Tag(TCMS):
         else:
             try:
                 log.info("Fetching tag '{0}'".format(self.name))
-                inject = self._server.Tag.get_tags({'names': [self.name]})
+                inject = self._server.Tag.filter({'name': self.name})
                 log.debug("Initializing tag '{0}'".format(self.name))
                 log.data(pretty(inject))
                 self._inject = inject
