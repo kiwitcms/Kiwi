@@ -9,7 +9,7 @@ from tcms.core.contrib.linkreference.views import create_link
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testcases.models import TestCaseBug
-from tcms.testruns.models import TestCaseRun, TestCaseRunStatus
+from tcms.testruns.models import TestCaseRun
 from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.decorators import permissions_required
 
@@ -17,12 +17,10 @@ __all__ = (
     'add_comment',
     'attach_bug',
     'attach_log',
-    'get_case_run_status_by_name',
     'create',
     'detach_bug',
     'detach_log',
     'filter',
-    'get',
     'get_bugs',
     'get_logs',
     'update',
@@ -120,19 +118,6 @@ def attach_bug(values):
         else:
             raise ValueError(form_errors_to_list(form))
     return
-
-
-@rpc_method(name='TestCaseRun.get_case_run_status_by_name')
-def get_case_run_status_by_name(name):
-    """
-    Params:      $name - String: the status name.
-
-    Returns:     Hash: Matching case run status object hash or error if not found.
-
-    Example:
-    >>> TestCaseRun.check_case_run_status('idle')
-    """
-    return TestCaseRunStatus.objects.get(name=name).serialize()
 
 
 @permissions_required('testruns.add_testcaserun')
@@ -237,50 +222,18 @@ def detach_bug(case_run_ids, bug_ids):
 
 
 @rpc_method(name='TestCaseRun.filter')
-def filter(values={}):
+def filter(values):
     """
-    Description: Performs a search and returns the resulting list of test cases.
+    .. function:: XML-RPC TestCaseRun.filter(values)
 
-    Params:      $values - Hash: keys must match valid search fields.
+        Perform a search and return the resulting list of test case executions.
 
-        +----------------------------------------------------------------+
-        |               Case-Run Search Parameters                       |
-        +----------------------------------------------------------------+
-        |        Key          |          Valid Values                    |
-        | case_run_id         | Integer                                  |
-        | assignee            | ForeignKey: Auth.User                    |
-        | build               | ForeignKey: Build                        |
-        | case                | ForeignKey: Test Case                    |
-        | case_run_status     | ForeignKey: Case Run Status              |
-        | notes               | String                                   |
-        | run                 | ForeignKey: Test Run                     |
-        | tested_by           | ForeignKey: Auth.User                    |
-        | running_date        | Datetime                                 |
-        | close_date          | Datetime                                 |
-        +----------------------------------------------------------------+
-
-    Returns:     Object: Matching test cases are retuned in a list of hashes.
-
-    Example:
-    # Get all case runs contain 'TCMS' in case summary
-    >>> TestCaseRun.filter({'case__summary__icontain': 'TCMS'})
+        :param values: Field lookups for :class:`tcms.testruns.models.TestCaseRun`
+        :type values: dict
+        :return: List of serialized :class:`tcms.testruns.models.TestCaseRun` objects
+        :rtype: list(dict)
     """
     return TestCaseRun.to_xmlrpc(values)
-
-
-@rpc_method(name='TestCaseRun.get')
-def get(query):
-    """
-    Description: Used to load an existing test case-run from the database.
-
-    Params:      query - dict
-
-    Returns:     A blessed TestCaseRun object hash
-
-    Example:
-    >>> TestCaseRun.get(1193)
-    """
-    return TestCaseRun.objects.get(**query).serialize()
 
 
 @rpc_method(name='TestCaseRun.get_bugs')
