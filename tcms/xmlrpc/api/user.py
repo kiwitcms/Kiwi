@@ -9,15 +9,8 @@ from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.xmlrpc.utils import parse_bool_value
 from tcms.xmlrpc.decorators import permissions_required
 
-__all__ = (
-    'filter',
-    'get',
-    'update',
-    'join'
-)
 
-
-def get_user_dict(user):
+def _get_user_dict(user):
     u = XMLRPCSerializer(model=user)
     u = u.serialize_model()
     if 'password' in u:
@@ -26,91 +19,58 @@ def get_user_dict(user):
 
 
 @rpc_method(name='User.filter')
-def filter(query):
+def filter(query=None, **kwargs):
     """
-    Description: Performs a search and returns the resulting list of test cases
+    .. function:: XML-RPC User.filter(query=None)
 
-    Params:      $query - Hash: keys must match valid search fields.
+        Search and return the resulting list of users.
 
-        +------------------------------------------------------------------+
-        |                 Case Search Parameters                           |
-        +------------------------------------------------------------------+
-        |        Key          |          Valid Values                      |
-        | id                  | Integer: ID                                |
-        | username            | String: User name                          |
-        | first_name          | String: User first name                    |
-        | last_name           | String: User last  name                    |
-        | email               | String Email                               |
-        | is_active           | Boolean: Return the active users           |
-        | groups              | ForeignKey: AuthGroup                      |
-        +------------------------------------------------------------------+
+        :param query: Field lookups for :class:`django.contrib.auth.models.User`
+        :type query: None or dict
+        :return: Serialized :class:`django.contrib.auth.models.User` object without
+                 the password field!
+        :rtype: dict
 
-    Returns:     Array: Matching test cases are retuned in a list of hashes.
+    .. note::
 
-    Example:
-    >>> User.filter({'username__startswith': 'x'})
+        If query is ``None`` will return the user issuing the RPC request.
     """
+    if query is None:
+        query = {'pk': kwargs.get(REQUEST_KEY).user.pk}
+
     if 'is_active' in query:
         query['is_active'] = parse_bool_value(query['is_active'])
     users = User.objects.filter(**query)
-    return [get_user_dict(u) for u in users]
-
-
-@rpc_method(name='User.get')
-def get(id=None, **kwargs):
-    """
-    Description: Used to load an existing user from the database.
-
-    Params:      $id - Integer/String: An integer representing the ID in the
-                       database. If parameter is None then return information
-                       about the currently logged in user.
-
-    Returns:     A blessed User object Hash
-
-    Example:
-    >>> User.get(2206)
-    """
-    if id is None:
-        user = kwargs.get(REQUEST_KEY).user
-    else:
-        user = User.objects.get(pk=id)
-    return get_user_dict(user)
+    return [_get_user_dict(u) for u in users]
 
 
 @rpc_method(name='User.update')
-def update(values, id=None, **kwargs):
+def update(user_id, values, **kwargs):
     """
-    Description: Updates the fields of the selected user. it also can change
-                 the informations of other people if you have permission.
+    .. function:: XML-RPC User.update(user_id, values)
 
-    Params:      $values   - Hash of keys matching TestCase fields and the new
-                             values to set each field to.
+        Updates the fields of the selected user. Can be used to update
+        password as well!
 
-                 $id       - Integer/String(Optional)
-                             Integer: A single TestCase ID.
-                             String:  A comma string of User ID.
-                             Default: The ID of myself
+        :param user_id: PK of user to update
+        :type user_id: int
+        :param values: Field values for :class:`django.contrib.auth.models.User`
+        :type values: dict
+        :return: Serialized :class:`django.contrib.auth.models.User` object
+        :raises: PermissionDenied if missing the *auth.change_user* permission
+                 when updating another user or when passwords don't match.
 
-    Returns:     A blessed User object Hash
+        .. note::
 
-    +--------------+--------+-----------------------------------------+
-    | Field        | Type   | Null                                    |
-    +--------------+--------+-----------------------------------------+
-    | first_name   | String | Optional                                |
-    | last_name    | String | Optional(Required if changes category)  |
-    | email        | String | Optional                                |
-    | password     | String | Optional                                |
-    | old_password | String | Required by password                    |
-    +--------------+--------+-----------------------------------------+
+            If ``user_id`` is None will update the user issuing the RPC request.
 
-    Example:
-    >>> User.update({'first_name': 'foo'})
-    >>> User.update({'password': 'foo', 'old_password': '123'})
-    >>> User.update({'password': 'foo', 'old_password': '123'}, 2206)
+        .. warning::
+
+            Changing the password for another user via RPC is not allowed!
     """
     request = kwargs.get(REQUEST_KEY)
-    if id:
-        user_being_updated = User.objects.get(pk=id)
+    if user_id:
+        user_being_updated = User.objects.get(pk=user_id)
     else:
         user_being_updated = request.user
 
@@ -144,24 +104,24 @@ def update(values, id=None, **kwargs):
             setattr(user_being_updated, field, values[field])
 
     user_being_updated.save(update_fields=update_fields)
-    return get_user_dict(user_being_updated)
+    return _get_user_dict(user_being_updated)
 
 
 @permissions_required('auth.change_user')
-@rpc_method(name='User.join')
-def join(username, groupname):
+@rpc_method(name='User.join_group')
+def join_group(username, groupname):
     """
-    Description: Add user to a group specified by name.
+    .. function:: XML-RPC User.join_group(username, groupname)
 
-    Returns: None
+        Add user to a group specified by name.
 
-    Raises: PermissionDenied
-            Object.DoesNotExist
-
-    Example:
-    >>> User.join('username', 'groupname')
+        :param username: Username to modify
+        :type username: str
+        :param groupname: Name of group to join, must exist!
+        :type groupname: str
+        :return: None
+        :raises: PermissionDenied if missing *auth.change_user* permission
     """
     user = User.objects.get(username=username)
     group = Group.objects.get(name=groupname)
-
     user.groups.add(group)

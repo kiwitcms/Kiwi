@@ -46,7 +46,7 @@ class TestXMLRPCLogging(XmlrpcAPIBaseTest):
         self.assertArgsNotLogged('Auth.login')
 
         # also call User.update which accepts passwords via dict
-        self.rpc_client.User.update({
+        self.rpc_client.User.update(None, {
             'password': 'new-password',
             'old_password': 'api-testing',
         })
