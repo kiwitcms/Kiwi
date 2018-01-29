@@ -29,7 +29,7 @@ from pprint import pformat as pretty
 import tcms_api.config as config
 
 from tcms_api.config import log
-from tcms_api.base import TCMS, TCMSNone, _getter, _setter, _idify
+from tcms_api.base import TCMS, TCMSNone, _getter, _setter
 from tcms_api.xmlrpc import TCMSError
 from tcms_api.immutable import (Build, CaseStatus, Category, PlanStatus,
                                 PlanType, Priority, Product, RunStatus, Status, Tag, User, Version)
@@ -85,7 +85,7 @@ class TestPlan(Mutable):
     _identifier_width = 5
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["author", "caseplans", "children", "components", "name",
+    _attributes = ["author", "children", "components", "name",
                    "owner", "parent", "product", "status", "tags", "testcases",
                    "testruns", "type", "version"]
 
@@ -101,8 +101,6 @@ class TestPlan(Mutable):
     tags = property(_getter("tags"), doc="Attached tags.")
     testcases = property(_getter("testcases"),
                          doc="Container with test cases linked to this plan.")
-    caseplans = property(_getter("caseplans"),
-                         doc="Test case plan objects related to this plan.")
     testruns = property(_getter("testruns"),
                         doc="Test runs related to this plan.")
 
@@ -310,7 +308,6 @@ class TestPlan(Mutable):
 
         # Initialize containers
         self._testcases = PlanCases(self)
-        self._caseplans = PlanCasePlans(self)
         self._testruns = PlanRuns(self)
         self._components = PlanComponents(self)
         self._children = ChildPlans(self)
@@ -351,8 +348,6 @@ class TestPlan(Mutable):
             self.tags.update()
         if self._testcases is not TCMSNone:
             self.testcases.update()
-        if self._caseplans is not TCMSNone:
-            self.caseplans.update()
         if self._testruns is not TCMSNone:
             self.testruns.update()
         if self._components is not TCMSNone:
@@ -363,24 +358,6 @@ class TestPlan(Mutable):
         # Update self (if modified)
         Mutable.update(self)
 
-    def sortkey(self, testcase, sortkey=None):
-        """ Get or set sortkey for given test case """
-        # Make sure the test case we got belongs to the test plan
-        if testcase not in self.testcases:
-            raise TCMSError("Test case {0} not in test plan {1}".format(
-                testcase.identifier, self.identifier))
-        # Pick the correct CasePlan object
-        try:
-            caseplan = [caseplan for caseplan in self.caseplans
-                        if caseplan.testcase == testcase][0]
-        except LookupError:
-            raise TCMSError("No CasePlan for {0} in {1} found".format(
-                testcase.identifier, self.identifier))
-        # Modify the sortkey if requested
-        if sortkey is not None:
-            caseplan.sortkey = sortkey
-        # And finally return the current value
-        return caseplan.sortkey
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  TestRun Class
@@ -722,7 +699,7 @@ class TestCase(Mutable):
     _attributes = ["action", "arguments", "author", "automated",
                    "autoproposed", "breakdown", "bugs", "category", "components",
                    "created", "effect", "link", "manual", "notes", "plans",
-                   "priority", "script", "setup", "sortkey", "status", "summary",
+                   "priority", "script", "setup", "status", "summary",
                    "tags", "tester", "testplans", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -782,8 +759,6 @@ class TestCase(Mutable):
                            doc="Test case requirements.")
     script = property(_getter("script"), _setter("script"),
                       doc="Test script (used for automation).")
-    # XXX sortkey = property(_getter("sortkey"), _setter("sortkey"),
-    #        doc="Sort key.")
     status = property(_getter("status"), _setter("status"),
                       doc="Current test case status.")
     summary = property(_getter("summary"), _setter("summary"),
@@ -1019,7 +994,6 @@ class TestCase(Mutable):
         self._priority = Priority(inject["priority_id"])
         self._requirement = inject["requirement"]
         self._script = inject["script"]
-        # XXX self._sortkey = inject["sortkey"]
         self._status = CaseStatus(inject["case_status_id"])
         self._summary = inject["summary"]
         self._time = inject["estimated_time"]
@@ -1081,7 +1055,6 @@ class TestCase(Mutable):
         hash["product"] = self.category.product.id
         hash["requirement"] = self.requirement
         hash["script"] = self.script
-        # XXX hash["sortkey"] = self.sortkey
         hash["summary"] = self.summary
         if self.tester:
             hash["default_tester"] = self.tester.login
@@ -1324,131 +1297,9 @@ class CaseRun(Mutable):
         # Update self (if modified)
         Mutable.update(self)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  CasePlan Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class CasePlan(Mutable):
-    """
-    Test case plan object
-
-    Used mainly for storing different test case sortkey for different
-    test plans.
-    """
-
-    # Identifier width and local cache
-    _identifier_width = 12
-    _cache = {}
-    # List of all object attributes (used for init & expiration)
-    _attributes = ["testcase", "testplan", "sortkey"]
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  CasePlan Properties
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    # Read-only properties
-    id = property(_getter("id"), doc="Case plan id (internal fake)")
-    testcase = property(_getter("testcase"), doc="Test case object.")
-    testplan = property(_getter("testplan"), doc="Test plan object.")
-
-    # Read-write properties
-    sortkey = property(_getter("sortkey"), _setter("sortkey"),
-                       doc="Test case plan sort key (int).")
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  CasePlan Special
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def __new__(cls, id=None, *args, **kwargs):
-        """ Create a new object, handle caching if enabled """
-        # Parse our internal fake id if both testcase and testplan given
-        id = CasePlan._fake_id(
-            id, kwargs.get("testcase"), kwargs.get("testplan"))
-        return super(CasePlan, cls).__new__(cls, id, *args, **kwargs)
-
-    def __init__(self, id=None, testcase=None, testplan=None, **kwargs):
-        """
-        Initialize a test case plan
-
-        Provide internal fake id or both test case and test plan.
-        """
-        # Prepare fake internal id if both testcase and testplan given
-        id = CasePlan._fake_id(id, testcase, testplan)
-        # Initialize (unless already done)
-        id, ignore, inject, initialized = self._is_initialized(id, **kwargs)
-        if initialized:
-            return
-        Mutable.__init__(self, id, prefix="CP")
-        # If inject given, fetch test case plan data from it
-        if inject:
-            self._fetch(inject, **kwargs)
-        # Otherwise just make sure all requested parameter were given
-        elif not id and (testcase is None or testplan is None):
-            raise TCMSError("Need either internal id or both test case "
-                            "and test plan to initialize the CasePlan object")
-
-    def __str__(self):
-        """ Test case, test plan and sortkey for printing """
-        return "{0} in {1} with sortkey {2}".format(
-            self.testcase.identifier,
-            self.testplan.identifier,
-            self.sortkey)
-
-    @staticmethod
-    def _fake_id(id, testcase, testplan):
-        """ Prepare internal fake id from testcase and testplan """
-        # Nothing to do when id provided
-        if id is not None:
-            return id
-        # Extract ids if objects given
-        if isinstance(testcase, TestCase):
-            testcase = testcase.id
-        if isinstance(testplan, TestPlan):
-            testplan = testplan.id
-        # Idify if both testcase and testplan provided
-        if testcase is not None and testplan is not None:
-            return _idify([testplan, testcase])
-        return None
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  CasePlan Methods
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _fetch(self, inject=None, **kwargs):
-        """ Initialize / refresh test case plan data """
-        TCMS._fetch(self, inject)
-
-        # Fetch data from the server if no inject given
-        if inject is None:
-            log.info("Fetching case plan {0}".format(self.identifier))
-            testplan, testcase = _idify(self.id)
-            inject = self._server.TestCasePlan.get(testcase, testplan)
-            self._inject = inject
-        # Use our internal fake id instead of the server one
-        self._id = _idify([inject["plan_id"], inject["case_id"]])
-        log.debug("Initializing case plan {0}".format(self.identifier))
-        log.data(pretty(inject))
-
-        # Set up attributes
-        self._testcase = TestCase(inject["case_id"])
-        self._testplan = TestPlan(inject["plan_id"])
-        self._sortkey = inject["sortkey"]
-
-        # Index the fetched object into cache
-        self._index()
-
-    def _update(self):
-        """ Save test case plan data to the server """
-        log.info("Updating case plan {0}".format(self.identifier))
-        log.data("{0}, {1}, {2}".format(
-            self.testcase.id, self.testplan.id, self.sortkey))
-        self._server.TestCasePlan.update(
-            self.testcase.id, self.testplan.id, self.sortkey)
-
 
 # We need to import containers here because of cyclic import
 from tcms_api.containers import (
     CaseBugs, CaseComponents, CasePlans,
-    CaseRunBugs, CaseTags, ChildPlans, PlanCasePlans, PlanCases,
+    CaseRunBugs, CaseTags, ChildPlans, PlanCases,
     PlanComponents, PlanRuns, PlanTags, RunCaseRuns, RunCases, RunTags)  # noqa: E402

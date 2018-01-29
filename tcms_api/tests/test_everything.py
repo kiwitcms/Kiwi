@@ -4,6 +4,9 @@
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
+#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#   Author: Alexander Todorov <info@kiwitcms.org>
+#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #   This library is free software; you can redistribute it and/or
@@ -962,46 +965,6 @@ class TestCaseTests(BaseAPIClient_TestCase):
         # assert only 1 request was made to the server
         self.assertEqual(TCMS._requests, requests + 1)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  CasePlan
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class CasePlanTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        # reset to CACHE_NONE
-        super(CasePlanTests, self).setUp()
-        self.testcase = self.cases[0]
-
-    def test_sortkey_update_cache_none(self):
-        """ Sort key update """
-        testcase = self.testcase.id
-        testplan = self.testcase.testplans[0].id
-        for sortkey in [100, 200, 300]:
-            # Update the sortkey
-            caseplan = CasePlan(testcase=testcase, testplan=testplan)
-            caseplan.sortkey = sortkey
-            caseplan.update()
-            self.assertEqual(caseplan.sortkey, sortkey)
-
-    def test_sortkey_update_cache_objects(self):
-        """ Sort key update """
-        CasePlan._cache = {}  # clear cache
-        set_cache_level(CACHE_OBJECTS)
-
-        testcase = self.testcase.id
-        testplan = self.testcase.testplans[0].id
-        for sortkey in [100, 200, 300]:
-            # Update the sortkey
-            caseplan = CasePlan(testcase=testcase, testplan=testplan)
-            caseplan.sortkey = sortkey
-            caseplan.update()
-            self.assertEqual(caseplan.sortkey, sortkey)
-
-            requests = TCMS._requests
-            caseplan = CasePlan(testcase=testcase, testplan=testplan)
-            self.assertEqual(caseplan.sortkey, sortkey)
-            self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseComponents
@@ -1345,51 +1308,6 @@ class PlanRunsTests(BaseAPIClient_TestCase):
         testrun = TestRun(testplan=testplan)
         self.assertTrue(testrun in testplan.testruns)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  PlanCasePlans
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class PlanCasePlansTests(BaseAPIClient_TestCase):
-    def setUp(self):
-        super(PlanCasePlansTests, self).setUp()
-        self.testcase = self.cases[0]
-
-    def test_sortkey_update_cache_none(self):
-        """ Get/set sortkey using the TestPlan.sortkey() method """
-        testcase = TestCase(self.testcase.id)
-        testplan = TestPlan(self.master.id)
-        for sortkey in [100, 200, 300]:
-            # Compare current sortkey value
-            caseplan = CasePlan(testcase=testcase, testplan=testplan)
-            self.assertEqual(testplan.sortkey(testcase), caseplan.sortkey)
-            # Update the sortkey
-            testplan.sortkey(testcase, sortkey)
-            testplan.update()
-            self.assertEqual(testplan.sortkey(testcase), sortkey)
-
-    def test_sortkey_update_cache_objects(self):
-        """ Get/set sortkey using the TestPlan.sortkey() method """
-        TestCase._cache = {}  # clear cache
-        TestPlan._cache = {}
-        set_cache_level(CACHE_OBJECTS)
-
-        testcase = TestCase(self.testcase.id)
-        testplan = TestPlan(self.master.id)
-        for sortkey in [100, 200, 300]:
-            # Compare current sortkey value
-            caseplan = CasePlan(testcase=testcase, testplan=testplan)
-            self.assertEqual(testplan.sortkey(testcase), caseplan.sortkey)
-            # Update the sortkey
-            testplan.sortkey(testcase, sortkey)
-            testplan.update()
-            self.assertEqual(testplan.sortkey(testcase), sortkey)
-
-            # Check the cache content
-            requests = TCMS._requests
-            testplan = TestPlan(self.master.id)
-            self.assertEqual(testplan.sortkey(testcase), sortkey)
-            self.assertEqual(requests, TCMS._requests)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  RunCases

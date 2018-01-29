@@ -67,10 +67,10 @@ from tcms_api.immutable import (
     Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
     Priority, Product, RunStatus, Status, Tag, User, Version)
 from tcms_api.mutable import (
-    Mutable, TestPlan, TestRun, TestCase, CaseRun, CasePlan)
+    Mutable, TestPlan, TestRun, TestCase, CaseRun)
 from tcms_api.containers import (
-    Container, CaseBugs, CaseComponents, CasePlans, CaseRunBugs, CaseTags,
-    ChildPlans, PlanCasePlans, PlanCases, PlanComponents, PlanRuns,
+    Container, CaseBugs, CaseComponents, CaseRunBugs, CaseTags,
+    ChildPlans, PlanCases, PlanComponents, PlanRuns,
     PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer)
 
 # Various useful utilities
@@ -97,10 +97,10 @@ __all__ = [
 
     'Bug', 'Build', 'CaseStatus', 'Category', 'Component', 'PlanStatus', 'PlanType',
     'Priority', 'Product', 'RunStatus', 'Status', 'Tag', 'User', 'Version',
-    'TestPlan', 'TestRun', 'TestCase', 'CaseRun', 'CasePlan',
+    'TestPlan', 'TestRun', 'TestCase', 'CaseRun',
 
-    'CaseBugs', 'CaseComponents', 'CasePlans', 'CaseRunBugs', 'CaseTags',
-    'ChildPlans', 'PlanCasePlans', 'PlanCases', 'PlanComponents', 'PlanRuns',
+    'CaseBugs', 'CaseComponents', 'CaseRunBugs', 'CaseTags',
+    'ChildPlans', 'PlanCases', 'PlanComponents', 'PlanRuns',
     'PlanTags', 'RunCaseRuns', 'RunCases', 'RunTags', 'TagContainer',
 
     'color', 'header', 'human', 'info', 'listed', 'unlisted',
