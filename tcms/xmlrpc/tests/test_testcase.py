@@ -3,7 +3,11 @@
 from tcms.testcases.models import TestCasePlan
 
 from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestCaseCategoryFactory
 from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
@@ -98,3 +102,28 @@ class TestLinkPlan(XmlrpcAPIBaseTest):
                         case=case_id
                     ).count()
                 )
+
+
+class TestFilterCases(XmlrpcAPIBaseTest):
+
+    def _fixture_setup(self):
+        super(TestFilterCases, self)._fixture_setup()
+
+        self.tester = UserFactory(username='great tester')
+        self.product = ProductFactory(name='StarCraft')
+        self.version = VersionFactory(value='0.1', product=self.product)
+        self.plan = TestPlanFactory(name='Test product.get_cases',
+                                    owner=self.tester, author=self.tester,
+                                    product=self.product,
+                                    product_version=self.version)
+        self.case_category = TestCaseCategoryFactory(product=self.product)
+        self.cases_count = 10
+        self.cases = [TestCaseFactory(category=self.case_category, author=self.tester,
+                                      reviewer=self.tester, default_tester=None,
+                                      plan=[self.plan])
+                      for i in range(self.cases_count)]
+
+    def test_filter_by_product_id(self):
+        cases = self.rpc_client.TestCase.filter({'category__product': self.product.pk})
+        self.assertIsNotNone(cases)
+        self.assertEqual(len(cases), self.cases_count)
