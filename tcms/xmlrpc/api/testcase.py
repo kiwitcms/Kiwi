@@ -11,8 +11,7 @@ from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
-from tcms.xmlrpc.utils import pre_process_estimated_time
-from tcms.xmlrpc.utils import pre_process_ids
+from tcms.xmlrpc.utils import pre_process_ids, pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
 
 
@@ -24,8 +23,6 @@ __all__ = (
     'attach_bug',
     'check_case_status',
     'check_priority',
-    'calculate_average_estimated_time',
-    'calculate_total_estimated_time',
     'create',
     'detach_bug',
     'filter',
@@ -283,64 +280,6 @@ def check_priority(value):
     from tcms.management.models import Priority
 
     return Priority.objects.get(value=value).serialize()
-
-
-@rpc_method(name='TestCase.calculate_average_estimated_time')
-def calculate_average_estimated_time(case_ids):
-    """
-    Description: Returns an average estimated time for cases.
-
-    Params:      $case_ids - Integer/String: An integer representing the ID in the database.
-
-    Returns:     String: Time in "HH:MM:SS" format.
-
-    Example:
-    >>> TestCase.calculate_average_time([609, 610, 611])
-    """
-    from django.db.models import Avg
-
-    tcs = TestCase.objects.filter(
-        pk__in=pre_process_ids(case_ids)).only('estimated_time')
-
-    if not tcs.exists():
-        raise ValueError('Please input valid case Id')
-
-    # aggregate avg return integer directly rather than timedelta
-    seconds = tcs.aggregate(Avg('estimated_time')).get('estimated_time__avg')
-
-    m, s = divmod(seconds, 60)
-    h, m = divmod(m, 60)
-    # TODO: return h:m:s or d:h:m
-    return '%02i:%02i:%02i' % (h, m, s)
-
-
-@rpc_method(name='TestCase.calculate_total_estimated_time')
-def calculate_total_estimated_time(case_ids):
-    """
-    Description: Returns an total estimated time for cases.
-
-    Params:      $case_ids - Integer/String: An integer representing the ID in the database.
-
-    Returns:     String: Time in "HH:MM:SS" format.
-
-    Example:
-    >>> TestCase.calculate_total_time([609, 610, 611])
-    """
-    from django.db.models import Sum
-
-    tcs = TestCase.objects.filter(
-        pk__in=pre_process_ids(case_ids)).only('estimated_time')
-
-    if not tcs.exists():
-        raise ValueError('Please input valid case Id')
-
-    # aggregate Sum return integer directly rather than timedelta
-    seconds = tcs.aggregate(Sum('estimated_time')).get('estimated_time__sum')
-
-    m, s = divmod(seconds, 60)
-    h, m = divmod(m, 60)
-    # TODO: return h:m:s or d:h:m
-    return '%02i:%02i:%02i' % (h, m, s)
 
 
 @permissions_required('testcases.add_testcase')
