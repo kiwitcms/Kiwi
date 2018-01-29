@@ -11,7 +11,6 @@ from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
-from tcms.xmlrpc.utils import distinct_count
 from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.decorators import permissions_required
@@ -30,7 +29,6 @@ __all__ = (
     'create',
     'detach_bug',
     'filter',
-    'filter_count',
     'get',
     'get_bug_systems',
     'get_bugs',
@@ -531,27 +529,6 @@ def filter(query):
         )
 
     return TestCase.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCase.filter_count')
-def filter_count(values={}):
-    """
-    Description: Performs a search and returns the resulting count of cases.
-
-    Params:      $values - Hash: keys must match valid search fields (see filter).
-
-    Returns:     Integer - total matching cases.
-
-    Example:
-    # See TestCase.filter()
-    """
-
-    if values.get('estimated_time'):
-        values['estimated_time'] = timedelta2int(
-            pre_process_estimated_time(values.get('estimated_time'))
-        )
-
-    return distinct_count(TestCase, values)
 
 
 @rpc_method(name='TestCase.get')

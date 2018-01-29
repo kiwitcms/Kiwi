@@ -8,7 +8,6 @@ from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
-from tcms.xmlrpc.utils import distinct_count
 from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.decorators import permissions_required
@@ -19,7 +18,6 @@ __all__ = (
     'create',
     'env_value',
     'filter',
-    'filter_count',
     'get',
     'get_bugs',
     'get_env_values',
@@ -312,21 +310,6 @@ def filter(values={}):
     >>> TestRun.filter({'case_run__case__case_id__in': [12345, 23456, 34567]})
     """
     return TestRun.to_xmlrpc(values)
-
-
-@rpc_method(name='TestRun.filter_count')
-def filter_count(values={}):
-    """
-    Description: Performs a search and returns the resulting count of runs.
-
-    Params:      $query - Hash: keys must match valid search fields (see filter).
-
-    Returns:     Integer - total matching runs.
-
-    Example:
-    # See distinct_count()
-    """
-    return distinct_count(TestRun, values)
 
 
 @rpc_method(name='TestRun.get')
