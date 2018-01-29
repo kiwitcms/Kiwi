@@ -5,8 +5,6 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from django.contrib.auth.models import User
 
 from tcms.management.models import Product
-from tcms.management.forms import VersionForm
-from tcms.core.utils import form_errors_to_list
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product
 
@@ -15,12 +13,10 @@ __all__ = (
     'check_component',
     'filter',
     'filter_components',
-    'filter_versions',
     'get_cases',
     'add_component',
     'get_component',
     'update_component',
-    'add_version',
 )
 
 
@@ -106,35 +102,6 @@ def filter_components(query):
     from tcms.management.models import Component
 
     return Component.to_xmlrpc(query)
-
-
-@rpc_method(name='Product.filter_versions')
-def filter_versions(query):
-    """
-    Description: Performs a search and returns the resulting list of versions.
-
-    Params:      $query - Hash: keys must match valid search fields.
-
-    +------------------------------------------------------------------+
-    |              Component Search Parameters                         |
-    +------------------------------------------------------------------+
-    |        Key          |          Valid Values                      |
-    | id                  | Integer: ID of product                     |
-    | value               | String                                     |
-    | product             | ForeignKey: Product                        |
-    +------------------------------------------------------------------+
-
-    Returns:     Array: Matching versions are retuned in a list of hashes.
-
-    Example:
-    # Get all of versions named like '2.4.0-SNAPSHOT'
-    >>> Product.filter_versions({'value__icontains': '2.4.0-SNAPSHOT'})
-    # Get all of filter_versions named in product 'Red Hat Enterprise Linux 5'
-    >>> Product.filter_versions({'product__name': 'Red Hat Enterprise Linux 5'})
-    """
-    from tcms.management.models import Version
-
-    return Version.to_xmlrpc(query)
 
 
 @rpc_method(name='Product.get_cases')
@@ -272,38 +239,3 @@ def update_component(component_id, values):
         component.initial_qa_contact_id = values['initial_qa_contact_id']
     component.save()
     return component.serialize()
-
-
-@permissions_required('management.add_version')
-@rpc_method(name='Product.add_version')
-def add_version(values):
-    """
-    Description: Add version to specified product.
-
-    Params:      $product - Integer/String
-                            Integer: product_id of the product in the Database
-                            String: Product name
-                 $value   - String
-                            The name of the version string.
-
-    Returns:     Array: Returns the newly added version object, error info if failed.
-
-    Example:
-    # Add version for specified product:
-    >>> Product.add_version({'value': 'devel', 'product': 272})
-    {'product': 'QE Test Product', 'id': '1106', 'value': 'devel', 'product_id': 272}
-    # Run it again:
-    >>> Product.add_version({'value': 'devel', 'product': 272})
-    [['__all__', 'Version with this Product and Value already exists.']]
-    """
-
-    product = pre_check_product(values)
-    form_values = values.copy()
-    form_values['product'] = product.pk
-
-    form = VersionForm(form_values)
-    if form.is_valid():
-        version = form.save()
-        return version.serialize()
-    else:
-        raise ValueError(form_errors_to_list(form))

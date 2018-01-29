@@ -261,13 +261,14 @@ MODERNRPC_METHODS_MODULES = [
         'tcms.xmlrpc.api.env_property',
         'tcms.xmlrpc.api.env_value',
         'tcms.xmlrpc.api.product',
+        'tcms.xmlrpc.api.tag',
         'tcms.xmlrpc.api.testcase',
         'tcms.xmlrpc.api.testcaserun',
         'tcms.xmlrpc.api.testcaseplan',
         'tcms.xmlrpc.api.testplan',
         'tcms.xmlrpc.api.testrun',
         'tcms.xmlrpc.api.user',
-        'tcms.xmlrpc.api.tag',
+        'tcms.xmlrpc.api.version',
 ]
 # RPC handlers which can log RPC calls to the database
 MODERNRPC_HANDLERS = ['tcms.xmlrpc.handlers.XMLRPCHandler', 'tcms.xmlrpc.handlers.JSONRPCHandler']

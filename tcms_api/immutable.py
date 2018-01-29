@@ -991,7 +991,7 @@ class Version(TCMS):
         elif self._id is not TCMSNone:
             try:
                 log.info("Fetching version {0}".format(self.identifier))
-                inject = self._server.Product.filter_versions({'id': self.id})[0]
+                inject = self._server.Version.filter({'id': self.id})[0]
             except IndexError:
                 raise TCMSError(
                     "Cannot find version for {0}".format(self.identifier))
@@ -1000,7 +1000,7 @@ class Version(TCMS):
             try:
                 log.info("Fetching version '{0}' of '{1}'".format(
                     self.name, self.product.name))
-                inject = self._server.Product.filter_versions(
+                inject = self._server.Version.filter(
                     {'product': self.product.id, 'value': self.name})[0]
             except IndexError:
                 raise TCMSError(
