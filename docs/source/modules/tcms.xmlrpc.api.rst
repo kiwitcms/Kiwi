@@ -26,4 +26,5 @@ Submodules
    tcms.xmlrpc.api.testplan
    tcms.xmlrpc.api.testrun
    tcms.xmlrpc.api.user
+   tcms.xmlrpc.api.version
 
