@@ -882,7 +882,7 @@ class User(TCMS):
             # Otherwise initialize to the current user
             else:
                 log.info("Fetching the current user")
-                inject = self._server.User.get()
+                inject = self._server.User.filter()[0]
                 self._index("i-am-current-user")
 
         # Initialize data from the inject and index into cache

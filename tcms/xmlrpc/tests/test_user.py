@@ -5,7 +5,7 @@ from xmlrpc.client import Fault as XmlRPCFault
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from tcms.xmlrpc.api.user import get_user_dict
+from tcms.xmlrpc.api.user import _get_user_dict
 
 from tcms.tests.factories import GroupFactory
 from tcms.tests.factories import UserFactory
@@ -14,14 +14,14 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
 class TestUserSerializer(TestCase):
-    '''Test User.get_user_dict'''
+    '''Test User._get_user_dict'''
 
     @classmethod
     def setUpTestData(cls):
         cls.user = UserFactory()
 
     def test_ensure_password_not_returned(self):
-        data = get_user_dict(self.user)
+        data = _get_user_dict(self.user)
         self.assertEqual(data['username'], self.user.username)
         self.assertEqual(data['email'], self.user.email)
         self.assertNotIn('password', data)
@@ -60,36 +60,19 @@ class TestUserFilter(XmlrpcAPIBaseTest):
         users = self.rpc_client.User.filter({'groups__name': self.group_reviewer.name})
         self.assertEqual(len(users), 2)
 
-
-class TestUserGet(XmlrpcAPIBaseTest):
-    '''Test User.get'''
-
-    def test_get(self):
-        data = self.rpc_client.User.get(self.api_user.pk)
-
-        self.assertEqual(data['username'], self.api_user.username)
-        self.assertEqual(data['id'], self.api_user.pk)
-        self.assertEqual(data['first_name'], self.api_user.first_name)
-        self.assertEqual(data['last_name'], self.api_user.last_name)
-        self.assertEqual(data['email'], self.api_user.email)
-
     def test_get_me(self):
         # if executed without parameters returns the current user
-        data = self.rpc_client.User.get()
+        data = self.rpc_client.User.filter()[0]
 
         self.assertEqual(data['username'], self.api_user.username)
         self.assertEqual(data['id'], self.api_user.pk)
         self.assertEqual(data['first_name'], self.api_user.first_name)
         self.assertEqual(data['last_name'], self.api_user.last_name)
         self.assertEqual(data['email'], self.api_user.email)
-
-    def test_get_not_exist(self):
-        with self.assertRaisesRegex(XmlRPCFault, "User matching query does not exist"):
-            self.rpc_client.User.get(-1)
 
 
 class TestUserJoin(XmlrpcAPIBaseTest):
-    '''Test User.join'''
+    '''Test User.join_group'''
 
     def _fixture_setup(self):
         super(TestUserJoin, self)._fixture_setup()
@@ -103,7 +86,7 @@ class TestUserJoin(XmlrpcAPIBaseTest):
         self.group = GroupFactory(name=self.group_name)
 
     def test_join_normally(self):
-        self.rpc_client.User.join(self.username, self.group_name)
+        self.rpc_client.User.join_group(self.username, self.group_name)
 
         user = User.objects.get(username=self.username)
         user_added_to_group = user.groups.filter(name=self.group_name).exists()
@@ -111,11 +94,11 @@ class TestUserJoin(XmlrpcAPIBaseTest):
 
     def test_join_nonexistent_user(self):
         with self.assertRaisesRegex(XmlRPCFault, "User matching query does not exist"):
-            self.rpc_client.User.join('nonexistent user', self.group_name)
+            self.rpc_client.User.join_group('nonexistent user', self.group_name)
 
     def test_join_nonexistent_group(self):
         with self.assertRaisesRegex(XmlRPCFault, "Group matching query does not exist"):
-            self.rpc_client.User.join(self.username, 'nonexistent group name')
+            self.rpc_client.User.join_group(self.username, 'nonexistent group name')
 
 
 class TestUserUpdate(XmlrpcAPIBaseTest):
@@ -145,13 +128,13 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
         self.api_user.save()
 
     def test_update_myself(self):
-        data = self.rpc_client.User.update(self.user_new_attrs, self.api_user.pk)
+        data = self.rpc_client.User.update(self.api_user.pk, self.user_new_attrs)
         self.assertEqual(data['first_name'], self.user_new_attrs['first_name'])
         self.assertEqual(data['last_name'], self.user_new_attrs['last_name'])
         self.assertEqual(data['email'], self.user_new_attrs['email'])
 
     def test_update_myself_without_passing_id(self):
-        data = self.rpc_client.User.update(self.user_new_attrs)
+        data = self.rpc_client.User.update(None, self.user_new_attrs)
         self.assertEqual(data['first_name'], self.user_new_attrs['first_name'])
         self.assertEqual(data['last_name'], self.user_new_attrs['last_name'])
         self.assertEqual(data['email'], self.user_new_attrs['email'])
@@ -159,12 +142,12 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
     def test_update_other_missing_permission(self):
         new_values = {'some_attr': 'xxx'}
         with self.assertRaisesRegex(XmlRPCFault, "Permission denied"):
-            self.rpc_client.User.update(new_values, self.another_user.pk)
+            self.rpc_client.User.update(self.another_user.pk, new_values)
 
     def test_update_other_with_proper_permission(self):
         user_should_have_perm(self.api_user, 'auth.change_user')
 
-        data = self.rpc_client.User.update(self.user_new_attrs, self.another_user.pk)
+        data = self.rpc_client.User.update(self.another_user.pk, self.user_new_attrs)
         updated_user = User.objects.get(pk=self.another_user.pk)
         self.assertEqual(data['first_name'], updated_user.first_name)
         self.assertEqual(data['last_name'], updated_user.last_name)
@@ -176,14 +159,14 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
         user_new_attrs['password'] = new_password
 
         with self.assertRaisesRegex(XmlRPCFault, 'Old password is required'):
-            self.rpc_client.User.update(user_new_attrs, self.api_user.pk)
+            self.rpc_client.User.update(self.api_user.pk, user_new_attrs)
 
         user_new_attrs['old_password'] = 'invalid old password'
         with self.assertRaisesRegex(XmlRPCFault, "Password is incorrect"):
-            self.rpc_client.User.update(user_new_attrs, self.api_user.pk)
+            self.rpc_client.User.update(self.api_user.pk, user_new_attrs)
 
         user_new_attrs['old_password'] = 'api-testing'
-        data = self.rpc_client.User.update(user_new_attrs, self.api_user.pk)
+        data = self.rpc_client.User.update(self.api_user.pk, user_new_attrs)
         self.assertTrue('password' not in data)
         self.assertEqual(data['first_name'], user_new_attrs['first_name'])
         self.assertEqual(data['last_name'], user_new_attrs['last_name'])
@@ -200,4 +183,4 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
 
         with self.assertRaisesRegex(XmlRPCFault,
                                     'Password updates for other users are not allowed via RPC!'):
-            self.rpc_client.User.update(user_new_attrs, self.another_user.pk)
+            self.rpc_client.User.update(self.another_user.pk, user_new_attrs)
