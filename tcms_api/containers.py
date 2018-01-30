@@ -827,7 +827,7 @@ class RunCaseRuns(Container):
             return
         # Fetch test case runs from the server
         log.info("Fetching {0}'s case runs".format(self._identifier))
-        injects = self._server.TestRun.get_test_case_runs(self.id)
+        injects = self._server.TestCaseRun.filter({'run': self.id})
         # Feed the TestRun.testcases container with the initial object
         # set if all cases are already cached (saving unnecesary fetch)
         testcaseids = [inject["case_id"] for inject in injects]

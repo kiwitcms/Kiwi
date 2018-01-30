@@ -23,7 +23,6 @@ __all__ = (
     'get',
     'get_bugs',
     'get_tags',
-    'get_test_case_runs',
     'get_test_cases',
     'link_env_value',
     'remove_tag',
@@ -353,23 +352,6 @@ def get_tags(run_id):
     tag_ids = test_run.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
-
-
-@rpc_method(name='TestRun.get_test_case_runs')
-def get_test_case_runs(run_id):
-    """
-    Description: Get the list of cases that this run is linked to.
-
-    Params:      $run_id - Integer: An integer representing the ID in the database
-                                    for this run.
-
-    Returns:     Array: An array of test case-run object hashes.
-
-    Example:
-    # Get all of case runs
-    >>> TestRun.get_test_case_runs(1193)
-    """
-    return TestCaseRun.to_xmlrpc({'run__run_id': run_id})
 
 
 @rpc_method(name='TestRun.get_test_cases')
