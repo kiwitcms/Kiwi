@@ -260,6 +260,7 @@ MODERNRPC_METHODS_MODULES = [
         'tcms.xmlrpc.api.env_group',
         'tcms.xmlrpc.api.env_property',
         'tcms.xmlrpc.api.env_value',
+        'tcms.xmlrpc.api.priority',
         'tcms.xmlrpc.api.product',
         'tcms.xmlrpc.api.tag',
         'tcms.xmlrpc.api.testcase',
