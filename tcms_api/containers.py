@@ -643,7 +643,7 @@ class PlanRuns(Container):
         if Container._fetch(self, inset):
             return
         log.info("Fetching testruns for {0}".format(self._identifier))
-        injects = self._server.TestPlan.get_test_runs(self.id)
+        injects = self._server.TestRun.filter({'plan': self.id})
         log.data(pretty(injects))
         self._current = set([TestRun(inject) for inject in injects])
         self._original = set(self._current)

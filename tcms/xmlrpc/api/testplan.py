@@ -19,7 +19,6 @@ __all__ = (
     'filter',
     'get',
     'get_tags',
-    'get_test_runs',
     'get_text',
     'remove_tag',
     'store_text',
@@ -223,24 +222,6 @@ def get_tags(plan_id):
     tag_ids = test_plan.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
-
-
-@rpc_method(name='TestPlan.get_test_runs')
-def get_test_runs(plan_id):
-    """
-    Description: Get the list of runs in this plan.
-
-    Params:      $plan_id - Integer: An integer representing the ID of this plan in the database
-
-    Returns:     Array: An array of test run object hashes.
-
-    Example:
-    >>> TestPlan.get_test_runs(plan_id)
-    """
-    from tcms.testruns.models import TestRun
-
-    query = {'plan': plan_id}
-    return TestRun.to_xmlrpc(query)
 
 
 @rpc_method(name='TestPlan.get_text')
