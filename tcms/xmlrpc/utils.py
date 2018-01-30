@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import re
+import time
+
+from django.apps import apps
 from django.db.models import FieldDoesNotExist
+
+import django_comments as comments
 
 from tcms.management.models import Product
 
@@ -152,10 +157,6 @@ class Comment(object):
         self.comment = comment
 
     def add(self):
-        import time
-        import django_comments as comments
-        from django.apps import apps
-
         comment_form = comments.get_form()
 
         model = apps.get_model(*self.content_type.split('.', 1))
@@ -176,8 +177,7 @@ class Comment(object):
                 'object_pk': object_pk,
                 'timestamp': timestamp
             }
-            data['security_hash'] = d_form.generate_security_hash(
-                **security_hash_dict)
+            data['security_hash'] = d_form.generate_security_hash(**security_hash_dict)
             form = comment_form(target, data=data)
 
             # Response the errors if got
@@ -204,8 +204,6 @@ class Comment(object):
                 comment=comment,
                 request=self.request
             )
-
-        return
 
 
 estimated_time_re = re.compile(r'^(\d+[d])?(\d+[h])?(\d+[m])?(\d+[s])?$')
