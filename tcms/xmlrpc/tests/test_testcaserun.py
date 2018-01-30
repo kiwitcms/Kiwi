@@ -294,7 +294,7 @@ class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
 
 
 class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
-    """Test testcaserun.attach_log"""
+    """Test testcaserun.add_log"""
 
     def _fixture_setup(self):
         super(TestCaseRunAttachLog, self)._fixture_setup()
@@ -303,16 +303,16 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
 
     def test_attach_log_with_non_existing_id(self):
         with self.assertRaisesRegex(XmlRPCFault, 'constraint fail|violates foreign key'):
-            self.rpc_client.TestCaseRun.attach_log(-5, 'A test log', 'http://example.com')
+            self.rpc_client.TestCaseRun.add_log(-5, 'A test log', 'http://example.com')
 
     def test_attach_log_with_invalid_url(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Enter a valid URL'):
-            self.rpc_client.TestCaseRun.attach_log(self.case_run.pk, "UT test logs", 'aaaaaaaaa')
+            self.rpc_client.TestCaseRun.add_log(self.case_run.pk, "UT test logs", 'aaaaaaaaa')
 
     def test_attach_log(self):
         url = "http://127.0.0.1/test/test-log.log"
-        log = self.rpc_client.TestCaseRun.attach_log(self.case_run.pk, "UT test logs", url)
-        self.assertIsNone(log)
+        log_id = self.rpc_client.TestCaseRun.add_log(self.case_run.pk, "UT test logs", url)
+        self.assertGreater(log_id, 0)
 
 
 class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
@@ -385,24 +385,24 @@ class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
     def setUp(self):
         super(TestCaseRunDetachLog, self).setUp()
 
-        self.rpc_client.TestCaseRun.attach_log(
+        self.rpc_client.TestCaseRun.add_log(
             self.case_run.pk, 'Related issue', 'https://localhost/issue/1')
         self.link = self.case_run.links()[0]
 
     def test_doesnt_raise_with_non_existing_id(self):
-        self.rpc_client.TestCaseRun.detach_log(-9, self.link.pk)
+        self.rpc_client.TestCaseRun.remove_log(-9, self.link.pk)
         links = self.case_run.links()
         self.assertEqual(1, links.count())
         self.assertEqual(self.link.pk, links[0].pk)
 
     def test_detach_log_with_non_exist_log(self):
-        self.rpc_client.TestCaseRun.detach_log(self.case_run.pk, 999999999)
+        self.rpc_client.TestCaseRun.remove_log(self.case_run.pk, 999999999)
         links = self.case_run.links()
         self.assertEqual(1, links.count())
         self.assertEqual(self.link.pk, links[0].pk)
 
     def test_detach_log(self):
-        self.rpc_client.TestCaseRun.detach_log(self.case_run.pk, self.link.pk)
+        self.rpc_client.TestCaseRun.remove_log(self.case_run.pk, self.link.pk)
         self.assertEqual([], list(self.case_run.links()))
 
 
@@ -472,7 +472,7 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
         self.case_run_1 = TestCaseRunFactory()
         self.case_run_2 = TestCaseRunFactory()
 
-        self.rpc_client.TestCaseRun.attach_log(
+        self.rpc_client.TestCaseRun.add_log(
             self.case_run_1.pk,
             "Test logs",
             "http://www.google.com")
