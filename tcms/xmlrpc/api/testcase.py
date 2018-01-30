@@ -22,6 +22,10 @@ __all__ = (
     'get_components',
     'remove_component',
 
+    'add_notification_cc',
+    'get_notification_cc',
+    'remove_notification_cc',
+
     'add_tag',
     'add_to_run',
     'attach_bug',
@@ -35,9 +39,6 @@ __all__ = (
     'get_tags',
     'get_text',
     'link_plan',
-    'notification_add_cc',
-    'notification_get_cc_list',
-    'notification_remove_cc',
     'remove_tag',
     'store_text',
     'unlink_plan',
@@ -109,6 +110,104 @@ def remove_component(case_id, component_id):
     TestCase.objects.get(pk=case_id).remove_component(
         Component.objects.get(pk=component_id)
     )
+
+
+def _validate_cc_list(cc_list):
+    """
+        Validate each email address given in argument. Called by
+        notification RPC methods.
+
+        :param cc_list: List of email addresses
+        :type cc_list: list
+        :return: None
+        :raises: TypeError or ValidationError if addresses are not valid.
+    """
+
+    if not isinstance(cc_list, list):
+        raise TypeError('cc_list should be a list object.')
+
+    field = EmailField(required=True)
+    invalid_emails = []
+
+    for item in cc_list:
+        try:
+            field.clean(item)
+        except ValidationError:
+            invalid_emails.append(item)
+
+    if invalid_emails:
+        raise ValidationError(
+            field.error_messages['invalid'] % {
+                'value': ', '.join(invalid_emails)})
+
+
+@permissions_required('testcases.change_testcase')
+@rpc_method(name='TestCase.add_notification_cc')
+def add_notification_cc(case_id, cc_list):
+    '''
+    .. function:: XML-RPC TestCase.add_notification_cc(case_id, cc_list)
+
+        Add email addresses to the notification list of specified TestCase
+
+        :param case_id: PK of TestCase to be modified
+        :param case_id: int
+        :param cc_list: List of email addresses
+        :type cc_list: list(str)
+        :return: None
+        :raises: TypeError or ValidationError if email validation fails
+        :raises: PermissionDenied if missing *testcases.change_testcase* permission
+        :raises: TestCase.DoesNotExist if object with case_id doesn't exist
+    '''
+
+    _validate_cc_list(cc_list)
+
+    tc = TestCase.objects.get(pk=case_id)
+
+    # First, find those that do not exist yet.
+    existing_cc = tc.emailing.get_cc_list()
+    adding_cc = list(set(cc_list) - set(existing_cc))
+
+    # add the ones which are new
+    tc.emailing.add_cc(adding_cc)
+
+
+@permissions_required('testcases.change_testcase')
+@rpc_method(name='TestCase.remove_notification_cc')
+def remove_notification_cc(case_id, cc_list):
+    '''
+    .. function:: XML-RPC TestCase.remove_notification_cc(case_id, cc_list)
+
+        Remove email addresses from the notification list of specified TestCase
+
+        :param case_id: PK of TestCase to modify
+        :type case_id: int
+        :param cc_list: List of email addresses
+        :type cc_list: list(str)
+        :return: None
+        :raises: TypeError or ValidationError if email validation fails
+        :raises: PermissionDenied if missing *testcases.change_testcase* permission
+        :raises: TestCase.DoesNotExist if object with case_id doesn't exist
+    '''
+
+    _validate_cc_list(cc_list)
+
+    TestCase.objects.get(pk=case_id).emailing.remove_cc(cc_list)
+
+
+@rpc_method(name='TestCase.get_notification_cc')
+def get_notification_cc(case_id):
+    '''
+    .. function:: XML-RPC TestCase.get_notification_cc(case_id)
+
+        Return notification list for specified TestCase
+
+        :param case_id: PK of TestCase
+        :type case_id: int
+        :return: List of email addresses
+        :rtype: list(str)
+        :raises: TestCase.DoesNotExist if object with case_id doesn't exist
+    '''
+    return TestCase.objects.get(pk=case_id).get_cc_list()
 
 
 @permissions_required('testcases.add_testcasetag')
@@ -800,126 +899,3 @@ def update(case_ids, values):
 
     query = {'pk__in': tcs.values_list('pk', flat=True)}
     return TestCase.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCase.validate_cc_list')
-def validate_cc_list(cc_list):
-    '''Validate each email in cc_list argument
-
-    This is called by ``notification_*`` methods internally.
-
-    No return value, and if any email in cc_list is not valid, ValidationError
-    will be raised.
-    '''
-
-    if not isinstance(cc_list, list):
-        raise TypeError('cc_list should be a list object.')
-
-    field = EmailField(required=True)
-    invalid_emails = []
-
-    for item in cc_list:
-        try:
-            field.clean(item)
-        except ValidationError:
-            invalid_emails.append(item)
-
-    if invalid_emails:
-        raise ValidationError(
-            field.error_messages['invalid'] % {
-                'value': ', '.join(invalid_emails)})
-
-
-@permissions_required('testcases.change_testcase')
-@rpc_method(name='TestCase.notification_add_cc')
-def notification_add_cc(case_ids, cc_list):
-    '''
-    Description: Add email addresses to the notification CC list of specific TestCases
-
-    Params:      $case_ids - Integer/Array: one or more TestCase IDs
-
-                 $cc_list - Array: one or more Email addresses, which will be
-                            added to each TestCase indicated by the case_ids.
-
-    Returns:     JSON. When succeed, status is 0, and message maybe empty or
-                 anything else that depends on the implementation. If something
-                 wrong, status will be 1 and message will be a short description
-                 to the error.
-    '''
-
-    try:
-        validate_cc_list(cc_list)
-    except (TypeError, ValidationError):
-        raise
-
-    try:
-        tc_ids = pre_process_ids(case_ids)
-
-        for tc in TestCase.objects.filter(pk__in=tc_ids).iterator():
-            # First, find those that do not exist yet.
-            existing_cc = tc.emailing.get_cc_list()
-            adding_cc = list(set(cc_list) - set(existing_cc))
-
-            tc.emailing.add_cc(adding_cc)
-
-    except (TypeError, ValueError, Exception):
-        raise
-
-
-@permissions_required('testcases.change_testcase')
-@rpc_method(name='TestCase.notification_remove_cc')
-def notification_remove_cc(case_ids, cc_list):
-    '''
-    Description: Remove email addresses from the notification CC list of specific TestCases
-
-    Params:      $case_ids - Integer/Array: one or more TestCase IDs
-
-                 $cc_list - Array: contians the email addresses that will
-                            be removed from each TestCase indicated by case_ids.
-
-    Returns:     JSON. When succeed, status is 0, and message maybe empty or
-                 anything else that depends on the implementation. If something
-                 wrong, status will be 1 and message will be a short description
-                 to the error.
-    '''
-
-    try:
-        validate_cc_list(cc_list)
-    except (TypeError, ValidationError):
-        raise
-
-    try:
-        tc_ids = pre_process_ids(case_ids)
-
-        for tc in TestCase.objects.filter(pk__in=tc_ids).only('pk').iterator():
-            tc.emailing.remove_cc(cc_list)
-
-    except (TypeError, ValueError, Exception):
-        raise
-
-
-@permissions_required('testcases.change_testcase')
-@rpc_method(name='TestCase.notification_get_cc_list')
-def notification_get_cc_list(case_ids):
-    '''
-    Description: Return whole CC list of each TestCase
-
-    Params:      $case_ids - Integer/Array: one or more TestCase IDs
-
-    Returns:     An dictionary object with case_id as key and a list of CC as the value
-                 Each case_id will be converted to a str object in the result.
-    '''
-
-    result = {}
-
-    try:
-        tc_ids = pre_process_ids(case_ids)
-
-        for tc in TestCase.objects.filter(pk__in=tc_ids).iterator():
-            cc_list = tc.emailing.get_cc_list()
-            result[str(tc.pk)] = cc_list
-
-    except (TypeError, ValueError, Exception):
-        raise
-
-    return result
