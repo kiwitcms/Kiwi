@@ -970,7 +970,7 @@ def component(request, template_name='plan/get_component.html'):
             TestPlanComponent.objects.filter(plan__in=self.tps,).delete()
 
         def get_form(self):
-            tpcs = TestPlanComponent.objects.filter(plan=self.tps)
+            tpcs = TestPlanComponent.objects.filter(plan__in=self.tps)
 
             form = PlanComponentForm(tps=self.tps, initial={
                 'component': tpcs.values_list('component_id', flat=True),
