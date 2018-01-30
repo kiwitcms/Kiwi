@@ -14,6 +14,7 @@ from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
     'add_case',
+    'remove_case',
 
     'add_tag',
     'create',
@@ -25,7 +26,6 @@ __all__ = (
     'get_test_case_runs',
     'get_test_cases',
     'link_env_value',
-    'remove_cases',
     'remove_tag',
     'unlink_env_value',
     'update',
@@ -54,46 +54,21 @@ def add_case(run_id, case_id):
 
 
 @permissions_required('testruns.delete_testcaserun')
-@rpc_method(name='TestRun.remove_cases')
-def remove_cases(run_ids, case_ids):
+@rpc_method(name='TestRun.remove_case')
+def remove_case(run_id, case_id):
     """
-    Description: Remove one or more cases from the selected test runs.
+    .. function:: XML-RPC TestRun.remove_case(run_id, case_id)
 
-    Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database
-                                                  an array of IDs, or a comma separated list of IDs.
+        Remove a TestCase from the selected test run.
 
-                 $case_ids - Integer/Array/String: An integer or alias representing the ID in the
-                                                   database, an arry of case_ids or aliases, or a
-                                                   string of comma separated case_ids.
-
-    Returns:     Array: empty on success
-
-    Exception:   When any exception is thrown on the server side, it will be
-                 returned as JSON, which contains two items:
-
-                 - status: 1.
-
-                 - message: str, any message specific to the error on the server
-
-    Example:
-    # Remove case 54321 from run 1234
-    TestRun.remove_cases(1234, 54321)
-    # Remove case ids list [1234, 5678] from run list [56789, 12345]
-    TestRun.remove_cases([56789, 12345], [1234, 5678])
-    # Remove case ids list '1234, 5678' from run list '56789, 12345' with String
-    TestRun.remove_cases('56789, 12345', '1234, 5678')
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param case_id: PK of TestCase to be removed
+        :type case_id: int
+        :return: None
+        :raises: PermissionDenied if missing *testruns.delete_testcaserun* permission
     """
-
-    try:
-        trs = TestRun.objects.filter(run_id__in=pre_process_ids(run_ids))
-
-        for tr in trs.iterator():
-            crs = TestCaseRun.objects.filter(run=tr,
-                                             case__in=pre_process_ids(case_ids))
-            crs.delete()
-
-    except Exception:
-        raise
+    TestCaseRun.objects.filter(run=run_id, case=case_id).delete()
 
 
 @permissions_required('testruns.add_testruntag')
