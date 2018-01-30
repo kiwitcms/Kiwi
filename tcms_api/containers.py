@@ -605,7 +605,7 @@ class CasePlans(Container):
             return
         log.info("Fetching {0}'s plans".format(self._identifier))
         self._current = set([TestPlan(inject)
-                            for inject in self._server.TestCase.get_plans(self.id)])
+                            for inject in self._server.TestPlan.filter({'case': self.id})])
         self._original = set(self._current)
 
     def _add(self, plans):

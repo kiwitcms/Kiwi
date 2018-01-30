@@ -33,7 +33,6 @@ __all__ = (
     'filter',
     'get',
     'get_bugs',
-    'get_plans',
     'get_tags',
     'get_text',
     'link_plan',
@@ -536,25 +535,6 @@ def get_bugs(case_ids):
 
     query = {'case__case_id__in': tcs.values_list('case_id', flat=True)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCase.get_plans')
-def get_plans(case_id):
-    """
-    Description: Get the list of plans that this case is linked to.
-
-    Params:      $case_id - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of test plan object hashes.
-
-    Example:
-    >>> TestCase.get_plans(12345)
-    """
-    test_case = TestCase.objects.get(case_id=case_id)
-
-    plan_ids = test_case.plan.values_list('plan_id', flat=True)
-    query = {'plan_id__in': plan_ids}
-    return TestPlan.to_xmlrpc(query)
 
 
 @rpc_method(name='TestCase.get_tags')
