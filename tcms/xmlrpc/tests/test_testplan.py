@@ -3,6 +3,7 @@
 from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.testplans.models import TestPlan
+from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TCMSEnvPlanMap
 
 from tcms.tests.factories import ProductFactory
@@ -186,3 +187,75 @@ class TestUpdate(XmlrpcAPIBaseTest):
         # iow no dangling objects left
         self.assertEqual(2, TCMSEnvPlanMap.objects.filter(plan__in=[self.plan_1,
                                                                     self.plan_2]).count())
+
+
+class TestRemoveCase(XmlrpcAPIBaseTest):
+    """ Test the XML-RPC method TestPlan.remove_case() """
+
+    def _fixture_setup(self):
+        super(TestRemoveCase, self)._fixture_setup()
+        self.testcase_1 = TestCaseFactory()
+        self.testcase_2 = TestCaseFactory()
+        self.plan_1 = TestPlanFactory()
+        self.plan_2 = TestPlanFactory()
+
+        self.testcase_1.add_to_plan(self.plan_1)
+
+        self.testcase_2.add_to_plan(self.plan_1)
+        self.testcase_2.add_to_plan(self.plan_2)
+
+    def test_remove_case_with_single_plan(self):
+        self.rpc_client.TestPlan.remove_case(self.plan_1.pk, self.testcase_1.pk)
+        self.assertEqual(0, self.testcase_1.plan.count())
+
+    def test_remove_case_with_two_plans(self):
+        self.assertEqual(2, self.testcase_2.plan.count())
+
+        self.rpc_client.TestPlan.remove_case(self.plan_1.pk, self.testcase_2.pk)
+        self.assertEqual(1, self.testcase_2.plan.count())
+
+
+class TestAddCase(XmlrpcAPIBaseTest):
+    """ Test the XML-RPC method TestPlan.add_case() """
+
+    def _fixture_setup(self):
+        super(TestAddCase, self)._fixture_setup()
+
+        self.testcase_1 = TestCaseFactory()
+        self.testcase_2 = TestCaseFactory()
+        self.testcase_3 = TestCaseFactory()
+
+        self.plan_1 = TestPlanFactory()
+        self.plan_2 = TestPlanFactory()
+        self.plan_3 = TestPlanFactory()
+
+        # case 1 is already linked to plan 1
+        self.testcase_1.add_to_plan(self.plan_1)
+
+    def test_ignores_existing_mappings(self):
+        plans = [self.plan_1.pk, self.plan_2.pk, self.plan_3.pk]
+        cases = [self.testcase_1.pk, self.testcase_2.pk, self.testcase_3.pk]
+
+        for plan_id in plans:
+            for case_id in cases:
+                self.rpc_client.TestPlan.add_case(plan_id, case_id)
+
+        # no duplicates for plan1/case1 were created
+        self.assertEqual(
+            1,
+            TestCasePlan.objects.filter(
+                plan=self.plan_1.pk,
+                case=self.testcase_1.pk
+            ).count()
+        )
+
+        # verify all case/plan combinations exist
+        for plan_id in plans:
+            for case_id in cases:
+                self.assertEqual(
+                    1,
+                    TestCasePlan.objects.filter(
+                        plan=plan_id,
+                        case=case_id
+                    ).count()
+                )

@@ -5,10 +5,15 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.management.models import TestTag
 from tcms.testplans.models import TestPlan, TCMSEnvPlanMap
+from tcms.testcases.models import TestCase, TestCasePlan
+
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_process_ids
 
 __all__ = (
+    'add_case',
+    'remove_case',
+
     'add_tag',
     'create',
     'filter',
@@ -457,3 +462,43 @@ def update(plan_ids, values):
 
     query = {'pk__in': tps.values_list('pk', flat=True)}
     return TestPlan.to_xmlrpc(query)
+
+
+@permissions_required('testcases.add_testcaseplan')
+@rpc_method(name='TestPlan.add_case')
+def add_case(plan_id, case_id):
+    """
+    .. function:: XML-RPC TestPlan.add_case(plan_id, case_id)
+
+        Link test case to the given plan.
+
+        :param plan_id: PK of TestPlan to modify
+        :type plan_id: int
+        :param case_id: PK of TestCase to be added to plan
+        :type case_id: int
+        :return: None
+        :raises: TestPlan.DoesNotExit or TestCase.DoesNotExist if objects specified
+                 by PKs are missing
+        :raises: PermissionDenied if missing *testcases.add_testcaseplan* permission
+    """
+    plan = TestPlan.objects.get(pk=plan_id)
+    case = TestCase.objects.get(pk=case_id)
+    plan.add_case(case)
+
+
+@permissions_required('testcases.delete_testcaseplan')
+@rpc_method(name='TestPlan.remove_case')
+def remove_case(plan_id, case_id):
+    """
+    .. function:: XML-RPC TestPlan.remove_case(plan_id, case_id)
+
+        Unlink a test case from the given plan.
+
+        :param plan_id: PK of TestPlan to modify
+        :type plan_id: int
+        :param case_id: PK of TestCase to be removed from plan
+        :type case_id: int
+        :return: None
+        :raises: PermissionDenied if missing *testcases.delete_testcaseplan* permission
+    """
+    TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
