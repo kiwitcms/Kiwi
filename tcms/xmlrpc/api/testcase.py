@@ -16,7 +16,6 @@ from tcms.xmlrpc.decorators import permissions_required
 
 
 __all__ = (
-    'add_comment',
     'add_component',
     'add_tag',
     'add_to_run',
@@ -45,41 +44,6 @@ __all__ = (
     'unlink_plan',
     'update',
 )
-
-
-@rpc_method(name='TestCase.add_comment')
-def add_comment(case_ids, comment, **kwargs):
-    """
-    Description: Adds comments to selected test cases.
-
-    Params:      $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of case_ids, or a string of comma separated case_ids.
-
-                 $comment - String - The comment
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add comment 'foobar' to case 1234
-    >>> TestCase.add_comment(1234, 'foobar')
-    # Add 'foobar' to cases list [56789, 12345]
-    >>> TestCase.add_comment([56789, 12345], 'foobar')
-    # Add 'foobar' to cases list '56789, 12345' with String
-    >>> TestCase.add_comment('56789, 12345', 'foobar')
-    """
-    from tcms.xmlrpc.utils import Comment
-
-    request = kwargs.get(REQUEST_KEY)
-    object_pks = pre_process_ids(value=case_ids)
-    c = Comment(
-        request=request,
-        content_type='testcases.testcase',
-        object_pks=object_pks,
-        comment=comment
-    )
-
-    return c.add()
 
 
 @permissions_required('testcases.add_testcasecomponent')

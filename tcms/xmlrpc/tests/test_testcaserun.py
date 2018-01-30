@@ -187,23 +187,6 @@ class TestCaseRunAddComment(XmlrpcAPIBaseTest):
         self.case_run_1 = TestCaseRunFactory()
         self.case_run_2 = TestCaseRunFactory()
 
-    def test_add_comment_with_string(self):
-        comment = self.rpc_client.TestCaseRun.add_comment(
-            "{0},{1}".format(self.case_run_1.pk, self.case_run_2.pk),
-            "Hello World!")
-        self.assertIsNone(comment)
-
-        comment = self.rpc_client.TestCaseRun.add_comment(
-            str(self.case_run_1.pk),
-            "Hello World!")
-        self.assertIsNone(comment)
-
-    def test_add_comment_with_list(self):
-        comment = self.rpc_client.TestCaseRun.add_comment(
-            [self.case_run_1.pk, self.case_run_2.pk],
-            "Hello World!")
-        self.assertIsNone(comment)
-
     def test_add_comment_with_int(self):
         comment = self.rpc_client.TestCaseRun.add_comment(self.case_run_2.pk, "Hello World!")
         self.assertIsNone(comment)

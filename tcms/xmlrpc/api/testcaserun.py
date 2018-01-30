@@ -11,6 +11,7 @@ from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun
 from tcms.xmlrpc.utils import pre_process_ids
+from tcms.xmlrpc.utils import Comment
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
@@ -28,40 +29,24 @@ __all__ = (
 
 
 @rpc_method(name='TestCaseRun.add_comment')
-def add_comment(case_run_ids, comment, **kwargs):
+def add_comment(case_run_id, comment, **kwargs):
     """
-    Description: Adds comments to selected test case runs.
+    .. function:: XML-RPC TestCaseRun.add_comment(case_run_id, comment)
 
-    Params:      $case_run_ids - Integer/Array/String: An integer representing the ID
-                             in the database, an array of case_run_ids, or a string of
-                             comma separated case_run_ids.
+        Add comment to selected test case run.
 
-                 $comment - String - The comment
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add comment 'foobar' to case run 1234
-    >>> TestCaseRun.add_comment(1234, 'foobar')
-    # Add 'foobar' to case runs list [56789, 12345]
-    >>> TestCaseRun.add_comment([56789, 12345], 'foobar')
-    # Add 'foobar' to case runs list '56789, 12345' with String
-    >>> TestCaseRun.add_comment('56789, 12345', 'foobar')
+        :param case_run_id: PK of a TestCaseRun object
+        :param case_run_id: int
+        :param comment: The text to add as a comment
+        :param comment: str
+        :return: None
     """
-    from tcms.xmlrpc.utils import Comment
-
-    # FIXME: empty object_pks should be an ValueError
-    object_pks = pre_process_ids(value=case_run_ids)
-    request = kwargs.get(REQUEST_KEY)
-    c = Comment(
-        request=request,
+    Comment(
+        request=kwargs.get(REQUEST_KEY),
         content_type='testruns.testcaserun',
-        object_pks=object_pks,
+        object_pks=[case_run_id],
         comment=comment
-    )
-
-    return c.add()
+    ).add()
 
 
 @permissions_required('testcases.add_testcasebug')
