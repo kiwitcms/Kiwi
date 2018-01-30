@@ -28,7 +28,7 @@ class TestNotificationRemoveCC(XmlrpcAPIBaseTest):
     def test_remove_existing_cc(self):
         # initially testcase has the default CC listed
         # and we issue XMLRPC request to remove the cc
-        self.rpc_client.TestCase.notification_remove_cc(self.testcase.pk, [self.default_cc])
+        self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk, [self.default_cc])
 
         # now verify that the CC email has been removed
         self.assertEqual(0, self.testcase.emailing.cc_list.count())
