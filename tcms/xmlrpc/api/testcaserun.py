@@ -15,15 +15,16 @@ from tcms.xmlrpc.utils import Comment
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
+    'add_log',
+    'remove_log',
+    'get_logs',
+
     'add_comment',
     'attach_bug',
-    'attach_log',
     'create',
     'detach_bug',
-    'detach_log',
     'filter',
     'get_bugs',
-    'get_logs',
     'update',
 )
 
@@ -311,10 +312,10 @@ def update(case_run_ids, values, **kwargs):
     return TestCaseRun.to_xmlrpc(query)
 
 
-@rpc_method(name='TestCaseRun.attach_log')
-def attach_log(case_run_id, name, url):
+@rpc_method(name='TestCaseRun.add_log')
+def add_log(case_run_id, name, url):
     """
-    .. function:: XML-RPC TestCaseRun.attach_log
+    .. function:: XML-RPC TestCaseRun.add_log(case_run_id, name, url)
 
         Add new log link to a TestCaseRun
 
@@ -324,7 +325,9 @@ def attach_log(case_run_id, name, url):
         :type name: str
         :param url: URL of the log
         :type url: str
-        :return: Nothing
+        :return: ID of created log link
+        :rtype: int
+        :raises: RuntimeError if operation not successfull
     """
     result = create_link({
         'name': name,
@@ -334,15 +337,21 @@ def attach_log(case_run_id, name, url):
     })
     if result['rc'] != 0:
         raise RuntimeError(result['response'])
+    return result['data']['pk']
 
 
-@rpc_method(name='TestCaseRun.detach_log')
-def detach_log(case_run_id, link_id):
+@rpc_method(name='TestCaseRun.remove_log')
+def remove_log(case_run_id, link_id):
     """
-    Description: Remove log link to TestCaseRun
+    .. function:: XML-RPC TestCaseRun.remove_log(case_run_id, link_id)
 
-    Params:     $case_run_id - Integer
-                $link_id     - Integer: Id of LinkReference instance
+        Remove log link from TestCaseRun
+
+        :param case_run_id: PK of TestCaseRun to modify
+        :type case_run_id: int
+        :param link_id: PK of link to remove
+        :type link_id: int
+        :return: None
     """
     LinkReference.objects.filter(pk=link_id, test_case_run=case_run_id).delete()
 
@@ -350,9 +359,14 @@ def detach_log(case_run_id, link_id):
 @rpc_method(name='TestCaseRun.get_logs')
 def get_logs(case_run_id):
     """
-    Description:  Get log links to TestCaseRun
+    .. function:: XML-RPC TestCaseRun.get_logs(case_run_id)
 
-    Params:     $case_run_id - Integer:
+        Get log links for the specified TestCaseRun
+
+        :param case_run_id: PK of TestCaseRun object
+        :type case_run_id: int
+        :return: Serialized list of :class:`tcms.core.contrib.linkreference.models.LinkReference`
+                 objects
     """
     links = LinkReference.objects.filter(test_case_run=case_run_id)
     s = XMLRPCSerializer(links)

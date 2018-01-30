@@ -36,7 +36,7 @@ def create_link(data):
         url = form.cleaned_data['url']
         target_id = form.cleaned_data['target_id']
 
-        LinkReference.objects.create(
+        link = LinkReference.objects.create(
             test_case_run_id=target_id,
             name=name,
             url=url)
@@ -44,7 +44,11 @@ def create_link(data):
         return {
             'rc': 0,
             'response': 'ok',
-            'data': {'name': name, 'url': url}
+            'data': {
+                'pk': link.pk,
+                'name': name,
+                'url': url,
+            }
         }
     else:
         return {'rc': 1, 'response': form.errors.as_text()}
