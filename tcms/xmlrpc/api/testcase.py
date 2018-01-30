@@ -25,14 +25,12 @@ __all__ = (
     'add_tag',
     'add_to_run',
     'attach_bug',
-    'check_case_status',
     'create',
     'detach_bug',
     'filter',
     'get',
     'get_bug_systems',
     'get_bugs',
-    'get_case_status',
     'get_plans',
     'get_tags',
     'get_text',
@@ -244,23 +242,6 @@ def attach_bug(values):
     return
 
 
-@rpc_method(name='TestCase.check_case_status')
-def check_case_status(name):
-    """
-    Description: Looks up and returns a case status by name.
-
-    Params:      $name - String: name of the case status.
-
-    Returns:     Hash: Matching case status object hash or error if not found.
-
-    Example:
-    >>> TestCase.check_case_status('proposed')
-    """
-    from tcms.testcases.models import TestCaseStatus
-
-    return TestCaseStatus.objects.get(name=name).serialize()
-
-
 @permissions_required('testcases.add_testcase')
 @rpc_method(name='TestCase.create')
 def create(values, **kwargs):
@@ -393,8 +374,6 @@ def detach_bug(case_ids, bug_ids):
             except ObjectDoesNotExist:
                 pass
 
-    return
-
 
 @rpc_method(name='TestCase.filter')
 def filter(query):
@@ -520,29 +499,6 @@ def get_bugs(case_ids):
 
     query = {'case__case_id__in': tcs.values_list('case_id', flat=True)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCase.get_case_status')
-def get_case_status(id=None):
-    """
-    Description: Get the case status matching the given id.
-
-    Params:      $id - Integer: ID of the case status in the database.
-
-    Returns:     Hash: case status object hash.
-
-    Example:
-    # Get all of case status
-    >>> TestCase.get_case_status()
-    # Get case status by ID 1
-    >>> TestCase.get_case_status(1)
-    """
-    from tcms.testcases.models import TestCaseStatus
-
-    if id:
-        return TestCaseStatus.objects.get(id=id).serialize()
-
-    return TestCaseStatus.to_xmlrpc()
 
 
 @rpc_method(name='TestCase.get_plans')
