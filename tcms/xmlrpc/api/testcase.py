@@ -26,7 +26,6 @@ __all__ = (
     'add_to_run',
     'attach_bug',
     'check_case_status',
-    'check_priority',
     'create',
     'detach_bug',
     'filter',
@@ -37,7 +36,6 @@ __all__ = (
     'get_plans',
     'get_tags',
     'get_text',
-    'get_priority',
     'link_plan',
     'notification_add_cc',
     'notification_get_cc_list',
@@ -261,23 +259,6 @@ def check_case_status(name):
     from tcms.testcases.models import TestCaseStatus
 
     return TestCaseStatus.objects.get(name=name).serialize()
-
-
-@rpc_method(name='TestCase.check_priority')
-def check_priority(value):
-    """
-    Description: Looks up and returns a priority by name.
-
-    Params:      $value - String: name of the priority.
-
-    Returns:     Hash: Matching priority object hash or error if not found.
-
-    Example:
-    >>> TestCase.check_priority('p1')
-    """
-    from tcms.management.models import Priority
-
-    return Priority.objects.get(value=value).serialize()
 
 
 @permissions_required('testcases.add_testcase')
@@ -625,23 +606,6 @@ def get_text(case_id, case_text_version=None):
 
     return test_case.get_text_with_version(
         case_text_version=case_text_version).serialize()
-
-
-@rpc_method(name='TestCase.get_priority')
-def get_priority(id):
-    """
-    Description: Get the priority matching the given id.
-
-    Params:      $id - Integer: ID of the priority in the database.
-
-    Returns:     Hash: Priority object hash.
-
-    Example:
-    >>> TestCase.get_priority(1)
-    """
-    from tcms.management.models import Priority
-
-    return Priority.objects.get(id=id).serialize()
 
 
 @permissions_required('testcases.add_testcaseplan')
