@@ -4,17 +4,15 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.management.models import TestTag
-from tcms.testplans.models import TestPlan, TestPlanType, TCMSEnvPlanMap
+from tcms.testplans.models import TestPlan, TCMSEnvPlanMap
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_process_ids
 
 __all__ = (
     'add_tag',
-    'check_plan_type',
     'create',
     'filter',
     'get',
-    'get_plan_type',
     'get_tags',
     'get_test_cases',
     'get_all_cases_tags',
@@ -65,19 +63,6 @@ def add_tag(plan_ids, tags):
             tp.add_tag(tag=t)
 
     return
-
-
-@rpc_method(name='TestPlan.check_plan_type')
-def check_plan_type(name):
-    """
-    Params:      $name - String: the plan type.
-
-    Returns:     Hash: Matching plan type object hash or error if not found.
-
-    Example:
-    >>> TestPlan.check_plan_type('regression')
-    """
-    return TestPlanType.objects.get(name=name).serialize()
 
 
 @permissions_required('testplans.add_testplan')
@@ -216,19 +201,6 @@ def get(plan_id):
     # replace tag_id list in the serialize return data
     response["tag"] = tags_without_id
     return response
-
-
-@rpc_method(name='TestPlan.get_plan_type')
-def get_plan_type(id):
-    """
-    Params:      $id - Integer: ID of the plan type to return
-
-    Returns:     Hash: Matching plan type object hash or error if not found.
-
-    Example:
-    >>> TestPlan.get_plan_type(3)
-    """
-    return TestPlanType.objects.get(id=id).serialize()
 
 
 @rpc_method(name='TestPlan.get_tags')
