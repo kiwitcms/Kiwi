@@ -24,7 +24,6 @@ __all__ = (
     'get_tags',
     'get_test_case_runs',
     'get_test_cases',
-    'get_test_plan',
     'link_env_value',
     'remove_cases',
     'remove_tag',
@@ -423,23 +422,6 @@ def get_test_cases(run_id):
         case['case_run_status'] = info['case_run_status__name']
 
     return tcs_serializer
-
-
-@rpc_method(name='TestRun.get_test_plan')
-def get_test_plan(run_id):
-    """
-    Description: Get the plan that this run is associated with.
-
-    Params:      $run_id - Integer: An integer representing the ID in the database
-                                    for this run.
-
-    Returns:     Hash: A plan object hash.
-
-    Example:
-    >>> TestRun.get_test_plan(1193)
-    """
-    return TestRun.objects.select_related('plan').get(
-        run_id=run_id).plan.serialize()
 
 
 @permissions_required('testruns.delete_testruntag')
