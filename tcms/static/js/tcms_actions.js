@@ -167,8 +167,6 @@ var default_messages = {
 
       modify_plan : '/plan/$id/modify/',
       plan_assign_case: '/plan/$id/assigncase/apply/',
-      plan_components : '/plans/component/',
-      plan_tree_view: '/plan/$id/treeview/',
       plans: '/plans/',
 
       case_change_status: '/cases/changestatus/',

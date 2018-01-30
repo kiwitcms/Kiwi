@@ -193,14 +193,6 @@ class TestPlanFactory(DjangoModelFactory):
     # FIXME: How to create field for field parent
 
     @factory.post_generation
-    def component(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for component in extracted:
-                TestPlanComponentFactory(plan=self, component=component)
-
-    @factory.post_generation
     def env_group(self, create, extracted, **kwargs):
         if not create:
             return
@@ -224,15 +216,6 @@ class TestPlanTagFactory(DjangoModelFactory):
 
     plan = factory.SubFactory(TestPlanFactory)
     tag = factory.SubFactory(TestTagFactory)
-
-
-class TestPlanComponentFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testplans.TestPlanComponent'
-
-    plan = factory.SubFactory(TestPlanFactory)
-    component = factory.SubFactory(ComponentFactory)
 
 
 class TCMSEnvPlanMapFactory(DjangoModelFactory):

@@ -54,8 +54,6 @@ class TestPlan(TCMSActionModel):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
                                on_delete=models.CASCADE)
 
-    component = models.ManyToManyField('management.Component',
-                                       through='testplans.TestPlanComponent')
     env_group = models.ManyToManyField('management.TCMSEnvGroup', through='TCMSEnvPlanMap')
     tag = models.ManyToManyField('management.TestTag', through='testplans.TestPlanTag')
 
@@ -175,15 +173,6 @@ class TestPlan(TCMSActionModel):
             tcp.sortkey = sortkey
             tcp.save()
 
-    def add_component(self, component):
-        try:
-            return TestPlanComponent.objects.create(
-                plan=self,
-                component=component,
-            )
-        except Exception:
-            return False
-
     def add_env_group(self, env_group):
         # Create the env plan map
         return TCMSEnvPlanMap.objects.create(
@@ -199,14 +188,6 @@ class TestPlan(TCMSActionModel):
 
     def remove_tag(self, tag):
         TestPlanTag.objects.filter(plan=self, tag=tag).delete()
-
-    def remove_component(self, component):
-        try:
-            return TestPlanComponent.objects.get(
-                plan=self, component=component
-            ).delete()
-        except Exception:
-            return False
 
     def clear_env_groups(self):
         # Remove old env groups because we only maintanence on group per plan.
@@ -399,15 +380,6 @@ class TestPlanTag(models.Model):
 
     class Meta:
         db_table = u'test_plan_tags'
-
-
-class TestPlanComponent(models.Model):
-    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
-    component = models.ForeignKey('management.Component', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = u'test_plan_components'
-        unique_together = ('plan', 'component')
 
 
 class TestPlanEmailSettings(models.Model):

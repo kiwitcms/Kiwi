@@ -1007,31 +1007,6 @@ class CaseComponentsTests(BaseAPIClient_TestCase):
         testcase = TestCase(self.testcase.id)
         self.assertTrue(component not in testcase.components)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  PlanComponents
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class PlanComponentsTests(BaseAPIClient_TestCase):
-    def test_unlinking_component_from_test_plan(self):
-        """ Unlinking a component from a test plan """
-        testplan = TestPlan(self.master.id)
-        testplan.components.remove(self.component)
-        testplan.update()
-        # Check server content by re-fetching the TestPlan
-        # remember that we don't cache by default!
-        testplan = TestPlan(self.master.id)
-        self.assertTrue(self.component not in testplan.components)
-
-    def test_linking_component_to_test_plan(self):
-        """ Linking a component to a test plan """
-        testplan = TestPlan(self.master.id)
-        testplan.components.add(self.component)
-        testplan.update()
-        # Check server content by re-fetching the TestPlan
-        # remember that we don't cache by default!
-        testplan = TestPlan(self.master.id)
-        self.assertTrue(self.component in testplan.components)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  CaseBugs

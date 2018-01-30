@@ -6,7 +6,7 @@ from tinymce.widgets import TinyMCE
 
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, StripURLField
-from tcms.management.models import Component, Product, Version, TCMSEnvGroup, TestTag
+from tcms.management.models import Product, Version, TCMSEnvGroup, TestTag
 from .models import TestPlan, TestPlanType
 # ===========Plan Fields==============
 
@@ -404,32 +404,3 @@ class XMLRPCEditPlanForm(EditPlanForm):
         queryset=Version.objects.none(),
         required=False
     )
-
-
-# =========== Misc forms ==============
-
-
-class PlanComponentForm(forms.Form):
-    plan = forms.ModelMultipleChoiceField(
-        label='',
-        queryset=TestPlan.objects.none(),
-        widget=forms.Select(attrs={'style': 'display:none;'}),
-    )
-    component = forms.ModelMultipleChoiceField(
-        queryset=Component.objects.none(),
-        required=False,
-    )
-
-    def __init__(self, tps, **kwargs):
-        tp_ids = tps.values_list('pk', flat=True)
-        product_ids = list(set(tps.values_list('product_id', flat=True)))
-
-        if kwargs.get('initial'):
-            kwargs['initial']['plan'] = tp_ids
-
-        super(PlanComponentForm, self).__init__(**kwargs)
-
-        self.fields['plan'].queryset = tps
-        self.fields['component'].queryset = Component.objects.filter(
-            product__pk__in=product_ids
-        )

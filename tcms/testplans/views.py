@@ -10,7 +10,6 @@ from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
-from django.core import serializers
 from django.db.models import Count
 from django.db.models import Q
 from django.forms.models import model_to_dict
@@ -28,7 +27,7 @@ from tcms.core.utils.checksum import checksum
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.views import Prompt
-from tcms.management.models import TCMSEnvGroup, Component
+from tcms.management.models import TCMSEnvGroup
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
@@ -38,9 +37,8 @@ from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.forms import ClonePlanForm
 from tcms.testplans.forms import EditPlanForm
 from tcms.testplans.forms import NewPlanForm
-from tcms.testplans.forms import PlanComponentForm
 from tcms.testplans.forms import SearchPlanForm
-from tcms.testplans.models import TestPlan, TestPlanComponent
+from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun, TestCaseRun
 
 
@@ -916,121 +914,6 @@ def cases(request, plan_id):
 
     func = getattr(cas, action)
     return func()
-
-
-@require_GET
-def component(request, template_name='plan/get_component.html'):
-    '''Manage the component template for plan
-
-    Parameters:
-      plan - Necessary, to determine which plan you need to modify the
-             component template
-      a - Optional, Actions for the plan, now it have 'add', 'remove', 'update'
-          and 'render' actions. 'render' is default, use for render the page.
-          'update' is use for clean the components then add the new components
-          you specific.
-      component - Optional, The component ID you wish to operate.
-      multiple - Optional, When you modify multiple, the parameter need to
-                 post. It will response a JSON not a page.
-
-    Returns:
-      HTML page by default, or a JSON when the 'multiple' parameter specific.
-    '''
-    ajax_response = {'rc': 0, 'response': 'ok'}
-
-    class ComponentActions(object):
-        def __init__(self, request, tps, cs):
-            self.__all__ = ['add', 'clear', 'get_form', 'remove', 'update', 'render']
-            self.__msgs__ = {
-                'permission_denied': {'rc': 1, 'response': 'Permisson denied'},
-            }
-
-            self.request = request
-            self.tps = tps
-            self.cs = cs
-
-        def add(self):
-            if not self.request.user.has_perm('testplans.add_testplancomponent'):
-                if self.is_ajax():
-                    return HttpResponse(json_dumps(self.__msgs__['permission_denied']))
-
-                return self.render(message=self.__msgs__['permission_denied']['response'])
-
-            for tp in self.tps:
-                for c in cs:
-                    tp.add_component(c)
-
-            return self.render()
-
-        def clear(self):
-            if not self.request.user.has_perm('testplans.delete_testplancomponent'):
-                pass
-
-            # Remove the exist components
-            TestPlanComponent.objects.filter(plan__in=self.tps,).delete()
-
-        def get_form(self):
-            tpcs = TestPlanComponent.objects.filter(plan__in=self.tps)
-
-            form = PlanComponentForm(tps=self.tps, initial={
-                'component': tpcs.values_list('component_id', flat=True),
-            })
-
-            q_format = request.GET.get('format')
-            if not q_format:
-                q_format = 'p'
-            html = getattr(form, 'as_' + q_format)
-
-            return HttpResponse(html())
-
-        def remove(self):
-            if not self.request.user.has_perm('testplans.delete_testplancomponent'):
-                if self.request.is_ajax():
-                    return HttpResponse(json_dumps(self.__msgs__['permission_denied']))
-
-                return self.render(message=self.__msgs__['permission_denied']['response'])
-
-            for tp in self.tps:
-                for c in cs:
-                    tp.remove_component(c)
-
-            return self.render()
-
-        def update(self):
-            self.clear()
-            self.add()
-            return self.render()
-
-        def render(self, message=None):
-            if request.GET.get('multiple'):
-                return HttpResponse(json_dumps(ajax_response))
-
-            if request.GET.get('type'):
-                obj = TestPlanComponent.objects.filter(plan__in=self.tps)
-                return HttpResponse(serializers.serialize(request.GET['type'], obj))
-
-            context_data = {'test_plan': self.tps[0]}
-            return render(request, template_name, context_data)
-
-    if not request.GET.get('plan'):
-        raise Http404
-
-    tps = TestPlan.objects.filter(pk__in=request.GET.getlist('plan'))
-
-    if request.GET.get('component'):
-        cs = Component.objects.filter(pk__in=request.GET.getlist('component'))
-    else:
-        cs = Component.objects.none()
-
-    cas = ComponentActions(request=request, tps=tps, cs=cs)
-
-    action = getattr(cas, request.GET.get('a', 'render').lower())
-    return action()
-
-
-def tree_view(request):
-    '''Whole tree view for plans'''
-    # FIXME:
 
 
 @require_GET

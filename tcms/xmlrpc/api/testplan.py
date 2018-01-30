@@ -3,7 +3,6 @@
 from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import string_to_list, form_errors_to_list
-from tcms.management.models import Component
 from tcms.management.models import TestTag
 from tcms.testplans.models import TestPlan, TestPlanType, TCMSEnvPlanMap
 from tcms.xmlrpc.decorators import permissions_required
@@ -11,20 +10,17 @@ from tcms.xmlrpc.utils import pre_process_ids
 
 __all__ = (
     'add_tag',
-    'add_component',
     'check_plan_type',
     'create',
     'filter',
     'get',
     'get_plan_type',
     'get_tags',
-    'get_components',
     'get_test_cases',
     'get_all_cases_tags',
     'get_test_runs',
     'get_text',
     'remove_tag',
-    'remove_component',
     'store_text',
     'update',
 )
@@ -67,44 +63,6 @@ def add_tag(plan_ids, tags):
         t, c = TestTag.objects.get_or_create(name=tag)
         for tp in tps.iterator():
             tp.add_tag(tag=t)
-
-    return
-
-
-@permissions_required('testplans.add_testplancomponent')
-@rpc_method(name='TestPlan.add_component')
-def add_component(plan_ids, component_ids):
-    """
-    Description: Adds one or more components to the selected test plan.
-
-    Params:      $plan_ids - Integer/Array/String: An integer representing the ID of the plan
-                             in the database.
-                 $component_ids - Integer/Array/String - The component ID, an array of
-                                  Component IDs or a comma separated list of component IDs.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add component id 54321 to plan 1234
-    >>> TestPlan.add_component(1234, 54321)
-    # Add component ids list [1234, 5678] to plan list [56789, 12345]
-    >>> TestPlan.add_component([56789, 12345], [1234, 5678])
-    # Add component ids list '1234, 5678' to plan list '56789, 12345' with String
-    >>> TestPlan.add_component('56789, 12345', '1234, 5678')
-    """
-    # FIXME: optimize this method to reduce possible huge number of SQLs
-
-    tps = TestPlan.objects.filter(
-        plan_id__in=pre_process_ids(value=plan_ids)
-    )
-    cs = Component.objects.filter(
-        id__in=pre_process_ids(value=component_ids)
-    )
-
-    for tp in tps.iterator():
-        for c in cs.iterator():
-            tp.add_component(c)
 
     return
 
@@ -292,25 +250,6 @@ def get_tags(plan_id):
     return TestTag.to_xmlrpc(query)
 
 
-@rpc_method(name='TestPlan.get_components')
-def get_components(plan_id):
-    """
-    Description: Get the list of components attached to this plan.
-
-    Params:      $plan_id - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of component object hashes.
-
-    Example:
-    >>> TestPlan.get_components(12345)
-    """
-    test_plan = TestPlan.objects.get(plan_id=plan_id)
-
-    component_ids = test_plan.component.values_list('id', flat=True)
-    query = {'id__in': component_ids}
-    return Component.to_xmlrpc(query)
-
-
 @rpc_method(name='TestPlan.get_all_cases_tags')
 def get_all_cases_tags(plan_id):
     """
@@ -445,43 +384,6 @@ def remove_tag(plan_ids, tags):
     for test_plan in test_plans.iterator():
         for test_tag in test_tags.iterator():
             test_plan.remove_tag(tag=test_tag)
-
-    return
-
-
-@permissions_required('testplans.delete_testplancomponent')
-@rpc_method(name='TestPlan.remove_component')
-def remove_component(plan_ids, component_ids):
-    """
-    Description: Removes selected component from the selected test plan.
-
-    Params:      $plan_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of plan_ids, or a string of comma separated plan_ids.
-
-                 $component_ids - Integer: - The component ID to be removed.
-
-    Returns:     Array: Empty on success.
-
-    Example:
-    # Remove component id 54321 from plan 1234
-    >>> TestPlan.remove_component(1234, 54321)
-    # Remove component ids list [1234, 5678] from plan list [56789, 12345]
-    >>> TestPlan.remove_component([56789, 12345], [1234, 5678])
-    # Remove component ids list '1234, 5678' from plan list '56789, 12345' with String
-    >>> TestPlan.remove_component('56789, 12345', '1234, 5678')
-    """
-    test_plans = TestPlan.objects.filter(
-        plan_id__in=pre_process_ids(value=plan_ids)
-    )
-    components = Component.objects.filter(
-        id__in=pre_process_ids(value=component_ids)
-    )
-
-    for test_plan in test_plans.iterator():
-        for component in components.iterator():
-            test_plan.remove_component(component=component)
-
-    return
 
 
 @permissions_required('testplans.add_testplantext')

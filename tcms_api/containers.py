@@ -36,7 +36,6 @@ an object and clear() for removing all items from it.
 Container overview (objects contained are listed in brackets):
 
     TestPlan.tags = PlanTags[Tag] ......................... done
-    TestPlan.components = PlanComponents[Component] ....... done
     TestPlan.children = ChildPlans[TestPlan] .............. done
     TestPlan.testcases = PlanCases[TestCase] .............. done
     TestPlan.testruns = PlanRuns[TestRun] ................. done
@@ -339,59 +338,6 @@ class CaseComponents(Container):
                 component.name, self._identifier))
             self._server.TestCase.remove_component(self.id, component.id)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#   Plan Components Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class PlanComponents(Container):
-    """ Components linked to a test plan """
-
-    # Local cache indexed by corresponding test plan id
-    _cache = {}
-    # Class of contained objects
-    _class = Component
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Plan Components Special
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def __str__(self):
-        """ The list of linked components' names """
-        if self._items:
-            return listed(sorted([component.name for component in self]))
-        else:
-            return "[None]"
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  Plan Components Methods
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    def _fetch(self, inset=None):
-        """ Fetch currently linked components from the server """
-        # If data initialized from the inset ---> we're done
-        if Container._fetch(self, inset):
-            return
-        log.info("Fetching {0}'s components".format(self._identifier))
-        self._current = set([Component(inject)
-                            for inject in self._server.TestPlan.get_components(self.id)])
-        self._original = set(self._current)
-
-    def _add(self, components):
-        """ Link provided components to the test plan """
-        log.info("Linking {1} to {0}".format(
-            self._identifier,
-            listed([component.name for component in components])))
-        data = [component.id for component in components]
-        log.data(data)
-        self._server.TestPlan.add_component(self.id, data)
-
-    def _remove(self, components):
-        """ Unlink provided components from the test plan """
-        for component in components:
-            log.info("Unlinking {0} from {1}".format(
-                component.name, self._identifier))
-            self._server.TestPlan.remove_component(self.id, component.id)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Case Bugs Class
