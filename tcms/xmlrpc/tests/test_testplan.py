@@ -2,8 +2,6 @@
 
 from xmlrpc.client import Fault as XmlRPCFault
 
-from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TCMSEnvPlanMap
 
@@ -98,51 +96,6 @@ class TestAddTag(XmlrpcAPIBaseTest):
         for plan in self.plans:
             tag_exists = plan.tag.filter(name__in=tags_names).exists()
             self.assertTrue(tag_exists)
-
-
-class TestGetTestCases(XmlrpcAPIBaseTest):
-    '''Test testplan.get_test_cases method'''
-
-    def _fixture_setup(self):
-        super(TestGetTestCases, self)._fixture_setup()
-
-        self.tester = UserFactory(username='tester')
-        self.reviewer = UserFactory(username='reviewer')
-        self.product = ProductFactory()
-        self.plan = TestPlanFactory(author=self.tester, owner=self.tester, product=self.product)
-        self.cases = [
-            TestCaseFactory(author=self.tester, default_tester=None, reviewer=self.reviewer,
-                            plan=[self.plan]),
-            TestCaseFactory(author=self.tester, default_tester=None, reviewer=self.reviewer,
-                            plan=[self.plan]),
-            TestCaseFactory(author=self.tester, default_tester=None, reviewer=self.reviewer,
-                            plan=[self.plan]),
-        ]
-        self.another_plan = TestPlanFactory(
-            author=self.tester,
-            owner=self.tester,
-            product=self.product
-        )
-
-    def test_get_test_cases(self):
-        serialized_cases = self.rpc_client.TestPlan.get_test_cases(self.plan.pk)
-        for case in serialized_cases:
-            expected_case = TestCase.objects.get(plan=self.plan.pk, pk=case['case_id'])
-
-            self.assertEqual(expected_case.summary, case['summary'])
-            self.assertEqual(expected_case.priority_id, case['priority_id'])
-            self.assertEqual(expected_case.author_id, case['author_id'])
-
-            plan_case_rel = TestCasePlan.objects.get(plan=self.plan, case=case['case_id'])
-            self.assertEqual(plan_case_rel.sortkey, case['sortkey'])
-
-    def test_404_when_plan_nonexistent(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestPlan matching query does not exist'):
-            self.rpc_client.TestPlan.get_test_cases(-1)
-
-    def test_plan_has_no_cases(self):
-        result = self.rpc_client.TestPlan.get_test_cases(self.another_plan.pk)
-        self.assertEqual([], result)
 
 
 class TestRemoveTag(XmlrpcAPIBaseTest):

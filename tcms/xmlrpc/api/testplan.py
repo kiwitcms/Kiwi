@@ -14,7 +14,6 @@ __all__ = (
     'filter',
     'get',
     'get_tags',
-    'get_test_cases',
     'get_all_cases_tags',
     'get_test_runs',
     'get_text',
@@ -243,34 +242,6 @@ def get_all_cases_tags(plan_id):
     tag_ids = list(set(tag_ids))
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
-
-
-@rpc_method(name='TestPlan.get_test_cases')
-def get_test_cases(plan_id):
-    """
-    Description: Get the list of cases that this plan is linked to.
-
-    Params:      $plan_id - Integer: An integer representing the ID of the plan in the database
-
-    Returns:     Array: An array of test case object hashes.
-
-    Example:
-    >>> TestPlan.get_test_cases(137)
-    """
-    from tcms.testcases.models import TestCase
-    from tcms.testplans.models import TestPlan
-    from tcms.xmlrpc.serializer import XMLRPCSerializer
-
-    tp = TestPlan.objects.get(pk=plan_id)
-    tcs = TestCase.objects.filter(plan=tp).order_by('testcaseplan__sortkey')
-    serialized_tcs = XMLRPCSerializer(tcs.iterator()).serialize_queryset()
-    if serialized_tcs:
-        for serialized_tc in serialized_tcs:
-            case_id = serialized_tc.get('case_id', None)
-            tc = tcs.get(pk=case_id)
-            tcp = tc.testcaseplan_set.get(plan=tp)
-            serialized_tc['sortkey'] = tcp.sortkey
-    return serialized_tcs
 
 
 @rpc_method(name='TestPlan.get_test_runs')

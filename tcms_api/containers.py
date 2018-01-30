@@ -689,7 +689,7 @@ class PlanCases(Container):
                 Tag(tag)
         # Fetch test cases from the server
         log.info("Fetching {0}'s cases".format(self._identifier))
-        injects = self._server.TestPlan.get_test_cases(self.id)
+        injects = self._server.TestCase.filter({'plan': self.id})
         log.data("Fetched {0}".format(listed(injects, "inject")))
         self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
