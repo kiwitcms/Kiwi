@@ -782,14 +782,11 @@ class RunCases(Container):
 
     def _add(self, testcases):
         """ Add given test cases to the test run """
-        # Short info about the action
-        identifiers = [testcase.identifier for testcase in testcases]
-        log.info("Adding {0} to {1}".format(
-            listed(identifiers, "testcase", max=3),
-            self._object.identifier))
         # Prepare data and push
         for testcase in testcases:
             try:
+                log.info("Adding {0} to {1}".format(
+                    testcase.identifier, self._object.identifier))
                 self._server.TestRun.add_case(self.id, testcase.id)
             except xmlrpc.client.Fault as error:
                 # don't raise errors on duplicate entries
@@ -802,14 +799,11 @@ class RunCases(Container):
 
     def _remove(self, testcases):
         """ Remove given test cases from the test run """
-        # Short info about the action
-        identifiers = [testcase.identifier for testcase in testcases]
-        log.info("Removing {0} from {1}".format(
-            listed(identifiers, "testcase", max=3),
-            self._object.identifier))
-        data = [testcase.id for testcase in testcases]
-        log.data(pretty(data))
-        self._server.TestRun.remove_cases(self.id, data)
+        for testcase in testcases:
+            log.info("Removing {0} from {1}".format(
+                testcase.identifier, self._object.identifier))
+            self._server.TestRun.remove_case(self.id, testcase.id)
+
         # RunCaseRuns will need update ---> erase current data
         self._object.caseruns._init()
 
