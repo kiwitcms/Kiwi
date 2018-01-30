@@ -8,15 +8,20 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
+from tcms.management.models import Component
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
+
 from tcms.xmlrpc.utils import pre_process_ids, pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
 
 
 __all__ = (
     'add_component',
+    'get_components',
+    'remove_component',
+
     'add_tag',
     'add_to_run',
     'attach_bug',
@@ -29,7 +34,6 @@ __all__ = (
     'get_bug_systems',
     'get_bugs',
     'get_case_status',
-    'get_components',
     'get_plans',
     'get_tags',
     'get_text',
@@ -38,7 +42,6 @@ __all__ = (
     'notification_add_cc',
     'notification_get_cc_list',
     'notification_remove_cc',
-    'remove_component',
     'remove_tag',
     'store_text',
     'unlink_plan',
@@ -48,37 +51,68 @@ __all__ = (
 
 @permissions_required('testcases.add_testcasecomponent')
 @rpc_method(name='TestCase.add_component')
-def add_component(case_ids, component_ids):
+def add_component(case_id, component_id):
     """
-    Description: Adds one or more components to the selected test cases.
+    .. function:: XML-RPC TestCase.add_component(case_id, component_id)
 
-    Params:      $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of case_ids, or a string of comma separated case_ids.
+        Add component to the selected test case.
 
-                 $component_ids - Integer/Array/String - The component ID, an array of Component IDs
-                                  or a comma separated list of component IDs
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add component id 54321 to case 1234
-    >>> TestCase.add_component(1234, 54321)
-    # Add component ids list [1234, 5678] to cases list [56789, 12345]
-    >>> TestCase.add_component([56789, 12345], [1234, 5678])
-    # Add component ids list '1234, 5678' to cases list '56789, 12345' with String
-    >>> TestCase.add_component('56789, 12345', '1234, 5678')
+        :param case_id: PK of TestCase to modify
+        :type case_id: int
+        :param component_id: PK of Component to add
+        :type component_id: int
+        :return: None
+        :raises: PermissionDenied if missing the *testcases.add_testcasecomponent*
+                 permission
+        :raises: DoesNotExist if missing test case or component that match the
+                 specified PKs
     """
-    from tcms.management.models import Component
+    TestCase.objects.get(pk=case_id).add_component(
+        Component.objects.get(pk=component_id)
+    )
 
-    test_cases = TestCase.objects.filter(case_id__in=pre_process_ids(value=case_ids))
-    components = Component.objects.filter(id__in=pre_process_ids(value=component_ids))
 
-    for test_case in test_cases.iterator():
-        for component in components.iterator():
-            test_case.add_component(component=component)
+@rpc_method(name='TestCase.get_components')
+def get_components(case_id):
+    """
+    .. function:: XML-RPC TestCase.get_components(case_id)
 
-    return
+        Get the list of components attached to this case.
+
+        :param case_id: PK if TestCase
+        :type case_id: int
+        :return: Serialized list of :class:`tcms.management.models.Component` objects
+        :rtype: list(dict)
+        :raises: TestCase.DoesNotExist if missing test case matching PK
+    """
+    test_case = TestCase.objects.get(case_id=case_id)
+
+    component_ids = test_case.component.values_list('id', flat=True)
+    query = {'id__in': component_ids}
+    return Component.to_xmlrpc(query)
+
+
+@permissions_required('testcases.delete_testcasecomponent')
+@rpc_method(name='TestCase.remove_component')
+def remove_component(case_id, component_id):
+    """
+    .. function:: XML-RPC TestCase.remove_component(case_id, component_id)
+
+        Remove selected component from the selected test case.
+
+        :param case_id: PK of TestCase to modify
+        :type case_id: int
+        :param component_id: PK of Component to remove
+        :type component_id: int
+        :return: None
+        :raises: PermissionDenied if missing the *testcases.delete_testcasecomponent*
+                 permission
+        :raises: DoesNotExist if missing test case or component that match the
+                 specified PKs
+    """
+    TestCase.objects.get(pk=case_id).remove_component(
+        Component.objects.get(pk=component_id)
+    )
 
 
 @permissions_required('testcases.add_testcasetag')
@@ -530,27 +564,6 @@ def get_case_status(id=None):
     return TestCaseStatus.to_xmlrpc()
 
 
-@rpc_method(name='TestCase.get_components')
-def get_components(case_id):
-    """
-    Description: Get the list of components attached to this case.
-
-    Params:      $case_id - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of component object hashes.
-
-    Example:
-    >>> TestCase.get_components(12345)
-    """
-    from tcms.management.models import Component
-
-    test_case = TestCase.objects.get(case_id=case_id)
-
-    component_ids = test_case.component.values_list('id', flat=True)
-    query = {'id__in': component_ids}
-    return Component.to_xmlrpc(query)
-
-
 @rpc_method(name='TestCase.get_plans')
 def get_plans(case_id):
     """
@@ -701,46 +714,6 @@ def link_plan(case_ids, plan_ids):
         TestCasePlan(plan_id=_plan_id, case_id=_case_id)
         for _plan_id, _case_id in _generate_link_plan_value()
     ])
-
-
-@permissions_required('testcases.delete_testcasecomponent')
-@rpc_method(name='TestCase.remove_component')
-def remove_component(case_ids, component_ids):
-    """
-    Description: Removes selected component from the selected test case.
-
-    Params:      $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of case_ids, or a string of comma separated case_ids.
-
-                 $component_ids - Integer: - The component ID to be removed.
-
-    Returns:     Array: Empty on success.
-
-    Example:
-    # Remove component id 54321 from case 1234
-    >>> TestCase.remove_component(1234, 54321)
-    # Remove component ids list [1234, 5678] from cases list [56789, 12345]
-    >>> TestCase.remove_component([56789, 12345], [1234, 5678])
-    # Remove component ids list '1234, 5678' from cases list '56789, 12345' with String
-    >>> TestCase.remove_component('56789, 12345', '1234, 5678')
-    """
-    from tcms.management.models import Component
-
-    tcs = TestCase.objects.filter(
-        case_id__in=pre_process_ids(value=case_ids)
-    )
-    tccs = Component.objects.filter(
-        id__in=pre_process_ids(value=component_ids)
-    )
-
-    for tc in tcs.iterator():
-        for tcc in tccs.iterator():
-            try:
-                tc.remove_component(component=tcc)
-            except ObjectDoesNotExist:
-                pass
-
-    return
 
 
 @permissions_required('testcases.delete_testcasetag')
