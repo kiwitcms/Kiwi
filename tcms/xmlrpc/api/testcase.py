@@ -33,7 +33,6 @@ __all__ = (
     'detach_bug',
     'filter',
     'get',
-    'get_bug_systems',
     'get_bugs',
     'get_plans',
     'get_tags',
@@ -554,23 +553,6 @@ def get(case_id):
     # replace tag_id list in the serialize return data
     response["tag"] = tags_without_id
     return response
-
-
-@rpc_method(name='TestCase.get_bug_systems')
-def get_bug_systems(id):
-    """
-    Description: Used to load an existing test case bug system from the database.
-
-    Params:      $id - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of bug object hashes.
-
-    Example:
-    >>> TestCase.get_bug_systems(1)
-    """
-    from tcms.testcases.models import TestCaseBugSystem
-
-    return TestCaseBugSystem.objects.get(pk=id).serialize()
 
 
 @rpc_method(name='TestCase.get_bugs')
