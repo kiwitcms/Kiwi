@@ -4,7 +4,7 @@ from datetime import datetime
 from modernrpc.core import rpc_method
 
 from tcms.core.utils import string_to_list, form_errors_to_list
-from tcms.management.models import TestTag
+from tcms.management.models import TestTag, TCMSEnvValue
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
@@ -17,16 +17,16 @@ __all__ = (
     'remove_case',
     'get_cases',
 
+    'add_env_value',
+    'remove_env_value',
+
     'add_tag',
     'create',
-    'env_value',
     'filter',
     'get',
     'get_bugs',
     'get_tags',
-    'link_env_value',
     'remove_tag',
-    'unlink_env_value',
     'update',
 )
 
@@ -220,44 +220,6 @@ def create(values):
         raise ValueError(form_errors_to_list(form))
 
     return tr.serialize()
-
-
-@permissions_required('testruns.change_tcmsenvrunvaluemap')
-@rpc_method(name='TestRun.env_value')
-def env_value(action, run_ids, env_value_ids):
-    """
-    Description: add/remove env values to the given runs,
-                 function is same as link_env_value/unlink_env_value
-
-    Params:      $action        - String: 'add' or 'remove'.
-                 $run_ids       - Integer/Array/String: An integer representing the ID
-                                  in the database, an array of run_ids,
-                                  or a string of comma separated run_ids.
-
-                 $env_value_ids - Integer/Array/String: An integer representing the ID
-                                  in the database, an array of env_value_ids,
-                                  or a string of comma separated env_value_ids.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add env value 13 to run id 8748
-    >>> TestRun.env_value('add', 8748, 13)
-    """
-    from tcms.management.models import TCMSEnvValue
-
-    test_runs = TestRun.objects.filter(pk__in=pre_process_ids(value=run_ids))
-    env_values = TCMSEnvValue.objects.filter(
-        pk__in=pre_process_ids(value=env_value_ids)
-    )
-
-    for test_run in test_runs.iterator():
-        for env_value in env_values.iterator():
-            func = getattr(test_run, action + '_env_value')
-            func(env_value=env_value)
-
-    return
 
 
 @rpc_method(name='TestRun.filter')
@@ -518,48 +480,43 @@ def update(run_ids, values):
 
 
 @permissions_required('testruns.add_tcmsenvrunvaluemap')
-@rpc_method(name='TestRun.link_env_value')
-def link_env_value(run_ids, env_value_ids):
+@rpc_method(name='TestRun.add_env_value')
+def add_env_value(run_id, env_value_id):
     """
-    Description: Link env values to the given runs.
+    .. function:: XML-RPC TestRun.add_env_value(run_id, env_value_id)
 
-    Params:      $run_ids       - Integer/Array/String: An integer representing the ID in the
-                                   database, an array of run_ids, or a string of
-                                   comma separated run_ids.
+        Add environment values to the given TestRun.
 
-                 $env_value_ids - Integer/Array/String: An integer representing the ID in the
-                                   database, an array of env_value_ids, or a string of
-                                   comma separated env_value_ids.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add env value 13 to run id 8748
-    >>> TestRun.link_env_value(8748, 13)
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param env_value_id: PK of :class:`tcms.management.models.TCMSEnvValue`
+                             object to add
+        :type env_value_id: int
+        :return: None
+        :raises: PermissionDenied if missing *testruns.add_tcmsenvrunvaluemap* permission
+        :raises: DoesNotExist if objects specified by PKs don't exist
     """
-    return env_value('add', run_ids, env_value_ids)
+    TestRun.objects.get(pk=run_id).add_env_value(
+        TCMSEnvValue.objects.get(pk=env_value_id)
+    )
 
 
 @permissions_required('testruns.delete_tcmsenvrunvaluemap')
-@rpc_method(name='TestRun.unlink_env_value')
-def unlink_env_value(run_ids, env_value_ids):
+@rpc_method(name='TestRun.remove_env_value')
+def remove_env_value(run_id, env_value_id):
     """
-    Description: Unlink env values to the given runs.
+    .. function:: XML-RPC TestRun.remove_env_value(run_id, env_value_id)
 
-    Params:      $run_ids       - Integer/Array/String: An integer representing the ID in the
-                                   database, an array of run_ids, or a string of
-                                   comma separated run_ids.
+        Remove environment value from the given TestRun.
 
-                 $env_value_ids - Integer/Array/String: An integer representing the ID in the
-                                   database, an array of env_value_ids, or a string of
-                                   comma separated env_value_ids.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Unlink env value 13 to run id 8748
-    >>> TestRun.unlink_env_value(8748, 13)
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param env_value_id: PK of :class:`tcms.management.models.TCMSEnvValue`
+                             object to be removed
+        :type env_value_id: int
+        :return: None
+        :raises: PermissionDenied if missing *testruns.delete_tcmsenvrunvaluemap* permission
     """
-    return env_value('remove', run_ids, env_value_ids)
+    TestRun.objects.get(pk=run_id).remove_env_value(
+        TCMSEnvValue.objects.get(pk=env_value_id)
+    )
