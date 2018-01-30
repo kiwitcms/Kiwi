@@ -23,7 +23,6 @@ Immutable TCMS objects
 """
 
 import re
-import xmlrpc.client
 from pprint import pformat as pretty
 
 import tcms_api.config as config
@@ -371,8 +370,8 @@ class PlanType(TCMS):
         elif self._id is not TCMSNone:
             try:
                 log.info("Fetching test plan type " + self.identifier)
-                inject = self._server.TestPlan.get_plan_type(self.id)
-            except xmlrpc.client.Fault as error:
+                inject = self._server.PlanType.filter({'pk': self.id})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError(
                     "Cannot find test plan type for " + self.identifier)
@@ -380,8 +379,8 @@ class PlanType(TCMS):
         else:
             try:
                 log.info("Fetching test plan type '{0}'".format(self.name))
-                inject = self._server.TestPlan.check_plan_type(self.name)
-            except xmlrpc.client.Fault as error:
+                inject = self._server.PlanType.filter({'name': self.name})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError("PlanType '{0}' not found".format(
                     self.name))

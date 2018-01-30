@@ -100,29 +100,6 @@ class TestAddTag(XmlrpcAPIBaseTest):
             self.assertTrue(tag_exists)
 
 
-class TestPlanTypeMethods(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestPlanTypeMethods, self)._fixture_setup()
-
-        self.plan_type = TestPlanTypeFactory(name='xmlrpc plan type', description='')
-
-    def test_check_plan_type(self):
-        result = self.rpc_client.TestPlan.check_plan_type(self.plan_type.name)
-        self.assertEqual(self.plan_type.name, result['name'])
-        self.assertEqual(self.plan_type.description, result['description'])
-        self.assertEqual(self.plan_type.pk, result['id'])
-
-    def test_get_plan_type(self):
-        result = self.rpc_client.TestPlan.get_plan_type(self.plan_type.pk)
-        self.assertEqual(self.plan_type.name, result['name'])
-        self.assertEqual(self.plan_type.description, result['description'])
-        self.assertEqual(self.plan_type.pk, result['id'])
-
-        with self.assertRaisesRegex(XmlRPCFault, 'TestPlanType matching query does not exist'):
-            self.rpc_client.TestPlan.get_plan_type(0)
-
-
 class TestGetTestCases(XmlrpcAPIBaseTest):
     '''Test testplan.get_test_cases method'''
 
