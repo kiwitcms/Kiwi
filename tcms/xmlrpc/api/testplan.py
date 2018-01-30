@@ -19,7 +19,6 @@ __all__ = (
     'filter',
     'get',
     'get_tags',
-    'get_all_cases_tags',
     'get_test_runs',
     'get_text',
     'remove_tag',
@@ -222,29 +221,6 @@ def get_tags(plan_id):
     test_plan = TestPlan.objects.get(plan_id=plan_id)
 
     tag_ids = test_plan.tag.values_list('id', flat=True)
-    query = {'id__in': tag_ids}
-    return TestTag.to_xmlrpc(query)
-
-
-@rpc_method(name='TestPlan.get_all_cases_tags')
-def get_all_cases_tags(plan_id):
-    """
-    Description: Get the list of tags attached to this plan's testcases.
-
-    Params:      $plan_id - Integer An integer representing the ID of this plan in the database
-
-    Returns:     Array: An array of tag object hashes.
-
-    Example:
-    >>> TestPlan.get_all_cases_tags(137)
-    """
-    test_plan = TestPlan.objects.get(plan_id=plan_id)
-
-    test_cases = test_plan.case.all()
-    tag_ids = []
-    for test_case in test_cases.iterator():
-        tag_ids.extend(test_case.tag.values_list('id', flat=True))
-    tag_ids = list(set(tag_ids))
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
 
