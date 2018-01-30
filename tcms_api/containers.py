@@ -327,9 +327,8 @@ class CaseComponents(Container):
         log.info("Linking {1} to {0}".format(
             self._identifier,
             listed([component.name for component in components])))
-        data = [component.id for component in components]
-        log.data(data)
-        self._server.TestCase.add_component(self.id, data)
+        for component in components:
+            self._server.TestCase.add_component(self.id, component.id)
 
     def _remove(self, components):
         """ Unlink provided components from the test case """
