@@ -680,13 +680,7 @@ class PlanCases(Container):
         # If data initialized from the inset ---> we're done
         if Container._fetch(self, inset):
             return
-        # Initialize all plan-case tags (skip when caching persistently
-        # as this an additional/unnecessary call in that case)
-        if config.get_cache_level() == config.CACHE_OBJECTS:
-            log.info("Fetching tags for all {0}'s test cases".format(
-                self._object.identifier))
-            for tag in self._server.TestPlan.get_all_cases_tags(self.id):
-                Tag(tag)
+
         # Fetch test cases from the server
         log.info("Fetching {0}'s cases".format(self._identifier))
         injects = self._server.TestCase.filter({'plan': self.id})
