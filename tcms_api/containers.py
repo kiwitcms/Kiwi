@@ -770,7 +770,7 @@ class RunCases(Container):
             return
         # Fetch attached test cases from the server
         log.info("Fetching {0}'s test cases".format(self._identifier))
-        injects = self._server.TestRun.get_test_cases(self.id)
+        injects = self._server.TestRun.get_cases(self.id)
         self._current = set([TestCase(inject) for inject in injects])
         self._original = set(self._current)
 

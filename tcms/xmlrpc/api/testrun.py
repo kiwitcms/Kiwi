@@ -15,6 +15,7 @@ from tcms.xmlrpc.decorators import permissions_required
 __all__ = (
     'add_case',
     'remove_case',
+    'get_cases',
 
     'add_tag',
     'create',
@@ -23,7 +24,6 @@ __all__ = (
     'get',
     'get_bugs',
     'get_tags',
-    'get_test_cases',
     'link_env_value',
     'remove_tag',
     'unlink_env_value',
@@ -68,6 +68,33 @@ def remove_case(run_id, case_id):
         :raises: PermissionDenied if missing *testruns.delete_testcaserun* permission
     """
     TestCaseRun.objects.filter(run=run_id, case=case_id).delete()
+
+
+@rpc_method(name='TestRun.get_cases')
+def get_cases(run_id):
+    """
+    .. function:: XML-RPC TestRun.get_cases(run_id)
+
+        Get the list of test cases that are attached to a test run.
+
+        :param run_id: PK of TestRun to inspect
+        :type run_id: int
+        :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects
+                 augmented with ``case_run_id`` and ``case_run_status`` information.
+        :rtype: list(dict)
+    """
+    tcs_serializer = TestCase.to_xmlrpc(query={'case_run__run_id': run_id})
+
+    qs = TestCaseRun.objects.filter(run_id=run_id).values(
+        'case', 'pk', 'case_run_status__name')
+    extra_info = dict(((row['case'], row) for row in qs.iterator()))
+
+    for case in tcs_serializer:
+        info = extra_info[case['case_id']]
+        case['case_run_id'] = info['pk']
+        case['case_run_status'] = info['case_run_status__name']
+
+    return tcs_serializer
 
 
 @permissions_required('testruns.add_testruntag')
@@ -352,33 +379,6 @@ def get_tags(run_id):
     tag_ids = test_run.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
-
-
-@rpc_method(name='TestRun.get_test_cases')
-def get_test_cases(run_id):
-    """
-    Description: Get the list of cases that this run is linked to.
-
-    Params:      $run_id - Integer: An integer representing the ID in the database
-                                    for this run.
-
-    Returns:     Array: An array of test case object hashes.
-
-    Example:
-    >>> TestRun.get_test_cases(1193)
-    """
-    tcs_serializer = TestCase.to_xmlrpc(query={'case_run__run_id': run_id})
-
-    qs = TestCaseRun.objects.filter(run_id=run_id).values(
-        'case', 'pk', 'case_run_status__name')
-    extra_info = dict(((row['case'], row) for row in qs.iterator()))
-
-    for case in tcs_serializer:
-        info = extra_info[case['case_id']]
-        case['case_run_id'] = info['pk']
-        case['case_run_status'] = info['case_run_status__name']
-
-    return tcs_serializer
 
 
 @permissions_required('testruns.delete_testruntag')
