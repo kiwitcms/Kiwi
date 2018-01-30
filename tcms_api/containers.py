@@ -610,17 +610,17 @@ class CasePlans(Container):
 
     def _add(self, plans):
         """ Link provided plans to the test case """
-        log.info("Linking {1} to {0}".format(
-            self._identifier,
-            listed([plan.identifier for plan in plans])))
-        self._server.TestCase.link_plan(self.id, [plan.id for plan in plans])
+        for plan in plans:
+            log.info("Linking {0} to {1}".format(
+                plan.identifier, self._identifier))
+            self._server.TestPlan.add_case(plan.id, self.id)
 
     def _remove(self, plans):
         """ Unlink provided plans from the test case """
         for plan in plans:
             log.info("Unlinking {0} from {1}".format(
                 plan.identifier, self._identifier))
-            self._server.TestCase.unlink_plan(self.id, plan.id)
+            self._server.TestPlan.remove_case(plan.id, self.id)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -697,10 +697,10 @@ class PlanCases(Container):
     def _add(self, cases):
         """ Link provided cases to the test plan """
         # Link provided cases on the server
-        log.info("Linking {1} to {0}".format(
-            self._identifier,
-            listed([case.identifier for case in cases])))
-        self._server.TestCase.link_plan([case.id for case in cases], self.id)
+        for case in cases:
+            log.info("Linking {0} to {1}".format(
+                case.identifier, self._identifier))
+            self._server.TestPlan.add_case(self.id, case.id)
 
     def _remove(self, cases):
         """ Unlink provided cases from the test plan """
@@ -708,7 +708,7 @@ class PlanCases(Container):
         for case in cases:
             log.info("Unlinking {0} from {1}".format(
                 case.identifier, self._identifier))
-            self._server.TestCase.unlink_plan(case.id, self.id)
+            self._server.TestPlan.remove_case(self.id, case.id)
 
     def __iter__(self):
         """ Iterate over all included test cases """

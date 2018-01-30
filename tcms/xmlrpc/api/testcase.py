@@ -10,8 +10,6 @@ from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCasePlan
-from tcms.testplans.models import TestPlan
 
 from tcms.xmlrpc.utils import pre_process_ids, pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
@@ -35,10 +33,8 @@ __all__ = (
     'get_bugs',
     'get_tags',
     'get_text',
-    'link_plan',
     'remove_tag',
     'store_text',
-    'unlink_plan',
     'update',
 )
 
@@ -581,78 +577,6 @@ def get_text(case_id, case_text_version=None):
         case_text_version=case_text_version).serialize()
 
 
-@permissions_required('testcases.add_testcaseplan')
-@rpc_method(name='TestCase.link_plan')
-def link_plan(case_ids, plan_ids):
-    """
-    Description: Link test cases to the given plan.
-
-    Params:      $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of case_ids, or a string of comma separated case_ids.
-
-                 $plan_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of plan_ids, or a string of comma separated plan_ids.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occurs
-
-    Example:
-    # Add case 1234 to plan id 54321
-    >>> TestCase.link_plan(1234, 54321)
-    # Add case ids list [56789, 12345] to plan list [1234, 5678]
-    >>> TestCase.link_plan([56789, 12345], [1234, 5678])
-    # Add case ids list 56789 and 12345 to plan list 1234 and 5678 with String
-    >>> TestCase.link_plan('56789, 12345', '1234, 5678')
-    """
-    case_ids = pre_process_ids(value=case_ids)
-    qs = TestCase.objects.filter(pk__in=case_ids)
-    tcs_ids = qs.values_list('pk', flat=True)
-
-    # Check the non-exist case ids.
-    ids_diff = set(case_ids) - set(tcs_ids.iterator())
-    if ids_diff:
-        ids_str = ','.join(map(str, ids_diff))
-        if len(ids_diff) > 1:
-            err_msg = 'TestCases %s do not exist.' % ids_str
-        else:
-            err_msg = 'TestCase %s does not exist.' % ids_str
-        raise ObjectDoesNotExist(err_msg)
-
-    plan_ids = pre_process_ids(value=plan_ids)
-    qs = TestPlan.objects.filter(pk__in=plan_ids)
-    tps_ids = qs.values_list('pk', flat=True)
-
-    # Check the non-exist plan ids.
-    ids_diff = set(plan_ids) - set(tps_ids.iterator())
-    if ids_diff:
-        ids_str = ','.join(map(str, ids_diff))
-        if len(ids_diff) > 1:
-            err_msg = 'TestPlans %s do not exist.' % ids_str
-        else:
-            err_msg = 'TestPlan %s does not exist.' % ids_str
-        raise ObjectDoesNotExist(err_msg)
-
-    # (plan_id, case_id) pair might probably exist in test_case_plans table, so
-    # skip the ones that do exist and create the rest.
-    # note: this query returns a list of tuples!
-    existing = TestCasePlan.objects.filter(
-        plan__in=plan_ids,
-        case__in=case_ids
-    ).values_list('plan', 'case')
-
-    # Link the plans to cases
-    def _generate_link_plan_value():
-        for plan_id in plan_ids:
-            for case_id in case_ids:
-                if (plan_id, case_id) not in existing:
-                    yield plan_id, case_id
-
-    TestCasePlan.objects.bulk_create([
-        TestCasePlan(plan_id=_plan_id, case_id=_case_id)
-        for _plan_id, _case_id in _generate_link_plan_value()
-    ])
-
-
 @permissions_required('testcases.delete_testcasetag')
 @rpc_method(name='TestCase.remove_tag')
 def remove_tag(case_ids, tags):
@@ -729,27 +653,6 @@ def store_text(case_id, action, **kwargs):
         setup=setup and setup.strip(),
         breakdown=breakdown and breakdown.strip(),
     ).serialize()
-
-
-@permissions_required('testcases.delete_testcaseplan')
-@rpc_method(name='TestCase.unlink_plan')
-def unlink_plan(case_id, plan_id):
-    """
-    Description: Unlink a test case from the given plan.
-                 If only one plan is linked, this will delete the test case.
-
-    Params:     $case_id - Integer/String: An integer or alias representing the ID in the database.
-                $plan_id - Integer: An integer representing the ID in the database.
-
-    Returns:    Array: Array of plans hash still linked if any, empty if not.
-
-    Example:
-    >>> TestCase.unlink_plan(12345, 137)
-    """
-    TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
-    plan_pks = TestCasePlan.objects.filter(case=case_id).values_list('plan',
-                                                                     flat=True)
-    return TestPlan.to_xmlrpc(query={'pk__in': plan_pks})
 
 
 @permissions_required('testcases.change_testcase')
