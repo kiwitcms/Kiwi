@@ -27,7 +27,6 @@ __all__ = (
     'remove_notification_cc',
 
     'add_tag',
-    'add_to_run',
     'attach_bug',
     'create',
     'detach_bug',
@@ -241,49 +240,6 @@ def add_tag(case_ids, tags):
         t, c = TestTag.objects.get_or_create(name=tag)
         for tc in tcs.iterator():
             tc.add_tag(tag=t)
-
-    return
-
-
-@permissions_required('testruns.add_testcaserun')
-@rpc_method(name='TestCase.add_to_run')
-def add_to_run(case_ids, run_ids):
-    """
-    Description: Add one or more cases to the selected test runs.
-
-    Params:      $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                             an array of case_ids, or a string of comma separated case_ids.
-
-                 $run_ids - Integer/Array/String: An integer representing the ID in the database
-                             an array of IDs, or a comma separated list of IDs.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add case 1234 to run id 54321
-    >>> TestCase.add_to_run(1234, 54321)
-    # Add case ids list [56789, 12345] to run list [1234, 5678]
-    >>> TestCase.add_to_run([56789, 12345], [1234, 5678])
-    # Add case ids list 56789 and 12345 to run list 1234 and 5678 with String
-    >>> TestCase.add_to_run('56789, 12345', '1234, 5678')
-    """
-    from tcms.testruns.models import TestRun
-
-    case_ids = pre_process_ids(case_ids)
-    run_ids = pre_process_ids(run_ids)
-
-    trs = TestRun.objects.filter(run_id__in=run_ids)
-    if not trs.exists():
-        raise ValueError('Invalid run_ids')
-
-    tcs = TestCase.objects.filter(case_id__in=case_ids)
-    if not tcs.exists():
-        raise ValueError('Invalid case_ids')
-
-    for tr in trs.iterator():
-        for tc in tcs.iterator():
-            tr.add_case_run(case=tc)
 
     return
 

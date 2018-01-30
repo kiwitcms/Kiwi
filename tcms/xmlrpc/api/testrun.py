@@ -13,7 +13,8 @@ from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
-    'add_cases',
+    'add_case',
+
     'add_tag',
     'create',
     'env_value',
@@ -33,37 +34,24 @@ __all__ = (
 
 
 @permissions_required('testruns.add_testcaserun')
-@rpc_method(name='TestRun.add_cases')
-def add_cases(run_ids, case_ids):
+@rpc_method(name='TestRun.add_case')
+def add_case(run_id, case_id):
     """
-    Description: Add one or more cases to the selected test runs.
+    .. function:: XML-RPC TestRun.add_case(run_id, case_id)
 
-    Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database
-                                                  an array of IDs, or a comma separated list of IDs.
+        Add a TestCase to the selected test run.
 
-                 $case_ids - Integer/Array/String: An integer or alias representing the ID in the
-                                                   database, an array of case_ids or aliases, or a
-                                                   string of comma separated case_ids.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add case id 54321 to run 1234
-    >>> TestRun.add_cases(1234, 54321)
-    # Add case ids list [1234, 5678] to run list [56789, 12345]
-    >>> TestRun.add_cases([56789, 12345], [1234, 5678])
-    # Add case ids list '1234, 5678' to run list '56789, 12345' with String
-    >>> TestRun.add_cases('56789, 12345', '1234, 5678')
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param case_id: PK of TestCase to be added
+        :type case_id: int
+        :return: None
+        :raises: DoesNotExist if objects specified by the PKs don't exist
+        :raises: PermissionDenied if missing *testruns.add_testcaserun* permission
     """
-    trs = TestRun.objects.filter(run_id__in=pre_process_ids(run_ids))
-    tcs = TestCase.objects.filter(case_id__in=pre_process_ids(case_ids))
-
-    for tr in trs.iterator():
-        for tc in tcs.iterator():
-            tr.add_case_run(case=tc)
-
-    return
+    TestRun.objects.get(pk=run_id).add_case_run(
+        case=TestCase.objects.get(pk=case_id)
+    )
 
 
 @permissions_required('testruns.delete_testcaserun')
