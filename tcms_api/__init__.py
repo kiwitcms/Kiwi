@@ -70,7 +70,7 @@ from tcms_api.mutable import (
     Mutable, TestPlan, TestRun, TestCase, CaseRun)
 from tcms_api.containers import (
     Container, CaseBugs, CaseComponents, CaseRunBugs, CaseTags,
-    ChildPlans, PlanCases, PlanComponents, PlanRuns,
+    ChildPlans, PlanCases, PlanRuns,
     PlanTags, RunCaseRuns, RunCases, RunTags, TagContainer)
 
 # Various useful utilities
@@ -100,7 +100,7 @@ __all__ = [
     'TestPlan', 'TestRun', 'TestCase', 'CaseRun',
 
     'CaseBugs', 'CaseComponents', 'CaseRunBugs', 'CaseTags',
-    'ChildPlans', 'PlanCases', 'PlanComponents', 'PlanRuns',
+    'ChildPlans', 'PlanCases', 'PlanRuns',
     'PlanTags', 'RunCaseRuns', 'RunCases', 'RunTags', 'TagContainer',
 
     'color', 'header', 'human', 'info', 'listed', 'unlisted',

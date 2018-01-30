@@ -7,7 +7,6 @@ from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TestPlan
 from tcms.testplans.models import TCMSEnvPlanMap
 
-from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
@@ -99,43 +98,6 @@ class TestAddTag(XmlrpcAPIBaseTest):
         for plan in self.plans:
             tag_exists = plan.tag.filter(name__in=tags_names).exists()
             self.assertTrue(tag_exists)
-
-
-class TestAddComponent(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestAddComponent, self)._fixture_setup()
-
-        self.product = ProductFactory()
-        self.plans = [
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
-        ]
-        self.component1 = ComponentFactory(name='xmlrpc test component 1',
-                                           description='xmlrpc test description',
-                                           product=self.product,
-                                           initial_owner=None,
-                                           initial_qa_contact=None)
-        self.component2 = ComponentFactory(name='xmlrpc test component 2',
-                                           description='xmlrpc test description',
-                                           product=self.product,
-                                           initial_owner=None,
-                                           initial_qa_contact=None)
-
-    def test_single_id(self):
-        self.rpc_client.TestPlan.add_component(self.plans[0].pk, self.component1.pk)
-        component_exists = TestPlan.objects.filter(
-            pk=self.plans[0].pk, component__pk=self.component1.pk).exists()
-        self.assertTrue(component_exists)
-
-    def test_ids_in_array(self):
-        plans_ids = [plan.pk for plan in self.plans]
-        components_ids = [self.component1.pk, self.component2.pk]
-        self.rpc_client.TestPlan.add_component(plans_ids, components_ids)
-        for plan in TestPlan.objects.filter(pk__in=plans_ids):
-            components_ids = [item.pk for item in plan.component.iterator()]
-            self.assertTrue(self.component1.pk in components_ids)
-            self.assertTrue(self.component2.pk in components_ids)
 
 
 class TestPlanTypeMethods(XmlrpcAPIBaseTest):

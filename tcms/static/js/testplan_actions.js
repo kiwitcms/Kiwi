@@ -694,7 +694,6 @@ Nitrate.TestPlans.Details = {
     'reviewingCases': 'reviewcases',
     'attachment': 'attachment',
     'testruns': 'testruns',
-    'components': 'components',
     'log': 'log',
     'treeview': 'treeview',
     'tag': 'tag'
@@ -984,7 +983,6 @@ Nitrate.TestPlans.Details = {
 
     // Initial the contents
     constructTagZone(jQ('#tag')[0], { plan: plan_id });
-    constructPlanComponentsZone('components');
 
     Nitrate.TestPlans.Details.observeEvents(plan_id);
     Nitrate.TestPlans.Details.initTabs();
@@ -1014,9 +1012,6 @@ Nitrate.TestPlans.Details = {
     jQ('#btn_clone, #btn_export, #btn_print').bind('click', function() {
       var params = jQ(this).data('params');
       window.location.href = params[0] + '?plan=' + params[1];
-    });
-    jQ('#js-update-components').live('click', function() {
-      constructPlanComponentModificationDialog();
     });
     var treeview = jQ('#treeview')[0];
     var planPK = jQ('#id_tree_container').data('param');
@@ -2161,102 +2156,6 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
       complete();
     }
   });
-}
-
-function constructPlanComponentsZone(container, parameters, callback) {
-  if (!parameters) {
-    var parameters = { plan: Nitrate.TestPlans.Instance.pk };
-  }
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'plan_components' });
-
-  var complete = function(t) {
-    if (callback) {
-      callback();
-    }
-
-    jQ('#id_form_plan_components').bind('submit', function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      var p = Nitrate.Utils.formSerialize(this);
-      var submitButton = jQ(this).find(':submit')[0];
-      p[submitButton.name] = submitButton.value;
-      constructPlanComponentsZone(container, p, callback);
-    });
-
-    jQ('.link_remove_plan_component').bind('click', function(e) {
-      var c = confirm(default_messages.confirm.remove_case_component);
-      if(!c) {
-        return false;
-      }
-      var links = jQ('.link_remove_plan_component');
-      var index = links.index(this);
-      var component = jQ('input[type="checkbox"][name="component"]')[index];
-
-      var p = Nitrate.Utils.formSerialize(jQ('#id_form_plan_components')[0]);
-      p['component'] = component.value;
-      p['a'] = 'remove';
-      constructPlanComponentsZone(container, p, callback);
-    });
-
-    jQ('#id_checkbox_all_component').bind('click', function(e) {
-      clickedSelectAll(this, jQ(this).closest('form')[0], 'component');
-    });
-
-    var c_count = jQ('tbody#component').attr('count');
-    jQ('#component_count').text(c_count);
-  };
-
-  jQ.ajax({
-    'url': url,
-    'data': parameters,
-    'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      if (typeof container === 'string') {
-        jQ('#' + container).html(data);
-      } else {
-        jQ(container).html(data);
-      }
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      html_failure();
-    },
-    'complete': function (jqXHR, textStatus) {
-      complete(jqXHR);
-    }
-  });
-}
-
-// No invocation.
-function constructPlanComponentModificationDialog(container) {
-  if (!container) {
-    var container = getDialog();
-  }
-  jQ(container).show();
-
-  var d = jQ('<div>');
-
-  var parameters = { a: 'get_form', plan: Nitrate.TestPlans.Instance.pk };
-
-  var callback = function(t) {
-    var action = Nitrate.http.URLConf.reverse({ name: 'plan_components' });
-    var form_observe = function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      var submitButton = jQ(this).find(':submit')[0];
-      constructPlanComponentsZone('components', jQ(this).serialize()
-        + '&' + submitButton.name + '=' + submitButton.value);
-      clearDialog();
-    };
-    var notice = 'Press "Ctrl" to select multiple default component';
-    var s = jQ('<input>', {'type': 'submit', 'name': 'a', 'value': 'Update'});
-
-    var f = constructForm(d.html(), action, form_observe, notice, s[0]);
-    jQ(container).html(f);
-  };
-
-  // Get the form and insert into the dialog.
-  constructPlanComponentsZone(d[0], parameters, callback);
 }
 
 function sortCase(container, plan_id, order) {

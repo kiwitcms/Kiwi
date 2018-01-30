@@ -85,7 +85,7 @@ class TestPlan(Mutable):
     _identifier_width = 5
 
     # List of all object attributes (used for init & expiration)
-    _attributes = ["author", "children", "components", "name",
+    _attributes = ["author", "children", "name",
                    "owner", "parent", "product", "status", "tags", "testcases",
                    "testruns", "type", "version"]
 
@@ -97,7 +97,6 @@ class TestPlan(Mutable):
     id = property(_getter("id"), doc="Test plan id.")
     author = property(_getter("author"), doc="Test plan author.")
     children = property(_getter("children"), doc="Child test plans.")
-    components = property(_getter("components"), doc="Relevant components.")
     tags = property(_getter("tags"), doc="Attached tags.")
     testcases = property(_getter("testcases"),
                          doc="Container with test cases linked to this plan.")
@@ -309,7 +308,6 @@ class TestPlan(Mutable):
         # Initialize containers
         self._testcases = PlanCases(self)
         self._testruns = PlanRuns(self)
-        self._components = PlanComponents(self)
         self._children = ChildPlans(self)
         # If all tags are cached, initialize them directly from the inject
         if "tag" in inject and Tag._is_cached(inject["tag"]):
@@ -350,8 +348,6 @@ class TestPlan(Mutable):
             self.testcases.update()
         if self._testruns is not TCMSNone:
             self.testruns.update()
-        if self._components is not TCMSNone:
-            self.components.update()
         if self._children is not TCMSNone:
             self.children.update()
 
@@ -1302,4 +1298,4 @@ class CaseRun(Mutable):
 from tcms_api.containers import (
     CaseBugs, CaseComponents, CasePlans,
     CaseRunBugs, CaseTags, ChildPlans, PlanCases,
-    PlanComponents, PlanRuns, PlanTags, RunCaseRuns, RunCases, RunTags)  # noqa: E402
+    PlanRuns, PlanTags, RunCaseRuns, RunCases, RunTags)  # noqa: E402
