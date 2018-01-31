@@ -24,15 +24,14 @@ __all__ = (
     'get_notification_cc',
     'remove_notification_cc',
 
+    'filter',
+
     'add_tag',
     'attach_bug',
     'create',
     'detach_bug',
-    'filter',
-    'get',
     'get_bugs',
     'get_tags',
-    'get_text',
     'remove_tag',
     'store_text',
     'update',
@@ -387,7 +386,10 @@ def create(values, **kwargs):
         # Print the errors if the form is not passed validation.
         raise ValueError(form_errors_to_list(form))
 
-    return get(tc.case_id)
+    result = tc.serialize()
+    result['text'] = tc.latest_text().serialize()
+
+    return result
 
 
 @permissions_required('testcases.delete_testcasebug')
@@ -427,83 +429,30 @@ def detach_bug(case_ids, bug_ids):
 @rpc_method(name='TestCase.filter')
 def filter(query):
     """
-    Description: Performs a search and returns the resulting list of test cases.
+    .. function:: XML-RPC TestCase.filter(query)
 
-    Params:      $query - Hash: keys must match valid search fields.
+        Perform a search and return the resulting list of test cases
+        augmented with their latest ``text``.
 
-        +------------------------------------------------------------------+
-        |                 Case Search Parameters                           |
-        +------------------------------------------------------------------+
-        |        Key          |          Valid Values                      |
-        | author              | A bugzilla login (email address)           |
-        | alias               | String                                     |
-        | case_id             | Integer                                    |
-        | case_status         | ForeignKey: Case Stat                      |
-        | category            | ForeignKey: Category                       |
-        | component           | ForeignKey: Component                      |
-        | default_tester      | ForeignKey: Auth.User                      |
-        | estimated_time      | String: 2h30m30s(recommend) or HH:MM:SS    |
-        | plan                | ForeignKey: Test Plan                      |
-        | priority            | ForeignKey: Priority                       |
-        | category__product   | ForeignKey: Product                        |
-        | summary             | String                                     |
-        | tags                | ForeignKey: Tags                           |
-        | create_date         | Datetime                                   |
-        | is_automated        | 1: Only show current 0: show not current   |
-        | script              | Text                                       |
-        +------------------------------------------------------------------+
-
-    Returns:     Array: Matching test cases are retuned in a list of hashes.
-
-    Example:
-    # Get all of cases contain 'TCMS' in summary
-    >>> TestCase.filter({'summary__icontain': 'TCMS'})
-    # Get all of cases create by xkuang
-    >>> TestCase.filter({'author__username': 'xkuang'})
-    # Get all of cases the author name starts with x
-    >>> TestCase.filter({'author__username__startswith': 'x'})
-    # Get all of cases belong to the plan 137
-    >>> TestCase.filter({'plan__plan_id': 137})
-    # Get all of cases belong to the plan create by xkuang
-    >>> TestCase.filter({'plan__author__username': 'xkuang'})
-    # Get cases with ID 12345, 23456, 34567 - Here is only support array so far.
-    >>> TestCase.filter({'case_id__in': [12345, 23456, 34567]})
+        :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
+        :type query: dict
+        :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects.
+                 The key ``text`` holds a the latest version of a serialized
+                 :class:`tcms.testcases.models.TestCaseText` object!
+        :rtype: list(dict)
     """
     if query.get('estimated_time'):
         query['estimated_time'] = timedelta2int(
             pre_process_estimated_time(query.get('estimated_time'))
         )
 
-    return TestCase.to_xmlrpc(query)
+    results = []
+    for case in TestCase.objects.filter(**query):
+        serialized_case = case.serialize()
+        serialized_case['text'] = case.latest_text().serialize()
+        results.append(serialized_case)
 
-
-@rpc_method(name='TestCase.get')
-def get(case_id):
-    """
-    Description: Used to load an existing test case from the database.
-
-    Params:      $id - Integer/String: An integer representing the ID in the database
-
-    Returns:     A blessed TestCase object Hash
-
-    Example:
-    >>> TestCase.get(1193)
-    """
-    test_case = TestCase.objects.get(case_id=case_id)
-
-    test_case_latest_text = test_case.latest_text().serialize()
-
-    response = test_case.serialize()
-    response['text'] = test_case_latest_text
-    # get the xmlrpc tags
-    tag_ids = test_case.tag.values_list('id', flat=True)
-    query = {'id__in': tag_ids}
-    tags = TestTag.to_xmlrpc(query)
-    # cut 'id' attribute off, only leave 'name' here
-    tags_without_id = [x["name"] for x in tags]
-    # replace tag_id list in the serialize return data
-    response["tag"] = tags_without_id
-    return response
+    return results
 
 
 @rpc_method(name='TestCase.get_bugs')
@@ -550,31 +499,6 @@ def get_tags(case_id):
     tag_ids = test_case.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCase.get_text')
-def get_text(case_id, case_text_version=None):
-    """
-    Description: The associated large text fields: Action, Expected Results, Setup, Breakdown
-                 for a given version.
-
-    Params:      $case_id - Integer/String: An integer representing the ID in the database
-
-                 $version - Integer: (OPTIONAL) The version of the text you want returned.
-                            Defaults to the latest.
-
-    Returns:     Hash: case text object hash.
-
-    Example:
-    # Get all latest case text
-    >>> TestCase.get_text(12345)
-    # Get all case text with version 4
-    >>> TestCase.get_text(12345, 4)
-    """
-    test_case = TestCase.objects.get(case_id=case_id)
-
-    return test_case.get_text_with_version(
-        case_text_version=case_text_version).serialize()
 
 
 @permissions_required('testcases.delete_testcasetag')
