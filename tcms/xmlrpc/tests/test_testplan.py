@@ -157,9 +157,8 @@ class TestUpdate(XmlrpcAPIBaseTest):
         # plan_1 and plan_2 point to self.env_group_1
         # and there are only 2 objects in the many-to-many table
         # so we issue XMLRPC request to modify the env_group of self.plan_2
-        plans = self.rpc_client.TestPlan.update(self.plan_2.pk,
-                                                {'env_group': self.env_group_2.pk})
-        plan = plans[0]
+        plan = self.rpc_client.TestPlan.update(self.plan_2.pk,
+                                               {'env_group': self.env_group_2.pk})
 
         # now verify that the returned TP (plan_2) has been updated to env_group_2
         self.assertEqual(self.plan_2.pk, plan['plan_id'])
@@ -174,6 +173,14 @@ class TestUpdate(XmlrpcAPIBaseTest):
         # iow no dangling objects left
         self.assertEqual(2, TCMSEnvPlanMap.objects.filter(plan__in=[self.plan_1,
                                                                     self.plan_2]).count())
+
+    def test_update_text(self):
+        self.assertIsNone(self.plan_1.latest_text())
+        self.rpc_client.TestPlan.update(self.plan_1.pk, {'text': 'This has been updated'})
+        # reload from db
+        self.plan_1.refresh_from_db()
+        # assert
+        self.assertEqual('This has been updated', self.plan_1.latest_text().plan_text)
 
 
 class TestRemoveCase(XmlrpcAPIBaseTest):
