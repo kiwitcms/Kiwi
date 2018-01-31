@@ -7,7 +7,7 @@ from tcms.management.models import TestTag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase, TestCasePlan
 
-from tcms.xmlrpc.forms import EditPlanForm
+from tcms.xmlrpc.forms import EditPlanForm, NewPlanForm
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_process_ids
 
@@ -15,11 +15,11 @@ __all__ = (
     'add_case',
     'remove_case',
 
+    'create',
     'filter',
     'update',
 
     'add_tag',
-    'create',
     'get_tags',
     'remove_tag',
 )
@@ -70,40 +70,29 @@ def add_tag(plan_ids, tags):
 @rpc_method(name='TestPlan.create')
 def create(values, **kwargs):
     """
-    Description: Creates a new Test Plan object and stores it in the database.
+    .. function: XML-RPC TestPlan.create(values)
 
-    Params:      $values - Hash: A reference to a hash with keys and values
-                  matching the fields of the test plan to be created.
-     +--------------------------+---------+-----------+-------------------------------------------+
-     | Field                    | Type    | Null      | Description                               |
-     +--------------------------+---------+-----------+-------------------------------------------+
-     | product                  | Integer | Required  | ID of product                             |
-     | name                     | String  | Required  |                                           |
-     | type                     | Integer | Required  | ID of plan type                           |
-     | product_version          | Integer | Required  | ID of version, product_version(recommend),|
-     | (default_product_version)|         |           | default_product_version will be deprecated|
-     |                          |         |           | in future release.                        |
-     | text                     | String  | Required  | Plan documents, HTML acceptable.          |
-     | parent                   | Integer | Optional  | Parent plan ID                            |
-     | is_active                | Boolean | Optional  | 0: Archived 1: Active (Default 0)         |
-     +--------------------------+---------+-----------+-------------------------------------------+
+        Create new Test Plan object and store it in the database.
 
-    Returns:     The newly created object hash.
+        :param values: Field values for :class:`tcms.testplans.models.TestPlan`
+        :type values: dict
+        :return: Serialized :class:`tcms.testplans.models.TestPlan` object
+        :rtype: dict
+        :raises: PermissionDenied if missing *testplans.add_testplan* permission
+        :raises: ValueError if data validation fails
 
-    Example:
-    # Minimal test case parameters
-    >>> values = {
-        'product': 61,
-        'name': 'Testplan foobar',
-        'type': 1,
-        'parent_id': 150,
-        'default_product_version': 93,
-        'text':'Testing TCMS',
-    }
-    >>> TestPlan.create(values)
+        Minimal parameters::
+
+            >>> values = {
+                'product': 61,
+                'name': 'Testplan foobar',
+                'type': 1,
+                'parent_id': 150,
+                'default_product_version': 93,
+                'text':'Testing TCMS',
+            }
+            >>> TestPlan.create(values)
     """
-    from tcms.xmlrpc.forms import NewPlanForm
-
     if values.get('default_product_version'):
         values['product_version'] = values.pop('default_product_version')
 

@@ -515,32 +515,11 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
             "notes": "AAAAAAAA",
             "sortkey": 90
         })
-        self.assertIsNotNone(tcr)
-        self.assertIsInstance(tcr, list)
-        self.assertEqual(1, len(tcr))
-        self.assertEqual(tcr[0]['build'], self.build.name)
-        self.assertEqual(tcr[0]['assignee'], self.user.username)
-        self.assertEqual(tcr[0]['case_run_status'], 'RUNNING')
-        self.assertEqual(tcr[0]['notes'], "AAAAAAAA")
-        self.assertEqual(tcr[0]['sortkey'], 90)
-
-    def test_update_with_multi_caserun(self):
-        tcr = self.rpc_client.TestCaseRun.update([
-            self.case_run_1.pk, self.case_run_2.pk], {
-                "build": self.build.pk,
-                "assignee": self.user.pk,
-                "case_run_status": self.status_running.pk,
-                "notes": "Hello World!",
-                "sortkey": 180
-            })
-        self.assertIsNotNone(tcr)
-        self.assertIsInstance(tcr, list)
-        self.assertEqual(len(tcr), 2)
-        self.assertEqual(tcr[0]['build'], tcr[1]['build'])
-        self.assertEqual(tcr[0]['assignee'], tcr[1]['assignee'])
-        self.assertEqual(tcr[0]['case_run_status'], tcr[1]['case_run_status'])
-        self.assertEqual(tcr[0]['notes'], tcr[1]['notes'])
-        self.assertEqual(tcr[0]['sortkey'], tcr[1]['sortkey'])
+        self.assertEqual(tcr['build'], self.build.name)
+        self.assertEqual(tcr['assignee'], self.user.username)
+        self.assertEqual(tcr['case_run_status'], 'RUNNING')
+        self.assertEqual(tcr['notes'], "AAAAAAAA")
+        self.assertEqual(tcr['sortkey'], 90)
 
     def test_update_with_non_existing_build(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
@@ -560,7 +539,7 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
             "close_date": datetime.now(),
             'anotherone': 'abc',
         })
-        self.assertEqual('AAAA', case_run[0]['notes'])
+        self.assertEqual('AAAA', case_run['notes'])
 
     def test_update_with_no_perm(self):
         self.rpc_client.Auth.logout()

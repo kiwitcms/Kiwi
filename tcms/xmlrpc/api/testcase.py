@@ -10,7 +10,7 @@ from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
-from tcms.xmlrpc.forms import UpdateCaseForm
+from tcms.xmlrpc.forms import UpdateCaseForm, NewCaseForm
 
 from tcms.xmlrpc.utils import pre_process_ids, pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
@@ -26,11 +26,11 @@ __all__ = (
     'remove_notification_cc',
 
     'filter',
+    'create',
     'update',
 
     'add_tag',
     'attach_bug',
-    'create',
     'detach_bug',
     'get_bugs',
     'get_tags',
@@ -294,54 +294,26 @@ def attach_bug(values):
 @rpc_method(name='TestCase.create')
 def create(values, **kwargs):
     """
-    Description: Creates a new Test Case object and stores it in the database.
+    .. function:: XML-RPC TestCase.create(values)
 
-    Params:      $values - Array/Hash: A reference to a hash or array of hashes with keys and values
-                 matching the fields of the test case to be created.
-      +----------------------------+----------------+-----------+----------------------------+
-      | Field                      | Type           | Null      | Description                |
-      +----------------------------+----------------+-----------+----------------------------+
-      | product                    | Integer        | Required  | ID of Product              |
-      | category                   | Integer        | Required  | ID of Category             |
-      | priority                   | Integer        | Required  | ID of Priority             |
-      | summary                    | String         | Required  |                            |
-      | case_status                | Integer        | Optional  | ID of case status          |
-      | plan                       | Array/Str/Int  | Optional  | ID or List of plan_ids     |
-      | component                  | Integer/String | Optional  | ID of Priority             |
-      | default_tester             | String         | Optional  | Login of tester            |
-      | estimated_time             | String         | Optional  | 2h30m30s(recommend)        |
-      |                            |                |           |  or HH:MM:SS Format        |
-      | is_automated               | Integer        | Optional  | 0: Manual, 1: Auto, 2: Both|
-      | is_automated_proposed      | Boolean        | Optional  | Default 0                  |
-      | script                     | String         | Optional  |                            |
-      | arguments                  | String         | Optional  |                            |
-      | requirement                | String         | Optional  |                            |
-      | alias                      | String         | Optional  | Must be unique             |
-      | action                     | String         | Optional  |                            |
-      | effect                     | String         | Optional  | Expected Result            |
-      | setup                      | String         | Optional  |                            |
-      | breakdown                  | String         | Optional  |                            |
-      | tag                        | Array/String   | Optional  | String Comma separated     |
-      | bug                        | Array/String   | Optional  | String Comma separated     |
-      | extra_link                 | String         | Optional  | reference link             |
-      +----------------------------+----------------+-----------+----------------------------+
+        Create a new TestCase object and store it in the database.
 
-    Returns: Array/Hash: The newly created object hash if a single case was created, or
-             an array of objects if more than one was created. If any single case
-             threw an error during creation, a hash with an ERROR key will be set in its place.
+        :param values: Field values for :class:`tcms.testcases.models.TestCase`
+        :type values: dict
+        :return: Serialized :class:`tcms.testcases.models.TestCase` object
+        :rtype: dict
+        :raises: PermissionDenied if missing *testcases.add_testcase* permission
 
-    Example:
-    # Minimal test case parameters
-    >>> values = {
-        'category': 135,
-        'product': 61,
-        'summary': 'Testing XML-RPC',
-        'priority': 1,
-    }
-    >>> TestCase.create(values)
+        Minimal test case parameters::
+
+            >>> values = {
+                'category': 135,
+                'product': 61,
+            'summary': 'Testing XML-RPC',
+            'priority': 1,
+            }
+            >>> TestCase.create(values)
     """
-    from tcms.xmlrpc.forms import NewCaseForm
-
     request = kwargs.get(REQUEST_KEY)
 
     if not (values.get('category') or values.get('summary')):
