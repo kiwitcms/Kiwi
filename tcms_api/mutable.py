@@ -235,7 +235,7 @@ class TestPlan(Mutable):
             hash["parent"] = parent.id
 
         # Document - if not explicitly specified, put empty text
-        hash["text"] = kwargs.get("document", " ")
+        hash["text"] = kwargs.get("text", " ")
 
         # Workaround for BZ#725995
         hash["is_active"] = "1"

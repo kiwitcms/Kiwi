@@ -116,7 +116,7 @@ password = %s
         # Create master test plan (parent of all)
         self.master = tcms_api.TestPlan(
             name="API client Test Plan",
-            document='Master TP created from API',
+            text='Master TP created from API',
             product=self.product,
             version=self.version,
             type=self.plantype)
@@ -129,7 +129,7 @@ password = %s
         for plan_count in range(self.num_plans):
             testplan = tcms_api.TestPlan(
                 name="Test Plan {0}".format(plan_count + 1),
-                document='Child TP created from API',
+                text='Child TP created from API',
                 product=self.product,
                 version=self.version,
                 parent=self.master,

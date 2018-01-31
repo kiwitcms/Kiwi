@@ -19,7 +19,6 @@ __all__ = (
     'add_tag',
     'create',
     'get_tags',
-    'get_text',
     'remove_tag',
     'store_text',
     'update',
@@ -148,7 +147,18 @@ def filter(query={}):
         :return: List of serialized :class:`tcms.testplans.models.TestPlan` objects
         :rtype: list(dict)
     """
-    return TestPlan.to_xmlrpc(query)
+    results = []
+    for plan in TestPlan.objects.filter(**query):
+        serialized_plan = plan.serialize()
+
+        # the text for this TestPlan
+        latest_text = plan.latest_text()
+        if latest_text:
+            serialized_plan['text'] = latest_text.plan_text
+
+        results.append(serialized_plan)
+
+    return results
 
 
 @rpc_method(name='TestPlan.get_tags')
@@ -168,33 +178,6 @@ def get_tags(plan_id):
     tag_ids = test_plan.tag.values_list('id', flat=True)
     query = {'id__in': tag_ids}
     return TestTag.to_xmlrpc(query)
-
-
-@rpc_method(name='TestPlan.get_text')
-def get_text(plan_id, plan_text_version=None):
-    """
-    Description: The plan document for a given test plan.
-
-    Params:      $plan_id - Integer: An integer representing the ID of this plan in the database
-
-                 $version - Integer: (OPTIONAL) The version of the text you want returned.
-                                     Defaults to the latest.
-
-    Returns:     Hash: Text and author information.
-
-    Example:
-    # Get all latest case text
-    >>> TestPlan.get_text(137)
-    # Get all case text with version 4
-    >>> TestPlan.get_text(137, 4)
-    """
-    tp = TestPlan.objects.get(plan_id=plan_id)
-    test_plan_text = tp.get_text_with_version(
-        plan_text_version=plan_text_version)
-    if test_plan_text:
-        return test_plan_text.serialize()
-    else:
-        return "No plan text with version '%s' found." % plan_text_version
 
 
 @permissions_required('testplans.delete_testplantag')

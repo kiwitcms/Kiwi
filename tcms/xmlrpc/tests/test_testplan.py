@@ -34,14 +34,6 @@ class TestFilter(XmlrpcAPIBaseTest):
                                       product=self.product,
                                       author=self.tester,
                                       type=self.plan_type)
-        self.case_1 = TestCaseFactory(author=self.tester,
-                                      default_tester=None,
-                                      reviewer=self.tester,
-                                      plan=[self.plan_1])
-        self.case_2 = TestCaseFactory(author=self.tester,
-                                      default_tester=None,
-                                      reviewer=self.tester,
-                                      plan=[self.plan_1])
 
     def test_filter_plans(self):
         plans = self.rpc_client.TestPlan.filter({'pk__in': [self.plan_1.pk, self.plan_2.pk]})
@@ -49,11 +41,6 @@ class TestFilter(XmlrpcAPIBaseTest):
         self.assertEqual(self.plan_1.name, plan['name'])
         self.assertEqual(self.plan_1.product_version.pk, plan['product_version_id'])
         self.assertEqual(self.plan_1.author.pk, plan['author_id'])
-
-        self.assertEqual(2, len(plan['case']))
-        self.assertIn(self.case_1.pk, plan['case'])
-        self.assertIn(self.case_2.pk, plan['case'])
-        self.assertEqual(0, len(plans[1]['case']))
 
     def test_filter_out_all_plans(self):
         plans_total = TestPlan.objects.all().count()
