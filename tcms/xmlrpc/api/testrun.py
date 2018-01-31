@@ -11,6 +11,8 @@ from tcms.testruns.models import TestRun
 from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.decorators import permissions_required
+from tcms.testruns.forms import XMLRPCUpdateRunForm, XMLRPCNewRunForm
+
 
 __all__ = (
     'add_case',
@@ -20,14 +22,14 @@ __all__ = (
     'add_env_value',
     'remove_env_value',
 
+    'create',
     'filter',
+    'update',
 
     'add_tag',
-    'create',
     'get_bugs',
     'get_tags',
     'remove_tag',
-    'update',
 )
 
 
@@ -138,42 +140,27 @@ def add_tag(run_ids, tags):
 @rpc_method(name='TestRun.create')
 def create(values):
     """
-    Description: Creates a new Test Run object and stores it in the database.
+    .. function:: XML-RPC TestRun.create(values)
 
-    Params:      $values - Hash: A reference to a hash with keys and values
-                           matching the fields of the test run to be created.
-      +-------------------+----------------+-----------+---------------------------------------+
-      | Field             | Type           | Null      | Description                           |
-      +-------------------+----------------+-----------+---------------------------------------+
-      | plan              | Integer        | Required  | ID of test plan                       |
-      | build             | Integer/String | Required  | ID of Build                           |
-      | manager           | Integer        | Required  | ID of run manager                     |
-      | summary           | String         | Required  |                                       |
-      | product           | Integer        | Required  | ID of product                         |
-      | product_version   | Integer        | Required  | ID of product version                 |
-      | default_tester    | Integer        | Optional  | ID of run default tester              |
-      | plan_text_version | Integer        | Optional  |                                       |
-      | estimated_time    | String         | Optional  | 2h30m30s(recommend) or HH:MM:SS Format|
-      | notes             | String         | Optional  |                                       |
-      | status            | Integer        | Optional  | 0:RUNNING 1:STOPPED  (default 0)      |
-      | case              | Array/String   | Optional  | list of case ids to add to the run    |
-      | tag               | Array/String   | Optional  | list of tag to add to the run         |
-      +-------------------+----------------+-----------+---------------------------------------+
+        Create new TestRun object and store it in the database.
 
-    Returns:     The newly created object hash.
+        :param values: Field values for :class:`tcms.testruns.models.TestRun`
+        :type values: dict
+        :return: Serialized :class:`tcms.testruns.models.TestRun` object
+        :raises: PermissionDenied if missing *testruns.add_testrun* permission
+        :raises: ValueError if data validations fail
 
-    Example:
-    >>> values = {'build': 384,
-        'manager': 137,
-        'plan': 137,
-        'product': 61,
-        'product_version': 93,
-        'summary': 'Testing XML-RPC for TCMS',
-    }
-    >>> TestRun.create(values)
+        Example::
+
+            >>> values = {'build': 384,
+                'manager': 137,
+                'plan': 137,
+                'product': 61,
+                'product_version': 93,
+                'summary': 'Testing XML-RPC for TCMS',
+            }
+            >>> TestRun.create(values)
     """
-    from tcms.testruns.forms import XMLRPCNewRunForm
-
     if not values.get('product'):
         raise ValueError('Value of product is required')
     # TODO: XMLRPC only accept HH:MM:SS rather than DdHhMm
@@ -331,38 +318,20 @@ def remove_tag(run_ids, tags):
 
 @permissions_required('testruns.change_testrun')
 @rpc_method(name='TestRun.update')
-def update(run_ids, values):
+def update(run_id, values):
     """
-    Description: Updates the fields of the selected test run.
+    .. function:: XML-RPC TestRun.update(run_id, values)
 
-    Params:      $run_ids - Integer/Array/String: An integer or alias representing the ID in the
-                             database, an array of run_ids, or a string of comma separated run_ids.
+        Update the selected TestRun
 
-                 $values - Hash of keys matching TestRun fields and the new values
-                           to set each field to. See params of TestRun.create for description
-    +-------------------+----------------+--------------------------------+
-    | Field             | Type           | Description                    |
-    +-------------------+----------------+--------------------------------+
-    | plan              | Integer        | TestPlan.plan_id               |
-    | product           | Integer        | Product.id                     |
-    | build             | Integer        | Build.id                       |
-    | manager           | Integer        | Auth.User.id                   |
-    | default_tester    | Intege         | Auth.User.id                   |
-    | summary           | String         |                                |
-    | estimated_time    | TimeDelta      | 2h30m30s(recommend) or HH:MM:SS|
-    | product_version   | Integer        |                                |
-    | plan_text_version | Integer        |                                |
-    | notes             | String         |                                |
-    | status            | Integer        | 0:RUNNING 1:FINISHED           |
-    +-------------------+----------------+ -------------------------------+
-    Returns:     Hash: The updated test run object.
-
-    Example:
-    # Update status to finished for run 1193 and 1194
-    >>> TestRun.update([1193, 1194], {'status': 1})
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param values: Field values for :class:`tcms.testruns.models.TestRun`
+        :type values: dict
+        :return: Serialized :class:`tcms.testruns.models.TestRun` object
+        :raises: PermissionDenied if missing *testruns.change_testrun* permission
+        :raises: ValueError if data validations fail
     """
-    from tcms.testruns.forms import XMLRPCUpdateRunForm
-
     if (values.get('product_version') and not values.get('product')):
         raise ValueError('Field "product" is required by product_version')
 
@@ -375,55 +344,52 @@ def update(run_ids, values):
         form.populate(product_id=values['product'])
 
     if form.is_valid():
-        trs = TestRun.objects.filter(pk__in=pre_process_ids(value=run_ids))
-        _values = dict()
+        tr = TestRun.objects.get(pk=run_id)
         if form.cleaned_data['plan']:
-            _values['plan'] = form.cleaned_data['plan']
+            tr.plan = form.cleaned_data['plan']
 
         if form.cleaned_data['build']:
-            _values['build'] = form.cleaned_data['build']
+            tr.build = form.cleaned_data['build']
 
         if form.cleaned_data['manager']:
-            _values['manager'] = form.cleaned_data['manager']
+            tr.manager = form.cleaned_data['manager']
 
         if 'default_tester' in values:
             if values.get('default_tester') and \
                     form.cleaned_data['default_tester']:
-                _values['default_tester'] = form.cleaned_data['default_tester']
+                tr.default_tester = form.cleaned_data['default_tester']
             else:
-                _values['default_tester'] = None
+                tr.default_tester = None
 
         if form.cleaned_data['summary']:
-            _values['summary'] = form.cleaned_data['summary']
+            tr.summary = form.cleaned_data['summary']
 
         if values.get('estimated_time') is not None:
-            _values['estimated_time'] = form.cleaned_data['estimated_time']
+            tr.estimated_time = form.cleaned_data['estimated_time']
 
         if form.cleaned_data['product_version']:
-            _values['product_version'] = form.cleaned_data['product_version']
+            tr.product_version = form.cleaned_data['product_version']
 
         if 'notes' in values:
             if values['notes'] in (None, ''):
-                _values['notes'] = values['notes']
+                tr.notes = values['notes']
             if form.cleaned_data['notes']:
-                _values['notes'] = form.cleaned_data['notes']
+                tr.notes = form.cleaned_data['notes']
 
         if form.cleaned_data['plan_text_version']:
-            _values['plan_text_version'] = form.cleaned_data[
-                'plan_text_version']
+            tr.plan_text_version = form.cleaned_data['plan_text_version']
 
         if isinstance(form.cleaned_data['status'], int):
             if form.cleaned_data['status']:
-                _values['stop_date'] = datetime.now()
+                tr.stop_date = datetime.now()
             else:
-                _values['stop_date'] = None
+                tr.stop_date = None
 
-        trs.update(**_values)
+        tr.save()
     else:
         raise ValueError(form_errors_to_list(form))
 
-    query = {'pk__in': trs.values_list('pk', flat=True)}
-    return TestRun.to_xmlrpc(query)
+    return tr.serialize()
 
 
 @permissions_required('testruns.add_tcmsenvrunvaluemap')

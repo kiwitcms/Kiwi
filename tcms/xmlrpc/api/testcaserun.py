@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from django.db.models import ObjectDoesNotExist
 from modernrpc.core import rpc_method, REQUEST_KEY
 
@@ -19,13 +17,14 @@ __all__ = (
     'remove_log',
     'get_logs',
 
+    'create',
+    'filter',
+    'update',
+
     'add_comment',
     'attach_bug',
-    'create',
     'detach_bug',
-    'filter',
     'get_bugs',
-    'update',
 )
 
 
@@ -110,35 +109,23 @@ def attach_bug(values):
 @rpc_method(name='TestCaseRun.create')
 def create(values):
     """
-    *** It always report - ValueError: invalid literal for int() with base 10: '' ***
+    .. function:: XML-RPC TestCaseRun.create(values)
 
-    Description: Creates a new Test Case Run object and stores it in the database.
+        Create new TestCaseRun object and store it in the database.
 
-    Params:      $values - Hash: A reference to a hash with keys and values
-                           matching the fields of the test case to be created.
-  +--------------------+----------------+-----------+---------------------------------------+
-  | Field              | Type           | Null      | Description                           |
-  +--------------------+----------------+-----------+---------------------------------------+
-  | run                | Integer        | Required  | ID of Test Run                        |
-  | case               | Integer        | Required  | ID of test case                       |
-  | build              | Integer        | Required  | ID of a Build in plan's product       |
-  | assignee           | Integer        | Optional  | ID of assignee                        |
-  | case_run_status    | Integer        | Optional  | Defaults to "IDLE"                    |
-  | case_text_version  | Integer        | Optional  | Default to latest case text version   |
-  | notes              | String         | Optional  |                                       |
-  | sortkey            | Integer        | Optional  | a.k.a. Index, Default to 0            |
-  +--------------------+----------------+-----------+---------------------------------------+
+        :param values: Field values for :class:`tcms.testruns.models.TestCaseRun`
+        :type values: dict
+        :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
+        :raises: PermissionDenied if missing *testruns.add_testcaserun* permission
 
-    Returns:     The newly created object hash.
+        Minimal parameters::
 
-    Example:
-    # Minimal test case parameters
-    >>> values = {
-        'run': 1990,
-        'case': 12345,
-        'build': 123,
-    }
-    >>> TestCaseRun.create(values)
+            >>> values = {
+                'run': 1990,
+                'case': 12345,
+                'build': 123,
+            }
+            >>> TestCaseRun.create(values)
     """
     from tcms.testruns.forms import XMLRPCNewCaseRunForm
 
@@ -241,75 +228,51 @@ TODO: duplicate with TestCase.get_bugs
 
 @permissions_required('testruns.change_testcaserun')
 @rpc_method(name='TestCaseRun.update')
-def update(case_run_ids, values, **kwargs):
+def update(case_run_id, values, **kwargs):
     """
-    Description: Updates the fields of the selected case-runs.
+    .. function:: XML-RPC TestCaseRun.update(case_run_id, values)
 
-    Params:      $caserun_ids - Integer/String/Array
-                        Integer: A single TestCaseRun ID.
-                        String:  A comma separates string of TestCaseRun IDs for batch
-                                 processing.
-                        Array:   An array of TestCaseRun IDs for batch mode processing
+        Update the selected TestCaseRun
 
-                 $values - Hash of keys matching TestCaseRun fields and the new values
-                 to set each field to.
-                         +--------------------+----------------+
-                         | Field              | Type           |
-                         +--------------------+----------------+
-                         | build              | Integer        |
-                         | assignee           | Integer        |
-                         | case_run_status    | Integer        |
-                         | notes              | String         |
-                         | sortkey            | Integer        |
-                         +--------------------+----------------+
-
-    Returns:     Hash/Array: In the case of a single object, it is returned. If a
-                 list was passed, it returns an array of object hashes. If the
-                 update on any particular object failed, the hash will contain a
-                 ERROR key and the message as to why it failed.
-
-    Example:
-    # Update alias to 'tcms' for case 12345 and 23456
-    >>> TestCaseRun.update([12345, 23456], {'assignee': 2206})
+        :param case_run_id: PK of TestCaseRun to modify
+        :type case_run_id: int
+        :param values: Field values for :class:`tcms.testruns.models.TestCaseRun`
+        :type values: dict
+        :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
+        :raises: PermissionDenied if missing *testruns.change_testcaserun* permission
     """
     from tcms.testruns.forms import XMLRPCUpdateCaseRunForm
 
-    pks_to_update = pre_process_ids(case_run_ids)
-
-    tcrs = TestCaseRun.objects.filter(pk__in=pks_to_update)
+    tcr = TestCaseRun.objects.get(pk=case_run_id)
     form = XMLRPCUpdateCaseRunForm(values)
 
     if form.is_valid():
-        data = {}
-
         if form.cleaned_data['build']:
-            data['build'] = form.cleaned_data['build']
+            tcr.build = form.cleaned_data['build']
 
         if form.cleaned_data['assignee']:
-            data['assignee'] = form.cleaned_data['assignee']
+            tcr.assignee = form.cleaned_data['assignee']
 
         if form.cleaned_data['case_run_status']:
-            data['case_run_status'] = form.cleaned_data['case_run_status']
+            tcr.case_run_status = form.cleaned_data['case_run_status']
             request = kwargs.get(REQUEST_KEY)
-            data['tested_by'] = request.user
-            data['close_date'] = datetime.now()
+            tcr.tested_by = request.user
 
         if 'notes' in values:
             if values['notes'] in (None, ''):
-                data['notes'] = values['notes']
+                tcr.notes = values['notes']
             if form.cleaned_data['notes']:
-                data['notes'] = form.cleaned_data['notes']
+                tcr.notes = form.cleaned_data['notes']
 
         if form.cleaned_data['sortkey'] is not None:
-            data['sortkey'] = form.cleaned_data['sortkey']
+            tcr.sortkey = form.cleaned_data['sortkey']
 
-        tcrs.update(**data)
+        tcr.save()
 
     else:
         raise ValueError(form_errors_to_list(form))
 
-    query = {'pk__in': pks_to_update}
-    return TestCaseRun.to_xmlrpc(query)
+    return tcr.serialize()
 
 
 @rpc_method(name='TestCaseRun.add_log')
