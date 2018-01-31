@@ -14,10 +14,10 @@ __all__ = (
     'add_case',
     'remove_case',
 
+    'filter',
+
     'add_tag',
     'create',
-    'filter',
-    'get',
     'get_tags',
     'get_text',
     'remove_tag',
@@ -137,72 +137,18 @@ def create(values, **kwargs):
 
 
 @rpc_method(name='TestPlan.filter')
-def filter(values={}):
+def filter(query={}):
     """
-    Description: Performs a search and returns the resulting list of test plans.
+    .. function:: XML-RPC TestPlan.filter(query)
 
-    Params:      $values - Hash: keys must match valid search fields.
+        Perform a search and return the resulting list of test plans.
 
-        +------------------------------------------------------------+
-        |                   Plan Search Parameters                   |
-        +----------------------------------------------------------+
-        |        Key              |          Valid Values            |
-        | author                  | ForeignKey: Auth.User            |
-        | case                    | ForeignKey: Test Case            |
-        | create_date             | DateTime                         |
-        | env_group               | ForeignKey: Environment Group    |
-        | name                    | String                           |
-        | plan_id                 | Integer                          |
-        | product                 | ForeignKey: Product              |
-        | product_version         | ForeignKey: Version              |
-        | tag                     | ForeignKey: Tag                  |
-        | text                    | ForeignKey: Test Plan Text       |
-        | type                    | ForeignKey: Test Plan Type       |
-        +------------------------------------------------------------+
-
-    Returns:     Array: Matching test plans are retuned in a list of plan object hashes.
-
-    Example:
-    # Get all of plans contain 'TCMS' in name
-    >>> TestPlan.filter({'name__icontain': 'TCMS'})
-    # Get all of plans create by xkuang
-    >>> TestPlan.filter({'author__username': 'xkuang'})
-    # Get all of plans the author name starts with x
-    >>> TestPlan.filter({'author__username__startswith': 'x'})
-    # Get plans contain the case ID 12345, 23456, 34567
-    >>> TestPlan.filter({'case__case_id__in': [12345, 23456, 34567]})
+        :param query: Field lookups for :class:`tcms.testplans.models.TestPlan`
+        :type query: dict
+        :return: List of serialized :class:`tcms.testplans.models.TestPlan` objects
+        :rtype: list(dict)
     """
-    return TestPlan.to_xmlrpc(values)
-
-
-@rpc_method(name='TestPlan.get')
-def get(plan_id):
-    """
-    Description: Used to load an existing test plan from the database.
-
-    Params:      $id - Integer/String: An integer representing the ID of this plan in the database
-
-    Returns:     Hash: A blessed TestPlan object hash
-
-    Example:
-    >>> TestPlan.get(137)
-    """
-    tp = TestPlan.objects.get(plan_id=plan_id)
-    response = tp.serialize()
-
-    # This is for backward-compatibility. Actually, this is not a good way to
-    # add this extra field. But, now that's it.
-    response['default_product_version'] = response['product_version']
-
-    # get the xmlrpc tags
-    tag_ids = tp.tag.values_list('id', flat=True)
-    query = {'id__in': tag_ids}
-    tags = TestTag.to_xmlrpc(query)
-    # cut 'id' attribute off, only leave 'name' here
-    tags_without_id = [x["name"] for x in tags]
-    # replace tag_id list in the serialize return data
-    response["tag"] = tags_without_id
-    return response
+    return TestPlan.to_xmlrpc(query)
 
 
 @rpc_method(name='TestPlan.get_tags')

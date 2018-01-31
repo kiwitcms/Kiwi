@@ -23,7 +23,6 @@ Mutable TCMS objects
 """
 
 import datetime
-import xmlrpc.client
 from pprint import pformat as pretty
 
 import tcms_api.config as config
@@ -267,10 +266,8 @@ class TestPlan(Mutable):
         if inject is None:
             log.info("Fetching test plan " + self.identifier)
             try:
-                inject = self._server.TestPlan.get(self.id)
-                if not inject:
-                    raise ValueError("No data fetched")
-            except (xmlrpc.client.Fault, ValueError) as error:
+                inject = self._server.TestPlan.filter({'pk': self.id})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError(
                     "Failed to fetch test plan TP#{0}".format(self.id))
