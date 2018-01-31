@@ -963,10 +963,8 @@ class TestCase(Mutable):
         if inject is None:
             log.info("Fetching test case " + self.identifier)
             try:
-                inject = self._server.TestCase.get(self.id)
-                if not inject:
-                    raise ValueError("No data fetched")
-            except (xmlrpc.client.Fault, ValueError) as error:
+                inject = self._server.TestCase.filter({'pk': self.id})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError(
                     "Failed to fetch test case TC#{0}".format(self.id))

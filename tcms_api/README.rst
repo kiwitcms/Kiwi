@@ -50,7 +50,7 @@ Linking case to a plan is as simple as adding an item to a set::
 However, it's still possible to use the low-level driver when a
 specific features is not implemented yet or not efficient enough::
 
-    inject = TCMS()._server.TestCase.get(46490)
+    case = TCMS()._server.TestCase.filter({'pk': 46490})[0]
 
 For a quick start you can get some inspiration in the ``script_examples``
 directory. The 'matrix.py' script demonstrates how to easily
