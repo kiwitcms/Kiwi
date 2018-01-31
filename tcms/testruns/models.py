@@ -648,17 +648,6 @@ class TestCaseRun(TCMSActionModel):
         except TestCaseText.DoesNotExist:
             return NoneText
 
-    def get_previous_or_next(self):
-        ids = list(self.run.case_run.values_list('case_run_id', flat=True))
-        current_idx = ids.index(self.case_run_id)
-        prev = TestCaseRun.objects.get(case_run_id=ids[current_idx - 1])
-        try:
-            next = TestCaseRun.objects.get(case_run_id=ids[current_idx + 1])
-        except IndexError:
-            next = TestCaseRun.objects.get(case_run_id=ids[0])
-
-        return (prev, next)
-
     def latest_text(self):
         try:
             return TestCaseText.objects.filter(

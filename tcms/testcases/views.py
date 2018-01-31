@@ -742,7 +742,7 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
         data['test_case'] = case
         if case is not None:
             data.update({
-                'test_case_text': case.get_text_with_version(),
+                'test_case_text': case.latest_text(),
                 'components': case.component.only('name'),
                 'tags': case.tag.only('name'),
                 'case_comments': self.get_case_comments(case),
@@ -995,8 +995,7 @@ def get(request, case_id, template_name='case/get.html'):
         case_runs_by_plan = None
 
     # Get the case texts
-    tc_text = tc.get_text_with_version(
-        request.GET.get('case_text_version'))
+    tc_text = tc.get_text_with_version(request.GET.get('case_text_version'))
     # Switch the templates for different module
     template_types = {
         'case': 'case/get_details.html',
