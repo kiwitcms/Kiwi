@@ -995,8 +995,8 @@ class TestCase(Mutable):
             self._tester = None
 
         # Handle manual, automated and autoproposed
-        self._automated = inject["is_automated"] in [1, 2]
-        self._manual = inject["is_automated"] in [0, 2]
+        self._automated = inject["is_automated"] in [1, '1', 2, '2']
+        self._manual = inject["is_automated"] in [0, '0', 2, '2']
         self._autoproposed = inject["is_automated_proposed"]
 
         # Empty script or arguments to be handled same as None
