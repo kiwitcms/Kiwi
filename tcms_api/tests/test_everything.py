@@ -644,7 +644,7 @@ class TestPlanTests(BaseAPIClient_TestCase):
         """ Create a new test plan (valid) """
         testplan = TestPlan(
             name="Test plan",
-            document='Testing',
+            text='Testing',
             type=self.master.type,
             product=self.master.product,
             version=self.master.version)
@@ -1253,7 +1253,7 @@ class ChildPlansTests(BaseAPIClient_TestCase):
         parent = TestPlan(self.master.id)
         # Create a new separate plan, make sure it's not child
         child = TestPlan(name="Child test plan", type=parent.type,
-                         document='Nothing to document here',
+                         text='Nothing to document here',
                          product=parent.product, version=parent.version)
         self.assertTrue(child not in parent.children)
         # Add the new test plan to the children, reload, check
