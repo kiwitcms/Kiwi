@@ -96,9 +96,9 @@ class TestPreProcessIds(unittest.TestCase):
 class TestEstimatedTime(unittest.TestCase):
 
     def test_pre_process_estimated_time(self):
-        bad_args = ([], (), {}, True, False, 0, 1, -1)
+        bad_args = ([], (), {})
         for arg in bad_args:
-            with self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.'):
+            with self.assertRaisesRegex(ValueError, 'Invalid estimated_time format.'):
                 U.pre_process_estimated_time(arg)
 
     def test_pre_process_estimated_time_with_empty(self):
@@ -106,7 +106,7 @@ class TestEstimatedTime(unittest.TestCase):
         self.assertEqual('', time)
 
     def test_pre_process_estimated_time_with_bad_form(self):
-        with self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.'):
+        with self.assertRaisesRegex(ValueError, 'Invalid estimated_time format.'):
             U.pre_process_estimated_time("aaaaaa")
 
     def test_pre_process_estimated_time_with_time_string(self):
@@ -117,17 +117,17 @@ class TestEstimatedTime(unittest.TestCase):
         self.assertEqual(time, "1d13h22m54s")
 
     def test_pre_process_estimated_time_with_upper_string(self):
-        with self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.'):
+        with self.assertRaisesRegex(ValueError, 'Invalid estimated_time format.'):
             U.pre_process_estimated_time("1D13H22M54S")
 
     def test_pre_process_estimated_time_with_string(self):
-        with self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.'):
+        with self.assertRaisesRegex(ValueError, 'Invalid estimated_time format.'):
             U.pre_process_estimated_time("aa:bb:cc")
 
     def test_pre_process_estimated_time_with_mhs(self):
-        with self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.'):
+        with self.assertRaisesRegex(ValueError, 'Invalid estimated_time format.'):
             U.pre_process_estimated_time("ambhcs")
 
     def test_pre_process_estimated_time_with_symbols(self):
-        with self.assertRaisesRegex(ValueError, 'Invaild estimated_time format.'):
+        with self.assertRaisesRegex(ValueError, 'Invalid estimated_time format.'):
             U.pre_process_estimated_time("aa@bb@cc")

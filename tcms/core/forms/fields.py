@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import re
 
 from django import forms
 from django.db.models import Q
@@ -61,10 +60,10 @@ class DurationField(forms.CharField):
 
     def validate(self, value):
         super(DurationField, self).validate(value)
-        estimated_time_regex = re.compile(r'^(\d+[d])?(\d+[h])?(\d+[m])?(\d+[s])?$')
-        match = estimated_time_regex.match(value.replace(' ', ''))
-
-        if not match:
+        try:
+            from tcms.xmlrpc.utils import pre_process_estimated_time
+            pre_process_estimated_time(value)
+        except ValueError:
             raise forms.ValidationError(self.error_messages['invalid'])
 
     def clean(self, value):

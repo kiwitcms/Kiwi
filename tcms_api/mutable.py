@@ -928,9 +928,7 @@ class TestCase(Mutable):
         hash["is_automated_proposed"] = autoproposed
 
         # Estimated time
-        time = kwargs.get("time")
-        if time is not None:
-            hash["estimated_time"] = time
+        hash["estimated_time"] = kwargs.get("time", '00:00:00')
 
         # Notes
         notes = kwargs.get("notes")
