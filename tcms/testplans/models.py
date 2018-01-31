@@ -125,17 +125,6 @@ class TestPlan(TCMSActionModel):
         except ObjectDoesNotExist:
             return None
 
-    def get_text_with_version(self, plan_text_version=None):
-        if plan_text_version:
-            try:
-                return self.text.get(
-                    plan_text_version=plan_text_version
-                )
-            except TestPlanText.DoesNotExist:
-                return None
-
-        return self.latest_text()
-
     def add_text(self,
                  author,
                  plan_text,
