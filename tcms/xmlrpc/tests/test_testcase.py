@@ -55,3 +55,41 @@ class TestFilterCases(XmlrpcAPIBaseTest):
         cases = self.rpc_client.TestCase.filter({'category__product': self.product.pk})
         self.assertIsNotNone(cases)
         self.assertEqual(len(cases), self.cases_count)
+
+
+class TestUpdate(XmlrpcAPIBaseTest):
+
+    def _fixture_setup(self):
+        super(TestUpdate, self)._fixture_setup()
+
+        self.testcase = TestCaseFactory()
+
+    def test_update_text_and_product(self):
+        case_text = self.testcase.latest_text()
+        self.assertEqual('', case_text.setup)
+        self.assertEqual('', case_text.breakdown)
+        self.assertEqual('', case_text.action)
+        self.assertEqual('', case_text.effect)
+        self.assertNotEqual(self.api_user, case_text.author)
+
+        # update the test case
+        updated = self.rpc_client.TestCase.update(
+            self.testcase.pk,
+            {
+                'summary': 'This was updated',
+                'setup': 'new',
+                'breakdown': 'new',
+                'action': 'new',
+                'effect': 'new',
+            }
+        )
+        self.testcase.refresh_from_db()  # refresh before assertions
+
+        self.assertEqual(updated['case_id'], self.testcase.pk)
+        self.assertEqual('This was updated', self.testcase.summary)
+        case_text = self.testcase.latest_text()  # grab text again
+        self.assertEqual('new', case_text.setup)
+        self.assertEqual('new', case_text.breakdown)
+        self.assertEqual('new', case_text.action)
+        self.assertEqual('new', case_text.effect)
+        self.assertEqual(self.api_user, case_text.author)
