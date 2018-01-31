@@ -10,6 +10,7 @@ from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import TestTag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
+from tcms.xmlrpc.forms import UpdateCaseForm
 
 from tcms.xmlrpc.utils import pre_process_ids, pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
@@ -25,6 +26,7 @@ __all__ = (
     'remove_notification_cc',
 
     'filter',
+    'update',
 
     'add_tag',
     'attach_bug',
@@ -33,8 +35,6 @@ __all__ = (
     'get_bugs',
     'get_tags',
     'remove_tag',
-    'store_text',
-    'update',
 )
 
 
@@ -534,95 +534,27 @@ def remove_tag(case_ids, tags):
         for test_tag in test_tags.iterator():
             test_case.remove_tag(test_tag)
 
-    return
-
-
-@permissions_required('testcases.add_testcasetext')
-@rpc_method(name='TestCase.store_text')
-def store_text(case_id, action, **kwargs):
-    """
-    Description: Update the large text fields of a case.
-
-    Params:    $case_id - Integer: An integer or alias representing the ID in the database.
-               $action, $effect, $setup, $breakdown - String: Text for these fields.
-               [$author_id] = Integer/String: (OPTIONAL) The numeric ID or the login of the author.
-                              Defaults to logged in user
-
-    Returns:     Hash: case text object hash.
-
-    Example:
-    # Minimal
-    >>> TestCase.store_text(12345, 'Action')
-    # Full arguments
-    >>> TestCase.store_text(12345, 'Action', 'Effect', 'Setup', 'Breakdown', 2260)
-    """
-    from django.contrib.auth.models import User
-
-    test_case = TestCase.objects.get(case_id=case_id)
-
-    effect = kwargs.get('effect', '')
-    setup = kwargs.get('setup', '')
-    breakdown = kwargs.get('breakdown', '')
-    author_id = kwargs.get('author_id', None)
-    if author_id:
-        author = User.objects.get(id=author_id)
-    else:
-        request = kwargs.get(REQUEST_KEY)
-        author = request.user
-
-    return test_case.add_text(
-        author=author,
-        action=action and action.strip(),
-        effect=effect and effect.strip(),
-        setup=setup and setup.strip(),
-        breakdown=breakdown and breakdown.strip(),
-    ).serialize()
-
 
 @permissions_required('testcases.change_testcase')
 @rpc_method(name='TestCase.update')
-def update(case_ids, values):
+def update(case_id, values, **kwargs):
     """
-    Description: Updates the fields of the selected case or cases.
+    .. function:: XML-RPC TestCase.update(case_id, values)
 
-    Params:      $case_ids - Integer/String/Array
-                             Integer: A single TestCase ID.
-                             String:  A comma separates string of TestCase IDs for batch
-                                      processing.
-                             Array:   An array of case IDs for batch mode processing
+        Update the fields of the selected test case.
 
-                 $values   - Hash of keys matching TestCase fields and the new values
-                             to set each field to.
-
-    Returns:  Array: an array of case hashes. If the update on any particular
-                     case failed, the has will contain a ERROR key and the
-                     message as to why it failed.
-        +-----------------------+----------------+-----------------------------------------+
-        | Field                 | Type           | Null                                    |
-        +-----------------------+----------------+-----------------------------------------+
-        | case_status           | Integer        | Optional                                |
-        | product               | Integer        | Optional(Required if changes category)  |
-        | category              | Integer        | Optional                                |
-        | priority              | Integer        | Optional                                |
-        | default_tester        | String/Integer | Optional(str - user_name, int - user_id)|
-        | estimated_time        | String         | Optional(2h30m30s(recommend) or HH:MM:SS|
-        | is_automated          | Integer        | Optional(0 - Manual, 1 - Auto, 2 - Both)|
-        | is_automated_proposed | Boolean        | Optional                                |
-        | script                | String         | Optional                                |
-        | arguments             | String         | Optional                                |
-        | summary               | String         | Optional                                |
-        | requirement           | String         | Optional                                |
-        | alias                 | String         | Optional                                |
-        | notes                 | String         | Optional                                |
-        | extra_link            | String         | Optional(reference link)
-        +-----------------------+----------------+-----------------------------------------+
-
-    Example:
-    # Update alias to 'tcms' for case 12345 and 23456
-    >>> TestCase.update([12345, 23456], {'alias': 'tcms'})
+        :param case_id: PK of TestCase to be modified
+        :type case_id: int
+        :param values: Field values for :class:`tcms.testcases.models.TestCase`.
+                       The special keys ``setup``, ``breakdown``, ``action`` and
+                       ``effect`` are recognized and will cause update of the underlying
+                       :class:`tcms.testcases.models.TestCaseText` object!
+        :type values: dict
+        :return: Serialized :class:`tcms.testcases.models.TestCase` object
+        :rtype: dict
+        :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
+        :raises: PermissionDenied if missing *testcases.change_testcase* permission
     """
-    from tcms.xmlrpc.forms import UpdateCaseForm
-
     if values.get('estimated_time'):
         values['estimated_time'] = pre_process_estimated_time(values.get('estimated_time'))
 
@@ -635,12 +567,31 @@ def update(case_ids, values):
         form.populate(product_id=values['product'])
 
     if form.is_valid():
-        tcs = TestCase.update(
-            case_ids=pre_process_ids(value=case_ids),
-            values=form.cleaned_data,
-        )
+        tc = TestCase.objects.get(pk=case_id)
+        for key in values.keys():
+            # only modify attributes that were passed via parameters
+            # skip attributes which are Many-to-Many relations
+            if key not in ['component', 'tag'] and hasattr(tc, key):
+                setattr(tc, key, form.cleaned_data[key])
+        tc.save()
+
+        # if we're updating the text if any one of these parameters was
+        # specified
+        if any(x in ['setup', 'action', 'effect', 'breakdown'] for x in values.keys()):
+            action = form.cleaned_data.get('action', '').strip()
+            effect = form.cleaned_data.get('effect', '').strip()
+            setup = form.cleaned_data.get('setup', '').strip()
+            breakdown = form.cleaned_data.get('breakdown', '').strip()
+            author = kwargs.get(REQUEST_KEY).user
+
+            tc.add_text(
+                author=author,
+                action=action,
+                effect=effect,
+                setup=setup,
+                breakdown=breakdown,
+            )
     else:
         raise ValueError(form_errors_to_list(form))
 
-    query = {'pk__in': tcs.values_list('pk', flat=True)}
-    return TestCase.to_xmlrpc(query)
+    return tc.serialize()

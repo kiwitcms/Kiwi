@@ -922,18 +922,25 @@ class TestCaseTests(BaseAPIClient_TestCase):
                 # Unsupported combination
                 if not automated and not manual:
                     continue
-                for autoproposed in [False, True]:
-                    # Fetch and update
-                    testcase = TestCase(self.testcase.id)
-                    testcase.automated = automated
-                    testcase.manual = manual
-                    testcase.autoproposed = autoproposed
-                    testcase.update()
-                    # Reload and check
-                    testcase = TestCase(self.testcase.id)
-                    self.assertEqual(testcase.automated, automated)
-                    self.assertEqual(testcase.autoproposed, autoproposed)
-                    self.assertEqual(testcase.manual, manual)
+
+                # Fetch and update
+                testcase = TestCase(self.testcase.id)
+                testcase.automated = automated
+                testcase.manual = manual
+                testcase.update()
+                # Reload and check
+                testcase = TestCase(self.testcase.id)
+                self.assertEqual(testcase.automated, automated)
+                self.assertEqual(testcase.manual, manual)
+
+        for autoproposed in [False, True]:
+            # Fetch and update
+            testcase = TestCase(self.testcase.id)
+            testcase.autoproposed = autoproposed
+            testcase.update()
+            # Reload and check
+            testcase = TestCase(self.testcase.id)
+            self.assertEqual(testcase.autoproposed, autoproposed)
 
     def testTestCaseCaching(self):
         """ Test caching in TestCase class """
