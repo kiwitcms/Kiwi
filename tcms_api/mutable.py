@@ -588,10 +588,8 @@ class TestRun(Mutable):
         if inject is None:
             log.info("Fetching test run {0}".format(self.identifier))
             try:
-                inject = self._server.TestRun.get(self.id)
-                if not inject:
-                    raise ValueError("No data fetched")
-            except (xmlrpc.client.Fault, ValueError) as error:
+                inject = self._server.TestRun.filter({'pk': self.id})[0]
+            except IndexError as error:
                 log.debug(error)
                 raise TCMSError(
                     "Failed to fetch test run TR#{0}".format(self.id))

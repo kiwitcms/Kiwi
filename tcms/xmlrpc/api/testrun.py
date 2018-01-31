@@ -20,10 +20,10 @@ __all__ = (
     'add_env_value',
     'remove_env_value',
 
+    'filter',
+
     'add_tag',
     'create',
-    'filter',
-    'get',
     'get_bugs',
     'get_tags',
     'remove_tag',
@@ -223,71 +223,18 @@ def create(values):
 
 
 @rpc_method(name='TestRun.filter')
-def filter(values={}):
+def filter(query={}):
     """
-    Description: Performs a search and returns the resulting list of test runs.
+    .. function:: XML-RPC TestRun.filter(query)
 
-    Params:      $values - Hash: keys must match valid search fields.
+        Perform a search and return the resulting list of test runs.
 
-        +--------------------------------------------------------+
-        |                 Run Search Parameters                  |
-        +--------------------------------------------------------+
-        |        Key          |          Valid Values            |
-        | build               | ForeignKey: Build                |
-        | cc                  | ForeignKey: Auth.User            |
-        | env_value           | ForeignKey: Environment Value    |
-        | default_tester      | ForeignKey: Auth.User            |
-        | run_id              | Integer                          |
-        | manager             | ForeignKey: Auth.User            |
-        | notes               | String                           |
-        | plan                | ForeignKey: Test Plan            |
-        | summary             | String                           |
-        | tag                 | ForeignKey: Tag                  |
-        | product_version     | ForeignKey: Version              |
-        +--------------------------------------------------------+
-
-    Returns:     Array: Matching test runs are retuned in a list of run object hashes.
-
-    Example:
-    # Get all of runs contain 'TCMS' in summary
-    >>> TestRun.filter({'summary__icontain': 'TCMS'})
-    # Get all of runs managed by xkuang
-    >>> TestRun.filter({'manager__username': 'xkuang'})
-    # Get all of runs the manager name starts with x
-    >>> TestRun.filter({'manager__username__startswith': 'x'})
-    # Get runs contain the case ID 12345, 23456, 34567
-    >>> TestRun.filter({'case_run__case__case_id__in': [12345, 23456, 34567]})
+        :param query: Field lookups for :class:`tcms.testruns.models.TestRun`
+        :type query: dict
+        :return: List of serialized :class:`tcms.testruns.models.TestRun` objects
+        :rtype: list(dict)
     """
-    return TestRun.to_xmlrpc(values)
-
-
-@rpc_method(name='TestRun.get')
-def get(run_id):
-    """
-    Description: Used to load an existing test run from the database.
-
-    Params:      $run_id - Integer: An integer representing the ID of the run
-                                    in the database
-
-    Returns:     Hash: A blessed TestRun object hash
-
-    Example:
-    >>> TestRun.get(1193)
-    """
-    try:
-        tr = TestRun.objects.get(run_id=run_id)
-    except TestRun.DoesNotExist as error:
-        return error
-    response = tr.serialize()
-    # get the xmlrpc tags
-    tag_ids = tr.tag.values_list('id', flat=True)
-    query = {'id__in': tag_ids}
-    tags = TestTag.to_xmlrpc(query)
-    # cut 'id' attribute off, only leave 'name' here
-    tags_without_id = [x["name"] for x in tags]
-    # replace tag_id list in the serialize return data
-    response["tag"] = tags_without_id
-    return response
+    return TestRun.to_xmlrpc(query)
 
 
 @rpc_method(name='TestRun.get_bugs')
