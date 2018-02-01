@@ -64,35 +64,6 @@ class TestPreCheckProduct(test.TestCase):
         self.assertRaises(ObjectDoesNotExist, U.pre_check_product, {"product": "unknown name"})
 
 
-class TestPreProcessIds(unittest.TestCase):
-
-    def test_pre_process_ids_with_list(self):
-        ids = U.pre_process_ids(["1", "2", "3"])
-        self.assertEqual(ids, [1, 2, 3])
-
-    def test_pre_process_ids_with_str(self):
-        ids = U.pre_process_ids("1")
-        self.assertEqual(ids, [1])
-
-        ids = U.pre_process_ids("1,2,3,4")
-        self.assertEqual(ids, [1, 2, 3, 4])
-
-    def test_pre_process_ids_with_int(self):
-        ids = U.pre_process_ids(1)
-        self.assertEqual(ids, [1])
-
-    def test_pre_process_ids_with_others(self):
-        with self.assertRaisesRegex(TypeError, 'Unrecognizable type of ids'):
-            U.pre_process_ids((1,))
-
-        with self.assertRaisesRegex(TypeError, 'Unrecognizable type of ids'):
-            U.pre_process_ids({'a': 1})
-
-    def test_pre_process_ids_with_string(self):
-        self.assertRaises(ValueError, U.pre_process_ids, ["a", "b"])
-        self.assertRaises(ValueError, U.pre_process_ids, "1@2@3@4")
-
-
 class TestEstimatedTime(unittest.TestCase):
 
     def test_pre_process_estimated_time(self):
