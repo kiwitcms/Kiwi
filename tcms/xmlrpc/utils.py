@@ -46,26 +46,6 @@ def pre_check_product(values):
         raise ValueError('The type of product is not recognizable.')
 
 
-def pre_process_ids(value):
-    # FIXME: Add more type checks, e.g. value cannot be a boolean value.
-
-    if isinstance(value, list):
-        return [isinstance(c, int) and c or
-                int(c.strip()) for c in value if c]
-
-    if isinstance(value, str):
-        return [int(c.strip()) for c in value.split(',') if c]
-
-    if isinstance(value, int):
-        return [value]
-
-    raise TypeError('Unrecognizable type of ids')
-
-
-def compare_list(src_list, dest_list):
-    return list(set(src_list) - set(dest_list))
-
-
 def _lookup_fields_in_model(cls, fields):
     """Lookup ManyToMany fields in current table and related tables. For
     distinct duplicate rows when using inner join
