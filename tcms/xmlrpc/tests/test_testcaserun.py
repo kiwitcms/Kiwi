@@ -7,7 +7,6 @@ from datetime import datetime
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testruns.models import TestCaseRunStatus
-from tcms.testcases.models import TestCaseBugSystem
 
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
@@ -192,107 +191,6 @@ class TestCaseRunAddComment(XmlrpcAPIBaseTest):
         self.assertIsNone(comment)
 
 
-class TestCaseRunAttachBug(XmlrpcAPIBaseTest):
-    """Test testcaserun.attach_bug"""
-
-    def _fixture_setup(self):
-        super(TestCaseRunAttachBug, self)._fixture_setup()
-
-        self.case_run = TestCaseRunFactory()
-        self.bug_system_jira = TestCaseBugSystem.objects.get(name='JIRA')
-        self.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
-
-    def test_attach_bug_with_no_perm(self):
-        self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCaseRun.attach_bug({})
-
-    def test_attach_bug_with_no_required_args(self):
-        values = [
-            {
-                "summary": "This is summary.",
-                "description": "This is description."
-            },
-            {
-                "description": "This is description."
-            },
-            {
-                "summary": "This is summary.",
-            },
-        ]
-        for value in values:
-            with self.assertRaisesRegex(XmlRPCFault, 'bug_id'):
-                self.rpc_client.TestCaseRun.attach_bug(value)
-
-    def test_attach_bug_with_required_args(self):
-        bug = self.rpc_client.TestCaseRun.attach_bug({
-            "case_run_id": self.case_run.pk,
-            "bug_id": '1',
-            "bug_system_id": self.bug_system_bz.pk,
-        })
-        self.assertIsNone(bug)
-
-        bug = self.rpc_client.TestCaseRun.attach_bug({
-            "case_run_id": self.case_run.pk,
-            "bug_id": "TCMS-123",
-            "bug_system_id": self.bug_system_jira.pk,
-        })
-        self.assertIsNone(bug)
-
-    def test_attach_bug_with_all_fields(self):
-        bug = self.rpc_client.TestCaseRun.attach_bug({
-            "case_run_id": self.case_run.pk,
-            "bug_id": '2',
-            "bug_system_id": self.bug_system_bz.pk,
-            "summary": "This is summary.",
-            "description": "This is description."
-        })
-        self.assertIsNone(bug)
-
-    def test_succeed_to_attach_bug_by_passing_extra_data(self):
-        self.rpc_client.TestCaseRun.attach_bug({
-            "case_run_id": self.case_run.pk,
-            "bug_id": '1200',
-            "bug_system_id": self.bug_system_bz.pk,
-            "summary": "This is summary.",
-            "description": "This is description.",
-            "FFFF": "aaa"
-        })
-        bugs_added = self.case_run.case.case_bug.filter(
-            bug_id='1200',
-            bug_system=self.bug_system_bz.pk
-        ).count()
-        self.assertEqual(1, bugs_added)
-
-    def test_attach_bug_with_non_existing_case_run(self):
-        value = {
-            "case_run_id": 111111111,
-            "bug_id": '2',
-            "bug_system_id": self.bug_system_bz.pk,
-        }
-        with self.assertRaisesRegex(XmlRPCFault, 'TestCaseRun matching query does not exist'):
-            self.rpc_client.TestCaseRun.attach_bug(value)
-
-    def test_attach_bug_with_non_existing_bug_system(self):
-        value = {
-            "case_run_id": self.case_run.pk,
-            "bug_id": '2',
-            "bug_system_id": 111111111,
-        }
-        with self.assertRaisesRegex(XmlRPCFault, 'Invalid bug system id'):
-            self.rpc_client.TestCaseRun.attach_bug(value)
-
-    def test_attach_bug_with_chinese(self):
-        bug = self.rpc_client.TestCaseRun.attach_bug({
-            "case_run_id": self.case_run.pk,
-            "bug_id": '12',
-            "bug_system_id": self.bug_system_bz.pk,
-            "summary": u"你好，中国",
-            "description": u"中国是一个具有悠久历史的文明古国"
-        })
-        self.assertIsNone(bug)
-
-
 class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
     """Test testcaserun.add_log"""
 
@@ -313,61 +211,6 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
         url = "http://127.0.0.1/test/test-log.log"
         log_id = self.rpc_client.TestCaseRun.add_log(self.case_run.pk, "UT test logs", url)
         self.assertGreater(log_id, 0)
-
-
-class TestCaseRunDetachBug(XmlrpcAPIBaseTest):
-
-    def _fixture_setup(self):
-        super(TestCaseRunDetachBug, self)._fixture_setup()
-
-        self.bug_system_bz = TestCaseBugSystem.objects.get(name='Bugzilla')
-        self.bug_system_jira = TestCaseBugSystem.objects.get(name='JIRA')
-        self.case_run = TestCaseRunFactory()
-
-    def setUp(self):
-        super(TestCaseRunDetachBug, self).setUp()
-
-        self.bug_id = '67890'
-        self.rpc_client.TestCaseRun.attach_bug({
-            'case_run_id': self.case_run.pk,
-            'bug_id': self.bug_id,
-            'bug_system_id': self.bug_system_bz.pk,
-            'summary': 'Testing TCMS',
-            'description': 'Just foo and bar',
-        })
-
-        self.jira_key = 'AWSDF-112'
-        self.rpc_client.TestCaseRun.attach_bug({
-            'case_run_id': self.case_run.pk,
-            'bug_id': self.jira_key,
-            'bug_system_id': self.bug_system_jira.pk,
-            'summary': 'Testing TCMS',
-            'description': 'Just foo and bar',
-        })
-
-    def tearDown(self):
-        self.case_run.case.case_bug.all().delete()
-        super(TestCaseRunDetachBug, self).tearDown()
-
-    def test_detach_bug_with_non_exist_id(self):
-        original_links_count = self.case_run.case.case_bug.count()
-        self.rpc_client.TestCaseRun.detach_bug(9999999, '123456')
-        self.assertEqual(original_links_count, self.case_run.case.case_bug.count())
-
-    def test_detach_bug_with_non_exist_bug(self):
-        original_links_count = self.case_run.case.case_bug.count()
-        nonexisting_bug = '{0}111'.format(self.bug_id)
-        self.rpc_client.TestCaseRun.detach_bug(self.case_run.pk, nonexisting_bug)
-        self.assertEqual(original_links_count, self.case_run.case.case_bug.count())
-
-    def test_detach_bug(self):
-        self.rpc_client.TestCaseRun.detach_bug(self.case_run.pk, self.bug_id)
-        self.assertFalse(self.case_run.case.case_bug.filter(bug_id=self.bug_id).exists())
-
-    def test_detach_bug_with_no_perm(self):
-        self.rpc_client.Auth.logout()
-        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCaseRun.detach_bug(self.case_run.pk, self.bug_id)
 
 
 class TestCaseRunDetachLog(XmlrpcAPIBaseTest):

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.forms import EmailField, ValidationError
 
 from modernrpc.core import rpc_method, REQUEST_KEY
@@ -31,9 +30,6 @@ __all__ = (
 
     'add_tag',
     'remove_tag',
-
-    'attach_bug',
-    'detach_bug',
 )
 
 
@@ -242,58 +238,6 @@ def remove_tag(case_id, tag):
     )
 
 
-@permissions_required('testcases.add_testcasebug')
-@rpc_method(name='TestCase.attach_bug')
-def attach_bug(values):
-    """
-    Description: Add one or more bugs to the selected test cases.
-
-    Params:     $values - Array/Hash: A reference to a hash or array of hashes with keys and values
-                                      matching the fields of the test case bug to be created.
-
-      +-------------------+----------------+-----------+-------------------------------+
-      | Field             | Type           | Null      | Description                   |
-      +-------------------+----------------+-----------+-------------------------------+
-      | case_id           | Integer        | Required  | ID of Case                    |
-      | bug_id            | Integer        | Required  | ID of Bug                     |
-      | bug_system_id     | Integer        | Required  | ID of Bug tracker in DB       |
-      | summary           | String         | Optional  | Bug summary                   |
-      | description       | String         | Optional  | Bug description               |
-      +-------------------+----------------+-----------+-------------------------------+
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                 codes if a failure occured.
-
-    Example:
-    >>> TestCase.attach_bug({
-        'case_id': 12345,
-        'bug_id': 67890,
-        'bug_system_id': 1,
-        'summary': 'Testing TCMS',
-        'description': 'Just foo and bar',
-    })
-    """
-    from tcms.xmlrpc.forms import AttachCaseBugForm
-
-    if isinstance(values, dict):
-        values = [values, ]
-
-    for value in values:
-        form = AttachCaseBugForm(value)
-        if form.is_valid():
-            tc = TestCase.objects.only('pk').get(case_id=form.cleaned_data[
-                'case_id'])
-            tc.add_bug(
-                bug_id=form.cleaned_data['bug_id'],
-                bug_system_id=form.cleaned_data['bug_system_id'],
-                summary=form.cleaned_data['summary'],
-                description=form.cleaned_data['description']
-            )
-        else:
-            raise ValueError(form_errors_to_list(form))
-    return
-
-
 @permissions_required('testcases.add_testcase')
 @rpc_method(name='TestCase.create')
 def create(values, **kwargs):
@@ -366,40 +310,6 @@ def create(values, **kwargs):
     result['text'] = tc.latest_text().serialize()
 
     return result
-
-
-@permissions_required('testcases.delete_testcasebug')
-@rpc_method(name='TestCase.detach_bug')
-def detach_bug(case_ids, bug_ids):
-    """
-    Description: Remove one or more bugs to the selected test cases.
-
-    Params: $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                          an array of case_ids, or a string of comma separated case_ids
-            $bug_ids - Integer/Array/String: An integer representing the ID in the database,
-                        an array of bug_ids, or a string of comma separated primary key of bug_ids.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                 codes if a failure occured.
-
-    Example:
-    # Remove bug id 54321 from case 1234
-    >>> TestCase.detach_bug(1234, 54321)
-    # Remove bug ids list [1234, 5678] from cases list [56789, 12345]
-    >>> TestCase.detach_bug([56789, 12345], [1234, 5678])
-    # Remove bug ids list '1234, 5678' from cases list '56789, 12345' with String
-    >>> TestCase.detach_bug('56789, 12345', '1234, 5678')
-    """
-    case_ids = pre_process_ids(case_ids)
-    bug_ids = pre_process_ids(bug_ids)
-
-    tcs = TestCase.objects.filter(case_id__in=case_ids).iterator()
-    for tc in tcs:
-        for opk in bug_ids:
-            try:
-                tc.remove_bug(bug_id=opk)
-            except ObjectDoesNotExist:
-                pass
 
 
 @rpc_method(name='TestCase.filter')
