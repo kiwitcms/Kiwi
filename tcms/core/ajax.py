@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
+from django.forms import ValidationError
 from django.dispatch import Signal
 from django.http import Http404
 from django.http import HttpResponse
@@ -34,7 +35,6 @@ from tcms.testcases.views import plan_from_request_or_none
 from tcms.testplans.models import TestPlan, TestCasePlan
 from tcms.testruns import signals as run_watchers
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
-from tcms.core.exceptions import NitrateException
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
@@ -820,7 +820,7 @@ def update_bugs_to_caseruns(request):
 
     try:
         validate_bug_id(bug_ids, bug_system_id)
-    except NitrateException as e:
+    except ValidationError as e:
         return say_no(str(e))
 
     bz_external_track = data['bz_external_track']

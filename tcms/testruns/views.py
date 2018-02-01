@@ -13,6 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
 from django.db.models import Q
+from django.forms import ValidationError
 from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
@@ -25,7 +26,6 @@ from django.views.generic.base import View
 
 from django_comments.models import Comment
 
-from tcms.core.exceptions import NitrateException
 from tcms.core.utils import clean_request
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
@@ -814,7 +814,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 
             try:
                 validate_bug_id(bug_id, bug_system_id)
-            except NitrateException as e:
+            except ValidationError as e:
                 return self.ajax_response({
                     'rc': 1,
                     'response': str(e)
