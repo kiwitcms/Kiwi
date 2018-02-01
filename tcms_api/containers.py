@@ -367,24 +367,25 @@ class CaseBugs(Container):
 
     def _add(self, bugs):
         """ Attach provided bugs to the test case """
-        log.info("Attaching {0} to {1}".format(
-            listed(bugs), self._identifier))
-        data = [{
-                "bug_id": bug.bug,
-                "bug_system_id": bug.system,
-                "case_id": self.id} for bug in bugs]
-        log.data(pretty(data))
-        self._server.TestCase.attach_bug(data)
+        for bug in bugs:
+            log.info("Attaching {0} to {1}".format(bug, self._identifier))
+            data = {"bug_id": bug.bug,
+                    "bug_system_id": bug.system,
+                    "case_id": self.id}
+            self._server.TestCaseBug.create(data)
         # Fetch again the whole bug list (to get the internal id)
         self._fetch()
 
     def _remove(self, bugs):
         """ Detach provided bugs from the test case """
-        log.info("Detaching {0} from {1}".format(
-            listed(bugs), self._identifier))
-        data = [bug.bug for bug in bugs]
-        log.data(pretty(data))
-        self._server.TestCase.detach_bug(self.id, data)
+        for bug in bugs:
+            log.info("Detaching {0} from {1}".format(bug, self._identifier))
+            data = {
+                'case_id': self.id,
+                'bug_id': bug.bug,
+                'case_run__isnull': True,
+            }
+            self._server.TestCaseBug.remove(self.id, data)
 
     # Print unicode list of bugs
     def __str__(self):
@@ -417,24 +418,24 @@ class CaseRunBugs(Container):
 
     def _add(self, bugs):
         """ Attach provided bugs to the test case """
-        log.info("Attaching {0} to {1}".format(
-            listed(bugs), self._identifier))
-        data = [{
-                "bug_id": bug.bug,
-                "bug_system_id": bug.system,
-                "case_run_id": self.id} for bug in bugs]
-        log.data(pretty(data))
-        self._server.TestCaseRun.attach_bug(data)
+        for bug in bugs:
+            log.info("Attaching {0} to {1}".format(bug, self._identifier))
+            data = {"bug_id": bug.bug,
+                    "bug_system_id": bug.system,
+                    "case_run_id": self.id}
+            self._server.TestCaseBug.create(data)
         # Fetch again the whole bug list (to get the internal id)
         self._fetch()
 
     def _remove(self, bugs):
         """ Detach provided bugs from the test case """
-        log.info("Detaching {0} from {1}".format(
-            listed(bugs), self._identifier))
-        data = [bug.bug for bug in bugs]
-        log.data(pretty(data))
-        self._server.TestCaseRun.detach_bug(self.id, data)
+        for bug in bugs:
+            log.info("Detaching {0} from {1}".format(bug, self._identifier))
+            data = {
+                'bug_id': bug.bug,
+                'case_run_id': self.id,
+            }
+            self._server.TestCaseBug.remove(data)
 
     # Print unicode list of bugs
     def __str__(self):
