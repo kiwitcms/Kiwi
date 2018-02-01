@@ -6,7 +6,6 @@ from tinymce.widgets import TinyMCE
 from tcms.core.forms.fields import UserField, DurationField, StripURLField
 from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
-from tcms.core.exceptions import NitrateException
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.management.models import Priority, Product, Component, TestTag
@@ -467,10 +466,8 @@ class CaseBugForm(forms.ModelForm):
         super(CaseBugForm, self).clean()
         bug_id = self.cleaned_data['bug_id']
         bug_system_id = self.cleaned_data['bug_system'].pk
-        try:
-            validate_bug_id(bug_id, bug_system_id)
-        except NitrateException as e:
-            raise forms.ValidationError(str(e))
+
+        validate_bug_id(bug_id, bug_system_id)
 
         return self.cleaned_data
 

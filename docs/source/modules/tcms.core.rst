@@ -28,7 +28,6 @@ Submodules
    tcms.core.ajax
    tcms.core.context_processors
    tcms.core.db
-   tcms.core.exceptions
    tcms.core.managers
    tcms.core.middleware
 
