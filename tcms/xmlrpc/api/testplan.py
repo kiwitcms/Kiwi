@@ -11,12 +11,12 @@ from tcms.xmlrpc.forms import EditPlanForm, NewPlanForm
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
+    'create',
+    'update',
+    'filter',
+
     'add_case',
     'remove_case',
-
-    'create',
-    'filter',
-    'update',
 
     'add_tag',
     'remove_tag',
@@ -27,7 +27,7 @@ __all__ = (
 @rpc_method(name='TestPlan.create')
 def create(values, **kwargs):
     """
-    .. function: XML-RPC TestPlan.create(values)
+    .. function:: XML-RPC TestPlan.create(values)
 
         Create new Test Plan object and store it in the database.
 

@@ -8,7 +8,7 @@ from tcms.testplans.models import TestPlanType
 @rpc_method(name='PlanType.filter')
 def filter(query):
     """
-    .. function:: PlanType.filter(query)
+    .. function:: XML-RPC PlanType.filter(query)
 
         Search and return a list of test plan types.
 

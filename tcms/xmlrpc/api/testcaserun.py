@@ -10,15 +10,15 @@ from tcms.xmlrpc.utils import Comment
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
-    'add_log',
-    'remove_log',
-    'get_logs',
-
     'create',
-    'filter',
     'update',
+    'filter',
 
     'add_comment',
+
+    'add_log',
+    'get_logs',
+    'remove_log',
 )
 
 

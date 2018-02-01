@@ -7,23 +7,25 @@ from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product, parse_bool_value
 
 __all__ = (
-    'filter', 'create', 'update'
+    'create',
+    'update',
+    'filter',
 )
 
 
 @rpc_method(name='Build.filter')
-def filter(values={}):
+def filter(query={}):
     """
-    .. function:: XML-RPC Build.filter(values)
+    .. function:: XML-RPC Build.filter(query)
 
         Search and return builds matching query.
-        ``values`` is a dict matching the field lookups for the
-        :class:`tcms.management.models.TestBuild` model.
 
+        :param query: Field lookups for :class:`tcms.management.models.TestBuild`
+        :type query: dict
         :return: List of serialized :class:`tcms.management.models.TestBuild` objects
         :rtype: list(dict)
     """
-    return TestBuild.to_xmlrpc(values)
+    return TestBuild.to_xmlrpc(query)
 
 
 @rpc_method(name='Build.create')
@@ -33,13 +35,9 @@ def create(values):
     .. function:: XML-RPC Build.create(values)
 
         Create a new build object and store it in the database.
-        ``values`` is a dict matching the fields of the
-        :class:`tcms.management.models.TestBuild` model.
 
-        :param product: **required** ID or name of Product to which this Build belongs
-        :type product: int or str
-        :param name: **required** name of the build (aka build version string)
-        :type name: str
+        :param values: Field values for :class:`tcms.management.models.TestBuild`
+        :type values: dict
         :return: Serialized :class:`tcms.management.models.TestBuild` object
         :rtype: dict
         :raises: ValueError if product or name not specified
@@ -64,10 +62,12 @@ def update(build_id, values):
     """
     .. function:: XML-RPC Build.update(build_id, values)
 
-        Updates the fields of the selected ``build_id``.
-        ``values`` is a dict matching the fields of the
-        :class:`tcms.management.models.TestBuild` model:
+        Updates the fields of the selected build.
 
+        :param build_id: PK of TestBuild to modify
+        :type build_id: int
+        :param values: Field values for :class:`tcms.management.models.TestBuild`
+        :type values: dict
         :return: Serialized :class:`tcms.management.models.TestBuild` object
         :rtype: dict
         :raises: TestBuild.DoesNotExist if build not found

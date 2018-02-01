@@ -14,16 +14,16 @@ from tcms.testruns.forms import XMLRPCUpdateRunForm, XMLRPCNewRunForm
 
 
 __all__ = (
+    'create',
+    'update',
+    'filter',
+
     'add_case',
-    'remove_case',
     'get_cases',
+    'remove_case',
 
     'add_env_value',
     'remove_env_value',
-
-    'create',
-    'filter',
-    'update',
 
     'add_tag',
     'remove_tag',
@@ -100,7 +100,7 @@ def get_cases(run_id):
 @rpc_method(name='TestRun.add_tag')
 def add_tag(run_id, tag):
     """
-    .. function: XML-RPC TestRun.add_tag(run_id, tag)
+    .. function:: XML-RPC TestRun.add_tag(run_id, tag)
 
         Add one tag to the specified test run.
 
@@ -120,7 +120,7 @@ def add_tag(run_id, tag):
 @rpc_method(name='TestRun.remove_tag')
 def remove_tag(run_id, tag):
     """
-    .. function: XML-RPC TestRun.remove_tag(run_id, tag)
+    .. function:: XML-RPC TestRun.remove_tag(run_id, tag)
 
         Remove a tag from the specified test run.
 

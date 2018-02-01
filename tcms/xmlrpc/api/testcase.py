@@ -16,6 +16,10 @@ from tcms.xmlrpc.decorators import permissions_required
 
 
 __all__ = (
+    'create',
+    'update',
+    'filter',
+
     'add_component',
     'get_components',
     'remove_component',
@@ -23,10 +27,6 @@ __all__ = (
     'add_notification_cc',
     'get_notification_cc',
     'remove_notification_cc',
-
-    'filter',
-    'create',
-    'update',
 
     'add_tag',
     'remove_tag',
@@ -201,7 +201,7 @@ def get_notification_cc(case_id):
 @rpc_method(name='TestCase.add_tag')
 def add_tag(case_id, tag):
     """
-    .. function: XML-RPC TestCase.add_tag(case_id, tag)
+    .. function:: XML-RPC TestCase.add_tag(case_id, tag)
 
         Add one tag to the specified test case.
 
