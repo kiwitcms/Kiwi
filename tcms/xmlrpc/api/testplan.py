@@ -20,7 +20,6 @@ __all__ = (
     'update',
 
     'add_tag',
-    'get_tags',
     'remove_tag',
 )
 
@@ -148,25 +147,6 @@ def filter(query={}):
         results.append(serialized_plan)
 
     return results
-
-
-@rpc_method(name='TestPlan.get_tags')
-def get_tags(plan_id):
-    """
-    Description: Get the list of tags attached to this plan.
-
-    Params:      $plan_id - Integer An integer representing the ID of this plan in the database
-
-    Returns:     Array: An array of tag object hashes.
-
-    Example:
-    >>> TestPlan.get_tags(137)
-    """
-    test_plan = TestPlan.objects.get(plan_id=plan_id)
-
-    tag_ids = test_plan.tag.values_list('id', flat=True)
-    query = {'id__in': tag_ids}
-    return TestTag.to_xmlrpc(query)
 
 
 @permissions_required('testplans.delete_testplantag')

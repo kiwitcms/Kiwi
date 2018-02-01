@@ -56,7 +56,8 @@ class TestRun(TCMSActionModel):
                                        through='testruns.TCMSEnvRunValueMap')
 
     tag = models.ManyToManyField('management.TestTag',
-                                 through='testruns.TestRunTag')
+                                 through='testruns.TestRunTag',
+                                 related_name='run')
 
     cc = models.ManyToManyField('auth.User', through='testruns.TestRunCC')
     auto_update_run_status = models.BooleanField(default=False)

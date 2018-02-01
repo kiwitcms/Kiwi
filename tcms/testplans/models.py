@@ -55,7 +55,9 @@ class TestPlan(TCMSActionModel):
                                on_delete=models.CASCADE)
 
     env_group = models.ManyToManyField('management.TCMSEnvGroup', through='TCMSEnvPlanMap')
-    tag = models.ManyToManyField('management.TestTag', through='testplans.TestPlanTag')
+    tag = models.ManyToManyField('management.TestTag',
+                                 through='testplans.TestPlanTag',
+                                 related_name='plan')
 
     class Meta:
         db_table = u'test_plans'

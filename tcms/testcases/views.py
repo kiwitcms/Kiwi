@@ -524,9 +524,9 @@ def get_tags_from_cases(case_ids, plan=None):
     @return: a list containing all found tags with id and name
     @rtype: list
     '''
-    query = TestTag.objects.filter(cases__in=case_ids).distinct().order_by('name')
+    query = TestTag.objects.filter(case__in=case_ids).distinct().order_by('name')
     if plan:
-        query = query.filter(cases__plan=plan)
+        query = query.filter(case__plan=plan)
 
     return query
 

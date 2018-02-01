@@ -158,7 +158,7 @@ class TestCase(TCMSActionModel):
     component = models.ManyToManyField('management.Component', related_name='cases',
                                        through='testcases.TestCaseComponent')
 
-    tag = models.ManyToManyField('management.TestTag', related_name='cases',
+    tag = models.ManyToManyField('management.TestTag', related_name='case',
                                  through='testcases.TestCaseTag')
 
     # Auto-generated attributes from back-references:

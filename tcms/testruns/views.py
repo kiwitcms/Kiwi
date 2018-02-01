@@ -579,7 +579,7 @@ def get(request, run_id, template_name='run/get.html'):
     # 7. get tags
     # Get the list of testcases belong to the run
     tcs = [tcr.case_id for tcr in tcrs]
-    ttags = TestTag.objects.filter(cases__in=tcs).values_list('name', flat=True)
+    ttags = TestTag.objects.filter(case__in=tcs).values_list('name', flat=True)
     ttags = list(set(ttags.iterator()))
     ttags.sort()
 
