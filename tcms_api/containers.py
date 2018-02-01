@@ -493,16 +493,15 @@ class PlanTags(TagContainer):
 
     def _add(self, tags):
         """ Attach provided tags to the test plan """
-        log.info("Tagging {0} with {1}".format(
-            self._identifier, listed(tags, quote="'")))
-        self._server.TestPlan.add_tag(self.id, list(tag.name for tag in tags))
+        for tag in tags:
+            log.info("Tagging {0} with {1}".format(self._identifier, tag.name))
+            self._server.TestPlan.add_tag(self.id, tag.name)
 
     def _remove(self, tags):
         """ Detach provided tags from the test plan """
-        log.info("Untagging {0} of {1}".format(
-            self._identifier, listed(tags, quote="'")))
-        self._server.TestPlan.remove_tag(self.id, list(
-            tag.name for tag in tags))
+        for tag in tags:
+            log.info("Untagging {0} of {1}".format(self._identifier, tag.name))
+            self._server.TestPlan.remove_tag(self.id, tag.name)
 
     # Print unicode list of tags
     def __str__(self):
@@ -535,16 +534,15 @@ class RunTags(TagContainer):
 
     def _add(self, tags):
         """ Attach provided tags to the test run """
-        log.info("Tagging {0} with {1}".format(
-            self._identifier, listed(tags, quote="'")))
-        self._server.TestRun.add_tag(self.id, list(tag.name for tag in tags))
+        for tag in tags:
+            log.info("Tagging {0} with {1}".format(self._identifier, tag.name))
+            self._server.TestRun.add_tag(self.id, tag.name)
 
     def _remove(self, tags):
         """ Detach provided tags from the test run """
-        log.info("Untagging {0} of {1}".format(
-            self._identifier, listed(tags, quote="'")))
-        self._server.TestRun.remove_tag(self.id, list(
-            tag.name for tag in tags))
+        for tag in tags:
+            log.info("Untagging {0} of {1}".format(self._identifier, tag.name))
+            self._server.TestRun.remove_tag(self.id, tag.name)
 
     # Print unicode list of tags
     def __str__(self):
@@ -577,15 +575,15 @@ class CaseTags(TagContainer):
 
     def _add(self, tags):
         """ Attach provided tags to the test case """
-        log.info("Tagging {0} with {1}".format(
-            self._identifier, listed(tags, quote="'")))
-        self._server.TestCase.add_tag(self.id, list(tag.name for tag in tags))
+        for tag in tags:
+            log.info("Tagging {0} with {1}".format(self._identifier, tag.name))
+            self._server.TestCase.add_tag(self.id, tag.name)
 
     def _remove(self, tags):
         """ Detach provided tags from the test case """
-        log.info("Untagging {0} of {1}".format(
-            self._identifier, listed(tags, quote="'")))
-        self._server.TestCase.remove_tag(self.id, list(tag.name for tag in tags))
+        for tag in tags:
+            log.info("Untagging {0} of {1}".format(self._identifier, tag.name))
+            self._server.TestCase.remove_tag(self.id, tag.name)
 
     # Print unicode list of tags
     def __str__(self):

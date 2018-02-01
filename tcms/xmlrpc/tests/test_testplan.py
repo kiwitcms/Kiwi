@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from xmlrpc.client import Fault as XmlRPCFault
-
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import TCMSEnvPlanMap
@@ -61,29 +59,11 @@ class TestAddTag(XmlrpcAPIBaseTest):
 
         self.tag1 = TestTagFactory(name='xmlrpc_test_tag_1')
         self.tag2 = TestTagFactory(name='xmlrpc_test_tag_2')
-        self.tag_name = 'xmlrpc_tag_name_1'
 
-    def test_single_id(self):
-        '''Test with single plan id and tag id'''
-        with self.assertRaisesRegex(XmlRPCFault, 'Parameter tags must be a string'):
-            self.rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.pk)
-
+    def test_add_tag(self):
         self.rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag1.pk).exists()
         self.assertTrue(tag_exists)
-
-    def test_array_argument(self):
-        self.rpc_client.TestPlan.add_tag(self.plans[0].pk, [self.tag2.name, self.tag_name])
-        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk,
-                                             tag__name__in=[self.tag2.name, self.tag_name])
-        self.assertTrue(tag_exists.exists())
-
-        plans_ids = [plan.pk for plan in self.plans]
-        tags_names = [self.tag_name, 'xmlrpc_tag_name_2']
-        self.rpc_client.TestPlan.add_tag(plans_ids, tags_names)
-        for plan in self.plans:
-            tag_exists = plan.tag.filter(name__in=tags_names).exists()
-            self.assertTrue(tag_exists)
 
 
 class TestRemoveTag(XmlrpcAPIBaseTest):
@@ -103,31 +83,10 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.plans[0].add_tag(self.tag0)
         self.plans[1].add_tag(self.tag1)
 
-        self.tag_name = 'xmlrpc_tag_name_1'
-
-    def test_single_id(self):
-        '''Test with single plan id and tag id'''
-        # removing by ID raises an error
-        with self.assertRaisesRegex(XmlRPCFault, 'Parameter tags must be a string'):
-            self.rpc_client.TestPlan.remove_tag(self.plans[0].pk, self.tag0.pk)
-
-        # removing by name works fine
+    def test_remove_tag(self):
         self.rpc_client.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag0.pk).exists()
         self.assertFalse(tag_exists)
-
-    def test_array_argument(self):
-        self.rpc_client.TestPlan.remove_tag(self.plans[0].pk, [self.tag0.name, self.tag_name])
-        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk,
-                                             tag__name__in=[self.tag0.name, self.tag_name])
-        self.assertFalse(tag_exists.exists())
-
-        plans_ids = [plan.pk for plan in self.plans]
-        tags_names = [self.tag_name, 'xmlrpc_tag_name_2']
-        self.rpc_client.TestPlan.remove_tag(plans_ids, tags_names)
-        for plan in self.plans:
-            tag_exists = plan.tag.filter(name__in=tags_names).exists()
-            self.assertFalse(tag_exists)
 
 
 class TestUpdate(XmlrpcAPIBaseTest):
