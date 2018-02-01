@@ -11,7 +11,7 @@ from tcms.management.models import Component
 from tcms.testcases.models import TestCase
 from tcms.xmlrpc.forms import UpdateCaseForm, NewCaseForm
 
-from tcms.xmlrpc.utils import pre_process_ids, pre_process_estimated_time
+from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
 
 
@@ -267,9 +267,6 @@ def create(values, **kwargs):
     if not (values.get('category') or values.get('summary')):
         raise ValueError()
 
-    values['component'] = pre_process_ids(values.get('component', []))
-    values['plan'] = pre_process_ids(values.get('plan', []))
-    values['bug'] = pre_process_ids(values.get('bug', []))
     if values.get('estimated_time'):
         values['estimated_time'] = pre_process_estimated_time(values.get('estimated_time'))
 
@@ -287,16 +284,6 @@ def create(values, **kwargs):
             setup=form.cleaned_data['setup'] or '',
             breakdown=form.cleaned_data['breakdown'] or '',
         )
-
-        # Add the case to specific plans
-        for p in form.cleaned_data['plan']:
-            tc.add_to_plan(plan=p)
-            del p
-
-        # Add components to the case
-        for c in form.cleaned_data['component']:
-            tc.add_component(component=c)
-            del c
 
         # Add tag to the case
         for tag in string_to_list(values.get('tag', [])):

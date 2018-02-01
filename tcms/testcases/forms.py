@@ -228,12 +228,6 @@ class XMLRPCBaseCaseForm(BaseCaseForm):
 
 
 class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
-    plan = forms.ModelMultipleChoiceField(
-        label='Test Plan',
-        queryset=TestPlan.objects.all(),
-        required=False,
-    )
-
     def clean_case_status(self):
         if not self.cleaned_data['case_status']:
             return TestCaseStatus.get_PROPOSED()
