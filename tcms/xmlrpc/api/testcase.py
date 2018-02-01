@@ -34,8 +34,6 @@ __all__ = (
 
     'attach_bug',
     'detach_bug',
-    'get_bugs',
-
 )
 
 
@@ -431,33 +429,6 @@ def filter(query):
         results.append(serialized_case)
 
     return results
-
-
-@rpc_method(name='TestCase.get_bugs')
-def get_bugs(case_ids):
-    """
-    Description: Get the list of bugs that are associated with this test case.
-
-    Params:      $case_ids - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of bug object hashes.
-
-    Example:
-    # Get bugs belong to ID 12345
-    >>> TestCase.get_bugs(12345)
-    # Get bug belong to case ids list [12456, 23456]
-    >>> TestCase.get_bugs([12456, 23456])
-    # Get bug belong to case ids list 12456 and 23456 with string
-    >>> TestCase.get_bugs('12456, 23456')
-    """
-    from tcms.testcases.models import TestCaseBug
-
-    tcs = TestCase.objects.filter(
-        case_id__in=pre_process_ids(value=case_ids)
-    )
-
-    query = {'case__case_id__in': tcs.values_list('case_id', flat=True)}
-    return TestCaseBug.to_xmlrpc(query)
 
 
 @permissions_required('testcases.change_testcase')

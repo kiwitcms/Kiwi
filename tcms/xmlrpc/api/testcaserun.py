@@ -6,7 +6,6 @@ from tcms.core.utils import form_errors_to_list
 from tcms.core.contrib.linkreference.views import create_link
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
-from tcms.testcases.models import TestCaseBug
 from tcms.testruns.models import TestCaseRun
 from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.utils import Comment
@@ -24,7 +23,6 @@ __all__ = (
     'add_comment',
     'attach_bug',
     'detach_bug',
-    'get_bugs',
 )
 
 
@@ -207,23 +205,6 @@ def filter(values):
         :rtype: list(dict)
     """
     return TestCaseRun.to_xmlrpc(values)
-
-
-@rpc_method(name='TestCaseRun.get_bugs')
-def get_bugs(query):
-    """
-TODO: duplicate with TestCase.get_bugs
-
-    Description: Get the list of bugs that are associated with this test case.
-
-    Params:      $query - dict
-
-    Returns:     Array: An array of bug object hashes.
-
-    Example:
-    >>> TestCase.get_bugs(12345)
-    """
-    return TestCaseBug.to_xmlrpc(query)
 
 
 @permissions_required('testruns.change_testcaserun')

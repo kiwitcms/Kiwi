@@ -28,8 +28,6 @@ __all__ = (
 
     'add_tag',
     'remove_tag',
-
-    'get_bugs',
 )
 
 
@@ -225,40 +223,6 @@ def filter(query={}):
         :rtype: list(dict)
     """
     return TestRun.to_xmlrpc(query)
-
-
-@rpc_method(name='TestRun.get_bugs')
-def get_bugs(run_ids):
-    """
-    *** FIXME: BUGGY IN SERIALISER - List can not be serialize. ***
-    Description: Get the list of bugs attached to this run.
-
-    Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database
-                                                  an array of integers or a comma separated list
-                                                  of integers.
-
-    Returns:     Array: An array of bug object hashes.
-
-    Example:
-    # Get bugs belong to ID 12345
-    >>> TestRun.get_bugs(12345)
-    # Get bug belong to run ids list [12456, 23456]
-    >>> TestRun.get_bugs([12456, 23456])
-    # Get bug belong to run ids list 12456 and 23456 with string
-    >>> TestRun.get_bugs('12456, 23456')
-    """
-    from tcms.testcases.models import TestCaseBug
-
-    trs = TestRun.objects.filter(
-        run_id__in=pre_process_ids(value=run_ids)
-    )
-    tcrs = TestCaseRun.objects.filter(
-        run__run_id__in=trs.values_list('run_id', flat=True)
-    )
-
-    query = {'case_run__case_run_id__in': tcrs.values_list('case_run_id',
-                                                           flat=True)}
-    return TestCaseBug.to_xmlrpc(query)
 
 
 @permissions_required('testruns.change_testrun')
