@@ -28,7 +28,6 @@ __all__ = (
 
     'add_tag',
     'get_bugs',
-    'get_tags',
     'remove_tag',
 )
 
@@ -256,25 +255,6 @@ def get_bugs(run_ids):
     query = {'case_run__case_run_id__in': tcrs.values_list('case_run_id',
                                                            flat=True)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@rpc_method(name='TestRun.get_tags')
-def get_tags(run_id):
-    """
-    Description: Get the list of tags attached to this run.
-
-    Params:      $run_id - Integer: An integer representing the ID of the run in the database
-
-    Returns:     Array: An array of tag object hashes.
-
-    Example:
-    >>> TestRun.get_tags(1193)
-    """
-    test_run = TestRun.objects.get(run_id=run_id)
-
-    tag_ids = test_run.tag.values_list('id', flat=True)
-    query = {'id__in': tag_ids}
-    return TestTag.to_xmlrpc(query)
 
 
 @permissions_required('testruns.delete_testruntag')

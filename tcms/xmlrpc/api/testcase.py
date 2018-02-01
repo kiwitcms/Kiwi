@@ -33,7 +33,6 @@ __all__ = (
     'attach_bug',
     'detach_bug',
     'get_bugs',
-    'get_tags',
     'remove_tag',
 )
 
@@ -452,25 +451,6 @@ def get_bugs(case_ids):
 
     query = {'case__case_id__in': tcs.values_list('case_id', flat=True)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@rpc_method(name='TestCase.get_tags')
-def get_tags(case_id):
-    """
-    Description: Get the list of tags attached to this case.
-
-    Params:      $case_id - Integer/String: An integer representing the ID in the database
-
-    Returns:     Array: An array of tag object hashes.
-
-    Example:
-    >>> TestCase.get_tags(12345)
-    """
-    test_case = TestCase.objects.get(case_id=case_id)
-
-    tag_ids = test_case.tag.values_list('id', flat=True)
-    query = {'id__in': tag_ids}
-    return TestTag.to_xmlrpc(query)
 
 
 @permissions_required('testcases.delete_testcasetag')

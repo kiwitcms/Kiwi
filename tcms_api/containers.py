@@ -4,6 +4,8 @@
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
+#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #   This library is free software; you can redistribute it and/or
@@ -484,7 +486,7 @@ class PlanTags(TagContainer):
         if Container._fetch(self, inset):
             return
         log.info("Fetching tags for {0}".format(self._identifier))
-        injects = self._server.TestPlan.get_tags(self.id)
+        injects = self._server.Tag.filter({'plan': self.id})
         log.debug(pretty(injects))
         self._current = set([Tag(inject) for inject in injects])
         self._original = set(self._current)
@@ -526,7 +528,7 @@ class RunTags(TagContainer):
         if Container._fetch(self, inset):
             return
         log.info("Fetching tags for {0}".format(self._identifier))
-        injects = self._server.TestRun.get_tags(self.id)
+        injects = self._server.Tag.filter({'run': self.id})
         log.debug(pretty(injects))
         self._current = set([Tag(inject) for inject in injects])
         self._original = set(self._current)
@@ -568,7 +570,7 @@ class CaseTags(TagContainer):
         if Container._fetch(self, inset):
             return
         log.info("Fetching tags for {0}".format(self._identifier))
-        injects = self._server.TestCase.get_tags(self.id)
+        injects = self._server.Tag.filter({'case': self.id})
         log.debug(pretty(injects))
         self._current = set([Tag(inject) for inject in injects])
         self._original = set(self._current)
