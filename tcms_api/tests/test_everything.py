@@ -766,20 +766,17 @@ class TestRunTests(BaseAPIClient_TestCase):
         testcase.status = original
         testcase.update()
 
-    def test_include_only_selected_cases(self):
-        """ Include only selected test cases in the new run """
+    def test_add_cases(self):
         testcase = TestCase(self.testcase.id)
         testplan = TestPlan(self.master.id)
+
         # No test case should be linked
-        testrun = TestRun(testplan=testplan, testcases=[])
-        self.assertTrue(testcase.id not in
-                        [caserun.testcase.id for caserun in testrun])
+        testrun = TestRun(testplan=testplan)
+        self.assertFalse(testcase.id in
+                         [caserun.testcase.id for caserun in testrun])
+
         # Select test case by test case object
-        testrun = TestRun(testplan=testplan, testcases=[testcase])
-        self.assertTrue(testcase.id in
-                        [caserun.testcase.id for caserun in testrun])
-        # Select test case by id
-        testrun = TestRun(testplan=testplan, testcases=[testcase.id])
+        testrun.testcases.add(testcase)
         self.assertTrue(testcase.id in
                         [caserun.testcase.id for caserun in testrun])
 
@@ -1302,20 +1299,15 @@ class RunCasesTests(BaseAPIClient_TestCase):
         self.testrun = self.testruns[0]
         self.testcase = self.cases[0]
 
-    def test_present(self):
-        """ Check test case presence """
-        testcase = TestCase(self.testcase.id)
-        testrun = TestRun(self.testrun.id)
-        self.assertTrue(testcase in testrun.testcases)
-        self.assertTrue(testcase in
-                        [caserun.testcase for caserun in testrun.caseruns])
-
     def test_add_remove(self):
         """ Add and remove test case """
         # Create a new test run, make sure our test case is there
         testcase = TestCase(self.testcase.id)
         testrun = TestRun(testplan=self.master.id)
+        testrun.testcases.add(testcase)
+        testrun.update()
         self.assertTrue(testcase in testrun.testcases)
+
         # Remove and check it's not either in testcases or caseruns
         testrun.testcases.remove(testcase)
         testrun.update()
