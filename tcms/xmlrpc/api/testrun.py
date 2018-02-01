@@ -3,7 +3,7 @@ from datetime import datetime
 
 from modernrpc.core import rpc_method
 
-from tcms.core.utils import string_to_list, form_errors_to_list
+from tcms.core.utils import form_errors_to_list
 from tcms.management.models import TestTag, TCMSEnvValue
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
@@ -27,8 +27,9 @@ __all__ = (
     'update',
 
     'add_tag',
-    'get_bugs',
     'remove_tag',
+
+    'get_bugs',
 )
 
 
@@ -100,39 +101,42 @@ def get_cases(run_id):
 
 @permissions_required('testruns.add_testruntag')
 @rpc_method(name='TestRun.add_tag')
-def add_tag(run_ids, tags):
+def add_tag(run_id, tag):
     """
-    Description: Add one or more tags to the selected test runs.
+    .. function: XML-RPC TestRun.add_tag(run_id, tag)
 
-    Params:      $run_ids - Integer/Array/String: An integer representing the ID in the database,
-                                                  an arry of run_ids, or a string of
-                                                  comma separated run_ids.
+        Add one tag to the specified test run.
 
-                 $tags - String/Array - A single tag, an array of tags,
-                                        or a comma separated list of tags.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                        codes if a failure occured.
-
-    Example:
-    # Add tag 'foobar' to run 1234
-    >>> TestPlan.add_tag(1234, 'foobar')
-    # Add tag list ['foo', 'bar'] to run list [12345, 67890]
-    >>> TestPlan.add_tag([12345, 67890], ['foo', 'bar'])
-    # Add tag list ['foo', 'bar'] to run list [12345, 67890] with String
-    >>> TestPlan.add_tag('12345, 67890', 'foo, bar')
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param tag: Tag name to add
+        :type tag: str
+        :return: None
+        :raises: PermissionDenied if missing *testruns.add_testruntag* permission
+        :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
     """
-    trs = TestRun.objects.filter(pk__in=pre_process_ids(value=run_ids))
-    if not isinstance(tags, str) and not isinstance(tags, list):
-        raise ValueError('Parameter tags must be a string or list(string)')
-    tags = string_to_list(tags)
+    t, _ = TestTag.objects.get_or_create(name=tag)
+    TestRun.objects.get(pk=run_id).add_tag(t)
 
-    for tag in tags:
-        t, c = TestTag.objects.get_or_create(name=tag)
-        for tr in trs.iterator():
-            tr.add_tag(tag=t)
 
-    return
+@permissions_required('testruns.delete_testruntag')
+@rpc_method(name='TestRun.remove_tag')
+def remove_tag(run_id, tag):
+    """
+    .. function: XML-RPC TestRun.remove_tag(run_id, tag)
+
+        Remove a tag from the specified test run.
+
+        :param run_id: PK of TestRun to modify
+        :type run_id: int
+        :param tag: Tag name to add
+        :type tag: str
+        :return: None
+        :raises: PermissionDenied if missing *testruns.delete_testruntag* permission
+        :raises: DoesNotExist if objects specified don't exist
+    """
+    t = TestTag.objects.get(name=tag)
+    TestRun.objects.get(pk=run_id).remove_tag(t)
 
 
 @permissions_required('testruns.add_testrun')
@@ -255,45 +259,6 @@ def get_bugs(run_ids):
     query = {'case_run__case_run_id__in': tcrs.values_list('case_run_id',
                                                            flat=True)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@permissions_required('testruns.delete_testruntag')
-@rpc_method(name='TestRun.remove_tag')
-def remove_tag(run_ids, tags):
-    """
-    Description: Remove a tag from a run.
-
-    Params:      $run_ids - Integer/Array/String: An integer or alias representing the ID in the
-                             database, an array of run_ids, or a string of comma separated run_ids.
-
-                 $tag - String - A single tag to be removed.
-
-    Returns:     Array: Empty on success.
-
-    Example:
-    # Remove tag 'foo' from run 1234
-    >>> TestRun.remove_tag(1234, 'foo')
-    # Remove tag 'foo' and 'bar' from run list [56789, 12345]
-    >>> TestRun.remove_tag([56789, 12345], ['foo', 'bar'])
-    # Remove tag 'foo' and 'bar' from run list '56789, 12345' with String
-    >>> TestRun.remove_tag('56789, 12345', 'foo, bar')
-    """
-    test_runs = TestRun.objects.filter(
-        run_id__in=pre_process_ids(value=run_ids)
-    )
-
-    if not isinstance(tags, str) and not isinstance(tags, list):
-        raise ValueError('Parameter tags must be a string or list(string)')
-
-    test_tags = TestTag.objects.filter(
-        name__in=string_to_list(tags)
-    )
-
-    for test_run in test_runs.iterator():
-        for test_tag in test_tags.iterator():
-            test_run.remove_tag(tag=test_tag)
-
-    return
 
 
 @permissions_required('testruns.change_testrun')

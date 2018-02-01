@@ -2,14 +2,13 @@
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from tcms.core.utils import string_to_list, form_errors_to_list
+from tcms.core.utils import form_errors_to_list
 from tcms.management.models import TestTag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase, TestCasePlan
 
 from tcms.xmlrpc.forms import EditPlanForm, NewPlanForm
 from tcms.xmlrpc.decorators import permissions_required
-from tcms.xmlrpc.utils import pre_process_ids
 
 __all__ = (
     'add_case',
@@ -22,47 +21,6 @@ __all__ = (
     'add_tag',
     'remove_tag',
 )
-
-
-@permissions_required('testplans.add_testplantag')
-@rpc_method(name='TestPlan.add_tag')
-def add_tag(plan_ids, tags):
-    """
-    Description: Add one or more tags to the selected test plans.
-
-    Params:      $plan_ids - Integer/Array/String: An integer representing the ID of the plan
-                      in the database,
-                      an arry of plan_ids, or a string of comma separated plan_ids.
-
-                  $tags - String/Array - A single tag, an array of tags,
-                      or a comma separated list of tags.
-
-    Returns:     Array: empty on success or an array of hashes with failure
-                  codes if a failure occured.
-
-    Example:
-    # Add tag 'foobar' to plan 1234
-    >>> TestPlan.add_tag(1234, 'foobar')
-    # Add tag list ['foo', 'bar'] to plan list [12345, 67890]
-    >>> TestPlan.add_tag([12345, 67890], ['foo', 'bar'])
-    # Add tag list ['foo', 'bar'] to plan list [12345, 67890] with String
-    >>> TestPlan.add_tag('12345, 67890', 'foo, bar')
-    """
-    # FIXME: this could be optimized to reduce possible huge number of SQLs
-
-    tps = TestPlan.objects.filter(plan_id__in=pre_process_ids(value=plan_ids))
-
-    if not isinstance(tags, (str, list)):
-        raise ValueError('Parameter tags must be a string or list(string)')
-
-    tags = string_to_list(tags)
-
-    for tag in tags:
-        t, c = TestTag.objects.get_or_create(name=tag)
-        for tp in tps.iterator():
-            tp.add_tag(tag=t)
-
-    return
 
 
 @permissions_required('testplans.add_testplan')
@@ -149,44 +107,44 @@ def filter(query={}):
     return results
 
 
+@permissions_required('testplans.add_testplantag')
+@rpc_method(name='TestPlan.add_tag')
+def add_tag(plan_id, tag):
+    """
+    .. function:: XML-RPC TestPlan.add_tag(plan_id, tag)
+
+        Add a tag to the specified test plan.
+
+        :param plan_id: PK of TestPlan to modify
+        :type plan_id: int
+        :param tag: Tag name to add
+        :type tag: str
+        :return: None
+        :raises: PermissionDenied if missing *testplans.add_testplantag* permission
+        :raises: TestPlan.DoesNotExist if object specified by PK doesn't exist
+    """
+    t, _ = TestTag.objects.get_or_create(name=tag)
+    TestPlan.objects.get(pk=plan_id).add_tag(t)
+
+
 @permissions_required('testplans.delete_testplantag')
 @rpc_method(name='TestPlan.remove_tag')
-def remove_tag(plan_ids, tags):
+def remove_tag(plan_id, tag):
     """
-    Description: Remove a tag from a plan.
+    .. function:: XML-RPC TestPlan.remove_tag(plan_id, tag)
 
-    Params:      $plan_ids - Integer/Array/String: An integer or alias representing the ID
-                                                   in the database, an array of plan_ids,
-                                                   or a string of comma separated plan_ids.
+        Remove tag from the specified test plan.
 
-                 $tag - String - A single tag to be removed.
-
-    Returns:     Array: Empty on success.
-
-    Example:
-    # Remove tag 'foo' from plan 1234
-    >>> TestPlan.remove_tag(1234, 'foo')
-    # Remove tag 'foo' and 'bar' from plan list [56789, 12345]
-    >>> TestPlan.remove_tag([56789, 12345], ['foo', 'bar'])
-    # Remove tag 'foo' and 'bar' from plan list '56789, 12345' with String
-    >>> TestPlan.remove_tag('56789, 12345', 'foo, bar')
+        :param plan_id: PK of TestPlan to modify
+        :type plan_id: int
+        :param tag: Tag name to remove
+        :type tag: str
+        :return: None
+        :raises: PermissionDenied if missing *testplans.delete_testplantag* permission
+        :raises: DoesNotExist if objects specified don't exist
     """
-    from tcms.management.models import TestTag
-
-    test_plans = TestPlan.objects.filter(
-        plan_id__in=pre_process_ids(value=plan_ids)
-    )
-
-    if not isinstance(tags, (str, list)):
-        raise ValueError('Parameter tags must be a string or list(string)')
-
-    test_tags = TestTag.objects.filter(
-        name__in=string_to_list(tags)
-    )
-
-    for test_plan in test_plans.iterator():
-        for test_tag in test_tags.iterator():
-            test_plan.remove_tag(tag=test_tag)
+    t = TestTag.objects.get(name=tag)
+    TestPlan.objects.get(pk=plan_id).remove_tag(t)
 
 
 @permissions_required('testplans.change_testplan')

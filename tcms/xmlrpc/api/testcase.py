@@ -30,10 +30,12 @@ __all__ = (
     'update',
 
     'add_tag',
+    'remove_tag',
+
     'attach_bug',
     'detach_bug',
     'get_bugs',
-    'remove_tag',
+
 )
 
 
@@ -203,38 +205,43 @@ def get_notification_cc(case_id):
 
 @permissions_required('testcases.add_testcasetag')
 @rpc_method(name='TestCase.add_tag')
-def add_tag(case_ids, tags):
+def add_tag(case_id, tag):
     """
-    Description: Add one or more tags to the selected test cases.
+    .. function: XML-RPC TestCase.add_tag(case_id, tag)
 
-    Params:     $case_ids - Integer/Array/String: An integer representing the ID in the database,
-                            an array of case_ids, or a string of comma separated case_ids.
+        Add one tag to the specified test case.
 
-                $tags - String/Array - A single tag, an array of tags,
-                        or a comma separated list of tags.
-
-    Returns:    Array: empty on success or an array of hashes with failure
-                       codes if a failure occured.
-
-    Example:
-    # Add tag 'foobar' to case 1234
-    >>> TestCase.add_tag(1234, 'foobar')
-    # Add tag list ['foo', 'bar'] to cases list [12345, 67890]
-    >>> TestCase.add_tag([12345, 67890], ['foo', 'bar'])
-    # Add tag list ['foo', 'bar'] to cases list [12345, 67890] with String
-    >>> TestCase.add_tag('12345, 67890', 'foo, bar')
+        :param case_id: PK of TestCase to modify
+        :type case_id: int
+        :param tag: Tag name to add
+        :type tag: str
+        :return: None
+        :raises: PermissionDenied if missing *testcases.add_testcasetag* permission
+        :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
     """
-    tcs = TestCase.objects.filter(
-        case_id__in=pre_process_ids(value=case_ids))
+    t, _ = TestTag.objects.get_or_create(name=tag)
+    TestCase.objects.get(pk=case_id).add_tag(t)
 
-    tags = string_to_list(tags)
 
-    for tag in tags:
-        t, c = TestTag.objects.get_or_create(name=tag)
-        for tc in tcs.iterator():
-            tc.add_tag(tag=t)
+@permissions_required('testcases.delete_testcasetag')
+@rpc_method(name='TestCase.remove_tag')
+def remove_tag(case_id, tag):
+    """
+    .. function:: XML-RPC TestCase.remove_tag(case_id, tag)
 
-    return
+        Remove tag from a test case.
+
+        :param case_id: PK of TestCase to modify
+        :type case_id: int
+        :param tag: Tag name to remove
+        :type tag: str
+        :return: None
+        :raises: PermissionDenied if missing *testcases.delete_testcasetag* permission
+        :raises: DoesNotExist if objects specified don't exist
+    """
+    TestCase.objects.get(pk=case_id).remove_tag(
+        TestTag.objects.get(name=tag)
+    )
 
 
 @permissions_required('testcases.add_testcasebug')
@@ -451,40 +458,6 @@ def get_bugs(case_ids):
 
     query = {'case__case_id__in': tcs.values_list('case_id', flat=True)}
     return TestCaseBug.to_xmlrpc(query)
-
-
-@permissions_required('testcases.delete_testcasetag')
-@rpc_method(name='TestCase.remove_tag')
-def remove_tag(case_ids, tags):
-    """
-    Description: Remove a tag from a case.
-
-    Params: $case_ids - Integer/Array/String: An integer or alias representing the ID
-                         in the database, an array of case_ids,
-                         or a string of comma separated case_ids.
-
-            $tags - String/Array - A single or multiple tag to be removed.
-
-    Returns: Array: Empty on success.
-
-    Example:
-    # Remove tag 'foo' from case 1234
-    >>> TestCase.remove_tag(1234, 'foo')
-    # Remove tag 'foo' and bar from cases list [56789, 12345]
-    >>> TestCase.remove_tag([56789, 12345], ['foo', 'bar'])
-    # Remove tag 'foo' and 'bar' from cases list '56789, 12345' with String
-    >>> TestCase.remove_tag('56789, 12345', 'foo, bar')
-    """
-    test_cases = TestCase.objects.filter(
-        case_id__in=pre_process_ids(value=case_ids)
-    )
-    test_tags = TestTag.objects.filter(
-        name__in=string_to_list(tags)
-    )
-
-    for test_case in test_cases.iterator():
-        for test_tag in test_tags.iterator():
-            test_case.remove_tag(test_tag)
 
 
 @permissions_required('testcases.change_testcase')
