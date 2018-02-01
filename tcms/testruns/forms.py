@@ -108,11 +108,6 @@ class XMLRPCNewRunForm(BaseRunForm):
     default_tester = forms.ModelChoiceField(
         label='Default tester', queryset=User.objects.all(), required=False
     )
-    case = forms.ModelMultipleChoiceField(
-        label='Test Case',
-        queryset=TestCase.objects.all(),
-        required=False,
-    )
     plan_text_version = forms.IntegerField(
         label='Plan text version',
         required=False,

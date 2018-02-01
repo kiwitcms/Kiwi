@@ -9,7 +9,6 @@ from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
 from tcms.xmlrpc.utils import pre_process_estimated_time
-from tcms.xmlrpc.utils import pre_process_ids
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.testruns.forms import XMLRPCUpdateRunForm, XMLRPCNewRunForm
 
@@ -170,9 +169,6 @@ def create(values):
         values['estimated_time'] = pre_process_estimated_time(
             values.get('estimated_time'))
 
-    if values.get('case'):
-        values['case'] = pre_process_ids(value=values['case'])
-
     form = XMLRPCNewRunForm(values)
     form.populate(product_id=values['product'])
 
@@ -189,11 +185,6 @@ def create(values):
             manager=form.cleaned_data['manager'],
             default_tester=form.cleaned_data['default_tester'],
         )
-
-        if form.cleaned_data['case']:
-            for c in form.cleaned_data['case']:
-                tr.add_case_run(case=c)
-                del c
 
         if form.cleaned_data['tag']:
             tags = form.cleaned_data['tag']

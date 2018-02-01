@@ -448,12 +448,6 @@ class TestRun(Mutable):
             notes ....... ""
             manager ..... current user
             tester ...... current user
-            tags ........ None
-            testcases ... test cases to be included
-
-        Tags should be provided as a list of tag names. Test cases can
-        be provided as a list of test case objects or a list of ids. By
-        default all CONFIRMED test cases are linked to the created run.
         """
 
         # Initialize (unless already done)
@@ -493,8 +487,7 @@ class TestRun(Mutable):
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _create(self, testplan, product=None, version=None, build=None,
-                summary=None, notes=None, manager=None, tester=None, tags=None,
-                testcases=None, **kwargs):
+                summary=None, notes=None, manager=None, tester=None, **kwargs):
         """ Create a new test run """
 
         hash = {}
@@ -540,20 +533,6 @@ class TestRun(Mutable):
             tester = User(tester)
         hash["manager"] = manager.id
         hash["default_tester"] = tester.id
-
-        # Prepare the list of test cases to be included in the test run
-        # If testcases parameter is non-empty only selected cases will
-        # be added, otherwise all CONFIRMED cases will be linked.
-        if testcases is not None:
-            hash["case"] = [case.id if isinstance(case, TestCase) else case
-                            for case in testcases]
-        else:
-            hash["case"] = [case.id for case in testplan
-                            if case.status == CaseStatus("CONFIRMED")]
-
-        # Tag with supplied tags
-        if tags:
-            hash["tag"] = ",".join(tags)
 
         # Submit to the server and initialize
         log.info("Creating a new test run based on {0}".format(testplan))
@@ -620,12 +599,7 @@ class TestRun(Mutable):
         # Initialize containers
         self._caseruns = RunCaseRuns(self)
         self._testcases = RunCases(self)
-        # If all tags are cached, initialize them directly from the inject
-        if "tag" in inject and Tag._is_cached(inject["tag"]):
-            self._tags = RunTags(
-                self, inset=[Tag(tag) for tag in inject["tag"]])
-        else:
-            self._tags = RunTags(self)
+        self._tags = RunTags(self)
 
         # Index the fetched object into cache
         self._index()
