@@ -8,7 +8,9 @@ from modernrpc.core import REQUEST_KEY
 from django.core.exceptions import PermissionDenied
 
 __all__ = (
-    'login', 'logout', 'login_krbv'
+    'login',
+    'login_krbv',
+    'logout',
 )
 
 

@@ -5,6 +5,13 @@ from tcms.testcases.models import TestCaseBug
 from tcms.xmlrpc.decorators import permissions_required
 
 
+__all__ = (
+    'create',
+    'remove',
+    'filter',
+)
+
+
 @rpc_method(name='TestCaseBug.filter')
 def filter(query):
     """

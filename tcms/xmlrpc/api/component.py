@@ -9,6 +9,13 @@ from tcms.xmlrpc.utils import pre_check_product
 from tcms.xmlrpc.decorators import permissions_required
 
 
+__all__ = (
+    'create',
+    'update',
+    'filter',
+)
+
+
 @rpc_method(name='Component.filter')
 def filter(query):
     """
@@ -32,7 +39,7 @@ def create(values, **kwargs):
 
         Create new component.
 
-        :param values: Fields of :class:`tcms.management.models.Component`
+        :param values: Field values for :class:`tcms.management.models.Component`
         :type values: dict
         :return: Serialized :class:`tcms.management.models.Component` object
         :rtype: dict

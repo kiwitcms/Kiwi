@@ -10,6 +10,13 @@ from tcms.xmlrpc.utils import parse_bool_value
 from tcms.xmlrpc.decorators import permissions_required
 
 
+__all__ = (
+    'update',
+    'filter',
+    'join_group',
+)
+
+
 def _get_user_dict(user):
     u = XMLRPCSerializer(model=user)
     u = u.serialize_model()
@@ -19,14 +26,14 @@ def _get_user_dict(user):
 
 
 @rpc_method(name='User.filter')
-def filter(query=None, **kwargs):
+def filter(query={}, **kwargs):
     """
-    .. function:: XML-RPC User.filter(query=None)
+    .. function:: XML-RPC User.filter(query)
 
         Search and return the resulting list of users.
 
         :param query: Field lookups for :class:`django.contrib.auth.models.User`
-        :type query: None or dict
+        :type query: dict
         :return: Serialized :class:`django.contrib.auth.models.User` object without
                  the password field!
         :rtype: dict
@@ -35,7 +42,7 @@ def filter(query=None, **kwargs):
 
         If query is ``None`` will return the user issuing the RPC request.
     """
-    if query is None:
+    if not query:
         query = {'pk': kwargs.get(REQUEST_KEY).user.pk}
 
     if 'is_active' in query:

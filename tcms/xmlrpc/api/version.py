@@ -10,6 +10,12 @@ from tcms.xmlrpc.decorators import permissions_required
 from tcms.xmlrpc.utils import pre_check_product
 
 
+__all__ = (
+    'create',
+    'filter',
+)
+
+
 @rpc_method(name='Version.filter')
 def filter(query):
     """
@@ -33,7 +39,7 @@ def create(values):
 
         Add new version.
 
-        :param values: Member fields of :class:`tcms.management.models.Version`
+        :param values: Field values for :class:`tcms.management.models.Version`
         :type query: dict
         :return: Serialized :class:`tcms.management.models.Version` object
         :rtype: dict
