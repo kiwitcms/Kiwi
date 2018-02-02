@@ -5,7 +5,8 @@ django-vinaigrette
 django-uuslug
 odfpy
 python-bugzilla
-jira
+# because of https://github.com/pycontribs/jira/issues/501
+jira==1.0.10
 PyGithub
 dj-pagination
 django-tinymce
