@@ -145,9 +145,6 @@ MEDIA_ROOT = '/var/kiwi/uploads'
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '/uploads/'
 
-# URL prefix for admin absolute URL
-ADMIN_PREFIX = '/admin'
-
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
@@ -187,7 +184,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'tcms.core.context_processors.admin_prefix_processor',
                 'tcms.core.context_processors.auth_backend_processor',
                 'tcms.core.context_processors.request_contents_processor',
                 'tcms.core.context_processors.settings_processor',

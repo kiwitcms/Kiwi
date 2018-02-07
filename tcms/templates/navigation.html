@@ -203,11 +203,12 @@
                             </ul>
                         </li>
 
-                        <li class="divider"></li>
                     {% if user.is_staff %}
                         {% if perms.auth.change_user %}
+                        <li class="divider"></li>
+
                         <li>
-                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/auth/" target="_parent">Users and groups</a>
+                            <a href="/admin/auth/" target="_parent">Users and groups</a>
                         </li>
                         {% endif %}
 
@@ -215,26 +216,26 @@
 
                         {% if perms.management %}
                         <li>
-                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/management/">TCMS management</a>
+                            <a href="/admin/management/">TCMS management</a>
                         </li>
                         {% endif %}
 
                         {% if perms.testplans.change_testplantype %}
                         <li>
-                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/testplans/">Test Plans</a>
+                            <a href="/admin/testplans/">Test Plans</a>
                         </li>
                         {% endif %}
 
                         {% if perms.testcases %}
                         <li>
-                            <a href="{{ SETTINGS.ADMIN_PREFIX }}/testcases/">Test Cases</a>
+                            <a href="/admin/testcases/">Test Cases</a>
                         </li>
                         {% endif %}
 -->
                         <li class="divider"></li>
 
                         <li>
-                            <a href="{{ SETTINGS.ADMIN_PREFIX }}" target="_parent">Everything else</a>
+                            <a href="/admin/" target="_parent">Everything else</a>
                         </li>
                     {% endif %}
                     </ul>

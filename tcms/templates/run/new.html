@@ -58,7 +58,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 					<td>
 						{{ form.product_version }}
 						<span class="errors">{{ form.product_version.errors }}</span>
-						<a href="{{ ADMIN_PREFIX }}/management/version/add/" class="addlink" id="add_id_product_version">Add Product Version</a>
+						<a href="{% url 'admin:management_version_add' %}" class="addlink" id="add_id_product_version">Add Product Version</a>
 					</td>
 				</tr>
 				<tr>

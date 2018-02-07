@@ -2,13 +2,6 @@
 from django.conf import settings
 
 
-def admin_prefix_processor(request):
-    """
-    Django Admin URL Prefix RequestContext Handler
-    """
-    return {'ADMIN_PREFIX': settings.ADMIN_PREFIX}
-
-
 def auth_backend_processor(request):
     """Determine the be able to login/logout/register request """
     from tcms.core.contrib.auth import get_using_backend
