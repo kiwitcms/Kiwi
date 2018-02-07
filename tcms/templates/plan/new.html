@@ -41,7 +41,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 					<td>
 						<span class="name" >{{ form.product }}</span>
 						<span >{{ form.product.errors }}</span>
-              <a id="add_id_product" href="{{ ADMIN_PREFIX }}/management/product/add/" class="addlink" >
+              <a id="add_id_product" href="{% url 'admin:management_product_add' %}" class="addlink" >
 							Add Product
 						</a>
 						<span class="grey">After Add and Refresh page</span>
@@ -52,7 +52,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 					<td>
 						<span>{{ form.product_version }}</span>
 						<span >{{ form.product_version.errors }}</span>
-                        <a id="add_id_product_version" href="{{ ADMIN_PREFIX }}/management/version/add/" class="addlink" >
+                        <a id="add_id_product_version" href="{% url 'admin:management_version_add' %}" class="addlink" >
 							Add Product Version
 						</a>
 						<span class="grey">After Add and Refresh page</span>
