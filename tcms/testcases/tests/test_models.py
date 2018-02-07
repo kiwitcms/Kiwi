@@ -12,7 +12,7 @@ from tcms.testcases.models import _listen, _disconnect_signals
 from ..helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseEmailSettingsFactory
 from tcms.tests.factories import TestCaseFactory
@@ -28,7 +28,7 @@ class TestCaseRemoveBug(BasePlanCase):
     @classmethod
     def setUpTestData(cls):
         super(TestCaseRemoveBug, cls).setUpTestData()
-        cls.build = TestBuildFactory(product=cls.product)
+        cls.build = BuildFactory(product=cls.product)
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)
         cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,

@@ -2,7 +2,7 @@
 from django import forms
 
 from tcms.core.helpers.cache import cached_entities
-from tcms.management.models import Product, TestBuild, Component, Version
+from tcms.management.models import Product, Build, Component, Version
 from tcms.testcases.forms import BugField
 from tcms.testcases.models import TestCaseCategory
 from tcms.testplans.models import TestPlanType
@@ -167,7 +167,7 @@ class RunForm(forms.Form):
     r_created_since = forms.DateField(required=False)
     r_created_before = forms.DateField(required=False)
     r_real_tester = forms.CharField(required=False, max_length=200)
-    r_build = forms.ModelMultipleChoiceField(required=False, queryset=TestBuild.objects.none())
+    r_build = forms.ModelMultipleChoiceField(required=False, queryset=Build.objects.none())
     r_product = forms.ModelMultipleChoiceField(required=False, queryset=Product.objects.none())
     r_version = forms.ModelMultipleChoiceField(required=False, queryset=Version.objects.none())
 
@@ -201,7 +201,7 @@ class RunForm(forms.Form):
         build_pks = data.getlist('r_build')
         build_pks = [k for k in build_pks if k]
         if build_pks:
-            qs = TestBuild.objects.filter(pk__in=build_pks).only('name')
+            qs = Build.objects.filter(pk__in=build_pks).only('name')
             self.fields['r_build'].queryset = qs
         ver_pks = data.getlist('r_version')
         ver_pks = [k for k in ver_pks if k]

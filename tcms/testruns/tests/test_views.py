@@ -22,7 +22,7 @@ from tcms.tests import user_should_have_perm
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TCMSEnvPropertyFactory
 from tcms.tests.factories import TCMSEnvValueFactory
-from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestPlanFactory
@@ -110,7 +110,7 @@ class TestCreateNewRun(BasePlanCase):
         cls.permission = 'testruns.add_testrun'
         user_should_have_perm(cls.tester, cls.permission)
         cls.url = reverse('testruns-new')
-        cls.build_fast = TestBuildFactory(name='fast', product=cls.product)
+        cls.build_fast = BuildFactory(name='fast', product=cls.product)
 
     def test_refuse_if_missing_plan_pk(self):
         self.client.login(username=self.tester.username, password='password')
@@ -626,7 +626,7 @@ class TestAJAXSearchRuns(BaseCaseRun):
         # Probably need more cases as well in order to create case runs to
         # test statistcis in search result
 
-        cls.build_issuetracker_fast = TestBuildFactory(
+        cls.build_issuetracker_fast = BuildFactory(
             product=cls.product_issuetracker)
 
         cls.run_hotfix = TestRunFactory(
@@ -1238,8 +1238,8 @@ class TestEditRun(BaseCaseRun):
         cls.edit_url = reverse('testruns-edit', args=[cls.test_run.pk])
 
         cls.new_product = ProductFactory(name='Nitrate Dev')
-        cls.new_build = TestBuildFactory(name='FastTest',
-                                         product=cls.new_product)
+        cls.new_build = BuildFactory(name='FastTest',
+                                     product=cls.new_product)
         cls.new_version = VersionFactory(value='dev0.1',
                                          product=cls.new_product)
         cls.intern = UserFactory(username='intern',

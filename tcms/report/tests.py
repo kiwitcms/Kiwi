@@ -8,7 +8,7 @@ from django.urls import reverse
 from tcms.testruns.models import TestCaseRunStatus
 
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestCaseRunFactory
 
@@ -28,7 +28,7 @@ class TestingReportTestCase(test.TestCase):
         # test for https://github.com/kiwitcms/Kiwi/issues/88
         #
         run = TestRunFactory()
-        product_build = TestBuildFactory(product=run.plan.product)
+        product_build = BuildFactory(product=run.plan.product)
 
         for status in TestCaseRunStatus.objects.all():
             TestCaseRunFactory(
