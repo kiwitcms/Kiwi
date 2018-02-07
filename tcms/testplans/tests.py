@@ -16,7 +16,7 @@ from tcms.management.models import Product
 from tcms.management.models import Version
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCasePlan
-from tcms.testplans.models import TCMSEnvPlanMap
+from tcms.testplans.models import EnvPlanMap
 from tcms.testplans.models import TestPlan
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
@@ -27,7 +27,7 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTypeFactory
 from tcms.tests.factories import TestTagFactory
-from tcms.tests.factories import TCMSEnvGroupFactory
+from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests import BasePlanCase
@@ -45,8 +45,8 @@ class TestPlanEnvironmentGroupTests(test.TestCase):
         cls.product = ProductFactory()
         cls.product_version = VersionFactory(product=cls.product)
 
-        cls.env_group = TCMSEnvGroupFactory()
-        cls.new_env_group = TCMSEnvGroupFactory(name='Laptop hardware')
+        cls.env_group = EnvGroupFactory()
+        cls.new_env_group = EnvGroupFactory(name='Laptop hardware')
 
         cls.tester = UserFactory()
         cls.tester.set_password('password')
@@ -680,7 +680,7 @@ class TestCloneView(BasePlanCase):
 
         # Verify option copy_environment_groups
         for env_group in original_plan.env_group.all():
-            added = TCMSEnvPlanMap.objects.filter(plan=cloned_plan, group=env_group).exists()
+            added = EnvPlanMap.objects.filter(plan=cloned_plan, group=env_group).exists()
             self.assertTrue(added)
 
         # Verify options link_testcases and copy_testcases

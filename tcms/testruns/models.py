@@ -52,8 +52,8 @@ class TestRun(TCMSActionModel):
                                        related_name='default_tester',
                                        on_delete=models.CASCADE)
 
-    env_value = models.ManyToManyField('management.TCMSEnvValue',
-                                       through='testruns.TCMSEnvRunValueMap')
+    env_value = models.ManyToManyField('management.EnvValue',
+                                       through='testruns.EnvRunValueMap')
 
     tag = models.ManyToManyField('management.TestTag',
                                  through='testruns.TestRunTag',
@@ -214,8 +214,7 @@ class TestRun(TCMSActionModel):
         )
 
     def add_env_value(self, env_value):
-        return TCMSEnvRunValueMap.objects.get_or_create(run=self,
-                                                        value=env_value)
+        return EnvRunValueMap.objects.get_or_create(run=self, value=env_value)
 
     def remove_tag(self, tag):
         TestRunTag.objects.filter(run=self, tag=tag).delete()
@@ -224,7 +223,7 @@ class TestRun(TCMSActionModel):
         TestRunCC.objects.filter(run=self, user=user).delete()
 
     def remove_env_value(self, env_value):
-        TCMSEnvRunValueMap.objects.filter(run=self, value=env_value).delete()
+        EnvRunValueMap.objects.filter(run=self, value=env_value).delete()
 
     def mail(self, template, subject, context, to=[], request=None):
         from tcms.core.utils.mailto import mailto
@@ -683,9 +682,9 @@ class TestRunCC(models.Model):
         unique_together = ('run', 'user')
 
 
-class TCMSEnvRunValueMap(models.Model):
+class EnvRunValueMap(models.Model):
     run = models.ForeignKey(TestRun, on_delete=models.CASCADE)
-    value = models.ForeignKey('management.TCMSEnvValue', on_delete=models.CASCADE)
+    value = models.ForeignKey('management.EnvValue', on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'tcms_env_run_value_map'

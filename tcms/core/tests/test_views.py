@@ -12,8 +12,8 @@ from django.urls import reverse
 from django_comments.models import Comment
 
 from tcms.management.models import Priority
-from tcms.management.models import TCMSEnvGroup
-from tcms.management.models import TCMSEnvProperty
+from tcms.management.models import EnvGroup
+from tcms.management.models import EnvProperty
 from tcms.testcases.forms import CaseAutomatedForm
 from tcms.testcases.forms import TestCase
 from tcms.testplans.models import TestPlan
@@ -24,9 +24,9 @@ from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
-from tcms.tests.factories import TCMSEnvGroupFactory
-from tcms.tests.factories import TCMSEnvGroupPropertyMapFactory
-from tcms.tests.factories import TCMSEnvPropertyFactory
+from tcms.tests.factories import EnvGroupFactory
+from tcms.tests.factories import EnvGroupPropertyMapFactory
+from tcms.tests.factories import EnvPropertyFactory
 
 
 class TestNavigation(test.TestCase):
@@ -361,19 +361,19 @@ class TestGetObjectInfo(BasePlanCase):
 
         cls.get_info_url = reverse('ajax-info')
 
-        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate')
-        cls.group_new = TCMSEnvGroupFactory(name='NewGroup')
+        cls.group_nitrate = EnvGroupFactory(name='nitrate')
+        cls.group_new = EnvGroupFactory(name='NewGroup')
 
-        cls.property_os = TCMSEnvPropertyFactory(name='os')
-        cls.property_python = TCMSEnvPropertyFactory(name='python')
-        cls.property_django = TCMSEnvPropertyFactory(name='django')
+        cls.property_os = EnvPropertyFactory(name='os')
+        cls.property_python = EnvPropertyFactory(name='python')
+        cls.property_django = EnvPropertyFactory(name='django')
 
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
-                                       property=cls.property_os)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
-                                       property=cls.property_python)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_new,
-                                       property=cls.property_django)
+        EnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                   property=cls.property_os)
+        EnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                   property=cls.property_python)
+        EnvGroupPropertyMapFactory(group=cls.group_new,
+                                   property=cls.property_django)
 
     def test_get_env_properties(self):
         response = self.client.get(self.get_info_url, {'info_type': 'env_properties'})
@@ -381,7 +381,7 @@ class TestGetObjectInfo(BasePlanCase):
         expected_json = json.loads(
             serializers.serialize(
                 'json',
-                TCMSEnvProperty.objects.all(),
+                EnvProperty.objects.all(),
                 fields=('name', 'value')))
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
@@ -392,7 +392,7 @@ class TestGetObjectInfo(BasePlanCase):
                                    {'info_type': 'env_properties',
                                     'env_group_id': self.group_new.pk})
 
-        group = TCMSEnvGroup.objects.get(pk=self.group_new.pk)
+        group = EnvGroup.objects.get(pk=self.group_new.pk)
         expected_json = json.loads(
             serializers.serialize(
                 'json',

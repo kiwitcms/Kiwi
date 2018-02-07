@@ -32,7 +32,7 @@ from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.core.utils.validations import validate_bug_id
 from tcms.core.views import Prompt
-from tcms.management.models import Priority, TCMSEnvValue, TestTag
+from tcms.management.models import Priority, EnvValue, TestTag
 from tcms.search.forms import RunForm
 from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.forms import CaseBugForm
@@ -43,7 +43,7 @@ from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
-from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TCMSEnvRunValueMap
+from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRunValueMap
 from tcms.issuetracker.types import IssueTrackerType
 
 
@@ -183,9 +183,9 @@ def new(request, template_name='run/new.html'):
                             raise ValueError('Invalid number of env values.')
 
                         for value_id in env_values:
-                            args.append(TCMSEnvRunValueMap(run=tr, value_id=value_id))
+                            args.append(EnvRunValueMap(run=tr, value_id=value_id))
 
-                TCMSEnvRunValueMap.objects.bulk_create(args)
+                EnvRunValueMap.objects.bulk_create(args)
 
             return HttpResponseRedirect(
                 reverse('testruns-get', args=[tr.run_id, ])
@@ -1366,13 +1366,13 @@ def env_value(request):
             self.test_runs = test_runs
 
         def has_no_perm(self, perm):
-            if not self.request.user.has_perm('testruns.' + perm + '_tcmsenvrunvaluemap'):
+            if not self.request.user.has_perm('testruns.' + perm + '_envrunvaluemap'):
                 return {'rc': 1, 'response': 'Permission deined - %s' % perm}
 
             return False
 
         def get_env_value(self, env_value_id):
-            return TCMSEnvValue.objects.get(id=env_value_id)
+            return EnvValue.objects.get(id=env_value_id)
 
         def add(self):
             chk_perm = self.has_no_perm('add')

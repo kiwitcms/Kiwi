@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from tcms.testcases.models import TestCaseBug
 from tcms.testcases.models import TestCaseBugSystem
-from tcms.testruns.models import TCMSEnvRunValueMap
+from tcms.testruns.models import EnvRunValueMap
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
@@ -20,8 +20,8 @@ from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TCMSEnvPropertyFactory
-from tcms.tests.factories import TCMSEnvValueFactory
+from tcms.tests.factories import EnvPropertyFactory
+from tcms.tests.factories import EnvValueFactory
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
@@ -371,10 +371,10 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
                    ):
             cls.origin_run.add_cc(cc)
 
-        cls.property = TCMSEnvPropertyFactory(name='lang')
+        cls.property = EnvPropertyFactory(name='lang')
         for value in ('python', 'perl', 'ruby'):
             cls.origin_run.add_env_value(
-                TCMSEnvValueFactory(value=value, property=cls.property))
+                EnvValueFactory(value=value, property=cls.property))
 
         cls.case_2.add_text(action='action', effect='effect',
                             setup='setup', breakdown='breakdown')
@@ -969,20 +969,20 @@ class TestEnvValue(BaseCaseRun):
     def setUpTestData(cls):
         super(TestEnvValue, cls).setUpTestData()
 
-        cls.property_os = TCMSEnvPropertyFactory(name='os')
-        cls.value_linux = TCMSEnvValueFactory(value='Linux',
-                                              property=cls.property_os)
-        cls.value_bsd = TCMSEnvValueFactory(value='BSD',
-                                            property=cls.property_os)
-        cls.value_mac = TCMSEnvValueFactory(value='Mac',
-                                            property=cls.property_os)
+        cls.property_os = EnvPropertyFactory(name='os')
+        cls.value_linux = EnvValueFactory(value='Linux',
+                                          property=cls.property_os)
+        cls.value_bsd = EnvValueFactory(value='BSD',
+                                        property=cls.property_os)
+        cls.value_mac = EnvValueFactory(value='Mac',
+                                        property=cls.property_os)
 
         cls.test_run.add_env_value(cls.value_linux)
         cls.test_run_1.add_env_value(cls.value_linux)
 
         cls.env_value_url = reverse('testruns-env_value')
-        user_should_have_perm(cls.tester, 'testruns.add_tcmsenvrunvaluemap')
-        user_should_have_perm(cls.tester, 'testruns.delete_tcmsenvrunvaluemap')
+        user_should_have_perm(cls.tester, 'testruns.add_envrunvaluemap')
+        user_should_have_perm(cls.tester, 'testruns.delete_envrunvaluemap')
 
     def test_refuse_if_action_is_unknown(self):
         self.login_tester()
@@ -1005,8 +1005,7 @@ class TestEnvValue(BaseCaseRun):
             'run_id': self.test_run.pk
         })
 
-        rel = TCMSEnvRunValueMap.objects.filter(run=self.test_run,
-                                                value=self.value_bsd)
+        rel = EnvRunValueMap.objects.filter(run=self.test_run, value=self.value_bsd)
         self.assertTrue(rel.exists())
 
     def test_add_env_value_to_runs(self):
@@ -1018,12 +1017,12 @@ class TestEnvValue(BaseCaseRun):
             'run_id': [self.test_run.pk, self.test_run_1.pk]
         })
 
-        rel = TCMSEnvRunValueMap.objects.filter(run=self.test_run,
-                                                value=self.value_bsd)
+        rel = EnvRunValueMap.objects.filter(run=self.test_run,
+                                            value=self.value_bsd)
         self.assertTrue(rel.exists())
 
-        rel = TCMSEnvRunValueMap.objects.filter(run=self.test_run_1,
-                                                value=self.value_bsd)
+        rel = EnvRunValueMap.objects.filter(run=self.test_run_1,
+                                            value=self.value_bsd)
         self.assertTrue(rel.exists())
 
     def test_delete_env_value(self):
@@ -1035,8 +1034,8 @@ class TestEnvValue(BaseCaseRun):
             'run_id': self.test_run.pk,
         })
 
-        rel = TCMSEnvRunValueMap.objects.filter(run=self.test_run,
-                                                value=self.value_linux)
+        rel = EnvRunValueMap.objects.filter(run=self.test_run,
+                                            value=self.value_linux)
         self.assertFalse(rel.exists())
 
     def test_delete_env_value_from_runs(self):
@@ -1048,12 +1047,12 @@ class TestEnvValue(BaseCaseRun):
             'run_id': [self.test_run.pk, self.test_run_1.pk],
         })
 
-        rel = TCMSEnvRunValueMap.objects.filter(run=self.test_run,
-                                                value=self.value_linux)
+        rel = EnvRunValueMap.objects.filter(run=self.test_run,
+                                            value=self.value_linux)
         self.assertFalse(rel.exists())
 
-        rel = TCMSEnvRunValueMap.objects.filter(run=self.test_run_1,
-                                                value=self.value_linux)
+        rel = EnvRunValueMap.objects.filter(run=self.test_run_1,
+                                            value=self.value_linux)
         self.assertFalse(rel.exists())
 
 

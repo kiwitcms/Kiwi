@@ -298,7 +298,7 @@ class TestTag(TCMSActionModel):
         return tags
 
 
-class TCMSEnvGroup(TCMSActionModel):
+class EnvGroup(TCMSActionModel):
     name = models.CharField(unique=True, max_length=255)
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='env_group_manager',
                                 on_delete=models.CASCADE)
@@ -311,8 +311,8 @@ class TCMSEnvGroup(TCMSActionModel):
     )
     is_active = models.BooleanField(default=True)
     property = models.ManyToManyField(
-        'management.TCMSEnvProperty',
-        through='management.TCMSEnvGroupPropertyMap',
+        'management.EnvProperty',
+        through='management.EnvGroupPropertyMap',
         related_name='group'
     )
 
@@ -327,7 +327,7 @@ class TCMSEnvGroup(TCMSActionModel):
         return cls.objects.filter(is_active=True)
 
 
-class TCMSEnvProperty(TCMSActionModel):
+class EnvProperty(TCMSActionModel):
     name = models.CharField(unique=True, max_length=255)
     is_active = models.BooleanField(default=True)
 
@@ -342,17 +342,17 @@ class TCMSEnvProperty(TCMSActionModel):
         return cls.objects.filter(is_active=True)
 
 
-class TCMSEnvGroupPropertyMap(models.Model):
-    group = models.ForeignKey(TCMSEnvGroup, on_delete=models.CASCADE)
-    property = models.ForeignKey(TCMSEnvProperty, on_delete=models.CASCADE)
+class EnvGroupPropertyMap(models.Model):
+    group = models.ForeignKey(EnvGroup, on_delete=models.CASCADE)
+    property = models.ForeignKey(EnvProperty, on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'tcms_env_group_property_map'
 
 
-class TCMSEnvValue(TCMSActionModel):
+class EnvValue(TCMSActionModel):
     value = models.CharField(max_length=255)
-    property = models.ForeignKey(TCMSEnvProperty, related_name='value', on_delete=models.CASCADE)
+    property = models.ForeignKey(EnvProperty, related_name='value', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
     class Meta:

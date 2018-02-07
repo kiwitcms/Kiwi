@@ -123,10 +123,10 @@ class TestTagFactory(DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Tag %d' % n)
 
 
-class TCMSEnvGroupFactory(DjangoModelFactory):
+class EnvGroupFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'management.TCMSEnvGroup'
+        model = 'management.EnvGroup'
 
     name = factory.Sequence(lambda n: 'Env group %d' % n)
     manager = factory.SubFactory(UserFactory)
@@ -138,33 +138,33 @@ class TCMSEnvGroupFactory(DjangoModelFactory):
             return
         if extracted:
             for property in extracted:
-                TCMSEnvGroupPropertyMapFactory(group=self, property=property)
+                EnvGroupPropertyMapFactory(group=self, property=property)
 
 
-class TCMSEnvPropertyFactory(DjangoModelFactory):
+class EnvPropertyFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'management.TCMSEnvProperty'
+        model = 'management.EnvProperty'
 
     name = factory.Sequence(lambda n: 'Env property %d' % n)
 
 
-class TCMSEnvGroupPropertyMapFactory(DjangoModelFactory):
+class EnvGroupPropertyMapFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'management.TCMSEnvGroupPropertyMap'
+        model = 'management.EnvGroupPropertyMap'
 
-    group = factory.SubFactory(TCMSEnvGroupFactory)
-    property = factory.SubFactory(TCMSEnvPropertyFactory)
+    group = factory.SubFactory(EnvGroupFactory)
+    property = factory.SubFactory(EnvPropertyFactory)
 
 
-class TCMSEnvValueFactory(DjangoModelFactory):
+class EnvValueFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'management.TCMSEnvValue'
+        model = 'management.EnvValue'
 
     value = factory.Sequence(lambda n: 'Env value %d' % n)
-    property = factory.SubFactory(TCMSEnvPropertyFactory)
+    property = factory.SubFactory(EnvPropertyFactory)
 
 
 # ### Factories for app testplans ###
@@ -198,7 +198,7 @@ class TestPlanFactory(DjangoModelFactory):
             return
         if extracted:
             for group in extracted:
-                TCMSEnvPlanMapFactory(plan=self, group=group)
+                EnvPlanMapFactory(plan=self, group=group)
 
     @factory.post_generation
     def tag(self, create, extracted, **kwargs):
@@ -218,13 +218,13 @@ class TestPlanTagFactory(DjangoModelFactory):
     tag = factory.SubFactory(TestTagFactory)
 
 
-class TCMSEnvPlanMapFactory(DjangoModelFactory):
+class EnvPlanMapFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'testplans.TCMSEnvPlanMap'
+        model = 'testplans.EnvPlanMap'
 
     plan = factory.SubFactory(TestPlanFactory)
-    group = factory.SubFactory(TCMSEnvGroupFactory)
+    group = factory.SubFactory(EnvGroupFactory)
 
 
 class TestPlanTextFactory(DjangoModelFactory):
@@ -401,7 +401,7 @@ class TestRunFactory(DjangoModelFactory):
             return
         if extracted:
             for value in extracted:
-                TCMSEnvRunValueMapFactory(run=self, value=value)
+                EnvRunValueMapFactory(run=self, value=value)
 
     @factory.post_generation
     def tag(self, create, extracted, **kwargs):
@@ -456,13 +456,13 @@ class TestRunCCFactory(DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
 
 
-class TCMSEnvRunValueMapFactory(DjangoModelFactory):
+class EnvRunValueMapFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'testruns.TCMSEnvRunValueMap'
+        model = 'testruns.EnvRunValueMap'
 
     run = factory.SubFactory(TestRunFactory)
-    value = factory.SubFactory(TCMSEnvValueFactory)
+    value = factory.SubFactory(EnvValueFactory)
 
 
 # ### Factories for app profiles ###

@@ -2,7 +2,7 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.management.models import TCMSEnvProperty
+from tcms.management.models import EnvProperty
 from tcms.xmlrpc.utils import parse_bool_value
 
 
@@ -13,11 +13,11 @@ def filter(query):
 
         Performs a search and returns the resulting list of environment properties.
 
-        :param query: Field lookups for :class:`tcms.management.models.TCMSEnvProperty`
+        :param query: Field lookups for :class:`tcms.management.models.EnvProperty`
         :type query: dict
-        :returns: List of serialized :class:`tcms.management.models.TCMSEnvProperty` objects
+        :returns: List of serialized :class:`tcms.management.models.EnvProperty` objects
         :rtype: list(dict)
     """
     if 'is_active' in query:
         query['is_active'] = parse_bool_value(query['is_active'])
-    return TCMSEnvProperty.to_xmlrpc(query)
+    return EnvProperty.to_xmlrpc(query)
