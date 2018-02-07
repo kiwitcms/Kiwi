@@ -9,7 +9,7 @@ from tcms.core.utils.validations import validate_bug_id
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.management.models import Priority, Product, Component, TestTag
-from .models import TestCase, TestCaseCategory, TestCaseStatus, TestCaseTag
+from .models import TestCase, Category, TestCaseStatus, TestCaseTag
 from .models import TestCaseBug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from .fields import MultipleEmailField
 
@@ -92,7 +92,7 @@ class BaseCaseForm(forms.Form):
     )
     category = forms.ModelChoiceField(
         label="Category",
-        queryset=TestCaseCategory.objects.none(),
+        queryset=Category.objects.none(),
         empty_label=None,
     )
     component = forms.ModelMultipleChoiceField(
@@ -176,12 +176,12 @@ class BaseCaseForm(forms.Form):
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields['category'].queryset = TestCaseCategory.objects.filter(
+            self.fields['category'].queryset = Category.objects.filter(
                 product__id=product_id)
             self.fields['component'].queryset = Component.objects.filter(
                 product__id=product_id)
         else:
-            self.fields['category'].queryset = TestCaseCategory.objects.all()
+            self.fields['category'].queryset = Category.objects.all()
             self.fields['component'].queryset = Component.objects.all()
 
 
@@ -258,7 +258,7 @@ class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
         required=False,
     )
     category = forms.ModelChoiceField(
-        queryset=TestCaseCategory.objects.none(),
+        queryset=Category.objects.none(),
         empty_label=None,
         required=False,
     )
@@ -274,7 +274,7 @@ class BaseCaseSearchForm(forms.Form):
     tag__name__in = forms.CharField(required=False)
     category = forms.ModelChoiceField(
         label="Category",
-        queryset=TestCaseCategory.objects.none(),
+        queryset=Category.objects.none(),
         required=False
     )
     priority = forms.ModelMultipleChoiceField(
@@ -323,7 +323,7 @@ class BaseCaseSearchForm(forms.Form):
     def populate(self, product_id=None):
         """Limit the query to fit the plan"""
         if product_id:
-            self.fields['category'].queryset = TestCaseCategory.objects.filter(
+            self.fields['category'].queryset = Category.objects.filter(
                 product__id=product_id)
             self.fields['component'].queryset = Component.objects.filter(
                 product__id=product_id)
@@ -498,18 +498,18 @@ class CaseCategoryForm(forms.Form):
     )
     o_category = forms.ModelMultipleChoiceField(
         label="Categorys",
-        queryset=TestCaseCategory.objects.none(),
+        queryset=Category.objects.none(),
         required=False,
     )
 
     def populate(self, product_id=None):
         if product_id:
             self.fields[
-                'o_category'].queryset = TestCaseCategory.objects.filter(
+                'o_category'].queryset = Category.objects.filter(
                 product__id=product_id)
         else:
             self.fields['o_category'].queryset = \
-                TestCaseCategory.objects.all()
+                Category.objects.all()
 
 
 class CaseTagForm(forms.Form):
@@ -527,4 +527,4 @@ class CaseTagForm(forms.Form):
             ).values_list('tag').distinct()
             self.fields['o_tag'].queryset = TestTag.objects.filter(pk__in=tag_ids).order_by('name')
         else:
-            self.fields['o_category'].queryset = TestCaseCategory.objects.all()
+            self.fields['o_category'].queryset = Category.objects.all()

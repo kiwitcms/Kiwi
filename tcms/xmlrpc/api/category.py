@@ -2,7 +2,7 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import Category
 
 
 @rpc_method(name='Category.filter')
@@ -10,11 +10,11 @@ def filter(query):
     """
     .. function:: XML-RPC Category.filter(query)
 
-        Search and return TestCaseCategory objects matching query.
+        Search and return Category objects matching query.
 
-        :param query: Field lookups for :class:`tcms.testcases.models.TestCaseCategory`
+        :param query: Field lookups for :class:`tcms.testcases.models.Category`
         :type query: dict
-        :return: List of serialized :class:`tcms.testcases.models.TestCaseCategory` objects
+        :return: List of serialized :class:`tcms.testcases.models.Category` objects
         :rtype: list(dict)
     """
-    return TestCaseCategory.to_xmlrpc(query)
+    return Category.to_xmlrpc(query)

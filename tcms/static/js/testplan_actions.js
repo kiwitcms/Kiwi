@@ -1644,7 +1644,7 @@ function onTestCaseSortNumberClick(options) {
 /*
  * To change selected cases' category.
  */
-function onTestCaseCategoryClick(options) {
+function onCategoryClick(options) {
   var form = options.form;
   var table = options.table;
   var plan_id = options.planId;
@@ -2008,7 +2008,7 @@ function constructPlanDetailsCasesZoneCallback(options) {
 
     element = jQ(form).parent().find('input.btn_category')[0];
     if (element !== undefined) {
-      jQ(element).bind('click', onTestCaseCategoryClick({
+      jQ(element).bind('click', onCategoryClick({
         'container': container, 'form': form, 'planId': plan_id, 'table': table, 'parameters': parameters
       }));
     }

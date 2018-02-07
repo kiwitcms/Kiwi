@@ -16,7 +16,7 @@ from tcms.core.models import TCMSActionModel
 from tcms.core.utils.checksum import checksum
 from tcms.management.models import Version
 from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import Category
 from tcms.testcases.models import TestCasePlan
 from tcms.testcases.models import TestCaseStatus
 from tcms.testplans import signals as plan_watchers
@@ -297,7 +297,7 @@ class TestPlan(TCMSActionModel):
                     author = new_case_author or tpcase_src.author
                     default_tester = new_case_default_tester or tpcase_src.default_tester
 
-                    tc_category, b_created = TestCaseCategory.objects.get_or_create(
+                    tc_category, b_created = Category.objects.get_or_create(
                         name=tpcase_src.category.name, product=product)
 
                     tpcase_dest = TestCase.objects.create(

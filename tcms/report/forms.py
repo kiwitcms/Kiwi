@@ -3,7 +3,7 @@ from django import forms
 
 from tcms.core.forms.fields import ModelChoiceField
 from tcms.management.models import Component, Product, Build, Version
-from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import Category
 
 
 class CustomSearchForm(forms.Form):
@@ -32,7 +32,7 @@ class CustomSearchForm(forms.Form):
     )
     testcaserun__case__category = forms.ModelChoiceField(
         label='Case category',
-        queryset=TestCaseCategory.objects.none(),
+        queryset=Category.objects.none(),
         required=False,
     )
     testcaserun__case__component = forms.ModelChoiceField(
@@ -48,7 +48,7 @@ class CustomSearchForm(forms.Form):
             self.fields['pk__in'].queryset = Build.objects.filter(
                 product__id=product_id).only('name')
             self.fields['testcaserun__case__category'].queryset = \
-                TestCaseCategory.objects.filter(product__id=product_id).only(
+                Category.objects.filter(product__id=product_id).only(
                     'name')
             self.fields['testcaserun__case__component'].queryset = \
                 Component.objects.filter(product__id=product_id).only('name')
@@ -62,7 +62,7 @@ class CustomSearchForm(forms.Form):
                 Version.objects.only('value')
             self.fields['pk__in'].queryset = Build.objects.only('name')
             self.fields['testcaserun__case__category'].queryset = \
-                TestCaseCategory.objects.only('name')
+                Category.objects.only('name')
             self.fields['testcaserun__case__component'].queryset = \
                 Component.objects.only('name')
 

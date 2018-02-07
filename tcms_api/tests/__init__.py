@@ -11,7 +11,7 @@ from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import TestTagFactory
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestCaseRunFactory
-from tcms.tests.factories import TestCaseCategoryFactory
+from tcms.tests.factories import CategoryFactory
 
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
@@ -83,9 +83,9 @@ password = %s
         self.version = tcms_api.Version(product=self.product, version=f_version.value)
         self.plantype = tcms_api.PlanType(name="Function")
 
-        TestCaseCategoryFactory(name='Security', product=f_product)
-        TestCaseCategoryFactory(name='Sanity', product=f_product)
-        f_category = TestCaseCategoryFactory(product=f_product)
+        CategoryFactory(name='Security', product=f_product)
+        CategoryFactory(name='Sanity', product=f_product)
+        f_category = CategoryFactory(product=f_product)
         self.category = tcms_api.Category(category=f_category.name, product=self.product)
 
         f_component = ComponentFactory(product=f_product)

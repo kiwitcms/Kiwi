@@ -9,11 +9,11 @@ from tcms.testcases import views
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseText
 from tcms.testcases.models import TestCaseBugSystem
-from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus
 
 
-class TestCaseCategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     search_fields = (('name',))
     list_display = ('id', 'name', 'product', 'description')
     list_filter = ('product', )
@@ -96,5 +96,5 @@ Configure external bug trackers</a> section before editting the values below!</h
     form = BugSystemAdminForm
 
 
-admin.site.register(TestCaseCategory, TestCaseCategoryAdmin)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(TestCaseBugSystem, TestCaseBugSystemAdmin)

@@ -28,7 +28,7 @@ from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase, TestCaseBug
-from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import plan_from_request_or_none
@@ -92,9 +92,9 @@ def info(request):
             return Build.list(query)
 
         def categories(self):
-            from tcms.testcases.models import TestCaseCategory
+            from tcms.testcases.models import Category
 
-            return TestCaseCategory.objects.filter(product__id=self.product_id)
+            return Category.objects.filter(product__id=self.product_id)
 
         def components(self):
             from tcms.management.models import Component
@@ -852,7 +852,7 @@ def get_prod_related_objs(p_pks, target):
         'component': (Component, 'name'),
         'version': (Version, 'value'),
         'build': (Build, 'name'),
-        'category': (TestCaseCategory, 'name'),
+        'category': (Category, 'name'),
     }
     results = ctypes[target][0]._default_manager.filter(product__in=p_pks)
     attr = ctypes[target][1]

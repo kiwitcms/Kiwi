@@ -103,7 +103,7 @@ class TestCaseStatus(TCMSActionModel):
 vinaigrette.register(TestCaseStatus, ['name'])
 
 
-class TestCaseCategory(TCMSActionModel):
+class Category(TCMSActionModel):
     id = models.AutoField(db_column='category_id', primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey('management.Product', related_name="category",
@@ -134,7 +134,7 @@ class TestCase(TCMSActionModel):
     notes = models.TextField(blank=True, null=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
-    category = models.ForeignKey(TestCaseCategory, related_name='category_case',
+    category = models.ForeignKey(Category, related_name='category_case',
                                  on_delete=models.CASCADE)
     priority = models.ForeignKey('management.Priority', related_name='priority_case',
                                  on_delete=models.CASCADE)

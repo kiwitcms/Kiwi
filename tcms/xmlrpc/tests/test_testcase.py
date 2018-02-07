@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestCaseCategoryFactory
+from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import UserFactory
@@ -44,7 +44,7 @@ class TestFilterCases(XmlrpcAPIBaseTest):
                                     owner=self.tester, author=self.tester,
                                     product=self.product,
                                     product_version=self.version)
-        self.case_category = TestCaseCategoryFactory(product=self.product)
+        self.case_category = CategoryFactory(product=self.product)
         self.cases_count = 10
         self.cases = [TestCaseFactory(category=self.case_category, author=self.tester,
                                       reviewer=self.tester, default_tester=None,

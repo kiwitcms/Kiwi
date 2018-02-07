@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from tcms.core.utils import form_errors_to_list
 from tcms.testcases.forms import CaseCategoryForm
 from tcms.testcases.forms import CaseComponentForm
-from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import Category
 
 
 __all__ = ('CategoryActions', 'ComponentActions')
@@ -58,7 +58,7 @@ class CategoryActions(BaseActions):
 
         category_pk = self.request.POST.get('o_category')
         # FIXME: no exception hanlder when pk does not exist.
-        category = TestCaseCategory.objects.get(pk=category_pk)
+        category = Category.objects.get(pk=category_pk)
         # FIXME: lower performance. It's not necessary to update each TestCase
         # in this way.
         tcs = self.get_testcases()

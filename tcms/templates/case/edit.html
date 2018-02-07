@@ -70,7 +70,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 					</div>
 					<div class="data_row">
 						<label>Category</label>
-						<span id="form_category" >{{ form.category }}</span><a href="{{ ADMIN_PREFIX }}/testcases/testcasecategory/add/" class="addlink" id="id_addt_product_casecategory" target="_blank">Add Category</a><span class="grey">After Add and Refresh page</span>
+						<span id="form_category" >{{ form.category }}</span><a href="{% url 'admin:testcases_category_add' %}" class="addlink" id="id_addt_product_casecategory" target="_blank">Add Category</a><span class="grey">After Add and Refresh page</span>
 					</div>
 					<div class="data_row">
 						<label>Default Tester</label>
