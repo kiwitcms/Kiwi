@@ -2,14 +2,14 @@
 
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCasePlan
-from tcms.testplans.models import TCMSEnvPlanMap
+from tcms.testplans.models import EnvPlanMap
 
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTypeFactory
 from tcms.tests.factories import TestTagFactory
-from tcms.tests.factories import TCMSEnvGroupFactory
+from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
@@ -95,8 +95,8 @@ class TestUpdate(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super(TestUpdate, self)._fixture_setup()
 
-        self.env_group_1 = TCMSEnvGroupFactory()
-        self.env_group_2 = TCMSEnvGroupFactory()
+        self.env_group_1 = EnvGroupFactory()
+        self.env_group_2 = EnvGroupFactory()
         self.product = ProductFactory()
         self.version = VersionFactory(product=self.product)
         self.tester = UserFactory()
@@ -130,8 +130,8 @@ class TestUpdate(XmlrpcAPIBaseTest):
 
         # and there are still only 2 objects in the many-to-many table
         # iow no dangling objects left
-        self.assertEqual(2, TCMSEnvPlanMap.objects.filter(plan__in=[self.plan_1,
-                                                                    self.plan_2]).count())
+        self.assertEqual(2, EnvPlanMap.objects.filter(plan__in=[self.plan_1,
+                                                                self.plan_2]).count())
 
     def test_update_text(self):
         self.assertIsNone(self.plan_1.latest_text())

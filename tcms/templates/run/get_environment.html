@@ -17,12 +17,12 @@
 				<input type="button" value="Submit" name="submit" id="id_submit_value_{{ run_env_value.pk }}" class="js-env-submit" style="display:none" data-params='["{{ test_run.run_id }}", "{{ run_env_value.pk }}", "id_env_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'/>
 			</span>
 			<span class="action_property">
-				{% if perms.testruns.change_tcmsenvrunvaluemap %}
+				{% if perms.testruns.change_envrunvaluemap %}
 					<a href="javascript:void(0)" class="js-edit-property" data-params='["id_env_value_{{ run_env_value.pk }}", "id_select_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'>
 						<img src="{% static 'images/icon_changelink.gif' %}" title="Edit this value"/>
 					</a>
 				{% endif %}
-				{% if perms.testruns.delete_tcmsenvrunvaluemap %}
+				{% if perms.testruns.delete_envrunvaluemap %}
 					<a href="javascript:void(0)">
 						<img src="{% static 'images/remove_small.png' %}" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
 					</a>
@@ -32,7 +32,7 @@
 	</li>
 	{% endfor %}
 </ul>
-{% if perms.testruns.add_tcmsenvrunvaluemap %}
+{% if perms.testruns.add_envrunvaluemap %}
 <div>
 	<a class="addlink js-add-property" href="javascript:void(0)" data-params='["{{ test_run.run_id }}", "{{env_group.id}}"]'>Add Property</a>
 </div>
@@ -74,12 +74,12 @@
 			<input type="button" value="Submit" name="submit" id="id_submit_value_{{ run_env_value.pk }}" class="js-env-submit" style="display:none" data-params='["{{ test_run.run_id }}", "{{ run_env_value.pk }}", "id_env_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'/>
 		</span>
 		<span class="action_property">
-			{% if perms.testruns.change_tcmsenvrunvaluemap %}
+			{% if perms.testruns.change_envrunvaluemap %}
 				<a href="javascript:void(0)" class="js-edit-property" data-params='["id_env_value_{{ run_env_value.pk }}", "id_select_value_{{ run_env_value.pk }}", "id_submit_value_{{ run_env_value.pk }}"]'>
 					<img src="{% static 'images/icon_changelink.gif' %}" title="Edit this value"/>
 				</a>
 			{% endif %}
-			{% if perms.testruns.delete_tcmsenvrunvaluemap %}
+			{% if perms.testruns.delete_envrunvaluemap %}
 				<a href="javascript:void(0)">
 					<img src="{% static 'images/remove_small.png' %}" title="Remove this property" class="js-remove-property" data-param="{{ test_run.run_id }}"/>
 				</a>

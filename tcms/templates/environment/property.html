@@ -37,10 +37,10 @@
 				<div class="mixbar">
 				<span class="tit">Properties</span>
 				<span class="right-action">
-					{% if perms.management.add_tcmsenvproperty %}
+					{% if perms.management.add_envproperty %}
 					<a id="js-add-prop" class="addlink" href="#">Add</a>
 					{% endif %}
-					{% if perms.management.change_tcmsenvproperty %}
+					{% if perms.management.change_envproperty %}
 					<a id="js-disable-prop" class="disablelink" href="#">Disable</a>
 					<a id="js-enable-prop" class="enablelink" href="#">Enable</a>
 					{% endif %}
@@ -53,7 +53,7 @@
 							<input type="checkbox" name="id" value="{{ property.id }}">
 							<a id="id_property_name_{{ property.id }}" class="{% if property.is_active %}{% else %}line-through{% endif %} js-prop-name" >{{ property.name }}</a>
 						</span>
-						{% if perms.management.change_tcmsenvproperty %}
+						{% if perms.management.change_envproperty %}
 						<div class="right-action" >
 							<a class="editlink js-edit-prop" href="#" >Rename</a>
 						</div>

@@ -54,7 +54,7 @@ class TestPlan(TCMSActionModel):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
                                on_delete=models.CASCADE)
 
-    env_group = models.ManyToManyField('management.TCMSEnvGroup', through='TCMSEnvPlanMap')
+    env_group = models.ManyToManyField('management.EnvGroup', through='EnvPlanMap')
     tag = models.ManyToManyField('management.TestTag',
                                  through='testplans.TestPlanTag',
                                  related_name='plan')
@@ -166,7 +166,7 @@ class TestPlan(TCMSActionModel):
 
     def add_env_group(self, env_group):
         # Create the env plan map
-        return TCMSEnvPlanMap.objects.create(
+        return EnvPlanMap.objects.create(
             plan=self,
             group=env_group,
         )
@@ -182,7 +182,7 @@ class TestPlan(TCMSActionModel):
 
     def clear_env_groups(self):
         # Remove old env groups because we only maintanence on group per plan.
-        return TCMSEnvPlanMap.objects.filter(plan=self).delete()
+        return EnvPlanMap.objects.filter(plan=self).delete()
 
     def delete_case(self, case):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
@@ -388,9 +388,9 @@ class TestPlanEmailSettings(models.Model):
         pass
 
 
-class TCMSEnvPlanMap(models.Model):
+class EnvPlanMap(models.Model):
     plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
-    group = models.ForeignKey('management.TCMSEnvGroup', on_delete=models.CASCADE)
+    group = models.ForeignKey('management.EnvGroup', on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'tcms_env_plan_map'

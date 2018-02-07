@@ -11,16 +11,16 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
 from tcms.core.logs.models import TCMSLogModel
-from tcms.management.models import TCMSEnvGroup
-from tcms.management.models import TCMSEnvGroupPropertyMap
-from tcms.management.models import TCMSEnvProperty
+from tcms.management.models import EnvGroup
+from tcms.management.models import EnvGroupPropertyMap
+from tcms.management.models import EnvProperty
 from tcms.management.models import Product, Version
 from tcms.testplans.models import TestPlan, _listen, _disconnect_signals
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
-from tcms.tests.factories import TCMSEnvGroupFactory
-from tcms.tests.factories import TCMSEnvGroupPropertyMapFactory
-from tcms.tests.factories import TCMSEnvPropertyFactory
+from tcms.tests.factories import EnvGroupFactory
+from tcms.tests.factories import EnvGroupPropertyMapFactory
+from tcms.tests.factories import EnvPropertyFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestPlanTypeFactory
 from tcms.tests.factories import UserFactory
@@ -40,12 +40,12 @@ class TestVisitAndSearchGroupPage(TestCase):
                                                   email='new-tester@example.com',
                                                   password='password')
 
-        cls.group_1 = TCMSEnvGroupFactory(name='rhel-7',
-                                          manager=cls.new_tester,
-                                          modified_by=None)
-        cls.group_2 = TCMSEnvGroupFactory(name='fedora',
-                                          manager=cls.new_tester,
-                                          modified_by=None)
+        cls.group_1 = EnvGroupFactory(name='rhel-7',
+                                      manager=cls.new_tester,
+                                      modified_by=None)
+        cls.group_2 = EnvGroupFactory(name='fedora',
+                                      manager=cls.new_tester,
+                                      modified_by=None)
 
         cls.group_1.log_action(who=cls.new_tester,
                                action='Add group {}'.format(cls.group_1.name))
@@ -54,22 +54,22 @@ class TestVisitAndSearchGroupPage(TestCase):
         cls.group_2.log_action(who=cls.new_tester,
                                action='Edit group {}'.format(cls.group_2.name))
 
-        cls.property_1 = TCMSEnvPropertyFactory()
-        cls.property_2 = TCMSEnvPropertyFactory()
-        cls.property_3 = TCMSEnvPropertyFactory()
+        cls.property_1 = EnvPropertyFactory()
+        cls.property_2 = EnvPropertyFactory()
+        cls.property_3 = EnvPropertyFactory()
 
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_1, property=cls.property_1)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_1, property=cls.property_2)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_1, property=cls.property_3)
+        EnvGroupPropertyMapFactory(group=cls.group_1, property=cls.property_1)
+        EnvGroupPropertyMapFactory(group=cls.group_1, property=cls.property_2)
+        EnvGroupPropertyMapFactory(group=cls.group_1, property=cls.property_3)
 
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_2, property=cls.property_1)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_2, property=cls.property_3)
+        EnvGroupPropertyMapFactory(group=cls.group_2, property=cls.property_1)
+        EnvGroupPropertyMapFactory(group=cls.group_2, property=cls.property_3)
 
     def tearDown(self):
-        remove_perm_from_user(self.new_tester, 'management.change_tcmsenvgroup')
+        remove_perm_from_user(self.new_tester, 'management.change_envgroup')
 
     def assert_group_logs_are_displayed(self, response, group):
-        env_group_ct = ContentType.objects.get_for_model(TCMSEnvGroup)
+        env_group_ct = ContentType.objects.get_for_model(EnvGroup)
         logs = TCMSLogModel.objects.filter(content_type=env_group_ct,
                                            object_pk=group.pk)
 
@@ -97,7 +97,7 @@ class TestVisitAndSearchGroupPage(TestCase):
     def test_visit_group_page_with_permission(self):
         self.client.login(username=self.new_tester.username, password='password')
 
-        user_should_have_perm(self.new_tester, 'management.change_tcmsenvgroup')
+        user_should_have_perm(self.new_tester, 'management.change_envgroup')
         group_edit_url = reverse('mgmt-environment_group_edit')
 
         response = self.client.get(self.group_url)
@@ -137,7 +137,7 @@ class TestAddGroup(TestCase):
                                               password='password')
         cls.new_group_name = 'nitrate-dev'
 
-        cls.permission = 'management.add_tcmsenvgroup'
+        cls.permission = 'management.add_envgroup'
         user_should_have_perm(cls.tester, cls.permission)
 
     def test_missing_permission(self):
@@ -167,7 +167,7 @@ class TestAddGroup(TestCase):
         response = self.client.get(self.group_add_url,
                                    {'action': 'add', 'name': self.new_group_name})
 
-        groups = TCMSEnvGroup.objects.filter(name=self.new_group_name)
+        groups = EnvGroup.objects.filter(name=self.new_group_name)
         self.assertEqual(1, groups.count())
 
         new_group = groups[0]
@@ -178,7 +178,7 @@ class TestAddGroup(TestCase):
             {'rc': 0, 'response': 'ok', 'id': new_group.pk})
 
         # Assert log is created for new group
-        env_group_ct = ContentType.objects.get_for_model(TCMSEnvGroup)
+        env_group_ct = ContentType.objects.get_for_model(EnvGroup)
         log = TCMSLogModel.objects.filter(content_type=env_group_ct,
                                           object_pk=new_group.pk)[0]
         self.assertEqual('Initial env group {}'.format(self.new_group_name),
@@ -207,7 +207,7 @@ class TestDeleteGroup(TestCase):
         super(TestDeleteGroup, cls).setUpTestData()
 
         cls.group_delete_url = reverse('mgmt-environment_groups')
-        cls.permission = 'management.delete_tcmsenvgroup'
+        cls.permission = 'management.delete_envgroup'
 
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@exmaple.com',
@@ -216,10 +216,10 @@ class TestDeleteGroup(TestCase):
                                                      email='manager@example.com',
                                                      password='password')
 
-        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate',
-                                                manager=cls.group_manager)
-        cls.group_fedora = TCMSEnvGroupFactory(name='fedora',
-                                               manager=cls.group_manager)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate',
+                                            manager=cls.group_manager)
+        cls.group_fedora = EnvGroupFactory(name='fedora',
+                                           manager=cls.group_manager)
 
     def tearDown(self):
         remove_perm_from_user(self.tester, self.permission)
@@ -236,7 +236,7 @@ class TestDeleteGroup(TestCase):
             {'rc': 0, 'response': 'ok'})
 
         self.assertFalse(
-            TCMSEnvGroup.objects.filter(pk=self.group_nitrate.pk).exists())
+            EnvGroup.objects.filter(pk=self.group_nitrate.pk).exists())
 
     def test_missing_permission_when_delete_by_non_manager(self):
         self.client.login(username=self.tester.username, password='password')
@@ -258,7 +258,7 @@ class TestDeleteGroup(TestCase):
             {'rc': 0, 'response': 'ok'})
 
         self.assertFalse(
-            TCMSEnvGroup.objects.filter(pk=self.group_fedora.pk).exists())
+            EnvGroup.objects.filter(pk=self.group_fedora.pk).exists())
 
     def test_return_404_if_delete_a_nonexisting_group(self):
         self.client.login(username=self.tester.username,
@@ -279,9 +279,9 @@ class TestModifyGroup(TestCase):
                                               email='tester@exmaple.com',
                                               password='password')
 
-        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
 
-        cls.permission = 'management.change_tcmsenvgroup'
+        cls.permission = 'management.change_envgroup'
         cls.group_modify_url = reverse('mgmt-environment_groups')
 
     def tearDown(self):
@@ -329,7 +329,7 @@ class TestModifyGroup(TestCase):
                          'id': self.group_nitrate.pk,
                          'status': 0})
 
-        group = TCMSEnvGroup.objects.get(pk=self.group_nitrate.pk)
+        group = EnvGroup.objects.get(pk=self.group_nitrate.pk)
         self.assertFalse(group.is_active)
 
 
@@ -343,13 +343,13 @@ class TestVisitEnvironmentGroupPage(TestCase):
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
                                               password='password')
-        user_should_have_perm(cls.tester, 'management.change_tcmsenvgroup')
+        user_should_have_perm(cls.tester, 'management.change_envgroup')
 
         cls.group_edit_url = reverse('mgmt-environment_group_edit')
-        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
-        cls.disabled_group = TCMSEnvGroupFactory(name='disabled-group',
-                                                 is_active=False,
-                                                 manager=cls.tester)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.disabled_group = EnvGroupFactory(name='disabled-group',
+                                             is_active=False,
+                                             manager=cls.tester)
 
     def test_404_when_missing_group_id(self):
         self.client.login(username=self.tester.username, password='password')
@@ -402,14 +402,14 @@ class TestEditEnvironmentGroup(TestCase):
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
                                               password='password')
-        user_should_have_perm(cls.tester, 'management.change_tcmsenvgroup')
+        user_should_have_perm(cls.tester, 'management.change_envgroup')
 
-        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
-        cls.duplicate_group = TCMSEnvGroupFactory(name='fedora', manager=cls.tester)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.duplicate_group = EnvGroupFactory(name='fedora', manager=cls.tester)
 
-        cls.property_1 = TCMSEnvPropertyFactory()
-        cls.property_2 = TCMSEnvPropertyFactory()
-        cls.property_3 = TCMSEnvPropertyFactory()
+        cls.property_1 = EnvPropertyFactory()
+        cls.property_2 = EnvPropertyFactory()
+        cls.property_3 = EnvPropertyFactory()
 
         cls.group_edit_url = reverse('mgmt-environment_group_edit')
 
@@ -437,12 +437,12 @@ class TestEditEnvironmentGroup(TestCase):
             'selected_property_ids': [self.property_1.pk, self.property_2.pk]
         })
 
-        group = TCMSEnvGroup.objects.get(pk=self.group_nitrate.pk)
+        group = EnvGroup.objects.get(pk=self.group_nitrate.pk)
         self.assertEqual(new_group_name, group.name)
         self.assertTrue(group.is_active)
-        self.assertTrue(TCMSEnvGroupPropertyMap.objects.filter(
+        self.assertTrue(EnvGroupPropertyMap.objects.filter(
             group_id=self.group_nitrate.pk, property_id=self.property_1.pk).exists())
-        self.assertTrue(TCMSEnvGroupPropertyMap.objects.filter(
+        self.assertTrue(EnvGroupPropertyMap.objects.filter(
             group_id=self.group_nitrate.pk, property_id=self.property_2.pk).exists())
 
 
@@ -453,15 +453,15 @@ class TestAddProperty(TestCase):
     def setUpTestData(cls):
         super(TestAddProperty, cls).setUpTestData()
 
-        cls.permission = 'management.add_tcmsenvproperty'
+        cls.permission = 'management.add_envproperty'
         cls.group_properties_url = reverse('mgmt-environment_properties')
 
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
                                               password='password')
 
-        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate', manager=cls.tester)
-        cls.duplicate_property = TCMSEnvPropertyFactory(name='f26')
+        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.duplicate_property = EnvPropertyFactory(name='f26')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -518,9 +518,9 @@ class TestAddProperty(TestCase):
         }
         response = self.client.get(self.group_properties_url, request_data)
 
-        self.assertTrue(TCMSEnvProperty.objects.filter(name=new_property_name).exists())
+        self.assertTrue(EnvProperty.objects.filter(name=new_property_name).exists())
 
-        new_property = TCMSEnvProperty.objects.get(name=new_property_name)
+        new_property = EnvProperty.objects.get(name=new_property_name)
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
             {'rc': 0, 'response': 'ok', 'name': new_property_name, 'id': new_property.pk})
@@ -533,14 +533,14 @@ class TestEditProperty(TestCase):
     def setUpTestData(cls):
         super(TestEditProperty, cls).setUpTestData()
 
-        cls.permission = 'management.change_tcmsenvproperty'
+        cls.permission = 'management.change_envproperty'
         cls.group_properties_url = reverse('mgmt-environment_properties')
 
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
                                               password='password')
 
-        cls.property = TCMSEnvPropertyFactory(name='f26')
+        cls.property = EnvPropertyFactory(name='f26')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -587,7 +587,7 @@ class TestEditProperty(TestCase):
             str(response.content, encoding=settings.DEFAULT_CHARSET),
             {'rc': 0, 'response': 'ok'})
 
-        property = TCMSEnvProperty.objects.get(pk=self.property.pk)
+        property = EnvProperty.objects.get(pk=self.property.pk)
         self.assertEqual(new_property_name, property.name)
 
 
@@ -598,30 +598,30 @@ class TestEnableDisableProperty(TestCase):
     def setUpTestData(cls):
         super(TestEnableDisableProperty, cls).setUpTestData()
 
-        cls.permission = 'management.change_tcmsenvproperty'
+        cls.permission = 'management.change_envproperty'
         cls.group_properties_url = reverse('mgmt-environment_properties')
 
         cls.tester = User.objects.create_user(username='tester',
                                               email='tester@example.com',
                                               password='password')
 
-        cls.group_nitrate = TCMSEnvGroupFactory(name='nitrate')
+        cls.group_nitrate = EnvGroupFactory(name='nitrate')
 
-        cls.property_os = TCMSEnvPropertyFactory(name='OS')
-        cls.property_lang = TCMSEnvPropertyFactory(name='lang')
-        cls.disabled_property_1 = TCMSEnvPropertyFactory(name='disabled-property-1',
-                                                         is_active=False)
-        cls.disabled_property_2 = TCMSEnvPropertyFactory(name='disabled-property-2',
-                                                         is_active=False)
+        cls.property_os = EnvPropertyFactory(name='OS')
+        cls.property_lang = EnvPropertyFactory(name='lang')
+        cls.disabled_property_1 = EnvPropertyFactory(name='disabled-property-1',
+                                                     is_active=False)
+        cls.disabled_property_2 = EnvPropertyFactory(name='disabled-property-2',
+                                                     is_active=False)
 
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
-                                       property=cls.property_os)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
-                                       property=cls.property_lang)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
-                                       property=cls.disabled_property_1)
-        TCMSEnvGroupPropertyMapFactory(group=cls.group_nitrate,
-                                       property=cls.disabled_property_2)
+        EnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                   property=cls.property_os)
+        EnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                   property=cls.property_lang)
+        EnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                   property=cls.disabled_property_1)
+        EnvGroupPropertyMapFactory(group=cls.group_nitrate,
+                                   property=cls.disabled_property_2)
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -648,12 +648,12 @@ class TestEnableDisableProperty(TestCase):
             self.assertContains(response, 'Argument illegal')
 
             self.assertTrue(
-                TCMSEnvGroupPropertyMap.objects.filter(
+                EnvGroupPropertyMap.objects.filter(
                     group=self.group_nitrate,
                     property=self.property_os).exists())
 
             self.assertTrue(
-                TCMSEnvGroupPropertyMap.objects.filter(
+                EnvGroupPropertyMap.objects.filter(
                     group=self.group_nitrate,
                     property=self.property_lang).exists())
 
@@ -673,9 +673,9 @@ class TestEnableDisableProperty(TestCase):
                                      self.disabled_property_2.name])))
 
         self.assertTrue(
-            TCMSEnvProperty.objects.get(pk=self.disabled_property_1.pk).is_active)
+            EnvProperty.objects.get(pk=self.disabled_property_1.pk).is_active)
         self.assertTrue(
-            TCMSEnvProperty.objects.get(pk=self.disabled_property_2.pk).is_active)
+            EnvProperty.objects.get(pk=self.disabled_property_2.pk).is_active)
 
     def test_disable_a_property(self):
         self.client.login(username=self.tester.username, password='password')
@@ -693,15 +693,15 @@ class TestEnableDisableProperty(TestCase):
                                      self.property_lang.name])))
 
         self.assertFalse(
-            TCMSEnvProperty.objects.get(pk=self.property_os.pk).is_active)
+            EnvProperty.objects.get(pk=self.property_os.pk).is_active)
         self.assertFalse(
-            TCMSEnvProperty.objects.get(pk=self.property_lang.pk).is_active)
+            EnvProperty.objects.get(pk=self.property_lang.pk).is_active)
 
         self.assertFalse(
-            TCMSEnvGroupPropertyMap.objects.filter(
+            EnvGroupPropertyMap.objects.filter(
                 group=self.group_nitrate, property=self.property_os).exists())
         self.assertFalse(
-            TCMSEnvGroupPropertyMap.objects.filter(
+            EnvGroupPropertyMap.objects.filter(
                 group=self.group_nitrate, property=self.property_lang).exists())
 
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from modernrpc.core import rpc_method
 
 from tcms.core.utils import form_errors_to_list
-from tcms.management.models import TestTag, TCMSEnvValue
+from tcms.management.models import TestTag, EnvValue
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
@@ -292,7 +292,7 @@ def update(run_id, values):
     return tr.serialize()
 
 
-@permissions_required('testruns.add_tcmsenvrunvaluemap')
+@permissions_required('testruns.add_envrunvaluemap')
 @rpc_method(name='TestRun.add_env_value')
 def add_env_value(run_id, env_value_id):
     """
@@ -302,19 +302,19 @@ def add_env_value(run_id, env_value_id):
 
         :param run_id: PK of TestRun to modify
         :type run_id: int
-        :param env_value_id: PK of :class:`tcms.management.models.TCMSEnvValue`
+        :param env_value_id: PK of :class:`tcms.management.models.EnvValue`
                              object to add
         :type env_value_id: int
         :return: None
-        :raises: PermissionDenied if missing *testruns.add_tcmsenvrunvaluemap* permission
+        :raises: PermissionDenied if missing *testruns.add_envrunvaluemap* permission
         :raises: DoesNotExist if objects specified by PKs don't exist
     """
     TestRun.objects.get(pk=run_id).add_env_value(
-        TCMSEnvValue.objects.get(pk=env_value_id)
+        EnvValue.objects.get(pk=env_value_id)
     )
 
 
-@permissions_required('testruns.delete_tcmsenvrunvaluemap')
+@permissions_required('testruns.delete_envrunvaluemap')
 @rpc_method(name='TestRun.remove_env_value')
 def remove_env_value(run_id, env_value_id):
     """
@@ -324,12 +324,12 @@ def remove_env_value(run_id, env_value_id):
 
         :param run_id: PK of TestRun to modify
         :type run_id: int
-        :param env_value_id: PK of :class:`tcms.management.models.TCMSEnvValue`
+        :param env_value_id: PK of :class:`tcms.management.models.EnvValue`
                              object to be removed
         :type env_value_id: int
         :return: None
-        :raises: PermissionDenied if missing *testruns.delete_tcmsenvrunvaluemap* permission
+        :raises: PermissionDenied if missing *testruns.delete_envrunvaluemap* permission
     """
     TestRun.objects.get(pk=run_id).remove_env_value(
-        TCMSEnvValue.objects.get(pk=env_value_id)
+        EnvValue.objects.get(pk=env_value_id)
     )

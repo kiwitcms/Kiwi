@@ -27,7 +27,7 @@ from tcms.core.utils.checksum import checksum
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.views import Prompt
-from tcms.management.models import TCMSEnvGroup
+from tcms.management.models import EnvGroup
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
@@ -116,9 +116,9 @@ def new(request, template_name='plan/new.html'):
                 tp.add_text(author=request.user, plan_text=form.cleaned_data['text'])
 
             # Add test plan environment groups
-            if request.user.has_perm('testplans.add_tcmsenvplanmap'):
+            if request.user.has_perm('testplans.add_envplanmap'):
                 if request.POST.get('env_group'):
-                    env_groups = TCMSEnvGroup.objects.filter(
+                    env_groups = EnvGroup.objects.filter(
                         id__in=request.POST.getlist('env_group')
                     )
 
@@ -575,11 +575,11 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                                 plan_text=request.POST.get('text'),
                                 text_checksum=text_checksum)
 
-            if request.user.has_perm('testplans.change_tcmsenvplanmap'):
+            if request.user.has_perm('testplans.change_envplanmap'):
                 tp.clear_env_groups()
 
                 if request.POST.get('env_group'):
-                    env_groups = TCMSEnvGroup.objects.filter(
+                    env_groups = EnvGroup.objects.filter(
                         id__in=request.POST.getlist('env_group'))
 
                     for env_group in env_groups:

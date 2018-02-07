@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, DurationField
-from tcms.management.models import Product, Version, Build, TCMSEnvGroup
+from tcms.management.models import Product, Version, Build, EnvGroup
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
 from .models import TestRun, TestCaseRunStatus
@@ -192,7 +192,7 @@ class SearchRunForm(forms.Form):
     )
     env_group = forms.ModelChoiceField(
         label='Environment Group',
-        queryset=TCMSEnvGroup.get_active().all(),
+        queryset=EnvGroup.get_active().all(),
         required=False
     )
     build = forms.ModelChoiceField(

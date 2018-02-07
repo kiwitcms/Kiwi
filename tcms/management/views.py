@@ -16,10 +16,10 @@ from django.views.decorators.http import require_GET
 
 from tcms.core.logs.models import TCMSLogModel
 from tcms.core.utils import QuerySetIterationProxy
-from tcms.management.models import TCMSEnvGroup
-from tcms.management.models import TCMSEnvGroupPropertyMap
-from tcms.management.models import TCMSEnvProperty
-from tcms.management.models import TCMSEnvValue
+from tcms.management.models import EnvGroup
+from tcms.management.models import EnvGroupPropertyMap
+from tcms.management.models import EnvProperty
+from tcms.management.models import EnvValue
 
 MODULE_NAME = "management"
 
@@ -30,14 +30,14 @@ def environment_groups(request, template_name='environment/groups.html'):
     Environements list
     """
 
-    env_groups = TCMSEnvGroup.objects
+    env_groups = EnvGroup.objects
 
     has_perm = request.user.has_perm
     user_action = request.GET.get('action')
 
     # Add action
     if user_action == 'add':
-        if not has_perm('management.add_tcmsenvgroup'):
+        if not has_perm('management.add_envgroup'):
             return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
         group_name = request.GET.get('name')
@@ -74,7 +74,7 @@ def environment_groups(request, template_name='environment/groups.html'):
             raise Http404
 
         if request.user.pk != groups[0].manager_id:
-            if not has_perm('management.delete_tcmsenvgroup'):
+            if not has_perm('management.delete_envgroup'):
                 return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
         groups[0].delete()
@@ -83,7 +83,7 @@ def environment_groups(request, template_name='environment/groups.html'):
 
     # Modify actions
     if user_action == 'modify':
-        if not has_perm('management.change_tcmsenvgroup'):
+        if not has_perm('management.change_envgroup'):
             return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
         try:
@@ -96,7 +96,7 @@ def environment_groups(request, template_name='environment/groups.html'):
                 env.log_action(who=request.user, action=action)
             else:
                 return JsonResponse({'rc': 1, 'response': 'Argument illegal.'})
-        except TCMSEnvGroup.DoesNotExist as error:
+        except EnvGroup.DoesNotExist as error:
             raise Http404(error)
 
     # Search actions
@@ -111,14 +111,14 @@ def environment_groups(request, template_name='environment/groups.html'):
         env_groups = env_groups.all().order_by('is_active')
 
     # Get properties for each group
-    qs = TCMSEnvGroupPropertyMap.objects.filter(group__in=env_groups)
+    qs = EnvGroupPropertyMap.objects.filter(group__in=env_groups)
     qs = qs.values('group__pk', 'property__name')
     qs = qs.order_by('group__pk', 'property__name').iterator()
     properties = dict([(key, list(value)) for key, value in
                        groupby(qs, lambda item: item['group__pk'])])
 
     # Get logs for each group
-    env_group_ct = ContentType.objects.get_for_model(TCMSEnvGroup)
+    env_group_ct = ContentType.objects.get_for_model(EnvGroup)
     qs = TCMSLogModel.objects.filter(content_type=env_group_ct,
                                      object_pk__in=env_groups)
     qs = qs.values('object_pk', 'who__username', 'date', 'action')
@@ -141,7 +141,7 @@ def environment_groups(request, template_name='environment/groups.html'):
 
 
 @require_GET
-@permission_required('management.change_tcmsenvgroup')
+@permission_required('management.change_envgroup')
 def environment_group_edit(request, template_name='environment/group_edit.html'):
     """
     Assign properties to environment group
@@ -155,25 +155,25 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
         raise Http404
 
     try:
-        environment = TCMSEnvGroup.objects.get(pk=environment_id)
-    except TCMSEnvGroup.DoesNotExist:
+        environment = EnvGroup.objects.get(pk=environment_id)
+    except EnvGroup.DoesNotExist:
         raise Http404
 
     # import pytest; pytest.set_trace()
 
     try:
-        de = TCMSEnvGroup.objects.get(name=request.GET.get('name'))
+        de = EnvGroup.objects.get(name=request.GET.get('name'))
         if environment != de:
             response = 'Duplicated name already exists, please change to ' \
                 'another name.'
             context_data = {
                 'environment': environment,
-                'properties': TCMSEnvProperty.get_active(),
+                'properties': EnvProperty.get_active(),
                 'selected_properties': environment.property.all(),
                 'message': response,
             }
             return render(request, template_name, context_data)
-    except TCMSEnvGroup.DoesNotExist:
+    except EnvGroup.DoesNotExist:
         pass
 
     if request.GET.get('action') == 'modify':   # Actions of modify
@@ -195,12 +195,11 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
         environment.save()
 
         # Remove all of properties of the group.
-        TCMSEnvGroupPropertyMap.objects.filter(group__id=environment.id).delete()
+        EnvGroupPropertyMap.objects.filter(group__id=environment.id).delete()
 
         # Readd the property to environemnt group and log the action
         for property_id in request.GET.getlist('selected_property_ids'):
-            TCMSEnvGroupPropertyMap.objects.create(group_id=environment.id,
-                                                   property_id=property_id)
+            EnvGroupPropertyMap.objects.create(group_id=environment.id, property_id=property_id)
 
         property_values = environment.property.values_list('name', flat=True)
         environment.log_action(
@@ -211,7 +210,7 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
 
     context_data = {
         'environment': environment,
-        'properties': TCMSEnvProperty.get_active(),
+        'properties': EnvProperty.get_active(),
         'selected_properties': environment.property.all(),
         'message': response,
     }
@@ -233,7 +232,7 @@ def environment_properties(request, template_name='environment/property.html'):
 
     # Actions of create properties
     if user_action == 'add':
-        if not has_perm('management.add_tcmsenvproperty'):
+        if not has_perm('management.add_envproperty'):
             return JsonResponse({'rc': 1, 'response': 'Permission denied'})
 
         property_name = request.GET.get('name')
@@ -241,12 +240,12 @@ def environment_properties(request, template_name='environment/property.html'):
         if not property_name:
             return JsonResponse({'rc': 1, 'response': 'Property name is required'})
 
-        if TCMSEnvProperty.objects.filter(name=property_name).exists():
+        if EnvProperty.objects.filter(name=property_name).exists():
             resp_msg = "Environment property named '{}' already exists, " \
                        "please select another name.".format(property_name)
             return JsonResponse({'rc': 1, 'response': resp_msg})
 
-        new_property = TCMSEnvProperty.objects.create(name=property_name)
+        new_property = EnvProperty.objects.create(name=property_name)
 
         return JsonResponse({
             'rc': 0,
@@ -257,7 +256,7 @@ def environment_properties(request, template_name='environment/property.html'):
 
     # Actions of edit a exist properties
     if user_action == 'edit':
-        if not has_perm('management.change_tcmsenvproperty'):
+        if not has_perm('management.change_envproperty'):
             return JsonResponse({'rc': 1, 'response': 'Permission denied'})
 
         if not request.GET.get('id'):
@@ -265,13 +264,13 @@ def environment_properties(request, template_name='environment/property.html'):
 
         try:
             property_id = request.GET['id']
-            env_property = TCMSEnvProperty.objects.get(id=int(property_id))
+            env_property = EnvProperty.objects.get(id=int(property_id))
         except ValueError:
             return JsonResponse({
                 'rc': 1,
                 'response': 'ID {} is not a valid integer.'.format(property_id)
             })
-        except TCMSEnvProperty.DoesNotExist:
+        except EnvProperty.DoesNotExist:
             return JsonResponse({'rc': 1, 'response': 'ID does not exist.'})
 
         new_name = request.GET.get('name', env_property.name)
@@ -285,13 +284,13 @@ def environment_properties(request, template_name='environment/property.html'):
 
     # Actions of remove properties
     if user_action == 'modify':
-        if not has_perm('management.change_tcmsenvproperty'):
+        if not has_perm('management.change_envproperty'):
             message = 'Permission denied'
 
         property_ids = request.GET.getlist('id')
 
-        if has_perm('management.change_tcmsenvproperty') and property_ids:
-            env_properties = TCMSEnvProperty.objects.filter(id__in=property_ids)
+        if has_perm('management.change_envproperty') and property_ids:
+            env_properties = EnvProperty.objects.filter(id__in=property_ids)
 
             if request.GET.get('status') in ['0', '1']:
                 for env_property in env_properties:
@@ -302,7 +301,7 @@ def environment_properties(request, template_name='environment/property.html'):
                 message = "Modify test properties status '%s' successfully." % property_values
 
                 if not env_property.is_active:
-                    TCMSEnvGroupPropertyMap.objects.filter(
+                    EnvGroupPropertyMap.objects.filter(
                         property__id__in=property_ids).delete()
             else:
                 message = 'Argument illegal'
@@ -314,7 +313,7 @@ def environment_properties(request, template_name='environment/property.html'):
 
     context_data = {
         'message': message,
-        'properties': TCMSEnvProperty.objects.all().order_by('-is_active')
+        'properties': EnvProperty.objects.all().order_by('-is_active')
     }
     return render(request, template_name, context_data)
 
@@ -332,14 +331,14 @@ def environment_property_values(request):
         return HttpResponse('Property ID should specify')
 
     try:
-        property = TCMSEnvProperty.objects.get(id=request.GET['property_id'])
-    except TCMSEnvProperty.DoesNotExist as error:
+        property = EnvProperty.objects.get(id=request.GET['property_id'])
+    except EnvProperty.DoesNotExist as error:
         return HttpResponse(error)
 
     user_action = request.GET.get('action')
 
     if user_action == 'add' and request.GET.get('value'):
-        if not request.user.has_perm('management.add_tcmsenvvalue'):
+        if not request.user.has_perm('management.add_envvalue'):
             return HttpResponse('Permission denied')
 
         for value in request.GET['value'].split(','):
@@ -350,7 +349,7 @@ def environment_property_values(request):
                     duplicated_property_value.append(value)
 
     if user_action == 'edit' and request.GET.get('id'):
-        if not request.user.has_perm('management.change_tcmsenvvalue'):
+        if not request.user.has_perm('management.change_envvalue'):
             return HttpResponse('Permission denied')
 
         try:
@@ -362,11 +361,11 @@ def environment_property_values(request):
                 if error[1].startswith('Duplicate'):
                     duplicated_property_value.append(property_value.value)
 
-        except TCMSEnvValue.DoesNotExist as error:
+        except EnvValue.DoesNotExist as error:
             return HttpResponse(error[1])
 
     if user_action == 'modify' and request.GET.get('id'):
-        if not request.user.has_perm('management.change_tcmsenvvalue'):
+        if not request.user.has_perm('management.change_envvalue'):
             return HttpResponse('Permission denied')
 
         values = property.value.filter(id__in=request.GET.getlist('id'))

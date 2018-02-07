@@ -102,25 +102,25 @@ def info(request):
             return Component.objects.filter(product__id=self.product_id)
 
         def env_groups(self):
-            from tcms.management.models import TCMSEnvGroup
+            from tcms.management.models import EnvGroup
 
-            return TCMSEnvGroup.objects.all()
+            return EnvGroup.objects.all()
 
         def env_properties(self):
-            from tcms.management.models import TCMSEnvGroup, TCMSEnvProperty
+            from tcms.management.models import EnvGroup, EnvProperty
 
             if self.request.GET.get('env_group_id'):
-                env_group = TCMSEnvGroup.objects.get(
+                env_group = EnvGroup.objects.get(
                     id=self.request.GET['env_group_id']
                 )
                 return env_group.property.all()
             else:
-                return TCMSEnvProperty.objects.all()
+                return EnvProperty.objects.all()
 
         def env_values(self):
-            from tcms.management.models import TCMSEnvValue
+            from tcms.management.models import EnvValue
 
-            return TCMSEnvValue.objects.filter(
+            return EnvValue.objects.filter(
                 property__id=self.request.GET.get('env_property_id')
             )
 

@@ -6,7 +6,7 @@ from tinymce.widgets import TinyMCE
 
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, StripURLField
-from tcms.management.models import Product, Version, TCMSEnvGroup, TestTag
+from tcms.management.models import Product, Version, EnvGroup, TestTag
 from .models import TestPlan, TestPlanType
 # ===========Plan Fields==============
 
@@ -170,7 +170,7 @@ class BasePlanForm(forms.Form):
     )
     env_group = forms.ModelChoiceField(
         label="Environment Group",
-        queryset=TCMSEnvGroup.get_active().all(),
+        queryset=EnvGroup.get_active().all(),
         required=False
     )
     parent = forms.IntegerField(required=False)
@@ -288,7 +288,7 @@ class SearchPlanForm(forms.Form):
     )
     env_group = forms.ModelChoiceField(
         label="Environment Group",
-        queryset=TCMSEnvGroup.get_active().all(),
+        queryset=EnvGroup.get_active().all(),
         required=False
     )
     author__username__startswith = forms.CharField(required=False)
