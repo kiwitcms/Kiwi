@@ -71,7 +71,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Kiwi TCMS'
-copyright = u'2013, Red Hat, Inc.; 2017, Mr. Senko, Ltd.'
+copyright = u'2013, Red Hat, Inc.; 2017-2018 Kiwi TCMS project and its affiliates'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
