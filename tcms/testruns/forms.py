@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, DurationField
-from tcms.management.models import Product, Version, TestBuild, TCMSEnvGroup
+from tcms.management.models import Product, Version, Build, TCMSEnvGroup
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
 from .models import TestRun, TestCaseRunStatus
@@ -50,7 +50,7 @@ class BaseRunForm(forms.Form):
     )
     build = forms.ModelChoiceField(
         label='Build',
-        queryset=TestBuild.objects.none(),
+        queryset=Build.objects.none(),
     )
     notes = forms.CharField(
         label='Notes',
@@ -81,7 +81,7 @@ class BaseRunForm(forms.Form):
         query = {'product_id': product_id}
         self.fields['product_version'].queryset = Version.objects.filter(
             product__id=product_id)
-        self.fields['build'].queryset = TestBuild.list_active(query)
+        self.fields['build'].queryset = Build.list_active(query)
 
 
 class NewRunForm(BaseRunForm):
@@ -168,7 +168,7 @@ class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
     )
     build = forms.ModelChoiceField(
         label='Build',
-        queryset=TestBuild.objects.all(),
+        queryset=Build.objects.all(),
         required=False
     )
 
@@ -197,7 +197,7 @@ class SearchRunForm(forms.Form):
     )
     build = forms.ModelChoiceField(
         label='Build',
-        queryset=TestBuild.objects.none(),
+        queryset=Build.objects.none(),
         required=False,
     )
     people_type = forms.ChoiceField(choices=PEOPLE_TYPE_CHOICES,
@@ -226,12 +226,12 @@ class SearchRunForm(forms.Form):
             self.fields['product_version'].queryset = Version.objects.filter(
                 product__pk=product_id
             )
-            self.fields['build'].queryset = TestBuild.objects.filter(
+            self.fields['build'].queryset = Build.objects.filter(
                 product__pk=product_id
             )
         else:
             self.fields['product_version'].queryset = Version.objects.all()
-            self.fields['build'].queryset = TestBuild.list_active()
+            self.fields['build'].queryset = Build.list_active()
 
 
 # =========== Misc forms ==============
@@ -239,7 +239,7 @@ class SearchRunForm(forms.Form):
 class RunCloneForm(BaseRunForm):
     build = forms.ModelChoiceField(
         label='Build',
-        queryset=TestBuild.objects.none(),
+        queryset=Build.objects.none(),
         empty_label=None,
     )
 
@@ -260,7 +260,7 @@ class MulitpleRunsCloneForm(forms.Form):
     )
     build = forms.ModelChoiceField(
         label='Build',
-        queryset=TestBuild.objects.none(),
+        queryset=Build.objects.none(),
         empty_label=None,
     )
     manager = UserField(required=False)
@@ -299,7 +299,7 @@ class MulitpleRunsCloneForm(forms.Form):
             self.fields['product_version'].queryset = Version.objects.filter(
                 product__pk=product_id
             )
-            self.fields['build'].queryset = TestBuild.objects.filter(
+            self.fields['build'].queryset = Build.objects.filter(
                 product__pk=product_id
             )
 
@@ -312,7 +312,7 @@ class MulitpleRunsCloneForm(forms.Form):
 
 class BaseCaseRunForm(forms.Form):
     build = forms.ModelChoiceField(
-        label='Build', queryset=TestBuild.objects.all(),
+        label='Build', queryset=Build.objects.all(),
     )
     case_run_status = forms.ModelChoiceField(
         label='Case Run Status', queryset=TestCaseRunStatus.objects.all(),
@@ -328,7 +328,7 @@ class BaseCaseRunForm(forms.Form):
 
 class PlanFilterRunForm(forms.Form):
     build = forms.ModelChoiceField(
-        label='Build', queryset=TestBuild.objects.all(),
+        label='Build', queryset=Build.objects.all(),
         required=False
     )
     manager__username__iexact = UserField(required=False)
@@ -400,5 +400,5 @@ class XMLRPCUpdateCaseRunForm(BaseCaseRunForm):
         label='Assignee', queryset=User.objects.all(), required=False
     )
     build = forms.ModelChoiceField(
-        label='Build', queryset=TestBuild.objects.all(), required=False,
+        label='Build', queryset=Build.objects.all(), required=False,
     )

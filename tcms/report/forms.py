@@ -2,14 +2,14 @@
 from django import forms
 
 from tcms.core.forms.fields import ModelChoiceField
-from tcms.management.models import Component, Product, TestBuild, Version
+from tcms.management.models import Component, Product, Build, Version
 from tcms.testcases.models import TestCaseCategory
 
 
 class CustomSearchForm(forms.Form):
     pk__in = forms.ModelMultipleChoiceField(
         label='Build',
-        queryset=TestBuild.objects.none(),
+        queryset=Build.objects.none(),
         required=False,
     )
     product = ModelChoiceField(
@@ -45,7 +45,7 @@ class CustomSearchForm(forms.Form):
         if product_id:
             self.fields['build_run__product_version'].queryset = \
                 Version.objects.filter(product__id=product_id).only('value')
-            self.fields['pk__in'].queryset = TestBuild.objects.filter(
+            self.fields['pk__in'].queryset = Build.objects.filter(
                 product__id=product_id).only('name')
             self.fields['testcaserun__case__category'].queryset = \
                 TestCaseCategory.objects.filter(product__id=product_id).only(
@@ -60,7 +60,7 @@ class CustomSearchForm(forms.Form):
             # waste time and resources.
             self.fields['build_run__product_version'].queryset = \
                 Version.objects.only('value')
-            self.fields['pk__in'].queryset = TestBuild.objects.only('name')
+            self.fields['pk__in'].queryset = Build.objects.only('name')
             self.fields['testcaserun__case__category'].queryset = \
                 TestCaseCategory.objects.only('name')
             self.fields['testcaserun__case__component'].queryset = \
@@ -70,7 +70,7 @@ class CustomSearchForm(forms.Form):
 class CustomSearchDetailsForm(CustomSearchForm):
     pk__in = ModelChoiceField(
         label='Build',
-        queryset=TestBuild.objects.none(),
+        queryset=Build.objects.none(),
         error_messages={
             'required': 'A build is required to generate this report.',
             'invalid_choice': '%(value)s is not a valid test build ID for '
@@ -111,7 +111,7 @@ class BasicTestingReportFormFields(forms.Form):
     r_build = forms.ModelMultipleChoiceField(
         required=False,
         label='Build',
-        queryset=TestBuild.objects.none(),
+        queryset=Build.objects.none(),
         error_messages={
             'invalid_pk_value': '%s is not a valid test build ID.',
             'invalid_choice': 'Test build ID %s does not exist.',
@@ -162,12 +162,12 @@ class BasicTestingReportFormFields(forms.Form):
 
     def populate(self, product_id):
         if product_id:
-            self.fields['r_build'].queryset = TestBuild.objects.filter(
+            self.fields['r_build'].queryset = Build.objects.filter(
                 product=product_id).only('name')
             self.fields['r_version'].queryset = Version.objects.filter(
                 product=product_id).only('value')
         else:
-            self.fields['r_build'].queryset = TestBuild.objects.none()
+            self.fields['r_build'].queryset = Build.objects.none()
             self.fields['r_version'].queryset = Version.objects.none()
 
 

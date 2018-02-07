@@ -15,7 +15,7 @@ from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
-from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import BuildFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
@@ -316,7 +316,7 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         super(TestCaseRunUpdate, self)._fixture_setup()
 
         self.user = UserFactory()
-        self.build = TestBuildFactory()
+        self.build = BuildFactory()
         self.case_run_1 = TestCaseRunFactory()
         self.case_run_2 = TestCaseRunFactory()
         self.status_running = TestCaseRunStatus.objects.get(name='RUNNING')

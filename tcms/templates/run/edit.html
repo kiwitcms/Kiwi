@@ -68,7 +68,7 @@
 				<td><label>Build </label></td>
 				<td>
 					{{ form.build }}
-					<a href="{{ ADMIN_PREFIX }}/management/testbuild/add/" class="addlink" id="add_id_build">Add Build</a></td>
+					<a href="{% url 'admin:management_build_add' %}" class="addlink" id="add_id_build">Add Build</a></td>
 			</tr>
 			<tr>
 				<td><label>Manager</label></td>

@@ -16,7 +16,7 @@ from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
-from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import BuildFactory
 
 __all__ = (
     'user_should_have_perm',
@@ -182,7 +182,7 @@ class BaseCaseRun(BasePlanCase):
 
         cls.case_run_status_idle = TestCaseRunStatus.objects.get(name='IDLE')
 
-        cls.build = TestBuildFactory(product=cls.product)
+        cls.build = BuildFactory(product=cls.product)
 
         cls.test_run = TestRunFactory(product_version=cls.version,
                                       plan=cls.plan,

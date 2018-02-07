@@ -208,7 +208,7 @@ class Version(TCMSActionModel):
         return (self.id, self.value)
 
 
-class TestBuild(TCMSActionModel):
+class Build(TCMSActionModel):
     build_id = models.AutoField(max_length=10, unique=True, primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name='build', on_delete=models.CASCADE)
@@ -224,10 +224,10 @@ class TestBuild(TCMSActionModel):
 
     @classmethod
     def to_xmlrpc(cls, query=None):
-        from tcms.xmlrpc.serializer import TestBuildXMLRPCSerializer
+        from tcms.xmlrpc.serializer import BuildXMLRPCSerializer
         _query = query or {}
         qs = cls.objects.filter(**_query).order_by('pk')
-        s = TestBuildXMLRPCSerializer(model_class=cls, queryset=qs)
+        s = BuildXMLRPCSerializer(model_class=cls, queryset=qs)
         return s.serialize_queryset()
 
     @classmethod

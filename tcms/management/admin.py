@@ -6,7 +6,7 @@ from tcms.management.models import Classification
 from tcms.management.models import Component, Version
 from tcms.management.models import Priority
 from tcms.management.models import Product
-from tcms.management.models import TestBuild
+from tcms.management.models import Build
 
 
 class ClassificationAdmin(admin.ModelAdmin):
@@ -68,4 +68,4 @@ admin.site.register(Product, ProductsAdmin)
 admin.site.register(Priority, PriorityAdmin)
 admin.site.register(Component, ComponentAdmin)
 admin.site.register(Version, VersionAdmin)
-admin.site.register(TestBuild, BuildAdmin)
+admin.site.register(Build, BuildAdmin)

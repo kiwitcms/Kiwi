@@ -106,10 +106,10 @@ class VersionFactory(DjangoModelFactory):
     product = factory.SubFactory(ProductFactory)
 
 
-class TestBuildFactory(DjangoModelFactory):
+class BuildFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'management.TestBuild'
+        model = 'management.Build'
 
     name = factory.Sequence(lambda n: 'Build %d' % n)
     product = factory.SubFactory(ProductFactory)
@@ -391,7 +391,7 @@ class TestRunFactory(DjangoModelFactory):
     notes = ''
     plan = factory.SubFactory(TestPlanFactory)
     # FIXME: field name build conflicts with method Factory.build
-    build = factory.SubFactory(TestBuildFactory)
+    build = factory.SubFactory(BuildFactory)
     manager = factory.SubFactory(UserFactory)
     default_tester = factory.SubFactory(UserFactory)
 
@@ -435,7 +435,7 @@ class TestCaseRunFactory(DjangoModelFactory):
     run = factory.SubFactory(TestRunFactory)
     case = factory.SubFactory(TestCaseFactory)
     case_run_status = factory.LazyFunction(lambda: TestCaseRunStatus.objects.all()[0:1][0])
-    build = factory.SubFactory(TestBuildFactory)
+    build = factory.SubFactory(BuildFactory)
 
 
 class TestRunTagFactory(DjangoModelFactory):

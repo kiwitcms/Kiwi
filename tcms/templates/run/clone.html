@@ -69,7 +69,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 				<tr>
 					<td><label class="strong" for="id_build_id">Build </label></td>
 					<td>{{ clone_form.build }}<span class="errors">{{ clone_form.build.errors }}</span>
-						<a href="{{ ADMIN_PREFIX }}/management/testbuild/add/" class="addlink" id="add_id_build">Add Build</a>
+						<a href="{% url 'admin:management_build_add' %}" class="addlink" id="add_id_build">Add Build</a>
 					</td>
 				</tr>
 				<tr>

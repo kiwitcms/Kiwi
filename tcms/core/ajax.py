@@ -24,7 +24,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 
-from tcms.management.models import Component, TestBuild, Version
+from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase, TestCaseBug
@@ -78,7 +78,7 @@ def info(request):
             self.internal_parameters = ('info_type', 'field', 'format')
 
         def builds(self):
-            from tcms.management.models import TestBuild
+            from tcms.management.models import Build
 
             try:
                 _is_active = bool(strtobool(self.request.GET.get('is_active', 'False')))
@@ -89,7 +89,7 @@ def info(request):
                 'product_id': self.product_id,
                 'is_active': _is_active
             }
-            return TestBuild.list(query)
+            return Build.list(query)
 
         def categories(self):
             from tcms.testcases.models import TestCaseCategory
@@ -851,7 +851,7 @@ def get_prod_related_objs(p_pks, target):
     ctypes = {
         'component': (Component, 'name'),
         'version': (Version, 'value'),
-        'build': (TestBuild, 'name'),
+        'build': (Build, 'name'),
         'category': (TestCaseCategory, 'name'),
     }
     results = ctypes[target][0]._default_manager.filter(product__in=p_pks)

@@ -18,7 +18,7 @@ from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
 from tcms.core.db import GroupByResult
-from tcms.management.models import TestBuild
+from tcms.management.models import Build
 
 
 __all__ = (
@@ -497,7 +497,7 @@ class TestingReportBaseData(object):
     # ## Helper methods ###
 
     def get_build_names(self, build_ids):
-        return dict(TestBuild.objects.filter(
+        return dict(Build.objects.filter(
             pk__in=build_ids).values_list('pk', 'name').iterator())
 
     def get_usernames(self, user_ids):
@@ -513,7 +513,7 @@ class TestingReportBaseData(object):
 
         @param form: the valid form containing report criteria
         @type form: L{RunForm}
-        @param builds: sequence of TestBuilds, either selected by user or the
+        @param builds: sequence of Builds, either selected by user or the
             all builds of selected product
         @type builds: list or tuple
         @param builds_select: whether the builds are selected by user
@@ -529,7 +529,7 @@ class TestingReportBaseData(object):
         builds_selected = len(builds) > 0
         if len(builds) == 0:
             product = form.cleaned_data['r_product']
-            builds = TestBuild.objects.filter(product=product).only('name')
+            builds = Build.objects.filter(product=product).only('name')
         return builds, builds_selected
 
     def get_report_data(self, form):
@@ -639,8 +639,8 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
                     else:
                         runs_count = runs_subtotal[build_id][tested_by_id]
 
-                    build = TestBuild(pk=build_id,
-                                      name=build_names.get(build_id, ''))
+                    build = Build(pk=build_id,
+                                  name=build_names.get(build_id, ''))
                     if build == prev_build:
                         _build = (build, None)
                     else:
@@ -1006,7 +1006,7 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
             total_count = row['total_count']
 
             builds = status_matrix.setdefault(tag_id, GroupByResult())
-            plans = builds.setdefault(TestBuild(pk=build_id, name=build_name),
+            plans = builds.setdefault(Build(pk=build_id, name=build_name),
                                       GroupByResult())
             runs = plans.setdefault(TestPlan(pk=plan_id, name=plan_name),
                                     GroupByResult())
@@ -1196,7 +1196,7 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
             plan = TestPlan(pk=plan_id, name=plan_name)
             builds = status_matrix.setdefault(plan, GroupByResult())
 
-            build = TestBuild(pk=build_id, name=build_name)
+            build = Build(pk=build_id, name=build_name)
             runs = builds.setdefault(build, GroupByResult())
 
             run = TestRun(pk=run_id, summary=run_summary)

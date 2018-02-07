@@ -512,8 +512,8 @@ class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     }
 
 
-class TestBuildXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    '''Serializer for TestBuild'''
+class BuildXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
+    '''Serializer for Build'''
 
     values_fields_mapping = {
         'build_id': ('build_id', do_nothing),

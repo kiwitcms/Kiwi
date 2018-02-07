@@ -43,7 +43,7 @@ class TestRun(TCMSActionModel):
     plan = models.ForeignKey('testplans.TestPlan', related_name='run',
                              on_delete=models.CASCADE)
     environment_id = models.IntegerField(default=0)
-    build = models.ForeignKey('management.TestBuild', related_name='build_run',
+    build = models.ForeignKey('management.Build', related_name='build_run',
                               on_delete=models.CASCADE)
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='manager',
                                 on_delete=models.CASCADE)
@@ -560,7 +560,7 @@ class TestCaseRun(TCMSActionModel):
     case = models.ForeignKey('testcases.TestCase', related_name='case_run',
                              on_delete=models.CASCADE)
     case_run_status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
-    build = models.ForeignKey('management.TestBuild', on_delete=models.CASCADE)
+    build = models.ForeignKey('management.Build', on_delete=models.CASCADE)
     environment_id = models.IntegerField(default=0)
 
     class Meta:

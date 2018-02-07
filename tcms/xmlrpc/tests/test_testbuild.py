@@ -5,14 +5,14 @@ from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestBuildFactory
+from tcms.tests.factories import BuildFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestBuildCreate(XmlrpcAPIBaseTest):
+class BuildCreate(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
-        super(TestBuildCreate, self)._fixture_setup()
+        super(BuildCreate, self)._fixture_setup()
 
         self.product = ProductFactory()
 
@@ -100,20 +100,20 @@ class TestBuildCreate(XmlrpcAPIBaseTest):
         self.assertEqual(b['is_active'], False)
 
 
-class TestBuildUpdate(XmlrpcAPIBaseTest):
+class BuildUpdate(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
-        super(TestBuildUpdate, self)._fixture_setup()
+        super(BuildUpdate, self)._fixture_setup()
 
         self.product = ProductFactory()
         self.another_product = ProductFactory()
 
-        self.build_1 = TestBuildFactory(product=self.product)
-        self.build_2 = TestBuildFactory(product=self.product)
-        self.build_3 = TestBuildFactory(product=self.product)
+        self.build_1 = BuildFactory(product=self.product)
+        self.build_2 = BuildFactory(product=self.product)
+        self.build_3 = BuildFactory(product=self.product)
 
     def test_build_update_with_non_existing_build(self):
-        with self.assertRaisesRegex(XmlRPCFault, 'TestBuild matching query does not exist'):
+        with self.assertRaisesRegex(XmlRPCFault, 'Build matching query does not exist'):
             self.rpc_client.Build.update(-99, {})
 
     def test_build_update_with_no_perms(self):
@@ -146,13 +146,13 @@ class TestBuildUpdate(XmlrpcAPIBaseTest):
         self.assertEqual(b['description'], 'Update from unittest.')
 
 
-class TestBuildFilter(XmlrpcAPIBaseTest):
+class BuildFilter(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
-        super(TestBuildFilter, self)._fixture_setup()
+        super(BuildFilter, self)._fixture_setup()
 
         self.product = ProductFactory()
-        self.build = TestBuildFactory(description='for testing', product=self.product)
+        self.build = BuildFactory(description='for testing', product=self.product)
 
     def test_build_filter_with_non_exist_id(self):
         self.assertEqual(0, len(self.rpc_client.Build.filter({'pk': -9999})))
