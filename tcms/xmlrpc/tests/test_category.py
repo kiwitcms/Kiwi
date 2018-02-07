@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseCategoryFactory
+from tcms.tests.factories import CategoryFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
@@ -13,9 +13,9 @@ class TestCategory(XmlrpcAPIBaseTest):
         self.product_nitrate = ProductFactory(name='nitrate')
         self.product_xmlrpc = ProductFactory(name='xmlrpc')
         self.case_categories = [
-            TestCaseCategoryFactory(name='auto', product=self.product_nitrate),
-            TestCaseCategoryFactory(name='manual', product=self.product_nitrate),
-            TestCaseCategoryFactory(name='pending', product=self.product_xmlrpc),
+            CategoryFactory(name='auto', product=self.product_nitrate),
+            CategoryFactory(name='manual', product=self.product_nitrate),
+            CategoryFactory(name='pending', product=self.product_xmlrpc),
         ]
 
     def test_filter_by_name_and_product_id(self):

@@ -26,7 +26,7 @@ from tcms.testcases.models import TestCasePlan
 from tcms.testcases.views import ajax_response
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import TestCaseCategoryFactory
+from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
@@ -267,8 +267,8 @@ class TestOperateCategoryView(BasePlanCase):
     def setUpTestData(cls):
         super(TestOperateCategoryView, cls).setUpTestData()
 
-        cls.case_cat_full_auto = TestCaseCategoryFactory(name='Full Auto', product=cls.product)
-        cls.case_cat_full_manual = TestCaseCategoryFactory(name='Full Manual', product=cls.product)
+        cls.case_cat_full_auto = CategoryFactory(name='Full Auto', product=cls.product)
+        cls.case_cat_full_manual = CategoryFactory(name='Full Manual', product=cls.product)
 
         user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
 

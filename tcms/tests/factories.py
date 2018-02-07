@@ -251,10 +251,10 @@ class TestPlanEmailSettingsFactory(DjangoModelFactory):
 # ### Factories for app testcases ###
 
 
-class TestCaseCategoryFactory(DjangoModelFactory):
+class CategoryFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'testcases.TestCaseCategory'
+        model = 'testcases.Category'
 
     name = factory.Sequence(lambda n: 'category %d' % n)
     product = factory.SubFactory(ProductFactory)
@@ -269,7 +269,7 @@ class TestCaseFactory(DjangoModelFactory):
     summary = factory.Sequence(lambda n: 'Test case summary %d' % n)
     case_status = factory.LazyFunction(lambda: TestCaseStatus.objects.all()[0:1][0])
     priority = factory.LazyFunction(lambda: Priority.objects.all()[0:1][0])
-    category = factory.SubFactory(TestCaseCategoryFactory)
+    category = factory.SubFactory(CategoryFactory)
     author = factory.SubFactory(UserFactory)
     default_tester = factory.SubFactory(UserFactory)
     reviewer = factory.SubFactory(UserFactory)

@@ -4,7 +4,7 @@ from django import forms
 from tcms.core.helpers.cache import cached_entities
 from tcms.management.models import Product, Build, Component, Version
 from tcms.testcases.forms import BugField
-from tcms.testcases.models import TestCaseCategory
+from tcms.testcases.models import Category
 from tcms.testplans.models import TestPlanType
 
 
@@ -104,7 +104,7 @@ class CaseForm(forms.Form):
     )
     cs_category = forms.ModelMultipleChoiceField(
         required=False,
-        queryset=TestCaseCategory.objects.none()
+        queryset=Category.objects.none()
     )
 
     def clean_cs_auto(self):
@@ -148,7 +148,7 @@ class CaseForm(forms.Form):
         cat_pks = data.getlist('cs_category')
         cat_pks = [k for k in cat_pks if k]
         if cat_pks:
-            qs = TestCaseCategory.objects.filter(pk__in=cat_pks)
+            qs = Category.objects.filter(pk__in=cat_pks)
             self.fields['cs_category'].queryset = qs
 
 
