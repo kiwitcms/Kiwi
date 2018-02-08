@@ -345,7 +345,7 @@ class TestCase(TCMSActionModel):
 
         if created:
             if bz_external_track:
-                bug_system = TestCaseBugSystem.objects.get(pk=bug_system_id)
+                bug_system = BugSystem.objects.get(pk=bug_system_id)
                 it = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
                 if not it.is_adding_testcase_to_issue_disabled():
                     it.add_testcase_to_issue([self], bug)
@@ -435,7 +435,7 @@ class TestCase(TCMSActionModel):
         return format_timedelta(self.estimated_time)
 
     def get_bugs(self):
-        return TestCaseBug.objects.select_related(
+        return Bug.objects.select_related(
             'case_run', 'bug_system'
         ).filter(case__case_id=self.case_id)
 
@@ -523,7 +523,7 @@ class TestCase(TCMSActionModel):
         mailto(template, subject, to, context, request)
 
     def remove_bug(self, bug_id, run_id=None):
-        query = TestCaseBug.objects.filter(
+        query = Bug.objects.filter(
             bug_id=bug_id,
             case=self.pk
         )
@@ -615,7 +615,7 @@ class TestCaseTag(models.Model):
         db_table = u'test_case_tags'
 
 
-class TestCaseBugSystem(TCMSActionModel):
+class BugSystem(TCMSActionModel):
     """
         This model describes a bug tracking system used in
         Kiwi TCMS. Fields below can be configured via
@@ -718,12 +718,12 @@ Leave empty to disable!
         return cls.objects.get(pk=system_id)
 
 
-class TestCaseBug(TCMSActionModel):
+class Bug(TCMSActionModel):
     bug_id = models.CharField(max_length=25)
     case_run = models.ForeignKey('testruns.TestCaseRun', default=None, blank=True, null=True,
                                  related_name='case_run_bug', on_delete=models.CASCADE)
     case = models.ForeignKey(TestCase, related_name='case_bug', on_delete=models.CASCADE)
-    bug_system = models.ForeignKey(TestCaseBugSystem, default=1, on_delete=models.CASCADE)
+    bug_system = models.ForeignKey(BugSystem, default=1, on_delete=models.CASCADE)
     summary = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
@@ -739,7 +739,7 @@ class TestCaseBug(TCMSActionModel):
         if unique_check in bug_id_uniques:
             return 'Bug %d exists in run %d already.' % (self.bug_id, self.case_run.pk)
         else:
-            return super(TestCaseBug, self).unique_error_message(model_class, unique_check)
+            return super(Bug, self).unique_error_message(model_class, unique_check)
 
     def __str__(self):
         return self.bug_id

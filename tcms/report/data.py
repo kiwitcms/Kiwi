@@ -11,7 +11,7 @@ from django.db.models import Count, F
 
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCaseBug
+from tcms.testcases.models import Bug
 from tcms.testcases.forms import AUTOMATED_SERCH_CHOICES
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -430,7 +430,7 @@ class CustomDetailsReportData(CustomReportData):
         @return: mapping between case run ID and its bugs
         @rtype: dict
         '''
-        bugs = TestCaseBug.objects.filter(
+        bugs = Bug.objects.filter(
             case_run__run__build__in=build_ids,
             case_run__case_run_status_id__in=status_ids)
         bugs = bugs.select_related('bug_system')

@@ -7,7 +7,7 @@ from django.db.models import F
 from django.contrib.contenttypes.models import ContentType
 from django_comments.models import Comment
 
-from tcms.testcases.models import TestCaseBug
+from tcms.testcases.models import Bug
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 
@@ -19,7 +19,7 @@ def get_run_bug_ids(run_id):
     :return: list of pairs of bug ID and bug link.
     :rtype: list
     """
-    return TestCaseBug.objects.values(
+    return Bug.objects.values(
         'bug_id',
         'bug_system',
         'bug_system__tracker_type',
@@ -67,7 +67,7 @@ class TestCaseRunDataMixin(object):
         :rtype: dict
         """
         rows = []
-        bugs = TestCaseBug.objects \
+        bugs = Bug.objects \
             .filter(case_run__run=run_pk) \
             .values('case_run', 'bug_id', 'bug_system__url_reg_exp') \
             .order_by('case_run')

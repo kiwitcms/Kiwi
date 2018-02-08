@@ -16,7 +16,7 @@ from tcms.core.models.fields import DurationField
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
 from tcms.core.utils.timedeltaformat import format_timedelta
-from tcms.testcases.models import TestCaseBug, TestCaseText, NoneText
+from tcms.testcases.models import Bug, TestCaseText, NoneText
 from tcms.testruns import signals as run_watchers
 
 
@@ -238,7 +238,7 @@ class TestRun(TCMSActionModel):
         """
         # note fom Django docs: A count() call performs a SELECT COUNT(*)
         # behind the scenes !!!
-        return TestCaseBug.objects.filter(
+        return Bug.objects.filter(
             case_run__run=self.pk
         ).values('bug_id').distinct().count()
 
@@ -620,7 +620,7 @@ class TestCaseRun(TCMSActionModel):
         return self.case_run_status.is_finished()
 
     def get_bugs(self):
-        return TestCaseBug.objects.filter(
+        return Bug.objects.filter(
             case_run__case_run_id=self.case_run_id)
 
     def get_bugs_count(self):

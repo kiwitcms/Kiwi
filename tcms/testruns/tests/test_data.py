@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from tcms.core.helpers.comments import add_comment
-from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import BugSystem
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.data import get_run_bug_ids
 from tcms.tests import BaseCaseRun
@@ -85,7 +85,7 @@ class TestGetRunBugIDs(BaseCaseRun):
     def setUpTestData(cls):
         super(TestGetRunBugIDs, cls).setUpTestData()
 
-        cls.bugzilla = TestCaseBugSystem.objects.get(name='Bugzilla')
+        cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
 
         cls.case_run_1.add_bug('123456', bug_system_id=cls.bugzilla.pk)
         cls.case_run_1.add_bug('100000', bug_system_id=cls.bugzilla.pk)
@@ -118,8 +118,8 @@ class TestGetCaseRunsBugs(BaseCaseRun):
     def setUpTestData(cls):
         super(TestGetCaseRunsBugs, cls).setUpTestData()
 
-        cls.bugzilla = TestCaseBugSystem.objects.get(name='Bugzilla')
-        cls.jira = TestCaseBugSystem.objects.get(name='JIRA')
+        cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
+        cls.jira = BugSystem.objects.get(name='JIRA')
 
         cls.bz_bug_1 = '12345'
         cls.case_run_1.add_bug(cls.bz_bug_1, bug_system_id=cls.bugzilla.pk)

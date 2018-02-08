@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from tcms.testcases import views
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseText
-from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import BugSystem
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus
 
@@ -75,11 +75,11 @@ class BugSystemAdminForm(forms.ModelForm):
     )
 
     class Meta:
-        model = TestCaseBugSystem
+        model = BugSystem
         fields = '__all__'
 
 
-class TestCaseBugSystemAdmin(admin.ModelAdmin):
+class BugSystemAdmin(admin.ModelAdmin):
     search_fields = (('name',))
     list_display = ('id', 'name', 'url_reg_exp')
     fieldsets = [
@@ -97,4 +97,4 @@ Configure external bug trackers</a> section before editting the values below!</h
 
 
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(TestCaseBugSystem, TestCaseBugSystemAdmin)
+admin.site.register(BugSystem, BugSystemAdmin)

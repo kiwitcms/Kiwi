@@ -4,7 +4,7 @@ import re
 
 from django.forms import ValidationError
 
-from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import BugSystem
 
 
 __all__ = (
@@ -24,8 +24,8 @@ def validate_bug_id(bug_id, bug_system_id):
         bug_ids = (bug_ids,)
 
     try:
-        bug_system = TestCaseBugSystem.get_by_id(bug_system_id)
-    except TestCaseBugSystem.DoesNotExist:
+        bug_system = BugSystem.get_by_id(bug_system_id)
+    except BugSystem.DoesNotExist:
         raise ValidationError("Bug system with PK %s doesn't exit" % bug_system_id)
     else:
         id_pattern = bug_system.validate_reg_exp

@@ -2,7 +2,7 @@
 
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import TestRunFactory
-from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import BugSystem
 
 
 class TestRunGetBugsCount(BaseCaseRun):
@@ -12,7 +12,7 @@ class TestRunGetBugsCount(BaseCaseRun):
     def setUpTestData(cls):
         super(TestRunGetBugsCount, cls).setUpTestData()
 
-        bug_tracker = TestCaseBugSystem.objects.first()
+        bug_tracker = BugSystem.objects.first()
         cls.empty_test_run = TestRunFactory(product_version=cls.version,
                                             plan=cls.plan,
                                             manager=cls.tester,

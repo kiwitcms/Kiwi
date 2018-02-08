@@ -36,7 +36,7 @@ from tcms.management.models import Priority, EnvValue, Tag
 from tcms.search.forms import RunForm
 from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.forms import CaseBugForm
-from tcms.testcases.models import TestCasePlan, TestCaseStatus, TestCaseBugSystem
+from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
@@ -611,7 +611,7 @@ def get(request, run_id, template_name='run/get.html'):
         'test_case_run_status': case_run_statuss,
         'priorities': Priority.objects.all(),
         'case_own_tags': ttags,
-        'bug_trackers': TestCaseBugSystem.objects.all(),
+        'bug_trackers': BugSystem.objects.all(),
     }
     return render(request, template_name, context_data)
 
@@ -751,7 +751,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             if bug['bug_system'] not in bug_system_types:
                 # store a tracker type object for producing the report URL
                 tracker_class = IssueTrackerType.from_name(bug['bug_system__tracker_type'])
-                bug_system = TestCaseBugSystem.objects.get(pk=bug['bug_system'])
+                bug_system = BugSystem.objects.get(pk=bug['bug_system'])
                 tracker = tracker_class(bug_system)
                 bug_system_types[bug['bug_system']] = (tracker, [])
 
@@ -805,7 +805,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
             self.default_ajax_response = {'rc': 0, 'response': 'ok'}
 
         def add(self):
-            if not self.request.user.has_perm('testcases.add_testcasebug'):
+            if not self.request.user.has_perm('testcases.add_bug'):
                 response = {'rc': 1, 'response': 'Permission denied'}
                 return self.ajax_response(response=response)
 
@@ -847,7 +847,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 
         def file(self):
             bug_system_id = request.GET.get('bug_system_id')
-            bug_system = TestCaseBugSystem.objects.get(pk=bug_system_id)
+            bug_system = BugSystem.objects.get(pk=bug_system_id)
 
             if bug_system.base_url:
                 tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
@@ -860,7 +860,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
             return self.ajax_response(response)
 
         def remove(self):
-            if not self.request.user.has_perm('testcases.delete_testcasebug'):
+            if not self.request.user.has_perm('testcases.delete_bug'):
                 response = {'rc': 1, 'response': 'Permission denied'}
                 return self.render(response=response)
 

@@ -16,7 +16,7 @@
 		<td>{% if bug.case_run_id %}<a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>{% else %}None{% endif %}</td>
 		<td><a href="{{ bug.get_absolute_url }}">{{ bug.get_absolute_url }}</a></td>
         <td>
-			{% if perms.testcases.delete_testcasebug %}
+			{% if perms.testcases.delete_bug %}
 			<a class="remove js-remove-button" data-params='{"id": "{{ bug.bug_id }}", "caseId": "{{ test_case.pk }}", "caseRunId": "{{ bug.case_run_id|default:'' }}"}'>Remove</a>
 			{% else %}
 			<label class="grey">None</label>

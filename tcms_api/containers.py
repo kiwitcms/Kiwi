@@ -359,7 +359,7 @@ class CaseBugs(Container):
         if Container._fetch(self, inset):
             return
         log.info("Fetching bugs for {0}".format(self._identifier))
-        injects = self._server.TestCaseBug.filter({'case': self.id})
+        injects = self._server.Bug.filter({'case': self.id})
         log.data(pretty(injects))
         self._current = set([Bug(inject) for inject in injects])
         self._original = set(self._current)
@@ -371,7 +371,7 @@ class CaseBugs(Container):
             data = {"bug_id": bug.bug,
                     "bug_system_id": bug.system,
                     "case_id": self.id}
-            self._server.TestCaseBug.create(data)
+            self._server.Bug.create(data)
         # Fetch again the whole bug list (to get the internal id)
         self._fetch()
 
@@ -384,7 +384,7 @@ class CaseBugs(Container):
                 'bug_id': bug.bug,
                 'case_run__isnull': True,
             }
-            self._server.TestCaseBug.remove(self.id, data)
+            self._server.Bug.remove(self.id, data)
 
     # Print unicode list of bugs
     def __str__(self):
@@ -410,7 +410,7 @@ class CaseRunBugs(Container):
         if Container._fetch(self, inset):
             return
         log.info("Fetching bugs for {0}".format(self._identifier))
-        injects = self._server.TestCaseBug.filter({'case_run': self.id})
+        injects = self._server.Bug.filter({'case_run': self.id})
         log.data(pretty(injects))
         self._current = set([Bug(inject) for inject in injects])
         self._original = set(self._current)
@@ -422,7 +422,7 @@ class CaseRunBugs(Container):
             data = {"bug_id": bug.bug,
                     "bug_system_id": bug.system,
                     "case_run_id": self.id}
-            self._server.TestCaseBug.create(data)
+            self._server.Bug.create(data)
         # Fetch again the whole bug list (to get the internal id)
         self._fetch()
 
@@ -434,7 +434,7 @@ class CaseRunBugs(Container):
                 'bug_id': bug.bug,
                 'case_run_id': self.id,
             }
-            self._server.TestCaseBug.remove(data)
+            self._server.Bug.remove(data)
 
     # Print unicode list of bugs
     def __str__(self):
