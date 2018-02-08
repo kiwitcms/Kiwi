@@ -22,7 +22,7 @@ from tcms.testcases.models import TestCaseStatus
 from tcms.testplans import signals as plan_watchers
 
 
-class TestPlanType(TCMSActionModel):
+class PlanType(TCMSActionModel):
     id = models.AutoField(db_column='type_id', primary_key=True)
     name = models.CharField(max_length=64, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -50,7 +50,7 @@ class TestPlan(TCMSActionModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey('management.Product', related_name='plan',
                                 on_delete=models.CASCADE)
-    type = models.ForeignKey(TestPlanType, on_delete=models.CASCADE)
+    type = models.ForeignKey(PlanType, on_delete=models.CASCADE)
     parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
                                on_delete=models.CASCADE)
 

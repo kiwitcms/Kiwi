@@ -5,7 +5,7 @@ from tcms.core.helpers.cache import cached_entities
 from tcms.management.models import Product, Build, Component, Version
 from tcms.testcases.forms import BugField
 from tcms.testcases.models import Category
-from tcms.testplans.models import TestPlanType
+from tcms.testplans.models import PlanType
 
 
 def get_choice(value, _type=str, deli=','):
@@ -31,7 +31,7 @@ def get_boolean_choice(value):
 class PlanForm(forms.Form):
     pl_type = forms.ModelMultipleChoiceField(
         required=False,
-        queryset=TestPlanType.objects.all()
+        queryset=PlanType.objects.all()
     )
     pl_summary = forms.CharField(required=False, max_length=200)
     pl_id = forms.CharField(required=False, max_length=200)

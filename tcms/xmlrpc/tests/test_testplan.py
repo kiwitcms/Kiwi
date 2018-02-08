@@ -7,7 +7,7 @@ from tcms.testplans.models import EnvPlanMap
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestPlanTypeFactory
+from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import TestTagFactory
 from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
@@ -23,7 +23,7 @@ class TestFilter(XmlrpcAPIBaseTest):
         self.product = ProductFactory()
         self.version = VersionFactory(product=self.product)
         self.tester = UserFactory()
-        self.plan_type = TestPlanTypeFactory(name='manual smoking')
+        self.plan_type = PlanTypeFactory(name='manual smoking')
         self.plan_1 = TestPlanFactory(product_version=self.version,
                                       product=self.product,
                                       author=self.tester,
@@ -100,7 +100,7 @@ class TestUpdate(XmlrpcAPIBaseTest):
         self.product = ProductFactory()
         self.version = VersionFactory(product=self.product)
         self.tester = UserFactory()
-        self.plan_type = TestPlanTypeFactory(name='manual smoking')
+        self.plan_type = PlanTypeFactory(name='manual smoking')
         self.plan_1 = TestPlanFactory(product_version=self.version,
                                       product=self.product,
                                       author=self.tester,

@@ -42,7 +42,7 @@ class TestAdminView(BasePlanCase):
         self.assertNotContains(response, 'Test cases')
 
         # for tcms.testplans
-        self.assertContains(response, 'Test plan types')
+        self.assertContains(response, 'Plan types')
 
         self.assertNotContains(response, 'Test plans')
 

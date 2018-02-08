@@ -7,7 +7,7 @@ from tinymce.widgets import TinyMCE
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, StripURLField
 from tcms.management.models import Product, Version, EnvGroup, TestTag
-from .models import TestPlan, TestPlanType
+from .models import TestPlan, PlanType
 # ===========Plan Fields==============
 
 
@@ -145,7 +145,7 @@ class BasePlanForm(forms.Form):
     name = forms.CharField(label="Plan name")
     type = forms.ModelChoiceField(
         label="Type",
-        queryset=TestPlanType.objects.all(),
+        queryset=PlanType.objects.all(),
         empty_label=None,
     )
     text = forms.CharField(
@@ -283,7 +283,7 @@ class SearchPlanForm(forms.Form):
     )
     type = forms.ModelChoiceField(
         label="Type",
-        queryset=TestPlanType.objects.all(),
+        queryset=PlanType.objects.all(),
         required=False,
     )
     env_group = forms.ModelChoiceField(
@@ -333,7 +333,7 @@ class ClonePlanForm(BasePlanForm):
     name = forms.CharField(label="Plan name", required=False)
     type = forms.ModelChoiceField(
         label="Type",
-        queryset=TestPlanType.objects.all(),
+        queryset=PlanType.objects.all(),
         required=False,
     )
     keep_orignal_author = forms.BooleanField(
@@ -391,7 +391,7 @@ class XMLRPCEditPlanForm(EditPlanForm):
     )
     type = forms.ModelChoiceField(
         label="Type",
-        queryset=TestPlanType.objects.all(),
+        queryset=PlanType.objects.all(),
         required=False
     )
     product = forms.ModelChoiceField(

@@ -41,7 +41,7 @@ def advance_search(request, tmpl='search/advanced_search.html'):
         PRODUCT_CHOICE = [
             (p.pk, p.name) for p in cached_entities('product')
         ]
-        PLAN_TYPE_CHOICES = cached_entities('testplantype')
+        PLAN_TYPE_CHOICES = cached_entities('plantype')
         errors = fmt_errors(errors)
         priorities = Priority.objects.filter(is_active=True).order_by('value')
         return render(request, tmpl, locals())
