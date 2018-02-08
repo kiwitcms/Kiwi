@@ -29,8 +29,8 @@ from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
 from tcms.testcases import data
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCasePlan, TestCaseBugSystem, \
-    TestCaseBug, TestCaseText, TestCaseComponent
+    TestCasePlan, BugSystem, \
+    Bug, TestCaseText, TestCaseComponent
 from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -288,7 +288,7 @@ def calculate_number_of_bugs_for_testcases(tc_ids):
     Arguments:
     - tc_ids: a list of tuple of TestCases' IDs
     '''
-    qs = TestCaseBug.objects.filter(case__in=tc_ids)
+    qs = Bug.objects.filter(case__in=tc_ids)
     qs = qs.values('case').annotate(total_count=Count('pk'))
     return dict([(item['case'], item['total_count']) for item in qs])
 
@@ -1025,7 +1025,7 @@ def get(request, case_id, template_name='case/get.html'):
         'test_case_text': tc_text,
         'test_case_status': TestCaseStatus.objects.all(),
         'test_case_run_status': TestCaseRunStatus.objects.all(),
-        'bug_trackers': TestCaseBugSystem.objects.all(),
+        'bug_trackers': BugSystem.objects.all(),
         'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
     }
     return render(request, template_name, context_data)
@@ -1643,7 +1643,7 @@ def get_log(request, case_id, template_name="management/get_log.html"):
     return render(request, template_name, context_data)
 
 
-@permission_required('testcases.change_testcasebug')
+@permission_required('testcases.change_bug')
 def bug(request, case_id, template_name='case/get_bug.html'):
     """Process the bugs for cases"""
     # FIXME: Rewrite these codes for Ajax.Request
@@ -1676,7 +1676,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
         def add(self):
             # FIXME: It's may use ModelForm.save() method here.
             #        Maybe in future.
-            if not self.request.user.has_perm('testcases.add_testcasebug'):
+            if not self.request.user.has_perm('testcases.add_bug'):
                 return self.render(response='Permission denied.')
 
             form = CaseBugForm(request.GET)
@@ -1701,7 +1701,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             return self.render()
 
         def remove(self):
-            if not request.user.has_perm('testcases.delete_testcasebug'):
+            if not request.user.has_perm('testcases.delete_bug'):
                 return self.render(response='Permission denied.')
 
             try:

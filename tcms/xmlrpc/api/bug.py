@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from modernrpc.core import rpc_method
 
-from tcms.testcases.models import TestCaseBug
+from tcms.testcases.models import Bug
 from tcms.xmlrpc.decorators import permissions_required
 
 
@@ -12,17 +12,17 @@ __all__ = (
 )
 
 
-@rpc_method(name='TestCaseBug.filter')
+@rpc_method(name='Bug.filter')
 def filter(query):
     """
-    .. function:: XML-RPC TestCaseBug.filter(query)
+    .. function:: XML-RPC Bug.filter(query)
 
         Get list of bugs that are associated with TestCase or
         a TestCaseRun.
 
-        :param query: Field lookups for :class:`tcms.testcases.models.TestCaseBug`
+        :param query: Field lookups for :class:`tcms.testcases.models.Bug`
         :type query: dict
-        :return: List of serialized :class:`tcms.testcases.models.TestCaseBug` objects.
+        :return: List of serialized :class:`tcms.testcases.models.Bug` objects.
 
         Get all bugs for particular TestCase::
 
@@ -32,21 +32,21 @@ def filter(query):
 
             >>> Bug.filter({'case_run': 1234}) or Bug.filter({'case_run_id': 1234})
     """
-    return TestCaseBug.to_xmlrpc(query)
+    return Bug.to_xmlrpc(query)
 
 
-@permissions_required('testcases.add_testcasebug')
-@rpc_method(name='TestCaseBug.create')
+@permissions_required('testcases.add_bug')
+@rpc_method(name='Bug.create')
 def create(values):
     """
-    .. function:: XML-RPC TestCaseBug.create(values)
+    .. function:: XML-RPC Bug.create(values)
 
         Attach a bug to pre-existing TestCase or TestCaseRun object.
 
-        :param values: Field values for :class:`tcms.testcases.models.TestCaseBug`
+        :param values: Field values for :class:`tcms.testcases.models.Bug`
         :type values: dict
-        :return: Serialized :class:`tcms.testcases.models.TestCaseBug` object
-        :raises: PermissionDenied if missing the *testcases.add_testcasebug* permission
+        :return: Serialized :class:`tcms.testcases.models.Bug` object
+        :raises: PermissionDenied if missing the *testcases.add_bug* permission
 
         .. note::
 
@@ -55,7 +55,7 @@ def create(values):
 
         Example (doesn't specify case_run_id)::
 
-            >>> TestCaseBug.create({
+            >>> Bug.create({
                 'case_id': 12345,
                 'bug_id': 67890,
                 'bug_system_id': 1,
@@ -63,26 +63,26 @@ def create(values):
                 'description': 'Just foo and bar',
             })
     """
-    bug, _ = TestCaseBug.objects.get_or_create(**values)
+    bug, _ = Bug.objects.get_or_create(**values)
     return bug.serialize()
 
 
-@permissions_required('testcases.delete_testcasebug')
-@rpc_method(name='TestCaseBug.remove')
+@permissions_required('testcases.delete_bug')
+@rpc_method(name='Bug.remove')
 def remove(query):
     """
-    .. function:: XML-RPC TestCaseBug.remove(query)
+    .. function:: XML-RPC Bug.remove(query)
 
         Remove bugs from pre-existing TestCase or TestCaseRun object(s).
 
-        :param query: Field lookups for :class:`tcms.testcases.models.TestCaseBug`
+        :param query: Field lookups for :class:`tcms.testcases.models.Bug`
         :type query: dict
         :return: None
-        :raises: PermissionDenied if missing the *testcases.delete_testcasebug* permission
+        :raises: PermissionDenied if missing the *testcases.delete_bug* permission
 
         Example - removing bug from TestCase::
 
-            >>> TestCaseBug.remove({
+            >>> Bug.remove({
                 'case_id': 12345,
                 'bug_id': 67890,
                 'case_run__isnull': True
@@ -90,9 +90,9 @@ def remove(query):
 
         Example - removing bug from TestCaseRun (specify case_run_id)::
 
-            >>> TestCaseBug.remove({
+            >>> Bug.remove({
                 'bug_id': 67890,
                 'case_run_id': 99999,
             })
     """
-    return TestCaseBug.objects.filter(**query).delete()
+    return Bug.objects.filter(**query).delete()

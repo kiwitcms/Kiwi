@@ -20,7 +20,7 @@ from ..fields import MultipleEmailField
 from ..forms import CaseTagForm
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import BugSystem
 from tcms.testcases.models import TestCaseComponent
 from tcms.testcases.models import TestCasePlan
 from tcms.testcases.views import ajax_response
@@ -325,14 +325,14 @@ class TestAddIssueToCase(BasePlanCase):
         cls.plan_tester = User.objects.create_user(username='plantester',
                                                    email='plantester@example.com',
                                                    password='password')
-        user_should_have_perm(cls.plan_tester, 'testcases.change_testcasebug')
+        user_should_have_perm(cls.plan_tester, 'testcases.change_bug')
 
         cls.case_bug_url = reverse('testcases-bug', args=[cls.case_1.pk])
-        cls.issue_tracker = TestCaseBugSystem.objects.get(name='Bugzilla')
+        cls.issue_tracker = BugSystem.objects.get(name='Bugzilla')
 
     def test_add_and_remove_a_bug(self):
-        user_should_have_perm(self.plan_tester, 'testcases.add_testcasebug')
-        user_should_have_perm(self.plan_tester, 'testcases.delete_testcasebug')
+        user_should_have_perm(self.plan_tester, 'testcases.add_bug')
+        user_should_have_perm(self.plan_tester, 'testcases.delete_bug')
 
         self.client.login(username=self.plan_tester.username, password='password')
         request_data = {

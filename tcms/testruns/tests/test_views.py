@@ -9,8 +9,8 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from tcms.testcases.models import TestCaseBug
-from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import Bug
+from tcms.testcases.models import BugSystem
 from tcms.testruns.models import EnvRunValueMap
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
@@ -1064,10 +1064,10 @@ class TestBugActions(BaseCaseRun):
         super(TestBugActions, cls).setUpTestData()
 
         user_should_have_perm(cls.tester, 'testruns.change_testrun')
-        user_should_have_perm(cls.tester, 'testcases.delete_testcasebug')
+        user_should_have_perm(cls.tester, 'testcases.delete_bug')
 
-        cls.bugzilla = TestCaseBugSystem.objects.get(name='Bugzilla')
-        cls.jira = TestCaseBugSystem.objects.get(name='JIRA')
+        cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
+        cls.jira = BugSystem.objects.get(name='JIRA')
 
         cls.case_run_bug_url = reverse('testruns-bug', args=[cls.case_run_1.pk])
 
@@ -1090,7 +1090,7 @@ class TestBugActions(BaseCaseRun):
             'a': 'unknown action',
             'case_run': self.case_run_1.pk,
             'case': self.case_run_1.case.pk,
-            'bug_system_id': TestCaseBugSystem.objects.get(name='Bugzilla').pk,
+            'bug_system_id': BugSystem.objects.get(name='Bugzilla').pk,
             'bug_id': '123456',
         }
 
@@ -1111,7 +1111,7 @@ class TestBugActions(BaseCaseRun):
 
         response = self.client.get(self.case_run_bug_url, post_data)
 
-        bug_exists = TestCaseBug.objects.filter(
+        bug_exists = Bug.objects.filter(
             bug_id=self.bug_12345,
             case=self.case_run_1.case,
             case_run=self.case_run_1).exists()
@@ -1369,7 +1369,7 @@ class Test_TestRunReportUnconfiguredJIRA(BaseCaseRun):
 
         # NOTE: base_url, api_url, api_username and api_password
         # are intentionally left blank!
-        cls.it = TestCaseBugSystem.objects.create(
+        cls.it = BugSystem.objects.create(
             name='Partially configured JIRA',
             url_reg_exp='https://jira.example.com/browse/%s',
             validate_reg_exp=r'^[A-Z0-9]+-\d+$',
@@ -1397,7 +1397,7 @@ class Test_TestRunReportUnconfiguredBugzilla(BaseCaseRun):
 
         # NOTE: base_url, api_url, api_username and api_password
         # are intentionally left blank!
-        cls.it = TestCaseBugSystem.objects.create(
+        cls.it = BugSystem.objects.create(
             name='Partially configured Bugzilla',
             url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
             validate_reg_exp=r'^\d{1,7}$',
@@ -1425,7 +1425,7 @@ class Test_TestRunReportUnconfiguredGitHub(BaseCaseRun):
 
         # NOTE: base_url, api_url, api_username and api_password
         # are intentionally left blank!
-        cls.it = TestCaseBugSystem.objects.create(
+        cls.it = BugSystem.objects.create(
             name='Partially configured GitHub',
             url_reg_exp='https://github.com/kiwitcms/Kiwi/issues/%s',
             validate_reg_exp=r'^\d+$',

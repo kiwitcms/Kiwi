@@ -25,7 +25,7 @@ class IssueTrackerType(object):
 
     def __init__(self, tracker):
         """
-            :tracker: - TestCaseBugSystem object
+            :tracker: - BugSystem object
         """
         self.tracker = tracker
 
@@ -65,7 +65,7 @@ class IssueTrackerType(object):
             back to the test case via the internal RPC object.
 
             :testcases: - list of TestCase objects
-            :issue: - TestCaseBug object
+            :issue: - Bug object
         """
         raise NotImplementedError()
 

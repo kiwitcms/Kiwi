@@ -18,7 +18,7 @@ class BugzillaThread(threading.Thread):
         """
             @rpc - Bugzilla XML-RPC object
             @testcase - TestCase object
-            @bug - TestCaseBug object
+            @bug - Bug object
         """
 
         self.rpc = rpc

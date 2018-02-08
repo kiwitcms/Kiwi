@@ -13,7 +13,7 @@ from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import CategoryFactory
 
-from tcms.testcases.models import TestCaseBugSystem
+from tcms.testcases.models import BugSystem
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
@@ -150,4 +150,4 @@ password = %s
 
         # Create a TestCaseRun object
         self.caserun = TestCaseRunFactory()
-        self.caserun.add_bug(1234, TestCaseBugSystem.objects.first().pk)
+        self.caserun.add_bug(1234, BugSystem.objects.first().pk)

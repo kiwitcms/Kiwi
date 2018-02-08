@@ -5,7 +5,7 @@ from mock import patch
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from ..models import TestCaseBugSystem
+from ..models import BugSystem
 from ..models import TestCaseText
 from tcms.core.utils.checksum import checksum
 from tcms.testcases.models import _listen, _disconnect_signals
@@ -33,7 +33,7 @@ class TestCaseRemoveBug(BasePlanCase):
                                       manager=cls.tester, default_tester=cls.tester)
         cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
                                           case=cls.case, run=cls.test_run, build=cls.build)
-        cls.bug_system = TestCaseBugSystem.objects.get(name='Bugzilla')
+        cls.bug_system = BugSystem.objects.get(name='Bugzilla')
 
     def setUp(self):
         self.bug_id_1 = '12345678'

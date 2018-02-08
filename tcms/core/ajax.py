@@ -27,7 +27,7 @@ from django.views.decorators.http import require_POST
 from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
 from tcms.management.models import Tag
-from tcms.testcases.models import TestCase, TestCaseBug
+from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
@@ -833,7 +833,7 @@ def update_bugs_to_caseruns(request):
                                 bug_system_id=bug_system_id,
                                 bz_external_track=bz_external_track)
         else:
-            bugs = TestCaseBug.objects.filter(bug_id__in=bug_ids)
+            bugs = Bug.objects.filter(bug_id__in=bug_ids)
             for run in runs:
                 for bug in bugs:
                     if bug.case_run_id == run.pk:

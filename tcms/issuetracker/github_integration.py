@@ -17,9 +17,9 @@ class GitHubThread(threading.Thread):
     def __init__(self, rpc, tracker, testcase, bug):
         """
             @rpc - GitHub object
-            @tracker - TestCaseBugSystem object
+            @tracker - BugSystem object
             @testcase - TestCase object
-            @bug - TestCaseBug object
+            @bug - Bug object
         """
 
         self.rpc = rpc

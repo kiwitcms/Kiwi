@@ -250,6 +250,7 @@ COMMENTS_APP = 'tcms.core.contrib.comments'
 
 MODERNRPC_METHODS_MODULES = [
         'tcms.xmlrpc.api.auth',
+        'tcms.xmlrpc.api.bug',
         'tcms.xmlrpc.api.build',
         'tcms.xmlrpc.api.category',
         'tcms.xmlrpc.api.component',
@@ -260,7 +261,6 @@ MODERNRPC_METHODS_MODULES = [
         'tcms.xmlrpc.api.priority',
         'tcms.xmlrpc.api.product',
         'tcms.xmlrpc.api.tag',
-        'tcms.xmlrpc.api.testcasebug',
         'tcms.xmlrpc.api.testcase',
         'tcms.xmlrpc.api.testcaserun',
         'tcms.xmlrpc.api.testcasestatus',
