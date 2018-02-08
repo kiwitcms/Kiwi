@@ -666,26 +666,31 @@ class TestPlanTests(BaseAPIClient_TestCase):
         self.assertEqual(testplan.version.name, self.master.version.name)
         self.assertEqual(testplan.owner.login, self.api_user.username)
 
-    def test_plan_status(self):
-        """ Test read/write access to the test plan status """
+    def test_plan_is_active(self):
+        """ Test read/write access to the test plan is_active proprty """
         # Prepare original and negated status
-        original = PlanStatus(self.master.status.id)
-        negated = PlanStatus(not original.id)
+        original = self.master.is_active
+        negated = not original
+
         # Test original value
         testplan = TestPlan(self.master.id)
-        self.assertEqual(testplan.status, original)
-        testplan.status = negated
+        self.assertEqual(testplan.is_active, original)
+
+        testplan.is_active = negated
         testplan.update()
         del testplan
+
         # Test negated value
         testplan = TestPlan(self.master.id)
-        self.assertEqual(testplan.status, negated)
-        testplan.status = original
+        self.assertEqual(testplan.is_active, negated)
+
+        testplan.is_active = original
         testplan.update()
         del testplan
+
         # Back to the original value
         testplan = TestPlan(self.master.id)
-        self.assertEqual(testplan.status, original)
+        self.assertEqual(testplan.is_active, original)
 
     def test_cache_none(self):
         """ Cache none """
