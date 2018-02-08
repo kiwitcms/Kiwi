@@ -53,7 +53,7 @@ Container overview (objects contained are listed in brackets):
     TestCase.caseruns = CaseCaseRuns[CaseRun] ............. needed?
     TestCase.bugs = CaseBugs[Bug] ......................... done
 
-    CaseRun.bugs = CaseRunBugs[Bug] ....................... done
+    TestCaseRun.bugs = CaseRunBugs[Bug] ................... done
 """
 
 import xmlrpc.client
@@ -66,8 +66,7 @@ from tcms_api.utils import listed
 from tcms_api.base import TCMS, TCMSNone, _getter
 from tcms_api.immutable import Component, Bug, Tag
 from tcms_api.xmlrpc import TCMSError
-from tcms_api.mutable import (
-    Mutable, TestPlan, TestRun, TestCase, CaseRun)
+from tcms_api.mutable import Mutable, TestPlan, TestRun, TestCase, TestCaseRun
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Container Class
@@ -819,7 +818,7 @@ class RunCaseRuns(Container):
     _cache = {}
 
     # Class of contained objects
-    _class = CaseRun
+    _class = TestCaseRun
 
     def _fetch(self, inset=None):
         """ Fetch case runs from the server """
@@ -836,14 +835,14 @@ class RunCaseRuns(Container):
                 TestCase._is_cached(testcaseids)):
             self._object.testcases._fetch([TestCase(id) for id in testcaseids])
         # And finally create the initial object set
-        self._current = set([CaseRun(inject, testcaseinject=testcase)
+        self._current = set([TestCaseRun(inject, testcaseinject=testcase)
                             for inject in injects
                             for testcase in self._object.testcases._items
                             if int(inject["case_id"]) == testcase.id])
         self._original = set(self._current)
 
     def _add(self, caseruns):
-        """ Adding supported by CaseRun() or TestRun.testcases.add() """
+        """ Adding supported by TestCaseRun() or TestRun.testcases.add() """
         raise TCMSError(
             "Use TestRun.testcases.add([testcases]) to add new test cases")
 

@@ -70,7 +70,7 @@ from tcms_api.immutable import (
     Bug, Build, CaseStatus, Category, Component, PlanType,
     Priority, Product, Status, Tag, User, Version)
 from tcms_api.mutable import (
-    Mutable, TestPlan, TestRun, TestCase, CaseRun)
+    Mutable, TestPlan, TestRun, TestCase, TestCaseRun)
 from tcms_api.containers import (
     Container, CaseBugs, CaseComponents, CaseRunBugs, CaseTags,
     ChildPlans, PlanCases, PlanRuns,
@@ -100,7 +100,7 @@ __all__ = [
 
     'Bug', 'Build', 'CaseStatus', 'Category', 'Component', 'PlanType',
     'Priority', 'Product', 'Status', 'Tag', 'User', 'Version',
-    'TestPlan', 'TestRun', 'TestCase', 'CaseRun',
+    'TestPlan', 'TestRun', 'TestCase', 'TestCaseRun',
 
     'CaseBugs', 'CaseComponents', 'CaseRunBugs', 'CaseTags',
     'ChildPlans', 'PlanCases', 'PlanRuns',

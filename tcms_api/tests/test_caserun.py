@@ -6,7 +6,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 from tcms_api.immutable import Status
-from tcms_api.mutable import CaseRun
+from tcms_api.mutable import TestCaseRun
 
 from tcms_api.tests import BaseAPIClient_TestCase
 
@@ -21,7 +21,7 @@ class TestCaseRunTests(BaseAPIClient_TestCase):
             https://github.com/kiwitcms/Kiwi/issues/184
         """
         # Detach bug and check
-        test_case_run = CaseRun(self.caserun.pk)
+        test_case_run = TestCaseRun(self.caserun.pk)
 
         for status in TestCaseRunStatus.objects.all():
             test_case_run.status = Status(status.name)
