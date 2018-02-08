@@ -44,7 +44,7 @@ Synopsis:
 
         for case in TestRun(1234):
             if case.automated:
-                case.status = Status("RUNNING")
+                case.status = TestCaseRunStatus("RUNNING")
                 case.update()
 
     Link test case to a test plan::
@@ -68,7 +68,7 @@ For details see pydoc documentation for individual modules:
 from tcms_api.base import TCMS
 from tcms_api.immutable import (
     Bug, Build, CaseStatus, Category, Component, PlanType,
-    Priority, Product, Status, Tag, User, Version)
+    Priority, Product, TestCaseRunStatus, Tag, User, Version)
 from tcms_api.mutable import (
     Mutable, TestPlan, TestRun, TestCase, TestCaseRun)
 from tcms_api.containers import (
@@ -99,7 +99,7 @@ __all__ = [
     'TCMS', 'Mutable', 'Container',
 
     'Bug', 'Build', 'CaseStatus', 'Category', 'Component', 'PlanType',
-    'Priority', 'Product', 'Status', 'Tag', 'User', 'Version',
+    'Priority', 'Product', 'TestCaseRunStatus', 'Tag', 'User', 'Version',
     'TestPlan', 'TestRun', 'TestCase', 'TestCaseRun',
 
     'CaseBugs', 'CaseComponents', 'CaseRunBugs', 'CaseTags',

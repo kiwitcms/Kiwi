@@ -356,7 +356,7 @@ def set_color_mode(mode):
     """
     Set the coloring mode
 
-    If enabled, some objects (like case run Status) are printed in color
+    If enabled, some objects (like case run TestCaseRunStatus) are printed in color
     to easily spot failures, errors and so on. By default the feature is
     enabled when script is attached to a terminal. Possible values are:
 

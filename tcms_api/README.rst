@@ -39,7 +39,7 @@ Default iterators provided for all container objects::
 
     for case in TestRun(1234):
         if case.automated:
-            case.status = Status("RUNNING")
+            case.status = TestCaseRunStatus("RUNNING")
             case.update()
 
 Linking case to a plan is as simple as adding an item to a set::

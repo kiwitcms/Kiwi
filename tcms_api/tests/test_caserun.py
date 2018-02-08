@@ -5,7 +5,7 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-from tcms_api.immutable import Status
+from tcms_api import immutable
 from tcms_api.mutable import TestCaseRun
 
 from tcms_api.tests import BaseAPIClient_TestCase
@@ -24,7 +24,7 @@ class TestCaseRunTests(BaseAPIClient_TestCase):
         test_case_run = TestCaseRun(self.caserun.pk)
 
         for status in TestCaseRunStatus.objects.all():
-            test_case_run.status = Status(status.name)
+            test_case_run.status = immutable.TestCaseRunStatus(status.name)
             test_case_run.update()
             self.caserun.refresh_from_db()
             self.assertEqual(self.caserun.case_run_status.name, status.name)
