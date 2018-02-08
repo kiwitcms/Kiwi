@@ -1158,7 +1158,7 @@ class Bug(TCMS):
         self._system = int(inject["bug_system_id"])
         self._testcase = TestCase(int(inject["case_id"]))
         if inject["case_run_id"] is not None:
-            self._caserun = CaseRun(int(inject["case_run_id"]))
+            self._caserun = TestCaseRun(int(inject["case_run_id"]))
         # Index the fetched object into cache
         self._index()
 
@@ -1261,4 +1261,4 @@ class Tag(TCMS):
 
 
 # We need to import mutable here because of cyclic import
-from tcms_api.mutable import TestCase, CaseRun  # noqa: E402
+from tcms_api.mutable import TestCase, TestCaseRun  # noqa: E402

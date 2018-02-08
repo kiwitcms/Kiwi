@@ -1073,31 +1073,31 @@ class CaseRunBugsTests(BaseAPIClient_TestCase):
     def test_bugging1(self):
         """ Detaching bug from a test case run """
         # Detach bug and check
-        caserun = CaseRun(self.caserun.pk)
+        caserun = TestCaseRun(self.caserun.pk)
         caserun.bugs.remove(self.bug)
         caserun.update()
         # Refetch content
-        caserun = CaseRun(self.caserun.pk)
+        caserun = TestCaseRun(self.caserun.pk)
         self.assertTrue(self.bug not in caserun.bugs)
 
     def test_bugging2(self):
         """ Attaching bug to a test case run """
         # Attach bug and check
-        caserun = CaseRun(self.caserun.pk)
+        caserun = TestCaseRun(self.caserun.pk)
         caserun.bugs.add(self.bug)
         caserun.update()
         # Refetch content
-        caserun = CaseRun(self.caserun.pk)
+        caserun = TestCaseRun(self.caserun.pk)
         self.assertTrue(self.bug in caserun.bugs)
 
     def test_bugging3(self):
         """ Detaching bug from a test case run """
         # Detach bug and check
-        caserun = CaseRun(self.caserun.pk)
+        caserun = TestCaseRun(self.caserun.pk)
         caserun.bugs.remove(self.bug)
         caserun.update()
         # Refetch content
-        caserun = CaseRun(self.caserun.pk)
+        caserun = TestCaseRun(self.caserun.pk)
         self.assertTrue(self.bug not in caserun.bugs)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1346,7 +1346,7 @@ class RunCaseRunsTests(BaseAPIClient_TestCase):
 
     def test_present(self):
         """ Check case run presence """
-        caserun = CaseRun(self.caserun.pk)
+        caserun = TestCaseRun(self.caserun.pk)
         testrun = TestRun(self.caserun.run_id)
         self.assertTrue(caserun in testrun)
 

@@ -393,7 +393,7 @@ class TestRun(Mutable):
     finished = property(_getter("finished"),
                         doc="Timestamp when the test run was finished (datetime).")
     caseruns = property(_getter("caseruns"),
-                        doc="CaseRun objects related to this test run.")
+                        doc="TestCaseRun objects related to this test run.")
     testcases = property(_getter("testcases"),
                          doc="""TestCase objects related to this test run\n
                          Supports common container methods add(), remove() and clear()
@@ -1033,12 +1033,8 @@ class TestCase(Mutable):
         # Update self (if modified)
         Mutable.update(self)
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  CaseRun Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-class CaseRun(Mutable):
+class TestCaseRun(Mutable):
     """
     Test case run.
 
@@ -1048,7 +1044,7 @@ class CaseRun(Mutable):
 
     _identifier_width = 8
 
-    # By default we do not cache CaseRun objects at all
+    # By default we do not cache TestCaseRun objects at all
     _expiration = config.NEVER_CACHE
     _cache = {}
 
@@ -1096,7 +1092,7 @@ class CaseRun(Mutable):
         raise KeyError
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  CaseRun Special
+    #  Special
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def __init__(self, id=None, testcase=None, testrun=None, **kwargs):
@@ -1131,11 +1127,11 @@ class CaseRun(Mutable):
     @staticmethod
     def search(**query):
         """ Search for case runs """
-        return [CaseRun(inject) for inject in
+        return [TestCaseRun(inject) for inject in
                 TCMS()._server.TestCaseRun.filter(dict(query))]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #  CaseRun Methods
+    #  TestCaseRun Methods
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     def _create(self, testcase, testrun, **kwargs):
