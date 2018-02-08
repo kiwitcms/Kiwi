@@ -26,7 +26,7 @@ from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import PlanTypeFactory
-from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TagFactory
 from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
@@ -264,13 +264,13 @@ class ExportTestPlanTests(test.TestCase):
                 reviewer=cls.user,
                 plan=[cls.test_plan]
             )
-            tag = TestTagFactory(name='tag_for_%s' % case.summary)
+            tag = TagFactory(name='tag_for_%s' % case.summary)
             component = ComponentFactory(name='component_for_%s' % case.summary)
             case.add_tag(tag)
             case.add_component(component)
 
             if i % 2 == 0:
-                tag = TestTagFactory(name='second_tag_for_%s' % case.summary)
+                tag = TagFactory(name='second_tag_for_%s' % case.summary)
                 component = ComponentFactory(name='second_component_for_%s' % case.summary)
                 case.add_tag(tag)
                 case.add_component(component)

@@ -902,9 +902,9 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
 
     def get_tags_names(self, tag_ids):
         '''Get tags names from status matrix'''
-        from tcms.management.models import TestTag
+        from tcms.management.models import Tag
 
-        names = dict(TestTag.objects.filter(
+        names = dict(Tag.objects.filter(
             pk__in=tag_ids).values_list('pk', 'name').iterator())
         # The existence of None tells us the fact that there are plans without
         # any tag. So, name it untagged.

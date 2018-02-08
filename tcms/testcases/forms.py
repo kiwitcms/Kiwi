@@ -8,7 +8,7 @@ from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
-from tcms.management.models import Priority, Product, Component, TestTag
+from tcms.management.models import Priority, Product, Component, Tag
 from .models import TestCase, Category, TestCaseStatus, TestCaseTag
 from .models import TestCaseBug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from .fields import MultipleEmailField
@@ -171,7 +171,7 @@ class BaseCaseForm(forms.Form):
         tags = []
         if self.cleaned_data['tag']:
             tag_names = string_to_list(self.cleaned_data['tag'])
-            tags = TestTag.get_or_create_many_by_name(tag_names)
+            tags = Tag.get_or_create_many_by_name(tag_names)
         return tags
 
     def populate(self, product_id=None):
@@ -515,16 +515,16 @@ class CaseCategoryForm(forms.Form):
 class CaseTagForm(forms.Form):
     o_tag = forms.ModelMultipleChoiceField(
         label="Tags",
-        queryset=TestTag.objects.none(),
+        queryset=Tag.objects.none(),
         required=False,
     )
 
     def populate(self, case_ids=None):
         if case_ids:
-            # note: backwards relationship filter. TestCaseTag -> TestTag
+            # note: backwards relationship filter. TestCaseTag -> Tag
             tag_ids = TestCaseTag.objects.filter(
                 case__in=case_ids
             ).values_list('tag').distinct()
-            self.fields['o_tag'].queryset = TestTag.objects.filter(pk__in=tag_ids).order_by('name')
+            self.fields['o_tag'].queryset = Tag.objects.filter(pk__in=tag_ids).order_by('name')
         else:
             self.fields['o_category'].queryset = Category.objects.all()

@@ -8,7 +8,7 @@ import tcms_api
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import VersionFactory
-from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TagFactory
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import CategoryFactory
@@ -93,7 +93,7 @@ password = %s
         self.CASESTATUS = tcms_api.CaseStatus("CONFIRMED")
         self.build = tcms_api.Build(product=self.product, build="unspecified")
 
-        f_tags = [TestTagFactory() for i in range(20)]
+        f_tags = [TagFactory() for i in range(20)]
         self.tags = [tcms_api.Tag(t.pk) for t in f_tags]
 
         f_users = [UserFactory() for i in range(50)]

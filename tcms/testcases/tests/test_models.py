@@ -19,7 +19,7 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TagFactory
 
 
 class TestCaseRemoveBug(BasePlanCase):
@@ -150,8 +150,8 @@ class TestCaseRemoveTag(BasePlanCase):
     def setUpTestData(cls):
         super(TestCaseRemoveTag, cls).setUpTestData()
 
-        cls.tag_rhel = TestTagFactory(name='rhel')
-        cls.tag_fedora = TestTagFactory(name='fedora')
+        cls.tag_rhel = TagFactory(name='rhel')
+        cls.tag_fedora = TagFactory(name='fedora')
         TestCaseTagFactory(case=cls.case, tag=cls.tag_rhel, user=cls.tester.pk)
         TestCaseTagFactory(case=cls.case, tag=cls.tag_fedora, user=cls.tester.pk)
 

@@ -18,7 +18,7 @@ from uuslug import slugify
 
 from ..fields import MultipleEmailField
 from ..forms import CaseTagForm
-from tcms.management.models import TestTag
+from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import TestCaseBugSystem
 from tcms.testcases.models import TestCaseComponent
@@ -30,7 +30,7 @@ from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TagFactory
 from tcms.tests import BasePlanCase, BaseCaseRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
@@ -126,9 +126,9 @@ class CaseTagFormTest(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.tag_1 = TestTagFactory(name='tag one')
-        cls.tag_2 = TestTagFactory(name='tag two')
-        cls.tag_3 = TestTagFactory(name='tag three')
+        cls.tag_1 = TagFactory(name='tag one')
+        cls.tag_2 = TagFactory(name='tag two')
+        cls.tag_3 = TagFactory(name='tag three')
 
         cls.cases = []
         for i in range(5):
@@ -936,7 +936,7 @@ class TestAJAXResponse(BasePlanCase):
 
 class TestGetCasesFromPlan(BasePlanCase):
     def test_casetags_are_shown_in_template(self):
-        tag, _ = TestTag.objects.get_or_create(name='Linux')
+        tag, _ = Tag.objects.get_or_create(name='Linux')
         self.case.add_tag(tag)
 
         url = reverse('testcases-all')

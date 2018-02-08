@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TagFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestTag(XmlrpcAPIBaseTest):
+class Tag(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
-        super(TestTag, self)._fixture_setup()
+        super(Tag, self)._fixture_setup()
 
-        self.tag_db = TestTagFactory(name='db')
-        self.tag_fedora = TestTagFactory(name='fedora')
-        self.tag_python = TestTagFactory(name='python')
-        self.tag_tests = TestTagFactory(name='tests')
-        self.tag_xmlrpc = TestTagFactory(name='xmlrpc')
+        self.tag_db = TagFactory(name='db')
+        self.tag_fedora = TagFactory(name='fedora')
+        self.tag_python = TagFactory(name='python')
+        self.tag_tests = TagFactory(name='tests')
+        self.tag_xmlrpc = TagFactory(name='xmlrpc')
         self.tags = [self.tag_db, self.tag_fedora, self.tag_python, self.tag_tests, self.tag_xmlrpc]
 
     def test_get_tags_with_ids(self):

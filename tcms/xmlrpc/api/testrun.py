@@ -4,7 +4,7 @@ from datetime import datetime
 from modernrpc.core import rpc_method
 
 from tcms.core.utils import form_errors_to_list
-from tcms.management.models import TestTag, EnvValue
+from tcms.management.models import Tag, EnvValue
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
@@ -112,7 +112,7 @@ def add_tag(run_id, tag):
         :raises: PermissionDenied if missing *testruns.add_testruntag* permission
         :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
     """
-    t, _ = TestTag.objects.get_or_create(name=tag)
+    t, _ = Tag.objects.get_or_create(name=tag)
     TestRun.objects.get(pk=run_id).add_tag(t)
 
 
@@ -132,7 +132,7 @@ def remove_tag(run_id, tag):
         :raises: PermissionDenied if missing *testruns.delete_testruntag* permission
         :raises: DoesNotExist if objects specified don't exist
     """
-    t = TestTag.objects.get(name=tag)
+    t = Tag.objects.get(name=tag)
     TestRun.objects.get(pk=run_id).remove_tag(t)
 
 
@@ -192,7 +192,7 @@ def create(values):
                 tags = [c.strip() for c in tags.split(',') if c]
 
             for tag in tags:
-                t, c = TestTag.objects.get_or_create(name=tag)
+                t, c = Tag.objects.get_or_create(name=tag)
                 tr.add_tag(tag=t)
                 del tag, t, c
     else:

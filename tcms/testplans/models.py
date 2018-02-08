@@ -55,7 +55,7 @@ class TestPlan(TCMSActionModel):
                                on_delete=models.CASCADE)
 
     env_group = models.ManyToManyField('management.EnvGroup', through='EnvPlanMap')
-    tag = models.ManyToManyField('management.TestTag',
+    tag = models.ManyToManyField('management.Tag',
                                  through='testplans.TestPlanTag',
                                  related_name='plan')
 
@@ -365,7 +365,7 @@ class TestPlanText(TCMSActionModel):
 
 
 class TestPlanTag(models.Model):
-    tag = models.ForeignKey('management.TestTag', on_delete=models.CASCADE)
+    tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
     plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
     user = models.IntegerField(default="1", db_column='userid')
 

@@ -8,7 +8,7 @@ from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import PlanTypeFactory
-from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TagFactory
 from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
@@ -57,8 +57,8 @@ class TestAddTag(XmlrpcAPIBaseTest):
             TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
         ]
 
-        self.tag1 = TestTagFactory(name='xmlrpc_test_tag_1')
-        self.tag2 = TestTagFactory(name='xmlrpc_test_tag_2')
+        self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
+        self.tag2 = TagFactory(name='xmlrpc_test_tag_2')
 
     def test_add_tag(self):
         self.rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
@@ -77,8 +77,8 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
             TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
         ]
 
-        self.tag0 = TestTagFactory(name='xmlrpc_test_tag_0')
-        self.tag1 = TestTagFactory(name='xmlrpc_test_tag_1')
+        self.tag0 = TagFactory(name='xmlrpc_test_tag_0')
+        self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
 
         self.plans[0].add_tag(self.tag0)
         self.plans[1].add_tag(self.tag1)

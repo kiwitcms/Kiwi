@@ -27,7 +27,7 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import TestTagFactory
+from tcms.tests.factories import TagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 
@@ -360,7 +360,7 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
                                         default_tester=cls.tester)
 
         for tag_name in ('python', 'kiwi', 'django'):
-            cls.origin_run.add_tag(TestTagFactory(name=tag_name))
+            cls.origin_run.add_tag(TagFactory(name=tag_name))
 
         for cc in (User.objects.create_user(username='run_tester1',
                                             email='run_tester1@example.com'),
@@ -636,8 +636,8 @@ class TestAJAXSearchRuns(BaseCaseRun):
             build=cls.build_issuetracker_fast,
             manager=cls.tester,
             default_tester=cls.run_tester,
-            tag=[TestTagFactory(name='fedora'),
-                 TestTagFactory(name='rhel')])
+            tag=[TagFactory(name='fedora'),
+                 TagFactory(name='rhel')])
 
         cls.run_release = TestRunFactory(
             summary='Smoke test before release',
@@ -654,7 +654,7 @@ class TestAJAXSearchRuns(BaseCaseRun):
             build=cls.build_issuetracker_fast,
             manager=cls.tester,
             default_tester=cls.run_tester,
-            tag=[TestTagFactory(name='rhel')])
+            tag=[TagFactory(name='rhel')])
 
         # test data for Issue #78
         # https://github.com/kiwitcms/Kiwi/issues/78
