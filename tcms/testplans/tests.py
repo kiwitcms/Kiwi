@@ -25,7 +25,7 @@ from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestPlanTypeFactory
+from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import TestTagFactory
 from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
@@ -65,7 +65,7 @@ class TestPlanEnvironmentGroupTests(test.TestCase):
                 'name': 'TP for Issue #73',
                 'product': self.product.pk,
                 'product_version': self.product_version.pk,
-                'type': TestPlanTypeFactory().pk,
+                'type': PlanTypeFactory().pk,
                 'env_group': self.env_group.pk,
             },
             follow=True,
@@ -114,7 +114,7 @@ class PlanTests(test.TestCase):
         cls.classification = ClassificationFactory(name='Auto')
         cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
         cls.product_version = VersionFactory(value='0.1', product=cls.product)
-        cls.plan_type = TestPlanTypeFactory()
+        cls.plan_type = PlanTypeFactory()
 
         cls.test_plan = TestPlanFactory(name='another test plan for testing',
                                         product_version=cls.product_version,
@@ -245,7 +245,7 @@ class ExportTestPlanTests(test.TestCase):
         cls.classification = ClassificationFactory(name='Auto')
         cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
         cls.product_version = VersionFactory(value='0.1', product=cls.product)
-        cls.plan_type = TestPlanTypeFactory()
+        cls.plan_type = PlanTypeFactory()
 
         cls.test_plan = TestPlanFactory(name='Test plan for testing exports',
                                         product_version=cls.product_version,

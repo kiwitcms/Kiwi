@@ -22,7 +22,7 @@ from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import EnvGroupPropertyMapFactory
 from tcms.tests.factories import EnvPropertyFactory
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestPlanTypeFactory
+from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 
@@ -743,7 +743,7 @@ class ProductTests(TestCase):
             # setup
             product = ProductFactory(name='Something to delete')
             product_version = VersionFactory(value='0.1', product=product)
-            plan_type = TestPlanTypeFactory()
+            plan_type = PlanTypeFactory()
 
             # create Test Plan via the UI by sending a POST request to the view
             previous_plans_count = TestPlan.objects.count()

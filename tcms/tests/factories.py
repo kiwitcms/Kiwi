@@ -170,10 +170,10 @@ class EnvValueFactory(DjangoModelFactory):
 # ### Factories for app testplans ###
 
 
-class TestPlanTypeFactory(DjangoModelFactory):
+class PlanTypeFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'testplans.TestPlanType'
+        model = 'testplans.PlanType'
 
     name = factory.Sequence(lambda n: 'Plan type %d' % n)
 
@@ -189,7 +189,7 @@ class TestPlanFactory(DjangoModelFactory):
     owner = factory.SubFactory(UserFactory)
     author = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)
-    type = factory.SubFactory(TestPlanTypeFactory)
+    type = factory.SubFactory(PlanTypeFactory)
     # FIXME: How to create field for field parent
 
     @factory.post_generation
