@@ -4,6 +4,9 @@
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
+#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#   Author: Alexander Todorov <info@kiwitcms.org>
+#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #   This library is free software; you can redistribute it and/or
@@ -22,7 +25,6 @@
 Immutable TCMS objects
 """
 
-import re
 from pprint import pformat as pretty
 
 import tcms_api.config as config
@@ -549,105 +551,6 @@ class Product(TCMS):
                     "Cannot find product for '{0}'".format(self.name))
         # Index the fetched object into cache
         self._index(self.name)
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  PlanStatus Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class PlanStatus(TCMS):
-    """ Test plan status (is_active field) """
-
-    _statuses = ["DISABLED", "ENABLED"]
-    _colors = ["red", "green"]
-
-    def __init__(self, status):
-        """
-        Takes bool, numeric status id or status name.
-
-        0 ... False ... DISABLED
-        1 ... True .... ENABLED
-        """
-
-        if isinstance(status, int):
-            if status not in [0, 1]:
-                raise TCMSError(
-                    "Not a valid plan status id: '{0}'".format(status))
-            # Save id (and convert possible bool to int)
-            self._id = int(status)
-        else:
-            try:
-                self._id = self._statuses.index(status)
-            except ValueError:
-                raise TCMSError("Invalid plan status '{0}'".format(status))
-
-    def __str__(self):
-        """ Return plan status name for printing """
-        return self.name
-
-    def __nonzero__(self):
-        """ Boolean status representation """
-        return self._id != 0
-
-    @property
-    def id(self):
-        """ Numeric plan status id """
-        return self._id
-
-    @property
-    def name(self):
-        """ Human readable plan status name """
-        return color(self._statuses[self.id], color=self._colors[self.id],
-                     enabled=config.Coloring().enabled())
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  RunStatus Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class RunStatus(TCMS):
-    """ Test run status """
-
-    _statuses = ['RUNNING', 'FINISHED']
-
-    def __init__(self, status):
-        """
-        Takes numeric status id, status name or stop date.
-
-        A 'None' value is considered to be a 'no stop date' running:
-
-        0 ... RUNNING  ... 'None'
-        1 ... FINISHED ... '2011-07-27 15:14'
-        """
-        if isinstance(status, int):
-            if status not in [0, 1]:
-                raise TCMSError(
-                    "Not a valid run status id: '{0}'".format(status))
-            self._id = status
-        else:
-            # Running or no stop date
-            if status == "RUNNING" or status == "None" or status is None:
-                self._id = 0
-            # Finished or some stop date
-            elif status == "FINISHED" or re.match("^[-0-9: ]+$", status):
-                self._id = 1
-            else:
-                raise TCMSError("Invalid run status '{0}'".format(status))
-
-    def __str__(self):
-        """ Return run status name for printing """
-        return self.name
-
-    @property
-    def id(self):
-        """ Numeric runstatus id """
-        return self._id
-
-    @property
-    def name(self):
-        """ Human readable runstatus name """
-        return self._statuses[self._id]
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -4,6 +4,10 @@
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
+#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#   Author: Alexander Todorov <info@kiwitcms.org>
+#
+#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #   This library is free software; you can redistribute it and/or
@@ -30,8 +34,8 @@ import tcms_api.config as config
 from tcms_api.config import log
 from tcms_api.base import TCMS, TCMSNone, _getter, _setter
 from tcms_api.xmlrpc import TCMSError
-from tcms_api.immutable import (Build, CaseStatus, Category, PlanStatus,
-                                PlanType, Priority, Product, RunStatus, Status, Tag, User, Version)
+from tcms_api.immutable import (Build, CaseStatus, Category,
+                                PlanType, Priority, Product, Status, Tag, User, Version)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Mutable Class
@@ -85,7 +89,7 @@ class TestPlan(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["author", "children", "name",
-                   "owner", "parent", "product", "status", "tags", "testcases",
+                   "owner", "parent", "product", "is_active", "tags", "testcases",
                    "testruns", "type", "version"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -113,8 +117,8 @@ class TestPlan(Mutable):
                        doc="Test plan product.")
     type = property(_getter("type"), _setter("type"),
                     doc="Test plan type.")
-    status = property(_getter("status"), _setter("status"),
-                      doc="Test plan status.")
+    is_active = property(_getter("is_active"), _setter("is_active"),
+                         doc="True if Test Plan is active.")
     version = property(_getter("version"), _setter("version"),
                        doc="Default product version.")
 
@@ -296,7 +300,7 @@ class TestPlan(Mutable):
             "value": inject["product_version"],
             "product_id": inject["product_id"]})
         self._type = PlanType(inject["type_id"])
-        self._status = PlanStatus(inject["is_active"] in ["True", True])
+        self._is_active = inject["is_active"] in ["True", True]
         if inject["parent_id"] is not None:
             self._parent = TestPlan(inject["parent_id"])
         else:
@@ -324,7 +328,7 @@ class TestPlan(Mutable):
         hash["name"] = self.name
         hash["product"] = self.product.id
         hash["type"] = self.type.id
-        hash["is_active"] = self.status.id == 1
+        hash["is_active"] = self._is_active
         if self.parent is not None:
             hash["parent"] = self.parent.id
         hash["default_product_version"] = self.version.id
@@ -370,7 +374,7 @@ class TestRun(Mutable):
 
     # List of all object attributes (used for init & expiration)
     _attributes = ["build", "caseruns", "finished", "manager",
-                   "notes", "product", "started", "status", "summary", "tags",
+                   "notes", "product", "started", "summary", "tags",
                    "tester", "testcases", "testplan", "time"]
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -402,8 +406,6 @@ class TestRun(Mutable):
                        doc="Manager responsible for this test run.")
     notes = property(_getter("notes"), _setter("notes"),
                      doc="Test run notes.")
-    status = property(_getter("status"), _setter("status"),
-                      doc="Test run status")
     summary = property(_getter("summary"), _setter("summary"),
                        doc="Test run summary.")
     tester = property(_getter("tester"), _setter("tester"),
@@ -579,8 +581,6 @@ class TestRun(Mutable):
         self._build = Build(inject["build_id"])
         self._manager = User(inject["manager_id"])
         self._notes = inject["notes"]
-        self._status = RunStatus(inject["stop_date"])
-        self._old_status = self._status
         self._summary = inject["summary"]
         self._tester = User(inject["default_tester_id"])
         self._testplan = TestPlan(inject["plan_id"])
@@ -617,13 +617,6 @@ class TestRun(Mutable):
         # This is required until BZ#731982 is fixed
         hash["product"] = self.build.product.id
         hash["summary"] = self.summary
-
-        # Update status field only if its value has changed. This is to avoid
-        # updating the 'Finished at' field, which is done automatically by
-        # TCMS even when "switching" from 'Finished' to 'Finished'.
-        if self._status != self._old_status:
-            self._old_status = self._status
-            hash["status"] = self.status.id
 
         log.info("Updating test run " + self.identifier)
         log.data(pretty(hash))

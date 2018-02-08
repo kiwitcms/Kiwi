@@ -4,6 +4,9 @@
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
+#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#   Author: Alexander Todorov <info@kiwitcms.org>
+#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #   This library is free software; you can redistribute it and/or
@@ -64,8 +67,8 @@ For details see pydoc documentation for individual modules:
 # TCMS objects
 from tcms_api.base import TCMS
 from tcms_api.immutable import (
-    Bug, Build, CaseStatus, Category, Component, PlanStatus, PlanType,
-    Priority, Product, RunStatus, Status, Tag, User, Version)
+    Bug, Build, CaseStatus, Category, Component, PlanType,
+    Priority, Product, Status, Tag, User, Version)
 from tcms_api.mutable import (
     Mutable, TestPlan, TestRun, TestCase, CaseRun)
 from tcms_api.containers import (
@@ -95,8 +98,8 @@ from tcms_api.xmlrpc import TCMSError
 __all__ = [
     'TCMS', 'Mutable', 'Container',
 
-    'Bug', 'Build', 'CaseStatus', 'Category', 'Component', 'PlanStatus', 'PlanType',
-    'Priority', 'Product', 'RunStatus', 'Status', 'Tag', 'User', 'Version',
+    'Bug', 'Build', 'CaseStatus', 'Category', 'Component', 'PlanType',
+    'Priority', 'Product', 'Status', 'Tag', 'User', 'Version',
     'TestPlan', 'TestRun', 'TestCase', 'CaseRun',
 
     'CaseBugs', 'CaseComponents', 'CaseRunBugs', 'CaseTags',
