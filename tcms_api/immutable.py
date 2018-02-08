@@ -595,12 +595,7 @@ class CaseStatus(TCMS):
         return self._casestatuses[self._id]
 
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Status Class
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class Status(TCMS):
+class TestCaseRunStatus(TCMS):
     """
     Test case run status.
 

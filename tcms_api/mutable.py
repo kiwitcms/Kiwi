@@ -35,7 +35,7 @@ from tcms_api.config import log
 from tcms_api.base import TCMS, TCMSNone, _getter, _setter
 from tcms_api.xmlrpc import TCMSError
 from tcms_api.immutable import (Build, CaseStatus, Category,
-                                PlanType, Priority, Product, Status, Tag, User, Version)
+                                PlanType, Priority, Product, TestCaseRunStatus, Tag, User, Version)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Mutable Class
@@ -1203,7 +1203,7 @@ class TestCaseRun(Mutable):
             self._sortkey = int(inject["sortkey"])
         else:
             self._sortkey = None
-        self._status = Status(inject["case_run_status_id"])
+        self._status = TestCaseRunStatus(inject["case_run_status_id"])
         self._testrun = TestRun(inject["run_id"])
         # Initialize attached test case (from dict, object or id)
         testcaseinject = kwargs.get("testcaseinject", None)
