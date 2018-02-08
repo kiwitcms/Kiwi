@@ -115,10 +115,10 @@ class BuildFactory(DjangoModelFactory):
     product = factory.SubFactory(ProductFactory)
 
 
-class TestTagFactory(DjangoModelFactory):
+class TagFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'management.TestTag'
+        model = 'management.Tag'
 
     name = factory.Sequence(lambda n: 'Tag %d' % n)
 
@@ -215,7 +215,7 @@ class TestPlanTagFactory(DjangoModelFactory):
         model = 'testplans.TestPlanTag'
 
     plan = factory.SubFactory(TestPlanFactory)
-    tag = factory.SubFactory(TestTagFactory)
+    tag = factory.SubFactory(TagFactory)
 
 
 class EnvPlanMapFactory(DjangoModelFactory):
@@ -324,7 +324,7 @@ class TestCaseTagFactory(DjangoModelFactory):
         model = 'testcases.TestCaseTag'
 
     case = factory.SubFactory(TestCaseFactory)
-    tag = factory.SubFactory(TestTagFactory)
+    tag = factory.SubFactory(TagFactory)
     user = 0
 
 
@@ -443,7 +443,7 @@ class TestRunTagFactory(DjangoModelFactory):
     class Meta:
         model = 'testruns.TestRunTag'
 
-    tag = factory.SubFactory(TestTagFactory)
+    tag = factory.SubFactory(TagFactory)
     run = factory.SubFactory(TestRunFactory)
 
 

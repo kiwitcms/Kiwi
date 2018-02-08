@@ -277,7 +277,7 @@ class Build(TCMSActionModel):
 
 
 # Test tag zone
-class TestTag(TCMSActionModel):
+class Tag(TCMSActionModel):
     id = models.AutoField(db_column='tag_id', max_length=10, primary_key=True)
     name = models.CharField(db_column='tag_name', max_length=255)
 

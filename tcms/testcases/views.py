@@ -31,7 +31,7 @@ from tcms.testcases import data
 from tcms.testcases.models import TestCase, TestCaseStatus, \
     TestCasePlan, TestCaseBugSystem, \
     TestCaseBug, TestCaseText, TestCaseComponent
-from tcms.management.models import Priority, TestTag
+from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
@@ -524,7 +524,7 @@ def get_tags_from_cases(case_ids, plan=None):
     @return: a list containing all found tags with id and name
     @rtype: list
     '''
-    query = TestTag.objects.filter(case__in=case_ids).distinct().order_by('name')
+    query = Tag.objects.filter(case__in=case_ids).distinct().order_by('name')
     if plan:
         query = query.filter(case__plan=plan)
 

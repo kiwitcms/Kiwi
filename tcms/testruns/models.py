@@ -55,7 +55,7 @@ class TestRun(TCMSActionModel):
     env_value = models.ManyToManyField('management.EnvValue',
                                        through='testruns.EnvRunValueMap')
 
-    tag = models.ManyToManyField('management.TestTag',
+    tag = models.ManyToManyField('management.Tag',
                                  through='testruns.TestRunTag',
                                  related_name='run')
 
@@ -665,7 +665,7 @@ class TestCaseRun(TCMSActionModel):
 
 
 class TestRunTag(models.Model):
-    tag = models.ForeignKey('management.TestTag', on_delete=models.CASCADE)
+    tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
     run = models.ForeignKey(TestRun, related_name='tags', on_delete=models.CASCADE)
     user = models.IntegerField(db_column='userid', default='0')
 

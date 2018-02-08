@@ -26,7 +26,7 @@ from django.views.decorators.http import require_POST
 
 from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
-from tcms.management.models import TestTag
+from tcms.management.models import Tag
 from tcms.testcases.models import TestCase, TestCaseBug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus
@@ -229,7 +229,7 @@ def tag(request, template_name="management/get_tag.html"):
         def add(self):
             for tag_str in self.tag:
                 try:
-                    tag, c = TestTag.objects.get_or_create(name=tag_str)
+                    tag, c = Tag.objects.get_or_create(name=tag_str)
                     for o in self.obj:
                         o.add_tag(tag)
                 except IntegrityError:
@@ -248,7 +248,7 @@ def tag(request, template_name="management/get_tag.html"):
 
             for tag_str in self.tag:
                 try:
-                    tag = TestTag.objects.filter(name=tag_str)[0]
+                    tag = Tag.objects.filter(name=tag_str)[0]
                 except IndexError:
                     return "Tag %s does not exist in current selected plan." % tag_str
                 for object in self.obj:

@@ -6,7 +6,7 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import string_to_list, form_errors_to_list
 from tcms.core.utils.timedelta2int import timedelta2int
-from tcms.management.models import TestTag
+from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
 from tcms.xmlrpc.forms import UpdateCaseForm, NewCaseForm
@@ -213,7 +213,7 @@ def add_tag(case_id, tag):
         :raises: PermissionDenied if missing *testcases.add_testcasetag* permission
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
     """
-    t, _ = TestTag.objects.get_or_create(name=tag)
+    t, _ = Tag.objects.get_or_create(name=tag)
     TestCase.objects.get(pk=case_id).add_tag(t)
 
 
@@ -234,7 +234,7 @@ def remove_tag(case_id, tag):
         :raises: DoesNotExist if objects specified don't exist
     """
     TestCase.objects.get(pk=case_id).remove_tag(
-        TestTag.objects.get(name=tag)
+        Tag.objects.get(name=tag)
     )
 
 
@@ -287,7 +287,7 @@ def create(values, **kwargs):
 
         # Add tag to the case
         for tag in string_to_list(values.get('tag', [])):
-            t, c = TestTag.objects.get_or_create(name=tag)
+            t, c = Tag.objects.get_or_create(name=tag)
             tc.add_tag(tag=t)
     else:
         # Print the errors if the form is not passed validation.

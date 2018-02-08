@@ -6,7 +6,7 @@ from tinymce.widgets import TinyMCE
 
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, StripURLField
-from tcms.management.models import Product, Version, EnvGroup, TestTag
+from tcms.management.models import Product, Version, EnvGroup, Tag
 from .models import TestPlan, PlanType
 # ===========Plan Fields==============
 
@@ -234,7 +234,7 @@ class NewPlanForm(BasePlanForm):
     )
 
     def clean_tag(self):
-        return TestTag.objects.filter(
+        return Tag.objects.filter(
             name__in=string_to_list(self.cleaned_data['tag'])
         )
 

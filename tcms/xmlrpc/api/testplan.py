@@ -3,7 +3,7 @@
 from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import form_errors_to_list
-from tcms.management.models import TestTag
+from tcms.management.models import Tag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase, TestCasePlan
 
@@ -123,7 +123,7 @@ def add_tag(plan_id, tag):
         :raises: PermissionDenied if missing *testplans.add_testplantag* permission
         :raises: TestPlan.DoesNotExist if object specified by PK doesn't exist
     """
-    t, _ = TestTag.objects.get_or_create(name=tag)
+    t, _ = Tag.objects.get_or_create(name=tag)
     TestPlan.objects.get(pk=plan_id).add_tag(t)
 
 
@@ -143,7 +143,7 @@ def remove_tag(plan_id, tag):
         :raises: PermissionDenied if missing *testplans.delete_testplantag* permission
         :raises: DoesNotExist if objects specified don't exist
     """
-    t = TestTag.objects.get(name=tag)
+    t = Tag.objects.get(name=tag)
     TestPlan.objects.get(pk=plan_id).remove_tag(t)
 
 
