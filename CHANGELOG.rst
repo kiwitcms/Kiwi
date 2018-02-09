@@ -1,6 +1,189 @@
 Change Log
 ==========
 
+
+Kiwi TCMS 4.0.0 (Feb 10 2018)
+-----------------------------
+
+Enhancements and bug fixes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Upgrade to Django 2.0.2
+- Pin JIRA client version to 1.0.10. Fixes
+  `Issue #195 <https://github.com/kiwitcms/Kiwi/issues/195>`_
+- Generate api-docs for model classes
+- Updated documentation for all RPC methods
+- Use Grappelli jQuery initialization, fixes popup windows
+- Unify RPC namespaces, API client class names and server-side model names.
+  Fixes `Issue #153 <https://github.com/kiwitcms/Kiwi/issues/153>`_
+
+Settings
+~~~~~~~~
+
+- Remove ``ADMIN_PREFIX`` setting
+
+RPC methods refactoring
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. warning::
+
+    This is not compatible with older tcms-api releases!
+
+- Remove ``Build.check_build``, use ``Build.filter``
+- Remove ``Build.get``, use ``Build.filter``
+- Remove ``Build.get_caseruns``, use ``TestCaseRun.filter``
+- Remove ``Build.get_runs``, use ``TestRun.filter``
+
+- Rename ``Env.filter_groups``, use ``Env.Group.filter``
+- Rename ``Env.filter_properties``, use ``Env.Property.filter``
+- Rename ``Env.filter_values``, use ``Env.Value.filter``
+
+- Remove ``Product.add_component``, use ``Component.create``
+- Remove ``Product.add_version``, use ``Version.create``
+- Remove ``Product.check_category``, use ``Category.filter``
+- Remove ``Product.check_component``, use ``Component.filter``
+- Remove ``Product.check_product``, use ``Product.filter``
+- Remove ``Product.filter_categories``, use ``Category.filter``
+- Remove ``Product.filter_components``, use ``Component.filter``
+- Remove ``Product.filter_versions``, use ``Version.filter``
+- Remove ``Product.get``, use ``Product.filter``
+- Remove ``Product.get_builds``, use ``Build.filter``
+- Remove ``Product.get_cases``, use ``TestCase.filter``
+- Remove ``Product.get_categories``, use ``Category.filter``
+- Remove ``Product.get_category``, use ``Category.filter``
+- Remove ``Product.get_component``, use ``Component.filter``
+- Remove ``Product.update_component``, use ``Component.update``
+
+- Rename ``Tag.get_tags`` to ``Tag.filter``
+
+
+
+- Remove ``TestCase.add_comment``
+- Update signature for ``TestCase.add_component``
+- Update signature for ``TestCase.add_tag``
+- Remove ``TestCase.add_to_run``, use ``TestRun.add_case``
+- Remove ``TestCase.attach_bug``, use ``Bug.create``
+- Remove ``TestCase.calculate_average_estimated_time``
+- Remove ``TestCase.calculate_total_estimated_time``
+- Remove ``TestCase.check_case_status``, use ``TestCaseStatus.filter``
+- Remove ``TestCase.check_priority``, use ``Priority.filter``
+- Update signature for ``TestCase.create``, no longer accepts ``plan``,
+  ``component`` and ``bug`` dict attributes. Instead use 
+  ``TestPlan.add_case``, ``TestCase.add_component`` and ``Bug.create``
+- Remove ``TestCase.detach_bug``, use ``Bug.remove``
+- Remove ``TestCase.filter_count``
+- Remove ``TestCase.get``, use ``TestCase.filter``
+- Remove ``TestCase.get_bugs``, use ``Bug.filter({'case': ?})``
+- Remove ``TestCase.get_bug_systems``
+- Remove ``TestCase.get_case_status``, use ``TestCaseStatus.filter``
+- Update signature for ``TestCase.get_components``
+- Remove ``TestCase.get_plans``, use ``TestPlan.filter({'case': ?})``
+- Remove ``TestCase.get_priority``, use ``Priority.filter``
+- Remove ``TestCase.get_tags``, use ``Tag.filter({'case': ?})``
+- Remove ``TestCase.get_text``, use ``TestCase.filter``
+- Remove ``TestCase.link_plan``, use ``TestPlan.add_case``
+- Rename ``TestCase.notification_add_cc`` to ``TestCase.add_notification_cc``
+  and update signature
+- Rename ``TestCase.notification_get_cc_list`` to ``TestCase.get_notification_cc``
+  and update signature
+- Rename ``TestCase.notification_remove_cc`` to ``TestCase.remove_notification_cc``
+  and update signature
+- Update signature for ``TestCase.remove_component``
+- Update signature for ``TestCase.remove_tag``
+- Remove ``TestCase.store_text``, use ``TestCase.update`` with
+  ``setup``, ``breakdown``, ``action`` and ``effect`` attributes in the parameter dict
+- Remove ``TestCase.unlink_plan``, use ``TestPlan.remove_case``
+
+- Remove ``TestCasePlan.get``
+- Remove ``TestCasePlan.update``
+
+- Update ``TestCaseRun.add_comment`` to accept a single ID as first parameter
+- Remove ``TestCaseRun.attach_bug``, use ``Bug.create``
+- Rename ``TestCaseRun.attach_log`` to ``TestCaseRun.add_log``
+- Remove ``TestCaseRun.detach_bug``, use ``Bug.remove``
+- Rename ``TestCaseRun.detach_log`` to ``TestCaseRun.remove_log``
+- Remove ``TestCaseRun.get``, use ``TestCaseRun.filter``
+- Remove ``TestCaseRun.get_bugs``, use ``Bug.filter({'case_run': ?})``
+- Remove ``TestCaseRun.get_case_run_status_by_name``
+- Update signature for ``TestCaseRun.update``
+
+- Remove ``TestPlan.add_component``
+- Update signature for ``TestPlan.add_tag``
+- Remove ``TestPlan.check_plan_type``, use ``PlanType.filter``
+- Remove ``TestPlan.filter_count``
+- Remove ``TestPlan.get``, use ``TestPlan.filter``
+- Remove ``TestPlan.get_all_cases_tags``
+- Remove ``TestPlan.get_components``
+- Remove ``TestPlan.get_env_groups``, use ``Env.Group.filter({'testplan': ?})``
+- Remove ``TestPlan.get_plan_type``, use ``PlanType.filter``
+- Remove ``TestPlan.get_product``, use ``Product.filter({'plan': ?})``
+- Remove ``TestPlan.get_tags``, use ``Tag.filter({'plan': ?})``
+- Remove ``TestPlan.get_test_cases``, use ``TestCase.filter({'plan': ?})``
+- Remove ``TestPlan.get_test_runs``, use ``TestRun.filter({'plan': ?})``
+- Remove ``TestPlan.get_text``, use ``TestPlan.filter``
+- Rename ``TestPlan.link_env_value`` to ``TestPlan.add_env_value``
+  and update signature
+- Remove ``TestPlan.remove_component``
+- Update signature for ``TestPlan.remove_tag``
+- Remove ``TestPlan.store_text``, use ``TestPlan.update`` with
+  a ``text`` attribute in the parameter values
+- Rename ``TestPlan.unlink_env_value`` to ``TestPlan.remove_env_value``
+  and update signature
+
+- Rename ``TestRun.add_cases`` to ``TestRun.add_case`` and update signature
+- Update signature for ``TestRun.add_tag``
+- Update signature for ``TestRun.create``, no longer accepts ``case``
+  dict attribute. Instead use ``TestRun.add_case``
+- Remove ``TestRun.filter_count``
+- Remove ``TestRun.get``, use ``TestRun.filter``
+- Remove ``TestRun.get_bugs``
+- Remove ``TestRun.get_env_values``, use ``Env.Value.filter({'testrun': ?})``
+- Remove ``TestRun.get_tags``, use ``Tag.filter({'run': ?})``
+- Rename ``TestRun.get_test_cases`` to ``TestRun.get_cases``
+- Remove ``TestRun.get_test_case_runs``, use ``TestCaseRun.filter({'run': ?})``
+- Remove ``TestRun.get_test_plan``, use ``TestPlan.filter({'run': ?})[0]``
+- Rename ``TestRun.remove_cases`` to ``TestRun.remove_case`` and update signature
+- Update signature for ``TestRun.remove_tag``
+- Update signature for ``TestRun.update``
+
+- Rename ``User.get`` to ``User.filter``
+- Rename ``User.join`` to ``User.join_group``
+- Update signature for ``User.update``
+
+
+Models and database migrations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Remove model ``TestEnvironment``
+- Remove model ``TestEnvironmentCategory``
+- Remove model ``TestEnvironmentElement``
+- Remove model ``TestEnvironmentMap``
+- Remove model ``TestEnvironmentProperty``
+- Remove model ``TestPlanComponent``
+- Remove ``TestPlan.get_text_with_version()``
+- Remove ``TestRun.get_previous_or_next()``
+
+**IMPORTANT:** this release introduces new database migrations!
+
+
+tcms-api 4.0.0 (Feb 10 2018)
+----------------------------
+
+.. warning::
+
+    This is not compatible with older XML-RPC versions!
+
+- **Make the code compatible with Kiwi TCMS XML-RPC v4.0.0**
+- Rename ``Status`` to ``TestCaseRunStatus``
+- Rename ``CaseRun`` to ``TestCaseRun``
+- Remove ``PlanStatus``, use ``TestPlan.is_active``
+- Remove ``RunStatus``, use ``TestRun.finished``
+- Remove ``TestPlan.components`` container
+- Update signature for ``TestPlan``. Now acept ``text`` kwarg in constructor
+  instead of ``document``.
+
+
+
 Kiwi TCMS 3.50 (Jan 24 2018)
 ----------------------------
 
