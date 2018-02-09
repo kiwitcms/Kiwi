@@ -14,8 +14,12 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'style/base.css' %}" media="screen" />
 	<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
 	{% block custom_stylesheet %}{% endblock %}
-	<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+
+        <!-- jQuery, jQuery-UI for Grappelli -->
+        <script src="{% static "grappelli/jquery/jquery.min.js" %}" type="text/javascript"></script>
+        <script src="{% static "grappelli/jquery/ui/jquery-ui.min.js" %}" type="text/javascript"></script>
+        <!-- Grappelli Minified -->
+        <script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
 
 	<script type="text/javascript" src="{% static 'js/lib/jquery-1.7.2.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/lib/jquery-ui-1.8.20.min.js' %}"></script>
