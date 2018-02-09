@@ -180,7 +180,6 @@ def new(request, template_name='case/new.html'):
     if tp:
         default_form_parameters = {
             'product': tp.product_id,
-            'component': tp.component.defer('id').values_list('pk', flat=True),
             'is_automated': '0',
         }
     # Initial the form parameters when write new case directly
