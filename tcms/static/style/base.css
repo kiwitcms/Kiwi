@@ -15,7 +15,7 @@ body { font-size:12px; width:100%; min-width:1200px; line-height:150%; font-fami
 .blind_all_link,.blind_icon{ cursor: pointer;}
 .fixed:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 .fixed { display: block; min-height: 1%; }
-*html .fixed { height: 1%; }
+html .fixed { height: 1%; }
 
 .clear{ clear:both!important; float:none!important;}
 .absoluteright{position:absolute; right:10px; top:4px;}
@@ -1008,7 +1008,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .listTdReport tr:hover td.bgRowspan{background:#F5F5F5;}
 .listTdReport td{height:30px; line-height:30px; border-bottom:1px solid #E3E3E3; padding:0 5px;}
 .listTdReport .bottomTd td{border-bottom:0px;}
-.bgTotal{backgroundarkorange; color:#FFFFFF; padding:0 4px;}
 .reportSummary{margin:20px auto 12px auto; font-size:12px; clear:both; color:#888888; border-bottom:1px solid #888888;}
 .reportSummary ul{float:left; margin:0 0 -1px 0; padding-right:10px; padding-left:20px;}
 .reportSummary ul span{padding:0 10px 0 3px; color:red;}
