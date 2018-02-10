@@ -179,7 +179,7 @@ tcms-api 4.0.0 (Feb 10 2018)
 - Remove ``PlanStatus``, use ``TestPlan.is_active``
 - Remove ``RunStatus``, use ``TestRun.finished``
 - Remove ``TestPlan.components`` container
-- Update signature for ``TestPlan``. Now acept ``text`` kwarg in constructor
+- Update signature for ``TestPlan``. Now accept ``text`` kwarg in constructor
   instead of ``document``.
 
 
