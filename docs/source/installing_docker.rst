@@ -6,16 +6,19 @@ In order to run Kiwi TCMS as a production instance you will need
 `docker-compose <https://docs.docker.com/compose/install/>`_. Refer to
 their documentation about download and installation options.
 
-Build Docker image
-------------------
+Pull or Build Docker image
+--------------------------
 
-You can build a Docker image of Kiwi TCMS by running::
+You can download the official Kiwi TCMS Docker image by running::
+
+    docker pull kiwitcms/kiwi
+
+Alternatively you can build an image yourself by running::
 
     make docker-image
 
-This will create a Docker image based on the official CentOS 7 image
-with the latest Kiwi TCMS version. By default the image tag will be
-``kiwitcms/kiwi:<version>``.
+this will create a Docker image with the latest Kiwi TCMS version.
+By default the image tag will be ``kiwitcms/kiwi:<version>``.
 
 
 Start Docker compose
@@ -61,7 +64,7 @@ To upgrade running Kiwi TCMS containers execute the following commands::
 
     docker-compose down
     # make docker-image if you build from source or
-    docker pull kiwitcms/kiwi # to fetch latest version from a docker registry
+    docker pull kiwitcms/kiwi # to fetch latest version from Docker Hub
     docker-compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
