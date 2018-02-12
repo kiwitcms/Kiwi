@@ -233,10 +233,10 @@ def tag(request, template_name="management/get_tag.html"):
                     for o in self.obj:
                         o.add_tag(tag)
                 except IntegrityError:
-                    return "Error when adding %s " \
+                    return False, "Error when adding %s " \
                            "Tag with this key already exists in the database." % self.tag
                 except Exception:
-                    return "Error when adding %s" % self.tag
+                    return False, "Error when adding %s" % self.tag
 
             return True, self.obj
 
@@ -244,18 +244,17 @@ def tag(request, template_name="management/get_tag.html"):
             self.obj = self.obj.filter(tag__name__in=self.tag).distinct()
 
             if not self.obj:
-                return "Tags does not exist in current selected plan."
+                return False, "Tags does not exist in current selected plan."
 
             for tag_str in self.tag:
                 try:
-                    tag = Tag.objects.filter(name=tag_str)[0]
-                except IndexError:
-                    return "Tag %s does not exist in current selected plan." % tag_str
-                for object in self.obj:
-                    try:
+                    tag = Tag.objects.get(name=tag_str)
+                    for object in self.obj:
                         object.remove_tag(tag)
-                    except Exception:
-                        return "Remove tag %s error." % tag
+                except IndexError:
+                    return False, "Tag %s does not exist in current selected plan." % tag_str
+                except Exception:
+                    return False, "Remove tag %s error." % tag
             return True, self.obj
 
     objects = Objects(request, template_name)

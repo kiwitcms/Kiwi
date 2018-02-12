@@ -71,8 +71,3 @@ class TestAdminView(BasePlanCase):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(reverse('admin:sites_site_delete', args=[settings.SITE_ID]))
         self.assertRedirects(response, reverse('admin:sites_site_change', args=[settings.SITE_ID]))
-
-    def test_users_list_shows_is_superuser_column(self):
-        self.client.login(username=self.tester.username, password='password')
-        response = self.client.get(reverse('admin:auth_user_changelist'))
-        self.assertContains(response, 'column-is_superuser')
