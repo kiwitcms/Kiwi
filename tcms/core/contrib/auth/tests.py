@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-
-from hashlib import sha1
 from mock import patch
+from hashlib import sha1
 
+from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.urls import reverse
-from django.test import TestCase
 from django.contrib.sites.models import Site
+from django.test import TestCase, override_settings
 
-from tcms.core.contrib.auth.models import UserActivateKey
+from tcms import signals
+from .models import UserActivateKey
 
 
 # ### Test cases for models ###
@@ -131,11 +131,30 @@ class TestRegistration(TestCase):
 
         return response
 
-    @patch('tcms.core.contrib.auth.signals.user_registered.send')
+    @patch('tcms.signals.user_registered.send')
     def test_register_user_sends_signal(self, signal_mock):
-        response = self.assert_user_registration('new-signal-tester')
+        self.assert_user_registration('new-signal-tester')
         self.assertTrue(signal_mock.called)
         self.assertEqual(1, signal_mock.call_count)
+
+    @override_settings(ADMINS=[('Test Admin', 'admin@kiwitcms.org')])
+    @patch('tcms.core.utils.mailto.send_mail')
+    def test_signal_handler_notifies_admins(self, send_mail):
+        # connect the handler b/c it is not connected by default
+        signals.user_registered.connect(signals.notify_admins)
+
+        try:
+            self.assert_user_registration('signal-handler')
+
+            # 1 - verification mail, 2 - email to admin
+            self.assertTrue(send_mail.called)
+            self.assertEqual(2, send_mail.call_count)
+
+            # verify we've actually sent the admin email
+            self.assertIn('New user awaiting approval', send_mail.call_args_list[0][0][0])
+            self.assertIn('admin@kiwitcms.org', send_mail.call_args_list[0][0][-1])
+        finally:
+            signals.user_registered.disconnect(signals.notify_admins)
 
     @patch('tcms.core.utils.mailto.send_mail')
     @patch('tcms.core.contrib.auth.views.settings.DEFAULT_FROM_EMAIL', new='kiwi@example.com')

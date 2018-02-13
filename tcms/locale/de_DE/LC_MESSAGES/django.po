@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-18 21:42+0000\n"
+"POT-Creation-Date: 2018-02-14 21:20+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
@@ -44,7 +44,7 @@ msgstr "URL"
 msgid "Comment"
 msgstr "Bemerkung"
 
-#: tcms/core/forms/fields.py:56
+#: tcms/core/forms/fields.py:55
 msgid "Enter a valid estimated time. e.g. 12h45m"
 msgstr "Eingabe einer gültigen geschätzten Dauer z. B. 12h45m"
 
@@ -54,7 +54,8 @@ msgstr "Benutzername"
 
 #: tcms/profiles/forms.py:28
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr "Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
+msgstr ""
+"Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
 
 #: tcms/profiles/forms.py:31
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
@@ -71,6 +72,20 @@ msgstr "Benutzerfehler."
 #: tcms/profiles/forms.py:101
 msgid "A user with that username already exists."
 msgstr "Es gibt bereits einen Benutzer mit diesem Namen."
+
+#: tcms/signals.py:59
+msgid "New user awaiting approval"
+msgstr ""
+
+#: tcms/templates/email/user_registered/notify_admins.txt:2
+#, python-format
+msgid ""
+"Dear Administrator,\n"
+"somebody just registered an account with username %(user.username)s at your\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
+"Go to %(user_url)s to activate the account!\n"
+msgstr ""
 
 #: tcms/templates/registration/password_change_done.html:4
 #: tcms/templates/registration/password_change_done.html:8
@@ -93,8 +108,11 @@ msgstr[0] "Bitte korrigieren Sie den Fehler unten."
 msgstr[1] "Bitte korrigieren Sie den Fehler unten."
 
 #: tcms/templates/registration/password_change_form.html:19
-msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
-msgstr "Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
 
 #: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"
@@ -159,4 +177,3 @@ msgstr ""
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr ""
-

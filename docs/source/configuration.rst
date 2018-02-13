@@ -1,5 +1,5 @@
 Kiwi TCMS configuration settings
-==================================
+================================
 
 All sensible settings are defined in ``tcms/settings/common.py``. You will have
 to update some of them for your particular production environment.
@@ -17,6 +17,15 @@ to update some of them for your particular production environment.
 
     Additional information how to override the default settings and Docker image is
     available at `<https://github.com/MrSenko/kiwi-docker>`_!
+
+
+Augmenting behavior with signal handlers
+----------------------------------------
+
+Kiwi TCMS defines signals which are triggered during specific events.
+Administrators may override the default handlers and/or connect additional
+ones to augment the default behavior of Kiwi TCMS. For more information
+refer to :mod:`tcms.signals`.
 
 
 Using Amazon SES instead of SMTP email
