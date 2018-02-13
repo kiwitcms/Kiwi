@@ -131,6 +131,12 @@ class TestRegistration(TestCase):
 
         return response
 
+    @patch('tcms.core.contrib.auth.signals.user_registered.send')
+    def test_register_user_sends_signal(self, signal_mock):
+        response = self.assert_user_registration('new-signal-tester')
+        self.assertTrue(signal_mock.called)
+        self.assertEqual(1, signal_mock.call_count)
+
     @patch('tcms.core.utils.mailto.send_mail')
     @patch('tcms.core.contrib.auth.views.settings.DEFAULT_FROM_EMAIL', new='kiwi@example.com')
     def test_register_user_by_email_confirmation(self, send_mail):

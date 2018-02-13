@@ -8,9 +8,10 @@ from django.urls import reverse
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_http_methods
 
-from tcms.core.contrib.auth import get_using_backend
-from tcms.core.contrib.auth.forms import RegistrationForm
-from tcms.core.contrib.auth.models import UserActivateKey
+from . import get_using_backend
+from .forms import RegistrationForm
+from .models import UserActivateKey
+from .signals import user_registered
 from tcms.core.views import Prompt
 
 
@@ -34,8 +35,10 @@ def register(request, template_name='registration/registration_form.html'):
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
             ak = form.set_active_key()
+            # send a signal that new user has been registered
+            user_registered.send(sender=form.__class__, request=request, user=new_user, backend=backend)
 
             # Send email to user if email is configured.
             if form.cleaned_data['email'] and settings.DEFAULT_FROM_EMAIL:
