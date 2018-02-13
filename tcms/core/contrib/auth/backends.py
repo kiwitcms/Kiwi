@@ -16,36 +16,6 @@ class DBModelBackend(ModelBackend):
     can_logout = True
 
 
-class EmailBackend(ModelBackend):
-    # The source code is based on: http://www.djangosnippets.org/snippets/74/
-    # All rights reserved by the orignal authors.
-    """
-    Email authorization backend for TCMS.
-    """
-    # Web UI Needed
-    can_login = True
-    can_register = True
-    can_logout = True
-
-    def authenticate(self, request, username=None, password=None):
-        # If username is an email address, then try to pull it up
-        try:
-            validate_email(username)
-        except ValidationError:
-            try:
-                user = User.objects.get(username=username)
-            except User.DoesNotExist:
-                return None
-        else:
-            try:
-                user = User.objects.get(email=username)
-            except User.DoesNotExist:
-                return None
-
-        if user.check_password(password):
-            return user
-
-
 class BugzillaBackend(ModelBackend):
     """
     Bugzilla authorization backend for TCMS.
@@ -56,15 +26,6 @@ class BugzillaBackend(ModelBackend):
     can_login = True
     can_register = False
     can_logout = True
-
-    # Disable for python 2.4 compatible
-    # def __init__(self):
-    # super(KerberosBackend, self).__init__()
-    #    for var in ('BUGZILLA3_RPC_SERVER', ):
-    #        if not hasattr(settings, var):
-    #            raise ImproperlyConfigured(
-    #                "Variable '%s' not set in settings." % var
-    #            )
 
     def authenticate(self, request, username=None, password=None):
         server = xmlrpc.client.ServerProxy(settings.BUGZILLA3_RPC_SERVER)
@@ -110,15 +71,6 @@ class KerberosBackend(ModelBackend):
     can_login = True
     can_register = False
     can_logout = True
-
-    # Disable for python 2.4 compatible
-    # def __init__(self):
-    # super(KerberosBackend, self).__init__()
-    #    for var in ('KRB5_REALM', ):
-    #        if not hasattr(settings, var):
-    #            raise ImproperlyConfigured(
-    #                "Variable '%s' not set in settings." % var
-    #            )
 
     def authenticate(self, request, username=None, password=None):
         import kerberos
@@ -180,15 +132,6 @@ class ModAuthKerbBackend(RemoteUserBackend):
     can_login = False
     can_register = False
     can_logout = False
-
-    # Disable for python 2.4 compatible
-    # def __init__(self):
-    # super(KerberosBackend, self).__init__()
-    #    for var in ('KRB5_REALM', ):
-    #        if not hasattr(settings, var):
-    #            raise ImproperlyConfigured(
-    #                "Variable '%s' not set in settings." % var
-    #            )
 
     def configure_user(self, user):
         """
