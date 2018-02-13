@@ -272,18 +272,6 @@ def tag(request, template_name="management/get_tag.html"):
 
     del q_tag, q_action
 
-    # Response to batch operations
-    if request.GET.get('t') == 'json':
-        if request.GET.get('f') == 'serialized':
-            return HttpResponse(
-                # FIXME: this line of code depends on the existence of `a`
-                # argument in query string. So, if a does not appear in the
-                # query string, error will happen here
-                serializers.serialize(request.GET['t'], response[1])
-            )
-
-        return HttpResponse(json.dumps({'response': 'ok'}))
-
     # Response the single operation
     if len(obj) == 1:
         tags = obj[0].tag.all()
