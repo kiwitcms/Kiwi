@@ -11,8 +11,8 @@ from django.views.decorators.http import require_http_methods
 from . import get_using_backend
 from .forms import RegistrationForm
 from .models import UserActivateKey
-from .signals import user_registered
 from tcms.core.views import Prompt
+from tcms.signals import user_registered
 
 
 @require_http_methods(['GET', 'POST'])
@@ -38,7 +38,10 @@ def register(request, template_name='registration/registration_form.html'):
             new_user = form.save()
             ak = form.set_active_key()
             # send a signal that new user has been registered
-            user_registered.send(sender=form.__class__, request=request, user=new_user, backend=backend)
+            user_registered.send(sender=form.__class__,
+                                 request=request,
+                                 user=new_user,
+                                 backend=backend)
 
             # Send email to user if email is configured.
             if form.cleaned_data['email'] and settings.DEFAULT_FROM_EMAIL:

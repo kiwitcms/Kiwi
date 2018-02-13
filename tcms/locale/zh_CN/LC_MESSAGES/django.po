@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-18 21:42+0000\n"
+"POT-Creation-Date: 2018-02-14 21:20+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: tcms/core/forms/fields.py:56
+#: tcms/core/forms/fields.py:55
 msgid "Enter a valid estimated time. e.g. 12h45m"
 msgstr ""
 
@@ -72,6 +72,20 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr ""
 
+#: tcms/signals.py:59
+msgid "New user awaiting approval"
+msgstr ""
+
+#: tcms/templates/email/user_registered/notify_admins.txt:2
+#, python-format
+msgid ""
+"Dear Administrator,\n"
+"somebody just registered an account with username %(user.username)s at your\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
+"Go to %(user_url)s to activate the account!\n"
+msgstr ""
+
 #: tcms/templates/registration/password_change_done.html:4
 #: tcms/templates/registration/password_change_done.html:8
 msgid "Password change successful"
@@ -92,7 +106,9 @@ msgid_plural "Please correct the errors below."
 msgstr[0] ""
 
 #: tcms/templates/registration/password_change_form.html:19
-msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
 msgstr ""
 
 #: tcms/templates/registration/password_change_form.html:23
@@ -158,4 +174,3 @@ msgstr ""
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr ""
-

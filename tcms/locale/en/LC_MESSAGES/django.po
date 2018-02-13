@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-18 21:42+0000\n"
+"POT-Creation-Date: 2018-02-14 21:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: tcms/core/forms/fields.py:56
+#: tcms/core/forms/fields.py:55
 msgid "Enter a valid estimated time. e.g. 12h45m"
 msgstr ""
 
@@ -72,6 +72,20 @@ msgstr ""
 
 #: tcms/profiles/forms.py:101
 msgid "A user with that username already exists."
+msgstr ""
+
+#: tcms/signals.py:59
+msgid "New user awaiting approval"
+msgstr ""
+
+#: tcms/templates/email/user_registered/notify_admins.txt:2
+#, python-format
+msgid ""
+"Dear Administrator,\n"
+"somebody just registered an account with username %(user.username)s at your\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
+"Go to %(user_url)s to activate the account!\n"
 msgstr ""
 
 #: tcms/templates/registration/password_change_done.html:4
