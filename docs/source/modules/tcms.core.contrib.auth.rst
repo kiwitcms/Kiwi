@@ -15,5 +15,6 @@ Submodules
    tcms.core.contrib.auth.backends
    tcms.core.contrib.auth.forms
    tcms.core.contrib.auth.models
+   tcms.core.contrib.auth.signals
    tcms.core.contrib.auth.views
 
