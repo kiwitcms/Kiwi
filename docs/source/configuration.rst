@@ -15,7 +15,7 @@ to update some of them for your particular production environment.
 
 .. note::
 
-    Information how to override the default settings and Docker image are
+    Additional information how to override the default settings and Docker image is
     available at `<https://github.com/MrSenko/kiwi-docker>`_!
 
 
@@ -41,7 +41,7 @@ configure the following settings::
     AWS_SES_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
     AWS_SES_SECRET_ACCESS_KEY = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'
 
-Also modify the Docker image to include the following lines::
+Also modify ``Dockerfile`` to include the following lines::
 
     RUN pip install django_ses
 
@@ -53,18 +53,18 @@ Kiwi TCMS supports passwordless authentication with Kerberos. This is
 turned off by default because most organization do not use it. To enable
 configure the following settings::
 
-    MIDDLEWARE_CLASSES += (
+    MIDDLEWARE += [
         'django.contrib.auth.middleware.RemoteUserMiddleware',
-    )
+    ]
 
-    AUTHENTICATION_BACKENDS += (
+    AUTHENTICATION_BACKENDS += [
         'tcms.core.contrib.auth.backends.ModAuthKerbBackend',
-    )
+    ]
 
     KRB5_REALM='YOUR-DOMAIN.COM'
 
 
-Also modify the Docker image to include the following lines::
+Also modify ``Dockerfile`` to include the following lines::
 
     RUN yum -y install krb5-devel mod_auth_kerb
     RUN pip install kerberos

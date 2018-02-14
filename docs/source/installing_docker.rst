@@ -88,15 +88,21 @@ https://wiki.centos.org/HowTos/Https.
 Customization
 -------------
 
-You can configure your ``docker-compose.yml`` to mount a local file
-``my_settings.py`` inside the running Docker container as ``product.py``.
+You can edit ``docker-compose.yml`` to mount the local file
+``local_settings.py`` inside the running Docker container as ``product.py``::
+
+        volumes:
+            - uploads:/var/kiwi/uploads
+            - ./local_settings.py:/venv/lib64/python3.5/site-packages/tcms/settings/product.py
+
 You can override any default settings in this way!
 
 You can also build your own customized version of Kiwi TCMS by adjusting
-the contents of the local ``Dockerfile``. Use that file to install additional
-Python dependencies you may need and then::
+the contents of ``Dockerfile`` and then::
 
     docker build -t my_org/my_kiwi:<version> .
 
-Next make sure to modify ``docker-compose.yml`` to use your customized image
-instead the default ``kiwitcms/kiwi:latest``!
+.. note::
+
+    Make sure to modify ``docker-compose.yml`` to use your customized image
+    instead the default ``kiwitcms/kiwi:latest``!
