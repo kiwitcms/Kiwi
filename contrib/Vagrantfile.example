@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "fedora/27-cloud-base"
+  config.vm.box_check_update = false
+  config.vm.network "forwarded_port", guest: 8000, host: 8087
+  config.vm.synced_folder ".", "/code"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.name = 'nitrate-dev'
+  end
+
+  config.vm.provision "shell", inline: "dnf install -y python2"
+
+  config.vm.provision "shell", inline: "dnf install -y MySQL-python"
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "contrib/ansible/testenv/testenv.yml"
+  end
+end

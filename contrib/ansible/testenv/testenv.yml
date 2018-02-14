@@ -1,0 +1,84 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Ensure dependencies are installed
+      dnf: name={{ item }} state=present
+      with_items:
+        - ctags
+        - docker
+        - gcc
+        - git
+        - ipython
+        - mariadb-devel
+        - mariadb-server
+        - postgresql
+        - postgresql-devel
+        - postgresql-server
+        - python2
+        - python2-detox
+        - python2-ipdb
+        - python2-virtualenv
+        - python2-devel
+        - redhat-rpm-config
+        - rpm-build
+        - rpmdevtools
+        - rpmlint
+
+    - name: Service mariadb
+      systemd: name=mariadb state=started enabled=yes
+
+    - name: Service docker
+      systemd: name=docker state=started enabled=yes
+
+    - stat: path=/var/lib/pgsql/data
+      register: pgsql_data
+
+    - name: Init PostgreSQL data cluster
+      shell: postgresql-setup --initdb
+      when: pgsql_data.stat.exists == False
+
+    - name: Service PostgreSQL
+      systemd: name=postgresql state=started enabled=yes
+
+    - name: Create database nitrate
+      become: false
+      mysql_db: name=nitrate state=present login_user=root
+
+    - name: Add group docker
+      group: name=docker state=present
+
+    - name: Add user to group docker
+      user: name={{ ansible_user }} group=docker append=yes
+
+    - name: Restart docker service
+      systemd: name=docker state=restarted
+
+    - name: Provison virtualenv
+      become: false
+      pip:
+        virtualenv: /home/{{ ansible_user }}/nitrate-env
+        requirements: /code/requirements/devel.txt
+
+    - name: Initialize Nitrate database
+      become: false
+      django_manage:
+        command: migrate
+        app_path: /code
+        virtualenv: /home/{{ ansible_user }}/nitrate-env
+
+    - name: Create initialize superuser with username admin and email admin@example.com
+      become: false
+      django_manage:
+        command: "createsuperuser --noinput --username admin --email admin@example.com"
+        app_path: /code
+        virtualenv: /home/{{ ansible_user }}/nitrate-env
+      ignore_errors: yes
+
+    - name: Set superuser's password to admin
+      become: false
+      django_manage:
+        command: "shell -c \"from django.contrib.auth.models import User; admin = User.objects.get(username='admin'); admin.set_password('admin'); admin.save()\""
+        app_path: /code
+        virtualenv: /home/{{ ansible_user }}/nitrate-env

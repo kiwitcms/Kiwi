@@ -27,3 +27,4 @@ htmlcov/
 .cache/
 install/
 uploads/
+Vagrantfile
