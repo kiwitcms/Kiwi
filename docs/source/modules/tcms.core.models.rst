@@ -13,5 +13,4 @@ Submodules
 
    tcms.core.models.base
    tcms.core.models.fields
-   tcms.core.models.signals
 
