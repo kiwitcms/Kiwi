@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-14 21:20+0000\n"
+"POT-Creation-Date: 2018-02-15 22:47+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -72,8 +72,43 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr ""
 
-#: tcms/signals.py:59
+#: tcms/signals.py:80
 msgid "New user awaiting approval"
+msgstr ""
+
+#: tcms/signals.py:140
+#, python-format
+msgid "New TestRun %(summary)s created"
+msgstr ""
+
+#: tcms/signals.py:142
+#, python-format
+msgid "TestRun %(summary)s has been updated"
+msgstr ""
+
+#: tcms/templates/email/post_run_save/email.txt:2
+#, python-format
+msgid ""
+"Test run %(test_run.pk)s has been created or updated for you.\n"
+"\n"
+"### Links ###\n"
+"Test run: %(test_run.get_url)s\n"
+"Test plan: %(test_run.plan.get_url)s\n"
+"\n"
+"### Basic run information ###\n"
+"Summary: %(test_run.summary)s\n"
+"\n"
+"Managed: %(test_run.manager)s.\n"
+"Default tester: %(test_run.default_tester)s.\n"
+"\n"
+"Product: %(test_run.build.product)s\n"
+"Product version: %(test_run.product_version)s\n"
+"Build: %(test_run.build)s\n"
+"\n"
+"Estimated time: %(test_run.estimated_time)s\n"
+"\n"
+"Notes:\n"
+"%(test_run.notes)s\n"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2

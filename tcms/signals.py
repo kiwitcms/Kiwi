@@ -132,24 +132,20 @@ def handle_emails_post_run_save(sender, *args, **kwargs):
     """
         Send email updates after a TestRus has been created or updated!
     """
+    from django.utils.translation import gettext as _
+
     instance = kwargs['instance']
 
     if kwargs.get('created'):
-        instance.mail(
-            template='mail/new_run.txt',
-            subject='New run create from plan %s: %s' % (
-                instance.plan_id, instance.summary
-            ),
-            context={'test_run': instance, }
-        )
+        subject = _('New TestRun %(summary)s created') % {'summary': instance.summary}
     else:
-        instance.mail(
-            template='mail/update_run.txt',
-            subject='Test Run %s - %s has been updated' % (
-                instance.pk, instance.summary
-            ),
-            context={'test_run': instance, }
-        )
+        subject = _('TestRun %(summary)s has been updated') % {'summary': instance.summary}
+
+    instance.mail(
+        template='email/post_run_save/email.txt',
+        subject=subject,
+        context={'test_run': instance}
+    )
 
 
 def handle_post_case_run_save(sender, *args, **kwargs):
