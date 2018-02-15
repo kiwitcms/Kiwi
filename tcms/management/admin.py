@@ -18,20 +18,13 @@ class ProductsAdmin(admin.ModelAdmin):
     search_fields = ('name', 'id')
     list_display = ('id', 'name', 'classification', 'description')
     list_filter = ('id', 'name', 'classification')
-    exclude = ('milestone_url', 'default_milestone', 'vote_super_user',
-               'max_vote_super_bug')
+    exclude = ('vote_super_user', 'max_vote_super_bug')
 
 
 class PriorityAdmin(admin.ModelAdmin):
     search_fields = ('value', 'id')
     list_display = ('id', 'value', 'sortkey', 'is_active')
     list_filter = ('is_active', )
-
-
-class MilestoneAdmin(admin.ModelAdmin):
-    search_fields = (('name', 'pk',))
-    list_display = ('id', 'value', 'product', 'sortkey')
-    list_filter = ('product', )
 
 
 class ComponentAdmin(admin.ModelAdmin):
@@ -54,7 +47,6 @@ class BuildAdmin(admin.ModelAdmin):
     search_fields = ('name', 'build_id')
     list_display = ('build_id', 'name', 'product', 'is_active')
     list_filter = ('product',)
-    exclude = ('milestone',)
 
 
 class AttachmentAdmin(admin.ModelAdmin):

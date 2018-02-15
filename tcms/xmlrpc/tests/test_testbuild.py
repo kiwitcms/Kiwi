@@ -48,7 +48,6 @@ class BuildCreate(XmlrpcAPIBaseTest):
         values = {
             "product": self.product.pk,
             "name": "B7",
-            "milestone": "aaaaaaaa"
         }
         # various regex matching to account for version differences
         # between SQLite (different versions), MySQL and Postgres
