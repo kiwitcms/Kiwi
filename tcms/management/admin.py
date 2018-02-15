@@ -18,7 +18,6 @@ class ProductsAdmin(admin.ModelAdmin):
     search_fields = ('name', 'id')
     list_display = ('id', 'name', 'classification', 'description')
     list_filter = ('id', 'name', 'classification')
-    exclude = ('vote_super_user', 'max_vote_super_bug')
 
 
 class PriorityAdmin(admin.ModelAdmin):

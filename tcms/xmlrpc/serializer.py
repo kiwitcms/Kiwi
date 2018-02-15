@@ -500,10 +500,6 @@ class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'id': ('id', do_nothing),
         'name': ('name', do_nothing),
         'description': ('description', do_nothing),
-        'disallow_new': ('disallow_new', do_nothing),
-        'vote_super_user': ('vote_super_user', do_nothing),
-        'max_vote_super_bug': ('max_vote_super_bug', do_nothing),
-        'votes_to_confirm': ('votes_to_confirm', do_nothing),
         'classification': ('classification_id', do_nothing),
         'classification__name': ('classification', do_nothing),
     }
