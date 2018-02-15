@@ -6,7 +6,6 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.db.models import ObjectDoesNotExist
-from django.db.models.signals import post_save, post_delete, pre_save
 from django.contrib.contenttypes.fields import GenericRelation
 from django.utils.encoding import smart_str
 
@@ -17,7 +16,6 @@ from tcms.core.models.base import TCMSContentTypeBaseModel
 from tcms.core.models.fields import DurationField
 from tcms.core.utils.checksum import checksum
 from tcms.core.utils.timedeltaformat import format_timedelta
-from tcms.testcases import signals as case_watchers
 from tcms.issuetracker.types import IssueTrackerType
 
 
@@ -866,23 +864,3 @@ class TestCaseEmailSettings(models.Model):
                                                           email_addrs)
         self.remove_cc(emails_to_delete)
         self.add_cc(self.filter_new_emails(origin_emails, email_addrs))
-
-
-def _listen():
-    """ signals listen """
-
-    # case save/delete listen for email notify
-    post_save.connect(case_watchers.on_case_save, TestCase)
-    post_delete.connect(case_watchers.on_case_delete, TestCase)
-    pre_save.connect(case_watchers.pre_save_clean, TestCase)
-
-
-def _disconnect_signals():
-    # used in testing
-    post_save.disconnect(case_watchers.on_case_save, TestCase)
-    post_delete.disconnect(case_watchers.on_case_delete, TestCase)
-    pre_save.disconnect(case_watchers.pre_save_clean, TestCase)
-
-
-if settings.LISTENING_MODEL_SIGNAL:
-    _listen()

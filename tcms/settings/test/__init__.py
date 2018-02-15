@@ -16,6 +16,4 @@ DATABASES = {
     }
 }
 
-LISTENING_MODEL_SIGNAL = False
-
 STATICFILES_STORAGE = 'tcms.tests.storage.RaiseWhenFileNotFound'

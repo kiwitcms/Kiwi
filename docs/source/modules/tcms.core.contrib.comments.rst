@@ -11,7 +11,6 @@ Submodules
 
 .. toctree::
 
-   tcms.core.contrib.comments.apps
    tcms.core.contrib.comments.forms
    tcms.core.contrib.comments.models
    tcms.core.contrib.comments.views

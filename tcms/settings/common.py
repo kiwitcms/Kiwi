@@ -236,9 +236,9 @@ INSTALLED_APPS = [
     'tcms.core.logs',
     'tcms.management',
     'tcms.profiles',
-    'tcms.testcases',
-    'tcms.testplans',
-    'tcms.testruns',
+    'tcms.testcases.apps.AppConfig',
+    'tcms.testplans.apps.AppConfig',
+    'tcms.testruns.apps.AppConfig',
     'tcms.xmlrpc',
 ]
 
@@ -280,13 +280,9 @@ AUTHENTICATION_BACKENDS = [
     'tcms.core.contrib.auth.backends.DBModelBackend',
 ]
 
-
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False
-
-# Turn on/off listening signals sent by models.
-LISTENING_MODEL_SIGNAL = True
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100

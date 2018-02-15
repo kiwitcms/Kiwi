@@ -17,13 +17,13 @@ from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 from django.forms import ValidationError
-from django.dispatch import Signal
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 
+from tcms.signals import post_update
 from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
 from tcms.management.models import Tag
@@ -33,14 +33,10 @@ from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import plan_from_request_or_none
 from tcms.testplans.models import TestPlan, TestCasePlan
-from tcms.testruns import signals as run_watchers
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
-
-post_update = Signal(providing_args=["instances", "kwargs"])
-post_update.connect(run_watchers.post_update_handler)
 
 
 def check_permission(request, ctype):

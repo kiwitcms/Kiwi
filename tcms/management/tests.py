@@ -15,7 +15,7 @@ from tcms.management.models import EnvGroup
 from tcms.management.models import EnvGroupPropertyMap
 from tcms.management.models import EnvProperty
 from tcms.management.models import Product, Version
-from tcms.testplans.models import TestPlan, _listen, _disconnect_signals
+from tcms.testplans.models import TestPlan
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import EnvGroupFactory
@@ -732,55 +732,45 @@ class ProductTests(TestCase):
             0) No errors
             1) Product is deleted
             2) Test Plan is deleted
-
-            NOTE: we manually connect signals handlers here
-            b/c in test mode LISTENING_MODEL_SIGNAL = False
         """
-        # connect signal handlers
-        _listen()
+        # setup
+        product = ProductFactory(name='Something to delete')
+        product_version = VersionFactory(value='0.1', product=product)
+        plan_type = PlanTypeFactory()
 
-        try:
-            # setup
-            product = ProductFactory(name='Something to delete')
-            product_version = VersionFactory(value='0.1', product=product)
-            plan_type = PlanTypeFactory()
+        # create Test Plan via the UI by sending a POST request to the view
+        previous_plans_count = TestPlan.objects.count()
+        test_plan_name = 'Test plan for the new product'
+        response = self.c.post(reverse('plans-new'), {
+            'name': test_plan_name,
+            'product': product.pk,
+            'product_version': product_version.pk,
+            'type': plan_type.pk,
+        }, follow=True)
+        self.assertEqual(http.client.OK, response.status_code)
+        # verify test plan was created
+        self.assertTrue(test_plan_name in str(response.content,
+                                              encoding=settings.DEFAULT_CHARSET))
+        self.assertEqual(previous_plans_count + 1, TestPlan.objects.count())
 
-            # create Test Plan via the UI by sending a POST request to the view
-            previous_plans_count = TestPlan.objects.count()
-            test_plan_name = 'Test plan for the new product'
-            response = self.c.post(reverse('plans-new'), {
-                'name': test_plan_name,
-                'product': product.pk,
-                'product_version': product_version.pk,
-                'type': plan_type.pk,
-            }, follow=True)
-            self.assertEqual(http.client.OK, response.status_code)
-            # verify test plan was created
-            self.assertTrue(test_plan_name in str(response.content,
-                                                  encoding=settings.DEFAULT_CHARSET))
-            self.assertEqual(previous_plans_count + 1, TestPlan.objects.count())
+        # now delete the product
+        admin_delete_url = "admin:%s_%s_delete" % (product._meta.app_label,
+                                                   product._meta.model_name)
+        location = reverse(admin_delete_url, args=[product.pk])
+        response = self.c.get(location)
+        self.assertEqual(http.client.OK, response.status_code)
+        self.assertTrue('Are you sure you want to delete the product "%s"' % product.name
+                        in str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertTrue("Yes, I'm sure" in str(response.content,
+                                               encoding=settings.DEFAULT_CHARSET))
 
-            # now delete the product
-            admin_delete_url = "admin:%s_%s_delete" % (product._meta.app_label,
-                                                       product._meta.model_name)
-            location = reverse(admin_delete_url, args=[product.pk])
-            response = self.c.get(location)
-            self.assertEqual(http.client.OK, response.status_code)
-            self.assertTrue('Are you sure you want to delete the product "%s"' % product.name
-                            in str(response.content, encoding=settings.DEFAULT_CHARSET))
-            self.assertTrue("Yes, I'm sure" in str(response.content,
-                                                   encoding=settings.DEFAULT_CHARSET))
+        # confirm that we're sure we want to delete it
+        response = self.c.post(location, {'post': 'yes'})
+        self.assertEqual(302, response.status_code)
+        self.assertTrue('/admin/%s/%s/' % (product._meta.app_label, product._meta.model_name)
+                        in response['Location'])
 
-            # confirm that we're sure we want to delete it
-            response = self.c.post(location, {'post': 'yes'})
-            self.assertEqual(302, response.status_code)
-            self.assertTrue('/admin/%s/%s/' % (product._meta.app_label, product._meta.model_name)
-                            in response['Location'])
-
-            # verify everything has been deleted
-            self.assertFalse(Product.objects.filter(pk=product.pk).exists())
-            self.assertFalse(Version.objects.filter(pk=product_version.pk).exists())
-            self.assertEqual(previous_plans_count, TestPlan.objects.count())
-        finally:
-            # disconnect signals to avoid influencing other tests
-            _disconnect_signals()
+        # verify everything has been deleted
+        self.assertFalse(Product.objects.filter(pk=product.pk).exists())
+        self.assertFalse(Version.objects.filter(pk=product_version.pk).exists())
+        self.assertEqual(previous_plans_count, TestPlan.objects.count())
