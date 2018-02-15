@@ -4,7 +4,7 @@ import hashlib
 from datetime import datetime
 
 import factory
-
+from django.db.models import signals
 from factory.django import DjangoModelFactory
 
 from tcms.management.models import Priority
@@ -252,6 +252,7 @@ class CategoryFactory(DjangoModelFactory):
     description = ''
 
 
+@factory.django.mute_signals(signals.post_save)
 class TestCaseFactory(DjangoModelFactory):
 
     class Meta:
@@ -368,8 +369,6 @@ class TestCaseEmailSettingsFactory(DjangoModelFactory):
 
 
 # ### Factories for apps testruns ###
-
-
 class TestRunFactory(DjangoModelFactory):
 
     class Meta:

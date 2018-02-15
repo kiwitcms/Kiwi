@@ -7,7 +7,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Max
 from django.urls import reverse
-from django.db.models.signals import post_save, pre_delete, pre_save
 from django.shortcuts import get_object_or_404
 
 from uuslug import slugify
@@ -19,7 +18,6 @@ from tcms.testcases.models import TestCase
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCasePlan
 from tcms.testcases.models import TestCaseStatus
-from tcms.testplans import signals as plan_watchers
 
 
 class PlanType(TCMSActionModel):
@@ -394,20 +392,3 @@ class EnvPlanMap(models.Model):
 
     class Meta:
         db_table = u'tcms_env_plan_map'
-
-
-def _listen():
-    post_save.connect(plan_watchers.on_plan_save, TestPlan)
-    pre_delete.connect(plan_watchers.on_plan_delete, TestPlan)
-    pre_save.connect(plan_watchers.pre_save_clean, TestPlan)
-
-
-def _disconnect_signals():
-    """ used in testing """
-    post_save.disconnect(plan_watchers.on_plan_save, TestPlan)
-    pre_delete.disconnect(plan_watchers.on_plan_delete, TestPlan)
-    pre_save.disconnect(plan_watchers.pre_save_clean, TestPlan)
-
-
-if settings.LISTENING_MODEL_SIGNAL:
-    _listen()

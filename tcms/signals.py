@@ -18,18 +18,18 @@ method. When you are done connect your Django app to the rest of Kiwi TCMS by
 altering the following setting::
 
     INSTALLED_APPS += ['my_custom_app']
-
-
-.. data:: user_registered
-
-    Sent when a new user is registered into Kiwi TCMS through any of the
-    backends which support user registration. The signal receives three keyword
-    parameters: ``request``, ``user`` and ``backend`` respectively!
 """
-
 from django.dispatch import Signal
 
+
+#: Sent when a new user is registered into Kiwi TCMS through any of the
+#: backends which support user registration. The signal receives three keyword
+#: parameters: ``request``, ``user`` and ``backend`` respectively!
 user_registered = Signal(providing_args=['user', 'backend'])
+
+
+#: Sent by :meth:`tcms.core.ajax.update`
+post_update = Signal(providing_args=["instances", "kwargs"])
 
 
 def notify_admins(sender, **kwargs):

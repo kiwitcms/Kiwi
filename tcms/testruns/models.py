@@ -7,7 +7,6 @@ from django.core.cache import cache
 from django.urls import reverse
 from django.db import models
 from django.db.models import Q, Count
-from django.db.models.signals import post_save, post_delete, pre_save
 
 import vinaigrette
 
@@ -17,7 +16,6 @@ from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.testcases.models import Bug, TestCaseText, NoneText
-from tcms.testruns import signals as run_watchers
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
@@ -688,17 +686,3 @@ class EnvRunValueMap(models.Model):
 
     class Meta:
         db_table = u'tcms_env_run_value_map'
-
-
-# Signals handler
-def _run_listen():
-    post_save.connect(run_watchers.post_run_saved, sender=TestRun)
-    post_save.connect(run_watchers.post_case_run_saved, sender=TestCaseRun,
-                      dispatch_uid='tcms.testruns.models.TestCaseRun')
-    post_delete.connect(run_watchers.post_case_run_deleted, sender=TestCaseRun,
-                        dispatch_uid='tcms.testruns.models.TestCaseRun')
-    pre_save.connect(run_watchers.pre_save_clean, sender=TestRun)
-
-
-if settings.LISTENING_MODEL_SIGNAL:
-    _run_listen()

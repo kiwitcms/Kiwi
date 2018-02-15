@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from ..models import BugSystem
 from ..models import TestCaseText
 from tcms.core.utils.checksum import checksum
-from tcms.testcases.models import _listen, _disconnect_signals
 from ..helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
@@ -223,14 +222,10 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
 
     @patch('tcms.core.utils.mailto.send_mail')
     def test_send_mail_to_case_author(self, send_mail):
-        # connect signal handlers
-        _listen()
+        self.case.summary = 'New summary for running test'
+        self.case.save()
 
-        try:
-            self.case.summary = 'New summary for running test'
-            self.case.save()
-
-            expected_mail_body = '''TestCase [{0}] has been updated by {1}
+        expected_mail_body = '''TestCase [{0}] has been updated by {1}
 
 Case -
 {2}?#log
@@ -243,14 +238,11 @@ You are related to this TestCase'''.format(self.case.summary,
                                            'editor',
                                            self.case.get_url())
 
-            recipients = get_case_notification_recipients(self.case)
+        recipients = get_case_notification_recipients(self.case)
 
-            # Verify notification mail
-            send_mail.assert_called_once_with(
-                settings.EMAIL_SUBJECT_PREFIX + "TestCase %s has been updated." % self.case.pk,
-                expected_mail_body,
-                settings.DEFAULT_FROM_EMAIL, recipients,
-                fail_silently=False)
-        finally:
-            # disconnect signals
-            _disconnect_signals()
+        # Verify notification mail
+        send_mail.assert_called_once_with(
+            settings.EMAIL_SUBJECT_PREFIX + "TestCase %s has been updated." % self.case.pk,
+            expected_mail_body,
+            settings.DEFAULT_FROM_EMAIL, recipients,
+            fail_silently=False)
