@@ -7,8 +7,8 @@ class AppConfig(DjangoAppConfig):
     def ready(self):
         from django.db.models.signals import post_save, pre_delete, pre_save
         from .models import TestPlan
-        from . import signals
+        from tcms import signals
 
         pre_save.connect(signals.pre_save_clean, TestPlan)
-        post_save.connect(signals.on_plan_save, TestPlan)
-        pre_delete.connect(signals.on_plan_delete, TestPlan)
+        post_save.connect(signals.handle_emails_post_plan_save, TestPlan)
+        pre_delete.connect(signals.handle_emails_pre_plan_delete, TestPlan)

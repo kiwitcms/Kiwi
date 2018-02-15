@@ -23,6 +23,5 @@ Submodules
    tcms.testplans.admin
    tcms.testplans.forms
    tcms.testplans.models
-   tcms.testplans.signals
    tcms.testplans.views
 
