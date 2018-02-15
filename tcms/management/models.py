@@ -50,13 +50,10 @@ class Product(TCMSActionModel):
     name = models.CharField(unique=True, max_length=64)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
-    milestone_url = models.CharField(db_column='milestoneurl', max_length=128, default='---')
     disallow_new = models.BooleanField(db_column='disallownew', default=False)
     vote_super_user = models.IntegerField(db_column='votesperuser', null=True, default=True)
     max_vote_super_bug = models.IntegerField(db_column='maxvotesperbug', default=10000)
     votes_to_confirm = models.BooleanField(db_column='votestoconfirm', default=False)
-    default_milestone = models.CharField(db_column='defaultmilestone',
-                                         max_length=20, default='---')
 
     class Meta:
         db_table = u'products'
@@ -139,19 +136,6 @@ class Priority(TCMSActionModel):
         return result
 
 
-class Milestone(models.Model):
-    id = models.AutoField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    value = models.CharField(unique=True, max_length=60)
-    sortkey = models.IntegerField(default=0)
-
-    class Meta:
-        db_table = u'milestones'
-
-    def __str__(self):
-        return self.value
-
-
 class Component(TCMSActionModel):
     id = models.AutoField(max_length=5, primary_key=True)
     name = models.CharField(max_length=64)
@@ -212,7 +196,6 @@ class Build(TCMSActionModel):
     build_id = models.AutoField(max_length=10, unique=True, primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name='build', on_delete=models.CASCADE)
-    milestone = models.CharField(max_length=20, default='---')
     description = models.TextField(blank=True)
     is_active = models.BooleanField(db_column='isactive', default=True)
 
@@ -242,8 +225,6 @@ class Build(TCMSActionModel):
             q = q.filter(product=query['product'])
         if query.get('product_id'):
             q = q.filter(product__id=query['product_id'])
-        if query.get('milestone'):
-            q = q.filter(milestone=query['milestone'])
         if query.get('is_active'):
             q = q.filter(is_active=query['is_active'])
 

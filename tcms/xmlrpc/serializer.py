@@ -500,13 +500,10 @@ class ProductXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'id': ('id', do_nothing),
         'name': ('name', do_nothing),
         'description': ('description', do_nothing),
-        'milestone_url': ('milestone_url', do_nothing),
         'disallow_new': ('disallow_new', do_nothing),
         'vote_super_user': ('vote_super_user', do_nothing),
         'max_vote_super_bug': ('max_vote_super_bug', do_nothing),
         'votes_to_confirm': ('votes_to_confirm', do_nothing),
-        'default_milestone': ('default_milestone', do_nothing),
-
         'classification': ('classification_id', do_nothing),
         'classification__name': ('classification', do_nothing),
     }
@@ -519,9 +516,7 @@ class BuildXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'build_id': ('build_id', do_nothing),
         'description': ('description', do_nothing),
         'is_active': ('is_active', do_nothing),
-        'milestone': ('milestone', do_nothing),
         'name': ('name', do_nothing),
-
         'product': ('product_id', do_nothing),
         'product__name': ('product', do_nothing),
     }

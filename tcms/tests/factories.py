@@ -77,15 +77,6 @@ class PriorityFactory(DjangoModelFactory):
     is_active = True
 
 
-class MilestoneFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.Milestone'
-
-    product = factory.SubFactory(ProductFactory)
-    value = factory.Sequence(lambda n: 'Milestone %d' % n)
-
-
 class ComponentFactory(DjangoModelFactory):
 
     class Meta:
