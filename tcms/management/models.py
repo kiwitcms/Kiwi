@@ -50,10 +50,6 @@ class Product(TCMSActionModel):
     name = models.CharField(unique=True, max_length=64)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
-    disallow_new = models.BooleanField(db_column='disallownew', default=False)
-    vote_super_user = models.IntegerField(db_column='votesperuser', null=True, default=True)
-    max_vote_super_bug = models.IntegerField(db_column='maxvotesperbug', default=10000)
-    votes_to_confirm = models.BooleanField(db_column='votestoconfirm', default=False)
 
     class Meta:
         db_table = u'products'
