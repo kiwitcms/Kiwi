@@ -24,6 +24,5 @@ Submodules
    tcms.testcases.fields
    tcms.testcases.forms
    tcms.testcases.models
-   tcms.testcases.signals
    tcms.testcases.views
 
