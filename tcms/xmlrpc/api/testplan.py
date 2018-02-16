@@ -778,19 +778,19 @@ def import_case_via_XML(request, plan_id, values):
 
 def clean_xml_file(xml_file):
     from django.conf import settings
-    from tcms.core.contrib.xml2dict.xml2dict import XML2Dict
+    import xmltodict
 
     xml_file = xml_file.replace('\n', '')
     xml_file = xml_file.replace('&testopia_', '&')
     xml_file = xml_file.encode("utf8")
 
-    xml = XML2Dict()
-    xml_data = xml.fromstring(xml_file)
+    xml_data = xmltodict.parse(xml_file)
     root_element = xml_data.get('testopia', None)
     if root_element is None:
         raise ValueError('Invalid XML document.')
-    if not root_element.get('version', None) != settings.TESTOPIA_XML_VERSION:
-        raise
+    if root_element.get('@version') != settings.TESTOPIA_XML_VERSION:
+        raise ValueError(
+            'Wrong version {}'.format(root_element.get('@version')))
     case_elements = root_element.get('testcase', None)
     if case_elements is not None:
         if isinstance(case_elements, list):
@@ -809,7 +809,7 @@ def process_case(case):
     from tcms.testcases.models import TestCaseStatus
 
     # Check author
-    author = case.get('author', {}).get('value')
+    author = case.get('@author')
     if author:
         author = User.objects.get(email=author)
         author_id = author.id
@@ -817,7 +817,7 @@ def process_case(case):
         raise ValueError('Invalid author: "{0}"'.format(author))
 
     # Check default tester
-    default_tester_email = case.get('defaulttester', {}).get('value')
+    default_tester_email = case.get('defaulttester')
     if default_tester_email:
         default_tester = User.objects.get(email=default_tester_email)
         default_tester_id = default_tester.id
@@ -825,7 +825,7 @@ def process_case(case):
         default_tester_id = None
 
     # Check priority
-    priority = case.get('priority', {}).get('value')
+    priority = case.get('@priority')
     if priority:
         priority = Priority.objects.get(value=priority)
         priority_id = priority.id
@@ -833,14 +833,14 @@ def process_case(case):
         raise ValueError('Invalid priority value: "{0}"'.format(priority))
 
     # Check automated status
-    automated = case.get('automated', {}).get('value')
+    automated = case.get('@automated')
     if automated:
         is_automated = automated == 'Automatic' and True or False
     else:
         is_automated = False
 
     # Check status
-    status = case.get('status', {}).get('value')
+    status = case.get('@status')
     if status:
         case_status = TestCaseStatus.objects.get(name=status)
         case_status_id = case_status.id
@@ -853,7 +853,7 @@ def process_case(case):
     # But unfortunate it did not defined product in the XML file.
     # So we have to define the category_name at the moment then get the product from the plan.
     # If we did not found the category of the product we will create one.
-    category_name = case.get('categoryname', {}).get('value')
+    category_name = case.get('categoryname')
     if not category_name:
         raise ValueError('Invalid category name: "{0}"'.format(category_name))
 
@@ -865,15 +865,19 @@ def process_case(case):
             tag, create = TestTag.objects.get_or_create(name=case[element]['value'])
             tags.append(tag)
 
+        if isinstance(case[element], six.text_type):
+            tag, create = TestTag.objects.get_or_create(name=case[element])
+            tags.append(tag)
+
         if isinstance(case[element], list):
             for tag_name in case[element]:
-                tag, create = TestTag.objects.get_or_create(name=tag_name['value'])
+                tag, create = TestTag.objects.get_or_create(name=tag_name)
                 tags.append(tag)
     else:
         tags = None
 
     new_case = {
-        'summary': case.get('summary', {}).get('value', ''),
+        'summary': case.get('summary') or '',
         'author_id': author_id,
         'author': author,
         'default_tester_id': default_tester_id,
@@ -881,11 +885,11 @@ def process_case(case):
         'is_automated': is_automated,
         'case_status_id': case_status_id,
         'category_name': category_name,
-        'notes': case.get('notes', {}).get('value', ''),
-        'action': case.get('action', {}).get('value', ''),
-        'effect': case.get('expectedresults', {}).get('value', ''),
-        'setup': case.get('setup', {}).get('value', ''),
-        'breakdown': case.get('breakdown', {}).get('value', ''),
+        'notes': case.get('notes') or '',
+        'action': case.get('action') or '',
+        'effect': case.get('expectedresults') or '',
+        'setup': case.get('setup') or '',
+        'breakdown': case.get('breakdown') or '',
         'tags': tags,
     }
 

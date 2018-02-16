@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import xmltodict
 
 from six.moves.http_client import BAD_REQUEST
 from six.moves.http_client import NOT_FOUND
@@ -10,7 +11,6 @@ from django import test
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from tcms.core.contrib.xml2dict.xml2dict import XML2Dict
 from tcms.management.models import Priority
 from tcms.management.models import TestTag
 from tcms.testcases.models import TestCase
@@ -511,7 +511,6 @@ class TestProcessCase(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.xml2dict = XML2Dict()
         cls.user = UserFactory(username='xml user', email='user@example.com')
         cls.priority_p1, created = Priority.objects.get_or_create(value='P1')
         cls.status_confirmed, created = TestCaseStatus.objects.get_or_create(name='CONFIRMED')
@@ -527,7 +526,7 @@ class TestProcessCase(test.TestCase):
 
     def _create_xml_dict(self, case_data):
         xml_case = self._format_xml_case_string(case_data)
-        return self.xml2dict.fromstring(xml_case)
+        return xmltodict.parse(xml_case)
 
     def test_process_case(self):
         xmldict = self._create_xml_dict(sample_case_data)
@@ -616,7 +615,7 @@ class TestCleanXMLFile(test.TestCase):
         cls.original_xml_version = None
         if hasattr(settings, 'TESTOPIA_XML_VERSION'):
             cls.original_xml_version = settings.TESTOPIA_XML_VERSION
-        settings.TESTOPIA_XML_VERSION = 1.1
+        settings.TESTOPIA_XML_VERSION = '1.1'
 
     def test_clean_xml_file(self):
         result = clean_xml_file(xml_file_without_error)
