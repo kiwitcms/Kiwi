@@ -18,9 +18,10 @@
         - postgresql-server
         - python2
         - python2-detox
-        - python2-ipdb
-        - python2-virtualenv
         - python2-devel
+        - python2-ipdb
+        - python2-sphinx
+        - python2-virtualenv
         - redhat-rpm-config
         - rpm-build
         - rpmdevtools
