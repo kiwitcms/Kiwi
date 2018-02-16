@@ -12,12 +12,12 @@ tarball:
 
 
 .PHONY: srpm
-srpm:
+srpm: tarball
 	@rpmbuild $(DEFINE_OPTS) -bs $(SPECFILE)
 
 
 .PHONY: rpm
-rpm:
+rpm: srpm
 	@rpmbuild $(DEFINE_OPTS) -ba $(SPECFILE)
 
 
