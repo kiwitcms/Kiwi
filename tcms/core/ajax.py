@@ -11,7 +11,6 @@ from distutils.util import strtobool
 
 from django import http
 from django.db.models import Q
-from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
@@ -30,12 +29,10 @@ from tcms.management.models import Tag
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus
-from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import plan_from_request_or_none
 from tcms.testplans.models import TestPlan, TestCasePlan
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
 from tcms.core.helpers.comments import add_comment
-from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 
 
@@ -190,12 +187,11 @@ def tag(request, template_name="management/get_tag.html"):
         __all__ = ['plan', 'case', 'run']
 
         def __init__(self, request, template_name):
-            self.request = request
             self.template_name = template_name
-            for o in self.__all__:
-                if request.GET.get(o):
-                    self.object = o
-                    self.object_pks = request.GET.getlist(o)
+            for obj in self.__all__:
+                if request.GET.get(obj):
+                    self.object = obj
+                    self.object_pk = request.GET.get(obj)
                     break
 
         def get(self):
@@ -203,92 +199,61 @@ def tag(request, template_name="management/get_tag.html"):
             return func()
 
         def plan(self):
-            return self.template_name, TestPlan.objects.filter(
-                pk__in=self.object_pks)
+            return self.template_name, TestPlan.objects.get(
+                pk=self.object_pk)
 
         def case(self):
-            return self.template_name, get_selected_testcases(self.request)
+            return self.template_name, TestCase.objects.get(
+                pk=self.object_pk)
 
         def run(self):
-            self.template_name = 'run/get_tag.html'
-            return self.template_name, TestRun.objects.filter(
-                pk__in=self.object_pks)
+            return 'run/get_tag.html', TestRun.objects.get(
+                pk=self.object_pk)
 
     class TagActions(object):
         __all__ = ['add', 'remove']
 
         def __init__(self, obj, tag):
             self.obj = obj
-            self.tag = string_to_list(tag)
-            self.request = request
+            self.tag = tag
 
         def add(self):
-            for tag_str in self.tag:
-                try:
-                    tag, c = Tag.objects.get_or_create(name=tag_str)
-                    for o in self.obj:
-                        o.add_tag(tag)
-                except IntegrityError:
-                    return "Error when adding %s " \
-                           "Tag with this key already exists in the database." % self.tag
-                except Exception:
-                    return "Error when adding %s" % self.tag
-
-            return True, self.obj
+            tag, _ = Tag.objects.get_or_create(name=self.tag)
+            self.obj.add_tag(tag)
 
         def remove(self):
-            self.obj = self.obj.filter(tag__name__in=self.tag).distinct()
-
-            if not self.obj:
-                return "Tags does not exist in current selected plan."
-
-            for tag_str in self.tag:
-                try:
-                    tag = Tag.objects.filter(name=tag_str)[0]
-                except IndexError:
-                    return "Tag %s does not exist in current selected plan." % tag_str
-                for object in self.obj:
-                    try:
-                        object.remove_tag(tag)
-                    except Exception:
-                        return "Remove tag %s error." % tag
-            return True, self.obj
+            tag = Tag.objects.get(name=self.tag)
+            self.obj.remove_tag(tag)
 
     objects = Objects(request, template_name)
     template_name, obj = objects.get()
 
     q_tag = request.GET.get('tags')
     q_action = request.GET.get('a')
+
     if q_action:
         tag_actions = TagActions(obj=obj, tag=q_tag)
-        func = getattr(tag_actions, q_action)
-        response = func()
-        if not response[0]:
-            return HttpResponse(json.dumps({'response': response, 'rc': 1}))
+        getattr(tag_actions, q_action)()
 
     del q_tag, q_action
 
-    # Response the single operation
-    if len(obj) == 1:
-        tags = obj[0].tag.all()
-        tags = tags.extra(select={
-            'num_plans':
-                'SELECT COUNT(*) FROM test_plan_tags '
-                'WHERE test_tags.tag_id = test_plan_tags.tag_id',
-            'num_cases':
-                'SELECT COUNT(*) FROM test_case_tags '
-                'WHERE test_tags.tag_id = test_case_tags.tag_id',
-            'num_runs':
-                'SELECT COUNT(*) FROM test_run_tags '
-                'WHERE test_tags.tag_id = test_run_tags.tag_id',
-        })
-
-        context_data = {
-            'tags': tags,
-            'object': obj[0],
-        }
-        return render(request, template_name, context_data)
-    return HttpResponse('')
+    tags = obj.tag.all()
+    tags = tags.extra(select={
+        'num_plans':
+            'SELECT COUNT(*) FROM test_plan_tags '
+            'WHERE test_tags.tag_id = test_plan_tags.tag_id',
+        'num_cases':
+            'SELECT COUNT(*) FROM test_case_tags '
+            'WHERE test_tags.tag_id = test_case_tags.tag_id',
+        'num_runs':
+            'SELECT COUNT(*) FROM test_run_tags '
+            'WHERE test_tags.tag_id = test_run_tags.tag_id',
+    })
+    context_data = {
+        'tags': tags,
+        'object': obj,
+    }
+    return render(request, template_name, context_data)
 
 
 def get_value_by_type(val, v_type):

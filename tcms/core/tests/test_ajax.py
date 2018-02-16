@@ -98,7 +98,7 @@ class Test_TestCaseUpdateActions(BasePlanCase):
         self._assert_default_tester_is(None)
 
 
-class Test_Tag_Add(test.TestCase):
+class Test_Tag_Test(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -107,6 +107,9 @@ class Test_Tag_Add(test.TestCase):
         cls.test_plan = TestPlanFactory()
         cls.test_case = TestCaseFactory()
         cls.test_run = TestRunFactory()
+
+
+class Test_Tag_Add(Test_Tag_Test):
 
     def test_add_tag_to_test_plan(self):
         response = self.client.get(self.url, {
@@ -142,21 +145,11 @@ class Test_Tag_Add(test.TestCase):
         self.assertTrue(self.test_tag in self.test_run.tag.all())
 
 
-class Test_Tag_Remove(test.TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.url = reverse('ajax-tags')
-        cls.test_tag = TagFactory()
-        cls.test_plan = TestPlanFactory()
-        cls.test_case = TestCaseFactory()
-        cls.test_run = TestRunFactory()
-
-        cls.test_plan.add_tag(cls.test_tag)
-        cls.test_case.add_tag(cls.test_tag)
-        cls.test_run.add_tag(cls.test_tag)
+class Test_Tag_Remove(Test_Tag_Test):
 
     def test_remove_tag_from_test_plan(self):
+        self.test_plan.add_tag(self.test_tag)
+
         response = self.client.get(self.url, {
             'tags': self.test_tag,
             'plan': self.test_plan.plan_id,
@@ -167,6 +160,8 @@ class Test_Tag_Remove(test.TestCase):
         self.assertEqual(self.test_plan.tag.count(), 0)
 
     def test_remove_tag_from_test_case(self):
+        self.test_case.add_tag(self.test_tag)
+
         response = self.client.get(self.url, {
             'tags': self.test_tag,
             'case': self.test_case.case_id,
@@ -177,6 +172,8 @@ class Test_Tag_Remove(test.TestCase):
         self.assertEqual(self.test_case.tag.count(), 0)
 
     def test_remove_tag_from_test_run(self):
+        self.test_run.add_tag(self.test_tag)
+
         response = self.client.get(self.url, {
             'tags': self.test_tag,
             'run': self.test_run.run_id,
@@ -185,3 +182,50 @@ class Test_Tag_Remove(test.TestCase):
 
         self.assertEqual(response.status_code, http.client.OK)
         self.assertEqual(self.test_run.tag.count(), 0)
+
+
+class Test_Tag_Render(Test_Tag_Test):
+
+    @classmethod
+    def setUpTestData(cls):
+        super(Test_Tag_Render, cls).setUpTestData()
+
+        cls.test_plan.add_tag(cls.test_tag)
+        cls.test_case.add_tag(cls.test_tag)
+        cls.test_run.add_tag(cls.test_tag)
+
+        for _ in range(0, 3):
+            TestPlanFactory().add_tag(cls.test_tag)
+
+        for _ in range(0, 4):
+            TestCaseFactory().add_tag(cls.test_tag)
+
+        for _ in range(0, 5):
+            TestRunFactory().add_tag(cls.test_tag)
+
+    def test_render_plan(self):
+        response = self.client.get(self.url, {
+            'plan': self.test_plan.plan_id
+        })
+
+        self._assert_tags(response)
+
+    def test_render_case(self):
+        response = self.client.get(self.url, {
+            'case': self.test_case.case_id
+        })
+
+        self._assert_tags(response)
+
+    def _assert_tags(self, response):
+        self.assertEqual(response.status_code, http.client.OK)
+
+        # asserting the number of tags for the given plan/case/run
+        self.assertEqual(self.test_plan.tag.count(), 1)
+        self.assertEqual(self.test_case.tag.count(), 1)
+        self.assertEqual(self.test_run.tag.count(), 1)
+
+        # asserting the number or plans/cases/runs the tag has been assigned to
+        self.assertContains(response, '>4</a>')
+        self.assertContains(response, '>5</a>')
+        self.assertContains(response, '>6</a>')
