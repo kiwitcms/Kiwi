@@ -32,7 +32,8 @@
     - name: Service docker
       systemd: name=docker state=started enabled=yes
 
-    - stat: path=/var/lib/pgsql/data
+    - name: Check if PostgreSQL data cluster is initialized
+      stat: path=/var/lib/pgsql/data/pg_hba.conf
       register: pgsql_data
 
     - name: Init PostgreSQL data cluster
