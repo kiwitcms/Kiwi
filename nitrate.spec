@@ -1,35 +1,17 @@
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python2_sitelib: %define python2_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
-%define  debug_package %{nil}
+%define debug_package %{nil}
+%global pkgname nitrate
 
-Name:           nitrate
+Name:           python-%{pkgname}
 Version:        4.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Test Case Management System
 
-Group:          Development/Languages
 License:        GPLv2+
 URL:            https://github.com/Nitrate/Nitrate/
-Source0:        %{name}-%{version}.tar.bz2
+Source0:        %{pkgname}-%{version}.tar.bz2
 BuildArch:      noarch
-
-BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
-
-Requires:       python2-django > 1.9
-# This is not available in Fedora repository yet.
-Requires:       python2-django-contrib-comments
-Requires:       python2-celery
-Requires:       python2-django-tinymce
-Requires:       django-uuslug
-Requires:       python2-kobo-django
-Requires:       mod_auth_kerb
-Requires:       mod_wsgi
-Requires:       python2-PyMySQL
-Requires:       python2-odfpy
-Requires:       python-beautifulsoup4
-Requires:       python2-kerberos
-Requires:       python2-html2text
 
 %description
 Nitrate is a tool for tracking testing being done on a product.
@@ -37,19 +19,48 @@ Nitrate is a tool for tracking testing being done on a product.
 It is a database-backed web application built on top of Django.
 
 
-%package doc
+%package -n python2-%{pkgname}
+Summary:        Test Case Management System
+
+BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
+
+Requires:       mod_auth_gssapi
+Requires:       mod_wsgi
+Requires:       python-beautifulsoup4
+Requires:       python2-PyMySQL
+Requires:       python2-django > 1.9
+Requires:       python2-django-tinymce
+Requires:       python2-html2text
+Requires:       python2-kerberos
+Requires:       python2-kobo-django
+Requires:       python2-odfpy
+Requires:       python2-xmltodict
+Requires:       python2-six
+
+# This is not available in Fedora repository yet.
+# Requires:       python2-django-contrib-comments
+# Requires:       django-uuslug
+# Requires:       django-preserialize
+
+%{?python_provide:%python_provide python2-%{pkgname}}
+
+%description -n python2-%{pkgname}
+Nitrate is a tool for tracking testing being done on a product.
+
+It is a database-backed web application built on top of Django.
+
+
+%package -n %{pkgname}-doc
 Summary:        Documentation of Nitrate
-Group:          Documentation
-URL:            http://nitrate.readthedocs.org/en/latest/
 BuildRequires:  python2-sphinx
 
-
-%description doc
+%description -n %{pkgname}-doc
 Documentation of Nitrate
 
 
 %prep
-%setup -q
+%autosetup -n %{pkgname}-%{version}
 
 %build
 %{__python} setup.py build
@@ -61,66 +72,30 @@ cd -
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
 
-# Copy static content from 32/64bit-specific python dir to shared data dir:
-mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}
-mkdir -p ${RPM_BUILD_ROOT}%{_docdir}/%{name}
-mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/%{name}/static
+mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d
 
-mv ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{name}-httpd.conf \
-   ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{name}.conf
-
-# Celery
-# Create celery log and pid dir.
-install -d -m 755 ${RPM_BUILD_ROOT}%{_var}/log/celery
-install -d -m 755 ${RPM_BUILD_ROOT}%{_var}/run/celery
-
-chmod 755 ${RPM_BUILD_ROOT}%{_sysconfdir}/init.d/celeryd
+mv contrib/conf/%{pkgname}-httpd.conf ${RPM_BUILD_ROOT}%{_sysconfdir}/httpd/conf.d/%{pkgname}.conf
 
 
-%pre
-# Create celery group and user
-getent group celery >/dev/null || groupadd -r celery
-if ! getent passwd celery >/dev/null; then
-    useradd -r -g celery -G celery,nobody -d %{_var}/log/celery -s /sbin/nologin -c "TCMS celery daemons" celery
-fi
-
-%post
-# Collect static file for the app:
-/usr/bin/django-admin collectstatic --noinput --clear --settings=tcms.settings.product
-ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc0.d/K25celeryd
-ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc1.d/K25celeryd
-ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc2.d/S90celeryd
-ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc3.d/S90celeryd
-ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc4.d/S90celeryd
-ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc5.d/S90celeryd
-ln -s %{_sysconfdir}/init.d/celeryd %{_sysconfdir}/rc6.d/K25celeryd
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
-%files
-%doc AUTHORS CHANGELOG.rst README.rst VERSION.rst
+%files -n python2-%{pkgname}
+%doc AUTHORS CHANGELOG.rst README.rst VERSION.txt
 %license LICENSE
-%{python_sitelib}/tcms/
-%{python_sitelib}/nitrate-%{version}-py*.egg-info/
-%{_datadir}/%{name}
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
-%config(noreplace) %{python_sitelib}/tcms/settings/product.py
-%dir %attr(0755, celery, root) %{_var}/log/celery
-%dir %attr(0755, celery, root) %{_var}/run/celery
-%config(noreplace) %{_sysconfdir}/init.d/celeryd
+%{python2_sitelib}/tcms/
+%{python2_sitelib}/%{pkgname}-%{version}-py*.egg-info/
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/%{pkgname}.conf
 
 
-%files doc
+%files -n %{pkgname}-doc
 %doc docs/target/html
+%license LICENSE
 
 
 %changelog
+* Fri Feb 16 2018 Chenxiong Qi <qcxhome@gmail.com> 4.0.0-2
+- Clean up SPEC
+
 * Thu Nov 23 2017 Chenxiong Qi <qcxhome@gmail.com> 4.0.0-1
 - Upgrade django to 1.10.8
 - Compatible with Python 3
