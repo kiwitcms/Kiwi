@@ -7,12 +7,16 @@
       dnf: name={{ item }} state=present
       with_items:
         - ctags
+        - copr-cli
         - docker
+        - findutils
         - gcc
         - git
         - ipython
         - mariadb-devel
         - mariadb-server
+        - mock
+        - neovim
         - postgresql
         - postgresql-devel
         - postgresql-server
@@ -26,6 +30,9 @@
         - rpm-build
         - rpmdevtools
         - rpmlint
+
+    - name: Configure mock
+      user: name={{ ansible_user }} group=mock append=yes
 
     - name: Service mariadb
       systemd: name=mariadb state=started enabled=yes
