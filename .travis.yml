@@ -1,28 +1,11 @@
 language: python
-matrix:
-  include:
-    - python: "2.7"
-      env: DJANGO_VERSION=1.10.8
-    - python: "2.7"
-      env: DJANGO_VERSION=1.11.7
-    - python: "3.4"
-      env: DJANGO_VERSION=1.10.8
-    - python: "3.4"
-      env: DJANGO_VERSION=1.11.7
-    - python: "3.5"
-      env: DJANGO_VERSION=1.10.8
-    - python: "3.5"
-      env: DJANGO_VERSION=1.11.7
-    - python: "3.6"
-      env: DJANGO_VERSION=1.11.7
+python:
+  - "2.7"
+  - "3.6"
 before_install:
   - pip install coveralls
-install:
-  - pip install Django==$DJANGO_VERSION
-  - pip install -r requirements/devel.txt
-script:
-  - flake8
-  - py.test
+install: pip install tox-travis
+script: tox
 after_success:
   - coveralls
 notifications:
