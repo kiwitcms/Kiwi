@@ -29,6 +29,7 @@ Requires:       mod_auth_gssapi
 Requires:       mod_wsgi
 Requires:       python-beautifulsoup4
 Requires:       python2-PyMySQL
+Requires:       python2-celery
 Requires:       python2-django > 1.9
 Requires:       python2-django-tinymce
 Requires:       python2-html2text
