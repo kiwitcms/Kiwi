@@ -26,6 +26,7 @@
         - python2-ipdb
         - python2-sphinx
         - python2-virtualenv
+        - python3-devel
         - redhat-rpm-config
         - rpm-build
         - rpmdevtools
