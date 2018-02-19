@@ -58,11 +58,12 @@ install:
   - echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
   - pip install -r $REQUIREMENTS_TXT
   - pip install -r requirements/devel.txt
-  - pip install coveralls
+  - pip install coveralls codecov
   - npm install
 script: if [ -n "$DOCS_TEST" ]; then make check-docs-source-in-git; else make check; fi
 after_success:
   - coveralls
+  - codecov
 notifications:
   email:
     on_failure: change
