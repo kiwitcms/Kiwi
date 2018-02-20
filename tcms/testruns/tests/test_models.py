@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from mock import patch
+
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import TestRunFactory
 from tcms.testcases.models import BugSystem
@@ -28,3 +30,15 @@ class TestRunGetBugsCount(BaseCaseRun):
 
     def test_get_bugs_count(self):
         self.assertEqual(3, self.test_run.get_bug_count())
+
+    @patch('tcms.core.utils.mailto.send_mail')
+    def test_send_mail_after_test_run_creation(self, send_mail):
+        test_run = TestRunFactory()
+
+        recipients = test_run.get_notify_addrs()
+
+        # Verify notification mail
+        self.assertIn("New TestRun %s created" % test_run.summary,
+                      send_mail.call_args_list[0][0][0])
+        self.assertIn("Summary: %s" % test_run.summary, send_mail.call_args_list[0][0][1])
+        self.assertEqual(recipients, send_mail.call_args_list[0][0][-1])

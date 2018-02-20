@@ -79,7 +79,7 @@ def notify_admins(sender, **kwargs):
         recipients=admin_emails,
         subject=str(_('New user awaiting approval')),
         context={
-            'user': user,
+            'username': user.username,
             'user_url': user_url,
         }
     )

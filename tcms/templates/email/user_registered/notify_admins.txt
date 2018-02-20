@@ -1,6 +1,6 @@
 {% load i18n %}
 {% blocktrans %}Dear Administrator,
-somebody just registered an account with username {{ user.username }} at your
+somebody just registered an account with username {{ username }} at your
 Kiwi TCMS instance and is awaiting your approval!
 
 Go to {{ user_url }} to activate the account!
