@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from django.contrib.messages import constants as messages
 import tcms
 
 
@@ -413,4 +414,10 @@ TINYMCE_DEFAULT_CONFIG = {
                         "Header 2=header2;"
                         "Header 3=header3;"
                         "Table Row=tableRow1",
+}
+
+
+# override default message tags to match Patternfly class names
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
 }
