@@ -800,7 +800,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .system_help{background:url("../images/icon_system_help.png") 5px 2px no-repeat; padding:0 0 5px 25px;color:#52677A;}
 .system_alert{background:url("../images/icon_system_alert.png") top left no-repeat; padding-left:20px;color:#bd7f04;}
 .have_bug{background:url("../images/bug_fire.png") left center no-repeat; padding: 1px 0px 1px 20px;}
-.alert{background:url("../images/icon_system_help.png") top left no-repeat; padding-left:20px;color:#891b05;width:500px;margin:10px 0;}
 .system_info{background: url("../images/tip_bg.png") 5px 5px no-repeat; width:500px;margin:0 auto;padding:5px 5px 5px 25px;margin:10px 0px;-moz-box-shadow:1px 1px 1px #ccc;}
 .text-center{text-align:center;}
 
