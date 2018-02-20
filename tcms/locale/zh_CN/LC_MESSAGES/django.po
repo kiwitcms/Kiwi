@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-15 22:47+0000\n"
+"POT-Creation-Date: 2018-02-20 14:51+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -24,23 +24,53 @@ msgstr ""
 msgid "A user with that email already exists."
 msgstr ""
 
+#: tcms/core/contrib/auth/views.py:31
+msgid "This backend does not allow user registration"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:53
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:59
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:65
+msgid "Following is the administrator list"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:96
+msgid "This activation key no longer exists in the database"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:101
+msgid "This activation key has expired"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:113
+msgid "Your account has been activated successfully"
+msgstr ""
+
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:13
+#: tcms/core/contrib/comments/forms.py:15
 msgid "Name"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:17
+#: tcms/core/contrib/comments/forms.py:19
 msgid "Email address"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:20
+#: tcms/core/contrib/comments/forms.py:22
 msgid "URL"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:24
+#: tcms/core/contrib/comments/forms.py:26
 msgid "Comment"
 msgstr ""
 

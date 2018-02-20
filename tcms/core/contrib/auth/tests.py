@@ -105,18 +105,15 @@ class TestRegistration(TestCase):
             html=True)
 
     @patch('tcms.core.contrib.auth.models.sha1')
-    def assert_user_registration(self, username, sha1):
+    def assert_user_registration(self, username, sha1, follow=False):
         sha1.return_value.hexdigest.return_value = self.fake_activate_key
 
         response = self.client.post(self.register_url,
                                     {'username': username,
                                      'password1': 'password',
                                      'password2': 'password',
-                                     'email': 'new-tester@example.com'})
-        self.assertContains(
-            response,
-            '<a href="{}">Continue</a>'.format(reverse('core-views-index')),
-            html=True)
+                                     'email': 'new-tester@example.com'},
+                                    follow=follow)
 
         users = User.objects.filter(username=username)
         self.assertTrue(users.exists())
@@ -144,7 +141,8 @@ class TestRegistration(TestCase):
         signals.user_registered.connect(signals.notify_admins)
 
         try:
-            self.assert_user_registration('signal-handler')
+            response = self.assert_user_registration('signal-handler')
+            self.assertRedirects(response, reverse('core-views-index'), target_status_code=302)
 
             # 1 - verification mail, 2 - email to admin
             self.assertTrue(send_mail.called)
@@ -159,11 +157,11 @@ class TestRegistration(TestCase):
     @patch('tcms.core.utils.mailto.send_mail')
     @patch('tcms.core.contrib.auth.views.settings.DEFAULT_FROM_EMAIL', new='kiwi@example.com')
     def test_register_user_by_email_confirmation(self, send_mail):
-        response = self.assert_user_registration('new-tester')
-
+        response = self.assert_user_registration('new-tester', follow=True)
         self.assertContains(
             response,
-            'Your account has been created, please check your mailbox for confirmation')
+            'Your account has been created, please check your mailbox for confirmation'
+        )
 
         s = Site.objects.get_current()
         confirm_url = 'http://%s%s' % (s.domain, reverse('tcms-confirm',
@@ -184,20 +182,16 @@ class TestRegistration(TestCase):
            new=[('admin1', 'admin1@example.com'),
                 ('admin2', 'admin2@example.com')])
     def test_register_user_and_activate_by_admin(self):
-        response = self.assert_user_registration('plan-tester')
+        response = self.assert_user_registration('plan-tester', follow=True)
 
         self.assertContains(
             response,
-            'Your account has been created, but you need to contact an administrator '
-            'to active your account')
+            'Your account has been created, but you need an administrator to activate it')
 
-        self.assertContains(
-            response,
-            '<ul><li><a href="mailto:{}">{}</a></li>'
-            '<li><a href="mailto:{}">{}</a></li></ul>'.format(
-                'admin1@example.com', 'admin1',
-                'admin2@example.com', 'admin2'),
-            html=True)
+        for (name, email) in settings.ADMINS:
+            self.assertContains(response,
+                                '<a href="mailto:{}">{}</a>'.format(email, name),
+                                html=True)
 
 
 class TestConfirm(TestCase):
@@ -213,19 +207,14 @@ class TestConfirm(TestCase):
         self.new_user.is_active = False
         self.new_user.save()
 
-    def test_fail_if_activation_key_not_exist(self):
+    def test_fail_if_activation_key_does_not_exist(self):
         confirm_url = reverse('tcms-confirm',
                               args=['nonexisting-activation-key'])
-        response = self.client.get(confirm_url)
+        response = self.client.get(confirm_url, follow=True)
 
         self.assertContains(
             response,
-            'This key no longer exist in the database')
-
-        self.assertContains(
-            response,
-            '<a href="{}">Continue</a>'.format(reverse('core-views-index')),
-            html=True)
+            'This activation key no longer exists in the database')
 
         # user account not activated
         user = User.objects.get(username=self.new_user.username)
@@ -241,14 +230,9 @@ class TestConfirm(TestCase):
             key.save()
 
         confirm_url = reverse('tcms-confirm', args=[fake_activation_key])
-        response = self.client.get(confirm_url)
+        response = self.client.get(confirm_url, follow=True)
 
-        self.assertContains(response, 'This key has expired')
-
-        self.assertContains(
-            response,
-            '<a href="{}">Continue</a>'.format(reverse('core-views-index')),
-            html=True)
+        self.assertContains(response, 'This activation key has expired')
 
         # user account not activated
         user = User.objects.get(username=self.new_user.username)
@@ -263,17 +247,11 @@ class TestConfirm(TestCase):
 
         confirm_url = reverse('tcms-confirm',
                               args=[fake_activate_key])
-        response = self.client.get(confirm_url)
+        response = self.client.get(confirm_url, follow=True)
 
         self.assertContains(
             response,
             'Your account has been activated successfully')
-
-        self.assertContains(
-            response,
-            '<a href="{}">Continue</a>'.format(
-                reverse('tcms-redirect_to_profile')),
-            html=True)
 
         # user account activated
         user = User.objects.get(username=self.new_user.username)
