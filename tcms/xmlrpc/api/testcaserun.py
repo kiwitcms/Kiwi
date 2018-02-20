@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
+import time
+
 from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import form_errors_to_list
+from tcms.core.contrib.comments.forms import SimpleForm
+from tcms.core.contrib.comments import utils as comment_utils
 from tcms.core.contrib.linkreference.views import create_link
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.testruns.models import TestCaseRun
-from tcms.xmlrpc.utils import Comment
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
@@ -33,14 +36,22 @@ def add_comment(case_run_id, comment, **kwargs):
         :param case_run_id: int
         :param comment: The text to add as a comment
         :param comment: str
-        :return: None
+        :return: None or JSON string in case of errors
     """
-    Comment(
-        request=kwargs.get(REQUEST_KEY),
-        content_type='testruns.testcaserun',
-        object_pks=[case_run_id],
-        comment=comment
-    ).add()
+    case_run = TestCaseRun.objects.get(pk=case_run_id)
+
+    data = {
+        'content_type': 'testruns.testcaserun',
+        'object_pk': str(case_run_id),
+        'timestamp': str(time.time()).split('.')[0],
+    }
+    data['security_hash'] = SimpleForm(case_run).generate_security_hash(**data)
+    data['comment'] = comment
+
+    form, _ = comment_utils.add_comment(kwargs.get(REQUEST_KEY), data)
+
+    if not form.is_valid():
+        return form.errors.as_json()
 
 
 @permissions_required('testruns.add_testcaserun')

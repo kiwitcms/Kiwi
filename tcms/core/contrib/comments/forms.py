@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import time
+
 from django.conf import settings
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -28,10 +30,6 @@ class SimpleForm(CommentDetailsForm):
     )
 
     def clean_timestamp(self):
-        # return self.cleaned_data["timestamp"]
-
-        import time
-
         return str(time.time()).split('.')[0]
 
     def get_form(self):
