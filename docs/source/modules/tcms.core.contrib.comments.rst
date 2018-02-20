@@ -13,5 +13,6 @@ Submodules
 
    tcms.core.contrib.comments.forms
    tcms.core.contrib.comments.models
+   tcms.core.contrib.comments.utils
    tcms.core.contrib.comments.views
 
