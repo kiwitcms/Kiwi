@@ -2,35 +2,35 @@
 
 from datetime import datetime
 
-from django.conf import settings
-from django.shortcuts import render
 from django.urls import reverse
+from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_GET
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
+
 
 from . import get_using_backend
 from .forms import RegistrationForm
 from .models import UserActivateKey
-from tcms.core.views import Prompt
 from tcms.signals import user_registered
 
 
 @require_http_methods(['GET', 'POST'])
 def register(request, template_name='registration/registration_form.html'):
     """Register method of account"""
-
-    request_data = request.GET or request.POST
-
     # Check that registration is allowed by backend
     backend = get_using_backend()
     cr = getattr(backend, 'can_register')  # can register
     if not cr:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Alert,
-            info='The backend is not allowed to register.',
-            next=request_data.get('next', reverse('core-views-index'))
+        messages.add_message(
+            request,
+            messages.ERROR,
+            _('This backend does not allow user registration')
         )
+        return HttpResponseRedirect(reverse('tcms-login'))
 
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
@@ -47,27 +47,31 @@ def register(request, template_name='registration/registration_form.html'):
             if form.cleaned_data['email'] and settings.DEFAULT_FROM_EMAIL:
                 form.send_confirm_mail(request=request, active_key=ak)
 
-                msg = 'Your account has been created, please check your ' \
-                      'mailbox for confirmation.'
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    _('Your account has been created, please check your mailbox for confirmation')
+                )
             else:
-                msg = [
-                    '<p>Your account has been created, but you need to contact '
-                    'an administrator to active your account.</p>',
-                ]
-                # If can not send email, prompt to user.
+                messages.add_message(
+                    request,
+                    messages.WARNING,
+                    _('Your account has been created, but you need an administrator to activate it')
+                )
                 if settings.ADMINS:
-                    msg.append('<p>Following is the admin list</p><ul>')
+                    messages.add_message(
+                        request,
+                        messages.INFO,
+                        _('Following is the administrator list')
+                    )
                     for name, email in settings.ADMINS:
-                        msg.append('<li><a href="mailto:{}">{}</a></li>'.format(email, name))
-                    msg.append('</ul>')
-                msg = ''.join(msg)
+                        messages.add_message(
+                            request,
+                            messages.INFO,
+                            '<a href="mailto:{}">{}</a>'.format(email, name)
+                        )
 
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info=msg,
-                next=request.POST.get('next', reverse('core-views-index'))
-            )
+            return HttpResponseRedirect(reverse('core-views-index'))
     else:
         form = RegistrationForm()
 
@@ -86,37 +90,26 @@ def confirm(request, activation_key):
         ak = UserActivateKey.objects.select_related('user')
         ak = ak.get(activation_key=activation_key)
     except UserActivateKey.DoesNotExist:
-        msg = 'This key no longer exist in the database.'
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info=msg,
-            next=request.GET.get('next', reverse('core-views-index'))
+        messages.add_message(
+            request,
+            messages.ERROR,
+            _('This activation key no longer exists in the database')
         )
+        return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
     if ak.key_expires <= datetime.now():
-        msg = 'This key has expired!'
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info=msg,
-            next=request.GET.get('next', reverse('core-views-index'))
-        )
+        messages.add_message(request, messages.ERROR, _('This activation key has expired'))
+        return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
     # All thing done, start to active the user and use the user login
     user = ak.user
     user.is_active = True
     user.save(update_fields=['is_active'])
     ak.delete()
-    # login(request, user)
 
-    # Response to web browser.
-    msg = 'Your account has been activated successfully, click next link to ' \
-          're-login.'
-    return Prompt.render(
-        request=request,
-        info_type=Prompt.Info,
-        info=msg,
-        next=request.GET.get('next', reverse(
-            'tcms-redirect_to_profile'))
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        _('Your account has been activated successfully')
     )
+    return HttpResponseRedirect(request.GET.get('next', reverse('tcms-redirect_to_profile')))
