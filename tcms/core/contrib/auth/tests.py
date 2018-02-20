@@ -150,6 +150,8 @@ class TestRegistration(TestCase):
 
             # verify we've actually sent the admin email
             self.assertIn('New user awaiting approval', send_mail.call_args_list[0][0][0])
+            self.assertIn('somebody just registered an account with username signal-handler',
+                          send_mail.call_args_list[0][0][1])
             self.assertIn('admin@kiwitcms.org', send_mail.call_args_list[0][0][-1])
         finally:
             signals.user_registered.disconnect(signals.notify_admins)
