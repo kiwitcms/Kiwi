@@ -42,7 +42,7 @@ ADMINS = [
 # Email settings
 # DEFAULT_FROM_EMAIL must be defined if you want Kiwi TCMS to send emails.
 # You also need to configure the email backend. For more information see:
-# https://docs.djangoproject.com/en/1.11/topics/email/#quick-example
+# https://docs.djangoproject.com/en/2.0/topics/email/#quick-example
 DEFAULT_FROM_EMAIL = 'kiwi@example.com'
 EMAIL_SUBJECT_PREFIX = '[Kiwi-TCMS] '
 
@@ -58,6 +58,12 @@ ALLOWED_HOSTS = ['*']
 
 # default group in which new users will be created
 DEFAULT_GROUPS = ['Tester']
+
+
+# When set to False site administrators will have to manually approve
+# new users. You can combine this with tcms.signals.notify_admins() signal
+# handler!
+AUTO_APPROVE_NEW_USERS = True
 
 
 # Maximum upload file size, default set to 5MB.
