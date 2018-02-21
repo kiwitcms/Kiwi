@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-15 22:47+0000\n"
-"PO-Revision-Date: 2018-02-19 08:23-0500\n"
+"POT-Creation-Date: 2018-02-20 15:22+0000\n"
+"PO-Revision-Date: 2018-02-21 03:34-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -24,23 +24,51 @@ msgstr "Basis Authentifizierung"
 msgid "A user with that email already exists."
 msgstr "Ein Benutzer mit dieser E-Mail-Adresse ist bereits vorhanden."
 
+#: tcms/core/contrib/auth/views.py:31
+msgid "This backend does not allow user registration"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:53
+msgid "Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:59
+msgid "Your account has been created, but you need an administrator to activate it"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:65
+msgid "Following is the administrator list"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:96
+msgid "This activation key no longer exists in the database"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:101
+msgid "This activation key has expired"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:113
+msgid "Your account has been activated successfully"
+msgstr ""
+
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
 msgstr "Basis angepasste Kommentare"
 
-#: tcms/core/contrib/comments/forms.py:13
+#: tcms/core/contrib/comments/forms.py:15
 msgid "Name"
 msgstr "Name"
 
-#: tcms/core/contrib/comments/forms.py:17
+#: tcms/core/contrib/comments/forms.py:19
 msgid "Email address"
 msgstr "E-Mail-Adresse"
 
-#: tcms/core/contrib/comments/forms.py:20
+#: tcms/core/contrib/comments/forms.py:22
 msgid "URL"
 msgstr "URL"
 
-#: tcms/core/contrib/comments/forms.py:24
+#: tcms/core/contrib/comments/forms.py:26
 msgid "Comment"
 msgstr "Bemerkung"
 
@@ -88,20 +116,20 @@ msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid "Test run %(test_run.pk)s has been created or updated for you.\n\n"
+msgid "\n"
+"Test run %(pk)s has been created or updated for you.\n\n"
 "### Links ###\n"
-"Test run: %(test_run.get_url)s\n"
-"Test plan: %(test_run.plan.get_url)s\n\n"
+"Test run: %(run_url)s\n"
+"Test plan: %(plan_url)s\n\n"
 "### Basic run information ###\n"
-"Summary: %(test_run.summary)s\n\n"
-"Managed: %(test_run.manager)s.\n"
-"Default tester: %(test_run.default_tester)s.\n\n"
-"Product: %(test_run.build.product)s\n"
-"Product version: %(test_run.product_version)s\n"
-"Build: %(test_run.build)s\n\n"
-"Estimated time: %(test_run.estimated_time)s\n\n"
+"Summary: %(summary)s\n\n"
+"Managed: %(manager)s.\n"
+"Default tester: %(default_tester)s.\n\n"
+"Product: %(product)s\n"
+"Product version: %(version)s\n"
+"Build: %(build)s\n\n"
 "Notes:\n"
-"%(test_run.notes)s\n"
+"%(notes)s\n"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
