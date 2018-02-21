@@ -2,6 +2,57 @@ Change Log
 ==========
 
 
+Kiwi TCMS 4.1.0 (Feb 21 2018)
+-----------------------------
+
+Enhancements and bug fixes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Add tests for ``tcms.core.ajax.tag`` (Anton Sankov)
+- Remove unused code from ``tcms.core.ajax.tag`` (Anton Sankov)
+- Refactor ``tcms.core.ajax.tag`` to work with only one object. Fixes
+  `Issue #135 <https://github.com/kiwitcms/Kiwi/issues/135>`_ (Anton Sankov)
+- Add test for tcms_api.TestRun. Closes
+  `Issue #194 <https://github.com/kiwitcms/Kiwi/issues/194>`_
+- Send the ``user_registered`` signal when new users are registered
+- Add signal handler to notify admins on new users. Fixes
+  `Issue #205 <https://github.com/kiwitcms/Kiwi/issues/205>`_
+- Add ``is_superuser`` column to User admin. Fixes
+  `Issue #206 <https://github.com/kiwitcms/Kiwi/issues/206>`_
+- Properly pass variables to blocktrans tag. Fixes
+  `Issue #225 <https://github.com/kiwitcms/Kiwi/issues/225>`_
+- Minor documentation updates
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove double thread when sending email on ``post_save`` signal
+- Remove unused ``EmailBackend`` authentication backend
+- Remove unused ``tcms.core.models.signals``
+- Consolidate all signals and handlers in ``tcms.signals``
+- Make use of ``django_messages`` during account registration
+
+Settings
+~~~~~~~~
+
+- Remove ``LISTENING_MODEL_SIGNAL`` (internal setting)
+- New setting ``AUTO_APPROVE_NEW_USERS``. Fixes
+  `Issue #203 <https://github.com/kiwitcms/Kiwi/issues/203>`_
+
+
+Models and database migrations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Remove unused fields from ``Product`` model:
+  ``disallow_new``, ``max_vote_super_bug``, ``vote_super_user``,
+  ``field votes_to_confirm``, ``default_milestone``, ``milestone_url``
+- Remove unused ``Milestone`` model
+
+
+**IMPORTANT:** this release introduces new database migrations!
+
+
+
 Kiwi TCMS 4.0.0 (Feb 10 2018)
 -----------------------------
 
