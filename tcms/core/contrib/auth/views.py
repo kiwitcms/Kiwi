@@ -43,8 +43,8 @@ def register(request, template_name='registration/registration_form.html'):
                                  user=new_user,
                                  backend=backend)
 
-            # Send email to user if email is configured.
-            if form.cleaned_data['email'] and settings.DEFAULT_FROM_EMAIL:
+            # Send confirmation email to new user
+            if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
                 form.send_confirm_mail(request=request, active_key=ak)
 
                 messages.add_message(

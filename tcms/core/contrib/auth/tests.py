@@ -157,7 +157,6 @@ class TestRegistration(TestCase):
             signals.user_registered.disconnect(signals.notify_admins)
 
     @patch('tcms.core.utils.mailto.send_mail')
-    @patch('tcms.core.contrib.auth.views.settings.DEFAULT_FROM_EMAIL', new='kiwi@example.com')
     def test_register_user_by_email_confirmation(self, send_mail):
         response = self.assert_user_registration('new-tester', follow=True)
         self.assertContains(
@@ -179,10 +178,9 @@ class TestRegistration(TestCase):
 """ % confirm_url,
             settings.DEFAULT_FROM_EMAIL, ['new-tester@example.com'], fail_silently=False)
 
-    @patch('tcms.core.contrib.auth.views.settings.DEFAULT_FROM_EMAIL', new='')
-    @patch('tcms.core.contrib.auth.views.settings.ADMINS',
-           new=[('admin1', 'admin1@example.com'),
-                ('admin2', 'admin2@example.com')])
+    @override_settings(AUTO_APPROVE_NEW_USERS=False,
+                       ADMINS=[('admin1', 'admin1@example.com'),
+                               ('admin2', 'admin2@example.com')])
     def test_register_user_and_activate_by_admin(self):
         response = self.assert_user_registration('plan-tester', follow=True)
 
