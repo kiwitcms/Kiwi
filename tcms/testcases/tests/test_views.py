@@ -730,10 +730,6 @@ class TestExportCases(BasePlanCase):
         exported_cases_count = xmldoc.findall('testcase')
         self.assertEqual(2, len(exported_cases_count))
 
-    def test_no_cases_to_be_exported(self):
-        response = self.client.post(self.export_url, {})
-        self.assertContains(response, 'At least one target is required')
-
 
 class TestPrintablePage(BasePlanCase):
     """Test printable page view method"""
@@ -751,10 +747,6 @@ class TestPrintablePage(BasePlanCase):
                             effect='effect',
                             setup='setup',
                             breakdown='breakdown')
-
-    def test_no_cases_to_print(self):
-        response = self.client.post(self.printable_url, {})
-        self.assertContains(response, 'At least one target is required')
 
     def test_printable_page(self):
         response = self.client.post(self.printable_url,

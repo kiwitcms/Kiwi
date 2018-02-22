@@ -947,21 +947,10 @@ def get(request, case_id, template_name='case/get.html'):
 
     logs = itertools.groupby(logs, lambda l: l.date)
     logs = [(day, list(log_actions)) for day, log_actions in logs]
-    # Get the specific test plan
-    plan_id_from_request = request.GET.get('from_plan')
-    if plan_id_from_request:
-        try:
-            tp = tps.get(pk=plan_id_from_request)
-        except TestPlan.DoesNotExist:
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info='''This case has been removed from the plan, but you
-                          can view the case detail''',
-                next=reverse('testcases-get',
-                             args=[case_id, ]),
-            )
-    else:
+    try:
+        tp = tps.get(pk=request.GET.get('from_plan', 0))
+    except TestPlan.DoesNotExist:
+        # not viewing TC from a Plan or specified Plan does not exist (e.g. broken link)
         tp = None
 
     # Get the test case runs
@@ -1041,12 +1030,6 @@ def printable(request, template_name='case/printable.html'):
     """Create the printable copy for plan/case"""
     case_pks = request.POST.getlist('case')
 
-    if not case_pks:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one target is required.', )
-
     tcs = create_dict_from_query(
         TestCaseText.objects.filter(
             case__in=case_pks
@@ -1067,16 +1050,6 @@ def printable(request, template_name='case/printable.html'):
 def export(request, template_name='case/export.xml'):
     """Export the plan"""
     case_pks = request.POST.getlist('case')
-    if not case_pks:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one target is required.', )
-
-    timestamp = datetime.datetime.now()
-    timestamp_str = '%02i-%02i-%02i' \
-                    % (timestamp.year, timestamp.month, timestamp.day)
-
     context_data = {
         'data_generator': generator_proxy(case_pks),
     }
@@ -1084,7 +1057,7 @@ def export(request, template_name='case/export.xml'):
     response = render(request, template_name, context_data)
 
     response['Content-Disposition'] = \
-        'attachment; filename=tcms-testcases-%s.xml' % timestamp_str
+        'attachment; filename=tcms-testcases-%s.xml' % datetime.datetime.now().strftime('%Y-%m-%d')
     return response
 
 
