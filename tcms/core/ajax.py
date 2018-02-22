@@ -10,7 +10,7 @@ import json
 from distutils.util import strtobool
 
 from django import http
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
@@ -28,10 +28,10 @@ from tcms.management.models import Priority
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
-from tcms.testcases.models import TestCaseStatus
+from tcms.testcases.models import TestCaseStatus, TestCaseTag
 from tcms.testcases.views import plan_from_request_or_none
-from tcms.testplans.models import TestPlan, TestCasePlan
-from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
+from tcms.testplans.models import TestPlan, TestCasePlan, TestPlanTag
+from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
 
@@ -235,25 +235,62 @@ def tag(request, template_name="management/get_tag.html"):
         tag_actions = TagActions(obj=obj, tag=q_tag)
         getattr(tag_actions, q_action)()
 
-    del q_tag, q_action
+    tags = obj.tag.all().order_by('pk')
+    test_plan_tags = TestPlanTag.objects.filter(
+        tag__in=tags).values('tag').annotate(num_plans=Count('tag')).order_by('tag')
+    test_case_tags = TestCaseTag.objects.filter(
+        tag__in=tags).values('tag').annotate(num_cases=Count('tag')).order_by('tag')
+    test_run_tags = TestRunTag.objects.filter(
+        tag__in=tags).values('tag').annotate(num_runs=Count('tag')).order_by('tag')
 
-    tags = obj.tag.all()
-    tags = tags.extra(select={
-        'num_plans':
-            'SELECT COUNT(*) FROM test_plan_tags '
-            'WHERE test_tags.tag_id = test_plan_tags.tag_id',
-        'num_cases':
-            'SELECT COUNT(*) FROM test_case_tags '
-            'WHERE test_tags.tag_id = test_case_tags.tag_id',
-        'num_runs':
-            'SELECT COUNT(*) FROM test_run_tags '
-            'WHERE test_tags.tag_id = test_run_tags.tag_id',
-    })
+    plan_counter = _TagCounter('num_plans', test_plan_tags)
+    case_counter = _TagCounter('num_cases', test_case_tags)
+    run_counter = _TagCounter('num_runs', test_run_tags)
+
+    for tag in tags:
+        tag.num_plans = plan_counter.calculate_tag_count(tag)
+        tag.num_cases = case_counter.calculate_tag_count(tag)
+        tag.num_runs = run_counter.calculate_tag_count(tag)
+
     context_data = {
         'tags': tags,
         'object': obj,
     }
     return render(request, template_name, context_data)
+
+
+class _TagCounter(object):
+    """ Used for counting the number of times a tag is assigned to TestRun/TestCase/TestPlan """
+
+    def __init__(self, key, test_tags):
+        """
+         :param key: either 'num_plans', 'num_cases', 'num_runs', depending on what you want count
+         :type key: str
+         :param test_tags: query set, containing the Tag->Object relationship, ordered by tag and
+                            annotated by key
+            e.g. TestPlanTag, TestCaseTag ot TestRunTag
+         :type test_tags: QuerySet
+        """
+        self.key = key
+        self.test_tags = iter(test_tags)
+        self.counter = {'tag': 0}
+
+    def calculate_tag_count(self, tag):
+        """
+        :param tag: the tag you do the counting for
+        :type tag: Tag
+        :return: the number of times a tag is assigned to object
+        :rtype: int
+        """
+        if self.counter['tag'] != tag.pk:
+            try:
+                self.counter = self.test_tags.__next__()
+            except StopIteration:
+                return 0
+
+        if tag.pk == self.counter['tag']:
+            return self.counter[self.key]
+        return 0
 
 
 def get_value_by_type(val, v_type):
