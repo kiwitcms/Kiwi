@@ -65,9 +65,6 @@ Nitrate.TestPlans.Instance = {
 			{% else %}
 			<input id="btn_enable" type="button" value="Enable Plan " title="Enabled this plan" {% if not perms.testplans.change_testplan %}disabled="true"{% endif %}>
 			{% endif %}
-			<input id="btn_export" type="button" value="Export All Cases "
-                   title="Export all cases to XML file"
-                   data-params='["{% url "plans-export" %}", {{ test_plan.pk }}]'>
 			<input id="btn_print" type="button" value="Print Plan "
                    title="Print Plan"
                    data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>

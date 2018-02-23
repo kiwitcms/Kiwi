@@ -2,7 +2,6 @@
 
 import json
 import http.client
-import xml.etree.ElementTree as et
 from urllib.parse import urlencode
 
 from django import test
@@ -260,56 +259,6 @@ class ExportTestPlanTests(test.TestCase):
                 case.add_component(component)
 
             cls.cases.append(case)
-
-    def test_export_returns_valid_xml_and_content(self):
-        location = reverse('plans-export')
-        response = self.c.get(location, {'plan': self.test_plan.pk})
-        self.assertEqual(response.status_code, http.client.OK)
-
-        xml_doc = response.content
-        try:
-            xml_doc = et.fromstring(xml_doc)
-        except et.ParseError:
-            self.fail('XML document exported from test plan is invalid.')
-
-        for test_case in xml_doc.findall('testcase'):
-            self.assertEqual('CONFIRMED', test_case.attrib['status'])
-
-            for tp_ref in test_case.iter('testplan_reference'):
-                self.assertEqual(tp_ref.text, self.test_plan.name)
-
-            summary = test_case.findall('summary')[0].text
-            case_number = int(summary.replace('test_case_number_', ''))
-
-            # validate case tags
-            tags = test_case.findall('tag')
-            if case_number % 2 == 0:
-                self.assertEqual(2, len(tags))
-                self.assertEqual('second_tag_for_%s' % summary, tags[1].text)
-            else:
-                self.assertEqual(1, len(tags))
-            self.assertEqual('tag_for_%s' % summary, tags[0].text)
-
-            # validate case components
-            components = test_case.findall('component')
-
-            # each component has a product attribute
-            for comp in components:
-                self.assertTrue(comp.get('product') != '')
-
-            if case_number % 2 == 0:
-                self.assertEqual(2, len(components))
-                self.assertEqual('second_component_for_%s' % summary, components[1].text.strip())
-            else:
-                self.assertEqual(1, len(components))
-            self.assertEqual('component_for_%s' % summary, components[0].text.strip())
-
-    def test_export_wo_parameters_returns_html_warning(self):
-        location = reverse('plans-export')
-        response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.OK)
-        self.assertIn('At least one target is required.', str(response.content,
-                                                              encoding=settings.DEFAULT_CHARSET))
 
 
 class TestPlanModel(test.TestCase):

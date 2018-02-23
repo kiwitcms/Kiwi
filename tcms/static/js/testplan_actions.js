@@ -592,9 +592,6 @@ Nitrate.TestPlans.Advance_Search_List.on_load = function() {
   jQ('#plan_advance_printable').bind('click', function() {
     postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
   });
-  jQ('.js-export-cases').bind('click', function() {
-    postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
-  });
 };
 
 Nitrate.TestPlans.List.on_load = function() {
@@ -680,9 +677,6 @@ Nitrate.TestPlans.List.on_load = function() {
     postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
   });
   jQ('#plan_list_printable').bind('click', function() {
-    postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
-  });
-  jQ('.js-export-cases').bind('click', function() {
     postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
   });
 };
@@ -1009,7 +1003,7 @@ Nitrate.TestPlans.Details = {
     jQ('#btn_edit').bind('click', function() {
       window.location.href = jQ(this).data('param');
     });
-    jQ('#btn_clone, #btn_export, #btn_print').bind('click', function() {
+    jQ('#btn_clone, #btn_print').bind('click', function() {
       var params = jQ(this).data('params');
       window.location.href = params[0] + '?plan=' + params[1];
     });

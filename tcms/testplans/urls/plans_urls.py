@@ -12,5 +12,4 @@ urlpatterns = [
     url(r'^ajax/$', views.ajax_search, name='plans-ajax_search'),
     url(r'^clone/$', views.clone, name='plans-clone'),
     url(r'^printable/$', views.printable, name='plans-printable'),
-    url(r'^export/$', views.export, name='plans-export'),
 ]
