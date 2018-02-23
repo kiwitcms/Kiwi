@@ -379,11 +379,7 @@ class TestPlanEmailSettings(models.Model):
     auto_to_case_owner = models.BooleanField(default=False)
     auto_to_case_default_tester = models.BooleanField(default=False)
     notify_on_plan_update = models.BooleanField(default=False)
-    notify_on_plan_delete = models.BooleanField(default=False)
     notify_on_case_update = models.BooleanField(default=False)
-
-    class Meta:
-        pass
 
 
 class EnvPlanMap(models.Model):

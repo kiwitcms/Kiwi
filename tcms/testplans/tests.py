@@ -165,22 +165,6 @@ class PlanTests(test.TestCase):
         response = self.c.get(location)
         self.assertEqual(response.status_code, http.client.OK)
 
-    def test_plan_delete(self):
-        tp_pk = self.test_plan.pk
-
-        location = reverse('plan-delete', args=[tp_pk])
-        response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.OK)
-
-        response = self.c.get(location, {'sure': 'no'})
-        self.assertEqual(response.status_code, http.client.OK)
-
-        response = self.c.get(location, {'sure': 'yes'})
-        self.assertEqual(response.status_code, http.client.OK)
-        deleted = not TestPlan.objects.filter(pk=tp_pk).exists()
-        self.assertTrue(deleted,
-                        'TestPlan {0} should be deleted. But, not.'.format(tp_pk))
-
     def test_plan_edit(self):
         location = reverse('plan-edit', args=[self.plan_id])
         response = self.c.get(location)
@@ -340,7 +324,7 @@ class TestPlanModel(test.TestCase):
         cls.plan_1.add_case(cls.testcase_1)
         cls.plan_1.add_case(cls.testcase_2)
 
-    def test_plan_delete(self):
+    def test_plan_delete_case(self):
         self.plan_1.delete_case(self.testcase_1)
         cases_left = TestCasePlan.objects.filter(plan=self.plan_1.pk)
         self.assertEqual(1, cases_left.count())

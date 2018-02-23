@@ -76,7 +76,6 @@ DELETE_ATTACHMENTS_FROM_DISK = True
 
 # TCMS email templates
 PLAN_EMAIL_TEMPLATE = 'mail/change_plan.txt'
-PLAN_DELELE_EMAIL_TEMPLATE = 'mail/delete_plan.txt'
 CASE_EMAIL_TEMPLATE = 'mail/edit_case.txt'
 CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
 
