@@ -31,7 +31,6 @@ __all__ = [
     'handle_emails_post_case_save',
     'handle_emails_pre_case_delete',
     'handle_emails_post_plan_save',
-    'handle_emails_pre_plan_delete',
     'handle_emails_post_run_save',
     'handle_post_case_run_save',
     'handle_post_case_run_delete',
@@ -117,15 +116,6 @@ def handle_emails_post_plan_save(sender, instance, created=False, **kwargs):
         if instance.emailing.notify_on_plan_update:
             from tcms.testplans.helpers import email
             email.email_plan_update(instance)
-
-
-def handle_emails_pre_plan_delete(sender, instance, **kwargs):
-    """
-        Send email updates before a TestPlan will be deleted!
-    """
-    if instance.emailing.notify_on_plan_delete:
-        from tcms.testplans.helpers import email
-        email.email_plan_deletion(instance)
 
 
 def handle_emails_post_run_save(sender, *args, **kwargs):

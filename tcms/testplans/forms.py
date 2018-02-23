@@ -228,10 +228,6 @@ class NewPlanForm(BasePlanForm):
         label=' when cases of a plan are updated',
         required=False
     )
-    notify_on_plan_delete = forms.BooleanField(
-        label=' when plan is deleted',
-        required=False
-    )
 
     def clean_tag(self):
         return Tag.objects.filter(

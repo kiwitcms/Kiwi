@@ -53,8 +53,6 @@ def update_plan_email_settings(tp, form):
     '''Update testplan's email settings'''
     tp.emailing.notify_on_plan_update = form.cleaned_data[
         'notify_on_plan_update']
-    tp.emailing.notify_on_plan_delete = form.cleaned_data[
-        'notify_on_plan_delete']
     tp.emailing.notify_on_case_update = form.cleaned_data[
         'notify_on_case_update']
     tp.emailing.auto_to_plan_owner = form.cleaned_data['auto_to_plan_owner']
@@ -140,48 +138,6 @@ def new(request, template_name='plan/new.html'):
         'form': form,
     }
     return render(request, template_name, context_data)
-
-
-@require_GET
-@permission_required('testplans.delete_testplan')
-def delete(request, plan_id):
-    '''Delete testplan'''
-    if request.GET.get('sure', 'no') == 'no':
-        # TODO: rewrite the response
-        return HttpResponse("\
-            <script>if(confirm('Are you sure you want to delete this plan %s? \
-            \\n \\n \
-            Click OK to delete or cancel to come back')) { \
-                window.location.href='%s?sure=yes' \
-            } else { \
-                history.go(-1) \
-            };</script>" % (plan_id, reverse(
-            'plan-delete', args=[plan_id, ]
-        ))
-        )
-    elif request.GET.get('sure') == 'yes':
-        tp = get_object_or_404(TestPlan, plan_id=plan_id)
-
-        try:
-            tp.delete()
-            return HttpResponse(
-                "<script>window.location.href='%s'</script>" % reverse(
-                    'plans-all')
-            )
-        except Exception:
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info='Delete failed.',
-                next='javascript:window.history.go(-1)',
-            )
-    else:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='Nothing yet.',
-            next='javascript:window.history.go(-1)',
-        )
 
 
 @require_GET
@@ -615,7 +571,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             'auto_to_case_default_tester': tp.emailing.auto_to_case_default_tester,
             'notify_on_plan_update': tp.emailing.notify_on_plan_update,
             'notify_on_case_update': tp.emailing.notify_on_case_update,
-            'notify_on_plan_delete': tp.emailing.notify_on_plan_delete,
         })
         form.populate(product_id=tp.product_id)
 
