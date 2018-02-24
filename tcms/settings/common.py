@@ -176,7 +176,6 @@ INSTALLED_APPS = (
     'kobo.django.xmlrpc',
     'tinymce',
 
-    'tcms.core',
     'tcms.core.contrib.auth.apps.AppConfig',
     'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
@@ -189,6 +188,10 @@ INSTALLED_APPS = (
     'tcms.testplans',
     'tcms.testruns',
     'tcms.xmlrpc.apps.AppConfig',
+
+    # core app must be here in order to use permissions created during creating
+    # modules for above apps.
+    'tcms.core.apps.AppConfig',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
