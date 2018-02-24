@@ -12,7 +12,6 @@ services:
             MYSQL_DATABASE: kiwi
             MYSQL_USER: kiwi
             MYSQL_PASSWORD: kiwi
-            # Depends on https://github.com/CentOS/CentOS-Dockerfiles/pull/146
             MYSQL_CHARSET: utf8
             MYSQL_COLLATION: utf8_unicode_ci
 
@@ -27,8 +26,7 @@ services:
             - 443:443
         volumes:
             - uploads:/var/kiwi/uploads
-            - ./contrib/ssl/kiwi-https.crt:/etc/pki/tls/certs/localhost.crt
-            - ./contrib/ssl/kiwi-https.key:/etc/pki/tls/private/localhost.key
+            - ./etc/kiwitcms:/etc/kiwitcms:Z
         environment:
             KIWI_DB_HOST: db
             KIWI_DB_PORT: 3306

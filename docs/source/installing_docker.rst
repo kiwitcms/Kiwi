@@ -78,10 +78,13 @@ To upgrade running Kiwi TCMS containers execute the following commands::
 SSL configuration
 -----------------
 
-By default Kiwi TCMS is served via HTTPS. This docker compose is configured with
-a default self-signed certificate. If you want to use a different SSL certificate
-you need to update the ``kiwi-https.key`` and ``kiwi-https.crt`` files! More information
-about generating your own self-signed certificates can be found at
+By default Kiwi TCMS is served via HTTPS. ``docker-compose.yml`` is configured with
+a default self-signed certificate stored in ``etc/kiwitcms/ssl/``. If you want to
+use different SSL certificate you need to update the ``localhost.key`` and
+``localhost.crt`` files in that directory or bind-mount your own SSL directory to
+``/etc/kiwitcms/ssl`` inside the docker container!
+
+More information about generating your own self-signed certificates can be found at
 https://wiki.centos.org/HowTos/Https.
 
 
@@ -106,3 +109,20 @@ the contents of ``Dockerfile`` and then::
 
     Make sure to modify ``docker-compose.yml`` to use your customized image
     instead the default ``kiwitcms/kiwi:latest``!
+
+.. warning::
+
+    Some older versions of docker do not allow mounting of files between the
+    host and the container, they only allow mounting directories and volumes.
+    The stock docker versions on CentOS 7 and RHEL 7 do this. You may see an
+    error similar to:
+
+    ERROR: for kiwi_web Cannot start service web:
+        OCI runtime create failed: container_linux.go:348:
+            starting container process caused "process_linux.go:402:
+                container init caused "rootfs_linux.go:58: mounting
+                    "/root/kiwi/local_settings.py" to
+                    rootfs "/var/lib/docker/overlay2 ....
+
+    In this case you will either have to upgrade your docker version
+    or `COPY` the desired files and rebuild the docker image!
