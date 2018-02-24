@@ -6,8 +6,8 @@ RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-rele
     libxml2-devel libxslt-devel httpd-devel mod_wsgi mod_ssl npm && \
     yum -y update --setopt=tsflags=nodocs
 
-# static files configuration for Apache
-COPY ./contrib/conf/kiwi-httpd.conf /etc/httpd/conf.d/
+# static configuration for Apache
+COPY ./etc/kiwi-httpd.conf /etc/httpd/conf.d/
 
 # configure uploads directory
 RUN mkdir -p /var/kiwi/uploads && chown apache:apache /var/kiwi/uploads
