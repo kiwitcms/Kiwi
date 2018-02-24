@@ -126,3 +126,20 @@ the contents of ``Dockerfile`` and then::
 
     In this case you will either have to upgrade your docker version
     or `COPY` the desired files and rebuild the docker image!
+
+
+Troubleshooting
+----------------
+
+When started via docker-compose Kiwi TCMS will store the HTTPD logs from the
+container in the directory ``log/httpd`` on the host! Errors are usually found
+in ``ssl_error_log``.
+
+In case you see a 500 Internal Server Error page and the error log does not
+provide a traceback you should configure the ``DEBUG`` setting to ``True`` and
+restart the docker container. If your changes are picked up correctly you
+should see an error page with detailed information about the error instead of
+the default 500 error page.
+
+When reporting issues please copy the relevant traceback as plain text into
+your reports!
