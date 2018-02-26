@@ -41,4 +41,5 @@ class TestRunGetBugsCount(BaseCaseRun):
         self.assertIn("New TestRun %s created" % test_run.summary,
                       send_mail.call_args_list[0][0][0])
         self.assertIn("Summary: %s" % test_run.summary, send_mail.call_args_list[0][0][1])
-        self.assertEqual(recipients, send_mail.call_args_list[0][0][-1])
+        for recipient in recipients:
+            self.assertIn(recipient, send_mail.call_args_list[0][0][-1])
