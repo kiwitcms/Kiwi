@@ -3,7 +3,7 @@
 Test Cases
 ==========
 
-This chapter explains how to create, search, edit, and import, clone,
+This chapter explains how to create, search, edit, clone,
 review, tag and remove Test Cases in Kiwi TCMS. Test Cases can not be
 deleted, instead they have their **Active** status set to False.
 
@@ -11,7 +11,6 @@ There are three ways to associate Test Cases with a Test Plan:
 
 #. Create a new Test Case, see :ref:`create-test-case`.
 #. Add an existing Test Case, :ref:`use-existing-test-case`.
-#. Import a Test Case from XML, see :ref:`importing-test-case`.
 
 |Test Plan workflow|
 
@@ -140,28 +139,6 @@ very quickly! To clone a Test Case:
   and link it to the new Test Plan. Changes to the cloned Test Case will
   not affect the original version.
 
-
-.. _importing-test-case:
-
-Importing a Test Case
----------------------
-
-Test Cases can be imported into Test Plans from XML files.
-The XML file is from a previously exported Test Case or
-from Testopia, see :ref:`exporting-test-plan`.
-To import a Test Case, in the Test Plan screen:
-
-#. Open a Test Plan.
-#. Click **Cases** tab.
-#. Hover over **Case** sub-menu, then click **Import cases from XML**.
-
-   |Import Cases from XML|
-
-#. Click **Browse**.
-#. Select the XML file to import, and then click **Open**.
-#. Click **Import** button.
-
-   |The Import XML window|
 
 .. _editing-testcase:
 
@@ -425,8 +402,6 @@ Removing a Test Plan via the Test Case view
 .. |The Add cases from other plans button| image:: ../_static/TC_Add_To_Plan_TP.png
 .. |Add Selected Cases| image:: ../_static/Click_Add_To_Plan_Name.png
 .. |The Test Plans tab| image:: ../_static/TC_Add_To_Plan.png
-.. |Import Cases from XML| image:: ../_static/Plan_Import_XML.png
-.. |The Import XML window| image:: ../_static/Import_XML_Window.png
 .. |The Clone button 1| image:: ../_static/Click_Clone.png
 .. |Test Plan filter details screen| image:: ../_static/Click_Filter_Plan.png
 .. |Clone Test Case details screen| image:: ../_static/Enter_Clone_Details.png

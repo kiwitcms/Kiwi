@@ -26,7 +26,6 @@ Writing a Test Plan
 #. QA adds Test Cases:
 
    #. Create new Test Case. See the section :ref:`create-test-case`.
-   #. Import XML Test Case. See the section :ref:`importing-test-case`.
    #. Add existing Test Case. See the section :ref:`use-existing-test-case`.
 
 #. QA executes Test Run. See the section :ref:`executing-testrun`.
