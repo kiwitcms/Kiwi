@@ -275,15 +275,14 @@ To print a Test Plan:
 #. A printer friednly version displays.
 #. From the **File** menu in your Browser, click **Print**.
 
-.. _exporting-test-plan:
 
-Exporting a Test Plan
----------------------
+Exporting Test Cases from a Test Plan
+-------------------------------------
 
-Kiwi TCMS implements the export feature in Testopia. This generates an XML
-file listing all the Test Cases relating to the Test Plan. These files
-can be imported into a Test Plan or used as a form of backup. Kiwi TCMS
-will allow you to export all or selected Test Cases. To export a Test Plan:
+Kiwi TCMS can export XML file listing all the Test Cases related to the
+current Test Plan. These files can be used as a form of backup or to
+interface with other systems however we recommend to use the API library
+instead. To export a Test Plan:
 
 #. Open the Test Plan to be exported.
 #. Exporting Test Cases:
@@ -301,9 +300,6 @@ will allow you to export all or selected Test Cases. To export a Test Plan:
 #. Select **Save File**.
 #. Click **Ok**.
 
-The exported file can then be viewed, edited, or used as a template to
-create other files. Exported files can also be imported back into Kiwi TCMS.
-For more information about importing see the section :ref:`importing-test-case`.
 
 .. |The Planning menu 1| image:: ../_static/Click_New_Plan.png
 .. |My Test Plans menu| image:: ../_static/My_Test_Plans.png
