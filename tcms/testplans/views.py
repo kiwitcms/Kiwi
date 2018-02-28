@@ -822,6 +822,7 @@ class LinkCasesSearchView(View):
             form.populate(product_id=request.POST.get('product'))
             quick_form = QuickSearchCaseForm()
 
+        cases = []
         if form.is_valid():
             cases = TestCase.list(form.cleaned_data)
             cases = cases.select_related(
