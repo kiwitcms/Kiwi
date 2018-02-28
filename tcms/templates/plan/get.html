@@ -68,12 +68,6 @@ Nitrate.TestPlans.Instance = {
 			<input id="btn_print" type="button" value="Print Plan "
                    title="Print Plan"
                    data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>
-			{% comment %}
-			<span class="right-action">
-				<img src="{% static 'images/icon_printer.png' %}" width="16px">
-				<a href="{% url "plans-printable" %}?plan={{ test_plan.pk }}">Print Plan</a>
-			</span>
-            {% endcomment %}
 		</span>
 	</div>
 	<h2 id="display_title" class="{% ifequal test_plan.is_active 0 %}line-through{% endifequal %}">
