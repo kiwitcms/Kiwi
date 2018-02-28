@@ -11,14 +11,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
 from django.db.models import Q
+from django.contrib import messages
 from django.forms.models import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.http import require_http_methods
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from uuslug import slugify
 
@@ -32,8 +34,9 @@ from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
 from tcms.testcases.models import TestCaseStatus
-from tcms.testcases.models import TestCase, TestCasePlan, TestCaseText
+from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
+from tcms.testcases.views import printable as testcases_printable
 from tcms.testplans.forms import ClonePlanForm
 from tcms.testplans.forms import EditPlanForm
 from tcms.testplans.forms import NewPlanForm
@@ -873,51 +876,24 @@ class DeleteCasesView(View):
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
-@require_GET
-def printable(request, template_name='plan/printable.html'):
+@require_POST
+def printable(request):
     '''Create the printable copy for plan'''
-    plan_pks = request.GET.getlist('plan')
+    plan_pk = request.POST.get('plan', 0)
 
-    if not plan_pks:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one target is required.')
+    if not plan_pk:
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('At least one test plan is required for print'))
+        return HttpResponseRedirect(reverse('core-views-index'))
 
-    tps = TestPlan.objects.filter(pk__in=plan_pks).only('pk', 'name')
+    try:
+        TestPlan.objects.get(pk=plan_pk)
+    except (ValueError, TestPlan.DoesNotExist):
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Test Plan "%s" does not exist') % plan_pk)
+        return HttpResponseRedirect(reverse('core-views-index'))
 
-    def plan_generator():
-        cases_dict = {}
-        cases_seen = []
-        for row in TestCaseText.objects.values(
-            'setup', 'action', 'effect', 'breakdown',
-            'case', 'case__summary', 'case__plan'
-        ).filter(
-            case__plan__in=plan_pks,
-            case__case_status__name__in=['PROPOSED', 'CONFIRMED', 'NEEDS_UPDATE']
-        ).order_by('case__plan', 'case', '-case_text_version'):
-            plan_id = row['case__plan']
-
-            # start info for new plan
-            if plan_id not in cases_dict:
-                cases_dict[plan_id] = []
-                cases_seen = []
-
-            # continue adding cases to plan
-            case_id = row['case']
-            # only latest case text version
-            if case_id in cases_seen:
-                continue
-
-            cases_seen.append(case_id)
-            cases_dict[plan_id].append(row)
-
-        for tp in tps:
-            tp.result_set = cases_dict.get(tp.plan_id, None)
-            yield tp
-
-    context_data = {
-        'test_plans': plan_generator(),
-    }
-
-    return render(request, template_name, context_data)
+    # rendering is actually handled by testcases.views.printable()
+    return testcases_printable(request)

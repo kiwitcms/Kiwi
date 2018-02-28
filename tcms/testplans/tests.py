@@ -24,6 +24,7 @@ from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import TestPlanTextFactory
 from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import EnvGroupFactory
@@ -121,6 +122,8 @@ class PlanTests(test.TestCase):
                                         author=cls.user,
                                         product=cls.product,
                                         type=cls.plan_type)
+        TestPlanTextFactory(plan=cls.test_plan)
+
         cls.plan_id = cls.test_plan.pk
         cls.child_plan = TestPlanFactory(parent=cls.test_plan)
 
@@ -166,30 +169,24 @@ class PlanTests(test.TestCase):
 
     def test_plan_printable_without_selected_plan(self):
         location = reverse('plans-printable')
-        response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.OK)
-        self.assertEqual(response.context['info'], 'At least one target is required.')
+        response = self.c.post(location, follow=True)
+        self.assertContains(response, 'At least one test plan is required for print')
 
     def test_plan_printable(self):
         location = reverse('plans-printable')
-        response = self.c.get(location, {'plan': self.plan_id})
+        response = self.c.post(location, {'plan': self.test_plan.pk})
         self.assertEqual(response.status_code, http.client.OK)
 
-        for test_plan in response.context['test_plans']:
-            self.assertTrue(test_plan.pk > 0)
-            self.assertTrue(test_plan.name is not '')
-            self.assertTrue(test_plan.summary is not '')
-            self.assertTrue(test_plan.latest_text.plan_text is not '')
+        self.assertContains(response, self.test_plan.name)
+        self.assertContains(response, self.test_plan.latest_text().plan_text)
 
-            self.assertTrue(len(test_plan.result_set) > 0)
-            for case in test_plan.result_set:
-                self.assertTrue(case.case_id > 0)
-                self.assertTrue(case.summary is not '')
-                # factory sets all 4
-                self.assertTrue(case.setup is not '')
-                self.assertTrue(case.action is not '')
-                self.assertTrue(case.effect is not '')
-                self.assertTrue(case.breakdown is not '')
+        for case in self.test_plan.case.all():
+            self.assertContains(response, case.summary)
+            # factory sets all 4
+            self.assertContains(response, case.setup)
+            self.assertContains(response, case.action)
+            self.assertContains(response, case.effect)
+            self.assertContains(response, case.breakdown)
 
     def test_plan_attachment(self):
         location = reverse('plan-attachment',
