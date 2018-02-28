@@ -542,11 +542,6 @@ Nitrate.TestPlans.Advance_Search_List.on_load = function() {
   if (jQ('#id_check_all_plans').length) {
     jQ('#id_check_all_plans').bind('click', function(e) {
       clickedSelectAll(this, jQ('#plans_form')[0], 'plan');
-      if (this.checked) {
-        jQ('#plan_advance_printable').attr('disabled', false);
-      } else {
-        jQ('#plan_advance_printable').attr('disabled', true);
-      }
     });
   };
 
@@ -575,21 +570,10 @@ Nitrate.TestPlans.Advance_Search_List.on_load = function() {
     };
   });
 
-  jQ("input[type=checkbox][name=plan]").bind('click', function(){
-    if(jQ("input[type=checkbox][name=plan]:checked").length) {
-      jQ('#plan_advance_printable').attr('disabled', false);
-    } else {
-      jQ('#plan_advance_printable').attr('disabled', true);
-    }
-  });
-
   jQ('.js-new-plan').bind('click', function() {
     window.location = jQ(this).data('param');
   });
   jQ('.js-clone-plan').bind('click', function() {
-    postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
-  });
-  jQ('#plan_advance_printable').bind('click', function() {
     postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
   });
 };
@@ -602,11 +586,6 @@ Nitrate.TestPlans.List.on_load = function() {
   if (jQ('#id_check_all_plans').length) {
     jQ('#id_check_all_plans').bind('click', function(e) {
       clickedSelectAll(this, jQ('#plans_form')[0], 'plan');
-      if (this.checked) {
-        jQ('#plan_list_printable').attr('disabled', false);
-      } else {
-        jQ('#plan_list_printable').attr('disabled', true);
-      }
     });
   }
 
@@ -662,21 +641,11 @@ Nitrate.TestPlans.List.on_load = function() {
       ]
     });
   }
-  jQ("#testplans_table tbody tr input[type=checkbox][name=plan]").live("click", function() {
-    if (jQ("input[type=checkbox][name=plan]:checked").length) {
-      jQ('#plan_list_printable').attr('disabled', false);
-    } else {
-      jQ('#plan_list_printable').attr('disabled', true);
-    }
-  });
 
   jQ('.js-new-plan').bind('click', function() {
     window.location = jQ(this).data('param');
   });
   jQ('.js-clone-plan').bind('click', function() {
-    postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
-  });
-  jQ('#plan_list_printable').bind('click', function() {
     postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
   });
 };

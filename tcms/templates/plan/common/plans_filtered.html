@@ -6,9 +6,6 @@
 			<input type="button" title="Create new test plan" value="New Test Plan" class="js-new-plan" data-param="{% url 'plans-new' %}" />
 			<input type="button" value="Clone" title="clone selected test plans." class="js-clone-plan" data-param="{% url 'plans-clone' %}" />
 			{% endif %}
-			<input type="button" id="plan_list_printable"
-                   disabled="disabled" value="Printable copy"
-                   title="Create the printable copy for selected plans." data-param="{% url 'plans-printable' %}" />
 		</span>
 	</div>
 	<table id="testplans_table" class="list border-bottom" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">
