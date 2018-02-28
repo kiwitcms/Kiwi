@@ -18,9 +18,36 @@
 	</style>
 </head>
 <body>
-	<!-- Title area -->
+    {% if test_plan %}
+    <!-- Title area -->
+    <div class="plan_title">
+        <div>
+            <h1>[{{ test_plan.pk }}] <b>{{ test_plan.name }}</b></h1>
+        </div>
+        <div class="thick-line"></div>
+        <div class="contents">
+            <h3>Contents</h3>
+            <div>
+                <ol>
+                    {% for test_case in test_plan.result_set %}
+                    <li>[{{ test_case.case }}] {{ test_case.case__summary }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        <div>
+            <h2 id="plan_document">Test Plan Document</h2>
+            <div class="thick-line"></div>
+            {{ test_plan.latest_text.plan_text|safe }}
+        </div>
+    </div>
+    {% endif %}
+
+    <div>
+        <h2 id="plan_cases">Test Cases</h2>
+        <div class="thick-line"></div>
 	{% for case_id, test_cases in test_cases.items %}
-	<div style="clear: left">
+        <div style="clear: left">
             {% for test_case in test_cases %}
 		<h3>[{{ test_case.case_id }}] {{ test_case.case__summary }}</h3>
 		<div class="thin-line"></div>
@@ -43,4 +70,5 @@
             {% endfor %}
 	</div>
 	{% endfor %}
+    </div>
 </body>

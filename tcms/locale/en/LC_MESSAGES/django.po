@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 15:22+0000\n"
+"POT-Creation-Date: 2018-02-28 14:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,16 +104,16 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr ""
 
-#: tcms/signals.py:80
+#: tcms/signals.py:79
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:140
+#: tcms/signals.py:130
 #, python-format
 msgid "New TestRun %(summary)s created"
 msgstr ""
 
-#: tcms/signals.py:142
+#: tcms/signals.py:132
 #, python-format
 msgid "TestRun %(summary)s has been updated"
 msgstr ""
@@ -146,7 +146,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Dear Administrator,\n"
-"somebody just registered an account with username %(user.username)s at your\n"
+"somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n"
 "\n"
 "Go to %(user_url)s to activate the account!\n"
@@ -192,6 +192,15 @@ msgstr ""
 
 #: tcms/templates/registration/password_change_form.html:40
 msgid "Change my password"
+msgstr ""
+
+#: tcms/testplans/views.py:887
+msgid "At least one test plan is required for print"
+msgstr ""
+
+#: tcms/testplans/views.py:895
+#, python-format
+msgid "Test Plan \"%s\" does not exist"
 msgstr ""
 
 #: vinaigrette-deleteme.py:2

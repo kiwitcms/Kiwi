@@ -228,7 +228,7 @@ class TestPlanTextFactory(DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     create_date = factory.LazyFunction(datetime.now)
     plan_text = factory.Sequence(lambda n: 'Plan text %d' % n)
-    checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.plan_text))
+    checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.plan_text.encode('utf-8')))
 
 
 class TestPlanEmailSettingsFactory(DjangoModelFactory):

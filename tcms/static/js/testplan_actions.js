@@ -974,7 +974,7 @@ Nitrate.TestPlans.Details = {
     });
     jQ('#btn_clone, #btn_print').bind('click', function() {
       var params = jQ(this).data('params');
-      window.location.href = params[0] + '?plan=' + params[1];
+      postToURL(params[0], {'plan': params[1]});
     });
     var treeview = jQ('#treeview')[0];
     var planPK = jQ('#id_tree_container').data('param');

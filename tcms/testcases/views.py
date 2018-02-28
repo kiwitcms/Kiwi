@@ -1028,12 +1028,20 @@ def get(request, case_id, template_name='case/get.html'):
 @require_POST
 def printable(request, template_name='case/printable.html'):
     """Create the printable copy for plan/case"""
-    case_pks = request.POST.getlist('case')
+    # search only by case PK. Used when printing selected cases
+    case_filter = {'case__in': request.POST.getlist('case')}
+    # plan_pk is passed from the TestPlan.printable function
+    plan_pk = request.POST.get('plan', 0)
+
+    try:
+        test_plan = TestPlan.objects.get(pk=plan_pk)
+        # search cases from a TestPlan, used when printing entire plan
+        case_filter = {'case__plan': plan_pk}
+    except (ValueError, TestPlan.DoesNotExist):
+        test_plan = None
 
     tcs = create_dict_from_query(
-        TestCaseText.objects.filter(
-            case__in=case_pks
-        ).values(
+        TestCaseText.objects.filter(**case_filter).values(
             'case_id', 'case__summary', 'setup', 'action', 'effect', 'breakdown'
         ).order_by('case_id', '-case_text_version'),
         'case_id',
@@ -1041,6 +1049,7 @@ def printable(request, template_name='case/printable.html'):
     )
 
     context_data = {
+        'test_plan': test_plan,
         'test_cases': tcs,
     }
     return render(request, template_name, context_data)
