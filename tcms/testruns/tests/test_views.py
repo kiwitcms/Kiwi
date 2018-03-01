@@ -47,10 +47,8 @@ class TestOrderCases(BaseCaseRun):
 
     def test_prompt_if_no_case_run_is_passed(self):
         url = reverse('testruns-order_case', args=[self.test_run.pk])
-        response = self.client.post(url)
-        self.assertIn(
-            'At least one case is required by re-oder in run',
-            str(response.content, encoding=settings.DEFAULT_CHARSET))
+        response = self.client.post(url, follow=True)
+        self.assertContains(response, 'Reorder operation requires at least one TestCase')
 
     def test_order_case_runs(self):
         url = reverse('testruns-order_case', args=[self.test_run.pk])
@@ -119,10 +117,8 @@ class TestCreateNewRun(BasePlanCase):
 
     def test_refuse_if_missing_cases_pks(self):
         self.client.login(username=self.tester.username, password='password')
-        response = self.client.post(self.url, {'from_plan': self.plan.pk})
-        self.assertContains(
-            response,
-            'At least one case is required by a run.')
+        response = self.client.post(self.url, {'from_plan': self.plan.pk}, follow=True)
+        self.assertContains(response, 'Creating a TestRun requires at least one TestCase')
 
     def test_show_create_new_run_page(self):
         self.client.login(username=self.tester.username, password='password')
@@ -390,11 +386,9 @@ class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
     def test_refuse_clone_without_selecting_runs(self):
         self.client.login(username=self.tester.username, password='password')
 
-        response = self.client.get(self.clone_url, {})
+        response = self.client.get(self.clone_url, {}, follow=True)
 
-        self.assertContains(
-            response,
-            'At least one run is required')
+        self.assertContains(response, 'At least one TestCase is required')
 
     def test_open_clone_page_by_selecting_only_one_run(self):
         self.client.login(username=self.tester.username, password='password')
@@ -1216,11 +1210,11 @@ class TestUpdateCaseRunText(BaseCaseRun):
     def test_update_selected_case_runs(self):
         self.login_tester()
 
-        response = self.client.post(self.update_url, {'case_run': [self.case_run_1.pk]})
+        response = self.client.post(self.update_url,
+                                    {'case_run': [self.case_run_1.pk]},
+                                    follow=True)
 
-        self.assertContains(
-            response,
-            '1 case run(s) succeed to update')
+        self.assertContains(response, '1 CaseRun(s) updated:')
 
         self.assertEqual(self.case_run_1.case.latest_text_version(),
                          self.case_run_1.latest_text().case_text_version)

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-01 21:15+0000\n"
+"POT-Creation-Date: 2018-03-01 22:06+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
@@ -205,6 +205,40 @@ msgstr ""
 #: tcms/testplans/views.py:897
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
+msgstr ""
+
+#: tcms/testruns/views.py:73
+msgid "Creating a TestRun requires at least one TestCase"
+msgstr ""
+
+#: tcms/testruns/views.py:243
+msgid "Permission denied: TestRun does not belong to you"
+msgstr ""
+
+#: tcms/testruns/views.py:263
+#, python-format
+msgid "Deletion failed: %s"
+msgstr ""
+
+#: tcms/testruns/views.py:268
+msgid "Parameter \"sure\" must be \"yes\" or \"no\""
+msgstr ""
+
+#: tcms/testruns/views.py:972 tcms/testruns/views.py:1193
+msgid "At least one TestCase is required"
+msgstr ""
+
+#: tcms/testruns/views.py:1103
+msgid "Reorder operation requires at least one TestCase"
+msgstr ""
+
+#: tcms/testruns/views.py:1202
+msgid "TestCase ID is not a valid integer"
+msgstr ""
+
+#: tcms/testruns/views.py:1336
+#, python-format
+msgid "%d CaseRun(s) updated:"
 msgstr ""
 
 #: vinaigrette-deleteme.py:2
