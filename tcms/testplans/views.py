@@ -444,32 +444,34 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
 
     # Add cases to runs
     if request.method == 'POST':
-        choosed_testrun_ids = request.POST.getlist('testrun_ids')
+        chosen_testrun_ids = request.POST.getlist('testrun_ids')
         to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
 
-        # cases and runs are required in this process
-        if not len(choosed_testrun_ids) or not len(to_be_added_cases):
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info='At least one test run and one case is required to add cases to runs.',
-                next=reverse('test_plan_url_short', args=[plan_id]),
-            )
-
         # Adding cases to runs by recursion
-        for tr_id in choosed_testrun_ids:
+        cases_selected = 0
+        for tr_id in chosen_testrun_ids:
             testrun = get_object_or_404(TestRun, run_id=tr_id)
             cases = TestCaseRun.objects.filter(run=tr_id)
-            exist_cases_id = cases.values_list('case', flat=True)
+            existing_cases = cases.values_list('case', flat=True)
 
             for testcase in to_be_added_cases:
-                if testcase.case_id not in exist_cases_id:
+                # counter used as a flag that runs or cases were selected
+                # in the form, regardless of whether or not they were actually added
+                # used to produce an error message if user clicked the Update button
+                # without selecting anything on the screen
+                cases_selected += 1
+                if testcase.case_id not in existing_cases:
                     testrun.add_case_run(case=testcase)
 
             estimated_time = reduce(lambda x, y: x + y,
                                     [nc.estimated_time for nc in to_be_added_cases])
             testrun.estimated_time = testrun.estimated_time + estimated_time
             testrun.save()
+        else:
+            if not cases_selected:
+                messages.add_message(request,
+                                     messages.ERROR,
+                                     _('Select at least one TestRun and one TestCase'))
 
         return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 

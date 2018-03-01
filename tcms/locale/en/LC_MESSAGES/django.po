@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-28 14:47+0000\n"
+"POT-Creation-Date: 2018-03-01 21:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,11 +194,15 @@ msgstr ""
 msgid "Change my password"
 msgstr ""
 
-#: tcms/testplans/views.py:887
+#: tcms/testplans/views.py:474
+msgid "Select at least one TestRun and one TestCase"
+msgstr ""
+
+#: tcms/testplans/views.py:889
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:895
+#: tcms/testplans/views.py:897
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
