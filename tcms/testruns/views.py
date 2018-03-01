@@ -6,6 +6,7 @@ from urllib.parse import urlencode
 from functools import reduce
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -18,6 +19,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonRespons
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
@@ -62,14 +64,14 @@ def new(request, template_name='run/new.html'):
         return HttpResponseRedirect(reverse('plans-all'))
 
     plan_id = request.POST.get('from_plan')
-    # Case is required by a test run
+    # case is required by a test run
+    # NOTE: currently this is handled in JavaScript but in the TestRun creation
+    # form cases can be deleted
     if not request.POST.get('case'):
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one case is required by a run.',
-            next=reverse('test_plan_url_short', args=[plan_id, ]),
-        )
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Creating a TestRun requires at least one TestCase'))
+        return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
     # Ready to write cases to test plan
     confirm_status = TestCaseStatus.get_CONFIRMED()
@@ -233,13 +235,13 @@ def delete(request, run_id):
     except ObjectDoesNotExist:
         raise Http404
 
+    # should not happen under normal circumstances but malicious user may try
+    # to post to the delete URL with another ID
     if not test_run.belong_to(request.user):
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info="Permission denied - The run is not belong to you.",
-            next='javascript:window.history.go(-1)'
-        )
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Permission denied: TestRun does not belong to you'))
+        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
     if request.GET.get('sure', 'no') == 'no':
         return HttpResponse("<script>\n \
@@ -254,23 +256,17 @@ def delete(request, run_id):
             test_run.env_value.clear()
             test_run.case_run.all().delete()
             test_run.delete()
-            return HttpResponseRedirect(
-                reverse('test_plan_url_short', args=(plan_id, ))
-            )
-        except Exception:
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info="Delete failed.",
-                next='javascript:window.history.go(-1)'
-            )
+            return HttpResponseRedirect(reverse('test_plan_url_short', args=(plan_id, )))
+        except Exception as error:
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 _('Deletion failed: %s') % error)
+            return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
     else:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info="Nothing yet",
-            next='javascript:window.history.go(-1)'
-        )
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Parameter "sure" must be "yes" or "no"'))
+        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
 
 @require_GET
@@ -971,12 +967,10 @@ def clone(request, template_name='run/clone.html'):
         trs = trs.filter(pk__in=req_data.getlist('run'))
 
     if not trs:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one run is required',
-            next=request.META.get('HTTP_REFERER', '/')
-        )
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('At least one TestCase is required'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     # Generate the clone run page for one run
     if trs.count() == 1 and not req_data.get('submit'):
@@ -1104,12 +1098,10 @@ def order_case(request, run_id):
     get_object_or_404(TestRun, run_id=run_id)
 
     if 'case_run' not in request.POST:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one case is required by re-oder in run.',
-            next=reverse('testruns-get', args=[run_id, ]),
-        )
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Reorder operation requires at least one TestCase'))
+        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
     case_run_ids = request.POST.getlist('case_run')
     # sort key begin with 10, end with length*10, step 10.
@@ -1194,22 +1186,21 @@ class AddCasesToRunView(View):
         # Selected cases' ids to add to run
         ncs_id = request.POST.getlist('case')
         if not ncs_id:
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info='At least one case is required by a run.',
-                next=reverse('add-cases-to-run', args=[run_id, ]),
-            )
+            # user clicked Update button without selecting new Test Cases
+            # to be dded to TestRun
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('At least one TestCase is required'))
+            return HttpResponseRedirect(reverse('add-cases-to-run', args=[run_id]))
 
         try:
-            ncs_id = map(int, ncs_id)
+            ncs_id = list(map(int, ncs_id))
         except (ValueError, TypeError):
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info='At least one case id is invalid.',
-                next=reverse('add-cases-to-run', args=[run_id, ]),
-            )
+            # this will happen only on malicious requests
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('TestCase ID is not a valid integer'))
+            return HttpResponseRedirect(reverse('add-cases-to-run', args=[run_id]))
 
         try:
             qs = TestRun.objects.select_related('plan').only('plan__plan_id')
@@ -1342,15 +1333,13 @@ def update_case_run_text(request, run_id):
             tcr.case_text_version = lctv
             tcr.save()
 
-    info = '<p>%s case run(s) succeed to update, following is the list:</p>\
-    <ul>%s</ul>' % (count, updated_tcrs)
+    info = "<p>%s</p><ul>%s</ul>" % (_("%d CaseRun(s) updated:") % count, updated_tcrs)
+    message_level = messages.INFO
+    if count:
+        message_level = messages.SUCCESS
 
-    return Prompt.render(
-        request=request,
-        info_type=Prompt.Info,
-        info=info,
-        next=reverse('testruns-get', args=[run_id, ]),
-    )
+    messages.add_message(request, message_level, info)
+    return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
 
 @require_GET
