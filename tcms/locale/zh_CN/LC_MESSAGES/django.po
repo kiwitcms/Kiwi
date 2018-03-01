@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-28 14:47+0000\n"
+"POT-Creation-Date: 2018-03-01 21:15+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -191,11 +191,15 @@ msgstr ""
 msgid "Change my password"
 msgstr ""
 
-#: tcms/testplans/views.py:887
+#: tcms/testplans/views.py:474
+msgid "Select at least one TestRun and one TestCase"
+msgstr ""
+
+#: tcms/testplans/views.py:889
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:895
+#: tcms/testplans/views.py:897
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
