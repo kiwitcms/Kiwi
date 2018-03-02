@@ -950,15 +950,6 @@ Nitrate.TestPlans.Details = {
     Nitrate.TestPlans.Details.observeEvents(plan_id);
     Nitrate.TestPlans.Details.initTabs();
 
-    // Bind for run form
-    jQ('#id_form_run').bind('submit', function(e) {
-      if(!Nitrate.Utils.formSerialize(this)['run']) {
-        e.stopPropagation();
-        e.preventDefault();
-        window.alert(default_messages.alert.no_run_selected);
-      }
-    });
-
     jQ('#id_check_all_runs').bind('click', function(e) {
       clickedSelectAll(this, jQ('#testruns_table')[0], 'run');
     });

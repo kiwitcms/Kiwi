@@ -44,15 +44,11 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 			<div class="clear"></div>
 		</div>
 	</form>
-	<form id='runs_form'>
 	{% if REQUEST_CONTENTS %}
 	<div id="contentTab" class="mixbar">
-		{# <span class="tit">{{ test_runs.count }} Test Runs</span> #}
 		<span class="tit"><a href="{% url "testruns-all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
-		<input type="button" value="Clone" title="clone selected test runs" class="js-clone-testruns" data-param='{% url "testruns-clone" %}' />
 	</div>
 	{% include "run/common/run_filtered.html" %}
 	{% endif %}
-	</form>
 </div>
 {% endblock %}

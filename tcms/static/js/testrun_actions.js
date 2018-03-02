@@ -12,13 +12,6 @@ Nitrate.TestRuns.List.on_load = function() {
   bind_version_selector_to_product(true, jQ('#id_product')[0]);
   bind_build_selector_to_product(true, jQ('#id_product')[0]);
 
-  Nitrate.Utils.enableShiftSelectOnCheckbox('run_selector');
-
-  if (jQ('#testruns_table').length) {
-    jQ('#id_check_all_runs').bind('click',function(e) {
-      clickedSelectAll(this, jQ('#testruns_table')[0], 'run');
-    });
-  }
   if (jQ('#id_people_type').length) {
     jQ('#id_search_people').attr('name', jQ('#id_people_type').val());
     jQ('#id_people_type').bind('change', function() {
@@ -49,7 +42,6 @@ Nitrate.TestRuns.List.on_load = function() {
       "bServerSide": true,
       "sAjaxSource": "/runs/ajax/" + this.window.location.search,
       "aoColumns": [
-        {"bSortable": false },
         {"sType": "numeric"},
         {"sType": "html"},
         {"sType": "html"},
@@ -65,9 +57,6 @@ Nitrate.TestRuns.List.on_load = function() {
       "oLanguage": { "sEmptyTable": "No run was found." }
     });
   }
-  jQ('.js-clone-testruns').bind('click', function() {
-    postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
-  });
 };
 
 Nitrate.TestRuns.Details.on_load = function() {

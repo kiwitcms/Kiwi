@@ -7,7 +7,6 @@ from datetime import timedelta
 from django.utils import formats
 from django.urls import reverse
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from tcms.testcases.models import Bug
 from tcms.testcases.models import BugSystem
@@ -24,7 +23,6 @@ from tcms.tests.factories import EnvPropertyFactory
 from tcms.tests.factories import EnvValueFactory
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
@@ -233,11 +231,9 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.client.login(username=self.tester.username, password='password')
         url = reverse('testruns-clone-with-caseruns', args=[self.test_run.pk])
 
-        response = self.client.post(url, {})
+        response = self.client.post(url, {}, follow=True)
 
-        self.assertContains(
-            response,
-            'At least one case is required by a run')
+        self.assertContains(response, 'At least one TestCase is required')
 
     def test_open_clone_page_by_selecting_case_runs(self):
         self.client.login(username=self.tester.username, password='password')
@@ -340,223 +336,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.assert_clone_a_run(reserve_status=False, reserve_assignee=False)
 
 
-class TestStartCloneRunFromRunsSearchPage(CloneRunBaseTest):
-    """Test case for cloning runs from runs search result page"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestStartCloneRunFromRunsSearchPage, cls).setUpTestData()
-        cls.clone_url = reverse('testruns-clone')
-        cls.permission = 'testruns.add_testrun'
-
-        cls.origin_run = TestRunFactory(product_version=cls.version,
-                                        plan=cls.plan,
-                                        build=cls.build,
-                                        manager=cls.tester,
-                                        default_tester=cls.tester)
-
-        for tag_name in ('python', 'kiwi', 'django'):
-            cls.origin_run.add_tag(TagFactory(name=tag_name))
-
-        for cc in (User.objects.create_user(username='run_tester1',
-                                            email='run_tester1@example.com'),
-                   User.objects.create_user(username='run_tester2',
-                                            email='run_tester2@example.com'),
-                   User.objects.create_user(username='run_tester3',
-                                            email='run_tester3@example.com'),
-                   ):
-            cls.origin_run.add_cc(cc)
-
-        cls.property = EnvPropertyFactory(name='lang')
-        for value in ('python', 'perl', 'ruby'):
-            cls.origin_run.add_env_value(
-                EnvValueFactory(value=value, property=cls.property))
-
-        cls.case_2.add_text(action='action', effect='effect',
-                            setup='setup', breakdown='breakdown')
-        cls.case_2.add_text(action='action2', effect='effect2',
-                            setup='setup2', breakdown='breakdown2')
-
-        for case in (cls.case_1, cls.case_2):
-            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                               build=cls.build, sortkey=10,
-                               case_run_status=cls.case_run_status_idle,
-                               run=cls.origin_run, case=case)
-
-    def test_refuse_clone_without_selecting_runs(self):
-        self.client.login(username=self.tester.username, password='password')
-
-        response = self.client.get(self.clone_url, {}, follow=True)
-
-        self.assertContains(response, 'At least one TestCase is required')
-
-    def test_open_clone_page_by_selecting_only_one_run(self):
-        self.client.login(username=self.tester.username, password='password')
-
-        response = self.client.get(self.clone_url, {'run': self.test_run.pk})
-
-        self.assert_one_run_clone_page(response)
-
-    def test_open_clone_page_by_selecting_multiple_runs(self):
-        self.client.login(username=self.tester.username, password='password')
-
-        response = self.client.get(self.clone_url,
-                                   {'run': [self.test_run.pk, self.test_run_1.pk]})
-
-        runs_li = [
-            '''
-            <li>
-                <label for="id_run_0">
-                    <input checked="checked" id="id_run_0" name="run" value="{0}" type="checkbox">
-                    {1}
-                </label>
-            </li>
-            '''.format(self.test_run.pk, self.test_run.summary),
-            '''
-            <li>
-                <label for="id_run_1">
-                    <input checked="checked" id="id_run_1" name="run" value="{0}" type="checkbox">
-                    {1}
-                </label>
-            </li>
-            '''.format(self.test_run_1.pk, self.test_run_1.summary),
-        ]
-        runs_ul = '<ul id="id_run">{}</ul>'.format(''.join(runs_li))
-
-        self.assertContains(response, runs_ul, html=True)
-
-        # Assert clone settings
-        clone_settings_controls = [
-            '<li><input checked="checked" id="id_update_case_text" name="update_case_text" '
-            'type="checkbox">Use newest case text(setup/actions/effects/breakdown)</li>',
-            '<li><input checked="checked" id="id_clone_cc" name="clone_cc" type="checkbox">'
-            'Clone cc</li>',
-            '<li><input checked="checked" id="id_clone_tag" name="clone_tag" type="checkbox">'
-            'Clone tag</li>',
-        ]
-        for html_control in clone_settings_controls:
-            self.assertContains(response, html_control, html=True)
-
-    def test_clone_one_selected_run_with_default_clone_settings(self):
-        self.assert_clone_runs([self.origin_run])
-
-    def test_clone_one_selected_run_without_cloning_cc(self):
-        self.assert_clone_runs([self.origin_run], clone_cc=False)
-
-    def test_clone_one_selected_run_without_cloning_tag(self):
-        self.assert_clone_runs([self.origin_run], clone_tag=False)
-
-    def test_clone_one_selected_run_not_use_newest_case_text(self):
-        self.assert_clone_runs([self.origin_run], update_case_text=False)
-
-    def test_clone_all_selected_runs_with_default_clone_settings(self):
-        self.assert_clone_runs([self.test_run, self.origin_run])
-
-    def test_clone_all_selected_runs_without_cloning_cc(self):
-        self.assert_clone_runs([self.test_run, self.origin_run], clone_cc=False)
-
-    def test_clone_all_selected_runs_without_cloning_tag(self):
-        self.assert_clone_runs([self.test_run, self.origin_run], clone_tag=False)
-
-    def test_clone_one_selected_runs_not_use_newest_case_text(self):
-        self.assert_clone_runs([self.test_run, self.origin_run], update_case_text=False)
-
-    def assert_clone_runs(self, runs_to_clone,
-                          clone_cc=True, clone_tag=True, update_case_text=True):
-        """Test only clone the selected one run from runs/clone/"""
-        self.client.login(username=self.tester.username, password='password')
-
-        post_data = {
-            'run': [run.pk for run in runs_to_clone],
-            'product': self.origin_run.plan.product.pk,
-            'product_version': self.origin_run.product_version.pk,
-            'build': self.origin_run.build.pk,
-            'manager': self.tester.username,
-            'default_tester': self.tester.username,
-            'submit': 'Clone',
-
-            # Clone settings
-            # Do not update manager
-            'update_default_tester': 'on',
-        }
-
-        if clone_cc:
-            post_data['clone_cc'] = 'on'
-        if clone_tag:
-            post_data['clone_tag'] = 'on'
-        if update_case_text:
-            post_data['update_case_text'] = 'on'
-
-        response = self.client.post(self.clone_url, post_data)
-
-        # grabs the last X runs, which should be the cloned ones
-        # using reversed ordering b/c negative indexes are not supported
-        cloned_runs = TestRun.objects.order_by('-pk').only('pk')[:len(runs_to_clone)]
-        # then order by summary
-        cloned_runs = TestRun.objects.filter(pk__in=[r.pk for r in cloned_runs]).order_by('summary')
-
-        # convert to ordered query set so we can compare to it later using the same
-        # ordering by summary as above
-        runs_to_clone = TestRun.objects.filter(pk__in=post_data['run']).order_by('summary')
-
-        if cloned_runs.count() == 1:
-            # Finally, redirect to the new cloned test run
-            self.assertRedirects(
-                response,
-                reverse('testruns-get', args=[cloned_runs[0].pk]))
-        else:
-            self.assertEqual(http.client.FOUND, response.status_code)
-
-        for origin_run, cloned_run in zip(runs_to_clone, cloned_runs):
-            self.assert_cloned_run(origin_run, cloned_run,
-                                   clone_cc=clone_cc, clone_tag=clone_tag,
-                                   use_newest_case_text=update_case_text)
-
-    def assert_cloned_run(self, origin_run, cloned_run,
-                          clone_cc=True, clone_tag=True, use_newest_case_text=True):
-        self.assertEqual(origin_run.product_version, cloned_run.product_version)
-        self.assertEqual(origin_run.plan_text_version, cloned_run.plan_text_version)
-        self.assertEqual(origin_run.summary, cloned_run.summary)
-        self.assertEqual(origin_run.notes, cloned_run.notes)
-        self.assertEqual(origin_run.estimated_time, cloned_run.estimated_time)
-        self.assertEqual(origin_run.plan, cloned_run.plan)
-        self.assertEqual(origin_run.build, cloned_run.build)
-        self.assertEqual(origin_run.manager, cloned_run.manager)
-        self.assertEqual(self.tester, cloned_run.default_tester)
-
-        for origin_case_run, cloned_case_run in zip(origin_run.case_run.order_by('case'),
-                                                    cloned_run.case_run.order_by('case')):
-            self.assertEqual(origin_case_run.case, cloned_case_run.case)
-            self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
-            self.assertEqual(origin_case_run.build, cloned_case_run.build)
-            self.assertEqual(origin_case_run.notes, cloned_case_run.notes)
-            self.assertEqual(origin_case_run.sortkey, cloned_case_run.sortkey)
-
-            if use_newest_case_text:
-                if origin_case_run.case.text.count() == 0:
-                    self.assertEqual(origin_case_run.case_text_version,
-                                     cloned_case_run.case_text_version)
-                else:
-                    # Should use newest case text
-                    self.assertEqual(list(origin_case_run.get_text_versions())[-1],
-                                     cloned_case_run.case_text_version)
-            else:
-                self.assertEqual(origin_case_run.case_text_version,
-                                 cloned_case_run.case_text_version)
-
-        if clone_cc:
-            self.assertEqual(list(origin_run.cc_list.values_list('user')),
-                             list(cloned_run.cc_list.values_list('user')))
-        else:
-            self.assertEqual([], list(cloned_run.cc_list.all()))
-
-        if clone_tag:
-            self.assertEqual(list(origin_run.tags.values_list('tag')),
-                             list(cloned_run.tags.values_list('tag')))
-        else:
-            self.assertEqual([], list(cloned_run.tags.all()))
-
-
 class TestSearchRuns(BaseCaseRun):
 
     @classmethod
@@ -564,10 +343,6 @@ class TestSearchRuns(BaseCaseRun):
         super(TestSearchRuns, cls).setUpTestData()
 
         cls.search_runs_url = reverse('testruns-all')
-
-    def test_only_show_search_form(self):
-        response = self.client.get(self.search_runs_url)
-        self.assertContains(response, "<form id='runs_form'>")
 
     def test_search_runs(self):
         search_criteria = {'summary': 'run'}
@@ -692,8 +467,8 @@ class TestAJAXSearchRuns(BaseCaseRun):
 
         # used for assertIn b/c on Postgres the order in which items
         # are returned is not guaranteed at all
-        links_id = [r[1] for r in search_result['aaData']]
-        links_summary = [r[2] for r in search_result['aaData']]
+        links_id = [r[0] for r in search_result['aaData']]
+        links_summary = [r[1] for r in search_result['aaData']]
 
         for run in expected_found_runs:
             self.assertIn(
