@@ -54,17 +54,6 @@
 	</form>
 </div>
 
-<form id='id_form_run' action="{% url "testruns-clone" %}" method="get">
-	<input type="hidden" name="from_plan" value="{{ test_plan.pk }}" />
-	<input type="hidden" name="product" value="{{ test_plan.product.pk }}" />
-	<input type="hidden" name="product_version" value="{{ test_plan.product_version_id }}" />
-
- {% if perms.testruns.add_testrun %}
- <div class="mixbar actions">
-	 <input class="clone icon_plan left_float" type="submit" value="Clone" title="clone selected test runs" />
- </div>
- {% endif %}
-
 	<table class="list" id="testruns_table" cellpadding="0" cellspacing="0" border="0" data-param="{{test_plan.pk}}">
 		<thead>
 			<tr>
@@ -85,4 +74,3 @@
 	</table>
 
 	<div id="img_loading_runs" class="ajax_loading" style="display:none;"></div>
-</form>

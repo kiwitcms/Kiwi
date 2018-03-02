@@ -244,66 +244,6 @@ class RunCloneForm(BaseRunForm):
     )
 
 
-class MulitpleRunsCloneForm(forms.Form):
-    run = forms.ModelMultipleChoiceField(
-        queryset=TestRun.objects.none(),
-        widget=forms.CheckboxSelectMultiple(),
-        required=False
-    )
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        required=False
-    )
-    product_version = forms.ModelChoiceField(
-        queryset=Version.objects.none(),
-        required=False
-    )
-    build = forms.ModelChoiceField(
-        label='Build',
-        queryset=Build.objects.none(),
-        empty_label=None,
-    )
-    manager = UserField(required=False)
-    default_tester = UserField(required=False)
-    # assignee = UserField(required=False)
-    update_manager = forms.BooleanField(
-        help_text='Unchecking will keep the original manager',
-        required=False,
-    )
-    update_default_tester = forms.BooleanField(
-        help_text='Unchecking will keep the original default tester',
-        required=False,
-    )
-    # update_assignee = forms.BooleanField(
-    # help_text='Unchecking will keep the original assignee of case runs',
-    #     required=False,
-    # )
-    update_case_text = forms.BooleanField(
-        label='Use newest case text(setup/actions/effects/breakdown)',
-        help_text='Unchecking will make me the default tester of copied cases',
-        required=False
-    )
-    clone_cc = forms.BooleanField(
-        help_text='Unchecking it will not clone the CC',
-        required=False
-    )
-    clone_tag = forms.BooleanField(
-        help_text='Unchecking it will not clone the tags',
-        required=False
-    )
-
-    def populate(self, trs, product_id=None):
-        self.fields['run'].queryset = TestRun.objects.filter(pk__in=trs)
-
-        if product_id:
-            self.fields['product_version'].queryset = Version.objects.filter(
-                product__pk=product_id
-            )
-            self.fields['build'].queryset = Build.objects.filter(
-                product__pk=product_id
-            )
-
-
 # ===========================================================================
 # Case run form
 # ===========================================================================

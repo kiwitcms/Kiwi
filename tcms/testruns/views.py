@@ -2,7 +2,6 @@
 
 import datetime
 import json
-from urllib.parse import urlencode
 from functools import reduce
 
 from django.conf import settings
@@ -20,7 +19,6 @@ from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
@@ -33,7 +31,6 @@ from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.core.utils.validations import validate_bug_id
-from tcms.core.views import Prompt
 from tcms.management.models import Priority, EnvValue, Tag
 from tcms.search.forms import RunForm
 from tcms.search.query import SmartDjangoQuery
@@ -43,7 +40,7 @@ from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import TestCaseRunDataMixin
-from tcms.testruns.forms import MulitpleRunsCloneForm, PlanFilterRunForm
+from tcms.testruns.forms import PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRunValueMap
 from tcms.issuetracker.types import IssueTrackerType
@@ -917,11 +914,11 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
         tcrs = []
 
     if not tcrs:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one case is required by a run',
-            next=request.META.get('HTTP_REFERER', '/'))
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('At least one TestCase is required'))
+        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
+
     estimated_time = reduce(lambda x, y: x + y,
                             [tcr.case.estimated_time for tcr in tcrs])
 
@@ -948,145 +945,6 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
             'cases_run': tcrs,
         }
         return render(request, template_name, context_data)
-
-
-@require_http_methods(['GET', 'POST'])
-def clone(request, template_name='run/clone.html'):
-    """Clone test run to another build"""
-
-    SUB_MODULE_NAME = "runs"
-
-    trs = TestRun.objects.select_related()
-
-    req_data = request.GET or request.POST
-
-    filter_str = req_data.get('filter_str')
-    if filter_str:
-        trs = run_queryset_from_querystring(filter_str)
-    else:
-        trs = trs.filter(pk__in=req_data.getlist('run'))
-
-    if not trs:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('At least one TestCase is required'))
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
-    # Generate the clone run page for one run
-    if trs.count() == 1 and not req_data.get('submit'):
-        tr = trs[0]
-        tcrs = tr.case_run.all()
-        form = RunCloneForm(initial={
-            'summary': tr.summary,
-            'notes': tr.notes,
-            'manager': tr.manager.email,
-            'product': tr.plan.product_id,
-            'product_version': tr.product_version_id,
-            'build': tr.build_id,
-            'default_tester':
-                tr.default_tester_id and tr.default_tester.email or '',
-            'use_newest_case_text': True,
-        })
-        form.populate(product_id=tr.plan.product_id)
-
-        context_data = {
-            'module': MODULE_NAME,
-            'sub_module': SUB_MODULE_NAME,
-            'clone_form': form,
-            'test_run': tr,
-            'cases_run': tcrs,
-        }
-        return render(request, template_name, context_data)
-
-    # Process multiple runs clone page
-    template_name = 'run/clone_multiple.html'
-
-    if request.method == "POST":
-        form = MulitpleRunsCloneForm(request.POST)
-        form.populate(trs=trs, product_id=request.POST.get('product'))
-        if form.is_valid():
-            for tr in trs:
-                n_tr = TestRun.objects.create(
-                    product_version=form.cleaned_data['product_version'],
-                    plan_text_version=tr.plan_text_version,
-                    summary=tr.summary,
-                    notes=tr.notes,
-                    estimated_time=tr.estimated_time,
-                    plan=tr.plan,
-                    build=form.cleaned_data['build'],
-                    manager=(form.cleaned_data['update_manager'] and
-                             form.cleaned_data['manager'] or
-                             tr.manager),
-                    default_tester=(
-                        form.cleaned_data['update_default_tester'] and
-                        form.cleaned_data['default_tester'] or
-                        tr.default_tester),
-                )
-
-                for tcr in tr.case_run.all():
-                    if form.cleaned_data['update_case_text']:
-                        text_versions = list(tcr.get_text_versions())
-                        if text_versions:
-                            case_text_version = text_versions[-1]
-                        else:
-                            case_text_version = tcr.case_text_version
-                    else:
-                        case_text_version = tcr.case_text_version
-
-                    n_tr.add_case_run(
-                        case=tcr.case,
-                        assignee=tcr.assignee,
-                        case_text_version=case_text_version,
-                        build=form.cleaned_data['build'],
-                        notes=tcr.notes,
-                        sortkey=tcr.sortkey,
-                    )
-
-                for env_value in tr.env_value.all():
-                    n_tr.add_env_value(env_value)
-
-                if form.cleaned_data['clone_cc']:
-                    for cc in tr.cc.all():
-                        n_tr.add_cc(user=cc)
-
-                if form.cleaned_data['clone_tag']:
-                    for tag in tr.tag.all():
-                        n_tr.add_tag(tag=tag)
-
-            if len(trs) == 1:
-                return HttpResponseRedirect(
-                    reverse('testruns-get', args=[n_tr.pk])
-                )
-
-            params = {
-                'product': form.cleaned_data['product'].pk,
-                'product_version': form.cleaned_data['product_version'].pk,
-                'build': form.cleaned_data['build'].pk}
-
-            return HttpResponseRedirect('%s?%s' % (
-                reverse('testruns-all'),
-                urlencode(params, True)
-            ))
-    else:
-        form = MulitpleRunsCloneForm(initial={
-            'run': trs.values_list('pk', flat=True),
-            'manager': request.user,
-            'default_tester': request.user,
-            'assignee': request.user,
-            'update_manager': False,
-            'update_default_tester': True,
-            'update_assignee': True,
-            'update_case_text': True,
-            'clone_cc': True,
-            'clone_tag': True, })
-        form.populate(trs=trs)
-
-    context_data = {
-        'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
-        'clone_form': form,
-    }
-    return render(request, template_name, context_data)
 
 
 @require_POST
