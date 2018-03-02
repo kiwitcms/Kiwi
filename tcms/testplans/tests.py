@@ -531,14 +531,14 @@ class TestCloneView(BasePlanCase):
         self.client.login(username=self.plan_tester.username, password='password')
 
         data_missing_plan = {}  # No plan is passed
-        response = self.client.get(self.plan_clone_url, data_missing_plan)
-        self.assertContains(response, 'At least one plan is required by clone function')
+        response = self.client.get(self.plan_clone_url, data_missing_plan, follow=True)
+        self.assertContains(response, 'At least one TestPlan is required')
 
-    def test_refuse_if_give_nonexisting_plan(self):
+    def test_refuse_if_given_nonexisting_plan(self):
         self.client.login(username=self.plan_tester.username, password='password')
 
-        response = self.client.get(self.plan_clone_url, {'plan': 99999})
-        self.assertContains(response, 'The plan you specify does not exist in database')
+        response = self.client.get(self.plan_clone_url, {'plan': 99999}, follow=True)
+        self.assertContains(response, 'TestPlan(s) "%s" do not exist' % ['99999'])
 
     def test_open_clone_page_to_clone_one_plan(self):
         self.client.login(username=self.plan_tester.username, password='password')

@@ -774,9 +774,9 @@ class TestCloneCase(BasePlanCase):
         self.login_tester()
 
         # Refuse to clone cases if missing selectAll and case arguments
-        response = self.client.get(self.clone_url, {})
+        response = self.client.get(self.clone_url, {}, follow=True)
 
-        self.assertContains(response, 'At least one case is required')
+        self.assertContains(response, 'At least one TestCase is required')
 
     def test_show_clone_page_with_from_plan(self):
         self.login_tester()

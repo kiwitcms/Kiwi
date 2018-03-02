@@ -28,7 +28,6 @@ from tcms.core.models import TCMSLog
 from tcms.core.utils.checksum import checksum
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
-from tcms.core.views import Prompt
 from tcms.management.models import EnvGroup
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
@@ -596,22 +595,23 @@ def clone(request, template_name='plan/clone.html'):
 
     req_data = request.GET or request.POST
     if 'plan' not in req_data:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one plan is required by clone function.',
-            next='javascript:window.history.go(-1)',
-        )
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('At least one TestPlan is required'))
+        # redirect back where we came from
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    tps = TestPlan.objects.filter(pk__in=req_data.getlist('plan'))
+    plan_ids = req_data.getlist('plan')
+    tps = TestPlan.objects.filter(pk__in=plan_ids)
 
     if not tps:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='The plan you specify does not exist in database.',
-            next='javascript:window.history.go(-1)',
-        )
+        # note: if at least one of the specified plans is found
+        # we're not going to show this message
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('TestPlan(s) "%s" do not exist') % plan_ids)
+        # redirect back where we came from
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     # Clone the plan if the form is submitted
     if request.method == "POST":

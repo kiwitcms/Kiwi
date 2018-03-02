@@ -5,6 +5,7 @@ import json
 import itertools
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,6 +14,7 @@ from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
@@ -23,7 +25,6 @@ from tcms.core.utils import form_errors_to_list
 from tcms.core.logs.models import TCMSLogModel
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils import DataTableResult
-from tcms.core.views import Prompt
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
@@ -1377,12 +1378,11 @@ def clone(request, template_name='case/clone.html'):
     request_data = getattr(request, request.method)
 
     if 'selectAll' not in request_data and 'case' not in request_data:
-        return Prompt.render(
-            request=request,
-            info_type=Prompt.Info,
-            info='At least one case is required.',
-            next='javascript:window.history.go(-1)'
-        )
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('At least one TestCase is required'))
+        # redirect back where we came from
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     tp_src = plan_from_request_or_none(request)
     tp = None
@@ -1533,13 +1533,10 @@ def clone(request, template_name='case/clone.html'):
                 )
 
             # Otherwise it will prompt to user the clone action is successful.
-            return Prompt.render(
-                request=request,
-                info_type=Prompt.Info,
-                info='Test case successful to clone, click following link '
-                     'to return to plans page.',
-                next=reverse('plans-all')
-            )
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 _('TestCase cloning was successful'))
+            return HttpResponseRedirect(reverse('plans-all'))
     else:
         selected_cases = get_selected_testcases(request)
         # Initial the clone case form
@@ -1663,8 +1660,8 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             form = CaseBugForm(request.GET)
             if not form.is_valid():
                 errors = []
-                for field_name, messages in form.errors.items():
-                    for item in messages:
+                for field_name, error_messages in form.errors.items():
+                    for item in error_messages:
                         errors.append(item)
                 response = '\n'.join(errors)
                 return self.render(response=response)

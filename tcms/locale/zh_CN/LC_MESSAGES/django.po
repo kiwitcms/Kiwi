@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-01 22:06+0000\n"
+"POT-Creation-Date: 2018-03-02 13:54+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -191,8 +191,26 @@ msgstr ""
 msgid "Change my password"
 msgstr ""
 
-#: tcms/testplans/views.py:474
+#: tcms/testcases/views.py:1383 tcms/testruns/views.py:919
+#: tcms/testruns/views.py:1051
+msgid "At least one TestCase is required"
+msgstr ""
+
+#: tcms/testcases/views.py:1538
+msgid "TestCase cloning was successful"
+msgstr ""
+
+#: tcms/testplans/views.py:473
 msgid "Select at least one TestRun and one TestCase"
+msgstr ""
+
+#: tcms/testplans/views.py:600
+msgid "At least one TestPlan is required"
+msgstr ""
+
+#: tcms/testplans/views.py:612
+#, python-format
+msgid "TestPlan(s) \"%s\" do not exist"
 msgstr ""
 
 #: tcms/testplans/views.py:889
@@ -204,36 +222,32 @@ msgstr ""
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
 
-#: tcms/testruns/views.py:73
+#: tcms/testruns/views.py:70
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:243
+#: tcms/testruns/views.py:240
 msgid "Permission denied: TestRun does not belong to you"
 msgstr ""
 
-#: tcms/testruns/views.py:263
+#: tcms/testruns/views.py:260
 #, python-format
 msgid "Deletion failed: %s"
 msgstr ""
 
-#: tcms/testruns/views.py:268
+#: tcms/testruns/views.py:265
 msgid "Parameter \"sure\" must be \"yes\" or \"no\""
 msgstr ""
 
-#: tcms/testruns/views.py:972 tcms/testruns/views.py:1193
-msgid "At least one TestCase is required"
-msgstr ""
-
-#: tcms/testruns/views.py:1103
+#: tcms/testruns/views.py:961
 msgid "Reorder operation requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:1202
+#: tcms/testruns/views.py:1060
 msgid "TestCase ID is not a valid integer"
 msgstr ""
 
-#: tcms/testruns/views.py:1336
+#: tcms/testruns/views.py:1194
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr ""
