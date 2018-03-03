@@ -1,6 +1,51 @@
 Change Log
 ==========
 
+4.1 (2018-03-03)
+----------------
+
+- Update document relative to the permissions of default groups (Mr. Senko)
+- Add permissions to default groups (Chenxiong Qi)
+- Add default group System Admin (Chenxiong Qi)
+- Remove obsolete fixture now covered by default group permissions (Mr. Senko)
+- Simplify .travis.yml to run tox (Chenxiong Qi)
+- Add python2-celery back to SPEC (Chenxiong Qi)
+- Add missing python3-devel to testenv.yml (Chenxiong Qi)
+- Remove script celeryd (Chenxiong Qi)
+- Add copr-cli and mock to testenv and configure mock properly for use
+  (Chenxiong Qi)
+- Clean up SPEC (Chenxiong Qi)
+- Fix target dependency for tarball, srpm, rpm in Makefile (Chenxiong Qi)
+- Remove Vagrantfile from final Python sdist package (Chenxiong Qi)
+- Add python2-sphinx to Vagrant testenv for building RPM (Chenxiong Qi)
+- Fix testenv playbook (Chenxiong Qi)
+- Rewrite Vagrant machine provision and update relative doc (Chenxiong Qi)
+- Show product versions properly when open /plan/new/ - #132 (Chenxiong Qi)
+- Replace XML2Dict with xmltodict - #133 (Chenxiong Qi)
+- Fix link case url in reviewing cases tab (Chenxiong Qi)
+- Do not install Nitrate for flake8 testenv (Chenxiong Qi)
+- Add missing migrations (Chenxiong Qi)
+- Remove testenv for old py34 and py35 (Chenxiong Qi)
+- Let git ignore uploads directory (Chenxiong Qi)
+- Remove model TestPlanPermission and TestPlanActivity (Chenxiong Qi)
+- Refactor get_plain_text (Chenxiong Qi)
+- Remove unused class EditCaseNotifyThread (Chenxiong Qi)
+- Drop w3m and use html2text - #25 (Chenxiong Qi)
+- Refactor plan and case components action views - #193 (Chenxiong Qi)
+- Refactor inner action class CaseActions - #196 (Chenxiong Qi)
+- Remove py36 from running tests with django 1.10 (Chenxiong Qi)
+- Ignore more directories when make tags file (Chenxiong Qi)
+- Add test for django 1.11 - #247 (Chenxiong Qi)
+- Show status name rather than id in case run change log - #43 (Chenxiong Qi)
+- Refactor upload_file (Chenxiong Qi)
+- Fix hardcode to show priorities in advanced search - rhbz#1139932 (Chenxiong
+  Qi)
+- Fix Makefile to run tests (Chenxiong Qi)
+- Recover tests to run with pytest (Chenxiong Qi)
+- Run flake8 from tox (Chenxiong Qi)
+- Use permission_required - #192 (Chenxiong Qi)
+- Use triple-double quotes in docstring - #165 (Chenxiong Qi)
+
 4.0 (2017-11-23)
 ----------------
 

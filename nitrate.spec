@@ -4,8 +4,8 @@
 %global pkgname nitrate
 
 Name:           python-%{pkgname}
-Version:        4.0.0
-Release:        2%{?dist}
+Version:        4.1
+Release:        1%{?dist}
 Summary:        Test Case Management System
 
 License:        GPLv2+
