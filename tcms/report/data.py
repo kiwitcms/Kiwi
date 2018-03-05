@@ -630,7 +630,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
             for build_id, tested_by_ids in builds:
                 build_rowspan = len(tested_by_ids)
                 tested_by_ids = sorted(tested_by_ids.items(),
-                                       key=lambda item: item[0])
+                                       key=lambda item: item[0] or 0)
                 for tested_by_id, status_subtotal in tested_by_ids:
                     if build_id not in runs_subtotal:
                         runs_count = 0
