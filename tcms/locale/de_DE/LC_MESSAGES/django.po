@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 15:22+0000\n"
-"PO-Revision-Date: 2018-02-21 03:34-0500\n"
+"POT-Creation-Date: 2018-03-05 14:24+0000\n"
+"PO-Revision-Date: 2018-03-05 16:11-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -76,6 +76,10 @@ msgstr "Bemerkung"
 msgid "Enter a valid estimated time. e.g. 12h45m"
 msgstr "Eingabe einer gültigen geschätzten Dauer z. B. 12h45m"
 
+#: tcms/management/views.py:163
+msgid "Environment group with the same name already exists"
+msgstr ""
+
 #: tcms/profiles/forms.py:26
 msgid "Username"
 msgstr "Benutzername"
@@ -100,16 +104,20 @@ msgstr "Benutzerfehler."
 msgid "A user with that username already exists."
 msgstr "Es gibt bereits einen Benutzer mit diesem Namen."
 
-#: tcms/signals.py:80
+#: tcms/profiles/views.py:104
+msgid "Information successfully updated"
+msgstr ""
+
+#: tcms/signals.py:79
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:140
+#: tcms/signals.py:130
 #, python-format
 msgid "New TestRun %(summary)s created"
 msgstr ""
 
-#: tcms/signals.py:142
+#: tcms/signals.py:132
 #, python-format
 msgid "TestRun %(summary)s has been updated"
 msgstr ""
@@ -135,7 +143,7 @@ msgstr ""
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
 msgid "Dear Administrator,\n"
-"somebody just registered an account with username %(user.username)s at your\n"
+"somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
 msgstr ""
@@ -179,6 +187,67 @@ msgstr "Passwort (Wiederholung)"
 #: tcms/templates/registration/password_change_form.html:40
 msgid "Change my password"
 msgstr "Passwort ändern"
+
+#: tcms/testcases/views.py:1383 tcms/testruns/views.py:919
+#: tcms/testruns/views.py:1051
+msgid "At least one TestCase is required"
+msgstr ""
+
+#: tcms/testcases/views.py:1538
+msgid "TestCase cloning was successful"
+msgstr ""
+
+#: tcms/testplans/views.py:473
+msgid "Select at least one TestRun and one TestCase"
+msgstr ""
+
+#: tcms/testplans/views.py:600
+msgid "At least one TestPlan is required"
+msgstr ""
+
+#: tcms/testplans/views.py:612
+#, python-format
+msgid "TestPlan(s) \"%s\" do not exist"
+msgstr ""
+
+#: tcms/testplans/views.py:889
+msgid "At least one test plan is required for print"
+msgstr ""
+
+#: tcms/testplans/views.py:897
+#, python-format
+msgid "Test Plan \"%s\" does not exist"
+msgstr ""
+
+#: tcms/testruns/views.py:70
+msgid "Creating a TestRun requires at least one TestCase"
+msgstr ""
+
+#: tcms/testruns/views.py:240
+msgid "Permission denied: TestRun does not belong to you"
+msgstr ""
+
+#: tcms/testruns/views.py:260
+#, python-format
+msgid "Deletion failed: %s"
+msgstr ""
+
+#: tcms/testruns/views.py:265
+msgid "Parameter \"sure\" must be \"yes\" or \"no\""
+msgstr ""
+
+#: tcms/testruns/views.py:961
+msgid "Reorder operation requires at least one TestCase"
+msgstr ""
+
+#: tcms/testruns/views.py:1060
+msgid "TestCase ID is not a valid integer"
+msgstr ""
+
+#: tcms/testruns/views.py:1194
+#, python-format
+msgid "%d CaseRun(s) updated:"
+msgstr ""
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
