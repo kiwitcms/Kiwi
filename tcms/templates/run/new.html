@@ -131,9 +131,9 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 				<input type="button" name="cancel" value="cancel" class="js-cancel-button" >
 			</div>
 		</div>
-	{% if test_cases %}
-	<input type="hidden" name="testcases" value="testcases" />
-	<div class="Detailform border-1" id="testcases_selected">
+	        {% if test_cases %}
+	        <input type="hidden" name="testcases" value="testcases" />
+	        <div class="Detailform border-1" id="testcases_selected">
 		<div class="mixbar">
 			<span class="title"><b>Selected cases:</b></span>
 				<span class="notice">
@@ -142,7 +142,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 					{{ num_unconfirmed_cases }} unconfirmed cases removed
 					{% endif %}
 				</span>
-			</div>
+		</div>
 			<table id="testcases" class="list" cellpadding="0" cellspacing="0" border="0" >
 				<thead>
 					<tr>
@@ -181,18 +181,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 					{% endfor %}
 				</tbody>
 			</table>
-			{% else %}
-			<span class="prompt-message">
-				<center>
-					No testcase in this testrun , you may <a href="{{ test_plan.get_absolute_url }}"><strong>Select Cases</strong></a> from test plan.
-				</center>
-			</span>
-			<script type="text/javascript">
-			var msg = "No valid cases are selected. Please select some cases or confirm selected ones before creating a run."
-			alert(msg);
-			window.history.go(-1);
-			</script>
-			{% endif %}
+	        {% endif %}
 		</div>
 	</form>
 </div>
