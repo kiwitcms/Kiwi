@@ -32,7 +32,7 @@ Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 		>> <a href="{% url "mgmt-environment_groups" %}">Environment groups</a>
 		>> Edit group - {{ environment.name }}
 	</div>
-	<form id="js-edit-group" action="{% url "mgmt-environment_group_edit" %}" method="GET">
+	<form action="{% url "mgmt-environment_group_edit" %}" method="GET">
 		<input type="hidden" name="action" value="modify">
 		<input type="hidden" name="id" value="{{ environment.id }}">
 		<h2>Edit Environment Group</h2>
@@ -67,9 +67,6 @@ Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 			<tr>
 				<td colspan="2" class="manage-tit" align="center" height="25">
 					<input type="submit" value="Save">
-					<input type="button" value="Back" id="js-back-button" >
-					<br clear="all">
-					<span class="successlink">{{ message }}</span>
 				</td>
 			</tr>
 		</table>

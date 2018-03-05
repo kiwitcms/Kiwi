@@ -5,24 +5,6 @@ Nitrate.Management.Environment.Property = {};
 
 Nitrate.Management.Environment.Edit.on_load = function() {
   SelectFilter.init("id_properties", "properties", 0, "/static/admin/");
-
-  jQ('#js-edit-group').submit(function(e) {
-    e.preventDefault();
-    var jqForm = jQ(this);
-
-    jQ.ajax({
-      'url': jqForm.attr('action'),
-      'type': 'GET',
-      'data': jqForm.serialize(),
-      'success': function() {
-        window.location = '/environment/groups';
-      }
-    });
-  });
-
-  jQ('#js-back-button').bind('click', function() {
-    window.location = '/environment/groups';
-  });
 };
 
 Nitrate.Management.Environment.on_load = function() {

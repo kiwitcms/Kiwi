@@ -6,12 +6,15 @@ from itertools import groupby
 
 from django.db import IntegrityError
 
+from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render, get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 
 from tcms.core.logs.models import TCMSLogModel
@@ -148,31 +151,18 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
     """
 
     # Initial the response
-    response = ''
     environment_id = request.GET.get('id', None)
 
-    if environment_id is None:
-        raise Http404
-
-    try:
-        environment = EnvGroup.objects.get(pk=environment_id)
-    except EnvGroup.DoesNotExist:
-        raise Http404
-
-    # import pytest; pytest.set_trace()
+    environment = get_object_or_404(EnvGroup, pk=environment_id)
 
     try:
         de = EnvGroup.objects.get(name=request.GET.get('name'))
         if environment != de:
-            response = 'Duplicated name already exists, please change to ' \
-                'another name.'
-            context_data = {
-                'environment': environment,
-                'properties': EnvProperty.get_active(),
-                'selected_properties': environment.property.all(),
-                'message': response,
-            }
-            return render(request, template_name, context_data)
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('Environment group with the same name already exists'))
+            return HttpResponseRedirect(
+                    reverse('mgmt-environment_group_edit') + '?id=%s' % environment_id)
     except EnvGroup.DoesNotExist:
         pass
 
@@ -205,14 +195,12 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
         environment.log_action(
             who=request.user,
             action='Properties changed to %s' % (', '.join(property_values)))
-
-        response = 'Environment group saved successfully.'
+        return HttpResponseRedirect(reverse('mgmt-environment_groups'))
 
     context_data = {
         'environment': environment,
         'properties': EnvProperty.get_active(),
         'selected_properties': environment.property.all(),
-        'message': response,
     }
     return render(request, template_name, context_data)
 

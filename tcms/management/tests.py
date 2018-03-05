@@ -421,9 +421,9 @@ class TestEditEnvironmentGroup(TestCase):
             'id': self.group_nitrate.pk,
             'name': self.duplicate_group.name,
             'enabled': 'on'
-        })
+        }, follow=True)
 
-        self.assertContains(response, 'Duplicated name already exists')
+        self.assertContains(response, 'Environment group with the same name already exists')
 
     def test_edit_group(self):
         self.client.login(username=self.tester.username, password='password')
