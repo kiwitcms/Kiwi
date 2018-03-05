@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django import http
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -11,6 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.http import require_GET
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.testplans.models import TestPlan
@@ -92,17 +94,17 @@ def profile(request, username, template_name='profile/info.html'):
         up = UserProfile.get_user_profile(u)
     except ObjectDoesNotExist:
         up = UserProfile.objects.create(user=u)
-    message = None
     form = UserProfileForm(instance=up)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=up)
         if form.is_valid():
             form.save()
-            message = 'Information successfully updated.'
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 _('Information successfully updated'))
     context_data = {
         'user_profile': up,
         'form': form,
-        'message': message,
     }
     return render(request, template_name, context_data)
 
