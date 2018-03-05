@@ -950,7 +950,8 @@ def get(request, case_id, template_name='case/get.html'):
     logs = [(day, list(log_actions)) for day, log_actions in logs]
     try:
         tp = tps.get(pk=request.GET.get('from_plan', 0))
-    except TestPlan.DoesNotExist:
+    except (TestPlan.DoesNotExist, ValueError):
+        # ValueError is raised when from_plan is empty string
         # not viewing TC from a Plan or specified Plan does not exist (e.g. broken link)
         tp = None
 
