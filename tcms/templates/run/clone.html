@@ -42,8 +42,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 		<input type="hidden" id="id_product_id" name="product_id" value="{{ test_run.plan.product_id }}" />
 		<input type="hidden" name="do" value="clone_run" />
 		<input type="hidden" name="orig_run_id" value="{{ test_run.run_id }}" />
-		{# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
-		<input type="hidden" name="POSTING_TO_CREATE" value="YES" />
 
 		<div class="Detailform border-1">
 			<table class="editor" cellspan="0" cellspacing="0">

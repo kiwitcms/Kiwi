@@ -154,7 +154,6 @@ class TestCreateNewRun(BasePlanCase):
             'notes': 'Clone new run',
             'case': [self.case_1.pk, self.case_2.pk],
             'do': 'clone_run',
-            'POSTING_TO_CREATE': 'YES',
         }
 
         url = reverse('testruns-new')
@@ -254,7 +253,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'product_id': self.test_run.plan.product_id,
             'do': 'clone_run',
             'orig_run_id': self.test_run.pk,
-            'POSTING_TO_CREATE': 'YES',
             'product': self.test_run.plan.product_id,
             'product_version': self.test_run.product_version.pk,
             'build': self.test_run.build.pk,
