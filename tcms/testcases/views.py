@@ -1334,7 +1334,6 @@ def edit(request, case_id, template_name='case/edit.html'):
 
 def text_history(request, case_id, template_name='case/history.html'):
     """View test plan text history"""
-    SUB_MODULE_NAME = 'cases'
 
     tc = get_object_or_404(TestCase, case_id=case_id)
     tp = plan_from_request_or_none(request)
@@ -1345,7 +1344,6 @@ def text_history(request, case_id, template_name='case/history.html'):
 
     context_data = {
         'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'testplan': tp,
         'testcase': tc,
         'test_case_texts': tctxts.iterator(),
@@ -1374,7 +1372,6 @@ def text_history(request, case_id, template_name='case/history.html'):
 @permission_required('testcases.add_testcase')
 def clone(request, template_name='case/clone.html'):
     """Clone one case or multiple case into other plan or plans"""
-    SUB_MODULE_NAME = 'cases'
 
     request_data = getattr(request, request.method)
 
@@ -1560,7 +1557,6 @@ def clone(request, template_name='case/clone.html'):
     submit_action = request_data.get('submit', None)
     context_data = {
         'module': request_data.get('from_plan') and 'testplans' or MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'test_plan': tp,
         'search_form': search_plan_form,
         'clone_form': clone_form,
@@ -1597,14 +1593,12 @@ def category(request):
 @permission_required('testcases.add_testcaseattachment')
 def attachment(request, case_id, template_name='case/attachment.html'):
     """Manage test case attachments"""
-    SUB_MODULE_NAME = 'cases'
 
     tc = get_object_or_404(TestCase, case_id=case_id)
     tp = plan_from_request_or_none(request)
 
     context_data = {
         'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'testplan': tp,
         'testcase': tc,
         'limit': settings.FILE_UPLOAD_MAX_SIZE,
