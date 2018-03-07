@@ -36,7 +36,6 @@ MODULE_NAME = "report"
 
 def overall(request, template_name='report/list.html'):
     """Overall of products report"""
-    SUB_MODULE_NAME = 'overall'
     products = Product.objects.all()
 
     products = products.extra(select={
@@ -47,7 +46,6 @@ def overall(request, template_name='report/list.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'products': products
     }
     return render(request, template_name, context_data)
@@ -89,7 +87,6 @@ def overview(request, product_id, template_name='report/overview.html'):
 
 
 class ProductVersionReport(TemplateView, ProductVersionReportData):
-    submodule_name = 'version'
     template_name = 'report/version.html'
 
     def get(self, request, product_id):
@@ -154,7 +151,6 @@ class ProductVersionReport(TemplateView, ProductVersionReportData):
 
 
 class ProductBuildReport(TemplateView, ProductBuildReportData):
-    submodule_name = 'build'
     template_name = 'report/build.html'
 
     def get(self, request, product_id):
@@ -213,7 +209,6 @@ class ProductBuildReport(TemplateView, ProductBuildReportData):
 
 
 class ProductComponentReport(TemplateView, ProductComponentReportData):
-    submodule_name = 'component'
     template_name = 'report/component.html'
 
     def get(self, request, product_id):
@@ -262,7 +257,7 @@ class ProductComponentReport(TemplateView, ProductComponentReportData):
         data = super(ProductComponentReport, self).get_context_data(**kwargs)
         data.update({
             'module': MODULE_NAME,
-            'SUB_MODULE_NAME': self.submodule_name,
+            'SUB_MODULE_NAME': 'component',
             'product': self.product,
             'components': components,
             'component': selected_component,
@@ -273,7 +268,6 @@ class ProductComponentReport(TemplateView, ProductComponentReportData):
 
 
 class CustomReport(TemplateView):
-    submodule_name = 'custom_search'
     template_name = 'report/custom_search.html'
     form_class = CustomSearchForm
     data_class = CustomReportData
@@ -363,7 +357,6 @@ class CustomReport(TemplateView):
         data.update(self._get_report_data_context())
         data.update({
             'module': MODULE_NAME,
-            'sub_module': self.submodule_name,
         })
         return data
 

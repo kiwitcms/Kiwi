@@ -74,8 +74,6 @@ def update_plan_email_settings(tp, form):
 def new(request, template_name='plan/new.html'):
     """New testplan"""
 
-    SUB_MODULE_NAME = "new_plan"
-
     # If the form has been submitted...
     if request.method == 'POST':
         # A form bound to the POST data
@@ -91,7 +89,6 @@ def new(request, template_name='plan/new.html'):
                 # Generate the form
                 context_data = {
                     'module': MODULE_NAME,
-                    'sub_module': SUB_MODULE_NAME,
                     'form': form,
                 }
                 return render(request, template_name, context_data)
@@ -136,7 +133,6 @@ def new(request, template_name='plan/new.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'form': form,
     }
     return render(request, template_name, context_data)
@@ -145,8 +141,6 @@ def new(request, template_name='plan/new.html'):
 @require_GET
 def all(request, template_name='plan/all.html'):
     '''Display all testplans'''
-    # Define the default sub module
-    SUB_MODULE_NAME = 'plans'
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
     # If it's not a search the page will be blank
@@ -163,13 +157,6 @@ def all(request, template_name='plan/all.html'):
             search_form.populate()
 
         if search_form.is_valid():
-            # Detemine the query is the user's plans and change the sub
-            # module value
-            author = request.GET.get('author')
-            if author and request.user.is_authenticated:
-                if author == request.user.username or author == request.user.email:
-                    SUB_MODULE_NAME = "my_plans"
-
             query_result = True
             # build a QuerySet:
             tps = TestPlan.list(search_form.cleaned_data)
@@ -232,7 +219,6 @@ def all(request, template_name='plan/all.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'test_plans': tps,
         'query_result': query_result,
         'search_plan_form': search_form,
@@ -379,7 +365,6 @@ def ajax_response(request, queryset, column_names, template_name):
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):
     '''Display the plan details.'''
-    SUB_MODULE_NAME = 'plans'
 
     try:
         tp = TestPlan.objects.select_related().get(plan_id=plan_id)
@@ -398,7 +383,6 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'test_plan': tp,
     }
     return render(request, template_name, context_data)
@@ -409,8 +393,6 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
     '''Choose one run to add cases'''
 
-    # Define the default sub module
-    SUB_MODULE_NAME = 'runs'
     if request.method == 'GET':
         try:
             plan_id = int(plan_id)
@@ -433,7 +415,6 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
 
         context_data = {
             'module': MODULE_NAME,
-            'sub_module': SUB_MODULE_NAME,
             'plan_id': plan_id,
             'plan': tp,
             'test_runs': testruns.iterator(),
@@ -479,8 +460,6 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
 @permission_required('testplans.change_testplan')
 def edit(request, plan_id, template_name='plan/edit.html'):
     '''Edit test plan view'''
-    # Define the default sub module
-    SUB_MODULE_NAME = 'plans'
 
     try:
         tp = TestPlan.objects.select_related().get(plan_id=plan_id)
@@ -504,7 +483,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 # Generate the form
                 context_data = {
                     'module': MODULE_NAME,
-                    'sub_module': SUB_MODULE_NAME,
                     'form': form,
                     'test_plan': tp,
                 }
@@ -580,7 +558,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'test_plan': tp,
         'form': form,
     }
@@ -591,7 +568,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 @permission_required('testplans.add_testplan')
 def clone(request, template_name='plan/clone.html'):
     """Clone testplan"""
-    SUB_MODULE_NAME = 'plans'
 
     req_data = request.GET or request.POST
     if 'plan' not in req_data:
@@ -707,7 +683,6 @@ def clone(request, template_name='plan/clone.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'testplans': tps,
         'clone_form': clone_form,
     }
@@ -716,12 +691,10 @@ def clone(request, template_name='plan/clone.html'):
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):
     '''Manage attached files'''
-    SUB_MODULE_NAME = 'plans'
 
     tp = get_object_or_404(TestPlan, plan_id=plan_id)
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'test_plan': tp,
         'limit': settings.FILE_UPLOAD_MAX_SIZE,
     }
@@ -731,7 +704,6 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 @require_GET
 def text_history(request, plan_id, template_name='plan/history.html'):
     '''View test plan text history'''
-    SUB_MODULE_NAME = 'plans'
 
     tp = get_object_or_404(TestPlan, plan_id=int(plan_id))
     tptxts = tp.text.select_related('author').only('plan',
@@ -742,7 +714,6 @@ def text_history(request, plan_id, template_name='plan/history.html'):
     selected_plan_text_version = int(request.GET.get('plan_text_version', 0))
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'testplan': tp,
         'test_plan_texts': tptxts,
         'select_plan_text_version': selected_plan_text_version,
@@ -796,7 +767,6 @@ class LinkCasesSearchView(View):
     """Search cases for linking to plan"""
 
     template_name = 'plan/search_case.html'
-    SUB_MODULE_NAME = 'plans'
 
     def get(self, request, plan_id):
         plan = get_object_or_404(TestPlan, pk=int(plan_id))
@@ -809,7 +779,6 @@ class LinkCasesSearchView(View):
         quick_form = QuickSearchCaseForm()
         return render(self.request, self.template_name, {
             'module': MODULE_NAME,
-            'sub_module': self.SUB_MODULE_NAME,
             'search_form': normal_form,
             'quick_form': quick_form,
             'test_plan': plan,
@@ -841,7 +810,6 @@ class LinkCasesSearchView(View):
 
         context = {
             'module': MODULE_NAME,
-            'sub_module': self.SUB_MODULE_NAME,
             'test_plan': plan,
             'test_cases': cases,
             'search_form': normal_form,

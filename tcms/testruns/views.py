@@ -54,8 +54,6 @@ MODULE_NAME = "testruns"
 def new(request, template_name='run/new.html'):
     """Display the create test run page."""
 
-    SUB_MODULE_NAME = "new_run"
-
     # If from_plan does not exist will redirect to plans for select a plan
     if not request.POST.get('from_plan'):
         return HttpResponseRedirect(reverse('plans-all'))
@@ -190,7 +188,6 @@ def new(request, template_name='run/new.html'):
     # FIXME: pagination cases within Create New Run page.
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'from_plan': plan_id,
         'test_plan': tp,
         'test_cases': tcs_values,
@@ -250,8 +247,6 @@ def delete(request, run_id):
 @require_GET
 def all(request, template_name='run/all.html'):
     '''Read the test runs from database and display them.'''
-    SUB_MODULE_NAME = "runs"
-
     query_result = len(request.GET) > 0
 
     if request.GET:
@@ -267,7 +262,6 @@ def all(request, template_name='run/all.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'query_result': query_result,
         'search_form': search_form,
     }
@@ -531,8 +525,6 @@ def open_run_get_users(case_runs):
 def get(request, run_id, template_name='run/get.html'):
     """Display testrun's detail"""
 
-    SUB_MODULE_NAME = "runs"
-
     # Get the test run
     try:
         # 1. get test run itself
@@ -581,7 +573,6 @@ def get(request, run_id, template_name='run/get.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'test_run': tr,
         'from_plan': request.GET.get('from_plan', False),
         'test_case_runs': walk_case_runs(),
@@ -599,8 +590,6 @@ def get(request, run_id, template_name='run/get.html'):
 @permission_required('testruns.change_testrun')
 def edit(request, run_id, template_name='run/edit.html'):
     """Edit test plan view"""
-    # Define the default sub module
-    SUB_MODULE_NAME = 'runs'
 
     try:
         tr = TestRun.objects.select_related().get(run_id=run_id)
@@ -672,7 +661,6 @@ def edit(request, run_id, template_name='run/edit.html'):
 
     context_data = {
         'module': MODULE_NAME,
-        'sub_module': SUB_MODULE_NAME,
         'test_run': tr,
         'form': form,
     }
@@ -892,7 +880,6 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
     """Clone cases from filter caserun"""
 
-    SUB_MODULE_NAME = "runs"
     tr = get_object_or_404(TestRun, run_id=run_id)
 
     if request.POST.get('case_run'):
@@ -926,7 +913,6 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
 
         context_data = {
             'module': MODULE_NAME,
-            'sub_module': SUB_MODULE_NAME,
             'clone_form': form,
             'test_run': tr,
             'cases_run': tcrs,
