@@ -24,8 +24,6 @@ from tcms.management.models import EnvGroupPropertyMap
 from tcms.management.models import EnvProperty
 from tcms.management.models import EnvValue
 
-MODULE_NAME = "management"
-
 
 @require_GET
 def environment_groups(request, template_name='environment/groups.html'):
@@ -138,7 +136,6 @@ def environment_groups(request, template_name='environment/groups.html'):
                                         another_logs=logs)
     context_data = {
         'environments': env_groups,
-        'module': 'env',
     }
     return render(request, template_name, context_data)
 

@@ -46,9 +46,6 @@ from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRun
 from tcms.issuetracker.types import IssueTrackerType
 
 
-MODULE_NAME = "testruns"
-
-
 @require_POST
 @permission_required('testruns.add_testrun')
 def new(request, template_name='run/new.html'):
@@ -187,7 +184,6 @@ def new(request, template_name='run/new.html'):
 
     # FIXME: pagination cases within Create New Run page.
     context_data = {
-        'module': MODULE_NAME,
         'from_plan': plan_id,
         'test_plan': tp,
         'test_cases': tcs_values,
@@ -261,7 +257,6 @@ def all(request, template_name='run/all.html'):
         search_form = SearchRunForm()
 
     context_data = {
-        'module': MODULE_NAME,
         'query_result': query_result,
         'search_form': search_form,
     }
@@ -572,7 +567,6 @@ def get(request, run_id, template_name='run/get.html'):
                    comments_subtotal.get(case_run.pk, 0))
 
     context_data = {
-        'module': MODULE_NAME,
         'test_run': tr,
         'from_plan': request.GET.get('from_plan', False),
         'test_case_runs': walk_case_runs(),
@@ -660,7 +654,6 @@ def edit(request, run_id, template_name='run/edit.html'):
         form.populate(product_id=tr.build.product_id)
 
     context_data = {
-        'module': MODULE_NAME,
         'test_run': tr,
         'form': form,
     }
@@ -912,7 +905,6 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
         form.populate(product_id=tr.plan.product_id)
 
         context_data = {
-            'module': MODULE_NAME,
             'clone_form': form,
             'test_run': tr,
             'cases_run': tcrs,

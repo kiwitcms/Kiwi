@@ -44,8 +44,6 @@ from tcms.utils.dict_utils import create_dict_from_query
 from .fields import CC_LIST_DEFAULT_DELIMITER
 
 
-MODULE_NAME = "testcases"
-
 TESTCASE_OPERATION_ACTIONS = (
     'search', 'sort', 'update',
     'remove',  # including remove tag from cases
@@ -585,7 +583,6 @@ def all(request, template_name="case/all.html"):
             template_name = 'plan/get_review_cases.html'
 
     context_data = {
-        'module': MODULE_NAME,
         'test_cases': tcs,
         'test_plan': tp,
         'search_form': search_form,
@@ -615,7 +612,6 @@ def search(request, template_name='case/all.html'):
         search_form.populate()
 
     context_data = {
-        'module': MODULE_NAME,
         'search_form': search_form,
     }
     return render(request, template_name, context_data)
@@ -1016,7 +1012,6 @@ def get(request, case_id, template_name='case/get.html'):
         'test_case_status': TestCaseStatus.objects.all(),
         'test_case_run_status': TestCaseRunStatus.objects.all(),
         'bug_trackers': BugSystem.objects.all(),
-        'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
     }
     return render(request, template_name, context_data)
 
@@ -1327,7 +1322,6 @@ def edit(request, case_id, template_name='case/edit.html'):
         'test_plan': tp,
         'form': form,
         'notify_form': n_form,
-        'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
     }
     return render(request, template_name, context_data)
 
@@ -1343,7 +1337,6 @@ def text_history(request, case_id, template_name='case/history.html'):
                             'create_date').order_by('-case_text_version')
 
     context_data = {
-        'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
         'testplan': tp,
         'testcase': tc,
         'test_case_texts': tctxts.iterator(),
@@ -1556,7 +1549,6 @@ def clone(request, template_name='case/clone.html'):
 
     submit_action = request_data.get('submit', None)
     context_data = {
-        'module': request_data.get('from_plan') and 'testplans' or MODULE_NAME,
         'test_plan': tp,
         'search_form': search_plan_form,
         'clone_form': clone_form,
@@ -1598,7 +1590,6 @@ def attachment(request, case_id, template_name='case/attachment.html'):
     tp = plan_from_request_or_none(request)
 
     context_data = {
-        'module': request.GET.get('from_plan') and 'testplans' or MODULE_NAME,
         'testplan': tp,
         'testcase': tc,
         'limit': settings.FILE_UPLOAD_MAX_SIZE,

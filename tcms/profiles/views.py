@@ -22,9 +22,6 @@ from tcms.profiles.models import UserProfile
 from tcms.profiles.forms import BookmarkForm, UserProfileForm
 
 
-MODULE_NAME = 'profile'
-
-
 @require_http_methods(['GET', 'POST'])
 @login_required
 def bookmark(request, username, template_name='profile/bookmarks.html'):
@@ -137,7 +134,6 @@ def recent(request, username, template_name='profile/recent.html'):
     test_plans_disable_count = tps.count() - tps_active.count()
 
     context_data = {
-        'module': MODULE_NAME,
         'user_profile': up,
         'test_plans_count': tps.count(),
         'test_plans_disable_count': test_plans_disable_count,
