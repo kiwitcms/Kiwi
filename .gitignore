@@ -9,6 +9,7 @@ build/
 docs/source/*.dot
 docs/guide/target
 docs/target/
+.idea/
 .cache/
 node_modules/
 package-lock.json
