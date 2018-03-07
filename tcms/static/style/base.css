@@ -180,6 +180,15 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 .cc{ margin:10px 0 0 20px;}
 /***********************End Home***************************/
 
+/* error styles from older admin section */
+.errornote{ background:#FCE595; color:red; padding-left:20px; }
+.errorlist{
+    background: #AF2B2B;
+    border:1px solid #6F1B1B;
+    color:#FFF;
+    font-weight:bold;
+}
+
 /***********************Environment Start***************************/
 .titlelink input[type="text"] { width: 40%; }
 .env-list-side{ width:50%; float:left; }
