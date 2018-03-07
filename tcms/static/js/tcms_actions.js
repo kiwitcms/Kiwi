@@ -407,12 +407,6 @@ function getBuildsByProductId(allow_blank, product_field, build_field) {
     );
 
     debug_output('Update builds completed');
-
-    if (jQ('#value_sub_module').length && jQ('#value_sub_module').val() === 'new_run') {
-      if(jQ(build_field).html() === '') {
-        window.alert('You should create new build first before create new run');
-      }
-    }
   };
 
   var failure = function(t) {
