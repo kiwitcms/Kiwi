@@ -374,7 +374,7 @@ function set_up_choices(element, values, allow_blank) {
   element.innerHTML = innerHTML;
 }
 
-function getBuildsByProductId(allow_blank, product_field, build_field, is_active) {
+function getBuildsByProductId(allow_blank, product_field, build_field) {
   if (!product_field) {
     var product_field = jQ('#id_product')[0];
   }
@@ -393,17 +393,6 @@ function getBuildsByProductId(allow_blank, product_field, build_field, is_active
   if (no_product_is_selected) {
     jQ(build_field).html('<option value="">---------</option>');
     return false;
-  }
-
-  var is_active = '';
-  if (jQ('#value_sub_module').length) {
-    if (jQ('#value_sub_module').val() === "new_run") {
-      is_active = true;
-    }
-  }
-
-  if (is_active) {
-    is_active = true;
   }
 
   var success = function(t) {
@@ -434,7 +423,7 @@ function getBuildsByProductId(allow_blank, product_field, build_field, is_active
   jQ.ajax({
     'url': url,
     'type': 'GET',
-    'data': {'info_type': 'builds', 'product_id': product_id, 'is_active': is_active},
+    'data': {'info_type': 'builds', 'product_id': product_id, 'is_active': true},
     'success': function (data, textStatus, jqXHR) {
       success(jqXHR);
     },
@@ -632,15 +621,15 @@ function checkProductField(product_field) {
   return false;
 }
 
-function bind_build_selector_to_product(allow_blank, product_field, build_field, active) {
+function bind_build_selector_to_product(allow_blank, product_field, build_field) {
   var product_field = checkProductField(product_field);
 
   if (product_field) {
     jQ(product_field).bind('change', function() {
-      getBuildsByProductId(allow_blank, product_field, build_field, active);
+      getBuildsByProductId(allow_blank, product_field, build_field);
     });
 
-    getBuildsByProductId(allow_blank, product_field, build_field, active);
+    getBuildsByProductId(allow_blank, product_field, build_field);
   }
 }
 
