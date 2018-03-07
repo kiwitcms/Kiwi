@@ -577,10 +577,7 @@ def all(request, template_name="case/all.html"):
     # Due to this method serves several sort of search requests, so before
     # rendering the search result, template should be adjusted to a proper one.
     if request.POST.get('from_plan'):
-        if request.POST.get('template_type') == 'case':
-            template_name = 'plan/get_cases.html'
-        elif request.POST.get('template_type') == 'review_case':
-            template_name = 'plan/get_review_cases.html'
+        template_name = 'plan/get_cases.html'
 
     context_data = {
         'test_cases': tcs,
