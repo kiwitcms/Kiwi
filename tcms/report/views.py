@@ -31,9 +31,6 @@ from tcms.report.forms import CustomSearchForm
 from tcms.search import fmt_queries, remove_from_request_path
 
 
-MODULE_NAME = "report"
-
-
 def overall(request, template_name='report/list.html'):
     """Overall of products report"""
     products = Product.objects.all()
@@ -45,7 +42,6 @@ def overall(request, template_name='report/list.html'):
     })
 
     context_data = {
-        'module': MODULE_NAME,
         'products': products
     }
     return render(request, template_name, context_data)
@@ -77,7 +73,6 @@ def overview(request, product_id, template_name='report/overview.html'):
     caserun_status_count['TOTAL'] = total
 
     context_data = {
-        'module': MODULE_NAME,
         'SUB_MODULE_NAME': 'overview',
         'product': product,
         'runs_count': runs_count,
@@ -139,7 +134,6 @@ class ProductVersionReport(TemplateView, ProductVersionReportData):
 
         data = super(ProductVersionReport, self).get_context_data(**kwargs)
         data.update({
-            'module': MODULE_NAME,
             'SUB_MODULE_NAME': 'version',
             'product': self.product,
             'versions': versions,
@@ -197,7 +191,6 @@ class ProductBuildReport(TemplateView, ProductBuildReportData):
 
         data = super(ProductBuildReport, self).get_context_data(**kwargs)
         data.update({
-            'module': MODULE_NAME,
             'SUB_MODULE_NAME': 'build',
             'product': self.product,
             'builds': builds,
@@ -256,7 +249,6 @@ class ProductComponentReport(TemplateView, ProductComponentReportData):
 
         data = super(ProductComponentReport, self).get_context_data(**kwargs)
         data.update({
-            'module': MODULE_NAME,
             'SUB_MODULE_NAME': 'component',
             'product': self.product,
             'components': components,
@@ -355,9 +347,6 @@ class CustomReport(TemplateView):
     def get_context_data(self, **kwargs):
         data = super(CustomReport, self).get_context_data(**kwargs)
         data.update(self._get_report_data_context())
-        data.update({
-            'module': MODULE_NAME,
-        })
         return data
 
 
@@ -518,7 +507,6 @@ class TestingReportBase(TemplateView):
         data.update(context)
         data.update({
             'report_url': reverse('testing-report-case-runs'),
-            'module': MODULE_NAME,
         })
         return data
 

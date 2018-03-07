@@ -44,13 +44,6 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun, TestCaseRun
 
 
-MODULE_NAME = "testplans"
-
-
-# _____________________________________________________________________________
-# helper functons
-
-
 def update_plan_email_settings(tp, form):
     '''Update testplan's email settings'''
     tp.emailing.notify_on_plan_update = form.cleaned_data[
@@ -88,7 +81,6 @@ def new(request, template_name='plan/new.html'):
 
                 # Generate the form
                 context_data = {
-                    'module': MODULE_NAME,
                     'form': form,
                 }
                 return render(request, template_name, context_data)
@@ -132,7 +124,6 @@ def new(request, template_name='plan/new.html'):
         form = NewPlanForm()
 
     context_data = {
-        'module': MODULE_NAME,
         'form': form,
     }
     return render(request, template_name, context_data)
@@ -218,7 +209,6 @@ def all(request, template_name='plan/all.html'):
         query_url_page_type = remove_from_request_path(query_url_page_type, 'page')
 
     context_data = {
-        'module': MODULE_NAME,
         'test_plans': tps,
         'query_result': query_result,
         'search_plan_form': search_form,
@@ -304,8 +294,6 @@ def calculate_stats_for_testplans(plans):
 @require_GET
 def ajax_search(request, template_name='plan/common/json_plans.txt'):
     '''Display all testplans'''
-    # Define the default sub module
-
     # If it's not a search the page will be blank
     tps = TestPlan.objects.none()
     # if it's a search request the request will be full
@@ -382,7 +370,6 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
     tp.review_case = tp.case.exclude(case_status__name=confirm_status_name)
 
     context_data = {
-        'module': MODULE_NAME,
         'test_plan': tp,
     }
     return render(request, template_name, context_data)
@@ -414,7 +401,6 @@ def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
                          'priority__value', )
 
         context_data = {
-            'module': MODULE_NAME,
             'plan_id': plan_id,
             'plan': tp,
             'test_runs': testruns.iterator(),
@@ -482,7 +468,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 
                 # Generate the form
                 context_data = {
-                    'module': MODULE_NAME,
                     'form': form,
                     'test_plan': tp,
                 }
@@ -557,7 +542,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
         form.populate(product_id=tp.product_id)
 
     context_data = {
-        'module': MODULE_NAME,
         'test_plan': tp,
         'form': form,
     }
@@ -682,7 +666,6 @@ def clone(request, template_name='plan/clone.html'):
             })
 
     context_data = {
-        'module': MODULE_NAME,
         'testplans': tps,
         'clone_form': clone_form,
     }
@@ -694,7 +677,6 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 
     tp = get_object_or_404(TestPlan, plan_id=plan_id)
     context_data = {
-        'module': MODULE_NAME,
         'test_plan': tp,
         'limit': settings.FILE_UPLOAD_MAX_SIZE,
     }
@@ -713,7 +695,6 @@ def text_history(request, plan_id, template_name='plan/history.html'):
                                                    'author__email')
     selected_plan_text_version = int(request.GET.get('plan_text_version', 0))
     context_data = {
-        'module': MODULE_NAME,
         'testplan': tp,
         'test_plan_texts': tptxts,
         'select_plan_text_version': selected_plan_text_version,
@@ -778,7 +759,6 @@ class LinkCasesSearchView(View):
         })
         quick_form = QuickSearchCaseForm()
         return render(self.request, self.template_name, {
-            'module': MODULE_NAME,
             'search_form': normal_form,
             'quick_form': quick_form,
             'test_plan': plan,
@@ -809,7 +789,6 @@ class LinkCasesSearchView(View):
                 case_id__in=plan.case.values_list('case_id', flat=True))
 
         context = {
-            'module': MODULE_NAME,
             'test_plan': plan,
             'test_cases': cases,
             'search_form': normal_form,

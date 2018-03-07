@@ -25,9 +25,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 
 {% block contents %}
 <div id="content">
-	<div id="tcms_values" class="hidden">
-		<input id="value_module" type="hidden" name="module" value="{{ module }}" />
-	</div>
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "plans-all" %}">...</a>
