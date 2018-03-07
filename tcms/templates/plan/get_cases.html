@@ -1,8 +1,6 @@
 {% load static %}
-{% load ifin %}
 {% load testcase_tags %}
 <form id="js-cases-nav-form" action="{% url "testcases-all" %}" method="get">
-	<input type="hidden" name="type" value="case" />
 	<input type="hidden" name="case_sort_by" value="{{ REQUEST_CONTENTS.case_sort_by }}" />
 	<input type="hidden" name="plan" value="{{ REQUEST_CONTENTS.from_plan }}" />
 	<input type="hidden" name="from_plan" value="{{ REQUEST_CONTENTS.from_plan }}" />
@@ -87,12 +85,11 @@
 				{% endif %}
 			</ul>
 			<span class="reorder_case">
-				<a class="btn_filter filtercase" title="Click to toggle filter options">Toggle filter options</a>
+				<a class="btn_filter filtercase" title="Click to show filter options">Show filter options</a>
 				{% if perms.testcases.change_testcase %}
 				<a class="btn_sort sortlink" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes">Re-order cases</a>
 				{% endif %}
 			</span>
-			
 		</div>
 		<div class="mixbar fixed">
 			<div class="tit" style="width: 50px; float: left; height: 100%; margin: 0px; text-align: center;">Tags:</div>
@@ -170,7 +167,7 @@
 			</th>
 			<th align="left" width="80px" style="display:none">Text version</th>
 			<th align="left" width="40px">
-				<a class="sort_by_sortkey js-case-field" title="Sort by sortkey" href="#testcases" data-param="sortkey">
+				<a class="js-case-field" title="Sort by sortkey" href="#testcases" data-param="sortkey">
 					Sort
 				</a>
 			</th>
@@ -181,15 +178,8 @@
 		{% include 'plan/cases_rows.html' %}
 	</tbody>
 </table>
-<div id="img_loading_testcases" class="ajax_loading" style="display:none"></div>
+<div class="ajax_loading" style="display:none"></div>
 <div class="cases-pagination show-more-cases">
-	{% comment %}
-	There is a fixed size of page, 20 cases per page by default. After cases is
-	loaded for the first time, Load More will load cases from the second page,
-	and then the page index will be change to next page.
-
-	data-page-index records the next page index to load.
-	{% endcomment %}
 	<a href="javascript:void(0)" class="load-more js-load-more" data-page-index="2" data-criterias="{{ search_criterias }}">Show more</a>
 	<span class="js-loading-progress">
 		(<span class="js-remaining-cases-count" data-cases-count="{{ total_cases_count|default:"0" }}">0</span> cases left)

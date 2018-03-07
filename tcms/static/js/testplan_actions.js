@@ -2036,30 +2036,23 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
         jQ(this).hide().next().show();
       });
 
-      var type = '';
-      if (typeof parameters.template_type === 'string') {
-        type = (parameters.template_type === 'case') ? '-' : '-review-';
-      } else {
-        type = (parameters.template_type[0] === 'case') ? '-' : '-review-';
-      }
-      var casesSection = (type === '-') ? jQ('#testcases')[0] : jQ('#reviewcases')[0];
-      var casesTable = jQ(casesSection).find('.js-cases-list')[0];
-      var navForm = jQ('#js' + type + 'cases-nav-form')[0];
+      var casesTable = jQ(container).find('.js-cases-list')[0];
+      var navForm = jQ('#js-cases-nav-form')[0];
 
-      jQ('#js' + type + 'case-menu, #js' + type + 'new-case').bind('click', function() {
+      jQ('#js-case-menu, #js-new-case').bind('click', function() {
         var params = jQ(this).data('params');
         window.location.href = params[0] + '?from_plan=' + params[1];
       });
-      jQ('#js' + type + 'add-case-to-plan').bind('click', function() {
+      jQ('#js-add-case-to-plan').bind('click', function() {
         window.location.href = jQ(this).data('param');
       });
-      jQ('#js' + type + 'export-case').bind('click', function() {
+      jQ('#js-export-case').bind('click', function() {
         exportCase(jQ(this).data('param'), navForm, casesTable);
       });
-      jQ('#js' + type + 'print-case').bind('click', function() {
+      jQ('#js-print-case').bind('click', function() {
         printableCases(jQ(this).data('param'), navForm, casesTable);
       });
-      jQ('#js' + type + 'clone-case').bind('click', function() {
+      jQ('#js-clone-case').bind('click', function() {
         requestCloneFilteredCases({
           'url': jQ(this).data('param'),
           'form': navForm,
@@ -2067,10 +2060,10 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
           'requestMethod': 'get'
         });
       });
-      jQ('#js' + type + 'remove-case').bind('click', function() {
-        unlinkCasesFromPlan(casesSection, navForm, casesTable);
+      jQ('#js-remove-case').bind('click', function() {
+        unlinkCasesFromPlan(container, navForm, casesTable);
       });
-      jQ('#js' + type + 'new-run').bind('click', function() {
+      jQ('#js-new-run').bind('click', function() {
         writeNewRunFromFilteredCases({
           'url': jQ(this).data('param'),
           'form': navForm,
@@ -2078,7 +2071,7 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
           'requestMethod': 'post'
         });
       });
-      jQ('#js' + type + 'add-case-to-run').bind('click', function() {
+      jQ('#js-add-case-to-run').bind('click', function() {
         addFilteredCasesToRun({
           'url': jQ(this).data('param'),
           'form': navForm,
@@ -2086,20 +2079,19 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
           'requestMethod': 'get'
         });
       });
-      jQ('.js' + type + 'status-item').bind('click', function() {
+      jQ('.js-status-item').bind('click', function() {
         this.form.new_case_status_id.value = jQ(this).data('param');
         fireEvent(this.form.new_case_status_id, 'change');
       });
-      jQ('.js' + type + 'priority-item').bind('click', function() {
+      jQ('.js-priority-item').bind('click', function() {
         this.form.new_priority_id.value = jQ(this).data('param');
         fireEvent(this.form.new_priority_id, 'change');
       });
-      var $toggleAllCasesButton = (type === '-') ? jQ('#id_blind_all_link') : jQ('#review_id_blind_all_link');
-      $toggleAllCasesButton.find('.collapse-all').bind('click', function() {
+      jQ('#id_blind_all_link').find('.collapse-all').bind('click', function() {
         toggleAllCases(this);
       });
-      jQ(casesTable).find('.js' + type + 'case-field').bind('click', function() {
-        sortCase(casesSection, jQ(this).parents('thead').data('param'), jQ(this).data('param'));
+      jQ(casesTable).find('.js-case-field').bind('click', function() {
+        sortCase(container, jQ(this).parents('thead').data('param'), jQ(this).data('param'));
       });
     },
     'error': function (jqXHR, textStatus, errorThrown) {
