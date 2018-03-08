@@ -13,8 +13,7 @@ from django.test.client import Client
 from tcms.core.logs.models import TCMSLogModel
 from tcms.management.models import Product
 from tcms.management.models import Version
-from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCasePlan
+from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
 from tcms.testplans.models import EnvPlanMap
 from tcms.testplans.models import TestPlan
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
@@ -22,7 +21,7 @@ from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestCaseFactory, TestCaseTextFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestPlanTextFactory
 from tcms.tests.factories import PlanTypeFactory
@@ -122,6 +121,17 @@ class PlanTests(test.TestCase):
                                         author=cls.user,
                                         product=cls.product,
                                         type=cls.plan_type)
+        # add TestCases to plan with status CONFIRMED
+        for i in range(5):
+            case = TestCaseFactory(plan=[cls.test_plan],
+                                   case_status=TestCaseStatus.objects.get(name='CONFIRMED'))
+            TestCaseTextFactory(case=case)
+
+        # also add a few PROPOSED TestCases
+        for i in range(3):
+            case = TestCaseFactory(plan=[cls.test_plan])
+            TestCaseTextFactory(case=case)
+
         TestPlanTextFactory(plan=cls.test_plan)
 
         cls.plan_id = cls.test_plan.pk
@@ -174,19 +184,20 @@ class PlanTests(test.TestCase):
 
     def test_plan_printable(self):
         location = reverse('plans-printable')
-        response = self.c.post(location, {'plan': self.test_plan.pk})
+        response = self.c.post(location, {'plan': [self.test_plan.pk]})
         self.assertEqual(response.status_code, http.client.OK)
 
         self.assertContains(response, self.test_plan.name)
         self.assertContains(response, self.test_plan.latest_text().plan_text)
 
-        for case in self.test_plan.case.all():
+        confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
+        for case in self.test_plan.case.filter(case_status=confirmed):
             self.assertContains(response, case.summary)
             # factory sets all 4
-            self.assertContains(response, case.setup)
-            self.assertContains(response, case.action)
-            self.assertContains(response, case.effect)
-            self.assertContains(response, case.breakdown)
+            self.assertContains(response, case.latest_text().setup)
+            self.assertContains(response, case.latest_text().action)
+            self.assertContains(response, case.latest_text().effect)
+            self.assertContains(response, case.latest_text().breakdown)
 
     def test_plan_attachment(self):
         location = reverse('plan-attachment',

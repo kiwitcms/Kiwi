@@ -1013,26 +1013,30 @@ def get(request, case_id, template_name='case/get.html'):
     return render(request, template_name, context_data)
 
 
-# TODO: better to split this method for TestPlan and TestCase respectively.
-# NOTE: if you want to print cases according to case_status, you have to pass
-# printable_case_status in the REQUEST. Why to do this rather than using
-# case_status is that, Select All causes previous filter criteria is
-# passed via REQUEST, whereas case_status must exist. So, we have to find
-# a way to distinguish them for different purpose, respectively.
 @require_POST
 def printable(request, template_name='case/printable.html'):
-    """Create the printable copy for plan/case"""
+    """
+        Create the printable copy for plan/case.
+        Only CONFIRMED TestCases are printed when printing a TestPlan!
+    """
     # search only by case PK. Used when printing selected cases
-    case_filter = {'case__in': request.POST.getlist('case')}
-    # plan_pk is passed from the TestPlan.printable function
-    plan_pk = request.POST.get('plan', 0)
+    case_ids = request.POST.getlist('case')
+    case_filter = {'case__in': case_ids}
 
-    try:
-        test_plan = TestPlan.objects.get(pk=plan_pk)
-        # search cases from a TestPlan, used when printing entire plan
-        case_filter = {'case__plan': plan_pk}
-    except (ValueError, TestPlan.DoesNotExist):
-        test_plan = None
+    test_plan = None
+    # plan_pk is passed from the TestPlan.printable function
+    # but it doesn't pass IDs of individual cases to be printed
+    if not case_ids:
+        plan_pk = request.POST.get('plan', 0)
+        try:
+            test_plan = TestPlan.objects.get(pk=plan_pk)
+            # search cases from a TestPlan, used when printing entire plan
+            case_filter = {
+                'case__plan': plan_pk,
+                'case__case_status': TestCaseStatus.objects.get(name='CONFIRMED').pk,
+            }
+        except (ValueError, TestPlan.DoesNotExist):
+            test_plan = None
 
     tcs = create_dict_from_query(
         TestCaseText.objects.filter(**case_filter).values(
