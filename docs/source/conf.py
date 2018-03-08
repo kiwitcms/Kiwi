@@ -292,7 +292,7 @@ texinfo_documents = [
 epub_title = u'kiwi'
 epub_author = u'hlin,weizhou,cqi,qduanmu,MrSenko'
 epub_publisher = u'hlin,weizhou,cqi,qduanmu,MrSenko'
-epub_copyright = u'2013, Red Hat, Inc.; 2017, Mr. Senko, Ltd.'
+epub_copyright = u'2013, Red Hat, Inc.; 2017-2018, Kiwi TCMS project and its contributors'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'kiwi'
