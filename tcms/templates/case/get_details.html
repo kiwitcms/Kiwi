@@ -1,5 +1,4 @@
 {% load comments %}
-
 <td id="id_case_text_{{ forloop.counter }}" colspan="12">
 	<table class="case_detail">
 		<tr>
@@ -84,8 +83,13 @@
 						<br/>
 						{{ comment.comment|urlize|linebreaksbr }}
 					</li>
-					{% endfor %}
+				{% endfor %}
 				<ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="row">
+				{% include 'case/get_details_case_log.html' %}
 			</td>
 		</tr>
 	</table>
