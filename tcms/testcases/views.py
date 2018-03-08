@@ -736,6 +736,7 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
         if case is not None:
             data.update({
                 'test_case_text': case.latest_text(),
+                'logs': self.get_case_logs(case),
                 'components': case.component.only('name'),
                 'tags': case.tag.only('name'),
                 'case_comments': self.get_case_comments(case),
@@ -748,18 +749,6 @@ class TestCaseReviewPaneView(SimpleTestCaseView):
     '''Used in Reviewing Cases tab in test plan page'''
 
     template_name = 'case/get_details_review.html'
-
-    def get_context_data(self, **kwargs):
-        data = super(TestCaseReviewPaneView, self).get_context_data(**kwargs)
-        testcase = data['test_case']
-        if testcase is not None:
-            logs = self.get_case_logs(testcase)
-            comments = self.get_case_comments(testcase)
-            data.update({
-                'logs': logs,
-                'case_comments': comments,
-            })
-        return data
 
 
 class TestCaseCaseRunListPaneView(TemplateView):
