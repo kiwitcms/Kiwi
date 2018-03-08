@@ -721,6 +721,7 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
     # NOTES: what permission is proper for this request?
     def get(self, request, case_id):
         self.case_id = case_id
+        self.review_mode = request.GET.get('review_mode')
         return super(SimpleTestCaseView, self).get(request, case_id)
 
     def get_case(self):
@@ -735,6 +736,7 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
         data['test_case'] = case
         if case is not None:
             data.update({
+                'review_mode': self.review_mode,
                 'test_case_text': case.latest_text(),
                 'logs': self.get_case_logs(case),
                 'components': case.component.only('name'),

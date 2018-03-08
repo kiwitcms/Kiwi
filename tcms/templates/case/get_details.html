@@ -77,16 +77,48 @@
 				<ul class="comment ul-no-format">
 				{% for comment in case_comments %}
 					<li>
+						{% if review_mode and comment.user.pk == user.pk %}
+						<form action="{% url "comments-delete" %}" method="post" class="form_comment">
+							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
+							<input type="hidden" name="object_pk" value="{{ test_case.pk }}" />
+							<span class="strong">#{{ forloop.counter }}</span>
+							<span class="strong">{{ comment.user.email }}</span>
+							<span class="grey">{{ comment.submit_date }}</span>
+							<br/>
+							{{ comment.comment|urlize|linebreaksbr }}
+							<input class='commentdelete sprites' value='Delete Comment' type='submit' /> 
+						</form>
+						{% else %}
 						<span class="strong">#{{ forloop.counter }}</span>
 						<span class="strong">{{ comment.user.email }}</span>
 						<span class="grey">{{ comment.submit_date }}</span>
 						<br/>
 						{{ comment.comment|urlize|linebreaksbr }}
+						{% endif %}
 					</li>
 				{% endfor %}
 				<ul>
 			</td>
 		</tr>
+                {% if review_mode %}
+		<tr>
+			<td colspan="3" style='border:none;background:transparent'>
+				<form class="update_form" method="POST">
+					{% get_comment_form for test_case as comment_form %}
+					{{ comment_form.comment }}
+					{{ comment_form.content_type }}
+					{{ comment_form.object_pk }}
+					{{ comment_form.timestamp }}
+					{{ comment_form.security_hash }}
+					{{ comment_form.name }}
+					{{ comment_form.email }}
+					{{ comment_form.url }}
+					<br/>
+					<input type="submit" class="submit-post margin-top" value='Add Comment'>
+				</form>
+			</td>
+		</tr>
+                {% endif %}
 		<tr>
 			<td colspan="3" class="row">
 				{% include 'case/get_details_case_log.html' %}
