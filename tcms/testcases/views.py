@@ -745,12 +745,6 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
         return data
 
 
-class TestCaseReviewPaneView(SimpleTestCaseView):
-    '''Used in Reviewing Cases tab in test plan page'''
-
-    template_name = 'case/get_details_review.html'
-
-
 class TestCaseCaseRunListPaneView(TemplateView):
     '''Display case runs list when expand a plan from case page'''
 
