@@ -921,7 +921,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView,
         return data
 
 
-def get(request, case_id, template_name='case/get.html'):
+def get(request, case_id):
     """Get the case content"""
     # Get the case
     try:
@@ -979,19 +979,6 @@ def get(request, case_id, template_name='case/get.html'):
 
     # Get the case texts
     tc_text = tc.get_text_with_version(request.GET.get('case_text_version'))
-    # Switch the templates for different module
-    template_types = {
-        'case': 'case/get_details.html',
-        # 'review_case': 'case/get_details_review.html',
-        'case_run': 'case/get_details_case_run.html',
-        # 'case_run_list': 'case/get_case_runs_by_plan.html',
-        # 'case_case_run': 'case/get_details_case_case_run.html',
-        'execute_case_run': 'run/execute_case_run.html',
-    }
-
-    if request.GET.get('template_type'):
-        template_name = template_types.get(
-            request.GET['template_type'], 'case')
 
     grouped_case_bugs = tcr and group_case_bugs(tcr.case.get_bugs())
     # Render the page
@@ -1010,7 +997,7 @@ def get(request, case_id, template_name='case/get.html'):
         'test_case_run_status': TestCaseRunStatus.objects.all(),
         'bug_trackers': BugSystem.objects.all(),
     }
-    return render(request, template_name, context_data)
+    return render(request, 'case/get.html', context_data)
 
 
 @require_POST
