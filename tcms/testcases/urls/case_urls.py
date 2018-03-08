@@ -14,8 +14,6 @@ urlpatterns = [
     url(r'^(?P<case_id>\d+)/plan/$', views.plan, name='testcases-plan'),
     url(r'^(?P<case_id>\d+)/readonly-pane/$', views.SimpleTestCaseView.as_view(),
         name='case-readonly-pane'),
-    url(r'^(?P<case_id>\d+)/review-pane/$', views.TestCaseReviewPaneView.as_view(),
-        name='case-review-pane'),
     url(r'^(?P<case_id>\d+)/caserun-list-pane/$', views.TestCaseCaseRunListPaneView.as_view(),
         name='caserun-list-pane'),
     url(r'^(?P<case_id>\d+)/caserun-simple-pane/$', views.TestCaseSimpleCaseRunView.as_view(),

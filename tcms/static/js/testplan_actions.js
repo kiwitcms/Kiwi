@@ -1145,6 +1145,12 @@ function unlinkCasesFromPlan(container, form, table) {
 function toggleTestCasePane(options, callback) {
   var case_id = options.case_id;
   var casePaneContainer = options.casePaneContainer;
+  // defined if trying to expand a TestCase that is in review mode
+  // otherwise not set
+  var review_mode_param = '';
+  if (options.review_mode) {
+    review_mode_param = '?review_mode=1';
+  }
 
   // If any of these is invalid, just keep quiet and don't display anything.
   if (case_id === undefined || casePaneContainer === undefined) {
@@ -1154,7 +1160,7 @@ function toggleTestCasePane(options, callback) {
   casePaneContainer.toggle();
 
   if (casePaneContainer.find('.ajax_loading').length) {
-    jQ.get('/case/' + case_id + '/readonly-pane/', function(data) {
+    jQ.get('/case/' + case_id + '/readonly-pane/' + review_mode_param, function(data) {
       casePaneContainer.html(data);
       if (callback) {
         callback();
@@ -1162,30 +1168,6 @@ function toggleTestCasePane(options, callback) {
     }, 'html');
   }
 
-}
-
-// TODO: merge this function with above
-function toggleTestCaseReviewPane(options) {
-  var case_id = options.case_id;
-  var casePaneContainer = options.casePaneContainer;
-  var callback = options.callback;
-
-  // If any of these is invalid, just keep quiet and don't display anything.
-  if (case_id === undefined || casePaneContainer === undefined) {
-    return;
-  }
-
-  casePaneContainer.toggle();
-
-  if (casePaneContainer.find('.ajax_loading').length) {
-    jQ.get('/case/' + case_id + '/review-pane/', function(data) {
-      casePaneContainer.html(data);
-
-      if (typeof callback === 'function') {
-        callback();
-      }
-    }, 'html');
-  }
 }
 
 
@@ -1238,72 +1220,62 @@ function bindEventsOnLoadedCases(options) {
 
       if (template_type === 'case') {
         toggleTestCasePane({ 'case_id': case_id, 'casePaneContainer': jQ(content) });
-        toggleExpandArrow({ 'caseRowContainer': jQ(title), 'expandPaneContainer': jQ(content) });
-        return;
-      }
+      } else if (template_type === 'review_case') {
+          var review_case_content_callback = function(e) {
+            var comment_container_t = jQ('<div>')[0];
+            // Change status/comment callback
+            var cc_callback = function(e) {
+              e.stopPropagation();
+              e.preventDefault();
+              var params = Nitrate.Utils.formSerialize(this);
+              var refresh_case = function(t) {
+                var td = jQ('<td>', {colspan: 12});
+                var id = 'id_loading_' + params['object_pk'];
+                td.append(getAjaxLoading(id));
+                jQ(content).html(td);
+                fireEvent(btn, 'click');
+                fireEvent(btn, 'click');
+              }
+              submitComment(comment_container_t, params, refresh_case);
+            };
+            jQ(content).parent().find('.update_form').unbind('submit');
+            jQ(content).parent().find('.update_form').bind('submit', cc_callback);
 
-      // Review case content call back;
-      var review_case_content_callback = function(e) {
-        var comment_container_t = jQ('<div>')[0];
-        // Change status/comment callback
-        var cc_callback = function(e) {
-          e.stopPropagation();
-          e.preventDefault();
-          var params = Nitrate.Utils.formSerialize(this);
-          var refresh_case = function(t) {
-            var td = jQ('<td>', {colspan: 12});
-            var id = 'id_loading_' + params['object_pk'];
-            td.append(getAjaxLoading(id));
-            jQ(content).html(td);
-            fireEvent(btn, 'click');
-            fireEvent(btn, 'click');
-          }
-          submitComment(comment_container_t, params, refresh_case);
-        };
-        jQ(content).parent().find('.update_form').unbind('submit');
-        jQ(content).parent().find('.update_form').bind('submit', cc_callback);
+            // Observe the delete comment form
+            var rc_callback = function(e) {
+              e.stopPropagation();
+              e.preventDefault();
+              if (!window.confirm(default_messages.confirm.remove_comment)) {
+                return false;
+              }
+              var params = Nitrate.Utils.formSerialize(this);
+              var refresh_case = function(t) {
+                var returnobj = jQ.parseJSON(t.responseText);
+                if (returnobj.rc != 0) {
+                  window.alert(returnobj.response);
+                  return false;
+                }
 
-        // Observe the delete comment form
-        var rc_callback = function(e) {
-          e.stopPropagation();
-          e.preventDefault();
-          if (!window.confirm(default_messages.confirm.remove_comment)) {
-            return false;
-          }
-          var params = Nitrate.Utils.formSerialize(this);
-          var refresh_case = function(t) {
-            var returnobj = jQ.parseJSON(t.responseText);
-            if (returnobj.rc != 0) {
-              window.alert(returnobj.response);
-              return false;
-            }
-
-            var td = jQ('<td>', {colspan: 12});
-            var id = 'id_loading_' + params['object_pk'];
-            td.append(getAjaxLoading(id));
-            jQ(content).html(td);
-            fireEvent(btn, 'click');
-            fireEvent(btn, 'click');
+                var td = jQ('<td>', {colspan: 12});
+                var id = 'id_loading_' + params['object_pk'];
+                td.append(getAjaxLoading(id));
+                jQ(content).html(td);
+                fireEvent(btn, 'click');
+                fireEvent(btn, 'click');
+              };
+              removeComment(this, refresh_case);
+            };
+            jQ(content).parent().find('.form_comment').unbind('submit');
+            jQ(content).parent().find('.form_comment').bind('submit', rc_callback);
           };
-          removeComment(this, refresh_case);
-        };
-        jQ(content).parent().find('.form_comment').unbind('submit');
-        jQ(content).parent().find('.form_comment').bind('submit', rc_callback);
-      };
 
-      switch(template_type) {
-        case 'review_case':
-          var case_content_callback = review_case_content_callback;
-          break;
-        default:
-          var case_content_callback = function(e) {};
-      }
+          toggleTestCasePane({
+            'case_id': case_id,
+            'casePaneContainer': jQ(content),
+            'review_mode': 1
+          }, review_case_content_callback);
+      } // end of review_case block
 
-      toggleTestCaseReviewPane({
-        'case_id': case_id,
-        'casePaneContainer': jQ(content),
-        'callback': case_content_callback
-      });
       toggleExpandArrow({ 'caseRowContainer': jQ(title), 'expandPaneContainer': jQ(content) });
     });
 
