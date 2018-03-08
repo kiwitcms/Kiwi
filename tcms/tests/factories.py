@@ -332,10 +332,10 @@ class TestCaseTextFactory(DjangoModelFactory):
     effect = 'effect'
     setup = 'setup'
     breakdown = 'breakdown'
-    action_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.action))
-    effect_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.effect))
-    setup_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.setup))
-    breakdown_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.breakdown))
+    action_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.action.encode('utf-8')))
+    effect_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.effect.encode('utf-8')))
+    setup_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.setup.encode('utf-8')))
+    breakdown_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.breakdown.encode('utf-8')))
 
 
 class BugFactory(DjangoModelFactory):
