@@ -91,96 +91,115 @@ def new(request, template_name='run/new.html'):
                                  'priority__value',
                                  'case_status__name').order_by('case_id')
 
-    form = NewRunForm(request.POST)
-    if request.POST.get('product'):
-        form.populate(product_id=request.POST['product'])
+    if request.POST.get('POSTING_TO_CREATE'):
+        form = NewRunForm(request.POST)
+        if request.POST.get('product'):
+            form.populate(product_id=request.POST['product'])
+        else:
+            form.populate(product_id=tp.product_id)
+
+        if form.is_valid():
+            # Process the data in form.cleaned_data
+            default_tester = form.cleaned_data['default_tester']
+
+            tr = TestRun.objects.create(
+                product_version=form.cleaned_data['product_version'],
+                plan_text_version=tp.latest_text() and tp.latest_text().plan_text_version or 0,
+                stop_date=None,
+                summary=form.cleaned_data.get('summary'),
+                notes=form.cleaned_data.get('notes'),
+                plan=tp,
+                build=form.cleaned_data['build'],
+                manager=form.cleaned_data['manager'],
+                default_tester=default_tester,
+                estimated_time=form.cleaned_data['estimated_time'],
+                auto_update_run_status=form.cleaned_data['auto_update_run_status']
+            )
+
+            keep_status = form.cleaned_data['keep_status']
+            keep_assign = form.cleaned_data['keep_assignee']
+
+            try:
+                assignee_tester = User.objects.get(username=default_tester)
+            except ObjectDoesNotExist:
+                assignee_tester = None
+
+            loop = 1
+
+            # not reserve assignee and status, assignee will default set to
+            # default_tester
+            if not keep_assign and not keep_status:
+                for case in form.cleaned_data['case']:
+                    try:
+                        tcp = TestCasePlan.objects.get(plan=tp, case=case)
+                        sortkey = tcp.sortkey
+                    except ObjectDoesNotExist:
+                        sortkey = loop * 10
+
+                    tr.add_case_run(case=case,
+                                    sortkey=sortkey,
+                                    assignee=assignee_tester)
+                    loop += 1
+
+            # Add case to the run
+            for tcr in tcrs:
+                if (keep_status and keep_assign):
+                    tr.add_case_run(case=tcr.case,
+                                    assignee=tcr.assignee,
+                                    case_run_status=tcr.case_run_status,
+                                    sortkey=tcr.sortkey or loop * 10)
+                    loop += 1
+                elif keep_status and not keep_assign:
+                    tr.add_case_run(case=tcr.case,
+                                    case_run_status=tcr.case_run_status,
+                                    sortkey=tcr.sortkey or loop * 10)
+                    loop += 1
+                elif keep_assign and not keep_status:
+                    tr.add_case_run(case=tcr.case,
+                                    assignee=tcr.assignee,
+                                    sortkey=tcr.sortkey or loop * 10)
+                    loop += 1
+
+            # Write the values into tcms_env_run_value_map table
+            env_property_id_set = set(request.POST.getlist("env_property_id"))
+            if env_property_id_set:
+                args = list()
+                for property_id in env_property_id_set:
+                    checkbox_name = 'select_property_id_%s' % property_id
+                    select_name = 'select_property_value_%s' % property_id
+                    checked = request.POST.getlist(checkbox_name)
+                    if checked:
+                        env_values = request.POST.getlist(select_name)
+                        if not env_values:
+                            continue
+
+                        if len(env_values) != len(checked):
+                            raise ValueError('Invalid number of env values.')
+
+                        for value_id in env_values:
+                            args.append(EnvRunValueMap(run=tr, value_id=value_id))
+
+                EnvRunValueMap.objects.bulk_create(args)
+
+            return HttpResponseRedirect(
+                reverse('testruns-get', args=[tr.run_id, ])
+            )
+
     else:
+        estimated_time = reduce(lambda x, y: x + y,
+                                (tc.estimated_time for tc in tcs_values))
+        form = NewRunForm(initial={
+            'summary': 'Test run for %s on %s' % (
+                tp.name,
+                tp.env_group.all() and tp.env_group.all()[0] or 'Unknown environment'
+            ),
+            'estimated_time': format_timedelta(estimated_time),
+            'manager': tp.author.email,
+            'default_tester': request.user.email,
+            'product': tp.product_id,
+            'product_version': tp.product_version_id,
+        })
         form.populate(product_id=tp.product_id)
-
-    if form.is_valid():
-        # Process the data in form.cleaned_data
-        default_tester = form.cleaned_data['default_tester']
-
-        tr = TestRun.objects.create(
-            product_version=form.cleaned_data['product_version'],
-            plan_text_version=tp.latest_text() and tp.latest_text().plan_text_version or 0,
-            stop_date=None,
-            summary=form.cleaned_data.get('summary'),
-            notes=form.cleaned_data.get('notes'),
-            plan=tp,
-            build=form.cleaned_data['build'],
-            manager=form.cleaned_data['manager'],
-            default_tester=default_tester,
-            estimated_time=form.cleaned_data['estimated_time'],
-            auto_update_run_status=form.cleaned_data['auto_update_run_status']
-        )
-
-        keep_status = form.cleaned_data['keep_status']
-        keep_assign = form.cleaned_data['keep_assignee']
-
-        try:
-            assignee_tester = User.objects.get(username=default_tester)
-        except ObjectDoesNotExist:
-            assignee_tester = None
-
-        loop = 1
-
-        # not reserve assignee and status, assignee will default set to
-        # default_tester
-        if not keep_assign and not keep_status:
-            for case in form.cleaned_data['case']:
-                try:
-                    tcp = TestCasePlan.objects.get(plan=tp, case=case)
-                    sortkey = tcp.sortkey
-                except ObjectDoesNotExist:
-                    sortkey = loop * 10
-
-                tr.add_case_run(case=case,
-                                sortkey=sortkey,
-                                assignee=assignee_tester)
-                loop += 1
-
-        # Add case to the run
-        for tcr in tcrs:
-            if (keep_status and keep_assign):
-                tr.add_case_run(case=tcr.case,
-                                assignee=tcr.assignee,
-                                case_run_status=tcr.case_run_status,
-                                sortkey=tcr.sortkey or loop * 10)
-                loop += 1
-            elif keep_status and not keep_assign:
-                tr.add_case_run(case=tcr.case,
-                                case_run_status=tcr.case_run_status,
-                                sortkey=tcr.sortkey or loop * 10)
-                loop += 1
-            elif keep_assign and not keep_status:
-                tr.add_case_run(case=tcr.case,
-                                assignee=tcr.assignee,
-                                sortkey=tcr.sortkey or loop * 10)
-                loop += 1
-
-        # Write the values into tcms_env_run_value_map table
-        env_property_id_set = set(request.POST.getlist("env_property_id"))
-        if env_property_id_set:
-            args = list()
-            for property_id in env_property_id_set:
-                checkbox_name = 'select_property_id_%s' % property_id
-                select_name = 'select_property_value_%s' % property_id
-                checked = request.POST.getlist(checkbox_name)
-                if checked:
-                    env_values = request.POST.getlist(select_name)
-                    if not env_values:
-                        continue
-
-                    if len(env_values) != len(checked):
-                        raise ValueError('Invalid number of env values.')
-
-                    for value_id in env_values:
-                        args.append(EnvRunValueMap(run=tr, value_id=value_id))
-
-            EnvRunValueMap.objects.bulk_create(args)
-
-        return HttpResponseRedirect(reverse('testruns-get', args=[tr.run_id]))
 
     # FIXME: pagination cases within Create New Run page.
     context_data = {
