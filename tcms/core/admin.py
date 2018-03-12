@@ -25,7 +25,8 @@ class KiwiSiteAdmin(SiteAdmin):
 
 
 class KiwiUserAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ('is_superuser', )
+    list_display = UserAdmin.list_display + ('is_superuser', 'date_joined')
+    ordering = ['-pk']  # same as -date_joined
 
 
 # we don't want comments to be accessible via the admin interface
