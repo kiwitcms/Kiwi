@@ -31,7 +31,6 @@ import tcms_api.config as config
 
 from tcms_api.config import log
 from tcms_api.base import TCMS, TCMSNone, _getter, _idify
-from tcms_api.utils import color
 from tcms_api.xmlrpc import TCMSError
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -608,9 +607,6 @@ class TestCaseRunStatus(TCMS):
     _statuses = ['PAD', 'IDLE', 'RUNNING', 'PAUSED', 'PASSED', 'FAILED',
                  'BLOCKED', 'ERROR', 'WAIVED']
 
-    _colors = [None, "blue", "green", "yellow", "lightgreen", "red",
-               "lightred", "magenta", "lightcyan"]
-
     def __init__(self, status):
         """
         Takes numeric status id (1-8) or status name which is one of:
@@ -637,21 +633,14 @@ class TestCaseRunStatus(TCMS):
         return self._id
 
     @property
-    def _name(self):
-        """ Status name, plain without coloring """
-        return self._statuses[self.id]
-
-    @property
     def name(self):
         """ Human readable status name """
-        return color(self._name, color=self._colors[self.id],
-                     enabled=config.Coloring().enabled())
+        return self._statuses[self.id]
 
     @property
     def shortname(self):
         """ Short same-width status string (4 chars) """
-        return color(self._name[0:4], color=self._colors[self.id],
-                     enabled=config.Coloring().enabled())
+        return self.name[0:4]
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

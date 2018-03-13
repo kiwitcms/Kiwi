@@ -4,17 +4,16 @@ Basic Example
 
 Simple example showing the main features of the tcms_api module.
 Covered are testplan, testrun, testcase creation, logging, setting the
-log level, cache level and color mode, test case linking, attributes
+log level, cache level, test case linking, attributes
 adjustments and updating the changes to the server.
 """
 
 import tcms_api
 from tcms_api import info, log
 
-# Set log level, cache level and color mode
+# Set log level, cache level
 tcms_api.set_log_level(tcms_api.LOG_DEBUG)
 tcms_api.set_cache_level(tcms_api.CACHE_OBJECTS)
-tcms_api.set_color_mode(tcms_api.COLOR_AUTO)
 
 # Initialize an existing test plan
 info("Initializing an existing test plan")

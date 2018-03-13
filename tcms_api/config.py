@@ -4,6 +4,8 @@
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
+#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #   This library is free software; you can redistribute it and/or
@@ -19,7 +21,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Configuration, logging, coloring & caching
+Configuration, logging & caching
 
 To be able to contact the TCMS server a minimal user configuration
 file ~/.tcms.conf has to be provided in the user home directory:
@@ -71,11 +73,9 @@ from configparser import ConfigParser
 
 import datetime
 import logging
-import sys
 import os
 
 from tcms_api.xmlrpc import TCMSError
-from tcms_api.utils import color
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Constants
@@ -89,11 +89,6 @@ LOG_DEBUG = logging.DEBUG
 LOG_CACHE = 7
 LOG_DATA = 4
 LOG_ALL = 1
-
-# Coloring
-COLOR_ON = 1
-COLOR_OFF = 0
-COLOR_AUTO = 2
 
 # Caching
 NEVER_CACHE = datetime.timedelta(seconds=0)
@@ -112,15 +107,6 @@ _MAX_ID = 1000000000
 class Logging(object):
     """ Logging Configuration """
 
-    # Color mapping
-    COLORS = {
-        LOG_ERROR: "red",
-        LOG_WARN: "yellow",
-        LOG_INFO: "blue",
-        LOG_DEBUG: "green",
-        LOG_CACHE: "cyan",
-        LOG_DATA: "magenta",
-    }
     # Environment variable mapping
     MAPPING = {
         0: LOG_WARN,
@@ -136,30 +122,6 @@ class Logging(object):
     # Default log level is WARN
     _level = LOG_WARN
 
-    class ColoredFormatter(logging.Formatter):
-        """ Custom color formatter for logging """
-        def format(self, record):
-            # Handle custom log level names
-            if record.levelno == LOG_ALL:
-                levelname = "ALL"
-            elif record.levelno == LOG_DATA:
-                levelname = "DATA"
-            elif record.levelno == LOG_CACHE:
-                levelname = "CACHE"
-            else:
-                levelname = record.levelname
-            # Map log level to appropriate color
-            try:
-                colour = Logging.COLORS[record.levelno]
-            except KeyError:
-                colour = "black"
-            # Color the log level, use brackets when coloring off
-            if Coloring().enabled():
-                level = color(" " + levelname + " ", "lightwhite", colour)
-            else:
-                level = "[{0}]".format(levelname)
-            return "{0} {1}".format(level, record.getMessage())
-
     @staticmethod
     def _create_logger():
         """ Create logger """
@@ -167,7 +129,7 @@ class Logging(object):
         logger = logging.getLogger('tcms')
         handler = logging.StreamHandler()
         handler.setLevel(logging.NOTSET)
-        handler.setFormatter(Logging.ColoredFormatter())
+        handler.setFormatter(logging.Formatter())
         logger.addHandler(handler)
         # Save log levels in the logger itself (backward compatibility)
         for level in Logging.LEVELS:
@@ -293,86 +255,6 @@ class Config(object):
             raise TCMSError("No url found in the config file")
         self._parsed = True
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Color Configuration
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class Coloring(object):
-    """ Coloring configuration """
-
-    # Default color mode is auto-detected from the terminal presence
-    _mode = None
-    MODES = ["COLOR_OFF", "COLOR_ON", "COLOR_AUTO"]
-    # We need only a single config instance
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        """ Make sure we create a single instance only """
-        if not cls._instance:
-            cls._instance = super(Coloring, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
-
-    def __init__(self, mode=None):
-        """ Initialize the coloring mode """
-        # Nothing to do if already initialized
-        if self._mode is not None:
-            return
-        # Set the mode
-        self.set(mode)
-
-    def set(self, mode=None):
-        """ Set the coloring mode """
-        # Detect from the environment if no mode given (only once)
-        if mode is None:
-            # Nothing to do if already detected
-            if self._mode is not None:
-                return
-            # Detect from the environment variable COLOR
-            try:
-                mode = int(os.environ["COLOR"])
-            except Exception:
-                mode = COLOR_AUTO
-        elif mode < 0 or mode > 2:
-            raise TCMSError("Invalid color mode '{0}'".format(mode))
-        self._mode = mode
-        log.debug("Coloring {0} ({1})".format(
-            "enabled" if self.enabled() else "disabled",
-            self.MODES[self._mode]))
-
-    def get(self):
-        """ Get the current color mode """
-        return self._mode
-
-    def enabled(self):
-        """ True if coloring is currently enabled """
-        # In auto-detection mode color enabled when terminal attached
-        if self._mode == COLOR_AUTO:
-            return sys.stdout.isatty()
-        return self._mode == COLOR_ON
-
-
-def set_color_mode(mode):
-    """
-    Set the coloring mode
-
-    If enabled, some objects (like case run TestCaseRunStatus) are printed in color
-    to easily spot failures, errors and so on. By default the feature is
-    enabled when script is attached to a terminal. Possible values are:
-
-        COLOR=0 ... COLOR_OFF .... coloring disabled
-        COLOR=1 ... COLOR_ON ..... coloring enabled
-        COLOR=2 ... COLOR_AUTO ... if terminal attached (default)
-
-    Environment variable COLOR can be used to set up the coloring to the
-    desired mode without modifying code.
-    """
-    Coloring().set(mode)
-
-
-def get_color_mode():
-    """ Get the current coloring mode """
-    return Coloring().get()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Caching Configuration

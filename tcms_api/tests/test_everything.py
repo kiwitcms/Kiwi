@@ -75,14 +75,6 @@ class UtilsTests(unittest.TestCase):
             self.assertEqual(get_cache_level(), level)
         Caching().set(original)
 
-    def test_get_set_color_mode(self):
-        """ Get & set the color mode """
-        original = Coloring().get()
-        for mode in [COLOR_ON, COLOR_OFF, COLOR_AUTO]:
-            set_color_mode(mode)
-            self.assertEqual(Coloring().get(), mode)
-            self.assertEqual(get_color_mode(), mode)
-        Coloring().set(original)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Build
