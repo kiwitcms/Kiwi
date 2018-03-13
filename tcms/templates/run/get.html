@@ -1,5 +1,4 @@
 {% extends "tcms_base.html" %}
-{% load extra_filters %}
 {% load static %}
 
 {% block subtitle %}{{ test_run.summary }}{% endblock %}
@@ -94,7 +93,7 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Estimated Time&nbsp;:</div>
 				<div class="name">
-				{{ test_run.estimated_time|timedelta2string }}
+				{{ test_run.estimated_time }}
 				</div>
 			</div>
 			<div class="listinfo">

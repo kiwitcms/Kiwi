@@ -150,7 +150,7 @@ class TestCreateNewRun(BasePlanCase):
             'errata_id': '',
             'manager': self.tester.email,
             'default_tester': self.tester.email,
-            'estimated_time': '0m',
+            'estimated_time': '0',
             'notes': 'Clone new run',
             'case': [self.case_1.pk, self.case_2.pk],
             'do': 'clone_run',
@@ -261,7 +261,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'errata_id': '',
             'manager': self.test_run.manager.email,
             'default_tester': self.test_run.default_tester.email,
-            'estimated_time': '0m',
+            'estimated_time': '0',
             'notes': '',
             'case': [self.case_run_1.case.pk, self.case_run_2.case.pk],
             'case_run_id': [self.case_run_1.pk, self.case_run_2.pk],
@@ -1053,7 +1053,7 @@ class TestEditRun(BaseCaseRun):
             'errata_id': '',
             'manager': self.test_run.manager.email,
             'default_tester': self.intern.email,
-            'estimated_time': '3m',
+            'estimated_time': '00:03:00',
             'notes': 'easytest',
         }
 

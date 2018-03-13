@@ -80,8 +80,9 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 				<tr>
 					<td valign="top" valign="top"><label class="strong" for="id_estimated_time">Estimated Time</label></td>
 					<td>
-						<div id="estimated_time" data-time="{{ run_estimated_time|timedelta2seconds }}">
+						<div id="estimated_time" data-time="{{ run_estimated_time }}">
 							{{ form.estimated_time }}
+                                                        <span class="grey">(format D hh:mm:ss )</span>
 							<div class="errors">{{ form.estimated_time.errors }}</div>
 						</div> 
 					</td>

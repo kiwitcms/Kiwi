@@ -667,7 +667,7 @@ def edit(request, run_id, template_name='run/edit.html'):
             'build': tr.build_id,
             'notes': tr.notes,
             'finished': tr.stop_date,
-            'estimated_time': tr.clear_estimated_time,
+            'estimated_time': tr.estimated_time,
             'auto_update_run_status': tr.auto_update_run_status,
         })
         form.populate(product_id=tr.build.product_id)
