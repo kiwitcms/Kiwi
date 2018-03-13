@@ -4,10 +4,8 @@ from django import forms
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils import string_to_list
-from tcms.core.utils.timedelta2int import timedelta2int
 
 
 class UserField(forms.CharField):
@@ -44,31 +42,6 @@ class UserField(forms.CharField):
                         (Q(email=value) | Q(username=value)))
                 except User.DoesNotExist:
                     raise ValidationError('Unknown user: "%s"' % value)
-
-
-class DurationField(forms.CharField):
-    """
-    Customizing forms CharFiled validation.
-    estimated_time using integer mix with d(ay), h(our), m(inute)
-    """
-    default_error_messages = {
-        'invalid': _(u'Enter a valid estimated time. e.g. 12h45m'),
-    }
-
-    def __init__(self, *args, **kwargs):
-        super(DurationField, self).__init__(*args, **kwargs)
-
-    def validate(self, value):
-        super(DurationField, self).validate(value)
-        try:
-            from tcms.xmlrpc.utils import pre_process_estimated_time
-            pre_process_estimated_time(value)
-        except ValueError:
-            raise forms.ValidationError(self.error_messages['invalid'])
-
-    def clean(self, value):
-        value = super(DurationField, self).clean(value)
-        return timedelta2int(value)
 
 
 class MultipleEmailField(forms.EmailField):

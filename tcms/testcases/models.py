@@ -13,7 +13,6 @@ import vinaigrette
 
 from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import TCMSContentTypeBaseModel
-from tcms.core.models.fields import DurationField
 from tcms.core.utils.checksum import checksum
 from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.issuetracker.types import IssueTrackerType
@@ -128,7 +127,7 @@ class TestCase(TCMSActionModel):
     summary = models.CharField(max_length=255)
     requirement = models.CharField(max_length=255, blank=True, null=True)
     alias = models.CharField(max_length=255, blank=True)
-    estimated_time = DurationField(db_column='estimated_time', default=0)
+    estimated_time = models.IntegerField(db_column='estimated_time', default=0)  # DurationField
     notes = models.TextField(blank=True, null=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)

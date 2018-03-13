@@ -2,7 +2,6 @@
 from django.db import migrations, models
 import tcms.core.models.base
 from django.conf import settings
-import tcms.core.models.fields
 
 
 class Migration(migrations.Migration):
@@ -72,7 +71,7 @@ class Migration(migrations.Migration):
                 ('stop_date', models.DateTimeField(db_index=True, null=True, blank=True)),
                 ('summary', models.TextField()),
                 ('notes', models.TextField(blank=True)),
-                ('estimated_time', tcms.core.models.fields.DurationField(default=0, max_length=11)),
+                ('estimated_time', models.IntegerField(default=0)),
                 ('environment_id', models.IntegerField(default=0)),
                 ('auto_update_run_status', models.BooleanField(default=False)),
                 ('build', models.ForeignKey(related_name='build_run', to='management.TestBuild',

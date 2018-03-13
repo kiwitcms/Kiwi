@@ -3,7 +3,7 @@ from django import forms
 
 from tinymce.widgets import TinyMCE
 
-from tcms.core.forms.fields import UserField, DurationField, StripURLField
+from tcms.core.forms.fields import UserField, StripURLField
 from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 from tcms.testplans.models import TestPlan
@@ -105,7 +105,7 @@ class BaseCaseForm(forms.Form):
         widget=forms.Textarea,
         required=False
     )
-    estimated_time = DurationField(label='Estimated Time', initial='0m', required=False)
+    estimated_time = forms.DurationField(label='Estimated Time', initial='0', required=False)
     setup = forms.CharField(label="Setup", widget=TinyMCE(), required=False)
     action = forms.CharField(label="Actions", widget=TinyMCE(), required=False)
     effect = forms.CharField(label="Expect results", widget=TinyMCE(), required=False)
@@ -219,7 +219,7 @@ class CaseNotifyForm(forms.Form):
 
 
 class XMLRPCBaseCaseForm(BaseCaseForm):
-    estimated_time = DurationField(required=False)
+    estimated_time = forms.DurationField(required=False)
     is_automated = forms.ChoiceField(
         choices=FULL_AUTOMATED_CHOICES,
         widget=forms.CheckboxSelectMultiple(),

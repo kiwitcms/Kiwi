@@ -5,7 +5,6 @@ from django.forms import EmailField, ValidationError
 from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import string_to_list, form_errors_to_list
-from tcms.core.utils.timedelta2int import timedelta2int
 from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
@@ -315,9 +314,7 @@ def filter(query):
         :rtype: list(dict)
     """
     if query.get('estimated_time'):
-        query['estimated_time'] = timedelta2int(
-            pre_process_estimated_time(query.get('estimated_time'))
-        )
+        query['estimated_time'] = pre_process_estimated_time(query.get('estimated_time'))
 
     results = []
     for case in TestCase.objects.filter(**query):

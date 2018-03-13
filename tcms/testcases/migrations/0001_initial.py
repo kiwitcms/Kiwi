@@ -3,7 +3,6 @@ from django.conf import settings
 from django.db import migrations, models
 
 import tcms.core.models.base
-import tcms.core.models.fields
 
 
 class Migration(migrations.Migration):
@@ -46,7 +45,7 @@ class Migration(migrations.Migration):
                 ('requirement', models.CharField(max_length=255, blank=True)),
                 ('alias', models.CharField(max_length=255, blank=True)),
                 ('estimated_time',
-                 tcms.core.models.fields.DurationField(default=0, db_column='estimated_time')),
+                 models.IntegerField(default=0, db_column='estimated_time')),
                 ('notes', models.TextField(blank=True)),
             ],
             options={
