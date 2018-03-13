@@ -4,6 +4,8 @@
 #   Copyright (c) 2012 Red Hat, Inc. All rights reserved.
 #   Author: Petr Splichal <psplicha@redhat.com>
 #
+#   Copyright (c) 2018 Kiwi TCMS project. All rights reserved.
+#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
 #   This library is free software; you can redistribute it and/or
@@ -89,31 +91,6 @@ def listed(items, singular=None, plural=None, max=None, quote=""):
 def unlisted(text):
     """ Convert human readable list into python list """
     return re.split(r"\s*,\s*|\s+and\s+|\s+", text)
-
-
-def color(text, color=None, background=None, light=False, enabled=True):
-    """
-    Return text in desired color if coloring enabled
-
-    Available colors: black red green yellow blue magenta cyan white.
-    Alternatively color can be prefixed with "light", e.g. lightgreen.
-    """
-    colors = {"black": 30, "red": 31, "green": 32, "yellow": 33,
-              "blue": 34, "magenta": 35, "cyan": 36, "white": 37}
-    # Nothing do do if coloring disabled
-    if not enabled:
-        return text
-    # Prepare colors (strip 'light' if present in color)
-    if color and color.startswith("light"):
-        light = True
-        color = color[5:]
-    color = color and ";{0}".format(colors[color]) or ""
-    background = background and ";{0}".format(colors[background] + 10) or ""
-    light = light and 1 or 0
-    # Starting and finishing sequence
-    start = "\033[{0}{1}{2}m".format(light, color, background)
-    finish = "\033[1;m"
-    return "".join([start, text, finish])
 
 
 def human(time):

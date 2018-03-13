@@ -14,7 +14,6 @@ Among the most essential features are:
 
     * Natural and concise Python interface
     * Custom level of caching & logging
-    * Automated status coloring
     * Integrated test suite
     * Utility functions
 
@@ -22,9 +21,9 @@ The main motivation was to hide unnecessary implementation details
 wherever possible so that using the API is as concise as possible.
 
 Scripts importing ``tcms_api`` can make use of several useful
-helper functions including ``info()`` for logging to stderr, ``listed()``
-which converts list into nice human readable form, ``color()`` for
-coloring and of course ``log.{debug,info,warn,error}`` for logging.
+helper functions including ``info()`` for printing to stderr, ``listed()``
+which converts list into nice human readable form and of course
+``log.{debug,info,warn,error}`` for logging.
 
 
 EXAMPLES
@@ -61,7 +60,7 @@ object creation, attribute setting, adjusting logs and caching.
 For area-specific details see respective module documentation::
 
     tcms_api.base ......... TCMS class, search support
-    tcms_api.config ....... Configuration, logging, coloring, caching
+    tcms_api.config ....... Configuration, logging, caching
     tcms_api.containers ... Container classes implementation
     tcms_api.immutable .... Immutable TCMS objects
     tcms_api.mutable ...... Mutable TCMS objects

@@ -27,6 +27,6 @@ class TestTestRunTests(BaseAPIClient_TestCase):
         """
         i = 0
         for caserun in TestRun(self.testrun.pk):
-            self.assertEqual('IDLE', caserun.status._name)
+            self.assertEqual('IDLE', caserun.status.name)
             i += 1
         self.assertEqual(5, i)
