@@ -159,7 +159,6 @@ var default_messages = {
 
       change_user_group: '/management/account/$id/changegroup/',
       change_user_status: '/management/account/$id/changestatus/',
-      search_users: '/management/accounts/search/',
 
       get_form: '/ajax/form/',
       get_product_info: '/management/getinfo/',
