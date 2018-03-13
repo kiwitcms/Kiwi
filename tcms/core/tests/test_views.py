@@ -65,68 +65,6 @@ class TestIndex(BaseCaseRun):
             target_status_code=http.client.OK)
 
 
-class TestQuickSearch(BaseCaseRun):
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestQuickSearch, cls).setUpTestData()
-
-        cls.search_url = reverse('core-views-search')
-
-    def test_goto_plan(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'plans', 'search_content': self.plan.pk})
-        self.assertRedirects(
-            response,
-            reverse('test_plan_url_short', args=[self.plan.pk]),
-            target_status_code=http.client.MOVED_PERMANENTLY)
-
-    def test_goto_case(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'cases', 'search_content': self.case_1.pk})
-
-        self.assertRedirects(
-            response,
-            reverse('testcases-get', args=[self.case_1.pk]))
-
-    def test_goto_run(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'runs', 'search_content': self.test_run.pk})
-        self.assertRedirects(
-            response,
-            reverse('testruns-get', args=[self.test_run.pk]))
-
-    def test_goto_plan_search(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'plans', 'search_content': 'keyword'})
-        url = '{}?a=search&search=keyword'.format(reverse('plans-all'))
-        self.assertRedirects(response, url)
-
-    def test_goto_case_search(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'cases', 'search_content': 'keyword'})
-        url = '{}?a=search&search=keyword'.format(reverse('testcases-all'))
-        self.assertRedirects(response, url)
-
-    def test_goto_run_search(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'runs', 'search_content': 'keyword'})
-        url = '{}?a=search&search=keyword'.format(reverse('testruns-all'))
-        self.assertRedirects(response, url)
-
-    def test_goto_search_if_no_object_is_found(self):
-        non_existing_pk = 9999999
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'cases', 'search_content': non_existing_pk})
-        url = '{}?a=search&search={}'.format(reverse('testcases-all'), non_existing_pk)
-        self.assertRedirects(response, url)
-
-    def test_404_if_unknown_search_type(self):
-        response = self.client.get(self.search_url,
-                                   {'search_type': 'unknown type', 'search_content': self.plan.pk})
-        self.assertEqual(http.client.NOT_FOUND, response.status_code)
-
-
 class TestCommentCaseRuns(BaseCaseRun):
     """Test case for ajax.comment_case_runs"""
 

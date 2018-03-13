@@ -7,8 +7,6 @@ from tcms.testruns.views import load_runs_of_one_plan
 
 urlpatterns = [
     url(r'^(?P<plan_id>\d+)/$', views.get, name='test_plan_url_short'),
-    # for compatibility with core.views.search.search()
-    url(r'^(?P<plan_id>\d+)/$', views.get, name='testplans-get'),
     # human friendly url
     url(r'^(?P<plan_id>\d+)/(?P<slug>[-\w\d]+)$', views.get, name='test_plan_url'),
 
