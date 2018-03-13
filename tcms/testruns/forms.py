@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from tcms.core.utils import string_to_list
-from tcms.core.forms.fields import UserField, DurationField
+from tcms.core.forms.fields import UserField
 from tcms.management.models import Product, Version, Build, EnvGroup
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
@@ -42,7 +42,7 @@ class BaseRunForm(forms.Form):
         queryset=Product.objects.all(),
         empty_label=None,
     )
-    estimated_time = DurationField(required=False)
+    estimated_time = forms.DurationField(required=False)
     product_version = forms.ModelChoiceField(
         label='Product Version',
         queryset=Version.objects.none(),

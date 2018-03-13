@@ -11,7 +11,6 @@ from django.db.models import Q, Count
 import vinaigrette
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.models.fields import DurationField
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
 from tcms.core.utils.timedeltaformat import format_timedelta
@@ -36,7 +35,7 @@ class TestRun(TCMSActionModel):
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     summary = models.TextField()
     notes = models.TextField(blank=True)
-    estimated_time = DurationField(default=0)
+    estimated_time = models.IntegerField(default=0)  # todo: DurationField
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run',
                              on_delete=models.CASCADE)
