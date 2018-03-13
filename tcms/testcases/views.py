@@ -529,13 +529,12 @@ def get_tags_from_cases(case_ids, plan=None):
     return query
 
 
-def all(request, template_name="case/all.html"):
-    """Generate the case list in search case and case zone in plan
+@require_POST
+def all(request):
+    """
+    Generate the TestCase list for the UI tabs in TestPlan page view.
 
-    Parameters:
-    a: Action
-       -- search: Search form submitted.
-       -- initial: Initial the case filter
+    POST Parameters:
     from_plan: Plan ID
        -- [number]: When the plan ID defined, it will build the case
     page in plan.
@@ -543,8 +542,13 @@ def all(request, template_name="case/all.html"):
     """
     # Intial the plan in plan details page
     tp = plan_from_request_or_none(request)
-    search_form = build_cases_search_form(request, populate=True, plan=tp)
-    tcs = query_testcases(request, tp, search_form)
+    if not tp:
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('TestPlan not specified or does not exist'))
+        return HttpResponseRedirect(reverse('core-views-index'))
+
+    tcs = query_testcases(request, tp, None)
     tcs = sort_queried_testcases(request, tcs)
     total_cases_count = tcs.count()
 
@@ -574,15 +578,9 @@ def all(request, template_name="case/all.html"):
     else:
         query_url = '%s&asc=True' % query_url
 
-    # Due to this method serves several sort of search requests, so before
-    # rendering the search result, template should be adjusted to a proper one.
-    if request.POST.get('from_plan'):
-        template_name = 'plan/get_cases.html'
-
     context_data = {
         'test_cases': tcs,
         'test_plan': tp,
-        'search_form': search_form,
         'selected_case_ids': selected_case_ids,
         'case_status': TestCaseStatus.objects.all(),
         'priorities': Priority.objects.all(),
@@ -594,7 +592,7 @@ def all(request, template_name="case/all.html"):
         'search_criterias': request.body.decode(),
         'total_cases_count': total_cases_count,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'plan/get_cases.html', context_data)
 
 
 @require_GET
