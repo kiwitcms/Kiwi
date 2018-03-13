@@ -1278,7 +1278,7 @@ def edit(request, case_id, template_name='case/edit.html'):
             'category': tc.category_id,
             'notes': tc.notes,
             'component': [c.pk for c in tc.component.all()],
-            'estimated_time': tc.clear_estimated_time,
+            'estimated_time': tc.estimated_time,
             'setup': tctxt.setup,
             'action': tctxt.action,
             'effect': tctxt.effect,

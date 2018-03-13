@@ -41,6 +41,9 @@
 	<h2>Edit Test Run</h2>
 	<form action="{% url "testruns-edit" test_run.run_id %}" method="post">
 	<div class="Detailform border-1">
+		<div id="errors">
+			{{ form.errors }}
+		</div>
 		<table border="0" cellspacing="1" cellpadding="0" class="editor" >
 			<tr>
 				<td width="20%"><label class="strong">Summary</label></td>
@@ -98,6 +101,7 @@
 					<div class="time">
 						{{ form.estimated_time }}
 					</div>
+                                        <span class="grey">(format D hh:mm:ss )</span>
 				</td>
 			</tr>
 			<tr>
@@ -150,9 +154,6 @@
 				</td>
 			</tr>
 		</table>
-		<div id="errors">
-			{{ form.errors }}
-		</div>
 		<div id="control_box" class="submit-row">
 			<input type="submit" value="Save" />
 			<input type="reset" value="Reset" />

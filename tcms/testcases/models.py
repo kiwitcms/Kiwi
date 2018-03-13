@@ -14,7 +14,6 @@ import vinaigrette
 from tcms.core.models import TCMSActionModel
 from tcms.core.models.base import TCMSContentTypeBaseModel
 from tcms.core.utils.checksum import checksum
-from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.issuetracker.types import IssueTrackerType
 
 
@@ -426,10 +425,6 @@ class TestCase(TCMSActionModel):
         return TestCaseComponent.objects.filter(
             case=self,
         ).delete()
-
-    def clear_estimated_time(self):
-        """Converts a integer to time"""
-        return format_timedelta(self.estimated_time)
 
     def get_bugs(self):
         return Bug.objects.select_related(

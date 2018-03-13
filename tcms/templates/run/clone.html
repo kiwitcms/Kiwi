@@ -25,7 +25,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
+&	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "plans-all" %}">...</a>
 		>> <a href="{{ test_run.plan.get_absolute_url }}">...</a>
@@ -86,6 +86,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 						<div class="time">
 							{{ clone_form.estimated_time }}
 						</div> 
+                                                <span class="grey">(format D hh:mm:ss )</span>
 					</td>
 				</tr>
 				<tr>

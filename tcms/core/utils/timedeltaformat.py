@@ -13,7 +13,7 @@ def format_timedelta(timedelta):
         minute = '%dm' % m if m else ''
         second = '%ds' % s if s else ''
         timedelta_str = day + hour + minute + second
-        return timedelta_str if timedelta_str else '0m'
+        return timedelta_str if timedelta_str else '0'
     else:
         raise TypeError(
             'Unable to convert %s to d(ay):h(our):m(inute):s(econd)'

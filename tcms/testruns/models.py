@@ -13,7 +13,6 @@ import vinaigrette
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
-from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.testcases.models import Bug, TestCaseText, NoneText
 
 
@@ -127,10 +126,6 @@ class TestRun(TCMSActionModel):
             return True
 
         return False
-
-    def clear_estimated_time(self):
-        """Converts a integer to time"""
-        return format_timedelta(self.estimated_time)
 
     def check_all_case_runs(self, case_run_id=None):
         tcrs = self.case_run.all()

@@ -1,5 +1,4 @@
 {% load comments %}
-{% load extra_filters %}
 {% load report_tags %}
 {% load static %}
 
@@ -30,7 +29,7 @@
 					<span class="title">Manager:</span>{{ test_run.manager.email }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Estimated Time:</span>{{ test_run.estimated_time|timedelta2string }}
+					<span class="title">Estimated Time:</span>{{ test_run.estimated_time }}
 				</div>
 				
 				<div class="listinfo">

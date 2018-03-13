@@ -1,6 +1,5 @@
 {% extends "tcms_base.html" %}
 {% load static %}
-{% load extra_filters %}
 {% load attachments_tags %}
 
 {% block subtitle %}Test case - {{ test_case.case_id }}: {{ test_case.summary }}{% endblock %}
@@ -99,7 +98,7 @@ Nitrate.TestCases.Instance = {
 				</div>
 				<div class="listinfo">
 					<div class="title grey">Estimated Time&nbsp;:</div>
-					<div id="display_estimated_time" class="name">{{ test_case.estimated_time|timedelta2string }}</div>
+					<div id="display_estimated_time" class="name">{{ test_case.estimated_time }}</div>
 				</div>
 				<div class="listinfo">
 					<div class="title grey">Priority&nbsp;:</div>
