@@ -35,7 +35,7 @@ class TestRun(TCMSActionModel):
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     summary = models.TextField()
     notes = models.TextField(blank=True)
-    estimated_time = models.IntegerField(default=0)  # todo: DurationField
+    estimated_time = models.DurationField(default=datetime.timedelta(0))
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run',
                              on_delete=models.CASCADE)

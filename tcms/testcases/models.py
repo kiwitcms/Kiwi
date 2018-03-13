@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import datetime, timedelta
 from html2text import html2text
 
 from django.conf import settings
@@ -127,7 +127,7 @@ class TestCase(TCMSActionModel):
     summary = models.CharField(max_length=255)
     requirement = models.CharField(max_length=255, blank=True, null=True)
     alias = models.CharField(max_length=255, blank=True)
-    estimated_time = models.IntegerField(db_column='estimated_time', default=0)  # DurationField
+    estimated_time = models.DurationField(default=timedelta(0))
     notes = models.TextField(blank=True, null=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
