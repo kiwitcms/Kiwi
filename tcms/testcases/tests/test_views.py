@@ -588,7 +588,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}#testcases'.format(
-            reverse('testplans-get', args=[self.plan.pk])
+            reverse('test_plan_url_short', args=[self.plan.pk])
         )
         self.assertRedirects(response, redirect_url, target_status_code=301)
 
@@ -602,7 +602,7 @@ class TestEditCase(BasePlanCase):
         response = self.client.post(self.case_edit_url, edit_data)
 
         redirect_url = '{0}#reviewcases'.format(
-            reverse('testplans-get', args=[self.plan.pk])
+            reverse('test_plan_url_short', args=[self.plan.pk])
         )
         self.assertRedirects(response, redirect_url, target_status_code=301)
 

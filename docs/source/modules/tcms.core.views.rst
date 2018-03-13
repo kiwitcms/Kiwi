@@ -13,5 +13,4 @@ Submodules
 
    tcms.core.views.error
    tcms.core.views.index
-   tcms.core.views.search
 

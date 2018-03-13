@@ -2,6 +2,7 @@
 
 import json
 import http.client
+from uuslug import slugify
 from urllib.parse import urlencode
 
 from django import test
@@ -477,11 +478,9 @@ class TestLinkCases(BasePlanCase):
             'case': [self.another_case_1.pk, self.another_case_2.pk]
         }
         response = self.client.post(self.link_cases_url, post_data)
-
         self.assertRedirects(
             response,
-            reverse('test_plan_url_short', args=[self.plan.pk]),
-            target_status_code=http.client.MOVED_PERMANENTLY)
+            reverse('test_plan_url', args=[self.plan.pk, slugify(self.plan.name)]))
 
         self.assertTrue(
             TestCasePlan.objects.filter(

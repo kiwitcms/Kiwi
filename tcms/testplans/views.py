@@ -741,7 +741,7 @@ class LinkCasesView(View):
         cases = TestCase.objects.filter(case_id__in=case_ids).only('pk')
         for case in cases:
             plan.add_case(case)
-        return HttpResponseRedirect(reverse('testplans-get', args=[plan_id]))
+        return HttpResponseRedirect(reverse('test_plan_url', args=[plan_id, slugify(plan.name)]))
 
 
 class LinkCasesSearchView(View):
