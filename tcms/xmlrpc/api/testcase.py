@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.utils.dateparse import parse_duration
 from django.forms import EmailField, ValidationError
 
 from modernrpc.core import rpc_method, REQUEST_KEY
@@ -10,7 +11,6 @@ from tcms.management.models import Component
 from tcms.testcases.models import TestCase
 from tcms.xmlrpc.forms import UpdateCaseForm, NewCaseForm
 
-from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
 
 
@@ -267,7 +267,7 @@ def create(values, **kwargs):
         raise ValueError()
 
     if values.get('estimated_time'):
-        values['estimated_time'] = pre_process_estimated_time(values.get('estimated_time'))
+        values['estimated_time'] = parse_duration(values.get('estimated_time'))
 
     form = NewCaseForm(values)
     form.populate(values.get('product'))
@@ -314,7 +314,7 @@ def filter(query):
         :rtype: list(dict)
     """
     if query.get('estimated_time'):
-        query['estimated_time'] = pre_process_estimated_time(query.get('estimated_time'))
+        query['estimated_time'] = parse_duration(query.get('estimated_time'))
 
     results = []
     for case in TestCase.objects.filter(**query):
@@ -346,7 +346,7 @@ def update(case_id, values, **kwargs):
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
     """
     if values.get('estimated_time'):
-        values['estimated_time'] = pre_process_estimated_time(values.get('estimated_time'))
+        values['estimated_time'] = parse_duration(values.get('estimated_time'))
 
     form = UpdateCaseForm(values)
 

@@ -3,12 +3,13 @@ from datetime import datetime
 
 from modernrpc.core import rpc_method
 
+from django.utils.dateparse import parse_duration
+
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag, EnvValue
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
-from tcms.xmlrpc.utils import pre_process_estimated_time
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.testruns.forms import XMLRPCUpdateRunForm, XMLRPCNewRunForm
 
@@ -166,7 +167,7 @@ def create(values):
     # TODO: XMLRPC only accept HH:MM:SS rather than DdHhMm
 
     if values.get('estimated_time'):
-        values['estimated_time'] = pre_process_estimated_time(
+        values['estimated_time'] = parse_duration(
             values.get('estimated_time'))
 
     form = XMLRPCNewRunForm(values)
@@ -236,7 +237,7 @@ def update(run_id, values):
         raise ValueError('Field "product" is required by product_version')
 
     if values.get('estimated_time'):
-        values['estimated_time'] = pre_process_estimated_time(
+        values['estimated_time'] = parse_duration(
             values.get('estimated_time'))
 
     form = XMLRPCUpdateRunForm(values)

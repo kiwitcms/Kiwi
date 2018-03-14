@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import timedelta
+
 from django import forms
 from django.contrib.auth.models import User
 
@@ -82,6 +84,13 @@ class BaseRunForm(forms.Form):
         self.fields['product_version'].queryset = Version.objects.filter(
             product__id=product_id)
         self.fields['build'].queryset = Build.list_active(query)
+
+    def clean_estimated_time(self):
+        et = self.cleaned_data.get('estimated_time', timedelta(0))
+        # can be either None, '', 0 or timedelta(0)
+        if not et:
+            et = timedelta(0)
+        return et
 
 
 class NewRunForm(BaseRunForm):

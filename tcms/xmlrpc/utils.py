@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
-
 from django.db.models import FieldDoesNotExist
 
 from tcms.management.models import Product
@@ -123,32 +121,3 @@ def distinct_m2m_rows(cls, values, op_type):
 
 def distinct_filter(cls, values):
     return distinct_m2m_rows(cls, values, op_type=QUERY_DISTINCT)
-
-
-def pre_process_estimated_time(value):
-    '''pre process estiamted_time.
-
-    support value - HH:MM:SS & xdxhxmxs
-    return xdxhxmxs
-    '''
-
-    estimated_time_re = re.compile(r'^(\d+[d])?(\d+[h])?(\d+[m])?(\d+[s])?$')
-    estimated_time_hms_re = re.compile(r'^(\d+):(\d+):(\d+)$')
-
-    # int values are allowed because estimated_time is saved as an IntegerField
-    # in the database, 0 is also a common corner case value!
-    if isinstance(value, int) or value == '0':
-        return int(value)
-
-    if isinstance(value, str):
-        match = estimated_time_re.match(value.replace(' ', ''))
-        if match:
-            return value
-        else:
-            match = estimated_time_hms_re.match(value)
-            if not match:
-                raise ValueError('Invalid estimated_time format.')
-            else:
-                return '{0}h{1}m{2}s'.format(*match.groups())
-
-    raise ValueError('Invalid estimated_time format.')
