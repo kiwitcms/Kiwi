@@ -172,7 +172,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 						<td>{{ test_case.category }}</td>
 						<td >{{ test_case.priority }}</td>
 						<td>
-							<a class="deletelink js-remove-case" data-params='["row_{{ forloop.counter }}", {{ test_case.estimated_time|timedelta2seconds }}]'>Remove</a>
+							<a class="deletelink js-remove-case" data-params='["row_{{ forloop.counter }}", {{ test_case.estimated_time.total_seconds }}]'>Remove</a>
 						</td>
 					</tr>
 					{% endfor %}

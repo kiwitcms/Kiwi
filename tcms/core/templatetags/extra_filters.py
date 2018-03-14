@@ -16,11 +16,6 @@ def smart_int(object):
         return object
 
 
-@register.filter(name='timedelta2seconds')
-def timedelta2seconds(object):
-    return int(object.seconds + object.days * 86400)
-
-
 @register.filter(name='message_icon')
 def message_icon(msg):
     """
