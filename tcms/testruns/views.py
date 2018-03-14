@@ -29,7 +29,6 @@ from django_comments.models import Comment
 from tcms.core.utils import clean_request
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
-from tcms.core.utils.timedeltaformat import format_timedelta
 from tcms.core.utils.validations import validate_bug_id
 from tcms.management.models import Priority, EnvValue, Tag
 from tcms.search.forms import RunForm
@@ -193,7 +192,7 @@ def new(request, template_name='run/new.html'):
                 tp.name,
                 tp.env_group.all() and tp.env_group.all()[0] or 'Unknown environment'
             ),
-            'estimated_time': format_timedelta(estimated_time),
+            'estimated_time': estimated_time,
             'manager': tp.author.email,
             'default_tester': request.user.email,
             'product': tp.product_id,
@@ -917,7 +916,7 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
             'build': tr.build_id,
             'default_tester':
                 tr.default_tester_id and tr.default_tester.email or '',
-            'estimated_time': format_timedelta(estimated_time),
+            'estimated_time': estimated_time,
             'use_newest_case_text': True,
         })
 
