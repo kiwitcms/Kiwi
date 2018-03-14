@@ -279,7 +279,7 @@ function checkCookie() {
 }
 
 function removeItem(item, tc_estimated_time) {
-  var tr_estimated_time = jQ('#estimated_time').data('time');
+  var tr_estimated_time = parseInt(jQ('#estimated_time').data('time'));
   var remain_estimated_time = tr_estimated_time - tc_estimated_time;
   var second_value = remain_estimated_time % 60;
   var minute = parseInt(remain_estimated_time / 60);
@@ -288,17 +288,16 @@ function removeItem(item, tc_estimated_time) {
   var hour_value = hour % 24;
   var day_value = parseInt(hour / 24);
 
-  var remain_estimated_time_value = day_value ? day_value + 'd' : '';
-  remain_estimated_time_value += hour_value ? hour_value + 'h' : '';
-  remain_estimated_time_value += minute_value ? minute_value + 'm' : '';
-  remain_estimated_time_value += second_value ? second_value + 's' : '';
+  var remain_estimated_time_value = day_value ? day_value + ' ' : '';
+  remain_estimated_time_value += hour_value + ':';
+  remain_estimated_time_value += minute_value + ':';
+  remain_estimated_time_value += second_value;
 
   if (!remain_estimated_time_value.length) {
-	remain_estimated_time_value = '0m';
+    remain_estimated_time_value = '0';
   }
 
   jQ('#estimated_time').data('time', remain_estimated_time);
-  // TODO: can't set value through jquery setAttribute.
   document.getElementById('id_estimated_time').value = remain_estimated_time_value;
   jQ('#' + item).remove();
 }
