@@ -14,7 +14,5 @@ Submodules
    tcms.core.utils.checksum
    tcms.core.utils.mailto
    tcms.core.utils.raw_sql
-   tcms.core.utils.timedelta2int
-   tcms.core.utils.timedeltaformat
    tcms.core.utils.validations
 
