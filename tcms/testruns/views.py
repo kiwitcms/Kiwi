@@ -208,7 +208,7 @@ def new(request, template_name='run/new.html'):
         'test_cases': tcs_values,
         'form': form,
         'num_unconfirmed_cases': num_unconfirmed_cases,
-        'run_estimated_time': estimated_time,
+        'run_estimated_time': estimated_time.total_seconds(),
     }
     return render(request, template_name, context_data)
 
