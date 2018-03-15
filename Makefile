@@ -54,6 +54,12 @@ test:
 .PHONY: check
 check: flake8 test check-mo-files
 
+.PHONY: check-pylint
+check-pylint:
+	pylint *.py
+	pylint tcms --load-plugins=pylint_django -d missing-docstring
+	pylint tcms-api
+
 
 .PHONY: tags
 tags:

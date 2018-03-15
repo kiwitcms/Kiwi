@@ -6,9 +6,9 @@ python:
   - "3.6"
 cache: pip
 env:
-  - TEST_DB=SQLite
-  - TEST_DB=MySQL
-  - TEST_DB=Postgres
+  - TEST_DB=SQLite CMD=check
+  - TEST_DB=MySQL CMD=check
+  - TEST_DB=Postgres CMD=check
 services:
   - mysql
   - postgresql
@@ -26,19 +26,23 @@ addons:
 matrix:
   include:
     - python: 3.6
-      env: DOCS_TEST=1 TEST_DB=SQLite
+      env: TEST_DB=SQLite CMD=check-docs-source-in-git
       addons:
         apt:
           packages:
             - graphviz
     - python: 3.5
-      env: TEST_DB=MariaDB
+      env: TEST_DB=MariaDB CMD=check
       addons:
         mariadb: 10.1
     - python: 3.6
-      env: TEST_DB=MariaDB
+      env: TEST_DB=MariaDB CMD=check
       addons:
         mariadb: 10.1
+    - python: 3.6
+      env: TEST_DB=SQLite CMD=check-pylint
+  allow_failures:
+    - env: TEST_DB=SQLite CMD=check-pylint
 before_install:
   - if [ "$TEST_DB" == "MariaDB" ]; then sudo apt-get -y install libmariadbclient-dev; fi
   - cat "$TRAVIS_BUILD_DIR/.travis/my.cnf" | sudo tee -a /etc/mysql/conf.d/mariadb.cnf
@@ -60,7 +64,7 @@ install:
   - pip install -r requirements/devel.txt
   - pip install coveralls codecov
   - npm install
-script: if [ -n "$DOCS_TEST" ]; then make check-docs-source-in-git; else make check; fi
+script: make $CMD
 after_success:
   - coveralls
   - codecov
