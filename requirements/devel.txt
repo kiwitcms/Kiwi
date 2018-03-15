@@ -10,3 +10,4 @@ factory_boy
 mock
 django-extensions
 pydot
+pylint-django
