@@ -2,6 +2,90 @@ Change Log
 ==========
 
 
+tcms-api master (unreleased)
+----------------------------
+
+- Remove coloring. Fixes
+  `Issue #185 <https://github.com/kiwitcms/Kiwi/issues/185>`_
+
+
+
+Kiwi TCMS 4.1.3 (Mar 15 2018)
+-----------------------------
+
+
+Enhancements
+~~~~~~~~~~~~
+
+- Upgrade to `Django 2.0.3 <https://docs.djangoproject.com/en/2.0/releases/2.0.3/>`_
+- Show ``date_joined`` column for user admin
+- Expose httpd logs to the host running docker. Fixes
+  `Issue #191 <https://github.com/kiwitcms/Kiwi/issues/191>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Move SSL keys under common directory in the container. Fixes
+  `Issue #231 <https://github.com/kiwitcms/Kiwi/issues/231>`_
+
+- Always select active builds for TestRun. Fixes
+  `Issue #245 <https://github.com/kiwitcms/Kiwi/issues/245>`_
+- Swap ``escape`` and ``escapejs`` filters. Fixes
+  `Issue #234 <https://github.com/kiwitcms/Kiwi/issues/234>`_
+- Globally disable ``delete_selected`` action in Admin, this removes the
+  drop down selection widget! Fixes
+  `Issue #221 <https://github.com/kiwitcms/Kiwi/issues/221>`_
+- Fix error in TestCase view when ``from_plan`` is empty string. Fixes
+  `Sentry KIWI-TCMS-Z <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/474369640/>`_
+- Fix sorting issue when None is compared to int. Fixes
+  `Sentry KIWI-TCMS-V <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/473996504/>`_
+- Validate form field as integer, not char. Fixes
+  `Sentry KIWI-TCMS-W <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/474058623/>`_
+- [docs] Remove information about importing test cases via XML. This functionality
+  was removed in version 3.49
+
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Refactor inner class ``CaseActions``. Fixes
+  `Issue #21 <https://github.com/kiwitcms/Kiwi/issues/21>`_ (Chenxiong Qi)
+- Only use ``get_cases.html`` template. Fixes
+  `Issue #176 <https://github.com/kiwitcms/Kiwi/issues/176>`_
+- Unify ``get_details_review.html`` and ``get_details.html`` templates
+- Remove internal ``Prompt.render`` class and replace with Django messages
+- Remove ``mail/delete_plan.txt`` template
+- Remove ``handle_emails_pre_plan_delete`` signal handler
+- Remove the ``Export`` button from TestPlan view, use Case->Export sub-menu
+  item in the Cases tab. Also remove the export buttons from search and advanced
+  search result templates. If you'd like to export the cases from a given
+  plan you have to open it in a new browser window and use the menu
+- Remove the ``Print`` button from plan search form
+- Remove TestRun cloning from search results and plan details, use sub-menu
+- Remove unnecessary JavaScript handling for EnvGroup edit view
+
+
+Settings
+~~~~~~~~
+
+- Remove ``PLAN_DELELE_EMAIL_TEMPLATE`` setting (not used)
+
+
+Models and database migrations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Use Django's own DurationField, instead of custom one. Fixes
+  `Issue #183 <https://github.com/kiwitcms/Kiwi/issues/183>`_.
+  API clients must now send values for ``estimated_time`` which must be in a
+  format that ``parse_duration()`` understands, for example 'DD HH:MM:SS'! See
+  <https://docs.djangoproject.com/en/2.0/ref/utils/#django.utils.dateparse.parse_duration>
+
+**IMPORTANT:** this release introduces new database migrations!
+
+
+
 Kiwi TCMS 4.1.0 (Feb 21 2018)
 -----------------------------
 
