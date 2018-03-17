@@ -11,14 +11,14 @@
 	</tr>
 	{% for test_case_run, bugs, comments in case_runs %}
 	<tr>
-		<td valign="top"><a href="{{ test_case_run.case.get_url_path }}">{{ test_case_run.case.pk }}</a></td>
+		<td valign="top"><a href="{{ test_case_run.case.get_absolute_url }}">{{ test_case_run.case.pk }}</a></td>
 		<td valign="top"><a href="{% url 'testruns-get' test_case_run.run_id %}#caserun_{{ test_case_run.pk }}">{{ test_case_run.pk }}</a></td>
 		<td valign="top">{{ test_case_run.case.summary }}</td>
 		<td valign="top">{{ test_case_run.case.category }}</td>
 		<td valign="top">{{ test_case_run.tested_by }}</td>
 		<td valign="top">
 		{% for bug in bugs %}
-			<a href="{{ bug.get_absolute_url }}">{{ bug }}</a>,
+			<a href="{{ bug.get_full_url }}">{{ bug }}</a>,
 		{% empty %}
 			<span class="grey"></span>
 		{% endfor %}
@@ -45,7 +45,7 @@
 	{% for bug in test_case_run.bug.all %}
 	<h1>bottom bugs</h1>
 	<tr class="border-bottom">
-		<td valign="top" colspan="7"><a href="{{ bug.get_url }}">{{ get_url }}</a> </td>
+		<td valign="top" colspan="7"><a href="{{ bug.get_full_url }}">{{ bug }}</a> </td>
 	</tr>
 	{% endfor %}
 

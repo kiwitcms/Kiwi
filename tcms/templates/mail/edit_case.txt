@@ -1,10 +1,10 @@
 TestCase [{{ test_case.summary }}] has been updated by {{ test_case.current_user.username|default:"someone" }}
 
 Case -
-{{ test_case.get_url }}?#log
+{{ test_case.get_full_url }}?#log
 
 --
-Configure mail: {{test_case.get_url}}/edit/
+Configure mail: {{ test_case.get_full_url }}/edit/
 ------- You are receiving this mail because: -------
 You have subscribed to the changes of this TestCase
 You are related to this TestCase

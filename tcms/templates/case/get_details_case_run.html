@@ -95,7 +95,7 @@
 						<li>
 							<table cellpadding="3" cellspacing="0" border="0">
 								<tr>
-									<td><a href="{{ bugs.0.get_url }}">{{ bug_id }}</a></td>
+									<td><a href="{{ bugs.0.get_full_url }}">{{ bug_id }}</a></td>
 								<td>
 								{% for bug in bugs %}
 								    {% if bug.case_run_id %}
