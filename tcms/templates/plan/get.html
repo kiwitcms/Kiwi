@@ -35,7 +35,7 @@ Nitrate.TestPlans.Instance = {
 		num_cases: {{ test_plan.case.count }},
 		num_runs: {{ test_plan.run.count }},
 		num_children: {{ test_plan.child_set.count }},
-		get_url_path: '{{ test_plan.get_url_path }}'
+		get_url_path: '{{ test_plan.get_absolute_url }}'
 	}
 }
 </script>

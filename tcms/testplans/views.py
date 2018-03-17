@@ -189,7 +189,7 @@ def all(request, template_name='plan/all.html'):
 
             for attr in ['pk', 'num_cases', 'num_cases', 'num_runs', 'num_children']:
                 dict_obj[attr] = getattr(obj, attr)
-            dict_obj['get_url_path'] = obj.get_url_path()
+            dict_obj['get_absolute_url'] = obj.get_absolute_url()
 
             results.append(dict_obj)
         return JsonResponse(results, safe=False)

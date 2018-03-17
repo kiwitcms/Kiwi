@@ -1,46 +1,18 @@
 # -*- coding: utf-8 -*-
-from urllib.parse import urlparse, urlunparse
-
 from django.db import models
-from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.sites.models import Site
 
-# ----------------------------------------------------------
-# UrlMixin is storned from
-# http://code.djangoproject.com/wiki/ReplacingGetAbsoluteUrl
-# ----------------------------------------------------------
+from tcms.core.utils import request_host_link
 
 
 class UrlMixin(object):
-    def get_url(self):
-        if hasattr(self.get_url_path, 'dont_recurse'):
-            raise NotImplemented
-        try:
-            path = self.get_url_path()
-        except NotImplemented:
-            raise
-        protocol = getattr(settings, "PROTOCOL", "http")
-        domain = Site.objects.get_current().domain
-        port = getattr(settings, "PORT", "")
-        if port:
-            assert port.startswith(
-                ":"), "The PORT setting must have a preceeding ':'."
-        return "%s://%s%s%s" % (protocol, domain, port, path)
+    """Mixin class for getting full URL"""
 
-    get_url.dont_recurse = True
-
-    def get_url_path(self):
-        if hasattr(self.get_url, 'dont_recurse'):
-            raise NotImplemented
-        try:
-            url = self.get_url()
-        except NotImplemented:
-            raise
-        bits = urlparse(url)
-        return urlunparse(('', '') + bits[2:])
-
-    get_url_path.dont_recurse = True
+    def get_full_url(self):
+        site = Site.objects.get_current()
+        host_link = request_host_link(None, site.domain)
+        return '{}/{}'.format(host_link, self.get_absolute_url().strip('/'))
 
 
 class TCMSContentTypeBaseModel(models.Model):

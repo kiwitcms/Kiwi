@@ -57,7 +57,7 @@
 				<a href="{{ plan.0.get_absolute_url }}">[{{ plan.0.pk }}] {{ plan.0.name }}</a>
 			</td>
 			{% endifnotequal %}
-			<td><a href="{{ run.get_url_path }}">{{ run.summary }}</a></td>
+			<td><a href="{{ run.get_absolute_url }}">{{ run.summary }}</a></td>
 			<td><a href="{{ report_url }}{{path_without_build}}&r_build={{ build.0.pk }}&plan_tag={{ tag_name }}&run={{ run.pk }}&status=idle">{{ status_subtotal.IDLE|default:0 }}</a></td>
 			<td><a href="{{ report_url }}{{path_without_build}}&r_build={{ build.0.pk }}&plan_tag={{ tag_name }}&run={{ run.pk }}&status=running">{{ status_subtotal.RUNNING|default:0 }}</a></td>
 			<td><a href="{{ report_url }}{{path_without_build}}&r_build={{ build.0.pk }}&plan_tag={{ tag_name }}&run={{ run.pk }}&status=paused">{{ status_subtotal.PAUSED|default:0 }}</a></td>

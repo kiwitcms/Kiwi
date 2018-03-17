@@ -137,14 +137,8 @@ class TestRun(TCMSActionModel):
 
         return True
 
-    def get_absolute_url(self, request=None):
-        # Upward compatibility code
-        if request:
-            return request.build_absolute_uri(
-                reverse('testruns-get', args=[self.pk, ])
-            )
-
-        return self.get_url(request)
+    def get_absolute_url(self):
+        return reverse('testruns-get', args=[self.pk, ])
 
     def get_notify_addrs(self):
         """
@@ -159,9 +153,6 @@ class TestRun(TCMSActionModel):
             if tcr.assignee_id:
                 to.append(tcr.assignee.email)
         return list(set(to))
-
-    def get_url_path(self):
-        return reverse('testruns-get', args=[self.pk, ])
 
     # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, case_run_status=1, assignee=None,
