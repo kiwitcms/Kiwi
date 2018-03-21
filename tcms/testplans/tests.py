@@ -156,7 +156,7 @@ class PlanTests(test.TestCase):
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(1, len(data))
         self.assertEqual(self.test_plan.pk, data[0]['pk'])
-        self.assertEqual(self.test_plan.get_url_path(), data[0]['get_url_path'])
+        self.assertEqual(self.test_plan.get_absolute_url(), data[0]['get_absolute_url'])
         self.assertEqual(None, data[0]['parent'])
         self.assertEqual(1, data[0]['num_children'])
 
