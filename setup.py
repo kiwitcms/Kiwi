@@ -8,8 +8,8 @@ import tcms
 def get_install_requires():
     requires = []
     links = []
-    with open('requirements/base.txt', 'r') as f:
-        for line in f:
+    with open('requirements/base.txt', 'r') as file:
+        for line in file:
             dep_line = line.strip()
             parts = dep_line.split('#egg=')
             if len(parts) == 2:
@@ -20,12 +20,12 @@ def get_install_requires():
         return requires, links
 
 
-install_requires, dependency_links = get_install_requires()
+INSTALL_REQUIRES, DEPENDENCY_LINKS = get_install_requires()
 
 
 def get_long_description():
-    with open('README.rst', 'r') as f:
-        return f.read()
+    with open('README.rst', 'r') as file:
+        return file.read()
 
 
 setup(
@@ -40,8 +40,8 @@ setup(
     license='GPLv2+',
     keywords='test case',
 
-    install_requires=install_requires,
-    dependency_links=dependency_links,
+    install_requires=INSTALL_REQUIRES,
+    dependency_links=DEPENDENCY_LINKS,
 
     packages=find_packages(),
     include_package_data=True,
