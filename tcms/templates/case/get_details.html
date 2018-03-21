@@ -43,7 +43,7 @@
 				<ul class="ul-no-format">
 					{% for bug in test_case.get_bugs %}
 					<li>
-						<a href="{{ bug.get_absolute_url }}">{{ bug }}</a>
+						<a href="{{ bug.get_full_url }}">{{ bug }}</a>
 						{% if bug.case_run_id %}
 						<span class="grey"> - From Run</span>
 						<a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>

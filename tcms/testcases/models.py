@@ -742,10 +742,6 @@ class Bug(TCMSActionModel):
 
         return self.bug_id
 
-    def get_absolute_url(self):
-        # Upward compatibility code
-        return self.get_full_url()
-
     def get_full_url(self):
         return self.bug_system.url_reg_exp % self.bug_id
 

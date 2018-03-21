@@ -25,7 +25,7 @@
 
 	{% for plan, builds_count, runs_count, caseruns_count, status_matrix in report_data.reports %}
 	<div class="reportSummary01">
-		<ul><li class="tagTab">Plan: <a href="{{ plan.get_absolute_url }}">{{ plan }}</a></li></ul>
+		<ul><li class="tagTab">Plan: <a href="{{ plan.get_full_url }}">{{ plan }}</a></li></ul>
 		<ul>
 			<li>Builds:<span>{{ builds_count }}</span></li>
 			<li>Runs:<span>{{ runs_count }}</span></li>
@@ -55,7 +55,7 @@
 				{% ifnotequal build.1 None %}
 				<td rowspan="{{ build.1 }}" class="bgRowspan"><span>{{ build.0 }}</span></td>
 				{% endifnotequal %}
-				<td><a href="{{ run.get_absolute_url }}">{{ run.summary }}</a></td>
+				<td><a href="{{ run.get_full_url }}">{{ run.summary }}</a></td>
 				<td><a href="{{ report_url }}{{path_without_build}}&r_build={{build.0.pk}}&run={{ run.pk }}&status=idle">{{ status_subtotal.IDLE|default:0 }}</a></td>
 				<td><a href="{{ report_url }}{{path_without_build}}&r_build={{build.0.pk}}&run={{ run.pk }}&status=running">{{ status_subtotal.RUNNING|default:0 }}</a></td>
 				<td><a href="{{ report_url }}{{path_without_build}}&r_build={{build.0.pk}}&run={{ run.pk }}&status=paused">{{ status_subtotal.PAUSED|default:0 }}</a></td>

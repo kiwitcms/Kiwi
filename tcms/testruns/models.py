@@ -643,9 +643,6 @@ class TestCaseRun(TCMSActionModel):
         # NOTE: this returns the URL to the TestRun containing this TestCaseRun!
         return reverse('testruns-get', args=[self.run_id])
 
-    def get_url_path(self, request=None):
-        return self.get_absolute_url()
-
 
 class TestRunTag(models.Model):
     tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)

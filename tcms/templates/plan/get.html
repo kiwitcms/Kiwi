@@ -35,7 +35,7 @@ Nitrate.TestPlans.Instance = {
 		num_cases: {{ test_plan.case.count }},
 		num_runs: {{ test_plan.run.count }},
 		num_children: {{ test_plan.child_set.count }},
-		get_url_path: '{{ test_plan.get_absolute_url }}'
+		get_full_url: '{{ test_plan.get_full_url }}'
 	}
 }
 </script>
@@ -141,7 +141,7 @@ Nitrate.TestPlans.Instance = {
 				<div class="title grey">Parent&nbsp;:</div>
 				<div class="name ">
 				{% if test_plan.parent.pk %}
-					<a href="{{ test_plan.parent.get_absolute_url }}">{{ test_plan.parent.pk }}</a>
+					<a href="{{ test_plan.parent.get_full_url }}">{{ test_plan.parent.pk }}</a>
 				{% else %}
 					None
 				{% endif %}
