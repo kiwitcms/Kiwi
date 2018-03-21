@@ -36,8 +36,12 @@ def calc_percent(x, y):
     return float(x) / y * 100
 
 
-def request_host_link(request, domain_name=None):
-    if request.is_secure():
+def request_host_link(request=None, domain_name=None):
+    if request is None and settings.DEBUG is False:
+        # default to https if in production and we don't know
+        # what else to do
+        protocol = 'https://'
+    elif request and request.is_secure():
         protocol = 'https://'
     else:
         protocol = 'http://'
