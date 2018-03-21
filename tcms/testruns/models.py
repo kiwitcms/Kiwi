@@ -137,7 +137,7 @@ class TestRun(TCMSActionModel):
 
         return True
 
-    def get_absolute_url(self):
+    def _get_absolute_url(self):
         return reverse('testruns-get', args=[self.pk, ])
 
     def get_notify_addrs(self):
@@ -639,7 +639,7 @@ class TestCaseRun(TCMSActionModel):
         except IndexError:
             return NoneText
 
-    def get_absolute_url(self):
+    def _get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestCaseRun!
         return reverse('testruns-get', args=[self.run_id])
 

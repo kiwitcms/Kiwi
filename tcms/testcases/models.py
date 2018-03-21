@@ -537,7 +537,7 @@ class TestCase(TCMSActionModel):
     def remove_tag(self, tag):
         self.tag.through.objects.filter(case=self.pk, tag=tag.pk).delete()
 
-    def get_absolute_url(self, request=None):
+    def _get_absolute_url(self, request=None):
         return reverse('testcases-get', args=[self.pk, ])
 
     def _get_email_conf(self):
