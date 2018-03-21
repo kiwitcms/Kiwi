@@ -12,7 +12,7 @@ class UrlMixin(object):
     def get_full_url(self):
         site = Site.objects.get_current()
         host_link = request_host_link(None, site.domain)
-        return '{}/{}'.format(host_link, self.get_absolute_url().strip('/'))
+        return '{}/{}'.format(host_link, self._get_absolute_url().strip('/'))
 
 
 class TCMSContentTypeBaseModel(models.Model):

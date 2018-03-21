@@ -185,7 +185,7 @@ class TestPlan(TCMSActionModel):
     def delete_case(self, case):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
 
-    def get_absolute_url(self):
+    def _get_absolute_url(self):
         return reverse('test_plan_url', args=[self.plan_id, slugify(self.name)])
 
     def get_case_sortkey(self):
