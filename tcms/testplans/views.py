@@ -189,7 +189,7 @@ def all(request, template_name='plan/all.html'):
 
             for attr in ['pk', 'num_cases', 'num_cases', 'num_runs', 'num_children']:
                 dict_obj[attr] = getattr(obj, attr)
-            dict_obj['get_absolute_url'] = obj.get_absolute_url()
+            dict_obj['get_full_url'] = obj.get_full_url()
 
             results.append(dict_obj)
         return JsonResponse(results, safe=False)
@@ -362,7 +362,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 
     # redirect if has a cheated slug
     if slug != slugify(tp.name):
-        return HttpResponsePermanentRedirect(tp.get_absolute_url())
+        return HttpResponsePermanentRedirect(tp.get_full_url())
 
     # Initial the case counter
     confirm_status_name = 'CONFIRMED'

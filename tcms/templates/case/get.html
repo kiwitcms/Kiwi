@@ -39,7 +39,7 @@ Nitrate.TestCases.Instance = {
 	</div>
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
-		>> Plan: <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}:{{ test_plan.name }}</a> 
+		>> Plan: <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}:{{ test_plan.name }}</a>
 		>>Case: {{ test_case.case_id }}: {{ test_case.summary }}
 	</div>
 	{% else %}
@@ -65,7 +65,7 @@ Nitrate.TestCases.Instance = {
 		{% endif %}
 		{% if test_plan %}
 		<span class="right-action">
-			<a href="{{ test_plan.get_absolute_url }}">Back to Test Plan</a>
+			<a href="{{ test_plan.get_full_url }}">Back to Test Plan</a>
 		</span>
 		{% endif %}
 	</div>

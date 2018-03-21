@@ -28,7 +28,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 		<a href="{% url "core-views-index" %}">Home</a>
 		{% if test_plan %}
 		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.name }}</a>
+		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.name }}</a>
 		{% else %}
 		>> <a href="{% url "testcases-search" %}">Testing</a>
 		{% endif %}
@@ -164,7 +164,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 				{% if test_plan %}
 				<input type="submit" name="_addanother" value="Save and add another" />
 				<input type="submit" name="_returntoplan" value="Save and return to plan" />
-				<input type="button" value="Cancel" class="js-plan-cancel" data-param="{{ test_plan.get_absolute_url }}" />
+				<input type="button" value="Cancel" class="js-plan-cancel" data-param="{{ test_plan.get_full_url }}" />
 				{% else %}
 				<input type="button" value="cancel" class="js-case-cancel" >
 				{% endif %}

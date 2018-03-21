@@ -20,7 +20,7 @@
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ testplan.get_absolute_url }}">{{ testplan.plan_id }}: {{ testplan.name }}</a>
+		>> <a href="{{ testplan.get_full_url }}">{{ testplan.plan_id }}: {{ testplan.name }}</a>
 		>> Edit History
 	</div>
 	<h2>{{ testplan.name }}</h2>

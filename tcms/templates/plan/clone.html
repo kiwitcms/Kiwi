@@ -20,7 +20,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "plans-all" %}">Planning</a>
 		{% ifequal testplans|length 1 %}
-		>> <a href="{{ testplans.0.get_absolute_url }}">{{ testplans.0.plan_id }}: {{ testplans.0.name }}</a> 
+		>> <a href="{{ testplans.0.get_full_url }}">{{ testplans.0.plan_id }}: {{ testplans.0.name }}</a> 
 		>> Clone Plan
 		{% else %}
 		>> Clone plans
@@ -52,7 +52,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 								<span class="lab-50">{{ testplan.plan_id }}</span>
 								<span class="lab-100">{{ testplan.type }}</span>
 								<span>
-									<a href="{{ test_plan.get_absolute_url }}" title="{{ testplan.name }} ({{ testplan.author.email }})">
+									<a href="{{ test_plan.get_full_url }}" title="{{ testplan.name }} ({{ testplan.author.email }})">
 									 {{ testplan.name }}
 									</a>
 								</span>

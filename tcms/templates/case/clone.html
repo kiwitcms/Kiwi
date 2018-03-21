@@ -14,7 +14,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		{% if test_plan %}
-		>>Plan: <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
+		>>Plan: <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		{% else %}
 		>> <a href="{% url "testcases-search" %}">Search Cases</a>
 		{% endif %}

@@ -34,8 +34,8 @@
 			{% for test_plan in test_plans %}
 			<tr class="{% if not test_plan.is_active %}line-through inactive{% endif %}">
 				<td><input type="checkbox" name="plan" value="{{ test_plan.pk }}" title="Select/Unselect"></td>
-				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}</a></td>
-				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_absolute_url }}" title="Go to {{ test_plan.name }}">{{ test_plan }} </a></td>
+				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}</a></td>
+				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_full_url }}" title="Go to {{ test_plan.name }}">{{ test_plan }} </a></td>
 				<td><a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author }}</a></td>
 				<td>
 					{% if test_plan.owner %}
@@ -47,8 +47,8 @@
 				<td class="col_product_content">{{ test_plan.product }}</td>
 				<td style="display:none" class="col_product_version_content">{{ test_plan.product_version }}</td>
 				<td>{{ test_plan.type }}</td>
-				<td><a href="{{ test_plan.get_absolute_url }}" title="{{ test_plan.num_cases }} test cases">{{ test_plan.num_cases }}</a></td>
-				<td><a href="{{ test_plan.get_absolute_url }}#testruns" title="{{ test_plan.num_runs }} test runs">{{ test_plan.num_runs }}</a></td>
+				<td><a href="{{ test_plan.get_full_url }}" title="{{ test_plan.num_cases }} test cases">{{ test_plan.num_cases }}</a></td>
+				<td><a href="{{ test_plan.get_full_url }}#testruns" title="{{ test_plan.num_runs }} test runs">{{ test_plan.num_runs }}</a></td>
 				<td>
 					{% if perms.testplans.change_testplan %}
 					<a class="editlink" href="{% url "plan-edit" test_plan.plan_id %}">Edit</a>

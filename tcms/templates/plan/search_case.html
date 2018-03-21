@@ -25,7 +25,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
+		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		>> Add cases from other plans
 	</div>
 	<h2>{{ test_plan.name }}</h2>
