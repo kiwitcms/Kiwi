@@ -38,7 +38,7 @@
 		</tr>
 		{% for plan, builds_count, runs_count, status_subtotal in report_data.reports %}
 		<tr>
-			<td><a href="{{ plan.get_absolute_url }}">{{ plan.name }}</a></td>
+			<td><a href="{{ plan.get_full_url }}">{{ plan.name }}</a></td>
 			<td>{{ builds_count }}</td>
 			<td>{{ runs_count }}</td>
 			<td>{{ status_subtotal.PASSED|default:0 }}</td>

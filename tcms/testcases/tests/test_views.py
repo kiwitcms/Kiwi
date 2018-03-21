@@ -14,8 +14,6 @@ from django.conf import settings
 from django.forms import ValidationError
 from django.test import RequestFactory
 
-from uuslug import slugify
-
 from ..fields import MultipleEmailField
 from ..forms import CaseTagForm
 from tcms.management.models import Tag
@@ -397,12 +395,12 @@ class TestOperateCasePlans(BasePlanCase):
             plan = case_plan_rel.plan
             self.assertContains(
                 response,
-                '<a href="/plan/{0}/{1}">{0}</a>'.format(plan.pk, slugify(plan.name)),
+                '<a href="{0}">{1}</a>'.format(plan.get_full_url(), plan.pk),
                 html=True)
 
             self.assertContains(
                 response,
-                '<a href="/plan/{}/{}">{}</a>'.format(plan.pk, slugify(plan.name), plan.name),
+                '<a href="{}">{}</a>'.format(plan.get_full_url(), plan.name),
                 html=True)
 
     def test_list_plans(self):

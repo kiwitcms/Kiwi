@@ -40,7 +40,7 @@ jQ(function() {
 		<a href="{% url "core-views-index" %}">Home</a>
 		{% if request.GET.from_plan %}
 		&gt;&gt; <a href="{% url "plans-all" %}">Seach Plan</a>
-		&gt;&gt; Test Plan: <a href="{{ test_run.plan.get_absolute_url }}">[{{ test_run.plan.plan_id }}] {{ test_run.plan.name }}</a>
+		&gt;&gt; Test Plan: <a href="{{ test_run.plan.get_full_url }}">[{{ test_run.plan.plan_id }}] {{ test_run.plan.name }}</a>
 		{% else %}
 		&gt;&gt; <a href="{% url "testruns-all" %}">Search Runs</a>
 		{% endif %}
@@ -75,7 +75,7 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Test Plan&nbsp;:</div>
 				<div class="name">
-					<a href="{{ test_run.plan.get_absolute_url }}">[{{ test_run.plan.pk }}] {{ test_run.plan.name }}</a>
+					<a href="{{ test_run.plan.get_full_url }}">[{{ test_run.plan.pk }}] {{ test_run.plan.name }}</a>
 				</div>
 			</div>
 			<div class="listinfo">

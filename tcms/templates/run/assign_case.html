@@ -21,7 +21,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		&gt;&gt; <a href="{% url "plans-all" %}">...</a>
-		&gt;&gt; <a href="{{ test_run.plan.get_absolute_url }}">...</a>
+		&gt;&gt; <a href="{{ test_run.plan.get_full_url }}">...</a>
 		&gt;&gt; <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run.summary }}</a>
 		&gt;&gt; Add test case
 	</div>
@@ -37,7 +37,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 		</tr>
 		<tr class="cell">
 			<td class="lab">Test Plan</td>
-			<td><a href="{{ test_run.plan.get_absolute_url }}">{{ test_run.plan.name }}</a></td>
+			<td><a href="{{ test_run.plan.get_full_url }}">{{ test_run.plan.name }}</a></td>
 			<td class="lab">All Confirmed Cases</td>
 			<td><a>{{ confirmed_cases_count }}</a></td>
 		</tr>

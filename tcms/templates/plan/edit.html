@@ -38,7 +38,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan }}</a>
+		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan }}</a>
 		>> Edit
 	</div>
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
@@ -178,7 +178,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
 			<div class="submit-row" id="control_box">
 				<input type="submit" value="Save" />
 				<input type="reset" value="Reset" />
-				<input type="button" value="Back" class="js-back-button" data-param="{{ test_plan.get_absolute_url }}" />
 			</div>
 		</div>
 	</form>

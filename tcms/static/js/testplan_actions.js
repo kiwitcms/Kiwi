@@ -528,10 +528,6 @@ Nitrate.TestPlans.Edit.on_load = function() {
     jQ('#env_group_help').hide();
   });
   bind_version_selector_to_product(false);
-
-  jQ('.js-back-button').bind('click', function() {
-    window.location.href = jQ(this).data('param');
-  });
 }
 
 Nitrate.TestPlans.Advance_Search_List.on_load = function() {

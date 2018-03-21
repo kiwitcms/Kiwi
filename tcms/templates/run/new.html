@@ -28,7 +28,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 	<div class="sprites crumble">
 		<a href="{% url "core-views-index" %}">Home</a>
 		>> <a href="{% url "plans-all" %}">...</a>
-		>> <a href="{{ test_plan.get_absolute_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
+		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
 		>> New Test Run
 	</div>
 	<h2>Create New Test Run</h2>
@@ -116,7 +116,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 						{% empty%}
 						<div class="system_help">
 							<p>
-								Environment group must be set for this test plan (<b>{{ test_plan.product.name }}</b>:<b>{{ test_plan.product_version.value }}</b>:<b><a href="{{ test_plan.get_absolute_url }}">{{ test_plan }}</a></b>) before you will be able to select environments for this test run.If you do not have permission to edit this plan, please contact the author of this plan, mailto <a href="mailto:{{ test_plan.author.email }}">{{ test_plan.author.email }}</a>
+								Environment group must be set for this test plan (<b>{{ test_plan.product.name }}</b>:<b>{{ test_plan.product_version.value }}</b>:<b><a href="{{ test_plan.get_full_url }}">{{ test_plan }}</a></b>) before you will be able to select environments for this test run.If you do not have permission to edit this plan, please contact the author of this plan, mailto <a href="mailto:{{ test_plan.author.email }}">{{ test_plan.author.email }}</a>
 							</p>
 						</div>
 						{% endfor %}

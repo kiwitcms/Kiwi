@@ -32,7 +32,7 @@
 		<a href="{% url "core-views-index" %}">Home</a>
 		{% if request.GET.from_plan %}
 		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_run.plan.get_absolute_url }}">Test Plan :{{ test_run.plan.plan_id }}: {{ test_run.plan }}</a>
+		>> <a href="{{ test_run.plan.get_full_url }}">Test Plan :{{ test_run.plan.plan_id }}: {{ test_run.plan }}</a>
 		{% else %}
 		>> <a href="{% url "testruns-all" %}">Test Runs</a>
 		{% endif %}
@@ -125,7 +125,7 @@
 							<p>
 								Environment group must be set for this test plan (<b>{{ test_run.plan.product }}</b>:
 								<b>{{ test_run.product_version }}</b>:
-								<b><a href="{{ test_run.plan.get_absolute_url }}">{{ test_run.plan }}</a></b>
+								<b><a href="{{ test_run.plan.get_full_url }}">{{ test_run.plan }}</a></b>
 								) before you will be able to select environments for this test run.If you do not have permission to edit this plan,
 								please contact the author of this plan, mailto
 								<a href="mailto:{{ testplan.author.email }}">{{ test_run.plan.author.email }}</a>

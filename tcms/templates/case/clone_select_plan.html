@@ -13,11 +13,11 @@
 {% for test_plan in test_plans %}
 <tr class="{% cycle 'odd' 'even' %}">
 	<td align="center"><input type="checkbox" name="plan" value="{{ test_plan.plan_id }}" /></td>
-    <td><a href="{{ test_plan.get_absolute_url }}" target="_blank">{{ test_plan.plan_id }}</a></td>
+    <td><a href="{{ test_plan.get_full_url }}" target="_blank">{{ test_plan.plan_id }}</a></td>
     <td>{{ test_plan.type }}</td>
     <td>{{ test_plan.author }}</td>
     <td>{% if test_plan.is_active %} Yes {% else %} No {% endif %}</td>
-    <td><a href="{{ test_plan.get_absolute_url }}" target="_blank">{{ test_plan }}</a></td>
+    <td><a href="{{ test_plan.get_full_url }}" target="_blank">{{ test_plan }}</a></td>
 </tr>
 {% empty %}
 <tr><td>&nbsp;</td><td colspan="5">There are no plans</td></tr>
