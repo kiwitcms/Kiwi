@@ -101,7 +101,7 @@ class GroupByResult(object):
             total = self[self._total_name]
         else:
             total = 0
-            for name, subtotal in self._data.items():
+            for _, subtotal in self._data.items():
                 # NOTE: is it possible do such judgement in advance when adding
                 # element
                 if isinstance(subtotal, int):
@@ -125,12 +125,11 @@ class GroupByResult(object):
         subtotal = self[key]
         if total == 0:
             return .0
-        else:
-            return subtotal * 100.0 / total
+        return subtotal * 100.0 / total
 
     def __getattr__(self, name):
         if name.endswith('_percent'):
-            key, identifier = name.split('_')
+            key, _ = name.split('_')
             if key in self._data:
                 return self._get_percent(key)
         return 0
@@ -160,7 +159,7 @@ class GroupByResult(object):
             return self._meta['value_leaf_count']
 
         count = 0
-        for key, value in self.items():
+        for _, value in self.items():
             if isinstance(value, GroupByResult):
                 count += value.leaf_values_count(value_in_row)
             else:
