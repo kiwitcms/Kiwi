@@ -1,4 +1,4 @@
-{% load extra_filters %}A new test review has been created for you.
+A new test review has been created for you.
 
 ### Links ###
 Test run: {{ test_review.get_url }}
