@@ -1,3 +1,5 @@
+# pylint: disable=wildcard-import, unused-wildcard-import
+
 from tcms.settings.test import *  # noqa: F403
 
 DATABASES['default'].update({     # noqa: F405
