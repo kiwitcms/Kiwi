@@ -1,4 +1,7 @@
-# Django settings for devel env.
+# pylint: disable=wildcard-import, unused-wildcard-import
+"""
+    Django settings for devel env.
+"""
 
 import os
 from .product import *  # noqa: F403
