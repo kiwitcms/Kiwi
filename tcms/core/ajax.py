@@ -26,6 +26,7 @@ from tcms.signals import post_update
 from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
 from tcms.management.models import Tag
+from tcms.management.models import EnvGroup, EnvProperty, EnvValue
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus, TestCaseTag
@@ -45,9 +46,9 @@ def check_permission(request, ctype):
 
 def strip_parameters(request_dict, skip_parameters):
     parameters = {}
-    for k, v in request_dict.items():
-        if k not in skip_parameters and v:
-            parameters[str(k)] = v
+    for key, value in request_dict.items():
+        if key not in skip_parameters and value:
+            parameters[str(key)] = value
 
     return parameters
 
@@ -71,8 +72,6 @@ def info(request):
             self.internal_parameters = ('info_type', 'field', 'format')
 
         def builds(self):
-            from tcms.management.models import Build
-
             try:
                 _is_active = bool(strtobool(self.request.GET.get('is_active', 'False')))
             except (ValueError, TypeError):
@@ -85,47 +84,32 @@ def info(request):
             return Build.list(query)
 
         def categories(self):
-            from tcms.testcases.models import Category
-
             return Category.objects.filter(product__id=self.product_id)
 
         def components(self):
-            from tcms.management.models import Component
-
             return Component.objects.filter(product__id=self.product_id)
 
         def env_groups(self):
-            from tcms.management.models import EnvGroup
-
             return EnvGroup.objects.all()
 
         def env_properties(self):
-            from tcms.management.models import EnvGroup, EnvProperty
-
             if self.request.GET.get('env_group_id'):
                 env_group = EnvGroup.objects.get(
                     id=self.request.GET['env_group_id']
                 )
                 return env_group.property.all()
-            else:
-                return EnvProperty.objects.all()
+            return EnvProperty.objects.all()
 
         def env_values(self):
-            from tcms.management.models import EnvValue
-
             return EnvValue.objects.filter(
                 property__id=self.request.GET.get('env_property_id')
             )
 
         def users(self):
-            from django.contrib.auth.models import User
-
             query = strip_parameters(self.request.GET, self.internal_parameters)
             return User.objects.filter(**query)
 
         def versions(self):
-            from tcms.management.models import Version
-
             return Version.objects.filter(product__id=self.product_id)
 
     objects = Objects(request=request, product_id=request.GET.get('product_id'))
@@ -135,8 +119,8 @@ def info(request):
         if request.GET.get('format') == 'ulli':
             field = request.GET.get('field', 'name')
             response_str = '<ul>'
-            for o in obj().values(field):
-                response_str += '<li>' + o.get(field, None) + '</li>'
+            for obj_value in obj().values(field):
+                response_str += '<li>' + obj_value.get(field, None) + '</li>'
             response_str += '</ul>'
             return HttpResponse(response_str)
 
@@ -167,20 +151,17 @@ def form(request):
     # Get the form
     q_app, q_form = q_app_form.split('.')[0], q_app_form.split('.')[1]
     exec('from tcms.%s.forms import %s as form' % (q_app, q_form))
-    try:
-        __import__('tcms.%s.forms' % q_app)
-    except ImportError:
-        raise
+    __import__('tcms.%s.forms' % q_app)
     q_app_module = sys.modules['tcms.%s.forms' % q_app]
     form_class = getattr(q_app_module, q_form)
-    form = form_class(initial=parameters)
+    form_params = form_class(initial=parameters)
 
     # Generate the HTML and reponse
-    html = getattr(form, 'as_' + q_format)
+    html = getattr(form_params, 'as_' + q_format)
     return HttpResponse(html())
 
 
-def tag(request, template_name="management/get_tag.html"):
+def tags(request, template_name="management/get_tag.html"):
     """Get tags for test plan or test case"""
 
     class Objects(object):
@@ -188,10 +169,10 @@ def tag(request, template_name="management/get_tag.html"):
 
         def __init__(self, request, template_name):
             self.template_name = template_name
-            for obj in self.__all__:
-                if request.GET.get(obj):
-                    self.object = obj
-                    self.object_pk = request.GET.get(obj)
+            for obj_type in self.__all__:
+                if request.GET.get(obj_type):
+                    self.object = obj_type
+                    self.object_pk = request.GET.get(obj_type)
                     break
 
         def get(self):
@@ -213,17 +194,17 @@ def tag(request, template_name="management/get_tag.html"):
     class TagActions(object):
         __all__ = ['add', 'remove']
 
-        def __init__(self, obj, tag):
+        def __init__(self, obj, tag_obj):
             self.obj = obj
-            self.tag = tag
+            self.tag = tag_obj
 
         def add(self):
-            tag, _ = Tag.objects.get_or_create(name=self.tag)
-            self.obj.add_tag(tag)
+            tag_obj, _ = Tag.objects.get_or_create(name=self.tag)
+            self.obj.add_tag(tag_obj)
 
         def remove(self):
-            tag = Tag.objects.get(name=self.tag)
-            self.obj.remove_tag(tag)
+            tag_obj = Tag.objects.get(name=self.tag)
+            self.obj.remove_tag(tag_obj)
 
     objects = Objects(request, template_name)
     template_name, obj = objects.get()
@@ -232,28 +213,28 @@ def tag(request, template_name="management/get_tag.html"):
     q_action = request.GET.get('a')
 
     if q_action:
-        tag_actions = TagActions(obj=obj, tag=q_tag)
+        tag_actions = TagActions(obj=obj, tag_obj=q_tag)
         getattr(tag_actions, q_action)()
 
-    tags = obj.tag.all().order_by('pk')
+    all_tags = obj.tag.all().order_by('pk')
     test_plan_tags = TestPlanTag.objects.filter(
-        tag__in=tags).values('tag').annotate(num_plans=Count('tag')).order_by('tag')
+        tag__in=all_tags).values('tag').annotate(num_plans=Count('tag')).order_by('tag')
     test_case_tags = TestCaseTag.objects.filter(
-        tag__in=tags).values('tag').annotate(num_cases=Count('tag')).order_by('tag')
+        tag__in=all_tags).values('tag').annotate(num_cases=Count('tag')).order_by('tag')
     test_run_tags = TestRunTag.objects.filter(
-        tag__in=tags).values('tag').annotate(num_runs=Count('tag')).order_by('tag')
+        tag__in=all_tags).values('tag').annotate(num_runs=Count('tag')).order_by('tag')
 
     plan_counter = _TagCounter('num_plans', test_plan_tags)
     case_counter = _TagCounter('num_cases', test_case_tags)
     run_counter = _TagCounter('num_runs', test_run_tags)
 
-    for tag in tags:
+    for tag in all_tags:
         tag.num_plans = plan_counter.calculate_tag_count(tag)
         tag.num_cases = case_counter.calculate_tag_count(tag)
         tag.num_runs = run_counter.calculate_tag_count(tag)
 
     context_data = {
-        'tags': tags,
+        'tags': all_tags,
         'object': obj,
     }
     return render(request, template_name, context_data)
@@ -314,10 +295,10 @@ def get_value_by_type(val, v_type):
     value = error = None
 
     def get_time(time):
-        DT = datetime.datetime
+        date_time = datetime.datetime
         if time == 'NOW':
-            return DT.now()
-        return DT.strptime(time, '%Y%m%d %H%M%S')
+            return date_time.now()
+        return date_time.strptime(time, '%Y%m%d %H%M%S')
 
     pipes = {
         # Temporary solution is convert all of data to str
