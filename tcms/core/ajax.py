@@ -161,59 +161,17 @@ def form(request):
     return HttpResponse(html())
 
 
-def tags(request, template_name="management/get_tag.html"):
-    """Get tags for test plan or test case"""
+def tags(request):
+    """ Get tags for TestPlan, TestCase or TestRun """
 
-    class Objects(object):
-        __all__ = ['plan', 'case', 'run']
-
-        def __init__(self, request, template_name):
-            self.template_name = template_name
-            for obj_type in self.__all__:
-                if request.GET.get(obj_type):
-                    self.object = obj_type
-                    self.object_pk = request.GET.get(obj_type)
-                    break
-
-        def get(self):
-            func = getattr(self, self.object)
-            return func()
-
-        def plan(self):
-            return self.template_name, TestPlan.objects.get(
-                pk=self.object_pk)
-
-        def case(self):
-            return self.template_name, TestCase.objects.get(
-                pk=self.object_pk)
-
-        def run(self):
-            return 'run/get_tag.html', TestRun.objects.get(
-                pk=self.object_pk)
-
-    class TagActions(object):
-        __all__ = ['add', 'remove']
-
-        def __init__(self, obj, tag_obj):
-            self.obj = obj
-            self.tag = tag_obj
-
-        def add(self):
-            tag_obj, _ = Tag.objects.get_or_create(name=self.tag)
-            self.obj.add_tag(tag_obj)
-
-        def remove(self):
-            tag_obj = Tag.objects.get(name=self.tag)
-            self.obj.remove_tag(tag_obj)
-
-    objects = Objects(request, template_name)
-    template_name, obj = objects.get()
+    tag_objects = _TagObjects(request)
+    template_name, obj = tag_objects.get()
 
     q_tag = request.GET.get('tags')
     q_action = request.GET.get('a')
 
     if q_action:
-        tag_actions = TagActions(obj=obj, tag_obj=q_tag)
+        tag_actions = _TagActions(obj=obj, tag_name=q_tag)
         getattr(tag_actions, q_action)()
 
     all_tags = obj.tag.all().order_by('pk')
@@ -240,6 +198,59 @@ def tags(request, template_name="management/get_tag.html"):
     return render(request, template_name, context_data)
 
 
+class _TagObjects(object):
+    """ Used for getting the chosen object(TestPlan, TestCase or TestRun) from the database """
+
+    def __init__(self, request):
+        """
+        :param request: An HTTP GET request, containing the primary key
+                        and the type of object to be selected
+        :type request: HttpRequest
+        """
+        for obj in ['plan', 'case', 'run']:
+            if request.GET.get(obj):
+                self.object = obj
+                self.object_pk = request.GET.get(obj)
+                break
+
+    def get(self):
+        func = getattr(self, self.object)
+        return func()
+
+    def plan(self):
+        return 'management/get_tag.html', TestPlan.objects.get(pk=self.object_pk)
+
+    def case(self):
+        return 'management/get_tag.html', TestCase.objects.get(pk=self.object_pk)
+
+    def run(self):
+        return 'run/get_tag.html', TestRun.objects.get(pk=self.object_pk)
+
+
+class _TagActions(object):
+    """ Used for performing the 'add' and 'remove' actions on a given tag """
+
+    def __init__(self, obj, tag_name):
+        """
+        :param obj: the object for which the tag actions would be performed
+        :type obj: either a :class:`tcms.testplans.models.TestPlan`,
+                          a :class:`tcms.testcases.models.TestCase` or
+                          a :class:`tcms.testruns.models.TestRun`
+        :param tag_name: The name of the tag to be manipulated
+        :type tag_name: str
+        """
+        self.obj = obj
+        self.tag_name = tag_name
+
+    def add(self):
+        tag, _ = Tag.objects.get_or_create(name=self.tag_name)
+        self.obj.add_tag(tag)
+
+    def remove(self):
+        tag = Tag.objects.get(name=self.tag_name)
+        self.obj.remove_tag(tag)
+
+
 class _TagCounter(object):
     """ Used for counting the number of times a tag is assigned to TestRun/TestCase/TestPlan """
 
@@ -259,7 +270,7 @@ class _TagCounter(object):
     def calculate_tag_count(self, tag):
         """
         :param tag: the tag you do the counting for
-        :type tag: Tag
+        :type tag: :class:`tcms.management.models.Tag`
         :return: the number of times a tag is assigned to object
         :rtype: int
         """

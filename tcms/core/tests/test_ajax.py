@@ -6,12 +6,14 @@ from django import test
 from django.urls import reverse
 from django.conf import settings
 from django.db.models import Count
+from django.http.request import HttpRequest
 
-from tcms.core.ajax import _TagCounter
+from tcms.core.ajax import _TagCounter, _TagActions, _TagObjects
 from tcms.testplans.models import TestPlanTag
 from tcms.testruns.models import TestRunTag
 from tcms.testcases.models import TestCase, TestCaseTag
 from tcms.tests import BasePlanCase
+from tcms.management.models import Tag
 
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import TestRunFactory
@@ -233,6 +235,71 @@ class Test_Tag_Render(Test_Tag_Test):
         self.assertContains(response, '>4</a>')
         self.assertContains(response, '>5</a>')
         self.assertContains(response, '>6</a>')
+
+
+class Test_Tag_Objects(test.TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.request = HttpRequest()
+
+        cls.test_plan = TestPlanFactory()
+        cls.test_case = TestCaseFactory()
+        cls.test_run = TestRunFactory()
+
+    def test_get_plan(self):
+        self.request.GET = {'plan': self.test_plan.pk}
+        tag_objects = _TagObjects(self.request)
+
+        self.assertEqual(tag_objects.get()[0], 'management/get_tag.html')
+        self.assertEqual(tag_objects.get()[1], self.test_plan)
+
+    def test_get_case(self):
+        self.request.GET = {'case': self.test_case.pk}
+        tag_objects = _TagObjects(self.request)
+
+        self.assertEqual(tag_objects.get()[0], 'management/get_tag.html')
+        self.assertEqual(tag_objects.get()[1], self.test_case)
+
+    def test_get_run(self):
+        self.request.GET = {'run': self.test_run.pk}
+        tag_objects = _TagObjects(self.request)
+
+        self.assertEqual(tag_objects.get()[0], 'run/get_tag.html')
+        self.assertEqual(tag_objects.get()[1], self.test_run)
+
+
+class Test_Tag_Actions(test.TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_plan = TestPlanFactory()
+        cls.test_case = TestCaseFactory()
+        cls.test_run = TestRunFactory()
+
+        cls.tag = TagFactory()
+
+        cls.test_run.add_tag(cls.tag)
+
+    def test_add_tag_to_obj(self):
+        tag_actions = _TagActions(self.test_plan, self.tag.name)
+        tag_actions.add()
+
+        self.assertEqual(TestPlanTag.objects.filter(plan=self.test_plan).count(), 1)
+
+    def test_create_tag_and_add_to_obj(self):
+        tag_actions = _TagActions(self.test_case, 'tag_name')
+        tag_actions.add()
+
+        self.assertEqual(Tag.objects.filter(name='tag_name').count(), 1)
+        self.assertEqual(TestCaseTag.objects.filter(case=self.test_case).count(), 1)
+
+    def test_remove_tag_from_obj(self):
+        tag_actions = _TagActions(self.test_run, self.tag.name)
+        tag_actions.remove()
+
+        self.assertEqual(Tag.objects.filter(name=self.tag.name).count(), 1)
+        self.assertEqual(TestRunTag.objects.filter(run=self.test_run).count(), 0)
 
 
 class Test_Tag_Counter(test.TestCase):
