@@ -72,8 +72,8 @@ class TestRun(TCMSActionModel):
 
         _query = query or {}
         qs = distinct_filter(TestRun, _query).order_by('pk')
-        s = TestRunXMLRPCSerializer(model_class=cls, queryset=qs)
-        return s.serialize_queryset()
+        serializer = TestRunXMLRPCSerializer(model_class=cls, queryset=qs)
+        return serializer.serialize_queryset()
 
     @classmethod
     def list(cls, query):
@@ -127,16 +127,6 @@ class TestRun(TCMSActionModel):
 
         return False
 
-    def check_all_case_runs(self, case_run_id=None):
-        tcrs = self.case_run.all()
-        tcrs = tcrs.select_related('case_run_status')
-
-        for tcr in tcrs:
-            if not tcr.is_finished():
-                return False
-
-        return True
-
     def _get_absolute_url(self):
         return reverse('testruns-get', args=[self.pk, ])
 
@@ -144,15 +134,15 @@ class TestRun(TCMSActionModel):
         """
         Get the all related mails from the run
         """
-        to = [self.manager.email]
-        to.extend(self.cc.values_list('email', flat=True))
+        send_to = [self.manager.email]
+        send_to.extend(self.cc.values_list('email', flat=True))
         if self.default_tester_id:
-            to.append(self.default_tester.email)
+            send_to.append(self.default_tester.email)
 
         for tcr in self.case_run.select_related('assignee').all():
             if tcr.assignee_id:
-                to.append(tcr.assignee.email)
-        return list(set(to))
+                send_to.append(tcr.assignee.email)
+        return list(set(send_to))
 
     # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, case_run_status=1, assignee=None,
@@ -208,12 +198,6 @@ class TestRun(TCMSActionModel):
     def remove_env_value(self, env_value):
         EnvRunValueMap.objects.filter(run=self, value=env_value).delete()
 
-    def mail(self, template, subject, context, to=[], request=None):
-        from tcms.core.utils.mailto import mailto
-
-        to = self.get_notify_addrs()
-        mailto(template, subject, to, context, request)
-
     def get_bug_count(self):
         """
             Return the count of distinct bug numbers recorded for
@@ -268,8 +252,8 @@ class TestRun(TCMSActionModel):
             used for display purposes.
         """
         result = ""
-        for ev in self.env_value.all():
-            result += "%s:%s\n" % (ev.property.name, ev.value)
+        for env_value in self.env_value.all():
+            result += "%s:%s\n" % (env_value.property.name, env_value.value)
         return result
 
     def stats_caseruns_status(self, case_run_statuses=None):
@@ -363,11 +347,6 @@ class TestCaseRunStatus(TCMSActionModel):
     def get_names_ids(cls):
         '''Get all status names in reverse mapping between name and id'''
         return dict((name, _id) for _id, name in cls.get_names().items())
-
-    def is_finished(self):
-        if self.name in ['PASSED', 'FAILED', 'ERROR', 'WAIVED']:
-            return True
-        return False
 
     @classmethod
     def id_to_string(cls, _id):
@@ -467,11 +446,11 @@ class TestCaseRunStatus(TCMSActionModel):
         are needed frequently enough to be cached.
         """
         key_cache = '_cache'
-        cache = getattr(cls, key_cache, {})
+        _cache = getattr(cls, key_cache, {})
         if not hasattr(cls, key_cache):
-            setattr(cls, key_cache, cache)
+            setattr(cls, key_cache, _cache)
 
-        return cache
+        return _cache
 
     @classmethod
     def cache_get(cls, key):
@@ -556,22 +535,22 @@ class TestCaseRun(TCMSActionModel):
         from tcms.xmlrpc.utils import distinct_filter
 
         qs = distinct_filter(TestCaseRun, query).order_by('pk')
-        s = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=qs)
-        return s.serialize_queryset()
+        serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=qs)
+        return serializer.serialize_queryset()
 
     @classmethod
     def mail_scene(cls, objects, field=None, value=None, ctype=None,
                    object_pk=None):
-        tr = objects[0].run
+        test_run = objects[0].run
         # scence_templates format:
         # template, subject, context
         tcrs = objects.select_related()
         scence_templates = {
             'assignee': {
                 'template_name': 'mail/change_case_run_assignee.txt',
-                'subject': 'Assignee of run %s has been changed' % tr.run_id,
-                'recipients': tr.get_notify_addrs(),
-                'context': {'test_run': tr, 'test_case_runs': tcrs},
+                'subject': 'Assignee of run %s has been changed' % test_run.run_id,
+                'recipients': test_run.get_notify_addrs(),
+                'context': {'test_run': test_run, 'test_case_runs': tcrs},
             }
         }
 
@@ -590,9 +569,6 @@ class TestCaseRun(TCMSActionModel):
 
     def remove_bug(self, bug_id, run_id=None):
         self.case.remove_bug(bug_id=bug_id, run_id=run_id)
-
-    def is_finished(self):
-        return self.case_run_status.is_finished()
 
     def get_bugs(self):
         return Bug.objects.filter(
