@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-
-import json
+import http.client as http_client
 
 from django import http
 from django.forms import IntegerField
@@ -50,8 +48,7 @@ def create_link(data):
                 'url': url,
             }
         }
-    else:
-        return {'rc': 1, 'response': form.errors.as_text()}
+    return {'rc': 1, 'response': form.errors.as_text()}
 
 
 @permission_required('testruns.change_testcaserun')
@@ -65,7 +62,7 @@ def add(request):
     Incoming request should be a POST request, and contains following
     arguments:
 
-    - target: To which the new link will link to. The avialable target names
+    - target: To which the new link will link to. The available target names
       are documented in the ``LINKREF_TARGET``.
     - target_id: the ID used to construct the concrete target instance, to
       which the new link will be linked.
@@ -74,24 +71,23 @@ def add(request):
     - url: the actual URL.
     '''
 
-    jd = create_link(request.POST)
-    if jd['rc'] == 0:
-        return http.JsonResponse(jd)
-    else:
-        return http.HttpResponseBadRequest(content=json.dumps(jd), content_type='application/json')
+    json_data = create_link(request.POST)
+    if json_data['rc'] == 0:
+        return http.JsonResponse(json_data)
+    return http.JsonResponse(json_data, status=http_client.BAD_REQUEST)
 
 
 @permission_required('testruns.change_testcaserun')
 @require_GET
-def remove(request, link_id):
+def remove(_request, link_id):
     ''' Remove a specific link with ID ``link_id`` '''
 
     field = IntegerField(min_value=1)
     try:
         value = field.clean(link_id)
     except ValidationError as err:
-        jd = json.dumps({'rc': 1, 'response': '\n'.join(err.messages)})
-        return http.HttpResponseBadRequest(content=jd, content_type='application/json')
+        json_data = {'rc': 1, 'response': '\n'.join(err.messages)}
+        return http.JsonResponse(json_data, status=http_client.BAD_REQUEST)
 
     # this will silently ignore non-existing objects
     LinkReference.objects.filter(pk=value).delete()
