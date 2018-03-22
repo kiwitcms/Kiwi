@@ -2,16 +2,14 @@
 {% load static %}
 {% block subtitle %}{{ test_run.summary }}{% endblock %}
 
-{% block custom_stylesheet %}
-{% endblock %}
-
 {% block custom_javascript %}
-	<script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
-	<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
-	<script type="text/javascript">
-	Nitrate.Utils.after_page_load(Nitrate.TestRuns.Edit.on_load);
-	</script>
+<script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.TestRuns.Edit.on_load);
+</script>
 {% endblock %}
 
 {% block content_type %}
