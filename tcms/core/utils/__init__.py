@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
+#  pylint: disable=too-few-public-methods
 
 import re
 from django.conf import settings
 
-numeric_re = re.compile(r'^\d+$')
 
-
-def is_int(s):
-    return numeric_re.match(s) is not None
+def is_int(string):
+    return re.compile(r'^\d+$').match(string) is not None
 
 
 def string_to_list(strs, spliter=','):
@@ -29,11 +28,11 @@ def form_errors_to_list(form):
     return [(k, str(v[0])) for k, v in form.errors.items()]
 
 
-def calc_percent(x, y):
-    if not x or not y:
+def calc_percent(dividend, divisor):
+    if not dividend or not divisor:
         return 0
 
-    return float(x) / y * 100
+    return float(dividend) / divisor * 100
 
 
 def request_host_link(request=None, domain_name=None):
@@ -59,19 +58,19 @@ def clean_request(request, keys=None):
     request_contents = request.GET.copy()
     if not keys:
         keys = request_contents.keys()
-    rt = {}
-    for k in keys:
-        k = str(k)
-        if request_contents.get(k):
-            if k == 'order_by' or k == 'from_plan':
+    cleaned_request = {}
+    for key in keys:
+        key = str(key)
+        if request_contents.get(key):
+            if key == 'order_by' or key == 'from_plan':
                 continue
 
-            v = request.GET[k]
+            value = request.GET[key]
             # Convert the value to be list if it's __in filter.
-            if k.endswith('__in') and isinstance(v, str):
-                v = string_to_list(v)
-            rt[k] = v
-    return rt
+            if key.endswith('__in') and isinstance(value, str):
+                value = string_to_list(value)
+            cleaned_request[key] = value
+    return cleaned_request
 
 
 class QuerySetIterationProxy(object):
