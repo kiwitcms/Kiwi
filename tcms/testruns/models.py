@@ -370,14 +370,6 @@ class TestCaseRunStatus(TCMSActionModel):
         return False
 
     @classmethod
-    def get_IDLE(cls):
-        key = 'IDLE'
-        result = cls.cache_get(key)
-        if result is None:
-            result = cls.cache_set(key, cls.objects.get(name='IDLE'))
-        return result
-
-    @classmethod
     def id_to_string(cls, _id):
         key = 'id_to_string_' + str(_id)
         result = cls.cache_get(key)
