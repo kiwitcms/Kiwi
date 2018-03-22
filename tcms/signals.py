@@ -21,7 +21,6 @@ altering the following setting::
 """
 from django.dispatch import Signal
 
-
 __all__ = [
     'post_update',
     'user_registered',
@@ -61,8 +60,8 @@ def notify_admins(sender, **kwargs):
     from django.conf import settings
     from django.utils.translation import ugettext_lazy as _
 
-    from .core.utils.mailto import mailto
-    from .core.utils import request_host_link
+    from tcms.core.utils.mailto import mailto
+    from tcms.core.utils import request_host_link
 
     request = kwargs.get('request')
     user = kwargs.get('user')
@@ -123,6 +122,7 @@ def handle_emails_post_run_save(sender, *args, **kwargs):
         Send email updates after a TestRus has been created or updated!
     """
     from django.utils.translation import gettext as _
+    from tcms.core.utils.mailto import mailto
 
     instance = kwargs['instance']
 
@@ -131,11 +131,10 @@ def handle_emails_post_run_save(sender, *args, **kwargs):
     else:
         subject = _('TestRun %(summary)s has been updated') % {'summary': instance.summary}
 
-    instance.mail(
-        template='email/post_run_save/email.txt',
-        subject=subject,
-        context={'test_run': instance}
-    )
+    mailto(template_name='email/post_run_save/email.txt',
+           subject=subject,
+           recipients=instance.get_notify_addrs(),
+           context={'test_run': instance})
 
 
 def handle_post_case_run_save(sender, *args, **kwargs):
