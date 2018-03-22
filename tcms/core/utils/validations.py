@@ -30,7 +30,7 @@ def validate_bug_id(bug_id, bug_system_id):
     else:
         id_pattern = bug_system.validate_reg_exp
         if not id_pattern:
-            return None
+            return
         reg_exp = re.compile(id_pattern)
 
         def error_if_not_match(bug_id):
