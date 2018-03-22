@@ -6,14 +6,14 @@ register = template.Library()
 
 
 @register.filter(name='smart_int')
-def smart_int(object):
-    if not object:
-        return object
+def smart_int(obj):
+    if not obj:
+        return obj
 
     try:
-        return int(object)
+        return int(obj)
     except ValueError:
-        return object
+        return obj
 
 
 @register.filter(name='message_icon')
