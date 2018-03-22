@@ -13,5 +13,4 @@ Submodules
 
    tcms.core.forms.fields
    tcms.core.forms.forms
-   tcms.core.forms.widgets
 

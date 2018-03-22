@@ -7,16 +7,17 @@ from itertools import groupby
 from django.db.models import ObjectDoesNotExist
 from django.db.models.fields.related import ForeignKey
 
-from tcms.core.forms.widgets import SECONDS_PER_DAY
-from tcms.core.forms.widgets import SECONDS_PER_HOUR
-from tcms.core.forms.widgets import SECONDS_PER_MIN
 # TODO: to encode all strings in UTF-8 instead of mixing unicode and byte
 # string.
 # TODO: to claim the sequence of the primary keys of each ManyToManyField is
 # arbitrary.
 
+SECONDS_PER_MIN = 60
+SECONDS_PER_HOUR = 3600
+SECONDS_PER_DAY = 86400
 
 # ## Data format conversion functions ###
+
 
 def do_nothing(value):
     return value
