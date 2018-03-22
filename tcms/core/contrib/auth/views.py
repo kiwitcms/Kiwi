@@ -11,11 +11,10 @@ from django.views.decorators.http import require_GET
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
-
-from . import get_using_backend
-from .forms import RegistrationForm
-from .models import UserActivateKey
 from tcms.signals import user_registered
+from tcms.core.contrib.auth import get_using_backend
+from tcms.core.contrib.auth.forms import RegistrationForm
+from tcms.core.contrib.auth.models import UserActivateKey
 
 
 @require_http_methods(['GET', 'POST'])
@@ -23,8 +22,8 @@ def register(request, template_name='registration/registration_form.html'):
     """Register method of account"""
     # Check that registration is allowed by backend
     backend = get_using_backend()
-    cr = getattr(backend, 'can_register')  # can register
-    if not cr:
+    can_register = getattr(backend, 'can_register')
+    if not can_register:
         messages.add_message(
             request,
             messages.ERROR,
@@ -36,7 +35,7 @@ def register(request, template_name='registration/registration_form.html'):
         form = RegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             new_user = form.save()
-            ak = form.set_active_key()
+            activation_key = form.set_active_key()
             # send a signal that new user has been registered
             user_registered.send(sender=form.__class__,
                                  request=request,
@@ -45,7 +44,7 @@ def register(request, template_name='registration/registration_form.html'):
 
             # Send confirmation email to new user
             if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
-                form.send_confirm_mail(request=request, active_key=ak)
+                form.send_confirm_mail(request=request, active_key=activation_key)
 
                 messages.add_message(
                     request,
@@ -87,8 +86,8 @@ def confirm(request, activation_key):
 
     # Get the object
     try:
-        ak = UserActivateKey.objects.select_related('user')
-        ak = ak.get(activation_key=activation_key)
+        active_key = UserActivateKey.objects.select_related('user')
+        active_key = active_key.get(activation_key=activation_key)
     except UserActivateKey.DoesNotExist:
         messages.add_message(
             request,
@@ -97,15 +96,15 @@ def confirm(request, activation_key):
         )
         return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
-    if ak.key_expires <= datetime.now():
+    if active_key.key_expires <= datetime.now():
         messages.add_message(request, messages.ERROR, _('This activation key has expired'))
         return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
     # All thing done, start to active the user and use the user login
-    user = ak.user
+    user = active_key.user
     user.is_active = True
     user.save(update_fields=['is_active'])
-    ak.delete()
+    active_key.delete()
 
     messages.add_message(
         request,
