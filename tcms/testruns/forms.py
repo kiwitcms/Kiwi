@@ -86,11 +86,11 @@ class BaseRunForm(forms.Form):
         self.fields['build'].queryset = Build.list_active(query)
 
     def clean_estimated_time(self):
-        et = self.cleaned_data.get('estimated_time', timedelta(0))
+        estimated_time = self.cleaned_data.get('estimated_time', timedelta(0))
         # can be either None, '', 0 or timedelta(0)
-        if not et:
-            et = timedelta(0)
-        return et
+        if not estimated_time:
+            estimated_time = timedelta(0)
+        return estimated_time
 
 
 class NewRunForm(BaseRunForm):
@@ -339,7 +339,7 @@ class XMLRPCNewCaseRunForm(BaseCaseRunForm):
     def clean_case_run_status(self):
         data = self.cleaned_data.get('case_run_status')
         if not data:
-            data = TestCaseRunStatus.get_IDLE()
+            data = TestCaseRunStatus.objects.get(name='IDLE')
 
         return data
 
