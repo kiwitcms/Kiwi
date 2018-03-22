@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# pylint: disable=missing-docstring
 
 import os
 import sys
