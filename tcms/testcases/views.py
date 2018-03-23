@@ -384,31 +384,6 @@ def paginate_testcases(request, testcases):
     return testcases[offset:offset + page_size]
 
 
-def query_testcases(request, plan, search_form):
-    '''Query TestCases according to the criterias along with REQUEST'''
-    # FIXME: search_form is not defined before being used.
-    action = request.POST.get('a')
-    if action in TESTCASE_OPERATION_ACTIONS and search_form.is_valid():
-        tcs = TestCase.list(search_form.cleaned_data, plan)
-    elif action == 'initial':
-        d_status = get_case_status(request.POST.get('template_type'))
-        tcs = TestCase.objects.filter(case_status__in=d_status)
-    else:
-        tcs = TestCase.objects.none()
-
-    # Search the relationship
-    if plan:
-        tcs = tcs.filter(plan=plan)
-
-    tcs = tcs.select_related('author',
-                             'default_tester',
-                             'case_status',
-                             'priority',
-                             'category',
-                             'reviewer')
-    return tcs
-
-
 def sort_queried_testcases(request, testcases):
     '''Sort querid TestCases according to sort key
 
@@ -443,7 +418,31 @@ def query_testcases_from_request(request, plan=None):
       the TestPlan. Can be None. As you know, query from all TestCases.
     '''
     search_form = build_cases_search_form(request)
-    return query_testcases(request, plan, search_form)
+
+    action = request.POST.get('a')
+    if action == 'initial':
+        # todo: build_cases_search_form will also check TESTCASE_OPERATION_ACTIONS
+        # and return slightly different values in case of initialization
+        # move the check there and just execute the query here if the data
+        # is valid
+        d_status = get_case_status(request.POST.get('template_type'))
+        tcs = TestCase.objects.filter(case_status__in=d_status)
+    elif action in TESTCASE_OPERATION_ACTIONS and search_form.is_valid():
+        tcs = TestCase.list(search_form.cleaned_data, plan)
+    else:
+        tcs = TestCase.objects.none()
+
+    # Search the relationship
+    if plan:
+        tcs = tcs.filter(plan=plan)
+
+    tcs = tcs.select_related('author',
+                             'default_tester',
+                             'case_status',
+                             'priority',
+                             'category',
+                             'reviewer')
+    return tcs, search_form
 
 
 def get_selected_testcases(request):
@@ -464,7 +463,8 @@ def get_selected_testcases(request):
     REQ = request.POST or request.GET
     if REQ.get('selectAll', None):
         plan = plan_from_request_or_none(request)
-        return query_testcases_from_request(request, plan)
+        cases, _search_form = query_testcases_from_request(request, plan)
+        return cases
     else:
         pks = [int(pk) for pk in REQ.getlist('case')]
         return TestCase.objects.filter(pk__in=pks)
@@ -476,7 +476,7 @@ def load_more_cases(request, template_name='plan/cases_rows.html'):
     cases = []
     selected_case_ids = []
     if plan is not None:
-        cases = query_testcases_from_request(request, plan)
+        cases, _search_form = query_testcases_from_request(request, plan)
         cases = sort_queried_testcases(request, cases)
         cases = paginate_testcases(request, cases)
         cases = calculate_for_testcases(plan, cases)
@@ -548,7 +548,7 @@ def all(request):
                              _('TestPlan not specified or does not exist'))
         return HttpResponseRedirect(reverse('core-views-index'))
 
-    tcs = query_testcases(request, tp, None)
+    tcs, search_form = query_testcases_from_request(request, tp)
     tcs = sort_queried_testcases(request, tcs)
     total_cases_count = tcs.count()
 
@@ -581,6 +581,7 @@ def all(request):
     context_data = {
         'test_cases': tcs,
         'test_plan': tp,
+        'search_form': search_form,
         'selected_case_ids': selected_case_ids,
         'case_status': TestCaseStatus.objects.all(),
         'priorities': Priority.objects.all(),
