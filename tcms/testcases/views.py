@@ -490,27 +490,6 @@ def load_more_cases(request, template_name='plan/cases_rows.html'):
     return render(request, template_name, context_data)
 
 
-def get_selected_cases_ids(request):
-    '''Get cases' IDs to restore the checked status after current operation
-
-    The cases whose ID appears in REQUEST is handled, and they should be
-    checked when user sees the page returned after current operation.
-
-    If there is no case argument in REQUEST, check all. This is also the
-    default behavior.
-
-    Return values:
-    - a list of IDs, which should be checked.
-    - empty list, representing select all.
-    '''
-    REQUEST = request.POST
-    if REQUEST.get('case'):
-        # FIXME: why do not use list comprehension.
-        return map(lambda f: int(f), REQUEST.getlist('case'))
-    else:
-        return []
-
-
 def get_tags_from_cases(case_ids, plan=None):
     '''Get all tags from test cases
 
@@ -552,9 +531,6 @@ def all(request):
     tcs = sort_queried_testcases(request, tcs)
     total_cases_count = tcs.count()
 
-    # Initial the case ids
-    selected_case_ids = get_selected_cases_ids(request)
-
     # Get the tags own by the cases
     ttags = get_tags_from_cases((case.pk for case in tcs), tp)
 
@@ -582,7 +558,8 @@ def all(request):
         'test_cases': tcs,
         'test_plan': tp,
         'search_form': search_form,
-        'selected_case_ids': selected_case_ids,
+        # selected_case_ids is used in template to decide whether or not this TestCase is selected
+        'selected_case_ids': [test_case.pk for test_case in get_selected_testcases(request)],
         'case_status': TestCaseStatus.objects.all(),
         'priorities': Priority.objects.all(),
         'case_own_tags': ttags,
