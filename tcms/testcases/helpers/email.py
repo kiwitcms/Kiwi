@@ -6,7 +6,7 @@ from tcms.core.utils.mailto import mailto
 
 def email_case_update(case):
     recipients = get_case_notification_recipients(case)
-    if len(recipients) == 0:
+    if not recipients:
         return
     cc = case.emailing.get_cc_list()
     subject = 'TestCase %s has been updated.' % case.pk
@@ -21,7 +21,7 @@ def email_case_update(case):
 def email_case_deletion(case):
     recipients = get_case_notification_recipients(case)
     cc = case.emailing.get_cc_list()
-    if len(recipients) == 0:
+    if not recipients:
         return
     subject = 'TestCase %s has been deleted.' % case.pk
     context = {
