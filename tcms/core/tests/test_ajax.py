@@ -11,7 +11,7 @@ from django.http.request import HttpRequest
 from tcms.core.ajax import _TagCounter, _TagActions, _TagObjects
 from tcms.testplans.models import TestPlanTag
 from tcms.testruns.models import TestRunTag
-from tcms.testcases.models import TestCase, TestCaseTag
+from tcms.testcases.models import TestCase, TestCaseTag, Category
 from tcms.tests import BasePlanCase
 from tcms.management.models import Tag
 
@@ -19,11 +19,23 @@ from tcms.tests.factories import TagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import CategoryFactory
+from tcms.tests.factories import ProductFactory
 
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
 class TestInfo(test.TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.product = ProductFactory()
+
+        cls.default_category = Category.objects.get(name='--default--')
+        cls.category_one = CategoryFactory(product=cls.product)
+        cls.category_two = CategoryFactory(product=cls.product)
+
+        cls.categories = [cls.default_category, cls.category_one, cls.category_two]
 
     def test_lowercase_string_is_converted_to_bool(self):
         url = "%s?info_type=builds&product_id=1&is_active=true" % reverse('ajax-info')
@@ -34,6 +46,47 @@ class TestInfo(test.TestCase):
         url = "%s?info_type=builds&product_id=1&is_active=" % reverse('ajax-info')
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
+
+    def test_with_ulli_format(self):
+        """ When a request comes with info_type=categories, and format=ulli for given product_id,
+            we expect to receive all categories for that product, rendered as HTML unordered list
+        """
+
+        url = '%s?info_type=categories&product_id=%d&format=ulli' % (reverse('ajax-info'),
+                                                                     self.product.pk)
+
+        response = self.client.get(url)
+
+        for category in self.categories:
+            self.assertContains(response, '<li>' + category.name + '</li>')
+
+        self.assertContains(response, '<ul>')
+        self.assertContains(response, '</ul>')
+
+    def test_with_unrecognisable_infotype(self):
+        """ When a request comes with invalid info_type,
+            we expect to receive response containing the 'Unrecognizable infotype' error message
+        """
+
+        url = "%s?info_type=INVALID" % reverse('ajax-info')
+
+        response = self.client.get(url)
+
+        self.assertContains(response, 'Unrecognizable infotype')
+
+    def test_with_json_format(self):
+        """ When a request comes with info_type=categories for given product_id,
+            we expect to receive all categories for that product as array of JSON objects """
+
+        url = "%s?info_type=categories&product_id=%d" % (reverse('ajax-info'), self.product.pk)
+
+        response = self.client.get(url)
+        actual_response = json.loads(response.content, encoding=settings.DEFAULT_CHARSET)
+
+        for category in self.categories:
+            expected = {"model": "testcases.category", "pk": category.pk,
+                        "fields": {"name": category.name}}
+            self.assertIn(expected, actual_response)
 
 
 class Test_TestCaseUpdateActions(BasePlanCase):
