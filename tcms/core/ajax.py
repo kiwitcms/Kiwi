@@ -55,7 +55,7 @@ def strip_parameters(request_dict, skip_parameters):
 
 @require_GET
 def info(request):
-    """Ajax responsor for misc information"""
+    """Ajax responder for misc information"""
 
     objects = _InfoObjects(request=request, product_id=request.GET.get('product_id'))
     info_type = getattr(objects, request.GET.get('info_type'))
@@ -74,6 +74,54 @@ def info(request):
         return HttpResponse(response_str)
 
     return HttpResponse(serializers.serialize('json', info_type(), fields=('name', 'value')))
+
+
+class _InfoObjects(object):
+
+    def __init__(self, request, product_id=None):
+        self.request = request
+        try:
+            self.product_id = int(product_id)
+        except (ValueError, TypeError):
+            self.product_id = 0
+
+    def builds(self):
+        try:
+            is_active = strtobool(self.request.GET.get('is_active', default='False'))
+        except (ValueError, TypeError):
+            _is_active = False
+
+        query = {
+            'product_id': self.product_id,
+            'is_active': _is_active
+        }
+
+        return Build.list(query)
+
+    def categories(self):
+        return Category.objects.filter(product__id=self.product_id)
+
+    def components(self):
+        return Component.objects.filter(product__id=self.product_id)
+
+    def env_groups(self):
+        return EnvGroup.objects.all()
+
+    def env_properties(self):
+        if self.request.GET.get('env_group_id'):
+            return EnvGroup.objects.get(id=self.request.GET['env_group_id']).property.all()
+        return EnvProperty.objects.all()
+
+    def env_values(self):
+        return EnvValue.objects.filter(property__id=self.request.GET.get('env_property_id'))
+
+    def users(self):
+        query = strip_parameters(self.request.GET, skip_parameters=('info_type', 'field', 'format'))
+        return User.objects.filter(**query)
+
+    def versions(self):
+        return Version.objects.filter(product__id=self.product_id)
+
 
 @require_GET
 def form(request):

@@ -8,7 +8,7 @@ from django.conf import settings
 from django.db.models import Count
 from django.http.request import HttpRequest
 
-from tcms.core.ajax import _TagCounter, _TagActions, _TagObjects
+from tcms.core.ajax import _TagCounter, _TagActions, _TagObjects, _InfoObjects
 from tcms.testplans.models import TestPlanTag
 from tcms.testruns.models import TestRunTag
 from tcms.testcases.models import TestCase, TestCaseTag, Category
@@ -20,7 +20,15 @@ from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import CategoryFactory
+from tcms.tests.factories import ComponentFactory
+from tcms.tests.factories import EnvGroupFactory
+from tcms.tests.factories import EnvPropertyFactory
+from tcms.tests.factories import EnvGroupPropertyMapFactory
 from tcms.tests.factories import ProductFactory
+from tcms.tests.factories import EnvValueFactory
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import VersionFactory
+from tcms.tests.factories import BuildFactory
 
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
@@ -87,6 +95,127 @@ class TestInfo(test.TestCase):
             expected = {"model": "testcases.category", "pk": category.pk,
                         "fields": {"name": category.name}}
             self.assertIn(expected, actual_response)
+
+
+class Test_InfoObjects(test.TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.product = ProductFactory()
+        cls.request = HttpRequest()
+
+        cls.info_objects = _InfoObjects(cls.request, cls.product.pk)
+
+        cls.build_one = BuildFactory(product=cls.product)
+        cls.build_two = BuildFactory(product=cls.product)
+        cls.build_two.is_active = False
+        cls.build_two.save()
+
+        cls.category_one = CategoryFactory(product=cls.product)
+        cls.category_two = CategoryFactory(product=cls.product)
+        cls.category_three = CategoryFactory()
+
+        cls.component_one = ComponentFactory(product=cls.product)
+        cls.component_two = ComponentFactory(product=cls.product)
+        cls.component_three = ComponentFactory()
+
+        cls.env_group_one = EnvGroupFactory()
+        cls.env_group_two = EnvGroupFactory()
+
+        cls.env_property_one = EnvPropertyFactory()
+        cls.env_property_two = EnvPropertyFactory()
+        EnvGroupPropertyMapFactory(group=cls.env_group_one, property=cls.env_property_one)
+
+        cls.env_value_one = EnvValueFactory(property=cls.env_property_one)
+        cls.env_value_two = EnvValueFactory()
+
+        cls.user_one = UserFactory()
+        cls.user_two = UserFactory()
+
+        cls.version_one = VersionFactory(product=cls.product)
+        cls.version_two = VersionFactory()
+
+    def test_active_builds(self):
+        self.request.GET = {'is_active': 'True'}
+
+        info_objects = _InfoObjects(self.request, self.product.pk)
+        builds = info_objects.builds()
+
+        self.assertIn(self.build_one, builds)
+        self.assertNotIn(self.build_two, builds)
+
+    def test_non_active_builds(self):
+        self.request.GET = {'is_active': 'False'}
+
+        info_objects = _InfoObjects(self.request, self.product.pk)
+        builds = info_objects.builds()
+
+        self.assertIn(self.build_two, builds)
+        self.assertNotIn(self.build_one, builds)
+
+    def test_categories(self):
+
+        categories = self.info_objects.categories()
+
+        self.assertIn(self.category_one, categories)
+        self.assertIn(self.category_two, categories)
+        self.assertNotIn(self.category_three, categories)
+
+    def test_components(self):
+
+        components = self.info_objects.components()
+
+        self.assertIn(self.component_one, components)
+        self.assertIn(self.component_two, components)
+        self.assertNotIn(self.component_three, components)
+
+    def test_env_groups(self):
+
+        env_groups = self.info_objects.env_groups()
+
+        self.assertIn(self.env_group_one, env_groups)
+        self.assertIn(self.env_group_two, env_groups)
+
+    def test_env_properties(self):
+
+        env_properties = self.info_objects.env_properties()
+
+        self.assertIn(self.env_property_one, env_properties)
+        self.assertIn(self.env_property_two, env_properties)
+
+    def test_env_properties_by_env_group(self):
+        self.request.GET = {'env_group_id': self.env_group_one.pk}
+
+        info_objects = _InfoObjects(self.request)
+        env_properties = info_objects.env_properties()
+
+        self.assertIn(self.env_property_one, env_properties)
+        self.assertNotIn(self.env_property_two, env_properties)
+
+    def test_env_values(self):
+        self.request.GET = {'env_property_id': self.env_property_one.pk}
+
+        info_objects = _InfoObjects(self.request)
+        env_values = info_objects.env_values()
+
+        self.assertIn(self.env_value_one, env_values)
+        self.assertNotIn(self.env_value_two, env_values)
+
+    def test_users(self):
+        self.request.GET = {'username': self.user_one.username}
+
+        info_objects = _InfoObjects(self.request)
+        users = info_objects.users()
+
+        self.assertIn(self.user_one, users)
+        self.assertNotIn(self.user_two, users)
+
+    def test_version(self):
+
+        test_versions = self.info_objects.versions()
+
+        self.assertIn(self.version_one, test_versions)
+        self.assertNotIn(self.version_two, test_versions)
 
 
 class Test_TestCaseUpdateActions(BasePlanCase):
