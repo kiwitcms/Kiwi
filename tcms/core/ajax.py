@@ -57,81 +57,23 @@ def strip_parameters(request_dict, skip_parameters):
 def info(request):
     """Ajax responsor for misc information"""
 
-    class Objects(object):
-        __all__ = [
-            'builds', 'categories', 'components', 'env_groups',
-            'env_properties', 'env_values', 'tags', 'users', 'versions'
-        ]
+    objects = _InfoObjects(request=request, product_id=request.GET.get('product_id'))
+    info_type = getattr(objects, request.GET.get('info_type'))
 
-        def __init__(self, request, product_id=None):
-            self.request = request
-            try:
-                self.product_id = int(product_id)
-            except (ValueError, TypeError):
-                self.product_id = 0
-            self.internal_parameters = ('info_type', 'field', 'format')
+    if not info_type:
+        return HttpResponse('Unrecognizable info-type')
 
-        def builds(self):
-            try:
-                _is_active = bool(strtobool(self.request.GET.get('is_active', 'False')))
-            except (ValueError, TypeError):
-                _is_active = False
+    if request.GET.get('format') == 'ulli':
+        field = request.GET.get('field', default='name')
 
-            query = {
-                'product_id': self.product_id,
-                'is_active': _is_active
-            }
-            return Build.list(query)
+        response_str = '<ul>'
+        for obj_value in info_type().values(field):
+            response_str += '<li>' + obj_value.get(field, None) + '</li>'
+        response_str += '</ul>'
 
-        def categories(self):
-            return Category.objects.filter(product__id=self.product_id)
+        return HttpResponse(response_str)
 
-        def components(self):
-            return Component.objects.filter(product__id=self.product_id)
-
-        def env_groups(self):
-            return EnvGroup.objects.all()
-
-        def env_properties(self):
-            if self.request.GET.get('env_group_id'):
-                env_group = EnvGroup.objects.get(
-                    id=self.request.GET['env_group_id']
-                )
-                return env_group.property.all()
-            return EnvProperty.objects.all()
-
-        def env_values(self):
-            return EnvValue.objects.filter(
-                property__id=self.request.GET.get('env_property_id')
-            )
-
-        def users(self):
-            query = strip_parameters(self.request.GET, self.internal_parameters)
-            return User.objects.filter(**query)
-
-        def versions(self):
-            return Version.objects.filter(product__id=self.product_id)
-
-    objects = Objects(request=request, product_id=request.GET.get('product_id'))
-    obj = getattr(objects, request.GET.get('info_type'), None)
-
-    if obj:
-        if request.GET.get('format') == 'ulli':
-            field = request.GET.get('field', 'name')
-            response_str = '<ul>'
-            for obj_value in obj().values(field):
-                response_str += '<li>' + obj_value.get(field, None) + '</li>'
-            response_str += '</ul>'
-            return HttpResponse(response_str)
-
-        return HttpResponse(serializers.serialize(
-            request.GET.get('format', 'json'),
-            obj(),
-            fields=('name', 'value')
-        ))
-
-    return HttpResponse('Unrecognizable infotype')
-
+    return HttpResponse(serializers.serialize('json', info_type(), fields=('name', 'value')))
 
 @require_GET
 def form(request):
