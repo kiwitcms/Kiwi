@@ -89,14 +89,9 @@ class _InfoObjects(object):
         try:
             is_active = strtobool(self.request.GET.get('is_active', default='False'))
         except (ValueError, TypeError):
-            _is_active = False
+            is_active = False
 
-        query = {
-            'product_id': self.product_id,
-            'is_active': _is_active
-        }
-
-        return Build.list(query)
+        return Build.objects.filter(product_id=self.product_id, is_active=is_active)
 
     def categories(self):
         return Category.objects.filter(product__id=self.product_id)
