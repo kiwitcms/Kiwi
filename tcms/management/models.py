@@ -210,27 +210,10 @@ class Build(TCMSActionModel):
         return s.serialize_queryset()
 
     @classmethod
-    def list(cls, query):
-        q = cls.objects
-
-        if query.get('build_id'):
-            q = q.filter(build_id=query['build_id'])
-        if query.get('name'):
-            q = q.filter(name=query['name'])
-        if query.get('product'):
-            q = q.filter(product=query['product'])
-        if query.get('product_id'):
-            q = q.filter(product__id=query['product_id'])
-        if query.get('is_active'):
-            q = q.filter(is_active=query['is_active'])
-
-        return q.all()
-
-    @classmethod
     def list_active(cls, query={}):
         if isinstance(query, dict):
             query['is_active'] = True
-        return cls.list(query)
+        return cls.objects.filter(**query)
 
     def __str__(self):
         return self.name
