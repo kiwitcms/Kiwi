@@ -63,16 +63,16 @@ class TestInfo(test.TestCase):
         self.assertContains(response, '<ul>')
         self.assertContains(response, '</ul>')
 
-    def test_with_unrecognisable_infotype(self):
+    def test_with_unrecognisable_info_type(self):
         """ When a request comes with invalid info_type,
-            we expect to receive response containing the 'Unrecognizable infotype' error message
+            we expect to receive response containing the 'Unrecognizable info-type' error message
         """
 
         url = "%s?info_type=INVALID" % reverse('ajax-info')
 
         response = self.client.get(url)
 
-        self.assertContains(response, 'Unrecognizable infotype')
+        self.assertContains(response, 'Unrecognizable info-type')
 
     def test_with_json_format(self):
         """ When a request comes with info_type=categories for given product_id,
