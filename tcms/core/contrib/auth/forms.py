@@ -33,12 +33,12 @@ class RegistrationForm(UserCreationForm):
             initiate_user_with_default_setups(user)
         return user
 
-    def set_active_key(self):
+    def set_activation_key(self):
         from .models import UserActivateKey
 
         return UserActivateKey.set_random_key_for_user(user=self.instance)
 
-    def send_confirm_mail(self, request, active_key,
+    def send_confirm_mail(self, request, activation_key,
                           template_name='registration/confirm_email.html'):
         from django.urls import reverse
         from django.contrib.sites.models import Site
@@ -49,7 +49,7 @@ class RegistrationForm(UserCreationForm):
         cu = '%s%s' % (
             request_host_link(request, s.domain),
             reverse('tcms-confirm',
-                    args=[active_key.activation_key, ])
+                    args=[activation_key.activation_key, ])
         )
         mailto(
             template_name=template_name, recipients=self.cleaned_data['email'],
@@ -57,7 +57,7 @@ class RegistrationForm(UserCreationForm):
             context={
                 'user': self.instance,
                 'site': s,
-                'active_key': active_key,
+                'active_key': activation_key,
                 'confirm_url': cu,
             }
         )
