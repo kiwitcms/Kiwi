@@ -35,7 +35,7 @@ def register(request, template_name='registration/registration_form.html'):
         form = RegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             new_user = form.save()
-            activation_key = form.set_active_key()
+            activation_key = form.set_activation_key()
             # send a signal that new user has been registered
             user_registered.send(sender=form.__class__,
                                  request=request,
@@ -44,7 +44,7 @@ def register(request, template_name='registration/registration_form.html'):
 
             # Send confirmation email to new user
             if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
-                form.send_confirm_mail(request=request, active_key=activation_key)
+                form.send_confirm_mail(request=request, activation_key=activation_key)
 
                 messages.add_message(
                     request,
@@ -86,8 +86,8 @@ def confirm(request, activation_key):
 
     # Get the object
     try:
-        active_key = UserActivateKey.objects.select_related('user')
-        active_key = active_key.get(activation_key=activation_key)
+        _activation_key = UserActivateKey.objects.select_related('user')
+        _activation_key = _activation_key.get(activation_key=activation_key)
     except UserActivateKey.DoesNotExist:
         messages.add_message(
             request,
@@ -96,15 +96,15 @@ def confirm(request, activation_key):
         )
         return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
-    if active_key.key_expires <= datetime.now():
+    if _activation_key.key_expires <= datetime.now():
         messages.add_message(request, messages.ERROR, _('This activation key has expired'))
         return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
     # All thing done, start to active the user and use the user login
-    user = active_key.user
+    user = _activation_key.user
     user.is_active = True
     user.save(update_fields=['is_active'])
-    active_key.delete()
+    _activation_key.delete()
 
     messages.add_message(
         request,
