@@ -128,7 +128,7 @@ class TestRegistration(TestCase):
 
         return response
 
-    @patch('tcms.signals.user_registered.send')
+    @patch('tcms.signals.USER_REGISTERED_SIGNAL.send')
     def test_register_user_sends_signal(self, signal_mock):
         self.assert_user_registration('new-signal-tester')
         self.assertTrue(signal_mock.called)
@@ -138,7 +138,7 @@ class TestRegistration(TestCase):
     @patch('tcms.core.utils.mailto.send_mail')
     def test_signal_handler_notifies_admins(self, send_mail):
         # connect the handler b/c it is not connected by default
-        signals.user_registered.connect(signals.notify_admins)
+        signals.USER_REGISTERED_SIGNAL.connect(signals.notify_admins)
 
         try:
             response = self.assert_user_registration('signal-handler')
@@ -154,7 +154,7 @@ class TestRegistration(TestCase):
                           send_mail.call_args_list[0][0][1])
             self.assertIn('admin@kiwitcms.org', send_mail.call_args_list[0][0][-1])
         finally:
-            signals.user_registered.disconnect(signals.notify_admins)
+            signals.USER_REGISTERED_SIGNAL.disconnect(signals.notify_admins)
 
     @patch('tcms.core.utils.mailto.send_mail')
     def test_register_user_by_email_confirmation(self, send_mail):

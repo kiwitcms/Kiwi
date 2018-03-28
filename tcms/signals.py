@@ -1,3 +1,4 @@
+# pylint: disable=unused-argument
 """
 Defines custom signals sent throught out Kiwi TCMS. You can connect your own
 handlers if you'd like to augment some of the default behavior!
@@ -7,7 +8,7 @@ If you simply want to connect a signal handler add the following code to your
 
     from tcms.signals import *
 
-    user_registered.connect(notify_admins)
+    USER_REGISTERED_SIGNAL.connect(notify_admins)
 
 In case you want to perform more complex signal handling we advise you to create
 a new Django app and connect your handler function(s) to the desired signals
@@ -22,8 +23,8 @@ altering the following setting::
 from django.dispatch import Signal
 
 __all__ = [
-    'post_update',
-    'user_registered',
+    'POST_UPDATE_SIGNAL',
+    'USER_REGISTERED_SIGNAL',
 
     'notify_admins',
     'pre_save_clean',
@@ -40,11 +41,11 @@ __all__ = [
 #: Sent when a new user is registered into Kiwi TCMS through any of the
 #: backends which support user registration. The signal receives three keyword
 #: parameters: ``request``, ``user`` and ``backend`` respectively!
-user_registered = Signal(providing_args=['user', 'backend'])
+USER_REGISTERED_SIGNAL = Signal(providing_args=['user', 'backend'])
 
 
 #: Sent by :meth:`tcms.core.ajax.update` internally. **Do not override!**
-post_update = Signal(providing_args=["instances", "kwargs"])
+POST_UPDATE_SIGNAL = Signal(providing_args=["instances", "kwargs"])
 
 
 def notify_admins(sender, **kwargs):
@@ -54,7 +55,7 @@ def notify_admins(sender, **kwargs):
 
         .. warning::
 
-            This handler isn't connected to the ``user_registered`` signal by default!
+            This handler isn't connected to the ``USER_REGISTERED_SIGNAL`` by default!
     """
     from django.urls import reverse
     from django.conf import settings
@@ -67,7 +68,7 @@ def notify_admins(sender, **kwargs):
     user = kwargs.get('user')
 
     admin_emails = []
-    for name, email in settings.ADMINS:
+    for _name, email in settings.ADMINS:
         admin_emails.append(email)
 
     user_url = request_host_link(request) + reverse('admin:auth_user_change', args=[user.pk])
@@ -83,7 +84,7 @@ def notify_admins(sender, **kwargs):
     )
 
 
-def handle_emails_post_case_save(sender, instance, created=False, **kwargs):
+def handle_emails_post_case_save(sender, instance, created=False, **_kwargs):
     """
         Send email updates after a TestCase has been updated!
     """
@@ -93,7 +94,7 @@ def handle_emails_post_case_save(sender, instance, created=False, **kwargs):
             email.email_case_update(instance)
 
 
-def handle_emails_pre_case_delete(sender, instance, **kwags):
+def handle_emails_pre_case_delete(sender, instance, **_kwags):
     """
         Send email updates before a TestCase will be deleted!
     """
@@ -107,7 +108,7 @@ def pre_save_clean(sender, **kwargs):
     instance.clean()
 
 
-def handle_emails_post_plan_save(sender, instance, created=False, **kwargs):
+def handle_emails_post_plan_save(sender, instance, created=False, **_kwargs):
     """
         Send email updates after a TestPlan has been updated!
     """
@@ -117,7 +118,7 @@ def handle_emails_post_plan_save(sender, instance, created=False, **kwargs):
             email.email_plan_update(instance)
 
 
-def handle_emails_post_run_save(sender, *args, **kwargs):
+def handle_emails_post_run_save(sender, *_args, **kwargs):
     """
         Send email updates after a TestRus has been created or updated!
     """
@@ -137,7 +138,7 @@ def handle_emails_post_run_save(sender, *args, **kwargs):
            context={'test_run': instance})
 
 
-def handle_post_case_run_save(sender, *args, **kwargs):
+def handle_post_case_run_save(sender, *_args, **kwargs):
     """
         Auto-update TestRun status after TestCaseRun is created!
     """

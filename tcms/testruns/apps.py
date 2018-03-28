@@ -16,4 +16,4 @@ class AppConfig(DjangoAppConfig):
                             dispatch_uid='tcms.testruns.models.TestCaseRun')
         pre_save.connect(signals.pre_save_clean, sender=TestRun)
 
-        signals.post_update.connect(signals.handle_post_update_from_ajax)
+        signals.POST_UPDATE_SIGNAL.connect(signals.handle_post_update_from_ajax)
