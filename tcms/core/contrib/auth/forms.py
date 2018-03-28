@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
-from .backends import initiate_user_with_default_setups
+from tcms.core.utils import request_host_link
+from tcms.core.utils.mailto import mailto
+from tcms.core.contrib.auth.models import UserActivateKey
+from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
 class RegistrationForm(UserCreationForm):
@@ -34,30 +39,23 @@ class RegistrationForm(UserCreationForm):
         return user
 
     def set_activation_key(self):
-        from .models import UserActivateKey
-
         return UserActivateKey.set_random_key_for_user(user=self.instance)
 
     def send_confirm_mail(self, request, activation_key,
                           template_name='registration/confirm_email.html'):
-        from django.urls import reverse
-        from django.contrib.sites.models import Site
-        from tcms.core.utils.mailto import mailto
-        from tcms.core.utils import request_host_link
-
-        s = Site.objects.get_current()
-        cu = '%s%s' % (
-            request_host_link(request, s.domain),
+        current_site = Site.objects.get_current()
+        confirm_url = '%s%s' % (
+            request_host_link(request, current_site.domain),
             reverse('tcms-confirm',
                     args=[activation_key.activation_key, ])
         )
         mailto(
             template_name=template_name, recipients=self.cleaned_data['email'],
-            subject='Your new %s account confirmation' % s.domain,
+            subject='Your new %s account confirmation' % current_site.domain,
             context={
                 'user': self.instance,
-                'site': s,
+                'site': current_site,
                 'active_key': activation_key,
-                'confirm_url': cu,
+                'confirm_url': confirm_url,
             }
         )
