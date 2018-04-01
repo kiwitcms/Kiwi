@@ -73,20 +73,6 @@ def new(request, template_name='plan/new.html'):
         form = NewPlanForm(request.POST, request.FILES)
         form.populate(product_id=request.POST.get('product'))
 
-        # Process the upload plan document
-        if form.is_valid():
-            if form.cleaned_data.get('upload_plan_text'):
-                # Set the summary form field to the uploaded text
-                form.data['text'] = form.cleaned_data['text']
-
-                # Generate the form
-                context_data = {
-                    'form': form,
-                }
-                return render(request, template_name, context_data)
-
-        # Process the test plan submit to the form
-
         if form.is_valid():
             tp = TestPlan.objects.create(
                 product=form.cleaned_data['product'],
@@ -462,17 +448,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 
         # FIXME: Error handle
         if form.is_valid():
-            if form.cleaned_data.get('upload_plan_text'):
-                # Set the summary form field to the uploaded text
-                form.data['text'] = form.cleaned_data['text']
-
-                # Generate the form
-                context_data = {
-                    'form': form,
-                    'test_plan': tp,
-                }
-                return render(template_name, context_data)
-
             if request.user.has_perm('testplans.change_testplan'):
                 tp.name = form.cleaned_data['name']
                 tp.parent = form.cleaned_data['parent']
@@ -490,12 +465,12 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 tp.save()
 
             if request.user.has_perm('testplans.add_testplantext'):
-                new_text = request.POST.get('text')
+                new_text = form.cleaned_data['text']
                 text_checksum = checksum(new_text)
 
                 if not tp.text_exist() or text_checksum != tp.text_checksum():
                     tp.add_text(author=request.user,
-                                plan_text=request.POST.get('text'),
+                                plan_text=new_text,
                                 text_checksum=text_checksum)
 
             if request.user.has_perm('testplans.change_envplanmap'):
