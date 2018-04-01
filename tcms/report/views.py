@@ -302,6 +302,11 @@ class CustomReport(TemplateView):
                 bid = build['build']
                 runs_total += build['runs_count']
 
+                # skip if we have builds for which there are TestRuns but
+                # no cases have been executed
+                if bid not in status_matrix:
+                    continue
+
                 passed_count = status_matrix[bid].get('PASSED', 0)
                 failed_count = status_matrix[bid].get('FAILED', 0)
 
@@ -320,6 +325,8 @@ class CustomReport(TemplateView):
 
             context.update({
                 'total_runs_count': runs_total,
+                # todo: what if plan product was changed after the TR was created
+                # with that particular build ?
                 'total_plans_count': TestRun.objects.filter(
                     build__in=build_ids
                 ).values('plan').distinct().count(),
