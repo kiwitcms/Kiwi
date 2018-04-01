@@ -317,7 +317,7 @@ def load_runs_of_one_plan(request, plan_id,
     data, it accepts field lookup parameters collected from the filter panel
     in the UI.
     """
-    column_names = {
+    column_names = [
         '',
         'run_id',
         'summary',
@@ -329,7 +329,7 @@ def load_runs_of_one_plan(request, plan_id,
         'total_num_caseruns',
         'failure_caseruns_percent',
         'successful_caseruns_percent',
-    }
+    ]
 
     tp = TestPlan.objects.get(plan_id=plan_id)
     form = PlanFilterRunForm(request.GET)
