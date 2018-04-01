@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 
 from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
