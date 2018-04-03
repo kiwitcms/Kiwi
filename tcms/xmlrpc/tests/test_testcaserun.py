@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, attribute-defined-outside-init
 
 from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault

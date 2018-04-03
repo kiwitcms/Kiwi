@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=attribute-defined-outside-init
 
 from xmlrpc.client import Fault as XmlRPCFault
 

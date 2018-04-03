@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=attribute-defined-outside-init
+
 from tcms.testruns.models import TestRun
 
 from tcms.tests.factories import TestRunFactory
