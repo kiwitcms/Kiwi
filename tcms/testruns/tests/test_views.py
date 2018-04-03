@@ -2,7 +2,7 @@
 # pylint: disable=invalid-name
 
 import json
-import http.client
+from http import HTTPStatus
 from datetime import timedelta
 
 from django.utils import formats
@@ -76,13 +76,13 @@ class TestGetRun(BaseCaseRun):
     def test_404_if_non_existing_pk(self):
         url = reverse('testruns-get', args=[99999999])
         response = self.client.get(url)
-        self.assertEqual(http.client.NOT_FOUND, response.status_code)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_get_a_run(self):
         url = reverse('testruns-get', args=[self.test_run.pk])
         response = self.client.get(url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
 
         for i, case_run in enumerate(
                 (self.case_run_1, self.case_run_2, self.case_run_3), 1):
@@ -1173,7 +1173,7 @@ class Test_TestRunReportUnconfiguredJIRA(BaseCaseRun):
         url = reverse('run-report', args=[self.case_run_1.run_id])
         response = self.client.get(url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, self.it.url_reg_exp % 'KIWI-1234')
 
 
@@ -1201,7 +1201,7 @@ class Test_TestRunReportUnconfiguredBugzilla(BaseCaseRun):
         url = reverse('run-report', args=[self.case_run_1.run_id])
         response = self.client.get(url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, self.it.url_reg_exp % '5678')
 
 
@@ -1229,5 +1229,5 @@ class Test_TestRunReportUnconfiguredGitHub(BaseCaseRun):
         url = reverse('run-report', args=[self.case_run_1.run_id])
         response = self.client.get(url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, self.it.url_reg_exp % '100')

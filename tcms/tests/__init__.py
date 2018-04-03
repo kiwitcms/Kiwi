@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import http.client
+from http import HTTPStatus
 
 from django import test
 from django.conf import settings
@@ -81,7 +81,7 @@ class HelperAssertions(object):
     """Helper assertion methods"""
 
     def assert404(self, response):
-        self.assertEqual(http.client.NOT_FOUND, response.status_code)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def assertJsonResponse(self, response, expected, status_code=200):
         self.assertEqual(status_code, response.status_code)

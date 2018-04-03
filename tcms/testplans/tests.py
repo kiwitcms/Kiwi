@@ -2,7 +2,7 @@
 # pylint: disable=invalid-name
 
 import json
-import http.client
+from http import HTTPStatus
 from uuslug import slugify
 from urllib.parse import urlencode
 
@@ -72,7 +72,7 @@ class TestPlanEnvironmentGroupTests(test.TestCase):
             follow=True,
         )
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, ">%s</a>" % self.env_group.name)
 
     def test_user_with_default_perms_can_edit_tp_and_change_env_group(self):
@@ -96,7 +96,7 @@ class TestPlanEnvironmentGroupTests(test.TestCase):
             follow=True,
         )
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, ">%s</a>" % self.new_env_group.name)
 
 
@@ -142,18 +142,18 @@ class PlanTests(test.TestCase):
     def test_open_plans_search(self):
         location = reverse('plans-all')
         response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_search_plans(self):
         location = reverse('plans-all')
         response = self.c.get(location, {'action': 'search', 'type': self.test_plan.type.pk})
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_treeview(self):
         location = reverse('plans-all')
         response = self.c.get(location, {'t': 'ajax', 'pk': self.test_plan.pk})
 
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(1, len(data))
         self.assertEqual(self.test_plan.pk, data[0]['pk'])
@@ -164,20 +164,20 @@ class PlanTests(test.TestCase):
     def test_plan_new_get(self):
         location = reverse('plans-new')
         response = self.c.get(location, follow=True)
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_details(self):
         location = reverse('test_plan_url_short', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.MOVED_PERMANENTLY)
+        self.assertEqual(response.status_code, HTTPStatus.MOVED_PERMANENTLY)
 
         response = self.c.get(location, follow=True)
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_edit(self):
         location = reverse('plan-edit', args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_printable_without_selected_plan(self):
         location = reverse('plans-printable')
@@ -187,7 +187,7 @@ class PlanTests(test.TestCase):
     def test_plan_printable(self):
         location = reverse('plans-printable')
         response = self.c.post(location, {'plan': [self.test_plan.pk]})
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
         self.assertContains(response, self.test_plan.name)
         self.assertContains(response, self.test_plan.latest_text().plan_text)
@@ -205,16 +205,16 @@ class PlanTests(test.TestCase):
         location = reverse('plan-attachment',
                            args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_history(self):
         location = reverse('plan-text_history',
                            args=[self.plan_id])
         response = self.c.get(location)
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
         response = self.c.get(location, {'plan_text_version': 1})
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
 
 class ExportTestPlanTests(test.TestCase):
@@ -661,7 +661,7 @@ class TestCloneView(BasePlanCase):
         self.assertRedirects(
             response,
             reverse('test_plan_url_short', args=[cloned_plan.pk]),
-            target_status_code=http.client.MOVED_PERMANENTLY)
+            target_status_code=HTTPStatus.MOVED_PERMANENTLY)
 
         self.verify_cloned_plan(self.third_plan, cloned_plan)
 

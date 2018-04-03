@@ -2,7 +2,7 @@
 # pylint: disable=invalid-name
 
 import json
-import http.client
+from http import HTTPStatus
 
 from django.test import TestCase
 from django.conf import settings
@@ -266,7 +266,7 @@ class TestDeleteGroup(TestCase):
                           password='password')
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': 9999999999})
-        self.assertEqual(http.client.NOT_FOUND, response.status_code)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
 
 class TestModifyGroup(TestCase):
@@ -319,7 +319,7 @@ class TestModifyGroup(TestCase):
                                    {'action': 'modify',
                                     'id': 999999999,
                                     'status': 1})
-        self.assertEqual(http.client.NOT_FOUND, response.status_code)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_disable_a_group(self):
         user_should_have_perm(self.tester, self.permission)
@@ -355,12 +355,12 @@ class TestVisitEnvironmentGroupPage(TestCase):
     def test_404_when_missing_group_id(self):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(self.group_edit_url)
-        self.assertEqual(http.client.NOT_FOUND, response.status_code)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_404_if_group_id_not_exist(self):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(self.group_edit_url, {'id': 9999999})
-        self.assertEqual(http.client.NOT_FOUND, response.status_code)
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_visit_a_group(self):
         self.client.login(username=self.tester.username, password='password')
@@ -748,7 +748,7 @@ class ProductTests(TestCase):
             'product_version': product_version.pk,
             'type': plan_type.pk,
         }, follow=True)
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         # verify test plan was created
         self.assertTrue(test_plan_name in str(response.content,
                                               encoding=settings.DEFAULT_CHARSET))
@@ -759,7 +759,7 @@ class ProductTests(TestCase):
                                                    product._meta.model_name)
         location = reverse(admin_delete_url, args=[product.pk])
         response = self.c.get(location)
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertTrue('Are you sure you want to delete the product "%s"' % product.name
                         in str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertTrue("Yes, I'm sure" in str(response.content,

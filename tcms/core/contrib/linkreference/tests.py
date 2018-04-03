@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import http.client
+from http import HTTPStatus
 
 from django import test
 from django.urls import reverse
@@ -55,7 +55,7 @@ class TestAddView(test.TestCase):
             'url': 'http://example.com',
             'target_id': self.testcaserun.pk,
         })
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(result['rc'], 0)
@@ -70,7 +70,7 @@ class TestAddView(test.TestCase):
             'url': 'example dot com',
             'target_id': self.testcaserun.pk,
         })
-        self.assertEqual(http.client.BAD_REQUEST, response.status_code)
+        self.assertEqual(HTTPStatus.BAD_REQUEST, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(result['rc'], 1)
@@ -85,7 +85,7 @@ class TestAddView(test.TestCase):
             'url': 'http://example.com',
             'target_id': self.testcaserun.pk,
         })
-        self.assertEqual(http.client.BAD_REQUEST, response.status_code)
+        self.assertEqual(HTTPStatus.BAD_REQUEST, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(result['rc'], 1)

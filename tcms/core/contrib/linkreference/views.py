@@ -1,4 +1,4 @@
-import http.client as http_client
+from http import HTTPStatus
 
 from django import http
 from django.forms import IntegerField
@@ -74,7 +74,7 @@ def add(request):
     json_data = create_link(request.POST)
     if json_data['rc'] == 0:
         return http.JsonResponse(json_data)
-    return http.JsonResponse(json_data, status=http_client.BAD_REQUEST)
+    return http.JsonResponse(json_data, status=HTTPStatus.BAD_REQUEST)
 
 
 @permission_required('testruns.change_testcaserun')
@@ -87,7 +87,7 @@ def remove(_request, link_id):
         value = field.clean(link_id)
     except ValidationError as err:
         json_data = {'rc': 1, 'response': '\n'.join(err.messages)}
-        return http.JsonResponse(json_data, status=http_client.BAD_REQUEST)
+        return http.JsonResponse(json_data, status=HTTPStatus.BAD_REQUEST)
 
     # this will silently ignore non-existing objects
     LinkReference.objects.filter(pk=value).delete()
