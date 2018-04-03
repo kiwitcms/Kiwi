@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import http
+from http import HTTPStatus
 from django.test import TestCase
 from django.urls import reverse
 
@@ -24,7 +24,7 @@ class TestProfilesView(TestCase):
         url = reverse('tcms-profile', args=[self.tester.username])
         response = self.client.get(url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, self.tester.username)
         self.assertContains(response, self.tester.email)
 
@@ -35,7 +35,7 @@ class TestProfilesView(TestCase):
         url = reverse('tcms-profile', args=[self.somebody_else.username])
         response = self.client.get(url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, self.somebody_else.username)
         self.assertContains(response, self.somebody_else.email)
 

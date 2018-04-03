@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import http.client
+from http import HTTPStatus
 from urllib.parse import urlencode
 
 from django import test
@@ -54,7 +54,7 @@ class TestIndex(BaseCaseRun):
         self.assertRedirects(
             response,
             reverse('tcms-login'),
-            target_status_code=http.client.OK)
+            target_status_code=HTTPStatus.OK)
 
     def test_when_logged_in_index_page_redirects_to_dashboard(self):
         self.client.login(username=self.tester.username, password='password')
@@ -62,7 +62,7 @@ class TestIndex(BaseCaseRun):
         self.assertRedirects(
             response,
             reverse('tcms-recent', args=[self.tester.username]),
-            target_status_code=http.client.OK)
+            target_status_code=HTTPStatus.OK)
 
 
 class TestCommentCaseRuns(BaseCaseRun):

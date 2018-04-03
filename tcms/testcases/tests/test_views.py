@@ -3,7 +3,7 @@
 
 import json
 import unittest
-import http.client
+from http import HTTPStatus
 import xml.etree.ElementTree
 from datetime import datetime
 from urllib.parse import urlencode
@@ -57,7 +57,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
             }
         )
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
 
         self.assertContains(
             response,
@@ -950,6 +950,6 @@ class TestGetCasesFromPlan(BasePlanCase):
         response = self.client.post(url, data=response_data,
                                     content_type='application/x-www-form-urlencoded; charset=UTF-8',
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, 'Tags:')
         self.assertContains(response, '<a href="#testcases">Linux</a>')

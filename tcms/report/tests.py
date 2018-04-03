@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import http.client
+from http import HTTPStatus
 
 from django import test
 from django.urls import reverse
@@ -22,7 +22,7 @@ class TestingReportTestCase(test.TestCase):
         url = reverse('testing-report')
         response = self.client.get(url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
 
     def test_report_by_caserun_tester_loads(self):
         # test for https://github.com/kiwitcms/Kiwi/issues/88
@@ -49,4 +49,4 @@ class TestingReportTestCase(test.TestCase):
             'report_type': 'per_build_report'
         })
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)

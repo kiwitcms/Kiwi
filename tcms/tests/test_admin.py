@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import http.client
+from http import HTTPStatus
 
 from django.urls import reverse
 from django.conf import settings
@@ -23,7 +23,7 @@ class TestAdminView(BasePlanCase):
         self.client.login(username=self.tester.username, password='password')
         response = self.client.get(self.url)
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertNotContains(response, "You don't have permission to edit anything")
 
         # for tcms.management

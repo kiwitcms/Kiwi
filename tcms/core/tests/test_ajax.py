@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-import http.client
+from http import HTTPStatus
 
 from django import test
 from django.urls import reverse
@@ -245,7 +245,7 @@ class Test_TestCaseUpdateActions(BasePlanCase):
             'new_value': self.tester.username
         })
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(result['rc'], 0)
         self.assertEqual(result['response'], 'ok')
@@ -262,7 +262,7 @@ class Test_TestCaseUpdateActions(BasePlanCase):
             'new_value': self.tester.email
         })
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(result['rc'], 0)
         self.assertEqual(result['response'], 'ok')
@@ -278,7 +278,7 @@ class Test_TestCaseUpdateActions(BasePlanCase):
             'new_value': 'user which doesnt exist'
         })
 
-        self.assertEqual(http.client.OK, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(result['rc'], 1)
         self.assertEqual(result['response'], 'Default tester not found!')
@@ -306,7 +306,7 @@ class Test_Tag_Add(Test_Tag_Test):
             'a': 'add'
         })
 
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(self.test_plan.tag.count(), 1)
         self.assertTrue(self.test_tag in self.test_plan.tag.all())
 
@@ -317,7 +317,7 @@ class Test_Tag_Add(Test_Tag_Test):
             'a': 'add'
         })
 
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(self.test_case.tag.count(), 1)
         self.assertTrue(self.test_tag in self.test_case.tag.all())
 
@@ -328,7 +328,7 @@ class Test_Tag_Add(Test_Tag_Test):
             'a': 'add'
         })
 
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(self.test_run.tag.count(), 1)
         self.assertTrue(self.test_tag in self.test_run.tag.all())
 
@@ -344,7 +344,7 @@ class Test_Tag_Remove(Test_Tag_Test):
             'a': 'remove'
         })
 
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(self.test_plan.tag.count(), 0)
 
     def test_remove_tag_from_test_case(self):
@@ -356,7 +356,7 @@ class Test_Tag_Remove(Test_Tag_Test):
             'a': 'remove'
         })
 
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(self.test_case.tag.count(), 0)
 
     def test_remove_tag_from_test_run(self):
@@ -368,7 +368,7 @@ class Test_Tag_Remove(Test_Tag_Test):
             'a': 'remove'
         })
 
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(self.test_run.tag.count(), 0)
 
 
@@ -406,7 +406,7 @@ class Test_Tag_Render(Test_Tag_Test):
         self._assert_tags(response)
 
     def _assert_tags(self, response):
-        self.assertEqual(response.status_code, http.client.OK)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
 
         # asserting the number of tags for the given plan/case/run
         self.assertEqual(self.test_plan.tag.count(), 1)
