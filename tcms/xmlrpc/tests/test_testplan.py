@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=attribute-defined-outside-init
 
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCasePlan

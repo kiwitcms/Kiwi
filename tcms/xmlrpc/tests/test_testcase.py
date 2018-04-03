@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=attribute-defined-outside-init
 
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import CategoryFactory
