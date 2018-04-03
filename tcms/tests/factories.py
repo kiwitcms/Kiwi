@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=too-few-public-methods, unused-argument
 
 import hashlib
 from datetime import datetime
 
-import factory
 from django.db.models import signals
+
+import factory
 from factory.django import DjangoModelFactory
 
 from tcms.management.models import Priority
@@ -13,10 +15,10 @@ from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestCaseRunStatus
 
 
-def md5_hash(s):
+def md5_hash(string):
     """Helper method returning md5 hash"""
     md5 = hashlib.md5()
-    md5.update(s)
+    md5.update(string)
     return md5.hexdigest()
 
 
@@ -402,7 +404,7 @@ class TestRunFactory(DjangoModelFactory):
                 TestRunTagFactory(run=self, tag=tag)
 
     @factory.post_generation
-    def cc(self, create, extracted, **kwargs):
+    def cc(self, create, extracted, **kwargs):  # pylint: disable=invalid-name
         if not create:
             return
         if extracted:
