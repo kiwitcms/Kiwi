@@ -65,8 +65,8 @@ def overview(request, product_id, template_name='report/overview.html'):
     caserun_status_count = {}
     total = 0
     for row in TestCaseRun.objects.filter(
-            run__plan__product=product_id).values(
-            'case_run_status__name').annotate(
+            run__plan__product=product_id
+        ).values('case_run_status__name').annotate(
             status_count=Count('case_run_status__name')):
         caserun_status_count[row['case_run_status__name']] = row['status_count']
         total += row['status_count']
@@ -626,4 +626,4 @@ class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
             assignee_username = assignees.get(case_run.assignee_id, None)
             yield case_run, status_name, priority_value, (
                 case_run.assignee_id, assignee_username), (
-                case_run.tested_by_id, tester_username)
+                    case_run.tested_by_id, tester_username)

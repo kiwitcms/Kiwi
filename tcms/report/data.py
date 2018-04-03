@@ -97,7 +97,8 @@ class ProductBuildReportData(object):
         total = 0
         for row in TestCaseRun.objects.filter(
                 run__plan__product=product_id,
-                run__build=build_id).values('case_run_status__name').annotate(
+                run__build=build_id
+            ).values('case_run_status__name').annotate(
                 status_count=Count('case_run_status__name')):
             subtotal[row['case_run_status__name']] = row['status_count']
             total += row['status_count']
@@ -143,8 +144,8 @@ class ProductComponentReportData(object):
         subtotal = {}
         total = 0
         for row in TestCaseRun.objects.filter(
-                case__component=component_id).values(
-                'case_run_status__name').annotate(
+                case__component=component_id
+            ).values('case_run_status__name').annotate(
                 status_count=Count('case_run_status__name')):
             subtotal[row['case_run_status__name']] = row['status_count']
             total += row['status_count']
@@ -233,8 +234,8 @@ class ProductVersionReportData(object):
         total = 0
         for row in TestCaseRun.objects.filter(
                 run__plan__product=product_id,
-                run__plan__product_version=version_id).values(
-                'case_run_status__name').annotate(
+                run__plan__product_version=version_id
+            ).values('case_run_status__name').annotate(
                 status_count=Count('case_run_status__name')):
             subtotal[row['case_run_status__name']] = row['status_count']
             total += row['status_count']
@@ -319,8 +320,8 @@ class CustomReportData(object):
 
         results = {}
         for obj in TestCaseRun.objects.filter(
-                build__in=build_ids).values(
-                'case__is_automated').distinct().annotate(
+                build__in=build_ids
+            ).values('case__is_automated').distinct().annotate(
                 total_count=Count('case__is_automated')):
             automation_id = obj['case__is_automated']
             results[automated_name_map[automation_id]] = obj['total_count']
@@ -334,8 +335,8 @@ class CustomReportData(object):
         builds = {}
         for obj in TestCaseRun.objects.filter(
                 build__in=build_ids,
-                case_run_status__name__in=('PASSED', 'FAILED')).values(
-                'build', 'case_run_status__name').annotate(
+                case_run_status__name__in=('PASSED', 'FAILED')
+            ).values('build', 'case_run_status__name').annotate(
                 case_run_total=Count('case_run_status__name')):
             bid = obj['build']
             if bid not in builds.keys():

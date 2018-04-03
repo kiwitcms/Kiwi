@@ -159,7 +159,7 @@ def environment_group_edit(request, template_name='environment/group_edit.html')
                                  messages.ERROR,
                                  _('Environment group with the same name already exists'))
             return HttpResponseRedirect(
-                    reverse('mgmt-environment_group_edit') + '?id=%s' % environment_id)
+                reverse('mgmt-environment_group_edit') + '?id=%s' % environment_id)
     except EnvGroup.DoesNotExist:
         pass
 

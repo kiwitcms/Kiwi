@@ -706,14 +706,18 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         run = TestRun.objects.select_related('manager', 'plan').get(
             pk=self.run_id)
 
-        case_runs = TestCaseRun.objects.filter(run=run).select_related(
-            'case_run_status', 'case', 'tested_by').only(
+        case_runs = TestCaseRun.objects.filter(
+            run=run
+        ).select_related(
+            'case_run_status', 'case', 'tested_by'
+        ).only(
             'close_date',
             'case_run_status__name',
             'case__category__name',
             'case__summary', 'case__is_automated',
             'case__is_automated_proposed',
-            'tested_by__username')
+            'tested_by__username'
+        )
         mode_stats = self.stats_mode_caseruns(case_runs)
         summary_stats = self.get_summary_stats(case_runs)
 

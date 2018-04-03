@@ -52,8 +52,9 @@ class BuildCreate(XmlrpcAPIBaseTest):
         # various regex matching to account for version differences
         # between SQLite (different versions), MySQL and Postgres
         with self.assertRaisesRegex(
-                XmlRPCFault,
-                ".*(may not be NULL|NOT NULL constraint|violates not-null|cannot be null).*"):
+            XmlRPCFault,
+            ".*(may not be NULL|NOT NULL constraint|violates not-null|cannot be null).*"
+        ):
             self.rpc_client.Build.create(values)
 
     def test_build_create_with_non_existing_product(self):

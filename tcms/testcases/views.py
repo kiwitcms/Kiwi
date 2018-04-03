@@ -350,8 +350,8 @@ def build_cases_search_form(request, populate=None, plan=None):
         items_per_page = request.session.get('items_per_page',
                                              settings.DEFAULT_PAGE_SIZE)
         search_form = SearchCaseForm(initial={
-                                        'case_status': d_status_ids,
-                                        'items_per_page': items_per_page})
+            'case_status': d_status_ids,
+            'items_per_page': items_per_page})
 
     if populate:
         if request.POST.get('product'):
