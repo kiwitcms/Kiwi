@@ -98,8 +98,10 @@ class TestCaseRunDataMixin(object):
                 content_type=ct.pk,
                 is_public=True,
                 is_removed=False,
-                object_pk__in=obj_pks).annotate(
-                case_run_id=F('object_pk')).values(
+                object_pk__in=obj_pks
+            ).annotate(
+                case_run_id=F('object_pk')
+            ).values(
                 'case_run_id',
                 'submit_date',
                 'comment',

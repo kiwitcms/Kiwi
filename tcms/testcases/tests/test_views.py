@@ -942,14 +942,14 @@ class TestGetCasesFromPlan(BasePlanCase):
         self.case.add_tag(tag)
 
         url = reverse('testcases-all')
+        response_data = urlencode({
+            'from_plan': self.plan.pk,
+            'template_type': 'case',
+            'a': 'initial'})
         # note: this is how the UI sends the request
-        response = self.client.post(url, data=urlencode({
-                'from_plan': self.plan.pk,
-                'template_type': 'case',
-                'a': 'initial',
-            }),
-            content_type='application/x-www-form-urlencoded; charset=UTF-8',
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post(url, data=response_data,
+                                    content_type='application/x-www-form-urlencoded; charset=UTF-8',
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(http.client.OK, response.status_code)
         self.assertContains(response, 'Tags:')
         self.assertContains(response, '<a href="#testcases">Linux</a>')
