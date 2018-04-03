@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
+
 from mock import patch
 
 from django.db.models.functions import Length
