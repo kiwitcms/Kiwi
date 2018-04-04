@@ -15,8 +15,8 @@ from django.conf import settings
 from django.forms import ValidationError
 from django.test import RequestFactory
 
-from ..fields import MultipleEmailField
-from ..forms import CaseTagForm
+from tcms.testcases.fields import MultipleEmailField
+from tcms.testcases.forms import CaseTagForm
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import BugSystem
