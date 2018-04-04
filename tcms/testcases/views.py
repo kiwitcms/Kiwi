@@ -812,8 +812,8 @@ class TestCaseSimpleCaseRunView(TemplateView, data.TestCaseRunViewDataMixin):
         data = super(this_cls, self).get_context_data(**kwargs)
 
         caserun = self.get_caserun()
-        logs = self.get_caserun_logs(caserun)
-        comments = self.get_caserun_comments(caserun)
+        logs = self.get_case_run_logs(caserun)
+        comments = self.get_case_run_comments(caserun)
 
         data.update({
             'test_caserun': caserun,
@@ -860,8 +860,8 @@ class TestCaseCaseRunDetailPanelView(TemplateView,
         test_case_text = case.get_text_with_version(self.case_text_version)
 
         # Data of TestCaseRun
-        caserun_comments = self.get_caserun_comments(case_run)
-        caserun_logs = self.get_caserun_logs(case_run)
+        caserun_comments = self.get_case_run_comments(case_run)
+        caserun_logs = self.get_case_run_logs(case_run)
 
         caserun_status = TestCaseRunStatus.objects.values('pk', 'name')
         caserun_status = caserun_status.order_by('sortkey')

@@ -11,23 +11,21 @@ from tcms.testruns.models import TestCaseRun
 
 
 class TestCaseViewDataMixin(object):
-    '''Mixin class to get view data of test case'''
-
-    def get_case_contenttype(self):
-        return ContentType.objects.get_for_model(TestCase)
+    """Mixin class to get view data of test case"""
 
     def get_case_logs(self, testcase):
-        ct = self.get_case_contenttype()
-        logs = TCMSLogModel.objects.filter(content_type=ct,
+        content_type = self.get_case_content_type()
+        logs = TCMSLogModel.objects.filter(content_type=content_type,
                                            object_pk=testcase.pk,
                                            site=settings.SITE_ID)
         logs = logs.values('date', 'who__username', 'action')
         return logs.order_by('date')
 
     def get_case_comments(self, case):
-        '''Get a case' comments'''
-        ct = self.get_case_contenttype()
-        comments = Comment.objects.filter(content_type=ct,
+        """Get a case' comments"""
+
+        content_type = self.get_case_content_type()
+        comments = Comment.objects.filter(content_type=content_type,
                                           object_pk=case.pk,
                                           site=settings.SITE_ID,
                                           is_removed=False)
@@ -38,25 +36,30 @@ class TestCaseViewDataMixin(object):
         comments.order_by('pk')
         return comments
 
+    @staticmethod
+    def get_case_content_type():
+        return ContentType.objects.get_for_model(TestCase)
+
 
 class TestCaseRunViewDataMixin(object):
-    '''Mixin class to get view data of test case run'''
+    """Mixin class to get view data of test case run"""
 
-    def get_caserun_contenttype(self):
-        return ContentType.objects.get_for_model(TestCaseRun)
-
-    def get_caserun_logs(self, caserun):
-        caserun_ct = self.get_caserun_contenttype()
-        logs = TCMSLogModel.objects.filter(content_type=caserun_ct,
+    def get_case_run_logs(self, caserun):
+        content_type = self.get_case_run_content_type()
+        logs = TCMSLogModel.objects.filter(content_type=content_type,
                                            object_pk=caserun.pk,
                                            site_id=settings.SITE_ID)
         return logs.values('date', 'who__username', 'action')
 
-    def get_caserun_comments(self, caserun):
-        caserun_ct = self.get_caserun_contenttype()
-        comments = Comment.objects.filter(content_type=caserun_ct,
+    def get_case_run_comments(self, caserun):
+        content_type = self.get_case_run_content_type()
+        comments = Comment.objects.filter(content_type=content_type,
                                           object_pk=caserun.pk,
                                           site_id=settings.SITE_ID,
                                           is_removed=False)
         return comments.values('user__email', 'submit_date', 'comment',
                                'pk', 'user__pk')
+
+    @staticmethod
+    def get_case_run_content_type():
+        return ContentType.objects.get_for_model(TestCaseRun)
