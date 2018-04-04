@@ -6,10 +6,10 @@ from mock import patch
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from ..models import BugSystem
-from ..models import TestCaseText
+from tcms.testcases.models import BugSystem
+from tcms.testcases.models import TestCaseText
 from tcms.core.utils.checksum import checksum
-from ..helpers.email import get_case_notification_recipients
+from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import BuildFactory
@@ -139,7 +139,7 @@ class TestCaseRemovePlan(BasePlanCase):
 
         found = self.plan.case.filter(pk=self.new_case.pk).exists()
         self.assertFalse(
-            found, 'Case {0} should has no relationship to plan {0} now.'.format(self.new_case.pk,
+            found, 'Case {0} should has no relationship to plan {1} now.'.format(self.new_case.pk,
                                                                                  self.plan.pk))
 
 
