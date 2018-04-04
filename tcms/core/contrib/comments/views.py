@@ -31,6 +31,7 @@ def post(request, template_name='comments/comments.html'):
 
 
 @require_POST
+@permission_required("comments.can_moderate")
 def delete(request):
     """Deletes a comment"""
 
@@ -68,6 +69,3 @@ def delete(request):
             )
 
     return HttpResponse(json.dumps(ajax_response))
-
-
-delete = permission_required("comments.can_moderate")(delete)
