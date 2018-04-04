@@ -156,15 +156,6 @@ class BaseCaseForm(forms.Form):
             return self.cleaned_data['notes']
         return None
 
-    # def clean_alias(self):
-    #    data = self.cleaned_data['alias']
-    #    tc_count = TestCase.objects.filter(alias = data).count()
-    #
-    #    if tc_count == 0:
-    #        return data
-    #
-    #    raise forms.ValidationError('Duplicated alias exist in database.')
-
     def clean_tag(self):
         tags = []
         if self.cleaned_data['tag']:
