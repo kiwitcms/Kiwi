@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.shortcuts import render
 
 
-def index(request, template_name='index.html'):
+def index(request):
     """
     Home page of TCMS
     """
