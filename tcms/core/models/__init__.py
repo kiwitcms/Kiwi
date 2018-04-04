@@ -3,7 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from .base import UrlMixin
+from tcms.core.models.base import UrlMixin
 from tcms.core.logs.views import TCMSLog
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 
@@ -24,15 +24,15 @@ class TCMSActionModel(models.Model, UrlMixin):
         """
         Convert the query set for XMLRPC
         """
-        s = XMLRPCSerializer(queryset=cls.objects.filter(**query))
-        return s.serialize_queryset()
+        serializer = XMLRPCSerializer(queryset=cls.objects.filter(**query))
+        return serializer.serialize_queryset()
 
     def serialize(self):
         """
         Convert the model for XMLPRC
         """
-        s = XMLRPCSerializer(model=self)
-        return s.serialize_model()
+        serializer = XMLRPCSerializer(model=self)
+        return serializer.serialize_model()
 
     def log(self):
         log = TCMSLog(model=self)
