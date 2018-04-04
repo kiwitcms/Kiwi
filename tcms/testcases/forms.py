@@ -133,7 +133,7 @@ class BaseCaseForm(forms.Form):
         if len(data) == 2:
             return 2
 
-        if len(data):
+        if data:
             # FIXME: Should data always be a list?
             try:
                 return int(data[0])
@@ -147,16 +147,14 @@ class BaseCaseForm(forms.Form):
             return u''
         elif self.script_val:
             return self.cleaned_data['script']
-        else:
-            return None
+        return None
 
     def clean_notes(self):
         if self.notes_val == '':
             return u''
         elif self.notes_val:
             return self.cleaned_data['notes']
-        else:
-            return None
+        return None
 
     # def clean_alias(self):
     #    data = self.cleaned_data['alias']
@@ -309,9 +307,9 @@ class BaseCaseSearchForm(forms.Form):
     def clean_bug_id(self):
         data = self.cleaned_data['bug_id']
         data = string_to_list(data)
-        for d in data:
+        for data_obj in data:
             try:
-                int(d)
+                int(data_obj)
             except ValueError as error:
                 raise forms.ValidationError(error)
 
@@ -401,9 +399,8 @@ class CloneCaseForm(forms.Form):
         required=False
     )
 
-    def populate(self, case_ids, plan=None):
-        self.fields['case'].queryset = TestCase.objects.filter(
-            case_id__in=case_ids)
+    def populate(self, case_ids):
+        self.fields['case'].queryset = TestCase.objects.filter(case_id__in=case_ids)
 
 
 class CaseAutomatedForm(forms.Form):
@@ -504,12 +501,9 @@ class CaseCategoryForm(forms.Form):
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields[
-                'o_category'].queryset = Category.objects.filter(
-                product__id=product_id)
+            self.fields['o_category'].queryset = Category.objects.filter(product__id=product_id)
         else:
-            self.fields['o_category'].queryset = \
-                Category.objects.all()
+            self.fields['o_category'].queryset = Category.objects.all()
 
 
 class CaseTagForm(forms.Form):
