@@ -1,16 +1,13 @@
-# -*- coding: utf-8 -*-
+# pylint: disable=no-self-use
+import inspect
+
 from django import forms
-from django.urls import reverse
 from django.contrib import admin
 from django.forms.widgets import Select
-from django.http import HttpResponseRedirect
 
-from tcms.testcases import views
-from tcms.testcases.models import TestCase
-from tcms.testcases.models import TestCaseText
+from tcms.issuetracker import types
 from tcms.testcases.models import BugSystem
 from tcms.testcases.models import Category
-from tcms.testcases.models import TestCaseStatus
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -27,18 +24,6 @@ class IssueTrackerTypeSelectWidget(Select):
     """
     _choices = None
 
-    def _types_as_choices(self):
-        import inspect
-        from tcms.issuetracker import types
-
-        trackers = []
-        for module_object in types.__dict__.values():
-            if inspect.isclass(module_object) and \
-               issubclass(module_object, types.IssueTrackerType) and \
-               module_object != types.IssueTrackerType:  # flake8: noqa
-                trackers.append(module_object.__name__)
-        return (('', ''), ) + tuple(zip(trackers, trackers))
-
     @property
     def choices(self):
         if self._choices is None:
@@ -50,6 +35,16 @@ class IssueTrackerTypeSelectWidget(Select):
         # ChoiceField.__init__ sets ``self.choices = choices``
         # which would override ours.
         pass
+
+    @staticmethod
+    def _types_as_choices():
+        trackers = []
+        for module_object in types.__dict__.values():
+            if inspect.isclass(module_object) and \
+               issubclass(module_object, types.IssueTrackerType) and \
+               module_object != types.IssueTrackerType:  # flake8: noqa
+                trackers.append(module_object.__name__)
+        return (('', ''), ) + tuple(zip(trackers, trackers))
 
 
 class IssueTrackerTypeField(forms.ChoiceField):
