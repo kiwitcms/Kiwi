@@ -27,5 +27,5 @@ class TCMSLogModel(TCMSContentTypeBaseModel):
 
     @classmethod
     def get_logs_for_model(cls, model_class, object_pk):
-        ct = ContentType.objects.get_for_model(model_class)
-        return cls.objects.filter(content_type=ct, object_pk=object_pk)
+        content_type = ContentType.objects.get_for_model(model_class)
+        return cls.objects.filter(content_type=content_type, object_pk=object_pk)
