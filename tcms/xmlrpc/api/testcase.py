@@ -147,14 +147,14 @@ def add_notification_cc(case_id, cc_list):
 
     _validate_cc_list(cc_list)
 
-    tc = TestCase.objects.get(pk=case_id)
+    test_case = TestCase.objects.get(pk=case_id)
 
     # First, find those that do not exist yet.
-    existing_cc = tc.emailing.get_cc_list()
+    existing_cc = test_case.emailing.get_cc_list()
     adding_cc = list(set(cc_list) - set(existing_cc))
 
     # add the ones which are new
-    tc.emailing.add_cc(adding_cc)
+    test_case.emailing.add_cc(adding_cc)
 
 
 @permissions_required('testcases.change_testcase')
@@ -212,8 +212,8 @@ def add_tag(case_id, tag):
         :raises: PermissionDenied if missing *testcases.add_testcasetag* permission
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
     """
-    t, _ = Tag.objects.get_or_create(name=tag)
-    TestCase.objects.get(pk=case_id).add_tag(t)
+    tag, _ = Tag.objects.get_or_create(name=tag)
+    TestCase.objects.get(pk=case_id).add_tag(tag)
 
 
 @permissions_required('testcases.delete_testcasetag')
@@ -274,10 +274,10 @@ def create(values, **kwargs):
 
     if form.is_valid():
         # Create the case
-        tc = TestCase.create(author=request.user, values=form.cleaned_data)
+        test_case = TestCase.create(author=request.user, values=form.cleaned_data)
 
         # Add case text to the case
-        tc.add_text(
+        test_case.add_text(
             action=form.cleaned_data['action'] or '',
             effect=form.cleaned_data['effect'] or '',
             setup=form.cleaned_data['setup'] or '',
@@ -286,20 +286,20 @@ def create(values, **kwargs):
 
         # Add tag to the case
         for tag in string_to_list(values.get('tag', [])):
-            t, c = Tag.objects.get_or_create(name=tag)
-            tc.add_tag(tag=t)
+            tag, _ = Tag.objects.get_or_create(name=tag)
+            test_case.add_tag(tag=tag)
     else:
         # Print the errors if the form is not passed validation.
         raise ValueError(form_errors_to_list(form))
 
-    result = tc.serialize()
-    result['text'] = tc.latest_text().serialize()
+    result = test_case.serialize()
+    result['text'] = test_case.latest_text().serialize()
 
     return result
 
 
 @rpc_method(name='TestCase.filter')
-def filter(query):
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC TestCase.filter(query)
 
@@ -357,13 +357,13 @@ def update(case_id, values, **kwargs):
         form.populate(product_id=values['product'])
 
     if form.is_valid():
-        tc = TestCase.objects.get(pk=case_id)
+        test_case = TestCase.objects.get(pk=case_id)
         for key in values.keys():
             # only modify attributes that were passed via parameters
             # skip attributes which are Many-to-Many relations
-            if key not in ['component', 'tag'] and hasattr(tc, key):
-                setattr(tc, key, form.cleaned_data[key])
-        tc.save()
+            if key not in ['component', 'tag'] and hasattr(test_case, key):
+                setattr(test_case, key, form.cleaned_data[key])
+        test_case.save()
 
         # if we're updating the text if any one of these parameters was
         # specified
@@ -374,7 +374,7 @@ def update(case_id, values, **kwargs):
             breakdown = form.cleaned_data.get('breakdown', '').strip()
             author = kwargs.get(REQUEST_KEY).user
 
-            tc.add_text(
+            test_case.add_text(
                 author=author,
                 action=action,
                 effect=effect,
@@ -384,4 +384,4 @@ def update(case_id, values, **kwargs):
     else:
         raise ValueError(form_errors_to_list(form))
 
-    return tc.serialize()
+    return test_case.serialize()
