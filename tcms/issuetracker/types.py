@@ -7,13 +7,16 @@
 
 import os
 from urllib.parse import urlencode
-import bugzilla
-from . import bugzilla_integration
+
 import jira
-from . import jira_integration
 import github
-from . import github_integration
+import bugzilla
+
 from django.conf import settings
+
+from tcms.issuetracker import bugzilla_integration
+from tcms.issuetracker import jira_integration
+from tcms.issuetracker import github_integration
 
 
 class IssueTrackerType(object):
@@ -69,6 +72,7 @@ class IssueTrackerType(object):
         """
         raise NotImplementedError()
 
+    # pylint: disable = invalid-name, no-self-use
     def is_adding_testcase_to_issue_disabled(self):
         """
             When is linking a TC to a Bug report disabled?
@@ -80,7 +84,7 @@ class IssueTrackerType(object):
                     and self.tracker.api_username
                     and self.tracker.api_password)
 
-    def all_issues_link(self, ids):
+    def all_issues_link(self, _ids):
         """
             Used in testruns.views.get() aka run/report.html to produce
             a single URL which will open all reported issues into a single
