@@ -3,7 +3,6 @@ import datetime
 from collections import namedtuple
 
 from django.conf import settings
-from django.core.cache import cache
 from django.urls import reverse
 from django.db import models
 from django.db.models import Q, Count
@@ -332,148 +331,65 @@ class TestCaseRunStatus(TCMSActionModel):
     def __str__(self):
         return self.name
 
-    cache_key_names = 'case_run_status__names'
-
     @classmethod
     def get_names(cls):
-        '''Get all status names in mapping between id and name'''
-        names = cache.get(cls.cache_key_names)
-        if names is None:
-            names = dict(cls.objects.values_list('pk', 'name').iterator())
-            cache.set(cls.cache_key_names, names)
-        return names
+        """ Get all status names in mapping between id and name """
+        return dict(cls.objects.values_list('pk', 'name'))
 
     @classmethod
     def get_names_ids(cls):
-        '''Get all status names in reverse mapping between name and id'''
+        """ Get all status names in reverse mapping between name and id """
         return dict((name, _id) for _id, name in cls.get_names().items())
 
     @classmethod
     def id_to_string(cls, _id):
-        key = 'id_to_string_' + str(_id)
-        result = cls.cache_get(key)
-        if result is None:
-            try:
-                result = cls.objects.get(id=_id).name
-            except cls.DoesNotExist:
-                result = None
-            cls.cache_set(key, result)
-        return result
+        try:
+            return cls.objects.get(id=_id).name
+        except cls.DoesNotExist:
+            return None
 
     @classmethod
     def _status_to_id(cls, status):
-        status = status.upper()
-        key = 'status_to_id_' + status
-        result = cls.cache_get(key)
-        if result is None:
-            try:
-                result = cls.objects.get(name=status).pk
-            except cls.DoesNotExist:
-                result = None
-            cls.cache_set(key, result)
-        return result
+        try:
+            return cls.objects.get(name=status.upper()).pk
+        except cls.DoesNotExist:
+            return None
 
     @classmethod
     def _get_completed_status_ids(cls):
-        '''
+        """
         There are some status indicate that
         the testcaserun is completed.
         Return IDs of these statuses.
-        '''
-        key = 'completed_status_ids'
-        result = cls.cache_get(key)
-        if result is None:
-            completed_status = cls.objects.filter(name__in=(
-                'FAILED', 'PASSED', 'ERROR', 'WAIVED'
-            ))
+        """
+        completed_status = cls.objects.filter(name__in=('FAILED', 'PASSED', 'ERROR', 'WAIVED'))
 
-            result = completed_status.values_list('pk', flat=True)
-            result = cls.cache_set(key, list(result))
-        return result
+        return completed_status.values_list('pk', flat=True)
 
     @classmethod
     def _get_failed_status_ids(cls):
-        '''
+        """
         There are some status indicate that
         the testcaserun is failed.
         Return IDs of these statuses.
-        '''
-        key = 'failed_status_ids'
-        result = cls.cache_get(key)
-        if result is None:
-            statuses = cls.objects.all()
-            failed_status = statuses.filter(name__in=(
-                'FAILED', 'ERROR'
-            ))
+        """
+        failed_status = cls.objects.filter(name__in=('FAILED', 'ERROR'))
 
-            result = failed_status.values_list('pk', flat=True)
-            result = cls.cache_set(key, list(result))
-        return result
+        return failed_status.values_list('pk', flat=True)
 
     # TODO: gather following id_xxx into one method
 
     @classmethod
     def id_passed(cls):
-        key = 'id_passed'
-        result = cls.cache_get(key)
-        if result is None:
-            return cls.cache_set(key, cls._status_to_id('passed'))
-        return result
+        return cls._status_to_id('passed')
 
     @classmethod
     def id_failed(cls):
-        key = 'id_failed'
-        result = cls.cache_get(key)
-        if result is None:
-            return cls.cache_set(key, cls._status_to_id('failed'))
-        return result
+        return cls._status_to_id('failed')
 
     @classmethod
     def id_blocked(cls):
-        key = 'id_blocked'
-        result = cls.cache_get(key)
-        if result is None:
-            return cls.cache_set(key, cls._status_to_id('blocked'))
-        return result
-
-    @classmethod
-    def _get_cache(cls):
-        """A dictionary used to cache statuses.
-
-        The caching implementation in here is a
-        dedicated cache for this class. There are
-        limited few number of statuses, and they
-        are needed frequently enough to be cached.
-        """
-        key_cache = '_cache'
-        _cache = getattr(cls, key_cache, {})
-        if not hasattr(cls, key_cache):
-            setattr(cls, key_cache, _cache)
-
-        return _cache
-
-    @classmethod
-    def cache_get(cls, key):
-        cache = cls._get_cache()
-        return cache.get(key, None)
-
-    @classmethod
-    def cache_set(cls, key, value):
-        cache = cls._get_cache()
-        if len(cache) > 1000:  # Prevent overflow
-            cache.clear()
-        cache[key] = value
-        return value
-
-    def save(self, *args, **kwargs):
-        """Overrides save() only to outdate the cached statuses."""
-        cache = getattr(self.__class__, '_cache', {})
-        cache.clear()
-
-        result = super(self.__class__, self).save(*args, **kwargs)
-        if self.cache_key_names in cache:
-            del cache[self.cache_key_names]
-        return result
+        return cls._status_to_id('blocked')
 
 
 # register model for DB translations
