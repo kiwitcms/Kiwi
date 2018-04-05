@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 
 import datetime
-from mock import patch
 from hashlib import sha1
+from mock import patch
 
 from django.urls import reverse
 from django.conf import settings
@@ -104,27 +105,24 @@ class TestRegistration(TestCase):
             '<input value="Register" class="loginbutton sprites" type="submit">',
             html=True)
 
-    @patch('tcms.core.contrib.auth.models.sha1')
-    def assert_user_registration(self, username, sha1, follow=False):
-        sha1.return_value.hexdigest.return_value = self.fake_activate_key
+    def assert_user_registration(self, username, follow=False):
 
-        response = self.client.post(self.register_url,
-                                    {'username': username,
-                                     'password1': 'password',
-                                     'password2': 'password',
-                                     'email': 'new-tester@example.com'},
-                                    follow=follow)
+        with patch('tcms.core.contrib.auth.models.sha1') as sha_1:
+            sha_1.return_value.hexdigest.return_value = self.fake_activate_key
 
-        users = User.objects.filter(username=username)
-        self.assertTrue(users.exists())
+            response = self.client.post(self.register_url,
+                                        {'username': username,
+                                         'password1': 'password',
+                                         'password2': 'password',
+                                         'email': 'new-tester@example.com'},
+                                        follow=follow)
 
-        user = users[0]
+        user = User.objects.get(username=username)
         self.assertEqual('new-tester@example.com', user.email)
         self.assertFalse(user.is_active)
 
-        keys = UserActivateKey.objects.filter(user=user)
-        self.assertTrue(keys.exists())
-        self.assertEqual(self.fake_activate_key, keys[0].activation_key)
+        key = UserActivateKey.objects.get(user=user)
+        self.assertEqual(self.fake_activate_key, key.activation_key)
 
         return response
 
@@ -164,9 +162,9 @@ class TestRegistration(TestCase):
             'Your account has been created, please check your mailbox for confirmation'
         )
 
-        s = Site.objects.get_current()
-        confirm_url = 'http://%s%s' % (s.domain, reverse('tcms-confirm',
-                                                         args=[self.fake_activate_key]))
+        site = Site.objects.get_current()
+        confirm_url = 'http://%s%s' % (site.domain, reverse('tcms-confirm',
+                                                            args=[self.fake_activate_key]))
 
         # Verify notification mail
         send_mail.assert_called_once_with(
@@ -223,8 +221,8 @@ class TestConfirm(TestCase):
     def test_fail_if_activation_key_expired(self):
         fake_activation_key = 'secret-activation-key'
 
-        with patch('tcms.core.contrib.auth.models.sha1') as sha1:
-            sha1.return_value.hexdigest.return_value = fake_activation_key
+        with patch('tcms.core.contrib.auth.models.sha1') as sha_1:
+            sha_1.return_value.hexdigest.return_value = fake_activation_key
             key = UserActivateKey.set_random_key_for_user(self.new_user)
             key.key_expires = datetime.datetime.now() - datetime.timedelta(days=10)
             key.save()
@@ -241,8 +239,8 @@ class TestConfirm(TestCase):
     def test_confirm(self):
         fake_activate_key = 'secret-activate-key'
 
-        with patch('tcms.core.contrib.auth.models.sha1') as sha1:
-            sha1.return_value.hexdigest.return_value = fake_activate_key
+        with patch('tcms.core.contrib.auth.models.sha1') as sha_1:
+            sha_1.return_value.hexdigest.return_value = fake_activate_key
             UserActivateKey.set_random_key_for_user(self.new_user)
 
         confirm_url = reverse('tcms-confirm',
