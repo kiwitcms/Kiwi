@@ -30,7 +30,8 @@ def get_run_bug_ids(run_id):
 class TestCaseRunDataMixin(object):
     '''Data for test case runs'''
 
-    def stats_mode_caseruns(self, case_runs):
+    @staticmethod
+    def stats_mode_case_runs(case_runs):
         '''Statistics from case runs mode
 
         @param case_runs: iteratable object to access each case run
@@ -58,7 +59,8 @@ class TestCaseRunDataMixin(object):
             'manual_automated': manual_automated_count,
         }
 
-    def get_caseruns_bugs(self, run_pk):
+    @staticmethod
+    def get_case_runs_bugs(run_pk):
         """Get case run bugs for run report
 
         :param int run_pk: run's pk whose case runs' bugs will be retrieved.
@@ -77,7 +79,8 @@ class TestCaseRunDataMixin(object):
         return dict([(case_run_id, list(bugs_info)) for case_run_id, bugs_info in
                      groupby(rows, lambda row: row['case_run'])])
 
-    def get_caseruns_comments(self, run_pk):
+    @staticmethod
+    def get_case_runs_comments(run_pk):
         """Get case runs' comments
 
         @param run_pk: run's pk whose comments will be retrieved.
@@ -85,7 +88,7 @@ class TestCaseRunDataMixin(object):
         @return: the mapping between case run id and comments
         @rtype: dict
         """
-        ct = ContentType.objects.get_for_model(TestCaseRun)
+        content_type = ContentType.objects.get_for_model(TestCaseRun)
 
         rows = []
         # note: cast to string b/c object_pk is a Textield and PostgreSQL
@@ -95,7 +98,7 @@ class TestCaseRunDataMixin(object):
         obj_pks = [str(o.pk) for o in TestCaseRun.objects.filter(run=run_pk).only('pk')]
         for row in Comment.objects.filter(
                 site=settings.SITE_ID,
-                content_type=ct.pk,
+                content_type=content_type.pk,
                 is_public=True,
                 is_removed=False,
                 object_pk__in=obj_pks
@@ -111,7 +114,8 @@ class TestCaseRunDataMixin(object):
         return dict([(int(key), list(groups)) for key, groups in
                      groupby(rows, lambda row: row['case_run_id'])])
 
-    def get_summary_stats(self, case_runs):
+    @staticmethod
+    def get_summary_stats(case_runs):
         '''Get summary statistics from case runs
 
         Statistics targets:
