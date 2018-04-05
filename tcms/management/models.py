@@ -62,8 +62,8 @@ class Product(TCMSActionModel):
         from tcms.xmlrpc.serializer import ProductXMLRPCSerializer
         _query = query or {}
         qs = cls.objects.filter(**_query).order_by('pk')
-        s = ProductXMLRPCSerializer(model_class=cls, queryset=qs)
-        return s.serialize_queryset()
+        serializer = ProductXMLRPCSerializer(model_class=cls, queryset=qs)
+        return serializer.serialize_queryset()
 
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
@@ -83,10 +83,10 @@ class Product(TCMSActionModel):
         # for a ChoiceField's "choices"
         #
         # @only_active: restrict to only show builds flagged as "active"
-        q = self.build
+        query = self.build
         if only_active:
-            q = q.filter(is_active=True)
-        return get_as_choices(q.all(), allow_blank)
+            query = self.build.filter(is_active=True)
+        return get_as_choices(query.all(), allow_blank)
 
     def get_environment_choices(self, allow_blank):
         # Generate a list of (id, string) pairs suitable
@@ -206,8 +206,8 @@ class Build(TCMSActionModel):
         from tcms.xmlrpc.serializer import BuildXMLRPCSerializer
         _query = query or {}
         qs = cls.objects.filter(**_query).order_by('pk')
-        s = BuildXMLRPCSerializer(model_class=cls, queryset=qs)
-        return s.serialize_queryset()
+        serializer = BuildXMLRPCSerializer(model_class=cls, queryset=qs)
+        return serializer.serialize_queryset()
 
     @classmethod
     def list_active(cls, query={}):
@@ -225,15 +225,13 @@ class Build(TCMSActionModel):
         if hasattr(self, 'case_runs_failed_count'):
             return calc_percent(self.case_runs_failed_count,
                                 self.case_runs_count)
-        else:
-            return None
+        return None
 
     def get_case_runs_passed_percent(self):
         if hasattr(self, 'case_runs_passed_count'):
             return calc_percent(self.case_runs_passed_count,
                                 self.case_runs_count)
-        else:
-            return None
+        return None
 
 
 # Test tag zone
