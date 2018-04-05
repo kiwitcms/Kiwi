@@ -133,12 +133,12 @@ class TestGetCaseRunsBugs(BaseCaseRun):
 
     def test_empty_if_no_bugs(self):
         data = TestCaseRunDataMixin()
-        result = data.get_caseruns_bugs(self.test_run_1.pk)
+        result = data.get_case_runs_bugs(self.test_run_1.pk)
         self.assertEqual({}, result)
 
     def test_get_bugs(self):
         data = TestCaseRunDataMixin()
-        result = data.get_caseruns_bugs(self.test_run.pk)
+        result = data.get_case_runs_bugs(self.test_run.pk)
         expected_result = {
             self.case_run_1.pk: [
                 {
@@ -202,12 +202,12 @@ class TestGetCaseRunsComments(BaseCaseRun):
 
     def test_get_empty_comments_if_no_comment_there(self):
         data = TestCaseRunDataMixin()
-        comments = data.get_caseruns_comments(self.test_run.pk)
+        comments = data.get_case_runs_comments(self.test_run.pk)
         self.assertEqual({}, comments)
 
     def test_get_comments(self):
         data = TestCaseRunDataMixin()
-        comments = data.get_caseruns_comments(self.test_run_1.pk)
+        comments = data.get_case_runs_comments(self.test_run_1.pk)
 
         # note: keys are integer but the values are all string
         expected_comments = {

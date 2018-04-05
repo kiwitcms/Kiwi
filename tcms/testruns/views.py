@@ -718,7 +718,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             'case__is_automated_proposed',
             'tested_by__username'
         )
-        mode_stats = self.stats_mode_caseruns(case_runs)
+        mode_stats = self.stats_mode_case_runs(case_runs)
         summary_stats = self.get_summary_stats(case_runs)
 
         test_case_run_bugs = []
@@ -751,8 +751,8 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             if report_url:
                 report_urls.append((it.tracker.name, report_url))
 
-        caserun_bugs = self.get_caseruns_bugs(run.pk)
-        comments = self.get_caseruns_comments(run.pk)
+        caserun_bugs = self.get_case_runs_bugs(run.pk)
+        comments = self.get_case_runs_comments(run.pk)
 
         for case_run in case_runs:
             bugs = caserun_bugs.get(case_run.pk, ())
