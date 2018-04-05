@@ -76,7 +76,7 @@ class TestAddView(test.TestCase):
         self.assertEqual(result['rc'], 1)
         self.assertIn('Enter a valid URL', result['response'])
 
-    def test_with_name_longer_than_64_chars(self):
+    def test_with_name_longer_than_64_chars(self):  # pylint: disable=invalid-name
         self.client.login(username=self.tester.username, password='password')
         response = self.client.post(self.url, {
             'name': "Open source test case management system, with a lot of great features,"
