@@ -71,8 +71,8 @@ class TestPlan(TCMSActionModel):
 
         _query = query or {}
         qs = distinct_filter(TestPlan, _query).order_by('pk')
-        s = TestPlanXMLRPCSerializer(model_class=cls, queryset=qs)
-        return s.serialize_queryset()
+        serializer = TestPlanXMLRPCSerializer(model_class=cls, queryset=qs)
+        return serializer.serialize_queryset()
 
     @classmethod
     def list(cls, query=None):
@@ -81,20 +81,18 @@ class TestPlan(TCMSActionModel):
 
         new_query = {}
 
-        for k, v in query.items():
-            if v and k not in ['action', 't', 'f', 'a']:
-                new_query[k] = hasattr(v, 'strip') and v.strip() or v
+        for key, value in query.items():
+            if value and key not in ['action', 't', 'f', 'a']:
+                new_query[key] = value.strip() if hasattr(value, 'strip') else value
 
-        # build a QuerySet:
-        q = cls.objects
-        # add any necessary filters to the query:
+        query_set = cls.objects
 
         if new_query.get('search'):
-            q = q.filter(Q(plan_id__icontains=new_query['search']) |
-                         Q(name__icontains=new_query['search']))
+            query_set = query_set.filter(Q(plan_id__icontains=new_query['search']) |
+                                         Q(name__icontains=new_query['search']))
             del new_query['search']
 
-        return q.filter(**new_query).order_by('pk').distinct()
+        return query_set.filter(**new_query).order_by('pk').distinct()
 
     def confirmed_case(self):
         return self.case.filter(case_status__name='CONFIRMED')
@@ -196,8 +194,7 @@ class TestPlan(TCMSActionModel):
         sortkey = result['sortkey__max']
         if sortkey is None:
             return None
-        else:
-            return sortkey + 10
+        return sortkey + 10
 
     def _get_email_conf(self):
         try:
@@ -292,7 +289,7 @@ class TestPlan(TCMSActionModel):
                     author = new_case_author or tpcase_src.author
                     default_tester = new_case_default_tester or tpcase_src.default_tester
 
-                    tc_category, b_created = Category.objects.get_or_create(
+                    tc_category, _ = Category.objects.get_or_create(
                         name=tpcase_src.category.name, product=product)
 
                     tpcase_dest = TestCase.objects.create(
