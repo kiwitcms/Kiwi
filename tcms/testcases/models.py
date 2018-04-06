@@ -84,13 +84,6 @@ class TestCaseStatus(TCMSActionModel):
     def string_to_instance(cls, name):
         return cls.objects.get(name=name)
 
-    @classmethod
-    def id_to_string(cls, id):
-        try:
-            return cls.objects.get(id=id).name
-        except cls.DoesNotExist:
-            return None
-
     def is_confirmed(self):
         return self.name == 'CONFIRMED'
 
