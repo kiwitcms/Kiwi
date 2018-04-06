@@ -44,18 +44,18 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun, TestCaseRun
 
 
-def update_plan_email_settings(tp, form):
-    '''Update testplan's email settings'''
-    tp.emailing.notify_on_plan_update = form.cleaned_data[
+def update_plan_email_settings(test_plan, form):
+    """ Update test plan's email settings """
+    test_plan.emailing.notify_on_plan_update = form.cleaned_data[
         'notify_on_plan_update']
-    tp.emailing.notify_on_case_update = form.cleaned_data[
+    test_plan.emailing.notify_on_case_update = form.cleaned_data[
         'notify_on_case_update']
-    tp.emailing.auto_to_plan_owner = form.cleaned_data['auto_to_plan_owner']
-    tp.emailing.auto_to_plan_author = form.cleaned_data['auto_to_plan_author']
-    tp.emailing.auto_to_case_owner = form.cleaned_data['auto_to_case_owner']
-    tp.emailing.auto_to_case_default_tester = form.cleaned_data[
+    test_plan.emailing.auto_to_plan_owner = form.cleaned_data['auto_to_plan_owner']
+    test_plan.emailing.auto_to_plan_author = form.cleaned_data['auto_to_plan_author']
+    test_plan.emailing.auto_to_case_owner = form.cleaned_data['auto_to_case_owner']
+    test_plan.emailing.auto_to_case_default_tester = form.cleaned_data[
         'auto_to_case_default_tester']
-    tp.emailing.save()
+    test_plan.emailing.save()
 
 
 # _____________________________________________________________________________
@@ -74,7 +74,7 @@ def new(request, template_name='plan/new.html'):
         form.populate(product_id=request.POST.get('product'))
 
         if form.is_valid():
-            tp = TestPlan.objects.create(
+            test_plan = TestPlan.objects.create(
                 product=form.cleaned_data['product'],
                 author=request.user,
                 owner=request.user,
@@ -88,7 +88,7 @@ def new(request, template_name='plan/new.html'):
 
             # Add test plan text
             if request.user.has_perm('testplans.add_testplantext'):
-                tp.add_text(author=request.user, plan_text=form.cleaned_data['text'])
+                test_plan.add_text(author=request.user, plan_text=form.cleaned_data['text'])
 
             # Add test plan environment groups
             if request.user.has_perm('testplans.add_envplanmap'):
@@ -98,13 +98,13 @@ def new(request, template_name='plan/new.html'):
                     )
 
                     for env_group in env_groups:
-                        tp.add_env_group(env_group=env_group)
+                        test_plan.add_env_group(env_group=env_group)
 
             # create emailing settings to avoid Issue #181 on MySQL
-            tp.emailing.save()
+            test_plan.emailing.save()
 
             return HttpResponseRedirect(
-                reverse('test_plan_url_short', args=[tp.plan_id, ])
+                reverse('test_plan_url_short', args=[test_plan.plan_id, ])
             )
     else:
         form = NewPlanForm()
@@ -116,8 +116,8 @@ def new(request, template_name='plan/new.html'):
 
 
 @require_GET
-def all(request, template_name='plan/all.html'):
-    '''Display all testplans'''
+def get_all(request, template_name='plan/all.html'):
+    """ Display all testplans """
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
     # If it's not a search the page will be blank
@@ -128,10 +128,7 @@ def all(request, template_name='plan/all.html'):
     # if it's a search request the page will be fill
     if request.GET:
         search_form = SearchPlanForm(request.GET)
-        if request.GET.get('product'):
-            search_form.populate(product_id=request.GET['product'])
-        else:
-            search_form.populate()
+        search_form.populate(product_id=request.GET.get('product'))
 
         if search_form.is_valid():
             query_result = True
@@ -279,16 +276,14 @@ def calculate_stats_for_testplans(plans):
 
 @require_GET
 def ajax_search(request, template_name='plan/common/json_plans.txt'):
-    '''Display all testplans'''
+    """ Display all test plans """
     # If it's not a search the page will be blank
-    tps = TestPlan.objects.none()
+    test_plans = TestPlan.objects.none()
     # if it's a search request the request will be full
     if request.GET:
         search_form = SearchPlanForm(request.GET)
-        if request.GET.get('product'):
-            search_form.populate(product_id=request.GET['product'])
-        else:
-            search_form.populate()
+        search_form.populate(product_id=request.GET.get('product'))
+
         if search_form.is_valid():
             # Detemine the query is the user's plans and change the sub
             # module value
@@ -296,12 +291,12 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
             if author and len(search_form.changed_data) == 1:
                 if request.user.is_authenticated:
                     if author == request.user.username or author == request.user.email:
-                        q = Q(author__email__startswith=author) | \
+                        query = Q(author__email__startswith=author) | \
                             Q(owner__email__startswith=author)
-                        tps = TestPlan.objects.filter(q).distinct()
+                        test_plans = TestPlan.objects.filter(query).distinct()
             else:
-                tps = TestPlan.list(search_form.cleaned_data)
-                tps = tps.select_related('author', 'owner', 'type', 'product')
+                test_plans = TestPlan.list(search_form.cleaned_data)
+                test_plans = test_plans.select_related('author', 'owner', 'type', 'product')
 
     # columnIndexNameMap is required for correct sorting behavior, 5 should
     # be product, but we use run.build.product
@@ -318,14 +313,14 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
         'num_runs',
         ''
     ]
-    return ajax_response(request, tps, column_names, template_name)
+    return ajax_response(request, test_plans, column_names, template_name)
 
 
 def ajax_response(request, queryset, column_names, template_name):
-    """json template for the ajax request for searching"""
-    dt = DataTableResult(request.GET, queryset, column_names)
+    """ JSON template for the ajax request for searching """
+    data_table_result = DataTableResult(request.GET, queryset, column_names)
 
-    data = dt.get_response_data()
+    data = data_table_result.get_response_data()
     data['querySet'] = calculate_stats_for_testplans(data['querySet'])
 
     # todo: prepare the JSON with the response, consider using :
@@ -338,87 +333,85 @@ def ajax_response(request, queryset, column_names, template_name):
 
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):
-    '''Display the plan details.'''
+    """ Display the plan details. """
 
     try:
-        tp = TestPlan.objects.select_related().get(plan_id=plan_id)
-        tp.latest_text = tp.latest_text()
+        test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
+        test_plan.latest_text = test_plan.latest_text()
     except ObjectDoesNotExist:
         raise Http404
 
     # redirect if has a cheated slug
-    if slug != slugify(tp.name):
-        return HttpResponsePermanentRedirect(tp.get_full_url())
+    if slug != slugify(test_plan.name):
+        return HttpResponsePermanentRedirect(test_plan.get_full_url())
 
     # Initial the case counter
     confirm_status_name = 'CONFIRMED'
-    tp.run_case = tp.case.filter(case_status__name=confirm_status_name)
-    tp.review_case = tp.case.exclude(case_status__name=confirm_status_name)
+    test_plan.run_case = test_plan.case.filter(case_status__name=confirm_status_name)
+    test_plan.review_case = test_plan.case.exclude(case_status__name=confirm_status_name)
 
     context_data = {
-        'test_plan': tp,
+        'test_plan': test_plan,
     }
     return render(request, template_name, context_data)
 
 
 @require_http_methods(['GET', 'POST'])
 @permission_required('testruns.change_testrun')
-def choose_run(request, plan_id, template_name='plan/choose_testrun.html'):
-    '''Choose one run to add cases'''
+def choose_run(request, plan_id):
+    """ Choose one run to add cases """
 
     if request.method == 'GET':
         try:
-            plan_id = int(plan_id)
-            tp = TestPlan.objects.filter(pk=plan_id).defer('product_version')[0]
-        except IndexError:
+            test_plan = TestPlan.objects.get(pk=int(plan_id)).defer('product_version')
+        except ObjectDoesNotExist:
             raise Http404
 
-        testruns = TestRun.objects.filter(plan=plan_id).values('pk',
-                                                               'summary',
-                                                               'build__name',
-                                                               'manager__username')
+        test_runs = TestRun.objects.filter(plan=plan_id).values('pk',
+                                                                'summary',
+                                                                'build__name',
+                                                                'manager__username')
 
         # Ready to write cases to test plan
-        tcs = get_selected_testcases(request)
-        tcs = tcs.values('pk', 'summary',
-                         'author__username',
-                         'create_date',
-                         'category__name',
-                         'priority__value', )
+        test_cases = get_selected_testcases(request).values('pk', 'summary',
+                                                            'author__username',
+                                                            'create_date',
+                                                            'category__name',
+                                                            'priority__value', )
 
         context_data = {
             'plan_id': plan_id,
-            'plan': tp,
-            'test_runs': testruns.iterator(),
-            'test_cases': tcs.iterator(),
+            'plan': test_plan,
+            'test_runs': test_runs.iterator(),
+            'test_cases': test_cases.iterator(),
         }
-        return render(request, template_name, context_data)
+        return render(request, 'plan/choose_testrun.html', context_data)
 
     # Add cases to runs
     if request.method == 'POST':
-        chosen_testrun_ids = request.POST.getlist('testrun_ids')
+        chosen_test_run_ids = request.POST.getlist('testrun_ids')
         to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
 
         # Adding cases to runs by recursion
         cases_selected = 0
-        for tr_id in chosen_testrun_ids:
-            testrun = get_object_or_404(TestRun, run_id=tr_id)
-            cases = TestCaseRun.objects.filter(run=tr_id)
+        for test_run_id in chosen_test_run_ids:
+            test_run = get_object_or_404(TestRun, run_id=test_run_id)
+            cases = TestCaseRun.objects.filter(run=test_run_id)
             existing_cases = cases.values_list('case', flat=True)
 
-            for testcase in to_be_added_cases:
+            for test_case in to_be_added_cases:
                 # counter used as a flag that runs or cases were selected
                 # in the form, regardless of whether or not they were actually added
                 # used to produce an error message if user clicked the Update button
                 # without selecting anything on the screen
                 cases_selected += 1
-                if testcase.case_id not in existing_cases:
-                    testrun.add_case_run(case=testcase)
+                if test_case.case_id not in existing_cases:
+                    test_run.add_case_run(case=test_case)
 
             estimated_time = reduce(lambda x, y: x + y,
                                     [nc.estimated_time for nc in to_be_added_cases])
-            testrun.estimated_time = testrun.estimated_time + estimated_time
-            testrun.save()
+            test_run.estimated_time = test_run.estimated_time + estimated_time
+            test_run.save()
         else:
             if not cases_selected:
                 messages.add_message(request,
@@ -434,7 +427,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
     '''Edit test plan view'''
 
     try:
-        tp = TestPlan.objects.select_related().get(plan_id=plan_id)
+        test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
     except ObjectDoesNotExist:
         raise Http404
 
@@ -449,75 +442,75 @@ def edit(request, plan_id, template_name='plan/edit.html'):
         # FIXME: Error handle
         if form.is_valid():
             if request.user.has_perm('testplans.change_testplan'):
-                tp.name = form.cleaned_data['name']
-                tp.parent = form.cleaned_data['parent']
-                tp.product = form.cleaned_data['product']
-                tp.product_version = form.cleaned_data['product_version']
-                tp.type = form.cleaned_data['type']
-                tp.is_active = form.cleaned_data['is_active']
-                tp.extra_link = form.cleaned_data['extra_link']
-                tp.owner = form.cleaned_data['owner']
+                test_plan.name = form.cleaned_data['name']
+                test_plan.parent = form.cleaned_data['parent']
+                test_plan.product = form.cleaned_data['product']
+                test_plan.product_version = form.cleaned_data['product_version']
+                test_plan.type = form.cleaned_data['type']
+                test_plan.is_active = form.cleaned_data['is_active']
+                test_plan.extra_link = form.cleaned_data['extra_link']
+                test_plan.owner = form.cleaned_data['owner']
                 # IMPORTANT! tp.current_user is an instance attribute,
                 # added so that in post_save, current logged-in user info
                 # can be accessed.
                 # Instance attribute is usually not a desirable solution.
-                tp.current_user = request.user
-                tp.save()
+                test_plan.current_user = request.user
+                test_plan.save()
 
             if request.user.has_perm('testplans.add_testplantext'):
                 new_text = form.cleaned_data['text']
                 text_checksum = checksum(new_text)
 
-                if not tp.text_exist() or text_checksum != tp.text_checksum():
-                    tp.add_text(author=request.user,
-                                plan_text=new_text,
-                                text_checksum=text_checksum)
+                if not test_plan.text_exist() or text_checksum != test_plan.text_checksum():
+                    test_plan.add_text(author=request.user,
+                                       plan_text=new_text,
+                                       text_checksum=text_checksum)
 
             if request.user.has_perm('testplans.change_envplanmap'):
-                tp.clear_env_groups()
+                test_plan.clear_env_groups()
 
                 if request.POST.get('env_group'):
                     env_groups = EnvGroup.objects.filter(
                         id__in=request.POST.getlist('env_group'))
 
                     for env_group in env_groups:
-                        tp.add_env_group(env_group=env_group)
+                        test_plan.add_env_group(env_group=env_group)
             # Update plan email settings
-            update_plan_email_settings(tp, form)
+            update_plan_email_settings(test_plan, form)
             return HttpResponseRedirect(
-                reverse('test_plan_url', args=[plan_id, slugify(tp.name)]))
+                reverse('test_plan_url', args=[plan_id, slugify(test_plan.name)]))
     else:
         # Generate a blank form
         # Temporary use one environment group in this case
-        if tp.env_group.all():
-            for env_group in tp.env_group.all():
+        if test_plan.env_group.all():
+            for env_group in test_plan.env_group.all():
                 env_group_id = env_group.id
                 break
         else:
             env_group_id = None
 
         form = EditPlanForm(initial={
-            'name': tp.name,
-            'product': tp.product_id,
-            'product_version': tp.product_version_id,
-            'type': tp.type_id,
-            'text': tp.latest_text() and tp.latest_text().plan_text or '',
-            'parent': tp.parent_id,
+            'name': test_plan.name,
+            'product': test_plan.product_id,
+            'product_version': test_plan.product_version_id,
+            'type': test_plan.type_id,
+            'text': test_plan.latest_text() and test_plan.latest_text().plan_text or '',
+            'parent': test_plan.parent_id,
             'env_group': env_group_id,
-            'is_active': tp.is_active,
-            'extra_link': tp.extra_link,
-            'owner': tp.owner,
-            'auto_to_plan_owner': tp.emailing.auto_to_plan_owner,
-            'auto_to_plan_author': tp.emailing.auto_to_plan_author,
-            'auto_to_case_owner': tp.emailing.auto_to_case_owner,
-            'auto_to_case_default_tester': tp.emailing.auto_to_case_default_tester,
-            'notify_on_plan_update': tp.emailing.notify_on_plan_update,
-            'notify_on_case_update': tp.emailing.notify_on_case_update,
+            'is_active': test_plan.is_active,
+            'extra_link': test_plan.extra_link,
+            'owner': test_plan.owner,
+            'auto_to_plan_owner': test_plan.emailing.auto_to_plan_owner,
+            'auto_to_plan_author': test_plan.emailing.auto_to_plan_author,
+            'auto_to_case_owner': test_plan.emailing.auto_to_case_owner,
+            'auto_to_case_default_tester': test_plan.emailing.auto_to_case_default_tester,
+            'notify_on_plan_update': test_plan.emailing.notify_on_plan_update,
+            'notify_on_case_update': test_plan.emailing.notify_on_case_update,
         })
-        form.populate(product_id=tp.product_id)
+        form.populate(product_id=test_plan.product_id)
 
     context_data = {
-        'test_plan': tp,
+        'test_plan': test_plan,
         'form': form,
     }
     return render(request, template_name, context_data)
@@ -537,9 +530,9 @@ def clone(request, template_name='plan/clone.html'):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     plan_ids = req_data.getlist('plan')
-    tps = TestPlan.objects.filter(pk__in=plan_ids)
+    test_plans = TestPlan.objects.filter(pk__in=plan_ids)
 
-    if not tps:
+    if not test_plans:
         # note: if at least one of the specified plans is found
         # we're not going to show this message
         messages.add_message(request,
@@ -557,9 +550,9 @@ def clone(request, template_name='plan/clone.html'):
             clone_options = clone_form.cleaned_data
 
             # Create new test plan.
-            for tp in tps:
+            for test_plan in test_plans:
 
-                new_name = len(tps) == 1 and clone_options['name'] or None
+                new_name = clone_options['name'] if len(test_plans) == 1 else None
 
                 clone_params = dict(
                     # Cloned plan properties
@@ -598,26 +591,26 @@ def clone(request, template_name='plan/clone.html'):
                 if assign_me_as_text_author:
                     clone_params['default_text_author'] = request.user
 
-                cloned_plan = tp.clone(**clone_params)
+                cloned_plan = test_plan.clone(**clone_params)
 
-            if len(tps) == 1:
+            if len(test_plans) == 1:
                 return HttpResponseRedirect(
                     reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
-            else:
-                args = {
-                    'action': 'search',
-                    'product': clone_form.cleaned_data['product'].id,
-                    'product_version': clone_form.cleaned_data['product_version'].id,
-                }
-                url_args = urlencode(args)
-                return HttpResponseRedirect(
-                    '{}?{}'.format(reverse('plans-all'), url_args))
+
+            args = {
+                'action': 'search',
+                'product': clone_form.cleaned_data['product'].id,
+                'product_version': clone_form.cleaned_data['product_version'].id,
+            }
+            url_args = urlencode(args)
+            return HttpResponseRedirect(
+                '{}?{}'.format(reverse('plans-all'), url_args))
     else:
         # Generate the default values for the form
-        if len(tps) == 1:
+        if len(test_plans) == 1:
             clone_form = ClonePlanForm(initial={
-                'product': tps[0].product_id,
-                'product_version': tps[0].product_version_id,
+                'product': test_plans[0].product_id,
+                'product_version': test_plans[0].product_version_id,
                 'set_parent': True,
                 'copy_texts': True,
                 'copy_attachements': True,
@@ -626,9 +619,9 @@ def clone(request, template_name='plan/clone.html'):
                 'copy_testcases': False,
                 'maintain_case_orignal_author': True,
                 'keep_case_default_tester': False,
-                'name': tps[0].make_cloned_name(),
+                'name': test_plans[0].make_cloned_name(),
             })
-            clone_form.populate(product_id=tps[0].product.id)
+            clone_form.populate(product_id=test_plans[0].product.id)
         else:
             clone_form = ClonePlanForm(initial={
                 'set_parent': True,
@@ -641,18 +634,18 @@ def clone(request, template_name='plan/clone.html'):
             })
 
     context_data = {
-        'testplans': tps,
+        'testplans': test_plans,
         'clone_form': clone_form,
     }
     return render(request, template_name, context_data)
 
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):
-    '''Manage attached files'''
+    """ Manage attached files """
 
-    tp = get_object_or_404(TestPlan, plan_id=plan_id)
+    test_plan = get_object_or_404(TestPlan, plan_id=plan_id)
     context_data = {
-        'test_plan': tp,
+        'test_plan': test_plan,
         'limit': settings.FILE_UPLOAD_MAX_SIZE,
     }
     return render(request, template_name, context_data)
@@ -660,18 +653,18 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 
 @require_GET
 def text_history(request, plan_id, template_name='plan/history.html'):
-    '''View test plan text history'''
+    """ View test plan text history """
 
-    tp = get_object_or_404(TestPlan, plan_id=int(plan_id))
-    tptxts = tp.text.select_related('author').only('plan',
-                                                   'create_date',
-                                                   'plan_text',
-                                                   'plan_text_version',
-                                                   'author__email')
+    test_plan = get_object_or_404(TestPlan, plan_id=int(plan_id))
+    test_plan_texts = test_plan.text.select_related('author').only('plan',
+                                                                   'create_date',
+                                                                   'plan_text',
+                                                                   'plan_text_version',
+                                                                   'author__email')
     selected_plan_text_version = int(request.GET.get('plan_text_version', 0))
     context_data = {
-        'testplan': tp,
-        'test_plan_texts': tptxts,
+        'testplan': test_plan,
+        'test_plan_texts': test_plan_texts,
         'select_plan_text_version': selected_plan_text_version,
     }
     return render(request, template_name, context_data)
