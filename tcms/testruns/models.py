@@ -13,6 +13,9 @@ from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
 from tcms.testcases.models import Bug, TestCaseText, NoneText
+from tcms.xmlrpc.serializer import TestCaseRunXMLRPCSerializer
+from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
+from tcms.xmlrpc.utils import distinct_filter
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
@@ -20,6 +23,12 @@ TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
                                        'CaseRunsTotalCount '
                                        'CompletedPercentage '
                                        'FailurePercentage')
+
+
+def plan_by_id_or_name(value):
+    if is_int(value):
+        return Q(plan__plan_id=int(value))
+    return Q(plan__name__icontains=value)
 
 
 class TestRun(TCMSActionModel):
@@ -66,9 +75,6 @@ class TestRun(TCMSActionModel):
 
     @classmethod
     def to_xmlrpc(cls, query=None):
-        from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
-        from tcms.xmlrpc.utils import distinct_filter
-
         _query = query or {}
         qs = distinct_filter(TestRun, _query).order_by('pk')
         serializer = TestRunXMLRPCSerializer(model_class=cls, queryset=qs)
@@ -76,15 +82,12 @@ class TestRun(TCMSActionModel):
 
     @classmethod
     def list(cls, query):
-        conditions = []
-
         mapping = {
             'search': lambda value: Q(run_id__icontains=value) | Q(summary__icontains=value),
             'summary': lambda value: Q(summary__icontains=value),
             'product': lambda value: Q(build__product=value),
             'product_version': lambda value: Q(product_version=value),
-            'plan': lambda value:
-            Q(plan__plan_id=int(value)) if is_int(value) else Q(plan__name__icontains=value),
+            'plan': plan_by_id_or_name,
             'build': lambda value: Q(build=value),
             'env_group': lambda value: Q(plan__env_group=value),
             'people_id': lambda value: Q(manager__id=value) | Q(default_tester__id=value),
@@ -156,10 +159,8 @@ class TestRun(TCMSActionModel):
             or (case.default_tester_id and case.default_tester) \
             or (self.default_tester_id and self.default_tester)
 
-        get_caserun_status = TestCaseRunStatus.objects.get
-        _case_run_status = isinstance(case_run_status, int) \
-            and get_caserun_status(id=case_run_status) \
-            or case_run_status
+        _case_run_status = TestCaseRunStatus.objects.get(id=case_run_status) \
+            if isinstance(case_run_status, int) else case_run_status
 
         return self.case_run.create(case=case,
                                     assignee=_assignee,
@@ -217,12 +218,13 @@ class TestRun(TCMSActionModel):
         return percent
 
     def _get_completed_case_run_percentage(self):
-        ids = TestCaseRunStatus._get_completed_status_ids()
+        ids = TestCaseRunStatus.objects.filter(
+            name__in=TestCaseRunStatus.complete_status_names).values_list('pk', flat=True)
+
         completed_caserun = self.case_run.filter(
             case_run_status__in=ids)
 
-        percentage = self.get_percentage(completed_caserun.count())
-        return percentage
+        return self.get_percentage(completed_caserun.count())
 
     completed_case_run_percent = property(_get_completed_case_run_percentage)
 
@@ -356,17 +358,6 @@ class TestCaseRunStatus(TCMSActionModel):
             return None
 
     @classmethod
-    def _get_completed_status_ids(cls):
-        """
-        There are some status indicate that
-        the testcaserun is completed.
-        Return IDs of these statuses.
-        """
-        completed_status = cls.objects.filter(name__in=('FAILED', 'PASSED', 'ERROR', 'WAIVED'))
-
-        return completed_status.values_list('pk', flat=True)
-
-    @classmethod
     def _get_failed_status_ids(cls):
         """
         There are some status indicate that
@@ -447,26 +438,22 @@ class TestCaseRun(TCMSActionModel):
 
     @classmethod
     def to_xmlrpc(cls, query={}):
-        from tcms.xmlrpc.serializer import TestCaseRunXMLRPCSerializer
-        from tcms.xmlrpc.utils import distinct_filter
-
         qs = distinct_filter(TestCaseRun, query).order_by('pk')
         serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
     @classmethod
-    def mail_scene(cls, objects, field=None, value=None, ctype=None,
-                   object_pk=None):
+    def mail_scene(cls, objects, field=None):
         test_run = objects[0].run
         # scence_templates format:
         # template, subject, context
-        tcrs = objects.select_related()
+        test_case_runs = objects.select_related()
         scence_templates = {
             'assignee': {
                 'template_name': 'mail/change_case_run_assignee.txt',
                 'subject': 'Assignee of run %s has been changed' % test_run.run_id,
                 'recipients': test_run.get_notify_addrs(),
-                'context': {'test_run': test_run, 'test_case_runs': tcrs},
+                'context': {'test_run': test_run, 'test_case_runs': test_case_runs},
             }
         }
 
