@@ -98,9 +98,6 @@ class _InfoObjects(object):
     def components(self):
         return Component.objects.filter(product__id=self.product_id)
 
-    def env_groups(self):
-        return EnvGroup.objects.all()
-
     def env_properties(self):
         if self.request.GET.get('env_group_id'):
             return EnvGroup.objects.get(id=self.request.GET['env_group_id']).property.all()
@@ -115,6 +112,10 @@ class _InfoObjects(object):
 
     def versions(self):
         return Version.objects.filter(product__id=self.product_id)
+
+    @staticmethod
+    def env_groups():
+        return EnvGroup.objects.all()
 
 
 def tags(request):
@@ -207,7 +208,7 @@ class _TagActions(object):
         self.obj.remove_tag(tag)
 
 
-class _TagCounter(object):
+class _TagCounter(object):  # pylint: disable=too-few-public-methods
     """ Used for counting the number of times a tag is assigned to TestRun/TestCase/TestPlan """
 
     def __init__(self, key, test_tags):
@@ -282,8 +283,8 @@ def get_value_by_type(val, v_type):
     else:
         try:
             value = pipe(val)
-        except Exception as e:
-            error = str(e)
+        except Exception as error:
+            error = str(error)
     return value, error
 
 
@@ -339,12 +340,12 @@ def update(request):
         return say_no('%s has no field %s' % (ctype, field))
 
     if hasattr(targets[0], 'log_action'):
-        for t in targets:
+        for target in targets:
             try:
-                t.log_action(
+                target.log_action(
                     who=request.user,
                     action='Field %s changed from %s to %s.' % (
-                        field, getattr(t, field), value
+                        field, getattr(target, field), value
                     )
                 )
             except (AttributeError, User.DoesNotExist):
@@ -367,35 +368,35 @@ def update(request):
 
     # Special hacking for updating test case run status
     if ctype == 'testruns.testcaserun' and field == 'case_run_status':
-        for t in targets:
+        for target in targets:
             field = 'close_date'
-            t.log_action(
+            target.log_action(
                 who=request.user,
                 action='Field %s changed from %s to %s.' % (
-                    field, getattr(t, field), now
+                    field, getattr(target, field), now
                 )
             )
-            if t.tested_by != request.user:
+            if target.tested_by != request.user:
                 field = 'tested_by'
-                t.log_action(
+                target.log_action(
                     who=request.user,
                     action='Field %s changed from %s to %s.' % (
-                        field, getattr(t, field), request.user
+                        field, getattr(target, field), request.user
                     )
                 )
 
             field = 'assignee'
             try:
-                assignee = t.assginee
+                assignee = target.assginee
                 if assignee != request.user:
-                    t.log_action(
+                    target.log_action(
                         who=request.user,
                         action='Field %s changed from %s to %s.' % (
-                            field, getattr(t, field), request.user
+                            field, getattr(target, field), request.user
                         )
                     )
                     # t.assignee = request.user
-                t.save()
+                target.save()
             except (AttributeError, User.DoesNotExist):
                 pass
         targets.update(close_date=now, tested_by=request.user)
@@ -443,13 +444,13 @@ def update_case_run_status(request):
         return say_no('%s has no field %s' % (ctype, field))
 
     if hasattr(targets[0], 'log_action'):
-        for t in targets:
+        for target in targets:
             try:
-                t.log_action(
+                target.log_action(
                     who=request.user,
                     action='Field {} changed from {} to {}.'.format(
                         field,
-                        getattr(t, field),
+                        getattr(target, field),
                         TestCaseRunStatus.id_to_string(value),
                     )
                 )
@@ -473,35 +474,35 @@ def update_case_run_status(request):
 
     # Special hacking for updating test case run status
     if ctype == 'testruns.testcaserun' and field == 'case_run_status':
-        for t in targets:
+        for target in targets:
             field = 'close_date'
-            t.log_action(
+            target.log_action(
                 who=request.user,
                 action='Field %s changed from %s to %s.' % (
-                    field, getattr(t, field), now
+                    field, getattr(target, field), now
                 )
             )
-            if t.tested_by != request.user:
+            if target.tested_by != request.user:
                 field = 'tested_by'
-                t.log_action(
+                target.log_action(
                     who=request.user,
                     action='Field %s changed from %s to %s.' % (
-                        field, getattr(t, field), request.user
+                        field, getattr(target, field), request.user
                     )
                 )
 
             field = 'assignee'
             try:
-                assignee = t.assginee
+                assignee = target.assginee
                 if assignee != request.user:
-                    t.log_action(
+                    target.log_action(
                         who=request.user,
                         action='Field %s changed from %s to %s.' % (
-                            field, getattr(t, field), request.user
+                            field, getattr(target, field), request.user
                         )
                     )
                     # t.assignee = request.user
-                t.save()
+                target.save()
             except (AttributeError, User.DoesNotExist):
                 pass
         targets.update(close_date=now, tested_by=request.user)
@@ -509,12 +510,8 @@ def update_case_run_status(request):
     return HttpResponse(json.dumps({'rc': 0, 'response': 'ok'}))
 
 
-class ModelUpdateActions(object):
-    """Abstract class defining interfaces to update a model properties"""
-
-
-class TestCaseUpdateActions(ModelUpdateActions):
-    """Actions to update each possible proprety of TestCases
+class TestCaseUpdateActions(object):
+    """Actions to update each possible property of TestCases
 
     Define your own method named _update_[property name] to hold specific
     update logic.
@@ -659,14 +656,13 @@ class TestCaseUpdateActions(ModelUpdateActions):
         # be raised.
         offset = 0
         step_length = 500
-        queryset_filter = TestCasePlan.objects.filter
-        data = {self.target_field: sortkey}
-        while 1:
+        while True:
             sub_cases = update_targets[offset:offset + step_length]
             case_pks = [case.pk for case in sub_cases]
-            if len(case_pks) == 0:
+            if not case_pks:
                 break
-            queryset_filter(plan=plan, case__in=case_pks).update(**data)
+            TestCasePlan.objects.filter(plan=plan,
+                                        case__in=case_pks).update(**{self.target_field: sortkey})
             # Move to next batch of cases to change.
             offset += step_length
 
@@ -687,10 +683,10 @@ def update_cases_default_tester(request):
     return proxy.update()
 
 
-update_cases_priority = update_cases_default_tester
-update_cases_case_status = update_cases_default_tester
-update_cases_sortkey = update_cases_default_tester
-update_cases_reviewer = update_cases_default_tester
+UPDATE_CASES_PRIORITY = update_cases_default_tester
+UPDATE_CASES_CASE_STATUS = update_cases_default_tester
+UPDATE_CASES_SORTKEY = update_cases_default_tester
+UPDATE_CASES_REVIEWER = update_cases_default_tester
 
 
 @require_POST
@@ -723,10 +719,10 @@ def clean_bug_form(request):
     try:
         data['bugs'] = request.GET.get('bug_id', '').split(',')
         data['runs'] = map(int, request.GET.get('case_runs', '').split(','))
-    except (TypeError, ValueError) as e:
+    except (TypeError, ValueError) as error:
         return (None, 'Please specify only integers for bugs, '
                       'caseruns(using comma to seperate IDs), '
-                      'and bug_system. (DEBUG INFO: %s)' % str(e))
+                      'and bug_system. (DEBUG INFO: %s)' % str(error))
 
     data['bug_system_id'] = int(request.GET.get('bug_system_id', 1))
 
@@ -754,8 +750,8 @@ def update_bugs_to_caseruns(request):
 
     try:
         validate_bug_id(bug_ids, bug_system_id)
-    except ValidationError as e:
-        return say_no(str(e))
+    except ValidationError as error:
+        return say_no(str(error))
 
     bz_external_track = data['bz_external_track']
     action = data['action']
@@ -772,8 +768,8 @@ def update_bugs_to_caseruns(request):
                 for bug in bugs:
                     if bug.case_run_id == run.pk:
                         run.remove_bug(bug.bug_id, run.pk)
-    except Exception as e:
-        return say_no(str(e))
+    except Exception as error:
+        return say_no(str(error))
     return say_yes()
 
 
