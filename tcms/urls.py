@@ -43,14 +43,14 @@ urlpatterns = [
 
     # Ajax call responder
     url(r'^ajax/update/$', ajax.update, name='ajax-update'),
-    url(r'^ajax/update/case-status/$', ajax.update_cases_case_status),
+    url(r'^ajax/update/case-status/$', ajax.UPDATE_CASES_CASE_STATUS),
     url(r'^ajax/update/case-run-status$', ajax.update_case_run_status,
         name='ajax-update_case_run_status'),
-    url(r'^ajax/update/cases-priority/$', ajax.update_cases_priority),
+    url(r'^ajax/update/cases-priority/$', ajax.UPDATE_CASES_PRIORITY),
     url(r'^ajax/update/cases-default-tester/$', ajax.update_cases_default_tester,
         name='ajax-update_cases_default_tester'),
-    url(r'^ajax/update/cases-reviewer/$', ajax.update_cases_reviewer),
-    url(r'^ajax/update/cases-sortkey/$', ajax.update_cases_sortkey),
+    url(r'^ajax/update/cases-reviewer/$', ajax.UPDATE_CASES_REVIEWER),
+    url(r'^ajax/update/cases-sortkey/$', ajax.UPDATE_CASES_SORTKEY),
     url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
     url(r'^management/getinfo/$', ajax.info, name='ajax-info'),
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
