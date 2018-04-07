@@ -309,7 +309,7 @@ class TestCase(TCMSActionModel):
         return cls.list(query)
 
     @classmethod
-    def mail_scene(cls, objects, field=None, value=None, ctype=None, object_pk=None):
+    def mail_scene(cls, objects, field=None):
         tcs = objects.select_related()
         scence_templates = {
             'reviewer': {

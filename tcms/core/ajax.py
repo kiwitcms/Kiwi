@@ -353,10 +353,7 @@ def update(request):
     objects_update(targets, **{field: value})
 
     if hasattr(model, 'mail_scene'):
-        mail_context = model.mail_scene(
-            objects=targets, field=field, value=value, ctype=ctype,
-            object_pk=object_pk,
-        )
+        mail_context = model.mail_scene(objects=targets, field=field)
         if mail_context:
             from tcms.core.utils.mailto import mailto
 
@@ -461,10 +458,7 @@ def update_case_run_status(request):
     if hasattr(model, 'mail_scene'):
         from tcms.core.utils.mailto import mailto
 
-        mail_context = model.mail_scene(
-            objects=targets, field=field, value=value, ctype=ctype,
-            object_pk=object_pk,
-        )
+        mail_context = model.mail_scene(objects=targets, field=field)
         if mail_context:
             mail_context['context']['user'] = request.user
             try:
@@ -563,9 +557,7 @@ class TestCaseUpdateActions(object):
             return None
 
     def _sendmail(self):
-        mail_context = TestCase.mail_scene(objects=self._update_objects,
-                                           field=self.target_field,
-                                           value=self.new_value)
+        mail_context = TestCase.mail_scene(objects=self._update_objects, field=self.target_field)
         if mail_context:
             from tcms.core.utils.mailto import mailto
 
