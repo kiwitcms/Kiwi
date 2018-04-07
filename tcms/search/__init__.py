@@ -23,7 +23,7 @@ from tcms.testruns.models import TestRun
 
 
 @require_GET
-def advance_search(request, tmpl='search/advanced_search.html'):
+def advance_search(request):
     """View of /advance-search/"""
     errors = None
     data = request.GET
@@ -38,45 +38,36 @@ def advance_search(request, tmpl='search/advanced_search.html'):
     all_forms = (plan_form, case_form, run_form)
     errors = [f.errors for f in all_forms if not f.is_valid()]
     if errors or not data:
-        PRODUCT_CHOICE = [
+        product_choice = [
             (p.pk, p.name) for p in cached_entities('product')
         ]
-        PLAN_TYPE_CHOICES = cached_entities('plantype')
-        errors = fmt_errors(errors)
+        plan_type_choices = cached_entities('plantype')
+        errors = _fmt_errors(errors)
         priorities = Priority.objects.filter(is_active=True).order_by('value')
-        return render(request, tmpl, locals())
+        return render(request, 'search/advanced_search.html', locals())
 
     start = time.time()
-    results = query(request,
-                    plan_form.cleaned_data,
-                    run_form.cleaned_data,
-                    case_form.cleaned_data,
-                    target)
+    results = _query(plan_form.cleaned_data,
+                     run_form.cleaned_data,
+                     case_form.cleaned_data,
+                     target)
     results = order_targets(target, results, data)
     end = time.time()
     timecost = round(end - start, 3)
     queries = fmt_queries(*[f.cleaned_data for f in all_forms])
     queries['Target'] = target
-    return render_results(request, results, timecost, queries)
+    return _render_results(request, results, timecost, queries)
 
 
-def query(request, plan_query, run_query, case_query, target, using='orm'):
-    USING = {
-        'orm': {
-            'query': SmartDjangoQuery,
-            'sum': sum_orm_queries
-        }
-    }
-    Query = USING[using]['query']
-    Sum = USING[using]['sum']
-    plans = Query(plan_query, TestPlan.__name__)
-    runs = Query(run_query, TestRun.__name__)
-    cases = Query(case_query, TestCase.__name__)
-    results = Sum(plans, cases, runs, target)
-    return results
+def _query(plan_query, run_query, case_query, target):
+    plans = SmartDjangoQuery(plan_query, TestPlan.__name__)
+    runs = SmartDjangoQuery(run_query, TestRun.__name__)
+    cases = SmartDjangoQuery(case_query, TestCase.__name__)
+
+    return _sum_orm_queries(plans, cases, runs, target)
 
 
-def sum_orm_queries(plans, cases, runs, target):
+def _sum_orm_queries(plans, cases, runs, target):
     plans = plans.evaluate()
     cases = cases.evaluate()
     runs = runs.evaluate()
@@ -118,9 +109,10 @@ def sum_orm_queries(plans, cases, runs, target):
         if plans:
             cases = cases.filter(plan__in=plans).distinct()
         return cases
+    raise ValueError('Invalid target')
 
 
-def render_results(request, results, time_cost, queries, tmpl='search/results.html'):
+def _render_results(request, results, time_cost, queries):
     """Using a SQL "in" query and PKs as the arguments"""
     klasses = {
         'plan': {'class': TestPlan, 'result_key': 'test_plans'},
@@ -139,7 +131,7 @@ def render_results(request, results, time_cost, queries, tmpl='search/results.ht
         'queries': queries,
         'query_url': query_url,
     }
-    return render(request, tmpl, context_data)
+    return render(request, 'search/results.html', context_data)
 
 
 def remove_from_request_path(request, name):
@@ -161,23 +153,23 @@ def remove_from_request_path(request, name):
     return '?' + path
 
 
-def fmt_errors(form_errors):
+def _fmt_errors(form_errors):
     """
     Format errors collected in a Django Form
     for a better appearance.
     """
     errors = []
     for error in form_errors:
-        for k, v in error.items():
-            k = k.replace('p_product', 'product')
-            k = k.replace('p_', 'product ')
-            k = k.replace('cs_', 'case ')
-            k = k.replace('pl_', 'plan ')
-            k = k.replace('r_', 'run ')
-            k = k.replace('_', ' ')
-            if isinstance(v, list):
-                v = ', '.join(map(str, v))
-            errors.append((k, v))
+        for key, value in error.items():
+            key = key.replace('p_product', 'product')
+            key = key.replace('p_', 'product ')
+            key = key.replace('cs_', 'case ')
+            key = key.replace('pl_', 'plan ')
+            key = key.replace('r_', 'run ')
+            key = key.replace('_', ' ')
+            if isinstance(value, list):
+                value = ', '.join(map(str, value))
+            errors.append((key, value))
     return errors
 
 
@@ -186,24 +178,24 @@ def fmt_queries(*queries):
     Format the queries string.
     """
     results = {}
-    for query in queries:
-        for k, v in query.items():
-            k = k.replace('p_product', 'product')
-            k = k.replace('p_', 'product ')
-            k = k.replace('cs_', 'case ')
-            k = k.replace('pl_', 'plan ')
-            k = k.replace('r_', 'run ')
-            k = k.replace('_', ' ')
-            if isinstance(v, bool) or v:
-                if isinstance(v, QuerySet):
+    for _query in queries:
+        for key, value in _query.items():
+            key = key.replace('p_product', 'product')
+            key = key.replace('p_', 'product ')
+            key = key.replace('cs_', 'case ')
+            key = key.replace('pl_', 'plan ')
+            key = key.replace('r_', 'run ')
+            key = key.replace('_', ' ')
+            if isinstance(value, bool) or value:
+                if isinstance(value, QuerySet):
                     try:
-                        v = ', '.join(o.name for o in v)
+                        value = ', '.join(o.name for o in value)
                     except AttributeError:
                         try:
-                            v = ', '.join(o.value for o in v)
+                            value = ', '.join(o.value for o in value)
                         except AttributeError:
-                            v = ', '.join(v)
-                if isinstance(v, list):
-                    v = ', '.join(map(str, v))
-                results[k] = v
+                            value = ', '.join(value)
+                if isinstance(value, list):
+                    value = ', '.join(map(str, value))
+                results[key] = value
     return results
