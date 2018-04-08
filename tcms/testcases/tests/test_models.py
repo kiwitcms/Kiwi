@@ -170,10 +170,10 @@ class TestGetPlainText(BasePlanCase):
         super(TestGetPlainText, cls).setUpTestData()
 
         cls.action = '<p>First step:</p>'
-        cls.effect = '''<ul>
+        cls.effect = """<ul>
     <li>effect 1</li>
     <li>effect 2</li>
-</ul>'''
+</ul>"""
         cls.setup = '<p><a href="/setup_guide">setup</a></p>'
         cls.breakdown = '<span>breakdown</span>'
 
@@ -226,7 +226,7 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
         self.case.summary = 'New summary for running test'
         self.case.save()
 
-        expected_mail_body = '''TestCase [{0}] has been updated by {1}
+        expected_mail_body = """TestCase [{0}] has been updated by {1}
 
 Case -
 {2}?#log
@@ -235,7 +235,7 @@ Case -
 Configure mail: {2}/edit/
 ------- You are receiving this mail because: -------
 You have subscribed to the changes of this TestCase
-You are related to this TestCase'''.format(self.case.summary,
+You are related to this TestCase""".format(self.case.summary,
                                            'editor',
                                            self.case.get_full_url())
 

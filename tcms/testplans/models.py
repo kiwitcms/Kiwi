@@ -76,7 +76,7 @@ class TestPlan(TCMSActionModel):
 
     @classmethod
     def list(cls, query=None):
-        '''docstring for list_plans'''
+        """docstring for list_plans"""
         from django.db.models import Q
 
         new_query = {}
@@ -187,9 +187,9 @@ class TestPlan(TCMSActionModel):
         return reverse('test_plan_url', args=[self.plan_id, slugify(self.name)])
 
     def get_case_sortkey(self):
-        '''
+        """
         Get case sortkey.
-        '''
+        """
         result = TestCasePlan.objects.filter(plan=self).aggregate(Max('sortkey'))
         sortkey = result['sortkey__max']
         if sortkey is None:

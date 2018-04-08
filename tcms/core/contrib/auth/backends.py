@@ -14,10 +14,10 @@ class DBModelBackend(ModelBackend):
 
 
 def initiate_user_with_default_setups(user):
-    '''
+    """
     Add default groups, permissions, status to a newly
     created user.
-    '''
+    """
     # create default permissions if not already set
     assign_default_group_permissions()
 

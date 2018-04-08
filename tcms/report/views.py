@@ -358,17 +358,17 @@ class CustomReport(TemplateView):
 
 
 class CustomDetailReport(CustomReport):
-    '''Custom detail report
+    """Custom detail report
 
     Reuse CustomReport._search_context to get build and its summary statistics
-    '''
+    """
 
     template_name = 'report/custom_details.html'
     form_class = CustomSearchDetailsForm
     data_class = CustomDetailsReportData
 
     def _get_report_data_context(self):
-        '''Override to generate report by disabling check of argument a'''
+        """Override to generate report by disabling check of argument a"""
         return self._report_data_context()
 
     def walk_matrix_row_by_row(self, matrix_dataset):
@@ -399,7 +399,7 @@ class CustomDetailReport(CustomReport):
             yield None, None, status_total_line
 
     def read_case_runs(self, build_ids, status_ids):
-        '''Generator for reading case runs and related objects'''
+        """Generator for reading case runs and related objects"""
         case_runs = self._data.get_case_runs(build_ids, status_ids)
         bugs = self._data.get_case_runs_bugs(build_ids, status_ids)
         comments = self._data.get_case_runs_comments(build_ids, status_ids)
@@ -443,7 +443,7 @@ class CustomDetailReport(CustomReport):
 
 
 class TestingReportBase(TemplateView):
-    '''Base class for each type of report'''
+    """Base class for each type of report"""
 
     form_class = TestingReportForm
 
@@ -460,13 +460,13 @@ class TestingReportBase(TemplateView):
         return form
 
     def _init_context(self):
-        '''Provide very initial page without any report data
+        """Provide very initial page without any report data
 
         Basically, in 2 senariors, user will be lead to this context
 
             - no parameters in query string
             - no report_type parameter in query string
-        '''
+        """
         return {
             'run_form': self._get_form(),
         }
@@ -549,7 +549,7 @@ class TestingReportByPlanBuildDetail(TestingReportBase,
 
 
 class TestingReport(View):
-    '''Dispatch testing report according to report type'''
+    """Dispatch testing report according to report type"""
 
     testing_report_views = {
         None: TestingReportByCaseRunTester,

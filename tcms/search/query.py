@@ -6,11 +6,11 @@ from tcms.testruns.models import TestRun
 
 
 class SmartDjangoQuery(object):
-    '''
+    """
     Class mainly wraps the look-up rules and priorities\n
     of fields that should be applied on Django queryset.\n
     Mind the priorities cause they make difference about efficiency.
-    '''
+    """
 
     # where in the form, by specifying a fieldname named
     # FIELDNAME_EXCLUDE_POSTFIX, then this field will be used to exclude the

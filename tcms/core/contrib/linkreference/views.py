@@ -54,7 +54,7 @@ def create_link(data):
 @permission_required('testruns.change_testcaserun')
 @require_POST
 def add(request):
-    '''Add new link to a specific target
+    """Add new link to a specific target
 
     The target should be a valid model within TCMS, which are documented in
     ``LINKREF_TARGET``.
@@ -69,7 +69,7 @@ def add(request):
     - name: a short description to this new link, and accept 64 characters at
       most.
     - url: the actual URL.
-    '''
+    """
 
     json_data = create_link(request.POST)
     if json_data['rc'] == 0:
@@ -80,7 +80,7 @@ def add(request):
 @permission_required('testruns.change_testcaserun')
 @require_GET
 def remove(_request, link_id):
-    ''' Remove a specific link with ID ``link_id`` '''
+    """ Remove a specific link with ID ``link_id`` """
 
     field = IntegerField(min_value=1)
     try:

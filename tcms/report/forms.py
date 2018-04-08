@@ -92,7 +92,7 @@ REPORT_TYPES = (
 
 
 class BasicTestingReportFormFields(forms.Form):
-    '''Testing report form with basic necessary fields'''
+    """Testing report form with basic necessary fields"""
 
     r_product = ModelChoiceField(
         required=True,
@@ -172,7 +172,7 @@ class BasicTestingReportFormFields(forms.Form):
 
 
 class TestingReportCaseRunsListForm(BasicTestingReportFormFields):
-    '''Form validation for viewing case runs from tesing report'''
+    """Form validation for viewing case runs from tesing report"""
 
     run = forms.IntegerField(
         required=False,
@@ -219,7 +219,7 @@ class TestingReportCaseRunsListForm(BasicTestingReportFormFields):
 
 
 class TestingReportForm(BasicTestingReportFormFields):
-    '''Criteria for generating testing report'''
+    """Criteria for generating testing report"""
 
     report_type = forms.ChoiceField(
         required=True,

@@ -130,7 +130,7 @@ def _validate_cc_list(cc_list):
 @permissions_required('testcases.change_testcase')
 @rpc_method(name='TestCase.add_notification_cc')
 def add_notification_cc(case_id, cc_list):
-    '''
+    """
     .. function:: XML-RPC TestCase.add_notification_cc(case_id, cc_list)
 
         Add email addresses to the notification list of specified TestCase
@@ -143,7 +143,7 @@ def add_notification_cc(case_id, cc_list):
         :raises: TypeError or ValidationError if email validation fails
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
         :raises: TestCase.DoesNotExist if object with case_id doesn't exist
-    '''
+    """
 
     _validate_cc_list(cc_list)
 
@@ -160,7 +160,7 @@ def add_notification_cc(case_id, cc_list):
 @permissions_required('testcases.change_testcase')
 @rpc_method(name='TestCase.remove_notification_cc')
 def remove_notification_cc(case_id, cc_list):
-    '''
+    """
     .. function:: XML-RPC TestCase.remove_notification_cc(case_id, cc_list)
 
         Remove email addresses from the notification list of specified TestCase
@@ -173,7 +173,7 @@ def remove_notification_cc(case_id, cc_list):
         :raises: TypeError or ValidationError if email validation fails
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
         :raises: TestCase.DoesNotExist if object with case_id doesn't exist
-    '''
+    """
 
     _validate_cc_list(cc_list)
 
@@ -182,7 +182,7 @@ def remove_notification_cc(case_id, cc_list):
 
 @rpc_method(name='TestCase.get_notification_cc')
 def get_notification_cc(case_id):
-    '''
+    """
     .. function:: XML-RPC TestCase.get_notification_cc(case_id)
 
         Return notification list for specified TestCase
@@ -192,7 +192,7 @@ def get_notification_cc(case_id):
         :return: List of email addresses
         :rtype: list(str)
         :raises: TestCase.DoesNotExist if object with case_id doesn't exist
-    '''
+    """
     return TestCase.objects.get(pk=case_id).get_cc_list()
 
 

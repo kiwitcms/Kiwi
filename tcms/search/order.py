@@ -2,13 +2,13 @@
 
 
 def order_targets(target, queryset, queries):
-    '''
+    """
     Designed to work with advance search module.
     Ordering queryset of testplan, testcase, or testrun.
     @ target: string, 'plan','run', 'case'
     @ queryset: django queryset
     @ queries: form.cleaned_data
-    '''
+    """
     order_options = {
         'plan': {
             'default_order_by': 'create_date',
@@ -32,10 +32,10 @@ def order_targets(target, queryset, queries):
 
 
 def order_plan_queryset(plans, field, asc=False):
-    '''
+    """
     Annotate the TestPlan queryset
     by calling order_by on it.
-    '''
+    """
     orderable_fields = (
         'plan_id', 'name', 'author__username', 'owner__username',
         'create_date', 'product__name', 'type',
@@ -50,10 +50,10 @@ def order_plan_queryset(plans, field, asc=False):
 
 
 def order_run_queryset(runs, field, asc=False):
-    '''
+    """
     Annotate the TestRun queryset
     by calling order_by on it.
-    '''
+    """
     orderable_fields = (
         'run_id', 'summary', 'manager__username',
         'default_tester__username', 'env_groups',
@@ -69,10 +69,10 @@ def order_run_queryset(runs, field, asc=False):
 
 
 def order_case_queryset(cases, field, asc=False):
-    '''
+    """
     Annotate the TestCase queryset
     by calling order_by on it.
-    '''
+    """
     orderable_fields = (
         'case_id', 'summary', 'author__username',
         'default_tester__username', 'priority',
