@@ -198,9 +198,9 @@ class CaseNotifyForm(forms.Form):
     cc_list = MultipleEmailField(
         required=False,
         label=u'CC to',
-        help_text=u'''It will send notification email to each Email address
+        help_text=u"""It will send notification email to each Email address
             within CC list. Email addresses within CC list are
-            separated by comma.''',
+            separated by comma.""",
         widget=forms.Textarea(attrs={'rows': 1, }))
 
 

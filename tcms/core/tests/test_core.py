@@ -46,7 +46,7 @@ class TestUtilsFunctions(unittest.TestCase):
 
 
 class GroupByResultDictLikeTest(unittest.TestCase):
-    '''Test dict like behaviors'''
+    """Test dict like behaviors"""
 
     def setUp(self):
         self.groupby_result = GroupByResult({'total': 100})
@@ -106,7 +106,7 @@ class GroupByResultDictLikeTest(unittest.TestCase):
 
 
 class GroupByResultCalculationTest(unittest.TestCase):
-    '''Test calculation of GroupByResult'''
+    """Test calculation of GroupByResult"""
 
     def setUp(self):
         self.groupby_result = GroupByResult({

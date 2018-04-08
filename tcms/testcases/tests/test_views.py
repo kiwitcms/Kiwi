@@ -288,9 +288,9 @@ class TestOperateCategoryView(BasePlanCase):
                       for category in self.product.category.all())
         self.assertContains(
             response,
-            '''<select multiple="multiple" id="id_o_category" name="o_category">
+            """<select multiple="multiple" id="id_o_category" name="o_category">
 {}
-</select>'''.format(''.join(categories)),
+</select>""".format(''.join(categories)),
             html=True)
 
     def test_update_cases_category(self):
@@ -797,10 +797,10 @@ class TestCloneCase(BasePlanCase):
 
         self.assertContains(
             response,
-            '''<div>
+            """<div>
     <input type="radio" id="id_use_sameplan" name="selectplan" value="{0}">
     <label for="id_use_sameplan" class="strong">Use the same Plan -- {0} : {1}</label>
-</div>'''.format(self.plan.pk, self.plan.name),
+</div>""".format(self.plan.pk, self.plan.name),
             html=True)
 
         for loop_counter, case in enumerate([self.case_1, self.case_2]):

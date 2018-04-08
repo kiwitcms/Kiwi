@@ -45,7 +45,7 @@ from tcms.testruns.models import TestRun, TestCaseRun
 
 
 def update_plan_email_settings(test_plan, form):
-    """ Update test plan's email settings """
+    """Update test plan's email settings"""
     test_plan.emailing.notify_on_plan_update = form.cleaned_data[
         'notify_on_plan_update']
     test_plan.emailing.notify_on_case_update = form.cleaned_data[
@@ -117,7 +117,7 @@ def new(request, template_name='plan/new.html'):
 
 @require_GET
 def get_all(request, template_name='plan/all.html'):
-    """ Display all testplans """
+    """Display all testplans"""
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
     # If it's not a search the page will be blank
@@ -203,7 +203,7 @@ def get_all(request, template_name='plan/all.html'):
 
 
 def get_number_of_plans_cases(plan_ids):
-    '''Get the number of cases related to each plan
+    """Get the number of cases related to each plan
 
     Arguments:
     - plan_ids: a tuple or list of TestPlans' id
@@ -211,7 +211,7 @@ def get_number_of_plans_cases(plan_ids):
     Return value:
     Return value is an dict object, where key is plan_id and the value is the
     total count.
-    '''
+    """
     qs = TestCasePlan.objects.filter(plan__in=plan_ids)
     qs = qs.values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
@@ -219,7 +219,7 @@ def get_number_of_plans_cases(plan_ids):
 
 
 def get_number_of_plans_runs(plan_ids):
-    '''Get the number of runs related to each plan
+    """Get the number of runs related to each plan
 
     Arguments:
     - plan_ids: a tuple or list of TestPlans' id
@@ -227,7 +227,7 @@ def get_number_of_plans_runs(plan_ids):
     Return value:
     Return value is an dict object, where key is plan_id and the value is the
     total count.
-    '''
+    """
     qs = TestRun.objects.filter(plan__in=plan_ids)
     qs = qs.values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
@@ -235,7 +235,7 @@ def get_number_of_plans_runs(plan_ids):
 
 
 def get_number_of_children_plans(plan_ids):
-    '''Get the number of children plans related to each plan
+    """Get the number of children plans related to each plan
 
     Arguments:
     - plan_ids: a tuple or list of TestPlans' id
@@ -243,7 +243,7 @@ def get_number_of_children_plans(plan_ids):
     Return value:
     Return value is an dict object, where key is plan_id and the value is the
     total count.
-    '''
+    """
     qs = TestPlan.objects.filter(parent__in=plan_ids)
     qs = qs.values('parent').annotate(
         total_count=Count('parent')).order_by('-parent')
@@ -251,7 +251,7 @@ def get_number_of_children_plans(plan_ids):
 
 
 def calculate_stats_for_testplans(plans):
-    '''Attach the number of cases and runs for each TestPlan
+    """Attach the number of cases and runs for each TestPlan
 
     Arguments:
     - plans: the queryset of TestPlans
@@ -259,7 +259,7 @@ def calculate_stats_for_testplans(plans):
     Return value:
     A list of TestPlans, each of which is attached the statistics which is
     with prefix cal meaning calculation result.
-    '''
+    """
     plan_ids = [plan.pk for plan in plans]
     cases_counts = get_number_of_plans_cases(plan_ids)
     runs_counts = get_number_of_plans_runs(plan_ids)
@@ -276,7 +276,7 @@ def calculate_stats_for_testplans(plans):
 
 @require_GET
 def ajax_search(request, template_name='plan/common/json_plans.txt'):
-    """ Display all test plans """
+    """Display all testplans"""
     # If it's not a search the page will be blank
     test_plans = TestPlan.objects.none()
     # if it's a search request the request will be full
@@ -333,7 +333,7 @@ def ajax_response(request, queryset, column_names, template_name):
 
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):
-    """ Display the plan details. """
+    """Display the plan details."""
 
     try:
         test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
@@ -359,7 +359,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 @require_http_methods(['GET', 'POST'])
 @permission_required('testruns.change_testrun')
 def choose_run(request, plan_id):
-    """ Choose one run to add cases """
+    """Choose one run to add cases"""
 
     if request.method == 'GET':
         try:
@@ -424,7 +424,7 @@ def choose_run(request, plan_id):
 @require_http_methods(['GET', 'POST'])
 @permission_required('testplans.change_testplan')
 def edit(request, plan_id, template_name='plan/edit.html'):
-    '''Edit test plan view'''
+    """Edit test plan view"""
 
     try:
         test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
@@ -641,7 +641,7 @@ def clone(request, template_name='plan/clone.html'):
 
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):
-    """ Manage attached files """
+    """Manage attached files"""
 
     test_plan = get_object_or_404(TestPlan, plan_id=plan_id)
     context_data = {
@@ -653,7 +653,7 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 
 @require_GET
 def text_history(request, plan_id, template_name='plan/history.html'):
-    """ View test plan text history """
+    """View test plan text history"""
 
     test_plan = get_object_or_404(TestPlan, plan_id=int(plan_id))
     test_plan_texts = test_plan.text.select_related('author').only('plan',
@@ -795,7 +795,7 @@ class DeleteCasesView(View):
 
 @require_POST
 def printable(request):
-    '''Create the printable copy for plan'''
+    """Create the printable copy for plan"""
     plan_pk = request.POST.get('plan', 0)
 
     if not plan_pk:

@@ -36,10 +36,10 @@ class Migration(migrations.Migration):
             model_name='testcasebugsystem',
             name='report_url',
             field=models.CharField(
-                help_text='''For Bugzilla the report URL looks like
+                help_text="""For Bugzilla the report URL looks like
 <strong>https://bugzilla.example.com/buglist.cgi?bugidtype=include&bug_id=1,2,3</strong>
 <br/>so the value of this field must be <strong>https://bugzilla.example.com</strong>!
-Leave empty to disable!''',
+Leave empty to disable!""",
                 max_length=1024, null=True, verbose_name='Report URL', blank=True),
         ),
         migrations.AddField(

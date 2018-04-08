@@ -214,11 +214,11 @@ def new(request, template_name='run/new.html'):
 
 @permission_required('testruns.delete_testrun')
 def delete(request, run_id):
-    '''Delete the test run
+    """Delete the test run
 
     - Maybe will be not use again
 
-    '''
+    """
     try:
         test_run = TestRun.objects.select_related('manager', 'plan').get(run_id=run_id)
     except ObjectDoesNotExist:
@@ -260,7 +260,7 @@ def delete(request, run_id):
 
 @require_GET
 def all(request, template_name='run/all.html'):
-    '''Read the test runs from database and display them.'''
+    """Read the test runs from database and display them."""
     query_result = len(request.GET) > 0
 
     if request.GET:
@@ -282,11 +282,11 @@ def all(request, template_name='run/all.html'):
 
 
 def run_queryset_from_querystring(querystring):
-    '''Setup a run queryset from a querystring.
+    """Setup a run queryset from a querystring.
 
     A querystring is used in several places in front-end
     to query a list of runs.
-    '''
+    """
     # 'name=alice&age=20' => {'name': 'alice', 'age': ''}
     filter_keywords = dict(k.split('=') for k in querystring.split('&'))
     # get rid of empty values and several other noisy names
@@ -474,10 +474,10 @@ def ajax_search(request, template_name='run/common/json_runs.txt'):
 
 
 def open_run_get_case_runs(request, run):
-    '''Prepare for case runs list in a TestRun page
+    """Prepare for case runs list in a TestRun page
 
     This is an internal method. Do not call this directly.
-    '''
+    """
     tcrs = run.case_run.select_related('run', 'case')
     tcrs = tcrs.only('run__run_id',
                      'run__plan',
@@ -680,12 +680,12 @@ def edit(request, run_id, template_name='run/edit.html'):
 
 @permission_required('testruns.change_testcaserun')
 def execute(request, run_id, template_name='run/execute.html'):
-    '''Execute test run'''
+    """Execute test run"""
     return get(request, run_id, template_name)
 
 
 class TestRunReportView(TemplateView, TestCaseRunDataMixin):
-    '''Test Run report'''
+    """Test Run report"""
 
     template_name = 'run/report.html'
 
@@ -694,7 +694,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         return super(TestRunReportView, self).get(request, run_id)
 
     def get_context_data(self, **kwargs):
-        '''Generate report for specific TestRun
+        """Generate report for specific TestRun
 
         There are four data source to generate this report.
         1. TestRun
@@ -702,7 +702,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         3. Comments associated with each test case run
         4. Statistics
         5. bugs
-        '''
+        """
         run = TestRun.objects.select_related('manager', 'plan').get(
             pk=self.run_id)
 
@@ -936,7 +936,7 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
 
 @require_POST
 def order_case(request, run_id):
-    '''Resort case with new order'''
+    """Resort case with new order"""
     # Current we should rewrite all of cases belong to the plan.
     # Because the cases sortkey in database is chaos,
     # Most of them are None.
@@ -971,7 +971,7 @@ def order_case(request, run_id):
 
 @permission_required('testruns.change_testrun')
 def change_status(request, run_id):
-    '''Change test run finished or running'''
+    """Change test run finished or running"""
     tr = get_object_or_404(TestRun, run_id=run_id)
 
     if request.GET.get('finished') == '1':
@@ -1274,7 +1274,7 @@ def env_value(request):
 
 
 def caseruns(request, templ='report/caseruns.html'):
-    '''View that search caseruns.'''
+    """View that search caseruns."""
     queries = request.GET
     r_form = RunForm(queries)
     r_form.populate(queries)
@@ -1289,12 +1289,12 @@ def caseruns(request, templ='report/caseruns.html'):
 
 
 def get_caseruns_of_runs(runs, kwargs=None):
-    '''
+    """
     Filtering argument -
         priority
         tester
         plan tag
-    '''
+    """
 
     if kwargs is None:
         kwargs = {}

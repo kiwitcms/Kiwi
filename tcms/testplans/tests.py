@@ -575,13 +575,13 @@ class TestCloneView(BasePlanCase):
 
         self.assertContains(response, '<ul class="ul-no-format">')
         for plan in [self.plan, self.another_plan]:
-            plan_li = '''<li>
+            plan_li = """<li>
     <span class="lab-50">{}</span>
     <span class="lab-100">{}</span>
     <span>
         <a href="" title="{} ({})">{}</a>
     </span>
-</li>'''.format(plan.pk, plan.type, plan.name, plan.author.email, plan.name)
+</li>""".format(plan.pk, plan.type, plan.name, plan.author.email, plan.name)
             self.assertContains(response, plan_li, html=True)
 
     def verify_cloned_plan(self, original_plan, cloned_plan,

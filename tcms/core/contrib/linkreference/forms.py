@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-'''
+"""
 Define forms for each request for validating request arguments
-'''
+"""
 
 from django import forms
 
@@ -10,7 +10,7 @@ from tcms.core.forms.fields import StripURLField
 
 
 class AddLinkReferenceForm(forms.Form):
-    ''' Validate the argument within the request for adding new link '''
+    """ Validate the argument within the request for adding new link """
 
     target_id = forms.IntegerField(
         error_messages={

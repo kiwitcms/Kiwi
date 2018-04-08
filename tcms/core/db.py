@@ -7,7 +7,7 @@ __all__ = ('GroupByResult')
 # TODO: redesign GroupByResult, major goal is to distiguish level node and
 # value node.
 class GroupByResult(object):
-    '''Group By result
+    """Group By result
 
     This object can be used as a normal dict object with less support of stock
     dictionary methods. Consumers can do
@@ -33,7 +33,7 @@ class GroupByResult(object):
     To get subtotal of A, `gbr.A`
 
     To get percentage of B, `gbr.B_percent`
-    '''
+    """
 
     def __init__(self, data=None, total_name=None):
         self._total_name = total_name
@@ -85,13 +85,13 @@ class GroupByResult(object):
         return len(self._data) == 0
 
     def _get_total(self):
-        '''Get the total value of this GROUP BY result
+        """Get the total value of this GROUP BY result
 
         Total value comes from two situations. One is that there is no total
         value computed in database side by issuing GROUP BY with ROLLUP. In
         this case, total value will be calculated from all subtotal values.
         Inversely, the total value will be returned directly.
-        '''
+        """
         if self.empty:
             return 0
 
@@ -114,13 +114,13 @@ class GroupByResult(object):
     total = property(_get_total)
 
     def _get_percent(self, key):
-        '''Percentage of a subtotal
+        """Percentage of a subtotal
 
         @param key: name of subtotal whose percentage will be calculated
         @type key: str
         @return: a float number representing the percentage
         @rtype: float
-        '''
+        """
         total = self._total_result
         subtotal = self[key]
         if total == 0:
@@ -135,7 +135,7 @@ class GroupByResult(object):
         return 0
 
     def leaf_values_count(self, value_in_row=False, refresh=False):
-        '''Calculate the total number of leaf values under this level
+        """Calculate the total number of leaf values under this level
 
         After the first time this method gets call, the result will be cached
         as meta data of this level node. So, any number of subsequent
@@ -150,7 +150,7 @@ class GroupByResult(object):
         @type refresh: bool
         @return: the total number of leaf values under this level
         @rtype: int
-        '''
+        """
         if refresh:
             necessary_to_count = True
         else:

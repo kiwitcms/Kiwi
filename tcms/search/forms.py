@@ -9,11 +9,11 @@ from tcms.testplans.models import PlanType
 
 
 def get_choice(value, _type=str, deli=','):
-    '''
+    """
     Used to clean a form field where multiple\n
     choices are seperated using a delimiter such as comma.\n
     Removing the empty value.
-    '''
+    """
     try:
         results = value.split(deli)
         return [_type(r.strip()) for r in results if r]

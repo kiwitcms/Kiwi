@@ -58,13 +58,13 @@ TESTCASE_OPERATION_ACTIONS = (
 
 
 def plan_from_request_or_none(request, pk_enough=False):
-    '''Get TestPlan from REQUEST
+    """Get TestPlan from REQUEST
 
     This method relies on the existence of from_plan within REQUEST.
 
     Arguments:
     - pk_enough: a choice for invoker to determine whether the ID is enough.
-    '''
+    """
     tp_id = request.POST.get("from_plan") or request.GET.get("from_plan")
     if tp_id:
         if pk_enough:
@@ -269,7 +269,7 @@ def new(request, template_name='case/new.html'):
 
 
 def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
-    '''Get each TestCase' sortkey and related TestCasePlan's pk'''
+    """Get each TestCase' sortkey and related TestCasePlan's pk"""
     qs = TestCasePlan.objects.filter(case__in=tc_ids)
     if plan is not None:
         qs = qs.filter(plan__pk=plan.pk)
@@ -281,18 +281,18 @@ def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
 
 
 def calculate_number_of_bugs_for_testcases(tc_ids):
-    '''Calculate the number of bugs for each TestCase
+    """Calculate the number of bugs for each TestCase
 
     Arguments:
     - tc_ids: a list of tuple of TestCases' IDs
-    '''
+    """
     qs = Bug.objects.filter(case__in=tc_ids)
     qs = qs.values('case').annotate(total_count=Count('pk'))
     return dict([(item['case'], item['total_count']) for item in qs])
 
 
 def calculate_for_testcases(plan, testcases):
-    '''Calculate extra data for TestCases
+    """Calculate extra data for TestCases
 
     Attach TestCasePlan.sortkey, TestCasePlan.pk, and the number of bugs of
     each TestCase.
@@ -301,7 +301,7 @@ def calculate_for_testcases(plan, testcases):
     - plan: the TestPlan containing searched TestCases. None means testcases
       are not limited to a specific TestPlan.
     - testcases: a queryset of TestCases.
-    '''
+    """
     tc_ids = [tc.pk for tc in testcases]
     sortkey_tcpkan_pks = get_testcaseplan_sortkey_pk_for_testcases(
         plan, tc_ids)
@@ -324,7 +324,7 @@ def calculate_for_testcases(plan, testcases):
 
 
 def get_case_status(template_type):
-    '''Get part or all TestCaseStatus according to template type'''
+    """Get part or all TestCaseStatus according to template type"""
     confirmed_status_name = 'CONFIRMED'
     if template_type == 'case':
         d_status = TestCaseStatus.objects.filter(name=confirmed_status_name)
@@ -337,7 +337,7 @@ def get_case_status(template_type):
 
 @require_POST
 def build_cases_search_form(request, populate=None, plan=None):
-    '''Build search form preparing for quering TestCases'''
+    """Build search form preparing for quering TestCases"""
     # Initial the form and template
     action = request.POST.get('a')
     if action in TESTCASE_OPERATION_ACTIONS:
@@ -365,14 +365,14 @@ def build_cases_search_form(request, populate=None, plan=None):
 
 
 def paginate_testcases(request, testcases):
-    '''Paginate queried TestCases
+    """Paginate queried TestCases
 
     Arguments:
     - request: django's HttpRequest from which to get pagination data
     - testcases: an object queryset representing already queried TestCases
 
     Return value: return the queryset for chain call
-    '''
+    """
     DEFAULT_PAGE_INDEX = 1
 
     POST = request.POST
@@ -385,12 +385,12 @@ def paginate_testcases(request, testcases):
 
 
 def sort_queried_testcases(request, testcases):
-    '''Sort querid TestCases according to sort key
+    """Sort querid TestCases according to sort key
 
     Arguments:
     - request: REQUEST object
     - testcases: object of QuerySet containing queried TestCases
-    '''
+    """
     order_by = request.POST.get('order_by', 'create_date')
     asc = bool(request.POST.get('asc', None))
     tcs = order_case_queryset(testcases, order_by, asc)
@@ -410,13 +410,13 @@ def sort_queried_testcases(request, testcases):
 
 
 def query_testcases_from_request(request, plan=None):
-    '''Query TestCases according to criterias coming within REQUEST
+    """Query TestCases according to criterias coming within REQUEST
 
     Arguments:
     - request: the REQUEST object.
     - plan: instance of TestPlan to restrict only those TestCases belongs to
       the TestPlan. Can be None. As you know, query from all TestCases.
-    '''
+    """
     search_form = build_cases_search_form(request)
 
     action = request.POST.get('a')
@@ -446,7 +446,7 @@ def query_testcases_from_request(request, plan=None):
 
 
 def get_selected_testcases(request):
-    '''Get selected TestCases from client side
+    """Get selected TestCases from client side
 
     TestCases are selected in two cases. One is user selects part of displayed
     TestCases, where there should be at least one variable named case, whose
@@ -459,7 +459,7 @@ def get_selected_testcases(request):
 
     Arguments:
     - request: REQUEST object.
-    '''
+    """
     REQ = request.POST or request.GET
     if REQ.get('selectAll', None):
         plan = plan_from_request_or_none(request)
@@ -471,7 +471,7 @@ def get_selected_testcases(request):
 
 
 def load_more_cases(request, template_name='plan/cases_rows.html'):
-    '''Loading more TestCases'''
+    """Loading more TestCases"""
     plan = plan_from_request_or_none(request)
     cases = []
     selected_case_ids = []
@@ -491,7 +491,7 @@ def load_more_cases(request, template_name='plan/cases_rows.html'):
 
 
 def get_tags_from_cases(case_ids, plan=None):
-    '''Get all tags from test cases
+    """Get all tags from test cases
 
     @param cases: an iterable object containing test cases' ids
     @type cases: list, tuple
@@ -500,7 +500,7 @@ def get_tags_from_cases(case_ids, plan=None):
 
     @return: a list containing all found tags with id and name
     @rtype: list
-    '''
+    """
     query = Tag.objects.filter(case__in=case_ids).distinct().order_by('name')
     if plan:
         query = query.filter(case__plan=plan)
@@ -690,7 +690,7 @@ def ajax_response(request, queryset, column_names, template_name):
 
 
 class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
-    '''Simple read-only TestCase View used in TestPlan page'''
+    """Simple read-only TestCase View used in TestPlan page"""
 
     template_name = 'case/get_details.html'
 
@@ -724,7 +724,7 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
 
 
 class TestCaseCaseRunListPaneView(TemplateView):
-    '''Display case runs list when expand a plan from case page'''
+    """Display case runs list when expand a plan from case page"""
 
     template_name = 'case/get_case_runs_by_plan.html'
 
@@ -783,10 +783,10 @@ class TestCaseCaseRunListPaneView(TemplateView):
 
 
 class TestCaseSimpleCaseRunView(TemplateView, data.TestCaseRunViewDataMixin):
-    '''Display caserun information in Case Runs tab in case page
+    """Display caserun information in Case Runs tab in case page
 
     This view only shows notes, comments and logs simply. So, call it simple.
-    '''
+    """
 
     template_name = 'case/get_details_case_case_run.html'
 
@@ -826,7 +826,7 @@ class TestCaseSimpleCaseRunView(TemplateView, data.TestCaseRunViewDataMixin):
 class TestCaseCaseRunDetailPanelView(TemplateView,
                                      data.TestCaseViewDataMixin,
                                      data.TestCaseRunViewDataMixin):
-    '''Display case run detail in run page'''
+    """Display case run detail in run page"""
 
     template_name = 'case/get_details_case_run.html'
 
@@ -1071,14 +1071,14 @@ def generator_proxy(case_pks):
 
 
 def update_testcase(request, tc, tc_form):
-    '''Updating information of specific TestCase
+    """Updating information of specific TestCase
 
     This is called by views.edit internally. Don't call this directly.
 
     Arguments:
     - tc: instance of a TestCase being updated
     - tc_form: instance of django.forms.Form, holding validated data.
-    '''
+    """
 
     # Modify the contents
     fields = ['summary',
