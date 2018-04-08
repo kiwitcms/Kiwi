@@ -10,6 +10,66 @@ tcms-api master (unreleased)
 
 
 
+Kiwi TCMS 4.1.4 (April 8 2018)
+------------------------------
+
+
+Enhancements
+~~~~~~~~~~~~
+
+- Upgrade to `Django 2.0.4 <https://docs.djangoproject.com/en/2.0/releases/2.0.4/>`_
+- Enable pylint and fix around 700 issues (Anton Sankov)
+- Add pylint plugin to check docstrings for triple double quotes. Fixes
+  `Issue #296 <https://github.com/kiwitcms/Kiwi/issues/296>`_
+- Add pylint plugin to check for list comprehensions. Fixes
+  `Issue #270 <https://github.com/kiwitcms/Kiwi/issues/270>`_
+- Add pylint plugin to check for class attributes enclosed with double underscores.
+  These are dunders and are reserved for Python!
+
+
+Signals
+~~~~~~~
+
+**BREAKING CHANGES**:
+
+Renamed ``user_registered`` to ``USER_REGISTERED_SIGNAL`` and
+``post_update`` to ``POST_UPDATE_SIGNAL``!
+
+
+Bug fixes
+~~~~~~~~~
+
+- Change util function to default to https. Fixes
+  `Issue #220 <https://github.com/kiwitcms/Kiwi/issues/220>`_
+- Fix
+  `Sentry KIWI-TCMS-17 <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/495015101/>`_
+- Cast iterator to list. Fixes
+  `Sentry KIWI-TCMS-19 <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/501200394/>`_
+- Don't crash in Custom Report. Fixes
+  `Sentry KIWI-TCMS-18 <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/499389305/>`_
+- Better handling of TestPlan documents. Fixes
+  `Sentry KIWI-TCMS-1A <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/501695244/>`_
+- Fix sorting of entries in TestPlan -> Runs tab. Fixes
+  `Sentry KIWI-TCMS-E <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/472757670/>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Move Bugzilla and Kerberos backends code into their own repositories. Fixes
+  `Issue #239 <https://github.com/kiwitcms/Kiwi/issues/239>`_
+- Remove cache from TestCaseRunStatus. Fixes
+  `Issue #279 <https://github.com/kiwitcms/Kiwi/issues/279>`_
+- Rewrite ``UrlMixin``. Fixes
+  `Issue #157 <https://github.com/kiwitcms/Kiwi/issues/157>`_ (Chenxiong Qi)
+- Remove unused ``split_as_option`` template tag
+- Internal refactoring and more tests in ``tcms/core/ajax.py``
+- Delete unused file ``tcms/core/forms/widgets.py``
+- Merge ``case/form/filter.html`` into ``plan/get_cases.html``
+- Remove unused ``TestCaseStatus.id_to_string()``
+
+
+
 Kiwi TCMS 4.1.3 (Mar 15 2018)
 -----------------------------
 
@@ -80,7 +140,7 @@ Models and database migrations
   `Issue #183 <https://github.com/kiwitcms/Kiwi/issues/183>`_.
   API clients must now send values for ``estimated_time`` which must be in a
   format that ``parse_duration()`` understands, for example 'DD HH:MM:SS'! See
-  <https://docs.djangoproject.com/en/2.0/ref/utils/#django.utils.dateparse.parse_duration>
+  https://docs.djangoproject.com/en/2.0/ref/utils/#django.utils.dateparse.parse_duration
 
 **IMPORTANT:** this release introduces new database migrations!
 
