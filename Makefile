@@ -22,7 +22,7 @@ FLAKE8_EXCLUDE=.git,*raw_sql.py
 
 .PHONY: flake8
 flake8:
-	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms *.py
+	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms *.py kiwi_lint
 	@flake8 --exclude=$(FLAKE8_EXCLUDE) --ignore=F405 tcms_api
 
 
@@ -56,9 +56,9 @@ check: flake8 test check-mo-files
 
 .PHONY: check-pylint
 check-pylint:
-	pylint *.py
-	pylint --load-plugins=pylint_django -d missing-docstring tcms/
-	pylint tcms_api/
+	pylint -d missing-docstring *.py kiwi_lint/
+	PYTHONPATH=. pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring tcms/
+	PYTHONPATH=. pylint --load-plugins=kiwi_lint tcms_api/
 
 
 .PHONY: tags
