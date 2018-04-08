@@ -5,8 +5,10 @@
 # NOTE: import order matches the numeric ID of the checker
 from .dunder_attributes import DunderClassAttributeChecker
 from .list_comprehension import ListComprehensionChecker
+from .docstring import DocstringChecker
 
 
 def register(linter):
     linter.register_checker(DunderClassAttributeChecker(linter))
     linter.register_checker(ListComprehensionChecker(linter))
+    linter.register_checker(DocstringChecker(linter))
