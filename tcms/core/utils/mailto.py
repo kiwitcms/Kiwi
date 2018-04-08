@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 
-def mailto(template_name, subject, recipients=None,
+def mailto(template_name, subject, recipients=None,  # pylint: disable=invalid-name
            context=None, sender=settings.DEFAULT_FROM_EMAIL,
            cc=None):
     # make a list with recipients and filter out duplicates
@@ -21,7 +21,7 @@ def mailto(template_name, subject, recipients=None,
 
     # if debugging then send to ADMINS as well
     if settings.DEBUG:
-        for (admin_name, admin_email) in settings.ADMINS:
+        for _, admin_email in settings.ADMINS:
             recipients.append(admin_email)
 
     body = render_to_string(template_name, context)
