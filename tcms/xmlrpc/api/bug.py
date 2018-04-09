@@ -13,7 +13,7 @@ __all__ = (
 
 
 @rpc_method(name='Bug.filter')
-def filter(query):
+def filter(query):  # pylint: disable=invalid-name
     """
     .. function:: XML-RPC Bug.filter(query)
 
