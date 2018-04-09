@@ -6,7 +6,7 @@ from tcms.management.models import Priority
 
 
 @rpc_method(name='Priority.filter')
-def filter(query):
+def filter(query):  # pylint: disable=invalid-name
     """
     .. function:: XML-RPC Priority.filter(query)
 
