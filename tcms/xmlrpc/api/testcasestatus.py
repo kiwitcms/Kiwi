@@ -6,7 +6,7 @@ from tcms.testcases.models import TestCaseStatus
 
 
 @rpc_method(name='TestCaseStatus.filter')
-def filter(query):
+def filter(query):  # pylint: disable=invalid-name
     """
     .. function:: XML-RPC TestCaseStatus.filter(query)
 
