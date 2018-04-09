@@ -7,7 +7,7 @@ from tcms.xmlrpc.utils import parse_bool_value
 
 
 @rpc_method(name='Env.Group.filter')
-def filter(query):
+def filter(query):  # pylint: disable=invalid-name
     """
     .. function:: XML-RPC Env.Group.filter(query)
 
