@@ -99,7 +99,7 @@ def get_cases(run_id):
 
 @permissions_required('testruns.add_testruntag')
 @rpc_method(name='TestRun.add_tag')
-def add_tag(run_id, tag):
+def add_tag(run_id, tag_name):
     """
     .. function:: XML-RPC TestRun.add_tag(run_id, tag)
 
@@ -107,19 +107,19 @@ def add_tag(run_id, tag):
 
         :param run_id: PK of TestRun to modify
         :type run_id: int
-        :param tag: Tag name to add
-        :type tag: str
+        :param tag_name: Tag name to add
+        :type tag_name: str
         :return: None
         :raises: PermissionDenied if missing *testruns.add_testruntag* permission
         :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
     """
-    t, _ = Tag.objects.get_or_create(name=tag)
-    TestRun.objects.get(pk=run_id).add_tag(t)
+    tag, _ = Tag.objects.get_or_create(name=tag_name)
+    TestRun.objects.get(pk=run_id).add_tag(tag)
 
 
 @permissions_required('testruns.delete_testruntag')
 @rpc_method(name='TestRun.remove_tag')
-def remove_tag(run_id, tag):
+def remove_tag(run_id, tag_name):
     """
     .. function:: XML-RPC TestRun.remove_tag(run_id, tag)
 
@@ -127,14 +127,14 @@ def remove_tag(run_id, tag):
 
         :param run_id: PK of TestRun to modify
         :type run_id: int
-        :param tag: Tag name to add
-        :type tag: str
+        :param tag_name: Tag name to add
+        :type tag_name: str
         :return: None
         :raises: PermissionDenied if missing *testruns.delete_testruntag* permission
         :raises: DoesNotExist if objects specified don't exist
     """
-    t = Tag.objects.get(name=tag)
-    TestRun.objects.get(pk=run_id).remove_tag(t)
+    tag = Tag.objects.get(name=tag_name)
+    TestRun.objects.get(pk=run_id).remove_tag(tag)
 
 
 @permissions_required('testruns.add_testrun')
@@ -174,7 +174,7 @@ def create(values):
     form.populate(product_id=values['product'])
 
     if form.is_valid():
-        tr = TestRun.objects.create(
+        test_run = TestRun.objects.create(
             product_version=form.cleaned_data['product_version'],
             plan_text_version=form.cleaned_data['plan_text_version'],
             stop_date=form.cleaned_data['status'] and datetime.now() or None,
@@ -188,22 +188,21 @@ def create(values):
         )
 
         if form.cleaned_data['tag']:
-            tags = form.cleaned_data['tag']
-            if isinstance(tags, str):
-                tags = [c.strip() for c in tags.split(',') if c]
+            tag_names = form.cleaned_data['tag']
+            if isinstance(tag_names, str):
+                tag_names = [c.strip() for c in tag_names.split(',') if c]
 
-            for tag in tags:
-                t, c = Tag.objects.get_or_create(name=tag)
-                tr.add_tag(tag=t)
-                del tag, t, c
+            for tag_name in tag_names:
+                tag, _ = Tag.objects.get_or_create(name=tag_name)
+                test_run.add_tag(tag=tag)
     else:
         raise ValueError(form_errors_to_list(form))
 
-    return tr.serialize()
+    return test_run.serialize()
 
 
 @rpc_method(name='TestRun.filter')
-def filter(query={}):
+def filter(query={}):  # pylint: disable=invalid-name
     """
     .. function:: XML-RPC TestRun.filter(query)
 
@@ -245,52 +244,52 @@ def update(run_id, values):
         form.populate(product_id=values['product'])
 
     if form.is_valid():
-        tr = TestRun.objects.get(pk=run_id)
+        test_run = TestRun.objects.get(pk=run_id)
         if form.cleaned_data['plan']:
-            tr.plan = form.cleaned_data['plan']
+            test_run.plan = form.cleaned_data['plan']
 
         if form.cleaned_data['build']:
-            tr.build = form.cleaned_data['build']
+            test_run.build = form.cleaned_data['build']
 
         if form.cleaned_data['manager']:
-            tr.manager = form.cleaned_data['manager']
+            test_run.manager = form.cleaned_data['manager']
 
         if 'default_tester' in values:
             if values.get('default_tester') and \
                     form.cleaned_data['default_tester']:
-                tr.default_tester = form.cleaned_data['default_tester']
+                test_run.default_tester = form.cleaned_data['default_tester']
             else:
-                tr.default_tester = None
+                test_run.default_tester = None
 
         if form.cleaned_data['summary']:
-            tr.summary = form.cleaned_data['summary']
+            test_run.summary = form.cleaned_data['summary']
 
         if values.get('estimated_time') is not None:
-            tr.estimated_time = form.cleaned_data['estimated_time']
+            test_run.estimated_time = form.cleaned_data['estimated_time']
 
         if form.cleaned_data['product_version']:
-            tr.product_version = form.cleaned_data['product_version']
+            test_run.product_version = form.cleaned_data['product_version']
 
         if 'notes' in values:
             if values['notes'] in (None, ''):
-                tr.notes = values['notes']
+                test_run.notes = values['notes']
             if form.cleaned_data['notes']:
-                tr.notes = form.cleaned_data['notes']
+                test_run.notes = form.cleaned_data['notes']
 
         if form.cleaned_data['plan_text_version']:
-            tr.plan_text_version = form.cleaned_data['plan_text_version']
+            test_run.plan_text_version = form.cleaned_data['plan_text_version']
 
         if isinstance(form.cleaned_data['status'], int):
             if form.cleaned_data['status']:
-                tr.stop_date = datetime.now()
+                test_run.stop_date = datetime.now()
             else:
-                tr.stop_date = None
+                test_run.stop_date = None
 
-        tr.save()
+        test_run.save()
     else:
         raise ValueError(form_errors_to_list(form))
 
-    return tr.serialize()
+    return test_run.serialize()
 
 
 @permissions_required('testruns.add_envrunvaluemap')
