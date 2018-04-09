@@ -17,7 +17,7 @@ __all__ = (
 
 
 @rpc_method(name='Version.filter')
-def filter(query):
+def filter(query):  # pylint: disable=invalid-name
     """
     .. function:: XML-RPC Version.filter(query)
 
