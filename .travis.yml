@@ -36,6 +36,8 @@ matrix:
         mariadb: 10.1
     - python: 3.6
       env: TEST_DB=SQLite CMD=check-pylint
+    - python: 3.6
+      env: TEST_DB=SQLite CMD=check-security
   allow_failures:
     - env: TEST_DB=SQLite CMD=check-pylint
 before_install:
