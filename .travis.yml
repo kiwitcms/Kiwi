@@ -2,7 +2,6 @@ dist: trusty
 sudo: required
 language: python
 python:
-  - "3.5"
   - "3.6"
 cache: pip
 env:
@@ -31,10 +30,6 @@ matrix:
         apt:
           packages:
             - graphviz
-    - python: 3.5
-      env: TEST_DB=MariaDB CMD=check
-      addons:
-        mariadb: 10.1
     - python: 3.6
       env: TEST_DB=MariaDB CMD=check
       addons:
