@@ -54,7 +54,9 @@ class TestPlanEnvironmentGroupTests(test.TestCase):
         initiate_user_with_default_setups(cls.tester)
 
     def setUp(self):
-        is_logged_in = self.client.login(username=self.tester.username, password='password')
+        is_logged_in = self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         self.assertTrue(is_logged_in)
 
     def test_user_with_default_perms_can_create_testplan_and_set_env_group(self):
@@ -110,7 +112,9 @@ class PlanTests(test.TestCase):
         cls.user.save()
 
         cls.c = Client()
-        cls.c.login(username='admin', password='admin')
+        cls.c.login(  # nosec:B106:hardcoded_password_funcarg
+            username='admin',
+            password='admin')
 
         cls.classification = ClassificationFactory(name='Auto')
         cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
@@ -228,7 +232,9 @@ class ExportTestPlanTests(test.TestCase):
         cls.user.save()
 
         cls.c = Client()
-        cls.c.login(username='admin', password='admin')
+        cls.c.login(  # nosec:B106:hardcoded_password_funcarg
+            username='admin',
+            password='admin')
 
         cls.classification = ClassificationFactory(name='Auto')
         cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
@@ -298,8 +304,9 @@ class TestDeleteCasesFromPlan(BasePlanCase):
         cls.cases_url = reverse('plan-delete-cases', args=[cls.plan.pk])
 
     def test_missing_cases_ids(self):
-        self.client.login(username=self.plan_tester.username,
-                          password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         response = self.client.post(self.cases_url)
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
@@ -308,8 +315,9 @@ class TestDeleteCasesFromPlan(BasePlanCase):
                          data['response'])
 
     def test_delete_cases(self):
-        self.client.login(username=self.plan_tester.username,
-                          password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         post_data = {'case': [self.case_1.pk, self.case_3.pk]}
         response = self.client.post(self.cases_url, post_data)
@@ -348,7 +356,9 @@ class TestSortCases(BasePlanCase):
         cls.cases_url = reverse('plan-reorder-cases', args=[cls.plan.pk])
 
     def test_missing_cases_ids(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         response = self.client.post(self.cases_url)
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
@@ -356,7 +366,9 @@ class TestSortCases(BasePlanCase):
         self.assertEqual('At least one case is required to re-order.', data['response'])
 
     def test_order_cases(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         post_data = {'case': [self.case_3.pk, self.case_1.pk]}
         response = self.client.post(self.cases_url, post_data)
@@ -409,27 +421,35 @@ class TestLinkCases(BasePlanCase):
         remove_perm_from_user(self.plan_tester, 'testcases.add_testcaseplan')
 
     def assert_quick_search_is_shown(self, response):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         self.assertContains(
             response,
             '<li class="profile_tab_active" id="quick_tab">')
 
     def assert_normal_search_is_shown(self, response):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         self.assertContains(
             response,
             '<li class="profile_tab_active" id="normal_tab">')
 
     def test_show_quick_search_by_default(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         response = self.client.post(self.search_cases_for_link_url, {})
         self.assert_quick_search_is_shown(response)
 
     def assert_search_result(self, response):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         self.assertContains(
             response,
@@ -445,7 +465,9 @@ class TestLinkCases(BasePlanCase):
                 self.case_2.pk))
 
     def test_quick_search(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         post_data = {
             'search_mode': 'quick',
@@ -458,7 +480,9 @@ class TestLinkCases(BasePlanCase):
         self.assert_search_result(response)
 
     def test_normal_search(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         post_data = {
             'search_mode': 'normal',
@@ -471,7 +495,9 @@ class TestLinkCases(BasePlanCase):
         self.assert_search_result(response)
 
     def test_link_cases(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
 
@@ -531,7 +557,7 @@ class TestCloneView(BasePlanCase):
             author=cls.tester, default_tester=None,
             reviewer=cls.tester, plan=[cls.totally_new_plan])
 
-        cls.plan_tester = User.objects.create_user(
+        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
             username='plan_tester',
             email='tester@example.com',
             password='password')
@@ -539,20 +565,26 @@ class TestCloneView(BasePlanCase):
         cls.plan_clone_url = reverse('plans-clone')
 
     def test_refuse_if_missing_a_plan(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         data_missing_plan = {}  # No plan is passed
         response = self.client.get(self.plan_clone_url, data_missing_plan, follow=True)
         self.assertContains(response, 'At least one TestPlan is required')
 
     def test_refuse_if_given_nonexisting_plan(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         response = self.client.get(self.plan_clone_url, {'plan': 99999}, follow=True)
         self.assertContains(response, 'TestPlan(s) "%s" do not exist' % ['99999'])
 
     def test_open_clone_page_to_clone_one_plan(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         response = self.client.get(self.plan_clone_url, {'plan': self.plan.pk})
 
@@ -568,7 +600,9 @@ class TestCloneView(BasePlanCase):
             html=True)
 
     def test_open_clone_page_to_clone_multiple_plans(self):
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
 
         response = self.client.get(self.plan_clone_url,
                                    {'plan': [self.plan.pk, self.another_plan.pk]})
@@ -653,7 +687,9 @@ class TestCloneView(BasePlanCase):
             'keep_case_default_tester': 'on',
             'submit': 'Clone',
         }
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         response = self.client.post(self.plan_clone_url, post_data)
 
         cloned_plan = TestPlan.objects.get(name=self.third_plan.make_cloned_name())
@@ -681,7 +717,9 @@ class TestCloneView(BasePlanCase):
 
             'copy_testcases': 'on',
         }
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         self.client.post(self.plan_clone_url, post_data)
         cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
         self.verify_cloned_plan(self.totally_new_plan, cloned_plan,
@@ -704,7 +742,9 @@ class TestCloneView(BasePlanCase):
             'copy_testcases': 'on',
             # Do not pass maintain_case_orignal_author and keep_case_default_tester
         }
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         self.client.post(self.plan_clone_url, post_data)
         cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
         self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
@@ -722,7 +762,9 @@ class TestCloneView(BasePlanCase):
             'keep_case_default_tester': 'on',
             'submit': 'Clone',
         }
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         response = self.client.post(self.plan_clone_url, post_data)
 
         url_querystr = urlencode({

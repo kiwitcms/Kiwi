@@ -110,17 +110,23 @@ class TestCreateNewRun(BasePlanCase):
         cls.build_fast = BuildFactory(name='fast', product=cls.product)
 
     def test_refuse_if_missing_plan_pk(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.post(self.url, {})
         self.assertRedirects(response, reverse('plans-all'))
 
     def test_refuse_if_missing_cases_pks(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.post(self.url, {'from_plan': self.plan.pk}, follow=True)
         self.assertContains(response, 'Creating a TestRun requires at least one TestCase')
 
     def test_show_create_new_run_page(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.url, {
             'from_plan': self.plan.pk,
@@ -140,7 +146,9 @@ class TestCreateNewRun(BasePlanCase):
                 html=True)
 
     def test_create_a_new_run(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         clone_data = {
             'summary': self.plan.name,
@@ -229,7 +237,9 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         user_should_have_perm(cls.tester, cls.permission)
 
     def test_refuse_without_selecting_case_runs(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         url = reverse('testruns-clone-with-caseruns', args=[self.test_run.pk])
 
         response = self.client.post(url, {}, follow=True)
@@ -237,7 +247,9 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.assertContains(response, 'At least one TestCase is required')
 
     def test_open_clone_page_by_selecting_case_runs(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         url = reverse('testruns-clone-with-caseruns', args=[self.test_run.pk])
 
         response = self.client.post(url, {'case_run': [self.case_run_1.pk, self.case_run_2.pk]})
@@ -245,7 +257,9 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.assert_one_run_clone_page(response)
 
     def assert_clone_a_run(self, reserve_status=False, reserve_assignee=True):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         new_summary = 'Clone {} - {}'.format(self.test_run.pk, self.test_run.summary)
 

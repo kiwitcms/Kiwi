@@ -180,7 +180,7 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
         user_should_have_perm(self.api_user, 'auth.change_user')
 
         user_new_attrs = self.user_new_attrs.copy()
-        user_new_attrs['password'] = 'new password'
+        user_new_attrs['password'] = 'new password'  # nosec:B105:hardcoded_password_string
 
         with self.assertRaisesRegex(XmlRPCFault,
                                     'Password updates for other users are not allowed via RPC!'):

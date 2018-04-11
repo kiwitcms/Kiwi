@@ -31,7 +31,9 @@ class TestAddView(test.TestCase):
         cls.tester_without_perms.save()
 
     def test_without_proper_permissions(self):
-        self.client.login(username=self.tester_without_perms.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester_without_perms.username,
+            password='password')
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
@@ -49,7 +51,9 @@ class TestAddView(test.TestCase):
         self.assertRedirects(response, reverse('tcms-login')+'?next=/linkref/add/')
 
     def test_with_valid_url(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
@@ -64,7 +68,9 @@ class TestAddView(test.TestCase):
         self.assertEqual(result['data']['url'], 'http://example.com')
 
     def test_with_invalid_url(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.post(self.url, {
             'name': 'Log reference with invalid URL',
             'url': 'example dot com',
@@ -77,7 +83,9 @@ class TestAddView(test.TestCase):
         self.assertIn('Enter a valid URL', result['response'])
 
     def test_with_name_longer_than_64_chars(self):  # pylint: disable=invalid-name
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.post(self.url, {
             'name': "Open source test case management system, with a lot of great features,"
                     "such as bug tracker integration, fast search, powerful access control"

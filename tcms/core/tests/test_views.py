@@ -41,7 +41,9 @@ class TestNavigation(test.TestCase):
         # test for https://github.com/Nitrate/Nitrate/issues/262
         # when email contains + sign it needs to be properly urlencoded
         # before passing it as query string argument to the search views
-        self.client.login(username=self.user.username, password='testing')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.user.username,
+            password='testing')
         response = self.client.get(reverse('iframe-navigation'))
 
         self.assertContains(response, urlencode({'people': self.user.email}))
@@ -57,7 +59,9 @@ class TestIndex(BaseCaseRun):
             target_status_code=HTTPStatus.OK)
 
     def test_when_logged_in_index_page_redirects_to_dashboard(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.get(reverse('core-views-index'))
         self.assertRedirects(
             response,
@@ -74,7 +78,9 @@ class TestCommentCaseRuns(BaseCaseRun):
         cls.many_comments_url = reverse('ajax-comment_case_runs')
 
     def test_refuse_if_missing_comment(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.many_comments_url,
                                     {'run': [self.case_run_1.pk, self.case_run_2.pk]})
@@ -83,7 +89,9 @@ class TestCommentCaseRuns(BaseCaseRun):
             {'rc': 1, 'response': 'Comments needed'})
 
     def test_refuse_if_missing_no_case_run_pk(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.many_comments_url,
                                     {'comment': 'new comment', 'run': []})
@@ -98,7 +106,9 @@ class TestCommentCaseRuns(BaseCaseRun):
             {'rc': 1, 'response': 'No runs selected.'})
 
     def test_refuse_if_passed_case_run_pks_not_exist(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.many_comments_url,
                                     {'comment': 'new comment',
@@ -108,7 +118,9 @@ class TestCommentCaseRuns(BaseCaseRun):
             {'rc': 1, 'response': 'No caserun found.'})
 
     def test_add_comment_to_case_runs(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         new_comment = 'new comment'
         response = self.client.post(
@@ -144,7 +156,9 @@ class TestUpdateObject(BasePlanCase):
         user_should_have_perm(self.tester, self.permission)
 
     def test_refuse_if_missing_permission(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         remove_perm_from_user(self.tester, self.permission)
 
@@ -163,7 +177,9 @@ class TestUpdateObject(BasePlanCase):
             {'rc': 1, 'response': 'Permission Dinied.'})
 
     def test_update_plan_is_active(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         post_data = {
             'content_type': 'testplans.testplan',
@@ -197,7 +213,9 @@ class TestUpdateCaseRunStatus(BaseCaseRun):
 
     def test_refuse_if_missing_permission(self):
         remove_perm_from_user(self.tester, self.permission)
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.update_url, {
             'content_type': 'testruns.testcaserun',
@@ -212,7 +230,9 @@ class TestUpdateCaseRunStatus(BaseCaseRun):
             {'rc': 1, 'response': 'Permission Dinied.'})
 
     def test_change_case_run_status(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.update_url, {
             'content_type': 'testruns.testcaserun',
@@ -254,7 +274,9 @@ class TestUpdateCasePriority(BasePlanCase):
 
     def test_refuse_if_missing_permission(self):
         remove_perm_from_user(self.tester, self.permission)
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(
             self.case_update_url,
@@ -271,7 +293,9 @@ class TestUpdateCasePriority(BasePlanCase):
                                   "update TestCases."})
 
     def test_update_case_priority(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(
             self.case_update_url,
