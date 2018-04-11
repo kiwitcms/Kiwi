@@ -108,8 +108,8 @@ password = %s
                 summary="Test Case {0}".format(case_count + 1),
                 status=self.CASESTATUS)
             # Add a couple of random tags and the default tester
-            testcase.tags.add([random.choice(self.tags) for counter in range(10)])
-            testcase.tester = random.choice(self.TESTERS)
+            testcase.tags.add([random.choice(self.tags) for counter in range(10)])  # nosec:B311
+            testcase.tester = random.choice(self.TESTERS)  # nosec:B311:blacklist
             testcase.update()
             self.cases.append(testcase)
 
