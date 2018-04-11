@@ -39,19 +39,28 @@ matrix:
   allow_failures:
     - env: TEST_DB=SQLite CMD=check-pylint
 before_install:
-  - if [ "$TEST_DB" == "MariaDB" ]; then sudo apt-get -y install libmariadbclient-dev; fi
-  - cat "$TRAVIS_BUILD_DIR/.travis/my.cnf" | sudo tee -a /etc/mysql/conf.d/mariadb.cnf
-  - sudo cat /etc/mysql/conf.d/mariadb.cnf
-  - sudo service mysql restart
+  - |
+        if [ "$TEST_DB" == "MariaDB" ]; then
+            sudo apt-get -y install libmariadbclient-dev
+        fi
 
-  - mysql -e 'SELECT VERSION();'
-  - mysql -e 'CREATE USER "kiwi" IDENTIFIED BY "";'
-  - mysql -e 'CREATE DATABASE kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
-  - mysql -e 'GRANT ALL PRIVILEGES ON kiwi.* TO kiwi;'
-  - mysql -e 'CREATE DATABASE test_kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
-  - mysql -e 'GRANT ALL PRIVILEGES ON test_kiwi.* TO kiwi;'
+        if [ "$TEST_DB" == "MySQL" ] || [ "$TEST_DB" == "MariaDB" ]; then
+            cat "$TRAVIS_BUILD_DIR/.travis/my.cnf" | sudo tee -a /etc/mysql/conf.d/mariadb.cnf
+            sudo cat /etc/mysql/conf.d/mariadb.cnf
+            sudo service mysql restart
 
-  - psql -c  "CREATE DATABASE kiwi ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" -U postgres
+            mysql -e 'SELECT VERSION();'
+            mysql -e 'CREATE USER "kiwi" IDENTIFIED BY "";'
+            mysql -e 'CREATE DATABASE kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
+            mysql -e 'GRANT ALL PRIVILEGES ON kiwi.* TO kiwi;'
+            mysql -e 'CREATE DATABASE test_kiwi CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
+            mysql -e 'GRANT ALL PRIVILEGES ON test_kiwi.* TO kiwi;'
+        fi
+
+        if [ "$TEST_DB" == "Postgres" ]; then
+            psql -c  "CREATE DATABASE kiwi ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';" -U postgres
+        fi
+
 install:
   - export REQUIREMENTS_TXT="requirements/$(echo $TEST_DB | tr '[:upper:]' '[:lower:]' | sed 's/mariadb/mysql/' | sed 's/sqlite/base/').txt"
   - echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
