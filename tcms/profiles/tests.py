@@ -18,7 +18,9 @@ class TestProfilesView(TestCase):
         cls.somebody_else = create_request_user('somebody-else', 'password')
 
     def test_user_can_view_their_own_profile(self):
-        logged_in = self.client.login(username=self.tester.username, password='password')
+        logged_in = self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         self.assertTrue(logged_in)
 
         url = reverse('tcms-profile', args=[self.tester.username])
@@ -29,7 +31,9 @@ class TestProfilesView(TestCase):
         self.assertContains(response, self.tester.email)
 
     def test_user_case_view_profile_of_another_user(self):
-        logged_in = self.client.login(username=self.tester.username, password='password')
+        logged_in = self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         self.assertTrue(logged_in)
 
         url = reverse('tcms-profile', args=[self.somebody_else.username])
@@ -77,7 +81,9 @@ class TestOpenBookmarks(TestCase):
         cls.bookmark_3 = bookmark_form.save()
 
     def test_open_bookmark_page(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         url = reverse('tcms-bookmark',
                       kwargs={'username': self.tester.username})

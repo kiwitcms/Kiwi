@@ -23,9 +23,10 @@ class TestSetRandomKey(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(username='new-tester',
-                                           email='new-tester@example.com',
-                                           password='password')
+        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            username='new-tester',
+            email='new-tester@example.com',
+            password='password')
 
     @patch('tcms.core.contrib.auth.models.datetime')
     @patch('tcms.core.contrib.auth.models.random')
@@ -53,9 +54,10 @@ class TestForceToSetRandomKey(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(username='new-tester',
-                                           email='new-tester@example.com',
-                                           password='password')
+        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            username='new-tester',
+            email='new-tester@example.com',
+            password='password')
         cls.origin_activation_key = UserActivateKey.set_random_key_for_user(cls.new_user)
 
     def test_set_random_key_forcely(self):
@@ -75,18 +77,23 @@ class TestLogout(TestCase):
     def setUpTestData(cls):
         super(TestLogout, cls).setUpTestData()
 
-        cls.tester = User.objects.create_user(username='authtester',
-                                              email='authtester@example.com',
-                                              password='password')
+        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
+            username='authtester',
+            email='authtester@example.com',
+            password='password')
         cls.logout_url = reverse('tcms-logout')
 
     def test_logout_then_redirect_to_next(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.get(self.logout_url, follow=True)
         self.assertRedirects(response, reverse('tcms-login'))
 
     def test_logout_then_goto_next(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         next_url = reverse('plans-all')
         response = self.client.get(self.logout_url, {'next': next_url}, follow=True)
         self.assertRedirects(response, next_url)
@@ -197,9 +204,10 @@ class TestConfirm(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(username='new-user',
-                                           email='new-user@example.com',
-                                           password='password')
+        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
+            username='new-user',
+            email='new-user@example.com',
+            password='password')
 
     def setUp(self):
         self.new_user.is_active = False

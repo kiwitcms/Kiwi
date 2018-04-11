@@ -20,7 +20,9 @@ class TestAdminView(BasePlanCase):
         cls.url = reverse('admin:index')
 
     def test_admin_display(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.get(self.url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -64,16 +66,22 @@ class TestAdminView(BasePlanCase):
         self.assertContains(response, 'Sites')
 
     def test_sites_admin_add(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.get(reverse('admin:sites_site_add'))
         self.assertRedirects(response, reverse('admin:sites_site_change', args=[settings.SITE_ID]))
 
     def test_sites_admin_delete(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.get(reverse('admin:sites_site_delete', args=[settings.SITE_ID]))
         self.assertRedirects(response, reverse('admin:sites_site_change', args=[settings.SITE_ID]))
 
     def test_users_list_shows_is_superuser_column(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
         response = self.client.get(reverse('admin:auth_user_changelist'))
         self.assertContains(response, 'column-is_superuser')

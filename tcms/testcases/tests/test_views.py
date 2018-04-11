@@ -189,7 +189,9 @@ class TestOperateComponentView(BasePlanCase):
         remove_perm_from_user(self.tester, 'testcases.delete_testcasecomponent')
 
     def test_show_components_form(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.cases_component_url,
                                     {'product': self.product.pk})
@@ -205,7 +207,9 @@ class TestOperateComponentView(BasePlanCase):
             self.assertContains(response, comp_option, html=True)
 
     def test_add_components(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         post_data = {
             'product': self.product.pk,
@@ -225,7 +229,9 @@ class TestOperateComponentView(BasePlanCase):
             self.assertTrue(case_components.exists())
 
     def test_missing_delete_perm(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         post_data = {
             'o_component': [self.comp_cli.pk, self.comp_api.pk],
@@ -238,7 +244,9 @@ class TestOperateComponentView(BasePlanCase):
             {'rc': 1, 'response': 'Permission denied - delete', 'errors_list': []})
 
     def test_remove_components(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         user_should_have_perm(self.tester, 'testcases.delete_testcasecomponent')
 
@@ -274,7 +282,9 @@ class TestOperateCategoryView(BasePlanCase):
         cls.case_category_url = reverse('testcases-category')
 
     def test_show_categories_form(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         response = self.client.post(self.case_category_url, {'product': self.product.pk})
 
@@ -294,7 +304,9 @@ class TestOperateCategoryView(BasePlanCase):
             html=True)
 
     def test_update_cases_category(self):
-        self.client.login(username=self.tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
 
         post_data = {
             'from_plan': self.plan.pk,
@@ -321,9 +333,10 @@ class TestAddIssueToCase(BasePlanCase):
     def setUpTestData(cls):
         super(TestAddIssueToCase, cls).setUpTestData()
 
-        cls.plan_tester = User.objects.create_user(username='plantester',
-                                                   email='plantester@example.com',
-                                                   password='password')
+        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
+            username='plantester',
+            email='plantester@example.com',
+            password='password')
         user_should_have_perm(cls.plan_tester, 'testcases.change_bug')
 
         cls.case_bug_url = reverse('testcases-bug', args=[cls.case_1.pk])
@@ -333,7 +346,9 @@ class TestAddIssueToCase(BasePlanCase):
         user_should_have_perm(self.plan_tester, 'testcases.add_bug')
         user_should_have_perm(self.plan_tester, 'testcases.delete_bug')
 
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         request_data = {
             'handle': 'add',
             'case': self.case_1.pk,
@@ -381,9 +396,10 @@ class TestOperateCasePlans(BasePlanCase):
         cls.case_1.add_to_plan(cls.plan_test_case_plans)
         cls.case_1.add_to_plan(cls.plan_test_remove)
 
-        cls.plan_tester = User.objects.create_user(username='plantester',
-                                                   email='plantester@example.com',
-                                                   password='password')
+        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
+            username='plantester',
+            email='plantester@example.com',
+            password='password')
 
         cls.case_plans_url = reverse('testcases-plan', args=[cls.case_1.pk])
 
@@ -420,7 +436,9 @@ class TestOperateCasePlans(BasePlanCase):
 
     def test_add_a_plan(self):
         user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         response = self.client.get(self.case_plans_url,
                                    {'a': 'add', 'plan_id': self.plan_test_add.pk})
 
@@ -431,7 +449,9 @@ class TestOperateCasePlans(BasePlanCase):
 
     def test_remove_a_plan(self):
         user_should_have_perm(self.plan_tester, 'testcases.change_testcaseplan')
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         response = self.client.get(self.case_plans_url,
                                    {'a': 'remove', 'plan_id': self.plan_test_remove.pk})
 
@@ -443,7 +463,9 @@ class TestOperateCasePlans(BasePlanCase):
 
     def test_add_a_few_plans(self):
         user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
-        self.client.login(username=self.plan_tester.username, password='password')
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.plan_tester.username,
+            password='password')
         # This time, add a few plans to another case
         url = reverse('testcases-plan', args=[self.case_2.pk])
 
