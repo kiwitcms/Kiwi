@@ -60,6 +60,10 @@ check-pylint:
 	PYTHONPATH=. pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring tcms/
 	PYTHONPATH=. pylint --load-plugins=kiwi_lint tcms_api/
 
+.PHONY: check-security
+check-security:
+	bandit -r *.py tcms/ tcms_api/ kiwi_lint/
+
 
 .PHONY: tags
 tags:

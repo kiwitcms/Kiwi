@@ -10,4 +10,6 @@ factory_boy
 mock
 django-extensions
 pydot
+# linting tools
 pylint-django
+bandit
