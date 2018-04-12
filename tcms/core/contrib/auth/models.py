@@ -3,10 +3,10 @@
 import datetime
 import random
 
-from hashlib import sha1
-
 from django.db import models
 from django.conf import settings
+
+from tcms.core.utils.checksum import checksum
 
 
 class UserActivateKey(models.Model):
@@ -19,8 +19,8 @@ class UserActivateKey(models.Model):
 
     @classmethod
     def set_random_key_for_user(cls, user, force=False):
-        salt = sha1(str(random.random()).encode('utf-8')).hexdigest()[:5]
-        activation_key = sha1((salt + user.username).encode('utf-8')).hexdigest()
+        salt = checksum(str(random.random()))[:5]
+        activation_key = checksum(salt + user.username)
 
         # Create and save their profile
         user_activation_key, created = cls.objects.get_or_create(user=user)

@@ -551,10 +551,10 @@ class TestCaseText(TCMSActionModel):
     effect = models.TextField(blank=True)
     setup = models.TextField(blank=True)
     breakdown = models.TextField(blank=True)
-    action_checksum = models.CharField(max_length=32)
-    effect_checksum = models.CharField(max_length=32)
-    setup_checksum = models.CharField(max_length=32)
-    breakdown_checksum = models.CharField(max_length=32)
+    action_checksum = models.CharField(max_length=64)
+    effect_checksum = models.CharField(max_length=64)
+    setup_checksum = models.CharField(max_length=64)
+    breakdown_checksum = models.CharField(max_length=64)
 
     class Meta:
         db_table = u'test_case_texts'
