@@ -4,7 +4,7 @@
 import json
 import unittest
 from http import HTTPStatus
-import xml.etree.ElementTree
+import xml.etree.ElementTree  # nosec:B405:blacklist
 from datetime import datetime
 from urllib.parse import urlencode
 
@@ -747,7 +747,7 @@ class TestExportCases(BasePlanCase):
             response['Content-Disposition'])
         # verify content
 
-        xmldoc = xml.etree.ElementTree.fromstring(response.content)
+        xmldoc = xml.etree.ElementTree.fromstring(response.content)  # nosec:B314:blacklist
         exported_cases_count = xmldoc.findall('testcase')
         self.assertEqual(2, len(exported_cases_count))
 
