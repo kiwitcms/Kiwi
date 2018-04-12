@@ -18,6 +18,7 @@ framework.
 
 import os
 import sys
+import tempfile
 from django.core.wsgi import get_wsgi_application
 
 import tcms
@@ -28,7 +29,7 @@ import tcms
 # mod_wsgi daemon mode with each site in its own daemon process, or use
 # os.environ["DJANGO_SETTINGS_MODULE"] = "tcms.settings"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tcms.settings.product")
-os.environ['PYTHON_EGG_CACHE'] = '/tmp/.python-eggs/'
+os.environ['PYTHON_EGG_CACHE'] = tempfile.mkdtemp(prefix='.python-eggs-')
 
 # add tcms's core lib path
 sys.path.append(os.path.join(tcms.__path__[0], 'core', 'lib'))
