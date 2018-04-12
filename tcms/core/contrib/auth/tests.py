@@ -11,7 +11,6 @@ from django.contrib.sites.models import Site
 from django.test import TestCase, override_settings
 
 from tcms import signals
-from tcms.core.utils.checksum import checksum
 from .models import UserActivateKey
 
 
@@ -29,23 +28,17 @@ class TestSetRandomKey(TestCase):
             password='password')
 
     @patch('tcms.core.contrib.auth.models.datetime')
-    @patch('tcms.core.contrib.auth.models.random')
-    def test_set_random_key(self, random, mock_datetime):
-        mock_datetime.datetime.today.return_value = datetime.datetime(2017, 5, 10)
-        mock_datetime.timedelta.return_value = datetime.timedelta(7)
-        fake_random = 0.12345678
-        random.random.return_value = fake_random
+    def test_set_random_key(self, mock_datetime):
+        now = datetime.datetime.now()
+        in_7_days = datetime.timedelta(7)
+
+        mock_datetime.datetime.today.return_value = now
+        mock_datetime.timedelta.return_value = in_7_days
 
         activation_key = UserActivateKey.set_random_key_for_user(self.new_user)
-
         self.assertEqual(self.new_user, activation_key.user)
-
-        s_random = checksum(str(fake_random))[:5]
-        expected_key = checksum(s_random + self.new_user.username)
-        self.assertEqual(expected_key, activation_key.activation_key)
-
-        self.assertEqual(datetime.datetime(2017, 5, 17),
-                         activation_key.key_expires)
+        self.assertNotEqual('', activation_key.activation_key)
+        self.assertEqual(now + in_7_days, activation_key.key_expires)
 
 
 class TestForceToSetRandomKey(TestCase):
@@ -113,8 +106,8 @@ class TestRegistration(TestCase):
 
     def assert_user_registration(self, username, follow=False):
 
-        with patch('tcms.core.contrib.auth.models.checksum') as _checksum:
-            _checksum.return_value = self.fake_activate_key
+        with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
+            _secrets.token_hex.return_value = self.fake_activate_key
 
             response = self.client.post(self.register_url,
                                         {'username': username,
@@ -228,8 +221,8 @@ class TestConfirm(TestCase):
     def test_fail_if_activation_key_expired(self):
         fake_activation_key = 'secret-activation-key'
 
-        with patch('tcms.core.contrib.auth.models.checksum') as _checksum:
-            _checksum.return_value = fake_activation_key
+        with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
+            _secrets.token_hex.return_value = fake_activation_key
             key = UserActivateKey.set_random_key_for_user(self.new_user)
             key.key_expires = datetime.datetime.now() - datetime.timedelta(days=10)
             key.save()
@@ -246,8 +239,8 @@ class TestConfirm(TestCase):
     def test_confirm(self):
         fake_activate_key = 'secret-activate-key'
 
-        with patch('tcms.core.contrib.auth.models.checksum') as _checksum:
-            _checksum.return_value = fake_activate_key
+        with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
+            _secrets.token_hex.return_value = fake_activate_key
             UserActivateKey.set_random_key_for_user(self.new_user)
 
         confirm_url = reverse('tcms-confirm',
