@@ -2,7 +2,6 @@
 # pylint: disable=invalid-name
 
 import datetime
-from hashlib import sha1
 from mock import patch
 
 from django.urls import reverse
@@ -12,6 +11,7 @@ from django.contrib.sites.models import Site
 from django.test import TestCase, override_settings
 
 from tcms import signals
+from tcms.core.utils.checksum import checksum
 from .models import UserActivateKey
 
 
@@ -40,9 +40,8 @@ class TestSetRandomKey(TestCase):
 
         self.assertEqual(self.new_user, activation_key.user)
 
-        s_random = sha1(str(fake_random).encode('utf-8')).hexdigest()[:5]
-        expected_key = sha1('{}{}'.format(
-            s_random, self.new_user.username).encode('utf-8')).hexdigest()
+        s_random = checksum(str(fake_random))[:5]
+        expected_key = checksum(s_random + self.new_user.username)
         self.assertEqual(expected_key, activation_key.activation_key)
 
         self.assertEqual(datetime.datetime(2017, 5, 17),
@@ -114,8 +113,8 @@ class TestRegistration(TestCase):
 
     def assert_user_registration(self, username, follow=False):
 
-        with patch('tcms.core.contrib.auth.models.sha1') as sha_1:
-            sha_1.return_value.hexdigest.return_value = self.fake_activate_key
+        with patch('tcms.core.contrib.auth.models.checksum') as _checksum:
+            _checksum.return_value = self.fake_activate_key
 
             response = self.client.post(self.register_url,
                                         {'username': username,
@@ -229,8 +228,8 @@ class TestConfirm(TestCase):
     def test_fail_if_activation_key_expired(self):
         fake_activation_key = 'secret-activation-key'
 
-        with patch('tcms.core.contrib.auth.models.sha1') as sha_1:
-            sha_1.return_value.hexdigest.return_value = fake_activation_key
+        with patch('tcms.core.contrib.auth.models.checksum') as _checksum:
+            _checksum.return_value = fake_activation_key
             key = UserActivateKey.set_random_key_for_user(self.new_user)
             key.key_expires = datetime.datetime.now() - datetime.timedelta(days=10)
             key.save()
@@ -247,8 +246,8 @@ class TestConfirm(TestCase):
     def test_confirm(self):
         fake_activate_key = 'secret-activate-key'
 
-        with patch('tcms.core.contrib.auth.models.sha1') as sha_1:
-            sha_1.return_value.hexdigest.return_value = fake_activate_key
+        with patch('tcms.core.contrib.auth.models.checksum') as _checksum:
+            _checksum.return_value = fake_activate_key
             UserActivateKey.set_random_key_for_user(self.new_user)
 
         confirm_url = reverse('tcms-confirm',

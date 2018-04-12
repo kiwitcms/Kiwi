@@ -348,7 +348,7 @@ class TestPlanText(TCMSActionModel):
     create_date = models.DateTimeField(auto_now_add=True,
                                        db_column='creation_ts')
     plan_text = models.TextField(blank=True)
-    checksum = models.CharField(max_length=32)
+    checksum = models.CharField(max_length=64)
 
     class Meta:
         db_table = u'test_plan_texts'
