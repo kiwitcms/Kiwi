@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-few-public-methods, unused-argument
 
-import hashlib
 from datetime import datetime
 
 from django.db.models import signals
@@ -13,13 +12,7 @@ from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestCaseRunStatus
-
-
-def md5_hash(string):
-    """Helper method returning md5 hash"""
-    md5 = hashlib.md5()
-    md5.update(string)
-    return md5.hexdigest()
+from tcms.core.utils.checksum import checksum
 
 
 # ### Factories for app management ###
@@ -230,7 +223,7 @@ class TestPlanTextFactory(DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     create_date = factory.LazyFunction(datetime.now)
     plan_text = factory.Sequence(lambda n: 'Plan text %d' % n)
-    checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.plan_text.encode('utf-8')))
+    checksum = factory.LazyAttribute(lambda obj: checksum(obj.plan_text))
 
 
 class TestPlanEmailSettingsFactory(DjangoModelFactory):
@@ -334,10 +327,10 @@ class TestCaseTextFactory(DjangoModelFactory):
     effect = 'effect'
     setup = 'setup'
     breakdown = 'breakdown'
-    action_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.action.encode('utf-8')))
-    effect_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.effect.encode('utf-8')))
-    setup_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.setup.encode('utf-8')))
-    breakdown_checksum = factory.LazyAttribute(lambda obj: md5_hash(obj.breakdown.encode('utf-8')))
+    action_checksum = factory.LazyAttribute(lambda obj: checksum(obj.action))
+    effect_checksum = factory.LazyAttribute(lambda obj: checksum(obj.effect))
+    setup_checksum = factory.LazyAttribute(lambda obj: checksum(obj.setup))
+    breakdown_checksum = factory.LazyAttribute(lambda obj: checksum(obj.breakdown))
 
 
 class BugFactory(DjangoModelFactory):
