@@ -1239,12 +1239,9 @@ def env_value(request):
                 return HttpResponse(json.dumps(chk_perm))
 
             for test_run in self.test_runs:
-                try:
-                    test_run.remove_env_value(env_value=self.get_env_value(
-                        request.GET.get('env_value_id')
-                    ))
-                except Exception:
-                    continue
+                test_run.remove_env_value(env_value=self.get_env_value(
+                    request.GET.get('env_value_id')
+                ))
 
             return HttpResponse(json.dumps(self.ajax_response))
 

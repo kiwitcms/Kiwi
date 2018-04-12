@@ -1409,10 +1409,7 @@ def clone(request, template_name='case/clone.html'):
                         else:
                             sortkey = tp.get_case_sortkey()
 
-                        try:
-                            tp.add_case(tc_dest, sortkey)
-                        except Exception:
-                            pass
+                        tp.add_case(tc_dest, sortkey)
 
                 # Add the cases to plan
                 for tp in clone_form.cleaned_data['plan']:
@@ -1447,10 +1444,7 @@ def clone(request, template_name='case/clone.html'):
                                     description=component.description,
                                 )
 
-                            try:
-                                tc_dest.add_component(new_c)
-                            except Exception:
-                                pass
+                            tc_dest.add_component(new_c)
 
             # Detect the number of items and redirect to correct one
             cases_count = len(clone_form.cleaned_data['case'])
