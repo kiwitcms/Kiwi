@@ -391,7 +391,7 @@ def update(request):
             mail_context['context']['user'] = request.user
             try:
                 mailto(**mail_context)
-            except Exception:
+            except Exception:  # nosec:B110:try_except_pass
                 pass
 
     # Special hacking for updating test case run status
@@ -497,7 +497,7 @@ def update_case_run_status(request):
             mail_context['context']['user'] = request.user
             try:
                 mailto(**mail_context)
-            except Exception:
+            except Exception:  # nosec:B110:try_except_pass
                 pass
 
     # Special hacking for updating test case run status
@@ -604,7 +604,7 @@ class TestCaseUpdateActions(ModelUpdateActions):
             mail_context['context']['user'] = self.request.user
             try:
                 mailto(**mail_context)
-            except Exception:
+            except Exception:  # nosec:B110:try_except_pass
                 pass
 
     def _update_priority(self):
