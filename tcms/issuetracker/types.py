@@ -6,6 +6,7 @@
 """
 
 import os
+import tempfile
 from urllib.parse import urlencode
 
 import jira
@@ -106,12 +107,21 @@ class Bugzilla(IssueTrackerType):
         :api_url: - the XML-RPC URL for your Bugzilla instance
         :api_username: - a username registered in Bugzilla
         :api_password: - the password for this username
+
+        You can also provide the ``BUGZILLA_AUTH_CACHE_DIR`` setting (in ``product.py``)
+        to control where authentication cookies for Bugzilla will be saved. If this
+        is not provided a temporary directory will be used each time we try to login
+        into Bugzilla!
     """
     def __init__(self, tracker):
         super(Bugzilla, self).__init__(tracker)
 
         # directory for Bugzilla credentials
-        bugzilla_cache_dir = '/tmp/.bugzilla/'
+        bugzilla_cache_dir = getattr(
+            settings,
+            "BUGZILLA_AUTH_CACHE_DIR",
+            tempfile.mkdtemp(prefix='.bugzilla-')
+        )
         if not os.path.exists(bugzilla_cache_dir):
             os.makedirs(bugzilla_cache_dir, 0o700)
 
