@@ -14,7 +14,6 @@ from django_comments.models import Comment
 from tcms.management.models import Priority
 from tcms.management.models import EnvGroup
 from tcms.management.models import EnvProperty
-from tcms.testcases.forms import CaseAutomatedForm
 from tcms.testcases.forms import TestCase
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -247,16 +246,6 @@ class TestUpdateCaseRunStatus(BaseCaseRun):
             {'rc': 0, 'response': 'ok'})
         self.assertEqual(
             'PAUSED', TestCaseRun.objects.get(pk=self.case_run_1.pk).case_run_status.name)
-
-
-class TestGetForm(test.TestCase):
-    """Test case for form"""
-
-    def test_get_form(self):
-        response = self.client.get(reverse('ajax-form'),
-                                   {'app_form': 'testcases.CaseAutomatedForm'})
-        form = CaseAutomatedForm()
-        self.assertHTMLEqual(str(response.content, encoding=settings.DEFAULT_CHARSET), form.as_p())
 
 
 class TestUpdateCasePriority(BasePlanCase):

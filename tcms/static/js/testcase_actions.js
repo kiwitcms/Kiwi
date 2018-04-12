@@ -1026,8 +1026,9 @@ function updateCaseCategory(url, parameters, callback) {
 function constructCaseAutomatedForm(container, callback, options) {
   jQ(container).html(getAjaxLoading());
   jQ(container).show();
+
   var d = jQ('<div>', { 'class': 'automated_form' })[0];
-  var c = function(t) {
+  var create_form_cb = function(t) {
     var returntext = t.responseText;
     var action = '/cases/automated/';
     var form_observe = function(e) {
@@ -1046,7 +1047,7 @@ function constructCaseAutomatedForm(container, callback, options) {
       });
       /*
        * Have to add this. The form generated before does not contain a
-       * default value `change'. In fact, the field a onust contain the
+       * default value `change'. In fact, the field a must contain the
        * only value `change', here.
        */
       params = params.replace(/a=\w*/, 'a=change');
@@ -1064,7 +1065,22 @@ function constructCaseAutomatedForm(container, callback, options) {
     jQ(container).html(f);
   };
 
-  getForm(d, 'testcases.CaseAutomatedForm', {}, c);
+
+  // load the HTML form
+  jQ.ajax({
+    'url': '/cases/form/automated/',
+    'type': 'GET',
+    'success': function (data, textStatus, jqXHR) {
+      jQ(container).html(data);
+    },
+    'error': function (jqXHR, textStatus, errorThrown) {
+      window.alert('Getting form get errors');
+      return false;
+    },
+    'complete': function(jqXHR) {
+      create_form_cb(jqXHR);
+    }
+  });
 }
 
 /*

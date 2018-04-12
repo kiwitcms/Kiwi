@@ -134,6 +134,16 @@ def create_testcase(request, form, tp):
     return tc
 
 
+@require_GET
+def form_automated(request):
+    """
+        Return HTML for the form which allows changing of automated status.
+        Form submission is handled by automated() below.
+    """
+    form = CaseAutomatedForm()
+    return HttpResponse(form.as_p())
+
+
 @require_POST
 @permission_required('testcases.change_testcase')
 def automated(request):
