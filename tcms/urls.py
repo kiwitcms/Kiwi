@@ -51,7 +51,6 @@ urlpatterns = [
         name='ajax-update_cases_default_tester'),
     url(r'^ajax/update/cases-reviewer/$', ajax.update_cases_reviewer),
     url(r'^ajax/update/cases-sortkey/$', ajax.update_cases_sortkey),
-    url(r'^ajax/form/$', ajax.form, name='ajax-form'),
     url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
     url(r'^management/getinfo/$', ajax.info, name='ajax-info'),
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),

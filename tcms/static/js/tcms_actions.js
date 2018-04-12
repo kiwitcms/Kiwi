@@ -160,7 +160,6 @@ var default_messages = {
       change_user_group: '/management/account/$id/changegroup/',
       change_user_status: '/management/account/$id/changestatus/',
 
-      get_form: '/ajax/form/',
       get_product_info: '/management/getinfo/',
 
       modify_plan : '/plan/$id/modify/',
@@ -930,33 +929,6 @@ function getInfo(parameters, callback, container, allow_blank, format) {
   });
 }
 
-function getForm(container, app_form, parameters, callback, format) {
-  var failure = function(t) {
-    window.alert('Getting form get errors');
-    return false;
-  };
-
-  if (!parameters) {
-    var parameters = {};
-  }
-
-  parameters.app_form = app_form;
-  parameters.format = format;
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'get_form'});
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      failure();
-    }
-  });
-}
 
 function updateRunStatus(content_type, object_pk, field, value, value_type, callback) {
   if (!value_type) {
