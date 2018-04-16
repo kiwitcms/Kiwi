@@ -169,7 +169,7 @@ class Bugzilla(IssueTrackerType):
             action = 'None'
             effect = 'None'
 
-        comment = "Filed from caserun %s\n\n" % caserun.get_url()
+        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Version-Release number of selected " \
                    "component (if applicable):\n"
         comment += '%s\n\n' % caserun.build.name
@@ -280,7 +280,7 @@ class JIRA(IssueTrackerType):
             action = 'None'
             effect = 'None'
 
-        comment = "Filed from caserun %s\n\n" % caserun.get_url()
+        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
         comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
         comment += "Version-Release number of selected " \
@@ -354,7 +354,7 @@ class GitHub(IssueTrackerType):
             action = 'None'
             effect = 'None'
 
-        comment = "Filed from caserun %s\n\n" % caserun.get_url()
+        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
         comment += "Component(s):\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
         comment += "Version-Release number of selected " \

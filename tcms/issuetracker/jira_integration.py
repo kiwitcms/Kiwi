@@ -34,7 +34,7 @@ class JiraThread(threading.Thread):
         try:
             text = """---- Issue confirmed via test case ----
 URL: %s
-Summary: %s""" % (self.testcase.get_url(), self.testcase.summary)
+Summary: %s""" % (self.testcase.get_full_url(), self.testcase.summary)
 
             self.rpc.add_comment(self.bug.bug_id, text)
         except Exception as err:
