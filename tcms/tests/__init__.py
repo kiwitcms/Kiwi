@@ -6,7 +6,6 @@ from http import HTTPStatus
 from django import test
 from django.conf import settings
 from django.contrib.auth.models import Permission
-from django.contrib.auth.models import User
 
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.models import TestCaseStatus
@@ -18,12 +17,6 @@ from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import BuildFactory
-
-__all__ = (
-    'user_should_have_perm',
-    'remove_perm_from_user',
-    'BasePlanCase',
-)
 
 
 def user_should_have_perm(user, perm):
@@ -101,9 +94,7 @@ class BasePlanCase(HelperAssertions, test.TestCase):
         cls.product = ProductFactory(name='Kiwi')
         cls.version = VersionFactory(value='0.1', product=cls.product)
 
-        cls.tester = User.objects.create_user(
-            username='kiwi-tester',
-            email='kiwi-tester@example.com')
+        cls.tester = UserFactory()
         cls.tester.set_password('password')
         cls.tester.save()
 
