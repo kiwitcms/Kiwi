@@ -363,7 +363,7 @@ def choose_run(request, plan_id):
 
     if request.method == 'GET':
         try:
-            test_plan = TestPlan.objects.get(pk=int(plan_id)).defer('product_version')
+            test_plan = TestPlan.objects.get(pk=int(plan_id))
         except ObjectDoesNotExist:
             raise Http404
 
