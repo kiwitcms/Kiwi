@@ -1,5 +1,5 @@
 ### Links ###
-Test run: {{ test_run.get_url }}
+Test run: {{ test_run.get_full_url }}
 
 ### Info ###
 The assignee of case run in test run {{ test_run.pk }}: {{ test_run.summary }}

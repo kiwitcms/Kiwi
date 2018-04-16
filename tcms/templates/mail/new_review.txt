@@ -1,8 +1,8 @@
 A new test review has been created for you.
 
 ### Links ###
-Test run: {{ test_review.get_url }}
-Test plan: {{ test_review.plan.get_url }}
+Test run: {{ test_review.get_full_url }}
+Test plan: {{ test_review.plan.get_full_url }}
 
 ### Basic run information ###
 Summary: {{ test_review.summary }}
