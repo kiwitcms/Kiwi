@@ -98,7 +98,7 @@ You can edit ``docker-compose.yml`` to mount the local file
 
         volumes:
             - uploads:/var/kiwi/uploads
-            - ./local_settings.py:/venv/lib64/python3.5/site-packages/tcms/settings/product.py
+            - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/product.py
 
 You can override any default settings in this way!
 

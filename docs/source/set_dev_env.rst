@@ -16,14 +16,14 @@ Kiwi TCMS is a Python 3 project! On CentOS 7 this is available via
 All further instructions assume that you have Python 3 enabled. If you are using software
 collections then execute::
 
-    scl enable rh-python35 /bin/bash
+    scl enable rh-python36 /bin/bash
 
 If you are using a different Linux distribution then consult its documentation
 for more details on how to install and enable Python 3!
 
 .. note::
 
-    At the time of writing Kiwi TCMS has been tested with Python 3.5. You can always consult
+    At the time of writing Kiwi TCMS has been tested with Python 3.6. You can always consult
     ``Dockerfile`` to find out the latest version which we use!
 
 Setup virtualenv
