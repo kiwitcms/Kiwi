@@ -117,14 +117,20 @@ class TestVisitAndSearchGroupPage(TestCase):
     def test_search_groups(self):
         response = self.client.get(self.group_url, {'action': 'search', 'name': 'el'})
 
-        self.assertContains(
-            response,
-            '<label class=" ">{}</label>'.format(self.group_1.name),
-            html=True)
-        self.assertNotContains(
-            response,
-            '<label class=" ">{}</label>'.format(self.group_2.name),
-            html=True)
+        self.assertContains(response,
+                            '<label class=" ">{}</label>'.format(self.group_1.name),
+                            html=True)
+        self.assertNotContains(response,
+                               '<label class=" ">{}</label>'.format(self.group_2.name),
+                               html=True)
+
+    def test_search_groups_no_name(self):
+        response = self.client.get(self.group_url, {'action': 'search'})
+
+        for group in [self.group_1, self.group_2]:
+            self.assertContains(response,
+                                '<label class=" ">{}</label>'.format(group.name),
+                                html=True)
 
 
 class TestAddGroup(TestCase):
@@ -285,6 +291,25 @@ class TestDeleteGroup(TestCase):
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': 9999999999})
         self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
+
+    def test_return_404_if_no_id(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+        response = self.client.get(self.group_delete_url,
+                                   {'action': 'del'})
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
+
+    def test_response_when_id_not_an_int(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+        response = self.client.get(self.group_delete_url,
+                                   {'action': 'del', 'id': 'NOT_AN_INT'})
+
+        result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
+        self.assertEquals(result['rc'], 1)
+        self.assertEquals(result['response'], 'id must be an integer.')
 
 
 class TestModifyGroup(TestCase):
