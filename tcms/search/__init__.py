@@ -25,7 +25,6 @@ from tcms.testruns.models import TestRun
 @require_GET
 def advance_search(request):
     """View of /advance-search/"""
-    errors = None
     data = request.GET
     target = data.get('target')
     plan_form = PlanForm(data)
@@ -36,14 +35,21 @@ def advance_search(request):
     case_form.populate(data)
     run_form.populate(data)
     all_forms = (plan_form, case_form, run_form)
-    errors = [f.errors for f in all_forms if not f.is_valid()]
+
+    errors = []
+    for form in all_forms:
+        if form.is_valid():
+            errors.append(form.errors)
+
     if errors or not data:
-        product_choice = [
-            (p.pk, p.name) for p in cached_entities('product')
-        ]
-        plan_type_choices = cached_entities('plantype')
+        product_choice = []
+        for product in cached_entities('product'):
+            product_choice.append((product.pk, product.name))
+        plan_type_choices = cached_entities('plantype')  # pylint: disable=unused-variable
         errors = _fmt_errors(errors)
-        priorities = Priority.objects.filter(is_active=True).order_by('value')
+        priorities = Priority.objects.filter(  # pylint: disable=unused-variable
+            is_active=True).order_by('value')
+
         return render(request, 'search/advanced_search.html', locals())
 
     start = time.time()
@@ -54,7 +60,10 @@ def advance_search(request):
     results = order_targets(target, results, data)
     end = time.time()
     timecost = round(end - start, 3)
-    queries = fmt_queries(*[f.cleaned_data for f in all_forms])
+    queries = []
+    for form in all_forms:
+        queries.append(form.cleaned_data)
+    queries = fmt_queries(*queries)
     queries['Target'] = target
     return _render_results(request, results, timecost, queries)
 
@@ -148,7 +157,11 @@ def remove_from_request_path(request, name):
         path = path[1].split('&')
     else:
         return None
-    path = [p for p in path if not p.startswith(name)]
+
+    for p in path:
+        if p.startswith(name):
+            path.remove(p)
+
     path = '&'.join(path)
     return '?' + path
 
