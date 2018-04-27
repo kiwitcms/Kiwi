@@ -10,13 +10,16 @@ from tcms.testplans.models import PlanType
 
 def get_choice(value, _type=str, deli=','):
     """
-    Used to clean a form field where multiple\n
-    choices are seperated using a delimiter such as comma.\n
+    Used to clean a form field where multiple
+    choices are separated using a delimiter such as comma.
     Removing the empty value.
     """
     try:
-        results = value.split(deli)
-        return [_type(r.strip()) for r in results if r]
+        results = []
+        for result in value.split(deli):
+            if result:
+                results.append(_type(result.strip))
+        return results
     except Exception as err:
         raise forms.ValidationError(str(err))
 
@@ -65,21 +68,29 @@ class PlanForm(forms.Form):
         return get_choice(self.cleaned_data['pl_owners'])
 
     def populate(self, data):
-        prod_pks = data.getlist('pl_product')
-        prod_pks = [k for k in prod_pks if k]
-        if prod_pks:
-            qs = Product.objects.filter(pk__in=prod_pks)
-            self.fields['pl_product'].queryset = qs
-        comp_pks = data.getlist('pl_component')
-        comp_pks = [k for k in comp_pks if k]
-        if comp_pks:
-            qs = Component.objects.filter(pk__in=comp_pks)
-            self.fields['pl_component'].queryset = qs
-        ver_pks = data.getlist('pl_version')
-        ver_pks = [k for k in ver_pks if k]
-        if ver_pks:
-            qs = Version.objects.filter(pk__in=ver_pks)
-            self.fields['pl_version'].queryset = qs
+        product_pks = []
+        for product_pk in data.getlist('pl_product'):
+            if product_pk:
+                product_pks.append(product_pk)
+
+        if product_pks:
+            self.fields['pl_product'].queryset = Product.objects.filter(pk__in=product_pks)
+
+        component_pks = []
+        for component_pk in data.getlist('pl_component'):
+            if component_pk:
+                component_pks.append(component_pk)
+
+        if component_pks:
+            self.fields['pl_component'].queryset = Component.objects.filter(pk__in=component_pks)
+
+        version_pks = []
+        for version_pk in data.getlist('pl_version'):
+            if version_pk:
+                version_pks.append(version_pk)
+
+        if version_pks:
+            self.fields['pl_version'].queryset = Version.objects.filter(pk__in=version_pks)
 
 
 class CaseForm(forms.Form):
@@ -129,27 +140,39 @@ class CaseForm(forms.Form):
         return get_choice(self.cleaned_data['cs_tester'])
 
     def populate(self, data):
-        status_choice = [(s.pk, s.name) for s in cached_entities('TestCaseStatus')]
-        self.fields['cs_status'].choices = status_choice
+        status_choices = []
+        for test_case_status in cached_entities('TestCaseStatus'):
+            status_choices.append((test_case_status.pk, test_case_status.name))
+        self.fields['cs_status'].choices = status_choices
 
-        priority_choice = [(p.pk, p.value) for p in cached_entities('Priority')]
-        self.fields['cs_priority'].choices = priority_choice
+        priority_choices = []
+        for priority in cached_entities('Priority'):
+            priority_choices.append((priority.pk, priority.value))
+        self.fields['cs_priority'].choices = priority_choices
 
-        prod_pks = data.getlist('cs_product')
-        prod_pks = [k for k in prod_pks if k]
-        if prod_pks:
-            qs = Product.objects.filter(pk__in=prod_pks)
-            self.fields['cs_product'].queryset = qs
-        comp_pks = data.getlist('cs_component')
-        comp_pks = [k for k in comp_pks if k]
-        if comp_pks:
-            qs = Component.objects.filter(pk__in=comp_pks)
-            self.fields['cs_component'].queryset = qs
-        cat_pks = data.getlist('cs_category')
-        cat_pks = [k for k in cat_pks if k]
-        if cat_pks:
-            qs = Category.objects.filter(pk__in=cat_pks)
-            self.fields['cs_category'].queryset = qs
+        product_pks = []
+        for product_pk in data.getlist('cs_product'):
+            if product_pk:
+                product_pks.append(product_pk)
+
+        if product_pks:
+            self.fields['cs_product'].queryset = Product.objects.filter(pk__in=product_pks)
+
+        component_pks = []
+        for component_pk in data.getlist('cs_component'):
+            if component_pk:
+                component_pks.append(component_pk)
+
+        if component_pks:
+            self.fields['cs_component'].queryset = Component.objects.filter(pk__in=component_pks)
+
+        category_pks = []
+        for category_pk in data.getlist('cs_category'):
+            if category_pk:
+                category_pks.append(category_pk)
+
+        if category_pks:
+            self.fields['cs_category'].queryset = Category.objects.filter(pk__in=category_pks)
 
 
 class RunForm(forms.Form):
@@ -193,18 +216,28 @@ class RunForm(forms.Form):
         return get_choice(self.cleaned_data['r_manager'])
 
     def populate(self, data):
-        prod_pks = data.getlist('r_product')
-        prod_pks = [k for k in prod_pks if k]
-        if prod_pks:
-            qs = Product.objects.filter(pk__in=prod_pks).only('name')
-            self.fields['r_product'].queryset = qs
-        build_pks = data.getlist('r_build')
-        build_pks = [k for k in build_pks if k]
+        product_pks = []
+        for product_pk in data.getlist('r_product'):
+            if product_pk:
+                product_pks.append(product_pk)
+
+        if product_pks:
+            self.fields['r_product'].queryset = Product.objects.filter(
+                pk__in=product_pks).only('name')
+
+        build_pks = []
+        for build_pk in data.getlist('r_build'):
+            if build_pk:
+                build_pks.append(build_pk)
+
         if build_pks:
-            qs = Build.objects.filter(pk__in=build_pks).only('name')
-            self.fields['r_build'].queryset = qs
-        ver_pks = data.getlist('r_version')
-        ver_pks = [k for k in ver_pks if k]
-        if ver_pks:
-            qs = Version.objects.filter(pk__in=ver_pks).only('value')
-            self.fields['r_version'].queryset = qs
+            self.fields['r_build'].queryset = Build.objects.filter(pk__in=build_pks).only('name')
+
+        version_pks = []
+        for version_pk in data.getlist('r_version'):
+            if version_pk:
+                version_pks.append(version_pk)
+
+        if version_pks:
+            self.fields['r_version'].queryset = Version.objects.filter(
+                pk__in=version_pks).only('value')
