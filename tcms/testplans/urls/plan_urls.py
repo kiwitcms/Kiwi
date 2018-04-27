@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 
-from .. import views
+from tcms.testplans import views
 from tcms.testruns.views import load_runs_of_one_plan
 
 urlpatterns = [
