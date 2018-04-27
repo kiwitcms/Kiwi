@@ -26,12 +26,10 @@ from tcms.management.models import EnvValue
 
 
 @require_GET
-def environment_groups(request, template_name='environment/groups.html'):
+def environment_groups(request):
     """
     Environements list
     """
-
-    env_groups = EnvGroup.objects
 
     has_perm = request.user.has_perm
     user_action = request.GET.get('action')
@@ -43,22 +41,20 @@ def environment_groups(request, template_name='environment/groups.html'):
 
         group_name = request.GET.get('name')
 
-        # Get the group name of envrionment from javascript
+        # Get the group name of environment from javascript
         if not group_name:
-            return JsonResponse(
-                {'rc': 1, 'response': 'Environment group name is required.'})
+            return JsonResponse({'rc': 1, 'response': 'Environment group name is required.'})
 
-        if env_groups.filter(name=group_name).exists():
+        if EnvGroup.objects.filter(name=group_name).exists():
             response_msg = "Environment group name '%s' already " \
                            'exists, please select another name.' % group_name
             return JsonResponse({'rc': 1, 'response': response_msg})
-        else:
-            env = env_groups.create(name=group_name,
-                                    manager_id=request.user.id,
-                                    modified_by_id=None)
-            env.log_action(who=request.user,
-                           action='Initial env group %s' % env.name)
-            return JsonResponse({'rc': 0, 'response': 'ok', 'id': env.id})
+
+        env = EnvGroup.objects.create(name=group_name, manager_id=request.user.id,
+                                      modified_by_id=None)
+        env.log_action(who=request.user, action='Initial env group %s' % env.name)
+
+        return JsonResponse({'rc': 0, 'response': 'ok', 'id': env.id})
 
     # Del action
     if user_action == 'del':
@@ -66,19 +62,15 @@ def environment_groups(request, template_name='environment/groups.html'):
             raise Http404
 
         try:
-            group_pk = int(request.GET['id'])
+            env_group_pk = int(request.GET['id'])
+            env_group = get_object_or_404(EnvGroup, pk=env_group_pk)
         except ValueError:
             return JsonResponse({'rc': 1, 'response': 'id must be an integer.'})
 
-        groups = list(env_groups.filter(pk=group_pk))
-        if len(groups) == 0:
-            raise Http404
-
-        if request.user.pk != groups[0].manager_id:
-            if not has_perm('management.delete_envgroup'):
+        if request.user.pk != env_group.manager_id and not has_perm('management.delete_envgroup'):
                 return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
-        groups[0].delete()
+        env_group.delete()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
@@ -88,7 +80,7 @@ def environment_groups(request, template_name='environment/groups.html'):
             return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
         try:
-            env = env_groups.get(id=request.GET['id'])
+            env = EnvGroup.objects.get(id=request.GET['id'])
             if request.GET.get('status') in ['0', '1']:
                 env.is_active = int(request.GET['status'])
                 env.save(update_fields=['is_active'])
@@ -103,31 +95,34 @@ def environment_groups(request, template_name='environment/groups.html'):
     # Search actions
     if user_action == 'search':
         if request.GET.get('name'):
-            env_groups = env_groups.filter(
+            env_groups = EnvGroup.objects.filter(
                 name__icontains=request.GET['name']
             )
         else:
-            env_groups = env_groups.all()
+            env_groups = EnvGroup.objects.all()
     else:
-        env_groups = env_groups.all().order_by('is_active')
+        env_groups = EnvGroup.objects.all().order_by('is_active')
 
     # Get properties for each group
-    qs = EnvGroupPropertyMap.objects.filter(group__in=env_groups)
-    qs = qs.values('group__pk', 'property__name')
-    qs = qs.order_by('group__pk', 'property__name').iterator()
-    properties = dict([(key, list(value)) for key, value in
-                       groupby(qs, lambda item: item['group__pk'])])
+    query_set = EnvGroupPropertyMap.objects.filter(group__in=env_groups).values(
+        'group__pk', 'property__name').order_by(
+        'group__pk', 'property__name').iterator()
+
+    properties = {}
+    for key, value in groupby(query_set, lambda item: item['group__pk']):
+        properties[key] = list(value)
 
     # Get logs for each group
-    env_group_ct = ContentType.objects.get_for_model(EnvGroup)
-    qs = TCMSLogModel.objects.filter(content_type=env_group_ct,
-                                     object_pk__in=env_groups)
-    qs = qs.values('object_pk', 'who__username', 'date', 'action')
-    qs = qs.order_by('object_pk').iterator()
-    # we have to convert object_pk to an integer due to it's a string stored in
-    # database.
-    logs = dict([(int(key), list(value)) for key, value in
-                 groupby(qs, lambda log: log['object_pk'])])
+    env_group_content_type = ContentType.objects.get_for_model(EnvGroup)
+    query_set = TCMSLogModel.objects.filter(
+        content_type=env_group_content_type,
+        object_pk__in=env_groups
+    ).values('object_pk', 'who__username', 'date', 'action').order_by('object_pk').iterator()
+
+    logs = {}
+    for object_pk, value in groupby(query_set, lambda log: log['object_pk']):
+        # we have to convert object_pk to an integer because it is a string, stored in the database
+        logs[int(object_pk)] = list(value)
 
     env_groups = env_groups.select_related('modified_by', 'manager').iterator()
 
@@ -137,69 +132,68 @@ def environment_groups(request, template_name='environment/groups.html'):
     context_data = {
         'environments': env_groups,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'environment/groups.html', context_data)
 
 
 @require_GET
 @permission_required('management.change_envgroup')
-def environment_group_edit(request, template_name='environment/group_edit.html'):
+def environment_group_edit(request):
     """
     Assign properties to environment group
     """
 
     # Initial the response
-    environment_id = request.GET.get('id', None)
-
-    environment = get_object_or_404(EnvGroup, pk=environment_id)
+    env_group_id = request.GET.get('id', None)
+    env_group = get_object_or_404(EnvGroup, pk=env_group_id)
 
     try:
-        de = EnvGroup.objects.get(name=request.GET.get('name'))
-        if environment != de:
+        env_group_with_same_name = EnvGroup.objects.get(name=request.GET.get('name'))
+        if env_group != env_group_with_same_name:
             messages.add_message(request,
                                  messages.ERROR,
                                  _('Environment group with the same name already exists'))
             return HttpResponseRedirect(
-                reverse('mgmt-environment_group_edit') + '?id=%s' % environment_id)
+                reverse('mgmt-environment_group_edit') + '?id=%s' % env_group_id)
     except EnvGroup.DoesNotExist:
         pass
 
     if request.GET.get('action') == 'modify':   # Actions of modify
         environment_name = request.GET['name']
-        if environment.name != environment_name:
-            environment.name = environment_name
-            environment.log_action(
+        if env_group.name != environment_name:
+            env_group.name = environment_name
+            env_group.log_action(
                 who=request.user,
-                action='Modify name %s from to %s' % (environment.name,
+                action='Modify name %s from to %s' % (env_group.name,
                                                       environment_name))
 
-        if environment.is_active != request.GET.get('enabled', False):
-            environment.is_active = bool(strtobool(request.GET.get('enabled', False)))
-            environment.log_action(
+        if env_group.is_active != request.GET.get('enabled', False):
+            env_group.is_active = strtobool(request.GET.get('enabled', False))
+            env_group.log_action(
                 who=request.user,
-                action='Change env group status to %s' % environment.is_active)
+                action='Change env group status to %s' % env_group.is_active)
 
-        environment.modified_by_id = request.user.id
-        environment.save()
+        env_group.modified_by_id = request.user.id
+        env_group.save()
 
         # Remove all of properties of the group.
-        EnvGroupPropertyMap.objects.filter(group__id=environment.id).delete()
+        EnvGroupPropertyMap.objects.filter(group__id=env_group.id).delete()
 
         # Readd the property to environemnt group and log the action
         for property_id in request.GET.getlist('selected_property_ids'):
-            EnvGroupPropertyMap.objects.create(group_id=environment.id, property_id=property_id)
+            EnvGroupPropertyMap.objects.create(group_id=env_group.id, property_id=property_id)
 
-        property_values = environment.property.values_list('name', flat=True)
-        environment.log_action(
+        property_values = env_group.property.values_list('name', flat=True)
+        env_group.log_action(
             who=request.user,
             action='Properties changed to %s' % (', '.join(property_values)))
         return HttpResponseRedirect(reverse('mgmt-environment_groups'))
 
     context_data = {
-        'environment': environment,
+        'environment': env_group,
         'properties': EnvProperty.get_active(),
-        'selected_properties': environment.property.all(),
+        'selected_properties': env_group.property.all(),
     }
-    return render(request, template_name, context_data)
+    return render(request, 'environment/group_edit.html', context_data)
 
 
 @require_GET
@@ -308,18 +302,12 @@ def environment_property_values(request):
     """
     List values of property
     """
-    template_name = 'environment/ajax/property_values.html'
-    message = ''
     duplicated_property_value = []
 
     if not request.GET.get('property_id'):
         return HttpResponse('Property ID should specify')
 
-    try:
-        property = EnvProperty.objects.get(id=request.GET['property_id'])
-    except EnvProperty.DoesNotExist as error:
-        return HttpResponse(error)
-
+    env_property = get_object_or_404(EnvProperty, id=request.GET['property_id'])
     user_action = request.GET.get('action')
 
     if user_action == 'add' and request.GET.get('value'):
@@ -328,7 +316,7 @@ def environment_property_values(request):
 
         for value in request.GET['value'].split(','):
             try:
-                property.value.create(value=value)
+                env_property.value.create(value=value)
             except IntegrityError as error:
                 if error[1].startswith('Duplicate'):
                     duplicated_property_value.append(value)
@@ -338,22 +326,20 @@ def environment_property_values(request):
             return HttpResponse('Permission denied')
 
         try:
-            property_value = property.value.get(id=request.GET['id'])
+            property_value = env_property.value.get(id=request.GET['id'])
             property_value.value = request.GET.get('value', property_value.value)
-            try:
-                property_value.save()
-            except IntegrityError as error:
-                if error[1].startswith('Duplicate'):
-                    duplicated_property_value.append(property_value.value)
-
+            property_value.save()
         except EnvValue.DoesNotExist as error:
             return HttpResponse(error[1])
+        except IntegrityError as error:
+            if error[1].startswith('Duplicate'):
+                duplicated_property_value.append(property_value.value)
 
     if user_action == 'modify' and request.GET.get('id'):
         if not request.user.has_perm('management.change_envvalue'):
             return HttpResponse('Permission denied')
 
-        values = property.value.filter(id__in=request.GET.getlist('id'))
+        values = env_property.value.filter(id__in=request.GET.getlist('id'))
         status = request.GET.get('status')
         if status in ['0', '1']:
             for value in values:
@@ -366,10 +352,10 @@ def environment_property_values(request):
         message = 'Value(s) named \'%s\' already exists in this property, ' \
                   'please select another name.' % "', '".join(duplicated_property_value)
 
-    values = property.value.all()
+    values = env_property.value.all()
     context_data = {
-        'property': property,
+        'property': env_property,
         'values': values,
-        'message': message,
+        'message': message if message else '',
     }
-    return render(request, template_name, context_data)
+    return render(request, 'environment/ajax/property_values.html', context_data)
