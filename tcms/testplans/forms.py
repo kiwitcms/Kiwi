@@ -17,7 +17,7 @@ MIMETYPE_OCTET_STREAM = 'application/octet-stream'
 MIMETYPE_OPENDOCUMENT = 'application/vnd.oasis.opendocument.text'
 
 
-class UploadedFile(object):
+class UploadedFile(object):  # pylint: disable=too-few-public-methods
     """Base class for all classes representing a concrete uploaded file"""
 
     def __init__(self, uploaded_file):
@@ -27,14 +27,14 @@ class UploadedFile(object):
         raise NotImplementedError('Must be implemented in subclass.')
 
 
-class UploadedPlainTextFile(UploadedFile):
+class UploadedPlainTextFile(UploadedFile):  # pylint: disable=too-few-public-methods
     """Represent an uploaded plain text file"""
 
     def get_content(self):
         return '<pre>{0}</pre>'.format(self.uploaded_file.read())
 
 
-class UploadedHTMLFile(UploadedFile):
+class UploadedHTMLFile(UploadedFile):  # pylint: disable=too-few-public-methods
     """Represent an uploaded HTML file
 
     While uploading an HTML file, several tags, attributee have to be deleted,
@@ -73,7 +73,7 @@ class UploadedHTMLFile(UploadedFile):
         return soup.body
 
 
-class UploadedODTFile(UploadedFile):
+class UploadedODTFile(UploadedFile):  # pylint: disable=too-few-public-methods
     """Represent an uploaded ODT file"""
 
     def get_content(self):
@@ -86,10 +86,6 @@ class UploadedODTFile(UploadedFile):
 
 
 class PlanFileField(forms.FileField):
-    VALID_CONTENT_TYPES = (MIMETYPE_HTML,
-                           MIMETYPE_PLAIN,
-                           MIMETYPE_OCTET_STREAM,
-                           MIMETYPE_OPENDOCUMENT)
     ODT_CONTENT_TYPES = (MIMETYPE_OCTET_STREAM, MIMETYPE_OPENDOCUMENT)
 
     default_error_messages = {
@@ -101,15 +97,13 @@ class PlanFileField(forms.FileField):
     }
 
     def clean(self, data, initial=None):
-        f = super(PlanFileField, self).clean(data, initial)
-        if f is None:
-            return None
-        elif not data and initial:
-            return initial
+        plan_file_field = super(PlanFileField, self).clean(data, initial)
 
-        if data.content_type not in self.VALID_CONTENT_TYPES:
-            raise forms.ValidationError(
-                self.error_messages['invalid_file_type'])
+        if plan_file_field is None:
+            return None
+
+        if not data and initial:
+            return initial
 
         if data.content_type in self.ODT_CONTENT_TYPES:
             try:
@@ -127,6 +121,8 @@ class PlanFileField(forms.FileField):
 
         if data.content_type == MIMETYPE_PLAIN:
             return UploadedPlainTextFile(data).get_content()
+
+        raise forms.ValidationError(self.error_messages['invalid_file_type'])
 
 
 # =========== New Plan ModelForm ==============
@@ -182,9 +178,9 @@ class BasePlanForm(forms.Form):
 
     def clean_parent(self):
         try:
-            p = self.cleaned_data['parent']
-            if p:
-                return TestPlan.objects.get(pk=p)
+            parent_pk = self.cleaned_data['parent']
+            if parent_pk:
+                return TestPlan.objects.get(pk=parent_pk)
         except TestPlan.DoesNotExist:
             raise forms.ValidationError('The plan does not exist in database.')
 
@@ -308,11 +304,14 @@ class SearchPlanForm(forms.Form):
     )
 
     def clean_pk__in(self):
-        results = string_to_list(self.cleaned_data['pk__in'])
+        results = []
         try:
-            return [int(r) for r in results]
-        except Exception as e:
-            raise forms.ValidationError(str(e))
+            for result in string_to_list(self.cleaned_data['pk__in']):
+                results.append(int(result))
+        except Exception as error:
+            raise forms.ValidationError(str(error))
+
+        return results
 
     def clean_tag__name__in(self):
         return string_to_list(self.cleaned_data['tag__name__in'])
