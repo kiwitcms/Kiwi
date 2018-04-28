@@ -2,7 +2,6 @@
 
 import datetime
 from urllib.parse import urlencode
-from functools import reduce
 
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -212,10 +211,14 @@ def get_number_of_plans_cases(plan_ids):
     Return value is an dict object, where key is plan_id and the value is the
     total count.
     """
-    qs = TestCasePlan.objects.filter(plan__in=plan_ids)
-    qs = qs.values('plan').annotate(
+    query_set = TestCasePlan.objects.filter(plan__in=plan_ids).values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
-    return dict([(item['plan'], item['total_count']) for item in qs])
+
+    number_of_plan_cases = {}
+    for item in query_set:
+        number_of_plan_cases[item['plan']] = item['total_count']
+
+    return number_of_plan_cases
 
 
 def get_number_of_plans_runs(plan_ids):
@@ -228,10 +231,13 @@ def get_number_of_plans_runs(plan_ids):
     Return value is an dict object, where key is plan_id and the value is the
     total count.
     """
-    qs = TestRun.objects.filter(plan__in=plan_ids)
-    qs = qs.values('plan').annotate(
+    query_set = TestRun.objects.filter(plan__in=plan_ids).values('plan').annotate(
         total_count=Count('pk')).order_by('-plan')
-    return dict([(item['plan'], item['total_count']) for item in qs])
+    number_of_plan_runs = {}
+    for item in query_set:
+        number_of_plan_runs[item['plan']] = item['total_count']
+
+    return number_of_plan_runs
 
 
 def get_number_of_children_plans(plan_ids):
@@ -244,10 +250,13 @@ def get_number_of_children_plans(plan_ids):
     Return value is an dict object, where key is plan_id and the value is the
     total count.
     """
-    qs = TestPlan.objects.filter(parent__in=plan_ids)
-    qs = qs.values('parent').annotate(
+    query_set = TestPlan.objects.filter(parent__in=plan_ids).values('parent').annotate(
         total_count=Count('parent')).order_by('-parent')
-    return dict([(item['parent'], item['total_count']) for item in qs])
+    number_of_children_plans = {}
+    for item in query_set:
+        number_of_children_plans[item['parent']] = item['total_count']
+
+    return number_of_children_plans
 
 
 def calculate_stats_for_testplans(plans):
@@ -260,7 +269,10 @@ def calculate_stats_for_testplans(plans):
     A list of TestPlans, each of which is attached the statistics which is
     with prefix cal meaning calculation result.
     """
-    plan_ids = [plan.pk for plan in plans]
+    plan_ids = []
+    for plan in plans:
+        plan_ids.append(plan.pk)
+
     cases_counts = get_number_of_plans_cases(plan_ids)
     runs_counts = get_number_of_plans_runs(plan_ids)
     children_counts = get_number_of_children_plans(plan_ids)
@@ -408,15 +420,17 @@ def choose_run(request, plan_id):
                 if test_case.case_id not in existing_cases:
                     test_run.add_case_run(case=test_case)
 
-            estimated_time = reduce(lambda x, y: x + y,
-                                    [nc.estimated_time for nc in to_be_added_cases])
+            estimated_time = 0
+            for case in to_be_added_cases:
+                estimated_time += case.estimated_time
+
             test_run.estimated_time = test_run.estimated_time + estimated_time
             test_run.save()
-        else:
-            if not cases_selected:
-                messages.add_message(request,
-                                     messages.ERROR,
-                                     _('Select at least one TestRun and one TestCase'))
+
+        if not cases_selected:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('Select at least one TestRun and one TestCase'))
 
         return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
@@ -434,10 +448,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
     # If the form is submitted
     if request.method == "POST":
         form = EditPlanForm(request.POST, request.FILES)
-        if request.POST.get('product'):
-            form.populate(product_id=request.POST['product'])
-        else:
-            form.populate()
+        form.populate(product_id=request.POST.get('product'))
 
         # FIXME: Error handle
         if form.is_valid():
@@ -688,7 +699,10 @@ class ReorderCasesView(View):
 
         plan = get_object_or_404(TestPlan, pk=int(plan_id))
 
-        case_ids = [int(id) for id in request.POST.getlist('case')]
+        case_ids = []
+        for case_id in request.POST.getlist('case'):
+            case_ids.append(int(case_id))
+
         cases = TestCase.objects.filter(pk__in=case_ids).only('pk')
 
         for case in cases:
@@ -705,10 +719,15 @@ class LinkCasesView(View):
     @method_decorator(permission_required('testcases.add_testcaseplan'))
     def post(self, request, plan_id):
         plan = get_object_or_404(TestPlan.objects.only('pk'), pk=int(plan_id))
-        case_ids = [int(id) for id in request.POST.getlist('case')]
+
+        case_ids = []
+        for case_id in request.POST.getlist('case'):
+            case_ids.append(int(case_id))
+
         cases = TestCase.objects.filter(case_id__in=case_ids).only('pk')
         for case in cases:
             plan.add_case(case)
+
         return HttpResponseRedirect(reverse('test_plan_url', args=[plan_id, slugify(plan.name)]))
 
 
