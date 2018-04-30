@@ -591,8 +591,8 @@ class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
 
             testers_ids, assignees_ids = self._get_testers_assignees_ids(
                 test_case_runs)
-            testers = self.get_related_testers(testers_ids)
-            assignees = self.get_related_assignees(assignees_ids)
+            testers = self.get_related_users(testers_ids)
+            assignees = self.get_related_users(assignees_ids)
 
             data['test_case_runs_count'] = len(test_case_runs)
             data['test_case_runs'] = self.walk_case_runs(test_case_runs,
