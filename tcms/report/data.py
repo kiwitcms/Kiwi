@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
-from collections import namedtuple
 from itertools import groupby
 
 from django_comments.models import Comment
@@ -19,7 +18,7 @@ from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
 from tcms.core.db import GroupByResult
 from tcms.management.models import Build
-
+from tcms.management.models import Tag
 
 __all__ = (
     'CustomDetailsReportData',
@@ -37,7 +36,7 @@ __all__ = (
 
 
 def models_to_pks(models):
-    return [model.pk for model in models]
+    return [model.pk for model in models]  # pylint: disable=avoid-list-comprehension
 
 
 def model_to_pk(model):
@@ -50,18 +49,6 @@ def do_nothing(value):
 
 class ProductBuildReportData(object):
     """Report data by builds of a Product"""
-
-    def total_runs_count(self, product_id, finished=False):
-        builds = {}
-        query = TestRun.objects.filter(build__product=product_id)
-        if finished:
-            query = query.filter(stop_date__isnull=False)
-        query = query.values('build').annotate(
-            total_count=Count('pk')
-        ).order_by('build')
-        for row in query:
-            builds[row['build']] = row['total_count']
-        return builds
 
     def finished_runs_count(self, product_id):
         return self.total_runs_count(product_id, True)
@@ -78,7 +65,8 @@ class ProductBuildReportData(object):
             {'case_run_status__name': 'FAILED'}
         )
 
-    def caseruns_count(self, product_id, condition={}):
+    @staticmethod
+    def caseruns_count(product_id, condition=None):
         case_runs = {}
         query = TestCaseRun.objects.filter(
             build__product=product_id
@@ -92,35 +80,39 @@ class ProductBuildReportData(object):
             case_runs[row['build']] = row['total_count']
         return case_runs
 
-    def caserun_status_subtotal(self, product_id, build_id):
+    @staticmethod
+    def caserun_status_subtotal(product_id, build_id):
+        test_case_runs = TestCaseRun.objects.filter(
+            run__plan__product=product_id,
+            run__build=build_id
+        ).values(
+            'case_run_status__name'
+        ).annotate(status_count=Count('case_run_status__name'))
+
         subtotal = {}
         total = 0
-        for row in TestCaseRun.objects.filter(
-                run__plan__product=product_id,
-                run__build=build_id
-            ).values('case_run_status__name').annotate(
-                status_count=Count('case_run_status__name')):
-            subtotal[row['case_run_status__name']] = row['status_count']
-            total += row['status_count']
+        for test_case_run in test_case_runs:
+            subtotal[test_case_run['case_run_status__name']] = test_case_run['status_count']
+            total += test_case_run['status_count']
         subtotal['TOTAL'] = total
+
         return subtotal
+
+    @staticmethod
+    def total_runs_count(product_id, finished=False):
+        builds = {}
+        query = TestRun.objects.filter(build__product=product_id)
+        if finished:
+            query = query.filter(stop_date__isnull=False)
+        query = query.values('build').annotate(
+            total_count=Count('pk')
+        ).order_by('build')
+        for row in query:
+            builds[row['build']] = row['total_count']
+        return builds
 
 
 class ProductComponentReportData(object):
-    def total_cases(self, product_id, condition={}):
-        total = {}
-        query = TestCaseRun.objects.filter(
-            case__component__product=product_id
-        )
-        if condition:
-            query = query.filter(**condition)
-        query = query.values('case__component').annotate(
-            total_count=Count('pk')
-        ).order_by('case__component')
-
-        for row in query:
-            total[row['case__component']] = row['total_count']
-        return total
 
     def failed_case_runs_count(self, product_id):
         return self.total_cases(
@@ -140,76 +132,47 @@ class ProductComponentReportData(object):
             }
         )
 
-    def case_runs_count(self, component_id):
+    @staticmethod
+    def case_runs_count(component_id):
         subtotal = {}
         total = 0
-        for row in TestCaseRun.objects.filter(
-                case__component=component_id
-            ).values('case_run_status__name').annotate(
-                status_count=Count('case_run_status__name')):
+        query = TestCaseRun.objects.filter(
+            case__component=component_id
+        ).values(
+            'case_run_status__name'
+        ).annotate(status_count=Count('case_run_status__name'))
+
+        for row in query:
             subtotal[row['case_run_status__name']] = row['status_count']
             total += row['status_count']
         subtotal['TOTAL'] = total
         return subtotal
 
+    @staticmethod
+    def total_cases(product_id, condition=None):
+        """
+        :param product_id: ID of the product
+        :type product_id: number
+        :param condition: additional conditions to be added to the query
+        :type condition: dict
+        """
+        total = {}
+        query = TestCaseRun.objects.filter(
+            case__component__product=product_id
+        )
+        if condition:
+            query = query.filter(**condition)
+        query = query.values('case__component').annotate(
+            total_count=Count('pk')
+        ).order_by('case__component')
+
+        for row in query:
+            total[row['case__component']] = row['total_count']
+        return total
+
 
 class ProductVersionReportData(object):
     """Report data by versions of a Product"""
-
-    def plans_subtotal(self, product_id, condition={}):
-        total = {}
-        query = TestPlan.objects.filter(product=product_id)
-        if condition:
-            query = query.filter(**condition)
-        query = query.values('product_version').annotate(
-            total_count=Count('pk')
-        ).order_by('product_version')
-
-        for row in query:
-            total[row['product_version']] = row['total_count']
-        return total
-
-    def runs_subtotal(self, product_id, running=True):
-        total = {}
-        query = TestRun.objects.filter(
-            plan__product=product_id,
-            stop_date__isnull=running
-        )
-        query = query.values('product_version').annotate(
-            total_count=Count('pk')
-        ).order_by('product_version')
-
-        for row in query:
-            total[row['product_version']] = row['total_count']
-        return total
-
-    def cases_subtotal(self, product_id):
-        total = {}
-        query = TestCase.objects.filter(
-            plan__product=product_id
-        )
-        query = query.values('plan__product_version').annotate(
-            total_count=Count('pk')
-        ).order_by('plan__product_version')
-
-        for row in query:
-            total[row['plan__product_version']] = row['total_count']
-        return total
-
-    def case_runs_subtotal(self, product_id, condition={}):
-        total = {}
-        query = TestCaseRun.objects.filter(
-            run__plan__product=product_id
-        )
-        if condition:
-            query = query.filter(**condition)
-        query = query.values('run__product_version').annotate(
-            total_count=Count('pk')
-        ).order_by('run__product_version')
-
-        for row in query:
-            total[row['run__product_version']] = row['total_count']
-        return total
 
     def finished_case_runs_subtotal(self, product_id):
         return self.case_runs_subtotal(
@@ -229,22 +192,98 @@ class ProductVersionReportData(object):
             }
         )
 
-    def case_runs_status_subtotal(self, product_id, version_id):
-        subtotal = {}
+    @staticmethod
+    def plans_subtotal(product_id, condition=None):
+        """
+        :param product_id: ID of the Product
+        :type product_id: number
+        :param condition: additional conditions to be added to the query
+        :type condition: dict
+        """
+        query = TestPlan.objects.filter(product=product_id)
+        if condition:
+            query = query.filter(**condition)
+        query = query.values('product_version').annotate(
+            total_count=Count('pk')
+        ).order_by('product_version')
+
+        total = {}
+        for row in query:
+            total[row['product_version']] = row['total_count']
+        return total
+
+    @staticmethod
+    def runs_subtotal(product_id, running=True):
+        total = {}
+        test_runs = TestRun.objects.filter(
+            plan__product=product_id,
+            stop_date__isnull=running
+        ).values(
+            'product_version'
+        ).annotate(
+            total_count=Count('pk')
+        ).order_by('product_version')
+
+        for test_run in test_runs:
+            total[test_run['product_version']] = test_run['total_count']
+        return total
+
+    @staticmethod
+    def cases_subtotal(product_id):
+        """
+        :param product_id: ID of the Product
+        :type product_id: number
+        """
+        total = {}
+        test_cases = TestCase.objects.filter(
+            plan__product=product_id
+        ).values('plan__product_version').annotate(
+            total_count=Count('pk')
+        ).order_by('plan__product_version')
+
+        for test_case in test_cases:
+            total[test_case['plan__product_version']] = test_case['total_count']
+        return total
+
+    @staticmethod
+    def case_runs_subtotal(product_id, condition=None):
+        """
+        :param product_id: ID of the Product
+        :type product_id: number
+        :param condition: additional conditions to be added to the query
+        :type condition: dict
+        """
+        query = TestCaseRun.objects.filter(
+            run__plan__product=product_id
+        )
+        if condition:
+            query = query.filter(**condition)
+        query = query.values('run__product_version').annotate(
+            total_count=Count('pk')
+        ).order_by('run__product_version')
+
+        total = {}
+        for row in query:
+            total[row['run__product_version']] = row['total_count']
+        return total
+
+    @staticmethod
+    def case_runs_status_subtotal(product_id, version_id):
+        test_case_runs = TestCaseRun.objects.filter(
+            run__plan__product=product_id,
+            run__plan__product_version=version_id
+        ).values(
+            'case_run_status__name'
+        ).annotate(status_count=Count('case_run_status__name'))
+
         total = 0
-        for row in TestCaseRun.objects.filter(
-                run__plan__product=product_id,
-                run__plan__product_version=version_id
-            ).values('case_run_status__name').annotate(
-                status_count=Count('case_run_status__name')):
+        subtotal = {}
+        for row in test_case_runs:
             subtotal[row['case_run_status__name']] = row['status_count']
             total += row['status_count']
         subtotal['TOTAL'] = total
+
         return subtotal
-
-
-SQLQueryInfo = namedtuple('SQLQueryInfo',
-                          'joins, where_condition, where_param_conv')
 
 
 class CustomReportData(object):
@@ -310,7 +349,12 @@ class CustomReportData(object):
             self.report_criteria
         )
 
-    def automation_total(self, build_ids=[]):
+    @staticmethod
+    def automation_total(build_ids):
+        """
+        :param build_ids: list of IDs of the builds, by which the TestCaseRuns are filtered
+        :type build_ids: list
+        """
         automated_name_map = {}
 
         # convert tuples to map for easier indexing
@@ -330,18 +374,29 @@ class CustomReportData(object):
 
     # ## Case run status matrix to show progress bar for each build ###
 
-    def status_matrix(self, build_ids=[]):
-        """Case run status matrix used to render progress bar"""
+    @staticmethod
+    def status_matrix(build_ids):
+        """
+        Case run status matrix used to render progress bar
+
+        :param build_ids: list of IDs of the builds, by which the TestCaseRuns are filtered
+        :type build_ids: list
+        """
+
+        test_case_runs = TestCaseRun.objects.filter(
+            build__in=build_ids,
+            case_run_status__name__in=('PASSED', 'FAILED')
+        ).values(
+            'build',
+            'case_run_status__name'
+        ).annotate(case_run_total=Count('case_run_status__name'))
+
         builds = {}
-        for obj in TestCaseRun.objects.filter(
-                build__in=build_ids,
-                case_run_status__name__in=('PASSED', 'FAILED')
-            ).values('build', 'case_run_status__name').annotate(
-                case_run_total=Count('case_run_status__name')):
-            bid = obj['build']
+        for test_case_run in test_case_runs:
+            bid = test_case_run['build']
             if bid not in builds.keys():
                 builds[bid] = {}
-            builds[bid][obj['case_run_status__name']] = obj['case_run_total']
+            builds[bid][test_case_run['case_run_status__name']] = test_case_run['case_run_total']
 
         return builds
 
@@ -361,7 +416,8 @@ class CustomDetailsReportData(CustomReportData):
     report_criteria = CustomReportData.report_criteria.copy()
     report_criteria['pk__in'] = ('build', model_to_pk)
 
-    def generate_status_matrix(self, build_ids):
+    @staticmethod
+    def generate_status_matrix(build_ids):
         matrix_dataset = {}
         # TODO: replace defaultdict with GroupByResult
         status_total_line = defaultdict(int)
@@ -403,7 +459,8 @@ class CustomDetailsReportData(CustomReportData):
         matrix_dataset[None] = status_total_line
         return matrix_dataset
 
-    def get_case_runs(self, build_ids, status_ids):
+    @staticmethod
+    def get_case_runs(build_ids, status_ids):
         """Get case runs according to builds and status
 
         @param build_ids: IDs of builds
@@ -413,15 +470,23 @@ class CustomDetailsReportData(CustomReportData):
         @return: queried case runs
         @rtype: L{QuerySet}
         """
-        tcrs = TestCaseRun.objects.filter(run__build__in=build_ids,
-                                          case_run_status_id__in=status_ids)
-        tcrs = tcrs.select_related('run', 'case', 'tested_by')
-        tcrs = tcrs.only('run', 'case__summary', 'case__category__name',
-                         'tested_by__username', 'close_date')
-        tcrs = tcrs.order_by('case')
-        return tcrs
+        return TestCaseRun.objects.filter(
+            run__build__in=build_ids,
+            case_run_status_id__in=status_ids
+        ).select_related(
+            'run',
+            'case',
+            'tested_by'
+        ).only(
+            'run',
+            'case__summary',
+            'case__category__name',
+            'tested_by__username',
+            'close_date'
+        ).order_by('case')
 
-    def get_case_runs_bugs(self, build_ids, status_ids):
+    @staticmethod
+    def get_case_runs_bugs(build_ids, status_ids):
         """Get case runs' bugs according to builds and status
 
         @param build_ids: IDs of builds
@@ -433,15 +498,21 @@ class CustomDetailsReportData(CustomReportData):
         """
         bugs = Bug.objects.filter(
             case_run__run__build__in=build_ids,
-            case_run__case_run_status_id__in=status_ids)
-        bugs = bugs.select_related('bug_system')
-        bugs = bugs.only('bug_id',
-                         'bug_system__url_reg_exp',
-                         'case_run')
-        return dict((case_run_id, list(bugs)) for case_run_id, bugs in
-                    groupby(bugs, key=lambda bug: bug.case_run_id))
+            case_run__case_run_status_id__in=status_ids
+        ).select_related(
+            'bug_system'
+        ).only('bug_id',
+               'bug_system__url_reg_exp',
+               'case_run')
 
-    def get_case_runs_comments(self, build_ids, status_ids):
+        case_run_bugs = {}
+        for case_run_id, bugs in groupby(bugs, key=lambda bug: bug.case_run_id):
+            case_run_bugs[case_run_id] = list(bugs)
+
+        return case_run_bugs
+
+    @staticmethod
+    def get_case_runs_comments(build_ids, status_ids):
         """Get case runs' bugs according to builds and status
 
         @param build_ids: IDs of builds
@@ -451,10 +522,10 @@ class CustomDetailsReportData(CustomReportData):
         @return: mapping between case run ID and its comments
         @rtype: dict
         """
-        ct = ContentType.objects.get_for_model(TestCaseRun)
+        content_type = ContentType.objects.get_for_model(TestCaseRun)
         rows = Comment.objects.filter(
             site=settings.SITE_ID,
-            content_type=ct.pk,
+            content_type=content_type.pk,
             is_public=True,
             is_removed=False,
             object_pk__in=TestCaseRun.objects.filter(
@@ -470,8 +541,11 @@ class CustomDetailsReportData(CustomReportData):
             'comment'
         ).order_by('case_run_id')
 
-        return dict((case_run_id, list(comments)) for case_run_id, comments in
-                    groupby(rows, key=lambda row: row['case_run_id']))
+        case_run_comments = {}
+        for case_run_id, comments in groupby(rows, key=lambda row: row['case_run_id']):
+            case_run_comments[case_run_id] = list(comments)
+
+        return case_run_comments
 
 
 class TestingReportBaseData(object):
@@ -495,16 +569,6 @@ class TestingReportBaseData(object):
                 query = query.filter(**args)
         return query
 
-    # ## Helper methods ###
-
-    def get_build_names(self, build_ids):
-        return dict(Build.objects.filter(
-            pk__in=build_ids).values_list('pk', 'name').iterator())
-
-    def get_usernames(self, user_ids):
-        return dict(User.objects.filter(
-            id__in=user_ids).values_list('id', 'username').iterator())
-
     # ## Report data generation ###
 
     def _get_report_data(self, form, builds, builds_selected):
@@ -524,15 +588,6 @@ class TestingReportBaseData(object):
         """
         raise NotImplementedError
 
-    def _get_builds(self, form):
-        """Get selected or all product's builds for display"""
-        builds = form.cleaned_data['r_build']
-        builds_selected = len(builds) > 0
-        if len(builds) == 0:
-            product = form.cleaned_data['r_product']
-            builds = Build.objects.filter(product=product).only('name')
-        return builds, builds_selected
-
     def get_report_data(self, form):
         """Core method to get report data exported to testing report view"""
         builds, builds_selected = self._get_builds(form)
@@ -542,6 +597,16 @@ class TestingReportBaseData(object):
             'builds': builds,
         })
         return data
+
+    @staticmethod
+    def _get_builds(form):
+        """Get selected or all product's builds for display"""
+        builds = form.cleaned_data['r_build']
+        builds_selected = len(builds) > 0
+        if not builds:
+            product = form.cleaned_data['r_product']
+            builds = Build.objects.filter(product=product).only('name')
+        return builds, builds_selected
 
     # ## Shared report data ###
 
@@ -559,6 +624,18 @@ class TestingReportBaseData(object):
         )
         return query.count()
 
+    # ## Helper methods ###
+
+    @staticmethod
+    def get_build_names(build_ids):
+        return dict(Build.objects.filter(
+            pk__in=build_ids).values_list('pk', 'name').iterator())
+
+    @staticmethod
+    def get_usernames(user_ids):
+        return dict(User.objects.filter(
+            id__in=user_ids).values_list('id', 'username').iterator())
+
 
 class TestingReportByCaseRunTesterData(TestingReportBaseData):
     """Data for testing report of By Case Run Tester"""
@@ -566,8 +643,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
     def _get_report_data(self, form, builds, builds_selected):
         if builds_selected:
             return self._get_report_data_with_builds(form, builds)
-        else:
-            return self._get_report_data_without_builds_selected(form)
+        return self._get_report_data_without_builds_selected(form)
 
     def _get_report_data_without_builds_selected(self, form):
         """Get report data when user does not select any build"""
@@ -616,7 +692,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
 
         # Get related tested_by's username. Don't need duplicated user ids.
         tested_by_ids = []
-        for build_id, tested_bys in status_matrix.items():
+        for _build_id, tested_bys in status_matrix.items():
             tested_by_ids += tested_bys.keys()
         tested_by_ids = set(tested_by_ids)
 
@@ -839,14 +915,17 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
                     runs_subtotal.get(tag_id, 0), \
                     status_subtotal
 
+        tags_names_sorted = []
+        for key in sorted(tags_names.keys()):
+            tags_names_sorted.append(tags_names[key])
+
         return {
             'plans_count': plans_count,
             'runs_count': runs_count,
             'reports': walk_status_matrix_rows(),
 
             # This is only used for displaying tags in report
-            'tags_names': [tags_names[key]
-                           for key in sorted(tags_names.keys())],
+            'tags_names': tags_names_sorted
         }
 
     def plans_subtotal(self, form):
@@ -877,7 +956,7 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
             result[row['run__plan__tag']] = row['total_count']
         return result
 
-    def passed_failed_case_runs_subtotal(self, form):
+    def passed_failed_case_runs_subtotal(self, form):  # pylint: disable=invalid-name
         query = self._filter_query(
             form,
             TestCaseRun.objects.values(
@@ -901,9 +980,9 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
 
         return tags
 
-    def get_tags_names(self, tag_ids):
+    @staticmethod
+    def get_tags_names(tag_ids):
         """Get tags names from status matrix"""
-        from tcms.management.models import Tag
 
         names = dict(Tag.objects.filter(
             pk__in=tag_ids).values_list('pk', 'name').iterator())
@@ -952,36 +1031,6 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
                 tags_names[key] for key in sorted(tags_names.keys())),
         }
 
-    def walk_status_matrix_rows(self, root_matrix):
-        """Walk status matrix row by row"""
-        def sort_key(item):
-            return item[0].pk
-
-        prev_build = None
-        prev_plan = None
-
-        ordered_builds = sorted(root_matrix.items(), key=sort_key)
-        for build, plans in ordered_builds:
-            ordered_plans = sorted(plans.items(), key=sort_key)
-            build_rowspan = plans.leaf_values_count(value_in_row=True)
-            for plan, runs in ordered_plans:
-                ordered_runs = sorted(runs.items(), key=sort_key)
-                plan_rowspan = runs.leaf_values_count(value_in_row=True)
-                for run, status_subtotal in ordered_runs:
-                    if build == prev_build:
-                        _build = (build, None)
-                    else:
-                        _build = (build, build_rowspan)
-                        prev_build = build
-                    # FIXME: find a better way, building a tuple seems not a
-                    # good way, may cause performance issue
-                    if (build, plan) == prev_plan:
-                        _plan = (plan, None)
-                    else:
-                        _plan = (plan, plan_rowspan)
-                        prev_plan = (build, plan)
-                    yield _build, _plan, run, status_subtotal
-
     def status_matrix(self, form):
         status_matrix = GroupByResult()
         query = self._filter_query(
@@ -1024,6 +1073,38 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
         )
         return query.count()
 
+    @staticmethod
+    def walk_status_matrix_rows(root_matrix):
+        """Walk status matrix row by row"""
+
+        def sort_key(item):
+            return item[0].pk
+
+        prev_build = None
+        prev_plan = None
+
+        ordered_builds = sorted(root_matrix.items(), key=sort_key)
+        for build, plans in ordered_builds:
+            ordered_plans = sorted(plans.items(), key=sort_key)
+            build_rowspan = plans.leaf_values_count(value_in_row=True)
+            for plan, runs in ordered_plans:
+                ordered_runs = sorted(runs.items(), key=sort_key)
+                plan_rowspan = runs.leaf_values_count(value_in_row=True)
+                for run, status_subtotal in ordered_runs:
+                    if build == prev_build:
+                        _build = (build, None)
+                    else:
+                        _build = (build, build_rowspan)
+                        prev_build = build
+                    # FIXME: find a better way, building a tuple seems not a
+                    # good way, may cause performance issue
+                    if (build, plan) == prev_plan:
+                        _plan = (plan, None)
+                    else:
+                        _plan = (plan, plan_rowspan)
+                        prev_plan = (build, plan)
+                    yield _build, _plan, run, status_subtotal
+
 
 class TestingReportByPlanBuildData(TestingReportBaseData):
     """Data of testing report By Plan Build"""
@@ -1037,7 +1118,7 @@ class TestingReportByPlanBuildData(TestingReportBaseData):
         def walk_status_matrix_rows():
             ordered_plans = sorted(status_matrix.items(),
                                    key=lambda item: item[0].pk)
-            for plan, status_subtotal in ordered_plans:
+            for plan, _ in ordered_plans:
                 yield plan, \
                     builds_subtotal.get(plan, 0), \
                     runs_subtotal.get(plan, 0), \
@@ -1153,25 +1234,6 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
             'reports': walk_status_matrix_rows(),
         }
 
-    def walk_status_matrix_section(self, status_matrix_section):
-        prev_build = None
-
-        ordered_builds = sorted(status_matrix_section.items(),
-                                key=lambda item: item[0].pk)
-        for build, runs in ordered_builds:
-            build_rowspan = runs.leaf_values_count(value_in_row=True)
-
-            ordered_runs = sorted(runs.items(),
-                                  key=lambda item: item[0].pk)
-
-            for run, status_subtotal in ordered_runs:
-                if build == prev_build:
-                    _build = (build, None)
-                else:
-                    _build = (build, build_rowspan)
-                    prev_build = build
-                yield _build, run, status_subtotal
-
     def status_matrix(self, form):
         query = self._filter_query(
             form,
@@ -1206,6 +1268,26 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
 
         return status_matrix
 
+    @staticmethod
+    def walk_status_matrix_section(status_matrix_section):
+        prev_build = None
+
+        ordered_builds = sorted(status_matrix_section.items(),
+                                key=lambda item: item[0].pk)
+        for build, runs in ordered_builds:
+            build_rowspan = runs.leaf_values_count(value_in_row=True)
+
+            ordered_runs = sorted(runs.items(),
+                                  key=lambda item: item[0].pk)
+
+            for run, status_subtotal in ordered_runs:
+                if build == prev_build:
+                    _build = (build, None)
+                else:
+                    _build = (build, build_rowspan)
+                    prev_build = build
+                yield _build, run, status_subtotal
+
 
 class TestingReportCaseRunsData(object):
     """Data of case runs from testing report
@@ -1235,40 +1317,27 @@ class TestingReportCaseRunsData(object):
 
     def _get_filter_criteria(self, form):
         """Get filter criteria, only once during single request"""
-        filter_criteria = getattr(self, '__filter_criteria', None)
-        if filter_criteria is None:
-            filter_criteria = self.runs_filter_criteria(form)
-            filter_criteria.update(self.case_runs_filter_criteria(form))
-            self.__filter_criteria = filter_criteria
+
+        filter_criteria = self.runs_filter_criteria(form)
+        filter_criteria.update(self.case_runs_filter_criteria(form))
+
         return filter_criteria
 
     def get_case_runs(self, form):
         filter_criteria = self._get_filter_criteria(form)
-        qs = TestCaseRun.objects.filter(**filter_criteria)
-        qs = qs.select_related('run', 'case')
-        case_runs = qs.only('tested_by', 'assignee',
-                            'run__run_id',
-                            'run__plan',
-                            'case__summary',
-                            'case__is_automated',
-                            'case__is_automated_proposed',
-                            'case__category__name',
-                            'case__priority',
-                            'case_text_version',
-                            'case_run_status',
-                            'sortkey')
-
-        return case_runs
-
-    def get_related_testers(self, testers_ids):
-        users = User.objects.filter(
-            pk__in=testers_ids).values_list('pk', 'username').order_by('pk')
-        return dict(users.iterator())
-
-    def get_related_assignees(self, assignees_ids):
-        users = User.objects.filter(
-            pk__in=assignees_ids).values_list('pk', 'username').order_by('pk')
-        return dict(users.iterator())
+        return TestCaseRun.objects.filter(**filter_criteria).select_related(
+            'run', 'case').only('tested_by',
+                                'assignee',
+                                'run__run_id',
+                                'run__plan',
+                                'case__summary',
+                                'case__is_automated',
+                                'case__is_automated_proposed',
+                                'case__category__name',
+                                'case__priority',
+                                'case_text_version',
+                                'case_run_status',
+                                'sortkey')
 
     def runs_filter_criteria(self, form):
         result = {}
@@ -1283,7 +1352,14 @@ class TestingReportCaseRunsData(object):
 
         return result
 
-    def case_runs_filter_criteria(self, form):
+    @staticmethod
+    def get_related_users(testers_ids):
+        users = User.objects.filter(
+            pk__in=testers_ids).values_list('pk', 'username').order_by('pk')
+        return dict(users.iterator())
+
+    @staticmethod
+    def case_runs_filter_criteria(form):
         filter_criteria = {}
 
         priority = form.cleaned_data['priority']
