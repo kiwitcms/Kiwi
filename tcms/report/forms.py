@@ -77,9 +77,6 @@ class CustomSearchDetailsForm(CustomSearchForm):
                               'generating this report.',
         })
 
-    def clean_build_run__product_version(self):
-        return None
-
 
 REPORT_TYPES = (
     ('per_build_report', 'By Case-Run Tester'),
