@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from tcms.profiles.forms import BookmarkForm
 from tcms.tests import create_request_user
+from tcms.tests.factories import UserProfileFactory
 
 
 class TestProfilesView(TestCase):
@@ -99,3 +100,18 @@ class TestOpenBookmarks(TestCase):
             response,
             '<input value="Delete" class="sprites node_delete" type="submit">',
             html=True)
+
+
+class TestUserProfile(TestCase):
+
+    def test_user_invalid_im_type_id(self):
+        """
+        Given a UserProfile with im_type_id smaller than 1, or bigger than 5
+        When get_im() instance method is called
+        Then we expect a ValueError
+        """
+
+        user_profile = UserProfileFactory(im='NOT EMPTY', im_type_id=6)
+
+        with self.assertRaises(ValueError, message='Invalid image type id'):
+            user_profile.get_im()

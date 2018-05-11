@@ -25,9 +25,11 @@ class UserProfile(models.Model):
         if not self.im:
             return None
 
-        for c in IM_CHOICES:
-            if self.im_type_id == c[0]:
-                return '[%s] %s' % (c[1], self.im)
+        for choice in IM_CHOICES:
+            if self.im_type_id == choice[0]:
+                return '[%s] %s' % (choice[1], self.im)
+
+        raise ValueError('Invalid image type id')
 
     @classmethod
     def get_user_profile(cls, user):
