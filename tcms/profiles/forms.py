@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
+from django.apps import apps
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import get_backends
+from django.contrib.sites.models import Site
+from django.contrib.contenttypes.models import ContentType
 
-from .models import UserProfile
+
+from tcms.profiles.models import UserProfile
+from tcms.profiles.models import Bookmark
 from tcms.core.forms.fields import StripURLField
-
 
 IM_CHOICES = (
     (1, 'IRC'),
@@ -61,12 +67,12 @@ class UserProfileForm(forms.ModelForm):
             return email
 
         try:
-            u = User.objects.get(email=email)
+            user = User.objects.get(email=email)
         except ObjectDoesNotExist:
             return email
 
-        if u == self.instance:
-            return u.email
+        if user == self.instance:
+            return user.email
 
         raise forms.ValidationError(
             _("A user with that email already exists."))
@@ -90,11 +96,11 @@ class UserProfileForm(forms.ModelForm):
             return username
 
         try:
-            u = User.objects.get(username=username)
+            user = User.objects.get(username=username)
         except ObjectDoesNotExist:
             return username
 
-        if u == self.instance:
+        if user == self.instance:
             return username
 
         raise forms.ValidationError(
@@ -103,8 +109,8 @@ class UserProfileForm(forms.ModelForm):
     def save(self, commit=True):
         can_register = False
 
-        for b in get_backends():
-            if getattr(b, 'can_register', None):
+        for backend in get_backends():
+            if getattr(backend, 'can_register', None):
                 can_register = True
 
         instance = super(UserProfileForm, self).save(commit=commit)
@@ -133,24 +139,14 @@ class BookmarkForm(forms.Form):
     description = forms.CharField(required=False, widget=forms.Textarea)
 
     def clean(self):
-        from django.conf import settings
-        from django.apps import apps
-        from django.core.exceptions import ObjectDoesNotExist, ValidationError
-        from django.contrib.sites.models import Site
-        from django.contrib.auth.models import User
-        from django.contrib.contenttypes.models import ContentType
-
         cleaned_data = self.cleaned_data.copy()
         if cleaned_data.get('content_type'):
             try:
-                m = apps.get_model(
-                    *cleaned_data['content_type'].split(".", 1))
-                target = m._default_manager.get(pk=cleaned_data['object_pk'])
+                model = apps.get_model(*cleaned_data['content_type'].split(".", 1))
+                target = model._default_manager.get(pk=cleaned_data['object_pk'])
                 app_label, model = cleaned_data['content_type'].split(".", 1)
-                ct = ContentType.objects.get(
-                    app_label=app_label, model=model
-                )
-                cleaned_data['content_type'] = ct
+                content_type = ContentType.objects.get(app_label=app_label, model=model)
+                cleaned_data['content_type'] = content_type
                 cleaned_data['object_pk'] = target.pk
             except ObjectDoesNotExist as error:
                 raise ValidationError(error)
@@ -163,8 +159,6 @@ class BookmarkForm(forms.Form):
         pass
 
     def save(self):
-        from .models import Bookmark
-
         cleaned_data = self.cleaned_data.copy()
         del cleaned_data['a']
         if not cleaned_data['content_type']:
