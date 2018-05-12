@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-13 15:31+0000\n"
-"PO-Revision-Date: 2018-05-11 22:30-0400\n"
+"PO-Revision-Date: 2018-05-11 22:40-0400\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -243,75 +243,75 @@ msgstr "新建测试计划至少需要一个测试实例"
 
 #: tcms/testruns/views.py:233
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "拒绝访问: 测试运行不属于您"
 
 #: tcms/testruns/views.py:253
 #, python-format
 msgid "Deletion failed: %s"
-msgstr ""
+msgstr "删除失败: %s"
 
 #: tcms/testruns/views.py:258
 msgid "Parameter \"sure\" must be \"yes\" or \"no\""
-msgstr ""
+msgstr "参数 \"sure\" 必须为 \"yes\" 或 \"no\""
 
 #: tcms/testruns/views.py:945
 msgid "Reorder operation requires at least one TestCase"
-msgstr ""
+msgstr "重排序操作至少需要一个测试实例"
 
 #: tcms/testruns/views.py:1044
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "测试实例编号不是有效的整数"
 
 #: tcms/testruns/views.py:1178
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "已更新 %d 个测试运行:"
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
-msgstr ""
+msgstr "空闲"
 
 #: vinaigrette-deleteme.py:3
 msgid "RUNNING"
-msgstr ""
+msgstr "运行中"
 
 #: vinaigrette-deleteme.py:4
 msgid "PAUSED"
-msgstr ""
+msgstr "已暂停"
 
 #: vinaigrette-deleteme.py:5
 msgid "PASSED"
-msgstr ""
+msgstr "已通过"
 
 #: vinaigrette-deleteme.py:6
 msgid "FAILED"
-msgstr ""
+msgstr "失败"
 
 #: vinaigrette-deleteme.py:7
 msgid "BLOCKED"
-msgstr ""
+msgstr "已屏蔽"
 
 #: vinaigrette-deleteme.py:8
 msgid "ERROR"
-msgstr ""
+msgstr "错误"
 
 #: vinaigrette-deleteme.py:9
 msgid "WAIVED"
-msgstr ""
+msgstr "已放弃"
 
 #: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
-msgstr ""
+msgstr "已建议"
 
 #: vinaigrette-deleteme.py:11
 msgid "CONFIRMED"
-msgstr ""
+msgstr "已确认"
 
 #: vinaigrette-deleteme.py:12
 msgid "DISABLED"
-msgstr ""
+msgstr "已禁用"
 
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "需要更新"
 
