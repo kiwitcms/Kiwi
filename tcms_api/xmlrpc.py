@@ -36,9 +36,9 @@ t.testplan_get(10)
 import errno
 import http.client
 import xmlrpc.client
+from configparser import ConfigParser
 from datetime import datetime, time
 from http.cookiejar import CookieJar
-from configparser import ConfigParser
 
 VERBOSE = 0
 DEBUG = 0
@@ -62,8 +62,9 @@ class CookieTransport(xmlrpc.client.Transport):
     cookiejar = None
     scheme = 'http'
 
-    def __init__(self):
-        super(CookieTransport, self).__init__()
+    def __init__(self, use_datetime=False, use_builtin_types=False):
+        super(CookieTransport, self).__init__(use_datetime=use_datetime,
+                                              use_builtin_types=use_builtin_types)
         self._cookies = []
 
     def request(self, host, handler, request_body, verbose=False):
@@ -172,6 +173,7 @@ class TCMSXmlrpc(object):
     TCMSXmlrpc - TCMS XML-RPC client
                     for server deployed without BASIC authentication
     """
+
     @classmethod
     def from_config(cls, filename):
         cp = ConfigParser()
