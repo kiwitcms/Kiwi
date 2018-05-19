@@ -358,3 +358,6 @@ epub_copyright = u'2013, Red Hat, Inc.; 2017-2018, Kiwi TCMS project and its con
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'http://docs.python.org/': None}
+
+# this is not available on RTD
+autodoc_mock_imports = ['secrets']
