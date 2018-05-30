@@ -17,7 +17,12 @@ def string_to_list(strs, spliter=','):
         str_list = (str(item).strip() for item in strs.split(spliter))
     else:
         str_list = (strs,)
-    return [s for s in str_list if s]
+
+    lst = []
+    for string in str_list:
+        if string:
+            lst.append(string)
+    return lst
 
 
 def form_errors_to_list(form):
@@ -25,7 +30,10 @@ def form_errors_to_list(form):
     Convert errors of form to list
     Use for Ajax.Request response
     """
-    return [(k, str(v[0])) for k, v in form.errors.items()]
+    errors = []
+    for key, value in form.errors.items():
+        errors.append((key, value[0]))
+    return errors
 
 
 def calc_percent(dividend, divisor):
@@ -157,8 +165,13 @@ class DataTableResult(object):
 
     def _sort_result(self):
         sorting_columns = self._iter_sorting_columns()
-        order_fields = ['-{}'.format(col_name) if direction == 'desc' else col_name
-                        for col_name, direction in sorting_columns]
+        order_fields = []
+        for col_name, direction in sorting_columns:
+            if direction == 'desc':
+                order_fields.append('-{}'.format(col_name))
+            else:
+                order_fields.append(col_name)
+
         if order_fields:
             self.queryset = self.queryset.order_by(*order_fields)
 
