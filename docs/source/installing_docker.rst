@@ -24,7 +24,12 @@ By default the image tag will be ``kiwitcms/kiwi:<version>``.
 Start Docker compose
 --------------------
 
-You can start using Kiwi TCMS by executing::
+Before starting Kiwi TCMS you need to clone the git repo::
+
+    git clone https://github.com/kiwitcms/Kiwi.git
+
+
+Then you can start Kiwi TCMS by executing::
 
     docker-compose up -d
 
