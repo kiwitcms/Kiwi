@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class RawSQL:
+class RawSQL:  # pylint: disable=too-few-public-methods
     """
     Record the Raw SQL for operate the database directly.
     """
@@ -25,7 +25,7 @@ class RawSQL:
         WHERE test_case_bugs.case_run_id = test_case_runs.case_run_id'
 
 
-class ReportSQL(object):
+class ReportSQL(object):  # pylint: disable=too-few-public-methods
     # Index
     index_product_plans_count = 'SELECT COUNT(plan_id) \
         FROM test_plans \
