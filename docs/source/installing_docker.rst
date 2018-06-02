@@ -31,6 +31,7 @@ Before starting Kiwi TCMS you need to clone the git repo::
 
 Then you can start Kiwi TCMS by executing::
 
+    cd Kiwi/
     docker-compose up -d
 
 
