@@ -4,6 +4,9 @@ Kiwi TCMS - Open Source Test Case Management System
 .. image:: https://travis-ci.org/kiwitcms/Kiwi.svg?branch=master
     :target: https://travis-ci.org/kiwitcms/Kiwi
 
+.. image:: https://scan.coverity.com/projects/15921/badge.svg
+    :target: https://scan.coverity.com/projects/kiwitcms-kiwi
+
 .. image:: https://coveralls.io/repos/github/kiwitcms/Kiwi/badge.svg?branch=master
    :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
 
