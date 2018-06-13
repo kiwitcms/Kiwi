@@ -113,5 +113,5 @@ class TestUserProfile(TestCase):
 
         user_profile = UserProfileFactory(im='NOT EMPTY', im_type_id=6)
 
-        with self.assertRaisesRegex(ValueError, 'Invalid image type id'):
+        with self.assertRaisesRegex(ValueError, 'Invalid IM type id'):
             user_profile.get_im()
