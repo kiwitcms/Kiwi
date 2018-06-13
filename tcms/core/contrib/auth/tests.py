@@ -168,10 +168,12 @@ class TestRegistration(TestCase):
         # Verify notification mail
         send_mail.assert_called_once_with(
             settings.EMAIL_SUBJECT_PREFIX + 'Your new 127.0.0.1:8000 account confirmation',
-            """Welcome, new-tester, and thanks for signing up for an 127.0.0.1:8000 account!
+            """Welcome new-tester,
+thank you for signing up for an 127.0.0.1:8000 account!
 
-
+To activate your account, click this link:
 %s
+
 """ % confirm_url,
             settings.DEFAULT_FROM_EMAIL, ['new-tester@example.com'], fail_silently=False)
 

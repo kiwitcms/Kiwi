@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 15:31+0000\n"
+"POT-Creation-Date: 2018-06-13 20:12+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -20,37 +20,42 @@ msgstr ""
 msgid "Core auth"
 msgstr ""
 
-#: tcms/core/contrib/auth/forms.py:24 tcms/profiles/forms.py:72
+#: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:78
 msgid "A user with that email already exists."
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:31
+#: tcms/core/contrib/auth/forms.py:53
+#, python-format
+msgid "Your new %s account confirmation"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:30
 msgid "This backend does not allow user registration"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:53
+#: tcms/core/contrib/auth/views.py:52
 msgid ""
 "Your account has been created, please check your mailbox for confirmation"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:59
+#: tcms/core/contrib/auth/views.py:58
 msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:65
+#: tcms/core/contrib/auth/views.py:64
 msgid "Following is the administrator list"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:96
+#: tcms/core/contrib/auth/views.py:95
 msgid "This activation key no longer exists in the database"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:101
+#: tcms/core/contrib/auth/views.py:100
 msgid "This activation key has expired"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:113
+#: tcms/core/contrib/auth/views.py:112
 msgid "Your account has been activated successfully"
 msgstr ""
 
@@ -58,51 +63,47 @@ msgstr ""
 msgid "Core customized comments"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:15
+#: tcms/core/contrib/comments/forms.py:14
 msgid "Name"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:19
+#: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:22
+#: tcms/core/contrib/comments/forms.py:21
 msgid "URL"
 msgstr ""
 
-#: tcms/core/contrib/comments/forms.py:26
+#: tcms/core/contrib/comments/forms.py:25
 msgid "Comment"
 msgstr ""
 
-#: tcms/core/forms/fields.py:55
-msgid "Enter a valid estimated time. e.g. 12h45m"
-msgstr ""
-
-#: tcms/management/views.py:160
+#: tcms/management/views.py:154
 msgid "Environment group with the same name already exists"
 msgstr ""
 
-#: tcms/profiles/forms.py:26
+#: tcms/profiles/forms.py:32
 msgid "Username"
 msgstr ""
 
-#: tcms/profiles/forms.py:28
+#: tcms/profiles/forms.py:34
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 
-#: tcms/profiles/forms.py:31
+#: tcms/profiles/forms.py:37
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
-#: tcms/profiles/forms.py:36
+#: tcms/profiles/forms.py:42
 msgid "E-mail"
 msgstr ""
 
-#: tcms/profiles/forms.py:81
+#: tcms/profiles/forms.py:87
 msgid "User error."
 msgstr ""
 
-#: tcms/profiles/forms.py:101
+#: tcms/profiles/forms.py:107
 msgid "A user with that username already exists."
 msgstr ""
 
@@ -114,14 +115,24 @@ msgstr ""
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:130
+#: tcms/signals.py:131
 #, python-format
 msgid "New TestRun %(summary)s created"
 msgstr ""
 
-#: tcms/signals.py:132
+#: tcms/signals.py:133
 #, python-format
 msgid "TestRun %(summary)s has been updated"
+msgstr ""
+
+#: tcms/templates/email/confirm_registration.txt:1
+#, python-format
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
+"To activate your account, click this link:\n"
+"%(confirm_url)s\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
@@ -199,67 +210,67 @@ msgstr ""
 msgid "Change my password"
 msgstr ""
 
-#: tcms/testcases/views.py:548
+#: tcms/testcases/views.py:537
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:1345 tcms/testruns/views.py:905
-#: tcms/testruns/views.py:1035
+#: tcms/testcases/views.py:1333 tcms/testruns/views.py:899
+#: tcms/testruns/views.py:1029
 msgid "At least one TestCase is required"
 msgstr ""
 
-#: tcms/testcases/views.py:1500
+#: tcms/testcases/views.py:1482
 msgid "TestCase cloning was successful"
 msgstr ""
 
-#: tcms/testplans/views.py:440
+#: tcms/testplans/views.py:433
 msgid "Select at least one TestRun and one TestCase"
 msgstr ""
 
-#: tcms/testplans/views.py:560
+#: tcms/testplans/views.py:539
 msgid "At least one TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:572
+#: tcms/testplans/views.py:551
 #, python-format
 msgid "TestPlan(s) \"%s\" do not exist"
 msgstr ""
 
-#: tcms/testplans/views.py:836
+#: tcms/testplans/views.py:823
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:844
+#: tcms/testplans/views.py:831
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
 
-#: tcms/testruns/views.py:65
+#: tcms/testruns/views.py:64
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:233
+#: tcms/testruns/views.py:230
 msgid "Permission denied: TestRun does not belong to you"
 msgstr ""
 
-#: tcms/testruns/views.py:253
+#: tcms/testruns/views.py:250
 #, python-format
 msgid "Deletion failed: %s"
 msgstr ""
 
-#: tcms/testruns/views.py:258
+#: tcms/testruns/views.py:255
 msgid "Parameter \"sure\" must be \"yes\" or \"no\""
 msgstr ""
 
-#: tcms/testruns/views.py:945
+#: tcms/testruns/views.py:939
 msgid "Reorder operation requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:1044
+#: tcms/testruns/views.py:1038
 msgid "TestCase ID is not a valid integer"
 msgstr ""
 
-#: tcms/testruns/views.py:1178
+#: tcms/testruns/views.py:1170
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr ""

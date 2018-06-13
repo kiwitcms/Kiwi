@@ -1,0 +1,6 @@
+{% load i18n %}{% blocktrans %}Welcome {{ user }},
+thank you for signing up for an {{ site_domain }} account!
+
+To activate your account, click this link:
+{{ confirm_url }}
+{% endblocktrans %}

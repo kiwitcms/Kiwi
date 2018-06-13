@@ -44,7 +44,7 @@ def register(request, template_name='registration/registration_form.html'):
 
             # Send confirmation email to new user
             if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
-                form.send_confirm_mail(request=request, activation_key=activation_key)
+                form.send_confirm_mail(request, activation_key)
 
                 messages.add_message(
                     request,
