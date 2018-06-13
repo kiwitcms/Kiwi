@@ -41,8 +41,7 @@ class RegistrationForm(UserCreationForm):
     def set_activation_key(self):
         return UserActivateKey.set_random_key_for_user(user=self.instance)
 
-    def send_confirm_mail(self, request, activation_key,
-                          template_name='registration/confirm_email.html'):
+    def send_confirm_mail(self, request, activation_key):
         current_site = Site.objects.get_current()
         confirm_url = '%s%s' % (
             request_host_link(request, current_site.domain),
@@ -50,12 +49,11 @@ class RegistrationForm(UserCreationForm):
                     args=[activation_key.activation_key, ])
         )
         mailto(
-            template_name=template_name, recipients=self.cleaned_data['email'],
-            subject='Your new %s account confirmation' % current_site.domain,
+            template_name='email/confirm_registration.txt', recipients=self.cleaned_data['email'],
+            subject=_('Your new %s account confirmation') % current_site.domain,
             context={
                 'user': self.instance,
-                'site': current_site,
-                'active_key': activation_key,
+                'site_domain': current_site.domain,
                 'confirm_url': confirm_url,
             }
         )
