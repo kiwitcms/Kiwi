@@ -29,7 +29,7 @@ class UserProfile(models.Model):
             if self.im_type_id == choice[0]:
                 return '[%s] %s' % (choice[1], self.im)
 
-        raise ValueError('Invalid image type id')
+        raise ValueError('Invalid IM type id')
 
     @classmethod
     def get_user_profile(cls, user):
