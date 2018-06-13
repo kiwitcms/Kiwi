@@ -308,8 +308,8 @@ class TestDeleteGroup(TestCase):
                                    {'action': 'del', 'id': 'NOT_AN_INT'})
 
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertEquals(result['rc'], 1)
-        self.assertEquals(result['response'], 'id must be an integer.')
+        self.assertEqual(result['rc'], 1)
+        self.assertEqual(result['response'], 'id must be an integer.')
 
 
 class TestModifyGroup(TestCase):
