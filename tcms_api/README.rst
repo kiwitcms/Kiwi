@@ -51,12 +51,6 @@ specific features is not implemented yet or not efficient enough::
 
     case = TCMS()._server.TestCase.filter({'pk': 46490})[0]
 
-For a quick start you can get some inspiration in the ``script_examples``
-directory. The 'matrix.py' script demonstrates how to easily
-display a matrix view of the test run results for a specific test
-plan. The 'create.py' script gives a broader overview covering
-object creation, attribute setting, adjusting logs and caching.
-
 For area-specific details see respective module documentation::
 
     tcms_api.base ......... TCMS class, search support
