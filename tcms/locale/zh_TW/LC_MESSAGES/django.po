@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-14 06:11-0400\n"
+"PO-Revision-Date: 2018-06-14 06:22-0400\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -59,51 +59,51 @@ msgstr "您的帳戶已成功啟用"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr ""
+msgstr "核心客製化附註"
 
 #: tcms/core/contrib/comments/forms.py:14
 msgid "Name"
-msgstr ""
+msgstr "姓名"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "電子郵件地址"
 
 #: tcms/core/contrib/comments/forms.py:21
 msgid "URL"
-msgstr ""
+msgstr "網址"
 
 #: tcms/core/contrib/comments/forms.py:25
 msgid "Comment"
-msgstr ""
+msgstr "附註"
 
 #: tcms/management/views.py:154
 msgid "Environment group with the same name already exists"
-msgstr ""
+msgstr "已存在同名的環境群組"
 
 #: tcms/profiles/forms.py:32
 msgid "Username"
-msgstr ""
+msgstr "使用者名稱"
 
 #: tcms/profiles/forms.py:34
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
+msgstr "必填。不超過30個字元。只允許字母、數字和@.+-_字元。"
 
 #: tcms/profiles/forms.py:37
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr ""
+msgstr "此值可能只包含字母、數位和@.+-_字元。"
 
 #: tcms/profiles/forms.py:42
 msgid "E-mail"
-msgstr ""
+msgstr "電子郵件"
 
 #: tcms/profiles/forms.py:87
 msgid "User error."
-msgstr ""
+msgstr "使用者錯誤。"
 
 #: tcms/profiles/forms.py:107
 msgid "A user with that username already exists."
-msgstr ""
+msgstr "具有此使用者名的使用者已存在。"
 
 #: tcms/profiles/views.py:101
 msgid "Information successfully updated"
