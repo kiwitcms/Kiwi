@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-01-19 03:01-0500\n"
+"PO-Revision-Date: 2018-06-14 06:11-0400\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -18,46 +18,44 @@ msgstr ""
 
 #: tcms/core/contrib/auth/apps.py:7
 msgid "Core auth"
-msgstr ""
+msgstr "核心身份驗證"
 
 #: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:78
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "使用此電子郵件的用戶已經存在"
 
 #: tcms/core/contrib/auth/forms.py:53
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "您的新帳戶 %s 確認"
 
 #: tcms/core/contrib/auth/views.py:30
 msgid "This backend does not allow user registration"
-msgstr ""
+msgstr "此後端不允許使用者註冊"
 
 #: tcms/core/contrib/auth/views.py:52
-msgid ""
-"Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgid "Your account has been created, please check your mailbox for confirmation"
+msgstr "您的帳戶已經新增完畢，請確認您的 E-mail 是否有啟動連結的信件。"
 
 #: tcms/core/contrib/auth/views.py:58
-msgid ""
-"Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgid "Your account has been created, but you need an administrator to activate it"
+msgstr "您的帳戶已創建, 但您需要管理員來啟用它"
 
 #: tcms/core/contrib/auth/views.py:64
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "以下是管理員清單"
 
 #: tcms/core/contrib/auth/views.py:95
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "此啟用金鑰不存在於資料庫中"
 
 #: tcms/core/contrib/auth/views.py:100
 msgid "This activation key has expired"
-msgstr ""
+msgstr "此啟用金鑰已過期"
 
 #: tcms/core/contrib/auth/views.py:112
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "您的帳戶已成功啟用"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -127,45 +125,35 @@ msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
+msgid "Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid ""
-"\n"
-"Test run %(pk)s has been created or updated for you.\n"
-"\n"
+msgid "\n"
+"Test run %(pk)s has been created or updated for you.\n\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n"
-"\n"
+"Test plan: %(plan_url)s\n\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n"
-"\n"
+"Summary: %(summary)s\n\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n"
-"\n"
+"Default tester: %(default_tester)s.\n\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n"
-"\n"
+"Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s\n"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid ""
-"Dear Administrator,\n"
+msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
 msgstr ""
 
@@ -189,9 +177,7 @@ msgid_plural "Please correct the errors below."
 msgstr[0] ""
 
 #: tcms/templates/registration/password_change_form.html:19
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
 msgstr ""
 
 #: tcms/templates/registration/password_change_form.html:23
@@ -322,3 +308,4 @@ msgstr ""
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr ""
+
