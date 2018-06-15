@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-15 03:10-0400\n"
+"PO-Revision-Date: 2018-06-15 05:13-0400\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -246,16 +246,16 @@ msgstr "創建 TestRun 至少需要一個 TestCase"
 
 #: tcms/testruns/views.py:230
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "許可權被拒絕: 此TestRun 不屬於您"
 
 #: tcms/testruns/views.py:250
 #, python-format
 msgid "Deletion failed: %s"
-msgstr ""
+msgstr "刪除失敗: %s"
 
 #: tcms/testruns/views.py:255
 msgid "Parameter \"sure\" must be \"yes\" or \"no\""
-msgstr ""
+msgstr "參數 \"確定\" 必須是 \"是\" 或 \"否\""
 
 #: tcms/testruns/views.py:939
 msgid "Reorder operation requires at least one TestCase"
