@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-14 07:13-0400\n"
+"PO-Revision-Date: 2018-06-15 03:10-0400\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -173,76 +173,76 @@ msgstr "密碼修改成功"
 
 #: tcms/templates/registration/password_change_done.html:10
 msgid "Your password was changed."
-msgstr ""
+msgstr "您的密碼已變更完畢。"
 
 #: tcms/templates/registration/password_change_form.html:5
 #: tcms/templates/registration/password_change_form.html:18
 msgid "Password change"
-msgstr ""
+msgstr "密碼變更"
 
 #: tcms/templates/registration/password_change_form.html:15
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
-msgstr[0] ""
+msgstr[0] "請更正以下的錯誤。"
 
 #: tcms/templates/registration/password_change_form.html:19
 msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
-msgstr ""
+msgstr "請輸入您的舊密碼, 為安全起見, 然後輸入您的新密碼兩次, 以便我們可以驗證您鍵入它正確。"
 
 #: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"
-msgstr ""
+msgstr "舊密碼"
 
 #: tcms/templates/registration/password_change_form.html:28
 msgid "New password"
-msgstr ""
+msgstr "新密碼"
 
 #: tcms/templates/registration/password_change_form.html:33
 msgid "Password (again)"
-msgstr ""
+msgstr "新密碼 (再次)"
 
 #: tcms/templates/registration/password_change_form.html:40
 msgid "Change my password"
-msgstr ""
+msgstr "更改我的密碼"
 
 #: tcms/testcases/views.py:537
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "TestPlan 未指定或不存在"
 
 #: tcms/testcases/views.py:1333 tcms/testruns/views.py:899
 #: tcms/testruns/views.py:1029
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "至少需要一個 TestCase"
 
 #: tcms/testcases/views.py:1482
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "TestCase 複製成功"
 
 #: tcms/testplans/views.py:433
 msgid "Select at least one TestRun and one TestCase"
-msgstr ""
+msgstr "選擇至少一個 TestRun 和一個 TestCase"
 
 #: tcms/testplans/views.py:539
 msgid "At least one TestPlan is required"
-msgstr ""
+msgstr "至少需要一個 TestPlan"
 
 #: tcms/testplans/views.py:551
 #, python-format
 msgid "TestPlan(s) \"%s\" do not exist"
-msgstr ""
+msgstr "TestPlan(s) \"%s\" 不存在"
 
 #: tcms/testplans/views.py:823
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "列印時至少需要一個Test Plan"
 
 #: tcms/testplans/views.py:831
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "TestPlan \"%s\" 不存在"
 
 #: tcms/testruns/views.py:64
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "創建 TestRun 至少需要一個 TestCase"
 
 #: tcms/testruns/views.py:230
 msgid "Permission denied: TestRun does not belong to you"
