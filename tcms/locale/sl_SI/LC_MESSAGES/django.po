@@ -1,0 +1,314 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kiwitcms\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-13 20:12+0000\n"
+"PO-Revision-Date: 2018-06-15 04:23-0400\n"
+"Last-Translator: atodorov <atodorov@otb.bg>\n"
+"Language-Team: Slovenian\n"
+"Language: sl_SI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: kiwitcms\n"
+"X-Crowdin-Language: sl\n"
+"X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
+
+#: tcms/core/contrib/auth/apps.py:7
+msgid "Core auth"
+msgstr ""
+
+#: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:78
+msgid "A user with that email already exists."
+msgstr ""
+
+#: tcms/core/contrib/auth/forms.py:53
+#, python-format
+msgid "Your new %s account confirmation"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:30
+msgid "This backend does not allow user registration"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:52
+msgid "Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:58
+msgid "Your account has been created, but you need an administrator to activate it"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:64
+msgid "Following is the administrator list"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:95
+msgid "This activation key no longer exists in the database"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:100
+msgid "This activation key has expired"
+msgstr ""
+
+#: tcms/core/contrib/auth/views.py:112
+msgid "Your account has been activated successfully"
+msgstr ""
+
+#: tcms/core/contrib/comments/apps.py:10
+msgid "Core customized comments"
+msgstr ""
+
+#: tcms/core/contrib/comments/forms.py:14
+msgid "Name"
+msgstr ""
+
+#: tcms/core/contrib/comments/forms.py:18
+msgid "Email address"
+msgstr ""
+
+#: tcms/core/contrib/comments/forms.py:21
+msgid "URL"
+msgstr ""
+
+#: tcms/core/contrib/comments/forms.py:25
+msgid "Comment"
+msgstr ""
+
+#: tcms/management/views.py:154
+msgid "Environment group with the same name already exists"
+msgstr ""
+
+#: tcms/profiles/forms.py:32
+msgid "Username"
+msgstr ""
+
+#: tcms/profiles/forms.py:34
+msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: tcms/profiles/forms.py:37
+msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
+msgstr ""
+
+#: tcms/profiles/forms.py:42
+msgid "E-mail"
+msgstr ""
+
+#: tcms/profiles/forms.py:87
+msgid "User error."
+msgstr ""
+
+#: tcms/profiles/forms.py:107
+msgid "A user with that username already exists."
+msgstr ""
+
+#: tcms/profiles/views.py:101
+msgid "Information successfully updated"
+msgstr ""
+
+#: tcms/signals.py:79
+msgid "New user awaiting approval"
+msgstr ""
+
+#: tcms/signals.py:131
+#, python-format
+msgid "New TestRun %(summary)s created"
+msgstr ""
+
+#: tcms/signals.py:133
+#, python-format
+msgid "TestRun %(summary)s has been updated"
+msgstr ""
+
+#: tcms/templates/email/confirm_registration.txt:1
+#, python-format
+msgid "Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n\n"
+"To activate your account, click this link:\n"
+"%(confirm_url)s\n"
+msgstr ""
+
+#: tcms/templates/email/post_run_save/email.txt:2
+#, python-format
+msgid "\n"
+"Test run %(pk)s has been created or updated for you.\n\n"
+"### Links ###\n"
+"Test run: %(run_url)s\n"
+"Test plan: %(plan_url)s\n\n"
+"### Basic run information ###\n"
+"Summary: %(summary)s\n\n"
+"Managed: %(manager)s.\n"
+"Default tester: %(default_tester)s.\n\n"
+"Product: %(product)s\n"
+"Product version: %(version)s\n"
+"Build: %(build)s\n\n"
+"Notes:\n"
+"%(notes)s\n"
+msgstr ""
+
+#: tcms/templates/email/user_registered/notify_admins.txt:2
+#, python-format
+msgid "Dear Administrator,\n"
+"somebody just registered an account with username %(username)s at your\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Go to %(user_url)s to activate the account!\n"
+msgstr ""
+
+#: tcms/templates/registration/password_change_done.html:4
+#: tcms/templates/registration/password_change_done.html:8
+msgid "Password change successful"
+msgstr ""
+
+#: tcms/templates/registration/password_change_done.html:10
+msgid "Your password was changed."
+msgstr ""
+
+#: tcms/templates/registration/password_change_form.html:5
+#: tcms/templates/registration/password_change_form.html:18
+msgid "Password change"
+msgstr ""
+
+#: tcms/templates/registration/password_change_form.html:15
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: tcms/templates/registration/password_change_form.html:19
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: tcms/templates/registration/password_change_form.html:23
+msgid "Old password"
+msgstr ""
+
+#: tcms/templates/registration/password_change_form.html:28
+msgid "New password"
+msgstr ""
+
+#: tcms/templates/registration/password_change_form.html:33
+msgid "Password (again)"
+msgstr ""
+
+#: tcms/templates/registration/password_change_form.html:40
+msgid "Change my password"
+msgstr ""
+
+#: tcms/testcases/views.py:537
+msgid "TestPlan not specified or does not exist"
+msgstr ""
+
+#: tcms/testcases/views.py:1333 tcms/testruns/views.py:899
+#: tcms/testruns/views.py:1029
+msgid "At least one TestCase is required"
+msgstr ""
+
+#: tcms/testcases/views.py:1482
+msgid "TestCase cloning was successful"
+msgstr ""
+
+#: tcms/testplans/views.py:433
+msgid "Select at least one TestRun and one TestCase"
+msgstr ""
+
+#: tcms/testplans/views.py:539
+msgid "At least one TestPlan is required"
+msgstr ""
+
+#: tcms/testplans/views.py:551
+#, python-format
+msgid "TestPlan(s) \"%s\" do not exist"
+msgstr ""
+
+#: tcms/testplans/views.py:823
+msgid "At least one test plan is required for print"
+msgstr ""
+
+#: tcms/testplans/views.py:831
+#, python-format
+msgid "Test Plan \"%s\" does not exist"
+msgstr ""
+
+#: tcms/testruns/views.py:64
+msgid "Creating a TestRun requires at least one TestCase"
+msgstr ""
+
+#: tcms/testruns/views.py:230
+msgid "Permission denied: TestRun does not belong to you"
+msgstr ""
+
+#: tcms/testruns/views.py:250
+#, python-format
+msgid "Deletion failed: %s"
+msgstr ""
+
+#: tcms/testruns/views.py:255
+msgid "Parameter \"sure\" must be \"yes\" or \"no\""
+msgstr ""
+
+#: tcms/testruns/views.py:939
+msgid "Reorder operation requires at least one TestCase"
+msgstr ""
+
+#: tcms/testruns/views.py:1038
+msgid "TestCase ID is not a valid integer"
+msgstr ""
+
+#: tcms/testruns/views.py:1170
+#, python-format
+msgid "%d CaseRun(s) updated:"
+msgstr ""
+
+#: vinaigrette-deleteme.py:2
+msgid "IDLE"
+msgstr ""
+
+#: vinaigrette-deleteme.py:3
+msgid "RUNNING"
+msgstr ""
+
+#: vinaigrette-deleteme.py:4
+msgid "PAUSED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:5
+msgid "PASSED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:6
+msgid "FAILED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:7
+msgid "BLOCKED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:8
+msgid "ERROR"
+msgstr ""
+
+#: vinaigrette-deleteme.py:9
+msgid "WAIVED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:10
+msgid "PROPOSED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:11
+msgid "CONFIRMED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:12
+msgid "DISABLED"
+msgstr ""
+
+#: vinaigrette-deleteme.py:13
+msgid "NEED_UPDATE"
+msgstr ""
+
