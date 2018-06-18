@@ -6,12 +6,13 @@ python:
 cache: pip
 env:
   global:
-  # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-  #   via the "travis encrypt" command using the project repo's public key
-  - secure: "AFMd4dRA1psBKd1LohQMxwL9vmAUvPrMzvBiU4w6mRX87Sskz69sLXAXivYvl/Eli+vzqIQat0VFOuymC4ScKhON1rbSJ5F/DQElToAPPNT2GXIaMCRA+ILOX28wFvC6/wqpvYuIf4yN19t2rSkNy0AqTH1RhPNkCHyiMcs0V6ztmlxobn1F9TYPCO8i1B+ZFez7rnUeQVaoXW3Cv4X8rjbkBd9iQQF/wfn8k71LeY2KB0fCxmjzFDQwXLnldka4lLWRuTPBcdKf57MveorMSJ5afLr/wd4IXKdoM3oUa6Us73T1+OvC3cOVlG7z49bP5VVz0xMq6qcmnQEOxMhO8wUNtkMssBz89BwC39LKMOxcASFF8F5joTWCfN+s2k2bsV/lNuKCspOEji+KTdSnMFMlo3LxQ8rt1cMNOrHvnmYJjteQ00IXrXhxdFeGGOrko0qQU1iPW4FjRsHOeNqdMMDKKvTO27odgJbNYF7lo3nWgPXVGqteMhpvxnoS2JR9ettGZJQueDrAzSmCe9Akc0hGwvyUTsyjaYLIAdxmaqKZtu1G+Otep11Rjf0gXaNLSZ/Pm02BHrOdLqTsRuTihHuR/W2HHuJrw44u2nF/3oer+bfAAGpdK0e6NqaZgmLSEN340FDcJ9sG6oGMo6cYGQWqzNUf3/gS4K7TvWhw10M="
-  - TEST_DB=SQLite CMD=check
-  - TEST_DB=MySQL CMD=check
-  - TEST_DB=Postgres CMD=check
+    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+    # via the "travis encrypt" command using the project repo's public key
+    - secure: "AFMd4dRA1psBKd1LohQMxwL9vmAUvPrMzvBiU4w6mRX87Sskz69sLXAXivYvl/Eli+vzqIQat0VFOuymC4ScKhON1rbSJ5F/DQElToAPPNT2GXIaMCRA+ILOX28wFvC6/wqpvYuIf4yN19t2rSkNy0AqTH1RhPNkCHyiMcs0V6ztmlxobn1F9TYPCO8i1B+ZFez7rnUeQVaoXW3Cv4X8rjbkBd9iQQF/wfn8k71LeY2KB0fCxmjzFDQwXLnldka4lLWRuTPBcdKf57MveorMSJ5afLr/wd4IXKdoM3oUa6Us73T1+OvC3cOVlG7z49bP5VVz0xMq6qcmnQEOxMhO8wUNtkMssBz89BwC39LKMOxcASFF8F5joTWCfN+s2k2bsV/lNuKCspOEji+KTdSnMFMlo3LxQ8rt1cMNOrHvnmYJjteQ00IXrXhxdFeGGOrko0qQU1iPW4FjRsHOeNqdMMDKKvTO27odgJbNYF7lo3nWgPXVGqteMhpvxnoS2JR9ettGZJQueDrAzSmCe9Akc0hGwvyUTsyjaYLIAdxmaqKZtu1G+Otep11Rjf0gXaNLSZ/Pm02BHrOdLqTsRuTihHuR/W2HHuJrw44u2nF/3oer+bfAAGpdK0e6NqaZgmLSEN340FDcJ9sG6oGMo6cYGQWqzNUf3/gS4K7TvWhw10M="
+  matrix:
+    - TEST_DB=SQLite CMD=check
+    - TEST_DB=MySQL CMD=check
+    - TEST_DB=Postgres CMD=check
 services:
   - mysql
   - postgresql
