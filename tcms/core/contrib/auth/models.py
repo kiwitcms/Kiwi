@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-try:
-    import secrets
-except ImportError:
-    # note: this is *only* because RTD still runs Python 3.5
-    # which doesn't have the secrets module. This workaround makes
-    # the doc builds pass! If you try using Kiwi TCMS on Python 3.5
-    # it will still fail below b/c 'secrets' is not defined!
-    pass
+import secrets
 
 from django.db import models
 from django.conf import settings
