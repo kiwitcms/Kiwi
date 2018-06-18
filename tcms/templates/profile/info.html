@@ -69,7 +69,11 @@
 				</tr>
 				<tr>
 					<td>{{ form.errors }}</td>
-					<td><input type="submit" value="Save Change" class="clear" /></td>
+					<td>
+                                            <input type="submit" value="Save changes" class="clear" /> or
+                                            <a href="{% url "admin:auth_user_delete" user.pk %}" target="_parent">DELETE ACCOUNT</a>
+                                        </td>
+                                </tr>
 			</table>
 		</form>
 		{% else %}
