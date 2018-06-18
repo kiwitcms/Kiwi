@@ -6,7 +6,9 @@ from http import HTTPStatus
 from django.urls import reverse
 from django.conf import settings
 
-from tcms.tests import BasePlanCase
+from tcms.tests import BasePlanCase, BaseCaseRun
+from tcms.tests.factories import UserFactory
+from tcms.tests.factories import TestCaseEmailSettingsFactory
 
 
 class TestAdminView(BasePlanCase):
@@ -85,3 +87,43 @@ class TestAdminView(BasePlanCase):
             password='password')
         response = self.client.get(reverse('admin:auth_user_changelist'))
         self.assertContains(response, 'column-is_superuser')
+
+
+class TestUserDeletionViaAdminView(BaseCaseRun):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.case.email_setting = TestCaseEmailSettingsFactory(case=cls.case,
+                                                              notify_on_case_update=True,
+                                                              auto_to_case_author=True)
+
+        cls.tester.is_staff = True  # can access admin
+        cls.tester.save()
+
+        cls.another_user = UserFactory()
+
+        cls.url = reverse('admin:auth_user_delete', args=[cls.tester.pk])
+
+    def test_delete_another_user(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+        response = self.client.get(reverse('admin:auth_user_delete', args=[self.another_user.pk]))
+
+        # it is not possible to delete other user accounts
+        self.assertEqual(HTTPStatus.FORBIDDEN, response.status_code)
+
+    def test_delete_myself(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+        response = self.client.get(self.url)
+
+        # verify there's the Yes, I'm certain button
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, "Yes, I'm sure")
+
+        response = self.client.post(self.url, {'post': 'yes'}, follow=True)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, "was deleted successfully")
