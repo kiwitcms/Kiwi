@@ -118,12 +118,24 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 					</div>
 					{% endif %}
 					<div class="data_row">
-						<label>Author</label>
-						<div class="name">{{ test_case.author }}</div>
+                                            <label>Author</label>
+                                            <div class="name">
+                                                {% if test_case.author %}
+                                                <a href="{% url "tcms-profile" test_case.author.username %}">
+                                                   {{ test_case.author.username }}
+                                                </a>
+                                                {% endif %}
+                                            </div>
 					</div>
 					<div class="data_row">
-						<label >Last Editor</label>
-						<div id="display_editor">{{ test_case.latest_text.author.email }}</div>
+                                            <label >Last Editor</label>
+                                            <div id="display_editor">
+                                                {% if test_case.latest_text.author %}
+                                                <a href="{% url "tcms-profile" test_case.latest_text.author.username %}">
+                                                   {{ test_case.latest_text.author.username }}
+                                                </a>
+                                                {% endif %}
+                                            </div>
 					</div>
 					<div class="data_row">
 						<label >Created</label>

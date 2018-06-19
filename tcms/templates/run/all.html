@@ -46,7 +46,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.List.on_load);
 	</form>
 	{% if REQUEST_CONTENTS %}
 	<div id="contentTab" class="mixbar">
-		<span class="tit"><a href="{% url "testruns-all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
+		<span class="tit"><a href="{% url "testruns-all" %}?case_run__assignee={{ user.username }}">View My Assigned Runs</a></span>
 	</div>
 	{% include "run/common/run_filtered.html" %}
 	{% endif %}

@@ -33,7 +33,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 		</tr>
 		<tr class="cell">
 			<td class="lab">Manager</td>
-			<td class="name"><a href="mailto:{{ test_run.manager.email }}">{{ test_run.manager.email }}</a></td>
+			<td class="name"><a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager.username }}</a></td>
 		</tr>
 		<tr class="cell">
 			<td class="lab">Test Plan</td>

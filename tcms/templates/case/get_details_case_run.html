@@ -19,9 +19,6 @@
 								{{ comment_form.object_pk }}
 								{{ comment_form.timestamp }}
 								{{ comment_form.security_hash }}
-								{{ comment_form.name }}
-								{{ comment_form.email }}
-								{{ comment_form.url }}
 							</td>
 						</tr>
 						<tr>
@@ -54,7 +51,7 @@
 					{% for comment in caserun_comments %}
 					<li>
 						<span>#{{ forloop.counter }}</span>
-						<span>{{ comment.user__email }}</span>
+						<span>{{ comment.user__username }}</span>
 						<span>{{ comment.submit_date }}</span>
 						<div>
 						{{ comment.comment|urlize|linebreaksbr }}

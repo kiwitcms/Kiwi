@@ -31,7 +31,6 @@ class TestCaseViewDataMixin(object):
                                           is_removed=False)
         comments = comments.select_related('user').only('submit_date',
                                                         'user__email',
-                                                        'user__username',
                                                         'comment')
         comments.order_by('pk')
         return comments
@@ -57,7 +56,7 @@ class TestCaseRunViewDataMixin(object):
                                           object_pk=caserun.pk,
                                           site_id=settings.SITE_ID,
                                           is_removed=False)
-        return comments.values('user__email', 'submit_date', 'comment',
+        return comments.values('user__username', 'submit_date', 'comment',
                                'pk', 'user__pk')
 
     @staticmethod

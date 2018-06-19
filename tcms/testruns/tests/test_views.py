@@ -713,9 +713,10 @@ class TestAddRemoveRunCC(BaseCaseRun):
         self.assertEqual(len(expected_cc), self.test_run.cc.count())
 
         for cc in expected_cc:
+            href = reverse('tcms-profile', args=[cc.username])
             self.assertContains(
                 response,
-                '<a href="mailto:{0}">{0}</a>'.format(cc.email),
+                '<a href="%s">%s</a>' % (href, cc.username),
                 html=True)
 
     def test_refuse_if_missing_action(self):

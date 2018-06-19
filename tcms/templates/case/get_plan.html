@@ -15,7 +15,7 @@
         <tr class="{% cycle 'even' 'odd' %}">
             <td><a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}</a></td>
             <td><a href="{{ test_plan.get_full_url }}">{{ test_plan.name }}</a></td>
-            <td>{{ test_plan.author.email }}</td>
+            <td><a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author.username }}</a></td>
             <td>{{ test_plan.type }}</td>
             <td>{{ test_plan.product }}</td>
             <td>{{ test_plan.product_version }}</td>

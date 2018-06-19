@@ -8,7 +8,7 @@
 </script>
 	{% autopaginate test_runs %}
 	<div id="contentTab" class="mixbar">
-		<span class="tit"><a href="{% url "testruns-all" %}?case_run__assignee={{ user.email }}">View My Assigned Runs</a></span>
+		<span class="tit"><a href="{% url "testruns-all" %}?case_run__assignee={{ user.username }}">View My Assigned Runs</a></span>
 		<span class="right-action">{% paginate %}</span>
 	</div>
 	{% include "run/common/run_advance_filtered.html" %}

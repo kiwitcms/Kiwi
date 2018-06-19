@@ -40,7 +40,7 @@
                         {{ test_runs_count }} test run(s) related to you need to be run, here {% ifequal test_runs_count 1 %}is{% else %}are{% endifequal %} the latest {{ last_15_test_runs|length }}.</div>
 							<div class="sprites tablefooterleft"></div>
                             
-                            <a href="{% url "testruns-all" %}?people={{ user.email|iriencode }}&status=running" class="seeall"> SEE ALL</a>
+                            <a href="{% url "testruns-all" %}?people={{ user.username|iriencode }}&status=running" class="seeall">SEE ALL</a>
 							<div class="sprites tablefooterright"></div>
 						</div>
 						{% else %}

@@ -26,7 +26,7 @@
 					<span class="title">Product Version:</span>{{ test_run.product_version }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Manager:</span>{{ test_run.manager.email }}
+					<span class="title">Manager:</span>{{ test_run.manager.username }}
 				</div>
 				<div class="listinfo">
 					<span class="title">Estimated Time:</span>{{ test_run.estimated_time }}
@@ -53,8 +53,7 @@
 					<span class="title">Build:</span>{{ test_run.build }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Default Tester:</span>
-					{% if test_run.default_tester_id %}{{ test_run.default_tester.email }}{% else %}{{ test_run.default_tester }}{% endif %}
+					<span class="title">Default Tester:</span>{{ test_run.default_tester }}
 				</div>
 				<div class="listinfo">
 					<span class="title">Started at:</span>{{ test_run.start_date }}

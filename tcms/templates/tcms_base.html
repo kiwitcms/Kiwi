@@ -41,13 +41,11 @@
 	Nitrate.User = {
 		pk: {{ request.user.pk }},
 		username: '{{ request.user.username }}',
-		email: '{{ request.user.email }}',
 	};
 	{% else %}
 	Nitrate.User = {
 		pk: null,
 		username: 'anonymous',
-		email: 'anonymous@anywhere.com',
 	};
 	{% endif %}
 	</script>

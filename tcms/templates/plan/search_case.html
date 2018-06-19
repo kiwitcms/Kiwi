@@ -98,8 +98,12 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 						<td align="left"><input id="id_checkbox_case_{{ forloop.counter }}" type="checkbox" name="case" value="{{ test_case.case_id }}"></td>
 						<td><a href="{% url "testcases-get" test_case.case_id %}">{{ test_case.case_id }}</a></td>
 						<td valign="top" >{{ test_case.summary }}</td>
-						<td valign="top" >{{ test_case.author.email }}</td>
-						<td valign="top" >{{ test_case.default_tester.email }}</td>
+						<td valign="top" ><a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author.username }}</a></td>
+						<td valign="top" >
+                                                {% if test_case.default_tester %}
+                                                    <a href="{% url "tcms-profile" test_case.default_tester.username %}">{{ test_case.default_tester.username }}</a>
+                                                {% endif %}
+                                                </td>
 						<td valign="top" >{{ test_case.priority }}</td>
 						<td valign="top" >{{ test_case.create_date }}</td>
 						<td valign="top" >{{ test_case.case_status}}</td>
