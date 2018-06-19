@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-19T19:30:54+0000\n"
+"PO-Revision-Date: 2018-06-19T19:40:35+0000\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -171,101 +171,103 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr ""
+msgstr "Spoštovani administrator,\n"
+"uporabnik %(username)s je kreiral nov uporabniški račun v sistemu Kiwi TCMS, kateri čaka na potrditev.\n\n"
+"Aktivacija računa je mogoča na sledeči povezavi %(user_url)s !\n"
 
 #: tcms/templates/registration/password_change_done.html:4
 #: tcms/templates/registration/password_change_done.html:8
 msgid "Password change successful"
-msgstr ""
+msgstr "Sprememba gesla je bila uspešna"
 
 #: tcms/templates/registration/password_change_done.html:10
 msgid "Your password was changed."
-msgstr ""
+msgstr "Vaše geslo je bilo spremenjeno."
 
 #: tcms/templates/registration/password_change_form.html:5
 #: tcms/templates/registration/password_change_form.html:18
 msgid "Password change"
-msgstr ""
+msgstr "Sprememba gesla"
 
 #: tcms/templates/registration/password_change_form.html:15
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Popravite napake spodaj."
+msgstr[1] "Prosimo popravite napake v spodnjih poljih."
 msgstr[2] ""
 msgstr[3] ""
 
 #: tcms/templates/registration/password_change_form.html:19
 msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
-msgstr ""
+msgstr "Najprej vnesite obstoječe geslo, nato dvakrat vnesite želeno novo geslo."
 
 #: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"
-msgstr ""
+msgstr "Staro geslo"
 
 #: tcms/templates/registration/password_change_form.html:28
 msgid "New password"
-msgstr ""
+msgstr "Novo geslo"
 
 #: tcms/templates/registration/password_change_form.html:33
 msgid "Password (again)"
-msgstr ""
+msgstr "Novo geslo (ponovno)"
 
 #: tcms/templates/registration/password_change_form.html:40
 msgid "Change my password"
-msgstr ""
+msgstr "Spremeni geslo"
 
 #: tcms/testcases/views.py:537
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Baza testnih scenarijev ni izbrana ali ne obstaja"
 
 #: tcms/testcases/views.py:1333 tcms/testruns/views.py:899
 #: tcms/testruns/views.py:1029
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Vsaj en testni scenarij je zahtevan"
 
 #: tcms/testcases/views.py:1482
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Kloniranje testnega scenarija je uspelo"
 
 #: tcms/testplans/views.py:433
 msgid "Select at least one TestRun and one TestCase"
-msgstr ""
+msgstr "Izberite najmanj en testni scenarij in eno testiranje"
 
 #: tcms/testplans/views.py:539
 msgid "At least one TestPlan is required"
-msgstr ""
+msgstr "Vsaj ena baza testni scenarijev je zahtevana"
 
 #: tcms/testplans/views.py:551
 #, python-format
 msgid "TestPlan(s) \"%s\" do not exist"
-msgstr ""
+msgstr "Baza testnih scenarijev \"%s\" ne obstaja"
 
 #: tcms/testplans/views.py:823
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Za tiskanje je potrebno izbrati vsaj eno bazo testnih scenarijev"
 
 #: tcms/testplans/views.py:831
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Testiranje \"%s\" ne obstaja"
 
 #: tcms/testruns/views.py:64
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "V kolikor želite kreirati novo testiranje morate dodati najmanj en testni scenarij"
 
 #: tcms/testruns/views.py:230
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Zavrnjeno: niste avtor ali zadolženi za testiranje"
 
 #: tcms/testruns/views.py:250
 #, python-format
 msgid "Deletion failed: %s"
-msgstr ""
+msgstr "Izbris ni bil uspešen: %s"
 
 #: tcms/testruns/views.py:255
 msgid "Parameter \"sure\" must be \"yes\" or \"no\""
-msgstr ""
+msgstr "Vrednost polja \"zagotovo\" mora biti \"da\" ali \"ne\""
 
 #: tcms/testruns/views.py:939
 msgid "Reorder operation requires at least one TestCase"
