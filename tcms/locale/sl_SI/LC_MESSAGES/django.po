@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-19T19:20:35+0000\n"
+"PO-Revision-Date: 2018-06-19T19:30:54+0000\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -31,15 +31,15 @@ msgstr "Informacije o uporabniškem računu %s ."
 
 #: tcms/core/contrib/auth/views.py:30
 msgid "This backend does not allow user registration"
-msgstr "Registracija novih uporabnikov ni dovoljena."
+msgstr "Registracija novih uporabnikov ni dovoljena"
 
 #: tcms/core/contrib/auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Uporabniški račun je bil uspešno kreiran, preverite vaš e-poštni nabiralnik za potrditveno povezavo preko katere ga aktivirate."
+msgstr "Uporabniški račun je bil uspešno kreiran, preverite vaš e-poštni nabiralnik za potrditveno povezavo preko katere ga aktivirate"
 
 #: tcms/core/contrib/auth/views.py:58
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr "Uporabniški račun je bil ustvarjen. Pred uporabo ga mora potrditi še administrator."
+msgstr "Uporabniški račun je bil ustvarjen. Pred uporabo ga mora potrditi še administrator"
 
 #: tcms/core/contrib/auth/views.py:64
 msgid "Following is the administrator list"
@@ -47,15 +47,15 @@ msgstr "Seznam administratorjev"
 
 #: tcms/core/contrib/auth/views.py:95
 msgid "This activation key no longer exists in the database"
-msgstr "Aktivacijska koda ne obstaja več v bazi."
+msgstr "Aktivacijska koda ne obstaja več v bazi"
 
 #: tcms/core/contrib/auth/views.py:100
 msgid "This activation key has expired"
-msgstr "Aktivacijska koda je potekla."
+msgstr "Aktivacijska koda je potekla"
 
 #: tcms/core/contrib/auth/views.py:112
 msgid "Your account has been activated successfully"
-msgstr "Vaš račun je bil uspešno aktiviran."
+msgstr "Vaš račun je bil uspešno aktiviran"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -79,7 +79,7 @@ msgstr "Komentar"
 
 #: tcms/management/views.py:154
 msgid "Environment group with the same name already exists"
-msgstr "Okolje (skupina) z istim imenom že obstaja."
+msgstr "Okolje (skupina) z istim imenom že obstaja"
 
 #: tcms/profiles/forms.py:32
 msgid "Username"
@@ -87,41 +87,41 @@ msgstr "Uporabniško ime"
 
 #: tcms/profiles/forms.py:34
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
+msgstr "Zahtevano. 30 znakov ali manj. Dovoljeni znaki: številke, črke ter znaki @ . + - _ "
 
 #: tcms/profiles/forms.py:37
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr ""
+msgstr "Vnesena vrednost lahko vsebuje zgolj številke, črke ter znake @ . + - _"
 
 #: tcms/profiles/forms.py:42
 msgid "E-mail"
-msgstr ""
+msgstr "Elektronski naslov"
 
 #: tcms/profiles/forms.py:87
 msgid "User error."
-msgstr ""
+msgstr "Uporabniška napaka."
 
 #: tcms/profiles/forms.py:107
 msgid "A user with that username already exists."
-msgstr ""
+msgstr "Uporabnik z istim uporabniškim imenom že obstaja."
 
 #: tcms/profiles/views.py:101
 msgid "Information successfully updated"
-msgstr ""
+msgstr "Podati so bili uspešno posodobljeni"
 
 #: tcms/signals.py:79
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Nov uporabnik - potrebna potrditev uporabniškega računa"
 
 #: tcms/signals.py:131
 #, python-format
 msgid "New TestRun %(summary)s created"
-msgstr ""
+msgstr "Ustvarjeno nov testiranje %(summary)s"
 
 #: tcms/signals.py:133
 #, python-format
 msgid "TestRun %(summary)s has been updated"
-msgstr ""
+msgstr "Testiranje %(summary)s je bilo posodobljeno"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -129,7 +129,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr ""
+msgstr "Pozdravljen-/a %(user)s,\n"
+"uspešno je bil kreiran uporabniški račun za domeno %(site_domain)s !\n\n"
+"Za aktivacijo računa kliknite na spodnjo povezavo\n"
+"%(confirm_url)s\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -147,7 +150,20 @@ msgid "\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr ""
+msgstr "\n"
+"Testiranje %(pk)s je bilo ustvarjeno ali posobljeno.\n\n"
+"### Povezano ###\n"
+"Testiranje: %(run_url)s\n"
+"Baza testnih scenarijev: %(plan_url)s\n\n"
+"### Osnovne informacije o testiranju ###\n"
+"Povzetek: %(summary)s\n\n"
+"Vodja testiranja: %(manager)s.\n"
+"Zadolženi tester: %(default_tester)s.\n\n"
+"Produkt: %(product)s\n"
+"Verzija produkta: %(version)s\n"
+"Build: %(build)s\n\n"
+"Zapiski:\n"
+"%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
