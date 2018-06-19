@@ -21,6 +21,7 @@ altering the following setting::
     INSTALLED_APPS += ['my_custom_app']
 """
 from django.dispatch import Signal
+from django.db.models import ObjectDoesNotExist
 
 __all__ = [
     'POST_UPDATE_SIGNAL',
@@ -94,13 +95,22 @@ def handle_emails_post_case_save(sender, instance, created=False, **_kwargs):
             email.email_case_update(instance)
 
 
-def handle_emails_pre_case_delete(sender, instance, **_kwags):
+def handle_emails_pre_case_delete(sender, **kwargs):
     """
         Send email updates before a TestCase will be deleted!
     """
-    if instance.emailing.notify_on_case_delete:
-        from tcms.testcases.helpers import email
-        email.email_case_deletion(instance)
+    instance = kwargs['instance']
+
+    try:
+        # note: using the `email_settings` related object instead of the
+        # `emailing` property b/c it breaks with cascading deletes via admin.
+        # if there are not settings created before hand they default to False
+        # so email will not going to be sent and the exception is safe to ignore
+        if instance.email_settings.notify_on_case_delete:
+            from tcms.testcases.helpers import email
+            email.email_case_deletion(instance)
+    except ObjectDoesNotExist:
+        pass
 
 
 def pre_save_clean(sender, **kwargs):
