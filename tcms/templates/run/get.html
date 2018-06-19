@@ -87,7 +87,7 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Manager&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager.email }}</a>
+					<a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager.username }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
@@ -149,7 +149,7 @@ jQ(function() {
 				<div class="title grey">Default Tester&nbsp;:</div>
 				<div class="name">
 					{% if test_run.default_tester %}
-					<a href="{% url "tcms-profile" test_run.default_tester.username %}">{{ test_run.default_tester.email }}</a>
+					<a href="{% url "tcms-profile" test_run.default_tester.username %}">{{ test_run.default_tester.username }}</a>
 					{% else %}
 					{{ test_run.default_tester }}
 					{% endif %}

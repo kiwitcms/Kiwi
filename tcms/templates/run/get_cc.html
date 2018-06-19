@@ -4,7 +4,7 @@
 	<ul style="margin:0px;" class="js-cc-ul">
 	{% for cc in test_run.cc.select_related.all %}
 	<li>
-		<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
+            <a href="{% url "tcms-profile" cc.username %}">{{ cc.username }}</a>
 		{% if perms.testruns.delete_testruncc %}
 		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{% static 'images/remove_small.png' %}" width="9" height="9" title="remove this tag" /></a>
 		{% endif %}
@@ -23,7 +23,7 @@
 	{% endif %}
 	{% for cc in test_run.cc.select_related.all %}
 	<li>
-		<a href="mailto:{{ cc.email }}">{{ cc.email }}</a>
+		<a href="{% url "tcms-profile" cc.username %}">{{ cc.username }}</a>
 		{% if perms.testruns.delete_testruncc %}
 		<a href="javascript:void(0)" class="js-remove-cc" data-params='[{{ test_run.run_id }}, "{{ cc.username }}"]'><img src="{% static 'images/remove_small.png' %}" width="9" height="9" title="remove this tag" /></a>
 		{% endif %}

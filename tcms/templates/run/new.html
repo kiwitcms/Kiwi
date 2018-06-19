@@ -113,7 +113,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 						{% empty%}
 						<div class="system_help">
 							<p>
-								Environment group must be set for this test plan (<b>{{ test_plan.product.name }}</b>:<b>{{ test_plan.product_version.value }}</b>:<b><a href="{{ test_plan.get_full_url }}">{{ test_plan }}</a></b>) before you will be able to select environments for this test run.If you do not have permission to edit this plan, please contact the author of this plan, mailto <a href="mailto:{{ test_plan.author.email }}">{{ test_plan.author.email }}</a>
+								Environment group must be set for this test plan (<b>{{ test_plan.product.name }}</b>:<b>{{ test_plan.product_version.value }}</b>:<b><a href="{{ test_plan.get_full_url }}">{{ test_plan }}</a></b>) before you will be able to select environments for this test run.If you do not have permission to edit this plan, please contact the author of this plan
+                                                            <a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author.username }}</a>
 							</p>
 						</div>
 						{% endfor %}
@@ -164,7 +165,9 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 								{{ test_case.summary }}
 							</a>
 						</td>
-						<td>{{ test_case.author.email }}</td>
+						<td>
+                                                    <a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author.username }}</a>
+                                                </td>
 						<td>{{ test_case.create_date }}</td>
 						<td>{{ test_case.category }}</td>
 						<td >{{ test_case.priority }}</td>

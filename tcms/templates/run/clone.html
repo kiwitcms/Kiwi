@@ -169,7 +169,9 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 									{{ case_run.case.summary }}
 								</a>
 							</td>
-							<td>{{ case_run.case.author.email }}</td>
+							<td>
+                                                            <a href="{% url "tcms-profile" case_run.case.author.username %}">{{ case_run.case.author.username }}</a>
+                                                        </td>
 							<td>{{ case_run.case.create_date }}</td>
 							<td>{{ case_run.case.case_status }}</td>
 							<td>{{ case_run.case.category }}</td>

@@ -445,7 +445,6 @@ var updateCaseRunStatus = function(e) {
       // Update related people
       var usr = Nitrate.User;
       title.find('.link_tested_by').each(function(i) {
-        this.href = 'mailto:' + usr.email;
         jQ(this).html(usr.username);
       });
     }

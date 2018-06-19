@@ -64,10 +64,18 @@
 					</label>
 				</th>
 				<td>
-					{{ env.manager.email }}
+                                    {% if env.manager %}
+                                    <a href="{% url "tcms-profile" env.manager.username %}">
+                                        {{ env.manager.username }}
+                                    </a>
+                                    {% endif %}
 				</td>
 				<td>
-					{{ env.modified_by.email}}
+                                    {% if env.modified_by %}
+                                    <a href="{% url "tcms-profile" env.modified_by.username %}">
+                                        {{ env.modified_by.username }}
+                                    </a>
+                                    {% endif %}
 				</td>
 				<td class="env_properties">
 					<ul class="ul-no-format">

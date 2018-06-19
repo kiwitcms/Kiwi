@@ -36,7 +36,7 @@
 		<tr class="{% cycle 'even' 'odd' %}">
 			<td><a href="{% url "plan-text_history" testplan.plan_id %}?plan_text_version={{ plan_text.plan_text_version }}">{{ plan_text.plan_text_version }}</a></td>
 			<td>{{ plan_text.create_date }}</td>
-			<td>{{ plan_text.author.email }}</td>
+			<td><a href="{% url "tcms-profile" plan_text.author.username %}">{{ plan_text.author.username }}</a></td>
 			<td>
 				{{ plan_text.plan_text|striptags|truncatewords:"10" }}
 			</td>

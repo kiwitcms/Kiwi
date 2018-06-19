@@ -125,8 +125,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Edit.on_load);
 								<b>{{ test_run.product_version }}</b>:
 								<b><a href="{{ test_run.plan.get_full_url }}">{{ test_run.plan }}</a></b>
 								) before you will be able to select environments for this test run.If you do not have permission to edit this plan,
-								please contact the author of this plan, mailto
-								<a href="mailto:{{ testplan.author.email }}">{{ test_run.plan.author.email }}</a>
+								please contact the author of this plan
+                                                            <a href="{% url "tcms-profile" test_run.plan.author.username %}">{{ test_run.plan.author.username }}</a>
 							</p>
 						</div>
 						{% endfor %}

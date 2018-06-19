@@ -70,7 +70,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
 				<tr>
 					<td><label class="lab">Author</label></td>
 					<td>
-						<span id="display_author"  class="name " > <a href="mailto:{{ test_plan.author.email }}">{{ test_plan.author.email }}</a></span>
+						<span id="display_author" class="name"><a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author.username }}</a></span>
 					</td>
 				</tr>
 				<tr>

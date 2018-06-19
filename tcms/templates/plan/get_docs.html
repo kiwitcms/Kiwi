@@ -13,7 +13,8 @@
 	</div>
 	<div class='clear'></div>
 	<div class="listinfo_doc">
-		<span class="title">Last Editor:</span>{{ test_plan.latest_text.author.email }}
+		<span class="title">Last Editor:</span>
+                <a href="{% url "tcms-profile" test_plan.latest_text.author.username %}">{{ test_plan.latest_text.author.username }}</a>
 	</div>
 	<div id="display_summary" class="listinfo_doc">
 		<div class="title">Summary:</div>
