@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-15 04:23-0400\n"
+"PO-Revision-Date: 2018-06-19T19:20:35+0000\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -18,72 +18,72 @@ msgstr ""
 
 #: tcms/core/contrib/auth/apps.py:7
 msgid "Core auth"
-msgstr ""
+msgstr "Avtentikacija jedra"
 
 #: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:78
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Uporabnik s tem e-mail naslovom že obstaja."
 
 #: tcms/core/contrib/auth/forms.py:53
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Informacije o uporabniškem računu %s ."
 
 #: tcms/core/contrib/auth/views.py:30
 msgid "This backend does not allow user registration"
-msgstr ""
+msgstr "Registracija novih uporabnikov ni dovoljena."
 
 #: tcms/core/contrib/auth/views.py:52
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Uporabniški račun je bil uspešno kreiran, preverite vaš e-poštni nabiralnik za potrditveno povezavo preko katere ga aktivirate."
 
 #: tcms/core/contrib/auth/views.py:58
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Uporabniški račun je bil ustvarjen. Pred uporabo ga mora potrditi še administrator."
 
 #: tcms/core/contrib/auth/views.py:64
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Seznam administratorjev"
 
 #: tcms/core/contrib/auth/views.py:95
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Aktivacijska koda ne obstaja več v bazi."
 
 #: tcms/core/contrib/auth/views.py:100
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Aktivacijska koda je potekla."
 
 #: tcms/core/contrib/auth/views.py:112
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Vaš račun je bil uspešno aktiviran."
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr ""
+msgstr "Jedrni komentarji - po meri"
 
 #: tcms/core/contrib/comments/forms.py:14
 msgid "Name"
-msgstr ""
+msgstr "Ime"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "E-poštni naslov"
 
 #: tcms/core/contrib/comments/forms.py:21
 msgid "URL"
-msgstr ""
+msgstr "URL naslov"
 
 #: tcms/core/contrib/comments/forms.py:25
 msgid "Comment"
-msgstr ""
+msgstr "Komentar"
 
 #: tcms/management/views.py:154
 msgid "Environment group with the same name already exists"
-msgstr ""
+msgstr "Okolje (skupina) z istim imenom že obstaja."
 
 #: tcms/profiles/forms.py:32
 msgid "Username"
-msgstr ""
+msgstr "Uporabniško ime"
 
 #: tcms/profiles/forms.py:34
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
