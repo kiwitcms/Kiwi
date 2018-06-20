@@ -439,8 +439,6 @@ a:link.selector-add,a:visited.selector-add{ display:block;text-align:center; wid
 a:link.selector-remove,a:visited.selector-remove{ display:block;text-align:center; width:65px; margin:4px 0px; -moz-border-radius:3px 3px 3px 3px; border:1px solid #ccc; background:#4E76A8;height:23px; line-height:23px}
 /*----------Selector End----------------*/
 
-.perviewPlan{ width:500px;height:auto; min-height:100px; position:absolute; top:300px; left:50%; margin-left:-200px; padding:20px; background-color:#f5f5f5; border:solid 3px #999;-moz-border-radius:5px 5px 5px 5px;}
-.previewButton{margin:10px; float:right;}
 .add{background:transparent url(../images/operation.png) no-repeat;padding-left:16px;cursor:pointer;background-position: 0px -968px; border:none; font-size:12px; height:16px; line-height:16px;}
 .remove{background:transparent url(../images/remove.png) no-repeat;padding:0px 13px;cursor:pointer;border:none; font-size:12px; height:16px;margin: 3px;}
 a:link.remove,a:visited.remove{ color:#333;}
