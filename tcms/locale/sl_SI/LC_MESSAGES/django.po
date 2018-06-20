@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-20T05:48:41+0000\n"
+"PO-Revision-Date: 2018-06-20T05:50:35+0000\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -192,10 +192,10 @@ msgstr "Sprememba gesla"
 #: tcms/templates/registration/password_change_form.html:15
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
-msgstr[0] "Popravite napake spodaj."
-msgstr[1] "Prosimo popravite napake v spodnjih poljih."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Popravite spodnjo napako."
+msgstr[1] "Prosimo popravite spodnji napaki."
+msgstr[2] "Prosimo popravite spodnje napake."
+msgstr[3] "Prosimo popravite spodnje napake."
 
 #: tcms/templates/registration/password_change_form.html:19
 msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
@@ -275,7 +275,7 @@ msgstr "V kolikor želite uporabiti funkcijo sortiranja morate izbrati vsaj en t
 
 #: tcms/testruns/views.py:1038
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "ID testnega scenarija ni celo število"
 
 #: tcms/testruns/views.py:1170
 #, python-format
