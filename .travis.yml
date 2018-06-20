@@ -9,21 +9,10 @@ env:
     # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
     # via the "travis encrypt" command using the project repo's public key
     - secure: "AFMd4dRA1psBKd1LohQMxwL9vmAUvPrMzvBiU4w6mRX87Sskz69sLXAXivYvl/Eli+vzqIQat0VFOuymC4ScKhON1rbSJ5F/DQElToAPPNT2GXIaMCRA+ILOX28wFvC6/wqpvYuIf4yN19t2rSkNy0AqTH1RhPNkCHyiMcs0V6ztmlxobn1F9TYPCO8i1B+ZFez7rnUeQVaoXW3Cv4X8rjbkBd9iQQF/wfn8k71LeY2KB0fCxmjzFDQwXLnldka4lLWRuTPBcdKf57MveorMSJ5afLr/wd4IXKdoM3oUa6Us73T1+OvC3cOVlG7z49bP5VVz0xMq6qcmnQEOxMhO8wUNtkMssBz89BwC39LKMOxcASFF8F5joTWCfN+s2k2bsV/lNuKCspOEji+KTdSnMFMlo3LxQ8rt1cMNOrHvnmYJjteQ00IXrXhxdFeGGOrko0qQU1iPW4FjRsHOeNqdMMDKKvTO27odgJbNYF7lo3nWgPXVGqteMhpvxnoS2JR9ettGZJQueDrAzSmCe9Akc0hGwvyUTsyjaYLIAdxmaqKZtu1G+Otep11Rjf0gXaNLSZ/Pm02BHrOdLqTsRuTihHuR/W2HHuJrw44u2nF/3oer+bfAAGpdK0e6NqaZgmLSEN340FDcJ9sG6oGMo6cYGQWqzNUf3/gS4K7TvWhw10M="
-  matrix:
-    - TEST_DB=SQLite CMD=check
-    - TEST_DB=MySQL CMD=check
-    - TEST_DB=Postgres CMD=check
 services:
   - mysql
   - postgresql
 addons:
-  coverity_scan:
-    project:
-      name: "kiwitcms/Kiwi"
-      description: "Open source test case management system"
-    notification_email: info@kiwitcms.org
-    build_command: "echo"
-    branch_pattern: master
   apt:
     sources:
       - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ artful main restricted'
@@ -33,26 +22,80 @@ addons:
       # https://travis-ci.org/kiwitcms/Kiwi/jobs/322848116
       # all sources I've read point to possible issues with sqlite itself
       - sqlite3
-  postgresql: 9.5
 
-matrix:
+stages:
+  - static_analysis
+  - testing
+  - non_functional_testing
+  - docker
+
+jobs:
+  allow_failures:
+    - env: CMD=pylint
+
   include:
-    - python: 3.6
-      env: TEST_DB=SQLite CMD=check-docs-source-in-git
+    - stage: static_analysis
+      env:
+        - CMD=bandit
+
+    - stage: static_analysis
+      if: branch = master AND type = push
+      env:
+        - CMD=coverity
+      addons:
+        coverity_scan:
+          project:
+            name: "kiwitcms/Kiwi"
+            description: "Open source test case management system"
+          notification_email: info@kiwitcms.org
+          build_command: "--no-command --fs-capture-search ./"
+          branch_pattern: master
+
+    - stage: static_analysis
+      env:
+        - CMD=flake8
+
+    - { stage: static_analysis, env: CMD=pylint }
+
+    - stage: testing
+      env:
+        - TEST_DB=MariaDB
+        - CMD=check
+      addons:
+        mariadb: 10.1
+
+    - stage: testing
+      env:
+        - TEST_DB=SQLite
+        - CMD=check
+
+    - stage: testing
+      env:
+        - TEST_DB=MySQL
+        - CMD=check
+
+    - stage: testing
+      env:
+        - TEST_DB=Postgres
+        - CMD=check
+      addons:
+        postgresql: 9.5
+
+    - stage: non_functional_testing
+      env:
+        - CMD=check-docs-source-in-git
       addons:
         apt:
           packages:
             - graphviz
-    - python: 3.6
-      env: TEST_DB=MariaDB CMD=check
-      addons:
-        mariadb: 10.1
-    - python: 3.6
-      env: TEST_DB=SQLite CMD=check-pylint
-    - python: 3.6
-      env: TEST_DB=SQLite CMD=check-security
-  allow_failures:
-    - env: TEST_DB=SQLite CMD=check-pylint
+
+    - stage: non_functional_testing
+      env:
+        - CMD=check-mo-files
+
+    - stage: docker
+      env:
+        - CMD=docker-image
 
 before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
@@ -79,12 +122,15 @@ before_install:
         fi
 
 install:
-  - export REQUIREMENTS_TXT="requirements/$(echo $TEST_DB | tr '[:upper:]' '[:lower:]' | sed 's/mariadb/mysql/' | sed 's/sqlite/base/').txt"
-  - echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
-  - pip install -r $REQUIREMENTS_TXT
-  - pip install -r requirements/devel.txt
-  - pip install coveralls codecov
-  - npm install
+  - |
+        [ -z "$TEST_DB" ] && export TEST_DB="SQLite"
+        export REQUIREMENTS_TXT="requirements/$(echo $TEST_DB | tr '[:upper:]' '[:lower:]' | sed 's/mariadb/mysql/' | sed 's/sqlite/base/').txt"
+        echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
+        pip install -r $REQUIREMENTS_TXT
+        pip install -r requirements/devel.txt
+        pip install coveralls codecov
+        npm install
+
 script: make $CMD
 after_success:
   - coveralls

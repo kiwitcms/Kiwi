@@ -54,14 +54,14 @@ test:
 .PHONY: check
 check: flake8 test check-mo-files
 
-.PHONY: check-pylint
-check-pylint:
+.PHONY: pylint
+pylint:
 	pylint -d missing-docstring *.py kiwi_lint/
 	PYTHONPATH=. pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring tcms/
 	PYTHONPATH=. pylint --load-plugins=kiwi_lint tcms_api/
 
-.PHONY: check-security
-check-security:
+.PHONY: bandit
+bandit:
 	bandit -r *.py tcms/ tcms_api/ kiwi_lint/
 
 
@@ -138,3 +138,7 @@ help:
 	@echo '  tags             - Refresh tags for VIM. Default filename is .tags'
 	@echo '  etags            - Refresh tags for Emacs. Default filename is TAGS'
 	@echo '  help             - Show this help message and exit. Default if no command is given'
+
+.PHONY: coverity
+coverity:
+	@echo 'Everything is handled by the Coverity add-on in Travis'
