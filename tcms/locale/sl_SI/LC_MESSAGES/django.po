@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-19T19:40:35+0000\n"
+"PO-Revision-Date: 2018-06-20T05:48:41+0000\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -271,7 +271,7 @@ msgstr "Vrednost polja \"zagotovo\" mora biti \"da\" ali \"ne\""
 
 #: tcms/testruns/views.py:939
 msgid "Reorder operation requires at least one TestCase"
-msgstr ""
+msgstr "V kolikor želite uporabiti funkcijo sortiranja morate izbrati vsaj en testni scenarij"
 
 #: tcms/testruns/views.py:1038
 msgid "TestCase ID is not a valid integer"
@@ -280,53 +280,53 @@ msgstr ""
 #: tcms/testruns/views.py:1170
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "%d testiranje posodobljeno:"
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
-msgstr ""
+msgstr "NESTESTIRANO"
 
 #: vinaigrette-deleteme.py:3
 msgid "RUNNING"
-msgstr ""
+msgstr "V TEKU"
 
 #: vinaigrette-deleteme.py:4
 msgid "PAUSED"
-msgstr ""
+msgstr "ZAČASNO ZAUSTAVLJENO"
 
 #: vinaigrette-deleteme.py:5
 msgid "PASSED"
-msgstr ""
+msgstr "OK"
 
 #: vinaigrette-deleteme.py:6
 msgid "FAILED"
-msgstr ""
+msgstr "NEUSPEŠEN TEST"
 
 #: vinaigrette-deleteme.py:7
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLOKIRAN"
 
 #: vinaigrette-deleteme.py:8
 msgid "ERROR"
-msgstr ""
+msgstr "NAPAKA"
 
 #: vinaigrette-deleteme.py:9
 msgid "WAIVED"
-msgstr ""
+msgstr "IZPUŠČEN"
 
 #: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
-msgstr ""
+msgstr "PREDLOG"
 
 #: vinaigrette-deleteme.py:11
 msgid "CONFIRMED"
-msgstr ""
+msgstr "POTRJEN"
 
 #: vinaigrette-deleteme.py:12
 msgid "DISABLED"
-msgstr ""
+msgstr "ONEMOGOČEN"
 
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "ZA POPRAVITI"
 
