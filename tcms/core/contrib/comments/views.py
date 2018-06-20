@@ -5,8 +5,7 @@ import json
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 
 import django_comments as comments
@@ -15,19 +14,14 @@ from .utils import add_comment
 
 
 @require_POST
-def post(request, template_name='comments/comments.html'):
+def post(request):
     """Post a comment"""
 
     # Fill out some initial data fields from an authenticated user, if present
     data = request.POST.copy()
     form, target = add_comment(request, data)
 
-    # returns back to sender regardless of success or failure
-    context_data = {
-        'object': target,
-        'form': form,
-    }
-    return render(request, template_name, context_data)
+    return JsonResponse({'rc': 0})
 
 
 @require_POST
