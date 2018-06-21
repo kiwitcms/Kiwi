@@ -3,16 +3,31 @@ Kiwi TCMS - Open Source Test Case Management System
 
 .. image:: https://travis-ci.org/kiwitcms/Kiwi.svg?branch=master
     :target: https://travis-ci.org/kiwitcms/Kiwi
+    :alt: Travis CI
+
+.. image:: https://readthedocs.org/projects/kiwitcms/badge/?version=latest
+    :target: http://kiwitcms.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation
 
 .. image:: https://scan.coverity.com/projects/15921/badge.svg
     :target: https://scan.coverity.com/projects/kiwitcms-kiwi
+    :alt: Coverity scan
+
+.. image:: https://snyk.io/test/github/kiwitcms/Kiwi/badge.svg
+    :target: https://snyk.io/test/github/kiwitcms/Kiwi
+    :alt: Snyk vulnerability scan
 
 .. image:: https://coveralls.io/repos/github/kiwitcms/Kiwi/badge.svg?branch=master
-   :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
+    :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
+    :alt: Code coverage
 
-.. image:: https://readthedocs.org/projects/kiwitcms/badge/?version=latest
-   :target: http://kiwitcms.readthedocs.io/en/latest/?badge=latest
+.. image:: https://pyup.io/repos/github/kiwitcms/Kiwi/shield.svg
+    :target: https://pyup.io/repos/github/kiwitcms/Kiwi/
+    :alt: Python updates
 
+.. image:: https://api.codeclimate.com/v1/badges/3f4e108ea369f625f112/maintainability
+   :target: https://codeclimate.com/github/kiwitcms/Kiwi/maintainability
+   :alt: Maintainability
 
 Introduction
 ------------
