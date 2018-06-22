@@ -2,11 +2,99 @@ Change Log
 ==========
 
 
-tcms-api master (unreleased)
+Kiwi TCMS 4.2 (23 June 2018)
 ----------------------------
+
+**IMPORTANT:** this release introduces new database migrations, security updates
+and GDPR related changes! It is also the first release after a great deal of
+travelling for various conferences.
+
+Security
+~~~~~~~~
+
+- Enable testing with Badit. Fixes
+  `Issue #237 <https://github.com/kiwitcms/Kiwi/issues/237>`_
+- Enable testing with
+  `Coverity Scan <https://scan.coverity.com/projects/kiwitcms-kiwi>`_
+- Enable testing with
+  `pyup.io <https://pyup.io/repos/github/kiwitcms/Kiwi/>`_
+- Enable testing with
+  `Snyk <https://snyk.io/test/github/kiwitcms/Kiwi>`_
+- Use SHA256 instead of MD5 and SHA1
+- Use the ``secrets`` module for activation keys
+- Remove unnecessary AJAX view that had remote code execution vulnerability
+- Don't use hardcoded temporary directories
+- Upgrade to
+  `Patternfly 3.36.0 <https://github.com/patternfly/patternfly/releases/tag/v3.36.0>`_
+  which fixes the following vulnerabilities:
+  - https://snyk.io/vuln/npm:moment:20161019
+  - https://snyk.io/vuln/npm:moment:20170905
+
+Settings
+~~~~~~~~
+
+- ``BUGZILLA_AUTH_CACHE_DIR`` is a new setting that may be specified to control
+  where Bugzilla auth cookies are saved! It is not specified by default and
+  Kiwi TCMS uses a temporary directory each time we try to login into Bugzilla!
+
+Enhancements
+~~~~~~~~~~~~
+
+- Upgrade to Python 3.6. Fixes
+  `Issue #91 <https://github.com/kiwitcms/Kiwi/issues/91>`_
+- Upgrade to `Django 2.0.6 <https://docs.djangoproject.com/en/2.0/releases/2.0.6/>`_
+- Fix around 100 pylint issues (Anton Sankov)
+- Update email confirmation template for newly registered users and make the
+  text translatable
+- Display ``Last login`` column in User admin page
+- Add tests for ``tcms.management.views`` (Anton Sankov)
+- Remove unused CSS selectors
+- Remove unnecessary ``templates/comments/comments.html``
+
+Bug fixes
+~~~~~~~~~
+
+- Remove unused deferred field ``product_version``. Fixes
+  `Sentry KIWI-TCMS-1C <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/523948048/>`_
+- Rename left-over ``get_url()`` to ``get_full_url()``. Fixes
+  `Sentry KIWI-TCMS-1B <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/523855781/>`_
+- Fix empty TestPlan url and Product fields in TestRun email notification. Fixes
+  `Issue #353 <https://github.com/kiwitcms/Kiwi/issues/353>`_ (Matt Porter, Konsulko Group)
+
+Translations
+~~~~~~~~~~~~
+
+- Updated translations for Chinese Simplified
+- Updated translations for Chinese Traditional
+- New language and translations for Slovenian
+
+Documentation
+~~~~~~~~~~~~~
+
+- Added ``git clone`` command to documentation. Fixes
+  `Issue #344 <https://github.com/kiwitcms/Kiwi/issues/344>`_ (Anton Sankov)
+
+Models and database migrations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Increase checksum fields size to hold the new checksum values
+- Increase ``activation_key`` field size to 64 chars
+
+GDPR related
+~~~~~~~~~~~~
+
+- Allow users to delete their accounts. Link is present on ``My profile`` page.
+  This will also delete any related objects using cascade delete
+- Try not to be so obvious when it comes to displaying email addresses across
+  the web interface. Instead show username and link to profile
+
+
+tcms-api 4.2 (23 June 2018)
+---------------------------
 
 - Remove coloring. Fixes
   `Issue #185 <https://github.com/kiwitcms/Kiwi/issues/185>`_
+- Fix using the API client against https URLs (Adam Łoszyn, Samsung)
 
 
 

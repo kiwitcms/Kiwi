@@ -10,7 +10,7 @@ with open("README.rst") as readme:
 
 
 setup(name='tcms-api',
-      version='4.0.0',
+      version='4.2',
       packages=['tcms_api'],
       package_dir={'tcms_api': '.'},
       scripts=['tcms'],
