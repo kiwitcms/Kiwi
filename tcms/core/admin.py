@@ -25,7 +25,7 @@ class KiwiSiteAdmin(SiteAdmin):
 
 
 class KiwiUserAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ('is_superuser', 'date_joined')
+    list_display = UserAdmin.list_display + ('is_superuser', 'date_joined', 'last_login')
     ordering = ['-pk']  # same as -date_joined
 
     def _modifying_myself(self, request, object_id):
