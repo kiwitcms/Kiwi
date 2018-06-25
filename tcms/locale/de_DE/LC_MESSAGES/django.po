@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 20:12+0000\n"
+"POT-Creation-Date: 2018-06-25 12:30+0000\n"
 "PO-Revision-Date: 2018-01-19 03:01-0500\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
@@ -83,6 +83,13 @@ msgstr "Bemerkung"
 msgid "Environment group with the same name already exists"
 msgstr ""
 
+#: tcms/management/views.py:353
+#, python-format
+msgid ""
+"Value(s) named '%s' already exists in this property. Please select another "
+"name."
+msgstr ""
+
 #: tcms/profiles/forms.py:32
 msgid "Username"
 msgstr "Benutzername"
@@ -112,16 +119,16 @@ msgstr "Es gibt bereits einen Benutzer mit diesem Namen."
 msgid "Information successfully updated"
 msgstr ""
 
-#: tcms/signals.py:79
+#: tcms/signals.py:80
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:131
+#: tcms/signals.py:141
 #, python-format
 msgid "New TestRun %(summary)s created"
 msgstr ""
 
-#: tcms/signals.py:133
+#: tcms/signals.py:143
 #, python-format
 msgid "TestRun %(summary)s has been updated"
 msgstr ""

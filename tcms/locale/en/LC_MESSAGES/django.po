@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 20:12+0000\n"
+"POT-Creation-Date: 2018-06-25 12:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,6 +85,13 @@ msgstr ""
 msgid "Environment group with the same name already exists"
 msgstr ""
 
+#: tcms/management/views.py:353
+#, python-format
+msgid ""
+"Value(s) named '%s' already exists in this property. Please select another "
+"name."
+msgstr ""
+
 #: tcms/profiles/forms.py:32
 msgid "Username"
 msgstr ""
@@ -113,16 +120,16 @@ msgstr ""
 msgid "Information successfully updated"
 msgstr ""
 
-#: tcms/signals.py:79
+#: tcms/signals.py:80
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:131
+#: tcms/signals.py:141
 #, python-format
 msgid "New TestRun %(summary)s created"
 msgstr ""
 
-#: tcms/signals.py:133
+#: tcms/signals.py:143
 #, python-format
 msgid "TestRun %(summary)s has been updated"
 msgstr ""
