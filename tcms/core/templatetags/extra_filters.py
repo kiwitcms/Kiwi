@@ -5,11 +5,15 @@ from django.contrib.messages import constants as messages
 register = template.Library()
 
 
-@register.filter(name='smart_int')
-def smart_int(obj):
-    if not obj:
-        return obj
+@register.filter(name='to_int')
+def to_int(obj):
+    """
+        Returns int representation. Use in only 2 places where
+        we compare query string parameter with a current value to
+        determine if an <option> is selected!
 
+        NOTE: We can get rid of this once REQUEST_CONTENTS is gone!
+    """
     try:
         return int(obj)
     except ValueError:
