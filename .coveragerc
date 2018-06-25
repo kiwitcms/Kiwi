@@ -6,6 +6,7 @@ branch = True
 omit =
     setup.py
     manage.py
+    kiwi_lint/*.py
     tcms/settings/test/*
     */tests/__init__.py
     */tests.py
