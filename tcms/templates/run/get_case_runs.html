@@ -93,7 +93,7 @@
 				<select id="id_case_run_status" name="case_run_status__pk">
 					<option value="">--------</option>
 					{% for case_run_status in test_case_run_status %}
-					<option value="{{ case_run_status.pk }}" {% ifequal case_run_status.pk REQUEST_CONTENTS.case_run_status__pk|smart_int %}selected="selected"{% endifequal %}>{{ case_run_status }}</option>
+					<option value="{{ case_run_status.pk }}" {% if case_run_status.pk is REQUEST_CONTENTS.case_run_status__pk|to_int %}selected="selected"{% endif %}>{{ case_run_status }}</option>
 					{% endfor %}
 				</select>
 			</div>
@@ -102,7 +102,7 @@
 				<select id="id_priority" name="case__priority__pk">
 					<option value="">--------</option>
 					{% for priority in priorities %}
-					<option value="{{ priority.pk }}" {% ifequal priority.pk REQUEST_CONTENTS.case__priority__pk|smart_int %}selected="selected"{% endifequal %}>{{ priority }}</option>
+					<option value="{{ priority.pk }}" {% if priority.pk == REQUEST_CONTENTS.case__priority__pk|to_int %}selected="selected"{% endif %}>{{ priority }}</option>
 					{% endfor %}
 				</select>
 			</div>
