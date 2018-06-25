@@ -76,7 +76,7 @@ def bookmarks(request):
 @require_http_methods(['GET', 'POST'])
 @login_required
 @csrf_protect
-def profile(request, username, template_name='profile/info.html'):
+def profile(request, username):
     """Edit the profiles of the user"""
     u = get_object_or_404(User, username=username)
 
@@ -96,7 +96,7 @@ def profile(request, username, template_name='profile/info.html'):
         'user_profile': up,
         'form': form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'profile/info.html', context_data)
 
 
 @require_GET
