@@ -348,14 +348,15 @@ def environment_property_values(request):
         else:
             return HttpResponse('Argument illegal')
 
+    message = ''
     if duplicated_property_value:
-        message = 'Value(s) named \'%s\' already exists in this property, ' \
-                  'please select another name.' % "', '".join(duplicated_property_value)
+        message = _("Value(s) named '%s' already exists in this property. "
+                    "Please select another name.") % ', '.join(duplicated_property_value)
 
     values = env_property.value.all()
     context_data = {
         'property': env_property,
         'values': values,
-        'message': message if message else '',
+        'message': message,
     }
     return render(request, 'environment/ajax/property_values.html', context_data)
