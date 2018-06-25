@@ -12,9 +12,7 @@ def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse('tcms-login'))
 
-    return HttpResponseRedirect(
-        reverse('tcms-recent', args=[request.user.username])
-    )
+    return HttpResponseRedirect(reverse('tcms-dashboard'))
 
 
 def navigation(request):
