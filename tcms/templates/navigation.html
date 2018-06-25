@@ -38,7 +38,7 @@
                         </li>
 
                         <li>
-                            <a href="{% url 'tcms-bookmark' user.username %}" target="_parent">My bookmarks</a>
+                            <a href="{% url 'tcms-bookmarks' %}" target="_parent">My bookmarks</a>
                         </li>
 
                         <li class="divider"></li>
@@ -96,7 +96,7 @@
                 <li style="float:right">
                     <a class="nav-item-iconic fa fa-bookmark-o" id="bookmark_submit" title="Bookmark this page" href="#"></a>
 
-                    <form id="id_bookmark_iform" action="{% url "tcms-bookmark" user.username %}" method="get">
+                    <form id="id_bookmark_iform" action="{% url "tcms-bookmarks" %}" method="get">
                         <input type="hidden" name="a" value="render_form" />
                         <input type="hidden" name="user" value="{{ request.user.pk }}" />
                         <input type="hidden" name="site" value="{{ SETTINGS.SITE_ID }}" />

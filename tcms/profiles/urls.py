@@ -10,8 +10,7 @@ from tcms.core.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^(?P<username>[\w.@+-]+)/profile/$', profiles_views.profile,
         name='tcms-profile'),
-    url(r'^(?P<username>[\w.@+-]+)/bookmarks/$', profiles_views.bookmark,
-        name='tcms-bookmark'),
+    url(r'bookmarks/$', profiles_views.bookmarks, name='tcms-bookmarks'),
     url(r'dashboard/$', profiles_views.dashboard, name='tcms-dashboard'),
 
     url(r'^logout/$',

@@ -23,16 +23,10 @@ from tcms.profiles.forms import BookmarkForm, UserProfileForm
 
 @require_http_methods(['GET', 'POST'])
 @login_required
-def bookmark(request, username, template_name='profile/bookmarks.html'):
+def bookmarks(request):
     """
     Bookmarks for the user
     """
-
-    if username != request.user.username:
-        return http.HttpResponseRedirect(reverse('tcms-login'))
-    else:
-        up = {'user': request.user}
-
     class BookmarkActions(object):
         def __init__(self):
             self.ajax_response = {'rc': 0, 'response': 'ok'}
@@ -61,10 +55,10 @@ def bookmark(request, username, template_name='profile/bookmarks.html'):
                 bks = Bookmark.objects.filter(user=request.user)
 
             context_data = {
-                'user_profile': up,
+                'user_profile': {'user': request.user},
                 'bookmarks': bks,
             }
-            return render(request, template_name, context_data)
+            return render(request, 'profile/bookmarks.html', context_data)
 
         def render_form(self):
             query = request.GET.copy()
