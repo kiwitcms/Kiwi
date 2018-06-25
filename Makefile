@@ -78,18 +78,9 @@ etags:
 	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-im \
 		--exclude=build --exclude=tcms/static/js/lib -f TAGS
 
-ifeq ($(DOCKER_ORG),)
-  DOCKER_ORG='kiwitcms'
-endif
-
-ifeq ($(KIWI_VERSION),)
-    KIWI_VERSION=$(shell cat tcms/__init__.py | grep __version__ | cut -f2 -d"'")
-endif
-
 docker-image:
 	find -name "*.pyc" -delete
-	docker build -t $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) .
-	docker tag $(DOCKER_ORG)/kiwi:$(KIWI_VERSION) $(DOCKER_ORG)/kiwi:latest
+	docker build -t kiwitcms/kiwi:latest .
 
 run:
 	docker-compose up
