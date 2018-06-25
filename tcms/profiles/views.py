@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
 from django.db.models import Q
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
@@ -108,14 +107,8 @@ def profile(request, username, template_name='profile/info.html'):
 
 @require_GET
 @login_required
-def recent(request, username, template_name='profile/recent.html'):
+def dashboard(request):
     """List the recent plan/run"""
-
-    if username != request.user.username:
-        return http.HttpResponseRedirect(reverse('tcms-login'))
-    else:
-        up = {'user': request.user}
-
     runs_query = {
         'people': request.user,
         'is_active': True,
@@ -134,17 +127,11 @@ def recent(request, username, template_name='profile/recent.html'):
     test_plans_disable_count = tps.count() - tps_active.count()
 
     context_data = {
-        'user_profile': up,
+        'user_profile': {'user': request.user},
         'test_plans_count': tps.count(),
         'test_plans_disable_count': test_plans_disable_count,
         'test_runs_count': trs.count(),
         'last_15_test_plans': tps_active[:15],
         'last_15_test_runs': latest_fifteen_testruns,
     }
-    return render(request, template_name, context_data)
-
-
-@login_required
-def redirect_to_profile(request):
-    return http.HttpResponseRedirect(
-        reverse('tcms-recent', args=[request.user.username]))
+    return render(request, 'profile/dashboard.html', context_data)

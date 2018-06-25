@@ -64,7 +64,7 @@ class TestIndex(BaseCaseRun):
         response = self.client.get(reverse('core-views-index'))
         self.assertRedirects(
             response,
-            reverse('tcms-recent', args=[self.tester.username]),
+            reverse('tcms-dashboard'),
             target_status_code=HTTPStatus.OK)
 
 
