@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from tcms.core.helpers.cache import cached_entities
-from tcms.management.models import Product, Build, Component, Version
+from tcms.management.models import Product, Priority, Build, Component, Version
 from tcms.testcases.forms import BugField
-from tcms.testcases.models import Category
+from tcms.testcases.models import Category, TestCaseStatus
 from tcms.testplans.models import PlanType
 
 
@@ -141,12 +140,12 @@ class CaseForm(forms.Form):
 
     def populate(self, data):
         status_choices = []
-        for test_case_status in cached_entities('TestCaseStatus'):
+        for test_case_status in TestCaseStatus.objects.all():
             status_choices.append((test_case_status.pk, test_case_status.name))
         self.fields['cs_status'].choices = status_choices
 
         priority_choices = []
-        for priority in cached_entities('Priority'):
+        for priority in Priority.objects.all():
             priority_choices.append((priority.pk, priority.value))
         self.fields['cs_priority'].choices = priority_choices
 
