@@ -123,18 +123,12 @@ class TestPlan(TCMSActionModel):
         except ObjectDoesNotExist:
             return None
 
-    def add_text(self,
-                 author,
-                 plan_text,
-                 create_date=datetime.now(),
-                 plan_text_version=None,
-                 text_checksum=None):
-        if not plan_text_version:
-            latest_text = self.latest_text()
-            if latest_text:
-                plan_text_version = latest_text.plan_text_version + 1
-            else:
-                plan_text_version = 1
+    def add_text(self, author, plan_text, text_checksum=None):
+        latest_text = self.latest_text()
+        if latest_text:
+            plan_text_version = latest_text.plan_text_version + 1
+        else:
+            plan_text_version = 1
 
         if not text_checksum:
             old_checksum = self.text_checksum()
@@ -145,7 +139,6 @@ class TestPlan(TCMSActionModel):
         return self.text.create(
             plan_text_version=plan_text_version,
             author=author,
-            create_date=create_date,
             plan_text=plan_text,
             checksum=text_checksum or checksum(plan_text)
         )
@@ -262,11 +255,7 @@ class TestPlan(TCMSActionModel):
         if copy_texts:
             tptxts_src = self.text.all()
             for tptxt_src in tptxts_src:
-                tp_dest.add_text(
-                    plan_text_version=tptxt_src.plan_text_version,
-                    author=tptxt_src.author,
-                    create_date=tptxt_src.create_date,
-                    plan_text=tptxt_src.plan_text)
+                tp_dest.add_text(author=tptxt_src.author, plan_text=tptxt_src.plan_text)
         else:
             tp_dest.add_text(author=default_text_author, plan_text='')
 
