@@ -224,11 +224,9 @@ class TestPlan(TCMSActionModel):
 
         # Copy the plan documents
         if copy_texts:
-            tptxts_src = self.text.all()
-            for tptxt_src in tptxts_src:
-                tp_dest.add_text(tptxt_src.author, tptxt_src.plan_text)
-        else:
-            tp_dest.add_text(default_text_author, '')
+            latest_text = self.latest_text()
+            if latest_text is not None:
+                tp_dest.add_text(latest_text.author, latest_text.plan_text)
 
         # Copy the plan tags
         for tp_tag_src in self.tag.all():
