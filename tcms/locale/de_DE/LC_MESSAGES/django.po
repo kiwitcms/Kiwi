@@ -83,7 +83,9 @@ msgstr ""
 
 #: tcms/management/views.py:353
 #, python-format
-msgid "Value(s) named '%s' already exists in this property. Please select another name."
+msgid ""
+"Value(s) named '%s' already exists in this property. Please select another "
+"name."
 msgstr ""
 
 #: tcms/profiles/forms.py:32

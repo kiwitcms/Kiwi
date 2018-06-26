@@ -80,7 +80,7 @@
 						<div class="title"><label>Plan Type&nbsp;:</label></div>
 						<div class="listinfo_input">
 							<select name="pl_type" multiple="multiple" size="5">
-								{% for t in PLAN_TYPE_CHOICES %}
+								{% for t in plan_type_choices %}
 								<option value="{{t.pk}}">{{t.name}}</option>
 								{% endfor %}
 							</select>

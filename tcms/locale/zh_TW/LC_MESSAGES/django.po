@@ -34,11 +34,13 @@ msgid "This backend does not allow user registration"
 msgstr "此後端不允許使用者註冊"
 
 #: tcms/core/contrib/auth/views.py:52
-msgid "Your account has been created, please check your mailbox for confirmation"
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
 msgstr "您的帳戶已經新增完畢，請確認您的 E-mail 是否有啟動連結的信件。"
 
 #: tcms/core/contrib/auth/views.py:58
-msgid "Your account has been created, but you need an administrator to activate it"
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
 msgstr "您的帳戶已創建, 但您需要管理員來啟用它"
 
 #: tcms/core/contrib/auth/views.py:64
@@ -83,7 +85,9 @@ msgstr "已存在同名的環境群組"
 
 #: tcms/management/views.py:353
 #, python-format
-msgid "Value(s) named '%s' already exists in this property. Please select another name."
+msgid ""
+"Value(s) named '%s' already exists in this property. Please select another "
+"name."
 msgstr ""
 
 #: tcms/profiles/forms.py:32
@@ -130,46 +134,64 @@ msgstr "TestRun %(summary)s 已更新"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid "Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n\n"
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr "歡迎 %(user)s, 感謝您註冊了 %(site_domain)s 帳戶! 要啟動您的帳戶, 請按一下此連結:\n"
+msgstr ""
+"歡迎 %(user)s, 感謝您註冊了 %(site_domain)s 帳戶! 要啟動您的帳戶, 請按一下此"
+"連結:\n"
 "%(confirm_url)s\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid "\n"
-"Test run %(pk)s has been created or updated for you.\n\n"
+msgid ""
+"\n"
+"Test run %(pk)s has been created or updated for you.\n"
+"\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n\n"
+"Summary: %(summary)s\n"
+"\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n\n"
+"Default tester: %(default_tester)s.\n"
+"\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n\n"
+"Build: %(build)s\n"
+"\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr "\n"
+msgstr ""
+"\n"
 "已為您創建或更新了Test run %(pk)s 。 # # # # # Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
-"# 基本運行資訊 # # 摘要: %(summary)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
+"# 基本運行資訊 # # 摘要: %(summary)s\n"
+"\n"
 "管理人員: %(manager)s。預設測試人員: %(default_tester)s。 產品: %(product)s\n"
 "產品版本: %(version)s\n"
-"生成版本: %(build)s\n\n"
+"生成版本: %(build)s\n"
+"\n"
 "備註:\n"
 "%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid "Dear Administrator,\n"
+msgid ""
+"Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr "親愛的管理員, 有人剛剛在您的Kiwi TCMS 註冊了一個帳戶與使用者名 %(username)s, 並等待您的批准! 至 %(user_url)s 以啟動帳戶!\n"
+msgstr ""
+"親愛的管理員, 有人剛剛在您的Kiwi TCMS 註冊了一個帳戶與使用者名 %(username)s, "
+"並等待您的批准! 至 %(user_url)s 以啟動帳戶!\n"
 
 #: tcms/templates/registration/password_change_done.html:4
 #: tcms/templates/registration/password_change_done.html:8
@@ -191,8 +213,12 @@ msgid_plural "Please correct the errors below."
 msgstr[0] "請更正以下的錯誤。"
 
 #: tcms/templates/registration/password_change_form.html:19
-msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
-msgstr "請輸入您的舊密碼, 為安全起見, 然後輸入您的新密碼兩次, 以便我們可以驗證您鍵入它正確。"
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"請輸入您的舊密碼, 為安全起見, 然後輸入您的新密碼兩次, 以便我們可以驗證您鍵入"
+"它正確。"
 
 #: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"

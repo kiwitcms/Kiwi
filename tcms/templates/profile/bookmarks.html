@@ -18,7 +18,7 @@ Nitrate.Utils.after_page_load(Nitrate.Profiles.Bookmarks.on_load);
 
 {% block contents %}
 <div id="content">
-	<form id="id_form_bookmark" action="{% url "tcms-bookmark" user.username %}" method="post">
+	<form id="id_form_bookmark" action="{% url "tcms-bookmarks" %}" method="post">
 		<div class="table_watchlist_toolbar">
 			<span>
 				{# <a href="#" class="sprites node_add">Add</a> #}
