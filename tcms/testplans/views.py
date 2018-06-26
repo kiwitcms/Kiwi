@@ -86,7 +86,7 @@ def new(request, template_name='plan/new.html'):
 
             # Add test plan text
             if request.user.has_perm('testplans.add_testplantext'):
-                test_plan.add_text(author=request.user, plan_text=form.cleaned_data['text'])
+                test_plan.add_text(request.user, form.cleaned_data['text'])
 
             # Add test plan environment groups
             if request.user.has_perm('testplans.add_envplanmap'):
@@ -468,7 +468,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 test_plan.save()
 
             if request.user.has_perm('testplans.add_testplantext'):
-                test_plan.add_text(author=request.user, plan_text=form.cleaned_data['text'])
+                test_plan.add_text(request.user, form.cleaned_data['text'])
 
             if request.user.has_perm('testplans.change_envplanmap'):
                 test_plan.clear_env_groups()
