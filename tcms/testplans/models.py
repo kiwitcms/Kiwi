@@ -112,11 +112,7 @@ class TestPlan(TCMSActionModel):
         if old_checksum == checksum(plan_text):
             return self.latest_text()
 
-        return self.text.create(
-            author=author,
-            plan_text=plan_text,
-            checksum=new_checksum
-        )
+        return self.text.create(author=author, plan_text=plan_text)
 
     def add_case(self, case, sortkey=0):
 
@@ -311,7 +307,6 @@ class TestPlanText(TCMSActionModel):
     create_date = models.DateTimeField(auto_now_add=True,
                                        db_column='creation_ts')
     plan_text = models.TextField(blank=True)
-    checksum = models.CharField(max_length=64)
 
     class Meta:
         db_table = u'test_plan_texts'

@@ -222,7 +222,6 @@ class TestPlanTextFactory(DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     create_date = factory.LazyFunction(datetime.now)
     plan_text = factory.Sequence(lambda n: 'Plan text %d' % n)
-    checksum = factory.LazyAttribute(lambda obj: checksum(obj.plan_text))
 
 
 class TestPlanEmailSettingsFactory(DjangoModelFactory):
