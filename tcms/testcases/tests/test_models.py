@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 
 from tcms.testcases.models import BugSystem
 from tcms.testcases.models import TestCaseText
-from tcms.core.utils.checksum import checksum
 from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
@@ -186,11 +185,7 @@ class TestGetPlainText(BasePlanCase):
             action=cls.action,
             effect=cls.effect,
             setup=cls.setup,
-            breakdown=cls.breakdown,
-            action_checksum=checksum(cls.action),
-            effect_checksum=checksum(cls.effect),
-            setup_checksum=checksum(cls.setup),
-            breakdown_checksum=checksum(cls.breakdown))
+            breakdown=cls.breakdown)
 
     def test_get_plain_text(self):
         case_text = TestCaseText.objects.all()[0]
