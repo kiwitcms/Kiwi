@@ -119,17 +119,16 @@ class TestPlan(TCMSActionModel):
         except ObjectDoesNotExist:
             return None
 
-    def add_text(self, author, plan_text, text_checksum=None):
-        if not text_checksum:
-            old_checksum = self.text_checksum()
-            new_checksum = checksum(plan_text)
-            if old_checksum == new_checksum:
-                return self.latest_text()
+    def add_text(self, author, plan_text):
+        old_checksum = self.text_checksum()
+        new_checksum = checksum(plan_text)
+        if old_checksum == new_checksum:
+            return self.latest_text()
 
         return self.text.create(
             author=author,
             plan_text=plan_text,
-            checksum=text_checksum or checksum(plan_text)
+            checksum=new_checksum
         )
 
     def add_case(self, case, sortkey=0):

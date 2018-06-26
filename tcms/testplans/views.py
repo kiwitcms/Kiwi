@@ -24,7 +24,6 @@ from django.views.generic import View
 from uuslug import slugify
 
 from tcms.core.models import TCMSLog
-from tcms.core.utils.checksum import checksum
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.raw_sql import RawSQL
 from tcms.management.models import EnvGroup
@@ -469,13 +468,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 test_plan.save()
 
             if request.user.has_perm('testplans.add_testplantext'):
-                new_text = form.cleaned_data['text']
-                text_checksum = checksum(new_text)
-
-                if not test_plan.text_exist() or text_checksum != test_plan.text_checksum():
-                    test_plan.add_text(author=request.user,
-                                       plan_text=new_text,
-                                       text_checksum=text_checksum)
+                test_plan.add_text(author=request.user, plan_text=form.cleaned_data['text'])
 
             if request.user.has_perm('testplans.change_envplanmap'):
                 test_plan.clear_env_groups()
