@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-06-20T05:50:35+0000\n"
+"POT-Creation-Date: 2018-06-25 12:30+0000\n"
+"PO-Revision-Date: 2018-06-26 18:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -81,6 +81,11 @@ msgstr "Komentar"
 msgid "Environment group with the same name already exists"
 msgstr "Okolje (skupina) z istim imenom že obstaja"
 
+#: tcms/management/views.py:353
+#, python-format
+msgid "Value(s) named '%s' already exists in this property. Please select another name."
+msgstr ""
+
 #: tcms/profiles/forms.py:32
 msgid "Username"
 msgstr "Uporabniško ime"
@@ -109,16 +114,16 @@ msgstr "Uporabnik z istim uporabniškim imenom že obstaja."
 msgid "Information successfully updated"
 msgstr "Podati so bili uspešno posodobljeni"
 
-#: tcms/signals.py:79
+#: tcms/signals.py:80
 msgid "New user awaiting approval"
 msgstr "Nov uporabnik - potrebna potrditev uporabniškega računa"
 
-#: tcms/signals.py:131
+#: tcms/signals.py:141
 #, python-format
 msgid "New TestRun %(summary)s created"
 msgstr "Ustvarjeno nov testiranje %(summary)s"
 
-#: tcms/signals.py:133
+#: tcms/signals.py:143
 #, python-format
 msgid "TestRun %(summary)s has been updated"
 msgstr "Testiranje %(summary)s je bilo posodobljeno"
