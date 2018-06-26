@@ -117,10 +117,6 @@ class XMLRPCNewRunForm(BaseRunForm):
     default_tester = forms.ModelChoiceField(
         label='Default tester', queryset=User.objects.all(), required=False
     )
-    plan_text_version = forms.IntegerField(
-        label='Plan text version',
-        required=False,
-    )
     status = forms.TypedChoiceField(
         coerce=int, choices=((0, 0), (1, 1)), required=False
     )
@@ -128,17 +124,6 @@ class XMLRPCNewRunForm(BaseRunForm):
         label='Tag',
         required=False
     )
-
-    def clean_plan_text_version(self):
-        data = self.cleaned_data.get('plan_text_version')
-        if not data:
-            if self.cleaned_data.get('plan'):
-                plan_text = self.cleaned_data['plan'].latest_text()
-                data = plan_text.plan_text_version
-            else:
-                data = 0
-
-        return data
 
     def clean_status(self):
         data = self.cleaned_data.get('status')

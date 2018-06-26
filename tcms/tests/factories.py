@@ -219,7 +219,6 @@ class TestPlanTextFactory(DjangoModelFactory):
         model = 'testplans.TestPlanText'
 
     plan = factory.SubFactory(TestPlanFactory)
-    plan_text_version = 1
     author = factory.SubFactory(UserFactory)
     create_date = factory.LazyFunction(datetime.now)
     plan_text = factory.Sequence(lambda n: 'Plan text %d' % n)
@@ -371,7 +370,6 @@ class TestRunFactory(DjangoModelFactory):
 
     summary = factory.Sequence(lambda n: 'Test run summary %d' % n)
     product_version = factory.SubFactory(VersionFactory)
-    plan_text_version = 1
     stop_date = None
     notes = ''
     plan = factory.SubFactory(TestPlanFactory)

@@ -180,7 +180,6 @@ class TestCreateNewRun(BasePlanCase):
         self.assertEqual(self.version, new_run.product_version)
         self.assertEqual(None, new_run.stop_date)
         self.assertEqual('Clone new run', new_run.notes)
-        self.assertEqual(0, new_run.plan_text_version)
         self.assertEqual(timedelta(0), new_run.estimated_time)
         self.assertEqual(self.build_fast, new_run.build)
         self.assertEqual(self.tester, new_run.manager)

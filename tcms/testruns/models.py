@@ -36,7 +36,6 @@ class TestRun(TCMSActionModel):
 
     product_version = models.ForeignKey('management.Version', related_name='version_run',
                                         on_delete=models.CASCADE)
-    plan_text_version = models.IntegerField()
 
     start_date = models.DateTimeField(auto_now_add=True, db_index=True)
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
@@ -68,7 +67,7 @@ class TestRun(TCMSActionModel):
 
     class Meta:
         db_table = u'test_runs'
-        unique_together = ('run_id', 'product_version', 'plan_text_version')
+        unique_together = ('run_id', 'product_version')
 
     def __str__(self):
         return self.summary

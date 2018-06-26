@@ -443,7 +443,6 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'environment_id': ('environment_id', do_nothing),
         'estimated_time': ('estimated_time', timedelta_to_str),
         'notes': ('notes', do_nothing),
-        'plan_text_version': ('plan_text_version', do_nothing),
         'run_id': ('run_id', do_nothing),
         'start_date': ('start_date', datetime_to_str),
         'stop_date': ('stop_date', datetime_to_str),
