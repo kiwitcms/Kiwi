@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 20:12+0000\n"
-"PO-Revision-Date: 2018-01-19 03:01-0500\n"
+"POT-Creation-Date: 2018-06-25 12:30+0000\n"
+"PO-Revision-Date: 2018-06-26 18:40\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -34,13 +34,11 @@ msgid "This backend does not allow user registration"
 msgstr ""
 
 #: tcms/core/contrib/auth/views.py:52
-msgid ""
-"Your account has been created, please check your mailbox for confirmation"
+msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr ""
 
 #: tcms/core/contrib/auth/views.py:58
-msgid ""
-"Your account has been created, but you need an administrator to activate it"
+msgid "Your account has been created, but you need an administrator to activate it"
 msgstr ""
 
 #: tcms/core/contrib/auth/views.py:64
@@ -83,14 +81,18 @@ msgstr "Bemerkung"
 msgid "Environment group with the same name already exists"
 msgstr ""
 
+#: tcms/management/views.py:353
+#, python-format
+msgid "Value(s) named '%s' already exists in this property. Please select another name."
+msgstr ""
+
 #: tcms/profiles/forms.py:32
 msgid "Username"
 msgstr "Benutzername"
 
 #: tcms/profiles/forms.py:34
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
-"Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
+msgstr "Pflichtfeld. 30 Zeichen oder weniger. Nur Buchstaben, Zahlen und @.+-_."
 
 #: tcms/profiles/forms.py:37
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
@@ -112,61 +114,51 @@ msgstr "Es gibt bereits einen Benutzer mit diesem Namen."
 msgid "Information successfully updated"
 msgstr ""
 
-#: tcms/signals.py:79
+#: tcms/signals.py:80
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:131
+#: tcms/signals.py:141
 #, python-format
 msgid "New TestRun %(summary)s created"
 msgstr ""
 
-#: tcms/signals.py:133
+#: tcms/signals.py:143
 #, python-format
 msgid "TestRun %(summary)s has been updated"
 msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
+msgid "Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid ""
-"\n"
-"Test run %(pk)s has been created or updated for you.\n"
-"\n"
+msgid "\n"
+"Test run %(pk)s has been created or updated for you.\n\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n"
-"\n"
+"Test plan: %(plan_url)s\n\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n"
-"\n"
+"Summary: %(summary)s\n\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n"
-"\n"
+"Default tester: %(default_tester)s.\n\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n"
-"\n"
+"Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s\n"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid ""
-"Dear Administrator,\n"
+msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
 msgstr ""
 
@@ -191,11 +183,8 @@ msgstr[0] "Bitte korrigieren Sie den Fehler unten."
 msgstr[1] "Bitte korrigieren Sie den Fehler unten."
 
 #: tcms/templates/registration/password_change_form.html:19
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
-msgstr ""
-"Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
+msgid "Please enter your old password, for security's sake, and then enter your new password twice so we can verify you typed it in correctly."
+msgstr "Bitte geben Sie Ihr altes Passwort und dann Ihr neues Passwort zweifach ein."
 
 #: tcms/templates/registration/password_change_form.html:23
 msgid "Old password"
@@ -326,5 +315,3 @@ msgstr ""
 msgid "NEED_UPDATE"
 msgstr ""
 
-#~ msgid "Enter a valid estimated time. e.g. 12h45m"
-#~ msgstr "Eingabe einer gültigen geschätzten Dauer z. B. 12h45m"
