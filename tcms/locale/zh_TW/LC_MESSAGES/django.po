@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-25 12:30+0000\n"
-"PO-Revision-Date: 2018-06-15 05:13-0400\n"
+"PO-Revision-Date: 2018-06-26 18:40\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -290,61 +290,62 @@ msgstr "參數 \"確定\" 必須是 \"是\" 或 \"否\""
 
 #: tcms/testruns/views.py:939
 msgid "Reorder operation requires at least one TestCase"
-msgstr ""
+msgstr "重新排序操作至少需要一個 TestCase"
 
 #: tcms/testruns/views.py:1038
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "TestCase ID 不是有效的整數"
 
 #: tcms/testruns/views.py:1170
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "%d CaseRun 已更新:"
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
-msgstr ""
+msgstr "閒置"
 
 #: vinaigrette-deleteme.py:3
 msgid "RUNNING"
-msgstr ""
+msgstr "運行"
 
 #: vinaigrette-deleteme.py:4
 msgid "PAUSED"
-msgstr ""
+msgstr "暫停"
 
 #: vinaigrette-deleteme.py:5
 msgid "PASSED"
-msgstr ""
+msgstr "通過"
 
 #: vinaigrette-deleteme.py:6
 msgid "FAILED"
-msgstr ""
+msgstr "失敗"
 
 #: vinaigrette-deleteme.py:7
 msgid "BLOCKED"
-msgstr ""
+msgstr "封鎖"
 
 #: vinaigrette-deleteme.py:8
 msgid "ERROR"
-msgstr ""
+msgstr "錯誤"
 
 #: vinaigrette-deleteme.py:9
 msgid "WAIVED"
-msgstr ""
+msgstr "放棄"
 
 #: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
-msgstr ""
+msgstr "提出"
 
 #: vinaigrette-deleteme.py:11
 msgid "CONFIRMED"
-msgstr ""
+msgstr "已驗證"
 
 #: vinaigrette-deleteme.py:12
 msgid "DISABLED"
-msgstr ""
+msgstr "禁用"
 
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "需要更新"
+
