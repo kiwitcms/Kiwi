@@ -103,14 +103,6 @@ class TestPlan(TCMSActionModel):
         except ObjectDoesNotExist:
             return None
 
-    def text_exist(self):
-        try:
-            return self.text.exists()
-        except IndexError:
-            return False
-        except ObjectDoesNotExist:
-            return False
-
     def text_checksum(self):
         try:
             return self.text.order_by('-pk').only('checksum')[0].checksum

@@ -481,9 +481,6 @@ class TestCase(TCMSActionModel):
         qs = self.text.order_by('-case_text_version').only('case_text_version')[0:1]
         return 0 if len(qs) == 0 else qs[0].case_text_version
 
-    def text_exist(self):
-        return self.text.exists()
-
     def text_checksum(self):
         qs = self.text.order_by('-case_text_version').only('action_checksum',
                                                            'effect_checksum',
