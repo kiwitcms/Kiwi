@@ -663,22 +663,20 @@ def attachment(request, plan_id, template_name='plan/attachment.html'):
 
 
 @require_GET
-def text_history(request, plan_id, template_name='plan/history.html'):
+def text_history(request, plan_id):
     """View test plan text history"""
 
     test_plan = get_object_or_404(TestPlan, plan_id=int(plan_id))
     test_plan_texts = test_plan.text.select_related('author').only('plan',
                                                                    'create_date',
                                                                    'plan_text',
-                                                                   'plan_text_version',
                                                                    'author__email')
-    selected_plan_text_version = int(request.GET.get('plan_text_version', 0))
     context_data = {
         'testplan': test_plan,
         'test_plan_texts': test_plan_texts,
-        'select_plan_text_version': selected_plan_text_version,
+        'selected_text_version': int(request.GET.get('id', 0)),
     }
-    return render(request, template_name, context_data)
+    return render(request, 'plan/history.html', context_data)
 
 
 class ReorderCasesView(View):

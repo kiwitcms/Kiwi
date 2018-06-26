@@ -100,8 +100,6 @@ def new(request, template_name='run/new.html'):
 
             test_run = TestRun.objects.create(
                 product_version=form.cleaned_data['product_version'],
-                plan_text_version=test_plan.latest_text() and
-                test_plan.latest_text().plan_text_version or 0,
                 stop_date=None,
                 summary=form.cleaned_data.get('summary'),
                 notes=form.cleaned_data.get('notes'),

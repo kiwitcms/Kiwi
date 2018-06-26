@@ -176,7 +176,6 @@ def create(values):
     if form.is_valid():
         test_run = TestRun.objects.create(
             product_version=form.cleaned_data['product_version'],
-            plan_text_version=form.cleaned_data['plan_text_version'],
             stop_date=form.cleaned_data['status'] and datetime.now() or None,
             summary=form.cleaned_data['summary'],
             notes=form.cleaned_data['notes'],
@@ -275,9 +274,6 @@ def update(run_id, values):
                 test_run.notes = values['notes']
             if form.cleaned_data['notes']:
                 test_run.notes = form.cleaned_data['notes']
-
-        if form.cleaned_data['plan_text_version']:
-            test_run.plan_text_version = form.cleaned_data['plan_text_version']
 
         if isinstance(form.cleaned_data['status'], int):
             if form.cleaned_data['status']:

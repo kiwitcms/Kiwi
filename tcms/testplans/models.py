@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
-
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -99,8 +97,7 @@ class TestPlan(TCMSActionModel):
 
     def latest_text(self):
         try:
-            return self.text.select_related('author').order_by(
-                '-plan_text_version')[0]
+            return self.text.select_related('author').order_by('-pk')[0]
         except IndexError:
             return None
         except ObjectDoesNotExist:
@@ -116,20 +113,13 @@ class TestPlan(TCMSActionModel):
 
     def text_checksum(self):
         try:
-            return self.text.order_by('-plan_text_version').only(
-                'checksum')[0].checksum
+            return self.text.order_by('-pk').only('checksum')[0].checksum
         except IndexError:
             return None
         except ObjectDoesNotExist:
             return None
 
     def add_text(self, author, plan_text, text_checksum=None):
-        latest_text = self.latest_text()
-        if latest_text:
-            plan_text_version = latest_text.plan_text_version + 1
-        else:
-            plan_text_version = 1
-
         if not text_checksum:
             old_checksum = self.text_checksum()
             new_checksum = checksum(plan_text)
@@ -137,7 +127,6 @@ class TestPlan(TCMSActionModel):
                 return self.latest_text()
 
         return self.text.create(
-            plan_text_version=plan_text_version,
             author=author,
             plan_text=plan_text,
             checksum=text_checksum or checksum(plan_text)
@@ -332,7 +321,6 @@ class TestPlan(TCMSActionModel):
 
 class TestPlanText(TCMSActionModel):
     plan = models.ForeignKey(TestPlan, related_name='text', on_delete=models.CASCADE)
-    plan_text_version = models.IntegerField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True,
                                        db_column='creation_ts')
@@ -341,8 +329,7 @@ class TestPlanText(TCMSActionModel):
 
     class Meta:
         db_table = u'test_plan_texts'
-        ordering = ['plan', '-plan_text_version']
-        unique_together = ('plan', 'plan_text_version')
+        ordering = ['plan', '-pk']
 
 
 class TestPlanTag(models.Model):

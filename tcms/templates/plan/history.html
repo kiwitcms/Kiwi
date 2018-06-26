@@ -34,14 +34,14 @@
 		</tr>
 		{% for plan_text in test_plan_texts %}
 		<tr class="{% cycle 'even' 'odd' %}">
-			<td><a href="{% url "plan-text_history" testplan.plan_id %}?plan_text_version={{ plan_text.plan_text_version }}">{{ plan_text.plan_text_version }}</a></td>
+			<td><a href="{% url "plan-text_history" testplan.plan_id %}?id={{ plan_text.pk }}">{{ forloop.revcounter }}</a></td>
 			<td>{{ plan_text.create_date }}</td>
 			<td><a href="{% url "tcms-profile" plan_text.author.username %}">{{ plan_text.author.username }}</a></td>
 			<td>
 				{{ plan_text.plan_text|striptags|truncatewords:"10" }}
 			</td>
 		</tr>
-		{% ifequal plan_text.plan_text_version select_plan_text_version %}
+		{% if plan_text.pk == selected_text_version %}
 		<tr class="hide">
 			<td>
 			<td colspan="3">
@@ -50,7 +50,7 @@
 					</div>
 			</td>
 		</tr>
-		{% endifequal %}
+		{% endif %}
 		{% endfor %}
 	</table>
 	</div>

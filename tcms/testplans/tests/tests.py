@@ -217,7 +217,7 @@ class PlanTests(test.TestCase):
         response = self.c.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
-        response = self.c.get(location, {'plan_text_version': 1})
+        response = self.c.get(location, {'id': 1})
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
 
@@ -633,9 +633,7 @@ class TestCloneView(BasePlanCase):
         self.assertEqual(cloned_plan.text.count(), original_plan.text.count())
         for copied_text, original_text in zip(cloned_plan.text.all(),
                                               original_plan.text.all()):
-            self.assertEqual(copied_text.plan_text_version, original_text.plan_text_version)
             self.assertEqual(copied_text.author, original_text.author)
-            self.assertEqual(copied_text.create_date, original_text.create_date)
             self.assertEqual(copied_text.plan_text, original_text.plan_text)
 
         # Verify option copy_environment_groups
