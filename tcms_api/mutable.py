@@ -969,7 +969,7 @@ class TestCase(Mutable):
 
         # Test case documentation
         for attribute in ["setup", "action", "effect", "breakdown"]:
-            if "text" in inject:
+            if "text" in inject and attribute in inject["text"]:
                 setattr(self, "_" + attribute, inject["text"][attribute])
             else:
                 setattr(self, "_" + attribute, None)
