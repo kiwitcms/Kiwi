@@ -12,7 +12,6 @@ from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestCaseRunStatus
-from tcms.core.utils.checksum import checksum
 
 
 # ### Factories for app management ###
@@ -325,10 +324,6 @@ class TestCaseTextFactory(DjangoModelFactory):
     effect = 'effect'
     setup = 'setup'
     breakdown = 'breakdown'
-    action_checksum = factory.LazyAttribute(lambda obj: checksum(obj.action))
-    effect_checksum = factory.LazyAttribute(lambda obj: checksum(obj.effect))
-    setup_checksum = factory.LazyAttribute(lambda obj: checksum(obj.setup))
-    breakdown_checksum = factory.LazyAttribute(lambda obj: checksum(obj.breakdown))
 
 
 class BugFactory(DjangoModelFactory):

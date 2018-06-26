@@ -372,44 +372,31 @@ class TestCase(TCMSActionModel):
             breakdown,
             author=None,
             create_date=datetime.now(),
-            case_text_version=1,
-            action_checksum=None,
-            effect_checksum=None,
-            setup_checksum=None,
-            breakdown_checksum=None):
+            case_text_version=1):
         if not author:
             author = self.author
 
-        new_action_checksum = checksum(action)
-        new_effect_checksum = checksum(effect)
-        new_setup_checksum = checksum(setup)
-        new_breakdown_checksum = checksum(breakdown)
+        new_checksum = checksum(action + effect + setup + breakdown)
+        latest_text = self.latest_text()
+        old_checksum = checksum(latest_text.action +
+                                latest_text.effect +
+                                latest_text.setup +
+                                latest_text.breakdown)
 
-        old_action, old_effect, old_setup, old_breakdown = self.text_checksum()
-        if old_action != new_action_checksum \
-                or old_effect != new_effect_checksum \
-                or old_setup != new_setup_checksum \
-                or old_breakdown != new_breakdown_checksum:
-            case_text_version = self.latest_text_version() + 1
+        if old_checksum == new_checksum:
+            return latest_text
 
-            latest_text = TestCaseText.objects.create(
-                case=self,
-                case_text_version=case_text_version,
-                create_date=create_date,
-                author=author,
-                action=action,
-                effect=effect,
-                setup=setup,
-                breakdown=breakdown,
-                action_checksum=action_checksum or new_action_checksum,
-                effect_checksum=effect_checksum or new_effect_checksum,
-                setup_checksum=setup_checksum or new_setup_checksum,
-                breakdown_checksum=breakdown_checksum or new_breakdown_checksum
-            )
-        else:
-            latest_text = self.latest_text()
-
-        return latest_text
+        case_text_version = self.latest_text_version() + 1
+        return TestCaseText.objects.create(
+            case=self,
+            case_text_version=case_text_version,
+            create_date=create_date,
+            author=author,
+            action=action,
+            effect=effect,
+            setup=setup,
+            breakdown=breakdown
+        )
 
     def add_to_plan(self, plan):
         TestCasePlan.objects.get_or_create(case=self, plan=plan)
@@ -481,20 +468,6 @@ class TestCase(TCMSActionModel):
         qs = self.text.order_by('-case_text_version').only('case_text_version')[0:1]
         return 0 if len(qs) == 0 else qs[0].case_text_version
 
-    def text_checksum(self):
-        qs = self.text.order_by('-case_text_version').only('action_checksum',
-                                                           'effect_checksum',
-                                                           'setup_checksum',
-                                                           'breakdown_checksum')[0:1]
-        if len(qs) == 0:
-            return None, None, None, None
-        else:
-            text = qs[0]
-            return (text.action_checksum,
-                    text.effect_checksum,
-                    text.setup_checksum,
-                    text.breakdown_checksum)
-
     def mail(self, template, subject, context={}, to=[], request=None):
         from tcms.core.utils.mailto import mailto
 
@@ -548,10 +521,6 @@ class TestCaseText(TCMSActionModel):
     effect = models.TextField(blank=True)
     setup = models.TextField(blank=True)
     breakdown = models.TextField(blank=True)
-    action_checksum = models.CharField(max_length=64)
-    effect_checksum = models.CharField(max_length=64)
-    setup_checksum = models.CharField(max_length=64)
-    breakdown_checksum = models.CharField(max_length=64)
 
     class Meta:
         db_table = u'test_case_texts'
