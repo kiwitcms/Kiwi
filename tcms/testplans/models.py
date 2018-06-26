@@ -103,18 +103,13 @@ class TestPlan(TCMSActionModel):
         except ObjectDoesNotExist:
             return None
 
-    def text_checksum(self):
-        try:
-            return self.text.order_by('-pk').only('checksum')[0].checksum
-        except IndexError:
-            return None
-        except ObjectDoesNotExist:
-            return None
-
     def add_text(self, author, plan_text):
-        old_checksum = self.text_checksum()
-        new_checksum = checksum(plan_text)
-        if old_checksum == new_checksum:
+        latest_text = self.latest_text()
+        old_checksum = None
+        if latest_text is not None:
+            old_checksum = checksum(latest_text.plan_text)
+
+        if old_checksum == checksum(plan_text):
             return self.latest_text()
 
         return self.text.create(
