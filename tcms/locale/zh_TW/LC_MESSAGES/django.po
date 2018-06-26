@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-25 12:30+0000\n"
+"POT-Creation-Date: 2018-06-26 22:07+0000\n"
 "PO-Revision-Date: 2018-06-15 05:13-0400\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -114,7 +114,7 @@ msgstr "使用者錯誤。"
 msgid "A user with that username already exists."
 msgstr "具有此使用者名的使用者已存在。"
 
-#: tcms/profiles/views.py:101
+#: tcms/profiles/views.py:94
 msgid "Information successfully updated"
 msgstr "已成功更新資訊"
 
