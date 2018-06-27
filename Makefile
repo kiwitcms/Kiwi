@@ -52,7 +52,7 @@ test:
 	fi
 
 .PHONY: check
-check: flake8 test check-mo-files
+check: flake8 test
 
 .PHONY: pylint
 pylint:
