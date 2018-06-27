@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-06-26 22:07+0000\n"
-"PO-Revision-Date: 2018-06-26 22:10\n"
+"PO-Revision-Date: 2018-06-27 06:30\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -84,7 +84,7 @@ msgstr "Okolje (skupina) z istim imenom že obstaja"
 #: tcms/management/views.py:353
 #, python-format
 msgid "Value(s) named '%s' already exists in this property. Please select another name."
-msgstr ""
+msgstr "Vrednost '%s' že obstaja. Prosimo določite preimenujte vrednost."
 
 #: tcms/profiles/forms.py:32
 msgid "Username"
