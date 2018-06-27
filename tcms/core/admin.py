@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django import forms
 from django.urls import reverse
 from django.conf import settings
 from django.contrib import admin
@@ -8,6 +9,9 @@ from django.contrib.auth.models import Permission, User
 from django.contrib.sites.models import Site
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.admin import SiteAdmin
+from django.contrib.auth.forms import UserChangeForm
+from django.utils.translation import ugettext_lazy as _
+
 
 from django_comments.models import Comment
 
@@ -24,9 +28,31 @@ class KiwiSiteAdmin(SiteAdmin):
         return HttpResponseRedirect(reverse('admin:sites_site_change', args=[settings.SITE_ID]))
 
 
+class UniqueEmailForm:
+    """
+        Enforces unique user emails.
+    """
+    def clean_email(self):
+        qs = User.objects.filter(email=self.cleaned_data['email'])
+        if self.instance:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.count():
+            raise forms.ValidationError(_('This email address is already in use'))
+        else:
+            return self.cleaned_data['email']
+
+
+class MyUserChangeForm(UniqueEmailForm, UserChangeForm):
+    email = forms.EmailField(required=True)
+
+
 class KiwiUserAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ('is_superuser', 'date_joined', 'last_login')
     ordering = ['-pk']  # same as -date_joined
+
+    # override standard form and make the email address unique
+    # even when adding users via admin panel
+    form = MyUserChangeForm
 
     def _modifying_myself(self, request, object_id):
         return request.user.pk == int(object_id)
