@@ -104,17 +104,6 @@ check-docs-source-in-git: docs
 	    exit 1; \
 	fi
 
-# verify all .mo files have been compiled and up-to-date!
-.PHONY: check-mo-files
-check-mo-files:
-	./manage.py compilemessages
-	git status
-	if [ -n "$$(git status --short)" ]; then \
-	    echo "FAIL: Out-of-date .mo files!"; \
-	    echo "HELP: execute './manage.py compilemessages' and commit to fix this"; \
-	    exit 1; \
-	fi
-
 .PHONY: help
 help:
 	@echo 'Usage: make [command]'
