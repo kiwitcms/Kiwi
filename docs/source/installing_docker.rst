@@ -18,7 +18,12 @@ Alternatively you can build an image yourself by running::
     make docker-image
 
 this will create a Docker image with the latest Kiwi TCMS version.
-By default the image tag will be ``kiwitcms/kiwi:<version>``.
+By default the image tag will be ``kiwitcms/kiwi:latest``.
+
+.. note::
+
+    While Kiwi TCMS uses git tags when releasing new versions we do not
+    provide versioned docker images via Docker Hub!
 
 
 Start Docker compose
@@ -72,7 +77,8 @@ To upgrade running Kiwi TCMS containers execute the following commands::
     git pull # to refresh docker-compose.yml
     docker-compose down
     # make docker-image if you build from source or
-    docker pull kiwitcms/kiwi # to fetch latest version from Docker Hub
+    docker pull kiwitcms/kiwi  # to fetch latest version from Docker Hub
+    docker pull centos/mariadb # to fetch the latest version for MariaDB
     docker-compose up -d
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
