@@ -3,8 +3,9 @@ FROM centos/httpd
 RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs install centos-release-scl && \
     yum -y --setopt=tsflags=nodocs install rh-python36 gcc mariadb-devel \
-    libxml2-devel libxslt-devel httpd-devel mod_wsgi mod_ssl npm && \
-    yum -y update --setopt=tsflags=nodocs
+    libxml2-devel libxslt-devel httpd-devel mod_wsgi mod_ssl npm gettext && \
+    yum -y update --setopt=tsflags=nodocs && \
+    yum clean all
 
 # static configuration for Apache
 COPY ./etc/kiwi-httpd.conf /etc/httpd/conf.d/
@@ -49,6 +50,9 @@ RUN cd /Kiwi/ && npm install && \
 
 # Copy the application code to the virtual environment
 COPY ./tcms/ /venv/lib64/python3.6/site-packages/tcms/
+
+# compile translations
+RUN /Kiwi/manage.py compilemessages
 
 # collect static files
 RUN /Kiwi/manage.py collectstatic --noinput
