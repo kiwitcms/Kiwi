@@ -59,9 +59,8 @@ class TestCaseStatus(TCMSActionModel):
     description = models.TextField(null=True, blank=True)
 
     class Meta:
-        db_table = u'test_case_status'
         verbose_name = "Test case status"
-        verbose_name_plural = "Test case status"
+        verbose_name_plural = "Test case statuses"
 
     def __str__(self):
         return self.name
@@ -100,7 +99,6 @@ class Category(TCMSActionModel):
     description = models.TextField(blank=True)
 
     class Meta:
-        db_table = u'test_case_categories'
         verbose_name_plural = u'test case categories'
         unique_together = ('product', 'name')
 
@@ -150,10 +148,8 @@ class TestCase(TCMSActionModel):
     tag = models.ManyToManyField('management.Tag', related_name='case',
                                  through='testcases.TestCaseTag')
 
-    # Auto-generated attributes from back-references:
+    # todo: Auto-generated attributes from back-references:
     # 'texts' : list of TestCaseTexts (from TestCaseTexts.case)
-    class Meta:
-        db_table = u'test_cases'
 
     def __str__(self):
         return self.summary
@@ -523,7 +519,6 @@ class TestCaseText(TCMSActionModel):
     breakdown = models.TextField(blank=True)
 
     class Meta:
-        db_table = u'test_case_texts'
         ordering = ['case', '-case_text_version']
         unique_together = ('case', 'case_text_version')
 
@@ -545,7 +540,6 @@ class TestCasePlan(models.Model):
     # in database.
 
     class Meta:
-        db_table = u'test_case_plans'
         unique_together = ('plan', 'case')
 
 
@@ -553,17 +547,11 @@ class TestCaseComponent(models.Model):
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)  # case_id
     component = models.ForeignKey('management.Component', on_delete=models.CASCADE)  # component_id
 
-    class Meta:
-        db_table = u'test_case_components'
-
 
 class TestCaseTag(models.Model):
     tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
     user = models.IntegerField(db_column='userid', default='0')
-
-    class Meta:
-        db_table = u'test_case_tags'
 
 
 class BugSystem(TCMSActionModel):
@@ -657,7 +645,6 @@ Leave empty to disable!
         verbose_name='API password or token')
 
     class Meta:
-        db_table = u'test_case_bug_systems'
         verbose_name = 'Bug tracker'
         verbose_name_plural = 'Bug trackers'
 
@@ -679,7 +666,6 @@ class Bug(TCMSActionModel):
     description = models.TextField(blank=True, null=True)
 
     class Meta:
-        db_table = u'test_case_bugs'
         unique_together = (('bug_id', 'case_run', 'case'),
                            ('bug_id', 'case_run'))
 
@@ -716,7 +702,6 @@ class Contact(TCMSContentTypeBaseModel):
         return self.name
 
     class Meta:
-        db_table = u'tcms_contacts'
         index_together = (('content_type', 'object_pk', 'site'),)
 
     @classmethod

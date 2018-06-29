@@ -2,8 +2,6 @@
 
 from django.db import models
 
-__all__ = ('LinkReference', )
-
 
 class LinkReference(models.Model):
     test_case_run = models.ForeignKey('testruns.TestCaseRun', on_delete=models.CASCADE)
@@ -14,6 +12,3 @@ class LinkReference(models.Model):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        db_table = 'tcms_linkrefs'

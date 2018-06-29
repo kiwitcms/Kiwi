@@ -27,7 +27,6 @@ class PlanType(TCMSActionModel):
         return self.name
 
     class Meta:
-        db_table = u'test_plan_types'
         ordering = ['name']
 
 
@@ -56,7 +55,6 @@ class TestPlan(TCMSActionModel):
                                  related_name='plan')
 
     class Meta:
-        db_table = u'test_plans'
         index_together = [['product', 'plan_id']]
 
     def __str__(self):
@@ -307,7 +305,6 @@ class TestPlanText(TCMSActionModel):
     plan_text = models.TextField(blank=True)
 
     class Meta:
-        db_table = u'test_plan_texts'
         ordering = ['plan', '-pk']
 
 
@@ -315,9 +312,6 @@ class TestPlanTag(models.Model):
     tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
     plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
     user = models.IntegerField(default="1", db_column='userid')
-
-    class Meta:
-        db_table = u'test_plan_tags'
 
 
 class TestPlanEmailSettings(models.Model):
@@ -334,6 +328,3 @@ class TestPlanEmailSettings(models.Model):
 class EnvPlanMap(models.Model):
     plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
     group = models.ForeignKey('management.EnvGroup', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = u'tcms_env_plan_map'
