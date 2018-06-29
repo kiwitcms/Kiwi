@@ -100,6 +100,33 @@ HELP_MENU_ITEMS = [
 STATIC_ROOT = '/usr/share/kiwi/static/'
 
 
+# WARNING: Do not change this unless you know what you are doing !!!
+# If you want to allow read-only access to anonymous users you can disable
+# global_login_required.GlobalLoginRequiredMiddleware below!
+MIDDLEWARE = [
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'tcms.core.middleware.CsrfDisableMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'global_login_required.GlobalLoginRequiredMiddleware',
+    'dj_pagination.middleware.PaginationMiddleware',
+]
+
+
+# You can also list additional views which will be available to
+# anonymous users here. Take care to keep the default ones!
+PUBLIC_VIEWS = [
+    'modernrpc.views.RPCEntryPoint',
+    'django.contrib.auth.views.LoginView',
+    'tcms.core.contrib.auth.views.register',
+    'tcms.core.contrib.auth.views.confirm',
+    'tcms.core.views.navigation',
+]
+
+
 # Cache backend - not used ATM!
 CACHES = {
     'default': {
@@ -200,17 +227,6 @@ TEMPLATES = [
             ]
         },
     },
-]
-
-MIDDLEWARE = [
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'tcms.core.middleware.CsrfDisableMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'dj_pagination.middleware.PaginationMiddleware',
 ]
 
 ROOT_URLCONF = 'tcms.urls'
