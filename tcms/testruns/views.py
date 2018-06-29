@@ -562,7 +562,7 @@ def get(request, run_id, template_name='run/get.html'):
 
     def walk_case_runs():
         """Walking case runs for helping rendering case runs table"""
-        priorities = Priority.get_values()
+        priorities = dict(Priority.objects.values_list('pk', 'value'))
         testers, assignees = open_run_get_users(test_case_runs)
         comments_subtotal = open_run_get_comments_subtotal(
             [cr.pk for cr in test_case_runs])

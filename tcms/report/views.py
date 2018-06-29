@@ -587,7 +587,7 @@ class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
         if form.is_valid():
             test_case_runs = self.get_case_runs(form)
             status_names = TestCaseRunStatus.get_names()
-            priority_values = Priority.get_values()
+            priority_values = dict(Priority.objects.values_list('pk', 'value'))
 
             testers_ids, assignees_ids = self._get_testers_assignees_ids(
                 test_case_runs)
@@ -619,6 +619,7 @@ class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
 
     def walk_case_runs(self, case_runs, status_names, priority_values,
                        testers, assignees):
+        # todo: this is the same method as in testruns/views.py
         for case_run in case_runs:
             status_name = status_names[case_run.case_run_status_id]
             priority_value = priority_values[case_run.case.priority_id]

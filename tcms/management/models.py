@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.core.cache import cache
 from django.db import models
 from django.conf import settings
 
@@ -115,21 +114,6 @@ class Priority(TCMSActionModel):
 
     def __str__(self):
         return self.value
-
-    cache_key_values = 'priority__value'
-
-    @classmethod
-    def get_values(cls):
-        values = cache.get(cls.cache_key_values)
-        if values is None:
-            values = dict(cls.objects.values_list('pk', 'value').iterator())
-            cache.set(cls.cache_key_values, values)
-        return values
-
-    def save(self, *args, **kwargs):
-        result = super(Priority, self).save(*args, **kwargs)
-        cache.delete(self.cache_key_values)
-        return result
 
 
 class Component(TCMSActionModel):
