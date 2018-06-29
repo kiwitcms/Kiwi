@@ -17,6 +17,7 @@ from tcms.management.models import EnvGroupPropertyMap
 from tcms.management.models import EnvProperty
 from tcms.management.models import Product, Version
 from tcms.testplans.models import TestPlan
+from tcms.tests import LoggedInTestCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import EnvGroupFactory
@@ -26,19 +27,6 @@ from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
-
-
-class LoggedInTestCase(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.tester = UserFactory()
-        cls.tester.set_password('password')
-        cls.tester.save()
-
-    def setUp(self):
-        super().setUp()
-        self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
-                          password='password')
 
 
 class TestVisitAndSearchGroupPage(LoggedInTestCase):
