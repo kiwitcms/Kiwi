@@ -201,3 +201,7 @@ class BaseCaseRun(BasePlanCase):
                                case_run_status=cls.case_run_status_idle,
                                case=case, sortkey=i * 10)
             for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1)]
+
+    def setUp(self):
+        super().setUp()
+        self.login_tester()
