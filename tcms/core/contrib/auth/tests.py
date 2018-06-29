@@ -11,14 +11,14 @@ from django.contrib.sites.models import Site
 from django.test import TestCase, override_settings
 
 from tcms import signals
-from .models import UserActivateKey
+from .models import UserActivationKey
 
 
 # ### Test cases for models ###
 
 
 class TestSetRandomKey(TestCase):
-    """Test case for UserActivateKey.set_random_key_for_user"""
+    """Test case for UserActivationKey.set_random_key_for_user"""
 
     @classmethod
     def setUpTestData(cls):
@@ -35,14 +35,14 @@ class TestSetRandomKey(TestCase):
         mock_datetime.datetime.today.return_value = now
         mock_datetime.timedelta.return_value = in_7_days
 
-        activation_key = UserActivateKey.set_random_key_for_user(self.new_user)
+        activation_key = UserActivationKey.set_random_key_for_user(self.new_user)
         self.assertEqual(self.new_user, activation_key.user)
         self.assertNotEqual('', activation_key.activation_key)
         self.assertEqual(now + in_7_days, activation_key.key_expires)
 
 
 class TestForceToSetRandomKey(TestCase):
-    """Test case for UserActivateKey.set_random_key_for_user forcely"""
+    """Test case for UserActivationKey.set_random_key_for_user forcely"""
 
     @classmethod
     def setUpTestData(cls):
@@ -50,11 +50,11 @@ class TestForceToSetRandomKey(TestCase):
             username='new-tester',
             email='new-tester@example.com',
             password='password')
-        cls.origin_activation_key = UserActivateKey.set_random_key_for_user(cls.new_user)
+        cls.origin_activation_key = UserActivationKey.set_random_key_for_user(cls.new_user)
 
     def test_set_random_key_forcely(self):
-        new_activation_key = UserActivateKey.set_random_key_for_user(self.new_user,
-                                                                     force=True)
+        new_activation_key = UserActivationKey.set_random_key_for_user(self.new_user,
+                                                                       force=True)
         self.assertEqual(self.origin_activation_key.user, new_activation_key.user)
         self.assertNotEqual(self.origin_activation_key.activation_key,
                             new_activation_key.activation_key)
@@ -120,7 +120,7 @@ class TestRegistration(TestCase):
         self.assertEqual('new-tester@example.com', user.email)
         self.assertFalse(user.is_active)
 
-        key = UserActivateKey.objects.get(user=user)
+        key = UserActivationKey.objects.get(user=user)
         self.assertEqual(self.fake_activate_key, key.activation_key)
 
         return response
@@ -225,7 +225,7 @@ class TestConfirm(TestCase):
 
         with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
             _secrets.token_hex.return_value = fake_activation_key
-            key = UserActivateKey.set_random_key_for_user(self.new_user)
+            key = UserActivationKey.set_random_key_for_user(self.new_user)
             key.key_expires = datetime.datetime.now() - datetime.timedelta(days=10)
             key.save()
 
@@ -243,7 +243,7 @@ class TestConfirm(TestCase):
 
         with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
             _secrets.token_hex.return_value = fake_activate_key
-            UserActivateKey.set_random_key_for_user(self.new_user)
+            UserActivationKey.set_random_key_for_user(self.new_user)
 
         confirm_url = reverse('tcms-confirm',
                               args=[fake_activate_key])
@@ -256,5 +256,5 @@ class TestConfirm(TestCase):
         # user account activated
         user = User.objects.get(username=self.new_user.username)
         self.assertTrue(user.is_active)
-        activate_key_deleted = not UserActivateKey.objects.filter(user=user).exists()
+        activate_key_deleted = not UserActivationKey.objects.filter(user=user).exists()
         self.assertTrue(activate_key_deleted)

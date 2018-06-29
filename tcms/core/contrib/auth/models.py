@@ -7,13 +7,10 @@ from django.db import models
 from django.conf import settings
 
 
-class UserActivateKey(models.Model):
+class UserActivationKey(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     activation_key = models.CharField(max_length=64, null=True, blank=True)
     key_expires = models.DateTimeField(null=True, blank=True)
-
-    class Meta:
-        db_table = u'tcms_user_activate_keys'
 
     @classmethod
     def set_random_key_for_user(cls, user, force=False):
