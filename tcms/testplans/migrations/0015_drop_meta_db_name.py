@@ -9,6 +9,8 @@ class Migration(migrations.Migration):
         ('testplans', '0014_remove_testplantext_checksum'),
     ]
 
+    atomic = False
+
     operations = [
         migrations.AlterModelTable(
             name='envplanmap',

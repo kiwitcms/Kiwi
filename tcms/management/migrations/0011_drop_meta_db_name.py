@@ -9,6 +9,8 @@ class Migration(migrations.Migration):
         ('management', '0010_remove_unused_fields_from_product'),
     ]
 
+    atomic = False
+
     operations = [
         migrations.AlterModelTable(
             name='build',

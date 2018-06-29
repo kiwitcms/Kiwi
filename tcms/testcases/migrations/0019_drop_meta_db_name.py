@@ -9,6 +9,8 @@ class Migration(migrations.Migration):
         ('testcases', '0018_remove_checksum_fields'),
     ]
 
+    atomic = False
+
     operations = [
         migrations.AlterModelOptions(
             name='testcasestatus',
