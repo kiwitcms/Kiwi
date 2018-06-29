@@ -1,4 +1,3 @@
-{% load extra_filters %}
 <form id="id_form_case_runs">
 <div class="mixbar"> 
 	<span class="tit" style='float:left'>Cases: {{ test_case_runs_count }}</span>
@@ -93,7 +92,7 @@
 				<select id="id_case_run_status" name="case_run_status__pk">
 					<option value="">--------</option>
 					{% for case_run_status in test_case_run_status %}
-					<option value="{{ case_run_status.pk }}" {% if case_run_status.pk is REQUEST_CONTENTS.case_run_status__pk|to_int %}selected="selected"{% endif %}>{{ case_run_status }}</option>
+					<option value="{{ case_run_status.pk }}" {% if case_run_status.pk|escape == REQUEST_CONTENTS.case_run_status__pk %}selected="selected"{% endif %}>{{ case_run_status }}</option>
 					{% endfor %}
 				</select>
 			</div>
@@ -102,7 +101,7 @@
 				<select id="id_priority" name="case__priority__pk">
 					<option value="">--------</option>
 					{% for priority in priorities %}
-					<option value="{{ priority.pk }}" {% if priority.pk == REQUEST_CONTENTS.case__priority__pk|to_int %}selected="selected"{% endif %}>{{ priority }}</option>
+					<option value="{{ priority.pk }}" {% if priority.pk|escape == REQUEST_CONTENTS.case__priority__pk %}selected="selected"{% endif %}>{{ priority }}</option>
 					{% endfor %}
 				</select>
 			</div>

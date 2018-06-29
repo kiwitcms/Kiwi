@@ -5,21 +5,6 @@ from django.contrib.messages import constants as messages
 register = template.Library()
 
 
-@register.filter(name='to_int')
-def to_int(obj):
-    """
-        Returns int representation. Use in only 2 places where
-        we compare query string parameter with a current value to
-        determine if an <option> is selected!
-
-        NOTE: We can get rid of this once REQUEST_CONTENTS is gone!
-    """
-    try:
-        return int(obj)
-    except ValueError:
-        return obj
-
-
 @register.filter(name='message_icon')
 def message_icon(msg):
     """

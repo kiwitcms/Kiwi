@@ -1,6 +1,6 @@
 {% extends "tcms_base.html" %}
 {% load static %}
-{% load i18n admin_modify ifin %}
+{% load i18n %}
 
 {% block subtitle %}Edit Environment group{% endblock %}
 
@@ -58,7 +58,7 @@ Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 					<div class="selectgroup">
 						<select id="id_properties" name="selected_property_ids" multiple="multiple">
 							{% for property in properties %}
-							<option value="{{ property.id }}" {% ifin property selected_properties %}selected{% endifin %}>{{ property.name }}</option>
+							<option value="{{ property.id }}" {% if property in selected_properties %}selected{% endif %}>{{ property.name }}</option>
 							{% endfor %}
 						</select>
 					</div>

@@ -1,5 +1,4 @@
 {% load static %}
-{% load testcase_tags %}
 <form id="js-cases-nav-form" action="{% url "testcases-all" %}" method="get">
 	<input type="hidden" name="case_sort_by" value="{{ REQUEST_CONTENTS.case_sort_by }}" />
 	<input type="hidden" name="plan" value="{{ REQUEST_CONTENTS.from_plan }}" />
