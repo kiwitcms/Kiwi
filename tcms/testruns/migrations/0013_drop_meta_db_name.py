@@ -9,6 +9,8 @@ class Migration(migrations.Migration):
         ('testruns', '0012_drop_fields_from_testcaserunstatus'),
     ]
 
+    atomic = False
+
     operations = [
         migrations.AlterModelTable(
             name='envrunvaluemap',

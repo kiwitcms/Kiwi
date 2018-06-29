@@ -9,6 +9,8 @@ class Migration(migrations.Migration):
         ('profiles', '0002_remove_unused_models'),
     ]
 
+    atomic = False
+
     operations = [
         migrations.AlterModelTable(
             name='bookmark',
