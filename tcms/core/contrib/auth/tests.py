@@ -80,13 +80,13 @@ class TestLogout(TestCase):
             username=self.tester.username,
             password='password')
         response = self.client.get(self.logout_url, follow=True)
-        self.assertRedirects(response, reverse('tcms-login'))
+        self.assertRedirects(response, reverse('tcms-login') + '?next=/')
 
     def test_logout_then_goto_next(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        next_url = reverse('plans-all')
+        next_url = reverse('tcms-login') + '?next=' + reverse('plans-all')
         response = self.client.get(self.logout_url, {'next': next_url}, follow=True)
         self.assertRedirects(response, next_url)
 
