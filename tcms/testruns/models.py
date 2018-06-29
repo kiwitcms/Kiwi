@@ -66,7 +66,6 @@ class TestRun(TCMSActionModel):
     auto_update_run_status = models.BooleanField(default=False)
 
     class Meta:
-        db_table = u'test_runs'
         unique_together = ('run_id', 'product_version')
 
     def __str__(self):
@@ -319,9 +318,6 @@ class TestCaseRunStatus(TCMSActionModel):
     id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
 
-    class Meta:
-        db_table = u'test_case_run_status'
-
     def __str__(self):
         return self.name
 
@@ -416,7 +412,6 @@ class TestCaseRun(TCMSActionModel):
     environment_id = models.IntegerField(default=0)
 
     class Meta:
-        db_table = u'test_case_runs'
         unique_together = ('case', 'run', 'case_text_version')
 
     def links(self):
@@ -512,22 +507,15 @@ class TestRunTag(models.Model):
     run = models.ForeignKey(TestRun, related_name='tags', on_delete=models.CASCADE)
     user = models.IntegerField(db_column='userid', default='0')
 
-    class Meta:
-        db_table = u'test_run_tags'
-
 
 class TestRunCC(models.Model):
     run = models.ForeignKey(TestRun, related_name='cc_list', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
 
     class Meta:
-        db_table = u'test_run_cc'
         unique_together = ('run', 'user')
 
 
 class EnvRunValueMap(models.Model):
     run = models.ForeignKey(TestRun, on_delete=models.CASCADE)
     value = models.ForeignKey('management.EnvValue', on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = u'tcms_env_run_value_map'

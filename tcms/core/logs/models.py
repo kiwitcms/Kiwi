@@ -19,7 +19,6 @@ class TCMSLogModel(TCMSContentTypeBaseModel):
 
     class Meta:
         abstract = False
-        db_table = u'tcms_logs'
         index_together = (('content_type', 'object_pk', 'site'),)
 
     def __str__(self):

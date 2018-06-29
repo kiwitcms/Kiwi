@@ -15,9 +15,6 @@ class UserProfile(models.Model):
     address = models.TextField(blank=True, default='')
     notes = models.TextField(blank=True, default='')
 
-    class Meta:
-        db_table = u'tcms_user_profiles'
-
     def get_im(self):
         # to avoid circular imports
         from .forms import IM_CHOICES
@@ -44,9 +41,6 @@ class BookmarkCategory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=1024)
 
-    class Meta:
-        db_table = u'tcms_bookmark_categories'
-
     def __str__(self):
         return self.name
 
@@ -60,7 +54,6 @@ class Bookmark(TCMSContentTypeBaseModel):
     url = models.CharField(max_length=8192)
 
     class Meta:
-        db_table = u'tcms_bookmarks'
         index_together = (('content_type', 'object_pk', 'site'),)
 
     def __str__(self):
