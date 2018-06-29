@@ -11,12 +11,21 @@ from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import UserFactory
 
 
 class TestingReportTestCase(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.product = ProductFactory()
+        cls.tester = UserFactory()
+        cls.tester.set_password('password')
+        cls.tester.save()
+
+    def setUp(self):
+        super().setUp()
+        self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
+                          password='password')
 
     def test_report_view_loads(self):
         url = reverse('testing-report')
