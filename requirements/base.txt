@@ -1,5 +1,6 @@
 Django==2.0.6
 django-attachments>=1.3
+django-glrm
 django-grappelli
 django-vinaigrette
 django-uuslug
