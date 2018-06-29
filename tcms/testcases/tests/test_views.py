@@ -46,7 +46,6 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
     def test_user_in_default_group_sees_comments(self):
         # test for https://github.com/kiwitcms/Kiwi/issues/74
         initiate_user_with_default_setups(self.tester)
-        self.login_tester()
 
         url = reverse('caserun-detail-pane', args=[self.case_run_1.case_id])
         response = self.client.get(
@@ -524,24 +523,19 @@ class TestEditCase(BasePlanCase):
         }
 
     def test_404_if_case_id_not_exist(self):
-        self.login_tester()
         url = reverse('testcases-edit', args=[99999])
         response = self.client.get(url)
         self.assert404(response)
 
     def test_404_if_from_plan_not_exist(self):
-        self.login_tester()
         response = self.client.get(self.case_edit_url, {'from_plan': 9999})
         self.assert404(response)
 
     def test_show_edit_page(self):
-        self.login_tester()
         response = self.client.get(self.case_edit_url)
         self.assertEqual(200, response.status_code)
 
     def test_edit_a_case(self):
-        self.login_tester()
-
         edit_data = self.edit_data.copy()
         new_summary = 'Edited: {0}'.format(self.case_1.summary)
         edit_data['summary'] = new_summary
@@ -558,8 +552,6 @@ class TestEditCase(BasePlanCase):
         self.assertEqual(new_summary, edited_case.summary)
 
     def test_continue_edit_this_case_after_save(self):
-        self.login_tester()
-
         edit_data = self.edit_data.copy()
         edit_data['_continue'] = 'continue edit'
 
@@ -572,8 +564,6 @@ class TestEditCase(BasePlanCase):
         self.assertRedirects(response, redirect_url)
 
     def test_continue_edit_next_confirmed_case_after_save(self):
-        self.login_tester()
-
         edit_data = self.edit_data.copy()
         edit_data['_continuenext'] = 'continue edit next case'
 
@@ -586,8 +576,6 @@ class TestEditCase(BasePlanCase):
         self.assertRedirects(response, redirect_url)
 
     def test_continue_edit_next_non_confirmed_case_after_save(self):
-        self.login_tester()
-
         edit_data = self.edit_data.copy()
         edit_data['case_status'] = self.case_status_proposed.pk
         edit_data['_continuenext'] = 'continue edit next case'
@@ -601,8 +589,6 @@ class TestEditCase(BasePlanCase):
         self.assertRedirects(response, redirect_url)
 
     def test_return_to_plan_confirmed_cases_tab(self):
-        self.login_tester()
-
         edit_data = self.edit_data.copy()
         edit_data['_returntoplan'] = 'return to plan'
 
@@ -614,8 +600,6 @@ class TestEditCase(BasePlanCase):
         self.assertRedirects(response, redirect_url, target_status_code=301)
 
     def test_return_to_plan_review_cases_tab(self):
-        self.login_tester()
-
         edit_data = self.edit_data.copy()
         edit_data['case_status'] = self.case_status_proposed.pk
         edit_data['_returntoplan'] = 'return to plan'
@@ -685,8 +669,6 @@ class TestChangeCasesAutomated(BasePlanCase):
         cls.change_url = reverse('testcases-automated')
 
     def test_update_automated(self):
-        self.login_tester()
-
         change_data = self.change_data.copy()
         change_data['o_is_automated'] = 'on'
 
@@ -699,8 +681,6 @@ class TestChangeCasesAutomated(BasePlanCase):
             self.assertEqual(1, case.is_automated)
 
     def test_update_manual(self):
-        self.login_tester()
-
         change_data = self.change_data.copy()
         change_data['o_is_manual'] = 'on'
 
@@ -713,8 +693,6 @@ class TestChangeCasesAutomated(BasePlanCase):
             self.assertEqual(0, case.is_automated)
 
     def test_update_automated_proposed(self):
-        self.login_tester()
-
         change_data = self.change_data.copy()
         change_data['o_is_automated_proposed'] = 'on'
 
@@ -803,16 +781,12 @@ class TestCloneCase(BasePlanCase):
         cls.clone_url = reverse('testcases-clone')
 
     def test_refuse_if_missing_argument(self):
-        self.login_tester()
-
         # Refuse to clone cases if missing selectAll and case arguments
         response = self.client.get(self.clone_url, {}, follow=True)
 
         self.assertContains(response, 'At least one TestCase is required')
 
     def test_show_clone_page_with_from_plan(self):
-        self.login_tester()
-
         response = self.client.get(self.clone_url,
                                    {'from_plan': self.plan.pk,
                                     'case': [self.case_1.pk, self.case_2.pk]})
@@ -835,8 +809,6 @@ class TestCloneCase(BasePlanCase):
                 html=True)
 
     def test_show_clone_page_without_from_plan(self):
-        self.login_tester()
-
         response = self.client.get(self.clone_url, {'case': self.case_1.pk})
 
         self.assertNotContains(
