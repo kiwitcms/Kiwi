@@ -28,32 +28,40 @@ from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 
 
-class TestVisitAndSearchGroupPage(TestCase):
+class LoggedInTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.tester = UserFactory()
+        cls.tester.set_password('password')
+        cls.tester.save()
+
+    def setUp(self):
+        super().setUp()
+        self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
+                          password='password')
+
+
+class TestVisitAndSearchGroupPage(LoggedInTestCase):
     """Test case for opening group page"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestVisitAndSearchGroupPage, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.group_url = reverse('mgmt-environment_groups')
 
-        cls.new_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='new-tester',
-            email='new-tester@example.com',
-            password='password')
-
         cls.group_1 = EnvGroupFactory(name='rhel-7',
-                                      manager=cls.new_tester,
+                                      manager=cls.tester,
                                       modified_by=None)
         cls.group_2 = EnvGroupFactory(name='fedora',
-                                      manager=cls.new_tester,
+                                      manager=cls.tester,
                                       modified_by=None)
 
-        cls.group_1.log_action(who=cls.new_tester,
+        cls.group_1.log_action(who=cls.tester,
                                action='Add group {}'.format(cls.group_1.name))
-        cls.group_1.log_action(who=cls.new_tester,
+        cls.group_1.log_action(who=cls.tester,
                                action='Edit group {}'.format(cls.group_1.name))
-        cls.group_2.log_action(who=cls.new_tester,
+        cls.group_2.log_action(who=cls.tester,
                                action='Edit group {}'.format(cls.group_2.name))
 
         cls.property_1 = EnvPropertyFactory()
@@ -68,7 +76,7 @@ class TestVisitAndSearchGroupPage(TestCase):
         EnvGroupPropertyMapFactory(group=cls.group_2, property=cls.property_3)
 
     def tearDown(self):
-        remove_perm_from_user(self.new_tester, 'management.change_envgroup')
+        remove_perm_from_user(self.tester, 'management.change_envgroup')
 
     def assert_group_logs_are_displayed(self, response, group):
         env_group_ct = ContentType.objects.get_for_model(EnvGroup)
@@ -97,11 +105,7 @@ class TestVisitAndSearchGroupPage(TestCase):
             self.assert_group_logs_are_displayed(response, group)
 
     def test_visit_group_page_with_permission(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.new_tester.username,
-            password='password')
-
-        user_should_have_perm(self.new_tester, 'management.change_envgroup')
+        user_should_have_perm(self.tester, 'management.change_envgroup')
         group_edit_url = reverse('mgmt-environment_group_edit')
 
         response = self.client.get(self.group_url)
@@ -133,19 +137,15 @@ class TestVisitAndSearchGroupPage(TestCase):
                                 html=True)
 
 
-class TestAddGroup(TestCase):
+class TestAddGroup(LoggedInTestCase):
     """Test case for adding a group"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestAddGroup, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.group_add_url = reverse('mgmt-environment_groups')
 
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='new-tester',
-            email='new-tester@example.com',
-            password='password')
         cls.new_group_name = 'nitrate-dev'
 
         cls.permission = 'management.add_envgroup'
@@ -161,10 +161,6 @@ class TestAddGroup(TestCase):
             {'rc': 1, 'response': 'Permission denied.'})
 
     def test_missing_group_name(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester,
-            password='password')
-
         response = self.client.get(self.group_add_url, {'action': 'add'})
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
@@ -176,9 +172,6 @@ class TestAddGroup(TestCase):
             {'rc': 1, 'response': 'Environment group name is required.'})
 
     def test_add_a_new_group(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester,
-            password='password')
         response = self.client.get(self.group_add_url,
                                    {'action': 'add', 'name': self.new_group_name})
 
@@ -200,10 +193,6 @@ class TestAddGroup(TestCase):
                          log.action)
 
     def test_add_existing_group(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester,
-            password='password')
-
         self.client.get(self.group_add_url,
                         {'action': 'add', 'name': self.new_group_name})
 
@@ -216,20 +205,16 @@ class TestAddGroup(TestCase):
         )
 
 
-class TestDeleteGroup(TestCase):
+class TestDeleteGroup(LoggedInTestCase):
     """Test case for deleting a group"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestDeleteGroup, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.group_delete_url = reverse('mgmt-environment_groups')
         cls.permission = 'management.delete_envgroup'
 
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='tester',
-            email='tester@exmaple.com',
-            password='password')
         cls.group_manager = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
             username='group-manager',
             email='manager@example.com',
@@ -259,9 +244,6 @@ class TestDeleteGroup(TestCase):
             EnvGroup.objects.filter(pk=self.group_nitrate.pk).exists())
 
     def test_missing_permission_when_delete_by_non_manager(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': self.group_nitrate.pk})
         self.assertJSONEqual(
@@ -270,10 +252,6 @@ class TestDeleteGroup(TestCase):
 
     def test_delete_group_by_non_manager(self):
         user_should_have_perm(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': self.group_fedora.pk})
 
@@ -285,25 +263,16 @@ class TestDeleteGroup(TestCase):
             EnvGroup.objects.filter(pk=self.group_fedora.pk).exists())
 
     def test_return_404_if_delete_a_nonexisting_group(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': 9999999999})
         self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_return_404_if_no_id(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del'})
         self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_response_when_id_not_an_int(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': 'NOT_AN_INT'})
 
@@ -312,17 +281,12 @@ class TestDeleteGroup(TestCase):
         self.assertEqual(result['response'], 'id must be an integer.')
 
 
-class TestModifyGroup(TestCase):
+class TestModifyGroup(LoggedInTestCase):
     """Test case for modifying a group"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestModifyGroup, cls).setUpTestData()
-
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='tester',
-            email='tester@exmaple.com',
-            password='password')
+        super().setUpTestData()
 
         cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
 
@@ -343,9 +307,6 @@ class TestModifyGroup(TestCase):
 
     def test_refuse_invalid_status_value(self):
         user_should_have_perm(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
 
         # Status value is not valid as long as it's not 0 or 1.
         for invalid_status in ('true', 'false', 'yes', 'no', '2'):
@@ -359,10 +320,6 @@ class TestModifyGroup(TestCase):
 
     def test_404_if_group_pk_not_exist(self):
         user_should_have_perm(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_modify_url,
                                    {'action': 'modify',
                                     'id': 999999999,
@@ -371,10 +328,6 @@ class TestModifyGroup(TestCase):
 
     def test_disable_a_group(self):
         user_should_have_perm(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         self.client.get(self.group_modify_url,
                         {'action': 'modify',
                          'id': self.group_nitrate.pk,
@@ -384,17 +337,13 @@ class TestModifyGroup(TestCase):
         self.assertFalse(group.is_active)
 
 
-class TestVisitEnvironmentGroupPage(TestCase):
+class TestVisitEnvironmentGroupPage(LoggedInTestCase):
     """Test case for visiting environment group page"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestVisitEnvironmentGroupPage, cls).setUpTestData()
+        super().setUpTestData()
 
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='tester',
-            email='tester@example.com',
-            password='password')
         user_should_have_perm(cls.tester, 'management.change_envgroup')
 
         cls.group_edit_url = reverse('mgmt-environment_group_edit')
@@ -404,24 +353,14 @@ class TestVisitEnvironmentGroupPage(TestCase):
                                              manager=cls.tester)
 
     def test_404_when_missing_group_id(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
         response = self.client.get(self.group_edit_url)
         self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_404_if_group_id_not_exist(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
         response = self.client.get(self.group_edit_url, {'id': 9999999})
         self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
     def test_visit_a_group(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_edit_url, {'id': self.group_nitrate.pk})
 
         self.assertContains(
@@ -435,10 +374,6 @@ class TestVisitEnvironmentGroupPage(TestCase):
             html=True)
 
     def test_visit_disabled_group(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_edit_url, {'id': self.disabled_group.pk})
 
         self.assertContains(
@@ -452,17 +387,13 @@ class TestVisitEnvironmentGroupPage(TestCase):
             html=True)
 
 
-class TestEditEnvironmentGroup(TestCase):
+class TestEditEnvironmentGroup(LoggedInTestCase):
     """Test case for editing environment group"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestEditEnvironmentGroup, cls).setUpTestData()
+        super().setUpTestData()
 
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='tester',
-            email='tester@example.com',
-            password='password')
         user_should_have_perm(cls.tester, 'management.change_envgroup')
 
         cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
@@ -475,10 +406,6 @@ class TestEditEnvironmentGroup(TestCase):
         cls.group_edit_url = reverse('mgmt-environment_group_edit')
 
     def test_refuse_if_there_is_duplicate_group_name(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_edit_url, {
             'action': 'modify',
             'id': self.group_nitrate.pk,
@@ -489,10 +416,6 @@ class TestEditEnvironmentGroup(TestCase):
         self.assertContains(response, 'Environment group with the same name already exists')
 
     def test_edit_group(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         new_group_name = 'nitrate-dev'
         self.client.get(self.group_edit_url, {
             'action': 'modify',
@@ -511,33 +434,25 @@ class TestEditEnvironmentGroup(TestCase):
             group_id=self.group_nitrate.pk, property_id=self.property_2.pk).exists())
 
 
-class TestAddProperty(TestCase):
+class TestAddProperty(LoggedInTestCase):
     """Test case for adding properties to a group"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestAddProperty, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.permission = 'management.add_envproperty'
         cls.group_properties_url = reverse('mgmt-environment_properties')
-
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='tester',
-            email='tester@example.com',
-            password='password')
 
         cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
         cls.duplicate_property = EnvPropertyFactory(name='f26')
 
     def setUp(self):
+        super().setUp()
         user_should_have_perm(self.tester, self.permission)
 
     def test_refuse_if_missing_permission(self):
         remove_perm_from_user(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url, {'action': 'add'})
 
         self.assertJSONEqual(
@@ -545,10 +460,6 @@ class TestAddProperty(TestCase):
             {'rc': 1, 'response': 'Permission denied'})
 
     def test_refuse_if_missing_property_name(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url, {'action': 'add'})
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
@@ -561,10 +472,6 @@ class TestAddProperty(TestCase):
             {'rc': 1, 'response': 'Property name is required'})
 
     def test_refuse_to_create_duplicate_property(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         request_data = {
             'action': 'add',
             'name': self.duplicate_property.name,
@@ -581,10 +488,6 @@ class TestAddProperty(TestCase):
             expected_result)
 
     def test_add_new_property(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         new_property_name = 'f24'
         request_data = {
             'action': 'add',
@@ -600,32 +503,23 @@ class TestAddProperty(TestCase):
             {'rc': 0, 'response': 'ok', 'name': new_property_name, 'id': new_property.pk})
 
 
-class TestEditProperty(TestCase):
+class TestEditProperty(LoggedInTestCase):
     """Test case for editing a property"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestEditProperty, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.permission = 'management.change_envproperty'
         cls.group_properties_url = reverse('mgmt-environment_properties')
-
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='tester',
-            email='tester@example.com',
-            password='password')
-
         cls.property = EnvPropertyFactory(name='f26')
 
     def setUp(self):
+        super().setUp()
         user_should_have_perm(self.tester, self.permission)
 
     def test_refuse_if_missing_permission(self):
         remove_perm_from_user(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url,
                                    {'action': 'edit', 'id': self.property.pk})
         self.assertJSONEqual(
@@ -633,10 +527,6 @@ class TestEditProperty(TestCase):
             {'rc': 1, 'response': 'Permission denied'})
 
     def test_refuse_if_missing_property_id(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url, {'action': 'edit'})
 
         self.assertJSONEqual(
@@ -644,10 +534,6 @@ class TestEditProperty(TestCase):
             {'rc': 1, 'response': 'ID is required'})
 
     def test_refuse_if_property_id_not_exist(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url,
                                    {'action': 'edit', 'id': 999999999})
 
@@ -656,10 +542,6 @@ class TestEditProperty(TestCase):
             {'rc': 1, 'response': 'ID does not exist.'})
 
     def test_edit_a_property(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         new_property_name = 'fedora-24'
         response = self.client.get(self.group_properties_url,
                                    {'action': 'edit',
@@ -674,20 +556,15 @@ class TestEditProperty(TestCase):
         self.assertEqual(new_property_name, property.name)
 
 
-class TestEnableDisableProperty(TestCase):
+class TestEnableDisableProperty(LoggedInTestCase):
     """Test case for modifying a property"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestEnableDisableProperty, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.permission = 'management.change_envproperty'
         cls.group_properties_url = reverse('mgmt-environment_properties')
-
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='tester',
-            email='tester@example.com',
-            password='password')
 
         cls.group_nitrate = EnvGroupFactory(name='nitrate')
 
@@ -708,24 +585,17 @@ class TestEnableDisableProperty(TestCase):
                                    property=cls.disabled_property_2)
 
     def setUp(self):
+        super().setUp()
         user_should_have_perm(self.tester, self.permission)
 
     def test_refuse_if_missing_permission(self):
         remove_perm_from_user(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url,
                                    {'action': 'modify', 'id': self.property_os.pk})
 
         self.assertContains(response, 'Permission denied')
 
     def test_refuse_if_status_is_illegal(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         for illegal_status in ('yes', 'no', '2', '-1'):
             response = self.client.get(self.group_properties_url,
                                        {'action': 'modify',
@@ -746,10 +616,6 @@ class TestEnableDisableProperty(TestCase):
                     property=self.property_lang).exists())
 
     def test_enable_a_property(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url,
                                    {'action': 'modify',
                                     'id': [self.disabled_property_1.pk,
@@ -768,10 +634,6 @@ class TestEnableDisableProperty(TestCase):
             EnvProperty.objects.get(pk=self.disabled_property_2.pk).is_active)
 
     def test_disable_a_property(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
         response = self.client.get(self.group_properties_url,
                                    {'action': 'modify',
                                     'id': [self.property_os.pk,
