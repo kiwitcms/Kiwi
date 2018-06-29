@@ -874,7 +874,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView,
         caserun_logs = self.get_case_run_logs(case_run)
 
         caserun_status = TestCaseRunStatus.objects.values('pk', 'name')
-        caserun_status = caserun_status.order_by('sortkey')
+        caserun_status = caserun_status.order_by('pk')
         bugs = group_case_bugs(case_run.case.get_bugs().order_by('bug_id'))
 
         data.update({

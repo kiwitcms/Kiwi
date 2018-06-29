@@ -318,9 +318,6 @@ class TestCaseRunStatus(TCMSActionModel):
 
     id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
-    sortkey = models.IntegerField(null=True, blank=True, default=0)
-    description = models.TextField(null=True, blank=True)
-    auto_blinddown = models.BooleanField(default=True)
 
     class Meta:
         db_table = u'test_case_run_status'

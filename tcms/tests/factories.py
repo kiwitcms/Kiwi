@@ -411,7 +411,7 @@ class TestCaseRunFactory(DjangoModelFactory):
     sortkey = factory.Sequence(lambda n: n)
     run = factory.SubFactory(TestRunFactory)
     case = factory.SubFactory(TestCaseFactory)
-    case_run_status = factory.LazyFunction(lambda: TestCaseRunStatus.objects.all()[0:1][0])
+    case_run_status = factory.LazyFunction(lambda: TestCaseRunStatus.objects.order_by('pk').first())
     build = factory.SubFactory(BuildFactory)
 
 
