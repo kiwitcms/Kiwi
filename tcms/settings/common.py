@@ -127,14 +127,6 @@ PUBLIC_VIEWS = [
 ]
 
 
-# Cache backend - not used ATM!
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~ DANGER: Don't change the settings below!
 

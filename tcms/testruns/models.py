@@ -311,10 +311,6 @@ class TestRun(TCMSActionModel):
                                          failure_percent)
 
 
-# FIXME: replace TestCaseRunStatus' internal cache with Django's cache
-# machanism
-
-
 class TestCaseRunStatus(TCMSActionModel):
     complete_status_names = ('PASSED', 'ERROR', 'FAILED', 'WAIVED')
     failure_status_names = ('ERROR', 'FAILED')
