@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils import request_host_link
 from tcms.core.utils.mailto import mailto
-from tcms.core.contrib.auth.models import UserActivateKey
+from tcms.core.contrib.auth.models import UserActivationKey
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
 
@@ -39,7 +39,7 @@ class RegistrationForm(UserCreationForm):
         return user
 
     def set_activation_key(self):
-        return UserActivateKey.set_random_key_for_user(user=self.instance)
+        return UserActivationKey.set_random_key_for_user(user=self.instance)
 
     def send_confirm_mail(self, request, activation_key):
         current_site = Site.objects.get_current()

@@ -14,7 +14,7 @@ from django.views.decorators.http import require_http_methods
 from tcms.signals import USER_REGISTERED_SIGNAL
 from tcms.core.contrib.auth import get_using_backend
 from tcms.core.contrib.auth.forms import RegistrationForm
-from tcms.core.contrib.auth.models import UserActivateKey
+from tcms.core.contrib.auth.models import UserActivationKey
 
 
 @require_http_methods(['GET', 'POST'])
@@ -86,9 +86,9 @@ def confirm(request, activation_key):
 
     # Get the object
     try:
-        _activation_key = UserActivateKey.objects.select_related('user')
+        _activation_key = UserActivationKey.objects.select_related('user')
         _activation_key = _activation_key.get(activation_key=activation_key)
-    except UserActivateKey.DoesNotExist:
+    except UserActivationKey.DoesNotExist:
         messages.add_message(
             request,
             messages.ERROR,
