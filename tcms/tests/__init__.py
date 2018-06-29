@@ -148,6 +148,13 @@ class BasePlanCase(HelperAssertions, test.TestCase):
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
 
+    def setUp(self):
+        """
+            Login because by default we have GlobalLoginRequiredMiddleware enabled!
+        """
+        super().setUp()
+        self.login_tester()
+
     def login_tester(self, user=None, password=None):
         """Login tester user for test
 
@@ -201,7 +208,3 @@ class BaseCaseRun(BasePlanCase):
                                case_run_status=cls.case_run_status_idle,
                                case=case, sortkey=i * 10)
             for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1)]
-
-    def setUp(self):
-        super().setUp()
-        self.login_tester()

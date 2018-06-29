@@ -13,7 +13,6 @@ class TestAddCasesToRuns(BaseCaseRun):
 
     def test_view_loads_fine(self):
         initiate_user_with_default_setups(self.tester)
-        self.login_tester()
 
         url = reverse('plan-choose_run', args=[self.plan.pk])
         response = self.client.get(url, follow=True)

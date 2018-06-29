@@ -233,7 +233,7 @@ class Test_TestCaseUpdateActions(BasePlanCase):
         initiate_user_with_default_setups(cls.tester)
 
     def setUp(self):
-        self.login_tester()
+        super().setUp()
         self._assert_default_tester_is(None)
 
     def test_update_default_tester_via_username(self):
