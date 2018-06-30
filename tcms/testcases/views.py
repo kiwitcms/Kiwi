@@ -322,11 +322,9 @@ def calculate_for_testcases(plan, testcases):
         data = sortkey_tcpkan_pks.get(tc.pk, None)
         if data:
             setattr(tc, 'cal_sortkey', data['sortkey'])
-        else:
-            setattr(tc, 'cal_sortkey', None)
-        if data:
             setattr(tc, 'cal_testcaseplan_pk', data['testcaseplan_pk'])
         else:
+            setattr(tc, 'cal_sortkey', None)
             setattr(tc, 'cal_testcaseplan_pk', None)
         setattr(tc, 'cal_num_bugs', num_bugs.get(tc.pk, None))
 
