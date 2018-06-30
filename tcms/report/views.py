@@ -2,7 +2,7 @@
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
-from django.db.models import Count
+from django.db.models import Count, OuterRef, Subquery
 from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import TemplateView
@@ -12,7 +12,6 @@ from .forms import CustomSearchDetailsForm
 from tcms.management.models import Priority
 from tcms.management.models import Product
 from tcms.testruns.models import TestRun, TestCaseRunStatus, TestCaseRun
-from tcms.core.utils.raw_sql import RawSQL
 from tcms.report.forms import TestingReportForm
 from tcms.report.forms import TestingReportCaseRunsListForm
 from tcms.report.data import CustomDetailsReportData
@@ -33,13 +32,12 @@ from tcms.search import fmt_queries, remove_from_request_path
 
 def overall(request, template_name='report/list.html'):
     """Overall of products report"""
-    products = Product.objects.all()
-
-    products = products.extra(select={
-        'plans_count': RawSQL.index_product_plans_count,
-        'runs_count': RawSQL.index_product_runs_count,
-        'cases_count': RawSQL.index_product_cases_count,
-    })
+    cases_count_query = Product.objects.filter(pk=OuterRef('pk')) \
+                                       .annotate(cases_num=Count('plan__case')) \
+                                       .values('cases_num')
+    products = Product.objects.annotate(plans_count=Count('plan', distinct=True),
+                                        runs_count=Count('plan__run', distinct=True),
+                                        cases_count=Subquery(cases_count_query))
 
     context_data = {
         'products': products
