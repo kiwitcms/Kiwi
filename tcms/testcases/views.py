@@ -23,15 +23,13 @@ from django_comments.models import Comment
 
 from tcms.core.utils import form_errors_to_list
 from tcms.core.logs.models import TCMSLogModel
-from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils import DataTableResult
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
 from tcms.testcases import data
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCasePlan, BugSystem, \
-    Bug, TestCaseText, TestCaseComponent
+    TestCasePlan, BugSystem, TestCaseText, TestCaseComponent
 from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -290,17 +288,6 @@ def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
     }) for item in qs])
 
 
-def calculate_number_of_bugs_for_testcases(tc_ids):
-    """Calculate the number of bugs for each TestCase
-
-    Arguments:
-    - tc_ids: a list of tuple of TestCases' IDs
-    """
-    qs = Bug.objects.filter(case__in=tc_ids)
-    qs = qs.values('case').annotate(total_count=Count('pk'))
-    return dict([(item['case'], item['total_count']) for item in qs])
-
-
 def calculate_for_testcases(plan, testcases):
     """Calculate extra data for TestCases
 
@@ -315,18 +302,18 @@ def calculate_for_testcases(plan, testcases):
     tc_ids = [tc.pk for tc in testcases]
     sortkey_tcpkan_pks = get_testcaseplan_sortkey_pk_for_testcases(
         plan, tc_ids)
-    num_bugs = calculate_number_of_bugs_for_testcases(tc_ids)
 
     # FIXME: strongly recommended to upgrade to Python +2.6
     for tc in testcases:
         data = sortkey_tcpkan_pks.get(tc.pk, None)
         if data:
+            # todo: these properties appear to be redundant since the same
+            # info should be available from the tc query
             setattr(tc, 'cal_sortkey', data['sortkey'])
             setattr(tc, 'cal_testcaseplan_pk', data['testcaseplan_pk'])
         else:
             setattr(tc, 'cal_sortkey', None)
             setattr(tc, 'cal_testcaseplan_pk', None)
-        setattr(tc, 'cal_num_bugs', num_bugs.get(tc.pk, None))
 
     return testcases
 
@@ -920,10 +907,7 @@ def get(request, case_id):
     tcrs = tc.case_run.select_related(
         'run', 'tested_by',
         'assignee', 'case',
-        'case', 'case_run_status').all()
-    tcrs = tcrs.extra(select={
-        'num_bug': RawSQL.num_case_run_bugs,
-    }).order_by('run__plan')
+        'case', 'case_run_status').order_by('run__plan')
     runs_ordered_by_plan = itertools.groupby(tcrs, lambda t: t.run.plan)
     # FIXME: Just don't know why Django template does not evaluate a generator,
     # and had to evaluate the groupby generator manually like below.

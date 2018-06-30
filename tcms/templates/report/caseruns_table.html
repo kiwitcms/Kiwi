@@ -10,7 +10,6 @@
 			<th width="150">Automated </th>
 			<th width="100">Category</th>
 			<th width="60">Priority</th>
-			{#<th width="40">Bugs</th>#}
 			<th width="50" style='text-align:center'>Status</th>
 			<th width="40">Sort</th>
 		</tr>
@@ -40,7 +39,6 @@
 			<td>{{ test_case_run.case.get_is_automated_status }}</td>
 			<td>{{ test_case_run.case.category }}</td>
 			<td>{{ priority_value }}</td>
-			{#<td><span id="{{ test_case_run.pk }}_case_bug_count" {% if test_case_run.num_bug %}class="have_bug"{% endif %}>{{ test_case_run.num_bug }}</span></td>#}
 			<td class="expandable center">
 				<img border="0" alt="" class="icon_status btn_{{ status_name.lower }}" />
 			</td>
