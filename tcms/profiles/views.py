@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_http_methods
@@ -13,7 +13,6 @@ from django.views.decorators.http import require_GET
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.core.utils.raw_sql import RawSQL
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 from tcms.profiles.models import Bookmark
@@ -112,9 +111,7 @@ def dashboard(request):
     tps = TestPlan.objects.filter(Q(author=request.user) | Q(owner=request.user))
     tps = tps.order_by('-plan_id')
     tps = tps.select_related('product', 'type')
-    tps = tps.extra(select={
-        'num_runs': RawSQL.num_runs,
-    })
+    tps = tps.annotate(num_runs=Count('run', distinct=True))
     tps_active = tps.filter(is_active=True)
     trs = TestRun.list(runs_query)
     latest_fifteen_testruns = trs.order_by('-run_id')[:15]

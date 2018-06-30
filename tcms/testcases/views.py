@@ -664,7 +664,6 @@ def ajax_search(request, template_name='case/common/json_cases.txt'):
         'default_tester__id',
         'default_tester__username'
     )
-    tcs = tcs.extra(select={'num_bug': RawSQL.num_case_bugs, })
 
     # columnIndexNameMap is required for correct sorting behavior, 5 should be
     # product, but we use run.build.product
