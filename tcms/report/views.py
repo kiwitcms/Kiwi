@@ -12,7 +12,7 @@ from .forms import CustomSearchDetailsForm
 from tcms.management.models import Priority
 from tcms.management.models import Product
 from tcms.testruns.models import TestRun, TestCaseRunStatus, TestCaseRun
-from tcms.core.utils.raw_sql import ReportSQL as RawSQL
+from tcms.core.utils.raw_sql import RawSQL
 from tcms.report.forms import TestingReportForm
 from tcms.report.forms import TestingReportCaseRunsListForm
 from tcms.report.data import CustomDetailsReportData

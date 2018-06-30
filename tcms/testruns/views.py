@@ -28,7 +28,6 @@ from django_comments.models import Comment
 
 from tcms.core.utils import clean_request
 from tcms.core.utils import DataTableResult
-from tcms.core.utils.raw_sql import RawSQL
 from tcms.core.utils.validations import validate_bug_id
 from tcms.management.models import Priority, EnvValue, Tag
 from tcms.search.forms import RunForm
@@ -484,9 +483,9 @@ def open_run_get_case_runs(request, run):
                      'case__category__name')
     # Get the bug count for each case run
     # 5. have to show the number of bugs of each case run
-    tcrs = tcrs.extra(select={
-        'num_bug': RawSQL.num_case_run_bugs,
-    })
+    tcrs = tcrs.annotate(num_bug=Count('case_run_bug', distinct=True))
+
+    # todo: is this last distinct necessary
     tcrs = tcrs.distinct()
     # Continue to search the case runs with conditions
     # 4. case runs preparing for render case runs table

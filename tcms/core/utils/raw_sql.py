@@ -1,14 +1,5 @@
 # -*- coding: utf-8 -*-
-class RawSQL:  # pylint: disable=too-few-public-methods
-    """
-    Record the Raw SQL for operate the database directly.
-    """
-    num_case_run_bugs = 'SELECT COUNT(*) \
-        FROM testcases_bug \
-        WHERE testcases_bug.case_run_id = testruns_testcaserun.case_run_id'
-
-
-class ReportSQL(object):  # pylint: disable=too-few-public-methods
+class RawSQL(object):  # pylint: disable=too-few-public-methods
     # Index
     index_product_plans_count = 'SELECT COUNT(plan_id) \
         FROM testplans_testplan \
