@@ -3,23 +3,6 @@ class RawSQL:  # pylint: disable=too-few-public-methods
     """
     Record the Raw SQL for operate the database directly.
     """
-    # Following SQL use for count case and run in plan
-    num_cases = 'SELECT COUNT(*) \
-        FROM testcases_testcaseplan \
-        WHERE testcases_testcaseplan.plan_id = testplans_testplan.plan_id'
-
-    num_runs = 'SELECT COUNT(*) \
-        FROM testruns_testrun \
-        WHERE testruns_testrun.plan_id = testplans_testplan.plan_id'
-
-    num_plans = 'SELECT COUNT(*) \
-        FROM testplans_testplan AS ch_plans\
-        WHERE ch_plans.parent_id = testplans_testplan.plan_id'
-
-    num_case_bugs = 'SELECT COUNT(*) \
-        FROM testcases_bug \
-        WHERE testcases_bug.case_id = testcases_testcase.case_id'
-
     num_case_run_bugs = 'SELECT COUNT(*) \
         FROM testcases_bug \
         WHERE testcases_bug.case_run_id = testruns_testcaserun.case_run_id'

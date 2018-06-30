@@ -6,12 +6,12 @@ Advance search implementations
 
 import time
 
+from django.db.models import Count
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
-from tcms.core.utils.raw_sql import RawSQL
 from tcms.management.models import Priority, Product
 from tcms.search.forms import CaseForm, RunForm, PlanForm
 from tcms.search.order import order_targets
@@ -100,11 +100,8 @@ def _sum_orm_queries(plans, cases, runs, target):
             plans = plans.filter(case__in=cases).distinct()
         if runs:
             plans = plans.filter(run__in=runs).distinct()
-        plans = plans.extra(select={
-            'num_cases': RawSQL.num_cases,
-            'num_runs': RawSQL.num_runs,
-            'num_children': RawSQL.num_plans,
-        })
+        plans = plans.annotate(num_cases=Count('case', distinct=True),
+                               num_runs=Count('run', distinct=True))
         return plans
     if target == 'case':
         if not plans and not runs:

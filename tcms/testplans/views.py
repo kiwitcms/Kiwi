@@ -25,7 +25,6 @@ from uuslug import slugify
 
 from tcms.core.models import TCMSLog
 from tcms.core.utils import DataTableResult
-from tcms.core.utils.raw_sql import RawSQL
 from tcms.management.models import EnvGroup
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
@@ -149,11 +148,9 @@ def get_all(request, template_name='plan/all.html'):
             # The cleanest way I can find to get it into one query is to
             # use QuerySet.extra()
             # See http://docs.djangoproject.com/en/dev/ref/models/querysets
-            tps = tps.extra(select={
-                'num_cases': RawSQL.num_cases,
-                'num_runs': RawSQL.num_runs,
-                'num_children': RawSQL.num_plans,
-            })
+            tps = tps.annotate(num_cases=Count('case', distinct=True),
+                               num_runs=Count('run', distinct=True),
+                               num_children=Count('child_set', distinct=True))
             tps = order_plan_queryset(tps, order_by, asc)
     else:
         # Set search active plans only by default
