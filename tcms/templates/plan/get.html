@@ -31,12 +31,6 @@ Nitrate.TestPlans.Instance = {
 		author_id: {{ test_plan.author_id }},
 		parent: {{ test_plan.parent.pk|default:'null' }}
 	},
-	extras: {
-		num_cases: {{ test_plan.case.count }},
-		num_runs: {{ test_plan.run.count }},
-		num_children: {{ test_plan.child_set.count }},
-		get_full_url: '{{ test_plan.get_full_url }}'
-	}
 }
 </script>
 {% endblock %}
