@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.utils module
-==========================
+tcms.xmlrpc.utils module
+========================
 
 .. automodule:: tcms.xmlrpc.utils
     :members:

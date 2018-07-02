@@ -1,5 +1,5 @@
-tcms\.report\.urls module
-=========================
+tcms.report.urls module
+=======================
 
 .. automodule:: tcms.report.urls
     :members:

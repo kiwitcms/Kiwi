@@ -1,5 +1,5 @@
-tcms\.core\.templatetags\.extra\_filters module
-===============================================
+tcms.core.templatetags.extra\_filters module
+============================================
 
 .. automodule:: tcms.core.templatetags.extra_filters
     :members:

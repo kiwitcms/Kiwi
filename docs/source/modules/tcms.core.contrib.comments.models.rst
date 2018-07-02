@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.comments\.models module
-============================================
+tcms.core.contrib.comments.models module
+========================================
 
 .. automodule:: tcms.core.contrib.comments.models
     :members:

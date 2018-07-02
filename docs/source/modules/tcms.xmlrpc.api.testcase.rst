@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.testcase module
-==================================
+tcms.xmlrpc.api.testcase module
+===============================
 
 .. automodule:: tcms.xmlrpc.api.testcase
     :members:

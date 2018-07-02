@@ -1,5 +1,5 @@
-tcms\.testruns\.models module
-=============================
+tcms.testruns.models module
+===========================
 
 .. automodule:: tcms.testruns.models
     :members:

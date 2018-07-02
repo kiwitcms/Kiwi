@@ -1,5 +1,5 @@
-tcms\.utils\.dict\_utils module
-===============================
+tcms.utils.dict\_utils module
+=============================
 
 .. automodule:: tcms.utils.dict_utils
     :members:

@@ -1,5 +1,5 @@
-tcms\.testcases\.helpers package
-================================
+tcms.testcases.helpers package
+==============================
 
 .. automodule:: tcms.testcases.helpers
     :members:

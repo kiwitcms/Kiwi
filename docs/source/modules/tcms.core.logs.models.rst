@@ -1,5 +1,5 @@
-tcms\.core\.logs\.models module
-===============================
+tcms.core.logs.models module
+============================
 
 .. automodule:: tcms.core.logs.models
     :members:

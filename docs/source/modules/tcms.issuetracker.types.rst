@@ -1,5 +1,5 @@
-tcms\.issuetracker\.types module
-================================
+tcms.issuetracker.types module
+==============================
 
 .. automodule:: tcms.issuetracker.types
     :members:

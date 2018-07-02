@@ -1,5 +1,5 @@
-tcms\.wsgi module
-=================
+tcms.wsgi module
+================
 
 .. automodule:: tcms.wsgi
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.middleware module
-=============================
+tcms.core.middleware module
+===========================
 
 .. automodule:: tcms.core.middleware
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.db module
-=====================
+tcms.core.db module
+===================
 
 .. automodule:: tcms.core.db
     :members:

@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.decorators module
-===============================
+tcms.xmlrpc.decorators module
+=============================
 
 .. automodule:: tcms.xmlrpc.decorators
     :members:

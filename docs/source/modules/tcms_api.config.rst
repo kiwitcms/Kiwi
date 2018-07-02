@@ -1,5 +1,5 @@
-tcms\_api\.config module
-========================
+tcms\_api.config module
+=======================
 
 .. automodule:: tcms_api.config
     :members:

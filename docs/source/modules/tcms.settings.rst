@@ -1,17 +1,10 @@
-tcms\.settings package
-======================
+tcms.settings package
+=====================
 
 .. automodule:: tcms.settings
     :members:
     :undoc-members:
     :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-
-    tcms.settings.test
 
 Submodules
 ----------

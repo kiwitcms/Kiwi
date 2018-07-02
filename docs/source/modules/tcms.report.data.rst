@@ -1,5 +1,5 @@
-tcms\.report\.data module
-=========================
+tcms.report.data module
+=======================
 
 .. automodule:: tcms.report.data
     :members:

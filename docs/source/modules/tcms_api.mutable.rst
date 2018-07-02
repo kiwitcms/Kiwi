@@ -1,5 +1,5 @@
-tcms\_api\.mutable module
-=========================
+tcms\_api.mutable module
+========================
 
 .. automodule:: tcms_api.mutable
     :members:

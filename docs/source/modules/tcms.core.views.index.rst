@@ -1,5 +1,5 @@
-tcms\.core\.views\.index module
-===============================
+tcms.core.views.index module
+============================
 
 .. automodule:: tcms.core.views.index
     :members:

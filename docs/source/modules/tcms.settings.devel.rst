@@ -1,5 +1,5 @@
-tcms\.settings\.devel module
-============================
+tcms.settings.devel module
+==========================
 
 .. automodule:: tcms.settings.devel
     :members:

@@ -1,5 +1,5 @@
-tcms\.testcases package
-=======================
+tcms.testcases package
+======================
 
 .. automodule:: tcms.testcases
     :members:
@@ -11,6 +11,7 @@ Subpackages
 
 .. toctree::
 
+    tcms.testcases.helpers
     tcms.testcases.urls
 
 Submodules

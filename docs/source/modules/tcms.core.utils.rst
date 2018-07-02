@@ -1,5 +1,5 @@
-tcms\.core\.utils package
-=========================
+tcms.core.utils package
+=======================
 
 .. automodule:: tcms.core.utils
     :members:

@@ -1,5 +1,5 @@
-tcms\.management\.admin module
-==============================
+tcms.management.admin module
+============================
 
 .. automodule:: tcms.management.admin
     :members:

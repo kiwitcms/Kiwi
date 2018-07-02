@@ -1,5 +1,5 @@
-tcms\.testcases\.admin module
-=============================
+tcms.testcases.admin module
+===========================
 
 .. automodule:: tcms.testcases.admin
     :members:

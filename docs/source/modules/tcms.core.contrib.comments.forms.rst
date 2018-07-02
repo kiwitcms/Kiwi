@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.comments\.forms module
-===========================================
+tcms.core.contrib.comments.forms module
+=======================================
 
 .. automodule:: tcms.core.contrib.comments.forms
     :members:

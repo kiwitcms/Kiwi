@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.testrun module
-=================================
+tcms.xmlrpc.api.testrun module
+==============================
 
 .. automodule:: tcms.xmlrpc.api.testrun
     :members:

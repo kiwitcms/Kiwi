@@ -1,5 +1,5 @@
-tcms\.management\.models module
-===============================
+tcms.management.models module
+=============================
 
 .. automodule:: tcms.management.models
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.linkreference package
-==========================================
+tcms.core.contrib.linkreference package
+=======================================
 
 .. automodule:: tcms.core.contrib.linkreference
     :members:

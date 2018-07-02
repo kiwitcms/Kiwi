@@ -1,5 +1,5 @@
-tcms\.report\.views module
-==========================
+tcms.report.views module
+========================
 
 .. automodule:: tcms.report.views
     :members:

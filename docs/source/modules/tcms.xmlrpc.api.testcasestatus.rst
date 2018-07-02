@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.testcasestatus module
-========================================
+tcms.xmlrpc.api.testcasestatus module
+=====================================
 
 .. automodule:: tcms.xmlrpc.api.testcasestatus
     :members:

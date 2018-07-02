@@ -1,5 +1,5 @@
-tcms\.core\.ajax module
-=======================
+tcms.core.ajax module
+=====================
 
 .. automodule:: tcms.core.ajax
     :members:

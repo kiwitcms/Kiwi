@@ -1,5 +1,5 @@
-tcms\.testplans\.actions module
-===============================
+tcms.testplans.actions module
+=============================
 
 .. automodule:: tcms.testplans.actions
     :members:

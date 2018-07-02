@@ -1,8 +1,7 @@
 -r base.txt
 
 django-debug-toolbar
-# workaround for https://github.com/sphinx-doc/sphinx/issues/4581
-Sphinx==1.6.6
+Sphinx
 flake8
 epydoc
 coverage

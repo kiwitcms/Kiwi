@@ -1,5 +1,5 @@
-tcms\.settings\.common module
-=============================
+tcms.settings.common module
+===========================
 
 .. automodule:: tcms.settings.common
     :members:

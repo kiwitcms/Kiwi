@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.linkreference\.forms module
-================================================
+tcms.core.contrib.linkreference.forms module
+============================================
 
 .. automodule:: tcms.core.contrib.linkreference.forms
     :members:

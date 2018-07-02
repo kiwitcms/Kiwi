@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.comments\.views module
-===========================================
+tcms.core.contrib.comments.views module
+=======================================
 
 .. automodule:: tcms.core.contrib.comments.views
     :members:

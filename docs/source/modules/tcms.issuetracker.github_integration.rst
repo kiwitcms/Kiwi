@@ -1,5 +1,5 @@
-tcms\.issuetracker\.github\_integration module
-==============================================
+tcms.issuetracker.github\_integration module
+============================================
 
 .. automodule:: tcms.issuetracker.github_integration
     :members:

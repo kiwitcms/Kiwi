@@ -1,5 +1,5 @@
-tcms\.search\.order module
-==========================
+tcms.search.order module
+========================
 
 .. automodule:: tcms.search.order
     :members:

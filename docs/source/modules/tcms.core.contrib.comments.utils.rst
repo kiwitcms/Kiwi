@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.comments\.utils module
-===========================================
+tcms.core.contrib.comments.utils module
+=======================================
 
 .. automodule:: tcms.core.contrib.comments.utils
     :members:

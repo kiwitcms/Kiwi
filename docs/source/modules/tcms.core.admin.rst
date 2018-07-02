@@ -1,5 +1,5 @@
-tcms\.core\.admin module
-========================
+tcms.core.admin module
+======================
 
 .. automodule:: tcms.core.admin
     :members:

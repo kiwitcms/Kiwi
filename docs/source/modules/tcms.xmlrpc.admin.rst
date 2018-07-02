@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.admin module
-==========================
+tcms.xmlrpc.admin module
+========================
 
 .. automodule:: tcms.xmlrpc.admin
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.helpers package
-===========================
+tcms.core.helpers package
+=========================
 
 .. automodule:: tcms.core.helpers
     :members:

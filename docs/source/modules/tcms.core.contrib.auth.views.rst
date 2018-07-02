@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.auth\.views module
-=======================================
+tcms.core.contrib.auth.views module
+===================================
 
 .. automodule:: tcms.core.contrib.auth.views
     :members:

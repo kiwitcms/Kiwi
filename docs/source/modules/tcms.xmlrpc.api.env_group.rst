@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.env\_group module
-====================================
+tcms.xmlrpc.api.env\_group module
+=================================
 
 .. automodule:: tcms.xmlrpc.api.env_group
     :members:

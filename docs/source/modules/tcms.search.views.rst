@@ -1,5 +1,5 @@
-tcms\.search\.views module
-==========================
+tcms.search.views module
+========================
 
 .. automodule:: tcms.search.views
     :members:

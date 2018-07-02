@@ -1,5 +1,5 @@
-tcms\.search\.forms module
-==========================
+tcms.search.forms module
+========================
 
 .. automodule:: tcms.search.forms
     :members:

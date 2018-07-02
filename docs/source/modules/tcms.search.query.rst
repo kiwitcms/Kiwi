@@ -1,5 +1,5 @@
-tcms\.search\.query module
-==========================
+tcms.search.query module
+========================
 
 .. automodule:: tcms.search.query
     :members:
