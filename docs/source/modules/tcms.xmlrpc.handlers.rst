@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.handlers module
-=============================
+tcms.xmlrpc.handlers module
+===========================
 
 .. automodule:: tcms.xmlrpc.handlers
     :members:

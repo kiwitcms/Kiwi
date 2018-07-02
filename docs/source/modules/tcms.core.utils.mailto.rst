@@ -1,5 +1,5 @@
-tcms\.core\.utils\.mailto module
-================================
+tcms.core.utils.mailto module
+=============================
 
 .. automodule:: tcms.core.utils.mailto
     :members:

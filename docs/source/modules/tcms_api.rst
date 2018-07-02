@@ -6,13 +6,6 @@ tcms\_api package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    tcms_api.tests
-
 Submodules
 ----------
 

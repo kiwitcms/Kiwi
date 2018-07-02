@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.forms module
-==========================
+tcms.xmlrpc.forms module
+========================
 
 .. automodule:: tcms.xmlrpc.forms
     :members:

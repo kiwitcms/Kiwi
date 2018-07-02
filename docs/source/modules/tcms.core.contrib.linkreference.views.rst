@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.linkreference\.views module
-================================================
+tcms.core.contrib.linkreference.views module
+============================================
 
 .. automodule:: tcms.core.contrib.linkreference.views
     :members:

@@ -1,5 +1,5 @@
-tcms\.utils\.permissions module
-===============================
+tcms.utils.permissions module
+=============================
 
 .. automodule:: tcms.utils.permissions
     :members:

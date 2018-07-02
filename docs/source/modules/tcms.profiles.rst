@@ -1,5 +1,5 @@
-tcms\.profiles package
-======================
+tcms.profiles package
+=====================
 
 .. automodule:: tcms.profiles
     :members:

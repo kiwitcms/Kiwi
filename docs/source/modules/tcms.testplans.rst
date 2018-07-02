@@ -1,5 +1,5 @@
-tcms\.testplans package
-=======================
+tcms.testplans package
+======================
 
 .. automodule:: tcms.testplans
     :members:

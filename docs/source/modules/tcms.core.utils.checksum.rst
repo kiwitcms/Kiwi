@@ -1,5 +1,5 @@
-tcms\.core\.utils\.checksum module
-==================================
+tcms.core.utils.checksum module
+===============================
 
 .. automodule:: tcms.core.utils.checksum
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.logs\.views module
-==============================
+tcms.core.logs.views module
+===========================
 
 .. automodule:: tcms.core.logs.views
     :members:

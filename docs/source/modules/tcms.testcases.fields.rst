@@ -1,5 +1,5 @@
-tcms\.testcases\.fields module
-==============================
+tcms.testcases.fields module
+============================
 
 .. automodule:: tcms.testcases.fields
     :members:

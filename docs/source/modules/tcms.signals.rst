@@ -1,5 +1,5 @@
-tcms\.signals module
-====================
+tcms.signals module
+===================
 
 .. automodule:: tcms.signals
     :members:

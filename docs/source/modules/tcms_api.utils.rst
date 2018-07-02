@@ -1,5 +1,5 @@
-tcms\_api\.utils module
-=======================
+tcms\_api.utils module
+======================
 
 .. automodule:: tcms_api.utils
     :members:

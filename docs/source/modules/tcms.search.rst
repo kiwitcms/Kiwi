@@ -1,5 +1,5 @@
-tcms\.search package
-====================
+tcms.search package
+===================
 
 .. automodule:: tcms.search
     :members:

@@ -1,5 +1,5 @@
-tcms\.testcases\.urls\.cases\_urls module
-=========================================
+tcms.testcases.urls.cases\_urls module
+======================================
 
 .. automodule:: tcms.testcases.urls.cases_urls
     :members:

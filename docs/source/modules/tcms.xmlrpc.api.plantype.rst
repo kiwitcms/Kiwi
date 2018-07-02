@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.plantype module
-==================================
+tcms.xmlrpc.api.plantype module
+===============================
 
 .. automodule:: tcms.xmlrpc.api.plantype
     :members:

@@ -1,5 +1,5 @@
-tcms\.testplans\.helpers\.email module
-======================================
+tcms.testplans.helpers.email module
+===================================
 
 .. automodule:: tcms.testplans.helpers.email
     :members:

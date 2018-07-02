@@ -1,5 +1,5 @@
-tcms\.core\.models\.fields module
-=================================
+tcms.core.models.fields module
+==============================
 
 .. automodule:: tcms.core.models.fields
     :members:

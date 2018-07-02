@@ -1,5 +1,5 @@
-tcms\.core\.models package
-==========================
+tcms.core.models package
+========================
 
 .. automodule:: tcms.core.models
     :members:

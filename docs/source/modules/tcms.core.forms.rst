@@ -1,5 +1,5 @@
-tcms\.core\.forms package
-=========================
+tcms.core.forms package
+=======================
 
 .. automodule:: tcms.core.forms
     :members:

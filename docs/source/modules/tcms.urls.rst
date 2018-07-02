@@ -1,5 +1,5 @@
-tcms\.urls module
-=================
+tcms.urls module
+================
 
 .. automodule:: tcms.urls
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.views package
-=========================
+tcms.core.views package
+=======================
 
 .. automodule:: tcms.core.views
     :members:

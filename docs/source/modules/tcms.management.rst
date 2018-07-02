@@ -1,5 +1,5 @@
-tcms\.management package
-========================
+tcms.management package
+=======================
 
 .. automodule:: tcms.management
     :members:

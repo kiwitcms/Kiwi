@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.serializer module
-===============================
+tcms.xmlrpc.serializer module
+=============================
 
 .. automodule:: tcms.xmlrpc.serializer
     :members:

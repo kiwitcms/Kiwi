@@ -1,5 +1,5 @@
-tcms\.testplans\.urls\.plan\_urls module
-========================================
+tcms.testplans.urls.plan\_urls module
+=====================================
 
 .. automodule:: tcms.testplans.urls.plan_urls
     :members:

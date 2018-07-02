@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.auth package
-=================================
+tcms.core.contrib.auth package
+==============================
 
 .. automodule:: tcms.core.contrib.auth
     :members:

@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.version module
-=================================
+tcms.xmlrpc.api.version module
+==============================
 
 .. automodule:: tcms.xmlrpc.api.version
     :members:

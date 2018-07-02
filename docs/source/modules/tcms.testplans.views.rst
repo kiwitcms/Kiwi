@@ -1,5 +1,5 @@
-tcms\.testplans\.views module
-=============================
+tcms.testplans.views module
+===========================
 
 .. automodule:: tcms.testplans.views
     :members:

@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.category module
-==================================
+tcms.xmlrpc.api.category module
+===============================
 
 .. automodule:: tcms.xmlrpc.api.category
     :members:

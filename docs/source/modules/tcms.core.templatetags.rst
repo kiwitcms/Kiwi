@@ -1,5 +1,5 @@
-tcms\.core\.templatetags package
-================================
+tcms.core.templatetags package
+==============================
 
 .. automodule:: tcms.core.templatetags
     :members:

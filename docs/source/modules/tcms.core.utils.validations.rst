@@ -1,5 +1,5 @@
-tcms\.core\.utils\.validations module
-=====================================
+tcms.core.utils.validations module
+==================================
 
 .. automodule:: tcms.core.utils.validations
     :members:

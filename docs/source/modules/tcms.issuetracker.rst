@@ -1,5 +1,5 @@
-tcms\.issuetracker package
-==========================
+tcms.issuetracker package
+=========================
 
 .. automodule:: tcms.issuetracker
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.helpers\.comments module
-====================================
+tcms.core.helpers.comments module
+=================================
 
 .. automodule:: tcms.core.helpers.comments
     :members:

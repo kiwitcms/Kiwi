@@ -1,5 +1,5 @@
-tcms\.report\.forms module
-==========================
+tcms.report.forms module
+========================
 
 .. automodule:: tcms.report.forms
     :members:

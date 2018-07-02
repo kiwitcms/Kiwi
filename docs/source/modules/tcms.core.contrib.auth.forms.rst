@@ -1,5 +1,5 @@
-tcms\.core\.contrib\.auth\.forms module
-=======================================
+tcms.core.contrib.auth.forms module
+===================================
 
 .. automodule:: tcms.core.contrib.auth.forms
     :members:

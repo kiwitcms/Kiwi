@@ -1,5 +1,5 @@
-tcms\.core package
-==================
+tcms.core package
+=================
 
 .. automodule:: tcms.core
     :members:
@@ -12,6 +12,7 @@ Subpackages
 .. toctree::
 
     tcms.core.contrib
+    tcms.core.forms
     tcms.core.helpers
     tcms.core.logs
     tcms.core.models

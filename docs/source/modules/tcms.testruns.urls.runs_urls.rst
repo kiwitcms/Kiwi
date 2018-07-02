@@ -1,5 +1,5 @@
-tcms\.testruns\.urls\.runs\_urls module
-=======================================
+tcms.testruns.urls.runs\_urls module
+====================================
 
 .. automodule:: tcms.testruns.urls.runs_urls
     :members:

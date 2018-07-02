@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.bug module
-=============================
+tcms.xmlrpc.api.bug module
+==========================
 
 .. automodule:: tcms.xmlrpc.api.bug
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.managers module
-===========================
+tcms.core.managers module
+=========================
 
 .. automodule:: tcms.core.managers
     :members:

@@ -1,5 +1,5 @@
-tcms\.testcases\.views module
-=============================
+tcms.testcases.views module
+===========================
 
 .. automodule:: tcms.testcases.views
     :members:

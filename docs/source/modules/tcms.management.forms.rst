@@ -1,5 +1,5 @@
-tcms\.management\.forms module
-==============================
+tcms.management.forms module
+============================
 
 .. automodule:: tcms.management.forms
     :members:

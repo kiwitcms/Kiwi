@@ -1,5 +1,5 @@
-tcms\.testplans\.forms module
-=============================
+tcms.testplans.forms module
+===========================
 
 .. automodule:: tcms.testplans.forms
     :members:

@@ -1,5 +1,5 @@
-tcms\.core\.contrib package
-===========================
+tcms.core.contrib package
+=========================
 
 .. automodule:: tcms.core.contrib
     :members:

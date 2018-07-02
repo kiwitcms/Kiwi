@@ -1,5 +1,5 @@
-tcms\.xmlrpc\.api\.auth module
-==============================
+tcms.xmlrpc.api.auth module
+===========================
 
 .. automodule:: tcms.xmlrpc.api.auth
     :members:
