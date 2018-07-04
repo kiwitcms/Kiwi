@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from tcms.core.forms.fields import ModelChoiceField
 from tcms.management.models import Component, Product, Build, Version
 from tcms.testcases.models import Category
 
@@ -12,7 +11,7 @@ class CustomSearchForm(forms.Form):
         queryset=Build.objects.none(),
         required=False,
     )
-    product = ModelChoiceField(
+    product = forms.ModelChoiceField(
         label='Product',
         queryset=Product.objects.only('name').order_by('name'),
         empty_label=None,
@@ -68,7 +67,7 @@ class CustomSearchForm(forms.Form):
 
 
 class CustomSearchDetailsForm(CustomSearchForm):
-    pk__in = ModelChoiceField(
+    pk__in = forms.ModelChoiceField(
         label='Build',
         queryset=Build.objects.none(),
         error_messages={
@@ -91,7 +90,7 @@ REPORT_TYPES = (
 class BasicTestingReportFormFields(forms.Form):
     """Testing report form with basic necessary fields"""
 
-    r_product = ModelChoiceField(
+    r_product = forms.ModelChoiceField(
         required=True,
         label='Product',
         empty_label=None,

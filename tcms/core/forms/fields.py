@@ -47,11 +47,3 @@ class StripURLField(forms.URLField):
         if isinstance(value, str):
             value = value.strip()
         return super(StripURLField, self).to_python(value)
-
-
-class ModelChoiceField(forms.ModelChoiceField):
-    def to_python(self, value):
-        try:
-            return super(ModelChoiceField, self).to_python(value)
-        except ValidationError as e:
-            raise ValidationError(e.messages[0] % {'value': value})
