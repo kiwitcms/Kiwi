@@ -5,8 +5,6 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
-from tcms.core.utils import string_to_list
-
 
 class UserField(forms.CharField):
     """
@@ -42,19 +40,6 @@ class UserField(forms.CharField):
                         (Q(email=value) | Q(username=value)))
                 except User.DoesNotExist:
                     raise ValidationError('Unknown user: "%s"' % value)
-
-
-class MultipleEmailField(forms.EmailField):
-    def clean(self, value):
-        """
-        Validates that the input matches the regular expression. Returns a
-        Unicode object.
-        """
-        value = super(forms.CharField, self).clean(value)
-        if value == u'':
-            return value
-
-        return [v for v in string_to_list(strs=value) if self.regex.search(v)]
 
 
 class StripURLField(forms.URLField):
