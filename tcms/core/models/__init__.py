@@ -34,10 +34,6 @@ class TCMSActionModel(models.Model, UrlMixin):
         serializer = XMLRPCSerializer(model=self)
         return serializer.serialize_model()
 
-    def log(self):
-        log = TCMSLog(model=self)
-        return log.list()
-
     def log_action(self, who, action):
         log = TCMSLog(model=self)
         log.make(who=who, action=action)
