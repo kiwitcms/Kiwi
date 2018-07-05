@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 
 from uuslug import slugify
 
+from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils.checksum import checksum
 from tcms.management.models import Version
@@ -32,8 +33,9 @@ class PlanType(TCMSActionModel):
 
 class TestPlan(TCMSActionModel):
     """A plan within the TCMS"""
+    history = KiwiHistoricalRecords()
 
-    plan_id = models.AutoField(max_length=11, primary_key=True)
+    plan_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, db_index=True)
     create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
     is_active = models.BooleanField(db_column='isactive', default=True, db_index=True)
