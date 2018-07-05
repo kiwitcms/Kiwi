@@ -11,4 +11,4 @@ django-extensions
 pydot
 # linting tools
 pylint-django
-bandit
+bandit==1.4.0
