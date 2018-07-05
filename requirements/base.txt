@@ -5,7 +5,7 @@ django-grappelli
 django-vinaigrette
 django-uuslug
 odfpy
-python-bugzilla
+python-bugzilla==2.1.0
 # because of https://github.com/pycontribs/jira/issues/501
 jira==1.0.10
 PyGithub
