@@ -42,11 +42,9 @@
 	<table cellspan="0" cellspacing="0" border="0"  class="manage" width="98%">
 		<thead>
 			<tr class="titlelink">
-				<th width="15%">Groups</th>
-				<th width="15%">Author</th>
-				<th width="15%">Last Modified</th>
+				<th width="20%">Groups</th>
 				<th>Properties</th>
-				<th>Actions</th>
+				<th width="20%">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -63,20 +61,6 @@
 						{% endif %}
 					</label>
 				</th>
-				<td>
-                                    {% if env.manager %}
-                                    <a href="{% url "tcms-profile" env.manager.username %}">
-                                        {{ env.manager.username }}
-                                    </a>
-                                    {% endif %}
-				</td>
-				<td>
-                                    {% if env.modified_by %}
-                                    <a href="{% url "tcms-profile" env.modified_by.username %}">
-                                        {{ env.modified_by.username }}
-                                    </a>
-                                    {% endif %}
-				</td>
 				<td class="env_properties">
 					<ul class="ul-no-format">
 						{% for property in env.properties %}
@@ -90,21 +74,7 @@
 					<a href="?id={{ env.id }}&action=modify&status=0" class="disablelink {% if env.is_active %}{% else %}hidden{% endif %}">Disable</a>
 					<a href="?id={{ env.id }}&action=modify&status=1" class="enablelink {% if env.is_active %}hidden{% endif %} ">Enable</a>
 					<a href="#" class="editlink js-del-env-group">Delete</a>
-					<a href="#viewhistroy{{ env.id }}" class="loglink" name="viewhistroy{{ env.id }}">View edit history</a>
-					{% else %}
 					{% endif %}
-				</td>
-			</tr>
-			<tr style="display:none">
-				<td colspan="5">
-					{% for log in env.another_logs %}
-					<div class="envlog">
-                    	<div class="envlog_time">{{ log.date }}</div>
-                        <div class="envlog_who">{{ log.who__username }}</div>
-                        <div class="envlog_content">{{ log.action }}</div>
-                    </div>
-                    <div class="clear"></div>
-					{% endfor %}
 				</td>
 			</tr>
 			{% endfor %}

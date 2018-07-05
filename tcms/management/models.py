@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.conf import settings
 
 from tcms.core.models import TCMSActionModel
 from tcms.core.utils import calc_percent
@@ -231,15 +230,6 @@ class Tag(TCMSActionModel):
 
 class EnvGroup(TCMSActionModel):
     name = models.CharField(unique=True, max_length=255)
-    manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='env_group_manager',
-                                on_delete=models.CASCADE)
-    modified_by = models.ForeignKey(
-        'auth.User',
-        related_name='env_group_modifier',
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE
-    )
     is_active = models.BooleanField(default=True)
     property = models.ManyToManyField(
         'management.EnvProperty',

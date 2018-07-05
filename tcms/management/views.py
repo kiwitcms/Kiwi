@@ -8,7 +8,6 @@ from django.db import IntegrityError
 
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
@@ -17,7 +16,6 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 
-from tcms.core.logs.models import TCMSLogModel
 from tcms.core.utils import QuerySetIterationProxy
 from tcms.management.models import EnvGroup
 from tcms.management.models import EnvGroupPropertyMap
@@ -50,10 +48,7 @@ def environment_groups(request):
                            'exists, please select another name.' % group_name
             return JsonResponse({'rc': 1, 'response': response_msg})
 
-        env = EnvGroup.objects.create(name=group_name, manager_id=request.user.id,
-                                      modified_by_id=None)
-        env.log_action(who=request.user, action='Initial env group %s' % env.name)
-
+        env = EnvGroup.objects.create(name=group_name)
         return JsonResponse({'rc': 0, 'response': 'ok', 'id': env.id})
 
     # Del action
@@ -67,8 +62,8 @@ def environment_groups(request):
         except ValueError:
             return JsonResponse({'rc': 1, 'response': 'id must be an integer.'})
 
-        if request.user.pk != env_group.manager_id and not has_perm('management.delete_envgroup'):
-                return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
+        if not has_perm('management.delete_envgroup'):
+            return JsonResponse({'rc': 1, 'response': 'Permission denied.'})
 
         env_group.delete()
 
@@ -84,9 +79,6 @@ def environment_groups(request):
             if request.GET.get('status') in ['0', '1']:
                 env.is_active = int(request.GET['status'])
                 env.save(update_fields=['is_active'])
-
-                action = 'Change env group status to {}'.format(env.is_active)
-                env.log_action(who=request.user, action=action)
             else:
                 return JsonResponse({'rc': 1, 'response': 'Argument illegal.'})
         except EnvGroup.DoesNotExist as error:
@@ -112,23 +104,8 @@ def environment_groups(request):
     for key, value in groupby(query_set, lambda item: item['group__pk']):
         properties[key] = list(value)
 
-    # Get logs for each group
-    env_group_content_type = ContentType.objects.get_for_model(EnvGroup)
-    query_set = TCMSLogModel.objects.filter(
-        content_type=env_group_content_type,
-        object_pk__in=env_groups
-    ).values('object_pk', 'who__username', 'date', 'action').order_by('object_pk').iterator()
-
-    logs = {}
-    for object_pk, value in groupby(query_set, lambda log: log['object_pk']):
-        # we have to convert object_pk to an integer because it is a string, stored in the database
-        logs[int(object_pk)] = list(value)
-
-    env_groups = env_groups.select_related('modified_by', 'manager').iterator()
-
-    env_groups = QuerySetIterationProxy(env_groups,
-                                        properties=properties,
-                                        another_logs=logs)
+    env_groups = QuerySetIterationProxy(env_groups.iterator(),
+                                        properties=properties)
     context_data = {
         'environments': env_groups,
     }
@@ -161,16 +138,9 @@ def environment_group_edit(request):
         environment_name = request.GET['name']
         if env_group.name != environment_name:
             env_group.name = environment_name
-            env_group.log_action(
-                who=request.user,
-                action='Modify name %s from to %s' % (env_group.name,
-                                                      environment_name))
 
         if env_group.is_active != request.GET.get('enabled', False):
             env_group.is_active = strtobool(request.GET.get('enabled', False))
-            env_group.log_action(
-                who=request.user,
-                action='Change env group status to %s' % env_group.is_active)
 
         env_group.modified_by_id = request.user.id
         env_group.save()
@@ -182,10 +152,6 @@ def environment_group_edit(request):
         for property_id in request.GET.getlist('selected_property_ids'):
             EnvGroupPropertyMap.objects.create(group_id=env_group.id, property_id=property_id)
 
-        property_values = env_group.property.values_list('name', flat=True)
-        env_group.log_action(
-            who=request.user,
-            action='Properties changed to %s' % (', '.join(property_values)))
         return HttpResponseRedirect(reverse('mgmt-environment_groups'))
 
     context_data = {
