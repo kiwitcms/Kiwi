@@ -13,5 +13,5 @@ dj-pagination
 django-tinymce
 beautifulsoup4
 django-contrib-comments
-html2text
+html2text==2018.1.9
 django-modern-rpc
