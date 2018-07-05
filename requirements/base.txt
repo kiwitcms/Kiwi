@@ -12,6 +12,6 @@ PyGithub
 dj-pagination
 django-tinymce
 beautifulsoup4
-django-contrib-comments
+django-contrib-comments==1.8.0
 html2text
 django-modern-rpc
