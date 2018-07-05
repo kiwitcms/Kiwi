@@ -10,5 +10,5 @@ mock
 django-extensions
 pydot
 # linting tools
-pylint-django
+pylint-django==0.11.1
 bandit
