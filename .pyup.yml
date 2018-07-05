@@ -2,3 +2,4 @@
 # see https://pyup.io/docs/configuration/ for all available options
 
 update: all
+pin: False
