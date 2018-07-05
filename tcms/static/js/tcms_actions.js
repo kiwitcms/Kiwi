@@ -51,62 +51,6 @@ jQ(window).bind('load', function(e) {
     function() { jQ(this).children(':eq(1)').show(); },
     function() { jQ(this).children(':eq(1)').hide(); }
   );
-
-  // Observe the bookmark form
-  if (jQ('#id_bookmark_iform').length) {
-    jQ('#bookmark_submit').bind('click', function(e) {
-      var form = jQ('#id_bookmark_iform');
-      var url = form.attr('action');
-      var dialog = showDialog();
-      var username = Nitrate.User.username;
-      var parameters = Nitrate.Utils.formSerialize(form);
-      parameters.url = window.location.href;
-
-      if (!parameters.name) {
-        parameters.name = document.title;
-      }
-
-      var complete = function(t) {
-        var c = function(t) {
-          var returnobj = jQ.parseJSON(t.responseText);
-
-          if (returnobj.rc != 0) {
-            window.alert(returnobj.response);
-            return returnobj;
-          }
-
-          clearDialog();
-          window.alert(default_messages.alert.bookmark_added);
-          return returnobj;
-        };
-
-        var form_observe = function(e) {
-          e.stopPropagation();
-          e.preventDefault();
-
-          addBookmark(this.action, this.method, Nitrate.Utils.formSerialize(this), c);
-        };
-
-        var form = constructForm(t.responseText, url, form_observe);
-        jQ(dialog).html(form);
-      };
-
-      jQ.ajax({
-        'url': url,
-        'type': form.attr('method'),
-        'data': parameters,
-        'success': function (data, textStatus, jqXHR) {
-          jQ(dialog).html(data);
-        },
-        'error': function (jqXHR, textStatus, errorThrown) {
-          html_failure();
-        },
-        'complete': function(jqXHR, textStatus) {
-          complete(jqXHR);
-        }
-      });
-    });
-  }
 });
 
 var default_messages = {
@@ -116,7 +60,6 @@ var default_messages = {
     'ajax_failure': 'Communication with server got some unknown errors.',
     'tree_reloaded': 'The tree has been reloaded.',
     'last_case_run': 'It is the last case run',
-    'bookmark_added': 'Bookmark added.',
     'invalid_bug_id': 'Please input a valid bug id!',
     'no_bugs_specified': 'Please specify bug ID',
     'no_plan_specified': 'Please specify one plan at least.'
@@ -126,7 +69,6 @@ var default_messages = {
     'change_case_priority': 'Are you sure you want to change the priority?',
     'remove_case_component': 'Are you sure you want to delete these component(s)?\nYou cannot undo.',
     'remove_case_component': 'Are you sure you want to delete these component(s)?\nYou cannot undo.',
-    'remove_bookmark': 'Are you sure you wish to delete these bookmarks?',
     'remove_comment': 'Are you sure to delete the comment?',
     'remove_tag': 'Are you sure you wish to delete the tag(s)'
   },
@@ -235,21 +177,6 @@ var json_success_refresh_page = function(t) {
   }
 };
 
-function addBookmark(url, method, parameters, callback) {
-  parameters['a'] = 'add';
-
-  jQ.ajax({
-    'url': url,
-    'type': method,
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
 
 function setCookie(name, value, expires, path, domain, secure) { 
   var curCookie = name + "=" + escape(value) +

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django import http
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -15,61 +14,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
-from tcms.profiles.models import Bookmark
 from tcms.profiles.models import UserProfile
-from tcms.profiles.forms import BookmarkForm, UserProfileForm
-
-
-@require_http_methods(['GET', 'POST'])
-@login_required
-def bookmarks(request):
-    """
-    Bookmarks for the user
-    """
-    class BookmarkActions(object):
-        def __init__(self):
-            self.ajax_response = {'rc': 0, 'response': 'ok'}
-
-        def add(self):
-            form = BookmarkForm(request.GET)
-            if not form.is_valid():
-                ajax_response = {'rc': 1, 'response': form.errors.as_text()}
-                return http.JsonResponse(ajax_response)
-
-            form.save()
-            return http.JsonResponse(self.ajax_response)
-
-        def remove(self):
-            pks = request.POST.getlist('pk')
-            bks = Bookmark.objects.filter(pk__in=pks, user=request.user)
-            bks.delete()
-
-            return http.JsonResponse(self.ajax_response)
-
-        def render(self):
-            if request.GET.get('category'):
-                bks = Bookmark.objects.filter(user=request.user,
-                                              category_id=request.GET['category'])
-            else:
-                bks = Bookmark.objects.filter(user=request.user)
-
-            context_data = {
-                'user_profile': {'user': request.user},
-                'bookmarks': bks,
-            }
-            return render(request, 'profile/bookmarks.html', context_data)
-
-        def render_form(self):
-            query = request.GET.copy()
-            query['a'] = 'add'
-            form = BookmarkForm(initial=query)
-            form.populate(user=request.user)
-            return http.HttpResponse(form.as_p())
-
-    action = BookmarkActions()
-    request_data = request.GET or request.POST
-    func = getattr(action, request_data.get('a', 'render'))
-    return func()
+from tcms.profiles.forms import UserProfileForm
 
 
 @require_http_methods(['GET', 'POST'])

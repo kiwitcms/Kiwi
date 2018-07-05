@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.conf import settings
-
-from tcms.core.models.base import TCMSContentTypeBaseModel
 
 
 class UserProfile(models.Model):
@@ -31,30 +28,3 @@ class UserProfile(models.Model):
     @classmethod
     def get_user_profile(cls, user):
         return cls.objects.get(user=user)
-
-#
-# TCMS Bookmarks in profile models
-#
-
-
-class BookmarkCategory(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=1024)
-
-    def __str__(self):
-        return self.name
-
-
-class Bookmark(TCMSContentTypeBaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    category = models.ForeignKey(BookmarkCategory, blank=True, null=True,
-                                 related_name='bookmark', on_delete=models.CASCADE)
-    name = models.CharField(max_length=1024)
-    description = models.TextField(blank=True, null=True)
-    url = models.CharField(max_length=8192)
-
-    class Meta:
-        index_together = (('content_type', 'object_pk', 'site'),)
-
-    def __str__(self):
-        return self.name

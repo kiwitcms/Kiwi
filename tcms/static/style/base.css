@@ -587,7 +587,6 @@ ul.runcc{ margin:0px;}
 .table_watchlist_toolbar span{ margin-left:20px;}
 .table_watchlist_toolbar span a{ margin-right:10px;}
 
-.bookmark{ background-position:0 -804px; padding-left:18px; cursor:pointer; height:18px; font-size:12px; font-family:arial; padding-top:3px;}
 .userguide{ background:url(../images/ico_question.png) no-repeat 0px 1px ; padding-left:18px; cursor:pointer; height:18px; line-height:18px; display:inline-table; margin-left:6px;}
 .button_area{ width:60%; margin:10px;}
 .button_area input[type='button']{-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px; border:solid 1px #bdbcbd; padding:5px 15px;background: -moz-linear-gradient(top, #fff,#efefef); cursor:pointer;  }
