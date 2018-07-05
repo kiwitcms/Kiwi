@@ -6,10 +6,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
 {% endblock %}
 
-{% block custom_javascript %}
-<script type="text/javascript" src="{% static 'js/profiles.js' %}"></script>
-{% endblock %}
-
 {% block contents %}
 <div id="content">
 		{% ifequal user_profile.user user %}

@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
-from django.apps import apps
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import get_backends
-from django.contrib.sites.models import Site
-from django.contrib.contenttypes.models import ContentType
 
 
 from tcms.profiles.models import UserProfile
-from tcms.profiles.models import Bookmark
 from tcms.core.forms.fields import StripURLField
 
 IM_CHOICES = (
@@ -22,8 +16,6 @@ IM_CHOICES = (
     (4, 'Yahoo messenger'),
     (5, 'ICQ')
 )
-
-BOOKMARK_EMPTY_LABEL = '---all---'
 
 
 class UserProfileForm(forms.ModelForm):
@@ -123,45 +115,3 @@ class UserProfileForm(forms.ModelForm):
         user.last_name = self.cleaned_data['last_name']
         user.save()
         return instance
-
-
-class BookmarkForm(forms.Form):
-    a = forms.CharField(widget=forms.HiddenInput)
-    content_type = forms.CharField(
-        required=False, widget=forms.HiddenInput
-    )
-    object_pk = forms.CharField(
-        required=False, widget=forms.HiddenInput
-    )
-    user = forms.IntegerField(widget=forms.HiddenInput)
-    url = StripURLField()
-    name = forms.CharField(max_length=1024, required=False)
-    description = forms.CharField(required=False, widget=forms.Textarea)
-
-    def clean(self):
-        cleaned_data = self.cleaned_data.copy()
-        if cleaned_data.get('content_type'):
-            try:
-                model = apps.get_model(*cleaned_data['content_type'].split(".", 1))
-                target = model._default_manager.get(pk=cleaned_data['object_pk'])
-                app_label, model = cleaned_data['content_type'].split(".", 1)
-                content_type = ContentType.objects.get(app_label=app_label, model=model)
-                cleaned_data['content_type'] = content_type
-                cleaned_data['object_pk'] = target.pk
-            except ObjectDoesNotExist as error:
-                raise ValidationError(error)
-
-        cleaned_data['user'] = User.objects.get(pk=cleaned_data['user'])
-        cleaned_data['site'] = Site.objects.get(pk=settings.SITE_ID)
-        return cleaned_data
-
-    def populate(self, user):
-        pass
-
-    def save(self):
-        cleaned_data = self.cleaned_data.copy()
-        del cleaned_data['a']
-        if not cleaned_data['content_type']:
-            del cleaned_data['content_type']
-            del cleaned_data['object_pk']
-        return Bookmark.objects.create(**cleaned_data)

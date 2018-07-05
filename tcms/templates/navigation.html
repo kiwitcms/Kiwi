@@ -37,10 +37,6 @@
                             <a href="{% url "plans-all" %}?author__email__startswith={{ user.email|urlencode }}" target="_parent">My Test Plans</a>
                         </li>
 
-                        <li>
-                            <a href="{% url 'tcms-bookmarks' %}" target="_parent">My bookmarks</a>
-                        </li>
-
                         <li class="divider"></li>
 
                         <li>
@@ -91,20 +87,6 @@
                     </ul>
                 </li>
 
-<!-- enable again when moving out of the iframe
-                {% if user.is_authenticated %}
-                <li style="float:right">
-                    <a class="nav-item-iconic fa fa-bookmark-o" id="bookmark_submit" title="Bookmark this page" href="#"></a>
-
-                    <form id="id_bookmark_iform" action="{% url "tcms-bookmarks" %}" method="get">
-                        <input type="hidden" name="a" value="render_form" />
-                        <input type="hidden" name="user" value="{{ request.user.pk }}" />
-                        <input type="hidden" name="site" value="{{ SETTINGS.SITE_ID }}" />
-                        {% block content_type %}{% endblock %}
-                    </form>
-                </li>
-                {% endif %}
--->
             </ul>
 
             <ul class="nav navbar-nav navbar-primary">
