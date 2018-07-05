@@ -10,7 +10,7 @@ python-bugzilla
 jira==1.0.10
 PyGithub
 dj-pagination
-django-tinymce
+django-tinymce==2.7.0
 beautifulsoup4
 django-contrib-comments
 html2text
