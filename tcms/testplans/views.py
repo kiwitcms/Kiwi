@@ -23,7 +23,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from uuslug import slugify
 
-from tcms.core.models import TCMSLog
 from tcms.core.utils import DataTableResult
 from tcms.management.models import EnvGroup
 from tcms.search import remove_from_request_path
@@ -788,9 +787,8 @@ class DeleteCasesView(View):
         cases = get_selected_testcases(request).only('pk')
 
         # Log Action
-        plan_log = TCMSLog(model=plan)
         for case in cases:
-            plan_log.make(
+            plan.log_action(
                 who=request.user,
                 action='Remove case {} from plan {}'.format(case.pk, plan.pk))
             case.log_action(who=request.user,
