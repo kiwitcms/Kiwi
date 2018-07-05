@@ -113,6 +113,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'global_login_required.GlobalLoginRequiredMiddleware',
     'dj_pagination.middleware.PaginationMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 
@@ -241,6 +242,7 @@ INSTALLED_APPS = [
     'django_comments',
     'dj_pagination',
     'modernrpc',
+    'simple_history',
     'tinymce',
 
     'tcms.core',
@@ -297,6 +299,11 @@ AUTHENTICATION_BACKENDS = [
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False
+
+# Allows history_change_reason to be a TextField so we can
+# support a changelog-like feature! DO NOT EDIT b/c migrations
+# depend on this setting!
+SIMPLE_HISTORY_HISTORY_CHANGE_REASON_USE_TEXT_FIELD = True
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100

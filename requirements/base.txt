@@ -2,6 +2,7 @@ Django==2.0.7
 django-attachments>=1.3
 django-glrm
 django-grappelli
+django-simple-history
 django-vinaigrette
 django-uuslug
 odfpy
