@@ -8,10 +8,7 @@ from django.test import TestCase
 from django.conf import settings
 from django.test.client import Client
 from django.urls import reverse
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 
-from tcms.core.logs.models import TCMSLogModel
 from tcms.management.models import EnvGroup
 from tcms.management.models import EnvGroupPropertyMap
 from tcms.management.models import EnvProperty
@@ -38,19 +35,8 @@ class TestVisitAndSearchGroupPage(LoggedInTestCase):
 
         cls.group_url = reverse('mgmt-environment_groups')
 
-        cls.group_1 = EnvGroupFactory(name='rhel-7',
-                                      manager=cls.tester,
-                                      modified_by=None)
-        cls.group_2 = EnvGroupFactory(name='fedora',
-                                      manager=cls.tester,
-                                      modified_by=None)
-
-        cls.group_1.log_action(who=cls.tester,
-                               action='Add group {}'.format(cls.group_1.name))
-        cls.group_1.log_action(who=cls.tester,
-                               action='Edit group {}'.format(cls.group_1.name))
-        cls.group_2.log_action(who=cls.tester,
-                               action='Edit group {}'.format(cls.group_2.name))
+        cls.group_1 = EnvGroupFactory(name='rhel-7')
+        cls.group_2 = EnvGroupFactory(name='fedora')
 
         cls.property_1 = EnvPropertyFactory()
         cls.property_2 = EnvPropertyFactory()
@@ -66,21 +52,6 @@ class TestVisitAndSearchGroupPage(LoggedInTestCase):
     def tearDown(self):
         remove_perm_from_user(self.tester, 'management.change_envgroup')
 
-    def assert_group_logs_are_displayed(self, response, group):
-        env_group_ct = ContentType.objects.get_for_model(EnvGroup)
-        logs = TCMSLogModel.objects.filter(content_type=env_group_ct,
-                                           object_pk=group.pk)
-
-        for log in logs:
-            self.assertContains(
-                response,
-                '<div class="envlog_who">{}</div>'.format(log.who.username),
-                html=True)
-            self.assertContains(
-                response,
-                '<div class="envlog_content">{}</div>'.format(log.action),
-                html=True)
-
     def test_visit_group_page(self):
         response = self.client.get(self.group_url)
 
@@ -89,8 +60,6 @@ class TestVisitAndSearchGroupPage(LoggedInTestCase):
                 response,
                 '<label class=" ">{}</label>'.format(group.name),
                 html=True)
-
-            self.assert_group_logs_are_displayed(response, group)
 
     def test_visit_group_page_with_permission(self):
         user_should_have_perm(self.tester, 'management.change_envgroup')
@@ -168,17 +137,9 @@ class TestAddGroup(LoggedInTestCase):
 
         new_group = groups[0]
 
-        self.assertEqual(self.tester, new_group.manager)
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
             {'rc': 0, 'response': 'ok', 'id': new_group.pk})
-
-        # Assert log is created for new group
-        env_group_ct = ContentType.objects.get_for_model(EnvGroup)
-        log = TCMSLogModel.objects.filter(content_type=env_group_ct,
-                                          object_pk=new_group.pk)[0]
-        self.assertEqual('Initial env group {}'.format(self.new_group_name),
-                         log.action)
 
     def test_add_existing_group(self):
         self.client.get(self.group_add_url,
@@ -202,25 +163,15 @@ class TestDeleteGroup(LoggedInTestCase):
 
         cls.group_delete_url = reverse('mgmt-environment_groups')
         cls.permission = 'management.delete_envgroup'
+        user_should_have_perm(cls.tester, cls.permission)
 
-        cls.group_manager = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='group-manager',
-            email='manager@example.com',
-            password='password')
-
-        cls.group_nitrate = EnvGroupFactory(name='nitrate',
-                                            manager=cls.group_manager)
-        cls.group_fedora = EnvGroupFactory(name='fedora',
-                                           manager=cls.group_manager)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate')
+        cls.group_fedora = EnvGroupFactory(name='fedora')
 
     def tearDown(self):
         remove_perm_from_user(self.tester, self.permission)
 
-    def test_manager_is_able_to_delete_without_requiring_permission(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.group_manager.username,
-            password='password')
-
+    def test_able_to_delete_when_logged_in(self):
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': self.group_nitrate.pk})
 
@@ -231,24 +182,13 @@ class TestDeleteGroup(LoggedInTestCase):
         self.assertFalse(
             EnvGroup.objects.filter(pk=self.group_nitrate.pk).exists())
 
-    def test_missing_permission_when_delete_by_non_manager(self):
+    def test_missing_permission_when_deleting_and_no_permission(self):
+        remove_perm_from_user(self.tester, self.permission)
         response = self.client.get(self.group_delete_url,
                                    {'action': 'del', 'id': self.group_nitrate.pk})
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
             {'rc': 1, 'response': 'Permission denied.'})
-
-    def test_delete_group_by_non_manager(self):
-        user_should_have_perm(self.tester, self.permission)
-        response = self.client.get(self.group_delete_url,
-                                   {'action': 'del', 'id': self.group_fedora.pk})
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok'})
-
-        self.assertFalse(
-            EnvGroup.objects.filter(pk=self.group_fedora.pk).exists())
 
     def test_return_404_if_delete_a_nonexisting_group(self):
         response = self.client.get(self.group_delete_url,
@@ -276,7 +216,7 @@ class TestModifyGroup(LoggedInTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate')
 
         cls.permission = 'management.change_envgroup'
         cls.group_modify_url = reverse('mgmt-environment_groups')
@@ -335,10 +275,9 @@ class TestVisitEnvironmentGroupPage(LoggedInTestCase):
         user_should_have_perm(cls.tester, 'management.change_envgroup')
 
         cls.group_edit_url = reverse('mgmt-environment_group_edit')
-        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate')
         cls.disabled_group = EnvGroupFactory(name='disabled-group',
-                                             is_active=False,
-                                             manager=cls.tester)
+                                             is_active=False)
 
     def test_404_when_missing_group_id(self):
         response = self.client.get(self.group_edit_url)
@@ -384,8 +323,8 @@ class TestEditEnvironmentGroup(LoggedInTestCase):
 
         user_should_have_perm(cls.tester, 'management.change_envgroup')
 
-        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
-        cls.duplicate_group = EnvGroupFactory(name='fedora', manager=cls.tester)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate')
+        cls.duplicate_group = EnvGroupFactory(name='fedora')
 
         cls.property_1 = EnvPropertyFactory()
         cls.property_2 = EnvPropertyFactory()
@@ -432,7 +371,7 @@ class TestAddProperty(LoggedInTestCase):
         cls.permission = 'management.add_envproperty'
         cls.group_properties_url = reverse('mgmt-environment_properties')
 
-        cls.group_nitrate = EnvGroupFactory(name='nitrate', manager=cls.tester)
+        cls.group_nitrate = EnvGroupFactory(name='nitrate')
         cls.duplicate_property = EnvPropertyFactory(name='f26')
 
     def setUp(self):

@@ -430,7 +430,6 @@ ul.runcc{ margin:0px;}
 .casedoc{ padding-left:20px;}
 .casedoc ul,.casedoc ol{ padding-left:20px;}
 
-.loglink{ background:url(../images/loglink.png) left center no-repeat; width:16px; height:16px; padding-left:15px;}
 .envlog{ background:url(../images/envlog_bg.png) repeat-x left top #f8f7f7; height:23px; padding:0;}
 .envlog_time{ width:15%;padding:3px 0px 0 0px; float:left; text-align:center;}
 .envlog_who{ width:15%;padding:3px 5px 0 10px;float:left;}

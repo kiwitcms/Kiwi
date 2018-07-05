@@ -114,8 +114,6 @@ class EnvGroupFactory(DjangoModelFactory):
         model = 'management.EnvGroup'
 
     name = factory.Sequence(lambda n: 'Env group %d' % n)
-    manager = factory.SubFactory(UserFactory)
-    modified_by = factory.SubFactory(UserFactory)
 
     @factory.post_generation
     def property(self, create, extracted, **kwargs):

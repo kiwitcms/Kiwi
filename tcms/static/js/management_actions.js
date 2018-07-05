@@ -8,10 +8,6 @@ Nitrate.Management.Environment.Edit.on_load = function() {
 };
 
 Nitrate.Management.Environment.on_load = function() {
-  jQ('a.loglink').bind('click', function(e) {
-    jQ(this).parents('.js-env-group').next().toggle();
-  });
-
   jQ('.js-add-env-group').bind('click', function() {
     addEnvGroup();
   });
