@@ -22,7 +22,6 @@ from django.views.generic.base import TemplateView
 from django_comments.models import Comment
 
 from tcms.core.utils import form_errors_to_list
-from tcms.core.logs.models import TCMSLogModel
 from tcms.core.utils import DataTableResult
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
@@ -891,8 +890,7 @@ def get(request, case_id):
     tps = tc.plan.select_related('author', 'product', 'type').all()
 
     # log
-    log_id = str(case_id)
-    logs = TCMSLogModel.get_logs_for_model(TestCase, log_id)
+    logs = tc.log()
 
     logs = itertools.groupby(logs, lambda l: l.date)
     logs = [(day, list(log_actions)) for day, log_actions in logs]

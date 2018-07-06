@@ -12,10 +12,9 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.test.client import Client
 
-from tcms.core.logs.models import TCMSLogModel
 from tcms.management.models import Product
 from tcms.management.models import Version
-from tcms.testcases.models import TestCase, TestCasePlan, TestCaseStatus
+from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testplans.models import EnvPlanMap
 from tcms.testplans.models import TestPlan
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
@@ -330,17 +329,13 @@ class TestDeleteCasesFromPlan(BasePlanCase):
 
         # Assert action logs are recorded for plan and case correctly
 
-        expected_log = 'Remove from plan {}'.format(self.plan.pk)
-        for pk in (self.case_1.pk, self.case_3.pk):
-            log = TCMSLogModel.get_logs_for_model(TestCase, pk)[0]
-            self.assertEqual(expected_log, log.action)
+        for case in (self.case_1, self.case_3):
+            logs = case.log()
+            first_log = logs.first()
+            self.assertEqual(first_log.action, 'Remove from plan {}'.format(self.plan.pk))
 
-        for plan_pk, case_pk in ((self.plan.pk, self.case_1.pk),
-                                 (self.plan.pk, self.case_3.pk)):
-            expected_log = 'Remove case {} from plan {}'.format(
-                case_pk, plan_pk)
-            self.assertTrue(
-                TCMSLogModel.objects.filter(action=expected_log).exists())
+            expected_log = 'Remove case {} from plan {}'.format(case.pk, self.plan.pk)
+            self.assertTrue(self.plan.log().filter(action=expected_log).exists())
 
 
 class TestSortCases(BasePlanCase):
