@@ -13,5 +13,4 @@ Submodules
 
    tcms.core.logs.managers
    tcms.core.logs.models
-   tcms.core.logs.views
 

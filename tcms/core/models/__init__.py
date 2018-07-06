@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.utils.encoding import smart_text
+from django.contrib.contenttypes.models import ContentType
 
 from tcms.core.models.base import UrlMixin
-from tcms.core.logs.views import TCMSLog
+from tcms.core.logs.models import TCMSLogModel
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 
 User._meta.ordering = ['username']
@@ -35,14 +38,14 @@ class TCMSActionModel(models.Model, UrlMixin):
         return serializer.serialize_model()
 
     def log(self):
-        log = TCMSLog(model=self)
-        return log.list()
+        ctype = ContentType.objects.get_for_model(self)
+        qs = TCMSLogModel.objects.filter(content_type=ctype,
+                                         object_pk=smart_text(self.pk),
+                                         site=settings.SITE_ID)
+        return qs.select_related('who')
 
     def log_action(self, who, action):
-        log = TCMSLog(model=self)
-        log.make(who=who, action=action)
-
-        return log
+        TCMSLogModel(content_object=self, who=who, action=action, site_id=settings.SITE_ID).save()
 
     def clean(self):
         strip_types = (models.CharField,
