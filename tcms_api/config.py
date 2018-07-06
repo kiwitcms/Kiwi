@@ -71,7 +71,6 @@ status use 'print TCMS()' which gives a short summary like this:
 
 from configparser import ConfigParser
 
-import datetime
 import logging
 import os
 
@@ -89,19 +88,6 @@ LOG_DEBUG = logging.DEBUG
 LOG_CACHE = 7
 LOG_DATA = 4
 LOG_ALL = 1
-
-# Caching
-NEVER_CACHE = datetime.timedelta(seconds=0)
-NEVER_EXPIRE = datetime.timedelta(days=365)
-CACHE_NONE = 0
-CACHE_OBJECTS = 1
-
-# Maximum id value (used for idifying)
-_MAX_ID = 1000000000
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Logging Configuration
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 class Logging(object):
@@ -254,83 +240,3 @@ class Config(object):
             log.error(self.example)
             raise TCMSError("No url found in the config file")
         self._parsed = True
-
-
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Caching Configuration
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-class Caching(object):
-    """ Caching level configuration """
-
-    # Current caching level and the list of all levels
-    _level = None
-    LEVELS = "CACHE_NONE CACHE_OBJECTS".split()
-
-    # We need only a single config instance
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        """ Make sure we create a single instance only """
-        if not cls._instance:
-            cls._instance = super(Caching, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
-
-    def __init__(self, level=None):
-        """ Initialize the caching level """
-        # Nothing to do if already initialized
-        if self._level is not None:
-            return
-        # Set the level
-        self.set(level)
-
-    def set(self, level=None):
-        """ Set the caching level """
-        # Setup from the environment or config file (performed only once)
-        if level is None:
-            # Default cache level already detected, nothing to do
-            if self._level is not None:
-                return
-            # Attempt to detect the level from the environment
-            try:
-                self._level = int(os.environ.get("CACHE", CACHE_NONE))
-            except Exception:
-                # Inspect the [cache] section of the config file
-                try:
-                    self._level = Config().cache.level
-                # Use default if no cache section or no config file
-                except AttributeError:
-                    self._level = CACHE_OBJECTS
-        elif level >= CACHE_NONE and level <= CACHE_OBJECTS:
-            self._level = level
-        else:
-            raise TCMSError("Invalid cache level '{0}'".format(level))
-        log.debug("Caching on level {0} ({1})".format(
-            self._level, self.LEVELS[self._level]))
-
-    def get(self):
-        """ Get the current caching level """
-        return self._level
-
-
-def set_cache_level(level):
-    """
-    Set the caching level
-
-    If the level parameter is not specified environment variable CACHE
-    and configuration section [cache] are inspected. There are four cache
-    levels available.
-
-        CACHE=0 ... CACHE_NONE
-        CACHE=2 ... CACHE_OBJECTS
-
-    See tcms_api.cache module documentation for detailed description
-    of the caching mechanism.
-    """
-    Caching().set(level)
-
-
-def get_cache_level():
-    """ Get the current caching level """
-    return Caching().get()
