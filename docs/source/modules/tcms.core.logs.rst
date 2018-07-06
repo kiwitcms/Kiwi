@@ -11,6 +11,5 @@ Submodules
 
 .. toctree::
 
-   tcms.core.logs.managers
    tcms.core.logs.models
 
