@@ -59,3 +59,7 @@ class TCMSLog(object):
                                   site=settings.SITE_ID)
         qs = qs.select_related('who')
         return qs
+
+    def list(self):
+        """List the logs"""
+        return self.get_query_set().all()
