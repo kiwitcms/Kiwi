@@ -51,19 +51,17 @@
 					{% for comment in caserun_comments %}
 					<li>
 						<span>#{{ forloop.counter }}</span>
-						<span>{{ comment.user__username }}</span>
+						<span>{{ comment.user.username }}</span>
 						<span>{{ comment.submit_date }}</span>
 						<div>
 						{{ comment.comment|urlize|linebreaksbr }}
 						<br>
-						{% if perms.comments.can_moderate %}
-						{% ifequal comment.user__pk request.user.pk %}
+						{% if perms.comments.can_moderate and comment.user.pk == request.user.pk %}
 						<form action="{% url "comments-delete" %}" method="post" class="form_comment" style="display:inline;">
 							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
 							<input type="hidden" name="object_pk" value="{{ test_case_run.case_id }}" />
 							<input class='commentdelete sprites' value='' type='submit' title="Remove Comment" />
 						</form>
-						{% endifequal %}
 						{% endif %}
 						</div>
 					</li>

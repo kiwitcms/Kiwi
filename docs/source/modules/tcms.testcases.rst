@@ -21,7 +21,6 @@ Submodules
 
    tcms.testcases.actions
    tcms.testcases.admin
-   tcms.testcases.data
    tcms.testcases.fields
    tcms.testcases.forms
    tcms.testcases.models

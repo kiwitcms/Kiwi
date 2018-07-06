@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.apps import apps
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 
 import django_comments
 
@@ -54,3 +56,16 @@ def add_comment(request, data):
     )
 
     return form, target
+
+
+def get_comments(obj):
+    """Get comments for obj"""
+
+    content_type = ContentType.objects.get_for_model(obj)
+    comments = django_comments.models.Comment.objects.filter(content_type=content_type,
+                                                             object_pk=obj.pk,
+                                                             site=settings.SITE_ID,
+                                                             is_removed=False)
+    comments = comments.select_related('user').only('submit_date', 'user__username', 'comment')
+    comments.order_by('pk')
+    return comments
