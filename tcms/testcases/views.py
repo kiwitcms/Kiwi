@@ -707,7 +707,7 @@ class SimpleTestCaseView(TemplateView, data.TestCaseViewDataMixin):
             data.update({
                 'review_mode': self.review_mode,
                 'test_case_text': case.latest_text(),
-                'logs': self.get_case_logs(case),
+                'logs': case.log(),
                 'components': case.component.only('name'),
                 'tags': case.tag.only('name'),
                 'case_comments': self.get_case_comments(case),
@@ -805,7 +805,7 @@ class TestCaseSimpleCaseRunView(TemplateView, data.TestCaseRunViewDataMixin):
         data = super(this_cls, self).get_context_data(**kwargs)
 
         caserun = self.get_caserun()
-        logs = self.get_case_run_logs(caserun)
+        logs = caserun.log()
         comments = self.get_case_run_comments(caserun)
 
         data.update({
@@ -854,7 +854,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView,
 
         # Data of TestCaseRun
         caserun_comments = self.get_case_run_comments(case_run)
-        caserun_logs = self.get_case_run_logs(case_run)
+        caserun_logs = case_run.log()
 
         caserun_status = TestCaseRunStatus.objects.values('pk', 'name')
         caserun_status = caserun_status.order_by('pk')
