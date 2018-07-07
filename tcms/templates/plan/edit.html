@@ -42,13 +42,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
 		>> Edit
 	</div>
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
-	<div class="control">
-		<span class="right-bar">
-			<a href="{% url "plan-text_history" test_plan.plan_id %}" class="historylink">
-				Edit History
-			</a>
-		</span>
-	</div>
 	<form action="{% url "plan-edit" test_plan.plan_id %}" method="post" enctype="multipart/form-data">
 		<div id="" class="Detailform border-1">
 			<table class="editor" cellspacing="0">

@@ -211,12 +211,10 @@ class PlanTests(test.TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_history(self):
-        location = reverse('plan-text_history',
-                           args=[self.plan_id])
+        # note: the history URL is generated on the fly and not accessible via
+        # name
+        location = "/admin/testplans/testplan/%d/history/" % self.plan_id
         response = self.c.get(location)
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-
-        response = self.c.get(location, {'id': 1})
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
 
