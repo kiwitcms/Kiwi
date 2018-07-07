@@ -11,7 +11,6 @@ from uuslug import slugify
 
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.models import TCMSActionModel
-from tcms.core.utils.checksum import checksum
 from tcms.management.models import Version
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import Category
@@ -37,6 +36,7 @@ class TestPlan(TCMSActionModel):
 
     plan_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, db_index=True)
+    text = models.TextField(blank=True)
     create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
     is_active = models.BooleanField(db_column='isactive', default=True, db_index=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
@@ -94,25 +94,6 @@ class TestPlan(TCMSActionModel):
 
     def confirmed_case(self):
         return self.case.filter(case_status__name='CONFIRMED')
-
-    def latest_text(self):
-        try:
-            return self.text.select_related('author').order_by('-pk')[0]
-        except IndexError:
-            return None
-        except ObjectDoesNotExist:
-            return None
-
-    def add_text(self, author, plan_text):
-        latest_text = self.latest_text()
-        old_checksum = None
-        if latest_text is not None:
-            old_checksum = checksum(latest_text.plan_text)
-
-        if old_checksum == checksum(plan_text):
-            return self.latest_text()
-
-        return self.text.create(author=author, plan_text=plan_text)
 
     def add_case(self, case, sortkey=0):
 
@@ -174,7 +155,6 @@ class TestPlan(TCMSActionModel):
 
     def clone(self, new_name=None, product=None, version=None,
               new_original_author=None, set_parent=True,
-              copy_texts=True, default_text_author=None,
               copy_environment_group=True,
               link_cases=True, copy_cases=None,
               new_case_author=None,
@@ -191,9 +171,6 @@ class TestPlan(TCMSActionModel):
             author is used.
         :param bool set_parent: Whether to set original plan as parent of cloned plan.
             Set by default.
-        :param bool copy_texts: Whether to copy the four text. Copy by default.
-        :param default_text_author: When not copy the four text, new text will be created.
-            This is the default author of new created text.
         :param bool copy_environment_group: Whether to copy environment groups. Copy by default.
         :param bool link_cases: Whether to link cases to cloned plan. Default is True.
         :param bool copy_cases: Whether to copy cases to cloned plan instead of just linking them.
@@ -204,9 +181,6 @@ class TestPlan(TCMSActionModel):
             have original case' component, create it and use this value as the initial_owner.
         :rtype: cloned plan
         """
-
-        if not copy_texts and not default_text_author:
-            raise ValueError('Missing default text author when not copy texts.')
 
         if not copy_cases and not default_component_initial_owner:
             raise ValueError('Missing default component initial owner when not copy cases.')
@@ -220,13 +194,8 @@ class TestPlan(TCMSActionModel):
             create_date=self.create_date,
             is_active=self.is_active,
             extra_link=self.extra_link,
-            parent=self if set_parent else None)
-
-        # Copy the plan documents
-        if copy_texts:
-            latest_text = self.latest_text()
-            if latest_text is not None:
-                tp_dest.add_text(latest_text.author, latest_text.plan_text)
+            parent=self if set_parent else None,
+            text=self.text)
 
         # Copy the plan tags
         for tp_tag_src in self.tag.all():
@@ -297,17 +266,6 @@ class TestPlan(TCMSActionModel):
                     tp_dest.add_case(tpcase_src, tcp.sortkey)
 
         return tp_dest
-
-
-class TestPlanText(TCMSActionModel):
-    plan = models.ForeignKey(TestPlan, related_name='text', on_delete=models.CASCADE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
-    create_date = models.DateTimeField(auto_now_add=True,
-                                       db_column='creation_ts')
-    plan_text = models.TextField(blank=True)
-
-    class Meta:
-        ordering = ['plan', '-pk']
 
 
 class TestPlanTag(models.Model):

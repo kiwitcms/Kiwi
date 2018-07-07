@@ -68,12 +68,8 @@ def create(values, **kwargs):
             author=request.user,
             product_version=form.cleaned_data['product_version'],
             parent=form.cleaned_data['parent'],
-            is_active=form.cleaned_data['is_active']
-        )
-
-        tp.add_text(
-            author=request.user,
-            plan_text=values['text'],
+            is_active=form.cleaned_data['is_active'],
+            text=form.cleaned_data['text'],
         )
 
         return tp.serialize()
@@ -96,12 +92,6 @@ def filter(query={}):
     results = []
     for plan in TestPlan.objects.filter(**query):
         serialized_plan = plan.serialize()
-
-        # the text for this TestPlan
-        latest_text = plan.latest_text()
-        if latest_text:
-            serialized_plan['text'] = latest_text.plan_text
-
         results.append(serialized_plan)
 
     return results
@@ -149,7 +139,7 @@ def remove_tag(plan_id, tag):
 
 @permissions_required('testplans.change_testplan')
 @rpc_method(name='TestPlan.update')
-def update(plan_id, values, **kwargs):
+def update(plan_id, values):
     """
     .. function:: XML-RPC TestPlan.update(plan_id, values)
 
@@ -203,14 +193,10 @@ def update(plan_id, values, **kwargs):
         if values.get('is_active') is not None:
             tp.is_active = form.cleaned_data['is_active']
 
-        tp.save()
-
         if form.cleaned_data['text']:
-            request = kwargs.get(REQUEST_KEY)
-            tp.add_text(
-                author=request.user,
-                plan_text=values['text'],
-            )
+            tp.text = form.cleaned_data['text']
+
+        tp.save()
 
         if form.cleaned_data['env_group']:
             tp.clear_env_groups()

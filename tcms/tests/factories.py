@@ -167,6 +167,7 @@ class TestPlanFactory(DjangoModelFactory):
         model = 'testplans.TestPlan'
 
     name = factory.Sequence(lambda n: 'Plan name %d' % n)
+    text = factory.Sequence(lambda n: 'Plan document %d' % n)
     create_date = factory.LazyFunction(datetime.now)
     product_version = factory.SubFactory(VersionFactory)
     owner = factory.SubFactory(UserFactory)
@@ -208,17 +209,6 @@ class EnvPlanMapFactory(DjangoModelFactory):
 
     plan = factory.SubFactory(TestPlanFactory)
     group = factory.SubFactory(EnvGroupFactory)
-
-
-class TestPlanTextFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testplans.TestPlanText'
-
-    plan = factory.SubFactory(TestPlanFactory)
-    author = factory.SubFactory(UserFactory)
-    create_date = factory.LazyFunction(datetime.now)
-    plan_text = factory.Sequence(lambda n: 'Plan text %d' % n)
 
 
 class TestPlanEmailSettingsFactory(DjangoModelFactory):

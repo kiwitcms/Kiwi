@@ -385,6 +385,7 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'extra_link': ('extra_link', do_nothing),
         'is_active': ('is_active', do_nothing),
         'name': ('name', do_nothing),
+        'text': ('text', do_nothing),
         'plan_id': ('plan_id', do_nothing),
 
         'author': ('author_id', do_nothing),

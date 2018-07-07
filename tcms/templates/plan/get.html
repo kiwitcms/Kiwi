@@ -39,7 +39,6 @@ Nitrate.TestPlans.Instance = {
 	<input type="hidden" name="content_type" value="testplans.testplan" />
 	<input type="hidden" name="object_pk" value="{{ test_plan.pk }}" />
 	<input type="hidden" name="name" value="{{ test_plan.name }}" />
-	{# <input type="hidden" name="description" value="{{ test_plan.latest_text.plan_text }}" /> #}
 {% endblock %}
 
 {% block contents %}
@@ -107,7 +106,7 @@ Nitrate.TestPlans.Instance = {
 					<span class="blue strong"><a href="{% url "plans-all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&product=&product_version=&env_group={{ env_group.id }}&create_date__gte=&create_date__lte=" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
 					{% endfor %}
 				</div>
-				<div id="display_summary" >
+				<div>
 					{% for env_property in env_properties %}
 					{{ env_property.property.name }},
 					{% endfor %}
@@ -173,7 +172,15 @@ Nitrate.TestPlans.Instance = {
 				</li>
 			</ul>
 			<div id="document" class="tab_list" style="display:none">
-				{% include "plan/get_docs.html" %}
+                            <div class="listinfo_doc_content">
+                                <div id="display_summary" class="listinfo_doc">
+                                {% if test_plan.text %}
+                                    {{ test_plan.text|safe }}
+                                {% else %}
+                                    <span style="color: #666">The document for this plan hasn't been written yet.</span>
+                                {% endif %}
+                                </div>
+                            </div>
 			</div>
 			<div id="attachment" class="tab_list" style="display:none">
 				{% include "plan/get_attachments.html" %}
