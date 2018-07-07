@@ -80,11 +80,8 @@ def new(request, template_name='plan/new.html'):
                 create_date=datetime.datetime.now(),
                 extra_link=form.cleaned_data['extra_link'],
                 parent=form.cleaned_data['parent'],
+                text=form.cleaned_data['text'],
             )
-
-            # Add test plan text
-            if request.user.has_perm('testplans.add_testplantext'):
-                test_plan.add_text(request.user, form.cleaned_data['text'])
 
             # Add test plan environment groups
             if request.user.has_perm('testplans.add_envplanmap'):
@@ -344,7 +341,6 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 
     try:
         test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
-        test_plan.latest_text = test_plan.latest_text()
     except ObjectDoesNotExist:
         raise Http404
 
@@ -461,10 +457,8 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 # can be accessed.
                 # Instance attribute is usually not a desirable solution.
                 test_plan.current_user = request.user
+                test_plan.text = form.cleaned_data['text']
                 test_plan.save()
-
-            if request.user.has_perm('testplans.add_testplantext'):
-                test_plan.add_text(request.user, form.cleaned_data['text'])
 
             if request.user.has_perm('testplans.change_envplanmap'):
                 test_plan.clear_env_groups()
@@ -494,7 +488,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             'product': test_plan.product_id,
             'product_version': test_plan.product_version_id,
             'type': test_plan.type_id,
-            'text': test_plan.latest_text() and test_plan.latest_text().plan_text or '',
+            'text': test_plan.text,
             'parent': test_plan.parent_id,
             'env_group': env_group_id,
             'is_active': test_plan.is_active,
@@ -562,7 +556,6 @@ def clone(request, template_name='plan/clone.html'):
                     set_parent=clone_options['set_parent'],
 
                     # Related data
-                    copy_texts=clone_options['copy_texts'],
                     copy_environment_group=clone_options['copy_environment_group'],
 
                     # Link or copy cases
@@ -587,10 +580,6 @@ def clone(request, template_name='plan/clone.html'):
                 if assign_me_as_copied_case_default_tester:
                     clone_params['new_case_default_tester'] = request.user
 
-                assign_me_as_text_author = not clone_options['copy_texts']
-                if assign_me_as_text_author:
-                    clone_params['default_text_author'] = request.user
-
                 cloned_plan = test_plan.clone(**clone_params)
 
             if len(test_plans) == 1:
@@ -612,7 +601,6 @@ def clone(request, template_name='plan/clone.html'):
                 'product': test_plans[0].product_id,
                 'product_version': test_plans[0].product_version_id,
                 'set_parent': True,
-                'copy_texts': True,
                 'copy_attachements': True,
                 'copy_environment_group': True,
                 'link_testcases': True,
@@ -625,7 +613,6 @@ def clone(request, template_name='plan/clone.html'):
         else:
             clone_form = ClonePlanForm(initial={
                 'set_parent': True,
-                'copy_texts': True,
                 'copy_attachements': True,
                 'link_testcases': True,
                 'copy_testcases': False,

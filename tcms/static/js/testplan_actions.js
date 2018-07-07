@@ -1070,26 +1070,6 @@ Nitrate.TestPlans.Clone.on_load = function() {
   });
 };
 
-function showMoreSummary() {
-  jQ('#display_summary').show();
-  if (jQ('#display_summary_short').length) {
-    jQ('#id_link_show_more').hide();
-    jQ('#id_link_show_short').show();
-    jQ('#display_summary_short').hide();
-  }
-}
-
-function showShortSummary() {
-  jQ('#id_link_show_more').show();
-  jQ('#display_summary').hide();
-  if (jQ('#display_summary_short').length) {
-    jQ('#id_link_show_short').hide();
-    jQ('#display_summary_short').show();
-  }
-
-  window.scrollTo(0, 0);
-}
-
 /*
  * Unlink selected cases from current TestPlan.
  *

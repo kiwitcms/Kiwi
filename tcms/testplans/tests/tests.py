@@ -24,7 +24,6 @@ from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory, TestCaseTextFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestPlanTextFactory
 from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import EnvGroupFactory
@@ -137,8 +136,6 @@ class PlanTests(test.TestCase):
             case = TestCaseFactory(plan=[cls.test_plan])
             TestCaseTextFactory(case=case)
 
-        TestPlanTextFactory(plan=cls.test_plan)
-
         cls.plan_id = cls.test_plan.pk
         cls.child_plan = TestPlanFactory(parent=cls.test_plan)
 
@@ -193,7 +190,7 @@ class PlanTests(test.TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
         self.assertContains(response, self.test_plan.name)
-        self.assertContains(response, self.test_plan.latest_text().plan_text)
+        self.assertContains(response, self.test_plan.text)
 
         confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
         for case in self.test_plan.case.filter(case_status=confirmed):
@@ -616,18 +613,12 @@ class TestCloneView(BasePlanCase):
                            maintain_case_orignal_author=None,
                            keep_case_default_tester=None):
         self.assertEqual('Copy of {}'.format(original_plan.name), cloned_plan.name)
+        self.assertEqual(cloned_plan.text, original_plan.text)
         self.assertEqual(Product.objects.get(pk=self.product.pk), cloned_plan.product)
         self.assertEqual(Version.objects.get(pk=self.version.pk), cloned_plan.product_version)
 
         # Verify option set_parent
         self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
-
-        # Verify option copy_texts
-        self.assertEqual(cloned_plan.text.count(), original_plan.text.count())
-        for copied_text, original_text in zip(cloned_plan.text.all(),
-                                              original_plan.text.all()):
-            self.assertEqual(copied_text.author, original_text.author)
-            self.assertEqual(copied_text.plan_text, original_text.plan_text)
 
         # Verify option copy_environment_groups
         for env_group in original_plan.env_group.all():
@@ -671,7 +662,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'copy_texts': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',
@@ -699,7 +689,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'copy_texts': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',
@@ -725,7 +714,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'copy_texts': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'submit': 'Clone',
@@ -746,7 +734,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'copy_texts': 'on',
             'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',

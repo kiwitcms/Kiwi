@@ -135,12 +135,11 @@ class TestUpdate(XmlrpcAPIBaseTest):
                                                                 self.plan_2]).count())
 
     def test_update_text(self):
-        self.assertIsNone(self.plan_1.latest_text())
         self.rpc_client.TestPlan.update(self.plan_1.pk, {'text': 'This has been updated'})
         # reload from db
         self.plan_1.refresh_from_db()
         # assert
-        self.assertEqual('This has been updated', self.plan_1.latest_text().plan_text)
+        self.assertEqual('This has been updated', self.plan_1.text)
 
 
 class TestRemoveCase(XmlrpcAPIBaseTest):

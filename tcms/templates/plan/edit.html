@@ -11,9 +11,6 @@
 <style>
 #tab_testcases{ padding-left:5px;}
 #tab_testruns {padding-left:5px;}
-.display_summary textarea{
-	background:red;
-}
 </style>
 {% endblock %}
 
@@ -112,7 +109,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
 				<tr>
 					<td><label class="lab strong">Plan Document</label></td>
 					<td>
-						<div id="display_summary"  class="mec">
+						<div>
 							{{ form.text }}
 						</div>
                         <div >{{ form.text.errors }}</div>
