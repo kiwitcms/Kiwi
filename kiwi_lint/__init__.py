@@ -8,6 +8,8 @@ from .list_comprehension import ListComprehensionChecker
 from .docstring import DocstringChecker
 from .raw_sql import RawSQLChecker
 from .auth_user import AuthUserChecker
+from .bulk_create import BulkCreateChecker
+from .objects_update import ObjectsUpdateChecker
 
 
 def register(linter):
@@ -16,3 +18,5 @@ def register(linter):
     linter.register_checker(DocstringChecker(linter))
     linter.register_checker(RawSQLChecker(linter))
     linter.register_checker(AuthUserChecker(linter))
+    linter.register_checker(BulkCreateChecker(linter))
+    linter.register_checker(ObjectsUpdateChecker(linter))

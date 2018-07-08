@@ -14,7 +14,7 @@ class RawSQLChecker(checkers.BaseChecker):
 
     name = 'raw-sql-checker'
 
-    msgs = {'R4431': ('Avoid using raw SQL',
+    msgs = {'E4431': ('Avoid using raw SQL',
                       'avoid-raw-sql',
                       'Avoid raw SQL, use Django ORM queries instead')}
 
