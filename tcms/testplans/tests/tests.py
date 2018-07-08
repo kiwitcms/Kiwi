@@ -10,7 +10,6 @@ from django import test
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.test.client import Client
 
 from tcms.management.models import Product
 from tcms.management.models import Version
@@ -19,13 +18,11 @@ from tcms.testplans.models import EnvPlanMap
 from tcms.testplans.models import TestPlan
 from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
 
-from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory, TestCaseTextFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import PlanTypeFactory
-from tcms.tests.factories import TagFactory
 from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
@@ -107,12 +104,8 @@ class PlanTests(test.TestCase):
         cls.user = UserFactory(username='admin', email='admin@example.com')
         cls.user.set_password('admin')
         cls.user.is_superuser = True
+        cls.user.is_staff = True
         cls.user.save()
-
-        cls.c = Client()
-        cls.c.login(  # nosec:B106:hardcoded_password_funcarg
-            username='admin',
-            password='admin')
 
         cls.classification = ClassificationFactory(name='Auto')
         cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
@@ -139,19 +132,24 @@ class PlanTests(test.TestCase):
         cls.plan_id = cls.test_plan.pk
         cls.child_plan = TestPlanFactory(parent=cls.test_plan)
 
+    def setUp(self):
+        super().setUp()
+        self.client.login(username=self.user.username,  # nosec:B106:hardcoded_password_funcarg
+                          password='admin')
+
     def test_open_plans_search(self):
         location = reverse('plans-all')
-        response = self.c.get(location)
+        response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_search_plans(self):
         location = reverse('plans-all')
-        response = self.c.get(location, {'action': 'search', 'type': self.test_plan.type.pk})
+        response = self.client.get(location, {'action': 'search', 'type': self.test_plan.type.pk})
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_treeview(self):
         location = reverse('plans-all')
-        response = self.c.get(location, {'t': 'ajax', 'pk': self.test_plan.pk})
+        response = self.client.get(location, {'t': 'ajax', 'pk': self.test_plan.pk})
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
@@ -163,30 +161,30 @@ class PlanTests(test.TestCase):
 
     def test_plan_new_get(self):
         location = reverse('plans-new')
-        response = self.c.get(location, follow=True)
+        response = self.client.get(location, follow=True)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_details(self):
         location = reverse('test_plan_url_short', args=[self.plan_id])
-        response = self.c.get(location)
+        response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.MOVED_PERMANENTLY)
 
-        response = self.c.get(location, follow=True)
+        response = self.client.get(location, follow=True)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_edit(self):
         location = reverse('plan-edit', args=[self.plan_id])
-        response = self.c.get(location)
+        response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_printable_without_selected_plan(self):
         location = reverse('plans-printable')
-        response = self.c.post(location, follow=True)
+        response = self.client.post(location, follow=True)
         self.assertContains(response, 'At least one test plan is required for print')
 
     def test_plan_printable(self):
         location = reverse('plans-printable')
-        response = self.c.post(location, {'plan': [self.test_plan.pk]})
+        response = self.client.post(location, {'plan': [self.test_plan.pk]})
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
         self.assertContains(response, self.test_plan.name)
@@ -204,66 +202,15 @@ class PlanTests(test.TestCase):
     def test_plan_attachment(self):
         location = reverse('plan-attachment',
                            args=[self.plan_id])
-        response = self.c.get(location)
+        response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_history(self):
         # note: the history URL is generated on the fly and not accessible via
         # name
         location = "/admin/testplans/testplan/%d/history/" % self.plan_id
-        response = self.c.get(location)
+        response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
-
-
-class ExportTestPlanTests(test.TestCase):
-    """ Test the export functionality! """
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.user = UserFactory(username='admin', email='admin@example.com')
-        cls.user.set_password('admin')
-        cls.user.is_superuser = True
-        cls.user.save()
-
-        cls.c = Client()
-        cls.c.login(  # nosec:B106:hardcoded_password_funcarg
-            username='admin',
-            password='admin')
-
-        cls.classification = ClassificationFactory(name='Auto')
-        cls.product = ProductFactory(name='Kiwi', classification=cls.classification)
-        cls.product_version = VersionFactory(value='0.1', product=cls.product)
-        cls.plan_type = PlanTypeFactory()
-
-        cls.test_plan = TestPlanFactory(name='Test plan for testing exports',
-                                        product_version=cls.product_version,
-                                        owner=cls.user,
-                                        author=cls.user,
-                                        product=cls.product,
-                                        type=cls.plan_type)
-
-        # create test cases into the test plan
-        cls.cases = []
-        for i in range(10):
-            case = TestCaseFactory(
-                summary='test_case_number_%d' % i,
-                author=cls.user,
-                default_tester=None,
-                reviewer=cls.user,
-                plan=[cls.test_plan]
-            )
-            tag = TagFactory(name='tag_for_%s' % case.summary)
-            component = ComponentFactory(name='component_for_%s' % case.summary)
-            case.add_tag(tag)
-            case.add_component(component)
-
-            if i % 2 == 0:
-                tag = TagFactory(name='second_tag_for_%s' % case.summary)
-                component = ComponentFactory(name='second_component_for_%s' % case.summary)
-                case.add_tag(tag)
-                case.add_component(component)
-
-            cls.cases.append(case)
 
 
 class TestPlanModel(test.TestCase):
