@@ -12,7 +12,7 @@ class AuthUserChecker(checkers.BaseChecker):
 
     name = 'auth-user-checker'
 
-    msgs = {'R4441': ("Hard-coded 'auth.User'",
+    msgs = {'E4441': ("Hard-coded 'auth.User'",
                       'hard-coded-auth-user',
                       "Don't hard-code the auth.User model. "
                       "Use settings.AUTH_USER_MODEL instead!")}
