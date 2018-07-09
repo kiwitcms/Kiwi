@@ -6,5 +6,5 @@ def checksum(value):
     if value is None:
         return ''
     _checksum = hashlib.sha256()
-    _checksum.update(value.encode("UTF-8"))
+    _checksum.update(value.encode("UTF-8"))  # pylint: disable=objects-update-used
     return _checksum.hexdigest()

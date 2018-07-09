@@ -773,12 +773,10 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
             self.request = request
             self.case_run = case_run
             self.template_name = template_name
-            self.default_ajax_response = {'rc': 0, 'response': 'ok'}
 
         def add(self):
             if not self.request.user.has_perm('testcases.add_bug'):
-                response = {'rc': 1, 'response': 'Permission denied'}
-                return self.ajax_response(response=response)
+                return JsonResponse({'rc': 1, 'response': 'Permission denied'})
 
             bug_id = request.GET.get('bug_id')
             bug_system_id = request.GET.get('bug_system_id')
@@ -786,10 +784,8 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
             try:
                 validate_bug_id(bug_id, bug_system_id)
             except ValidationError as error:
-                return self.ajax_response({
-                    'rc': 1,
-                    'response': str(error)
-                })
+                return JsonResponse({'rc': 1,
+                                     'response': str(error)})
 
             bz_external_track = True if request.GET.get('bz_external_track',
                                                         False) else False
@@ -800,21 +796,13 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                             bz_external_track=bz_external_track)
             except Exception as error:
                 msg = str(error) if str(error) else 'Failed to add bug %s' % bug_id
-                return self.ajax_response({
-                    'rc': 1,
-                    'response': msg
-                })
+                return JsonResponse({'rc': 1,
+                                     'response': msg})
 
-            self.default_ajax_response.update({
-                'run_bug_count': self.get_run_bug_count(),
-                'caserun_bugs_count': self.case_run.get_bugs_count(),
-            })
-            return self.ajax_response()
-
-        def ajax_response(self, response=None):
-            if not response:
-                response = self.default_ajax_response
-            return JsonResponse(response)
+            return JsonResponse({'rc': 0,
+                                 'response': 'ok',
+                                 'run_bug_count': self.get_run_bug_count(),
+                                 'caserun_bugs_count': self.case_run.get_bugs_count()})
 
         def file(self):
             bug_system_id = request.GET.get('bug_system_id')
@@ -824,11 +812,10 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
                 url = tracker.report_issue_from_testcase(self.case_run)
                 response = {'rc': 0, 'response': url}
-            else:
-                response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker '
-                                                 'by configuring its base_url!'}
 
-            return self.ajax_response(response)
+            response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker '
+                                             'by configuring its base_url!'}
+            return JsonResponse(response)
 
         def remove(self):
             if not self.request.user.has_perm('testcases.delete_bug'):
@@ -840,12 +827,11 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 run_id = self.request.GET.get('case_run')
                 self.case_run.remove_bug(bug_id, run_id)
             except ObjectDoesNotExist as error:
-                response = {'rc': 1, 'response': str(error)}
-                return self.ajax_response(response=response)
+                return JsonResponse({'rc': 1, 'response': str(error)})
 
-            self.default_ajax_response[
-                'run_bug_count'] = self.get_run_bug_count()
-            return self.ajax_response()
+            return JsonResponse({'rc': 0,
+                                 'response': 'ok',
+                                 'run_bug_count': self.get_run_bug_count()})
 
         def render_form(self):
             form = CaseBugForm(initial={
@@ -871,9 +857,8 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                              template_name=template_name)
 
     if not request.GET.get('a') in crba.__all__:
-        return crba.ajax_response(response={
-            'rc': 1,
-            'response': 'Unrecognizable actions'})
+        return JsonResponse({'rc': 1,
+                             'response': 'Unrecognizable actions'})
 
     func = getattr(crba, request.GET['a'])
     return func()
@@ -1212,9 +1197,10 @@ def env_value(request):
 
             fragment = render(request, "run/get_environment.html",
                               {"test_run": self.test_runs[0], "is_ajax": True})
-            self.ajax_response.update({"fragment": str(fragment.content,
+            self.ajax_response.update({  # pylint: disable=objects-update-used
+                                       "fragment": str(fragment.content,
                                                        encoding=settings.DEFAULT_CHARSET)})
-            return HttpResponse(json.dumps(self.ajax_response))
+            return JsonResponse(self.ajax_response)
 
         def remove(self):
             chk_perm = self.has_no_perm('delete')
@@ -1226,12 +1212,12 @@ def env_value(request):
                     request.GET.get('env_value_id')
                 ))
 
-            return HttpResponse(json.dumps(self.ajax_response))
+            return JsonResponse(self.ajax_response)
 
         def change(self):
             chk_perm = self.has_no_perm('change')
             if chk_perm:
-                return HttpResponse(json.dumps(chk_perm))
+                return JsonResponse(chk_perm)
 
             for test_run in self.test_runs:
                 test_run.remove_env_value(env_value=self.get_env_value(
@@ -1241,7 +1227,7 @@ def env_value(request):
                     request.GET.get('new_env_value_id')
                 ))
 
-            return HttpResponse(json.dumps(self.ajax_response))
+            return JsonResponse(self.ajax_response)
 
         @staticmethod
         def get_env_value(env_value_id):
@@ -1251,7 +1237,7 @@ def env_value(request):
 
     if request.GET.get('a') not in run_env_actions.__all__:
         ajax_response = {'rc': 1, 'response': 'Unrecognizable actions'}
-        return HttpResponse(json.dumps(ajax_response))
+        return JsonResponse(ajax_response)
 
     func = getattr(run_env_actions, request.GET['a'])
     return func()

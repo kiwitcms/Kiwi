@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
 
     # Ajax call responder
-    url(r'^ajax/update/$', ajax.update, name='ajax-update'),
+    url(r'^ajax/update/$', ajax.update, name='ajax-update'),  # pylint: disable=objects-update-used
     url(r'^ajax/update/case-status/$', ajax.UPDATE_CASES_CASE_STATUS),
     url(r'^ajax/update/case-run-status$', ajax.update_case_run_status,
         name='ajax-update_case_run_status'),
