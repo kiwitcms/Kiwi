@@ -12,7 +12,6 @@ from django.contrib.sites.admin import SiteAdmin
 from django.contrib.auth.forms import UserChangeForm
 from django.utils.translation import ugettext_lazy as _
 
-
 from django_comments.models import Comment
 
 
@@ -53,6 +52,15 @@ class KiwiUserAdmin(UserAdmin):
     # override standard form and make the email address unique
     # even when adding users via admin panel
     form = MyUserChangeForm
+
+    def change_view(self, request, object_id, extra_context=None):
+        if request.user.is_superuser:
+            return super().change_view(request, object_id, extra_context)
+
+        # object history view link to admin_user_change so we redirect
+        # to the user profile instead
+        user = User.objects.get(pk=object_id)
+        return HttpResponseRedirect(reverse('tcms-profile', args=[user.username]))
 
     def _modifying_myself(self, request, object_id):
         return request.user.pk == int(object_id)
