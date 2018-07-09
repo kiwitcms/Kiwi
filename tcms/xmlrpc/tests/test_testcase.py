@@ -74,7 +74,7 @@ class TestUpdate(XmlrpcAPIBaseTest):
         self.assertNotEqual(self.api_user, case_text.author)
 
         # update the test case
-        updated = self.rpc_client.TestCase.update(
+        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
                 'summary': 'This was updated',

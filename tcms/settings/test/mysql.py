@@ -1,4 +1,4 @@
-# pylint: disable=wildcard-import, unused-wildcard-import
+# pylint: disable=wildcard-import, unused-wildcard-import, objects-update-used
 
 from tcms.settings.test import *  # noqa: F403
 

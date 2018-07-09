@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=attribute-defined-outside-init, invalid-name
+# pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
 
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import CategoryFactory
