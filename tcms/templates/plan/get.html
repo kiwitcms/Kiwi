@@ -53,11 +53,6 @@ Nitrate.TestPlans.Instance = {
 		<span id="id_buttons" class="button">
 			<input id="btn_edit" type="button" value="Edit Plan " title="Edit test plan" data-param="{% url 'plan-edit' test_plan.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
 			<input id="btn_clone" type="button" value="Clone Plan" title="Clone this plan to other product" data-params='["{% url "plans-clone" %}", {{ test_plan.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
-			{% if test_plan.is_active %}
-			<input id="btn_disable" type="button" value="Disable Plan " title="Disabled this plan" {% if not perms.testplans.change_testplan %}disabled="true"{% endif %}>
-			{% else %}
-			<input id="btn_enable" type="button" value="Enable Plan " title="Enabled this plan" {% if not perms.testplans.change_testplan %}disabled="true"{% endif %}>
-			{% endif %}
 			<input id="btn_print" type="button" value="Print Plan "
                    title="Print Plan"
                    data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>

@@ -870,19 +870,6 @@ Nitrate.TestPlans.Details = {
         Nitrate.TestPlans.Details.reviewingCasesTabOpened = true;
       }
     });
-
-    // Initial the enable/disble btns
-    if (jQ('#btn_disable').length) {
-      jQ('#btn_disable').bind('click', function(e){
-        updateObject('testplans.testplan', plan_id, 'is_active', 'False', 'bool', reloadWindow);
-      });
-    }
-
-    if (jQ('#btn_enable').length) {
-      jQ('#btn_enable').bind('click', function(e) {
-        updateObject('testplans.testplan', plan_id, 'is_active', 'True', 'bool', reloadWindow);
-      });
-    }
   },
   'reopenCasesTabThen': function() {
     Nitrate.TestPlans.Details.testcasesTabOpened = false;
