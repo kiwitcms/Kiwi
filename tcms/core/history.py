@@ -1,5 +1,6 @@
 from django.db.models import signals
 from simple_history.models import HistoricalRecords
+from simple_history.admin import SimpleHistoryAdmin
 
 
 class KiwiHistoricalRecords(HistoricalRecords):
@@ -39,3 +40,19 @@ class KiwiHistoricalRecords(HistoricalRecords):
         """
         super().finalize(sender, **kwargs)
         signals.pre_save.connect(self.pre_save, sender=sender, weak=False)
+
+
+class ReadOnlyHistoryAdmin(SimpleHistoryAdmin):
+    """
+        Custom history admin which shows all fields
+        as read-only.
+    """
+    history_list_display = ['history_change_reason']
+
+    def get_readonly_fields(self, request, obj=None):
+        # make all fields readonly
+        readonly_fields = list(set(
+            [field.name for field in self.opts.local_fields] +
+            [field.name for field in self.opts.local_many_to_many]
+        ))
+        return readonly_fields

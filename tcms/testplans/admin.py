@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 
-from simple_history.admin import SimpleHistoryAdmin
+from tcms.core.history import ReadOnlyHistoryAdmin
 from tcms.testplans.models import PlanType, TestPlan
 
 
@@ -12,11 +12,10 @@ class PlanTypeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'description')
 
 
-class TestPlanAdmin(SimpleHistoryAdmin):
+class TestPlanAdmin(ReadOnlyHistoryAdmin):
     """
         Does not allow adding new or changing plans.
     """
-    history_list_display = ['history_change_reason']
     actions = ['delete_selected']
 
     def add_view(self, request, form_url='', extra_context=None):
