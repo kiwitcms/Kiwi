@@ -663,6 +663,27 @@ class ReorderCasesView(View):
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
+@method_decorator(permission_required('testplans.change_testplan'), name='dispatch')
+class UpdateParentView(View):
+    """Updates TestPlan.parent. Called from the front-end."""
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        parent_id = int(request.POST.get('parent_id'))
+        if parent_id == 0:
+            parent_id = None
+
+        child_ids = request.POST.getlist('child_ids[]')
+
+        for child_pk in child_ids:
+            test_plan = get_object_or_404(TestPlan, pk=int(child_pk))
+            test_plan.parent_id = parent_id
+            test_plan.save()
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
+
+
 class LinkCasesView(View):
     """Link cases to plan"""
 
