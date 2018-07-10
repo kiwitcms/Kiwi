@@ -361,8 +361,17 @@ Nitrate.TestPlans.TreeView = {
         self.toggleRemoveChildPlanButton();
       };
 
-      updateObject('testplans.testplan', Nitrate.Utils.formSerialize(this)['plan_id'], 'parent',
-        plan_id, plan_id_type, cbUpdateTreeView);
+      jQ.ajax({
+        'url': '/plan/update-parent/',
+        'type': 'POST',
+        'data': { child_ids: childPlanIds.split(','), parent_id: plan_id },
+        'success': function (data, textStatus, jqXHR) {
+          cbUpdateTreeView(jqXHR);
+        },
+        'error': function (jqXHR, textStatus, errorThrown) {
+          json_failure(jqXHR);
+        }
+      });
     };
 
     previewPlan(parameters, '', callback);

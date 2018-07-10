@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^(?P<plan_id>\d+)/delete-cases/$', views.DeleteCasesView.as_view(),
         name='plan-delete-cases'),
 
-    url(r'^(?P<plan_id>\d+)/runs/$', load_runs_of_one_plan, name='load_runs_of_one_plan_url')
+    url(r'^(?P<plan_id>\d+)/runs/$', load_runs_of_one_plan, name='load_runs_of_one_plan_url'),
+    url(r'^update-parent/$', views.UpdateParentView.as_view()),
 ]
