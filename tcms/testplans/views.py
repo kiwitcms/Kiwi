@@ -644,28 +644,21 @@ class ReorderCasesView(View):
     http_method_names = ['post']
 
     def post(self, request, plan_id):
-        # Current we should rewrite all of cases belong to the plan.
-        # Because the cases sortkey in database is chaos,
-        # Most of them are None.
-
         if 'case' not in request.POST:
             return JsonResponse({
                 'rc': 1,
                 'response': 'At least one case is required to re-order.'
             })
 
-        plan = get_object_or_404(TestPlan, pk=int(plan_id))
-
         case_ids = []
         for case_id in request.POST.getlist('case'):
             case_ids.append(int(case_id))
 
-        cases = TestCase.objects.filter(pk__in=case_ids).only('pk')
+        cases = TestCasePlan.objects.filter(case_id__in=case_ids, plan=plan_id).only('case_id')
 
         for case in cases:
-            new_sort_key = (case_ids.index(case.pk) + 1) * 10
-            TestCasePlan.objects.filter(
-                plan=plan, case=case).update(sortkey=new_sort_key)
+            case.sortkey = (case_ids.index(case.case_id) + 1) * 10
+            case.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
