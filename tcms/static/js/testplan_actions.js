@@ -339,45 +339,14 @@ Nitrate.TestPlans.TreeView = {
       tvTabContainer.find('.remove_node')[0].disabled = true;
     }
   },
-  'addChildPlan': function(container, plan_id) {
+  'updateChildPlan': function(container, current_plan_id, plan_id, plan_id_type) {
     var self = this;
-    var tree = Nitrate.TestPlans.TreeView;
     var childPlanIds = window.prompt('Enter a comma separated list of plan IDs');
     if (!childPlanIds) {
       return false;
     }
 
-    var planIdRegex = /^\d+$/;
-    var cleanedChildPlanIds = [];
-    var cleaned = true;
-    childPlanIds.split(',').forEach(function(element, index) {
-      var s = element.trim();
-      if (s === '') {
-        return true;
-      }
-
-      if (!planIdRegex.test(s)) {
-        window.alert('Plan Id should be a numeric. ' + s + ' is not valid.');
-        cleaned = false;
-        return cleaned;
-      }
-
-      var childPlanId = window.parseInt(s);
-      var isParentOrThisPlan = childPlanId === tree.data[0].pk || childPlanId === plan_id;
-      if (isParentOrThisPlan) {
-        window.alert('Cannot add parent or self.');
-        cleaned = false;
-        return cleaned;
-      }
-
-      cleanedChildPlanIds.push(childPlanId);
-    });
-
-    if (!cleaned) {
-      return;
-    }
-
-    var parameters = { pk__in: cleanedChildPlanIds.join(',') };
+    var parameters = { pk__in: childPlanIds };
 
     var callback = function(e) {
       e.stopPropagation();
@@ -388,110 +357,16 @@ Nitrate.TestPlans.TreeView = {
         var container = planDetails.getTabContentContainer({
           containerId: planDetails.tabContentContainerIds.treeview
         });
-        planDetails.loadPlansTreeView(plan_id);
+        planDetails.loadPlansTreeView(current_plan_id);
         self.toggleRemoveChildPlanButton();
       };
 
       updateObject('testplans.testplan', Nitrate.Utils.formSerialize(this)['plan_id'], 'parent',
-        plan_id, 'int', cbUpdateTreeView);
+        plan_id, plan_id_type, cbUpdateTreeView);
     };
 
     previewPlan(parameters, '', callback);
   },
-  'removeChildPlan': function(container, plan_id) {
-    var self = this;
-    var tree = Nitrate.TestPlans.TreeView;
-    var plan_obj = tree.traverse(tree.data, plan_id);
-    var children_pks = [];
-    for (var i = 0; i < plan_obj.children.length; i++) {
-      children_pks.push(plan_obj.children[i].pk);
-    }
-
-    var p = prompt('Enter a comma separated list of plan IDs to be removed');
-    if (!p) {
-      return false;
-    }
-    var prompt_pks = p.split(',');
-    for (var j = 0 ; j < prompt_pks.length; j++) {
-      if (prompt_pks[j].indexOf(plan_id.toString()) > -1) {
-        window.alert('can not remove current plan');
-        return false;
-      } else if (jQ.inArray(window.parseInt(prompt_pks[j]), children_pks) === -1) {
-        window.alert('plan ' + prompt_pks[j] + ' is not the child node of current plan');
-        return false;
-      }
-    }
-    var parameters = {pk__in: p};
-
-    var callback = function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      var tree = Nitrate.TestPlans.TreeView;
-      var cbUpdateTreeView = function(t) {
-        clearDialog();
-        var planDetails = Nitrate.TestPlans.Details;
-        var container = planDetails.getTabContentContainer({
-          containerId: planDetails.tabContentContainerIds.treeview
-        });
-        planDetails.loadPlansTreeView(plan_id);
-        self.toggleRemoveChildPlanButton();
-      };
-
-      updateObject('testplans.testplan', Nitrate.Utils.formSerialize(this)['plan_id'], 'parent',
-        0, 'None', cbUpdateTreeView);
-    };
-
-    previewPlan(parameters, '', callback);
-  },
-  'changeParentPlan': function(container, plan_id) {
-    var tree = Nitrate.TestPlans.TreeView;
-    var p = prompt('Enter new parent plan ID');
-    if (!p) {
-      return false;
-    }
-    var planId = window.parseInt(p);
-      if (isNaN(planId)) {
-        window.alert('Plan Id should be a numeric. ' + p + ' is invalid.');
-        return false;
-      }
-      if (planId === plan_id) {
-        window.alert('Parent plan should not be the current plan itself.');
-        return false;
-      }
-
-    var parameters = {plan_id: p};
-    var callback = function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      var tree = Nitrate.TestPlans.TreeView;
-      var cbAfterUpdatingPlan = function(t) {
-        var plan;
-        var param = { plan_id: p, t: 'ajax' };
-        var c = function(t) {
-          plan = Nitrate.Utils.convert('obj_to_list', jQ.parseJSON(t.responseText));
-
-          if (tree.data[0].pk == plan_id) {
-            plan[0].children = jQ.extend({}, tree.data);
-            tree.data = plan;
-            tree.render_page();
-          } else {
-            plan[0].children = jQ.extend({}, tree.data[0].children);
-            tree.data = plan;
-            tree.render_page();
-          }
-
-          clearDialog();
-        };
-
-        tree.filter(param, c);
-      };
-
-      updateObject('testplans.testplan', plan_id, 'parent',
-        Nitrate.Utils.formSerialize(this)['plan_id'], 'int', cbAfterUpdatingPlan);
-    };
-
-    previewPlan(parameters, '', callback);
-  }
 };
 
 Nitrate.TestPlans.Create.on_load = function() {
@@ -951,14 +826,11 @@ Nitrate.TestPlans.Details = {
     });
     var treeview = jQ('#treeview')[0];
     var planPK = jQ('#id_tree_container').data('param');
-    jQ('#js-change-parent-node').bind('click', function() {
-      Nitrate.TestPlans.TreeView.changeParentPlan(treeview, planPK);
-    });
     jQ('#js-add-child-node').bind('click', function() {
-      Nitrate.TestPlans.TreeView.addChildPlan(treeview, planPK);
+      Nitrate.TestPlans.TreeView.updateChildPlan(treeview, planPK, planPK, 'int');
     });
     jQ('#js-remove-child-node').bind('click', function() {
-      Nitrate.TestPlans.TreeView.removeChildPlan(treeview, planPK);
+      Nitrate.TestPlans.TreeView.updateChildPlan(treeview, planPK, 0, 'None');
     });
   }
 };
