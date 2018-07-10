@@ -411,7 +411,7 @@ def choose_run(request, plan_id):
                 if test_case.case_id not in existing_cases:
                     test_run.add_case_run(case=test_case)
 
-            estimated_time = 0
+            estimated_time = datetime.timedelta(0)
             for case in to_be_added_cases:
                 estimated_time += case.estimated_time
 
