@@ -857,8 +857,8 @@ function constructPlanCaseZone(container, case_id, parameters) {
         return false;
       }
 
-      var url = Nitrate.http.URLConf.reverse({ name: 'case_plan', arguments: {id: case_id} });
-      previewPlan(p, url, callback);
+      var action_url = Nitrate.http.URLConf.reverse({ name: 'case_plan', arguments: {id: case_id} });
+      previewPlan(p, action_url, callback);
     });
     if (jQ('#testplans_table td a').length) {
       jQ('#testplans_table').dataTable({

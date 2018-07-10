@@ -785,7 +785,7 @@ function updateCommentsCount(caseId, increase) {
   }
 }
 
-function previewPlan(parameters, action, callback, notice, s, c) {
+function previewPlan(parameters, action, callback) {
   var dialog = getDialog();
 
   clearDialog();
@@ -796,14 +796,7 @@ function previewPlan(parameters, action, callback, notice, s, c) {
 
   var url = '/plans/';
   var success = function(t) {
-    // Not a very general way to resolve...
-    var text = t.responseText;
-    try {
-      notice = "";
-    } catch (e) {
-      // do nothing
-    }
-    var form = constructForm(text, action, callback, notice, s, c);
+    var form = constructForm(t.responseText, action, callback);
     jQ(dialog).html(form);
   };
 
