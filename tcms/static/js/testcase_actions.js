@@ -701,14 +701,6 @@ function changeCaseOrder2(parameters, callback) {
   });
 }
 
-// Deprecated. dead code.
-function changeCasePriority(object_pk, value, callback) {
-  var ctype = 'testcases.testcase';
-  var field = 'priority';
-  var vtype = 'int';
-  updateObject(ctype, object_pk, field, value, vtype, callback);
-}
-
 function addCaseBug(form, callback) {
   var addBugInfo = Nitrate.Utils.formSerialize(form);
   addBugInfo.bug_validation_regexp = jQ('select[name="bug_system"] option:selected').data('validation-regexp');
