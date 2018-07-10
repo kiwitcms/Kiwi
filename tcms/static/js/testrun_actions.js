@@ -1364,7 +1364,7 @@ jQ(document).ready(function(){
     if (!window.confirm(default_messages.confirm.change_case_status)) {
       return false;
     }
-    updateObject('testruns.testcaserun', object_pks, 'case_run_status', option, 'int', reloadWindow);
+    updateRunStatus('testruns.testcaserun', object_pks, 'case_run_status', option, 'int', reloadWindow);
   });
 });
 
