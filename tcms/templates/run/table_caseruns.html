@@ -22,7 +22,6 @@
 			<th width="40">Bugs</th>
 			<th width="50" style='text-align:center'>Status</th>
 			<th width="65">Comments</th>
-			<th width="40">Sort</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -66,11 +65,6 @@
 				<img border="0" alt="" class="icon_status btn_{{ status_name|lower }}" />
 			</td>
 			<td><div id="{{ test_case_run.case_id }}_case_comment_count">{% if comments_count %}<img src="{% static 'images/comment.png' %}" style="vertical-align: middle;">{%endif %} <span id="{{ test_case_run.case_id }}_comments_count">{{ comments_count }}</span></div></td>
-			<td class="expandable">
-				<span class="mark">
-					<a href="#" class="js-change-order" data-params='["{{ test_case_run.run_id }}", "{{ test_case_run.pk }}", "{{ test_case_run.sortkey }}"]'>{{ test_case_run.sortkey }}</a>
-				</span>
-			</td>
 		</tr>
 		<tr class="case_content hide js-details-caserun" style="display: none;">
 			<td id="id_loading_{{ test_case_run.case_id }}" class="left_panel" colspan="14">
