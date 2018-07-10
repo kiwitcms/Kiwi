@@ -1,6 +1,5 @@
 <div class="mixbar">
 	<div class="marginLeft fixed">
-		<input id="js-change-parent-node" class="edit_node icon_plan left_float" type="button" value="Change parent node for plan {{ test_plan.pk }}" />
 		<input id="js-add-child-node" class="add_node icon_plan left_float" type="button" value="Add child node to current plan {{ test_plan.pk }}" />
 		<input id="js-remove-child-node" class="remove_node icon_plan left_float" {% if not test_plan.child_set.exists %}disabled{% endif %} type="button" value="Remove child node from current plan {{ test_plan.pk }}" />
 	</div>
