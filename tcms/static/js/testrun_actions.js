@@ -285,10 +285,6 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('.js-status-subtotal').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], jQ(this).data('param'));
   });
-  jQ('.js-change-order').bind('click', function() {
-    var params = jQ(this).data('params');
-    changeCaseRunOrder(params[0], params[1], params[2]);
-  });
 };
 
 Nitrate.TestRuns.New.on_load = function() {
@@ -493,47 +489,6 @@ var updateCaseRunStatus = function(e) {
   }
 };
 
-function changeCaseRunOrder(run_id, case_run_id, sort_key) {
-  var nsk = window.prompt('Enter your new order number', sort_key); // New sort key
-
-  if (!nsk) {
-    return false;
-  }
-
-  if (isNaN(nsk)) {
-    window.alert('The value must be a integer number and limit between 0 to 32300.');
-    return false;
-  }
-
-  if (nsk > 32300 || nsk < 0) {
-    window.alert('The value must be a integer number and limit between 0 to 32300.');
-    return false;
-  }
-
-  if (nsk == sort_key) {
-    window.alert('Nothing changed');
-    return false;
-  }
-
-  // Succeed callback
-  var s_callback = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-
-    if (returnobj.response === 'ok') {
-      window.location.reload();
-    } else {
-      window.alert(returnobj.response);
-    }
-  };
-
-  var ctype = 'testruns.testcaserun';
-  var object_pk = case_run_id;
-  var field = 'sortkey';
-  var value = nsk;
-  var vtype = 'int';
-
-  updateObject(ctype, object_pk, field, value, vtype, s_callback);
-}
 
 function taggleSortCaseRun(event) {
   var element = event.target;
