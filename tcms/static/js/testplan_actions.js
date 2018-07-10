@@ -396,8 +396,7 @@ Nitrate.TestPlans.TreeView = {
         plan_id, 'int', cbUpdateTreeView);
     };
 
-    // FIXME: this first argument is not being used.
-    constructPlanParentPreviewDialog(childPlanIds, parameters, callback);
+    previewPlan(parameters, '', callback);
   },
   'removeChildPlan': function(container, plan_id) {
     var self = this;
@@ -442,7 +441,7 @@ Nitrate.TestPlans.TreeView = {
         0, 'None', cbUpdateTreeView);
     };
 
-    constructPlanParentPreviewDialog(p, parameters, callback);
+    previewPlan(parameters, '', callback);
   },
   'changeParentPlan': function(container, plan_id) {
     var tree = Nitrate.TestPlans.TreeView;
@@ -491,7 +490,7 @@ Nitrate.TestPlans.TreeView = {
         Nitrate.Utils.formSerialize(this)['plan_id'], 'int', cbAfterUpdatingPlan);
     };
 
-    constructPlanParentPreviewDialog(p, parameters, callback);
+    previewPlan(parameters, '', callback);
   }
 };
 
@@ -2052,23 +2051,6 @@ function sortCase(container, plan_id, order) {
 }
 
 function changeCaseMember(parameters, callback) {
-}
-
-function constructPlanParentPreviewDialog(plan_id, parameters, callback) {
-  var action = '';
-  var notice = 'This operation will overwrite existing data';
-    /*
-    //FIXME: Overwrite is not availabel for updateObject function yet.
-    var s = new Element('span');
-    var s1 = new Element('input', {type: 'checkbox', name: 'overwrite'});
-    var s2 = new Element('label');
-    s2.update('Overwrite exist parent.');
-    var s3 = new Element('input', {type: 'submit'});
-    s.appendChild(s1);
-    s.appendChild(s2);
-    s.appendChild(s3);
-    */
-  previewPlan(parameters, action, callback, notice);
 }
 
 function resortCasesDragAndDrop(container, button, form, table, parameters, callback) {
