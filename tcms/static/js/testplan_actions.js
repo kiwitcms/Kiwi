@@ -1027,16 +1027,6 @@ function bindEventsOnLoadedCases(options) {
         Nitrate.TestPlans.Details.refreshCasesSelectionCheck(jQ(cases_container));
       });
 
-    // Observe the change sortkey
-    jQ(container).parent().find('.case_sortkey.js-just-loaded').bind('click', function(e) {
-      var c = jQ(this).next(); // Container
-      var params = { 'testcaseplan': c.html(), 'sortkey': jQ(this).html() };
-      var callback = function(t) {
-       constructPlanDetailsCasesZone(cases_container, plan_id, parameters);
-      };
-      changeCaseOrder(params, callback);
-    });
-
     jQ(container).parent().find('.change_status_selector.js-just-loaded').bind('change', function(e) {
       var be_confirmed = (this.value == '2');
       var was_confirmed = (jQ(this).parent()[0].attributes['status'].value == "CONFIRMED");
