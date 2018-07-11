@@ -769,38 +769,6 @@ function updateRunStatus(content_type, object_pk, field, value, value_type, call
   });
 }
 
-function updateObject(content_type, object_pk, field, value, value_type, callback) {
-  if (!value_type) {
-    var value_type = 'str';
-  }
-
-  var url = '/ajax/update/';
-
-  if (typeof object_pk === 'object') {
-	object_pk = object_pk.join(',');
-  }
-
-  var parameters = {
-    'content_type': content_type,
-    'object_pk': object_pk,
-    'field': field,
-    'value': value,
-    'value_type': value_type
-  };
-
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
-
 function getDialog(element) {
   if (!element) {
     var element = jQ('#dialog')[0];

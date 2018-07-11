@@ -16,7 +16,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.apps import apps
 from django.forms import ValidationError
 from django.http import Http404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
@@ -283,115 +283,11 @@ def get_value_by_type(val, v_type):
 
 
 def say_no(error_msg):
-    ajax_response = {'rc': 1, 'response': error_msg}
-    return HttpResponse(json.dumps(ajax_response))
+    return JsonResponse({'rc': 1, 'response': error_msg})
 
 
 def say_yes():
-    return HttpResponse(json.dumps({'rc': 0, 'response': 'ok'}))
-
-
-# Deprecated. Not flexible.
-@require_POST
-def update(request):
-    """
-    Generic approach to update a model,\n
-    based on contenttype.
-    """
-    now = datetime.datetime.now()
-
-    data = request.POST.copy()
-    ctype = data.get("content_type")
-    vtype = data.get('value_type', 'str')
-    object_pk_str = data.get("object_pk")
-    field = data.get('field')
-    value = data.get('value')
-
-    object_pk = [int(a) for a in object_pk_str.split(',')]
-
-    if not field or not value or not object_pk or not ctype:
-        return say_no(
-            'Following fields are required - content_type, '
-            'object_pk, field and value.')
-
-    # Convert the value type
-    # FIXME: Django bug here: update() keywords must be strings
-    field = str(field)
-
-    value, error = get_value_by_type(value, vtype)
-    if error:
-        return say_no(error)
-    has_perms = check_permission(request, ctype)
-    if not has_perms:
-        return say_no('Permission Dinied.')
-
-    model = apps.get_model(*ctype.split(".", 1))
-    targets = model._default_manager.filter(pk__in=object_pk)
-
-    if not targets:
-        return say_no('No record found')
-    if not hasattr(targets[0], field):
-        return say_no('%s has no field %s' % (ctype, field))
-
-    if hasattr(targets[0], 'log_action'):
-        for target in targets:
-            try:
-                target.log_action(
-                    who=request.user,
-                    action='Field %s changed from %s to %s.' % (
-                        field, getattr(target, field), value
-                    )
-                )
-            except (AttributeError, User.DoesNotExist):
-                pass
-    objects_update(targets, **{field: value})
-
-    if hasattr(model, 'mail_scene'):
-        mail_context = model.mail_scene(objects=targets, field=field)
-        if mail_context:
-            from tcms.core.utils.mailto import mailto
-
-            mail_context['context']['user'] = request.user
-            try:
-                mailto(**mail_context)
-            except Exception:  # nosec:B110:try_except_pass
-                pass
-
-    # Special hacking for updating test case run status
-    if ctype == 'testruns.testcaserun' and field == 'case_run_status':
-        for target in targets:
-            field = 'close_date'
-            target.log_action(
-                who=request.user,
-                action='Field %s changed from %s to %s.' % (
-                    field, getattr(target, field), now
-                )
-            )
-            if target.tested_by != request.user:
-                field = 'tested_by'
-                target.log_action(
-                    who=request.user,
-                    action='Field %s changed from %s to %s.' % (
-                        field, getattr(target, field), request.user
-                    )
-                )
-
-            field = 'assignee'
-            try:
-                assignee = target.assginee
-                if assignee != request.user:
-                    target.log_action(
-                        who=request.user,
-                        action='Field %s changed from %s to %s.' % (
-                            field, getattr(target, field), request.user
-                        )
-                    )
-                    # t.assignee = request.user
-                target.save()
-            except (AttributeError, User.DoesNotExist):
-                pass
-        targets.update(close_date=now, tested_by=request.user)
-    return say_yes()
+    return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 @require_POST
