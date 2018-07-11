@@ -13,7 +13,6 @@ from django.db.models import Q, Count
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from django.apps import apps
 from django.forms import ValidationError
 from django.http import Http404
 from django.http import HttpResponse, JsonResponse
@@ -31,7 +30,7 @@ from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseStatus, TestCaseTag
 from tcms.testcases.views import plan_from_request_or_none
 from tcms.testplans.models import TestPlan, TestCasePlan, TestPlanTag
-from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, TestRunTag
+from tcms.testruns.models import TestRun, TestCaseRun, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
 
@@ -288,110 +287,6 @@ def say_no(error_msg):
 
 def say_yes():
     return JsonResponse({'rc': 0, 'response': 'ok'})
-
-
-@require_POST
-def update_case_run_status(request):
-    """
-    Update Case Run status.
-    """
-    now = datetime.datetime.now()
-
-    data = request.POST.copy()
-    ctype = data.get("content_type")
-    vtype = data.get('value_type', 'str')
-    object_pk_str = data.get("object_pk")
-    field = data.get('field')
-    value = data.get('value')
-
-    object_pk = [int(a) for a in object_pk_str.split(',')]
-
-    if not field or not value or not object_pk or not ctype:
-        return say_no(
-            'Following fields are required - content_type, '
-            'object_pk, field and value.')
-
-    # Convert the value type
-    # FIXME: Django bug here: update() keywords must be strings
-    field = str(field)
-
-    value, error = get_value_by_type(value, vtype)
-    if error:
-        return say_no(error)
-    has_perms = check_permission(request, ctype)
-    if not has_perms:
-        return say_no('Permission Dinied.')
-
-    model = apps.get_model(*ctype.split(".", 1))
-    targets = model._default_manager.filter(pk__in=object_pk)
-
-    if not targets:
-        return say_no('No record found')
-    if not hasattr(targets[0], field):
-        return say_no('%s has no field %s' % (ctype, field))
-
-    if hasattr(targets[0], 'log_action'):
-        for target in targets:
-            try:
-                target.log_action(
-                    who=request.user,
-                    action='Field {} changed from {} to {}.'.format(
-                        field,
-                        getattr(target, field),
-                        TestCaseRunStatus.id_to_string(value),
-                    )
-                )
-            except (AttributeError, User.DoesNotExist):
-                pass
-    objects_update(targets, **{field: value})
-
-    if hasattr(model, 'mail_scene'):
-        from tcms.core.utils.mailto import mailto
-
-        mail_context = model.mail_scene(objects=targets, field=field)
-        if mail_context:
-            mail_context['context']['user'] = request.user
-            try:
-                mailto(**mail_context)
-            except Exception:  # nosec:B110:try_except_pass
-                pass
-
-    # Special hacking for updating test case run status
-    if ctype == 'testruns.testcaserun' and field == 'case_run_status':
-        for target in targets:
-            field = 'close_date'
-            target.log_action(
-                who=request.user,
-                action='Field %s changed from %s to %s.' % (
-                    field, getattr(target, field), now
-                )
-            )
-            if target.tested_by != request.user:
-                field = 'tested_by'
-                target.log_action(
-                    who=request.user,
-                    action='Field %s changed from %s to %s.' % (
-                        field, getattr(target, field), request.user
-                    )
-                )
-
-            field = 'assignee'
-            try:
-                assignee = target.assginee
-                if assignee != request.user:
-                    target.log_action(
-                        who=request.user,
-                        action='Field %s changed from %s to %s.' % (
-                            field, getattr(target, field), request.user
-                        )
-                    )
-                    # t.assignee = request.user
-                target.save()
-            except (AttributeError, User.DoesNotExist):
-                pass
-        targets.update(close_date=now, tested_by=request.user)
-
-    return HttpResponse(json.dumps({'rc': 0, 'response': 'ok'}))
 
 
 class TestCaseUpdateActions(object):

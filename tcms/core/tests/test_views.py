@@ -16,7 +16,6 @@ from tcms.management.models import EnvGroup
 from tcms.management.models import EnvProperty
 from tcms.testcases.forms import TestCase
 from tcms.testruns.models import TestCaseRun
-from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
@@ -138,57 +137,6 @@ class TestCommentCaseRuns(BaseCaseRun):
                                               content_type=case_run_ct)
             self.assertEqual(new_comment, comments[0].comment)
             self.assertEqual(self.tester, comments[0].user)
-
-
-class TestUpdateCaseRunStatus(BaseCaseRun):
-    """Test case for update_case_run_status"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestUpdateCaseRunStatus, cls).setUpTestData()
-
-        cls.permission = 'testruns.change_testcaserun'
-        cls.update_url = reverse('ajax-update_case_run_status')
-
-    def setUp(self):
-        user_should_have_perm(self.tester, self.permission)
-
-    def test_refuse_if_missing_permission(self):
-        remove_perm_from_user(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.update_url, {
-            'content_type': 'testruns.testcaserun',
-            'object_pk': self.case_run_1.pk,
-            'field': 'case_run_status',
-            'value': str(TestCaseRunStatus.objects.get(name='PAUSED').pk),
-            'value_type': 'int',
-        })
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': 'Permission Dinied.'})
-
-    def test_change_case_run_status(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.update_url, {
-            'content_type': 'testruns.testcaserun',
-            'object_pk': self.case_run_1.pk,
-            'field': 'case_run_status',
-            'value': str(TestCaseRunStatus.objects.get(name='PAUSED').pk),
-            'value_type': 'int',
-        })
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok'})
-        self.assertEqual(
-            'PAUSED', TestCaseRun.objects.get(pk=self.case_run_1.pk).case_run_status.name)
 
 
 class TestUpdateCasePriority(BasePlanCase):
