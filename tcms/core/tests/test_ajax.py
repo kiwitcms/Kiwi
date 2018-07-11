@@ -55,22 +55,6 @@ class TestInfo(test.TestCase):
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
 
-    def test_with_ulli_format(self):
-        """ When a request comes with info_type=categories, and format=ulli for given product_id,
-            we expect to receive all categories for that product, rendered as HTML unordered list
-        """
-
-        url = '%s?info_type=categories&product_id=%d&format=ulli' % (reverse('ajax-info'),
-                                                                     self.product.pk)
-
-        response = self.client.get(url)
-
-        for category in self.categories:
-            self.assertContains(response, '<li>' + category.name + '</li>')
-
-        self.assertContains(response, '<ul>')
-        self.assertContains(response, '</ul>')
-
     def test_with_unrecognisable_info_type(self):
         """ When a request comes with invalid info_type,
             we expect to receive response containing the 'Unrecognizable info-type' error message

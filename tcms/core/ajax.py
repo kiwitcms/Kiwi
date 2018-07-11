@@ -62,16 +62,6 @@ def info(request):
     if not info_type:
         return HttpResponse('Unrecognizable info-type')
 
-    if request.GET.get('format') == 'ulli':
-        field = request.GET.get('field', default='name')
-
-        response_str = '<ul>'
-        for obj_value in info_type().values(field):
-            response_str += '<li>' + obj_value.get(field, None) + '</li>'
-        response_str += '</ul>'
-
-        return HttpResponse(response_str)
-
     return HttpResponse(serializers.serialize('json', info_type(), fields=('name', 'value')))
 
 
