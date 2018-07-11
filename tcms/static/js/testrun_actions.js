@@ -409,6 +409,21 @@ Nitrate.TestRuns.AssignCase.on_load = function() {
   });
 };
 
+
+function updateRunStatus(object_pk, value, callback) {
+  jQ.ajax({
+    'url': '/run/case-run-update-status/',
+    'type': 'POST',
+    'data': {'object_pk': object_pk, 'status_id': value },
+    'success': function (data, textStatus, jqXHR) {
+      callback();
+    },
+    'error': function (jqXHR, textStatus, errorThrown) {
+      json_failure(jqXHR);
+    }
+  });
+}
+
 var updateCaseRunStatus = function(e) {
   e.stopPropagation();
   e.preventDefault();
@@ -417,11 +432,8 @@ var updateCaseRunStatus = function(e) {
   var title = parent.prev();
   var link = title.find('.expandable')[0];
   var parameters = Nitrate.Utils.formSerialize(this);
-  var ctype = parameters['content_type'];
   var object_pk = parameters['object_pk'];
-  var field = parameters['field'];
   var value = parameters['value'];
-  var vtype = 'int';
 
   // Callback when
   var callback = function(t) {
@@ -485,7 +497,7 @@ var updateCaseRunStatus = function(e) {
     var ajax_loading = getAjaxLoading();
     ajax_loading.id = 'id_loading_' + parameters['case_id'];
     container.html(ajax_loading);
-    updateRunStatus(ctype, object_pk, field, value, vtype, callback);
+    updateRunStatus([object_pk], value, callback);
   }
 };
 
@@ -1365,7 +1377,7 @@ jQ(document).ready(function(){
     if (!window.confirm(default_messages.confirm.change_case_status)) {
       return false;
     }
-    updateRunStatus('testruns.testcaserun', object_pks, 'case_run_status', option, 'int', reloadWindow);
+    updateRunStatus(object_pks, option, reloadWindow);
   });
 });
 

@@ -1312,3 +1312,21 @@ class UpdateAssigneeView(View):
             test_case_run.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
+
+
+@method_decorator(permission_required('testruns.change_testcaserun'), name='dispatch')
+class UpdateCaseRunStatusView(View):
+    """Updates TestCaseRun.case_run_status_id. Called from the front-end."""
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        status_id = int(request.POST.get('status_id'))
+        object_ids = request.POST.getlist('object_pk[]')
+
+        for caserun_pk in object_ids:
+            test_case_run = get_object_or_404(TestCaseRun, pk=int(caserun_pk))
+            test_case_run.case_run_status_id = status_id
+            test_case_run.save()
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
