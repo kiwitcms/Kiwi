@@ -1117,13 +1117,38 @@ function changeCaseRunAssignee() {
     return false;
   }
 
-  var parameters = {'info_type': 'users', 'username': p};
-  getInfoAndUpdateObject(
-    parameters,
-    'testruns.testcaserun',
-    serializeCaseRunFromInputList(jQ('#id_table_cases')[0]),
-    'assignee'
-  );
+  var refresh_window = function(t) {
+    var returnobj = jQ.parseJSON(t.responseText);
+    if (returnobj.rc !== 0) {
+      window.alert(returnobj.response);
+      return false;
+    }
+
+    window.location.reload();
+  };
+
+  var get_info_callback = function(t) {
+    var returnobj = jQ.parseJSON(t.responseText);
+
+    if (returnobj.length === 0) {
+      window.alert('Nothing found in database');
+      return false;
+    }
+
+    if (returnobj.length > 1) {
+      window.alert('Mutiple instances reached, please define the condition more clear.');
+      return false;
+    }
+
+    updateObject('testruns.testcaserun',
+                 serializeCaseRunFromInputList(jQ('#id_table_cases')[0]),
+                'assignee',
+                returnobj[0].pk,
+                'str',
+                refresh_window);
+  };
+
+  getInfo({'info_type': 'users', 'username': p}, get_info_callback);
 }
 
 function serializeCaseRunFromInputList(table, name) {
