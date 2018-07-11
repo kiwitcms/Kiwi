@@ -804,8 +804,6 @@ function editValue(form,hidebox,selectid,submitid) {
 
   var success = function(t) {
     var returnobj = jQ.parseJSON(t.responseText);
-    debug_output('Get environments succeed get ready to replace the select widget inner html');
-
     var current_value = jQ("input[type=hidden][name=current_run_env]:eq(0)", form);
     var excludeValues = [];
     jQ("input[type=hidden][name=current_run_env]").each(function(index, element) {
@@ -853,7 +851,6 @@ function submitValue(run_id,value,hidebox,select_field,submitid) {
     }
     return true;
   });
-  debug_output(dup_values);
   if (jQ.inArray(select_field.value, dup_values) >= 0) {
     window.alert("The value is exist for this run");
     return false;
