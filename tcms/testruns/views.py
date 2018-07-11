@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import datetime
 import json
+import datetime
+from http import HTTPStatus
 from functools import reduce
 
 from django.conf import settings
@@ -1283,3 +1284,31 @@ def get_caseruns_of_runs(runs, kwargs=None):
     if status:
         caseruns = caseruns.filter(case_run_status__name__iexact=status)
     return caseruns
+
+
+@method_decorator(permission_required('testruns.change_testcaserun'), name='dispatch')
+class UpdateAssigneeView(View):
+    """Updates TestCaseRun.assignee. Called from the front-end."""
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        assignee = request.POST.get('assignee')
+        try:
+            user = User.objects.get(username=assignee)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(email=assignee)
+            except User.DoesNotExist:
+                return JsonResponse({'rc': 1,
+                                     'response': _('User %s not found!' % assignee)},
+                                    status=HTTPStatus.NOT_FOUND)
+
+        object_ids = request.POST.getlist('ids[]')
+
+        for caserun_pk in object_ids:
+            test_case_run = get_object_or_404(TestCaseRun, pk=int(caserun_pk))
+            test_case_run.assignee = user
+            test_case_run.save()
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
