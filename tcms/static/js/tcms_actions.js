@@ -796,32 +796,18 @@ function previewPlan(parameters, action, callback) {
   });
 }
 
-function getInfo(parameters, callback, container, allow_blank, format) {
-  var success = function(t) {
-    if (callback) {
-      callback(t, allow_blank, container);
-    }
-  };
-
-  var failure = function(t) {
-    window.alert("Get info " + parameters.info_type + " failed");
-    return false;
-  };
-
-  if (format) {
-    parameters.format = format;
-  }
-
+function getInfo(parameters, callback) {
   var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
   jQ.ajax({
     'url': url,
     'type': 'GET',
     'data': parameters,
     'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
+        callback(jqXHR);
     },
     'error': function (jqXHR, textStatus, errorThrown) {
-      failure();
+        window.alert("Get info " + parameters.info_type + " failed");
+        return false;
     }
   });
 }
