@@ -329,24 +329,8 @@ function getBuildsByProductId(allow_blank, product_field, build_field) {
     );
   };
 
-  var failure = function(t) {
-    window.alert("Update builds and envs failed");
-  };
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'info_type': 'builds', 'product_id': product_id, 'is_active': true},
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      if (jqXHR.readyState != 0 && errorThrown != "") {
-        failure();
-      }
-    }
-  });
+  getInfo({'info_type': 'builds', 'product_id': product_id, 'is_active': true},
+          success);
 }
 
 
@@ -381,24 +365,8 @@ function getVersionsByProductId(allow_blank, product_field, version_field) {
     );
   };
 
-  var failure = function(t) {
-    window.alert("Update versions failed");
-  };
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'info_type': 'versions', 'product_id': product_id},
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      if (jqXHR.readyState != 0 && errorThrown != "") {
-        failure();
-      }
-    }
-  });
+  getInfo({'info_type': 'versions', 'product_id': product_id},
+          success);
 }
 
 function getComponentsByProductId(allow_blank, product_field, component_field, callback, parameters) {
@@ -447,23 +415,7 @@ function getComponentsByProductId(allow_blank, product_field, component_field, c
     }
   };
 
-  var failure = function(t) { window.alert("Update components failed"); };
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
-
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      if (jqXHR.readyState != 0 && errorThrown != "") {
-        failure();
-      }
-    }
-  });
+  getInfo(parameters, success);
 }
 
 function getCategorisByProductId(allow_blank, product_field, category_field) {
@@ -499,22 +451,8 @@ function getCategorisByProductId(allow_blank, product_field, category_field) {
     );
   };
 
-  var failure = function(t) { alert("Update category failed"); };
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'info_type': 'categories', 'product_id': product_id},
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      if (jqXHR.readyState != 0 && errorThrown != "") {
-        failure();
-      }
-    }
-  });
+  getInfo({'info_type': 'categories', 'product_id': product_id},
+          success);
 }
 
 function checkProductField(product_field) {
@@ -638,27 +576,16 @@ function constructTagZone(container, parameters) {
   jQ(container).html('<div class="ajax_loading"></div>');
 
   var complete = function(t) {
-    var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
-
     jQ('#id_tags').autocomplete({
       'source': function(request, response) {
-        jQ.ajax({
-          'url': url,
-          'data': {
-            'name__startswith': request.term,
-            'info_type': 'tags',
-            'format': 'ulli',
-            'field': 'tag__name'
-          },
-          'success': function(data) {
-            var processedData = [];
-            if (data.indexOf('<li>') > -1) {
-              processedData = data.slice(data.indexOf('<li>') + 4, data.lastIndexOf('</li>'))
-              .split('<li>').join('').split('</li>');
-            }
-            response(processedData);
-          }
-        });
+        getInfo({'name__startswith': request.term, 'info_type': 'tags'},
+                function(data) {
+                    var processedData = [];
+                    jQ.parseJSON(data.responseText).forEach(function (element){
+                        processedData.push(element.fields.name);
+                    });
+                    response(processedData);
+                });
       },
       'minLength': 2,
       'appendTo': '#id_tags_autocomplete'
