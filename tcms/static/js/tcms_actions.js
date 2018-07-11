@@ -801,50 +801,6 @@ function updateObject(content_type, object_pk, field, value, value_type, callbac
   });
 }
 
-/*
- *  Arguments:
- *  parameters: Hash - Use for getInfo method
- *  content_type: String - use for updateObject method
- *  object_pk: Int/Array - use for updateObject method
- *  field: String - use for updateObject method
- *  callback: Function - use for updateObject method
- */
-function getInfoAndUpdateObject(parameters, content_type, object_pks, field, callback) {
-  var refresh_window = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-    if (returnobj.rc !== 0) {
-      window.alert(returnobj.response);
-      return false;
-    }
-
-    window.location.reload();
-  };
-
-  var get_info_callback = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-
-    // FIXME: Display multiple items and let user to select one
-    if (returnobj.length === 0) {
-      window.alert('Nothing found in database');
-      return false;
-    }
-
-    if (returnobj.length > 1) {
-      window.alert('Mutiple instances reached, please define the condition more clear.');
-      return false;
-    }
-
-    var value = returnobj[0].pk;
-
-    if (!callback) {
-      callback = refresh_window;
-    }
-    updateObject(content_type, object_pks, field, value, 'str', callback);
-  };
-
-  getInfo(parameters, get_info_callback);
-}
-
 function getDialog(element) {
   if (!element) {
     var element = jQ('#dialog')[0];
