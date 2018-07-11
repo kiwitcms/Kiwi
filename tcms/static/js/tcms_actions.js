@@ -322,15 +322,11 @@ function getBuildsByProductId(allow_blank, product_field, build_field) {
   var success = function(t) {
     returnobj = jQ.parseJSON(t.responseText);
 
-    debug_output('Get builds succeed get ready to replace the select widget inner html');
-
     set_up_choices(
       build_field,
       returnobj.map(function(o) { return [o.pk, o.fields.name]; }),
       allow_blank
     );
-
-    debug_output('Update builds completed');
   };
 
   var failure = function(t) {
@@ -375,8 +371,6 @@ function getVersionsByProductId(allow_blank, product_field, version_field) {
 
   var success = function(t) {
     returnobj = jQ.parseJSON(t.responseText);
-
-    debug_output('Get versions succeed get ready to replace the select widget inner html');
 
     set_up_choices(
       version_field,
@@ -488,8 +482,6 @@ function getCategorisByProductId(allow_blank, product_field, category_field) {
     }
   }
 
-  debug_output('Get categories from product ' + product_id);
-
   if (product_id === '') {
     jQ(category_field).html('<option value="">---------</option>');
     return true;
@@ -505,8 +497,6 @@ function getCategorisByProductId(allow_blank, product_field, category_field) {
       }),
       allow_blank
     );
-
-    debug_output('Get categories succeed get ready to replace the select widget inner html');
   };
 
   var failure = function(t) { alert("Update category failed"); };
@@ -590,13 +580,6 @@ function bind_component_selector_to_product(allow_blank, load, product_field, co
       getComponentsByProductId(allow_blank);
     }
   }
-}
-
-// debug_output function is implement with firebug plugin for firefox
-function debug_output(value) {
-  try {
-    console.log(value);
-  } catch (err) {}
 }
 
 function myCustomURLConverter(url, node, on_save) {
@@ -814,16 +797,10 @@ function previewPlan(parameters, action, callback) {
 }
 
 function getInfo(parameters, callback, container, allow_blank, format) {
-  debug_output('Get info ' + parameters);
-
   var success = function(t) {
     if (callback) {
-      debug_output("Starting GetInfo callback");
       callback(t, allow_blank, container);
-      debug_output("GetInfo callback completed");
     }
-
-    debug_output("GetInfo " + parameters.info_type + " successful");
   };
 
   var failure = function(t) {
