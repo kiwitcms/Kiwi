@@ -110,6 +110,10 @@ class _InfoObjects(object):
         query = strip_parameters(self.request.GET, skip_parameters=('info_type', 'field', 'format'))
         return User.objects.filter(**query)
 
+    def tags(self):
+        query = strip_parameters(self.request.GET, skip_parameters=('info_type', 'format'))
+        return Tag.objects.filter(**query)
+
     def versions(self):
         return Version.objects.filter(product__id=self.product_id)
 
