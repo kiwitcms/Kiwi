@@ -61,10 +61,6 @@ Nitrate.TestRuns.List.on_load = function() {
 
 Nitrate.TestRuns.Details.on_load = function() {
   // Observe the interface buttons
-  if (jQ('#id_sort').length) {
-    jQ('#id_sort').bind('click', taggleSortCaseRun);
-  }
-
   jQ('#id_check_all_button').bind('click', function(e) {
     toggleAllCheckBoxes(this, 'id_table_cases', 'case_run');
   });
@@ -501,42 +497,6 @@ var updateCaseRunStatus = function(e) {
   }
 };
 
-
-function taggleSortCaseRun(event) {
-  var element = event.target;
-
-  if (element.innerHTML !== 'Done Sorting') {
-    jQ('#id_blind_all_link').remove(); // Remove blind all link
-
-    // Remove case text
-    jQ('#id_table_cases .hide').remove();
-
-    // Remove blind down arrow link
-    jQ('#id_table_cases .blind_icon').remove();
-
-    // Use the title to replace the blind down title link
-    jQ('#id_table_cases .blind_title_link').each(function(index) {
-      jQ(this).replaceWith((jQ('<span>')).html(this.innerHTML));
-    });
-
-    // Use the sortkey content to replace change sort key link
-    jQ('#id_table_cases .mark').each(function(index) {
-      jQ(this).parent().html(this.innerHTML);
-    });
-
-    jQ('#id_table_cases .case_content').remove();
-    jQ('#id_table_cases .expandable').unbind();
-
-    // init the tableDnD object
-    var table = document.getElementById('id_table_cases');
-    var tableDnD = new TableDnD();
-    tableDnD.init(table);
-    jQ('#id_sort').html('Done Sorting');
-  } else {
-    jQ('#id_table_cases input[type=checkbox]').attr({ 'checked': true, 'disabled': false });
-    postToURL('ordercaserun/', serializeCaseRunFromInputList('id_table_cases', 'case_run'));
-  }
-}
 
 function constructCaseRunZone(container, title_container, case_id) {
   var link = jQ(title_container).find('.expandable')[0];

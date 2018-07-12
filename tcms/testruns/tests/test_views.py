@@ -12,7 +12,6 @@ from django.conf import settings
 from tcms.testcases.models import Bug
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import EnvRunValueMap
-from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
 
@@ -29,41 +28,6 @@ from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
-
-
-class TestOrderCases(BaseCaseRun):
-    """Test view method order_case"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestOrderCases, cls).setUpTestData()
-
-    def test_404_if_run_does_not_exist(self):
-        nonexisting_run_pk = TestRun.objects.last().pk + 1
-        url = reverse('testruns-order_case', args=[nonexisting_run_pk])
-        response = self.client.post(url)
-        self.assert404(response)
-
-    def test_prompt_if_no_case_run_is_passed(self):
-        url = reverse('testruns-order_case', args=[self.test_run.pk])
-        response = self.client.post(url, follow=True)
-        self.assertContains(response, 'Reorder operation requires at least one TestCase')
-
-    def test_order_case_runs(self):
-        url = reverse('testruns-order_case', args=[self.test_run.pk])
-        response = self.client.post(url, {'case_run': [self.case_run_1.pk,
-                                                       self.case_run_2.pk,
-                                                       self.case_run_3.pk]})
-
-        redirect_to = reverse('testruns-get', args=[self.test_run.pk])
-        self.assertRedirects(response, redirect_to)
-
-        test_sortkeys = [
-            TestCaseRun.objects.get(pk=self.case_run_1.pk).sortkey,
-            TestCaseRun.objects.get(pk=self.case_run_2.pk).sortkey,
-            TestCaseRun.objects.get(pk=self.case_run_3.pk).sortkey,
-        ]
-        self.assertEqual([10, 20, 30], test_sortkeys)
 
 
 class TestGetRun(BaseCaseRun):

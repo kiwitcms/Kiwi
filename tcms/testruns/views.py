@@ -908,41 +908,6 @@ def new_run_with_caseruns(request, run_id, template_name='run/clone.html'):
         return render(request, template_name, context_data)
 
 
-@require_POST
-def order_case(request, run_id):
-    """Resort case with new order"""
-    # Current we should rewrite all of cases belong to the plan.
-    # Because the cases sortkey in database is chaos,
-    # Most of them are None.
-    get_object_or_404(TestRun, run_id=run_id)
-
-    if 'case_run' not in request.POST:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Reorder operation requires at least one TestCase'))
-        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
-
-    case_run_ids = request.POST.getlist('case_run')
-    # sort key begin with 10, end with length*10, step 10.
-    # e.g.
-    # case_run_ids = [10334, 10294, 10315, 10443]
-    #                      |      |      |      |
-    #          sort key -> 10     20     30     40
-    # then zip case_run_ids and new_sort_keys to pairs
-    # e.g.
-    #    sort_key, case_run_id
-    #         (10, 10334)
-    #         (20, 10294)
-    #         (30, 10315)
-    #         (40, 10443)
-    new_sort_keys = range(10, (len(case_run_ids) + 1) * 10, 10)
-    key_id_pairs = zip(new_sort_keys, (int(pk) for pk in case_run_ids))
-    for sort_key, caserun_id in key_id_pairs:
-        TestCaseRun.objects.filter(pk=caserun_id).update(sortkey=sort_key)
-
-    return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
-
-
 @permission_required('testruns.change_testrun')
 def change_status(request, run_id):
     """Change test run finished or running"""
