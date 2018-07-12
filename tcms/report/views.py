@@ -8,7 +8,6 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.generic import View
 
-from .forms import CustomSearchDetailsForm
 from tcms.management.models import Priority
 from tcms.management.models import Product
 from tcms.testruns.models import TestRun, TestCaseRunStatus, TestCaseRun
@@ -28,6 +27,8 @@ from tcms.report.data import TestingReportByPlanTagsDetailData
 from tcms.report.data import TestingReportCaseRunsData
 from tcms.report.forms import CustomSearchForm
 from tcms.search import fmt_queries, remove_from_request_path
+
+from .forms import CustomSearchDetailsForm
 
 
 def overall(request, template_name='report/list.html'):
@@ -81,11 +82,12 @@ def overview(request, product_id, template_name='report/overview.html'):
 
 class ProductVersionReport(TemplateView, ProductVersionReportData):
     template_name = 'report/version.html'
+    product = None
+    selected_version = None
 
-    def get(self, request, product_id):
+    def get(self, request, *args, **kwargs):
         try:
-            self.product = Product.objects.only('name').get(pk=product_id)
-
+            self.product = Product.objects.only('name').get(pk=kwargs.get('product_id'))
             version_id = request.GET.get('version_id')
             if version_id is not None:
                 qs = self.product.version.only('value')
@@ -93,36 +95,10 @@ class ProductVersionReport(TemplateView, ProductVersionReportData):
         except (TypeError, ValueError, ObjectDoesNotExist) as error:
             raise Http404(error)
 
-        return super(ProductVersionReport, self).get(request, product_id)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        versions = self.product.version.only('product', 'value')
         product_id = self.product.pk
-
-        plans_subtotal = self.plans_subtotal(product_id)
-        running_runs_subtotal = self.runs_subtotal(product_id, True)
-        finished_runs_subtotal = self.runs_subtotal(product_id, False)
-        cases_subtotal = self.cases_subtotal(product_id)
-        case_runs_subtotal = self.case_runs_subtotal(product_id)
-        finished_case_runs_subtotal = \
-            self.finished_case_runs_subtotal(product_id)
-        failed_case_runs_subtotal = self.failed_case_runs_subtotal(product_id)
-
-        for version in versions:
-            vid = version.pk
-            version.plans_count = plans_subtotal.get(vid, 0)
-            version.running_runs_count = running_runs_subtotal.get(vid, 0)
-            version.finished_runs_count = finished_runs_subtotal.get(vid, 0)
-            version.cases_count = cases_subtotal.get(vid, 0)
-            version.failed_case_runs_count = failed_case_runs_subtotal.get(vid,
-                                                                           0)
-
-            m = finished_case_runs_subtotal.get(vid, 0)
-            n = case_runs_subtotal.get(vid, 0)
-            if m and n:
-                version.case_run_percent = round(m * 100.0 / n, 1)
-            else:
-                version.case_run_percent = .0
 
         case_runs_status_subtotal = None
         selected_version = getattr(self, 'selected_version', None)
@@ -130,24 +106,56 @@ class ProductVersionReport(TemplateView, ProductVersionReportData):
             case_runs_status_subtotal = self.case_runs_status_subtotal(
                 product_id, selected_version.pk)
 
-        data = super(ProductVersionReport, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
         data.update({
             'SUB_MODULE_NAME': 'version',
             'product': self.product,
-            'versions': versions,
+            'versions': self._get_updated_versions(product_id),
             'version': selected_version,
             'case_runs_status_subtotal': case_runs_status_subtotal,
         })
 
         return data
 
+    def _get_updated_versions(self, product_id):
+        versions = self.product.version.only('product', 'value')
+
+        plans_subtotal = self.plans_subtotal(product_id)
+        running_runs_subtotal = self.runs_subtotal(product_id, True)
+        finished_runs_subtotal = self.runs_subtotal(product_id, False)
+        cases_subtotal = self.cases_subtotal(product_id)
+        case_runs_subtotal = self.case_runs_subtotal(product_id)
+        finished_case_runs_subtotal = self.finished_case_runs_subtotal(product_id)
+        failed_case_runs_subtotal = self.failed_case_runs_subtotal(product_id)
+
+        for version in versions:
+            version_id = version.pk
+
+            version.plans_count = plans_subtotal.get(version_id, 0)
+            version.running_runs_count = running_runs_subtotal.get(version_id, 0)
+            version.finished_runs_count = finished_runs_subtotal.get(version_id, 0)
+            version.cases_count = cases_subtotal.get(version_id, 0)
+            version.failed_case_runs_count = failed_case_runs_subtotal.get(version_id, 0)
+
+            subtotal_finished_runs = finished_case_runs_subtotal.get(version_id, 0)
+            subtotal_runs = case_runs_subtotal.get(version_id, 0)
+
+            if subtotal_finished_runs and subtotal_runs:
+                version.case_run_percent = round(subtotal_finished_runs * 100.0 / subtotal_runs, 1)
+            else:
+                version.case_run_percent = .0
+
+        return versions
+
 
 class ProductBuildReport(TemplateView, ProductBuildReportData):
     template_name = 'report/build.html'
+    product = None
+    selected_build = None
 
-    def get(self, request, product_id):
+    def get(self, request, *args, **kwargs):
         try:
-            self.product = Product.objects.only('name').get(pk=product_id)
+            self.product = Product.objects.only('name').get(pk=kwargs.get('product_id'))
 
             build_id = request.GET.get('build_id')
             if build_id is not None:
@@ -156,55 +164,62 @@ class ProductBuildReport(TemplateView, ProductBuildReportData):
         except (TypeError, ValueError, ObjectDoesNotExist) as error:
             raise Http404(error)
 
-        return super(ProductBuildReport, self).get(request, product_id)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        builds = self.product.build.only('product', 'name')
-
-        pid = self.product.pk
-        builds_total_runs = self.total_runs_count(pid)
-        builds_finished_runs = self.finished_runs_count(pid)
-        builds_finished_caseruns = self.finished_caseruns_count(pid)
-        builds_caseruns = self.caseruns_count(pid)
-        builds_failed_caseruns = self.failed_caseruns_count(pid)
-
-        for build in builds:
-            bid = build.pk
-            build.total_runs = builds_total_runs.get(bid, 0)
-            build.finished_runs = builds_finished_runs.get(bid, 0)
-            build.failed_case_run_count = builds_failed_caseruns.get(bid, 0)
-
-            n = builds_finished_caseruns.get(bid, 0)
-            m = builds_caseruns.get(bid, 0)
-            if n and m:
-                build.finished_case_run_percent = round(n * 100.0 / m, 1)
-            else:
-                build.finished_case_run_percent = .0
+        product_id = self.product.pk
 
         case_runs_status_subtotal = None
         selected_build = getattr(self, 'selected_build', None)
+
         if selected_build is not None:
             case_runs_status_subtotal = self.caserun_status_subtotal(
-                pid, selected_build.pk)
+                product_id, selected_build.pk)
 
         data = super(ProductBuildReport, self).get_context_data(**kwargs)
+
         data.update({
             'SUB_MODULE_NAME': 'build',
             'product': self.product,
-            'builds': builds,
+            'builds': self._get_updated_builds(product_id),
             'build': selected_build,
             'case_runs_status_subtotal': case_runs_status_subtotal,
         })
 
         return data
 
+    def _get_updated_builds(self, product_id):
+        builds = self.product.build.only('product', 'name')
+
+        builds_total_runs = self.total_runs_count(product_id)
+        builds_finished_runs = self.finished_runs_count(product_id)
+        builds_finished_caseruns = self.finished_caseruns_count(product_id)
+        builds_caseruns = self.caseruns_count(product_id)
+        builds_failed_caseruns = self.failed_caseruns_count(product_id)
+
+        for build in builds:
+            build_id = build.pk
+            build.total_runs = builds_total_runs.get(build_id, 0)
+            build.finished_runs = builds_finished_runs.get(build_id, 0)
+            build.failed_case_run_count = builds_failed_caseruns.get(build_id, 0)
+
+            finished_caseruns = builds_finished_caseruns.get(build_id, 0)
+            caseruns = builds_caseruns.get(build_id, 0)
+
+            if finished_caseruns and caseruns:
+                build.finished_case_run_percent = round(finished_caseruns * 100.0 / caseruns, 1)
+            else:
+                build.finished_case_run_percent = .0
+
 
 class ProductComponentReport(TemplateView, ProductComponentReportData):
     template_name = 'report/component.html'
+    product = None
+    selected_component = None
 
-    def get(self, request, product_id):
+    def get(self, request, *args, **kwargs):
         try:
-            self.product = Product.objects.only('name').get(pk=product_id)
+            self.product = Product.objects.only('name').get(pk=kwargs.get('product_id'))
 
             component_id = request.GET.get('component_id')
             if component_id is not None:
@@ -213,27 +228,28 @@ class ProductComponentReport(TemplateView, ProductComponentReportData):
         except (TypeError, ValueError, Product.DoesNotExist) as error:
             raise Http404(error)
 
-        return super(ProductComponentReport, self).get(request, product_id)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         components = self.product.component.select_related('product')
         components = components.only('name', 'product__name')
 
-        pid = self.product.pk
-        total_cases = self.total_cases(pid)
-        failed_case_runs_count = self.failed_case_runs_count(pid)
-        finished_case_runs_count = self.finished_case_runs_count(pid)
+        product_id = self.product.pk
+        total_cases = self.total_cases(product_id)
+        failed_case_runs_count = self.failed_case_runs_count(product_id)
+        finished_case_runs_count = self.finished_case_runs_count(product_id)
 
         for component in components:
-            cid = component.pk
-            component.total_cases = total_cases.get(cid, 0)
-            component.failed_case_run_count = failed_case_runs_count.get(cid,
-                                                                         0)
+            component_id = component.pk
+            component.total_cases = total_cases.get(component_id, 0)
+            component.failed_case_run_count = failed_case_runs_count.get(component_id, 0)
 
-            n = finished_case_runs_count.get(cid, 0)
-            m = component.total_cases
-            if n and m:
-                component.finished_case_run_percent = round(n * 100.0 / m, 1)
+            total_runs = finished_case_runs_count.get(component_id, 0)
+            total_cases_of_component = component.total_cases
+
+            if total_runs and total_cases_of_component:
+                component.finished_case_run_percent = \
+                    round(total_runs * 100.0 / total_cases_of_component, 1)
             else:
                 component.finished_case_run_percent = 0
 
@@ -261,9 +277,8 @@ class CustomReport(TemplateView):
     template_name = 'report/custom_search.html'
     form_class = CustomSearchForm
     data_class = CustomReportData
-
-    def get(self, request):
-        return super(CustomReport, self).get(request)
+    product = None
+    _data = None
 
     def _get_search_form(self):
         req = self.request.GET
@@ -284,8 +299,11 @@ class CustomReport(TemplateView):
 
         self._data = self.data_class(form)
 
-        builds = self._data._get_builds()
-        build_ids = [b['build'] for b in builds]
+        builds = self._data.get_builds()
+
+        build_ids = []
+        for build in builds:
+            build_ids.append(build['build'])
 
         if builds:
             # Summary header data
@@ -308,12 +326,12 @@ class CustomReport(TemplateView):
                 passed_count = status_matrix[bid].get('PASSED', 0)
                 failed_count = status_matrix[bid].get('FAILED', 0)
 
-                c = build['case_runs_count']
+                case_runs_count = build['case_runs_count']
                 case_runs_total += build['case_runs_count']
 
-                if c:
-                    build['passed_case_runs_percent'] = passed_count * 100.0 / c
-                    build['failed_case_runs_percent'] = failed_count * 100.0 / c
+                if case_runs_count:
+                    build['passed_case_runs_percent'] = passed_count * 100.0 / case_runs_count
+                    build['failed_case_runs_percent'] = failed_count * 100.0 / case_runs_count
                 else:
                     build['passed_case_runs_percent'] = .0
                     build['failed_case_runs_percent'] = .0
@@ -346,13 +364,40 @@ class CustomReport(TemplateView):
     def _get_report_data_context(self):
         if self._do_search():
             return self._report_data_context()
-        else:
-            return self._initial_context()
+        return self._initial_context()
 
     def get_context_data(self, **kwargs):
         data = super(CustomReport, self).get_context_data(**kwargs)
         data.update(self._get_report_data_context())
         return data
+
+
+def walk_matrix_row_by_row(matrix_dataset):
+    status_total_line = None
+    if None in matrix_dataset:
+        status_total_line = matrix_dataset[None]
+        del matrix_dataset[None]
+
+    prev_plan = None
+    # TODO: replace this with collections.OrderedDict after
+    # upgrading to Python 2.7
+    ordered_plans = sorted(matrix_dataset.items(),
+                           key=lambda item: item[0].pk)
+    for plan, runs in ordered_plans:
+        plan_runs_count = len(runs)
+        # TODO: and also this line
+        ordered_runs = sorted(runs.items(),
+                              key=lambda item: item[0].pk)
+        for run, status_subtotal in ordered_runs:
+            if plan == prev_plan:
+                yield None, run, status_subtotal
+            else:
+                yield (plan, plan_runs_count), run, status_subtotal
+                prev_plan = plan
+
+    # Finally, yield the total line for rendering the complete report
+    if status_total_line is not None:
+        yield None, None, status_total_line
 
 
 class CustomDetailReport(CustomReport):
@@ -368,33 +413,6 @@ class CustomDetailReport(CustomReport):
     def _get_report_data_context(self):
         """Override to generate report by disabling check of argument a"""
         return self._report_data_context()
-
-    def walk_matrix_row_by_row(self, matrix_dataset):
-        status_total_line = None
-        if None in matrix_dataset:
-            status_total_line = matrix_dataset[None]
-            del matrix_dataset[None]
-
-        prev_plan = None
-        # TODO: replace this with collections.OrderedDict after
-        # upgrading to Python 2.7
-        ordered_plans = sorted(matrix_dataset.items(),
-                               key=lambda item: item[0].pk)
-        for plan, runs in ordered_plans:
-            plan_runs_count = len(runs)
-            # TODO: and also this line
-            ordered_runs = sorted(runs.items(),
-                                  key=lambda item: item[0].pk)
-            for run, status_subtotal in ordered_runs:
-                if plan == prev_plan:
-                    yield None, run, status_subtotal
-                else:
-                    yield (plan, plan_runs_count), run, status_subtotal
-                    prev_plan = plan
-
-        # Finally, yield the total line for rendering the complete report
-        if status_total_line is not None:
-            yield None, None, status_total_line
 
     def read_case_runs(self, build_ids, status_ids):
         """Generator for reading case runs and related objects"""
@@ -416,9 +434,11 @@ class CustomDetailReport(CustomReport):
                                         self)._report_data_context()
             data.update(summary_header_data)
 
-            build_ids = [build['build'] for build in data['builds']]
+            build_ids = []
+            for build in data['builds']:
+                build_ids.append(build['build'])
 
-            status_matrix = self.walk_matrix_row_by_row(
+            status_matrix = walk_matrix_row_by_row(
                 self._data.generate_status_matrix(build_ids)
             )
 
@@ -444,9 +464,6 @@ class TestingReportBase(TemplateView):
     """Base class for each type of report"""
 
     form_class = TestingReportForm
-
-    def get(self, *args, **kwargs):
-        return super(TestingReportBase, self).get(*args, **kwargs)
 
     def _get_form(self, data=None):
         product_id = self.request.GET.get('r_product')
@@ -563,13 +580,26 @@ class TestingReport(View):
         view_class = self.testing_report_views.get(report_type, None)
         if view_class is None:
             return self.testing_report_views[None].as_view()
-        else:
-            return view_class.as_view()
+        return view_class.as_view()
 
     def get(self, request, *args, **kwargs):
         report_type = request.GET.get('report_type', None)
         view = self._get_testing_report_view(report_type)
         return view(request, *args, **kwargs)
+
+
+def _get_testers_assignees_ids(case_runs):
+    testers_ids = set()
+    assignees_ids = set()
+
+    for case_run in case_runs:
+        if case_run.tested_by_id:
+            testers_ids.add(case_run.tested_by_id)
+
+        if case_run.assignee_id:
+            assignees_ids.add(case_run.assignee_id)
+
+    return list(testers_ids), list(assignees_ids)
 
 
 class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
@@ -584,41 +614,25 @@ class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
 
         if form.is_valid():
             test_case_runs = self.get_case_runs(form)
-            status_names = TestCaseRunStatus.get_names()
-            priority_values = dict(Priority.objects.values_list('pk', 'value'))
-
-            testers_ids, assignees_ids = self._get_testers_assignees_ids(
-                test_case_runs)
-            testers = self.get_related_users(testers_ids)
-            assignees = self.get_related_users(assignees_ids)
 
             data['test_case_runs_count'] = len(test_case_runs)
-            data['test_case_runs'] = self.walk_case_runs(test_case_runs,
-                                                         status_names,
-                                                         priority_values,
-                                                         testers,
-                                                         assignees)
+            data['test_case_runs'] = self.walk_case_runs(test_case_runs)
         else:
             data['form_errors'] = form.errors
 
         return data
 
-    def _get_testers_assignees_ids(self, case_runs):
-        testers_ids = set()
-        assignees_ids = set()
-        for case_run in case_runs:
-            pk = case_run.tested_by_id
-            if pk:
-                testers_ids.add(case_run.tested_by_id)
-            pk = case_run.assignee_id
-            if pk:
-                assignees_ids.add(case_run.assignee_id)
-        return list(testers_ids), list(assignees_ids)
-
-    def walk_case_runs(self, case_runs, status_names, priority_values,
-                       testers, assignees):
+    def walk_case_runs(self, test_case_runs):
         # todo: this is the same method as in testruns/views.py
-        for case_run in case_runs:
+
+        status_names = TestCaseRunStatus.get_names()
+        priority_values = dict(Priority.objects.values_list('pk', 'value'))
+
+        testers_ids, assignees_ids = _get_testers_assignees_ids(test_case_runs)
+        testers = self.get_related_users(testers_ids)
+        assignees = self.get_related_users(assignees_ids)
+
+        for case_run in test_case_runs:
             status_name = status_names[case_run.case_run_status_id]
             priority_value = priority_values[case_run.case.priority_id]
             tester_username = testers.get(case_run.tested_by_id, None)
