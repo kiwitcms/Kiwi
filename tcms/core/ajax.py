@@ -41,15 +41,6 @@ def check_permission(request, ctype):
     return False
 
 
-def strip_parameters(request_dict, skip_parameters):
-    parameters = {}
-    for key, value in request_dict.items():
-        if key not in skip_parameters and value:
-            parameters[str(key)] = value
-
-    return parameters
-
-
 @require_GET
 def info(request):
     """Ajax responder for misc information"""
@@ -94,13 +85,8 @@ class _InfoObjects(object):
     def env_values(self):
         return EnvValue.objects.filter(property__id=self.request.GET.get('env_property_id'))
 
-    def users(self):
-        query = strip_parameters(self.request.GET, skip_parameters=('info_type', 'field', 'format'))
-        return User.objects.filter(**query)
-
     def tags(self):
-        query = strip_parameters(self.request.GET, skip_parameters=('info_type', 'format'))
-        return Tag.objects.filter(**query)
+        return Tag.objects.filter(name__startswith=self.request.GET['name__startswith'])
 
     def versions(self):
         return Version.objects.filter(product__id=self.product_id)
