@@ -35,13 +35,9 @@ test_cases should be a queryset of a list of TestCases.
 		{% endif %}
 	</td>
 	<td class="col_tester_content expandable">{{ test_case.get_is_automated_status }}</td>
-	{# <td >{{ testcase.create_date }}</td> #}
 
 	<td status='{{ test_case.case_status }}'>
 		{% if perms.testcases.change_testcase %}
-		<a class="show_change_status_link" href="javascript:void(0);" style="display: none;">
-			{{ test_case.case_status }}
-		</a>
 		<select class="change_status_selector js-just-loaded">
 			{% for case_stat in case_status %}
 			<option {% ifequal case_stat.pk test_case.case_status_id %} selected="1" {% endifequal %} value="{{ case_stat.id }}">{{ case_stat.name }}</option>
