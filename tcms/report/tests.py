@@ -33,7 +33,7 @@ class TestingReportTestCase(test.TestCase):
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
-    def test_report_by_caserun_tester_loads(self):
+    def test_generate_testing_report(self):
         # test for https://github.com/kiwitcms/Kiwi/issues/88
         #
         run = TestRunFactory()
@@ -45,7 +45,8 @@ class TestingReportTestCase(test.TestCase):
                 run=run,
                 build=product_build)
 
-        self.untested_tcr = TestCaseRunFactory(
+        # Create an untested testcase run to assert that issue #88 does not arise.
+        TestCaseRunFactory(
             tested_by=None,
             case_run_status=TestCaseRunStatus.objects.get(name='IDLE'),
             run=run,
