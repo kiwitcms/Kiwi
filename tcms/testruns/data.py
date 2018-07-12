@@ -68,16 +68,25 @@ class TestCaseRunDataMixin(object):
             formatted bug URL.
         :rtype: dict
         """
+
+        bugs = Bug.objects.filter(
+            case_run__run=run_pk
+        ).values(
+            'case_run',
+            'bug_id',
+            'bug_system__url_reg_exp'
+        ).order_by('case_run')
+
         rows = []
-        bugs = Bug.objects \
-            .filter(case_run__run=run_pk) \
-            .values('case_run', 'bug_id', 'bug_system__url_reg_exp') \
-            .order_by('case_run')
         for row in bugs:
             row['bug_url'] = row['bug_system__url_reg_exp'] % row['bug_id']
             rows.append(row)
-        return dict([(case_run_id, list(bugs_info)) for case_run_id, bugs_info in
-                     groupby(rows, lambda row: row['case_run'])])
+
+        case_run_bugs = {}
+        for case_run_id, bugs_info in groupby(rows, lambda row: row['case_run']):
+            case_run_bugs[case_run_id] = list(bugs_info)
+
+        return case_run_bugs
 
     @staticmethod
     def get_case_runs_comments(run_pk):
@@ -88,31 +97,38 @@ class TestCaseRunDataMixin(object):
         @return: the mapping between case run id and comments
         @rtype: dict
         """
-        content_type = ContentType.objects.get_for_model(TestCaseRun)
-
-        rows = []
         # note: cast to string b/c object_pk is a Textield and PostgreSQL
         # doesn't like TEXT in <list of integers>
         # in Django 1.10 we have the Cast() function for similar cases, see
         # https://docs.djangoproject.com/en/1.10/ref/models/database-functions/#cast
-        obj_pks = [str(o.pk) for o in TestCaseRun.objects.filter(run=run_pk).only('pk')]
-        for row in Comment.objects.filter(
-                site=settings.SITE_ID,
-                content_type=content_type.pk,
-                is_public=True,
-                is_removed=False,
-                object_pk__in=obj_pks
-            ).annotate(
-                case_run_id=F('object_pk')
-            ).values(
-                'case_run_id',
-                'submit_date',
-                'comment',
-                'user_name').order_by('case_run_id'):
+        object_pks = []
+        for test_case_run in TestCaseRun.objects.filter(run=run_pk).only('pk'):
+            object_pks.append(str(test_case_run.pk))
+
+        comments = Comment.objects.filter(
+            site=settings.SITE_ID,
+            content_type=ContentType.objects.get_for_model(TestCaseRun).pk,
+            is_public=True,
+            is_removed=False,
+            object_pk__in=object_pks
+        ).annotate(
+            case_run_id=F('object_pk')
+        ).values(
+            'case_run_id',
+            'submit_date',
+            'comment',
+            'user_name'
+        ).order_by('case_run_id')
+
+        rows = []
+        for row in comments:
             rows.append(row)
 
-        return dict([(int(key), list(groups)) for key, groups in
-                     groupby(rows, lambda row: row['case_run_id'])])
+        case_run_comments = {}
+        for key, groups in groupby(rows, lambda row: row['case_run_id']):
+            case_run_comments[int(key)] = list(groups)
+
+        return case_run_comments
 
     @staticmethod
     def get_summary_stats(case_runs):
