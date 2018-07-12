@@ -20,7 +20,6 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 
-from tcms.signals import POST_UPDATE_SIGNAL
 from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
 from tcms.management.models import Tag
@@ -583,11 +582,3 @@ def get_prod_related_obj_json(request):
     else:
         res = []
     return HttpResponse(json.dumps(res))
-
-
-def objects_update(objects, **kwargs):
-    objects.update(**kwargs)
-    kwargs['instances'] = objects
-    if objects.model.__name__ == TestCaseRun.__name__ and kwargs.get(
-            'case_run_status', None):
-        POST_UPDATE_SIGNAL.send(sender=None, **kwargs)
