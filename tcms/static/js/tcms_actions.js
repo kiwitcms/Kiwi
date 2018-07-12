@@ -102,8 +102,6 @@ var default_messages = {
       change_user_group: '/management/account/$id/changegroup/',
       change_user_status: '/management/account/$id/changestatus/',
 
-      get_product_info: '/management/getinfo/',
-
       modify_plan : '/plan/$id/modify/',
       plan_assign_case: '/plan/$id/assigncase/apply/',
       plans: '/plans/',
@@ -578,7 +576,7 @@ function constructTagZone(container, parameters) {
   var complete = function(t) {
     jQ('#id_tags').autocomplete({
       'source': function(request, response) {
-        getInfo({'name__startswith': request.term, 'info_type': 'tags'},
+        getInfo({'info_type': 'tags', 'name__startswith': request.term},
                 function(data) {
                     var processedData = [];
                     jQ.parseJSON(data.responseText).forEach(function (element){
@@ -724,9 +722,8 @@ function previewPlan(parameters, action, callback) {
 }
 
 function getInfo(parameters, callback) {
-  var url = Nitrate.http.URLConf.reverse({ name: 'get_product_info' });
   jQ.ajax({
-    'url': url,
+    'url': '/management/getinfo/',
     'type': 'GET',
     'data': parameters,
     'success': function (data, textStatus, jqXHR) {
