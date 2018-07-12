@@ -456,7 +456,7 @@ class TestCaseUpdateActions(object):
 def update_cases_default_tester(request):
     """Update default tester upon selected TestCases"""
     proxy = TestCaseUpdateActions(request)
-    return proxy.update()
+    return proxy.update()  # pylint: disable=objects-update-used
 
 
 UPDATE_CASES_PRIORITY = update_cases_default_tester

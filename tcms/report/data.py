@@ -1318,7 +1318,8 @@ class TestingReportCaseRunsData(object):
         """Get filter criteria, only once during single request"""
 
         filter_criteria = self.runs_filter_criteria(form)
-        filter_criteria.update(self.case_runs_filter_criteria(form))
+        filter_criteria.update(  # pylint: disable=objects-update-used
+            self.case_runs_filter_criteria(form))
 
         return filter_criteria
 
