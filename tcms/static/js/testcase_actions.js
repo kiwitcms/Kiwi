@@ -554,7 +554,6 @@ function toggleTestCaseContents(template_type, container, content_container, obj
 
 function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_confirmed) {
   var value = selector.value;
-  var label = jQ(selector).prev()[0];
 
   var success = function(data, textStatus, jqXHR) {
     var returnobj = jQ.parseJSON(jqXHR.responseText);
@@ -572,9 +571,6 @@ function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_conf
 
     // container should be got before selector is hidden.
     var curCasesContainer = jQ(selector).parents('.tab_list');
-
-    jQ(label).html(case_status).show();
-    jQ(selector).hide();
 
     if (be_confirmed || was_confirmed) {
       jQ('#run_case_count').text(returnobj.run_case_count);

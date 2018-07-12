@@ -1837,9 +1837,6 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
     'traditional': true,
     'success': function (data, textStatus, jqXHR) {
       jQ(container).html(data);
-      jQ('.show_change_status_link').bind('click', function() {
-        jQ(this).hide().next().show();
-      });
 
       var casesTable = jQ(container).find('.js-cases-list')[0];
       var navForm = jQ('#js-cases-nav-form')[0];
