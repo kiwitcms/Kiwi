@@ -4,7 +4,6 @@ Shared functions for plan/case/run.
 
 Most of these functions are use for Ajax.
 """
-import datetime
 import json
 from distutils.util import strtobool
 
@@ -218,52 +217,6 @@ class _TagCounter(object):  # pylint: disable=too-few-public-methods
         if tag.pk == self.counter['tag']:
             return self.counter[self.key]
         return 0
-
-
-def get_value_by_type(val, v_type):
-    """
-    Exampls:
-    1. get_value_by_type('True', 'bool')
-    (1, None)
-    2. get_value_by_type('19860624 123059', 'datetime')
-    (datetime.datetime(1986, 6, 24, 12, 30, 59), None)
-    3. get_value_by_type('5', 'int')
-    ('5', None)
-    4. get_value_by_type('string', 'str')
-    ('string', None)
-    5. get_value_by_type('everything', 'None')
-    (None, None)
-    6. get_value_by_type('buggy', 'buggy')
-    (None, 'Unsupported value type.')
-    7. get_value_by_type('string', 'int')
-    (None, "invalid literal for int() with base 10: 'string'")
-    """
-    value = error = None
-
-    def get_time(time):
-        date_time = datetime.datetime
-        if time == 'NOW':
-            return date_time.now()
-        return date_time.strptime(time, '%Y%m%d %H%M%S')
-
-    pipes = {
-        # Temporary solution is convert all of data to str
-        # 'bool': lambda x: x == 'True',
-        'bool': lambda x: x == 'True' and 1 or 0,
-        'datetime': get_time,
-        'int': lambda x: str(int(x)),
-        'str': lambda x: str(x),
-        'None': lambda x: None,
-    }
-    pipe = pipes.get(v_type, None)
-    if pipe is None:
-        error = 'Unsupported value type.'
-    else:
-        try:
-            value = pipe(val)
-        except Exception as error:
-            error = str(error)
-    return value, error
 
 
 def say_no(error_msg):
