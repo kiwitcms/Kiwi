@@ -796,20 +796,7 @@ function editValue(form,hidebox,selectid,submitid) {
     set_up_choices(jQ('#' + selectid)[0], values, 0);
   };
 
-  var failure = function(t) { window.alert("Update values failed"); };
-
-  var url = '/management/getinfo/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'info_type': 'env_values', 'env_property_id': env_property_id},
-    'success': function(data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function(jqXHR, textStatus, errorThrown) {
-      failure();
-    }
-  });
+  getInfo({'info_type': 'env_values', 'env_property_id': env_property_id}, success);
 }
 
 function submitValue(run_id,value,hidebox,select_field,submitid) {
@@ -910,20 +897,7 @@ function addProperty(run_id,env_group_id) {
     change_value(jQ('#id_add_env_property').val(), 'id_add_env_value');
   };
 
-  var failure = function(t) { window.alert("Update properties failed"); };
-
-  var url = '/management/getinfo/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'info_type': 'env_properties', 'env_group_id': env_group_id},
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      failure();
-    }
-  });
+  getInfo({'info_type': 'env_properties', 'env_group_id': env_group_id}, success);
 
   jQ('#id_add_env_property').bind('change', function(e) {
     change_value(jQ('#id_add_env_property').val(), 'id_add_env_value');
@@ -944,20 +918,7 @@ function change_value(env_property_id,selectid) {
     set_up_choices(jQ('#' + selectid)[0], values, 0);
   };
 
-  var failure = function(t) { window.alert("Update values failed"); };
-
-  var url = '/management/getinfo/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'info_type': 'env_values', 'env_property_id': env_property_id},
-    'success': function (data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      failure();
-    }
-  });
+  getInfo({'info_type': 'env_values', 'env_property_id': env_property_id}, success);
 }
 
 function add_property_to_env(run_id, env_value_id) {
