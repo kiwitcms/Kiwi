@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import json
 import itertools
 
 from django.conf import settings
@@ -11,7 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -163,19 +162,23 @@ def automated(request):
         tcs = get_selected_testcases(request)
 
         if form.cleaned_data['a'] == 'change':
+            is_automated = 0
+            is_auto_proposed = False
             if isinstance(form.cleaned_data['is_automated'], int):
-                # FIXME: inconsistent operation updating automated property
-                # upon TestCases. Other place to update property upon
-                # TestCase via Model.save, that will trigger model
-                #        singal handlers.
-                tcs.update(is_automated=form.cleaned_data['is_automated'])
+                is_automated = form.cleaned_data['is_automated']
+
             if isinstance(form.cleaned_data['is_automated_proposed'], bool):
-                tcs.update(is_automated_proposed=form.cleaned_data['is_automated_proposed'])
+                is_auto_proposed = form.cleaned_data['is_automated_proposed']
+
+            for test_case in tcs:
+                test_case.is_automated = is_automated
+                test_case.is_automated_proposed = is_auto_proposed
+                test_case.save()
     else:
         ajax_response['rc'] = 1
         ajax_response['response'] = form_errors_to_list(form)
 
-    return HttpResponse(json.dumps(ajax_response))
+    return JsonResponse(ajax_response)
 
 
 @permission_required('testcases.add_testcase')
