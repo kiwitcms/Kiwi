@@ -144,7 +144,6 @@ class ComponentActions(BaseActions):
         if not is_valid:
             return form
 
-        # self.tcs.update(category = self.form.cleaned_data['category'])
         tcs = self.get_testcases()
         for tc in tcs:
             tc.clear_components()

@@ -23,7 +23,6 @@
 				<li><a href="#" title="Remove selected cases form this test run" data-param="{{ test_run.run_id }}" class="removeBlue9 js-del-case">Remove</a></li>
 				{% endif %}
 				{% if perms.testruns.change_testcaserun %}
-				<li><a id="id_sort" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes" href="#" class="reorderBlue9">Re-order</a></li>
 				<li><a href="#" title="Update the IDLE case runs to newest case text" href="javascript:void(0)" data-param="{% url 'testruns-update_case_run_text' test_run.pk %}" class="updateBlue9 js-update-case">Update</a></li>
 				{% endif %}
 				{% if perms.testruns.change_testcaserun %}
