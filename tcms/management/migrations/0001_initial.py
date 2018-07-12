@@ -2,7 +2,6 @@
 from django.db import migrations, models
 import tcms.core.models.base
 from django.conf import settings
-import tcms.core.models.fields
 
 
 class Migration(migrations.Migration):

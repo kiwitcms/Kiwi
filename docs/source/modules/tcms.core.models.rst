@@ -12,5 +12,4 @@ Submodules
 .. toctree::
 
    tcms.core.models.base
-   tcms.core.models.fields
 
