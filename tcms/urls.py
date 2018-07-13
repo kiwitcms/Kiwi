@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
 
     # Ajax call responder
-    url(r'^ajax/update/case-status/$', ajax.UPDATE_CASES_CASE_STATUS),
+    url(r'^ajax/update/case-status/$', ajax.UpdateTestCaseStatusView.as_view()),
     url(r'^ajax/update/cases-priority/$', ajax.UPDATE_CASES_PRIORITY),
     url(r'^ajax/update/cases-default-tester/$', ajax.update_cases_default_tester,
         name='ajax-update_cases_default_tester'),
