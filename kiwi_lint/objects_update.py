@@ -12,7 +12,7 @@ class ObjectsUpdateChecker(checkers.BaseChecker):
 
     name = 'objects-update-checker'
 
-    msgs = {'E4461': ("Model.objects.update() doesn't update history! Use .save() instead.",
+    msgs = {'E4461': ("Model.objects.update() doesn't update history! Use Model.save() instead.",
                       'objects-update-used',
                       "")}
 
