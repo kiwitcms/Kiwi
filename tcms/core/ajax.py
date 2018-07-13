@@ -4,7 +4,6 @@ Shared functions for plan/case/run.
 
 Most of these functions are use for Ajax.
 """
-import json
 from distutils.util import strtobool
 
 from django.db.models import Q, Count
@@ -29,7 +28,7 @@ from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseTag
 from tcms.testcases.views import plan_from_request_or_none
-from tcms.testplans.models import TestPlan, TestCasePlan, TestPlanTag
+from tcms.testplans.models import TestPlan, TestPlanTag
 from tcms.testruns.models import TestRun, TestCaseRun, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
@@ -306,34 +305,6 @@ class TestCaseUpdateActions(object):
             raise ObjectDoesNotExist('Default tester not found!')
         self.get_update_targets().update(**{str(self.target_field): user.pk})
 
-    def _update_sortkey(self):
-        try:
-            sortkey = int(self.new_value)
-            if sortkey < 0 or sortkey > 32300:
-                return say_no('New sortkey is out of range [0, 32300].')
-        except ValueError:
-            return say_no('New sortkey is not an integer.')
-        plan = plan_from_request_or_none(self.request, pk_enough=True)
-        if plan is None:
-            return say_no('No plan record found.')
-        update_targets = self.get_update_targets()
-
-        # ##
-        # MySQL does not allow to exeucte UPDATE statement that contains
-        # subquery querying from same table. In this case, OperationError will
-        # be raised.
-        offset = 0
-        step_length = 500
-        while True:
-            sub_cases = update_targets[offset:offset + step_length]
-            case_pks = [case.pk for case in sub_cases]
-            if not case_pks:
-                break
-            TestCasePlan.objects.filter(plan=plan,
-                                        case__in=case_pks).update(**{self.target_field: sortkey})
-            # Move to next batch of cases to change.
-            offset += step_length
-
     def _update_reviewer(self):
         reviewers = User.objects.filter(username=self.new_value).values_list('pk', flat=True)
         if not reviewers:
@@ -350,7 +321,6 @@ def update_cases_default_tester(request):
 
 
 UPDATE_CASES_PRIORITY = update_cases_default_tester
-UPDATE_CASES_SORTKEY = update_cases_default_tester
 UPDATE_CASES_REVIEWER = update_cases_default_tester
 
 

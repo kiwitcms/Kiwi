@@ -650,49 +650,6 @@ function blindupAllCases(element) {
   }
 }
 
-function changeCaseOrder2(parameters, callback) {
-  var nsk = '';
-  if (parameters.hasOwnProperty('sortkey')) {
-    nsk = window.prompt('Enter your new order number', parameters['sortkey']);   // New sort key
-    if (nsk == parameters['sortkey']) {
-      window.alert('Nothing changed');
-      return false;
-    }
-  } else {
-    nsk = window.prompt('Enter your new order number');
-  }
-
-  if (!nsk) {
-    return false;
-  }
-
-  if (nsk != window.parseInt(nsk)) {
-    window.alert('The value must be an integer number and limit between 0 to 32300.');
-    return false;
-  }
-
-  if (nsk > 32300 || nsk < 0) {
-    window.alert('The value must be an integer number and limit between 0 to 32300.');
-    return false;
-  }
-
-  parameters.target_field = 'sortkey';
-  parameters.new_value = nsk;
-
-  jQ.ajax({
-    'url': '/ajax/update/cases-sortkey/',
-    'type': 'POST',
-    'data': parameters,
-    'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
-
 function addCaseBug(form, callback) {
   var addBugInfo = Nitrate.Utils.formSerialize(form);
   addBugInfo.bug_validation_regexp = jQ('select[name="bug_system"] option:selected').data('validation-regexp');
