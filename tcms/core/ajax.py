@@ -7,7 +7,6 @@ Most of these functions are use for Ajax.
 import json
 from distutils.util import strtobool
 
-from django import http
 from django.db.models import Q, Count
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -15,9 +14,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ValidationError
 from django.http import Http404
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.views.generic.base import View
+from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
+from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import Component, Build, Version
 from tcms.management.models import Priority
@@ -25,7 +27,7 @@ from tcms.management.models import Tag
 from tcms.management.models import EnvGroup, EnvProperty, EnvValue
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
-from tcms.testcases.models import TestCaseStatus, TestCaseTag
+from tcms.testcases.models import TestCaseTag
 from tcms.testcases.views import plan_from_request_or_none
 from tcms.testplans.models import TestPlan, TestCasePlan, TestPlanTag
 from tcms.testruns.models import TestRun, TestCaseRun, TestRunTag
@@ -304,55 +306,6 @@ class TestCaseUpdateActions(object):
             raise ObjectDoesNotExist('Default tester not found!')
         self.get_update_targets().update(**{str(self.target_field): user.pk})
 
-    def _update_case_status(self):
-        try:
-            new_status = TestCaseStatus.objects.get(pk=self.new_value)
-        except TestCaseStatus.DoesNotExist:
-            raise ObjectDoesNotExist('The status you choose does not exist.')
-
-        update_object = self.get_update_targets()
-        if not update_object:
-            return say_no('No record(s) found')
-
-        for testcase in update_object:
-            if hasattr(testcase, 'log_action'):
-                testcase.log_action(
-                    who=self.request.user,
-                    action='Field %s changed from %s to %s.' % (
-                        self.target_field, testcase.case_status, new_status.name
-                    )
-                )
-        update_object.update(**{str(self.target_field): self.new_value})
-
-        # ###
-        # Case is moved between Cases and Reviewing Cases tabs accoding to the
-        # change of status. Meanwhile, the number of cases with each status
-        # should be updated also.
-
-        try:
-            plan = plan_from_request_or_none(self.request)
-        except Http404:
-            return say_no("No plan record found.")
-        else:
-            if plan is None:
-                return say_no('No plan record found.')
-
-        confirm_status_name = 'CONFIRMED'
-        plan.run_case = plan.case.filter(case_status__name=confirm_status_name)
-        plan.review_case = plan.case.exclude(case_status__name=confirm_status_name)
-        run_case_count = plan.run_case.count()
-        case_count = plan.case.count()
-        # FIXME: why not calculate review_case_count or run_case_count by using
-        # substraction, which saves one SQL query.
-        review_case_count = plan.review_case.count()
-
-        return http.JsonResponse({
-            'rc': 0, 'response': 'ok',
-            'run_case_count': run_case_count,
-            'case_count': case_count,
-            'review_case_count': review_case_count,
-        })
-
     def _update_sortkey(self):
         try:
             sortkey = int(self.new_value)
@@ -389,8 +342,6 @@ class TestCaseUpdateActions(object):
         self.get_update_targets().update(**{str(self.target_field): reviewers[0]})
 
 
-# NOTE: what permission is necessary
-# FIXME: find a good chance to map all TestCase property change request to this
 @require_POST
 def update_cases_default_tester(request):
     """Update default tester upon selected TestCases"""
@@ -399,9 +350,41 @@ def update_cases_default_tester(request):
 
 
 UPDATE_CASES_PRIORITY = update_cases_default_tester
-UPDATE_CASES_CASE_STATUS = update_cases_default_tester
 UPDATE_CASES_SORTKEY = update_cases_default_tester
 UPDATE_CASES_REVIEWER = update_cases_default_tester
+
+
+@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+class UpdateTestCaseStatusView(View):
+    """Updates TestCase.case_status_id. Called from the front-end."""
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        status_id = int(request.POST.get('new_value'))
+        case_ids = request.POST.getlist('case[]')
+
+        for test_case in TestCase.objects.filter(pk__in=case_ids):
+            test_case.case_status_id = status_id
+            test_case.save()
+
+        # Case is moved between Cases and Reviewing Cases tabs accoding to the
+        # change of status. Meanwhile, the number of cases with each status
+        # should be updated also.
+        plan_id = request.POST.get("from_plan")
+        test_plan = get_object_or_404(TestPlan, pk=plan_id)
+
+        confirmed_cases_count = test_plan.case.filter(case_status__name='CONFIRMED').count()
+        total_cases_count = test_plan.case.count()
+        review_cases_count = total_cases_count - confirmed_cases_count
+
+        return JsonResponse({
+            'rc': 0,
+            'response': 'ok',
+            'run_case_count': confirmed_cases_count,
+            'case_count': total_cases_count,
+            'review_case_count': review_cases_count,
+        })
 
 
 @require_POST
@@ -520,4 +503,4 @@ def get_prod_related_obj_json(request):
         res = get_prod_related_objs(p_pks, target)
     else:
         res = []
-    return HttpResponse(json.dumps(res))
+    return JsonResponse(res)
