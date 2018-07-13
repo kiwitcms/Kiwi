@@ -561,13 +561,6 @@ function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_conf
       window.alert(returnobj.response);
       return false;
     }
-    var case_status_id = returnobj.case_status_id;
-
-    for (var i = 0; (node = selector.options[i]); i++) {
-      if (node.selected) {
-        var case_status = node.innerHTML;
-      }
-    }
 
     // container should be got before selector is hidden.
     var curCasesContainer = jQ(selector).parents('.tab_list');
@@ -580,7 +573,7 @@ function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_conf
       jQ('#' + case_id).remove();
 
       // We have to reload the other side of cases to reflect the status
-      // change. This MUST be done before selector is hided.
+      // change. This MUST be done before selector is hidden.
       Nitrate.TestPlans.Details.reopenTabHelper(curCasesContainer);
     }
   };
