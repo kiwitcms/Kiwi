@@ -269,7 +269,7 @@ class TestCaseUpdateActions(object):
 
     def get_update_targets(self):
         """Get selected cases to update their properties"""
-        case_ids = map(int, self.request.POST.getlist('case'))
+        case_ids = map(int, self.request.POST.getlist('case[]'))
         self._update_objects = TestCase.objects.filter(pk__in=case_ids)
         return self._update_objects
 

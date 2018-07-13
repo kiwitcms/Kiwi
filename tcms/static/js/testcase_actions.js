@@ -552,9 +552,7 @@ function toggleTestCaseContents(template_type, container, content_container, obj
   toggleExpandArrow({ caseRowContainer: jQ(container), expandPaneContainer: jQ(content_container) });
 }
 
-function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_confirmed) {
-  var value = selector.value;
-
+function changeTestCaseStatus(plan_id, case_id, new_value, container) {
   var success = function(data, textStatus, jqXHR) {
     var returnobj = jQ.parseJSON(jqXHR.responseText);
     if (returnobj.rc !== 0) {
@@ -562,27 +560,32 @@ function changeTestCaseStatus(plan_id, selector, case_id, be_confirmed, was_conf
       return false;
     }
 
-    // container should be got before selector is hidden.
-    var curCasesContainer = jQ(selector).parents('.tab_list');
+    var template_type = 'case';
 
-    if (be_confirmed || was_confirmed) {
-      jQ('#run_case_count').text(returnobj.run_case_count);
-      jQ('#case_count').text(returnobj.case_count);
-      jQ('#review_case_count').text(returnobj.review_case_count);
-      jQ('#' + case_id).next().remove();
-      jQ('#' + case_id).remove();
-
-      // We have to reload the other side of cases to reflect the status
-      // change. This MUST be done before selector is hidden.
-      Nitrate.TestPlans.Details.reopenTabHelper(curCasesContainer);
+    if (container.attr('id') === 'reviewcases') {
+        template_type = 'review_case';
     }
+
+    var parameters = {
+        'a': 'initial',
+        'from_plan': plan_id,
+        'template_type': template_type,
+    };
+
+    constructPlanDetailsCasesZone(container, plan_id, parameters);
+
+    jQ('#run_case_count').text(returnobj.run_case_count);
+    jQ('#case_count').text(returnobj.case_count);
+    jQ('#review_case_count').text(returnobj.review_case_count);
+
+    Nitrate.TestPlans.Details.reopenTabHelper(jQ(container));
   };
 
   var data = {
     'from_plan': plan_id,
     'case': case_id,
     'target_field': 'case_status',
-    'new_value': value,
+    'new_value': new_value,
   };
 
   jQ.ajax({
