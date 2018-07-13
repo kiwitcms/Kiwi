@@ -1291,42 +1291,6 @@ function onTestCaseAutomatedClick(options) {
 }
 
 /*
- * To change selected cases' sort number.
- */
-function onTestCaseSortNumberClick(options) {
-  var form = options.form;
-  var table = options.table;
-  var plan_id = options.planId;
-  var container = options.container;
-
-  return function(e) {
-    // NOTE: new implemenation does not use testcaseplan.pk
-    var selection = serializeCaseFromInputList2(table);
-    if (selection.empty()) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-    var postdata = serializeFormData({
-      'form': form,
-      'zoneContainer': container,
-      'casesSelection': selection,
-      'hashable': true
-    });
-
-    var callback = function(response) {
-      var returnobj = jQ.parseJSON(response.responseText);
-      if (returnobj.rc != 0) {
-        window.alert(returnobj.response);
-        return false;
-      }
-      postdata.case = selection.selectedCasesIds;
-      constructPlanDetailsCasesZone(container, plan_id, postdata);
-    };
-    changeCaseOrder2(postdata, callback);
-  };
-}
-
-/*
  * To change selected cases' category.
  */
 function onCategoryClick(options) {
@@ -1693,13 +1657,6 @@ function constructPlanDetailsCasesZoneCallback(options) {
     element = jQ(form).parent().find('input.btn_default_tester')[0];
     if (element !== undefined) {
       jQ(element).bind('click', onTestCaseDefaultTesterClick({
-        'container': container, 'form': form, 'planId': plan_id, 'table': table
-      }));
-    }
-
-    element = jQ(form).parent().find('input.sort_list')[0];
-    if (element !== undefined) {
-      jQ(element).bind('click', onTestCaseSortNumberClick({
         'container': container, 'form': form, 'planId': plan_id, 'table': table
       }));
     }

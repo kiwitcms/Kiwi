@@ -34,11 +34,6 @@
 						{% else %}
 						<li><input type="button" class="delete icon_plan" value="Remove" title="Remove selected cases from this plan" disabled /></li>
 						{% endif %}
-						{% if perms.testcases.change_testcase %}
-						<li><input type="button" class="sort_list icon_plan" value="Set Sort Number" title="Set sort number of selected cases from this plan"/></li>
-						{% else %}
-						<li><input type="button" class="sort_list icon_plan" value="Set Sort Number" title="Set sort number of selected cases from this plan" disabled /></li>
-						{% endif %}
 					</ul>
 				</li>
                         {% if REQUEST_CONTENTS.template_type == 'case' and perms.testruns.add_testrun %}
