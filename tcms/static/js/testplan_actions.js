@@ -1037,10 +1037,8 @@ function bindEventsOnLoadedCases(options) {
       });
 
     jQ(container).parent().find('.change_status_selector.js-just-loaded').bind('change', function(e) {
-      var be_confirmed = (this.value == '2');
-      var was_confirmed = (jQ(this).parent()[0].attributes['status'].value == "CONFIRMED");
       var case_id = jQ(this).parent().parent()[0].id;
-      changeTestCaseStatus(plan_id, this, case_id, be_confirmed, was_confirmed);
+      changeTestCaseStatus(plan_id, [case_id], this.value, jQ(this).parents('.tab_list'));
     });
 
     // Display/Hide the case content
@@ -1183,77 +1181,6 @@ function serializeFormData(options) {
   }
 
   return formdata;
-}
-
-
-/*
- * Event handler invoked when TestCases' Status is changed.
- */
-function onTestCaseStatusChange(options) {
-  var form = options.form;
-  var table = options.table;
-  var container = options.container;
-  var plan_id = options.planId;
-
-  return function(e) {
-    var selection = serializeCaseFromInputList2(table);
-    if (selection.empty()) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-    var status_pk = this.value;
-    if (!status_pk) {
-      return false;
-    }
-    var c = window.confirm(default_messages.confirm.change_case_status);
-    if (!c) {
-      return false;
-    }
-
-    var postdata = serializeFormData({
-      'form': form,
-      'zoneContainer': container,
-      'casesSelection': selection,
-      'hashable': true
-    });
-    postdata.a = 'update';
-
-    var update_status_data = {
-      'from_plan': postdata.from_plan,
-      'case': postdata.case,
-      'target_field': 'case_status',
-      'new_value': status_pk
-    };
-
-    var afterStatusChangedCallback = function(response) {
-      var returnobj = jQ.parseJSON(response.responseText);
-
-      if (returnobj.rc == 0) {
-        constructPlanDetailsCasesZone(container, plan_id, postdata);
-        jQ('#run_case_count').text(returnobj.run_case_count);
-        jQ('#case_count').text(returnobj.case_count);
-        jQ('#review_case_count').text(returnobj.review_case_count);
-
-        Nitrate.TestPlans.Details.reopenTabHelper(jQ(container));
-      } else {
-        window.alert(returnobj.response);
-        return false;
-      }
-    };
-
-    jQ.ajax({
-      'type': 'POST',
-      'url': '/ajax/update/case-status/',
-      'data': update_status_data,
-      'traditional': true,
-      'success': function (data, textStatus, jqXHR) {
-        afterStatusChangedCallback(jqXHR);
-      },
-      'error': function (jqXHR, textStatus, errorThrown) {
-        json_failure(jqXHR);
-      }
-    });
-  };
 }
 
 
@@ -1734,14 +1661,6 @@ function constructPlanDetailsCasesZoneCallback(options) {
       });
     }
 
-    // Bind batch change case status selector
-    var element = jQ(form).parent().find('input[name="new_case_status_id"]')[0];
-    if (element !== undefined) {
-      jQ(element).bind('change', onTestCaseStatusChange({
-        'form': form, 'table': table, 'container': container, 'planId': plan_id
-      }));
-    }
-
     element = jQ(form).parent().find('input[name="new_priority_id"]')[0];
     if (element !== undefined) {
       jQ(element).bind('change', onTestCasePriorityChange({
@@ -1881,10 +1800,18 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
           'requestMethod': 'get'
         });
       });
+
       jQ('.js-status-item').bind('click', function() {
-        this.form.new_case_status_id.value = jQ(this).data('param');
-        fireEvent(this.form.new_case_status_id, 'change');
+        var new_value = jQ(this).data('param');
+        var case_ids = [];
+        jQ(container).find('.case_selector').each(function(index, element) {
+            if (element.checked) {
+                case_ids.push(element.value);
+            }
+        });
+        changeTestCaseStatus(plan_id, case_ids, new_value, jQ(container));
       });
+
       jQ('.js-priority-item').bind('click', function() {
         this.form.new_priority_id.value = jQ(this).data('param');
         fireEvent(this.form.new_priority_id, 'change');
@@ -1918,8 +1845,6 @@ function sortCase(container, plan_id, order) {
   constructPlanDetailsCasesZone(container, plan_id, parameters);
 }
 
-function changeCaseMember(parameters, callback) {
-}
 
 function resortCasesDragAndDrop(container, button, form, table, parameters, callback) {
   if (button.innerHTML !== 'Done Sorting') {
