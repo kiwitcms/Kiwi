@@ -1184,6 +1184,19 @@ function serializeFormData(options) {
 }
 
 
+function selectedCaseIds(container) {
+    // return a list of case ids for currently selected test cases
+    // in the UI
+    var case_ids = [];
+    jQ(container).find('.case_selector').each(function(index, element) {
+        if (element.checked) {
+            case_ids.push(element.value);
+        }
+    });
+    return case_ids;
+}
+
+
 function changeTestCasePriority(plan_id, case_ids, new_value, container) {
     var afterPriorityChangedCallback = function(response) {
       var returnobj = jQ.parseJSON(response.responseText);
@@ -1726,23 +1739,13 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
 
       jQ('.js-status-item').bind('click', function() {
         var new_value = jQ(this).data('param');
-        var case_ids = [];
-        jQ(container).find('.case_selector').each(function(index, element) {
-            if (element.checked) {
-                case_ids.push(element.value);
-            }
-        });
+        var case_ids = selectedCaseIds(container);
         changeTestCaseStatus(plan_id, case_ids, new_value, jQ(container));
       });
 
       jQ('.js-priority-item').bind('click', function() {
         var new_value = jQ(this).data('param');
-        var case_ids = [];
-        jQ(container).find('.case_selector').each(function(index, element) {
-            if (element.checked) {
-                case_ids.push(element.value);
-            }
-        });
+        var case_ids = selectedCaseIds(container);
         changeTestCasePriority(plan_id, case_ids, new_value, jQ(container));
       });
 
