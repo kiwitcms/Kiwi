@@ -1184,59 +1184,33 @@ function serializeFormData(options) {
 }
 
 
-/*
- * Event handler invoked when TestCases' Priority is changed.
- */
-function onTestCasePriorityChange(options) {
-  var form = options.form;
-  var table = options.table;
-  var container = options.container;
-  var plan_id = options.planId;
-
-  return function(e) {
-    var selection = serializeCaseFromInputList2(table);
-    if (selection.empty()) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-    // FIXME: how about show a message to user to let user know what is happening?
-    if (!this.value) {
-      return false;
-    }
-    var c = window.confirm(default_messages.confirm.change_case_priority);
-    if (!c) {
-      return false;
-    }
-
-    var postdata = serializeFormData({
-      'form': form,
-      'zoneContainer': container,
-      'casesSelection': selection,
-      'hashable': true
-    });
-    postdata.a = 'update';
-
-    var update_priority_data = {
-      'from_plan': postdata.from_plan,
-      'case': postdata.case,
-      'target_field': 'priority',
-      'new_value': this.value
-    };
-
+function changeTestCasePriority(plan_id, case_ids, new_value, container) {
     var afterPriorityChangedCallback = function(response) {
       var returnobj = jQ.parseJSON(response.responseText);
       if (returnobj.rc != 0) {
         window.alert(returnobj.response);
         return false;
       }
-      constructPlanDetailsCasesZone(container, plan_id, postdata);
+
+      var template_type = 'case';
+
+      if (container.attr('id') === 'reviewcases') {
+          template_type = 'review_case';
+      }
+
+      var parameters = {
+          'a': 'initial',
+          'from_plan': plan_id,
+          'template_type': template_type,
+      };
+
+      constructPlanDetailsCasesZone(container, plan_id, parameters);
     };
 
     jQ.ajax({
       'type': 'POST',
       'url': '/ajax/update/cases-priority/',
-      'data': update_priority_data,
-      'traditional': true,
+      'data': {'case': case_ids, 'new_value': new_value },
       'success': function (data, textStatus, jqXHR) {
         afterPriorityChangedCallback(jqXHR);
       },
@@ -1244,7 +1218,6 @@ function onTestCasePriorityChange(options) {
         json_failure(jqXHR);
       }
     });
-  };
 }
 
 
@@ -1625,13 +1598,6 @@ function constructPlanDetailsCasesZoneCallback(options) {
       });
     }
 
-    element = jQ(form).parent().find('input[name="new_priority_id"]')[0];
-    if (element !== undefined) {
-      jQ(element).bind('change', onTestCasePriorityChange({
-        'form': form, 'table': table, 'container': container, 'planId': plan_id
-      }));
-    }
-
     // Observe the batch case automated status button
     element = jQ(form).parent().find('input.btn_automated')[0];
     if (element !== undefined) {
@@ -1770,9 +1736,16 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
       });
 
       jQ('.js-priority-item').bind('click', function() {
-        this.form.new_priority_id.value = jQ(this).data('param');
-        fireEvent(this.form.new_priority_id, 'change');
+        var new_value = jQ(this).data('param');
+        var case_ids = [];
+        jQ(container).find('.case_selector').each(function(index, element) {
+            if (element.checked) {
+                case_ids.push(element.value);
+            }
+        });
+        changeTestCasePriority(plan_id, case_ids, new_value, jQ(container));
       });
+
       jQ('#id_blind_all_link').find('.collapse-all').bind('click', function() {
         toggleAllCases(this);
       });
