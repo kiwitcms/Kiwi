@@ -4,20 +4,20 @@ Shared functions for plan/case/run.
 
 Most of these functions are use for Ajax.
 """
+from http import HTTPStatus
 from distutils.util import strtobool
 
-from django.db.models import Q, Count
+from django.db.models import Count
 from django.contrib.auth.models import User
 from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ValidationError
-from django.http import Http404
 from django.http import HttpResponse, JsonResponse
 from django.views.generic.base import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404, render
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import Component, Build, Version
@@ -26,18 +26,10 @@ from tcms.management.models import EnvGroup, EnvProperty, EnvValue
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseTag
-from tcms.testcases.views import plan_from_request_or_none
 from tcms.testplans.models import TestPlan, TestPlanTag
 from tcms.testruns.models import TestRun, TestCaseRun, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
-
-
-def check_permission(request, ctype):
-    perm = '%s.change_%s' % tuple(ctype.split('.'))
-    if request.user.has_perm(perm):
-        return True
-    return False
 
 
 @require_GET
@@ -227,94 +219,6 @@ def say_yes():
     return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
-class TestCaseUpdateActions(object):
-    """Actions to update each possible property of TestCases
-
-    Define your own method named _update_[property name] to hold specific
-    update logic.
-    """
-
-    ctype = 'testcases.testcase'
-
-    def __init__(self, request):
-        self.request = request
-        self.target_field = request.POST.get('target_field')
-        self.new_value = request.POST.get('new_value')
-
-    def get_update_action(self):
-        return getattr(self, '_update_%s' % self.target_field, None)
-
-    def update(self):
-        has_perms = check_permission(self.request, self.ctype)
-        if not has_perms:
-            return say_no("You don't have enough permission to update TestCases.")
-
-        action = self.get_update_action()
-        if action is not None:
-            try:
-                resp = action()
-                self._sendmail()
-            except ObjectDoesNotExist as err:
-                return say_no(str(err))
-            except Exception:
-                # TODO: besides this message to users, what happening should be
-                # recorded in the system log.
-                return say_no('Update failed. Please try again or request '
-                              'support from your organization.')
-            else:
-                if resp is None:
-                    resp = say_yes()
-                return resp
-        return say_no('Not know what to update.')
-
-    def get_update_targets(self):
-        """Get selected cases to update their properties"""
-        case_ids = map(int, self.request.POST.getlist('case[]'))
-        self._update_objects = TestCase.objects.filter(pk__in=case_ids)
-        return self._update_objects
-
-    def get_plan(self, pk_enough=True):
-        try:
-            return plan_from_request_or_none(self.request, pk_enough)
-        except Http404:
-            return None
-
-    def _sendmail(self):
-        mail_context = TestCase.mail_scene(objects=self._update_objects, field=self.target_field)
-        if mail_context:
-            from tcms.core.utils.mailto import mailto
-
-            mail_context['context']['user'] = self.request.user
-            try:
-                mailto(**mail_context)
-            except Exception:  # nosec:B110:try_except_pass
-                pass
-
-    def _update_default_tester(self):
-        try:
-            user = User.objects.get(Q(username=self.new_value) | Q(email=self.new_value))
-        except User.DoesNotExist:
-            raise ObjectDoesNotExist('Default tester not found!')
-        self.get_update_targets().update(**{str(self.target_field): user.pk})
-
-    def _update_reviewer(self):
-        reviewers = User.objects.filter(username=self.new_value).values_list('pk', flat=True)
-        if not reviewers:
-            err_msg = 'Reviewer %s is not found' % self.new_value
-            raise ObjectDoesNotExist(err_msg)
-        self.get_update_targets().update(**{str(self.target_field): reviewers[0]})
-
-
-@require_POST
-def update_cases_default_tester(request):
-    """Update default tester upon selected TestCases"""
-    proxy = TestCaseUpdateActions(request)
-    return proxy.update()  # pylint: disable=objects-update-used
-
-
-UPDATE_CASES_REVIEWER = update_cases_default_tester
-
-
 @method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
 class UpdateTestCaseStatusView(View):
     """Updates TestCase.case_status_id. Called from the front-end."""
@@ -360,6 +264,40 @@ class UpdateTestCasePriorityView(View):
 
         for test_case in TestCase.objects.filter(pk__in=case_ids):
             test_case.priority_id = priority_id
+            test_case.save()
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
+
+
+@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+class UpdateTestCaseActorsView(View):
+    """
+        Updates TestCase.default_tester_id or TestCase.reviewer_id.
+        Called from the front-end.
+    """
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        username = request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                return JsonResponse({'rc': 1,
+                                     'response': _('User %s not found!' % username)},
+                                    status=HTTPStatus.NOT_FOUND)
+
+        what_to_update = request.POST.get('what_to_update')
+        case_ids = request.POST.getlist('case[]')
+        for test_case in TestCase.objects.filter(pk__in=case_ids):
+            if what_to_update == 'default_tester':
+                test_case.default_tester_id = user.pk
+            elif what_to_update == 'reviewer':
+                test_case.reviewer_id = user.pk
+
             test_case.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

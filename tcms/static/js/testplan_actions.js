@@ -1343,67 +1343,6 @@ function onCategoryClick(options) {
 }
 
 /*
- * To change selected cases' default tester.
- */
-function onTestCaseDefaultTesterClick(options) {
-  var form = options.form;
-  var table = options.table;
-  var plan_id = options.planId;
-  var container = options.container;
-
-  return function(e) {
-    var selection = serializeCaseFromInputList2(table);
-    if (selection.empty()) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-
-    var params = serializeFormData({
-      'form': form,
-      'zoneContainer': container,
-      'casesSelection': selection,
-      'hashable': true
-    });
-    params.a = 'update';
-
-    var cbAfterDefaultTesterChanged = function(response) {
-      var returnobj = jQ.parseJSON(response.responseText);
-      if (returnobj.rc != 0) {
-        window.alert(returnobj.response);
-        return false;
-      }
-      constructPlanDetailsCasesZone(container, plan_id, params);
-    };
-
-    var email_or_username = window.prompt('Please enter new email or username');
-    if (!email_or_username) {
-      return false;
-    }
-
-    var update_default_tester_data = {
-      'from_plan': params.from_plan,
-      'case': params.case,
-      'target_field': 'default_tester',
-      'new_value': email_or_username
-    };
-
-    jQ.ajax({
-      'type': 'POST',
-      'url': '/ajax/update/cases-default-tester/',
-      'data': update_default_tester_data,
-      'traditional': true,
-      'success': function (data, textStatus, jqXHR) {
-        cbAfterDefaultTesterChanged(jqXHR);
-      },
-      'error': function (jqXHR, textStatus, errorThrown) {
-        json_failure(jqXHR);
-      }
-    });
-  };
-}
-
-
-/*
  * To change selected cases' component.
  */
 function onTestCaseComponentClick(options) {
@@ -1463,41 +1402,13 @@ function onTestCaseComponentClick(options) {
 
 
 /*
- * To change selected cases' reviewer.
+ * To change selected cases' Reviewer or Default tester.
  */
-function onTestCaseReviewerClick(options) {
-  var form = options.form;
-  var table = options.table;
-  var plan_id = options.planId;
-  var container = options.container;
-  var parameters = options.parameters;
-
-  return function(e) {
-    var selection = serializeCaseFromInputList2(table);
-    if (selection.empty()) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-
+function changeTestCaseActor(plan_id, case_ids, container, what_to_update) {
     var email_or_username = window.prompt('Please type new email or username');
     if (!email_or_username) {
       return false;
     }
-
-    var postData = serializeFormData({
-      'form': form,
-      'zoneContainer': container,
-      'casesSelection': selection,
-      'hashable': true
-    });
-    postData.a = 'update';
-
-    var update_reviewer_data = {
-      'from_plan': postData.plan,
-      'case': postData.case,
-      'target_field': 'reviewer',
-      'new_value': email_or_username
-    };
 
     var cbAfterReviewerChanged = function(response) {
       var returnobj = jQ.parseJSON(response.responseText);
@@ -1505,14 +1416,26 @@ function onTestCaseReviewerClick(options) {
         window.alert(returnobj.response);
         return false;
       }
+
+      var template_type = 'case';
+
+      if (what_to_update === 'reviewer') {
+          template_type = 'review_case';
+      }
+
+      var parameters = {
+          'a': 'initial',
+          'from_plan': plan_id,
+          'template_type': template_type,
+      };
+
       constructPlanDetailsCasesZone(container, plan_id, parameters);
     };
 
     jQ.ajax({
       'type': 'POST',
-      'url': '/ajax/update/cases-reviewer/',
-      'data': update_reviewer_data,
-      'traditional': true,
+      'url': '/ajax/update/cases-actor/',
+      'data': {'username': email_or_username, 'case': case_ids, 'what_to_update': what_to_update},
       'success': function (data, textStatus, jqXHR) {
         cbAfterReviewerChanged(jqXHR);
       },
@@ -1520,7 +1443,6 @@ function onTestCaseReviewerClick(options) {
         json_failure(jqXHR);
       }
     });
-  };
 }
 
 /*
@@ -1633,20 +1555,6 @@ function constructPlanDetailsCasesZoneCallback(options) {
       }));
     }
 
-    element = jQ(form).parent().find('input.btn_default_tester')[0];
-    if (element !== undefined) {
-      jQ(element).bind('click', onTestCaseDefaultTesterClick({
-        'container': container, 'form': form, 'planId': plan_id, 'table': table
-      }));
-    }
-
-    element = jQ(form).parent().find('input.btn_reviewer')[0];
-    if (element !== undefined) {
-      jQ(element).bind('click', onTestCaseReviewerClick({
-        'container': container, 'form': form, 'planId': plan_id, 'table': table, 'parameters': parameters
-      }));
-    }
-
     jQ(container).find('input[value="all"]').live('click', function(e) {
         Nitrate.TestPlans.Details.toggleSelectAllInput(jQ(container));
     });
@@ -1749,6 +1657,16 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
         changeTestCasePriority(plan_id, case_ids, new_value, jQ(container));
       });
 
+      jQ('input.btn_reviewer').bind('click', function() {
+        var case_ids = selectedCaseIds(container);
+        changeTestCaseActor(plan_id, case_ids, jQ(container), 'reviewer');
+      });
+
+      jQ('input.btn_default_tester').bind('click', function() {
+        var case_ids = selectedCaseIds(container);
+        changeTestCaseActor(plan_id, case_ids, jQ(container), 'default_tester');
+      });
+
       jQ('#id_blind_all_link').find('.collapse-all').bind('click', function() {
         toggleAllCases(this);
       });
@@ -1764,6 +1682,7 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
     }
   });
 }
+
 
 function sortCase(container, plan_id, order) {
   var form = jQ(container).children()[0];
