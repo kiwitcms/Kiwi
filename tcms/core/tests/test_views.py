@@ -140,14 +140,12 @@ class TestCommentCaseRuns(BaseCaseRun):
 
 
 class TestUpdateCasePriority(BasePlanCase):
-    """Test case for update_cases_default_tester"""
-
     @classmethod
     def setUpTestData(cls):
         super(TestUpdateCasePriority, cls).setUpTestData()
 
         cls.permission = 'testcases.change_testcase'
-        cls.case_update_url = reverse('ajax-update_cases_default_tester')
+        cls.url = reverse('ajax.update.cases-priority')
 
     def setUp(self):
         user_should_have_perm(self.tester, self.permission)
@@ -159,11 +157,9 @@ class TestUpdateCasePriority(BasePlanCase):
             password='password')
 
         response = self.client.post(
-            self.case_update_url,
+            self.url,
             {
-                'target_field': 'priority',
-                'from_plan': self.plan.pk,
-                'case': [self.case_1.pk, self.case_3.pk],
+                'case[]': [self.case_1.pk, self.case_3.pk],
                 'new_value': Priority.objects.get(value='P3').pk,
             })
 
@@ -178,11 +174,9 @@ class TestUpdateCasePriority(BasePlanCase):
             password='password')
 
         response = self.client.post(
-            self.case_update_url,
+            self.url,
             {
-                'target_field': 'priority',
-                'from_plan': self.plan.pk,
-                'case': [self.case_1.pk, self.case_3.pk],
+                'case[]': [self.case_1.pk, self.case_3.pk],
                 'new_value': Priority.objects.get(value='P3').pk,
             })
 

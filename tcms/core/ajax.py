@@ -21,7 +21,6 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import Component, Build, Version
-from tcms.management.models import Priority
 from tcms.management.models import Tag
 from tcms.management.models import EnvGroup, EnvProperty, EnvValue
 from tcms.testcases.models import TestCase, Bug
@@ -291,13 +290,6 @@ class TestCaseUpdateActions(object):
             except Exception:  # nosec:B110:try_except_pass
                 pass
 
-    def _update_priority(self):
-        exists = Priority.objects.filter(pk=self.new_value).exists()
-        if not exists:
-            raise ObjectDoesNotExist('The priority you specified to change '
-                                     'does not exist.')
-        self.get_update_targets().update(**{str(self.target_field): self.new_value})
-
     def _update_default_tester(self):
         try:
             user = User.objects.get(Q(username=self.new_value) | Q(email=self.new_value))
@@ -320,7 +312,6 @@ def update_cases_default_tester(request):
     return proxy.update()  # pylint: disable=objects-update-used
 
 
-UPDATE_CASES_PRIORITY = update_cases_default_tester
 UPDATE_CASES_REVIEWER = update_cases_default_tester
 
 
@@ -355,6 +346,23 @@ class UpdateTestCaseStatusView(View):
             'case_count': total_cases_count,
             'review_case_count': review_cases_count,
         })
+
+
+@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+class UpdateTestCasePriorityView(View):
+    """Updates TestCase.priority_id. Called from the front-end."""
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        priority_id = int(request.POST.get('new_value'))
+        case_ids = request.POST.getlist('case[]')
+
+        for test_case in TestCase.objects.filter(pk__in=case_ids):
+            test_case.priority_id = priority_id
+            test_case.save()
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 @require_POST

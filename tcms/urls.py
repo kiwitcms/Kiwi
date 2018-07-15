@@ -43,7 +43,7 @@ urlpatterns = [
 
     # Ajax call responder
     url(r'^ajax/update/case-status/$', ajax.UpdateTestCaseStatusView.as_view()),
-    url(r'^ajax/update/cases-priority/$', ajax.UPDATE_CASES_PRIORITY),
+    url(r'^ajax/update/cases-priority/$', ajax.UpdateTestCasePriorityView.as_view()),
     url(r'^ajax/update/cases-default-tester/$', ajax.update_cases_default_tester,
         name='ajax-update_cases_default_tester'),
     url(r'^ajax/update/cases-reviewer/$', ajax.UPDATE_CASES_REVIEWER),
