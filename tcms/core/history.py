@@ -1,3 +1,4 @@
+# pylint: disable=unused-argument, no-self-use, avoid-list-comprehension
 from django.db.models import signals
 from simple_history.models import HistoricalRecords
 from simple_history.admin import SimpleHistoryAdmin
