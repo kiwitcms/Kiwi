@@ -269,16 +269,6 @@ class TestDeleteCasesFromPlan(BasePlanCase):
         self.assertFalse(self.plan.case.filter(
             pk__in=[self.case_1.pk, self.case_3.pk]).exists())
 
-        # Assert action logs are recorded for plan and case correctly
-
-        for case in (self.case_1, self.case_3):
-            logs = case.log()
-            first_log = logs.first()
-            self.assertEqual(first_log.action, 'Remove from plan {}'.format(self.plan.pk))
-
-            expected_log = 'Remove case {} from plan {}'.format(case.pk, self.plan.pk)
-            self.assertTrue(self.plan.log().filter(action=expected_log).exists())
-
 
 class TestSortCases(BasePlanCase):
     """Test case for sorting cases"""

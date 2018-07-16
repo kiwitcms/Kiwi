@@ -710,7 +710,6 @@ class SimpleTestCaseView(TemplateView):
             data.update({
                 'review_mode': self.review_mode,
                 'test_case_text': case.latest_text(),
-                'logs': case.log(),
                 'components': case.component.only('name'),
                 'tags': case.tag.only('name'),
                 'case_comments': get_comments(case),
@@ -883,11 +882,6 @@ def get(request, case_id):
     # Get the test plans
     tps = tc.plan.select_related('author', 'product', 'type').all()
 
-    # log
-    logs = tc.log()
-
-    logs = itertools.groupby(logs, lambda l: l.date)
-    logs = [(day, list(log_actions)) for day, log_actions in logs]
     try:
         tp = tps.get(pk=request.GET.get('from_plan', 0))
     except (TestPlan.DoesNotExist, ValueError):
@@ -927,7 +921,6 @@ def get(request, case_id):
     grouped_case_bugs = tcr and group_case_bugs(tcr.case.get_bugs())
     # Render the page
     context_data = {
-        'logs': logs,
         'test_case': tc,
         'test_plan': tp,
         'test_plans': tps,
