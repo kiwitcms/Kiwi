@@ -30,7 +30,8 @@ class TestNotificationRemoveCC(XmlrpcAPIBaseTest):
         self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk, [self.default_cc])
 
         # now verify that the CC email has been removed
-        self.assertEqual(0, self.testcase.emailing.cc_list.count())
+        self.testcase.emailing.refresh_from_db()
+        self.assertEqual([], self.testcase.emailing.get_cc_list())
 
 
 class TestFilterCases(XmlrpcAPIBaseTest):

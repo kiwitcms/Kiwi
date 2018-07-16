@@ -148,13 +148,7 @@ def add_notification_cc(case_id, cc_list):
     _validate_cc_list(cc_list)
 
     test_case = TestCase.objects.get(pk=case_id)
-
-    # First, find those that do not exist yet.
-    existing_cc = test_case.emailing.get_cc_list()
-    adding_cc = list(set(cc_list) - set(existing_cc))
-
-    # add the ones which are new
-    test_case.emailing.add_cc(adding_cc)
+    test_case.emailing.add_cc(cc_list)
 
 
 @permissions_required('testcases.change_testcase')

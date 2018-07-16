@@ -327,15 +327,6 @@ class BugFactory(DjangoModelFactory):
     case = factory.SubFactory(TestCaseFactory)
 
 
-class ContactFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testcases.Contact'
-
-    name = factory.Sequence(lambda n: 'contact_%d' % n)
-    email = factory.LazyAttribute(lambda obj: '%s@example.com' % obj.name.replace(' ', '_'))
-
-
 class TestCaseEmailSettingsFactory(DjangoModelFactory):
 
     class Meta:
