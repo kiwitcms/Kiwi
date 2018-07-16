@@ -1493,16 +1493,6 @@ def attachment(request, case_id, template_name='case/attachment.html'):
     return render(request, template_name, context)
 
 
-def get_log(request, case_id, template_name="management/get_log.html"):
-    """Get the case log"""
-    tc = get_object_or_404(TestCase, case_id=case_id)
-
-    context = {
-        'object': tc
-    }
-    return render(request, template_name, context)
-
-
 @permission_required('testcases.change_bug')
 def bug(request, case_id, template_name='case/get_bug.html'):
     """Process the bugs for cases"""
