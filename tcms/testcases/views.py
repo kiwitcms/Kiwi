@@ -793,8 +793,7 @@ class TestCaseSimpleCaseRunView(TemplateView):
         except (TypeError, ValueError):
             raise Http404
 
-        this_cls = TestCaseSimpleCaseRunView
-        return super(this_cls, self).get(request, case_id)
+        return super().get(request, case_id)
 
     def get_caserun(self):
         try:
@@ -804,16 +803,13 @@ class TestCaseSimpleCaseRunView(TemplateView):
             raise Http404
 
     def get_context_data(self, **kwargs):
-        this_cls = TestCaseSimpleCaseRunView
-        data = super(this_cls, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
 
         caserun = self.get_caserun()
-        logs = caserun.log()
         comments = get_comments(caserun)
 
         data.update({
             'test_caserun': caserun,
-            'logs': logs.iterator(),
             'comments': comments.iterator(),
         })
         return data
