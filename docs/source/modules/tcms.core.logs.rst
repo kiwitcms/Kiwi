@@ -6,10 +6,3 @@ tcms.core.logs package
     :undoc-members:
     :show-inheritance:
 
-Submodules
-----------
-
-.. toctree::
-
-   tcms.core.logs.models
-
