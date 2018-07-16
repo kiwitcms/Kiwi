@@ -1063,6 +1063,9 @@ def update_testcase(request, tc, tc_form):
     - tc_form: instance of django.forms.Form, holding validated data.
     """
 
+    # TODO: this entire function doesn't seem very useful
+    # part if it was logging the changes but now this is
+    # done by simple_history. Should we remove it ???
     # Modify the contents
     fields = ['summary',
               'case_status',
@@ -1079,41 +1082,13 @@ def update_testcase(request, tc, tc_form):
 
     for field in fields:
         if getattr(tc, field) != tc_form.cleaned_data[field]:
-            tc.log_action(request.user,
-                          'Case %s changed from %s to %s in edit page.' % (
-                              field, getattr(tc, field),
-                              tc_form.cleaned_data[field]
-                          ))
             setattr(tc, field, tc_form.cleaned_data[field])
     try:
         if tc.default_tester != tc_form.cleaned_data['default_tester']:
-            tc.log_action(
-                request.user,
-                'Case default tester changed from %s to %s in edit page.' % (
-                    tc.default_tester_id and tc.default_tester,
-                    tc_form.cleaned_data['default_tester']
-                ))
             tc.default_tester = tc_form.cleaned_data['default_tester']
     except ObjectDoesNotExist:
         pass
     tc.update_tags(tc_form.cleaned_data.get('tag'))
-    try:
-        fields_text = ['action', 'effect', 'setup', 'breakdown']
-        latest_text = tc.latest_text()
-
-        for field in fields_text:
-            form_cleaned = tc_form.cleaned_data[field]
-            if not (getattr(latest_text, field) or form_cleaned):
-                continue
-            if getattr(latest_text, field) != form_cleaned:
-                tc.log_action(
-                    request.user,
-                    ' Case %s changed from %s to %s in edit page.' % (
-                        field, getattr(latest_text, field) or None,
-                        form_cleaned or None
-                    ))
-    except ObjectDoesNotExist:
-        pass
 
     # FIXME: Bug here, timedelta from form cleaned data need to convert.
     tc.estimated_time = tc_form.cleaned_data['estimated_time']
@@ -1121,6 +1096,8 @@ def update_testcase(request, tc, tc_form):
     # added so that in post_save, current logged-in user info
     # can be accessed.
     # Instance attribute is usually not a desirable solution.
+    # TODO: current_user is probbably not necessary now that we have proper history
+    # it is used in email templates though !!!
     tc.current_user = request.user
     tc.save()
 

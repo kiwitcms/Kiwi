@@ -769,14 +769,7 @@ class DeleteCasesView(View):
             })
 
         cases = get_selected_testcases(request).only('pk')
-
-        # Log Action
         for case in cases:
-            plan.log_action(
-                who=request.user,
-                action='Remove case {} from plan {}'.format(case.pk, plan.pk))
-            case.log_action(who=request.user,
-                            action='Remove from plan {}'.format(plan.pk))
             plan.delete_case(case=case)
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

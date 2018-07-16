@@ -44,9 +44,6 @@ class TCMSActionModel(models.Model, UrlMixin):
                                          site=settings.SITE_ID)
         return qs.select_related('who')
 
-    def log_action(self, who, action):
-        TCMSLogModel(content_object=self, who=who, action=action, site_id=settings.SITE_ID).save()
-
     def clean(self):
         strip_types = (models.CharField,
                        models.TextField,
