@@ -201,9 +201,6 @@ Nitrate.TestCases.Instance = {
 			<li id="tab_case_run" class="tab">
 				<a href="#case_run" title="case_run">Case Runs (<span id='case_run_count'>{{ test_case_runs.count }}</span>)</a>
 			</li>
-			<li id="tab_case_log" class="tab">
-				<a href="#log" title="log">Change Logs</a>
-			</li>
 		</ul>
 		<div  id="document" class="Detailform-variety_2 tab_list" style="clear:left;">
 			{% include "case/get_text.html" %}
@@ -228,9 +225,6 @@ Nitrate.TestCases.Instance = {
 		</div>
 		 <div id="case_run" class="tab_list" style="display:none">
 			{% include "case/get_case_run.html" %}
-		</div>
-		<div id="log" class="tab_list"	style="display:none">
-			{% include "case/get_log.html" %}
 		</div>
 	</div>
 </div>

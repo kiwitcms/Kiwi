@@ -159,9 +159,6 @@ Nitrate.TestPlans.Instance = {
 				<li id="tab_tag" class="tab">
 					<a href="#tag" title="tag">Tags (<span id='tag_count'>{{ test_plan.tag.count }}</span>)</a>
 				</li>
-				<li id="tab_log" class="tab">
-					<a href="#log" title="log">Log</a>
-				</li>
 				<li id="tab_treeview" class="tab">
 					<a href="#treeview" title="treeview">Tree View</a>
 				</li>
@@ -182,9 +179,6 @@ Nitrate.TestPlans.Instance = {
 			</div>
 			<div id="testruns" class="tab_list" style="display:none;">
 				{% include "plan/get_runs.html" %}
-			</div>
-			<div id="log" class="tab_list" style="display:none;">
-				{% include "plan/get_log.html" %}
 			</div>
 			<div id="treeview" class="tab_list" style="display:none;">
 				{% include "plan/get_treeview.html" %}
