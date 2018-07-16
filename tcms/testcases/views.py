@@ -92,7 +92,6 @@ def update_case_email_settings(tc, n_form):
         'default_testers_of_runs']
     tc.emailing.auto_to_case_run_assignee = n_form.cleaned_data[
         'assignees_of_case_runs']
-    tc.emailing.save()
 
     default_tester = n_form.cleaned_data['default_tester_of_case']
     if (default_tester and tc.default_tester_id):
@@ -100,7 +99,9 @@ def update_case_email_settings(tc, n_form):
 
     # Continue to update CC list
     valid_emails = n_form.cleaned_data['cc_list']
-    tc.emailing.update_cc_list(valid_emails)
+    tc.emailing.cc_list = CC_LIST_DEFAULT_DELIMITER.join(valid_emails)
+
+    tc.emailing.save()
 
 
 def group_case_bugs(bugs):
