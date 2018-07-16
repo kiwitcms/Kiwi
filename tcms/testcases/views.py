@@ -832,12 +832,10 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
         except (TypeError, ValueError):
             raise Http404
 
-        this_cls = TestCaseCaseRunDetailPanelView
-        return super(this_cls, self).get(request, case_id)
+        return super().get(request, case_id)
 
     def get_context_data(self, **kwargs):
-        this_cls = TestCaseCaseRunDetailPanelView
-        data = super(this_cls, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
 
         try:
             qs = TestCase.objects.filter(pk=self.case_id)
@@ -855,7 +853,6 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
 
         # Data of TestCaseRun
         caserun_comments = get_comments(case_run)
-        caserun_logs = case_run.log()
 
         caserun_status = TestCaseRunStatus.objects.values('pk', 'name')
         caserun_status = caserun_status.order_by('pk')
@@ -868,7 +865,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
             'test_case_run': case_run,
             'comments_count': len(caserun_comments),
             'caserun_comments': caserun_comments,
-            'caserun_logs': caserun_logs,
+            'caserun_logs': case_run.history.all(),
             'test_case_run_status': caserun_status,
             'grouped_case_bugs': bugs,
         })
