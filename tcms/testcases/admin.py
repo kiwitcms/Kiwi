@@ -2,12 +2,24 @@
 import inspect
 
 from django import forms
+from django.urls import reverse
 from django.contrib import admin
 from django.forms.widgets import Select
+from django.http import HttpResponseRedirect
 
 from tcms.issuetracker import types
-from tcms.testcases.models import BugSystem
-from tcms.testcases.models import Category
+from tcms.core.history import ReadOnlyHistoryAdmin
+from tcms.testcases.models import BugSystem, Category, TestCase
+
+
+class TestCaseAdmin(ReadOnlyHistoryAdmin):
+    actions = ['delete_selected']
+
+    def add_view(self, request, form_url='', extra_context=None):
+        return HttpResponseRedirect(reverse('admin:testcases_testcase_changelist'))
+
+    def change_view(self, request, object_id, extra_context=None):
+        return HttpResponseRedirect(reverse('testcases-get', args=[object_id]))
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -91,5 +103,6 @@ Configure external bug trackers</a> section before editting the values below!</h
     form = BugSystemAdminForm
 
 
-admin.site.register(Category, CategoryAdmin)
 admin.site.register(BugSystem, BugSystemAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(TestCase, TestCaseAdmin)

@@ -114,8 +114,12 @@ Nitrate.TestCases.Instance = {
 						<span id="display_script" >{{ test_case.alias|default:'None' }}</span>
 					</div>
 				</div>
-
+			        <div class="listinfo">
+				    <div class="title grey">Notes&nbsp;:</div>
+				    <div class="name" style="max-width:800px;"><span id="display_priority" >{{ test_case.notes|urlize|linebreaksbr }}</span></div>
+			    </div>
 			</div>
+
 			<div class="rightlistinfo">
 				<div class="listinfo">
 					<div class="title grey">Author&nbsp;:</div>
@@ -165,12 +169,12 @@ Nitrate.TestCases.Instance = {
 						</span>
 					</div>
 				</div>
+
+		                <div class="listinfo">
+			            <div class="title"><a href="/admin/testcases/testcase/{{ test_case.pk }}/history/">View Edit History</a></div>
+			        </div>
 			</div>
 			<div class="clear"></div>
-			<div class="listinfo">
-				<div class="title grey">Notes&nbsp;:</div>
-				<div class="name" style="max-width:800px;"><span id="display_priority" >{{ test_case.notes|urlize|linebreaksbr }}</span></div>
-			</div>
 		</fieldset>
 	</div>
 	
