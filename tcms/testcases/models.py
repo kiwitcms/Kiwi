@@ -12,8 +12,9 @@ from django.utils.encoding import smart_str
 import vinaigrette
 
 from tcms.core.models import TCMSActionModel
-from tcms.core.models.base import TCMSContentTypeBaseModel
 from tcms.core.utils.checksum import checksum
+from tcms.core.history import KiwiHistoricalRecords
+from tcms.core.models.base import TCMSContentTypeBaseModel
 from tcms.issuetracker.types import IssueTrackerType
 
 
@@ -107,7 +108,9 @@ class Category(TCMSActionModel):
 
 
 class TestCase(TCMSActionModel):
-    case_id = models.AutoField(max_length=10, primary_key=True)
+    history = KiwiHistoricalRecords()
+
+    case_id = models.AutoField(primary_key=True)
     create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
     is_automated = models.IntegerField(db_column='isautomated', default=0)
     is_automated_proposed = models.BooleanField(default=False)

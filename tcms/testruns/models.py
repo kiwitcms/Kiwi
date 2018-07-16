@@ -9,9 +9,10 @@ from django.db.models import Q, Count
 
 import vinaigrette
 
-from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
+from tcms.core.models import TCMSActionModel
+from tcms.core.history import KiwiHistoricalRecords
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testcases.models import Bug, TestCaseText, NoneText
 from tcms.xmlrpc.serializer import TestCaseRunXMLRPCSerializer
 from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
@@ -389,6 +390,8 @@ class TestCaseRunManager(models.Manager):
 
 
 class TestCaseRun(TCMSActionModel):
+    history = KiwiHistoricalRecords()
+
     objects = TestCaseRunManager()
 
     case_run_id = models.AutoField(primary_key=True)
