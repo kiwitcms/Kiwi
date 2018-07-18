@@ -11,8 +11,7 @@ History:
 """
 # pylint: disable=too-few-public-methods
 
-import errno
-import http.client
+from http.client import HTTPSConnection
 from http.cookiejar import CookieJar
 import xmlrpc.client
 
@@ -27,23 +26,6 @@ class CookieTransport(xmlrpc.client.Transport):
     def __init__(self, use_datetime=False, use_builtin_types=False):
         super().__init__(use_datetime=use_datetime, use_builtin_types=use_builtin_types)
         self._cookies = []
-
-    def request(self, host, handler, request_body, verbose=False):
-        # retry request once if cached connection has gone cold
-        for i in (0, 1):
-            try:
-                return self.single_request(host, handler, request_body, verbose)
-            # the order of these except blocks is reversed in Python 3.5 which
-            # leads to errors, partially due to Django's 2.0 disabling of
-            # keep-alive connections. See
-            # https://code.djangoproject.com/ticket/28968
-            # https://bugs.python.org/issue26402
-            except http.client.RemoteDisconnected:
-                if i:
-                    raise
-            except OSError as error:
-                if i or error.errno not in (errno.ECONNRESET, errno.ECONNABORTED, errno.EPIPE):
-                    raise
 
     def send_headers(self, connection, headers):
         if self._cookies:
@@ -87,26 +69,17 @@ class KerbTransport(SafeCookieTransport):
 
     def make_connection(self, host):
         """
-        For fixing bug #735937.
-        When running on Python 2.7, make_connection will do the same behavior as that of
-        Python 2.6's xmlrpc.client. That is in Python 2.6, make_connection will return an
-        individual HTTPS connection for each request
-        """
+        For fixing https://bugzilla.redhat.com/show_bug.cgi?id=735937
 
-        # create a HTTPS connection object from a host descriptor
-        # host may be a string, or a (host, x509-dict) tuple
-        try:
-            HTTPS = http.client.HTTPSConnection
-        except AttributeError:
-            raise NotImplementedError("your version of http.client doesn't support HTTPS")
-        else:
-            chost, self._extra_headers, x509 = self.get_host_info(host)
-            # Kiwi TCMS isn't ready to use HTTP/1.1 persistent connection mechanism.
-            # So tell server current opened HTTP connection should be closed after
-            # request is handled. And there will be a new connection for next request.
-            self._extra_headers.append(('Connection', 'close'))
-            self._connection = host, HTTPS(chost, None, **(x509 or {}))
-            return self._connection[1]
+        Return an individual HTTPS connection for each request.
+        """
+        chost, self._extra_headers, x509 = self.get_host_info(host)
+        # Kiwi TCMS isn't ready to use HTTP/1.1 persistent connection mechanism.
+        # So tell server current opened HTTP connection should be closed after
+        # request is handled. And there will be a new connection for next request.
+        self._extra_headers.append(('Connection', 'close'))
+        self._connection = host, HTTPSConnection(chost, None, **(x509 or {}))
+        return self._connection[1]
 
 
 class TCMSXmlrpc:
