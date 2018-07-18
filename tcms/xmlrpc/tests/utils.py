@@ -42,8 +42,3 @@ password = %s
 
         # this is the XML-RPC ServerProxy with cookies support
         self.rpc_client = tcms_api.TCMS()
-
-    def setUp(self):
-        # make sure we're logged-in before each test
-        super(XmlrpcAPIBaseTest, self).setUp()
-        self.rpc_client.exec.Auth.login(self.api_user.username, 'api-testing')
