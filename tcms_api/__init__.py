@@ -52,7 +52,7 @@ from configparser import ConfigParser
 from .xmlrpc import TCMSXmlrpc, TCMSKerbXmlrpc
 
 
-class TCMS(object):
+class TCMS:  # pylint: disable=too-few-public-methods
     """
     Takes care of initiating the connection to the TCMS server and
     parses user configuration.

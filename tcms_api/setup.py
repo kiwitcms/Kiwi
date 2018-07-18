@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+# pylint: disable=missing-docstring
 from setuptools import setup
 
-# Prepare short and long description
-description = 'Python API for the Kiwi TCMS test case management system'
+
 with open("README.rst") as readme:
-    long_description = readme.read()
+    LONG_DESCRIPTION = readme.read()
 
 
 setup(name='tcms-api',
       version='4.2',
       packages=['tcms_api'],
       package_dir={'tcms_api': '.'},
-      description=description,
-      long_description=long_description,
+      description='Python API for the Kiwi TCMS test case management system',
+      long_description=LONG_DESCRIPTION,
       author='Petr Šplíchal',
       author_email='psplicha@redhat.com',
       maintainer='Kiwi TCMS',

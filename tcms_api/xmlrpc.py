@@ -9,18 +9,18 @@ and https://fedorahosted.org/python-bugzilla/browser/bugzilla/base.py
 History:
 2011-12-31 bugfix https://bugzilla.redhat.com/show_bug.cgi?id=735937
 """
+# pylint: disable=too-few-public-methods
 
 import errno
 import http.client
-import xmlrpc.client
-from datetime import datetime, time
 from http.cookiejar import CookieJar
+import xmlrpc.client
 
 VERBOSE = 0
 
 
 class CookieTransport(xmlrpc.client.Transport):
-    '''A subclass of xmlrpc.client.Transport that supports cookies.'''
+    """A subclass of xmlrpc.client.Transport that supports cookies."""
     cookiejar = None
     scheme = 'http'
 
@@ -41,9 +41,8 @@ class CookieTransport(xmlrpc.client.Transport):
             except http.client.RemoteDisconnected:
                 if i:
                     raise
-            except OSError as e:
-                if i or e.errno not in (errno.ECONNRESET, errno.ECONNABORTED,
-                                        errno.EPIPE):
+            except OSError as error:
+                if i or error.errno not in (errno.ECONNRESET, errno.ECONNABORTED, errno.EPIPE):
                     raise
 
     def send_headers(self, connection, headers):
@@ -59,42 +58,40 @@ class CookieTransport(xmlrpc.client.Transport):
 
 
 class SafeCookieTransport(xmlrpc.client.SafeTransport, CookieTransport):
-    '''SafeTransport subclass that supports cookies.'''
+    """SafeTransport subclass that supports cookies."""
     scheme = 'https'
 
 
-# Stolen from FreeIPA source freeipa-1.2.1/ipa-python/krbtransport.py
+# Taken from FreeIPA source freeipa-1.2.1/ipa-python/krbtransport.py
 class KerbTransport(SafeCookieTransport):
     """Handles Kerberos Negotiation authentication to an XML-RPC server."""
 
     def get_host_info(self, host):
         import kerberos
 
-        host, extra_headers, x509 = xmlrpc.client.Transport.get_host_info(
-            self, host)
+        host, extra_headers, x509 = xmlrpc.client.Transport.get_host_info(self, host)
 
         # Set the remote host principal
-        h = host
-        hostinfo = h.split(':')
+        hostinfo = host.split(':')
         service = "HTTP@" + hostinfo[0]
 
-        rc, vc = kerberos.authGSSClientInit(service)
-        kerberos.authGSSClientStep(vc, "")
+        _result, context = kerberos.authGSSClientInit(service)
+        kerberos.authGSSClientStep(context, "")
 
         extra_headers = [
             ("Authorization", "negotiate %s" %
-             kerberos.authGSSClientResponse(vc))
+             kerberos.authGSSClientResponse(context))
         ]
 
         return host, extra_headers, x509
 
     def make_connection(self, host):
-        '''
+        """
         For fixing bug #735937.
         When running on Python 2.7, make_connection will do the same behavior as that of
         Python 2.6's xmlrpc.client. That is in Python 2.6, make_connection will return an
         individual HTTPS connection for each request
-        '''
+        """
 
         # create a HTTPS connection object from a host descriptor
         # host may be a string, or a (host, x509-dict) tuple
@@ -112,11 +109,11 @@ class KerbTransport(SafeCookieTransport):
             return self._connection[1]
 
 
-class TCMSXmlrpc(object):
+class TCMSXmlrpc:
     """
     TCMS XML-RPC client for server deployed without BASIC authentication.
     """
-    def __init__(self, username, password, url, use_mod_auth_kerb=False):
+    def __init__(self, username, password, url):
         if url.startswith('https://'):
             self._transport = SafeCookieTransport()
         elif url.startswith('http://'):
@@ -135,147 +132,6 @@ class TCMSXmlrpc(object):
         # Login, get a cookie into our cookie jar (login_dict):
         self.server.Auth.login(username, password)
 
-        # Record the user ID in case the script wants this
-        # self.user_id = login_dict['id']
-        # print('Logged in with cookie for user %i' % self.userId)
-        # print("COOKIES:", self._transport.cookiejar._cookies)
-
-    def _boolean_option(self, option, value):
-        """Returns the boolean option when value is True or False, else ''
-
-        Example: _boolean_option('isactive', True) returns " 'isactive': 1,"
-        """
-        if value or str(value) == 'False':
-            if not isinstance(value, bool):
-                raise Exception(
-                    "The value for the option '%s' is not boolean." % option)
-            elif value is False:
-                return "\'%s\':0, " % option
-            elif value is True:
-                return "\'%s\':1, " % option
-        return ''
-
-    def _datetime_option(self, option, value):
-        """Returns the string 'option': 'value' where value is a date object formatted
-        in string as yyyy-mm-dd hh:mm:ss. If value is None, then we return ''.
-
-        Example: self._time_option('datetime', datetime(2007,12,05,13,01,03))
-        returns "'datetime': '2007-12-05 13:01:03'"
-        """
-        if value:
-            if not isinstance(value, datetime):
-                raise Exception(
-                    "The option '%s' is not a valid datetime object." % option)
-            return "\'%s\':\'%s\', " % (option, value.strftime("%Y-%m-%d %H:%M:%S"))
-        return ''
-
-    def _list_dictionary_option(self, option, value):
-        """Verifies that the value passed for the option is in the format of a list
-        of dictionaries.
-
-        Example: _list_dictionary_option('plan':[{'key1': 'value1', 'key2': 'value2'}])
-        verifies that value is a list, then verifies that the content of value are dictionaries.
-        """
-        if value:  # Verify that value is a type of list
-            if not isinstance(value, list):
-                raise Exception(
-                    "The option '%s' is not a valid list of dictionaries." % option)
-            else:
-                # Verify that the content of value are dictionaries,
-                for item in value:
-                    if not isinstance(item, dict):
-                        raise Exception(
-                            "The option '%s' is not a valid list of dictionaries." % option)
-            return "\'%s\': %s" % (option, value)
-        return ''
-
-    _list_dict_op = _list_dictionary_option
-
-    def _number_option(self, option, value):
-        """Returns the string " 'option': value," if value is not None, else ''
-
-        Example: self._number_option("isactive", 1) returns " 'isactive': 1,"
-        """
-        if value:
-            if not isinstance(value, int):
-                raise Exception(
-                    "The option '%s' is not a valid integer." % option)
-            return "\'%s\':%d, " % (option, value)
-        return ''
-
-    def _number_no_option(self, number):
-        """Returns the number in number. Just a totally useless wrapper :-)
-
-        Example: self._number_no_option(1) returns 1
-        """
-        if not isinstance(number, int):
-            raise Exception("The 'number' parameter is not an integer.")
-        return str(number)
-
-    _number_noop = _number_no_option
-
-    def _options_dict(self, *args):
-        """Creates a wrapper around all the options into a dictionary format.
-
-        Example, if args is ['isactive': 1,", 'description', 'Voyage project'], then
-        the return will be {'isactive': 1,", 'description', 'Voyage project'}
-        """
-        return "{%s}" % ''.join(args)
-
-    def _options_non_empty_dict(self, *args):
-        """Creates a wrapper around all the options into a dictionary format and
-        verifies that the dictionary is not empty.
-
-        Example, if args is ['isactive': 1,", 'description', 'Voyage project'], then
-        the return will be {'isactive': 1,", 'description', 'Voyage project'}.
-        If args is empty, then we raise an error.
-        """
-        if not args:
-            raise Exception("At least one variable must be set.")
-        return "{%s}" % ''.join(args)
-
-    _options_ne_dict = _options_non_empty_dict
-
-    def _string_option(self, option, value):
-        """Returns the string 'option': 'value'. If value is None, then ''
-
-        Example: self._string_option('description', 'Voyage project') returns
-        "'description' : 'Voyage project',"
-        """
-        if value:
-            if not isinstance(value, str):
-                raise Exception(
-                    "The option '%s' is not a valid string." % option)
-            return "\'%s\':\'%s\', " % (option, value)
-        return ''
-
-    def _string_no_option(self, option):
-        """Returns the string 'option'.
-
-        Example: self._string_no_option("description") returns "'description'"
-        """
-        if option:
-            if not isinstance(option, str):
-                raise Exception(
-                    "The option '%s' is not a valid string." % option)
-            return "\'%s\'" % option
-        return ''
-
-    _string_noop = _string_no_option
-
-    def _time_option(self, option, value):
-        """Returns the string 'option': 'value' where value is a time object formatted in string
-        as hh:mm:ss. If value is None, then we return ''.
-
-        Example: self._time_option('time', time(12,00,03)) returns "'time': '12:00:03'"
-        """
-        if value:
-            if not isinstance(value, time):
-                raise Exception(
-                    "The option '%s' is not a valid time object." % option)
-            return "\'%s\':\'%s\', " % (option, value.strftime("%H:%M:%S"))
-        return ''
-
 
 class TCMSKerbXmlrpc(TCMSXmlrpc):
     """
@@ -283,7 +139,7 @@ class TCMSKerbXmlrpc(TCMSXmlrpc):
                     for server deployed with mod_auth_kerb
     """
 
-    def __init__(self, url):
+    def __init__(self, url):  # pylint: disable=super-init-not-called
         if url.startswith('https://'):
             self._transport = KerbTransport()
         elif url.startswith('http://'):
