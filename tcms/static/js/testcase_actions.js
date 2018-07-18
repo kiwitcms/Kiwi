@@ -7,8 +7,6 @@ Nitrate.TestCases.Edit = {};
 Nitrate.TestCases.Clone = {};
 
 (function() {
-  'use restrict';
-
   var TestCases = window.Nitrate.TestCases || {};
 
   TestCases.CasesSelection = function(options) {
