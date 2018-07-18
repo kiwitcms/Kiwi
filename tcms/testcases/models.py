@@ -289,20 +289,6 @@ class TestCase(TCMSActionModel):
 
         return cls.list(query)
 
-    @classmethod
-    def mail_scene(cls, objects, field=None):
-        tcs = objects.select_related()
-        scence_templates = {
-            'reviewer': {
-                'template_name': 'mail/change_case_reviewer.txt',
-                'subject': 'You have been speicific to be the reviewer of cases',
-                'recipients': list(set(tcs.values_list('reviewer__email', flat=True))),
-                'context': {'test_cases': tcs},
-            }
-        }
-
-        return scence_templates.get(field)
-
     def add_bug(self, bug_id, bug_system_id, summary=None, description=None,
                 case_run=None, bz_external_track=False):
         bug, created = self.case_bug.get_or_create(

@@ -432,23 +432,6 @@ class TestCaseRun(TCMSActionModel):
         serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
-    @classmethod
-    def mail_scene(cls, objects, field=None):
-        test_run = objects[0].run
-        # scence_templates format:
-        # template, subject, context
-        test_case_runs = objects.select_related()
-        scence_templates = {
-            'assignee': {
-                'template_name': 'mail/change_case_run_assignee.txt',
-                'subject': 'Assignee of run %s has been changed' % test_run.run_id,
-                'recipients': test_run.get_notify_addrs(),
-                'context': {'test_run': test_run, 'test_case_runs': test_case_runs},
-            }
-        }
-
-        return scence_templates.get(field)
-
     def add_bug(self, bug_id, bug_system_id,
                 summary=None, description=None, bz_external_track=False):
         return self.case.add_bug(
