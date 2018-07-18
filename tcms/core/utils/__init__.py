@@ -43,18 +43,16 @@ def calc_percent(dividend, divisor):
     return float(dividend) / divisor * 100
 
 
-def request_host_link(request=None, domain_name=None):
-    if request is None and settings.DEBUG is False:
-        # default to https if in production and we don't know
-        # what else to do
-        protocol = 'https://'
-    elif request and request.is_secure():
-        protocol = 'https://'
-    else:
-        protocol = 'http://'
+def request_host_link(request, domain_name=None):
+    protocol = 'http://'
 
-    if not domain_name:
-        domain_name = request.get_host()
+    if request:
+        if not domain_name:
+            domain_name = request.get_host()
+        # default to https if in production and we don't know
+        protocol = 'https://'
+        if not request.is_secure():
+            protocol = 'http://'
 
     return protocol + domain_name
 
