@@ -58,7 +58,7 @@ check: flake8 test
 pylint:
 	pylint -d missing-docstring *.py kiwi_lint/
 	PYTHONPATH=. pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring tcms/
-	PYTHONPATH=. pylint --load-plugins=kiwi_lint tcms_api/
+	PYTHONPATH=. pylint --load-plugins=kiwi_lint --extension-pkg-whitelist=kerberos tcms_api/
 
 .PHONY: bandit
 bandit:
