@@ -38,7 +38,7 @@ urlpatterns = [
 
     # Index and static zone
     url(r'^$', core_views.index, name='core-views-index'),
-    url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL), name='xml-rpc'),
+    url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
     url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
 
     # Ajax call responder
