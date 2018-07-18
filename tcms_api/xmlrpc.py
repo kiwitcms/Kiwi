@@ -13,12 +13,10 @@ History:
 import errno
 import http.client
 import xmlrpc.client
-from configparser import ConfigParser
 from datetime import datetime, time
 from http.cookiejar import CookieJar
 
 VERBOSE = 0
-DEBUG = 0
 
 
 class CookieTransport(xmlrpc.client.Transport):
@@ -103,9 +101,7 @@ class KerbTransport(SafeCookieTransport):
         try:
             HTTPS = http.client.HTTPSConnection
         except AttributeError:
-            raise NotImplementedError(
-                "your version of http.client doesn't support HTTPS"
-            )
+            raise NotImplementedError("your version of http.client doesn't support HTTPS")
         else:
             chost, self._extra_headers, x509 = self.get_host_info(host)
             # Kiwi TCMS isn't ready to use HTTP/1.1 persistent connection mechanism.
@@ -118,22 +114,8 @@ class KerbTransport(SafeCookieTransport):
 
 class TCMSXmlrpc(object):
     """
-    TCMSXmlrpc - TCMS XML-RPC client
-                    for server deployed without BASIC authentication
+    TCMS XML-RPC client for server deployed without BASIC authentication.
     """
-
-    @classmethod
-    def from_config(cls, filename):
-        cp = ConfigParser()
-        cp.read([filename])
-        kwargs = dict(
-            [(key, cp.get('tcms', key)) for key in [
-                'username', 'password', 'url'
-            ]]
-        )
-
-        return TCMSXmlrpc(**kwargs)
-
     def __init__(self, username, password, url, use_mod_auth_kerb=False):
         if url.startswith('https://'):
             self._transport = SafeCookieTransport()

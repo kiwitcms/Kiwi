@@ -26,26 +26,29 @@ Python API for the Kiwi TCMS test case management system
 
 This module provides a low-level(dictionary based) Python interface.
 
-Synopsis:
+Minimal config file ``~/.tcms.conf``::
 
-    Minimal config file ~/.tcms.conf::
+    [tcms]
+    url = https://tcms.server/xml-rpc/
+    username = your-username
+    password = your-password
 
-        [tcms]
-        url = https://tcms.server/xml-rpc/
-        username = your-username
-        password = your-password
+For Kerberos specify ``use_mod_kerb = True`` key!
+It's also possible to provide system-wide config in ``/etc/tcms.conf``.
 
+Connect to backend::
 
-    Connect to backend::
+    from tcms_api import TCMS
 
-        from tcms_api import TCMS
+    rpc_client = TCMS()
 
-        rpc_client = TCMS()
+    for test_case in rpc_client.exec.TestCase.filter({'pk': 46490}):
+        print(test_case)
 
-        for test_case in rpc_client.exec.TestCase.filter({'pk': 46490}):
-            print(test_case)
 """
-from .config import Config
+import os
+from configparser import ConfigParser
+
 from .xmlrpc import TCMSXmlrpc, TCMSKerbXmlrpc
 
 
@@ -56,18 +59,40 @@ class TCMS(object):
     """
 
     _connection = None
+    _path = os.path.expanduser("~/.tcms.conf")
 
     def __init__(self):
         # Connect to the server unless already connected
-        if TCMS._connection is None:
-            if hasattr(Config().tcms, 'use_mod_kerb') and Config().tcms.use_mod_kerb:
-                # use Kerberos
-                TCMS._connection = TCMSKerbXmlrpc(Config().tcms.url).server
-            else:
-                # use plain authentication otherwise
-                TCMS._connection = TCMSXmlrpc(Config().tcms.username,
-                                              Config().tcms.password,
-                                              Config().tcms.url).server
+        if TCMS._connection is not None:
+            return
+
+        # Try system settings when the config does not exist in user directory
+        if not os.path.exists(self._path):
+            self._path = "/etc/tcms.conf"
+        if not os.path.exists(self._path):
+            raise Exception("Config file '%s' not found" % self._path)
+
+        config = ConfigParser()
+        config.read(self._path)
+
+        # Make sure the server URL is set
+        try:
+            config['tcms']['url'] is not None
+        except (KeyError, AttributeError):
+            raise Exception("No url found in %s" % self._path)
+        self._parsed = True
+
+        if config['tcms'].get('use_mod_kerb', False):
+            # use Kerberos
+            TCMS._connection = TCMSKerbXmlrpc(config['tcms']['url']).server
+
+        # use plain authentication otherwise
+        try:
+            TCMS._connection = TCMSXmlrpc(config['tcms']['username'],
+                                          config['tcms']['password'],
+                                          config['tcms']['url']).server
+        except KeyError:
+            raise Exception("username/password are required in %s" % self._path)
 
     @property
     def exec(self):
