@@ -1458,7 +1458,7 @@ function constructPlanDetailsCasesZoneCallback(options) {
     var table = jQ(container).children()[2];
 
     // Presume the first form element is the form
-    if (!form.tagName === 'FORM') {
+    if (form.tagName !== 'FORM') {
       window.alert('form element of container is not a form');
       return false;
     }
