@@ -27,9 +27,7 @@ class XmlrpcAPIBaseTest(test.LiveServerTestCase):
         # reset connection to server b/c the address changes for
         # every test and the client caches this as a class attribute
         tcms_api.TCMS._connection = None
-        # also the config is a singleton so reset that too
-        # to force config reload
-        tcms_api.Config._instance = None
+        tcms_api.Config._parsed = False
 
         # WARNING: for now we override the config file
         # until we can pass the testing configuration

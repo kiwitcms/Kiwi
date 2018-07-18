@@ -45,11 +45,8 @@ Synopsis:
         for test_case in rpc_client.exec.TestCase.filter({'pk': 46490}):
             print(test_case)
 """
-import tcms_api.xmlrpc as xmlrpc
-from tcms_api.config import (
-    Config,
-    Logging, get_log_level, set_log_level, log,
-    LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL)  # flake8: noqa
+from .config import Config
+from .xmlrpc import TCMSXmlrpc, TCMSKerbXmlrpc
 
 
 class TCMS(object):
@@ -63,17 +60,14 @@ class TCMS(object):
     def __init__(self):
         # Connect to the server unless already connected
         if TCMS._connection is None:
-            log.debug("Contacting server {0}".format(Config().tcms.url))
             if hasattr(Config().tcms, 'use_mod_kerb') and Config().tcms.use_mod_kerb:
                 # use Kerberos
-                TCMS._connection = xmlrpc.TCMSKerbXmlrpc(
-                    Config().tcms.url).server
+                TCMS._connection = TCMSKerbXmlrpc(Config().tcms.url).server
             else:
                 # use plain authentication otherwise
-                TCMS._connection = xmlrpc.TCMSXmlrpc(
-                    Config().tcms.username,
-                    Config().tcms.password,
-                    Config().tcms.url).server
+                TCMS._connection = TCMSXmlrpc(Config().tcms.username,
+                                              Config().tcms.password,
+                                              Config().tcms.url).server
 
     @property
     def exec(self):
