@@ -33,6 +33,8 @@ def plan_by_id_or_name(value):
 
 
 class TestRun(TCMSActionModel):
+    history = KiwiHistoricalRecords()
+
     run_id = models.AutoField(primary_key=True)
 
     product_version = models.ForeignKey('management.Version', related_name='version_run',
@@ -143,7 +145,11 @@ class TestRun(TCMSActionModel):
         for tcr in self.case_run.select_related('assignee').all():
             if tcr.assignee_id:
                 send_to.append(tcr.assignee.email)
-        return list(set(send_to))
+
+        send_to = set(send_to)
+        # don't email author of last change
+        send_to.discard(getattr(self.history.latest().history_user, 'email', ''))
+        return list(send_to)
 
     # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, case_run_status=1, assignee=None,
@@ -377,6 +383,7 @@ vinaigrette.register(TestCaseRunStatus, ['name'])
 
 
 class TestCaseRunManager(models.Manager):
+    # todo: delete this
     def get_automated_case_count(self):
         return self.filter(case__is_automated=1).count()
 
