@@ -36,7 +36,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
         self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
 
     def test_add_tag(self):
-        self.rpc_client.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
+        self.rpc_client.exec.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
         tag_exists = TestRun.objects.filter(pk=self.test_runs[0].pk, tag__pk=self.tag0.pk).exists()
         self.assertTrue(tag_exists)
 
@@ -64,6 +64,6 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.test_runs[1].add_tag(self.tag1)
 
     def test_remove_tag(self):
-        self.rpc_client.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
+        self.rpc_client.exec.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
         tag_exists = TestRun.objects.filter(pk=self.test_runs[0].pk, tag__pk=self.tag0.pk).exists()
         self.assertFalse(tag_exists)

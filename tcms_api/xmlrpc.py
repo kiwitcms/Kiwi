@@ -8,29 +8,6 @@ and https://fedorahosted.org/python-bugzilla/browser/bugzilla/base.py
 
 History:
 2011-12-31 bugfix https://bugzilla.redhat.com/show_bug.cgi?id=735937
-
-Example on how to access this library,
-
-from tcms_api import TCMSXmlrpc
-
-n = TCMSXmlrpc.from_config('config.cfg')
-n.testplan_get(10)
-
-where config.cfg looks like:
-[tcms]
-username = myusername
-password = foobar
-url = https://tcms.example.com/xml-rpc/
-use_mod_kerb = False
-
-Or, more directly:
-
-t = TCMSXmlrpc(
-    'myusername',
-    'foobar',
-    'https://tcms.example.com/xml-rpc/',
-)
-t.testplan_get(10)
 """
 
 import errno
@@ -44,27 +21,13 @@ VERBOSE = 0
 DEBUG = 0
 
 
-class CookieResponse:
-    '''Fake HTTPResponse object that we can fill with headers we got elsewhere.
-    We can then pass it to CookieJar.extract_cookies() to make it pull out the
-    cookies from the set of headers we have.'''
-
-    def __init__(self, headers):
-        self.headers = headers
-        # log.debug("CookieResponse() headers = %s" % headers)
-
-    def info(self):
-        return self.headers
-
-
 class CookieTransport(xmlrpc.client.Transport):
     '''A subclass of xmlrpc.client.Transport that supports cookies.'''
     cookiejar = None
     scheme = 'http'
 
     def __init__(self, use_datetime=False, use_builtin_types=False):
-        super(CookieTransport, self).__init__(use_datetime=use_datetime,
-                                              use_builtin_types=use_builtin_types)
+        super().__init__(use_datetime=use_datetime, use_builtin_types=use_builtin_types)
         self._cookies = []
 
     def request(self, host, handler, request_body, verbose=False):
@@ -88,13 +51,13 @@ class CookieTransport(xmlrpc.client.Transport):
     def send_headers(self, connection, headers):
         if self._cookies:
             connection.putheader("Cookie", "; ".join(self._cookies))
-        super(CookieTransport, self).send_headers(connection, headers)
+        super().send_headers(connection, headers)
 
     def parse_response(self, response):
         for header in response.msg.get_all("Set-Cookie", []):
             cookie = header.split(";", 1)[0]
             self._cookies.append(cookie)
-        return super(CookieTransport, self).parse_response(response)
+        return super().parse_response(response)
 
 
 class SafeCookieTransport(xmlrpc.client.SafeTransport, CookieTransport):
@@ -153,21 +116,6 @@ class KerbTransport(SafeCookieTransport):
             return self._connection[1]
 
 
-class TCMSError(Exception):
-    pass
-
-
-class TCMSXmlrpcError(Exception):
-    def __init__(self, verb, params, wrappedError):
-        self.verb = verb
-        self.params = params
-        self.wrappedError = wrappedError
-
-    def __str__(self):
-        return "Error while executing cmd '%s' --> %s" \
-               % (self.verb + "(" + self.params + ")", self.wrappedError)
-
-
 class TCMSXmlrpc(object):
     """
     TCMSXmlrpc - TCMS XML-RPC client
@@ -192,10 +140,9 @@ class TCMSXmlrpc(object):
         elif url.startswith('http://'):
             self._transport = CookieTransport()
         else:
-            raise TCMSError("Unrecognized URL scheme")
+            raise Exception("Unrecognized URL scheme")
 
         self._transport.cookiejar = CookieJar()
-        # print("COOKIES:", self._transport.cookiejar._cookies)
         self.server = xmlrpc.client.ServerProxy(
             url,
             transport=self._transport,
@@ -218,7 +165,7 @@ class TCMSXmlrpc(object):
         """
         if value or str(value) == 'False':
             if not isinstance(value, bool):
-                raise TCMSError(
+                raise Exception(
                     "The value for the option '%s' is not boolean." % option)
             elif value is False:
                 return "\'%s\':0, " % option
@@ -235,7 +182,7 @@ class TCMSXmlrpc(object):
         """
         if value:
             if not isinstance(value, datetime):
-                raise TCMSError(
+                raise Exception(
                     "The option '%s' is not a valid datetime object." % option)
             return "\'%s\':\'%s\', " % (option, value.strftime("%Y-%m-%d %H:%M:%S"))
         return ''
@@ -249,13 +196,13 @@ class TCMSXmlrpc(object):
         """
         if value:  # Verify that value is a type of list
             if not isinstance(value, list):
-                raise TCMSError(
+                raise Exception(
                     "The option '%s' is not a valid list of dictionaries." % option)
             else:
                 # Verify that the content of value are dictionaries,
                 for item in value:
                     if not isinstance(item, dict):
-                        raise TCMSError(
+                        raise Exception(
                             "The option '%s' is not a valid list of dictionaries." % option)
             return "\'%s\': %s" % (option, value)
         return ''
@@ -269,7 +216,7 @@ class TCMSXmlrpc(object):
         """
         if value:
             if not isinstance(value, int):
-                raise TCMSError(
+                raise Exception(
                     "The option '%s' is not a valid integer." % option)
             return "\'%s\':%d, " % (option, value)
         return ''
@@ -280,7 +227,7 @@ class TCMSXmlrpc(object):
         Example: self._number_no_option(1) returns 1
         """
         if not isinstance(number, int):
-            raise TCMSError("The 'number' parameter is not an integer.")
+            raise Exception("The 'number' parameter is not an integer.")
         return str(number)
 
     _number_noop = _number_no_option
@@ -302,7 +249,7 @@ class TCMSXmlrpc(object):
         If args is empty, then we raise an error.
         """
         if not args:
-            raise TCMSError("At least one variable must be set.")
+            raise Exception("At least one variable must be set.")
         return "{%s}" % ''.join(args)
 
     _options_ne_dict = _options_non_empty_dict
@@ -315,7 +262,7 @@ class TCMSXmlrpc(object):
         """
         if value:
             if not isinstance(value, str):
-                raise TCMSError(
+                raise Exception(
                     "The option '%s' is not a valid string." % option)
             return "\'%s\':\'%s\', " % (option, value)
         return ''
@@ -327,7 +274,7 @@ class TCMSXmlrpc(object):
         """
         if option:
             if not isinstance(option, str):
-                raise TCMSError(
+                raise Exception(
                     "The option '%s' is not a valid string." % option)
             return "\'%s\'" % option
         return ''
@@ -342,7 +289,7 @@ class TCMSXmlrpc(object):
         """
         if value:
             if not isinstance(value, time):
-                raise TCMSError(
+                raise Exception(
                     "The option '%s' is not a valid time object." % option)
             return "\'%s\':\'%s\', " % (option, value.strftime("%H:%M:%S"))
         return ''
@@ -358,13 +305,12 @@ class TCMSKerbXmlrpc(TCMSXmlrpc):
         if url.startswith('https://'):
             self._transport = KerbTransport()
         elif url.startswith('http://'):
-            raise TCMSError("Encrypted https communication required for "
+            raise Exception("Encrypted https communication required for "
                             "Kerberos authentication.\nURL provided: {0}".format(url))
         else:
-            raise TCMSError("Unrecognized URL scheme: {0}".format(url))
+            raise Exception("Unrecognized URL scheme: {0}".format(url))
 
         self._transport.cookiejar = CookieJar()
-        # print("COOKIES:", self._transport.cookiejar._cookies)
         self.server = xmlrpc.client.ServerProxy(
             url,
             transport=self._transport,

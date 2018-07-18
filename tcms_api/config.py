@@ -74,8 +74,6 @@ from configparser import ConfigParser
 import logging
 import os
 
-from tcms_api.xmlrpc import TCMSError
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Constants
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,7 +205,7 @@ class Config(object):
             self.path = "/etc/tcms.conf"
         if not os.path.exists(self.path):
             log.error(self.example)
-            raise TCMSError("No config file found")
+            raise Exception("No config file found")
         log.debug("Parsing config file {0}".format(self.path))
 
         # Parse the config
@@ -230,13 +228,12 @@ class Config(object):
                     setattr(getattr(self, section), name, value)
         except ConfigParser.Error:
             log.error(self.example)
-            raise TCMSError(
-                "Cannot read the config file")
+            raise Exception("Cannot read the config file")
 
         # Make sure the server URL is set
         try:
             self.tcms.url is not None
         except AttributeError:
             log.error(self.example)
-            raise TCMSError("No url found in the config file")
+            raise Exception("No url found in the config file")
         self._parsed = True

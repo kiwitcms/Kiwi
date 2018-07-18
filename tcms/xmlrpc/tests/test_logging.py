@@ -24,7 +24,7 @@ class TestXMLRPCLogging(XmlrpcAPIBaseTest):
     def test_logging_with_authenticated_user(self):
         log_count = XmlRpcLog.objects.filter(user=self.api_user, method='Env.Group.filter').count()
 
-        self.rpc_client.Env.Group.filter({})
+        self.rpc_client.exec.Env.Group.filter({})
         new_count = XmlRpcLog.objects.filter(user=self.api_user, method='Env.Group.filter').count()
 
         self.assertEqual(new_count, log_count + 1)
@@ -34,8 +34,8 @@ class TestXMLRPCLogging(XmlrpcAPIBaseTest):
         log_count = XmlRpcLog.objects.filter(user__username='Anonymous',
                                              method='Env.Group.filter').count()
 
-        self.rpc_client.Auth.logout()
-        self.rpc_client.Env.Group.filter({})
+        self.rpc_client.exec.Auth.logout()
+        self.rpc_client.exec.Env.Group.filter({})
         new_count = XmlRpcLog.objects.filter(user__username='Anonymous',
                                              method='Env.Group.filter').count()
 
@@ -48,7 +48,7 @@ class TestXMLRPCLogging(XmlrpcAPIBaseTest):
         self.assertArgsNotLogged('Auth.login')
 
         # also call User.update which accepts passwords via dict
-        self.rpc_client.User.update(None, {
+        self.rpc_client.exec.User.update(None, {
             'password': 'new-password',
             'old_password': 'api-testing',
         })
