@@ -74,7 +74,7 @@ class _InfoObjects(object):
         return EnvProperty.objects.all()
 
     def env_values(self):
-        return EnvValue.objects.filter(property__id=self.request.GET.get('env_property_id'))
+        return EnvValue.objects.filter(property_id=self.request.GET.get('env_property_id'))
 
     def tags(self):
         return Tag.objects.filter(name__startswith=self.request.GET['name__startswith'])
