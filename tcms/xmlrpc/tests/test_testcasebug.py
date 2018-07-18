@@ -18,7 +18,7 @@ class BugFilter(XmlrpcAPIBaseTest):
         self.case_run = TestCaseRunFactory()
         self.bug_system_bz = BugSystem.objects.get(name='Bugzilla')
 
-        self.rpc_client.Bug.create({
+        self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
             'case_run_id': self.case_run.pk,
             'bug_id': '67890',
@@ -28,12 +28,12 @@ class BugFilter(XmlrpcAPIBaseTest):
         })
 
     def test_get_bugs_with_non_existing_caserun(self):
-        bugs = self.rpc_client.Bug.filter({'case_run': -1})
+        bugs = self.rpc_client.exec.Bug.filter({'case_run': -1})
         self.assertEqual(len(bugs), 0)
         self.assertIsInstance(bugs, list)
 
     def test_get_bugs_for_caserun(self):
-        bugs = self.rpc_client.Bug.filter({'case_run': self.case_run.pk})
+        bugs = self.rpc_client.exec.Bug.filter({'case_run': self.case_run.pk})
         self.assertIsNotNone(bugs)
         self.assertEqual(1, len(bugs))
         self.assertEqual(bugs[0]['summary'], 'Testing TCMS')
@@ -49,9 +49,9 @@ class BugCreate(XmlrpcAPIBaseTest):
         self.bug_system_bz = BugSystem.objects.get(name='Bugzilla')
 
     def test_attach_bug_with_no_perm(self):
-        self.rpc_client.Auth.logout()
+        self.rpc_client.exec.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.Bug.create({})
+            self.rpc_client.exec.Bug.create({})
 
     def test_attach_bug_with_no_required_args(self):
         values = [
@@ -68,10 +68,10 @@ class BugCreate(XmlrpcAPIBaseTest):
         ]
         for value in values:
             with self.assertRaises(XmlRPCFault):
-                self.rpc_client.Bug.create(value)
+                self.rpc_client.exec.Bug.create(value)
 
     def test_attach_bug_with_required_args(self):
-        bug = self.rpc_client.Bug.create({
+        bug = self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
             "case_run_id": self.case_run.pk,
             "bug_id": '1',
@@ -79,7 +79,7 @@ class BugCreate(XmlrpcAPIBaseTest):
         })
         self.assertIsNotNone(bug)
 
-        bug = self.rpc_client.Bug.create({
+        bug = self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
             "case_run_id": self.case_run.pk,
             "bug_id": "TCMS-123",
@@ -88,7 +88,7 @@ class BugCreate(XmlrpcAPIBaseTest):
         self.assertIsNotNone(bug)
 
     def test_attach_bug_with_all_fields(self):
-        bug = self.rpc_client.Bug.create({
+        bug = self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
             "case_run_id": self.case_run.pk,
             "bug_id": '2',
@@ -106,7 +106,7 @@ class BugCreate(XmlrpcAPIBaseTest):
             "bug_system_id": self.bug_system_bz.pk,
         }
         with self.assertRaises(XmlRPCFault):
-            self.rpc_client.Bug.create(value)
+            self.rpc_client.exec.Bug.create(value)
 
     def test_attach_bug_with_non_existing_bug_system(self):
         value = {
@@ -115,10 +115,10 @@ class BugCreate(XmlrpcAPIBaseTest):
             "bug_system_id": -1,
         }
         with self.assertRaises(XmlRPCFault):
-            self.rpc_client.Bug.create(value)
+            self.rpc_client.exec.Bug.create(value)
 
     def test_attach_bug_with_chinese(self):
-        bug = self.rpc_client.Bug.create({
+        bug = self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
             "case_run_id": self.case_run.pk,
             "bug_id": '12',
@@ -142,7 +142,7 @@ class BugDelete(XmlrpcAPIBaseTest):
         super(BugDelete, self).setUp()
 
         self.bug_id = '67890'
-        self.rpc_client.Bug.create({
+        self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
             'case_run_id': self.case_run.pk,
             'bug_id': self.bug_id,
@@ -152,7 +152,7 @@ class BugDelete(XmlrpcAPIBaseTest):
         })
 
         self.jira_key = 'AWSDF-112'
-        self.rpc_client.Bug.create({
+        self.rpc_client.exec.Bug.create({
             'case_id': self.case_run.case.pk,
             'case_run_id': self.case_run.pk,
             'bug_id': self.jira_key,
@@ -167,7 +167,7 @@ class BugDelete(XmlrpcAPIBaseTest):
 
     def test_detach_bug_with_non_exist_id(self):
         original_links_count = self.case_run.case.case_bug.count()
-        self.rpc_client.Bug.remove({
+        self.rpc_client.exec.Bug.remove({
             'case_run_id': 9999999,
             'bug_id': 123456,
         })
@@ -176,23 +176,23 @@ class BugDelete(XmlrpcAPIBaseTest):
     def test_detach_bug_with_non_exist_bug(self):
         original_links_count = self.case_run.case.case_bug.count()
         nonexisting_bug = '{0}111'.format(self.bug_id)
-        self.rpc_client.Bug.remove({
+        self.rpc_client.exec.Bug.remove({
             'case_run_id': self.case_run.pk,
             'bug_id': nonexisting_bug,
         })
         self.assertEqual(original_links_count, self.case_run.case.case_bug.count())
 
     def test_detach_bug(self):
-        self.rpc_client.Bug.remove({
+        self.rpc_client.exec.Bug.remove({
             'case_run_id': self.case_run.pk,
             'bug_id': self.bug_id,
         })
         self.assertFalse(self.case_run.case.case_bug.filter(bug_id=self.bug_id).exists())
 
     def test_detach_bug_with_no_perm(self):
-        self.rpc_client.Auth.logout()
+        self.rpc_client.exec.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.Bug.remove({
+            self.rpc_client.exec.Bug.remove({
                 'case_run_id': self.case_run.pk,
                 'bug_id': self.bug_id,
             })

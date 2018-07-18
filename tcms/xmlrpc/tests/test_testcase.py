@@ -22,12 +22,12 @@ class TestNotificationRemoveCC(XmlrpcAPIBaseTest):
 
     def tearDown(self):
         super(TestNotificationRemoveCC, self).tearDown()
-        self.rpc_client.Auth.logout()
+        self.rpc_client.exec.Auth.logout()
 
     def test_remove_existing_cc(self):
         # initially testcase has the default CC listed
         # and we issue XMLRPC request to remove the cc
-        self.rpc_client.TestCase.remove_notification_cc(self.testcase.pk, [self.default_cc])
+        self.rpc_client.exec.TestCase.remove_notification_cc(self.testcase.pk, [self.default_cc])
 
         # now verify that the CC email has been removed
         self.testcase.emailing.refresh_from_db()
@@ -54,7 +54,7 @@ class TestFilterCases(XmlrpcAPIBaseTest):
                       for i in range(self.cases_count)]
 
     def test_filter_by_product_id(self):
-        cases = self.rpc_client.TestCase.filter({'category__product': self.product.pk})
+        cases = self.rpc_client.exec.TestCase.filter({'category__product': self.product.pk})
         self.assertIsNotNone(cases)
         self.assertEqual(len(cases), self.cases_count)
 
@@ -75,7 +75,7 @@ class TestUpdate(XmlrpcAPIBaseTest):
         self.assertNotEqual(self.api_user, case_text.author)
 
         # update the test case
-        updated = self.rpc_client.TestCase.update(  # pylint: disable=objects-update-used
+        updated = self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
                 'summary': 'This was updated',

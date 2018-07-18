@@ -32,37 +32,53 @@ Synopsis:
 
         [tcms]
         url = https://tcms.server/xml-rpc/
+        username = your-username
+        password = your-password
 
-    Initialize or create an object::
 
-        testcase = TestCase(pk='1234')
-        testrun = TestRun(testplan=<plan>, summary=<summary>)
+    Connect to backend::
 
-    Iterate over all container objects::
+        from tcms_api import TCMS
 
-        for case in TestRun(1234):
-            if case.automated:
-                case.status = TestCaseRunStatus("RUNNING")
-                case.update()
+        rpc_client = TCMS()
 
-    Link test case to a test plan::
-
-        testplan.testcases.add(testcase)
-        testplan.update()
-
-For details see pydoc documentation for individual modules:
-
-    tcms_api.base ......... TCMS class, search support
-    tcms_api.config ....... Configuration, logging, caching
-    tcms_api.tests ........ Test suite
-    tcms_api.xmlrpc ....... XMLRPC driver
+        for test_case in rpc_client.exec.TestCase.filter({'pk': 46490}):
+            print(test_case)
 """
-
-# TCMS objects
-from tcms_api.base import TCMS
-
-# Logging and caching configuration
+import tcms_api.xmlrpc as xmlrpc
 from tcms_api.config import (
     Config,
     Logging, get_log_level, set_log_level, log,
     LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL)  # flake8: noqa
+
+
+class TCMS(object):
+    """
+    Takes care of initiating the connection to the TCMS server and
+    parses user configuration.
+    """
+
+    _connection = None
+
+    def __init__(self):
+        # Connect to the server unless already connected
+        if TCMS._connection is None:
+            log.debug("Contacting server {0}".format(Config().tcms.url))
+            if hasattr(Config().tcms, 'use_mod_kerb') and Config().tcms.use_mod_kerb:
+                # use Kerberos
+                TCMS._connection = xmlrpc.TCMSKerbXmlrpc(
+                    Config().tcms.url).server
+            else:
+                # use plain authentication otherwise
+                TCMS._connection = xmlrpc.TCMSXmlrpc(
+                    Config().tcms.username,
+                    Config().tcms.password,
+                    Config().tcms.url).server
+
+    @property
+    def exec(self):
+        """
+        Property that returns the underlying XML-RPC connection on which
+        you can call various server-side functions.
+        """
+        return TCMS._connection
