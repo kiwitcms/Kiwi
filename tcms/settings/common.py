@@ -279,8 +279,6 @@ MODERNRPC_METHODS_MODULES = [
     'tcms.xmlrpc.api.user',
     'tcms.xmlrpc.api.version',
 ]
-# RPC handlers which can log RPC calls to the database
-MODERNRPC_HANDLERS = ['tcms.xmlrpc.handlers.XMLRPCHandler', 'tcms.xmlrpc.handlers.JSONRPCHandler']
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 

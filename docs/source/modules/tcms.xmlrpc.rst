@@ -18,11 +18,8 @@ Submodules
 
 .. toctree::
 
-   tcms.xmlrpc.admin
    tcms.xmlrpc.decorators
    tcms.xmlrpc.forms
-   tcms.xmlrpc.handlers
-   tcms.xmlrpc.models
    tcms.xmlrpc.serializer
    tcms.xmlrpc.utils
 
