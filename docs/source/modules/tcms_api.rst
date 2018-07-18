@@ -11,6 +11,5 @@ Submodules
 
 .. toctree::
 
-   tcms_api.config
    tcms_api.xmlrpc
 
