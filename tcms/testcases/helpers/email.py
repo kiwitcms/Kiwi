@@ -19,7 +19,8 @@ def email_case_deletion(case):
     cc = case.emailing.get_cc_list()
     if not recipients:
         return
-    subject = _('DELETED: TestCase #%d - %s') % (case.pk, case.summary)
+    subject = _('DELETED: TestCase #%{pk}d - %{summary}s') % {'pk': case.pk,
+                                                              'summary': case.summary}
     context = {'case': case}
     mailto('email/post_case_delete/email.txt', subject, recipients, context, cc=cc)
 
