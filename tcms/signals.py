@@ -22,6 +22,7 @@ altering the following setting::
 """
 from django.dispatch import Signal
 from django.db.models import ObjectDoesNotExist
+from django.utils.translation import ugettext_lazy as _
 
 __all__ = [
     'POST_UPDATE_SIGNAL',
@@ -60,7 +61,6 @@ def notify_admins(sender, **kwargs):
     """
     from django.urls import reverse
     from django.conf import settings
-    from django.utils.translation import ugettext_lazy as _
 
     from tcms.core.utils.mailto import mailto
     from tcms.core.utils import request_host_link
@@ -132,7 +132,6 @@ def handle_emails_post_run_save(sender, *_args, **kwargs):
     """
         Send email updates after a TestRus has been created or updated!
     """
-    from django.utils.translation import gettext as _
     from tcms.core.utils.mailto import mailto
 
     instance = kwargs['instance']

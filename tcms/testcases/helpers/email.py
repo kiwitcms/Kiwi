@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils.mailto import mailto
 
@@ -9,13 +9,12 @@ def email_case_update(case):
     if not recipients:
         return
     cc = case.emailing.get_cc_list()
-    subject = 'TestCase %s has been updated.' % case.pk
+    subject = _('UPDATED: TestCase #%d - %s') % (case.pk, case.summary)
     txt = case.latest_text()
     context = {
         'test_case': case, 'test_case_text': txt,
     }
-    template = settings.CASE_EMAIL_TEMPLATE
-    mailto(template, subject, recipients, context, cc=cc)
+    mailto('email/post_case_save/email.txt', subject, recipients, context, cc=cc)
 
 
 def email_case_deletion(case):
@@ -23,12 +22,9 @@ def email_case_deletion(case):
     cc = case.emailing.get_cc_list()
     if not recipients:
         return
-    subject = 'TestCase %s has been deleted.' % case.pk
-    context = {
-        'case': case,
-    }
-    template = settings.CASE_EMAIL_TEMPLATE
-    mailto(template, subject, recipients, context, cc=cc)
+    subject = _('DELETED: TestCase #%d - %s') % (case.pk, case.summary)
+    context = {'case': case}
+    mailto('email/post_case_delete/email.txt', subject, recipients, context, cc=cc)
 
 
 def get_case_notification_recipients(case):

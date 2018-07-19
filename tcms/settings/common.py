@@ -74,12 +74,6 @@ FILE_UPLOAD_MAX_SIZE = 5242880
 DELETE_ATTACHMENTS_FROM_DISK = True
 
 
-# TCMS email templates
-PLAN_EMAIL_TEMPLATE = 'mail/change_plan.txt'
-CASE_EMAIL_TEMPLATE = 'mail/edit_case.txt'
-CASE_DELETE_EMAIL_TEMPLATE = 'mail/delete_case.txt'
-
-
 # If this if set, it is shown on the login/registration screens.
 MOTD_LOGIN = """<em>If it is not in Kiwi TCMS, then we don't test it!</em>"""
 
