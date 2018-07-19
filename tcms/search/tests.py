@@ -6,7 +6,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 
 
-class Test_SumOrmQueries(test.TestCase):
+class TestSumOrmQueries(test.TestCase):
 
     def test_with_invalid_target(self):
 

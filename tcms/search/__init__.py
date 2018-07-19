@@ -17,9 +17,9 @@ def remove_from_request_path(request, name):
     else:
         return None
 
-    for p in path:
-        if p.startswith(name):
-            path.remove(p)
+    for parameter in path:
+        if parameter.startswith(name):
+            path.remove(parameter)
 
     path = '&'.join(path)
     return '?' + path
@@ -32,12 +32,7 @@ def fmt_queries(*queries):
     results = {}
     for _query in queries:
         for key, value in _query.items():
-            key = key.replace('p_product', 'product')
-            key = key.replace('p_', 'product ')
-            key = key.replace('cs_', 'case ')
-            key = key.replace('pl_', 'plan ')
-            key = key.replace('r_', 'run ')
-            key = key.replace('_', ' ')
+            key = replace_keys(key)
             if isinstance(value, bool) or value:
                 if isinstance(value, QuerySet):
                     try:
@@ -51,3 +46,12 @@ def fmt_queries(*queries):
                     value = ', '.join(map(str, value))
                 results[key] = value
     return results
+
+
+def replace_keys(key):
+    key = key.replace('p_product', 'product')
+    key = key.replace('p_', 'product ')
+    key = key.replace('cs_', 'case ')
+    key = key.replace('pl_', 'plan ')
+    key = key.replace('r_', 'run ')
+    return key.replace('_', ' ')
