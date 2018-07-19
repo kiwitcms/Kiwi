@@ -25,7 +25,6 @@ from django.db.models import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 
 __all__ = [
-    'POST_UPDATE_SIGNAL',
     'USER_REGISTERED_SIGNAL',
 
     'notify_admins',
@@ -36,7 +35,6 @@ __all__ = [
     'handle_emails_post_run_save',
     'handle_post_case_run_save',
     'handle_post_case_run_delete',
-    'handle_post_update_from_ajax',
 ]
 
 
@@ -44,10 +42,6 @@ __all__ = [
 #: backends which support user registration. The signal receives three keyword
 #: parameters: ``request``, ``user`` and ``backend`` respectively!
 USER_REGISTERED_SIGNAL = Signal(providing_args=['user', 'backend'])
-
-
-#: Sent by :meth:`tcms.core.ajax.update` internally. **Do not override!**
-POST_UPDATE_SIGNAL = Signal(providing_args=["instances", "kwargs"])
 
 
 def notify_admins(sender, **kwargs):
@@ -153,6 +147,7 @@ def handle_post_case_run_save(sender, *_args, **kwargs):
     """
     # TODO: does this work properly
     instance = kwargs['instance']
+# todo: what about after update ????
     if kwargs.get('created'):
         instance.run.update_completion_status(is_auto_updated=True)
 
@@ -163,14 +158,4 @@ def handle_post_case_run_delete(sender, **kwargs):
     """
     # TODO: does this work properly
     instance = kwargs['instance']
-    instance.run.update_completion_status(is_auto_updated=True)
-
-
-def handle_post_update_from_ajax(sender, **kwargs):
-    """
-        Auto-update TestRun status after TestCaseRun is deleted!
-    """
-    # TODO: does this work properly
-    instances = kwargs['instances']
-    instance = instances[0]
     instance.run.update_completion_status(is_auto_updated=True)
