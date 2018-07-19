@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-26 22:07+0000\n"
+"POT-Creation-Date: 2018-07-19 21:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: tcms/core/admin.py:39
+msgid "This email address is already in use"
+msgstr ""
+
+#: tcms/core/ajax.py:290 tcms/testruns/views.py:1242
+#, python-format
+msgid "User %s not found!"
+msgstr ""
+
 #: tcms/core/contrib/auth/apps.py:7
 msgid "Core auth"
 msgstr ""
 
-#: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:78
+#: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:70
 msgid "A user with that email already exists."
 msgstr ""
 
@@ -81,57 +90,69 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: tcms/management/views.py:154
+#: tcms/core/history.py:41
+#, python-format
+msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
+msgstr ""
+
+#: tcms/core/history.py:47
+#, python-format
+msgid ""
+"Updated on %(history_date)s\n"
+"Updated by %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
+"For more information:\n"
+"%(instance_url)s"
+msgstr ""
+
+#: tcms/management/views.py:131
 msgid "Environment group with the same name already exists"
 msgstr ""
 
-#: tcms/management/views.py:353
+#: tcms/management/views.py:319
 #, python-format
 msgid ""
 "Value(s) named '%s' already exists in this property. Please select another "
 "name."
 msgstr ""
 
-#: tcms/profiles/forms.py:32
+#: tcms/profiles/forms.py:24
 msgid "Username"
 msgstr ""
 
-#: tcms/profiles/forms.py:34
+#: tcms/profiles/forms.py:26
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 
-#: tcms/profiles/forms.py:37
+#: tcms/profiles/forms.py:29
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
-#: tcms/profiles/forms.py:42
+#: tcms/profiles/forms.py:34
 msgid "E-mail"
 msgstr ""
 
-#: tcms/profiles/forms.py:87
+#: tcms/profiles/forms.py:79
 msgid "User error."
 msgstr ""
 
-#: tcms/profiles/forms.py:107
+#: tcms/profiles/forms.py:99
 msgid "A user with that username already exists."
 msgstr ""
 
-#: tcms/profiles/views.py:94
+#: tcms/profiles/views.py:39
 msgid "Information successfully updated"
 msgstr ""
 
-#: tcms/signals.py:80
+#: tcms/signals.py:72
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:141
+#: tcms/signals.py:132
 #, python-format
-msgid "New TestRun %(summary)s created"
-msgstr ""
-
-#: tcms/signals.py:143
-#, python-format
-msgid "TestRun %(summary)s has been updated"
+msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
@@ -142,6 +163,13 @@ msgid ""
 "\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
+msgstr ""
+
+#: tcms/templates/email/post_case_delete/email.txt:2
+#, python-format
+msgid ""
+"\n"
+"TestCase has been updated by %(username)s!\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
@@ -220,37 +248,42 @@ msgstr ""
 msgid "Change my password"
 msgstr ""
 
-#: tcms/testcases/views.py:537
+#: tcms/testcases/helpers/email.py:22
+#, python-brace-format
+msgid "DELETED: TestCase #%{pk}d - %{summary}s"
+msgstr ""
+
+#: tcms/testcases/views.py:525
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:1333 tcms/testruns/views.py:899
-#: tcms/testruns/views.py:1029
+#: tcms/testcases/views.py:1277 tcms/testruns/views.py:864
+#: tcms/testruns/views.py:950
 msgid "At least one TestCase is required"
 msgstr ""
 
-#: tcms/testcases/views.py:1482
+#: tcms/testcases/views.py:1426
 msgid "TestCase cloning was successful"
 msgstr ""
 
-#: tcms/testplans/views.py:433
+#: tcms/testplans/views.py:424
 msgid "Select at least one TestRun and one TestCase"
 msgstr ""
 
-#: tcms/testplans/views.py:539
+#: tcms/testplans/views.py:522
 msgid "At least one TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:551
+#: tcms/testplans/views.py:534
 #, python-format
 msgid "TestPlan(s) \"%s\" do not exist"
 msgstr ""
 
-#: tcms/testplans/views.py:823
+#: tcms/testplans/views.py:786
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:831
+#: tcms/testplans/views.py:794
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
@@ -259,28 +292,24 @@ msgstr ""
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:230
+#: tcms/testruns/views.py:227
 msgid "Permission denied: TestRun does not belong to you"
 msgstr ""
 
-#: tcms/testruns/views.py:250
+#: tcms/testruns/views.py:247
 #, python-format
 msgid "Deletion failed: %s"
 msgstr ""
 
-#: tcms/testruns/views.py:255
+#: tcms/testruns/views.py:252
 msgid "Parameter \"sure\" must be \"yes\" or \"no\""
 msgstr ""
 
-#: tcms/testruns/views.py:939
-msgid "Reorder operation requires at least one TestCase"
-msgstr ""
-
-#: tcms/testruns/views.py:1038
+#: tcms/testruns/views.py:959
 msgid "TestCase ID is not a valid integer"
 msgstr ""
 
-#: tcms/testruns/views.py:1170
+#: tcms/testruns/views.py:1091
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr ""
