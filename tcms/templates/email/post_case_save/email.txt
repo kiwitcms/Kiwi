@@ -1,0 +1,6 @@
+{% load i18n %}
+{% blocktrans with username=case.history.latest().history_user.username case_url=test_case.get_full_url %}
+TestCase has been updated by {{ username }}:
+{{ case_url }}
+{% endblocktrans %}
+

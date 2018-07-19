@@ -1,0 +1,5 @@
+{% load i18n %}
+{% blocktrans with plan_name=plan.name plan_url=plan.get_full_url username=plan.history.latest().history_user.username %}
+"{{ plan_name }}" has been updated by {{ username }}:
+{{ plan_url }}
+{% endblocktrans %}

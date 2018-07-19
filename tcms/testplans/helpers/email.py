@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils.mailto import mailto
 
@@ -8,9 +8,8 @@ def email_plan_update(plan):
     recipients = get_plan_notification_recipients(plan)
     if not recipients:
         return
-    subject = u'TestPlan %s has been updated.' % plan.pk
-    mailto(settings.PLAN_EMAIL_TEMPLATE, subject,
-           recipients, {'plan': plan})
+    subject = _('UPDATED: TestPlan #%d - %s') % (plan.pk, plan.name)
+    mailto('email/post_plan_save/email.txt', subject, recipients, {'plan': plan})
 
 
 def get_plan_notification_recipients(plan):
