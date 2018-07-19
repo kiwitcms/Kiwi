@@ -38,7 +38,7 @@ class TestRunGetBugsCount(BaseCaseRun):
         recipients = test_run.get_notify_addrs()
 
         # Verify notification mail
-        self.assertIn("New TestRun %s created" % test_run.summary,
+        self.assertIn("NEW: TestRun #%d - %s" % (test_run.pk, test_run.summary),
                       send_mail.call_args_list[0][0][0])
         self.assertIn("Summary: %s" % test_run.summary, send_mail.call_args_list[0][0][1])
         for recipient in recipients:

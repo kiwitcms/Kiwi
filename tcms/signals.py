@@ -81,10 +81,9 @@ def handle_emails_post_case_save(sender, instance, created=False, **_kwargs):
     """
         Send email updates after a TestCase has been updated!
     """
-    if not created:
-        if instance.emailing.notify_on_case_update:
-            from tcms.testcases.helpers import email
-            email.email_case_update(instance)
+    if not created and instance.emailing.notify_on_case_update:
+        from tcms.testcases.helpers import email
+        email.email_case_update(instance)
 
 
 def handle_emails_pre_case_delete(sender, **kwargs):
@@ -114,26 +113,27 @@ def handle_emails_post_plan_save(sender, instance, created=False, **_kwargs):
     """
         Send email updates after a TestPlan has been updated!
     """
-    if not created:
-        if instance.emailing.notify_on_plan_update:
-            from tcms.testplans.helpers import email
-            email.email_plan_update(instance)
+    if not created and instance.emailing.notify_on_plan_update:
+        from tcms.testplans.helpers import email
+        email.email_plan_update(instance)
 
 
 def handle_emails_post_run_save(sender, *_args, **kwargs):
     """
         Send email updates after a TestRus has been created or updated!
     """
+    from tcms.core.history import history_email_for
     from tcms.core.utils.mailto import mailto
 
     instance = kwargs['instance']
 
     if kwargs.get('created'):
-        subject = _('New TestRun %(summary)s created') % {'summary': instance.summary}
+        template_name = 'email/post_run_save/email.txt'
+        subject = _('NEW: TestRun #%(pk)d - %(summary)s') % {'pk': instance.pk,
+                                                             'summary': instance.summary}
+        context = {'test_run': instance}
     else:
-        subject = _('TestRun %(summary)s has been updated') % {'summary': instance.summary}
+        template_name = None
+        subject, context = history_email_for(instance, instance.summary)
 
-    mailto(template_name='email/post_run_save/email.txt',
-           subject=subject,
-           recipients=instance.get_notify_addrs(),
-           context={'test_run': instance})
+    mailto(template_name, subject, instance.get_notify_addrs(), context)

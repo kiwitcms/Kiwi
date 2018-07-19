@@ -2,6 +2,8 @@
 import difflib
 
 from django.db.models import signals
+from django.utils.translation import ugettext_lazy as _
+
 from simple_history.models import HistoricalRecords
 from simple_history.admin import SimpleHistoryAdmin
 
@@ -17,16 +19,41 @@ def diff_objects(old_instance, new_instance, fields):
         field_diff = []
         old_value = getattr(old_instance, field.attname)
         new_value = getattr(new_instance, field.attname)
-        for line in difflib.unified_diff([str(old_value)],
-                                         [str(new_value)],
+        for line in difflib.unified_diff(str(old_value).split('\n'),
+                                         str(new_value).split('\n'),
                                          fromfile=field.attname,
                                          tofile=field.attname,
-                                         lineterm="",
-                                        ):
+                                         lineterm=""):
             field_diff.append(line)
         full_diff.extend(field_diff)
 
     return "\n".join(full_diff)
+
+
+def history_email_for(instance, title):
+    """
+        Generate the subject and email body that is sent via
+        email notifications post update!
+    """
+    history = instance.history.latest()
+
+    subject = _("UPDATE: %(model_name)s #%(pk)d - %(title)s") % {
+        'model_name': instance.__class__.__name__,
+        'pk': instance.pk,
+        'title': title
+    }
+
+    body = _("""Updated on %(history_date)s
+Updated by %(username)s
+
+%(diff)s
+
+For more information:
+%(instance_url)s""") % {'history_date': history.history_date.strftime('%c'),
+                        'username': getattr(history.history_user, 'username', ''),
+                        'diff': history.history_change_reason,
+                        'instance_url': instance.get_full_url()}
+    return subject, body
 
 
 class KiwiHistoricalRecords(HistoricalRecords):
