@@ -17,7 +17,7 @@ from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.models import TestCase
 from tcms.testplans.models import TestPlan, PlanType
 from tcms.testruns.models import TestRun
-from tcms.search import fmt_queries, remove_from_request_path
+from tcms.search import fmt_queries, remove_from_request_path, replace_keys
 
 
 @require_GET
@@ -33,21 +33,9 @@ def advance_search(request):
     run_form.populate(data)
     all_forms = (plan_form, case_form, run_form)
 
-    errors = []
-    for form in all_forms:
-        if form.is_valid():
-            errors.append(form.errors)
-
-    if errors or not data:
-        product_choice = []
-        for product in Product.objects.all():
-            product_choice.append((product.pk, product.name))
-        plan_type_choices = PlanType.objects.all()  # pylint: disable=unused-variable
-        errors = _fmt_errors(errors)
-        priorities = Priority.objects.filter(  # pylint: disable=unused-variable
-            is_active=True).order_by('value')
-
-        return render(request, 'search/advanced_search.html', locals())
+    rendered_errors = _render_errors(request, data, all_forms)
+    if rendered_errors:
+        return rendered_errors
 
     start = time.time()
     results = _query(plan_form.cleaned_data,
@@ -65,6 +53,24 @@ def advance_search(request):
     return _render_results(request, results, timecost, queries)
 
 
+def _render_errors(request, data, forms):  # pylint: disable=inconsistent-return-statements
+    errors = []
+    for form in forms:
+        if form.is_valid():
+            errors.append(form.errors)
+
+    if errors or not data:
+        product_choice = []
+        for product in Product.objects.all():
+            product_choice.append((product.pk, product.name))
+        plan_type_choices = PlanType.objects.all()  # pylint: disable=possibly-unused-variable
+        errors = _fmt_errors(errors)
+        priorities = Priority.objects.filter(  # pylint: disable=possibly-unused-variable
+            is_active=True).order_by('value')
+
+        return render(request, 'search/advanced_search.html', locals())
+
+
 def _query(plan_query, run_query, case_query, target):
     plans = SmartDjangoQuery(plan_query, TestPlan.__name__)
     runs = SmartDjangoQuery(run_query, TestRun.__name__)
@@ -78,41 +84,50 @@ def _sum_orm_queries(plans, cases, runs, target):
     cases = cases.evaluate()
     runs = runs.evaluate()
     if target == 'run':
-        if not plans and not cases:
-            if runs is None:
-                runs = TestRun.objects.none()
-        if runs is None:
-            runs = TestRun.objects.all()
-        if cases:
-            runs = runs.filter(case_run__case__in=cases).distinct()
-        if plans:
-            runs = runs.filter(plan__in=plans).distinct()
-        return runs
+        return _get_run_target(plans, cases, runs)
     if target == 'plan':
-        if not cases and not runs:
-            if plans is None:
-                plans = TestPlan.objects.none()
-        if plans is None:
-            plans = TestPlan.objects.all()
-        if cases:
-            plans = plans.filter(case__in=cases).distinct()
-        if runs:
-            plans = plans.filter(run__in=runs).distinct()
-        plans = plans.annotate(num_cases=Count('case', distinct=True),
-                               num_runs=Count('run', distinct=True))
-        return plans
+        return _get_plan_target(plans, cases, runs)
     if target == 'case':
-        if not plans and not runs:
-            if cases is None:
-                cases = TestCase.objects.none()
-        if cases is None:
-            cases = TestCase.objects.all()
-        if runs:
-            cases = cases.filter(case_run__run__in=runs).distinct()
-        if plans:
-            cases = cases.filter(plan__in=plans).distinct()
-        return cases
+        return _get_case_target(plans, cases, runs)
     raise ValueError('Invalid target')
+
+
+def _get_run_target(plans, cases, runs):
+    if not plans and not cases and runs is None:
+        runs = TestRun.objects.none()
+    if runs is None:
+        runs = TestRun.objects.all()
+    if cases:
+        runs = runs.filter(case_run__case__in=cases).distinct()
+    if plans:
+        runs = runs.filter(plan__in=plans).distinct()
+    return runs
+
+
+def _get_plan_target(plans, cases, runs):
+    if not cases and not runs and plans is None:
+        plans = TestPlan.objects.none()
+    if plans is None:
+        plans = TestPlan.objects.all()
+    if cases:
+        plans = plans.filter(case__in=cases).distinct()
+    if runs:
+        plans = plans.filter(run__in=runs).distinct()
+    plans = plans.annotate(num_cases=Count('case', distinct=True),
+                           num_runs=Count('run', distinct=True))
+    return plans
+
+
+def _get_case_target(plans, cases, runs):
+    if not plans and not runs and cases is None:
+        cases = TestCase.objects.none()
+    if cases is None:
+        cases = TestCase.objects.all()
+    if runs:
+        cases = cases.filter(case_run__run__in=runs).distinct()
+    if plans:
+        cases = cases.filter(plan__in=plans).distinct()
+    return cases
 
 
 def _render_results(request, results, time_cost, queries):
@@ -145,12 +160,7 @@ def _fmt_errors(form_errors):
     errors = []
     for error in form_errors:
         for key, value in error.items():
-            key = key.replace('p_product', 'product')
-            key = key.replace('p_', 'product ')
-            key = key.replace('cs_', 'case ')
-            key = key.replace('pl_', 'plan ')
-            key = key.replace('r_', 'run ')
-            key = key.replace('_', ' ')
+            key = replace_keys(key)
             if isinstance(value, list):
                 value = ', '.join(map(str, value))
             errors.append((key, value))

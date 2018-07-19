@@ -99,7 +99,7 @@ class SmartDjangoQuery:
     }
 
     def __init__(self, queries, result_kls):
-        self.queryset = self.CONTENT_TYPES[result_kls]._default_manager.all()
+        self.queryset = self.CONTENT_TYPES[result_kls].objects.all()
         self.queries = queries
         self.result_kls = result_kls
 
@@ -111,7 +111,7 @@ class SmartDjangoQuery:
                 continue
             lookup = rules[key]
             value = self.queries.get(key, None)
-            if isinstance(value, int) or isinstance(value, bool) or value:
+            if isinstance(value, (bool, int)) or value:
                 if queryset is None:
                     queryset = self.queryset
                 if self.queries.get(key + '_' + self.EXCLUDE_POSTFIX, False):
