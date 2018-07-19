@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name
 # -*- coding: utf-8 -*-
 
 from http import HTTPStatus
