@@ -71,10 +71,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 					<td>{{ form.default_tester }} <div class="errors">{{ form.default_tester.errors }}</div></td>
 				</tr>
 				<tr>
-					<td valign="top" valign="top"><label for="auto_update_run_status">Set Status Automatically</label></td>
-					<td>{{ form.auto_update_run_status }} <span class="system_help">{{ form.auto_update_run_status.help_text }}</span></td>
-				</tr>
-				<tr>
 					<td valign="top" valign="top"><label class="strong" for="id_estimated_time">Estimated Time</label></td>
 					<td>
 						<div id="estimated_time" data-time="{{ run_estimated_time }}">

@@ -306,18 +306,6 @@ Nitrate.TestRuns.New.on_load = function() {
 Nitrate.TestRuns.Edit.on_load = function() {
   bind_version_selector_to_product(false);
   bind_build_selector_to_product(false);
-  if (jQ('#id_auto_update_run_status').attr('checked')) {
-    jQ('#id_finished').attr({'checked': false, 'disabled': true});
-  }
-  jQ('#id_auto_update_run_status').bind('click', function(){
-    if (jQ('#id_auto_update_run_status').attr('checked')) {
-      jQ('#id_finished').attr({'checked': false, 'disabled': true});
-    } else {
-      if (jQ('#id_finished').attr('disabled')) {
-        jQ('#id_finished').attr('disabled', false);
-      }
-    }
-  });
   jQ('#add_id_product_version, #add_id_build').bind('click', function() {
     return popupAddAnotherWindow(this, 'product');
   });

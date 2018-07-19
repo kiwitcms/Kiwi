@@ -68,12 +68,6 @@ class BaseRunForm(forms.Form):
         required=False,
         initial=True
     )
-    auto_update_run_status = forms.BooleanField(
-        label='Set Status Automatically', widget=forms.CheckboxInput(),
-        help_text='Check to update test run status automatically',
-        required=False,
-        initial=False
-    )
 
     def populate(self, product_id):
         # We can dynamically set choices for a form field:

@@ -157,7 +157,6 @@ jQ(function() {
 			</div>
 			<div class="listinfo">
 			<div class="title grey">Status&nbsp;:</div>
-				{% if not test_run.auto_update_run_status %}
 				<div class="name">
 					{% if test_run.stop_date %}
 					<span class="pauselink"> Finished </span>
@@ -171,15 +170,6 @@ jQ(function() {
 					{% endif %}
 					{% endif %}
 				</div>
-				{% else %}
-				<div class="name">
-					{% if test_run.stop_date %}
-					<span class="pauselink"> Finished </span>
-					{% else %}
-					<span class="runninglink">Running</span>
-					{% endif %}
-				</div>
-				{% endif %}
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Finished at&nbsp;:</div>
@@ -192,10 +182,6 @@ jQ(function() {
 				<div class="linotype name">
 					{% include 'run/get_cc.html' %}
 				</div>
-			</div>
-			<div class="listinfo">
-				<div class="title grey">Set Status Automatically&nbsp;:</div>
-				<div class="name"> {{ test_run.auto_update_run_status }} </div>
 			</div>
 		<div class="clear"></div>
 	</div>

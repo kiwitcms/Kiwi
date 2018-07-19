@@ -66,7 +66,6 @@ class TestRun(TCMSActionModel):
                                  related_name='run')
 
     cc = models.ManyToManyField('auth.User', through='testruns.TestRunCC')
-    auto_update_run_status = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('run_id', 'product_version')
@@ -238,19 +237,11 @@ class TestRun(TCMSActionModel):
 
     total_num_caseruns = property(_get_total_case_run_num)
 
-    def update_completion_status(self, is_auto_updated, is_finish=None):
-        if is_auto_updated and self.auto_update_run_status:
-            if self.completed_case_run_percent == 100.0:
-                self.stop_date = datetime.datetime.now()
-            else:
-                self.stop_date = None
-            self.save()
-        if not is_auto_updated and not self.auto_update_run_status:
-            if is_finish:
-                self.stop_date = datetime.datetime.now()
-            else:
-                self.stop_date = None
-            self.save()
+    def update_completion_status(self, is_finished):
+        if is_finished:
+            self.stop_date = datetime.datetime.now()
+        else:
+            self.stop_date = None
 
     def env_values_str(self):
         """
