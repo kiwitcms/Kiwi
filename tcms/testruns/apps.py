@@ -15,5 +15,3 @@ class AppConfig(DjangoAppConfig):
         post_delete.connect(signals.handle_post_case_run_delete, sender=TestCaseRun,
                             dispatch_uid='tcms.testruns.models.TestCaseRun')
         pre_save.connect(signals.pre_save_clean, sender=TestRun)
-
-        signals.POST_UPDATE_SIGNAL.connect(signals.handle_post_update_from_ajax)
