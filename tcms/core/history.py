@@ -2,6 +2,7 @@
 import difflib
 
 from django.db.models import signals
+from django.template.defaultfilters import safe
 from django.utils.translation import ugettext_lazy as _
 
 from simple_history.models import HistoricalRecords
@@ -95,7 +96,10 @@ class ReadOnlyHistoryAdmin(SimpleHistoryAdmin):
         Custom history admin which shows all fields
         as read-only.
     """
-    history_list_display = ['history_change_reason']
+    history_list_display = ['Diff']
+
+    def Diff(self, obj):
+        return safe('<pre>%s</pre>' % obj.history_change_reason)
 
     def get_readonly_fields(self, request, obj=None):
         # make all fields readonly
