@@ -1,7 +1,32 @@
 # pylint: disable=unused-argument, no-self-use, avoid-list-comprehension
+import difflib
+
 from django.db.models import signals
 from simple_history.models import HistoricalRecords
 from simple_history.admin import SimpleHistoryAdmin
+
+
+def diff_objects(old_instance, new_instance, fields):
+    """
+        Diff two objects by examining the given fields and
+        return a string.
+    """
+    full_diff = []
+
+    for field in fields:
+        field_diff = []
+        old_value = getattr(old_instance, field.attname)
+        new_value = getattr(new_instance, field.attname)
+        for line in difflib.unified_diff([str(old_value)],
+                                         [str(new_value)],
+                                         fromfile=field.attname,
+                                         tofile=field.attname,
+                                         lineterm="",
+                                        ):
+            field_diff.append(line)
+        full_diff.extend(field_diff)
+
+    return "\n".join(full_diff)
 
 
 class KiwiHistoricalRecords(HistoricalRecords):
@@ -24,15 +49,10 @@ class KiwiHistoricalRecords(HistoricalRecords):
             Calculate the changelog and call the inherited method to
             write the data into the database.
         """
-        change_reason = []
-
         if hasattr(instance, 'previous'):
-            for field in self.fields_included(instance):
-                old_value = getattr(instance.previous, field.attname)
-                new_value = getattr(instance, field.attname)
-                if old_value != new_value:
-                    change_reason.append("%s: %s -> %s" % (field.attname, old_value, new_value))
-        instance.changeReason = "; ".join(change_reason)
+            instance.changeReason = diff_objects(instance.previous,
+                                                 instance,
+                                                 self.fields_included(instance))
         super().post_save(instance, created, **kwargs)
 
     def finalize(self, sender, **kwargs):
