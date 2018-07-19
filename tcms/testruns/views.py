@@ -108,7 +108,6 @@ def new(request, template_name='run/new.html'):
                 manager=form.cleaned_data['manager'],
                 default_tester=default_tester,
                 estimated_time=form.cleaned_data['estimated_time'],
-                auto_update_run_status=form.cleaned_data['auto_update_run_status']
             )
 
             keep_status = form.cleaned_data['keep_status']
@@ -616,22 +615,6 @@ def edit(request, run_id, template_name='run/edit.html'):
 
         # FIXME: Error handler
         if form.is_valid():
-            # detect if auto_update_run_status field is changed by user when
-            # edit testrun.
-            auto_update_changed = False
-            if test_run.auto_update_run_status \
-                    != form.cleaned_data['auto_update_run_status']:
-                auto_update_changed = True
-
-            # detect if finished field is changed by user when edit testrun.
-            finish_field_changed = False
-            if test_run.stop_date and not form.cleaned_data['finished']:
-                finish_field_changed = True
-                is_finish = False
-            elif not test_run.stop_date and form.cleaned_data['finished']:
-                finish_field_changed = True
-                is_finish = True
-
             test_run.summary = form.cleaned_data['summary']
             # Permission hack
             if test_run.manager == request.user or test_run.plan.author == request.user:
@@ -641,17 +624,9 @@ def edit(request, run_id, template_name='run/edit.html'):
             test_run.product_version = form.cleaned_data['product_version']
             test_run.notes = form.cleaned_data['notes']
             test_run.estimated_time = form.cleaned_data['estimated_time']
-            test_run.auto_update_run_status = form.cleaned_data[
-                'auto_update_run_status']
+            test_run.update_completion_status(form.cleaned_data['finished'])
             test_run.save()
-            if auto_update_changed:
-                test_run.update_completion_status(is_auto_updated=True)
-            if finish_field_changed:
-                test_run.update_completion_status(is_auto_updated=False,
-                                                  is_finish=is_finish)
-            return HttpResponseRedirect(
-                reverse('testruns-get', args=[run_id, ])
-            )
+            return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
     else:
         # Generate a blank form
         form = EditRunForm(initial={
@@ -665,7 +640,6 @@ def edit(request, run_id, template_name='run/edit.html'):
             'notes': test_run.notes,
             'finished': test_run.stop_date,
             'estimated_time': test_run.estimated_time,
-            'auto_update_run_status': test_run.auto_update_run_status,
         })
         form.populate(product_id=test_run.build.product_id)
 
@@ -922,14 +896,10 @@ def change_status(request, run_id):
     """Change test run finished or running"""
     test_run = get_object_or_404(TestRun, run_id=run_id)
 
-    if request.GET.get('finished') == '1':
-        test_run.update_completion_status(is_auto_updated=False, is_finish=True)
-    else:
-        test_run.update_completion_status(is_auto_updated=False, is_finish=False)
+    test_run.update_completion_status(request.GET.get('finished') == '1')
+    test_run.save()
 
-    return HttpResponseRedirect(
-        reverse('testruns-get', args=[run_id, ])
-    )
+    return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
 
 
 @require_POST

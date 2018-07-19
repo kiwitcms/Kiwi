@@ -440,7 +440,6 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """Serializer for TestRun"""
 
     values_fields_mapping = {
-        'auto_update_run_status': ('auto_update_run_status', do_nothing),
         'environment_id': ('environment_id', do_nothing),
         'estimated_time': ('estimated_time', timedelta_to_str),
         'notes': ('notes', do_nothing),

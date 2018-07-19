@@ -33,8 +33,6 @@ __all__ = [
     'handle_emails_pre_case_delete',
     'handle_emails_post_plan_save',
     'handle_emails_post_run_save',
-    'handle_post_case_run_save',
-    'handle_post_case_run_delete',
 ]
 
 
@@ -139,23 +137,3 @@ def handle_emails_post_run_save(sender, *_args, **kwargs):
            subject=subject,
            recipients=instance.get_notify_addrs(),
            context={'test_run': instance})
-
-
-def handle_post_case_run_save(sender, *_args, **kwargs):
-    """
-        Auto-update TestRun status after TestCaseRun is created!
-    """
-    # TODO: does this work properly
-    instance = kwargs['instance']
-# todo: what about after update ????
-    if kwargs.get('created'):
-        instance.run.update_completion_status(is_auto_updated=True)
-
-
-def handle_post_case_run_delete(sender, **kwargs):
-    """
-        Auto-update TestRun status after TestCaseRun is deleted!
-    """
-    # TODO: does this work properly
-    instance = kwargs['instance']
-    instance.run.update_completion_status(is_auto_updated=True)
