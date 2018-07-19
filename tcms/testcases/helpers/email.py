@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 
+from tcms.core.history import history_email_for
 from tcms.core.utils.mailto import mailto
 
 
@@ -9,12 +10,8 @@ def email_case_update(case):
     if not recipients:
         return
     cc = case.emailing.get_cc_list()
-    subject = _('UPDATED: TestCase #%d - %s') % (case.pk, case.summary)
-    txt = case.latest_text()
-    context = {
-        'test_case': case, 'test_case_text': txt,
-    }
-    mailto('email/post_case_save/email.txt', subject, recipients, context, cc=cc)
+    subject, body = history_email_for(case, case.summary)
+    mailto(None, subject, recipients, body, cc=cc)
 
 
 def email_case_deletion(case):

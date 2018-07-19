@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.utils.translation import ugettext_lazy as _
-
+from tcms.core.history import history_email_for
 from tcms.core.utils.mailto import mailto
 
 
@@ -8,8 +7,8 @@ def email_plan_update(plan):
     recipients = get_plan_notification_recipients(plan)
     if not recipients:
         return
-    subject = _('UPDATED: TestPlan #%d - %s') % (plan.pk, plan.name)
-    mailto('email/post_plan_save/email.txt', subject, recipients, {'plan': plan})
+    subject, body = history_email_for(plan, plan.name)
+    mailto(None, subject, recipients, body)
 
 
 def get_plan_notification_recipients(plan):

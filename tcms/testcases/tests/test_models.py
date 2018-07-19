@@ -6,6 +6,7 @@ from mock import patch
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from tcms.core.history import history_email_for
 from tcms.testcases.models import BugSystem
 from tcms.testcases.models import TestCaseText
 from tcms.testcases.helpers.email import get_case_notification_recipients
@@ -221,24 +222,12 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
         self.case.summary = 'New summary for running test'
         self.case.save()
 
-        expected_mail_body = """TestCase [{0}] has been updated by {1}
-
-Case -
-{2}?#log
-
---
-Configure mail: {2}/edit/
-------- You are receiving this mail because: -------
-You have subscribed to the changes of this TestCase
-You are related to this TestCase""".format(self.case.summary,
-                                           'editor',
-                                           self.case.get_full_url())
-
+        expected_subject, expected_body = history_email_for(self.case, self.case.summary)
         recipients = get_case_notification_recipients(self.case)
 
         # Verify notification mail
-        send_mail.assert_called_once_with(
-            settings.EMAIL_SUBJECT_PREFIX + "TestCase %s has been updated." % self.case.pk,
-            expected_mail_body,
-            settings.DEFAULT_FROM_EMAIL, recipients,
-            fail_silently=False)
+        send_mail.assert_called_once_with(settings.EMAIL_SUBJECT_PREFIX + expected_subject,
+                                          expected_body,
+                                          settings.DEFAULT_FROM_EMAIL,
+                                          recipients,
+                                          fail_silently=False)
