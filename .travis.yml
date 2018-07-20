@@ -120,7 +120,7 @@ before_install:
 install:
   - |
         [ -z "$TEST_DB" ] && export TEST_DB="SQLite"
-        export REQUIREMENTS_TXT="requirements/$(echo $TEST_DB | tr '[:upper:]' '[:lower:]' | sed 's/mariadb/mysql/' | sed 's/sqlite/base/').txt"
+        export REQUIREMENTS_TXT="requirements/$(echo $TEST_DB | tr '[:upper:]' '[:lower:]' | sed 's/mysql/mariadb/' | sed 's/sqlite/base/').txt"
         echo "REQUIREMENTS_TXT=$REQUIREMENTS_TXT"
         pip install -r $REQUIREMENTS_TXT
         pip install -r requirements/devel.txt

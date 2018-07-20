@@ -39,7 +39,7 @@ Dependencies
 
 First install RPM packages which are needed to compile some of the Python dependencies::
 
-    sudo yum install gcc python-devel mysql-devel libxml2-devel libxslt-devel graphviz
+    sudo yum install gcc python-devel mariadb-devel libxml2-devel libxslt-devel graphviz
 
 .. note::
 
@@ -48,7 +48,7 @@ First install RPM packages which are needed to compile some of the Python depend
 Then install dependencies for development::
 
     . ~/virtualenvs/kiwi/bin/activate
-    pip install -r requirements/mysql.txt
+    pip install -r requirements/mariadb.txt
     pip install -r requirements/devel.txt
 
 
