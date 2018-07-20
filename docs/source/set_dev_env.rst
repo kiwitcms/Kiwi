@@ -72,11 +72,6 @@ Initialize database
     You may want to adjust the database and/or other configuration settings.
     Override them in ``./tcms/settings/devel.py`` if necessary.
 
-.. warning::
-
-    At the moment Kiwi TCMS is not 100% portable between database backends!
-    We recommend either MySQL or MariaDB for running Kiwi TCMS!
-
 Load database schema and create initial user::
 
     ./manage.py migrate
