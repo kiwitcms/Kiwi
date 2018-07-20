@@ -78,7 +78,11 @@ class KerbTransport(SafeCookieTransport):
         # So tell server current opened HTTP connection should be closed after
         # request is handled. And there will be a new connection for next request.
         self._extra_headers.append(('Connection', 'close'))
-        self._connection = host, HTTPSConnection(chost, None, **(x509 or {}))
+        self._connection = host, HTTPSConnection(  # nosec:B309:blacklist
+            chost,
+            None,
+            **(x509 or {})
+        )
         return self._connection[1]
 
 
