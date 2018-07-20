@@ -29,11 +29,11 @@ flake8:
 DJANGO_SETTINGS_MODULE="tcms.settings.test"
 
 ifeq ($(TEST_DB),MySQL)
-	DJANGO_SETTINGS_MODULE="tcms.settings.test.mysql"
+	DJANGO_SETTINGS_MODULE="tcms.settings.test.mariadb"
 endif
 
 ifeq ($(TEST_DB),MariaDB)
-	DJANGO_SETTINGS_MODULE="tcms.settings.test.mysql"
+	DJANGO_SETTINGS_MODULE="tcms.settings.test.mariadb"
 endif
 
 ifeq ($(TEST_DB),Postgres)

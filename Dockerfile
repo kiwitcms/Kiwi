@@ -36,7 +36,7 @@ RUN pip install --upgrade pip mod_wsgi && \
            /usr/lib64/httpd/modules/mod_wsgi.so
 
 COPY ./requirements/ /Kiwi/requirements/
-RUN pip install -r /Kiwi/requirements/mysql.txt
+RUN pip install -r /Kiwi/requirements/mariadb.txt
 
 # Add manage.py
 COPY ./manage.py /Kiwi/
