@@ -9,7 +9,7 @@ with open("README.rst") as readme:
 
 
 setup(name='tcms-api',
-      version='4.2',
+      version='5.0',
       packages=['tcms_api'],
       package_dir={'tcms_api': '.'},
       description='Python API for the Kiwi TCMS test case management system',

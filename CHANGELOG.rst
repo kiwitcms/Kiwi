@@ -1,6 +1,161 @@
 Change Log
 ==========
 
+Kiwi TCMS 5.0 (24 July 2018)
+----------------------------
+
+**IMPORTANT:** this release introduces new database migrations, object history
+tracking, removal of old functionality and unused code, lots of internal
+updates and bug fixes. After upgrade don't forget to::
+
+    ./manage.py migrate
+    ./manage.py populate_history --auto
+
+Settings
+~~~~~~~~
+
+- Remove ``CACHE`` because not used
+- Remove ``PLAN_EMAIL_TEMPLATE``, ``CASE_EMAIL_TEMPLATE`` and
+  ``CASE_DELETE_EMAIL_TEMPLATE``. Templates can still be overriden if desired
+
+Enhancements
+~~~~~~~~~~~~
+
+- Upgrade to `Django 2.0.7 <https://docs.djangoproject.com/en/2.0/releases/2.0.7/>`_
+- Allow to delete TestPlan. Fixes
+  `Issue #273 <https://github.com/kiwitcms/Kiwi/issues/273>`_
+- Don't include username in dashboard URL
+- Copy latest TestPlan text when cloning
+- Always require users to be logged in. Anonymous users will not be allowed
+  access by default. Read-only access to some views (e.g. get TestPlan or TestRun)
+  can be enabled by disabling ``GlobalLoginRequiredMiddleware``! Fixes
+  `Issue #230 <https://github.com/kiwitcms/Kiwi/issues/230>`_
+- Start tracking change history for TestPlan, TestCase, TestRun and TestCaseRun.
+  Fixes `Issue #294 <https://github.com/kiwitcms/Kiwi/issues/294>`_
+- History changes are recorded as unified diff which is a universally recognized format
+- Show the actual changes in email notifications. Fixes
+  `Issue #199 <https://github.com/kiwitcms/Kiwi/issues/199>`_
+
+Bug fixes
+~~~~~~~~~
+
+- Fix ``UnboundLocalError local variable 'message' referenced before assignment``. Fixes
+  `Sentry KIWI-TCMS-1S <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/589209883/>`_
+- Make email address unique when adding users via admin panel. Fixes
+  `Issue #352 <https://github.com/kiwitcms/Kiwi/issues/352>`_ and
+  `Issue #68 <https://github.com/kiwitcms/Kiwi/issues/68>`_
+- Fix ``unsupported operand type(s) for +=: 'int' and 'datetime.timedelta'`` by
+  initializing timedelta variable properly. Fixes
+  `Sentry KIWI-TCMS-1Y <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/593838484/>`_
+- Remove ``core.models.fields`` with MySQL time conversions. Fixes
+  `Issue #390 <https://github.com/kiwitcms/Kiwi/issues/390>`_
+- Fix bad JavaScript comparison. Fixes Coverity #289956
+- Remove expression with no effect. Fixes Coverity #289974
+- Rewrite ``request_host_link()`` to fix Coverity #289987
+- Fix Coverity #289923 - Typo in identifier
+- Don't send emails for changes performed by myself. Fixes
+  `Issue #216 <https://github.com/kiwitcms/Kiwi/issues/216>`_
+
+Refactoring
+~~~~~~~~~~~
+
+- Fix pylint issues in several modules (Anton Sankov & Ivaylo Ivanov)
+- Fix wrong Plan Type template variable in advanced search form
+- Do not use ``Model.objects.update()`` because it doesn't respect history
+- Use the standard ``ModelChoiceField`` instead of custom one
+- Use ``updateRunStatus()`` instead of deprecated ``updateObject()``
+- Simplify JavaScript function ``getInfo()`` and use it multiple times
+- Simplify ``previewPlan()`` by removing unused parameters
+- Unify ``addChildPlan()`` and ``removeChildPlan()``
+- Unify ``getInfoAndUpdateObject()`` with ``changeCaseRunAssignee()``
+- Unify ``onTestCaseStatusChange()`` with ``changeTestCaseStatus()``
+- Convert ``TestCaseEmailSettings.cc_list`` to string field
+- Merge ``report/caseruns_table.html`` with ``reports/caseruns.html``
+- Rename model ``UserActivateKey`` to ``UserActivationKey``. Fixes
+  `Issue #276 <https://github.com/kiwitcms/Kiwi/issues/276>`_
+- Remove ``cached_entities()``. Fixes
+  `Issue #307 <https://github.com/kiwitcms/Kiwi/issues/307>`_
+- Remove ``TestPlanText.checksum`` field
+- Remove checksum fields for ``TestCaseText`` model
+- Remove unused and home-grown template tags
+- Remove unused fields ``auto_blinddown``, ``description``, ``sortkey`` from
+  ``TestCaseRunStatus`` model. Fixes
+  `Issue #186 <https://github.com/kiwitcms/Kiwi/issues/186>`_
+- Remove ``Meta.db_name`` effectively renaming all tables. New names will use
+  Django's default naming scheme
+- Remove RawSQL queries. We are now 100% ORM based. Fixes
+  `Issue #36 <https://github.com/kiwitcms/Kiwi/issues/36>`_
+- Remove duplicate ``MultipleEmailField`` definition
+- Remove ``TCMSLog`` view, ``TCMSLogManager``, ``TCMSLogModel``
+- Remove ``TestPlanText`` model, use ``TestPlan.text`` instead
+- Remove unused JavaScript files
+  - ``lib/detetmine_type.js``
+  - ``lib/hole.js``
+  - ``lib/scriptaculous-controls.js.patch``
+  - ``lib/validations.js``
+  - ``static/js/index.js``
+- Remove ``constructPlanParentPreviewDialog()``
+- Remove ``changeCasePriority()``
+- Remove ``changeCaseRunOrder()``
+- Remove ``debug_output()`` from JavaScript files
+- Remove deprecated ``/ajax/update/`` end-point
+- Remove ``taggleSortCaseRun()``
+- Remove ``strip_parameters()``
+- Remove ``_InfoObjects.users()``
+- Remove ``get_value_by_type()``
+- Remove ``testcases.views.get_log()``
+- Remove ``mail_scene()`` methods and related templates
+
+
+Removed functionality
+~~~~~~~~~~~~~~~~~~~~~
+
+- TestRun completion status is no longer updated automatically. You can still
+  update the status manually via the 'Set Finished' or 'Set Running' links!
+  Fixes `Issue #367 <https://github.com/kiwitcms/Kiwi/issues/367>`_
+- Remove bookmarks functionality. There are many great bookmark manager apps
+  and if the user is keen on bookmarks they should use one of them. Closes
+  `Issue #67 <https://github.com/kiwitcms/Kiwi/issues/67>`_ and
+  `Issue #210 <https://github.com/kiwitcms/Kiwi/issues/210>`_
+- Don't track & display history of changes for ``EnvGroup`` model
+- Remove Disable/Enable buttons from TestPlan page. Enabling and disabling
+  can still be done via the edit page
+- Remove ``changeParentPlan()`` and the ability to change TestPlan parents
+  from the 'Tree View' tab. This can be done via the edit page
+- When viewing a TestPlan the user is no longer able to specify a sorkey for a
+  particular TestCase. Instead they can use the ``Re-order cases`` button and
+  move around the entire row of cases to adjust the sort order
+- When working with test case results, inside a TestRun you will not be allowed
+  to change the order of execution. Order should be defined inside the TestPlan
+  instead
+- Remove ``XmlRpcLog()`` model. Kiwi TCMS will no longer log RPC calls to the
+  database. This leads to a small performance boost and can be overriden on
+  individual basis if you need to do so.
+
+Translations
+~~~~~~~~~~~~
+
+- More source strings marked as translatable
+- New translations for Chinese Simplified, Chinese Traditional, German and Slovenian
+- Stop keeping compiled translations under git. Fixes
+  `Issue #387 <https://github.com/kiwitcms/Kiwi/issues/387>`_
+
+
+tcms-api 5.0 (24 July 2018)
+---------------------------
+
+- Requires Python 3.6 or newer because it fixes bugs related to Django's
+  disabling of keep-alive connections. See https://bugs.python.org/issue26402
+- The rpc client is now accessed via ``TCMS().exec.<Server-Method>``
+- Leave only XML-RPC transport classes! This removes the top-level interface
+  behind the API client and the consuming side is left to work with Python
+  dictionaries instead of objects.
+- Remove the interactive ``tcms`` script
+- Remove ``tcms_api.config`` module
+- Remove logging class
+- Remove ``script_examples/`` directory. These were never tested and maintained
+
+
 
 Kiwi TCMS 4.2 (23 June 2018)
 ----------------------------
