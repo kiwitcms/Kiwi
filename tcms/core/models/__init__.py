@@ -19,10 +19,12 @@ class TCMSActionModel(models.Model, UrlMixin):
         abstract = True
 
     @classmethod
-    def to_xmlrpc(cls, query={}):
+    def to_xmlrpc(cls, query=None):
         """
         Convert the query set for XMLRPC
         """
+        if query is None:
+            query = {}
         serializer = XMLRPCSerializer(queryset=cls.objects.filter(**query))
         return serializer.serialize_queryset()
 
@@ -44,7 +46,7 @@ class TCMSActionModel(models.Model, UrlMixin):
 
         for field in self._meta.fields:
             # TODO: hardcode 'notes' here
-            if not (field.name is 'notes') and isinstance(field, strip_types):
+            if not (field.name == 'notes') and isinstance(field, strip_types):
                 value = getattr(self, field.name)
                 if value:
                     setattr(self, field.name,

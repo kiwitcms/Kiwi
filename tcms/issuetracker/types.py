@@ -20,7 +20,7 @@ from tcms.issuetracker import jira_integration
 from tcms.issuetracker import github_integration
 
 
-class IssueTrackerType(object):
+class IssueTrackerType:
     """
         Represents actions which can be performed with issue trackers.
         This is a common interface for all issue trackers that Kiwi TCMS
@@ -97,7 +97,7 @@ class IssueTrackerType(object):
 
             :return: - None if not suported or string representing the URL
         """
-        return None
+        pass
 
 
 class Bugzilla(IssueTrackerType):

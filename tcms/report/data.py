@@ -47,7 +47,7 @@ def do_nothing(value):
     return value
 
 
-class ProductBuildReportData(object):
+class ProductBuildReportData:
     """Report data by builds of a Product"""
 
     def finished_runs_count(self, product_id):
@@ -112,7 +112,7 @@ class ProductBuildReportData(object):
         return builds
 
 
-class ProductComponentReportData(object):
+class ProductComponentReportData:
 
     def failed_case_runs_count(self, product_id):
         return self.total_cases(
@@ -171,7 +171,7 @@ class ProductComponentReportData(object):
         return total
 
 
-class ProductVersionReportData(object):
+class ProductVersionReportData:
     """Report data by versions of a Product"""
 
     def finished_case_runs_subtotal(self, product_id):
@@ -286,7 +286,7 @@ class ProductVersionReportData(object):
         return subtotal
 
 
-class CustomReportData(object):
+class CustomReportData:
     """Data for custom report
 
     In this data class, a major task is to construct INNER JOINS dynamically
@@ -548,7 +548,7 @@ class CustomDetailsReportData(CustomReportData):
         return case_run_comments
 
 
-class TestingReportBaseData(object):
+class TestingReportBaseData:
     """Base data of various testing report"""
     # filter criteria is against TestCaseRun
     report_criteria = {
@@ -1288,7 +1288,7 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
                 yield _build, run, status_subtotal
 
 
-class TestingReportCaseRunsData(object):
+class TestingReportCaseRunsData:
     """Data of case runs from testing report
 
     Case runs will be search by following criteria,

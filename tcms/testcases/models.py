@@ -38,7 +38,7 @@ class NoneText:
         return {}
 
 
-class PlainText(object):
+class PlainText:
     """Contains plain text converted from four text"""
 
     def __init__(self, action, setup, effect, breakdown):

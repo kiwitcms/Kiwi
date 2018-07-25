@@ -27,7 +27,7 @@ def get_run_bug_ids(run_id):
     ).distinct().filter(case_run__run=run_id)
 
 
-class TestCaseRunDataMixin(object):
+class TestCaseRunDataMixin:
     """Data for test case runs"""
 
     @staticmethod

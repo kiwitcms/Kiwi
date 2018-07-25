@@ -206,7 +206,7 @@ def new(request, template_name='case/new.html'):
         if form.is_valid():
             tc = create_testcase(request, form, tp)
 
-            class ReturnActions(object):
+            class ReturnActions:
                 def __init__(self, case, plan):
                     self.__all__ = ('_addanother', '_continue', '_returntocase', '_returntoplan')
                     self.case = case
@@ -1500,7 +1500,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
     # FIXME: Rewrite these codes for Ajax.Request
     tc = get_object_or_404(TestCase, case_id=case_id)
 
-    class CaseBugActions(object):
+    class CaseBugActions:
         __all__ = ['get_form', 'render', 'add', 'remove']
 
         def __init__(self, request, case, template_name):

@@ -12,7 +12,7 @@ from tcms.testcases.models import Category
 __all__ = ('CategoryActions', 'ComponentActions')
 
 
-class BaseActions(object):
+class BaseActions:
     """Base class for all Actions"""
 
     def __init__(self, request):

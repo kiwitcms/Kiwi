@@ -6,7 +6,7 @@ __all__ = ('GroupByResult')
 
 # TODO: redesign GroupByResult, major goal is to distiguish level node and
 # value node.
-class GroupByResult(object):
+class GroupByResult:
     """Group By result
 
     This object can be used as a normal dict object with less support of stock

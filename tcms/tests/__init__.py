@@ -70,7 +70,7 @@ def create_request_user(username=None, password=None):
     return user
 
 
-class HelperAssertions(object):
+class HelperAssertions:
     """Helper assertion methods"""
 
     def assert404(self, response):

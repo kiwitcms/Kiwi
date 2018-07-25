@@ -68,7 +68,7 @@ def clean_request(request, keys=None):
     for key in keys:
         key = str(key)
         if request_contents.get(key):
-            if key == 'order_by' or key == 'from_plan':
+            if key in ('order_by', 'from_plan'):
                 continue
 
             value = request.GET[key]
@@ -79,7 +79,7 @@ def clean_request(request, keys=None):
     return cleaned_request
 
 
-class QuerySetIterationProxy(object):
+class QuerySetIterationProxy:
     """Iterate a series of object and its associated objects at once
 
     This iteration proxy applies to this kind of structure especially.
@@ -135,7 +135,7 @@ class QuerySetIterationProxy(object):
         return next_one
 
 
-class DataTableResult(object):
+class DataTableResult:
     """Paginate and order queryset for rendering DataTable response"""
 
     def __init__(self, request_data, queryset, column_names):
