@@ -59,7 +59,7 @@ class TestCreateComponent(XmlrpcAPIBaseTest):
 
 
 class TestUpdateComponent(XmlrpcAPIBaseTest):
-
+    # pylint: disable=objects-update-used
     def _fixture_setup(self):
         super(TestUpdateComponent, self)._fixture_setup()
 
