@@ -750,7 +750,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
 def bug(request, case_run_id, template_name='run/execute_case_run.html'):
     """Process the bugs for case runs."""
 
-    class CaseRunBugActions(object):
+    class CaseRunBugActions:
 
         def __init__(self, request, case_run, template_name):
             self.request = request
@@ -1102,7 +1102,7 @@ def env_value(request):
     """Run environment property edit function"""
     test_runs = TestRun.objects.filter(run_id__in=request.GET.getlist('run_id'))
 
-    class RunEnvActions(object):
+    class RunEnvActions:
         def __init__(self, request, test_runs):
             self.__all__ = ['add', 'remove', 'change']
             self.ajax_response = {'rc': 0, 'response': 'ok'}

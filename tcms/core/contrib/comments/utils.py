@@ -26,7 +26,7 @@ def add_comment(request, data):
     object_pk = data.get("object_pk")
 
     model = apps.get_model(*ctype.split(".", 1))
-    target = model._default_manager.get(pk=object_pk)
+    target = model.objects.get(pk=object_pk)
 
     # Construct the comment form
     form = django_comments.get_form()(target, data=data)

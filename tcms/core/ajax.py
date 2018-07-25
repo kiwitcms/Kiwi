@@ -45,7 +45,7 @@ def info(request):
     return HttpResponse(serializers.serialize('json', info_type(), fields=('name', 'value')))
 
 
-class _InfoObjects(object):
+class _InfoObjects:
 
     def __init__(self, request, product_id=None):
         self.request = request
@@ -124,7 +124,7 @@ def tags(request):
     return render(request, template_name, context_data)
 
 
-class _TagObjects(object):
+class _TagObjects:
     """ Used for getting the chosen object(TestPlan, TestCase or TestRun) from the database """
 
     def __init__(self, request):
@@ -153,7 +153,7 @@ class _TagObjects(object):
         return 'run/get_tag.html', TestRun.objects.get(pk=self.object_pk)
 
 
-class _TagActions(object):
+class _TagActions:
     """ Used for performing the 'add' and 'remove' actions on a given tag """
 
     def __init__(self, obj, tag_name):
@@ -177,7 +177,7 @@ class _TagActions(object):
         self.obj.remove_tag(tag)
 
 
-class _TagCounter(object):  # pylint: disable=too-few-public-methods
+class _TagCounter:  # pylint: disable=too-few-public-methods
     """ Used for counting the number of times a tag is assigned to TestRun/TestCase/TestPlan """
 
     def __init__(self, key, test_tags):
@@ -342,8 +342,8 @@ def clean_bug_form(request):
 
     if request.GET.get('a') not in ('add', 'remove'):
         return (None, 'Actions only allow "add" and "remove".')
-    else:
-        data['action'] = request.GET.get('a')
+
+    data['action'] = request.GET.get('a')
     data['bz_external_track'] = True if request.GET.get('bz_external_track',
                                                         False) else False
 

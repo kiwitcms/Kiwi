@@ -27,10 +27,12 @@ class KiwiSiteAdmin(SiteAdmin):
         return HttpResponseRedirect(reverse('admin:sites_site_change', args=[settings.SITE_ID]))
 
 
-class UniqueEmailForm:
+class MyUserChangeForm(UserChangeForm):
     """
         Enforces unique user emails.
     """
+    email = forms.EmailField(required=True)
+
     def clean_email(self):
         qs = User.objects.filter(email=self.cleaned_data['email'])
         if self.instance:
@@ -41,8 +43,8 @@ class UniqueEmailForm:
             return self.cleaned_data['email']
 
 
-class MyUserChangeForm(UniqueEmailForm, UserChangeForm):
-    email = forms.EmailField(required=True)
+def _modifying_myself(request, object_id):
+    return request.user.pk == int(object_id)
 
 
 class KiwiUserAdmin(UserAdmin):
@@ -53,22 +55,19 @@ class KiwiUserAdmin(UserAdmin):
     # even when adding users via admin panel
     form = MyUserChangeForm
 
-    def change_view(self, request, object_id, extra_context=None):
+    def change_view(self, request, object_id, form_url='', extra_context=None):
         if request.user.is_superuser:
-            return super().change_view(request, object_id, extra_context)
+            return super().change_view(request, object_id, form_url, extra_context)
 
-        # object history view link to admin_user_change so we redirect
+        # object history view links to admin_user_change so we redirect
         # to the user profile instead
         user = User.objects.get(pk=object_id)
         return HttpResponseRedirect(reverse('tcms-profile', args=[user.username]))
 
-    def _modifying_myself(self, request, object_id):
-        return request.user.pk == int(object_id)
-
     @admin.options.csrf_protect_m
     def delete_view(self, request, object_id, extra_context=None):
         # if trying to delete another user go directly to parent
-        if not self._modifying_myself(request, object_id):
+        if not _modifying_myself(request, object_id):
             return super().delete_view(request, object_id, extra_context)
 
         # else allow deletion of the user own account
@@ -83,7 +82,7 @@ class KiwiUserAdmin(UserAdmin):
     def response_delete(self, request, obj_display, obj_id):
         result = super().response_delete(request, obj_display, obj_id)
 
-        if not self._modifying_myself(request, obj_id):
+        if not _modifying_myself(request, obj_id):
             return result
 
         # user doesn't exist anymore so go to the index page
@@ -93,7 +92,7 @@ class KiwiUserAdmin(UserAdmin):
     def has_delete_permission(self, request, obj=None):
         # allow to delete yourself without having 'delete' permission
         # explicitly assigned
-        if self._modifying_myself(request, getattr(obj, 'pk', 0)):
+        if _modifying_myself(request, getattr(obj, 'pk', 0)):
             return True
 
         return super().has_delete_permission(request, obj)

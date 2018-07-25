@@ -5,7 +5,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestRun
 
 
-class SmartDjangoQuery(object):
+class SmartDjangoQuery:
     """
     Class mainly wraps the look-up rules and priorities\n
     of fields that should be applied on Django queryset.\n

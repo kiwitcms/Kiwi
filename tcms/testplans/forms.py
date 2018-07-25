@@ -17,7 +17,7 @@ MIMETYPE_OCTET_STREAM = 'application/octet-stream'
 MIMETYPE_OPENDOCUMENT = 'application/vnd.oasis.opendocument.text'
 
 
-class UploadedFile(object):  # pylint: disable=too-few-public-methods
+class UploadedFile:  # pylint: disable=too-few-public-methods
     """Base class for all classes representing a concrete uploaded file"""
 
     def __init__(self, uploaded_file):

@@ -49,7 +49,7 @@ def timedelta_to_str(value):
 # ## End of functions ###
 
 
-class XMLRPCSerializer(object):
+class XMLRPCSerializer:
     """
     Django XMLRPC Serializer
     The goal is to process the datetime and timedelta data structure
