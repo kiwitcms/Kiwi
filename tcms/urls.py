@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.generic import TemplateView
 from django.views.i18n import JavaScriptCatalog
 
 from grappelli import urls as grappelli_urls
@@ -23,7 +24,7 @@ from tcms.testruns import urls as testruns_urls
 from tcms.testruns import views as testruns_views
 from tcms.management import views as management_views
 from tcms.report import urls as report_urls
-from tcms.search import advance_search
+from tcms.search import advanced_search
 
 
 urlpatterns = [
@@ -91,8 +92,10 @@ urlpatterns = [
     # Report zone
     url(r'^report/', include(report_urls)),
 
-    # Advance search
-    url(r'^advance-search/$', advance_search, name='advance_search'),
+    # Advanced search
+    url(r'^advance-search/$',
+        TemplateView.as_view(template_name="advanced_search/deprecation_warning.html")),
+    url(r'^deprecated/advanced-search/$', advanced_search.advance_search, name='advance_search'),
 
     # TODO: do we need this at all ???
     # Using admin js without admin permission
