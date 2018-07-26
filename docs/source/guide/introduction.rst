@@ -142,22 +142,6 @@ the breadcrumb located below the menu bar.
 
 |The TCMS menu bar and breadcrumbs|
 
-Bookmarks
-~~~~~~~~~
-
-Any page in Kiwi TCMS can be bookmarked.
-
--  Click the **My bookmarks** item from the **Personal menu** to view your bookmarks.
--  Click **Bookmark this page** icon to add the current page to your bookmarks.
-
-.. note::
-
-    Kiwi TCMS is transitioning to a a new UI which conflicts with the existing jQuery
-    versions. Because of this the navigation bar is loaded via an iframe and the
-    **Bookark this page** button is disabled. It will be located to the left of the
-    **Help menu** once re-enabled!
-
-
 Personal dashboard
 ~~~~~~~~~~~~~~~~~~~
 
