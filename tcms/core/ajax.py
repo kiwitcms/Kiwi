@@ -419,4 +419,4 @@ def get_prod_related_obj_json(request):
         res = get_prod_related_objs(p_pks, target)
     else:
         res = []
-    return JsonResponse(res)
+    return JsonResponse(res, safe=False)
