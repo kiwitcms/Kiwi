@@ -1,5 +1,5 @@
 from django import test
-from tcms.search import _sum_orm_queries
+from tcms.search.advanced_search import _sum_orm_queries
 from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.models import TestCase
 from tcms.testplans.models import TestPlan
