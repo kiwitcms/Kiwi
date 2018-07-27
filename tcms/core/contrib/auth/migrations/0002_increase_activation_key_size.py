@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tcms.core.contrib.auth', '0001_initial'),
+        ('tcms_auth', '0001_initial'),
     ]
 
     operations = [

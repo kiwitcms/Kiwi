@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('tcms.core.contrib.auth', '0002_increase_activation_key_size'),
+        ('tcms_auth', '0002_increase_activation_key_size'),
     ]
 
     operations = [
