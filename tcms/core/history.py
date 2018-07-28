@@ -69,6 +69,9 @@ class KiwiHistoricalRecords(HistoricalRecords):
             Signal handlers don't have access to the previous version of
             an object so we have to load it from the database!
         """
+        if kwargs.get('raw', False):
+            return
+
         if instance.pk and hasattr(instance, 'history'):
             instance.previous = instance.__class__.objects.get(pk=instance.pk)
 
@@ -77,6 +80,9 @@ class KiwiHistoricalRecords(HistoricalRecords):
             Calculate the changelog and call the inherited method to
             write the data into the database.
         """
+        if kwargs.get('raw', False):
+            return
+
         if hasattr(instance, 'previous'):
             instance.changeReason = diff_objects(instance.previous,
                                                  instance,

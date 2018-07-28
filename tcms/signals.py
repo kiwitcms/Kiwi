@@ -57,6 +57,9 @@ def notify_admins(sender, **kwargs):
     from tcms.core.utils.mailto import mailto
     from tcms.core.utils import request_host_link
 
+    if kwargs.get('raw', False):
+        return
+
     request = kwargs.get('request')
     user = kwargs.get('user')
 
@@ -77,10 +80,13 @@ def notify_admins(sender, **kwargs):
     )
 
 
-def handle_emails_post_case_save(sender, instance, created=False, **_kwargs):
+def handle_emails_post_case_save(sender, instance, created=False, **kwargs):
     """
         Send email updates after a TestCase has been updated!
     """
+    if kwargs.get('raw', False):
+        return
+
     if not created and instance.emailing.notify_on_case_update:
         from tcms.testcases.helpers import email
         email.email_case_update(instance)
@@ -90,6 +96,9 @@ def handle_emails_pre_case_delete(sender, **kwargs):
     """
         Send email updates before a TestCase will be deleted!
     """
+    if kwargs.get('raw', False):
+        return
+
     instance = kwargs['instance']
 
     try:
@@ -105,14 +114,20 @@ def handle_emails_pre_case_delete(sender, **kwargs):
 
 
 def pre_save_clean(sender, **kwargs):
+    if kwargs.get('raw', False):
+        return
+
     instance = kwargs['instance']
     instance.clean()
 
 
-def handle_emails_post_plan_save(sender, instance, created=False, **_kwargs):
+def handle_emails_post_plan_save(sender, instance, created=False, **kwargs):
     """
         Send email updates after a TestPlan has been updated!
     """
+    if kwargs.get('raw', False):
+        return
+
     if not created and instance.emailing.notify_on_plan_update:
         from tcms.testplans.helpers import email
         email.email_plan_update(instance)
@@ -124,6 +139,9 @@ def handle_emails_post_run_save(sender, *_args, **kwargs):
     """
     from tcms.core.history import history_email_for
     from tcms.core.utils.mailto import mailto
+
+    if kwargs.get('raw', False):
+        return
 
     instance = kwargs['instance']
 
