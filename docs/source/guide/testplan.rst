@@ -39,15 +39,6 @@ Other Test Plans can be searched via the **SEARCH** item in the **Main menu**:
   and 'libX11'.
 
 
-Advanced search
-~~~~~~~~~~~~~~~
-
-Advanced search accepts a combination of fields from Test Plan, Test Case
-and Test Run. To use Advanced Search in the **Main menu** click on
-**SEARCH::Advanced Search**
-
-   |The advanced search window.|
-
 .. _creating-testplan:
 
 Creating a Test Plan
@@ -307,7 +298,6 @@ instead. To export a Test Plan:
 .. |The Search menu| image:: ../_static/Click_Search.png
 .. |The Search Plan screen| image:: ../_static/Planning_Home.png
 .. |Click column to sort by.| image:: ../_static/Sort_By_Column.png
-.. |The advanced search window.| image:: ../_static/Advanced_Search.png
 .. |The Clone plan button| image:: ../_static/Plan_Actions.png
 .. |The Clone Test Plan screen| image:: ../_static/Clone_Details.png
 .. |The Edit plan button| image:: ../_static/Plan_Actions.png
