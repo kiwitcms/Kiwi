@@ -31,8 +31,6 @@ from tcms.core.utils import clean_request
 from tcms.core.utils import DataTableResult
 from tcms.core.utils.validations import validate_bug_id
 from tcms.management.models import Priority, EnvValue, Tag
-from tcms.search.forms import RunForm
-from tcms.search.query import SmartDjangoQuery
 from tcms.testcases.forms import CaseBugForm
 from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
@@ -1180,20 +1178,6 @@ def env_value(request):
 
     func = getattr(run_env_actions, request.GET['a'])
     return func()
-
-
-def view_caseruns(request):
-    """View that search caseruns."""
-    queries = request.GET
-    r_form = RunForm(queries)
-    r_form.populate(queries)
-    context = {}
-    if r_form.is_valid():
-        runs = SmartDjangoQuery(r_form.cleaned_data, TestRun.__name__).evaluate()
-        case_runs = get_caseruns_of_runs(runs, queries)
-        context['test_case_runs'] = case_runs
-        context['runs'] = runs
-    return render(request, 'report/caseruns.html', context)
 
 
 def get_caseruns_of_runs(runs, kwargs=None):
