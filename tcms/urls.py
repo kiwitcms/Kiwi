@@ -71,7 +71,6 @@ urlpatterns = [
     url(r'^run/', include(testruns_urls.run_urls)),
     url(r'^runs/', include(testruns_urls.runs_urls)),
 
-    url(r'^caseruns/$', testruns_views.view_caseruns),
     url(r'^caserun/(?P<case_run_id>\d+)/bug/$', testruns_views.bug, name='testruns-bug'),
     url(r'^caserun/comment-many/', ajax.comment_case_runs, name='ajax-comment_case_runs'),
     url(r'^caserun/update-bugs-for-many/', ajax.update_bugs_to_caseruns),
