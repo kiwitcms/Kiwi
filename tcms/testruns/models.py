@@ -123,12 +123,6 @@ class TestRun(TCMSActionModel):
 
         return runs.distinct()
 
-    def belong_to(self, user):
-        if self.manager == user or self.plan.author == user:
-            return True
-
-        return False
-
     def _get_absolute_url(self):
         return reverse('testruns-get', args=[self.pk, ])
 
