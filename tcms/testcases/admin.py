@@ -16,7 +16,7 @@ class TestCaseAdmin(ReadOnlyHistoryAdmin):
     actions = ['delete_selected']
 
     def add_view(self, request, form_url='', extra_context=None):
-        return HttpResponseRedirect(reverse('admin:testcases_testcase_changelist'))
+        return HttpResponseRedirect(reverse('testcases-new'))
 
     def change_view(self, request, object_id, extra_context=None):
         return HttpResponseRedirect(reverse('testcases-get', args=[object_id]))
