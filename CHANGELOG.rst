@@ -1,6 +1,58 @@
 Change Log
 ==========
 
+Kiwi TCMS 5.1 (31 July 2018)
+----------------------------
+
+
+Enhancements
+~~~~~~~~~~~~
+
+- Integrate with Django Report Builder as tech-preview. This makes it possible
+  for power users and administrators to generate
+  `tabular reports <http://django-report-builder.readthedocs.io/en/latest/howto/>`_.
+  You will have to know the existing DB schema if you want to create your own reports.
+  See <http://kiwitcms.readthedocs.io/en/latest/db.html>. This feature is in
+  tech-preview and it may be removed if it doesn't work out. Please comment at:
+  <https://github.com/kiwitcms/Kiwi/issues/452>
+- Allow using ``manage.py dumpdata|loaddata|sqlflush|dbshell`` for backups, see
+  `blog post <http://kiwitcms.org/blog/atodorov/2018/07/30/how-to-backup-docker-volumes-for-kiwi-tcms/>`_
+- In TestCase view page add a link to delete the current test case
+- In TestCase Admin page the ``+ Add TestCase`` button now allows to create new
+  test case
+- The version menu item in the helper menu now links to
+  `Changelog <https://github.com/kiwitcms/Kiwi/blob/master/CHANGELOG.rst#change-log>`_
+
+
+Deprecated functionality
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Start showing deprecation warning for Advanced search, see
+  `Issue #448 <https://github.com/kiwitcms/Kiwi/issues/448>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Allows Product/Version/Build to be shown in Testing Report. Fixes
+  `Sentry KIWI-TCMS-2C <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/618688608/>`_
+- Default to ``https://`` links if not running locally. Fixes
+  `Issue #450 <https://github.com/kiwitcms/Kiwi/issues/450>`_
+- Apply missing CSS class for object history table so it can be displayed nicely
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Squash some database migrations
+- Fix a number of pylint issues
+- Remove unused ``testruns.views::view_caseruns()``. References
+  `Issue #316 <https://github.com/kiwitcms/Kiwi/issues/316>`_
+- Remove unused template ``report/caserun.html``
+- Handle TestRun deletion via admin not home grown code
+
+
+
 Kiwi TCMS 5.0 (24 July 2018)
 ----------------------------
 
