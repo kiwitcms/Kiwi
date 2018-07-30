@@ -205,52 +205,6 @@ def new(request, template_name='run/new.html'):
     return render(request, template_name, context_data)
 
 
-@permission_required('testruns.delete_testrun')
-def delete(request, run_id):
-    """Delete the test run
-
-    - Maybe will be not use again
-
-    """
-    try:
-        test_run = TestRun.objects.select_related('manager', 'plan').get(run_id=run_id)
-    except ObjectDoesNotExist:
-        raise Http404
-
-    # should not happen under normal circumstances but malicious user may try
-    # to post to the delete URL with another ID
-    if not test_run.belong_to(request.user):
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Permission denied: TestRun does not belong to you'))
-        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
-
-    if request.GET.get('sure', 'no') == 'no':
-        return HttpResponse("<script>\n \
-            if(confirm('Are you sure you want to delete this run %s? \
-            \\n \\n \
-            Click OK to delete or cancel to come back')) \
-            { window.location.href='/run/%s/delete/?sure=yes' } \
-            else { history.go(-1) };</script>" % (run_id, run_id))
-    elif request.GET.get('sure') == 'yes':
-        try:
-            plan_id = test_run.plan_id
-            test_run.env_value.clear()
-            test_run.case_run.all().delete()
-            test_run.delete()
-            return HttpResponseRedirect(reverse('test_plan_url_short', args=(plan_id, )))
-        except Exception as error:
-            messages.add_message(request,
-                                 messages.WARNING,
-                                 _('Deletion failed: %s') % error)
-            return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
-    else:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Parameter "sure" must be "yes" or "no"'))
-        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
-
-
 @require_GET
 def get_all(request):
     """Read the test runs from database and display them."""

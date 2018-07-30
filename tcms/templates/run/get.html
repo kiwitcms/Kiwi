@@ -58,13 +58,7 @@ jQ(function() {
 		<input type="button" value="Clone" disabled="true"/>
 		{% endif %}
 		{% if perms.testruns.delete_testrun %}
-		{% ifequal test_run.manager user %}
-		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'testruns-delete' test_run.pk %}">
-		{% else %}
-		{% ifequal test_run.plan.author user %}
-		<input id="btn_delete" type="button" value="Delete" title="Delete the run" data-param="{% url 'testruns-delete' test_run.pk %}">
-		{% endifequal %}
-		{% endifequal %}
+                <a href="{% url 'admin:testruns_testrun_delete' test_run.pk %}"><strong>DELETE</strong></a>
 		{% endif %}
 	</div>
 	<h2 id="display_title">{{ test_run.summary }}</h2>
