@@ -2,6 +2,7 @@
 #  pylint: disable=too-few-public-methods
 
 import re
+import sys
 from django.conf import settings
 
 
@@ -44,7 +45,9 @@ def calc_percent(dividend, divisor):
 
 
 def request_host_link(request, domain_name=None):
-    protocol = 'http://'
+    protocol = 'https://'
+    if 'runserver' in sys.argv:
+        protocol = 'http://'
 
     if request:
         if not domain_name:
