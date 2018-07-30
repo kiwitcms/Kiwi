@@ -4,6 +4,12 @@ Change Log
 Kiwi TCMS 5.1 (31 July 2018)
 ----------------------------
 
+**IMPORTANT:** this release introduces new database migrations, an experimental
+reporting feature, deprecated functionality and bug fixes. After upgrade don't
+forget to::
+
+    ./manage.py migrate
+
 
 Enhancements
 ~~~~~~~~~~~~
@@ -12,9 +18,9 @@ Enhancements
   for power users and administrators to generate
   `tabular reports <http://django-report-builder.readthedocs.io/en/latest/howto/>`_.
   You will have to know the existing DB schema if you want to create your own reports.
-  See <http://kiwitcms.readthedocs.io/en/latest/db.html>. This feature is in
+  See http://kiwitcms.readthedocs.io/en/latest/db.html. This feature is in
   tech-preview and it may be removed if it doesn't work out. Please comment at:
-  <https://github.com/kiwitcms/Kiwi/issues/452>
+  `Issue #452 <https://github.com/kiwitcms/Kiwi/issues/452>`_.
 - Allow using ``manage.py dumpdata|loaddata|sqlflush|dbshell`` for backups, see
   `blog post <http://kiwitcms.org/blog/atodorov/2018/07/30/how-to-backup-docker-volumes-for-kiwi-tcms/>`_
 - In TestCase view page add a link to delete the current test case
