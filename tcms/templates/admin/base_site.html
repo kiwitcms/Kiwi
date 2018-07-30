@@ -7,6 +7,15 @@
 {% block extrastyle %}
     <link rel="stylesheet" type="text/css" href="{% static 'style/admin.css' %}" media="screen" />
 {% endblock %}
+{% block javascripts %}
+    {{ block.super }}
+
+    <script type="text/javascript" charset="utf-8">
+        grp.jQuery(document).ready(function() {
+            grp.jQuery("#change-history").addClass('grp-table');
+        });
+    </script>
+{% endblock %}
 {% block navigation %}
     <iframe src="{% url 'iframe-navigation' %}" width="100%" height="205px" scrolling="no" frameBorder="0"></iframe>
 {% endblock %}
