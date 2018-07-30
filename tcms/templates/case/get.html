@@ -55,14 +55,19 @@ Nitrate.TestCases.Instance = {
 	<div class="control">
 		{% if perms.testcases.change_testcase %}
                 <strong>
-                    <a href="{% url "testcases-edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">EDIT</a> |
+                    <a href="{% url "testcases-edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">EDIT</a>
                 </strong>
 		{% endif %}
 		{% if perms.testcases.add_testcaseplan %}
                 <strong>
-		    <a href="{% url "testcases-clone" %}?from_plan={{ test_plan.plan_id }}&case={{ test_case.case_id }}">CLONE</a>
+                    | <a href="{% url "testcases-clone" %}?from_plan={{ test_plan.plan_id }}&case={{ test_case.case_id }}">CLONE</a>
                 </strong>
 		{% endif %}
+                {% if perms.testcases.delete_testcase %}
+                <strong>
+                    | <a href="{% url 'admin:testcases_testcase_delete' test_case.pk %}">DELETE</a>
+                </strong>
+                {% endif %}
 		{% if test_plan %}
 		<span class="right-action">
 			<a href="{{ test_plan.get_full_url }}">Back to Test Plan</a>
