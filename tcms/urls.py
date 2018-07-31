@@ -29,7 +29,9 @@ from tcms.search import advanced_search
 
 
 urlpatterns = [
-    # iframe navigation workaround
+    url(r'^$', core_views.dashboard, name='core-views-index'),
+    url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
+    url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
     url(r'^navigation/', core_views.navigation, name='iframe-navigation'),
 
     url(r'^grappelli/', include(grappelli_urls)),
@@ -37,11 +39,6 @@ urlpatterns = [
 
     url(r'^attachments/', include(attachments_urls, namespace='attachments')),
     url(r'^tinymce/', include(tinymce_urls)),
-
-    # Index and static zone
-    url(r'^$', core_views.index, name='core-views-index'),
-    url(r'^xml-rpc/', RPCEntryPoint.as_view(protocol=XMLRPC_PROTOCOL)),
-    url(r'^json-rpc/$', RPCEntryPoint.as_view(protocol=JSONRPC_PROTOCOL)),
 
     # Ajax call responder
     url(r'^ajax/update/case-status/$', ajax.UpdateTestCaseStatusView.as_view()),
