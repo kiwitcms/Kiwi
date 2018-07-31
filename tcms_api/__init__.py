@@ -22,9 +22,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Python API for the Kiwi TCMS test case management system
+This module provides a dictionary based Python interface for the
+Kiwi TCMS test case management system.
 
-This module provides a low-level(dictionary based) Python interface.
+Installation::
+
+    pip install tcms-api
 
 Minimal config file ``~/.tcms.conf``::
 

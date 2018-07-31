@@ -83,7 +83,7 @@ HELP_MENU_ITEMS = [
     ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
     ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User Guide'),
     ('http://kiwitcms.readthedocs.io/en/latest/admin.html', 'Administration Guide'),
-    ('http://kiwitcms.readthedocs.io/en/latest/modules/tcms.xmlrpc.api.html', 'XML-RPC Help'),
+    ('http://kiwitcms.readthedocs.io/en/latest/api/index.html', 'API Help'),
 ]
 
 
