@@ -10,7 +10,6 @@ from . import views as profiles_views
 urlpatterns = [
     url(r'^(?P<username>[\w.@+-]+)/profile/$', profiles_views.profile,
         name='tcms-profile'),
-    url(r'dashboard/$', profiles_views.dashboard, name='tcms-dashboard'),
 
     url(r'^logout/$',
         contrib_auth_views.LogoutView.as_view(

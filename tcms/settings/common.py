@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+from django.urls import reverse_lazy
 from django.contrib.messages import constants as messages
 import tcms
 
@@ -130,6 +131,8 @@ SITE_ID = 1
 KIWI_VERSION = tcms.__version__
 
 MANAGERS = ADMINS
+
+LOGIN_REDIRECT_URL = reverse_lazy('core-views-index')
 
 # internal
 TCMS_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..').replace('\\', '/'))

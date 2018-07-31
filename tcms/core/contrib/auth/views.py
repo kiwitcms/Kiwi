@@ -111,4 +111,4 @@ def confirm(request, activation_key):
         messages.SUCCESS,
         _('Your account has been activated successfully')
     )
-    return HttpResponseRedirect(request.GET.get('next', reverse('tcms-dashboard')))
+    return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
