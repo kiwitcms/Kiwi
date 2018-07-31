@@ -122,4 +122,4 @@ if settings.DEBUG:
 
 # Overwrite default 500 handler
 # More details could see django.core.urlresolvers._resolve_special()
-handler500 = 'tcms.core.views.error.server_error'
+handler500 = 'tcms.core.views.server_error'
