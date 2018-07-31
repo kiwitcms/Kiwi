@@ -61,12 +61,21 @@ The above command will create two containers:
 Initial configuration of running container
 ------------------------------------------
 
-You need to do initial configuration by executing::
+You need to create the database schema by executing::
 
     docker exec -it kiwi_web /Kiwi/manage.py migrate
+
+By default the first registered account will become superuser!
+
+.. note::
+
+    This requires working email because the account must be activated via
+    confirmation link sent to the email address defined during registration.
+
+If email is not configured or you prefer the command line use::
+
     docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
 
-This will create the database schema and create the first user in the system!
 
 Upgrading
 ---------
