@@ -4,13 +4,14 @@ from django import forms
 from django.urls import reverse
 from django.conf import settings
 from django.contrib import admin
-from django.http import HttpResponseRedirect
 from django.contrib.auth.models import Permission, User
 from django.contrib.sites.models import Site
-from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.admin import SiteAdmin
 from django.contrib.auth.forms import UserChangeForm
 from django.utils.translation import ugettext_lazy as _
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.contrib.auth.admin import UserAdmin, sensitive_post_parameters_m
+
 
 from django_comments.models import Comment
 
@@ -63,6 +64,20 @@ class KiwiUserAdmin(UserAdmin):
         # to the user profile instead
         user = User.objects.get(pk=object_id)
         return HttpResponseRedirect(reverse('tcms-profile', args=[user.username]))
+
+    @sensitive_post_parameters_m
+    def user_change_password(self, request, id, form_url=''):
+        permission = None
+        try:
+            if _modifying_myself(request, id):
+                permission = Permission.objects.get(content_type__app_label='auth',
+                                                    codename='change_user')
+                request.user.user_permissions.add(permission)
+
+            return super().user_change_password(request, id, form_url)
+        finally:
+            if permission:
+                request.user.user_permissions.remove(permission)
 
     @admin.options.csrf_protect_m
     def delete_view(self, request, object_id, extra_context=None):
