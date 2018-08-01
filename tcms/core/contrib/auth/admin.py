@@ -4,7 +4,6 @@ from django import forms
 from django.urls import reverse
 from django.contrib import admin
 from django.http import HttpResponseRedirect
-from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import Permission, User
 from django.contrib.auth.forms import UserChangeForm
 from django.utils.translation import ugettext_lazy as _
@@ -40,7 +39,7 @@ class KiwiUserAdmin(UserAdmin):
     form = MyUserChangeForm
 
     def has_change_permission(self, request, obj=None):
-        return True
+        return request.user.is_superuser or obj is not None
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         if not (_modifying_myself(request, obj.pk) or request.user.is_superuser):
@@ -76,10 +75,7 @@ class KiwiUserAdmin(UserAdmin):
 
     @sensitive_post_parameters_m
     def user_change_password(self, request, id, form_url=''):
-        if not (_modifying_myself(request, id) or request.user.is_superuser):
-            raise PermissionDenied
-
-        return super().user_change_password(request, id, form_url)
+        return HttpResponseRedirect(reverse('admin:password_change'))
 
     @admin.options.csrf_protect_m
     def delete_view(self, request, object_id, extra_context=None):
