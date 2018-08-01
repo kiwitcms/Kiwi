@@ -183,6 +183,7 @@ class BasePlanForm(forms.Form):
                 return TestPlan.objects.get(pk=parent_pk)
         except TestPlan.DoesNotExist:
             raise forms.ValidationError('The plan does not exist in database.')
+        return None
 
     def populate(self, product_id):
         if product_id:
