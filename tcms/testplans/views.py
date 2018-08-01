@@ -293,7 +293,7 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
             author = request.GET.get('author__email__startswith')
             if author and len(search_form.changed_data) == 1:
                 if request.user.is_authenticated:
-                    if author == request.user.username or author == request.user.email:
+                    if author in (request.user.username, request.user.email):
                         query = Q(author__email__startswith=author) | \
                             Q(owner__email__startswith=author)
                         test_plans = TestPlan.objects.filter(query).distinct()
@@ -363,65 +363,70 @@ def choose_run(request, plan_id):
     """Choose one run to add cases"""
 
     if request.method == 'GET':
-        try:
-            test_plan = TestPlan.objects.get(pk=int(plan_id))
-        except ObjectDoesNotExist:
-            raise Http404
+        return _write_cases_to_test_plan(request, plan_id)
+    return _add_cases_to_runs(request, plan_id)
 
-        test_runs = TestRun.objects.filter(plan=plan_id).values('pk',
-                                                                'summary',
-                                                                'build__name',
-                                                                'manager__username')
 
-        # Ready to write cases to test plan
-        test_cases = get_selected_testcases(request).values('pk', 'summary',
-                                                            'author__username',
-                                                            'create_date',
-                                                            'category__name',
-                                                            'priority__value', )
+def _write_cases_to_test_plan(request, plan_id):
+    try:
+        test_plan = TestPlan.objects.get(pk=int(plan_id))
+    except ObjectDoesNotExist:
+        raise Http404
 
-        context_data = {
-            'plan_id': plan_id,
-            'plan': test_plan,
-            'test_runs': test_runs.iterator(),
-            'test_cases': test_cases.iterator(),
-        }
-        return render(request, 'plan/choose_testrun.html', context_data)
+    test_runs = TestRun.objects.filter(plan=plan_id).values('pk',
+                                                            'summary',
+                                                            'build__name',
+                                                            'manager__username')
 
-    # Add cases to runs
-    if request.method == 'POST':
-        chosen_test_run_ids = request.POST.getlist('testrun_ids')
-        to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
+    # Ready to write cases to test plan
+    test_cases = get_selected_testcases(request).values('pk', 'summary',
+                                                        'author__username',
+                                                        'create_date',
+                                                        'category__name',
+                                                        'priority__value', )
 
-        # Adding cases to runs by recursion
-        cases_selected = 0
-        for test_run_id in chosen_test_run_ids:
-            test_run = get_object_or_404(TestRun, run_id=test_run_id)
-            cases = TestCaseRun.objects.filter(run=test_run_id)
-            existing_cases = cases.values_list('case', flat=True)
+    context_data = {
+        'plan_id': plan_id,
+        'plan': test_plan,
+        'test_runs': test_runs.iterator(),
+        'test_cases': test_cases.iterator(),
+    }
+    return render(request, 'plan/choose_testrun.html', context_data)
 
-            for test_case in to_be_added_cases:
-                # counter used as a flag that runs or cases were selected
-                # in the form, regardless of whether or not they were actually added
-                # used to produce an error message if user clicked the Update button
-                # without selecting anything on the screen
-                cases_selected += 1
-                if test_case.case_id not in existing_cases:
-                    test_run.add_case_run(case=test_case)
 
-            estimated_time = datetime.timedelta(0)
-            for case in to_be_added_cases:
-                estimated_time += case.estimated_time
+def _add_cases_to_runs(request, plan_id):
+    chosen_test_run_ids = request.POST.getlist('testrun_ids')
+    to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
 
-            test_run.estimated_time = test_run.estimated_time + estimated_time
-            test_run.save()
+    # Adding cases to runs by recursion
+    cases_selected = 0
+    for test_run_id in chosen_test_run_ids:
+        test_run = get_object_or_404(TestRun, run_id=test_run_id)
+        cases = TestCaseRun.objects.filter(run=test_run_id)
+        existing_cases = cases.values_list('case', flat=True)
 
-        if not cases_selected:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 _('Select at least one TestRun and one TestCase'))
+        for test_case in to_be_added_cases:
+            # counter used as a flag that runs or cases were selected
+            # in the form, regardless of whether or not they were actually added
+            # used to produce an error message if user clicked the Update button
+            # without selecting anything on the screen
+            cases_selected += 1
+            if test_case.case_id not in existing_cases:
+                test_run.add_case_run(case=test_case)
 
-        return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
+        estimated_time = datetime.timedelta(0)
+        for case in to_be_added_cases:
+            estimated_time += case.estimated_time
+
+        test_run.estimated_time = test_run.estimated_time + estimated_time
+        test_run.save()
+
+    if not cases_selected:
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Select at least one TestRun and one TestCase'))
+
+    return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
 
 @require_http_methods(['GET', 'POST'])
@@ -564,6 +569,7 @@ def clone(request):
         if assign_me_as_copied_case_author:
             clone_params['new_case_author'] = request.user
 
+        # pylint: disable=invalid-name
         assign_me_as_copied_case_default_tester = \
             clone_options['copy_testcases'] and \
             not clone_options['keep_case_default_tester']
