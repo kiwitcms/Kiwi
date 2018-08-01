@@ -21,7 +21,7 @@ class TestPlanAdmin(ReadOnlyHistoryAdmin):
     def add_view(self, request, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('admin:testplans_testplan_changelist'))
 
-    def change_view(self, request, object_id, extra_context=None):
+    def change_view(self, request, object_id, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('test_plan_url_short', args=[object_id]))
 
     def response_delete(self, request, obj_display, obj_id):
