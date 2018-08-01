@@ -292,12 +292,6 @@ MODERNRPC_METHODS_MODULES = [
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
-# Authentication backends
-# NOTE: we only support the internal auth backends.
-AUTHENTICATION_BACKENDS = [
-    'tcms.core.contrib.auth.backends.DBModelBackend',
-]
-
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
 SET_ADMIN_AS_SUPERUSER = False
