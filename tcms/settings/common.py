@@ -107,7 +107,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'global_login_required.GlobalLoginRequiredMiddleware',
-    'dj_pagination.middleware.PaginationMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
@@ -242,7 +241,6 @@ INSTALLED_APPS = [
 
     'attachments',
     'django_comments',
-    'dj_pagination',
     'modernrpc',
     'report_builder',
     'simple_history',
@@ -302,7 +300,6 @@ SIMPLE_HISTORY_HISTORY_CHANGE_REASON_USE_TEXT_FIELD = True
 
 # Default page size when paginating queries
 DEFAULT_PAGE_SIZE = 100
-PAGINATION_DEFAULT_PAGINATION = DEFAULT_PAGE_SIZE
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

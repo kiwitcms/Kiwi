@@ -1,10 +1,7 @@
-{% load pagination_tags %}
 {% load static %}
 {% if test_cases %}
-	{% autopaginate test_cases %}
 	<form id="cases_form" action="{% url "testcases-clone" %}" method="post">
 	<div id="contentTab" class="mixbar">
-		{#}<span class="tit">{{ test_cases.count }} Cases</span>{#}
 		<span>
 			{% if perms.testcases.add_testcase %}
 			<input type="submit" value="Clone" title="clone selected test plans" />
@@ -14,7 +11,6 @@
                    title="Create the printable copy for selected cases." />
 			<input type="button" id="export_selected_cases" value="Export" title="Export the cases for selected cases." />
 		</span> 
-		{% paginate %}
 	</div>
 	<table class="list border-bottom" id="testcases_table" cellpadding="0" cellspacing="0" border="0">
 		<thead>
@@ -63,7 +59,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
-{% paginate %}
 </form>
 
 {% else %}
