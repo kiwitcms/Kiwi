@@ -11,8 +11,6 @@ Submodules
 
 .. toctree::
 
-   tcms.profiles.forms
-   tcms.profiles.models
    tcms.profiles.urls
    tcms.profiles.views
 

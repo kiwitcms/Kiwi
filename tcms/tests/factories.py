@@ -24,6 +24,7 @@ class UserFactory(DjangoModelFactory):
 
     username = factory.Sequence(lambda n: 'User%d' % n)
     email = factory.LazyAttribute(lambda user: '%s@example.com' % user.username)
+    is_staff = True
 
     @factory.post_generation
     def groups(self, create, extracted, **kwargs):
@@ -419,13 +420,3 @@ class EnvRunValueMapFactory(DjangoModelFactory):
 
     run = factory.SubFactory(TestRunFactory)
     value = factory.SubFactory(EnvValueFactory)
-
-
-# ### Factories for app profiles ###
-
-class UserProfileFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'profiles.UserProfile'
-
-    user = factory.SubFactory(UserFactory)
