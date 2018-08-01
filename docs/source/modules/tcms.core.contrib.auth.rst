@@ -11,6 +11,7 @@ Submodules
 
 .. toctree::
 
+   tcms.core.contrib.auth.admin
    tcms.core.contrib.auth.backends
    tcms.core.contrib.auth.forms
    tcms.core.contrib.auth.models
