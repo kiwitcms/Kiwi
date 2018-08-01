@@ -11,7 +11,6 @@ python-bugzilla
 # because of https://github.com/pycontribs/jira/issues/501
 jira==1.0.10
 PyGithub
-dj-pagination
 django-tinymce
 beautifulsoup4
 django-contrib-comments

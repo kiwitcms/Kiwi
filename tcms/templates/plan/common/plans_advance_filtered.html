@@ -1,7 +1,4 @@
-{% load pagination_tags %}
-
 <form id="plans_form">
-	{% autopaginate test_plans %}
 	<div id="contentTab" class="mixbar">
 		{#<span class="tit">{{ test_plans.count }} Plans</span>#}
 		<span>
@@ -9,9 +6,6 @@
 			<input type="button" title="Create new test plan" value="New Test Plan" class="js-new-plan" data-param="{% url 'plans-new' %}" />
 			<input type="button" value="Clone" title="clone selected test plans." class="js-clone-plan" data-param="{% url 'plans-clone' %}" />
 			{% endif %}
-		</span>
-		<span class="right-action">
-			{% paginate %}
 		</span>
 	</div>
 	<table id="testplans_table" class="list border-bottom" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">
@@ -62,5 +56,4 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	{% paginate %}
 </form>
