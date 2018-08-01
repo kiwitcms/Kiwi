@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import django.contrib.auth
+from django.core.exceptions import PermissionDenied
 
-from django.conf import settings
 from modernrpc.core import rpc_method
 from modernrpc.core import REQUEST_KEY
-from django.core.exceptions import PermissionDenied
 
 __all__ = (
     'login',
@@ -29,27 +28,18 @@ def login(username, password, **kwargs):
         :rtype: str
         :raises PermissionDenied: if username or password doesn't match or missing
     """
-    from tcms.core.contrib.auth import get_backend
-
-    user = None
     # Get the current request
     request = kwargs.get(REQUEST_KEY)
 
     if not username or not password:
         raise PermissionDenied('Username and password is required')
 
-    for backend_str in settings.AUTHENTICATION_BACKENDS:
-        backend = get_backend(backend_str)
-        user = backend.authenticate(request, username, password)
+    user = django.contrib.auth.authenticate(request, username=username, password=password)
+    if user is not None:
+        django.contrib.auth.login(request, user)
+        return request.session.session_key
 
-        if user:
-            user.backend = "%s.%s" % (backend.__module__,
-                                      backend.__class__.__name__)
-            django.contrib.auth.login(request, user)
-            return request.session.session_key
-
-    if user is None:
-        raise PermissionDenied('Wrong username or password')
+    raise PermissionDenied('Wrong username or password')
 
 
 @rpc_method(name='Auth.login_krbv')
