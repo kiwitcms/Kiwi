@@ -11,11 +11,11 @@ def email_plan_update(plan):
     mailto(None, subject, recipients, body)
 
 
-def get_plan_notification_recipients(plan):
+def get_plan_notification_recipients(plan): # pylint: disable=invalid-name
     recipients = set()
 
     if plan.owner and plan.emailing.auto_to_plan_owner:
-            recipients.add(plan.owner.email)
+        recipients.add(plan.owner.email)
 
     if plan.emailing.auto_to_plan_author:
         recipients.add(plan.author.email)
@@ -31,4 +31,4 @@ def get_plan_notification_recipients(plan):
 
     # don't email author of last change
     recipients.discard(getattr(plan.history.latest().history_user, 'email', ''))
-    return list(filter(lambda e: bool(e), recipients))
+    return list(filter(bool, recipients))
