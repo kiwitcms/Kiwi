@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 21:48+0000\n"
+"POT-Creation-Date: 2018-08-01 14:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,55 +18,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: tcms/core/admin.py:39
-msgid "This email address is already in use"
-msgstr ""
-
-#: tcms/core/ajax.py:290 tcms/testruns/views.py:1242
+#: tcms/core/ajax.py:290 tcms/testruns/views.py:1180
 #, python-format
 msgid "User %s not found!"
 msgstr ""
 
-#: tcms/core/contrib/auth/apps.py:7
+#: tcms/core/contrib/auth/admin.py:24
+msgid "This email address is already in use"
+msgstr ""
+
+#: tcms/core/contrib/auth/admin.py:73
+msgid "Personal info"
+msgstr ""
+
+#: tcms/core/contrib/auth/admin.py:74
+msgid "Permissions"
+msgstr ""
+
+#: tcms/core/contrib/auth/apps.py:8
 msgid "Core auth"
 msgstr ""
 
-#: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:70
+#: tcms/core/contrib/auth/forms.py:29
 msgid "A user with that email already exists."
 msgstr ""
 
-#: tcms/core/contrib/auth/forms.py:53
+#: tcms/core/contrib/auth/forms.py:57
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:30
-msgid "This backend does not allow user registration"
-msgstr ""
-
-#: tcms/core/contrib/auth/views.py:52
+#: tcms/core/contrib/auth/views.py:41
 msgid ""
 "Your account has been created, please check your mailbox for confirmation"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:58
+#: tcms/core/contrib/auth/views.py:47
 msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:64
+#: tcms/core/contrib/auth/views.py:53
 msgid "Following is the administrator list"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:95
+#: tcms/core/contrib/auth/views.py:84
 msgid "This activation key no longer exists in the database"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:100
+#: tcms/core/contrib/auth/views.py:89
 msgid "This activation key has expired"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:112
+#: tcms/core/contrib/auth/views.py:101
 msgid "Your account has been activated successfully"
 msgstr ""
 
@@ -118,39 +122,11 @@ msgid ""
 "name."
 msgstr ""
 
-#: tcms/profiles/forms.py:24
-msgid "Username"
-msgstr ""
-
-#: tcms/profiles/forms.py:26
-msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr ""
-
-#: tcms/profiles/forms.py:29
-msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr ""
-
-#: tcms/profiles/forms.py:34
-msgid "E-mail"
-msgstr ""
-
-#: tcms/profiles/forms.py:79
-msgid "User error."
-msgstr ""
-
-#: tcms/profiles/forms.py:99
-msgid "A user with that username already exists."
-msgstr ""
-
-#: tcms/profiles/views.py:39
-msgid "Information successfully updated"
-msgstr ""
-
-#: tcms/signals.py:72
+#: tcms/signals.py:74
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:132
+#: tcms/signals.py:149
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr ""
@@ -206,48 +182,6 @@ msgid ""
 "Go to %(user_url)s to activate the account!\n"
 msgstr ""
 
-#: tcms/templates/registration/password_change_done.html:4
-#: tcms/templates/registration/password_change_done.html:8
-msgid "Password change successful"
-msgstr ""
-
-#: tcms/templates/registration/password_change_done.html:10
-msgid "Your password was changed."
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:5
-#: tcms/templates/registration/password_change_form.html:18
-msgid "Password change"
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:15
-msgid "Please correct the error below."
-msgid_plural "Please correct the errors below."
-msgstr[0] ""
-msgstr[1] ""
-
-#: tcms/templates/registration/password_change_form.html:19
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:23
-msgid "Old password"
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:28
-msgid "New password"
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:33
-msgid "Password (again)"
-msgstr ""
-
-#: tcms/templates/registration/password_change_form.html:40
-msgid "Change my password"
-msgstr ""
-
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
@@ -257,8 +191,8 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:1277 tcms/testruns/views.py:864
-#: tcms/testruns/views.py:950
+#: tcms/testcases/views.py:1277 tcms/testruns/views.py:816
+#: tcms/testruns/views.py:902
 msgid "At least one TestCase is required"
 msgstr ""
 
@@ -288,28 +222,19 @@ msgstr ""
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
 
-#: tcms/testruns/views.py:64
-msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
-
-#: tcms/testruns/views.py:227
+#: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr ""
 
-#: tcms/testruns/views.py:247
-#, python-format
-msgid "Deletion failed: %s"
+#: tcms/testruns/views.py:62
+msgid "Creating a TestRun requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:252
-msgid "Parameter \"sure\" must be \"yes\" or \"no\""
-msgstr ""
-
-#: tcms/testruns/views.py:959
+#: tcms/testruns/views.py:911
 msgid "TestCase ID is not a valid integer"
 msgstr ""
 
-#: tcms/testruns/views.py:1091
+#: tcms/testruns/views.py:1043
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr ""
