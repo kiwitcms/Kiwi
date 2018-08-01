@@ -18,9 +18,9 @@ from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.core.contrib.comments import views as comments_views
 from tcms.core.contrib.linkreference import views as linkreference_views
-from tcms.profiles import urls as profiles_urls
 from tcms.testplans import urls as testplans_urls
 from tcms.testcases import urls as testcases_urls
+from tcms.core.contrib.auth import urls as auth_urls
 from tcms.testruns import urls as testruns_urls
 from tcms.testruns import views as testruns_views
 from tcms.management import views as management_views
@@ -55,7 +55,7 @@ urlpatterns = [
     url(r'^comments/delete/', comments_views.delete, name='comments-delete'),
 
     # Account information zone, such as login method
-    url(r'^accounts/', include(profiles_urls)),
+    url(r'^accounts/', include(auth_urls)),
 
     # Testplans zone
     url(r'^plan/', include(testplans_urls.plan_urls)),
