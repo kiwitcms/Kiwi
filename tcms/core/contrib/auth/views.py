@@ -20,19 +20,8 @@ from tcms.core.contrib.auth.models import UserActivationKey
 
 
 @require_http_methods(['GET', 'POST'])
-def register(request, template_name='registration/registration_form.html'):
+def register(request):
     """Register method of account"""
-    # Check that registration is allowed by backend
-    backend = get_using_backend()
-    can_register = getattr(backend, 'can_register')
-    if not can_register:
-        messages.add_message(
-            request,
-            messages.ERROR,
-            _('This backend does not allow user registration')
-        )
-        return HttpResponseRedirect(reverse('tcms-login'))
-
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
@@ -41,8 +30,7 @@ def register(request, template_name='registration/registration_form.html'):
             # send a signal that new user has been registered
             USER_REGISTERED_SIGNAL.send(sender=form.__class__,
                                         request=request,
-                                        user=new_user,
-                                        backend=backend)
+                                        user=new_user)
 
             # Send confirmation email to new user
             if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
@@ -79,7 +67,7 @@ def register(request, template_name='registration/registration_form.html'):
     context_data = {
         'form': form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'registration/registration_form.html', context_data)
 
 
 @require_GET

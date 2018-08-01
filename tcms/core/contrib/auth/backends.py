@@ -2,15 +2,8 @@
 
 from django.conf import settings
 from django.contrib.auth.models import Group
-from django.contrib.auth.backends import ModelBackend
 
 from tcms.utils.permissions import assign_default_group_permissions
-
-
-class DBModelBackend(ModelBackend):
-    can_login = True
-    can_register = True
-    can_logout = True
 
 
 def initiate_user_with_default_setups(user):

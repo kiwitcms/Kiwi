@@ -49,26 +49,19 @@
 
                         <li class="divider"></li>
 
-                        {% if AUTH_BACKEND.can_logout %}
                         <li>
                             <a href="{% url "tcms-logout" %}" target="_parent">Logout</a>
                         </li>
-                        {% endif %}
-
                     {% else %}
-                        {% if AUTH_BACKEND.can_login %}
                         <li>
                             <a href="{% url "tcms-login" %}" target="_parent">Login</a>
                         </li>
-                        {% endif %}
 
                         <li class="divider"></li>
 
-                        {% if AUTH_BACKEND.can_register %}
                         <li>
                             <a href="{% url "tcms-register" %}" target="_parent">Register</a>
                         </li>
-                        {% endif %}
                     {% endif %}
                     </ul>
                 </li>
