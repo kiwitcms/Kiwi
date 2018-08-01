@@ -3,8 +3,8 @@
 
 import json
 from http import HTTPStatus
-from uuslug import slugify
 from urllib.parse import urlencode
+from uuslug import slugify
 
 from django import test
 from django.conf import settings
@@ -119,13 +119,13 @@ class PlanTests(test.TestCase):
                                         product=cls.product,
                                         type=cls.plan_type)
         # add TestCases to plan with status CONFIRMED
-        for i in range(5):
+        for _i in range(5):
             case = TestCaseFactory(plan=[cls.test_plan],
                                    case_status=TestCaseStatus.objects.get(name='CONFIRMED'))
             TestCaseTextFactory(case=case)
 
         # also add a few PROPOSED TestCases
-        for i in range(3):
+        for _i in range(3):
             case = TestCaseFactory(plan=[cls.test_plan])
             TestCaseTextFactory(case=case)
 
@@ -554,19 +554,7 @@ class TestCloneView(BasePlanCase):
         self.assertEqual(Product.objects.get(pk=self.product.pk), cloned_plan.product)
         self.assertEqual(Version.objects.get(pk=self.version.pk), cloned_plan.product_version)
 
-        # Verify option set_parent
-        self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
-
-        # Verify option copy_environment_groups
-        for env_group in original_plan.env_group.all():
-            added = EnvPlanMap.objects.filter(plan=cloned_plan, group=env_group).exists()
-            self.assertTrue(added)
-
-        # Verify options link_testcases and copy_testcases
-        if link_cases and not copy_cases:
-            for case in original_plan.case.all():
-                is_case_linked = TestCasePlan.objects.filter(plan=cloned_plan, case=case).exists()
-                self.assertTrue(is_case_linked)
+        self._verify_options(original_plan, cloned_plan, copy_cases, link_cases)
 
         if link_cases and copy_cases:
             # Ensure cases of original plan are not linked to cloned plan
@@ -591,6 +579,21 @@ class TestCloneView(BasePlanCase):
                 else:
                     me = self.plan_tester
                     self.assertEqual(me, copied_case.default_tester)
+
+    def _verify_options(self, original_plan, cloned_plan, copy_cases, link_cases):
+        # Verify option set_parent
+        self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
+
+        # Verify option copy_environment_groups
+        for env_group in original_plan.env_group.all():
+            added = EnvPlanMap.objects.filter(plan=cloned_plan, group=env_group).exists()
+            self.assertTrue(added)
+
+        # Verify options link_testcases and copy_testcases
+        if link_cases and not copy_cases:
+            for case in original_plan.case.all():
+                is_case_linked = TestCasePlan.objects.filter(plan=cloned_plan, case=case).exists()
+                self.assertTrue(is_case_linked)
 
     def test_clone_a_plan_with_default_options(self):
         post_data = {
@@ -704,7 +707,7 @@ class TestAJAXSearch(BasePlanCase):
         super(TestAJAXSearch, cls).setUpTestData()
 
         # Add more plans for testing search
-        for i in range(24):
+        for _i in range(24):
             TestPlanFactory(author=cls.tester,
                             owner=cls.tester,
                             product=cls.product,
