@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-19 21:48+0000\n"
+"POT-Creation-Date: 2018-08-01 14:42+0000\n"
 "PO-Revision-Date: 2018-06-26 22:10\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -16,55 +16,59 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/admin.py:39
-msgid "This email address is already in use"
-msgstr ""
-
-#: tcms/core/ajax.py:290 tcms/testruns/views.py:1242
+#: tcms/core/ajax.py:290 tcms/testruns/views.py:1180
 #, python-format
 msgid "User %s not found!"
 msgstr ""
 
-#: tcms/core/contrib/auth/apps.py:7
+#: tcms/core/contrib/auth/admin.py:24
+msgid "This email address is already in use"
+msgstr ""
+
+#: tcms/core/contrib/auth/admin.py:73
+msgid "Personal info"
+msgstr ""
+
+#: tcms/core/contrib/auth/admin.py:74
+msgid "Permissions"
+msgstr ""
+
+#: tcms/core/contrib/auth/apps.py:8
 msgid "Core auth"
 msgstr "核心认证"
 
-#: tcms/core/contrib/auth/forms.py:29 tcms/profiles/forms.py:70
+#: tcms/core/contrib/auth/forms.py:29
 msgid "A user with that email already exists."
 msgstr "已存在使用相同电子邮件的地址的用户。"
 
-#: tcms/core/contrib/auth/forms.py:53
+#: tcms/core/contrib/auth/forms.py:57
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:30
-msgid "This backend does not allow user registration"
-msgstr "此后端不允许用户注册"
-
-#: tcms/core/contrib/auth/views.py:52
+#: tcms/core/contrib/auth/views.py:41
 msgid ""
 "Your account has been created, please check your mailbox for confirmation"
 msgstr "您的账户已创建，请检查您的收件箱进行确认"
 
-#: tcms/core/contrib/auth/views.py:58
+#: tcms/core/contrib/auth/views.py:47
 msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr "您的账户已创建，但您需要管理员来激活它"
 
-#: tcms/core/contrib/auth/views.py:64
+#: tcms/core/contrib/auth/views.py:53
 msgid "Following is the administrator list"
 msgstr "以下是管理员列表"
 
-#: tcms/core/contrib/auth/views.py:95
+#: tcms/core/contrib/auth/views.py:84
 msgid "This activation key no longer exists in the database"
 msgstr "此激活密钥不再存于数据库中"
 
-#: tcms/core/contrib/auth/views.py:100
+#: tcms/core/contrib/auth/views.py:89
 msgid "This activation key has expired"
 msgstr "此激活密钥已过期"
 
-#: tcms/core/contrib/auth/views.py:112
+#: tcms/core/contrib/auth/views.py:101
 msgid "Your account has been activated successfully"
 msgstr "您的账户已被成功激活"
 
@@ -116,39 +120,11 @@ msgid ""
 "name."
 msgstr ""
 
-#: tcms/profiles/forms.py:24
-msgid "Username"
-msgstr "用户名"
-
-#: tcms/profiles/forms.py:26
-msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr "必填。30个字符或更少。仅限字母、数字和 @/./+/-/_。"
-
-#: tcms/profiles/forms.py:29
-msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr "此值只可包含字母、数字和 @/./+/-/ 字符。"
-
-#: tcms/profiles/forms.py:34
-msgid "E-mail"
-msgstr "电子邮箱"
-
-#: tcms/profiles/forms.py:79
-msgid "User error."
-msgstr "用户错误。"
-
-#: tcms/profiles/forms.py:99
-msgid "A user with that username already exists."
-msgstr "已存在相同用户名的用户。"
-
-#: tcms/profiles/views.py:39
-msgid "Information successfully updated"
-msgstr "信息已成功更新"
-
-#: tcms/signals.py:72
+#: tcms/signals.py:74
 msgid "New user awaiting approval"
 msgstr "等待审批通过的新用户"
 
-#: tcms/signals.py:132
+#: tcms/signals.py:149
 #, fuzzy, python-format
 #| msgid "New TestRun %(summary)s created"
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
@@ -229,47 +205,6 @@ msgstr ""
 "\n"
 "请前往 %(user_url)s 激活账户！\n"
 
-#: tcms/templates/registration/password_change_done.html:4
-#: tcms/templates/registration/password_change_done.html:8
-msgid "Password change successful"
-msgstr "密码修改成功"
-
-#: tcms/templates/registration/password_change_done.html:10
-msgid "Your password was changed."
-msgstr "您的密码已更改。"
-
-#: tcms/templates/registration/password_change_form.html:5
-#: tcms/templates/registration/password_change_form.html:18
-msgid "Password change"
-msgstr "更改密码"
-
-#: tcms/templates/registration/password_change_form.html:15
-msgid "Please correct the error below."
-msgid_plural "Please correct the errors below."
-msgstr[0] "请更正下方的错误。"
-
-#: tcms/templates/registration/password_change_form.html:19
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
-msgstr "为了安全，请输入您的旧密码并输入两次您的新密码确认您输入正确。"
-
-#: tcms/templates/registration/password_change_form.html:23
-msgid "Old password"
-msgstr "旧密码"
-
-#: tcms/templates/registration/password_change_form.html:28
-msgid "New password"
-msgstr "新密码"
-
-#: tcms/templates/registration/password_change_form.html:33
-msgid "Password (again)"
-msgstr "重复密码"
-
-#: tcms/templates/registration/password_change_form.html:40
-msgid "Change my password"
-msgstr "更改我的密码"
-
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
@@ -279,8 +214,8 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr "测试计划未指定或不存在"
 
-#: tcms/testcases/views.py:1277 tcms/testruns/views.py:864
-#: tcms/testruns/views.py:950
+#: tcms/testcases/views.py:1277 tcms/testruns/views.py:816
+#: tcms/testruns/views.py:902
 msgid "At least one TestCase is required"
 msgstr "需要至少一个测试实例"
 
@@ -310,28 +245,19 @@ msgstr "需要至少一个测试计划进行打印"
 msgid "Test Plan \"%s\" does not exist"
 msgstr "测试计划 \"%s\" 不存在"
 
-#: tcms/testruns/views.py:64
-msgid "Creating a TestRun requires at least one TestCase"
-msgstr "新建测试计划至少需要一个测试实例"
-
-#: tcms/testruns/views.py:227
+#: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "拒绝访问: 测试运行不属于您"
 
-#: tcms/testruns/views.py:247
-#, python-format
-msgid "Deletion failed: %s"
-msgstr "删除失败: %s"
+#: tcms/testruns/views.py:62
+msgid "Creating a TestRun requires at least one TestCase"
+msgstr "新建测试计划至少需要一个测试实例"
 
-#: tcms/testruns/views.py:252
-msgid "Parameter \"sure\" must be \"yes\" or \"no\""
-msgstr "参数 \"sure\" 必须为 \"yes\" 或 \"no\""
-
-#: tcms/testruns/views.py:959
+#: tcms/testruns/views.py:911
 msgid "TestCase ID is not a valid integer"
 msgstr "测试实例编号不是有效的整数"
 
-#: tcms/testruns/views.py:1091
+#: tcms/testruns/views.py:1043
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "已更新 %d 个测试运行:"
@@ -383,9 +309,3 @@ msgstr "已禁用"
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr "需要更新"
-
-#~ msgid "TestRun %(summary)s has been updated"
-#~ msgstr "测试运行 %(summary)s 已更新"
-
-#~ msgid "Reorder operation requires at least one TestCase"
-#~ msgstr "重排序操作至少需要一个测试实例"
