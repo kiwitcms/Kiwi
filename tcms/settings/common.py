@@ -117,6 +117,11 @@ MIDDLEWARE = [
 PUBLIC_VIEWS = [
     'modernrpc.views.RPCEntryPoint',
     'django.contrib.auth.views.LoginView',
+    'django.contrib.auth.views.LogoutView',
+    'django.contrib.auth.views.PasswordResetView',
+    'django.contrib.auth.views.PasswordResetDoneView',
+    'django.contrib.auth.views.PasswordResetConfirmView',
+    'django.contrib.auth.views.PasswordResetCompleteView',
     'tcms.core.contrib.auth.views.register',
     'tcms.core.contrib.auth.views.confirm',
     'tcms.core.views.navigation',
