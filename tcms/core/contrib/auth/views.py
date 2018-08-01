@@ -6,7 +6,9 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
@@ -112,3 +114,9 @@ def confirm(request, activation_key):
         _('Your account has been activated successfully')
     )
     return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
+
+
+def profile(request, username):
+    """Show user profiles"""
+    user = get_object_or_404(User, username=username)
+    return HttpResponseRedirect(reverse('admin:auth_user_change', args=[user.pk]))

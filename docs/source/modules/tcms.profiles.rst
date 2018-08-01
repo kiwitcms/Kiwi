@@ -6,11 +6,3 @@ tcms.profiles package
     :undoc-members:
     :show-inheritance:
 
-Submodules
-----------
-
-.. toctree::
-
-   tcms.profiles.urls
-   tcms.profiles.views
-
