@@ -84,7 +84,11 @@ class KiwiUserAdmin(UserAdmin):
         if request.user.is_superuser:
             return super().get_fieldsets(request, obj)
 
-        return ((None, {'fields': ('username',)}),
+        first_fieldset_fields = ('username',)
+        if _modifying_myself(request, obj.pk):
+            first_fieldset_fields = first_fieldset_fields + ('password',)
+
+        return ((None, {'fields': first_fieldset_fields}),
                 (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
                 (_('Permissions'), {'fields': ('is_active', 'groups')}))
 
