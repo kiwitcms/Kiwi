@@ -14,7 +14,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
 from tcms.signals import USER_REGISTERED_SIGNAL
-from tcms.core.contrib.auth import get_using_backend
 from tcms.core.contrib.auth.forms import RegistrationForm
 from tcms.core.contrib.auth.models import UserActivationKey
 
