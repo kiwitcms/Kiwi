@@ -36,10 +36,9 @@ __all__ = [
 ]
 
 
-#: Sent when a new user is registered into Kiwi TCMS through any of the
-#: backends which support user registration. The signal receives three keyword
-#: parameters: ``request``, ``user`` and ``backend`` respectively!
-USER_REGISTERED_SIGNAL = Signal(providing_args=['user', 'backend'])
+#: Sent when a new user is registered into Kiwi TCMS. This signal receives two
+#: keyword parameters: ``request`` and ``user`` respectively!
+USER_REGISTERED_SIGNAL = Signal(providing_args=['user'])
 
 
 def notify_admins(sender, **kwargs):
