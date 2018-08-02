@@ -8,3 +8,8 @@ from .common import *  # noqa: F401,F403
 
 # Debug settings
 DEBUG = False
+
+try:
+    from local_settings import *  # noqa: F401,F403
+except ImportError:
+    pass
