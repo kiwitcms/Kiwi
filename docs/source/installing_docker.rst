@@ -65,16 +65,18 @@ You need to create the database schema by executing::
 
     docker exec -it kiwi_web /Kiwi/manage.py migrate
 
-By default the first registered account will become superuser!
-
 .. note::
+
+    By default the first registered account will become superuser!
+
+.. warning::
 
     This requires working email because the account must be activated via
     confirmation link sent to the email address defined during registration.
 
-If email is not configured or you prefer the command line use::
+    If email is not configured or you prefer the command line use::
 
-    docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
+        docker exec -it kiwi_web /Kiwi/manage.py createsuperuser
 
 
 Upgrading
@@ -115,11 +117,11 @@ Customization
 -------------
 
 You can edit ``docker-compose.yml`` to mount the local file
-``local_settings.py`` inside the running Docker container as ``product.py``::
+``local_settings.py`` inside the running Docker container::
 
         volumes:
             - uploads:/var/kiwi/uploads
-            - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/product.py
+            - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings.py
 
 You can override any default settings in this way!
 
