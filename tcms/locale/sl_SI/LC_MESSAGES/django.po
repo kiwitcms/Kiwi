@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-01 14:42+0000\n"
+"POT-Creation-Date: 2018-08-06 07:54+0000\n"
 "PO-Revision-Date: 2018-06-27 06:30\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
@@ -124,6 +124,82 @@ msgid ""
 "Value(s) named '%s' already exists in this property. Please select another "
 "name."
 msgstr "Vrednost '%s' že obstaja. Prosimo določite preimenujte vrednost."
+
+#: tcms/settings/common.py:85
+msgid "DASHBOARD"
+msgstr ""
+
+#: tcms/settings/common.py:86
+msgid "TESTING"
+msgstr ""
+
+#: tcms/settings/common.py:87
+msgid "New Test Plan"
+msgstr ""
+
+#: tcms/settings/common.py:89
+msgid "New Test Case"
+msgstr ""
+
+#: tcms/settings/common.py:91
+msgid "SEARCH"
+msgstr ""
+
+#: tcms/settings/common.py:92
+msgid "Search Test Plans"
+msgstr ""
+
+#: tcms/settings/common.py:93
+msgid "Search Test Runs"
+msgstr ""
+
+#: tcms/settings/common.py:94
+msgid "Search Test Cases"
+msgstr ""
+
+#: tcms/settings/common.py:96
+msgid "Advanced Search"
+msgstr ""
+
+#: tcms/settings/common.py:98
+msgid "REPORTING"
+msgstr ""
+
+#: tcms/settings/common.py:99
+msgid "Overall report"
+msgstr ""
+
+#: tcms/settings/common.py:100
+msgid "Custom report"
+msgstr ""
+
+#: tcms/settings/common.py:101
+msgid "Testing report"
+msgstr ""
+
+#: tcms/settings/common.py:103
+msgid "Report builder"
+msgstr ""
+
+#: tcms/settings/common.py:105
+msgid "ADMIN"
+msgstr ""
+
+#: tcms/settings/common.py:106
+msgid "Environment Groups"
+msgstr ""
+
+#: tcms/settings/common.py:107
+msgid "Envrionment Properties"
+msgstr ""
+
+#: tcms/settings/common.py:109
+msgid "Users and groups"
+msgstr ""
+
+#: tcms/settings/common.py:110
+msgid "Everything else"
+msgstr ""
 
 #: tcms/signals.py:74
 msgid "New user awaiting approval"
