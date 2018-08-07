@@ -197,7 +197,7 @@ USE_TZ = False
 TIME_ZONE = 'Etc/UTC'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-MEDIA_ROOT = '/var/kiwi/uploads'
+MEDIA_ROOT = '/Kiwi/uploads'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
