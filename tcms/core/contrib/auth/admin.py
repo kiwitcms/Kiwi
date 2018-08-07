@@ -42,7 +42,7 @@ class KiwiUserAdmin(UserAdmin):
         return request.user.is_superuser or obj is not None
 
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
-        if not (_modifying_myself(request, obj.pk) or request.user.is_superuser):
+        if obj and not (_modifying_myself(request, obj.pk) or request.user.is_superuser):
             context.update({
                 'show_save': False,
                 'show_save_and_continue': False,
