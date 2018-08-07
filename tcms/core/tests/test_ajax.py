@@ -30,7 +30,7 @@ from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import BuildFactory
 
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestInfo(test.TestCase):

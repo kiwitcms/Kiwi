@@ -6,7 +6,7 @@ from django import test
 
 import tcms_api
 from tcms.tests.factories import UserFactory
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class XmlrpcAPIBaseTest(test.LiveServerTestCase):
