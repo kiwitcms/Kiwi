@@ -22,12 +22,10 @@ services:
         restart: always
         image: kiwitcms/kiwi:latest
         ports:
-            - 80:80
-            - 443:443
+            - 80:8080
+            - 443:8443
         volumes:
-            - uploads:/var/kiwi/uploads
-            - ./etc/kiwitcms:/etc/kiwitcms:Z
-            - ./log/httpd:/var/log/httpd:Z
+            - uploads:/Kiwi/uploads:Z
         environment:
             KIWI_DB_HOST: db
             KIWI_DB_PORT: 3306

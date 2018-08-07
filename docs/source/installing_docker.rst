@@ -107,7 +107,7 @@ By default Kiwi TCMS is served via HTTPS. ``docker-compose.yml`` is configured w
 a default self-signed certificate stored in ``etc/kiwitcms/ssl/``. If you want to
 use different SSL certificate you need to update the ``localhost.key`` and
 ``localhost.crt`` files in that directory or bind-mount your own SSL directory to
-``/etc/kiwitcms/ssl`` inside the docker container!
+``/Kiwi/ssl`` inside the docker container!
 
 More information about generating your own self-signed certificates can be found at
 https://wiki.centos.org/HowTos/Https.
@@ -120,7 +120,7 @@ You can edit ``docker-compose.yml`` to mount the local file
 ``local_settings.py`` inside the running Docker container::
 
         volumes:
-            - uploads:/var/kiwi/uploads
+            - uploads:/Kiwi/uploads
             - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings.py
 
 You can override any default settings in this way!
@@ -156,9 +156,7 @@ the contents of ``Dockerfile`` and then::
 Troubleshooting
 ----------------
 
-When started via docker-compose Kiwi TCMS will store the HTTPD logs from the
-container in the directory ``log/httpd`` on the host! Errors are usually found
-in ``ssl_error_log``.
+The Kiwi TCMS container will print HTTPD logs on the docker console!
 
 In case you see a 500 Internal Server Error page and the error log does not
 provide a traceback you should configure the ``DEBUG`` setting to ``True`` and
