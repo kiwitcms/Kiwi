@@ -48,10 +48,15 @@ class TestFilterCases(XmlrpcAPIBaseTest):
                                     product_version=self.version)
         self.case_category = CategoryFactory(product=self.product)
         self.cases_count = 10
-        self.cases = [TestCaseFactory(category=self.case_category, author=self.tester,
-                                      reviewer=self.tester, default_tester=None,
-                                      plan=[self.plan])
-                      for i in range(self.cases_count)]
+        self.cases = []
+        for _ in range(self.cases_count):
+            test_case = TestCaseFactory(
+                category=self.case_category,
+                author=self.tester,
+                reviewer=self.tester,
+                default_tester=None,
+                plan=[self.plan])
+            self.cases.append(test_case)
 
     def test_filter_by_product_id(self):
         cases = self.rpc_client.exec.TestCase.filter({'category__product': self.product.pk})
