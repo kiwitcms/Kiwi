@@ -1,6 +1,78 @@
 Change Log
 ==========
 
+Kiwi TCMS 5.2 (07 August 2018)
+------------------------------
+
+**IMPORTANT:** this release introduces new database migrations and converts
+the Docker image to a non-root user with uid 1001. You may have to adjust
+ownership/permissions on the ``kiwi_uploads`` Docker volume! After upgrade don't
+forget to::
+
+    ./manage.py migrate
+
+
+Enhancements
+~~~~~~~~~~~~
+
+- Upgrade to `Django 2.1 <https://docs.djangoproject.com/en/2.1/releases/2.1/>`_
+- Upgrade to ``django-report-builder 6.2.2``, compatible with Django 2.1
+- Docker image now executes with uid 1001 instead of root
+  - image based on ``centos7`` image instead of ``centos/httpd``
+  - image now exposes ports 8080 and 8443
+  - Apache logs now printed on Docker console
+  - SSL certificates copied to ``/Kiwi/ssl`` inside Docker image instead
+    of being bind-mounted
+  - uploads dir changed to ``/Kiwi/uploads``
+  - static dir changed to ``/Kiwi/static``
+  - ``/Kiwi`` is now owned by uid 1001
+  - ``/venv`` is now owned by uid 1001
+  - ``docker-compose.yml`` is updated to match
+- Fix pylint errors (Ivaylo Ivanov)
+- Allow users to see other profiles via Admin
+- Use password change form from Admin instead of custom one
+- ``product.py`` will try to import ``local_settings.py`` if available in the
+  same directory. This can be used to customize settings in downstream
+  distributions
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Make password reset views public
+- Don't crash when adding new users via Admin
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove ``UserProfile`` model. Kiwi TCMS doesn't needs extra information
+  about users so we remove this part of the application. Custom installations
+  may choose to define their own profiles if they wish
+- Remove custom ``DBModelBackend`` authentication backend
+- Remove unused ``tcms.core.context_processors.auth_backend_processor``
+- Remove unused ``get_using_backend()``. Fixes
+  `Issue #261 <https://github.com/kiwitcms/Kiwi/issues/261>`_
+- Remove ``dj_pagination``. Fixes
+  `Issue #110 <https://github.com/kiwitcms/Kiwi/issues/110>`_
+
+
+Settings
+~~~~~~~~~
+
+- ``AUTHENTICATION_BACKENDS`` is removed
+- ``PAGINATION_DEFAULT_PAGINATION`` is removed
+- Navigation menu links are now defined in ``MENU_ITEMS`` and can be redefined
+
+
+Signals
+~~~~~~~
+
+- ``USER_REGISTERED_SIGNAL`` now doesn't receive the ``backend`` parameter
+
+
+
 Kiwi TCMS 5.1 (31 July 2018)
 ----------------------------
 
