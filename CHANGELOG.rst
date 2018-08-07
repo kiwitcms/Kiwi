@@ -21,8 +21,7 @@ Enhancements
   - image based on ``centos7`` image instead of ``centos/httpd``
   - image now exposes ports 8080 and 8443
   - Apache logs now printed on Docker console
-  - SSL certificates copied to ``/Kiwi/ssl`` inside Docker image instead
-    of being bind-mounted
+  - SSL certificates copied to ``/Kiwi/ssl`` inside Docker image instead of being bind-mounted
   - uploads dir changed to ``/Kiwi/uploads``
   - static dir changed to ``/Kiwi/static``
   - ``/Kiwi`` is now owned by uid 1001
