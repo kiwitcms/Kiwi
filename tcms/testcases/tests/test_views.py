@@ -33,7 +33,7 @@ from tcms.tests.factories import TagFactory
 from tcms.tests import BasePlanCase, BaseCaseRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):

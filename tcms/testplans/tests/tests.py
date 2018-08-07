@@ -16,7 +16,7 @@ from tcms.management.models import Version
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
 from tcms.testplans.models import EnvPlanMap
 from tcms.testplans.models import TestPlan
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory

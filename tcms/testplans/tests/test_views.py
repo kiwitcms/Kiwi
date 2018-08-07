@@ -5,7 +5,7 @@ from http import HTTPStatus
 from django.urls import reverse
 
 from tcms.tests import BaseCaseRun
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestAddCasesToRuns(BaseCaseRun):
