@@ -27,11 +27,12 @@ class TestCategory(XmlrpcAPIBaseTest):
         self.assertEqual(cat['name'], 'manual')
 
     def test_filter_by_product_id(self):
-        cat = self.rpc_client.exec.Category.filter({'product': self.product_nitrate.pk})
-        self.assertIsNotNone(cat)
+        categories = self.rpc_client.exec.Category.filter({'product': self.product_nitrate.pk})
+        self.assertIsNotNone(categories)
 
-        # PostgreSQL returns data in arbitrary order
-        category_names = [c['name'] for c in cat]
+        category_names = []
+        for category in categories:
+            category_names.append(category['name'])
 
         self.assertEqual(3, len(category_names))
         self.assertIn('--default--', category_names)
