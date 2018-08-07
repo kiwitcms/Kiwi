@@ -18,6 +18,7 @@ Enhancements
 - Upgrade to `Django 2.1 <https://docs.djangoproject.com/en/2.1/releases/2.1/>`_
 - Upgrade to ``django-report-builder 6.2.2``, compatible with Django 2.1
 - Docker image now executes with uid 1001 instead of root
+
   - image based on ``centos7`` image instead of ``centos/httpd``
   - image now exposes ports 8080 and 8443
   - Apache logs now printed on Docker console
