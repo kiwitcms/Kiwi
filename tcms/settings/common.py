@@ -2,6 +2,7 @@
 
 import os.path
 from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.messages import constants as messages
 import tcms
 
@@ -79,6 +80,37 @@ DELETE_ATTACHMENTS_FROM_DISK = True
 MOTD_LOGIN = """<em>If it is not in Kiwi TCMS, then we don't test it!</em>"""
 
 
+# this is the main navigation menu
+MENU_ITEMS = [
+    (_('DASHBOARD'), reverse_lazy('core-views-index')),
+    (_('TESTING'), [
+        (_('New Test Plan'), reverse_lazy('plans-new')),
+        ('-', '-'),
+        (_('New Test Case'), reverse_lazy('testcases-new')),
+    ]),
+    (_('SEARCH'), [
+        (_('Search Test Plans'), reverse_lazy('plans-all')),
+        (_('Search Test Runs'), reverse_lazy('testruns-all')),
+        (_('Search Test Cases'), reverse_lazy('testcases-search')),
+        ('-', '-'),
+        (_('Advanced Search'), '/advance-search/'),
+    ]),
+    (_('REPORTING'), [
+        (_('Overall report'), reverse_lazy('report-overall')),
+        (_('Custom report'), reverse_lazy('report-custom')),
+        (_('Testing report'), reverse_lazy('testing-report')),
+        ('-', '-'),
+        (_('Report builder'), '/report_builder/'),
+    ]),
+    (_('ADMIN'), [
+        (_('Environment Groups'), reverse_lazy('mgmt-environment_groups')),
+        (_('Envrionment Properties'), reverse_lazy('mgmt-environment_properties')),
+        ('-', '-'),
+        (_('Users and groups'), '/admin/auth/'),
+        (_('Everything else'), '/admin/'),
+    ]),
+]
+
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
     ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
@@ -92,7 +124,7 @@ HELP_MENU_ITEMS = [
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/usr/share/kiwi/static/'
+STATIC_ROOT = '/Kiwi/static/'
 
 
 # WARNING: Do not change this unless you know what you are doing !!!

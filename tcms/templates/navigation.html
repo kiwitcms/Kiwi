@@ -83,121 +83,31 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-primary">
-                <li>
-                    <a href="{% url "core-views-index" %}" target="_parent">DASHBOARD</a>
-                </li>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        TESTING
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% if not user.is_authenticated %}
-                        <li>
-                            <a href="{% url "tcms-login" %}" target="_parent">Login required</a>
-                        </li>
-                        {% endif %}
-
-                        {% if perms.testplans.add_testplan %}
-                        <li>
-                            <a href="{% url "plans-new" %}" target="_parent">New Test Plan</a>
-                        </li>
-                        {% endif %}
-
-                        <li class="divider"></li>
-
-                        {% if perms.testcases.add_testcase %}
-                        <li>
-                            <a href="{% url "testcases-new" %}" target="_parent">New Test Case</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </li>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        SEARCH
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{% url "plans-all" %}" target="_parent">Search Test Plans</a>
-                        </li>
-
-                        <li>
-                            <a href="{% url "testruns-all" %}" target="_parent">Search Test Runs</a>
-                        </li>
-
-                        <li>
-                            <a href="{% url "testcases-search" %}" target="_parent">Search Test Cases</a>
-                        </li>
-
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="/advance-search/" target="_parent">Advanced search</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        REPORTING
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{% url "report-overall" %}" target="_parent">Overall report</a>
-                        </li>
-                        <li>
-                            <a href="{% url "report-custom" %}" target="_parent">Custom report</a>
-                        </li>
-                        <li>
-                            <a href="{% url "testing-report" %}" target="_parent">Testing report</a>
-                        </li>
-                        <li>
-                            <a href="/report_builder/" target="_parent">Report builder</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        ADMIN
-                        <b class="caret"></b>
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Environment</a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{% url "mgmt-environment_groups" %}" target="_parent">Groups</a>
-                                </li>
-                                <li>
-                                    <a href="{% url "mgmt-environment_properties" %}" target="_parent">Properties</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                    {% if user.is_staff %}
-                        {% if perms.auth.change_user %}
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="/admin/auth/" target="_parent">Users and groups</a>
-                        </li>
-                        {% endif %}
-
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="/admin/" target="_parent">Everything else</a>
-                        </li>
+                {% for name, target in SETTINGS.MENU_ITEMS %}
+                    {% if target|length == 1 %}
+                    <li>
+                        <a href="{{ target }}" target="_parent">{{ name }}</a>
+                    </li>
+                    {% else %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ name }}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                        {% for name, target in target %}
+                            {% if name == '-' %}
+                                <li class="divider"></li>
+                            {% else %}
+                            <li>
+                                <a href="{{ target }}" target="_parent">{{ name }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </li>
                     {% endif %}
-                    </ul>
-                </li>
+                {% endfor %}
             </ul>
         </div>
     </nav>
