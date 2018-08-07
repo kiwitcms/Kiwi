@@ -12,14 +12,12 @@ ACCEPTABLE_BOOL_VALUES = ('0', '1', 0, 1, True, False)
 
 def parse_bool_value(value):
     if value in ACCEPTABLE_BOOL_VALUES:
-        if value is '0':
+        if value == '0':
             return False
-        elif value is '1':
+        if value == '1':
             return True
-        else:
-            return value
-    else:
-        raise ValueError('Unacceptable bool value.')
+        return value
+    raise ValueError('Unacceptable bool value.')
 
 
 def pre_check_product(values):
@@ -34,10 +32,9 @@ def pre_check_product(values):
         if not product_str:
             raise ValueError('Got empty product name.')
         return Product.objects.get(name=product_str)
-    elif type(product_str) == int:  # to avoid breaking tests with bool(int)
+    if isinstance(product_str, int):
         return Product.objects.get(pk=product_str)
-    else:
-        raise ValueError('The type of product is not recognizable.')
+    raise ValueError('The type of product is not recognizable.')
 
 
 def _lookup_fields_in_model(cls, fields):
