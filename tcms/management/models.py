@@ -3,31 +3,6 @@
 from django.db import models
 
 from tcms.core.models import TCMSActionModel
-from tcms.core.utils import calc_percent
-
-# Products zone
-
-
-def get_as_choices(iterable, allow_blank):
-    # Generate a list of (id, string) pairs suitable
-    # for a ChoiceField's "choices".
-    #
-    # Prepend with a blank entry if "allow_blank" is True
-    #
-    # Turn each object in the list into a choice
-    # using its "as_choice" method
-    if allow_blank:
-        result = [('', '')]
-    else:
-        result = []
-    result += [obj.as_choice() for obj in iterable]
-    return result
-
-
-def get_all_choices(cls, allow_blank=True):
-    # Generate a list of (id, string) pairs suitable
-    # for a ChoiceField's "choices", based on all instances of a class:
-    return get_as_choices(cls.objects.all(), allow_blank)
 
 
 class Classification(TCMSActionModel):
@@ -64,35 +39,6 @@ class Product(TCMSActionModel):
         self.category.get_or_create(name='--default--')
         self.version.get_or_create(value='unspecified')
         self.build.get_or_create(name='unspecified')
-
-    def get_version_choices(self, allow_blank):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices":
-        return get_as_choices(self.version.all(), allow_blank)
-
-    def get_build_choices(self, allow_blank, only_active):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices"
-        #
-        # @only_active: restrict to only show builds flagged as "active"
-        query = self.build
-        if only_active:
-            query = self.build.filter(is_active=True)
-        return get_as_choices(query.all(), allow_blank)
-
-    def get_environment_choices(self, allow_blank):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices":
-        return get_as_choices(self.environments.all(), allow_blank)
-
-    @classmethod
-    def get_choices(cls, allow_blank):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices":
-        return get_as_choices(cls.objects.order_by('name').all(), allow_blank)
-
-    def as_choice(self):
-        return (self.id, self.name)
 
 
 class Priority(TCMSActionModel):
@@ -158,9 +104,6 @@ class Version(TCMSActionModel):
         except cls.DoesNotExist:
             return None
 
-    def as_choice(self):
-        return (self.id, self.value)
-
 
 class Build(TCMSActionModel):
     build_id = models.AutoField(max_length=10, unique=True, primary_key=True)
@@ -190,21 +133,6 @@ class Build(TCMSActionModel):
 
     def __str__(self):
         return self.name
-
-    def as_choice(self):
-        return (self.build_id, self.name)
-
-    def get_case_runs_failed_percent(self):
-        if hasattr(self, 'case_runs_failed_count'):
-            return calc_percent(self.case_runs_failed_count,
-                                self.case_runs_count)
-        return None
-
-    def get_case_runs_passed_percent(self):
-        if hasattr(self, 'case_runs_passed_count'):
-            return calc_percent(self.case_runs_passed_count,
-                                self.case_runs_count)
-        return None
 
 
 # Test tag zone
