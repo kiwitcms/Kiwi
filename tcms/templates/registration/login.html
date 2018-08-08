@@ -42,17 +42,8 @@
     <div class="col-sm-5 col-md-6 col-lg-7 details">
       <p>
         <strong>
-        {% if SETTINGS.WELCOME_MESSAGE %}
-            {{ SETTINGS.WELCOME_MESSAGE }}
-        {% else %}
             Welcome to Kiwi TCMS | the leading open source test case management system!
-        {% endif %}
         </strong>
-      </p>
-      <p>
-        {% if SETTINGS.MOTD_LOGIN %}
-            {{ SETTINGS.MOTD_LOGIN|safe}}
-        {% endif %}
       </p>
       <p>
         Please login to get started
