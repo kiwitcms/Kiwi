@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render
+from django.contrib.auth import views
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -16,6 +17,11 @@ from django.views.decorators.http import require_http_methods
 from tcms.signals import USER_REGISTERED_SIGNAL
 from tcms.core.contrib.auth.forms import RegistrationForm
 from tcms.core.contrib.auth.models import UserActivationKey
+
+
+class LoginViewWithCustomTemplate(views.LoginView):
+    def get_template_names(self):
+        return ['registration/custom_login.html', 'registration/login.html']
 
 
 @require_http_methods(['GET', 'POST'])

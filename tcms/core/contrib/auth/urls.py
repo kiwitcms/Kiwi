@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^confirm/(?P<activation_key>[A-Za-z0-9\-]+)/$', views.confirm,
         name='tcms-confirm'),
 
-    url(r'^login/$', contrib_auth_views.LoginView.as_view(), name='tcms-login'),
+    url(r'^login/$', views.LoginViewWithCustomTemplate.as_view(), name='tcms-login'),
     url(r'^logout/$',
         contrib_auth_views.LogoutView.as_view(next_page=reverse_lazy('tcms-login')),
         name='tcms-logout'),

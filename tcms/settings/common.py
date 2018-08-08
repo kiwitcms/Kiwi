@@ -149,6 +149,7 @@ PUBLIC_VIEWS = [
     'django.contrib.auth.views.PasswordResetDoneView',
     'django.contrib.auth.views.PasswordResetConfirmView',
     'django.contrib.auth.views.PasswordResetCompleteView',
+    'tcms.core.contrib.auth.views.LoginViewWithCustomTemplate',
     'tcms.core.contrib.auth.views.register',
     'tcms.core.contrib.auth.views.confirm',
     'tcms.core.views.navigation',
