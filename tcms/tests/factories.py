@@ -175,7 +175,6 @@ class TestPlanFactory(DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)
     type = factory.SubFactory(PlanTypeFactory)
-    # FIXME: How to create field for field parent
 
     @factory.post_generation
     def env_group(self, create, extracted, **kwargs):
@@ -347,7 +346,6 @@ class TestRunFactory(DjangoModelFactory):
     stop_date = None
     notes = ''
     plan = factory.SubFactory(TestPlanFactory)
-    # FIXME: field name build conflicts with method Factory.build
     build = factory.SubFactory(BuildFactory)
     manager = factory.SubFactory(UserFactory)
     default_tester = factory.SubFactory(UserFactory)
