@@ -20,6 +20,9 @@ class BaseActions:
         self.request = request
         self.product_id = request.POST.get('product')
 
+    def _get_form(self):
+        raise NotImplementedError()
+
     def _check_form_validation(self):
         form = self._get_form()
         if not form.is_valid():
