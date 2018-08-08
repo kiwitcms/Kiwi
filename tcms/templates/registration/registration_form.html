@@ -10,10 +10,6 @@
 		<br clear="all">
 		<div class="login radius">
 			<form id="id_register_form" action="{% url "tcms-register" %}" method="POST">
-				{% if SETTINGS.MOTD_LOGIN %}
-				<div class="cc">{{ SETTINGS.MOTD_LOGIN|safe}}</div>
-				{% endif %}
-				{% if SETTINGS.WELCOME_MESSAGE %}<h3>{{ SETTINGS.WELCOME_MESSAGE }}</h3>{% endif %}
 				<table border="0" cellpadding="10" cellspacing="10" class="login_table">
 					{{ form.as_table }}
 					<tr>

@@ -76,10 +76,6 @@ FILE_UPLOAD_MAX_SIZE = 5242880
 DELETE_ATTACHMENTS_FROM_DISK = True
 
 
-# If this if set, it is shown on the login/registration screens.
-MOTD_LOGIN = """<em>If it is not in Kiwi TCMS, then we don't test it!</em>"""
-
-
 # this is the main navigation menu
 MENU_ITEMS = [
     (_('DASHBOARD'), reverse_lazy('core-views-index')),
