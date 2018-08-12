@@ -479,8 +479,8 @@ class TestEditProperty(LoggedInTestCase):
             str(response.content, encoding=settings.DEFAULT_CHARSET),
             {'rc': 0, 'response': 'ok'})
 
-        property = EnvProperty.objects.get(pk=self.property.pk)
-        self.assertEqual(new_property_name, property.name)
+        a_property = EnvProperty.objects.get(pk=self.property.pk)
+        self.assertEqual(new_property_name, a_property.name)
 
 
 class TestEnableDisableProperty(LoggedInTestCase):
@@ -635,8 +635,10 @@ class ProductTests(TestCase):
         self.assertEqual(previous_plans_count + 1, TestPlan.objects.count())
 
         # now delete the product
-        admin_delete_url = "admin:%s_%s_delete" % (product._meta.app_label,
-                                                   product._meta.model_name)
+        admin_delete_url = "admin:%s_%s_delete" % (
+            product._meta.app_label,  # pylint: disable=no-member
+            product._meta.model_name  # pylint: disable=no-member
+        )
         location = reverse(admin_delete_url, args=[product.pk])
         response = self.c.get(location)
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -648,7 +650,8 @@ class ProductTests(TestCase):
         # confirm that we're sure we want to delete it
         response = self.c.post(location, {'post': 'yes'})
         self.assertEqual(302, response.status_code)
-        self.assertTrue('/admin/%s/%s/' % (product._meta.app_label, product._meta.model_name)
+        self.assertTrue('/admin/%s/%s/' % (
+            product._meta.app_label, product._meta.model_name)  # pylint: disable=no-member
                         in response['Location'])
 
         # verify everything has been deleted
