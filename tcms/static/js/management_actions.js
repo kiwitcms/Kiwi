@@ -52,7 +52,7 @@ function addEnvGroup() {
     }
   };
 
-  var group_name = window.prompt("New environment group name");
+  var group_name = window.prompt(gettext("New environment group name"));
 
   if (group_name) {
     jQ.ajax({
