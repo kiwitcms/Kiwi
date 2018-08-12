@@ -34,20 +34,3 @@ class TCMSActionModel(models.Model, UrlMixin):
         """
         serializer = XMLRPCSerializer(model=self)
         return serializer.serialize_model()
-
-    def clean(self):
-        strip_types = (models.CharField,
-                       models.TextField,
-                       models.URLField,
-                       models.EmailField,
-                       models.IPAddressField,
-                       models.GenericIPAddressField,
-                       models.SlugField)
-
-        for field in self._meta.fields:
-            # TODO: hardcode 'notes' here
-            if not (field.name == 'notes') and isinstance(field, strip_types):
-                value = getattr(self, field.name)
-                if value:
-                    setattr(self, field.name,
-                            value.replace('\t', ' ').replace('\n', ' ').replace('\r', ' '))
