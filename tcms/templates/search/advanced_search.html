@@ -5,7 +5,7 @@
 {% block custom_javascript %}
 <script type="text/javascript" src="{% static 'js/advance_search.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
-<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>

@@ -95,13 +95,11 @@ urlpatterns = [
         TemplateView.as_view(template_name="advanced_search/deprecation_warning.html")),
     url(r'^deprecated/advanced-search/$', advanced_search.advance_search, name='advance_search'),
 
-    # TODO: do we need this at all ???
-    # Using admin js without admin permission
-    # https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view()),
+    # JavScript translations, see
+    # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
+    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
-# Debug zone
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
