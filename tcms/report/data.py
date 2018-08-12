@@ -419,7 +419,6 @@ class CustomDetailsReportData(CustomReportData):
     @staticmethod
     def generate_status_matrix(build_ids):
         matrix_dataset = {}
-        # TODO: replace defaultdict with GroupByResult
         status_total_line = defaultdict(int)
 
         rows = TestCaseRun.objects.filter(
@@ -1078,8 +1077,7 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
                     else:
                         _build = (build, build_rowspan)
                         prev_build = build
-                    # FIXME: find a better way, building a tuple seems not a
-                    # good way, may cause performance issue
+
                     if (build, plan) == prev_plan:
                         _plan = (plan, None)
                     else:

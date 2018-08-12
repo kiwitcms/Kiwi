@@ -306,7 +306,6 @@ def calculate_for_testcases(plan, testcases):
     sortkey_tcpkan_pks = get_testcaseplan_sortkey_pk_for_testcases(
         plan, tc_ids)
 
-    # FIXME: strongly recommended to upgrade to Python +2.6
     for tc in testcases:
         data = sortkey_tcpkan_pks.get(tc.pk, None)
         if data:
