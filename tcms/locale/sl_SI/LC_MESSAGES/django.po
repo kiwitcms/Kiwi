@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 07:54+0000\n"
-"PO-Revision-Date: 2018-08-07 10:11\n"
+"PO-Revision-Date: 2018-08-13 12:21\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -119,79 +119,79 @@ msgstr "Vrednost '%s' že obstaja. Prosimo določite preimenujte vrednost."
 
 #: tcms/settings/common.py:85
 msgid "DASHBOARD"
-msgstr ""
+msgstr "NADZORNA PLOŠČA"
 
 #: tcms/settings/common.py:86
 msgid "TESTING"
-msgstr ""
+msgstr "TESTIRANJE"
 
 #: tcms/settings/common.py:87
 msgid "New Test Plan"
-msgstr ""
+msgstr "Nova baza testnih scenarijev"
 
 #: tcms/settings/common.py:89
 msgid "New Test Case"
-msgstr ""
+msgstr "Nov testni scenarij"
 
 #: tcms/settings/common.py:91
 msgid "SEARCH"
-msgstr ""
+msgstr "ISKANJE"
 
 #: tcms/settings/common.py:92
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Iskanje baz testnih scenarijev"
 
 #: tcms/settings/common.py:93
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Iskanje testiranj"
 
 #: tcms/settings/common.py:94
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Iskanje testnih scenarijev"
 
 #: tcms/settings/common.py:96
 msgid "Advanced Search"
-msgstr ""
+msgstr "Napredno iskanje"
 
 #: tcms/settings/common.py:98
 msgid "REPORTING"
-msgstr ""
+msgstr "POROČANJE"
 
 #: tcms/settings/common.py:99
 msgid "Overall report"
-msgstr ""
+msgstr "Splošno poročilo"
 
 #: tcms/settings/common.py:100
 msgid "Custom report"
-msgstr ""
+msgstr "Poročila po meri"
 
 #: tcms/settings/common.py:101
 msgid "Testing report"
-msgstr ""
+msgstr "Poročilo testiranja"
 
 #: tcms/settings/common.py:103
 msgid "Report builder"
-msgstr ""
+msgstr "Urejevalnik poročil"
 
 #: tcms/settings/common.py:105
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMINISTRACIJA"
 
 #: tcms/settings/common.py:106
 msgid "Environment Groups"
-msgstr ""
+msgstr "Okoljske skupine"
 
 #: tcms/settings/common.py:107
 msgid "Envrionment Properties"
-msgstr ""
+msgstr "Lastnosti okolja"
 
 #: tcms/settings/common.py:109
 msgid "Users and groups"
-msgstr ""
+msgstr "Uporabniki in skupine"
 
 #: tcms/settings/common.py:110
 msgid "Everything else"
-msgstr ""
+msgstr "Ostalo"
 
 #: tcms/signals.py:74
 msgid "New user awaiting approval"
