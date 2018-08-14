@@ -26,7 +26,7 @@ class DocstringChecker(checkers.BaseTokenChecker):
             and self._string_tokens will contain all possible strings
             before we try linting docstrings!
         """
-        for (tok_type, token, (_start_row, _), _, _) in tokens:
+        for (tok_type, token, (_start_row, _start_col), (_end_row, _end_col), _line) in tokens:
             if tok_type == tokenize.STRING:
                 # 'token' is the whole un-parsed token; we can look at the start
                 # of it to see whether it's a raw or unicode string etc.
