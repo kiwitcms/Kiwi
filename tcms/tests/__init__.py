@@ -70,20 +70,12 @@ def create_request_user(username=None, password=None):
     return user
 
 
-class HelperAssertions:
-    """Helper assertion methods"""
-
-    def assert404(self, response):
-        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
-
-    def assertJsonResponse(self, response, expected, status_code=200):
-        self.assertEqual(status_code, response.status_code)
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            expected)
-
-
 class LoggedInTestCase(test.TestCase):
+    """
+        Test case class for logged-in users which also provides couple of
+        helper assertion methods.
+    """
+
     @classmethod
     def setUpTestData(cls):
         cls.tester = UserFactory()
@@ -98,8 +90,19 @@ class LoggedInTestCase(test.TestCase):
         self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
                           password='password')
 
+    # todo: create a lint plugin for that to enforce using the helper
+    def assert404(self, response):
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
-class BasePlanCase(HelperAssertions, LoggedInTestCase):
+    # todo: create a lint plugin for that to enforce using the helper
+    def assertJsonResponse(self, response, expected, status_code=200):
+        self.assertEqual(status_code, response.status_code)
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            expected)
+
+
+class BasePlanCase(LoggedInTestCase):
     """Base test case by providing essential Plan and Case objects used in tests"""
 
     @classmethod
