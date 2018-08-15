@@ -63,9 +63,9 @@ def _render_errors(request, data, forms):  # pylint: disable=inconsistent-return
         product_choice = []
         for product in Product.objects.all():
             product_choice.append((product.pk, product.name))
-        plan_type_choices = PlanType.objects.all()  # pylint: disable=possibly-unused-variable
+        plan_type_choices = PlanType.objects.all()  # pylint: disable=unused-variable
         errors = _fmt_errors(errors)
-        priorities = Priority.objects.filter(  # pylint: disable=possibly-unused-variable
+        priorities = Priority.objects.filter(  # pylint: disable=unused-variable
             is_active=True).order_by('value')
 
         return render(request, 'search/advanced_search.html', locals())
