@@ -3,6 +3,7 @@
 
 import json
 import unittest
+from uuslug import slugify
 from http import HTTPStatus
 import xml.etree.ElementTree  # nosec:B405:blacklist
 from datetime import datetime
@@ -411,12 +412,10 @@ class TestOperateCasePlans(BasePlanCase):
             plan = case_plan_rel.plan
             self.assertContains(
                 response,
-                '<a href="{0}">{1}</a>'.format(plan.get_full_url(), plan.pk),
-                html=True)
-
-            self.assertContains(
-                response,
-                '<a href="{}">{}</a>'.format(plan.get_full_url(), plan.name),
+                '<a href="{0}">TP-{1}: {2}</a>'.format(
+                    reverse('test_plan_url', args=[plan.pk, slugify(plan.name)]),
+                    plan.pk,
+                    plan.name),
                 html=True)
 
     def test_list_plans(self):

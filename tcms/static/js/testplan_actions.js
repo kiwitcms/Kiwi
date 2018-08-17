@@ -212,7 +212,7 @@ Nitrate.TestPlans.TreeView = {
       }
 
       var li = jQ('<li>');
-      var title = '[<a href="' + data[i].get_full_url + '">' + data[i].pk + '</a>] ';
+      var title = '[<a href="' + data[i].plan_url + '">' + data[i].pk + '</a>] ';
 
       if (data[i].num_children && data[i].children) {
         title = icon_expand + title;
@@ -235,12 +235,12 @@ Nitrate.TestPlans.TreeView = {
       }
 
       // Construct the items
-      title += '<a class="plan_name" href="' + data[i].get_full_url + '">' + data[i].name + '</a>';
+      title += '<a class="plan_name" href="' + data[i].plan_url + '">' + data[i].name + '</a>';
       title += ' (';
       if (data[i].num_cases && data[i].is_current) {
         title += '<a href="#testcases" onclick="FocusTabOnPlanPage(this)">' + data[i].num_cases + ' cases</a>, ';
       } else if (data[i].num_cases && !(data[i].is_current)) {
-        title += '<a href="' + data[i].get_full_url + '#testcases">' + data[i].num_cases + ' cases</a>, ';
+        title += '<a href="' + data[i].plan_url + '#testcases">' + data[i].num_cases + ' cases</a>, ';
       } else {
         title += '0 case, ';
       }
@@ -248,7 +248,7 @@ Nitrate.TestPlans.TreeView = {
       if (data[i].num_runs && data[i].is_current) {
         title += '<a href="#testruns" onclick="FocusTabOnPlanPage(this)">' + data[i].num_runs + ' runs</a>, ';
       } else if (data[i].num_runs && !data[i].is_current) {
-        title += '<a href="' + data[i].get_full_url + '#testruns">' + data[i].num_runs + ' runs</a>, ';
+        title += '<a href="' + data[i].plan_url + '#testruns">' + data[i].num_runs + ' runs</a>, ';
       } else {
         title += '0 runs, ';
       }
@@ -271,10 +271,10 @@ Nitrate.TestPlans.TreeView = {
             title += '0 child';
             break;
           case 1:
-            title += '<a href="' + data[i].get_full_url + '#treeview">' + '1 child</a>';
+            title += '<a href="' + data[i].plan_url + '#treeview">' + '1 child</a>';
             break;
           default:
-            title += '<a href="' + data[i].get_full_url + '#treeview">' + data[i].num_children + ' children</a>';
+            title += '<a href="' + data[i].plan_url + '#treeview">' + data[i].num_children + ' children</a>';
             break;
         }
 

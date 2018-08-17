@@ -1,7 +1,7 @@
 {% extends "tcms_base.html" %}
 {% load static %}
 
-{% block subtitle %}Choose test run to assign case{% endblock %}
+{% block subtitle %}Add TestCase(s) to TestRun(s){% endblock %}
 
 {% block custom_stylesheet %}
 {% endblock %}
@@ -17,7 +17,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.ChooseRuns.on_load);
 
 {% block contents %}
 <div id="content">
-	<h2 id="display_title"><a href="{{ plan.get_full_url }}">Plan:{{ plan.name }}</a></h2>
+	<h2 id="display_title">TestPlan: {{ plan.name }}</h2>
 	<form action="" method="post">
 		<table id="id_table_runs" class="list" cellpadding="0" cellspacing="0" border="0" >
 			<thead>

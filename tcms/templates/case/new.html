@@ -154,7 +154,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 				{% if test_plan %}
 				<input type="submit" name="_addanother" value="Save and add another" />
 				<input type="submit" name="_returntoplan" value="Save and return to plan" />
-				<input type="button" value="Cancel" class="js-plan-cancel" data-param="{{ test_plan.get_full_url }}" />
+				<input type="button" value="Cancel" class="js-plan-cancel" data-param="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}" />
 				{% else %}
 				<input type="button" value="cancel" class="js-case-cancel" >
 				{% endif %}

@@ -154,7 +154,8 @@ class PlanTests(test.TestCase):
         data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
         self.assertEqual(1, len(data))
         self.assertEqual(self.test_plan.pk, data[0]['pk'])
-        self.assertEqual(self.test_plan.get_full_url(), data[0]['get_full_url'])
+        self.assertEqual(reverse('test_plan_url_short', args=[self.test_plan.pk]),
+                         data[0]['plan_url'])
         self.assertEqual(None, data[0]['parent'])
         self.assertEqual(1, data[0]['num_children'])
 
@@ -704,7 +705,9 @@ class TestAJAXSearch(BasePlanCase):
         self.assertEqual(TestPlan.objects.count(), data['iTotalDisplayRecords'])
         for i, plan in enumerate(TestPlan.objects.all().order_by('pk')):
             self.assertEqual(
-                "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
+                "<a href='{}'>{}</a>".format(
+                    reverse('test_plan_url', args=[plan.pk, slugify(plan.name)]),
+                    plan.pk),
                 data['aaData'][i]['0'])
 
     def test_emtpy_plans(self):
@@ -734,7 +737,9 @@ class TestAJAXSearch(BasePlanCase):
 
         for i, plan in enumerate(expected_plans):
             self.assertEqual(
-                "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
+                "<a href='{}'>{}</a>".format(
+                    reverse('test_plan_url', args=[plan.pk, slugify(plan.name)]),
+                    plan.pk),
                 data['aaData'][i]['0'])
 
     def test_get_last_page_order_by_name(self):
@@ -759,7 +764,9 @@ class TestAJAXSearch(BasePlanCase):
 
         for i, plan in enumerate(expected_plans):
             self.assertEqual(
-                "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
+                "<a href='{}'>{}</a>".format(
+                    reverse('test_plan_url', args=[plan.pk, slugify(plan.name)]),
+                    plan.pk),
                 data['aaData'][i]['0'])
 
     def test_get_second_page_order_by_pk_desc(self):
@@ -782,5 +789,7 @@ class TestAJAXSearch(BasePlanCase):
 
         for i, plan in enumerate(expected_plans):
             self.assertEqual(
-                "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
+                "<a href='{}'>{}</a>".format(
+                    reverse('test_plan_url', args=[plan.pk, slugify(plan.name)]),
+                    plan.pk),
                 data['aaData'][i]['0'])

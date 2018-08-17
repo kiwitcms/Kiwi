@@ -162,7 +162,7 @@ def get_all(request, template_name='plan/all.html'):
 
             for attr in ['pk', 'num_cases', 'num_cases', 'num_runs', 'num_children']:
                 dict_obj[attr] = getattr(obj, attr)
-            dict_obj['get_full_url'] = obj.get_full_url()
+            dict_obj['plan_url'] = reverse('test_plan_url_short', args=[obj.pk])
 
             results.append(dict_obj)
         return JsonResponse(results, safe=False)
@@ -342,9 +342,9 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
     except ObjectDoesNotExist:
         raise Http404
 
-    # redirect if has a cheated slug
-    if slug != slugify(test_plan.name):
-        return HttpResponsePermanentRedirect(test_plan.get_full_url())
+    if slug is None:
+        return HttpResponsePermanentRedirect(reverse('test_plan_url',
+                                                     args=[plan_id, slugify(test_plan.name)]))
 
     # Initial the case counter
     confirm_status_name = 'CONFIRMED'
