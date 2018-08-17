@@ -21,10 +21,6 @@
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a> 
-		>> Environment Groups
-	</div>
 	<div class="mixbar">
 		<form method="get" action="{% url "mgmt-environment_groups" %}" id="changelist-search">
 			<input type="hidden" name="action" value="search">

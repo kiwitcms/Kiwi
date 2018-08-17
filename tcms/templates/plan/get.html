@@ -43,11 +43,6 @@ Nitrate.TestPlans.Instance = {
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> {{ test_plan.plan_id }}: {{ test_plan.name }}
-	</div>
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
 	<div class="control">
 		<span id="id_buttons" class="button">

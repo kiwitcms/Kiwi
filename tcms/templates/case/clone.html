@@ -11,21 +11,11 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 {% endblock %}
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		{% if test_plan %}
-		>>Plan: <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
-		{% else %}
-		>> <a href="{% url "testcases-search" %}">Search Cases</a>
-		{% endif %}
-		>> Clone case
-	</div>
-
 	<div id="hidden">
 		<input id="value_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}" />
 	</div>
 
-	<h2>Clone Test Case(s)</h2>
+	<h2>Clone TestCase(s)</h2>
 	<div class="Detailform border-1">
 		<div class="editor" cellspacing="0" cellspan="0">
 			<div class="listinfo">

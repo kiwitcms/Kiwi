@@ -24,14 +24,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 
 {% block contents %}
 <div id="content">
-&	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">...</a>
-		>> <a href="{{ test_run.plan.get_full_url }}">...</a>
-		>> <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a>
-		>> Clone
-	</div>
-	<h2>Clone Test Run - {{ test_run.summary }}</h2>
+	<h2>Clone TestRun - {{ test_run.summary }}</h2>
 	<form action="{% url "testruns-new" %}" method="post">
 		<input type="hidden" id="id_plan_id" name="from_plan" value="{{ test_run.plan_id }}" />
 		<input type="hidden" id="id_product_id" name="product_id" value="{{ test_run.plan.product_id }}" />

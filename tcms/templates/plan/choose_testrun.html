@@ -17,12 +17,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.ChooseRuns.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		&gt;&gt; <a href="{% url "plans-all" %}">...</a>
-		&gt;&gt; <a href="{{ plan.get_full_url }}">[{{plan.plan_id}}]{{ plan.name }}</a>
-		&gt;&gt; Add test case to runs
-	</div>
 	<h2 id="display_title"><a href="{{ plan.get_full_url }}">Plan:{{ plan.name }}</a></h2>
 	<form action="" method="post">
 		<table id="id_table_runs" class="list" cellpadding="0" cellspacing="0" border="0" >

@@ -36,16 +36,6 @@ jQ(function() {
 		<input id="value_run_id" type="hidden" name="run_id" value="{{ test_run.run_id }}" />
 		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_run.build.product_id }}" />
 	</div>
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		{% if request.GET.from_plan %}
-		&gt;&gt; <a href="{% url "plans-all" %}">Seach Plan</a>
-		&gt;&gt; Test Plan: <a href="{{ test_run.plan.get_full_url }}">[{{ test_run.plan.plan_id }}] {{ test_run.plan.name }}</a>
-		{% else %}
-		&gt;&gt; <a href="{% url "testruns-all" %}">Search Runs</a>
-		{% endif %}
-		&gt;&gt; [{{ test_run.run_id }}] {{ test_run.summary }}
-	</div>
 	<div class="control">
 		{% if perms.testruns.change_testcaserun %}
 		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'testruns-edit' test_run.run_id %}", "{{ request.GET.from_plan }}"]'>

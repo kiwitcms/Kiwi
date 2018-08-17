@@ -24,16 +24,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 {% block contents %}
 <!--add new case -->
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		{% if test_plan %}
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.name }}</a>
-		{% else %}
-		>> <a href="{% url "testcases-search" %}">Testing</a>
-		{% endif %}
-		>> Create new case
-	</div>
 	<form action="{% url "testcases-new" %}{% if test_plan %}?from_plan={{ test_plan.plan_id }}{% endif %}" method="POST">
 		{% if test_plan %}
 		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}" />

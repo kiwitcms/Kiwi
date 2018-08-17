@@ -1,6 +1,6 @@
 {% extends "tcms_base.html" %}
 {% load static %}
-{% block subtitle %}Reporting{% endblock %}
+{% block subtitle %}Overall report{% endblock %}
 
 {% block custom_stylesheet %}
 <link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
@@ -15,11 +15,6 @@ Nitrate.Utils.after_page_load(Nitrate.Report.List.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> Reporting
-	</div>
-	<h1>Product</h1>
 	<div class="Detailform border-1">
 		<table class="list" border="0" cellspacing="0" cellpadding="0">
 			<tr>
