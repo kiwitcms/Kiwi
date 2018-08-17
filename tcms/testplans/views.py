@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-from urllib.parse import urlencode
 
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -305,7 +304,6 @@ def ajax_search(request, template_name='plan/common/json_plans.txt'):
     # columnIndexNameMap is required for correct sorting behavior, 5 should
     # be product, but we use run.build.product
     column_names = [
-        '',
         'plan_id',
         'name',
         'author__username',
@@ -510,121 +508,79 @@ def edit(request, plan_id, template_name='plan/edit.html'):
     return render(request, template_name, context_data)
 
 
-@require_http_methods(['GET', 'POST'])
+@require_POST
 @permission_required('testplans.add_testplan')
-def clone(request, template_name='plan/clone.html'):
+def clone(request):
     """Clone testplan"""
 
-    req_data = request.GET or request.POST
-    if 'plan' not in req_data:
+    if 'plan' not in request.POST:
         messages.add_message(request,
                              messages.ERROR,
-                             _('At least one TestPlan is required'))
+                             _('TestPlan is required'))
         # redirect back where we came from
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    plan_ids = req_data.getlist('plan')
-    test_plans = TestPlan.objects.filter(pk__in=plan_ids)
+    plan_id = request.POST.get('plan')
+    test_plan = get_object_or_404(TestPlan, pk=int(plan_id))
 
-    if not test_plans:
-        # note: if at least one of the specified plans is found
-        # we're not going to show this message
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('TestPlan(s) "%s" do not exist') % plan_ids)
-        # redirect back where we came from
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    post_data = request.POST.copy()
+    if not request.POST.get('name'):
+        post_data['name'] = test_plan.make_cloned_name()
 
-    # Clone the plan if the form is submitted
-    if request.method == "POST":
-        clone_form = ClonePlanForm(request.POST)
-        clone_form.populate(product_id=request.POST.get('product_id'))
+    clone_form = ClonePlanForm(post_data)
+    clone_form.populate(product_id=request.POST.get('product_id'))
 
-        if clone_form.is_valid():
-            clone_options = clone_form.cleaned_data
+    # if required values are missing we are still going to show
+    # the form below, otherwise clone & redirect
+    if clone_form.is_valid():
+        clone_options = clone_form.cleaned_data
 
-            # Create new test plan.
-            for test_plan in test_plans:
+        # Create new test plan.
+        new_name = clone_options['name']
 
-                new_name = clone_options['name'] if len(test_plans) == 1 else None
+        clone_params = dict(
+            # Cloned plan properties
+            new_name=new_name,
+            product=clone_options['product'],
+            version=clone_options['product_version'],
+            set_parent=clone_options['set_parent'],
 
-                clone_params = dict(
-                    # Cloned plan properties
-                    new_name=new_name,
-                    product=clone_options['product'],
-                    version=clone_options['product_version'],
-                    set_parent=clone_options['set_parent'],
+            # Related data
+            copy_environment_group=clone_options['copy_environment_group'],
 
-                    # Related data
-                    copy_environment_group=clone_options['copy_environment_group'],
+            # Link or copy cases
+            link_cases=clone_options['link_testcases'],
+            copy_cases=clone_options['copy_testcases'],
+            default_component_initial_owner=request.user,
+        )
 
-                    # Link or copy cases
-                    link_cases=clone_options['link_testcases'],
-                    copy_cases=clone_options['copy_testcases'],
-                    default_component_initial_owner=request.user,
-                )
+        assign_me_as_plan_author = not clone_options['keep_orignal_author']
+        if assign_me_as_plan_author:
+            clone_params['new_original_author'] = request.user
 
-                assign_me_as_plan_author = not clone_options['keep_orignal_author']
-                if assign_me_as_plan_author:
-                    clone_params['new_original_author'] = request.user
+        assign_me_as_copied_case_author = \
+            clone_options['copy_testcases'] and \
+            not clone_options['maintain_case_orignal_author']
+        if assign_me_as_copied_case_author:
+            clone_params['new_case_author'] = request.user
 
-                assign_me_as_copied_case_author = \
-                    clone_options['copy_testcases'] and \
-                    not clone_options['maintain_case_orignal_author']
-                if assign_me_as_copied_case_author:
-                    clone_params['new_case_author'] = request.user
+        assign_me_as_copied_case_default_tester = \
+            clone_options['copy_testcases'] and \
+            not clone_options['keep_case_default_tester']
+        if assign_me_as_copied_case_default_tester:
+            clone_params['new_case_default_tester'] = request.user
 
-                assign_me_as_copied_case_default_tester = \
-                    clone_options['copy_testcases'] and \
-                    not clone_options['keep_case_default_tester']
-                if assign_me_as_copied_case_default_tester:
-                    clone_params['new_case_default_tester'] = request.user
+        cloned_plan = test_plan.clone(**clone_params)
 
-                cloned_plan = test_plan.clone(**clone_params)
+        return HttpResponseRedirect(
+            reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
 
-            if len(test_plans) == 1:
-                return HttpResponseRedirect(
-                    reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
-
-            args = {
-                'action': 'search',
-                'product': clone_form.cleaned_data['product'].id,
-                'product_version': clone_form.cleaned_data['product_version'].id,
-            }
-            url_args = urlencode(args)
-            return HttpResponseRedirect(
-                '{}?{}'.format(reverse('plans-all'), url_args))
-    else:
-        # Generate the default values for the form
-        if len(test_plans) == 1:
-            clone_form = ClonePlanForm(initial={
-                'product': test_plans[0].product_id,
-                'product_version': test_plans[0].product_version_id,
-                'set_parent': True,
-                'copy_attachements': True,
-                'copy_environment_group': True,
-                'link_testcases': True,
-                'copy_testcases': False,
-                'maintain_case_orignal_author': True,
-                'keep_case_default_tester': False,
-                'name': test_plans[0].make_cloned_name(),
-            })
-            clone_form.populate(product_id=test_plans[0].product.id)
-        else:
-            clone_form = ClonePlanForm(initial={
-                'set_parent': True,
-                'copy_attachements': True,
-                'link_testcases': True,
-                'copy_testcases': False,
-                'maintain_case_orignal_author': True,
-                'keep_case_default_tester': True,
-            })
-
+    # clone form wasn't valid
     context_data = {
-        'testplans': test_plans,
+        'test_plan': test_plan,
         'clone_form': clone_form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'plan/clone.html', context_data)
 
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):

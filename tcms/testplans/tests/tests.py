@@ -3,7 +3,6 @@
 
 import json
 from http import HTTPStatus
-from urllib.parse import urlencode
 from uuslug import slugify
 
 from django import test
@@ -497,23 +496,23 @@ class TestCloneView(BasePlanCase):
             password='password')
 
         data_missing_plan = {}  # No plan is passed
-        response = self.client.get(self.plan_clone_url, data_missing_plan, follow=True)
-        self.assertContains(response, 'At least one TestPlan is required')
+        response = self.client.post(self.plan_clone_url, data_missing_plan, follow=True)
+        self.assertContains(response, 'TestPlan is required')
 
     def test_refuse_if_given_nonexisting_plan(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username,
             password='password')
 
-        response = self.client.get(self.plan_clone_url, {'plan': 99999}, follow=True)
-        self.assertContains(response, 'TestPlan(s) "%s" do not exist' % ['99999'])
+        response = self.client.post(self.plan_clone_url, {'plan': 99999}, follow=True)
+        self.assert404(response)
 
     def test_open_clone_page_to_clone_one_plan(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username,
             password='password')
 
-        response = self.client.get(self.plan_clone_url, {'plan': self.plan.pk})
+        response = self.client.post(self.plan_clone_url, {'plan': self.plan.pk})
 
         self.assertContains(
             response,
@@ -525,25 +524,6 @@ class TestCloneView(BasePlanCase):
             '<input id="id_name" name="name" type="text" value="Copy of {}">'.format(
                 self.plan.name),
             html=True)
-
-    def test_open_clone_page_to_clone_multiple_plans(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-
-        response = self.client.get(self.plan_clone_url,
-                                   {'plan': [self.plan.pk, self.another_plan.pk]})
-
-        self.assertContains(response, '<ul class="ul-no-format">')
-        for plan in [self.plan, self.another_plan]:
-            plan_li = """<li>
-    <span class="lab-50">{}</span>
-    <span class="lab-100">{}</span>
-    <span>
-        <a href="{}">{}</a>
-    </span>
-</li>""".format(plan.pk, plan.type, plan.get_full_url(), plan.name)
-            self.assertContains(response, plan_li, html=True)
 
     def verify_cloned_plan(self, original_plan, cloned_plan,
                            link_cases=True, copy_cases=None,
@@ -668,36 +648,6 @@ class TestCloneView(BasePlanCase):
         cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
         self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
 
-    def test_clone_multiple_plans_with_default_options(self):
-        post_data = {
-            'plan': [self.plan.pk, self.another_plan.pk],
-            'product': self.product.pk,
-            'product_version': self.version.pk,
-            'set_parent': 'on',
-            'copy_environment_groups': 'on',
-            'link_testcases': 'on',
-            'maintain_case_orignal_author': 'on',
-            'keep_case_default_tester': 'on',
-            'submit': 'Clone',
-        }
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        response = self.client.post(self.plan_clone_url, post_data)
-
-        url_querystr = urlencode({
-            'action': 'search',
-            'product': self.product.pk,
-            'product_version': self.version.pk
-        })
-        self.assertRedirects(
-            response,
-            '{}?{}'.format(reverse('plans-all'), url_querystr))
-
-        for origin_plan in (self.plan, self.another_plan):
-            cloned_plan = TestPlan.objects.get(name=origin_plan.make_cloned_name())
-            self.verify_cloned_plan(origin_plan, cloned_plan)
-
 
 class TestAJAXSearch(BasePlanCase):
     """Test ajax_search view method"""
@@ -736,15 +686,13 @@ class TestAJAXSearch(BasePlanCase):
             'sEcho': 1,
             'iDisplayStart': 0,
             'iDisplayLength': 3,
-            'iSortCol_0': 1,
+            'iSortCol_0': 0,
             'sSortDir_0': 'asc',
             'iSortingCols': 1,
-            # In the view, first column is not sortable.
-            'bSortable_0': 'false',
+            'bSortable_0': 'true',
             'bSortable_1': 'true',
             'bSortable_2': 'true',
             'bSortable_3': 'true',
-            'bSortable_4': 'true',
         }
 
     def test_search_all_runs(self):
@@ -757,7 +705,7 @@ class TestAJAXSearch(BasePlanCase):
         for i, plan in enumerate(TestPlan.objects.all().order_by('pk')):
             self.assertEqual(
                 "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
-                data['aaData'][i]['1'])
+                data['aaData'][i]['0'])
 
     def test_emtpy_plans(self):
         response = self.client.get(self.search_url, {})
@@ -787,14 +735,14 @@ class TestAJAXSearch(BasePlanCase):
         for i, plan in enumerate(expected_plans):
             self.assertEqual(
                 "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
-                data['aaData'][i]['1'])
+                data['aaData'][i]['0'])
 
     def test_get_last_page_order_by_name(self):
         search_data = self.search_data.copy()
         plans_count = TestPlan.objects.count()
         # To request last page
         search_data['iDisplayStart'] = plans_count // 3 * 3
-        search_data['iSortCol_0'] = 2
+        search_data['iSortCol_0'] = 1
 
         response = self.client.get(self.search_url, search_data)
 
@@ -812,7 +760,7 @@ class TestAJAXSearch(BasePlanCase):
         for i, plan in enumerate(expected_plans):
             self.assertEqual(
                 "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
-                data['aaData'][i]['1'])
+                data['aaData'][i]['0'])
 
     def test_get_second_page_order_by_pk_desc(self):
         search_data = self.search_data.copy()
@@ -835,4 +783,4 @@ class TestAJAXSearch(BasePlanCase):
         for i, plan in enumerate(expected_plans):
             self.assertEqual(
                 "<a href='{}'>{}</a>".format(plan.get_full_url(), plan.pk),
-                data['aaData'][i]['1'])
+                data['aaData'][i]['0'])

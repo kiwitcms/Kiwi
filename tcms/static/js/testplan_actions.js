@@ -418,12 +418,6 @@ Nitrate.TestPlans.Advance_Search_List.on_load = function() {
     bind_version_selector_to_product(true);
   };
 
-  if (jQ('#id_check_all_plans').length) {
-    jQ('#id_check_all_plans').bind('click', function(e) {
-      clickedSelectAll(this, jQ('#plans_form')[0], 'plan');
-    });
-  };
-
   if (jQ('#column_add').length) {
     jQ('#column_add').bind('change', function(t) {
       switch(this.value) {
@@ -448,24 +442,11 @@ Nitrate.TestPlans.Advance_Search_List.on_load = function() {
       jQ(this).parent().parent().removeClass('selection_row');
     };
   });
-
-  jQ('.js-new-plan').bind('click', function() {
-    window.location = jQ(this).data('param');
-  });
-  jQ('.js-clone-plan').bind('click', function() {
-    postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
-  });
 };
 
 Nitrate.TestPlans.List.on_load = function() {
   if (jQ('#id_product').length) {
     bind_version_selector_to_product(true);
-  }
-
-  if (jQ('#id_check_all_plans').length) {
-    jQ('#id_check_all_plans').bind('click', function(e) {
-      clickedSelectAll(this, jQ('#plans_form')[0], 'plan');
-    });
   }
 
   if (jQ('#column_add').length) {
@@ -501,12 +482,11 @@ Nitrate.TestPlans.List.on_load = function() {
       "bFilter": false,
       // "bLengthChange": false,
       "aLengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-      "aaSorting": [[ 1, "desc" ]],
+      "aaSorting": [[ 0, "desc" ]],
       "bProcessing": true,
       "bServerSide": true,
       "sAjaxSource": "/plans/ajax/"+this.window.location.search,
       "aoColumns": [
-        {"bSortable": false },
         null,
         {"sType": "html"},
         {"sType": "html"},
@@ -520,13 +500,6 @@ Nitrate.TestPlans.List.on_load = function() {
       ]
     });
   }
-
-  jQ('.js-new-plan').bind('click', function() {
-    window.location = jQ(this).data('param');
-  });
-  jQ('.js-clone-plan').bind('click', function() {
-    postToURL(jQ(this).data('param'), Nitrate.Utils.formSerialize(this.form), 'get');
-  });
 };
 
 Nitrate.TestPlans.Details = {
