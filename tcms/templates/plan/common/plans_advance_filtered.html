@@ -1,17 +1,7 @@
 <form id="plans_form">
-	<div id="contentTab" class="mixbar">
-		{#<span class="tit">{{ test_plans.count }} Plans</span>#}
-		<span>
-			{% if perms.testplans.add_testplan %}
-			<input type="button" title="Create new test plan" value="New Test Plan" class="js-new-plan" data-param="{% url 'plans-new' %}" />
-			<input type="button" value="Clone" title="clone selected test plans." class="js-clone-plan" data-param="{% url 'plans-clone' %}" />
-			{% endif %}
-		</span>
-	</div>
 	<table id="testplans_table" class="list border-bottom" cellpadding="0" cellspacing="0" border="0" style="table-layout:fixed;">
 		<thead>
 			<tr>
-				<th width="20" class="nosort"><input id="id_check_all_plans" type="checkbox" title="Select all/Select none" /></th>
 				<th class="number nosort widthID" title="Sort by plan ID"><a href="{{query_url}}&order_by=plan_id">ID</a></th>
 				<th class="text nosort" title="Sort by plan name"><a href="{{query_url}}&order_by=name">Name</a></th>
 				<th width="100" class="text nosort" title="Sort by author"><a href="{{query_url}}&order_by=author__username">Author</a></th>
@@ -27,7 +17,6 @@
 		<tbody>
 			{% for test_plan in test_plans %}
 			<tr class="{% if not test_plan.is_active %}line-through inactive{% endif %}">
-				<td><input type="checkbox" name="plan" value="{{ test_plan.pk }}" title="Select/Unselect"></td>
 				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}</a></td>
 				<td class="{% if not test_plan.is_active %}underline{% endif %}"><a href="{{ test_plan.get_full_url }}" title="Go to {{ test_plan.name }}">{{ test_plan }} </a></td>
 				<td><a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author }}</a></td>
