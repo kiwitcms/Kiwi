@@ -24,15 +24,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.List.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		{% if query_result %}
-		>> <a href="{% url "plans-all" %}">Planning</a> 
-		>> Search result
-		{% else %}
-		>> Planning
-		{% endif %}
-	</div>
 	<div id="itemSearch" class="itemSearch">
 		<form id="id_search_plan_form" action="{% url "plans-all" %}" method="get">
 			<input type="hidden" name="action" value="search" />

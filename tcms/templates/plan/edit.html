@@ -32,12 +32,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
 {% block contents %}
 
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan }}</a>
-		>> Edit
-	</div>
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
 	<form action="{% url "plan-edit" test_plan.plan_id %}" method="post" enctype="multipart/form-data">
 		<div id="" class="Detailform border-1">

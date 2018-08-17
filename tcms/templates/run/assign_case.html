@@ -1,7 +1,7 @@
 {% extends "tcms_base.html" %}
 {% load static %}
 
-{% block subtitle %}Assign new test run{% endblock %}
+{% block subtitle %}Add TestCase to TestRun{% endblock %}
 
 {% block custom_stylesheet %}
 {% endblock %}
@@ -17,14 +17,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		&gt;&gt; <a href="{% url "plans-all" %}">...</a>
-		&gt;&gt; <a href="{{ test_run.plan.get_full_url }}">...</a>
-		&gt;&gt; <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.run_id }}: {{ test_run.summary }}</a>
-		&gt;&gt; Add test case
-	</div>
-	<h2 id="display_title"><a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a></h2>
+	<h2 id="display_title">Add TestCase(s) to <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a></h2>
 	<table class="runsDetail" border="0" width="66%" cellspacing="0" cellpadding="0">
 		<tr class="cell">
 			<td class="lab">Build</td>

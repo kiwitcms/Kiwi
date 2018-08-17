@@ -15,20 +15,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 {% block contents %}
 
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		{% ifequal testplans|length 1 %}
-		>> <a href="{{ testplans.0.get_full_url }}">{{ testplans.0.plan_id }}: {{ testplans.0.name }}</a> 
-		>> Clone Plan
-		{% else %}
-		>> Clone plans
-		{% endifequal %}
-	</div>
-	<h2>Clone Test Plan</h2>
-	<p class="help">
-		select different product 
-	</p>
+	<h2>Clone TestPlan {% if testplans|length == 1 %}{{ testplans.0.name }}{% endif %}</h2>
 	<div class="Detailform border-1">
 		<form action="{% url "plans-clone" %}" method="post">
 			{% for testplan in testplans %}

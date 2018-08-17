@@ -27,15 +27,9 @@ Nitrate.Utils.after_page_load(Nitrate.Management.Environment.Edit.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "mgmt-environment_groups" %}">Environment groups</a>
-		>> Edit group - {{ environment.name }}
-	</div>
 	<form action="{% url "mgmt-environment_group_edit" %}" method="GET">
 		<input type="hidden" name="action" value="modify">
 		<input type="hidden" name="id" value="{{ environment.id }}">
-		<h2>Edit Environment Group</h2>
 		<table border="0" class="manage" cellspan="0" cellspacing="0 "  width="98%">
 			<tr>
 				<td class="manage-tit" width="15%" height="28">

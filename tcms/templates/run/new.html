@@ -22,12 +22,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">...</a>
-		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
-		>> New Test Run
-	</div>
 	<h2>Create New Test Run</h2>
 	<form action="{% url "testruns-new" %}" method="post">
 		<input type="hidden" id="id_plan_id" name="from_plan" value="{{ from_plan }}" />
