@@ -20,10 +20,10 @@
 		<tr>
 			{% ifnotequal plan None %}
 			<td class="group_by" valign="middle" rowspan="{{ plan.1 }}" data-plan-id="{{ plan.0.plan_id }}">
-			  <a href="{{ plan.0.get_full_url }}">[{{ plan.0.plan_id }}] {{ plan.0.name }}</a>
+			  <a href="{% url 'test_plan_url' plan.0.pk plan.0.name|slugify %}">TP-{{ plan.0.pk }}: {{ plan.0.name }}</a>
 			</td>
 			{% endifnotequal %}
-			<td valign="top"><a href="{{ run.get_full_url }}">[{{ run.run_id }}] {{ run.summary }}</a></td>
+			<td valign="top"><a href="{% url 'testruns-get' run.pk %}">TR-{{ run.pk }}: {{ run.summary }}</a></td>
 			<td valign="top">{{ status_count.IDLE|default:'' }}</td>
 			<td valign="top">{{ status_count.RUNNING|default:'' }}</td>
 			<td valign="top">{{ status_count.PAUSED|default:'' }}</td>

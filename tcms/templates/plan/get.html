@@ -121,7 +121,7 @@ Nitrate.TestPlans.Instance = {
 				<div class="title grey">Parent&nbsp;:</div>
 				<div class="name ">
 				{% if test_plan.parent.pk %}
-					<a href="{{ test_plan.parent.get_full_url }}">{{ test_plan.parent.pk }}</a>
+					<a href="{% url 'test_plan_url_short' test_plan.parent.pk %}">{{ test_plan.parent.pk }}</a>
 				{% else %}
 					None
 				{% endif %}

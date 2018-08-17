@@ -3,21 +3,19 @@
 {{ testplan.name }}
 <table class="list border-1" cellpadding="0" cellspacing="0">
 <tr>
-	<th width="3%">&nbsp;</th>
-    <th class="widthID">ID</th>
+    <th width="3%">&nbsp;</th>
+    <th class="widthID">Plan Summary</th>
     <th width="8%">Plan Type</th>
     <th width="8%">Author</th>
     <th width="8%">Is Active</th>
-    <th>Plan Summary</th>
 </tr>
 {% for test_plan in test_plans %}
 <tr class="{% cycle 'odd' 'even' %}">
-	<td align="center"><input type="checkbox" name="plan" value="{{ test_plan.plan_id }}" /></td>
-    <td><a href="{{ test_plan.get_full_url }}" target="_blank">{{ test_plan.plan_id }}</a></td>
+    <td align="center"><input type="checkbox" name="plan" value="{{ test_plan.plan_id }}" /></td>
+    <td><a href="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}" target="_blank">TP-{{ test_plan.pk }} - {{ test_plan }}</a></td>
     <td>{{ test_plan.type }}</td>
     <td>{{ test_plan.author }}</td>
     <td>{% if test_plan.is_active %} Yes {% else %} No {% endif %}</td>
-    <td><a href="{{ test_plan.get_full_url }}" target="_blank">{{ test_plan }}</a></td>
 </tr>
 {% empty %}
 <tr><td>&nbsp;</td><td colspan="5">There are no plans</td></tr>

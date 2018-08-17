@@ -21,7 +21,7 @@
 			<td><a href="{% url "testruns-get" test_run.run_id %}" >{{ test_run.summary }}</a></td>
 			<td><a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager }}</a></td>
 			<td>{% if test_run.default_tester_id %}<a href="{% url "tcms-profile" test_run.default_tester.username %}">{% endif %}{{ test_run.default_tester }}{% if test_run.default_tester_id %}</a>{% endif %}</td>
-			<td style="display:none" class="col_plan_content"><a href="{{ test_run.plan.get_full_url }}" >{{ test_run.plan }}</a></td>
+			<td style="display:none" class="col_plan_content"><a href="{% url 'test_plan_url' test_run.plan.pk test_run.plan.name|slugify %}" >{{ test_run.plan }}</a></td>
 			<td>{{ test_run.build.product }}</td>
 			<td>{{ test_run.product_version }}</td>
 			<td>{{ test_run.env_values_str }}</td>

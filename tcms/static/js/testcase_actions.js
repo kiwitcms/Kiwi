@@ -156,6 +156,7 @@ Nitrate.TestCases.List.on_load = function() {
       {"sClass": "expandable"}
     ]
   });
+
   jQ("#testcases_table tbody tr td.expandable").live("click", function() {
     var tr = jQ(this).parent();
     var caseRowContainer = tr;
@@ -773,7 +774,6 @@ function constructPlanCaseZone(container, case_id, parameters) {
         "bAutoWidth": false,
         "aaSorting": [[ 0, "desc" ]],
         "aoColumns": [
-          {"sType": "num-html"},
           null,
           {"sType": "html"},
           {"sType": "html"},

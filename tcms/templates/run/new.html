@@ -103,7 +103,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.New.on_load);
 						{% empty%}
 						<div class="system_help">
 							<p>
-								Environment group must be set for this test plan (<b>{{ test_plan.product.name }}</b>:<b>{{ test_plan.product_version.value }}</b>:<b><a href="{{ test_plan.get_full_url }}">{{ test_plan }}</a></b>) before you will be able to select environments for this test run.If you do not have permission to edit this plan, please contact the author of this plan
+								Environment group must be set for this test plan (<b>{{ test_plan.product.name }}</b>:<b>{{ test_plan.product_version.value }}</b>:<b>
+                                                                <a href="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}">{{ test_plan }}</a></b>) before you will be able to select environments for this test run.If you do not have permission to edit this plan, please contact the author of this plan
                                                             <a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author.username }}</a>
 							</p>
 						</div>
