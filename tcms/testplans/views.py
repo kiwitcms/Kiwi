@@ -65,7 +65,7 @@ def new(request, template_name='plan/new.html'):
     # If the form has been submitted...
     if request.method == 'POST':
         # A form bound to the POST data
-        form = NewPlanForm(request.POST, request.FILES)
+        form = NewPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
         if form.is_valid():
@@ -436,7 +436,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 
     # If the form is submitted
     if request.method == "POST":
-        form = EditPlanForm(request.POST, request.FILES)
+        form = EditPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
         # FIXME: Error handle
