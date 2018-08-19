@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
-from html2text import html2text
 
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.db.models import ObjectDoesNotExist
-from django.utils.encoding import smart_str
 
 import vinaigrette
 
@@ -36,16 +34,6 @@ class NoneText:
     @classmethod
     def serialize(cls):
         return {}
-
-
-class PlainText:
-    """Contains plain text converted from four text"""
-
-    def __init__(self, action, setup, effect, breakdown):
-        self.action = action
-        self.setup = setup
-        self.effect = effect
-        self.breakdown = breakdown
 
 
 class TestCaseStatus(TCMSActionModel):
@@ -492,14 +480,6 @@ class TestCaseText(TCMSActionModel):
     class Meta:
         ordering = ['case', '-case_text_version']
         unique_together = ('case', 'case_text_version')
-
-    def get_plain_text(self):
-        action = html2text(smart_str(self.action)).rstrip()
-        effect = html2text(smart_str(self.effect)).rstrip()
-        setup = html2text(smart_str(self.setup)).rstrip()
-        breakdown = html2text(smart_str(self.breakdown)).rstrip()
-        return PlainText(action=action, setup=setup,
-                         effect=effect, breakdown=breakdown)
 
 
 class TestCasePlan(models.Model):

@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 
 from tcms.core.history import history_email_for
 from tcms.testcases.models import BugSystem
-from tcms.testcases.models import TestCaseText
 from tcms.testcases.helpers.email import get_case_notification_recipients
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
@@ -160,43 +159,6 @@ class TestCaseRemoveTag(BasePlanCase):
 
         tag_pks = list(self.case.tag.all().values_list('pk', flat=True))
         self.assertEqual([self.tag_fedora.pk], tag_pks)
-
-
-class TestGetPlainText(BasePlanCase):
-    """Test TestCaseText.get_plain_text"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestGetPlainText, cls).setUpTestData()
-
-        cls.action = '<p>First step:</p>'
-        cls.effect = """<ul>
-    <li>effect 1</li>
-    <li>effect 2</li>
-</ul>"""
-        cls.setup = '<p><a href="/setup_guide">setup</a></p>'
-        cls.breakdown = '<span>breakdown</span>'
-
-        cls.text_author = User.objects.create_user(username='author',
-                                                   email='my@example.com')
-        TestCaseText.objects.create(
-            case=cls.case,
-            case_text_version=1,
-            author=cls.text_author,
-            action=cls.action,
-            effect=cls.effect,
-            setup=cls.setup,
-            breakdown=cls.breakdown)
-
-    def test_get_plain_text(self):
-        case_text = TestCaseText.objects.all()[0]
-        plain_text = case_text.get_plain_text()
-
-        # These expected values were converted from html2text.
-        self.assertEqual('First step:', plain_text.action)
-        self.assertEqual('  * effect 1\n  * effect 2', plain_text.effect)
-        self.assertEqual('[setup](/setup_guide)', plain_text.setup)
-        self.assertEqual('breakdown', plain_text.breakdown)
 
 
 class TestSendMailOnCaseIsUpdated(BasePlanCase):

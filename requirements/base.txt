@@ -16,4 +16,3 @@ python-bugzilla
 PyGithub
 
 beautifulsoup4
-html2text
