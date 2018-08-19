@@ -158,12 +158,10 @@ class Bugzilla(IssueTrackerType):
 
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
 
-        if txt and isinstance(txt, TestCaseText):
-            plain_txt = txt.get_plain_text()
-
-            setup = plain_txt.setup
-            action = plain_txt.action
-            effect = plain_txt.effect
+        if isinstance(txt, TestCaseText):
+            setup = txt.setup
+            action = txt.action
+            effect = txt.effect
         else:
             setup = 'None'
             action = 'None'
@@ -269,12 +267,10 @@ class JIRA(IssueTrackerType):
 
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
 
-        if txt and isinstance(txt, TestCaseText):
-            plain_txt = txt.get_plain_text()
-
-            setup = plain_txt.setup
-            action = plain_txt.action
-            effect = plain_txt.effect
+        if isinstance(txt, TestCaseText):
+            setup = txt.setup
+            action = txt.action
+            effect = txt.effect
         else:
             setup = 'None'
             action = 'None'
@@ -343,12 +339,10 @@ class GitHub(IssueTrackerType):
 
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
 
-        if txt and isinstance(txt, TestCaseText):
-            plain_txt = txt.get_plain_text()
-
-            setup = plain_txt.setup
-            action = plain_txt.action
-            effect = plain_txt.effect
+        if isinstance(txt, TestCaseText):
+            setup = txt.setup
+            action = txt.action
+            effect = txt.effect
         else:
             setup = 'None'
             action = 'None'
