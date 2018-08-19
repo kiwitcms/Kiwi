@@ -11,8 +11,5 @@ django-vinaigrette
 # because of https://github.com/pycontribs/jira/issues/501
 jira==1.0.10
 Markdown
-odfpy
 python-bugzilla
 PyGithub
-
-beautifulsoup4
