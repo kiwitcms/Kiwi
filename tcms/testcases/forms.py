@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from tinymce.widgets import TinyMCE
-
+from tcms.core.widgets import SimpleMDE
 from tcms.core.forms.fields import UserField, StripURLField
 from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
@@ -106,10 +105,10 @@ class BaseCaseForm(forms.Form):
         required=False
     )
     estimated_time = forms.DurationField(label='Estimated Time', initial='0', required=False)
-    setup = forms.CharField(label="Setup", widget=TinyMCE(), required=False)
-    action = forms.CharField(label="Actions", widget=TinyMCE(), required=False)
-    effect = forms.CharField(label="Expect results", widget=TinyMCE(), required=False)
-    breakdown = forms.CharField(label="Breakdown", widget=TinyMCE(), required=False)
+    setup = forms.CharField(label="Setup", widget=SimpleMDE(), required=False)
+    action = forms.CharField(label="Actions", widget=SimpleMDE(), required=False)
+    effect = forms.CharField(label="Expect results", widget=SimpleMDE(), required=False)
+    breakdown = forms.CharField(label="Breakdown", widget=SimpleMDE(), required=False)
 
     tag = forms.CharField(
         label="Tag",

@@ -358,17 +358,6 @@ Nitrate.TestCases.Details.on_load = function() {
   });
 };
 
-/*
- * Resize all editors within the webpage after they are rendered.
- * This is used to avoid a bug of TinyMCE in Firefox 11.
- */
-function resize_tinymce_editors() {
-  jQ('.mceEditor .mceIframeContainer iframe').each(function(item) {
-	  var elem = jQ(this);
-	  elem.height(elem.height() + 1);
-	});
-}
-
 Nitrate.TestCases.Create.on_load = function() {
   SelectFilter.init("id_component", "component", 0, "/static/admin/");
   //init category and components
@@ -402,8 +391,6 @@ Nitrate.TestCases.Create.on_load = function() {
     getCategorisByProductId(false, jQ('#id_product')[0], jQ('#id_category')[0]);
   });
 
-  resize_tinymce_editors();
-
   jQ('.js-case-cancel').bind('click', function() {
     window.history.go(-1);
   });
@@ -416,7 +403,6 @@ Nitrate.TestCases.Create.on_load = function() {
 
 Nitrate.TestCases.Edit.on_load = function() {
   bind_category_selector_to_product(false, false, jQ('#id_product')[0], jQ('#id_category')[0]);
-  resize_tinymce_editors();
 
   jQ('.js-back-button').bind('click', function() {
     window.history.go(-1);
