@@ -1,5 +1,6 @@
 {% extends "tcms_base.html" %}
 {% load static %}
+{% load extra_filters %}
 {% block subtitle %}Case History{% endblock %}
 
 {% block custom_stylesheet %}
@@ -38,19 +39,19 @@
 					{% for text in text_to_show %}
 					<div class="action">
 						<b>SETUP:</b>
-						{{ text.setup|safe }}
+						{{ text.setup|markdown2html }}
 					</div>
 					<div class="effect">
 						<b>ACTION:</b>
-						{{ text.action|safe }}
+						{{ text.action|markdown2html }}
 					</div>
 					<div class="action">
 						<b>EXPECTED RESULT:</b>
-						{{ text.effect|safe }}
+						{{ text.effect|markdown2html }}
 					</div>
 					<div class="effect">
 						<b>BREAKDOWN:</b>
-						{{ text.breakdown|safe }}
+						{{ text.breakdown|markdown2html }}
 					</div>
 					{% endfor %}
 				</div>

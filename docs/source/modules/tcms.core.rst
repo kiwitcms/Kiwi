@@ -32,4 +32,5 @@ Submodules
    tcms.core.managers
    tcms.core.middleware
    tcms.core.views
+   tcms.core.widgets
 

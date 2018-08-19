@@ -13,7 +13,6 @@ from modernrpc.core import JSONRPC_PROTOCOL
 from modernrpc.core import XMLRPC_PROTOCOL
 from modernrpc.views import RPCEntryPoint
 import report_builder.urls as report_builder_urls
-from tinymce import urls as tinymce_urls
 from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.core.contrib.comments import views as comments_views
@@ -38,7 +37,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^attachments/', include(attachments_urls, namespace='attachments')),
-    url(r'^tinymce/', include(tinymce_urls)),
 
     # Ajax call responder
     url(r'^ajax/update/case-status/$', ajax.UpdateTestCaseStatusView.as_view()),

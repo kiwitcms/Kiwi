@@ -2,8 +2,8 @@
 from django import forms
 
 from odf.odf2xhtml import ODF2XHTML, load
-from tinymce.widgets import TinyMCE
 
+from tcms.core.widgets import SimpleMDE
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, StripURLField
 from tcms.management.models import Product, Version, EnvGroup, Tag
@@ -146,7 +146,7 @@ class BasePlanForm(forms.Form):
     )
     text = forms.CharField(
         label="Plan Document",
-        widget=TinyMCE(),
+        widget=SimpleMDE(),
         required=False
     )
     product = forms.ModelChoiceField(

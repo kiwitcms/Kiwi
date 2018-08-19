@@ -273,7 +273,6 @@ INSTALLED_APPS = [
     'modernrpc',
     'report_builder',
     'simple_history',
-    'tinymce',
 
     'tcms.core',
     'tcms.core.contrib.auth.apps.AppConfig',
@@ -384,79 +383,6 @@ LOGGING = {
         },
     }
 }
-
-TINYMCE_DEFAULT_CONFIG = {
-    'mode': "exact",
-    'theme': "advanced",
-    'language': "en",
-    'skin': "o2k7",
-    'browsers': "gecko",
-    'dialog_type': "modal",
-    'object_resizing': 'true',
-    'cleanup_on_startup': 'true',
-    'forced_root_block': "p",
-    'remove_trailing_nbsp': 'true',
-    'theme_advanced_toolbar_location': "top",
-    'theme_advanced_toolbar_align': "left",
-    'theme_advanced_statusbar_location': "none",
-    'theme_advanced_buttons1': "formatselect,"
-                               "bold,italic,"
-                               "underline,"
-                               "bullist,"
-                               "numlist,"
-                               "link,"
-                               "unlink,"
-                               "image,"
-                               "search,"
-                               "|,"
-                               "outdent,"
-                               "indent,"
-                               "hr,"
-                               "fullscreen,"
-                               "|,"
-                               "help",
-    'theme_advanced_buttons2': "tablecontrols",
-    'theme_advanced_buttons3': "",
-    'theme_advanced_path': 'false',
-    'theme_advanced_blockformats': "p,h2,h3,h4,div,code,pre",
-    'theme_advanced_styles': "[all] clearfix=clearfix;"
-                             "[p] summary=summary;"
-                             "[div] code=code;"
-                             "[img] img_left=img_left;"
-                             "[img] img_left_nospacetop=img_left_nospacetop;"
-                             "[img] img_right=img_right;"
-                             "[img] img_right_nospacetop=img_right_nospacetop;"
-                             "[img] img_block=img_block;"
-                             "[img] img_block_nospacetop=img_block_nospacetop;"
-                             "[div] column span-2=column span-2;"
-                             "[div] column span-4=column span-4;"
-                             "[div] column span-8=column span-8",
-    'height': '300',
-    'width': '100%',
-    'urlconverter_callback': 'myCustomURLConverter',
-    'plugins': "table,safari,"
-               "advimage,"
-               "advlink,"
-               "fullscreen,"
-               "visualchars,"
-               "paste,"
-               "media,"
-               "template,"
-               "searchreplace,"
-               "emotions,",
-    'table_styles': "Header 1=header1;"
-                    "Header 2=header2;"
-                    "Header 3=header3",
-    'table_cell_styles': "Header 1=header1;"
-                         "Header 2=header2;"
-                         "Header 3=header3;"
-                         "Table Cell=tableCel1",
-    'table_row_styles': "Header 1=header1;"
-                        "Header 2=header2;"
-                        "Header 3=header3;"
-                        "Table Row=tableRow1",
-}
-
 
 # override default message tags to match Patternfly class names
 MESSAGE_TAGS = {
