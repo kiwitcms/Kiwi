@@ -101,6 +101,10 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns.extend([
+        url(r'^500/$', TemplateView.as_view(template_name="500.html")),
+        url(r'^404/$', TemplateView.as_view(template_name="404.html")),
+    ])
 
     try:
         import debug_toolbar
@@ -112,6 +116,7 @@ if settings.DEBUG:
     # and debug_toolbar is not installed
     except ImportError:
         pass
+
 
 # Overwrite default 500 handler
 # More details could see django.core.urlresolvers._resolve_special()

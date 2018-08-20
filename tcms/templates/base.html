@@ -9,7 +9,7 @@
     <title>Kiwi TCMS - {% block title %}{% trans "the leading open source test case management system" %}{% endblock %}</title>
     {% include 'patternfly.html' %}
 </head>
-<body id="body">
+<body class="{% block body_class %}{% endblock %}">
     {% include 'navbar.html' %}
 
     {% for message in messages %}
