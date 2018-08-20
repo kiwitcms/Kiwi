@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 {% load extra_filters %}
 
 <!DOCTYPE html>
@@ -6,7 +7,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kiwi TCMS - {% block title %}{% trans "the leading open source test case management system" %}{% endblock %}</title>
-
     {% include 'patternfly.html' %}
 </head>
 <body id="body">

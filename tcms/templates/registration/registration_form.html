@@ -1,30 +1,52 @@
-{% extends "tcms_base.html" %}
-{% load static %}
-{% block subtitle %}Kiwi{% endblock %}
-{% block custom_stylesheet %}
-{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+{% block html_class %}login-pf{% endblock %}
+{% block title %}{% trans "Register new account" %}{% endblock %}
 
 {% block contents %}
-<div id="content">
-	<div id="index" >
-		<br clear="all">
-		<div class="login radius">
-			<form id="id_register_form" action="{% url "tcms-register" %}" method="POST">
-				<table border="0" cellpadding="10" cellspacing="10" class="login_table">
-					{{ form.as_table }}
-					<tr>
-						<td id="login_info" colspan="2" style="display:none;"></td>
-					</tr>
-					<tr><td></td>
-						<td  class="submit">
-							<input type="hidden" name="next" value="{{ REQUEST_CONTENTS.next }}" />
-							<input type="submit" value="Register" class="loginbutton sprites"/>
-							<!--<input type="reset" />-->
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-	</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7 col-md-6 col-lg-5 login">
+      {{ form.non_field_errors }}
+      <form class="form-horizontal" role="form" action="{% url "tcms-register" %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.username.errors }}
+          <label for="inputUsername" class="col-sm-2 col-md-2 control-label">{% trans "Username" %}</label>
+          <div class="col-sm-10 col-md-10">
+            <input type="text" class="form-control" id="inputUsername" name="username" required tabindex="1">
+            <span class="help-block">{{ form.username.help_text }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          {{ form.password1.errors }}
+          <label for="inputPassword" class="col-sm-2 col-md-2 control-label">{% trans "Password" %}</label>
+          <div class="col-sm-10 col-md-10">
+            <input type="password" class="form-control" id="inputPassword" name="password1" required tabindex="2">
+            <span class="help-block">{{ form.password1.help_text }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          {{ form.password2.errors }}
+          <label for="inputConfirmPassword" class="col-sm-2 col-md-2 control-label">{% trans "Confirm" %}</label>
+          <div class="col-sm-10 col-md-10">
+            <input type="password" class="form-control" id="inputConfirmPassword" name="password2" required tabindex="3">
+            <span class="help-block">{{ form.password2.help_text }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          {{ form.email.errors }}
+          <label for="inputEmail" class="col-sm-2 col-md-2 control-label">{% trans "E-mail" %}</label>
+          <div class="col-sm-10 col-md-10">
+            <input type="email" class="form-control" id="inputEmail" name="email" required tabindex="4">
+            <span class="help-block">{{ form.email.help_text }}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12 col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-10 submit">
+            <button type="submit" class="btn btn-primary btn-lg" tabindex="5">{% trans "Register" %}</button>
+          </div>
+        </div>
+      </form>
 </div>
 {% endblock %}

@@ -43,7 +43,7 @@ def register(request):
 
                 messages.add_message(
                     request,
-                    messages.INFO,
+                    messages.SUCCESS,
                     _('Your account has been created, please check your mailbox for confirmation')
                 )
             else:
