@@ -99,10 +99,7 @@ class TestRegistration(TestCase):
 
     def test_open_registration_page(self):
         response = self.client.get(self.register_url)
-        self.assertContains(
-            response,
-            '<input value="Register" class="loginbutton sprites" type="submit">',
-            html=True)
+        self.assertContains(response, '>Register</button>')
 
     def assert_user_registration(self, username, follow=False):
 
