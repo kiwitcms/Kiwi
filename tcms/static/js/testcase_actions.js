@@ -31,11 +31,6 @@ Nitrate.TestCases.Clone = {};
 Nitrate.TestCases.AdvanceList.on_load = function() {
   bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);
   bind_component_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_component')[0]);
-  if (jQ('#id_checkbox_all_case').length) {
-    jQ('#id_checkbox_all_case').bind('click', function(e) {
-      clickedSelectAll(this, jQ(this).closest('form')[0], 'case');
-    });
-  };
 
   jQ('#id_blind_all_link').bind('click', function(e) {
     if (!jQ('div[id^="id_loading_"]').length) {
@@ -77,11 +72,6 @@ Nitrate.TestCases.AdvanceList.on_load = function() {
 Nitrate.TestCases.List.on_load = function() {
   bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);
   bind_component_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_component')[0]);
-  if (jQ('#id_checkbox_all_case')[0]) {
-    jQ('#id_checkbox_all_case').bind('click', function(e) {
-      clickedSelectAll(this, jQ(this).closest('table')[0], 'case');
-    });
-  }
 
   jQ('#id_blind_all_link').live('click', function(e) {
     if (!jQ('div[id^="id_loading_"]').length) {
