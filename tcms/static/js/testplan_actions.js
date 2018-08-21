@@ -789,12 +789,7 @@ Nitrate.TestPlans.Details = {
     Nitrate.TestPlans.Details.observeEvents(plan_id);
     Nitrate.TestPlans.Details.initTabs();
 
-    jQ('#id_check_all_runs').bind('click', function(e) {
-      clickedSelectAll(this, jQ('#testruns_table')[0], 'run');
-    });
-
     Nitrate.Utils.enableShiftSelectOnCheckbox('case_selector');
-    Nitrate.Utils.enableShiftSelectOnCheckbox('run_selector');
 
     Nitrate.TestPlans.Runs.initializaRunTab();
     Nitrate.TestPlans.Runs.bind();
@@ -1756,8 +1751,6 @@ Nitrate.TestPlans.Runs = {
     jQ('#show_more_runs').live('click', that.showMore);
     jQ('#reload_runs').live('click', that.reload);
     jQ('#tab_testruns').live('click', that.initializaRunTab);
-    jQ('.run_selector').live('change', that.reactsToRunSelection);
-    jQ('#id_check_all_runs').live('change', that.reactsToAllRunSelectorChange);
   },
   'makeUrlFromPlanId': function (planId) {
     return '/plan/' + planId + '/runs/';
@@ -1765,10 +1758,6 @@ Nitrate.TestPlans.Runs = {
   'render': function (data, textStatus, jqXHR) {
     var tbody = jQ('#testruns_body');
     var html = jQ(data.html);
-    var btnCheckAll = jQ('#box_select_rest input:checkbox');
-    if (btnCheckAll.length > 0 && btnCheckAll.is(':checked')) {
-      html.find('.run_selector').attr('checked', 'checked');
-    };
     tbody.append(html);
   },
   'initializaRunTab': function () {
@@ -1808,37 +1797,6 @@ Nitrate.TestPlans.Runs = {
       }
     }
   },
-  'reactsToRunSelection': function () {
-    var that = Nitrate.TestPlans.Runs;
-    var selection = jQ('.run_selector:not(:checked)')
-    var controller = jQ('#id_check_all_runs');
-    if (selection.length == 0) {
-      controller.attr('checked', true);
-    } else {
-      controller.attr('checked', false);
-    }
-    controller.trigger('change');
-  },
-  'reactsToAllRunSelectorChange': function (event) {
-    var that = Nitrate.TestPlans.Runs;
-    if (jQ(event.target).attr('checked')) {
-      that.toggleRemainingRunSelection('on');
-    } else {
-      that.toggleRemainingRunSelection('off');
-    }
-  },
-  'toggleRemainingRunSelection': function (status) {
-    var area = jQ('#box_select_rest');
-    if (area.length) {
-      if (status === 'off') {
-        area.find('input:checkbox').attr('checked', false);
-        area.hide();
-      } else {
-        area.find('input:checkbox').attr('checked', true);
-        area.show();
-      }
-    }
-  },
   'nextPage': function (planId) {
     var that = this;
     var url = that.makeUrlFromPlanId(planId);
@@ -1852,9 +1810,6 @@ Nitrate.TestPlans.Runs = {
   },
   'filter': function (data) {
     var queryString = jQ("#run_filter").serialize();
-    // store this string into the rest result select box
-    var box = jQ('#box_select_rest');
-    box.find('input:checkbox').val(queryString);
     return queryString;
   },
   'reload': function () {
