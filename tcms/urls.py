@@ -21,7 +21,6 @@ from tcms.testcases import urls as testcases_urls
 from tcms.core.contrib.auth import urls as auth_urls
 from tcms.testruns import urls as testruns_urls
 from tcms.testruns import views as testruns_views
-from tcms.management import views as management_views
 from tcms.report import urls as report_urls
 
 
@@ -71,16 +70,6 @@ urlpatterns = [
 
     url(r'^linkref/add/$', linkreference_views.add, name='linkref-add'),
     url(r'^linkref/remove/(?P<link_id>\d+)/$', linkreference_views.remove),
-
-    # Management zone
-    url(r'^environment/groups/$', management_views.environment_groups,
-        name='mgmt-environment_groups'),
-    url(r'^environment/group/edit/$', management_views.environment_group_edit,
-        name='mgmt-environment_group_edit'),
-    url(r'^environment/properties/$', management_views.environment_properties,
-        name='mgmt-environment_properties'),
-    url(r'^environment/properties/values/$', management_views.environment_property_values,
-        name='mgmt-environment_property_values'),
 
     # Report zone
     url(r'^report/', include(report_urls)),

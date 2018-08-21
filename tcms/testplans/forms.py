@@ -4,7 +4,7 @@ from django import forms
 from tcms.core.widgets import SimpleMDE
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, StripURLField
-from tcms.management.models import Product, Version, EnvGroup, Tag
+from tcms.management.models import Product, Version, Tag
 from .models import TestPlan, PlanType
 
 
@@ -33,11 +33,6 @@ class BasePlanForm(forms.Form):
     extra_link = StripURLField(
         label='Extra link',
         max_length=1024,
-        required=False
-    )
-    env_group = forms.ModelChoiceField(
-        label="Environment Group",
-        queryset=EnvGroup.get_active().all(),
         required=False
     )
     parent = forms.IntegerField(required=False)
@@ -143,11 +138,6 @@ class SearchPlanForm(forms.Form):
         queryset=PlanType.objects.all(),
         required=False,
     )
-    env_group = forms.ModelChoiceField(
-        label="Environment Group",
-        queryset=EnvGroup.get_active().all(),
-        required=False
-    )
     author__username__startswith = forms.CharField(required=False)
     author__email__startswith = forms.CharField(required=False)
     owner__username__startswith = forms.CharField(required=False)
@@ -200,11 +190,6 @@ class ClonePlanForm(BasePlanForm):
         label='Keep orignal author',
         help_text='Unchecking will make me the author of the copied plan',
         required=False,
-    )
-    copy_environment_group = forms.BooleanField(
-        label='Copy environment group',
-        help_text='Check it on to copy environment group of the plan.',
-        required=False
     )
     link_testcases = forms.BooleanField(
         label='All Test Cases',

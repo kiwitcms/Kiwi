@@ -53,8 +53,6 @@ class TestRun(TCMSActionModel):
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run',
                              on_delete=models.CASCADE)
-    # todo: what is this? looks like redundant code
-    environment_id = models.IntegerField(default=0)
     build = models.ForeignKey('management.Build', related_name='build_run',
                               on_delete=models.CASCADE)
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='manager',
@@ -63,9 +61,6 @@ class TestRun(TCMSActionModel):
                                        null=True, blank=True,
                                        related_name='default_tester',
                                        on_delete=models.CASCADE)
-
-    env_value = models.ManyToManyField('management.EnvValue',
-                                       through='testruns.EnvRunValueMap')
 
     tag = models.ManyToManyField('management.Tag',
                                  through='testruns.TestRunTag',
@@ -95,12 +90,10 @@ class TestRun(TCMSActionModel):
             'product_version': lambda value: Q(product_version=value),
             'plan': plan_by_id_or_name,
             'build': lambda value: Q(build=value),
-            'env_group': lambda value: Q(plan__env_group=value),
             'people_id': lambda value: Q(manager__id=value) | Q(default_tester__id=value),
             'manager': lambda value: Q(manager=value),
             'default_tester': lambda value: Q(default_tester=value),
             'tag__name__in': lambda value: Q(tag__name__in=value),
-            'env_value__value__in': lambda value: Q(env_value__value__in=value),
             'case_run__assignee': lambda value: Q(case_run__assignee=value),
             'status': lambda value: {
                 'running': Q(stop_date__isnull=True),
@@ -176,7 +169,6 @@ class TestRun(TCMSActionModel):
                                     build=build or self.build,
                                     notes=notes,
                                     sortkey=sortkey,
-                                    environment_id=self.environment_id,
                                     running_date=None,
                                     close_date=None)
 
@@ -192,17 +184,11 @@ class TestRun(TCMSActionModel):
             user=user,
         )
 
-    def add_env_value(self, env_value):
-        return EnvRunValueMap.objects.get_or_create(run=self, value=env_value)
-
     def remove_tag(self, tag):
         TestRunTag.objects.filter(run=self, tag=tag).delete()
 
     def remove_cc(self, user):
         TestRunCC.objects.filter(run=self, user=user).delete()
-
-    def remove_env_value(self, env_value):
-        EnvRunValueMap.objects.filter(run=self, value=env_value).delete()
 
     def get_bug_count(self):
         """
@@ -244,16 +230,6 @@ class TestRun(TCMSActionModel):
             self.stop_date = datetime.datetime.now()
         else:
             self.stop_date = None
-
-    def env_values_str(self):
-        """
-            Return a string representation of environment properties
-            used for display purposes.
-        """
-        result = ""
-        for env_value in self.env_value.all():
-            result += "%s:%s\n" % (env_value.property.name, env_value.value)
-        return result
 
     def stats_caseruns_status(self, case_run_statuses=None):
         """Get statistics based on case runs' status
@@ -363,7 +339,6 @@ class TestCaseRun(TCMSActionModel):
                              on_delete=models.CASCADE)
     case_run_status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
     build = models.ForeignKey('management.Build', on_delete=models.CASCADE)
-    environment_id = models.IntegerField(default=0)
 
     class Meta:
         unique_together = ('case', 'run', 'case_text_version')
@@ -453,8 +428,3 @@ class TestRunCC(models.Model):
 
     class Meta:
         unique_together = ('run', 'user')
-
-
-class EnvRunValueMap(models.Model):
-    run = models.ForeignKey(TestRun, on_delete=models.CASCADE)
-    value = models.ForeignKey('management.EnvValue', on_delete=models.CASCADE)

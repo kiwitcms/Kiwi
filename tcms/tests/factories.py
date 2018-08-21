@@ -109,51 +109,6 @@ class TagFactory(DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Tag %d' % n)
 
 
-class EnvGroupFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvGroup'
-
-    name = factory.Sequence(lambda n: 'Env group %d' % n)
-
-    @factory.post_generation
-    def property(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for property in extracted:
-                EnvGroupPropertyMapFactory(group=self, property=property)
-
-
-class EnvPropertyFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvProperty'
-
-    name = factory.Sequence(lambda n: 'Env property %d' % n)
-
-
-class EnvGroupPropertyMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvGroupPropertyMap'
-
-    group = factory.SubFactory(EnvGroupFactory)
-    property = factory.SubFactory(EnvPropertyFactory)
-
-
-class EnvValueFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvValue'
-
-    value = factory.Sequence(lambda n: 'Env value %d' % n)
-    property = factory.SubFactory(EnvPropertyFactory)
-
-
-# ### Factories for app testplans ###
-
-
 class PlanTypeFactory(DjangoModelFactory):
 
     class Meta:
@@ -177,14 +132,6 @@ class TestPlanFactory(DjangoModelFactory):
     type = factory.SubFactory(PlanTypeFactory)
 
     @factory.post_generation
-    def env_group(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for group in extracted:
-                EnvPlanMapFactory(plan=self, group=group)
-
-    @factory.post_generation
     def tag(self, create, extracted, **kwargs):
         if not create:
             return
@@ -200,15 +147,6 @@ class TestPlanTagFactory(DjangoModelFactory):
 
     plan = factory.SubFactory(TestPlanFactory)
     tag = factory.SubFactory(TagFactory)
-
-
-class EnvPlanMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testplans.EnvPlanMap'
-
-    plan = factory.SubFactory(TestPlanFactory)
-    group = factory.SubFactory(EnvGroupFactory)
 
 
 class TestPlanEmailSettingsFactory(DjangoModelFactory):
@@ -351,14 +289,6 @@ class TestRunFactory(DjangoModelFactory):
     default_tester = factory.SubFactory(UserFactory)
 
     @factory.post_generation
-    def env_group(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for value in extracted:
-                EnvRunValueMapFactory(run=self, value=value)
-
-    @factory.post_generation
     def tag(self, create, extracted, **kwargs):
         if not create:
             return
@@ -409,12 +339,3 @@ class TestRunCCFactory(DjangoModelFactory):
 
     run = factory.SubFactory(TestRunFactory)
     user = factory.SubFactory(UserFactory)
-
-
-class EnvRunValueMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testruns.EnvRunValueMap'
-
-    run = factory.SubFactory(TestRunFactory)
-    value = factory.SubFactory(EnvValueFactory)

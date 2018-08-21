@@ -118,11 +118,6 @@ var default_messages = {
       create_case: '/case/create/',
       modify_case: '/case/$id/modify/',
       search_case: '/cases/',
-
-      manage_env_categories: '/management/environments/categories/',
-      manage_env_properties: '/management/environments/properties/',
-      manage_env_property_values: '/management/environments/propertyvalues/',
-      runs_env_value: '/runs/env_value/'
     },
 
     reverse: function(options) {

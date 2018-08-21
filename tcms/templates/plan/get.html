@@ -93,19 +93,6 @@ Nitrate.TestPlans.Instance = {
 		 </div>
 		<div class="rightlistinfo">
 			<div class="listinfo">
-				<div class="title grey">Environment Group&nbsp;:</div>
-				<div class="name">
-					{% for env_group in test_plan.env_group.all %}
-					<span class="blue strong"><a href="{% url "plans-search" %}?env_group={{ env_group.id }}" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
-					{% endfor %}
-				</div>
-				<div>
-					{% for env_property in env_properties %}
-					{{ env_property.property.name }},
-					{% endfor %}
-				</div>
-			</div>
-			<div class="listinfo">
 				<div class="title grey">Reference Link&nbsp;:</div>
 				<div class="name">
 					{% if test_plan.extra_link %}

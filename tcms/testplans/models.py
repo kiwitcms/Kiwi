@@ -51,7 +51,6 @@ class TestPlan(TCMSActionModel):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
                                on_delete=models.CASCADE)
 
-    env_group = models.ManyToManyField('management.EnvGroup', through='EnvPlanMap')
     tag = models.ManyToManyField('management.Tag',
                                  through='testplans.TestPlanTag',
                                  related_name='plan')
@@ -105,13 +104,6 @@ class TestPlan(TCMSActionModel):
             tcp.sortkey = sortkey
             tcp.save()
 
-    def add_env_group(self, env_group):
-        # Create the env plan map
-        return EnvPlanMap.objects.create(
-            plan=self,
-            group=env_group,
-        )
-
     def add_tag(self, tag):
         return TestPlanTag.objects.get_or_create(
             plan=self,
@@ -120,10 +112,6 @@ class TestPlan(TCMSActionModel):
 
     def remove_tag(self, tag):
         TestPlanTag.objects.filter(plan=self, tag=tag).delete()
-
-    def clear_env_groups(self):
-        # Remove old env groups because we only maintanence on group per plan.
-        return EnvPlanMap.objects.filter(plan=self).delete()
 
     def delete_case(self, case):
         TestCasePlan.objects.filter(case=case.pk, plan=self.pk).delete()
@@ -155,7 +143,6 @@ class TestPlan(TCMSActionModel):
 
     def clone(self, new_name=None, product=None, version=None,
               new_original_author=None, set_parent=True,
-              copy_environment_group=True,
               link_cases=True, copy_cases=None,
               new_case_author=None,
               new_case_default_tester=None,
@@ -171,7 +158,6 @@ class TestPlan(TCMSActionModel):
             author is used.
         :param bool set_parent: Whether to set original plan as parent of cloned plan.
             Set by default.
-        :param bool copy_environment_group: Whether to copy environment groups. Copy by default.
         :param bool link_cases: Whether to link cases to cloned plan. Default is True.
         :param bool copy_cases: Whether to copy cases to cloned plan instead of just linking them.
             Default is False.
@@ -200,11 +186,6 @@ class TestPlan(TCMSActionModel):
         # Copy the plan tags
         for tp_tag_src in self.tag.all():
             tp_dest.add_tag(tag=tp_tag_src)
-
-        # Copy the environment group
-        if copy_environment_group:
-            for env_group in self.env_group.all():
-                tp_dest.add_env_group(env_group=env_group)
 
         # Link the cases of the plan
         if link_cases:
@@ -283,8 +264,3 @@ class TestPlanEmailSettings(models.Model):
     auto_to_case_default_tester = models.BooleanField(default=False)
     notify_on_plan_update = models.BooleanField(default=False)
     notify_on_case_update = models.BooleanField(default=False)
-
-
-class EnvPlanMap(models.Model):
-    plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
-    group = models.ForeignKey('management.EnvGroup', on_delete=models.CASCADE)

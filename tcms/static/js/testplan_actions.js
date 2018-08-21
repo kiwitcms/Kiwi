@@ -258,12 +258,6 @@ Nitrate.TestPlans.TreeView = {
 Nitrate.TestPlans.Create.on_load = function() {
   bind_version_selector_to_product(false);
 
-  jQ('#env_group_help_link').bind('click', function(t) {
-    jQ('#env_group_help').toggle();
-  })
-  jQ('#env_group_help_close').bind('click', function(t) {
-    jQ('#env_group_help').hide();
-  })
   jQ('#add_id_product').bind('click', function() {
     return popupAddAnotherWindow(this);
   });
@@ -281,12 +275,6 @@ Nitrate.TestPlans.Create.on_load = function() {
 };
 
 Nitrate.TestPlans.Edit.on_load = function() {
-  jQ('#env_group_help_link').bind('click', function(t) {
-    jQ('#env_group_help').toggle();
-  });
-  jQ('#env_group_help_close').bind('click', function(t) {
-    jQ('#env_group_help').hide();
-  });
   bind_version_selector_to_product(false);
 }
 

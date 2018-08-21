@@ -186,34 +186,6 @@ table.noborder,table.noborder td{border:none;background:transparent;}
     font-weight:bold;
 }
 
-/***********************Environment Start***************************/
-.titlelink input[type="text"] { width: 40%; }
-.env-list-side{ width:50%; float:left; }
-
-.manage{ background:#fff; border-collapse:collapse; margin-left:auto; margin-right:auto; }
-.manage .manage-tit{ font-weight:bold; padding-left:10px; background:#f1f1f1; }
-.manage .manage-tit label{  }
-.manage td{ border:1px solid #CCC; color:#333; padding-left:5px; }
-.manage th{ border:1px solid #CCC; }
-.titlelink{ background:#235d9f; border:1px solid  #ccc; width:100%; height:24px; color:#fff; }
-.titlelink a{ cursor:pointer; }
-.groupul{ padding:0px; list-style-type:none; margin:0px; float:none; line-height:2.0em; }
-.groupul li{ margin:0px;padding:0px; border-bottom:1px solid #ccc; border-top:none; width:100%; float:left; border-left:1px solid #ccc; border-right:1px solid #ccc; }
-.groupul li a{ cursor:pointer; }
-.groupul li:hover{ background:#FFEFC6; }
-.groupul .focus{ background:#FFE59F url("../images/forward.png") no-repeat right; font-weight:bold; }
-.manage .selectgroup_ul { clear:both; margin-top:5px; width:100%; }
-.manage .selectgroup_ul span{ display:block; width:198px; border:1px solid #ccc; float:left; background:#f1f1f1; font-weight:bold; margin:0px; font-size:0.9em; }
-.manage .selectgroup{ float:left; margin:0px 0px; } 
-
-.manage .control{ float:left; background:#fff; margin:5px 10px; padding:0px 10px; vertical-align:middle; height:300px; width:100px; }
-.manage .control input{ width:100px; clear:both; margin-top:10px; }
-.manage .values{ float:left; border:1px solid #ccc; background:#fff; margin:5px 0px; height:330px; overflow-y:auto; }
-.manage .values ul{ padding:0px; margin:0px; }
-.manage .values ul li{ padding:0px; border-bottom:1px solid #ccc; line-height:24px; }
-.manage .values ul li:hover{ background:#EDEDED; }
-/***********************End Environment***************************/
-
 /***********************Report Start***************************/
 
 
@@ -462,24 +434,8 @@ ul.runcc{ margin:0px;}
 .casedoc{ padding-left:20px;}
 .casedoc ul,.casedoc ol{ padding-left:20px;}
 
-.envlog{ border-bottom:dotted 1px #aaa; min-height:23px; line-height:20px; padding:0; margin-bottom:5px;}
-.envlog_time{ width:15%;padding:3px 0px 0 0px; float:left; text-align:center;}
-.envlog_who{ width:15%;padding:3px 5px 0 10px;float:left;}
-.envlog_content{ width:auto; padding:3px 5px 0 0px;float:left}
-.envlog_nocontent{ text-align:center; padding-top:3px;}
-.env_properties{ background:#f3f8fe;}
-
 .action_property{ margin-left:5px;}
 .detail_title{ margin-right:10px;color:#235D9F;}
-
-.add_env_content{ margin:10px; position:relative;}
-.add_env_close{ position:absolute; right:-5px; top:-15px; background:url(../images/icon_cross.png) no-repeat left top; width:16px; height:16px; cursor:pointer}
-.env_title{ margin:20px 0 20px 10px;}
-.env_title input{ margin-right:10px;}
-.add_env_box{float:left; width:80%; margin:20px;}
-.add_env_box select{ width:98%; }
-.add_env_button{ float:left; margin:20px 10px 10px 20px;}
-.add_env_button input{ margin-right:5px; }
 
 /*Popup style*/
 #dialog{z-index:1000; position:fixed; left:50%; top:40%; margin-left:-250px; margin-top:-100px; background:url(../images/login_bg.png) repeat-x left top #e7e7e7;min-width:500px;min-height:200px;max-width:600px;max-height:400px;box-shadow: 2px 2px 2px #c5c3c3;-moz-border-radius: 5px;-khtml-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px; border:solid 1px #CCC;padding:10px; overflow:auto;}

@@ -426,7 +426,7 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'alias': {'product_version': 'default_product_version'},
     }
 
-    m2m_fields = ('case', 'env_group', 'tag')
+    m2m_fields = ('case', 'tag')
 
 
 class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
@@ -436,7 +436,6 @@ class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'case_run_id': ('case_run_id', do_nothing),
         'case_text_version': ('case_text_version', do_nothing),
         'close_date': ('close_date', datetime_to_str),
-        'environment_id': ('environment_id', do_nothing),
         'notes': ('notes', do_nothing),
         'running_date': ('running_date', datetime_to_str),
         'sortkey': ('sortkey', do_nothing),
@@ -460,7 +459,6 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """Serializer for TestRun"""
 
     values_fields_mapping = {
-        'environment_id': ('environment_id', do_nothing),
         'estimated_time': ('estimated_time', timedelta_to_str),
         'notes': ('notes', do_nothing),
         'run_id': ('run_id', do_nothing),

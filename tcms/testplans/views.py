@@ -19,7 +19,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from uuslug import slugify
 
-from tcms.management.models import EnvGroup
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
@@ -77,16 +76,6 @@ def new(request, template_name='plan/new.html'):
                 parent=form.cleaned_data['parent'],
                 text=form.cleaned_data['text'],
             )
-
-            # Add test plan environment groups
-            if request.user.has_perm('testplans.add_envplanmap'):
-                if request.POST.get('env_group'):
-                    env_groups = EnvGroup.objects.filter(
-                        id__in=request.POST.getlist('env_group')
-                    )
-
-                    for env_group in env_groups:
-                        test_plan.add_env_group(env_group=env_group)
 
             # create emailing settings to avoid Issue #181 on MySQL
             test_plan.emailing.save()
@@ -393,29 +382,11 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 test_plan.text = form.cleaned_data['text']
                 test_plan.save()
 
-            if request.user.has_perm('testplans.change_envplanmap'):
-                test_plan.clear_env_groups()
-
-                if request.POST.get('env_group'):
-                    env_groups = EnvGroup.objects.filter(
-                        id__in=request.POST.getlist('env_group'))
-
-                    for env_group in env_groups:
-                        test_plan.add_env_group(env_group=env_group)
             # Update plan email settings
             update_plan_email_settings(test_plan, form)
             return HttpResponseRedirect(
                 reverse('test_plan_url', args=[plan_id, slugify(test_plan.name)]))
     else:
-        # Generate a blank form
-        # Temporary use one environment group in this case
-        if test_plan.env_group.all():
-            for env_group in test_plan.env_group.all():
-                env_group_id = env_group.id
-                break
-        else:
-            env_group_id = None
-
         form = EditPlanForm(initial={
             'name': test_plan.name,
             'product': test_plan.product_id,
@@ -423,7 +394,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             'type': test_plan.type_id,
             'text': test_plan.text,
             'parent': test_plan.parent_id,
-            'env_group': env_group_id,
             'is_active': test_plan.is_active,
             'extra_link': test_plan.extra_link,
             'owner': test_plan.owner,
@@ -479,9 +449,6 @@ def clone(request):
             product=clone_options['product'],
             version=clone_options['product_version'],
             set_parent=clone_options['set_parent'],
-
-            # Related data
-            copy_environment_group=clone_options['copy_environment_group'],
 
             # Link or copy cases
             link_cases=clone_options['link_testcases'],

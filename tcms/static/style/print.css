@@ -91,9 +91,7 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .option_prefer lable{ margin-left:5px;}
 
 
-/***********************Environment Start***************************/
 .titlelink input[type="text"] { width: 40%; }
-.env-list-side{ width:50%; float:left; }
 /***********************Report Start***************************/
 .nav{ margin-left:1%; float:left; margin-top:10px; width:98%; border-bottom:1px solid #ccc; }
 .nav .head{ font-weight:bold; font-size:1.3em; float:left; }
@@ -428,27 +426,12 @@ ul.runcc{ margin:0px;}
 .casedoc{ padding-left:20px;}
 .casedoc ul,.casedoc ol{ padding-left:20px;}
 
-.envlog{ background:url(../images/envlog_bg.png) repeat-x left top #f8f7f7; height:23px; padding:0;}
-.envlog_time{ width:15%;padding:3px 0px 0 0px; float:left; text-align:center;}
-.envlog_who{ width:15%;padding:3px 5px 0 10px;float:left;}
-.envlog_content{ width:auto; padding:3px 5px 0 0px;float:left}
-.envlog_nocontent{ text-align:center; padding-top:3px;}
-.env_properties{ background:#f3f8fe;}
-
 .action_property{ margin-left:5px;}
 .detail_title{ margin-right:10px;color:#235D9F;}
 
 .assignee{ padding-left:18px; cursor:pointer; border:none; height:16px; line-height:16px; font-size:12px; display:none}
 #dialog{ width:500px;height:300px; z-index:1000; position:fixed; left:50%; top:50%; margin-left:-250px; margin-top:-150px; border:solid 4px #CCC; background:#f5f5f5;-moz-border-radius:5px 5px 5px 5px;}
 .popup_window{ width:500px;height:400px; z-index:1000; position:fixed; left:50%; top:50%; margin-left:-250px; margin-top:-200px; border:solid 4px #CCC; background:#f5f5f5;-moz-border-radius:5px 5px 5px 5px;}
-.add_env_content{ margin:10px; position:relative;}
-.add_env_close{ position:absolute; right:-5px; top:-15px; background:url(../images/icon_cross.png) no-repeat left top; width:16px; height:16px; cursor:pointer}
-.env_title{ margin:20px 0 20px 10px;}
-.env_title input{ margin-right:10px;}
-.add_env_box{float:left; width:80%; margin:20px;}
-.add_env_box select{ width:98%; }
-.add_env_button{ float:left; margin:20px 10px 10px 20px; }
-.add_env_button input{ margin-right:5px; }
 .comment{ width:98%;}
 .comment li{margin:5px 0px;border-bottom:1px dotted #666666; position:relative}
 .notes_title{ margin:0px; color:#235d9f; font-size:1.0em; font-weight:bold; }

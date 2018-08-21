@@ -1,6 +1,5 @@
-function pre_process_with_product_and_env(data) {
+function pre_process_data(data) {
     var plan_cache = {};
-    var env_cache = {};
 
     data.forEach(function(element) {
         // collect info about products
@@ -11,23 +10,6 @@ function pre_process_with_product_and_env(data) {
                 element['product'] = data[0].product;
             }, true);
             plan_cache[element.plan_id] = element.product;
-        }
-
-        // collect info about env properties
-        if (element.env_value in env_cache) {
-            element['env_properties'] = env_cache[element.env_value];
-        } else if (element.env_value.length === 0) {
-            element['env_properties'] = '';
-        } else {
-            // todo: we can also cache per-property
-            var result = '';
-            jsonRPC('Env.Value.filter', {pk__in: element.env_value}, function(data){
-                data.forEach(function(prop) {
-                    result += prop.property + ': ' + prop.value + '<br>';
-                });
-            }, true);
-            element['env_properties'] = result;
-            env_cache[element.env_value] = result;
         }
     });
 }
@@ -71,11 +53,7 @@ $(document).ready(function() {
 
             params['stop_date__isnull'] = $('#id_running').is(':checked');
 
-            if ($('#id_env_group').val()) {
-                params['plan__env_group'] = $('#id_env_group').val();
-            };
-
-            dataTableJsonRPC('TestRun.filter', params, callback, pre_process_with_product_and_env);
+            dataTableJsonRPC('TestRun.filter', params, callback, pre_process_data);
         },
         columns: [
             { data: "run_id" },
@@ -96,7 +74,6 @@ $(document).ready(function() {
             { data: "product" },
             { data: "product_version"},
             { data: "build"},
-            { data: "env_properties" },
             { data: "stop_date"},
         ],
         dom: "t",

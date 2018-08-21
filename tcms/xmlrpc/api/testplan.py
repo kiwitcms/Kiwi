@@ -212,10 +212,6 @@ def _get_updated_test_plan(values, form, test_plan):
 
     test_plan.save()
 
-    if form.cleaned_data['env_group']:
-        test_plan.clear_env_groups()
-        test_plan.add_env_group(form.cleaned_data['env_group'])
-
     return test_plan
 
 
