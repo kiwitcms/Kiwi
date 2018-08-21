@@ -20,5 +20,3 @@ DATABASES = {
         'PORT': '',
     }
 }
-
-STATICFILES_STORAGE = 'tcms.tests.storage.RaiseWhenFileNotFound'

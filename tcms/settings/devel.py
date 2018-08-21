@@ -33,3 +33,5 @@ MEDIA_ROOT = os.path.join(TCMS_ROOT_PATH, '..', 'uploads')  # noqa: F405
 # See:
 # http://docs.djangoproject.com/en/dev/ref/templates/api/#django-template-context-processors-debug
 INTERNAL_IPS = ('127.0.0.1', )
+
+STATICFILES_STORAGE = 'tcms.tests.storage.RaiseWhenFileNotFound'
