@@ -859,8 +859,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 
 .category{background-position:0px -1011px;}
 
-.export{background-position:0px -161px;}
-.export[disabled='true']{background-position: 0px -184px; color:graytext;}
 .import{background-position:0px -69px;}
 .import[disabled='true']{background-position:0px -92px; color:graytext;}
 .print_view{background-position:0px -207px;}

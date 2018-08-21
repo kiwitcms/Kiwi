@@ -13,8 +13,7 @@
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript">
 	Nitrate.TestCases.List.Param = {
-		'case_printable': '{% url "testcases-printable" %}',
-		'case_export':'{% url "testcases-export" %}'
+		'case_printable': '{% url "testcases-printable" %}'
 	};
 Nitrate.Utils.after_page_load(Nitrate.TestCases.List.on_load);
 </script>

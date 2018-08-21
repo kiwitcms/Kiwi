@@ -845,7 +845,7 @@ function popupAddAnotherWindow(triggeringLink, parameters) {
   return false;
 }
 
-function exportCase(url, form, table) {
+function printableCases(url, form, table) {
   var selection = serializeCaseFromInputList2(table);
   var emptySelection = !selection.selectAll & selection.selectedCasesIds.length === 0;
   if (emptySelection) {
@@ -861,8 +861,6 @@ function exportCase(url, form, table) {
   params.case = selection.selectedCasesIds;
   postToURL(url, params);
 }
-
-var printableCases = exportCase;
 
 function validateIssueID(bugRegExp, bugId) {
   // if bugRegExp is empty string then all input is valid!

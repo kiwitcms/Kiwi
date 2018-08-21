@@ -1584,9 +1584,6 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
       jQ('#js-add-case-to-plan').bind('click', function() {
         window.location.href = jQ(this).data('param');
       });
-      jQ('#js-export-case').bind('click', function() {
-        exportCase(jQ(this).data('param'), navForm, casesTable);
-      });
       jQ('#js-print-case').bind('click', function() {
         printableCases(jQ(this).data('param'), navForm, casesTable);
       });
