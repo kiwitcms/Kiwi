@@ -942,6 +942,9 @@ def printable(request, template_name='case/printable.html'):
         Create the printable copy for plan/case.
         Only CONFIRMED TestCases are printed when printing a TestPlan!
     """
+    # fixme: remove when TestPlan and TestCase templates have been converted to Patternfly
+    # instead of generating the print values on the backend we can use CSS to do
+    # this in the browser
     # search only by case PK. Used when printing selected cases
     case_ids = request.POST.getlist('case')
     case_filter = {'case__in': case_ids}
