@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-06 07:54+0000\n"
+"POT-Creation-Date: 2018-08-21 18:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,29 +47,29 @@ msgstr ""
 msgid "Your new %s account confirmation"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:41
+#: tcms/core/contrib/auth/views.py:47
 msgid ""
 "Your account has been created, please check your mailbox for confirmation"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:47
+#: tcms/core/contrib/auth/views.py:53
 msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:53
+#: tcms/core/contrib/auth/views.py:59
 msgid "Following is the administrator list"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:84
+#: tcms/core/contrib/auth/views.py:90
 msgid "This activation key no longer exists in the database"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:89
+#: tcms/core/contrib/auth/views.py:95
 msgid "This activation key has expired"
 msgstr ""
 
-#: tcms/core/contrib/auth/views.py:101
+#: tcms/core/contrib/auth/views.py:107
 msgid "Your account has been activated successfully"
 msgstr ""
 
@@ -122,79 +121,79 @@ msgid ""
 "name."
 msgstr ""
 
-#: tcms/settings/common.py:85
+#: tcms/settings/common.py:81
 msgid "DASHBOARD"
 msgstr ""
 
-#: tcms/settings/common.py:86
+#: tcms/settings/common.py:82
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:87
+#: tcms/settings/common.py:83
 msgid "New Test Plan"
 msgstr ""
 
-#: tcms/settings/common.py:89
+#: tcms/settings/common.py:85
 msgid "New Test Case"
 msgstr ""
 
-#: tcms/settings/common.py:91
+#: tcms/settings/common.py:87
 msgid "SEARCH"
 msgstr ""
 
-#: tcms/settings/common.py:92
+#: tcms/settings/common.py:88
 msgid "Search Test Plans"
 msgstr ""
 
-#: tcms/settings/common.py:93
+#: tcms/settings/common.py:89
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:90
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:92
 msgid "Advanced Search"
 msgstr ""
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:94
 msgid "REPORTING"
 msgstr ""
 
-#: tcms/settings/common.py:99
+#: tcms/settings/common.py:95
 msgid "Overall report"
 msgstr ""
 
-#: tcms/settings/common.py:100
+#: tcms/settings/common.py:96
 msgid "Custom report"
 msgstr ""
 
-#: tcms/settings/common.py:101
+#: tcms/settings/common.py:97
 msgid "Testing report"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:99
 msgid "Report builder"
 msgstr ""
 
-#: tcms/settings/common.py:105
+#: tcms/settings/common.py:101
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:102
 msgid "Environment Groups"
 msgstr ""
 
-#: tcms/settings/common.py:107
+#: tcms/settings/common.py:103
 msgid "Envrionment Properties"
 msgstr ""
 
-#: tcms/settings/common.py:109
+#: tcms/settings/common.py:105
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:110
+#: tcms/settings/common.py:106
 msgid "Everything else"
 msgstr ""
 
@@ -205,6 +204,82 @@ msgstr ""
 #: tcms/signals.py:149
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/templates/404.html:5 tcms/templates/404.html:16
+msgid "Page not found"
+msgstr ""
+
+#: tcms/templates/500.html:5 tcms/templates/500.html:16
+msgid "Internal Server Error"
+msgstr ""
+
+#: tcms/templates/base.html:9 tcms/templates/registration/login.html:46
+msgid "the leading open source test case management system"
+msgstr ""
+
+#: tcms/templates/dashboard.html:3
+msgid "Dashboard"
+msgstr ""
+
+#: tcms/templates/dashboard.html:8
+msgid "Test executions"
+msgstr ""
+
+#: tcms/templates/dashboard.html:18
+msgid "Started at"
+msgstr ""
+
+#: tcms/templates/dashboard.html:26
+#, python-format
+msgid ""
+"\n"
+"                %(total_count)s TestRun(s) assigned to you need to be "
+"executed.\n"
+"                Here are the latest %(count)s.\n"
+"                "
+msgstr ""
+
+#: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
+msgid "SEE ALL"
+msgstr ""
+
+#: tcms/templates/dashboard.html:35
+msgid "There are no TestRun(s) assigned to you"
+msgstr ""
+
+#: tcms/templates/dashboard.html:42
+msgid "Your Test plans"
+msgstr ""
+
+#: tcms/templates/dashboard.html:48
+msgid "TestPlan"
+msgstr ""
+
+#: tcms/templates/dashboard.html:49
+msgid "Product"
+msgstr ""
+
+#: tcms/templates/dashboard.html:50
+msgid "Type"
+msgstr ""
+
+#: tcms/templates/dashboard.html:51
+msgid "Executions"
+msgstr ""
+
+#: tcms/templates/dashboard.html:72
+#, python-format
+msgid ""
+"\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
+"are disabled.\n"
+"                Here are the latest %(count)s.\n"
+"                "
+msgstr ""
+
+#: tcms/templates/dashboard.html:81
+msgid "There are no TestPlan(s) that belong to you"
 msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
@@ -258,42 +333,96 @@ msgid ""
 "Go to %(user_url)s to activate the account!\n"
 msgstr ""
 
+#: tcms/templates/registration/login.html:17
+#: tcms/templates/registration/registration_form.html:15
+msgid "Username"
+msgstr ""
+
+#: tcms/templates/registration/login.html:24
+#: tcms/templates/registration/password_reset_confirm.html:15
+#: tcms/templates/registration/registration_form.html:23
+msgid "Password"
+msgstr ""
+
+#: tcms/templates/registration/login.html:34
+msgid "Log in"
+msgstr ""
+
+#: tcms/templates/registration/login.html:45
+msgid "Welcome to Kiwi TCMS"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_confirm.html:22
+#: tcms/templates/registration/registration_form.html:31
+msgid "Confirm"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_confirm.html:29
+msgid "Change password"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_confirm.html:43
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_done.html:11
+msgid "Password reset email was sent"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_form.html:16
+#: tcms/templates/registration/registration_form.html:39
+msgid "E-mail"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_form.html:23
+msgid "Password reset"
+msgstr ""
+
+#: tcms/templates/registration/password_reset_form.html:30
+msgid "Kiwi TCMS password reset"
+msgstr ""
+
+#: tcms/templates/registration/registration_form.html:4
+msgid "Register new account"
+msgstr ""
+
+#: tcms/templates/registration/registration_form.html:47
+msgid "Register"
+msgstr ""
+
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
 msgstr ""
 
-#: tcms/testcases/views.py:525
+#: tcms/testcases/views.py:523
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:1277 tcms/testruns/views.py:816
+#: tcms/testcases/views.py:1209 tcms/testruns/views.py:816
 #: tcms/testruns/views.py:902
 msgid "At least one TestCase is required"
 msgstr ""
 
-#: tcms/testcases/views.py:1426
+#: tcms/testcases/views.py:1358
 msgid "TestCase cloning was successful"
 msgstr ""
 
-#: tcms/testplans/views.py:424
+#: tcms/testplans/views.py:422
 msgid "Select at least one TestRun and one TestCase"
 msgstr ""
 
-#: tcms/testplans/views.py:522
-msgid "At least one TestPlan is required"
+#: tcms/testplans/views.py:519
+msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:534
-#, python-format
-msgid "TestPlan(s) \"%s\" do not exist"
-msgstr ""
-
-#: tcms/testplans/views.py:786
+#: tcms/testplans/views.py:742
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:794
+#: tcms/testplans/views.py:750
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
