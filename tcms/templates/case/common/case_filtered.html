@@ -1,16 +1,4 @@
 {% load static %}
-<form id="cases_form" action="{% url "testcases-clone" %}" method="post">
-	<div id="contentTab" class="mixbar">
-		{#}<span class="tit">{{ test_cases.count }} Cases</span>{#}
-		<span>
-			{% if perms.testcases.add_testcase %}
-			<input type="submit" value="Clone" title="clone selected test plans" />
-			{% endif %}
-			<input type="button" disabled="disabled"
-                   id="case_list_printable" value="Printable copy"
-                   title="Create the printable copy for selected cases." />
-		</span>
-	</div>
 	<table class="list border-bottom" id="testcases_table" cellpadding="0" cellspacing="0" border="0">
 		<thead>
 			<tr>
@@ -36,4 +24,3 @@
 		<tbody>
 		</tbody>
 	</table>
-</form>
