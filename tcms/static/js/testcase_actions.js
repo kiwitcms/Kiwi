@@ -89,9 +89,6 @@ Nitrate.TestCases.AdvanceList.on_load = function() {
   jQ('#case_advance_printable').bind('click', function() {
     postToURL(listParams.case_printable, Nitrate.Utils.formSerialize(this.form));
   });
-  jQ('#export_selected_cases').bind('click', function() {
-    postToURL(listParams.case_export, Nitrate.Utils.formSerialize(this.form));
-  });
 };
 
 Nitrate.TestCases.List.on_load = function() {
@@ -182,9 +179,6 @@ Nitrate.TestCases.List.on_load = function() {
   var listParams = Nitrate.TestCases.List.Param;
   jQ('#case_list_printable').bind('click', function() {
     postToURL(listParams.case_printable, Nitrate.Utils.formSerialize(this.form));
-  });
-  jQ('#export_selected_cases').bind('click', function() {
-    postToURL(listParams.case_export, Nitrate.Utils.formSerialize(this.form));
   });
 };
 

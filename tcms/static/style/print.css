@@ -15,7 +15,7 @@ h1,h2,h3,h4{margin:10px;color:#333;}
 
 /*---------------Display Depatrtment-----------------*/
 input,select,#header,.crumble,#footer,#response{ display:none}
-.actions .export,.actions .filter_action, .actions .import, .actions .print_view,.actions .add_new, .actions .clone, .actions .add_new , .actions .delete,.actions .new_run ,.actions .proposed ,.actions .confirmed ,.actions .disabled,.actions .new_review,.actions .sortlink, .actions .search {border:none;background:url("../images/operation.png") no-repeat;height:16px; line-height:16px; cursor:pointer; font-size:12px; display:none}
+.actions .filter_action, .actions .import, .actions .print_view,.actions .add_new, .actions .clone, .actions .add_new , .actions .delete,.actions .new_run ,.actions .proposed ,.actions .confirmed ,.actions .disabled,.actions .new_review,.actions .sortlink, .actions .search {border:none;background:url("../images/operation.png") no-repeat;height:16px; line-height:16px; cursor:pointer; font-size:12px; display:none}
 
 /*---------------End Display Depatrtment-----------------*/
 

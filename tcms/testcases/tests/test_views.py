@@ -5,8 +5,6 @@ import json
 import unittest
 from uuslug import slugify
 from http import HTTPStatus
-import xml.etree.ElementTree  # nosec:B405:blacklist
-from datetime import datetime
 from urllib.parse import urlencode
 
 from django import test
@@ -702,31 +700,6 @@ class TestChangeCasesAutomated(BasePlanCase):
         for pk in self.change_data['case']:
             case = TestCase.objects.get(pk=pk)
             self.assertTrue(case.is_automated_proposed)
-
-
-class TestExportCases(BasePlanCase):
-    """Test export view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestExportCases, cls).setUpTestData()
-        cls.export_url = reverse('testcases-export')
-
-    def test_export_cases(self):
-        response = self.client.post(self.export_url,
-                                    {'case': [self.case_1.pk, self.case_2.pk]})
-
-        today = datetime.now()
-        # Verify header
-        self.assertEqual(
-            'attachment; filename=tcms-testcases-%02i-%02i-%02i.xml' % (
-                today.year, today.month, today.day),
-            response['Content-Disposition'])
-        # verify content
-
-        xmldoc = xml.etree.ElementTree.fromstring(response.content)  # nosec:B314:blacklist
-        exported_cases_count = xmldoc.findall('testcase')
-        self.assertEqual(2, len(exported_cases_count))
 
 
 class TestPrintablePage(BasePlanCase):

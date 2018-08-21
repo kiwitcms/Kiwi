@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
 import itertools
 
 from django.conf import settings
@@ -27,7 +26,7 @@ from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCasePlan, BugSystem, TestCaseText, TestCaseComponent
+    TestCasePlan, BugSystem, TestCaseText
 from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -975,75 +974,6 @@ def printable(request, template_name='case/printable.html'):
         'test_cases': tcs,
     }
     return render(request, template_name, context_data)
-
-
-@require_POST
-def export(request, template_name='case/export.xml'):
-    """Export the plan"""
-    case_pks = request.POST.getlist('case')
-    context_data = {
-        'data_generator': generator_proxy(case_pks),
-    }
-
-    response = render(request, template_name, context_data)
-
-    response['Content-Disposition'] = \
-        'attachment; filename=tcms-testcases-%s.xml' % datetime.datetime.now().strftime('%Y-%m-%d')
-    return response
-
-
-def generator_proxy(case_pks):
-    metas = TestCase.objects.filter(
-        pk__in=case_pks
-    ).exclude(
-        case_status__name='DISABLED'
-    ).values(
-        'case_id', 'summary', 'is_automated', 'notes',
-        'priority__value', 'case_status__name',
-        'author__email', 'default_tester__email',
-        'category__name')
-
-    component_dict = create_dict_from_query(
-        TestCaseComponent.objects.filter(
-            case__in=case_pks
-        ).values(
-            'case_id', 'component_id', 'component__name', 'component__product__name'
-        ).order_by('case_id'),
-        'case_id'
-    )
-
-    tag_dict = create_dict_from_query(
-        TestCase.objects.filter(
-            pk__in=case_pks
-        ).values('case_id', 'tag__name').order_by('case_id'),
-        'case_id'
-    )
-
-    plan_text_dict = create_dict_from_query(
-        TestCaseText.objects.filter(
-            case__in=case_pks
-        ).values(
-            'case_id', 'setup', 'action', 'effect', 'breakdown'
-        ).order_by('case_id', '-case_text_version'),
-        'case_id',
-        True
-    )
-
-    for meta in metas:
-        case_id = meta['case_id']
-        c_meta = component_dict.get(case_id, None)
-        if c_meta:
-            meta['c_meta'] = c_meta
-
-        tag = tag_dict.get(case_id, None)
-        if tag:
-            meta['tag'] = tag
-
-        plan_text = plan_text_dict.get(case_id, None)
-        if plan_text:
-            meta['latest_text'] = plan_text
-
-        yield meta
 
 
 def update_testcase(request, tc, tc_form):

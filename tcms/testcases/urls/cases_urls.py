@@ -16,5 +16,4 @@ urlpatterns = [
     url(r'^category/$', views.category, name='testcases-category'),
     url(r'^clone/$', views.clone, name='testcases-clone'),
     url(r'^printable/$', views.printable, name='testcases-printable'),
-    url(r'^export/$', views.export, name='testcases-export'),
 ]
