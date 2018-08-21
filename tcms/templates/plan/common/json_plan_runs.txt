@@ -5,7 +5,7 @@
 	"aaData": [
 		{% for run in querySet %}
 		[
-			"<input type='checkbox' name='run' value='{{ run.pk }}' class='run_selector'>",
+			"",
 			"<a href='{% url "testruns-get" run.run_id %}' >{{ run.run_id }}</a>",
 			"<a href='{% url "testruns-get" run.run_id %}' >{{ run.summary|escape|escapejs }}</a>",
 			"<a href='{% url "tcms-profile" run.manager.username %}'>{{ run.manager }}</a>",
