@@ -16,9 +16,6 @@ Submodules
    tcms.xmlrpc.api.build
    tcms.xmlrpc.api.category
    tcms.xmlrpc.api.component
-   tcms.xmlrpc.api.env_group
-   tcms.xmlrpc.api.env_property
-   tcms.xmlrpc.api.env_value
    tcms.xmlrpc.api.plantype
    tcms.xmlrpc.api.priority
    tcms.xmlrpc.api.product

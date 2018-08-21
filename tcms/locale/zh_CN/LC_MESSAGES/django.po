@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-04 11:45+0000\n"
+"POT-Creation-Date: 2018-10-03 06:58+0000\n"
 "PO-Revision-Date: 2018-09-03 11:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:290 tcms/testruns/views.py:934
+#: tcms/core/ajax.py:254 tcms/testruns/views.py:820
 #, python-format
 msgid "User %s not found!"
 msgstr ""
@@ -110,17 +110,6 @@ msgid ""
 "%(instance_url)s"
 msgstr ""
 
-#: tcms/management/views.py:131
-msgid "Environment group with the same name already exists"
-msgstr "已存在有着相同名称的环境组。"
-
-#: tcms/management/views.py:319
-#, python-format
-msgid ""
-"Value(s) named '%s' already exists in this property. Please select another "
-"name."
-msgstr ""
-
 #: tcms/settings/common.py:81
 msgid "DASHBOARD"
 msgstr ""
@@ -174,38 +163,30 @@ msgid "ADMIN"
 msgstr ""
 
 #: tcms/settings/common.py:98
-msgid "Environment Groups"
-msgstr ""
-
-#: tcms/settings/common.py:99
-msgid "Envrionment Properties"
-msgstr ""
-
-#: tcms/settings/common.py:101
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:102
+#: tcms/settings/common.py:100
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:108
+#: tcms/settings/common.py:106
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:109
+#: tcms/settings/common.py:107
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:110
+#: tcms/settings/common.py:108
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:111
+#: tcms/settings/common.py:109
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:112
+#: tcms/settings/common.py:110
 msgid "API Help"
 msgstr ""
 
@@ -271,16 +252,16 @@ msgstr ""
 #: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/search.html:34
 #: tcms/testplans/templates/testplans/search.html:66
-#: tcms/testplans/templates/testplans/search.html:153
+#: tcms/testplans/templates/testplans/search.html:142
 #: tcms/testruns/templates/testruns/mutable.html:46
 #: tcms/testruns/templates/testruns/search.html:24
-#: tcms/testruns/templates/testruns/search.html:106
+#: tcms/testruns/templates/testruns/search.html:95
 msgid "Product"
 msgstr ""
 
 #: tcms/templates/dashboard.html:50
 #: tcms/testplans/templates/testplans/search.html:86
-#: tcms/testplans/templates/testplans/search.html:154
+#: tcms/testplans/templates/testplans/search.html:143
 msgid "Type"
 msgstr ""
 
@@ -480,9 +461,9 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:11
 #: tcms/testcases/templates/testcases/search.html:121
 #: tcms/testruns/templates/testruns/mutable.html:23
-#: tcms/testruns/templates/testruns/mutable.html:118
+#: tcms/testruns/templates/testruns/mutable.html:94
 #: tcms/testruns/templates/testruns/search.html:11
-#: tcms/testruns/templates/testruns/search.html:102
+#: tcms/testruns/templates/testruns/search.html:91
 msgid "Summary"
 msgstr ""
 
@@ -506,7 +487,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:44
 #: tcms/testcases/templates/testcases/search.html:126
-#: tcms/testruns/templates/testruns/mutable.html:122
+#: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
 msgstr ""
 
@@ -516,21 +497,21 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:66
 #: tcms/testcases/templates/testcases/search.html:127
-#: tcms/testruns/templates/testruns/mutable.html:123
+#: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:75
 #: tcms/testcases/templates/testcases/search.html:125
-#: tcms/testruns/templates/testruns/mutable.html:121
+#: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:88
 #: tcms/testcases/templates/testcases/search.html:122
 #: tcms/testplans/templates/testplans/search.html:98
-#: tcms/testplans/templates/testplans/search.html:151
-#: tcms/testruns/templates/testruns/mutable.html:119
+#: tcms/testplans/templates/testplans/search.html:140
+#: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
 msgstr ""
 
@@ -553,19 +534,19 @@ msgid "Bug ID"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:112
-#: tcms/testplans/templates/testplans/search.html:140
-#: tcms/testruns/templates/testruns/search.html:93
+#: tcms/testplans/templates/testplans/search.html:129
+#: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:120
-#: tcms/testplans/templates/testplans/search.html:148
-#: tcms/testruns/templates/testruns/search.html:101
+#: tcms/testplans/templates/testplans/search.html:137
+#: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:123
-#: tcms/testruns/templates/testruns/search.html:105
+#: tcms/testruns/templates/testruns/search.html:94
 msgid "Default tester"
 msgstr ""
 
@@ -577,12 +558,12 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr "测试计划未指定或不存在"
 
-#: tcms/testcases/views.py:1109 tcms/testruns/views.py:577
-#: tcms/testruns/views.py:656
+#: tcms/testcases/views.py:1107 tcms/testruns/views.py:549
+#: tcms/testruns/views.py:627
 msgid "At least one TestCase is required"
 msgstr "需要至少一个测试实例"
 
-#: tcms/testcases/views.py:1258
+#: tcms/testcases/views.py:1256
 msgid "TestCase cloning was successful"
 msgstr "测试实例克隆成功"
 
@@ -604,12 +585,12 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:76
 #: tcms/testruns/templates/testruns/search.html:34
-#: tcms/testruns/templates/testruns/search.html:107
+#: tcms/testruns/templates/testruns/search.html:96
 msgid "Version"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:104
-#: tcms/testplans/templates/testplans/search.html:152
+#: tcms/testplans/templates/testplans/search.html:141
 msgid "Owner"
 msgstr ""
 
@@ -623,33 +604,28 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:127
-#: tcms/testruns/templates/testruns/search.html:80
-msgid "Environment group"
-msgstr ""
-
-#: tcms/testplans/templates/testplans/search.html:149
-#: tcms/testruns/templates/testruns/search.html:103
+#: tcms/testplans/templates/testplans/search.html:138
+#: tcms/testruns/templates/testruns/search.html:92
 msgid "Test plan"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:150
+#: tcms/testplans/templates/testplans/search.html:139
 msgid "Created"
 msgstr ""
 
-#: tcms/testplans/views.py:357
+#: tcms/testplans/views.py:346
 msgid "Select at least one TestRun and one TestCase"
 msgstr "请选择至少一条测试运行和测试实例"
 
-#: tcms/testplans/views.py:454
+#: tcms/testplans/views.py:424
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:678
+#: tcms/testplans/views.py:645
 msgid "At least one test plan is required for print"
 msgstr "需要至少一个测试计划进行打印"
 
-#: tcms/testplans/views.py:686
+#: tcms/testplans/views.py:653
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "测试计划 \"%s\" 不存在"
@@ -672,7 +648,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:33
 #: tcms/testruns/templates/testruns/search.html:44
-#: tcms/testruns/templates/testruns/search.html:108
+#: tcms/testruns/templates/testruns/search.html:97
 msgid "Build"
 msgstr ""
 
@@ -687,7 +663,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:50
 #: tcms/testruns/templates/testruns/search.html:56
-#: tcms/testruns/templates/testruns/search.html:104
+#: tcms/testruns/templates/testruns/search.html:93
 msgid "Manager"
 msgstr ""
 
@@ -696,23 +672,19 @@ msgstr ""
 msgid "Username or email"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:67
-msgid "Environment properties"
-msgstr ""
-
-#: tcms/testruns/templates/testruns/mutable.html:90
+#: tcms/testruns/templates/testruns/mutable.html:66
 msgid "Notes"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:96
+#: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:105
+#: tcms/testruns/templates/testruns/mutable.html:81
 msgid "Selected TestCase(s):"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:108
+#: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
 msgid ""
 "\n"
@@ -722,7 +694,7 @@ msgid ""
 "                    "
 msgstr ""
 
-#: tcms/testruns/templates/testruns/mutable.html:120
+#: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
 msgstr ""
 
@@ -742,34 +714,35 @@ msgstr ""
 msgid "Running"
 msgstr ""
 
-#: tcms/testruns/templates/testruns/search.html:109
-msgid "Environment"
-msgstr ""
-
-#: tcms/testruns/templates/testruns/search.html:110
+#: tcms/testruns/templates/testruns/search.html:98
 msgid "Finished at"
 msgstr ""
 
-#: tcms/testruns/views.py:72
+#: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr ""
 
-#: tcms/testruns/views.py:82
+#: tcms/testruns/views.py:61
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "新建测试计划至少需要一个测试实例"
 
-#: tcms/testruns/views.py:581
+#: tcms/testruns/views.py:553
 msgid "Clone of "
 msgstr ""
 
-#: tcms/testruns/views.py:665
+#: tcms/testruns/views.py:636
 msgid "TestCase ID is not a valid integer"
 msgstr "测试实例编号不是有效的整数"
 
-#: tcms/testruns/views.py:797
+#: tcms/testruns/views.py:768
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "已更新 %d 个测试运行:"
+
+#: tcms/xmlrpc/serializer.py:298
+#, python-format
+msgid "Model %s has no primary key. You have to specify such field manually."
+msgstr ""
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"

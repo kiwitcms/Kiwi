@@ -14,5 +14,4 @@ Submodules
    tcms.management.admin
    tcms.management.forms
    tcms.management.models
-   tcms.management.views
 

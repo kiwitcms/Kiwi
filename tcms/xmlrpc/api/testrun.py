@@ -6,7 +6,7 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from django.utils.dateparse import parse_duration
 
 from tcms.core.utils import form_errors_to_list
-from tcms.management.models import Tag, EnvValue
+from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
@@ -22,9 +22,6 @@ __all__ = (
     'add_case',
     'get_cases',
     'remove_case',
-
-    'add_env_value',
-    'remove_env_value',
 
     'add_tag',
     'remove_tag',
@@ -283,46 +280,3 @@ def _get_updated_test_run(run_id, values, form):
 
     test_run.save()
     return test_run
-
-
-@permissions_required('testruns.add_envrunvaluemap')
-@rpc_method(name='TestRun.add_env_value')
-def add_env_value(run_id, env_value_id):
-    """
-    .. function:: XML-RPC TestRun.add_env_value(run_id, env_value_id)
-
-        Add environment values to the given TestRun.
-
-        :param run_id: PK of TestRun to modify
-        :type run_id: int
-        :param env_value_id: PK of :class:`tcms.management.models.EnvValue`
-                             object to add
-        :type env_value_id: int
-        :return: None
-        :raises: PermissionDenied if missing *testruns.add_envrunvaluemap* permission
-        :raises: DoesNotExist if objects specified by PKs don't exist
-    """
-    TestRun.objects.get(pk=run_id).add_env_value(
-        EnvValue.objects.get(pk=env_value_id)
-    )
-
-
-@permissions_required('testruns.delete_envrunvaluemap')
-@rpc_method(name='TestRun.remove_env_value')
-def remove_env_value(run_id, env_value_id):
-    """
-    .. function:: XML-RPC TestRun.remove_env_value(run_id, env_value_id)
-
-        Remove environment value from the given TestRun.
-
-        :param run_id: PK of TestRun to modify
-        :type run_id: int
-        :param env_value_id: PK of :class:`tcms.management.models.EnvValue`
-                             object to be removed
-        :type env_value_id: int
-        :return: None
-        :raises: PermissionDenied if missing *testruns.delete_envrunvaluemap* permission
-    """
-    TestRun.objects.get(pk=run_id).remove_env_value(
-        EnvValue.objects.get(pk=env_value_id)
-    )

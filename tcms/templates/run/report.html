@@ -31,19 +31,6 @@
 				<div class="listinfo">
 					<span class="title">Estimated Time:</span>{{ test_run.estimated_time }}
 				</div>
-				
-				<div class="listinfo">
-					<span class="title">Environment:</span>
-					<div class="linotype">
-							<ul>
-							{% for run_env_value in test_run.env_value.select_related.all %}
-							<li>
-								<span class="lab" >{{ run_env_value.property }}: </span>{{ run_env_value.value }}
-							</li>
-							{% endfor %}
-						</ul>
-					</div>
-				</div>
 			</div>
 			<div class="rightlistinfo">
 				<div class="listinfo">

@@ -110,26 +110,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Edit.on_load);
 					</td>
 				</tr>
 				<tr>
-					<td><label class="lab strong">Environment Group</label></td>
-					<td>
-						{{ form.env_group }}
-						<span>
-							<a class="system_help" href="javascript:void(0)" title="" id="env_group_help_link">What is environment group?</a>
-							<div id="env_group_help" class="system_info" style="display:none">
-								<p>
-									Environment Group represent group of environment properties and all values of these properties. <br/>
-									Kiwi TCMS uses environment variables to define the test hardware setup. The Environment Group is the top level container object, it contains one or more Properties, each having a range of values. Properties can belong to more than one group.
-									<br/>
-									Then when creating test run , you can set one value of each property under this environment group as environment of run testing.
-									<br/>
-									<a href="javascript:void(0)" class="right-action" title="close the tip" id="env_group_help_close">Close</a>
-								</p>
-
-							</div>
-						</span>
-					</td>
-				</tr>
-				<tr>
 					<td><label class="lab">Reference Link</label></td>
 					<td>
 						<div class="name summary">{{ form.extra_link }}</div>

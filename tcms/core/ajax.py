@@ -21,7 +21,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import Component, Build, Version
-from tcms.management.models import EnvGroup, EnvProperty, EnvValue
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseTag
@@ -69,20 +68,8 @@ class _InfoObjects:
     def components(self):
         return Component.objects.filter(product__id=self.product_id)
 
-    def env_properties(self):
-        if self.request.GET.get('env_group_id'):
-            return EnvGroup.objects.get(id=self.request.GET['env_group_id']).property.all()
-        return EnvProperty.objects.all()
-
-    def env_values(self):
-        return EnvValue.objects.filter(property_id=self.request.GET.get('env_property_id'))
-
     def versions(self):
         return Version.objects.filter(product__id=self.product_id)
-
-    @staticmethod
-    def env_groups():
-        return EnvGroup.objects.all()
 
 
 def tags(request):

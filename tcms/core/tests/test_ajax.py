@@ -20,11 +20,7 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import EnvGroupFactory
-from tcms.tests.factories import EnvPropertyFactory
-from tcms.tests.factories import EnvGroupPropertyMapFactory
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import EnvValueFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import BuildFactory
@@ -102,16 +98,6 @@ class Test_InfoObjects(test.TestCase):
         cls.component_two = ComponentFactory(product=cls.product)
         cls.component_three = ComponentFactory()
 
-        cls.env_group_one = EnvGroupFactory()
-        cls.env_group_two = EnvGroupFactory()
-
-        cls.env_property_one = EnvPropertyFactory()
-        cls.env_property_two = EnvPropertyFactory()
-        EnvGroupPropertyMapFactory(group=cls.env_group_one, property=cls.env_property_one)
-
-        cls.env_value_one = EnvValueFactory(property=cls.env_property_one)
-        cls.env_value_two = EnvValueFactory()
-
         cls.user_one = UserFactory()
         cls.user_two = UserFactory()
 
@@ -151,38 +137,6 @@ class Test_InfoObjects(test.TestCase):
         self.assertIn(self.component_one, components)
         self.assertIn(self.component_two, components)
         self.assertNotIn(self.component_three, components)
-
-    def test_env_groups(self):
-
-        env_groups = self.info_objects.env_groups()
-
-        self.assertIn(self.env_group_one, env_groups)
-        self.assertIn(self.env_group_two, env_groups)
-
-    def test_env_properties(self):
-
-        env_properties = self.info_objects.env_properties()
-
-        self.assertIn(self.env_property_one, env_properties)
-        self.assertIn(self.env_property_two, env_properties)
-
-    def test_env_properties_by_env_group(self):
-        self.request.GET = {'env_group_id': self.env_group_one.pk}
-
-        info_objects = _InfoObjects(self.request)
-        env_properties = info_objects.env_properties()
-
-        self.assertIn(self.env_property_one, env_properties)
-        self.assertNotIn(self.env_property_two, env_properties)
-
-    def test_env_values(self):
-        self.request.GET = {'env_property_id': self.env_property_one.pk}
-
-        info_objects = _InfoObjects(self.request)
-        env_values = info_objects.env_values()
-
-        self.assertIn(self.env_value_one, env_values)
-        self.assertNotIn(self.env_value_two, env_values)
 
     def test_users(self):
         self.request.GET = {'username': self.user_one.username}

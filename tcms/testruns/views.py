@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
 from datetime import datetime
 from http import HTTPStatus
 from functools import reduce
@@ -28,7 +27,7 @@ from django_comments.models import Comment
 
 from tcms.core.utils import clean_request
 from tcms.core.utils.validations import validate_bug_id
-from tcms.management.models import Priority, EnvValue, Tag
+from tcms.management.models import Priority, Tag
 from tcms.testcases.forms import CaseBugForm
 from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
@@ -36,28 +35,8 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
-from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRunValueMap
+from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
 from tcms.issuetracker.types import IssueTrackerType
-
-
-def save_env_properties(request, test_run):
-    """
-        helper to save Env properties from TestRun new/edit views
-    """
-    env_property_id_set = set(request.POST.getlist("env_property_id"))
-    if env_property_id_set:
-        args = []
-        for property_id in env_property_id_set:
-            select_name = 'select_property_value_%s' % property_id
-            env_values = request.POST.getlist(select_name)
-            if not env_values:
-                continue
-
-            for value_id in env_values:
-                if value_id:
-                    args.append(EnvRunValueMap(run=test_run, value_id=value_id))
-
-        EnvRunValueMap.objects.bulk_create(args)
 
 
 @require_POST
@@ -137,18 +116,13 @@ def new(request):
                                       assignee=assignee_tester)
                 loop += 1
 
-            save_env_properties(request, test_run)
-
             return HttpResponseRedirect(
                 reverse('testruns-get', args=[test_run.run_id, ])
             )
 
     else:
         form = NewRunForm(initial={
-            'summary': 'Test run for %s on %s' % (
-                test_plan.name,
-                test_plan.env_group.all() and test_plan.env_group.all()[0] or 'Unknown environment'
-            ),
+            'summary': 'Test run for %s' % test_plan.name,
             'manager': test_plan.author.email,
             'default_tester': request.user.email,
             'notes': '',
@@ -156,7 +130,6 @@ def new(request):
         form.populate(product_id=test_plan.product_id)
 
     context_data = {
-        'show_env': True,
         'test_plan': test_plan,
         'test_cases': tcs_values,
         'form': form,
@@ -348,7 +321,6 @@ def edit(request, run_id):
         form.populate(test_run.plan.product_id)
 
     context_data = {
-        'show_env': False,
         'test_run': test_run,
         'test_plan': test_run.plan,
         'form': form,
@@ -587,7 +559,6 @@ def clone(request, run_id):
     form.populate(product_id=test_run.plan.product_id)
 
     context_data = {
-        'show_env': True,
         'is_cloning': True,
         'disabled_cases': disabled_cases,
         'test_plan': test_run.plan,
@@ -801,91 +772,6 @@ def update_case_run_text(request, run_id):
 
     messages.add_message(request, message_level, info)
     return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
-
-
-@require_GET
-def env_value(request):
-    """Run environment property edit function"""
-    test_runs = TestRun.objects.filter(run_id__in=request.GET.getlist('run_id'))
-
-    class RunEnvActions:
-        def __init__(self, request, test_runs):
-            self.__all__ = ['add', 'remove', 'change']
-            self.ajax_response = {'rc': 0, 'response': 'ok'}
-            self.request = request
-            self.test_runs = test_runs
-
-        def has_no_perm(self, perm):
-            if not self.request.user.has_perm('testruns.' + perm + '_envrunvaluemap'):
-                return {'rc': 1, 'response': 'Permission deined - %s' % perm}
-
-            return False
-
-        def add(self):
-            chk_perm = self.has_no_perm('add')
-
-            if chk_perm:
-                return HttpResponse(json.dumps(chk_perm))
-
-            try:
-                value = self.get_env_value(request.GET.get('env_value_id'))
-                for test_run in self.test_runs:
-                    _, created = test_run.add_env_value(env_value=value)
-
-                    if not created:
-                        self.ajax_response = {
-                            'rc': 1,
-                            'response': 'The value is exist for this run'
-                        }
-            except ObjectDoesNotExist as errors:
-                self.ajax_response = {'rc': 1, 'response': errors}
-
-            fragment = render(request, "run/get_environment.html",
-                              {"test_run": self.test_runs[0], "is_ajax": True})
-            self.ajax_response.update({  # pylint: disable=objects-update-used
-                                       "fragment": str(fragment.content,
-                                                       encoding=settings.DEFAULT_CHARSET)})
-            return JsonResponse(self.ajax_response)
-
-        def remove(self):
-            chk_perm = self.has_no_perm('delete')
-            if chk_perm:
-                return HttpResponse(json.dumps(chk_perm))
-
-            for test_run in self.test_runs:
-                test_run.remove_env_value(env_value=self.get_env_value(
-                    request.GET.get('env_value_id')
-                ))
-
-            return JsonResponse(self.ajax_response)
-
-        def change(self):
-            chk_perm = self.has_no_perm('change')
-            if chk_perm:
-                return JsonResponse(chk_perm)
-
-            for test_run in self.test_runs:
-                test_run.remove_env_value(env_value=self.get_env_value(
-                    request.GET.get('old_env_value_id')
-                ))
-                test_run.add_env_value(env_value=self.get_env_value(
-                    request.GET.get('new_env_value_id')
-                ))
-
-            return JsonResponse(self.ajax_response)
-
-        @staticmethod
-        def get_env_value(env_value_id):
-            return EnvValue.objects.get(id=env_value_id)
-
-    run_env_actions = RunEnvActions(request, test_runs)
-
-    if request.GET.get('a') not in run_env_actions.__all__:
-        ajax_response = {'rc': 1, 'response': 'Unrecognizable actions'}
-        return JsonResponse(ajax_response)
-
-    func = getattr(run_env_actions, request.GET['a'])
-    return func()
 
 
 def get_caseruns_of_runs(runs, kwargs=None):

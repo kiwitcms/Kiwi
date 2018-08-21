@@ -13,87 +13,18 @@ from django.urls import reverse
 from tcms.management.models import Product
 from tcms.management.models import Version
 from tcms.testcases.models import TestCasePlan, TestCaseStatus
-from tcms.testplans.models import EnvPlanMap
 from tcms.testplans.models import TestPlan
-from tcms.utils.permissions import initiate_user_with_default_setups
 
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory, TestCaseTextFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import PlanTypeFactory
-from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
-
-
-class TestPlanEnvironmentGroupTests(test.TestCase):
-    """Test setting/editting ENV groups in Test Plans"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestPlanEnvironmentGroupTests, cls).setUpTestData()
-
-        cls.product = ProductFactory()
-        cls.product_version = VersionFactory(product=cls.product)
-
-        cls.env_group = EnvGroupFactory()
-        cls.new_env_group = EnvGroupFactory(name='Laptop hardware')
-
-        cls.tester = UserFactory()
-        cls.tester.set_password('password')
-        initiate_user_with_default_setups(cls.tester)
-
-    def setUp(self):
-        is_logged_in = self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-        self.assertTrue(is_logged_in)
-
-    def test_user_with_default_perms_can_create_testplan_and_set_env_group(self):
-        # test for https://github.com/kiwitcms/Kiwi/issues/73
-        url = reverse('plans-new')
-        response = self.client.post(
-            url,
-            {
-                'name': 'TP for Issue #73',
-                'product': self.product.pk,
-                'product_version': self.product_version.pk,
-                'type': PlanTypeFactory().pk,
-                'env_group': self.env_group.pk,
-            },
-            follow=True,
-        )
-
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, ">%s</a>" % self.env_group.name)
-
-    def test_user_with_default_perms_can_edit_tp_and_change_env_group(self):
-        test_plan = TestPlanFactory(
-            product=self.product,
-            product_version=self.product_version,
-            env_group=[self.env_group]
-        )
-        url = reverse('plan-edit', args=[test_plan.pk, ])
-
-        response = self.client.post(
-            url,
-            {
-                'name': 'NEW TEST PLAN NAME',
-                'product': test_plan.product.pk,
-                'product_version': test_plan.product_version.pk,
-                'type': test_plan.type.pk,
-                'env_group': self.new_env_group.pk,
-                'text': "We've changed the ENV group setting",
-            },
-            follow=True,
-        )
-
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, ">%s</a>" % self.new_env_group.name)
 
 
 class PlanTests(test.TestCase):
@@ -547,11 +478,6 @@ class TestCloneView(BasePlanCase):
         # Verify option set_parent
         self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
 
-        # Verify option copy_environment_groups
-        for env_group in original_plan.env_group.all():
-            added = EnvPlanMap.objects.filter(plan=cloned_plan, group=env_group).exists()
-            self.assertTrue(added)
-
         # Verify options link_testcases and copy_testcases
         if link_cases and not copy_cases:
             for case in original_plan.case.all():
@@ -565,7 +491,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',
             'keep_case_default_tester': 'on',
@@ -592,7 +517,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'maintain_case_orignal_author': 'on',
             'keep_case_default_tester': 'on',
@@ -617,7 +541,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'copy_environment_groups': 'on',
             'link_testcases': 'on',
             'submit': 'Clone',
 

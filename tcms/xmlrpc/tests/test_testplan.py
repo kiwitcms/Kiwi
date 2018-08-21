@@ -7,7 +7,6 @@ from tcms_api.xmlrpc import TCMSXmlrpc
 
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCasePlan
-from tcms.testplans.models import EnvPlanMap
 
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import ProductFactory
@@ -15,7 +14,6 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import TagFactory
-from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
@@ -142,8 +140,6 @@ class TestUpdate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attrib
     def _fixture_setup(self):
         super(TestUpdate, self)._fixture_setup()
 
-        self.env_group_1 = EnvGroupFactory()
-        self.env_group_2 = EnvGroupFactory()
         self.product = ProductFactory()
         self.version = VersionFactory(product=self.product)
         self.tester = UserFactory()
@@ -151,34 +147,11 @@ class TestUpdate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attrib
         self.plan_1 = TestPlanFactory(product_version=self.version,
                                       product=self.product,
                                       author=self.tester,
-                                      type=self.plan_type,
-                                      env_group=(self.env_group_1,))
+                                      type=self.plan_type)
         self.plan_2 = TestPlanFactory(product_version=self.version,
                                       product=self.product,
                                       author=self.tester,
-                                      type=self.plan_type,
-                                      env_group=(self.env_group_1,))
-
-    def test_update_env_group(self):
-        # plan_1 and plan_2 point to self.env_group_1
-        # and there are only 2 objects in the many-to-many table
-        # so we issue XMLRPC request to modify the env_group of self.plan_2
-        plan = self.rpc_client.exec.TestPlan.update(self.plan_2.pk,
-                                                    {'env_group': self.env_group_2.pk})
-
-        # now verify that the returned TP (plan_2) has been updated to env_group_2
-        self.assertEqual(self.plan_2.pk, plan['plan_id'])
-        self.assertEqual(1, len(plan['env_group']))
-        self.assertEqual(self.env_group_2.pk, plan['env_group'][0])
-
-        # and that plan_1 has not changed at all
-        self.assertEqual(1, self.plan_1.env_group.count())
-        self.assertEqual(self.env_group_1.pk, self.plan_1.env_group.all()[0].pk)
-
-        # and there are still only 2 objects in the many-to-many table
-        # iow no dangling objects left
-        self.assertEqual(2, EnvPlanMap.objects.filter(plan__in=[self.plan_1,
-                                                                self.plan_2]).count())
+                                      type=self.plan_type)
 
     def test_update_text(self):
         self.rpc_client.exec.TestPlan.update(self.plan_1.pk, {'text': 'This has been updated'})
