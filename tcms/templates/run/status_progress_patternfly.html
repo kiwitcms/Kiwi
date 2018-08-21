@@ -1,0 +1,5 @@
+<span>{{ stats.CompletedPercentage|floatformat:0 }}% complete</span>
+<div class="progress">
+  <div class="progress-bar progress-bar-striped progress-bar-success" style="width: {{ stats.SuccessPercentage|floatformat:0}}%;"></div>
+  <div class="progress-bar progress-bar-striped progress-bar-danger" style="width: {{ stats.FailurePercentage|floatformat:0 }}%"></div>
+</div>
