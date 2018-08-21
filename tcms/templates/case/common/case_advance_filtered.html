@@ -1,16 +1,5 @@
 {% load static %}
 {% if test_cases %}
-	<form id="cases_form" action="{% url "testcases-clone" %}" method="post">
-	<div id="contentTab" class="mixbar">
-		<span>
-			{% if perms.testcases.add_testcase %}
-			<input type="submit" value="Clone" title="clone selected test plans" />
-			{% endif %}
-			<input type="button" disabled="disabled" value="Printable copy"
-                   id="case_advance_printable"
-                   title="Create the printable copy for selected cases." />
-		</span> 
-	</div>
 	<table class="list border-bottom" id="testcases_table" cellpadding="0" cellspacing="0" border="0">
 		<thead>
 			<tr>
@@ -58,7 +47,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
-</form>
 
 {% else %}
 	{% ifequal REQUEST_CONTENTS.a 'search' %}

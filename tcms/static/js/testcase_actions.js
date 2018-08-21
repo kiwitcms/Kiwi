@@ -34,11 +34,6 @@ Nitrate.TestCases.AdvanceList.on_load = function() {
   if (jQ('#id_checkbox_all_case').length) {
     jQ('#id_checkbox_all_case').bind('click', function(e) {
       clickedSelectAll(this, jQ(this).closest('form')[0], 'case');
-      if (this.checked) {
-        jQ('#case_advance_printable').attr('disabled', false);
-      } else {
-        jQ('#case_advance_printable').attr('disabled', true);
-      }
     });
   };
 
@@ -73,22 +68,10 @@ Nitrate.TestCases.AdvanceList.on_load = function() {
 
   jQ('.expandable').bind('click', toggle_case);
 
-  jQ("#testcases_table tbody tr input[type=checkbox][name=case]").live('click', function() {
-    if (jQ('input[type=checkbox][name=case]:checked').length) {
-      jQ("#case_advance_printable").attr('disabled', false);
-    } else {
-      jQ("#case_advance_printable").attr('disabled', true);
-    }
-  });
-
   if (window.location.hash === '#expandall') {
     blinddownAllCases();
   }
 
-  var listParams = Nitrate.TestCases.List.Param;
-  jQ('#case_advance_printable').bind('click', function() {
-    postToURL(listParams.case_printable, Nitrate.Utils.formSerialize(this.form));
-  });
 };
 
 Nitrate.TestCases.List.on_load = function() {
@@ -97,11 +80,6 @@ Nitrate.TestCases.List.on_load = function() {
   if (jQ('#id_checkbox_all_case')[0]) {
     jQ('#id_checkbox_all_case').bind('click', function(e) {
       clickedSelectAll(this, jQ(this).closest('table')[0], 'case');
-      if (this.checked) {
-        jQ('#case_list_printable').attr('disabled', false);
-      } else {
-        jQ('#case_list_printable').attr('disabled', true);
-      }
     });
   }
 
@@ -166,19 +144,6 @@ Nitrate.TestCases.List.on_load = function() {
 
     toggleTestCasePane({ case_id: case_id, casePaneContainer: tr.next() });
     toggleExpandArrow({ caseRowContainer: tr, expandPaneContainer: tr.next() });
-  });
-
-  jQ("#testcases_table tbody tr input[type=checkbox][name=case]").live("click", function() {
-    if (jQ("input[type=checkbox][name=case]:checked").length) {
-      jQ("#case_list_printable").attr('disabled', false);
-    } else {
-      jQ("#case_list_printable").attr('disabled', true);
-    }
-  });
-
-  var listParams = Nitrate.TestCases.List.Param;
-  jQ('#case_list_printable').bind('click', function() {
-    postToURL(listParams.case_printable, Nitrate.Utils.formSerialize(this.form));
   });
 };
 
