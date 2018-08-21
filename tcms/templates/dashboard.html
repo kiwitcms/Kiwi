@@ -1,95 +1,87 @@
-{% extends "tcms_base.html" %}
-{% load static %}
-
-{% block subtitle %}Dashboard{% endblock %}
-
-{% block custom_stylesheet %}
-{% endblock %}
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Dashboard" %}{% endblock %}
 
 {% block contents %}
+<div class="container-fluid container-cards-pf">
+    <div class="panel panel-default col-sm-12 col-md-5 col-lg-5" style="padding:0; margin-right:1%">
+        <div class="panel-heading"><strong>{% trans "Test executions" %}</strong></div>
+        <table class="table table-striped">
+            <tbody>
+            {% for test_run in last_15_test_runs %}
+                <tr>
+                    <td>
+                        {% include "run/status_progress_patternfly.html" with stats=test_run.stats_caseruns_status %}
+                    </td>
+                    <td>
+                        <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a>
+                        <div>{% trans "Started at" %} {{ test_run.start_date }}</div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="panel-footer">
+            {% if test_runs_count %}
+                {% blocktrans with total_count=test_runs_count count=last_15_test_runs|length %}
+                {{ total_count }} TestRun(s) assigned to you need to be executed.
+                Here are the latest {{ count }}.
+                {% endblocktrans %}
 
-<div id="content" >
-	<div class="listinfo_content listinfo_index">
-		<div class="leftlistinfo">
-			<table cellpadding="0" cellspacing="0" class="home_table">
-				<tr>
-					<th colspan="4"><div class="sprites tableheader"> <div class="sprites tableheaderleft">Test Runs</div><div class="sprites tableheaderright"></div></div></th>
-				</tr>
-				{% for test_run in last_15_test_runs %}
-				<tr>
-					<td class="sprites home_table_bar" width="120" align="center">
-                                            {% include "run/status_progress.html" with status_stats=test_run.stats_caseruns_status %}
-					</td>
-					<td colspan="3">
-						<a	class="link" href="{% url "testruns-get" test_run.run_id %}">
-							{{ test_run.summary }}
-						</a>
-						<div class="grey" style="margin-top:5px">Start at {{ test_run.start_date }}</div>
-					</td>
-				</tr>
-				{% endfor %}
-				<tr>
-					<th colspan="4">
-						{% if test_runs_count %}
-						<div class="sprites tablefooter"> 
-                        <div class="left_float">
-                        {{ test_runs_count }} test run(s) related to you need to be run, here {% ifequal test_runs_count 1 %}is{% else %}are{% endifequal %} the latest {{ last_15_test_runs|length }}.</div>
-							<div class="sprites tablefooterleft"></div>
-                            
-                            <a href="{% url "testruns-all" %}?people={{ user.username|iriencode }}&status=running" class="seeall">SEE ALL</a>
-							<div class="sprites tablefooterright"></div>
-						</div>
-						{% else %}
-						<div class="sprites tablefooter">
-                        <div class="left_float">No run belong to you.</div>
-                        <div class="sprites tablefooterleft"></div>
-						<div class="sprites tablefooterright"></div>
-						</div>
-						{% endif %}
-					</th>
-				</tr>
-			</table>
-		
-		</div>
-		<div class="rightlistinfo">
-			<table cellpadding="0" cellspacing="0" class="home_table" style="margin-left:10px;">
-				<tr>
-					<th style="min-width:100px"><div class="sprites tableheader"> <div class="sprites tableheaderleft">Test Plans</div></div></th>
-					<th class="sprites tableheader" align="left">Product</th>
-					<th class="sprites tableheader" align="left">Type</th>
-					<th><div class="sprites tableheader" align="left">Runs<div class="sprites tableheaderright"></div></div></th>
-				</tr>
-				{% for test_plan in last_15_test_plans %}
+                <a href="{% url "testruns-all" %}?people={{ user.username|iriencode }}&status=running">
+                    {% trans "SEE ALL" %}
+                </a>
+            {% else %}
+                {% trans "There are no TestRun(s) assigned to you" %}
+            {% endif %}
+        </div>
+    </div> <!-- /panel -->
+
+    <div class="panel panel-default col-sm-12 col-md-6 col-lg-6" style="padding:0">
+        <div class="panel-heading">
+            <strong>{% trans "Your Test plans" %}</strong>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "TestPlan" %}</th>
+                    <th>{% trans "Product" %}</th>
+                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Executions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for test_plan in last_15_test_plans %}
                 {% if test_plan.is_active %}
-				<tr class="{% cycle 'odd' 'even' %}">
-					<td height="27"><a class="link" href="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}">{{ test_plan.name }}</a></td>
-					<td>{{ test_plan.product }}</td>
-					<td>{{ test_plan.type }}</td>
-					<td><a href="/runs/?plan={{ test_plan.plan_id }}">{{ test_plan.num_runs }}</a></td>
-				</tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}">{{ test_plan.name }}</a>
+                    </td>
+                    <td>{{ test_plan.product }}</td>
+                    <td>{{ test_plan.type }}</td>
+                    <td><a href="/runs/?plan={{ test_plan.plan_id }}">{{ test_plan.num_runs }}</a></td>
+                </tr>
                 {% endif %}
-				{% endfor %}
-				<tr>
-					<th colspan="4">
-						{% if test_plans_count %}
-						<div class="sprites tablefooter"> 
-                            <div class="left_float">You manage {{ test_plans_count }} test plan(s), {{ test_plans_disable_count }} test plan(s) disabled, here {% ifequal test_plans_count 1 %}is{% else %}are{% endifequal %} the latest {{ last_15_test_plans|length }}.</div>
-							<div class="sprites tablefooterleft"></div>
-                            <a class="seeall" href="{% url "plans-all" %}?author__email__startswith={{ user.email|iriencode }}">SEE ALL</a>
-							<div class="sprites tablefooterright"></div>
-						</div>
-						{% else %}
-						<div class="sprites tablefooter">
-							<div class="left_float">No plan belong to you</div>
-                            <div class="sprites tablefooterleft"></div>
-							<div class="sprites tablefooterright"></div><a class="create" href="{% url "plans-new" %}">Create</a>
-						</div>
-						{% endif %}
-					</th>
-				</tr>
-				</table>
-		</div>
-		<div class="clear"></div>
-	</div>
-</div>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="panel-footer">
+            {% if test_plans_count %}
+                {% blocktrans with total_count=test_plans_count disabled_count=test_plans_disable_count count=last_15_test_plans|length %}
+                You manage {{ total_count }} TestPlan(s), {{ disabled_count }} are disabled.
+                Here are the latest {{ count }}.
+                {% endblocktrans %}
+
+                <a href="{% url "plans-all" %}?author__email__startswith={{ user.email|iriencode }}">
+                    {% trans "SEE ALL" %}
+                </a>
+            {% else %}
+                {% trans "There are no TestPlan(s) that belong to you" %}
+            {% endif %}
+        </div>
+    </div> <!-- /panel -->
+
+</div><!-- /container -->
 {% endblock %}

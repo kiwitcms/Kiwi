@@ -19,11 +19,12 @@ from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
 
 
-TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
-                                       'StatusSubtotal '
-                                       'CaseRunsTotalCount '
-                                       'CompletedPercentage '
-                                       'FailurePercentage')
+TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
+                                        'StatusSubtotal',
+                                        'CaseRunsTotalCount',
+                                        'CompletedPercentage',
+                                        'FailurePercentage',
+                                        'SuccessPercentage'])
 
 
 def plan_by_id_or_name(value):
@@ -294,12 +295,13 @@ class TestRun(TCMSActionModel):
             complete_percent = complete_count * 100.0 / caseruns_total_count
         failure_percent = .0
         if complete_count:
-            failure_percent = failure_count * 100.0 / complete_count
+            failure_percent = failure_count * 100.0 / caseruns_total_count
 
         return TestCaseRunStatusSubtotal(caserun_statuses_subtotal,
                                          caseruns_total_count,
                                          complete_percent,
-                                         failure_percent)
+                                         failure_percent,
+                                         complete_percent - failure_percent)
 
 
 class TestCaseRunStatus(TCMSActionModel):
