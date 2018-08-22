@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-21 18:20+0000\n"
-"PO-Revision-Date: 2018-08-21 19:41\n"
+"PO-Revision-Date: 2018-08-22 05:20\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -204,27 +204,27 @@ msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Strani ni mogoče najti"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Notranja napaka na strežniku"
 
 #: tcms/templates/base.html:9 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "vodilni odprtokodni sistem za upravljanje s testnimi scenariji"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Nadzorna plošča"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Izvedeni testi"
 
 #: tcms/templates/dashboard.html:18
 msgid "Started at"
-msgstr ""
+msgstr "Začeto ob"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -232,35 +232,38 @@ msgid "\n"
 "                %(total_count)s TestRun(s) assigned to you need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"                %(total_count)s testiranj čaka na izvedbo\n"
+"                Zadnja dodeljena testiranja %(count)s.\n"
+"                "
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
-msgstr ""
+msgstr "PRIKAŽI VSE"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Nobeno testiranje vam trenutno ni dodeljeno"
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
-msgstr ""
+msgstr "Moji testni repozitoriji"
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
-msgstr ""
+msgstr "Repozitorij testov"
 
 #: tcms/templates/dashboard.html:49
 msgid "Product"
-msgstr ""
+msgstr "Izdelek"
 
 #: tcms/templates/dashboard.html:50
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #: tcms/templates/dashboard.html:51
 msgid "Executions"
-msgstr ""
+msgstr "Izvedbe"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
@@ -414,7 +417,7 @@ msgstr "Izberite najmanj en testni scenarij in eno testiranje"
 
 #: tcms/testplans/views.py:519
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Testni repozitorij je obvezen"
 
 #: tcms/testplans/views.py:742
 msgid "At least one test plan is required for print"
