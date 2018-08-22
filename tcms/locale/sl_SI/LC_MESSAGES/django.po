@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-21 18:20+0000\n"
-"PO-Revision-Date: 2018-08-22 05:20\n"
+"PO-Revision-Date: 2018-08-22 05:30\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -271,11 +271,14 @@ msgid "\n"
 "                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"                Imate %(total_count)s reopozitorijev testov, %(disabled_count)s je onemogočenih.\n"
+"                Tukaj so zadnji %(count)s.\n"
+"                "
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Noben testni plan vam ni dodeljen"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -339,59 +342,59 @@ msgstr "Spoštovani administrator,\n"
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
 msgid "Username"
-msgstr ""
+msgstr "Uporabniško ime"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Geslo"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Prijava"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Dobrodošli v Kiwi TCMS"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 msgid "Confirm"
-msgstr ""
+msgstr "Potrdi"
 
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Spremeni geslo"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Novo geslo vnesite dvakrat"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "Sporočilo za ponastavitev gesla poslano"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-pošta"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Ponastavitev gesla"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Ponastavitev gesla za Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Registriraj nov račun"
 
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Registracija"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
