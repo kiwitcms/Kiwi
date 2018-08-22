@@ -1,3 +1,7 @@
+if (!jQ) {
+    var jQ = $;
+}
+
 // Create a dictionary to avoid polluting the global namespace:
 var Nitrate = window.Nitrate || {}; // Ironically, this global name is not respected. So u r on ur own.
 window.Nitrate = Nitrate;

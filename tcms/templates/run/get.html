@@ -33,7 +33,7 @@ jQ(function() {
 	<!-- Store some values for easier javascript acccess -->
 	<div id="tcms_values" class="hidden">
 		<input id="value_run_id" type="hidden" name="run_id" value="{{ test_run.run_id }}" />
-		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_run.build.product_id }}" />
+		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_run.plan.product_id }}" />
 	</div>
 	<div class="control">
 		{% if perms.testruns.change_testcaserun %}
@@ -64,19 +64,13 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Product Version&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "testruns-all" %}?product={{ test_run.build.product_id }}&product_version={{ test_run.product_version_id }}" title="Search test runs of {{ test_run.product_version }}">{{ test_run.product_version }}</a>
+					<a href="{% url "testruns-all" %}?product={{ test_run.plan.product_id }}&product_version={{ test_run.plan.product_version_id }}" title="Search test runs of {{ test_run.plan.product_version.value }}">{{ test_run.plan.product_version.value }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Manager&nbsp;:</div>
 				<div class="name">
 					<a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager.username }}</a>
-				</div>
-			</div>
-			<div class="listinfo">
-				<div class="title grey">Estimated Time&nbsp;:</div>
-				<div class="name">
-				{{ test_run.estimated_time }}
 				</div>
 			</div>
 			<div class="listinfo">

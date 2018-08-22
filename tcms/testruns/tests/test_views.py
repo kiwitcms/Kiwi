@@ -978,11 +978,8 @@ class TestEditRun(BaseCaseRun):
         user_should_have_perm(cls.tester, 'testruns.change_testrun')
         cls.edit_url = reverse('testruns-edit', args=[cls.test_run.pk])
 
-        cls.new_product = ProductFactory(name='Nitrate Dev')
         cls.new_build = BuildFactory(name='FastTest',
-                                     product=cls.new_product)
-        cls.new_version = VersionFactory(value='dev0.1',
-                                         product=cls.new_product)
+                                     product=cls.test_run.plan.product)
         cls.intern = UserFactory(username='intern',
                                  email='intern@example.com')
 
@@ -996,13 +993,9 @@ class TestEditRun(BaseCaseRun):
 
         post_data = {
             'summary': 'New run summary',
-            'product': self.new_product.pk,
-            'product_version': self.new_version.pk,
             'build': self.new_build.pk,
-            'errata_id': '',
             'manager': self.test_run.manager.email,
             'default_tester': self.intern.email,
-            'estimated_time': '00:03:00',
             'notes': 'easytest',
         }
 
@@ -1010,7 +1003,6 @@ class TestEditRun(BaseCaseRun):
 
         run = TestRun.objects.get(pk=self.test_run.pk)
         self.assertEqual('New run summary', run.summary)
-        self.assertEqual(self.new_version, run.product_version)
         self.assertEqual(self.new_build, run.build)
 
         self.assertRedirects(response, reverse('testruns-get', args=[run.pk]))

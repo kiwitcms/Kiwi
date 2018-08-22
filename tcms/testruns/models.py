@@ -38,6 +38,8 @@ class TestRun(TCMSActionModel):
 
     run_id = models.AutoField(primary_key=True)
 
+    # todo: this field should be removed in favor of plan.product_version
+    # no longer shown in edit forms
     product_version = models.ForeignKey('management.Version', related_name='version_run',
                                         on_delete=models.CASCADE)
 
@@ -45,6 +47,8 @@ class TestRun(TCMSActionModel):
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     summary = models.TextField()
     notes = models.TextField(blank=True)
+    # todo: schedule for removal, after the migration to Patternfly this
+    # field is no longer shown in the edit form
     estimated_time = models.DurationField(default=datetime.timedelta(0))
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run',
