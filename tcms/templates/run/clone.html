@@ -45,13 +45,13 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.Clone.on_load);
 				<tr>
 					<td width="15%"><label for="">Product</label></td>
 					<td>
-						{{ clone_form.product }}
+						{{ test_run.plan.product.name }}
 					</td>
 				</tr>
 				<tr>
 					<td><label>Product Version</label></td>
-					<td>{{ clone_form.product_version }}<span class="errors">{{ clone_form.product_version.errors }}</span>
-						<a href="{% url 'admin:management_version_add' %}" class="addlink" id="add_id_product_version">Add Product Version</a>
+					<td>
+                                            {{ test_run.plan.product_version.value }}
 					</td>
 				</tr>
 				<tr>

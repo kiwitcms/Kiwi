@@ -38,7 +38,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.forms import PlanFilterRunForm
-from tcms.testruns.forms import NewRunForm, SearchRunForm, EditRunForm, RunCloneForm
+from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm, RunCloneForm
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRunValueMap
 from tcms.issuetracker.types import IssueTrackerType
 
@@ -97,7 +97,7 @@ def new(request, template_name='run/new.html'):
             default_tester = form.cleaned_data['default_tester']
 
             test_run = TestRun.objects.create(
-                product_version=form.cleaned_data['product_version'],
+                product_version=test_plan.product_version,
                 stop_date=None,
                 summary=form.cleaned_data.get('summary'),
                 notes=form.cleaned_data.get('notes'),
@@ -185,11 +185,9 @@ def new(request, template_name='run/new.html'):
                 test_plan.name,
                 test_plan.env_group.all() and test_plan.env_group.all()[0] or 'Unknown environment'
             ),
-            'estimated_time': estimated_time,
             'manager': test_plan.author.email,
             'default_tester': request.user.email,
             'product': test_plan.product_id,
-            'product_version': test_plan.product_version_id,
         })
         form.populate(product_id=test_plan.product_id)
 
@@ -552,7 +550,7 @@ def get(request, run_id, template_name='run/get.html'):
 
 
 @permission_required('testruns.change_testrun')
-def edit(request, run_id, template_name='run/edit.html'):
+def edit(request, run_id):
     """Edit test plan view"""
 
     try:
@@ -562,7 +560,7 @@ def edit(request, run_id, template_name='run/edit.html'):
 
     # If the form is submitted
     if request.method == "POST":
-        form = EditRunForm(request.POST)
+        form = BaseRunForm(request.POST)
         form.populate(product_id=request.POST.get('product', test_run.plan.product_id))
 
         # FIXME: Error handler
@@ -573,33 +571,30 @@ def edit(request, run_id, template_name='run/edit.html'):
                 test_run.manager = form.cleaned_data['manager']
             test_run.default_tester = form.cleaned_data['default_tester']
             test_run.build = form.cleaned_data['build']
-            test_run.product_version = form.cleaned_data['product_version']
+            test_run.product_version = test_run.plan.product_version
             test_run.notes = form.cleaned_data['notes']
             test_run.estimated_time = form.cleaned_data['estimated_time']
-            test_run.update_completion_status(form.cleaned_data['finished'])
             test_run.save()
             return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
     else:
         # Generate a blank form
-        form = EditRunForm(initial={
+        form = BaseRunForm(initial={
             'summary': test_run.summary,
             'manager': test_run.manager.email,
             'default_tester': (test_run.default_tester and
                                test_run.default_tester.email or None),
-            'product': test_run.build.product_id,
-            'product_version': test_run.product_version_id,
+            'version': test_run.product_version_id,
             'build': test_run.build_id,
             'notes': test_run.notes,
-            'finished': test_run.stop_date,
             'estimated_time': test_run.estimated_time,
         })
-        form.populate(product_id=test_run.build.product_id)
+        form.populate(test_run.plan.product_id)
 
     context_data = {
         'test_run': test_run,
         'form': form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'testruns/mutable.html', context_data)
 
 
 @permission_required('testruns.change_testcaserun')

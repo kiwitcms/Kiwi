@@ -33,32 +33,18 @@ PEOPLE_TYPE_CHOICES = (
 
 
 class BaseRunForm(forms.Form):
-    summary = forms.CharField(label='Summary', max_length=255)
-    manager = UserField(label='Manager')
-    default_tester = UserField(
-        label='Default Tester',
-        required=False
-    )
-    product = forms.ModelChoiceField(
-        label='Product',
-        queryset=Product.objects.all(),
-        empty_label=None,
-    )
+    summary = forms.CharField(max_length=255)
+    manager = UserField()
+    default_tester = UserField(required=False)
     estimated_time = forms.DurationField(required=False)
-    product_version = forms.ModelChoiceField(
-        label='Product Version',
-        queryset=Version.objects.none(),
-        empty_label=None,
-    )
     build = forms.ModelChoiceField(
-        label='Build',
         queryset=Build.objects.none(),
     )
     notes = forms.CharField(
-        label='Notes',
         widget=forms.Textarea,
         required=False
     )
+    # todo: what are these 2 fields
     keep_status = forms.BooleanField(
         label='Reserve Status', widget=forms.CheckboxInput(),
         required=False
@@ -75,8 +61,6 @@ class BaseRunForm(forms.Form):
         #          django-choicefield-queryset (Chinese)
         # Is this documented elsewhere?
         query = {'product_id': product_id}
-        self.fields['product_version'].queryset = Version.objects.filter(
-            product__id=product_id)
         self.fields['build'].queryset = Build.list_active(query)
 
     def clean_estimated_time(self):
@@ -93,12 +77,6 @@ class NewRunForm(BaseRunForm):
         queryset=TestCase.objects.filter(case_status__id=2).all(),
     )
 
-
-class EditRunForm(BaseRunForm):
-    finished = forms.BooleanField(label='Finished', required=False)
-
-
-# =========== Forms for XML-RPC functions ==============
 
 class XMLRPCNewRunForm(BaseRunForm):
     plan = forms.ModelChoiceField(
