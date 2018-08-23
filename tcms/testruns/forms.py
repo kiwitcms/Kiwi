@@ -42,7 +42,7 @@ class BaseRunForm(forms.Form):
     )
     notes = forms.CharField(
         widget=forms.Textarea,
-        required=False
+        required=False,
     )
     # todo: what are these 2 fields
     keep_status = forms.BooleanField(

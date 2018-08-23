@@ -45,11 +45,14 @@ from tcms.issuetracker.types import IssueTrackerType
 
 @require_POST
 @permission_required('testruns.add_testrun')
-def new(request, template_name='run/new.html'):
+def new(request):
     """Display the create test run page."""
 
     # If from_plan does not exist will redirect to plans for select a plan
     if not request.POST.get('from_plan'):
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Creating a TestRun requires a TestPlan, select one'))
         return HttpResponseRedirect(reverse('plans-all'))
 
     plan_id = request.POST.get('from_plan')
@@ -65,23 +68,16 @@ def new(request, template_name='run/new.html'):
     # Ready to write cases to test plan
     confirm_status = TestCaseStatus.get_CONFIRMED()
     test_cases = get_selected_testcases(request)
-    # FIXME: optimize this query, only get necessary columns, not all fields
-    # are necessary
-    test_plan = TestPlan.objects.select_related().get(plan_id=plan_id)
-    test_case_runs = TestCaseRun.objects.filter(
-        case_run_id__in=request.POST.getlist('case_run_id'))
-
-    num_unconfirmed_cases = test_cases.exclude(case_status=confirm_status).count()
-    estimated_time = datetime.timedelta(seconds=0)
+    test_plan = TestPlan.objects.get(plan_id=plan_id)
+    test_case_runs = TestCaseRun.objects.filter(case_run_id__in=request.POST.getlist('case_run_id'))
 
     tcs_values = test_cases.select_related('author',
                                            'case_status',
                                            'category',
                                            'priority')
-    # note: ordered for test_show_create_new_run_page() on PostgreSQL
+    # note: ordered by case_id for test_show_create_new_run_page()
     tcs_values = tcs_values.only('case_id',
                                  'summary',
-                                 'estimated_time',
                                  'author__email',
                                  'create_date',
                                  'category__name',
@@ -90,7 +86,7 @@ def new(request, template_name='run/new.html'):
 
     if request.POST.get('POSTING_TO_CREATE'):
         form = NewRunForm(request.POST)
-        form.populate(product_id=request.POST.get('product', test_plan.product_id))
+        form.populate(product_id=test_plan.product_id)
 
         if form.is_valid():
             # Process the data in form.cleaned_data
@@ -178,8 +174,6 @@ def new(request, template_name='run/new.html'):
             )
 
     else:
-        estimated_time = reduce(lambda x, y: x + y,
-                                (tc.estimated_time for tc in tcs_values))
         form = NewRunForm(initial={
             'summary': 'Test run for %s on %s' % (
                 test_plan.name,
@@ -187,20 +181,16 @@ def new(request, template_name='run/new.html'):
             ),
             'manager': test_plan.author.email,
             'default_tester': request.user.email,
-            'product': test_plan.product_id,
+            'notes': '',
         })
         form.populate(product_id=test_plan.product_id)
 
-    # FIXME: pagination cases within Create New Run page.
     context_data = {
-        'from_plan': plan_id,
         'test_plan': test_plan,
         'test_cases': tcs_values,
         'form': form,
-        'num_unconfirmed_cases': num_unconfirmed_cases,
-        'run_estimated_time': estimated_time.total_seconds(),
     }
-    return render(request, template_name, context_data)
+    return render(request, 'testruns/mutable.html', context_data)
 
 
 @require_GET
@@ -592,6 +582,7 @@ def edit(request, run_id):
 
     context_data = {
         'test_run': test_run,
+        'test_plan': test_run.plan,
         'form': form,
     }
     return render(request, 'testruns/mutable.html', context_data)
