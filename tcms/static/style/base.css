@@ -295,7 +295,6 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 .new_comment .submit-post{ margin:5px 0; cursor:pointer}
 .case_run .collapse-control{ width:30px; padding:2px; float:left; color:#333;}
 .case_run .buglink{background:transparent url(../images/bug_fire.png) no-repeat; padding:0px 15px; text-decoration:none; }
-.case_run .hiddenRow{ height:auto; float:left; width:100%;}
 .textbox{ border: #7F9DB9 1px solid;overflow:auto; width:60%;}
 /***********************Run End***************************/
 
@@ -333,7 +332,6 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 /************************************form**********************************/
 #itemFilter{ width:100%; float:right; background:#F8FFF2; border:1px solid #D5DBD0;}
 #itemFilter tfoot td{ background:#f1f1f1; border-top:1px solid #ccc;}
-.hiddenRow{ width:100%; background:#f3f8fe;}
 .remove a :hover img{ border:1px solid #ccc; }
 .query_cases_content { float:left; width:100%; padding-left:10px;}
 .query_cases_content label{ width:60%; margin-left:10px; float:left; border-bottom:1px dotted #235C82;}
@@ -698,12 +696,11 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 
 /* ico start */
 
-.disablelink, .enablelink,.spadelink , .editlink, .deletelink, .sortlink,.updatelink,.updategrey,.comment_add,.bug_add{background:transparent url(../images/operation.png) no-repeat;text-decoration:none;height:16px;line-height:16px;cursor:pointer; }
+.disablelink, .enablelink,.spadelink , .editlink, .sortlink,.updatelink,.updategrey,.comment_add,.bug_add{background:transparent url(../images/operation.png) no-repeat;text-decoration:none;height:16px;line-height:16px;cursor:pointer; }
 .addlink{padding:0px;cursor:pointer; background:transparent url(../images/operation_ico.png) no-repeat 0px 5px; padding-left:12px;}
 .updatelink{ padding-left:16px; cursor:pointer; background-position:0px -984px;}
 .updategrey{ padding-left:16px; cursor:pointer; background-position:0px -1000px; color:graytext}
 .editlink{padding:0px 18px;background-position: 0 -124px;}
-.deletelink{padding-left:18px;background-position: 0 -159px; }
 .comment_add{padding-left:18px;background-position: 0 -1112px;border:none;}
 .comment_add_disable{padding-left:18px;background-position: 0 -1142px;border:none;color:graytext}
 .bug_add{padding-left:18px;background-position: 0 -1128px;border:none;}
