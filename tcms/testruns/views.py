@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-import datetime
 from http import HTTPStatus
 from functools import reduce
 
@@ -38,7 +37,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.forms import PlanFilterRunForm
-from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm, RunCloneForm
+from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRunValueMap
 from tcms.issuetracker.types import IssueTrackerType
 
@@ -66,10 +65,8 @@ def new(request):
         return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
     # Ready to write cases to test plan
-    confirm_status = TestCaseStatus.get_CONFIRMED()
     test_cases = get_selected_testcases(request)
     test_plan = TestPlan.objects.get(plan_id=plan_id)
-    test_case_runs = TestCaseRun.objects.filter(case_run_id__in=request.POST.getlist('case_run_id'))
 
     tcs_values = test_cases.select_related('author',
                                            'case_status',
@@ -104,49 +101,23 @@ def new(request):
                 estimated_time=form.cleaned_data['estimated_time'],
             )
 
-            keep_status = form.cleaned_data['keep_status']
-            keep_assign = form.cleaned_data['keep_assignee']
-
             try:
                 assignee_tester = User.objects.get(username=default_tester)
             except ObjectDoesNotExist:
                 assignee_tester = None
 
             loop = 1
+            for case in form.cleaned_data['case']:
+                try:
+                    tcp = TestCasePlan.objects.get(plan=test_plan, case=case)
+                    sortkey = tcp.sortkey
+                except ObjectDoesNotExist:
+                    sortkey = loop * 10
 
-            # not reserve assignee and status, assignee will default set to
-            # default_tester
-            if not keep_assign and not keep_status:
-                for case in form.cleaned_data['case']:
-                    try:
-                        tcp = TestCasePlan.objects.get(plan=test_plan, case=case)
-                        sortkey = tcp.sortkey
-                    except ObjectDoesNotExist:
-                        sortkey = loop * 10
-
-                    test_run.add_case_run(case=case,
-                                          sortkey=sortkey,
-                                          assignee=assignee_tester)
-                    loop += 1
-
-            # Add case to the run
-            for test_case_run in test_case_runs:
-                if (keep_status and keep_assign):
-                    test_run.add_case_run(case=test_case_run.case,
-                                          assignee=test_case_run.assignee,
-                                          case_run_status=test_case_run.case_run_status,
-                                          sortkey=test_case_run.sortkey or loop * 10)
-                    loop += 1
-                elif keep_status and not keep_assign:
-                    test_run.add_case_run(case=test_case_run.case,
-                                          case_run_status=test_case_run.case_run_status,
-                                          sortkey=test_case_run.sortkey or loop * 10)
-                    loop += 1
-                elif keep_assign and not keep_status:
-                    test_run.add_case_run(case=test_case_run.case,
-                                          assignee=test_case_run.assignee,
-                                          sortkey=test_case_run.sortkey or loop * 10)
-                    loop += 1
+                test_run.add_case_run(case=case,
+                                      sortkey=sortkey,
+                                      assignee=assignee_tester)
+                loop += 1
 
             # Write the values into tcms_env_run_value_map table
             env_property_id_set = set(request.POST.getlist("env_property_id"))
@@ -786,47 +757,46 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 
 
 @require_POST
-def new_run_with_caseruns(request, run_id):
+def clone(request, run_id):
     """Clone cases from filter caserun"""
 
     test_run = get_object_or_404(TestRun, run_id=run_id)
+    confirmed_case_status = TestCaseStatus.get_CONFIRMED()
+    disabled_cases = 0
 
     if request.POST.get('case_run'):
-        test_case_runs = test_run.case_run.filter(pk__in=request.POST.getlist('case_run'))
+        test_cases = []
+        for test_case_run in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
+            if test_case_run.case.case_status == confirmed_case_status:
+                test_cases.append(test_case_run.case)
+            else:
+                disabled_cases += 1
     else:
-        test_case_runs = []
+        test_cases = None
 
-    if not test_case_runs:
+    if not test_cases:
         messages.add_message(request,
                              messages.ERROR,
                              _('At least one TestCase is required'))
         return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
-    estimated_time = datetime.timedelta(0)
-    for test_case_run in test_case_runs:
-        estimated_time += test_case_run.case.estimated_time
+    form = NewRunForm(initial={
+        'summary': _('Clone of ') + test_run.summary,
+        'notes': test_run.notes,
+        'manager': test_run.manager,
+        'build': test_run.build_id,
+        'default_tester': test_run.default_tester,
+    })
+    form.populate(product_id=test_run.plan.product_id)
 
-    if not request.POST.get('submit'):
-        form = RunCloneForm(initial={
-            'summary': test_run.summary,
-            'notes': test_run.notes, 'manager': test_run.manager.email,
-            'product': test_run.plan.product_id,
-            'product_version': test_run.product_version_id,
-            'build': test_run.build_id,
-            'default_tester':
-                test_run.default_tester_id and test_run.default_tester.email or '',
-            'estimated_time': estimated_time,
-            'use_newest_case_text': True,
-        })
-
-        form.populate(product_id=test_run.plan.product_id)
-
-        context_data = {
-            'clone_form': form,
-            'test_run': test_run,
-            'cases_run': test_case_runs,
-        }
-        return render(request, 'run/clone.html', context_data)
+    context_data = {
+        'is_cloning': True,
+        'disabled_cases': disabled_cases,
+        'test_plan': test_run.plan,
+        'test_cases': test_cases,
+        'form': form,
+    }
+    return render(request, 'testruns/mutable.html', context_data)
 
 
 @permission_required('testruns.change_testrun')

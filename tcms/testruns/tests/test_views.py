@@ -161,23 +161,17 @@ class CloneRunBaseTest(BaseCaseRun):
 
         self.assertContains(
             response,
-            '<input id="id_summary" maxlength="255" name="summary" '
-            'type="text" value="{}" required>'.format(self.test_run.summary),
+            '<input id="id_summary" class="form-control" name="summary" '
+            'type="text" value="Clone of {}" required>'.format(self.test_run.summary),
             html=True)
 
-        for_loop_counter = 1
         for case_run in (self.case_run_1, self.case_run_2):
+            case_url = reverse('testcases-get', args=[case_run.case.pk])
+
             self.assertContains(
                 response,
-                '<a href="/case/{0}/">{0}</a>'.format(case_run.case.pk),
+                '<a href="%s">TC-%d: %s</a>' % (case_url, case_run.case.pk, case_run.case.summary),
                 html=True)
-            self.assertContains(
-                response,
-                '<a id="link_{0}" class="blind_title_link" '
-                'href="javascript:toggleTestCaseContents(\'{0}\')">{1}</a>'.format(
-                    for_loop_counter, case_run.case.summary),
-                html=True)
-            for_loop_counter += 1
 
 
 class TestStartCloneRunFromRunPage(CloneRunBaseTest):
@@ -194,7 +188,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        url = reverse('testruns-clone-with-caseruns', args=[self.test_run.pk])
+        url = reverse('testruns-clone', args=[self.test_run.pk])
 
         response = self.client.post(url, {}, follow=True)
 
@@ -204,13 +198,13 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        url = reverse('testruns-clone-with-caseruns', args=[self.test_run.pk])
+        url = reverse('testruns-clone', args=[self.test_run.pk])
 
         response = self.client.post(url, {'case_run': [self.case_run_1.pk, self.case_run_2.pk]})
 
         self.assert_one_run_clone_page(response)
 
-    def assert_clone_a_run(self, reserve_status=False, reserve_assignee=True):
+    def test_clone_a_run(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
@@ -236,13 +230,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'case_run_id': [self.case_run_1.pk, self.case_run_2.pk],
         }
 
-        # Set clone settings
-
-        if reserve_status:
-            clone_data['keep_status'] = 'on'
-        if reserve_assignee:
-            clone_data['keep_assignee'] = 'on'
-
         url = reverse('testruns-new')
         response = self.client.post(url, clone_data)
 
@@ -252,57 +239,15 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             response,
             reverse('testruns-get', args=[cloned_run.pk]))
 
-        self.assert_cloned_run(self.test_run, cloned_run,
-                               reserve_status=reserve_status,
-                               reserve_assignee=reserve_assignee)
+        self.assert_cloned_run(self.test_run, cloned_run)
 
-    def assert_cloned_run(self, origin_run, cloned_run,
-                          reserve_status=False, reserve_assignee=True):
+    def assert_cloned_run(self, origin_run, cloned_run):
         # Assert clone settings result
         for origin_case_run, cloned_case_run in zip((self.case_run_1, self.case_run_2),
                                                     cloned_run.case_run.order_by('pk')):
-            if not reserve_status and not reserve_assignee:
-                self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                                 cloned_case_run.case_run_status)
-                self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
-                continue
-
-            if reserve_status and reserve_assignee:
-                self.assertEqual(origin_case_run.case_run_status,
-                                 cloned_case_run.case_run_status)
-                self.assertEqual(origin_case_run.assignee,
-                                 cloned_case_run.assignee)
-                continue
-
-            if reserve_status and not reserve_assignee:
-                self.assertEqual(origin_case_run.case_run_status,
-                                 cloned_case_run.case_run_status)
-
-                if origin_case_run.case.default_tester is not None:
-                    expected_assignee = origin_case_run.case.default_tester
-                else:
-                    expected_assignee = self.test_run.default_tester
-
-                self.assertEqual(expected_assignee, cloned_case_run.assignee)
-
-                continue
-
-            if not reserve_status and reserve_assignee:
-                self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                                 cloned_case_run.case_run_status)
-                self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
-
-    def test_clone_a_run_with_default_clone_settings(self):
-        self.assert_clone_a_run()
-
-    def test_clone_a_run_by_reserving_status(self):
-        self.assert_clone_a_run(reserve_status=True, reserve_assignee=False)
-
-    def test_clone_a_run_by_reserving_both_status_assignee(self):
-        self.assert_clone_a_run(reserve_status=True, reserve_assignee=True)
-
-    def test_clone_a_run_by_not_reserve_both_status_assignee(self):
-        self.assert_clone_a_run(reserve_status=False, reserve_assignee=False)
+            self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
+                             cloned_case_run.case_run_status)
+            self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
 
 
 class TestSearchRuns(BaseCaseRun):
