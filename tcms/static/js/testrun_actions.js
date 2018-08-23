@@ -1,10 +1,7 @@
 Nitrate.TestRuns = {};
 Nitrate.TestRuns.List = {};
 Nitrate.TestRuns.Details = {};
-Nitrate.TestRuns.New = {};
-Nitrate.TestRuns.Edit = {};
 Nitrate.TestRuns.Execute = {}
-Nitrate.TestRuns.Clone = {};
 Nitrate.TestRuns.ChooseRuns = {};
 Nitrate.TestRuns.AssignCase = {}
 
@@ -280,62 +277,6 @@ Nitrate.TestRuns.Details.on_load = function() {
   });
   jQ('.js-status-subtotal').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], jQ(this).data('param'));
-  });
-};
-
-Nitrate.TestRuns.New.on_load = function() {
-  if (jQ('#testcases').length) {
-    jQ('#testcases').dataTable({ "bPaginate": false, "bFilter": false, "bProcessing": true });
-  }
-
-  jQ('#add_id_product_version, #add_id_build').bind('click', function() {
-    return popupAddAnotherWindow(this, 'product');
-  });
-  jQ('.js-cancel-button').bind('click', function() {
-    window.history.go(-1);
-  });
-  jQ('.js-case-summary').bind('click', function() {
-    toggleTestCaseContents(jQ(this).data('param'));
-  });
-  jQ('.js-remove-case').bind('click', function() {
-    var params = jQ(this).data('params');
-    removeItem(params[0], params[1]);
-  });
-};
-
-Nitrate.TestRuns.Edit.on_load = function() {
-  bind_version_selector_to_product(false);
-  bind_build_selector_to_product(false);
-  jQ('#add_id_product_version, #add_id_build').bind('click', function() {
-    return popupAddAnotherWindow(this, 'product');
-  });
-};
-
-Nitrate.TestRuns.Clone.on_load = function() {
-  bind_version_selector_to_product(false);
-  bind_build_selector_to_product(false);
-  jQ("input[type=checkbox][name^=select_property_id_]").each(function() {
-    $this = jQ(this);
-    $this.bind('click', function(){
-      var parent = jQ(this).parent();
-      if (this.checked) {
-        jQ('select', parent).attr("disabled", false);
-        jQ('input[type=hidden]', parent).attr("disabled", false);
-      } else {
-        jQ('select', parent).attr("disabled", true);
-        jQ('input[type=hidden]', parent).attr("disabled", true);
-      }
-    });
-  });
-
-  jQ('#add_id_product_version, #add_id_build').bind('click', function() {
-    return popupAddAnotherWindow(this, 'product');
-  });
-  jQ('.js-cancel-button').bind('click', function() {
-    window.history.go(-1);
-  });
-  jQ('.js-remove-button').bind('click', function() {
-    jQ(this).parents('.js-one-case').remove();
   });
 };
 

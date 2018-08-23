@@ -61,7 +61,7 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .tit{font-weight:bold;margin-left:10px;}
 .mixbar.tit{font-size:1.2em;}
 .errors{color:#ff0000;}
-.disablelink, .enablelink,.spadelink , .addlink, .editlink, .deletelink, .sortlink,.updatelink,.updategrey{background:transparent url(../images/operation.png) no-repeat;text-decoration:none; font-size:12px; display:none}
+.disablelink, .enablelink,.spadelink , .addlink, .editlink, .sortlink,.updatelink,.updategrey{background:transparent url(../images/operation.png) no-repeat;text-decoration:none; font-size:12px; display:none}
 .historylink{float:left;text-shadow:1px 1px 1px #ddd;float:right;}
 .historylink :visited{color:#FFFAB3;}
 .applylink{background:transparent url(../images/apply.png) no-repeat  0px 1px ;padding-left:20px;margin-right:10px;}
@@ -206,7 +206,6 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .new_comment .submit-post{ margin:5px 0; cursor:pointer}
 .case_run .collapse-control{ width:30px; padding:2px; float:left; color:#333;}
 .case_run .buglink{ float:right; margin-right:40px; color:#fbbf2c;}
-.case_run .hiddenRow{ height:auto; float:left; width:100%;}
 .textbox{ border: #7F9DB9 1px solid;overflow:auto; width:60%;}
 /***********************Run End***************************/
 
@@ -296,7 +295,6 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 #itemFilter{ width:100%; float:right; background:#F8FFF2; border:1px solid #D5DBD0;}
 #itemFilter td{}
 #itemFilter tfoot td{ background:#f1f1f1; border-top:1px solid #ccc;}
-.hiddenRow{ width:100%; background:#f3f8fe;}
 .remove a :hover img{ border:1px solid #ccc; }
 .query_cases_content { float:left; width:100%; padding-left:10px;}
 .query_cases_content label{ width:60%; margin-left:10px; float:left; border-bottom:1px dotted #235C82;}
