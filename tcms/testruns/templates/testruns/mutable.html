@@ -5,6 +5,8 @@
 {% block title %}
     {% if test_run %}
         {% trans "Edit TestRun" %}
+    {% elif is_cloning %}
+        {% trans "Clone TestRun" %}
     {% else %}
         {% trans "New TestRun" %}
     {% endif %}
@@ -21,6 +23,8 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
+    {{ form.errors }}
+
     <form class="form-horizontal" action="{% if test_run %}{% url 'testruns-edit' test_run.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
 
@@ -80,8 +84,19 @@
         {# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
         <input type="hidden" name="POSTING_TO_CREATE" value="YES" />
 
-        <div class="panel panel-default col-lg-12" style="padding:0; margin-top:2em">
-            <div class="panel-heading"><strong>{% trans "Selected TestCase(s):" %}</strong></div>
+        <div class="panel {% if disabled_cases %}panel-danger{% else%}panel-default{% endif%} col-lg-12"
+             style="padding:0; margin-top:2em">
+            <div class="panel-heading">
+                <strong>{% trans "Selected TestCase(s):" %}</strong>
+                {% if disabled_cases %}
+                    <span class="danger">
+                    {% blocktrans with count=disabled_cases %}
+                    {{ count }} of the pre-selected test cases is not CONFIRMED and will not be cloned!
+                    See test plan for more details!
+                    {% endblocktrans %}
+                    </span>
+                {% endif %}
+            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>

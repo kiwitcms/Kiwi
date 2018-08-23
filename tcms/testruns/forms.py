@@ -44,16 +44,6 @@ class BaseRunForm(forms.Form):
         widget=forms.Textarea,
         required=False,
     )
-    # todo: what are these 2 fields
-    keep_status = forms.BooleanField(
-        label='Reserve Status', widget=forms.CheckboxInput(),
-        required=False
-    )
-    keep_assignee = forms.BooleanField(
-        label='Reserve Assignee', widget=forms.CheckboxInput(),
-        required=False,
-        initial=True
-    )
 
     def populate(self, product_id):
         # We can dynamically set choices for a form field:
@@ -200,21 +190,10 @@ class SearchRunForm(forms.Form):
             self.fields['build'].queryset = Build.list_active()
 
 
-# =========== Misc forms ==============
-
-class RunCloneForm(BaseRunForm):
-    build = forms.ModelChoiceField(
-        label='Build',
-        queryset=Build.objects.none(),
-        empty_label=None,
-    )
-
-
 # ===========================================================================
 # Case run form
 # ===========================================================================
 
-# =========== Forms for create/update ==============
 
 class BaseCaseRunForm(forms.Form):
     build = forms.ModelChoiceField(

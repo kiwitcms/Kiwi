@@ -42,7 +42,7 @@ jQ(function() {
 		<input id="btn_edit" type="button" value="Edit" disabled="true">
 		{% endif %}
 		{% if perms.testruns.add_testrun %}
-		<input id="btn_clone" type="button" value="Clone" title="Clone test run to other test build" data-param="{% url 'testruns-clone-with-caseruns' test_run.pk %}" />
+		<input id="btn_clone" type="button" value="Clone" title="Clone test run to other test build" data-param="{% url 'testruns-clone' test_run.pk %}" />
 		{% else %}
 		<input type="button" value="Clone" disabled="true"/>
 		{% endif %}
