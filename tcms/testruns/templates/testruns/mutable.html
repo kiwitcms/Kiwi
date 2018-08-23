@@ -2,7 +2,13 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% trans "Edit TestRun" %}{% endblock %}
+{% block title %}
+    {% if test_run %}
+        {% trans "Edit TestRun" %}
+    {% else %}
+        {% trans "New TestRun" %}
+    {% endif %}
+{% endblock %}
 {% block head %}
     {{ block.super }}
 
@@ -15,20 +21,22 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
-    <form class="form-horizontal" action="{% url "testruns-edit" test_run.run_id %}" method="post">
+    <form class="form-horizontal" action="{% if test_run %}{% url 'testruns-edit' test_run.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
+
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
             <div class="col-md-11 col-lg-11">
                 <input type="text" id="id_summary" name="summary" value="{{ form.summary.value }}" class="form-control" required>
-                <p class="help-block"><a href="{% url 'test_plan_url_short' test_run.plan_id %}">TP-{{ test_run.plan_id }}: {{ test_run.plan.name }}</a></p>
+                <input type="hidden" id="id_plan_id" name="from_plan" value="{{ test_plan.pk }}"> <!-- used in new() -->
+                <p class="help-block"><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-1 col-lg-1">
                 <label for="id_build">{% trans "Build" %}</label>
-                <a href="{% url 'admin:management_build_add' %}?_popup=1&product={{ test_run.plan.product_id }}"
+                <a href="{% url 'admin:management_build_add' %}?_popup=1&product={{ test_plan.product_id }}"
                     id="add_id_build"
                     alt="{% trans 'add new Build' %}"
                     title="{% trans 'add new Build' %}">+</a>
@@ -40,7 +48,7 @@
                 {% endfor %}
                 </select>
                 <p class="help-block">
-                    {% trans "Product" %}: {{ test_run.plan.product.name }}, {% trans "version" %} {{ test_run.plan.product_version.value }}
+                    {% trans "Product" %}: {{ test_plan.product.name }}, {% trans "version" %} {{ test_plan.product_version.value }}
                 </p>
             </div>
 
@@ -66,8 +74,48 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-default">{% trans "Save" %}</button>
-    </form>
+        <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
 
+        {% if test_cases %}
+        {# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
+        <input type="hidden" name="POSTING_TO_CREATE" value="YES" />
+
+        <div class="panel panel-default col-lg-12" style="padding:0; margin-top:2em">
+            <div class="panel-heading"><strong>{% trans "Selected TestCase(s):" %}</strong></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% trans "Summary" %}</th>
+                        <th>{% trans "Author" %}</th>
+                        <th>{% trans "Created on" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "Category" %}</th>
+                        <th>{% trans "Priority" %}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for test_case in test_cases %}
+                    <tr>
+                        <td>
+                            <input type="hidden" name="case" value="{{ test_case.pk }}">
+                            <a href="{% url 'testcases-get' test_case.pk %}">
+                                TC-{{ test_case.case_id }}: {{ test_case.summary }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'tcms-profile' test_case.author.username %}">{{ test_case.author.username }}</a>
+                        </td>
+                        <td>{{ test_case.create_date }}</td>
+                        <td>{{ test_case.case_status }}</td>
+                        <td>{{ test_case.category }}</td>
+                        <td>{{ test_case.priority }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> <!-- /panel -->
+        {% endif %}
+    </form>
 </div><!-- /container -->
 {% endblock %}

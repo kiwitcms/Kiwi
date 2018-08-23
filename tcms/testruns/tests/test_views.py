@@ -99,14 +99,10 @@ class TestCreateNewRun(BasePlanCase):
 
         # Assert listed cases
         for i, case in enumerate((self.case_1, self.case_2, self.case_3), 1):
+            case_url = reverse('testcases-get', args=[case.pk])
             self.assertContains(
                 response,
-                '<a href="/case/{0}/">{0}</a>'.format(case.pk),
-                html=True)
-            self.assertContains(
-                response,
-                '<a id="link_{0}" class="blind_title_link js-case-summary" '
-                'data-param="{0}">{1}</a>'.format(i, case.summary),
+                '<a href="%s">TC-%d: %s</a>' % (case_url, case.pk, case.summary),
                 html=True)
 
     def test_create_a_new_run(self):
@@ -117,16 +113,11 @@ class TestCreateNewRun(BasePlanCase):
         clone_data = {
             'summary': self.plan.name,
             'from_plan': self.plan.pk,
-            'product': self.product.pk,
-            'product_version': self.version.pk,
             'build': self.build_fast.pk,
-            'errata_id': '',
             'manager': self.tester.email,
             'default_tester': self.tester.email,
-            'estimated_time': '0',
             'notes': 'Clone new run',
             'case': [self.case_1.pk, self.case_2.pk],
-            'do': 'clone_run',
             'POSTING_TO_CREATE': 'YES',
         }
 
