@@ -85,7 +85,7 @@ MENU_ITEMS = [
         (_('New Test Case'), reverse_lazy('testcases-new')),
     ]),
     (_('SEARCH'), [
-        (_('Search Test Plans'), reverse_lazy('plans-all')),
+        (_('Search Test Plans'), reverse_lazy('plans-search')),
         (_('Search Test Runs'), reverse_lazy('testruns-all')),
         (_('Search Test Cases'), reverse_lazy('testcases-search')),
     ]),
@@ -238,6 +238,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
 
                 'tcms.core.context_processors.request_contents_processor',
                 'tcms.core.context_processors.settings_processor',

@@ -1,6 +1,5 @@
 Nitrate.TestPlans = {};
 Nitrate.TestPlans.Create = {};
-Nitrate.TestPlans.List = {};
 Nitrate.TestPlans.Details = {};
 Nitrate.TestPlans.Edit = {};
 Nitrate.TestPlans.SearchCase = {};
@@ -411,64 +410,6 @@ Nitrate.TestPlans.Edit.on_load = function() {
   });
   bind_version_selector_to_product(false);
 }
-
-Nitrate.TestPlans.List.on_load = function() {
-  if (jQ('#id_product').length) {
-    bind_version_selector_to_product(true);
-  }
-
-  if (jQ('#column_add').length) {
-    jQ('#column_add').bind('change', function(t) {
-      switch(this.value) {
-        case 'col_product':
-          jQ('#col_product_head').show();
-          jQ('.col_product_content').show();
-          jQ('#col_product_option').hide();
-          break;
-        case('col_product_version'):
-          jQ('#col_product_version_head').show();
-          jQ('.col_product_version_content').show();
-          jQ('#col_product_veresion_option').hide();
-          break;
-      }
-    });
-  }
-
-  jQ('input[name="plan_id"]').bind('click', function(t) {
-    if (this.checked) {
-      jQ(this).parent().parent().addClass('selection_row');
-    } else {
-      jQ(this).parent().parent().removeClass('selection_row');
-    }
-  });
-
-  var oTable;
-  if (jQ('#testplans_table').length) {
-    oTable = jQ('#testplans_table').dataTable({
-      "iDisplayLength": 20,
-      "sPaginationType": "full_numbers",
-      "bFilter": false,
-      // "bLengthChange": false,
-      "aLengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
-      "aaSorting": [[ 0, "desc" ]],
-      "bProcessing": true,
-      "bServerSide": true,
-      "sAjaxSource": "/plans/ajax/"+this.window.location.search,
-      "aoColumns": [
-        null,
-        {"sType": "html"},
-        {"sType": "html"},
-        {"sType": "html"},
-        null,
-        {"bVisible": false},
-        null,
-        {"bSortable": false },
-        {"bSortable": false },
-        {"bSortable": false }
-      ]
-    });
-  }
-};
 
 Nitrate.TestPlans.Details = {
   'tabContentContainerIds': {

@@ -78,7 +78,7 @@ Nitrate.TestPlans.Instance = {
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Product&nbsp;:</div>
-				<div id="display_product"  class="name "><a href="{% url "plans-all" %}?action=search&product={{ test_plan.product_id }}" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
+				<div id="display_product"  class="name "><a href="{% url "plans-search" %}?product={{ test_plan.product_id }}" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Version&nbsp;:</div>
@@ -94,7 +94,7 @@ Nitrate.TestPlans.Instance = {
 				<div class="title grey">Environment Group&nbsp;:</div>
 				<div class="name">
 					{% for env_group in test_plan.env_group.all %}
-					<span class="blue strong"><a href="{% url "plans-all" %}?action=search&env_group={{ env_group.id }}" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
+					<span class="blue strong"><a href="{% url "plans-search" %}?env_group={{ env_group.id }}" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
 					{% endfor %}
 				</div>
 				<div>

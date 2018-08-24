@@ -8,21 +8,18 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
-from django.db.models import Q
 from django.contrib import messages
 from django.forms.models import model_to_dict
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.http import require_http_methods
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from uuslug import slugify
 
-from tcms.core.utils import DataTableResult
 from tcms.management.models import EnvGroup
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
@@ -35,7 +32,7 @@ from tcms.testplans.forms import ClonePlanForm
 from tcms.testplans.forms import EditPlanForm
 from tcms.testplans.forms import NewPlanForm
 from tcms.testplans.forms import SearchPlanForm
-from tcms.testplans.models import TestPlan
+from tcms.testplans.models import TestPlan, PlanType
 from tcms.testruns.models import TestRun, TestCaseRun
 
 
@@ -108,7 +105,7 @@ def new(request, template_name='plan/new.html'):
 
 
 @require_GET
-def get_all(request, template_name='plan/all.html'):
+def get_all(request):
     """Display all testplans"""
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
@@ -143,6 +140,8 @@ def get_all(request, template_name='plan/all.html'):
             # The cleanest way I can find to get it into one query is to
             # use QuerySet.extra()
             # See http://docs.djangoproject.com/en/dev/ref/models/querysets
+            # not used in case/clone.html hen searching for other plans to clone to
+            # todo: but still used in Plan -> Tree view
             tps = tps.annotate(num_cases=Count('case', distinct=True),
                                num_runs=Count('run', distinct=True),
                                num_children=Count('child_set', distinct=True))
@@ -167,6 +166,7 @@ def get_all(request, template_name='plan/all.html'):
             results.append(dict_obj)
         return JsonResponse(results, safe=False)
 
+    # used in tree preview
     if request.GET.get('t') == 'html':
         if request.GET.get('f') == 'preview':
             template_name = 'plan/preview.html'
@@ -190,6 +190,18 @@ def get_all(request, template_name='plan/all.html'):
         'page_type': page_type
     }
     return render(request, template_name, context_data)
+
+
+@require_GET
+def search(request):
+    form = SearchPlanForm(request.GET)
+    form.populate(product_id=request.GET.get('product'))
+
+    context_data = {
+        'form': form,
+        'plan_types': PlanType.objects.all().only('pk', 'name').order_by('name'),
+    }
+    return render(request, 'testplans/search.html', context_data)
 
 
 def get_number_of_plans_cases(plan_ids):
@@ -275,63 +287,6 @@ def calculate_stats_for_testplans(plans):
         setattr(plan, 'cal_children_count', children_counts.get(plan.pk, 0))
 
     return plans
-
-
-@require_GET
-def ajax_search(request, template_name='plan/common/json_plans.txt'):
-    """Display all testplans"""
-    # If it's not a search the page will be blank
-    test_plans = TestPlan.objects.none()
-    # if it's a search request the request will be full
-    if request.GET:
-        search_form = SearchPlanForm(request.GET)
-        search_form.populate(product_id=request.GET.get('product'))
-
-        if search_form.is_valid():
-            # Detemine the query is the user's plans and change the sub
-            # module value
-            author = request.GET.get('author__email__startswith')
-            if author and len(search_form.changed_data) == 1:
-                if request.user.is_authenticated:
-                    if author in (request.user.username, request.user.email):
-                        query = Q(author__email__startswith=author) | \
-                            Q(owner__email__startswith=author)
-                        test_plans = TestPlan.objects.filter(query).distinct()
-            else:
-                test_plans = TestPlan.list(search_form.cleaned_data)
-                test_plans = test_plans.select_related('author', 'owner', 'type', 'product')
-
-    # columnIndexNameMap is required for correct sorting behavior, 5 should
-    # be product, but we use run.build.product
-    column_names = [
-        'plan_id',
-        'name',
-        'author__username',
-        'owner__username',
-        'product',
-        'product_version',
-        'type',
-        'num_cases',
-        'num_runs',
-        ''
-    ]
-    return ajax_response(request, test_plans, column_names, template_name)
-
-
-def ajax_response(request, queryset, column_names, template_name):
-    """ JSON template for the ajax request for searching """
-    data_table_result = DataTableResult(request.GET, queryset, column_names)
-
-    data = data_table_result.get_response_data()
-    data['querySet'] = calculate_stats_for_testplans(data['querySet'])
-
-    # todo: prepare the JSON with the response, consider using :
-    # from django.template.defaultfilters import escapejs
-    json_result = render_to_string(
-        template_name,
-        data,
-        request=request)
-    return HttpResponse(json_result, content_type='application/json')
 
 
 def get(request, plan_id, slug=None, template_name='plan/get.html'):
