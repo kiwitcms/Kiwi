@@ -78,7 +78,7 @@ class TestCreateNewRun(BasePlanCase):
             username=self.tester.username,
             password='password')
         response = self.client.post(self.url, {})
-        self.assertRedirects(response, reverse('plans-all'))
+        self.assertRedirects(response, reverse('plans-search'))
 
     def test_refuse_if_missing_cases_pks(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg

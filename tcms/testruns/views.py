@@ -52,7 +52,7 @@ def new(request):
         messages.add_message(request,
                              messages.ERROR,
                              _('Creating a TestRun requires a TestPlan, select one'))
-        return HttpResponseRedirect(reverse('plans-all'))
+        return HttpResponseRedirect(reverse('plans-search'))
 
     plan_id = request.POST.get('from_plan')
     # case is required by a test run

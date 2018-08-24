@@ -1356,7 +1356,7 @@ def clone(request, template_name='case/clone.html'):
             messages.add_message(request,
                                  messages.SUCCESS,
                                  _('TestCase cloning was successful'))
-            return HttpResponseRedirect(reverse('plans-all'))
+            return HttpResponseRedirect(reverse('plans-search'))
     else:
         selected_cases = get_selected_testcases(request)
         # Initial the clone case form

@@ -90,7 +90,7 @@ def filter(query={}):
         :rtype: list(dict)
     """
     results = []
-    for plan in TestPlan.objects.filter(**query):
+    for plan in TestPlan.objects.filter(**query).distinct():
         serialized_plan = plan.serialize()
         results.append(serialized_plan)
 

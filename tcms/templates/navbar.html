@@ -29,7 +29,7 @@
                         </li>
 
                         <li>
-                            <a href="{% url "plans-all" %}?author__email__startswith={{ user.email|urlencode }}" target="_parent">My Test Plans</a>
+                            <a href="{% url "plans-search" %}?author__username__startswith={{ user.username }}" target="_parent">My Test Plans</a>
                         </li>
 
                         <li class="divider"></li>

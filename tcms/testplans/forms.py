@@ -130,7 +130,7 @@ class SearchPlanForm(forms.Form):
     name__icontains = forms.CharField(label="Plan name", required=False)
     product = forms.ModelChoiceField(
         label="Product",
-        queryset=Product.objects.all(),
+        queryset=Product.objects.all().order_by('name'),
         required=False
     )
     product_version = forms.ModelChoiceField(
@@ -186,7 +186,7 @@ class SearchPlanForm(forms.Form):
             self.fields['product_version'].queryset = Version.objects.filter(
                 product__id=product_id)
         else:
-            self.fields['product_version'].queryset = Version.objects.all()
+            self.fields['product_version'].queryset = Version.objects.none()
 
 
 class ClonePlanForm(BasePlanForm):
