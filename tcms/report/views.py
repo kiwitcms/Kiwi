@@ -442,10 +442,10 @@ class CustomDetailReport(CustomReport):
                 self._data.generate_status_matrix(build_ids)
             )
 
-            status_ids = (TestCaseRunStatus.id_failed(),)
+            status_ids = (TestCaseRunStatus.objects.get(name=TestCaseRunStatus.FAILED).pk,)
             failed_case_runs = self.read_case_runs(build_ids, status_ids)
 
-            status_ids = (TestCaseRunStatus.id_blocked(),)
+            status_ids = (TestCaseRunStatus.objects.get(name=TestCaseRunStatus.BLOCKED).pk,)
             blocked_case_runs = self.read_case_runs(build_ids, status_ids)
 
             data.update({

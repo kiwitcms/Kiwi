@@ -20,11 +20,11 @@ from tcms.xmlrpc.utils import distinct_filter
 
 
 TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
-                                        'StatusSubtotal',
-                                        'CaseRunsTotalCount',
-                                        'CompletedPercentage',
-                                        'FailurePercentage',
-                                        'SuccessPercentage'])
+    'StatusSubtotal',
+    'CaseRunsTotalCount',
+    'CompletedPercentage',
+    'FailurePercentage',
+    'SuccessPercentage'])
 
 
 def plan_by_id_or_name(value):
@@ -117,8 +117,10 @@ class TestRun(TCMSActionModel):
             }[query.get('people_type')],
         }
 
-        conditions = [mapping[key](value) for key, value in query.items()
-                      if value and key in mapping]
+        conditions = []
+        for key, value in query.items():
+            if value and key in mapping:
+                conditions.append(mapping[key](value))
 
         runs = cls.objects.filter(*conditions)
 
@@ -309,6 +311,10 @@ class TestRun(TCMSActionModel):
 
 
 class TestCaseRunStatus(TCMSActionModel):
+    FAILED = 'FAILED'
+    BLOCKED = 'BLOCKED'
+    PASSED = 'PASSED'
+
     complete_status_names = ('PASSED', 'ERROR', 'FAILED', 'WAIVED')
     failure_status_names = ('ERROR', 'FAILED')
     idle_status_names = ('IDLE',)
@@ -329,68 +335,13 @@ class TestCaseRunStatus(TCMSActionModel):
         """ Get all status names in reverse mapping between name and id """
         return dict((name, _id) for _id, name in cls.get_names().items())
 
-    @classmethod
-    def id_to_string(cls, _id):
-        try:
-            return cls.objects.get(id=_id).name
-        except cls.DoesNotExist:
-            return None
-
-    @classmethod
-    def _status_to_id(cls, status):
-        try:
-            return cls.objects.get(name=status.upper()).pk
-        except cls.DoesNotExist:
-            return None
-
-    @classmethod
-    def _get_failed_status_ids(cls):
-        """
-        There are some status indicate that
-        the testcaserun is failed.
-        Return IDs of these statuses.
-        """
-        failed_status = cls.objects.filter(name__in=('FAILED', 'ERROR'))
-
-        return failed_status.values_list('pk', flat=True)
-
-    # TODO: gather following id_xxx into one method
-
-    @classmethod
-    def id_passed(cls):
-        return cls._status_to_id('passed')
-
-    @classmethod
-    def id_failed(cls):
-        return cls._status_to_id('failed')
-
-    @classmethod
-    def id_blocked(cls):
-        return cls._status_to_id('blocked')
-
 
 # register model for DB translations
 vinaigrette.register(TestCaseRunStatus, ['name'])
 
 
-class TestCaseRunManager(models.Manager):
-    # todo: delete this
-    def get_automated_case_count(self):
-        return self.filter(case__is_automated=1).count()
-
-    def get_manual_case_count(self):
-        return self.filter(case__is_automated=0).count()
-
-    def get_both(self):
-        count1 = self.get_automated_case_count()
-        count2 = self.get_manual_case_count()
-        return self.count() - count1 - count2
-
-
 class TestCaseRun(TCMSActionModel):
     history = KiwiHistoricalRecords()
-
-    objects = TestCaseRunManager()
 
     case_run_id = models.AutoField(primary_key=True)
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
@@ -425,9 +376,11 @@ class TestCaseRun(TCMSActionModel):
         return '%s: %s' % (self.pk, self.case_id)
 
     @classmethod
-    def to_xmlrpc(cls, query={}):
-        qs = distinct_filter(TestCaseRun, query).order_by('pk')
-        serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=qs)
+    def to_xmlrpc(cls, query: dict = None):
+        if query is None:
+            query = {}
+        query_set = distinct_filter(TestCaseRun, query).order_by('pk')
+        serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def add_bug(self, bug_id, bug_system_id,
