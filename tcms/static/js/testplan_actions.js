@@ -212,13 +212,11 @@ Nitrate.TestPlans.TreeView = {
       var li = jQ('<li>');
       var title = '[<a href="' + data[i].plan_url + '">' + data[i].pk + '</a>] ';
 
-      if (data[i].num_children && data[i].children) {
+
+      if (data[i].children) {
         title = icon_expand + title;
         li.addClass('no-list-style');
-      }
-
-      if (data[i].num_children && !data[i].children) {
-        title = icon_collapse + title;
+      } else {
         li.addClass('no-list-style');
       }
 
@@ -234,51 +232,7 @@ Nitrate.TestPlans.TreeView = {
 
       // Construct the items
       title += '<a class="plan_name" href="' + data[i].plan_url + '">' + data[i].name + '</a>';
-      title += ' (';
-      if (data[i].num_cases && data[i].is_current) {
-        title += '<a href="#testcases" onclick="FocusTabOnPlanPage(this)">' + data[i].num_cases + ' cases</a>, ';
-      } else if (data[i].num_cases && !(data[i].is_current)) {
-        title += '<a href="' + data[i].plan_url + '#testcases">' + data[i].num_cases + ' cases</a>, ';
-      } else {
-        title += '0 case, ';
-      }
-
-      if (data[i].num_runs && data[i].is_current) {
-        title += '<a href="#testruns" onclick="FocusTabOnPlanPage(this)">' + data[i].num_runs + ' runs</a>, ';
-      } else if (data[i].num_runs && !data[i].is_current) {
-        title += '<a href="' + data[i].plan_url + '#testruns">' + data[i].num_runs + ' runs</a>, ';
-      } else {
-        title += '0 runs, ';
-      }
-
-      if (data[i].is_current) {
-        switch (data[i].num_children) {
-          case 0:
-            title += '0 child';
-            break;
-          case 1:
-            title += '<a href="#treeview" onclick="expandCurrentPlan(jQ(this).parent()[0])">' + '1 child</a>';
-            break;
-          default:
-            title += '<a href="#treeview" onclick="expandCurrentPlan(jQ(this).parent()[0])">' + data[i].num_children + ' children</a>';
-            break;
-        }
-      } else {
-        switch (data[i].num_children) {
-          case 0:
-            title += '0 child';
-            break;
-          case 1:
-            title += '<a href="' + data[i].plan_url + '#treeview">' + '1 child</a>';
-            break;
-          default:
-            title += '<a href="' + data[i].plan_url + '#treeview">' + data[i].num_children + ' children</a>';
-            break;
-        }
-
-      }
-
-      title += ')</div>';
+      title += '</div>';
 
       li.html(title);
       ul.append(li);
@@ -1613,40 +1567,6 @@ function resortCasesDragAndDrop(container, button, form, table, parameters, call
         json_failure(jqXHR);
       }
     });
-  }
-}
-
-function FocusTabOnPlanPage(element) {
-  var tab_name = element.hash.slice(1);
-  jQ('#tab_treeview').removeClass('tab_focus');
-  jQ('#treeview').hide();
-  jQ('#tab_' + tab_name).addClass('tab_focus').children('a').click();
-  jQ('#' + tab_name).show();
-}
-
-function expandCurrentPlan(element) {
-  var tree = Nitrate.TestPlans.TreeView;
-  if (jQ(element).find('.collapse_icon').length) {
-    var e_container = jQ(element).find('.collapse_icon');
-    var li_container = e_container.parent().parent();
-    var e_pk = e_container.next('a').html();
-    var expand_icon_url = '/static/images/t2.gif';
-    var obj = tree.traverse(tree.data, e_pk);
-    if (typeof obj.children != 'object' || obj.children == []) {
-      var c = function(t) {
-        var returnobj = jQ.parseJSON(t.responseText);
-        returnobj = Nitrate.Utils.convert('obj_to_list', returnobj);
-        tree.insert(obj, returnobj);
-        var ul = tree.render(returnobj);
-        li_container.append(ul);
-      };
-
-      var p = { 'parent__pk': e_pk, 't': 'ajax' };
-      tree.filter(p, c);
-    }
-    li_container.find('ul').first().show();
-    e_container.attr('src', expand_icon_url)
-      .removeClass('collapse_icon').addClass('expand_icon');
   }
 }
 

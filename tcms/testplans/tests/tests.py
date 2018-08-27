@@ -152,7 +152,6 @@ class PlanTests(test.TestCase):
         self.assertEqual(reverse('test_plan_url_short', args=[self.test_plan.pk]),
                          data[0]['plan_url'])
         self.assertEqual(None, data[0]['parent'])
-        self.assertEqual(1, data[0]['num_children'])
 
     def test_plan_new_get(self):
         location = reverse('plans-new')

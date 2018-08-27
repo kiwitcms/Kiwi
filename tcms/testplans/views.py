@@ -124,27 +124,6 @@ def get_all(request):
             # build a QuerySet:
             tps = TestPlan.list(search_form.cleaned_data)
             tps = tps.select_related('author', 'type', 'product')
-
-            # We want to get the number of cases and runs, without doing
-            # lots of per-test queries.
-            #
-            # Ideally we would get the case/run counts using m2m field tricks
-            # in the ORM
-            # Unfortunately, Django's select_related only works on ForeignKey
-            # relationships, not on ManyToManyField attributes
-            # See http://code.djangoproject.com/ticket/6432
-
-            # SQLAlchemy can handle this kind of thing in several ways.
-            # Unfortunately we're using Django
-
-            # The cleanest way I can find to get it into one query is to
-            # use QuerySet.extra()
-            # See http://docs.djangoproject.com/en/dev/ref/models/querysets
-            # not used in case/clone.html hen searching for other plans to clone to
-            # todo: but still used in Plan -> Tree view
-            tps = tps.annotate(num_cases=Count('case', distinct=True),
-                               num_runs=Count('run', distinct=True),
-                               num_children=Count('child_set', distinct=True))
             tps = order_plan_queryset(tps, order_by, asc)
     else:
         # Set search active plans only by default
@@ -154,12 +133,13 @@ def get_all(request):
         template_name = 'case/clone_select_plan.html'
         tps = tps.order_by('name')
 
+    # test plan TreeView
     if request.GET.get('t') == 'ajax':
         results = []
         for obj in tps:
             dict_obj = model_to_dict(obj, fields=('name', 'parent', 'is_active'))
 
-            for attr in ['pk', 'num_cases', 'num_cases', 'num_runs', 'num_children']:
+            for attr in ['pk']:
                 dict_obj[attr] = getattr(obj, attr)
             dict_obj['plan_url'] = reverse('test_plan_url_short', args=[obj.pk])
 

@@ -8,8 +8,7 @@ def order_plan_queryset(plans, field, asc=False):
     """
     orderable_fields = (
         'plan_id', 'name', 'author__username', 'owner__username',
-        'create_date', 'product__name', 'type',
-        'num_cases', 'num_runs', 'num_children',
+        'create_date', 'product__name', 'type'
     )
     if field in orderable_fields:
         order_by = field
