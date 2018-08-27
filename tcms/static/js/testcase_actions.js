@@ -1,6 +1,5 @@
 Nitrate.TestCases = {};
 Nitrate.TestCases.List = {};
-Nitrate.TestCases.AdvanceList = {};
 Nitrate.TestCases.Details = {};
 Nitrate.TestCases.Create = {};
 Nitrate.TestCases.Edit = {};
@@ -27,47 +26,6 @@ Nitrate.TestCases.Clone = {};
 
   window.Nitrate.TestCases = TestCases;
 }());
-
-Nitrate.TestCases.AdvanceList.on_load = function() {
-  bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);
-  bind_component_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_component')[0]);
-
-  jQ('#id_blind_all_link').bind('click', function(e) {
-    if (!jQ('div[id^="id_loading_"]').length) {
-      jQ(this).removeClass('locked');
-    }
-    if (jQ(this).is('.locked')) {
-      //To disable the 'expand all' until all case runs are expanded.
-      return false;
-    } else {
-      jQ(this).addClass('locked');
-      var element = jQ(this).children()[0];
-      if (jQ(element).is('.collapse-all')) {
-        this.title = 'Collapse all cases';
-        blinddownAllCases(element);
-      } else {
-        this.title = 'Expand all cases';
-        blindupAllCases(element);
-      }
-    }
-  });
-
-  var toggle_case = function(e) {
-    var c = jQ(this).parent()[0]; // Container
-    var c_container = jQ(c).next()[0]; // Content Containers
-    var case_id = jQ(c).find('input[name="case"]')[0].value;
-
-    toggleTestCasePane({ case_id: case_id, casePaneContainer: jQ(c_container) });
-    toggleExpandArrow({ caseRowContainer: jQ(c), expandPaneContainer: jQ(c_container) });
-  };
-
-  jQ('.expandable').bind('click', toggle_case);
-
-  if (window.location.hash === '#expandall') {
-    blinddownAllCases();
-  }
-
-};
 
 Nitrate.TestCases.List.on_load = function() {
   bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);

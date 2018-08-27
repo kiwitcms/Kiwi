@@ -1,7 +1,6 @@
 Nitrate.TestPlans = {};
 Nitrate.TestPlans.Create = {};
 Nitrate.TestPlans.List = {};
-Nitrate.TestPlans.Advance_Search_List = {};
 Nitrate.TestPlans.Details = {};
 Nitrate.TestPlans.Edit = {};
 Nitrate.TestPlans.SearchCase = {};
@@ -413,37 +412,6 @@ Nitrate.TestPlans.Edit.on_load = function() {
   bind_version_selector_to_product(false);
 }
 
-Nitrate.TestPlans.Advance_Search_List.on_load = function() {
-  if (jQ('#id_product').length) {
-    bind_version_selector_to_product(true);
-  };
-
-  if (jQ('#column_add').length) {
-    jQ('#column_add').bind('change', function(t) {
-      switch(this.value) {
-        case 'col_product':
-          jQ('#col_product_head').show();
-          jQ('.col_product_content').show();
-          jQ('#col_product_option').hide();
-          break;
-        case('col_product_version'):
-          jQ('#col_product_version_head').show();
-          jQ('.col_product_version_content').show();
-          jQ('#col_product_veresion_option').hide();
-          break;
-      }
-    });
-  };
-
-  jQ('input[name="plan_id"]').bind('click', function(t) {
-    if (this.checked) {
-      jQ(this).parent().parent().addClass('selection_row');
-    } else {
-      jQ(this).parent().parent().removeClass('selection_row');
-    };
-  });
-};
-
 Nitrate.TestPlans.List.on_load = function() {
   if (jQ('#id_product').length) {
     bind_version_selector_to_product(true);
@@ -821,7 +789,7 @@ Nitrate.TestPlans.SearchCase.on_load = function() {
   }
   // new feature for searching by case id.
   var quick_search = jQ("#tp_quick_search_cases_form");
-  var normal_search = jQ("#tp_advanced_search_case_form");
+  var normal_search = jQ("#tp_normal_search_case_form");
   var quick_tab = jQ("#quick_tab");
   var normal_tab = jQ("#normal_tab");
   var search_mode = jQ("#search_mode");
@@ -844,7 +812,7 @@ Nitrate.TestPlans.SearchCase.on_load = function() {
       "hide_tab": normal_tab
     });
   });
-  jQ("#advanced_search_cases").bind("click", function() {
+  jQ("#normal_search_cases").bind("click", function() {
     // clear errors
     errors.empty();
     search_mode.val("normal");

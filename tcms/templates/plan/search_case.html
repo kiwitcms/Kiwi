@@ -41,7 +41,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 								</a>
 							</li>
 							<li {% if search_mode|default:'quick' == 'normal'  %}class="profile_tab_active"{%endif%} id="normal_tab">
-								<a href="#" id="advanced_search_cases">
+								<a href="#" id="normal_search_cases">
 										Normal Search
 								</a>
 							</li>
@@ -50,7 +50,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 					<div id="tp_quick_search_cases_form" style="{% if search_mode|default:'quick' == 'normal' %}display:none;{% endif %} margin: 15px 0px 0px 0px">
 						{% include "case/form/quick_search.html" %}
 					</div>
-					<div id="tp_advanced_search_case_form" style="{% if search_mode|default:'quick' == 'quick' %}display:none;{% endif %} margin: 15px 0px 0px 0px">
+					<div id="tp_normal_search_case_form" style="{% if search_mode|default:'quick' == 'quick' %}display:none;{% endif %} margin: 15px 0px 0px 0px">
 						{% include "case/form/search.html" %}
 					</div>
 					<div class='clear'></div>

@@ -145,10 +145,6 @@ msgstr ""
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:92
-msgid "Advanced Search"
-msgstr ""
-
 #: tcms/settings/common.py:94
 msgid "REPORTING"
 msgstr ""

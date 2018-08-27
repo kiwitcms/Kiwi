@@ -24,7 +24,6 @@ from tcms.testruns import urls as testruns_urls
 from tcms.testruns import views as testruns_views
 from tcms.management import views as management_views
 from tcms.report import urls as report_urls
-from tcms.search import advanced_search
 
 
 urlpatterns = [
@@ -88,12 +87,7 @@ urlpatterns = [
     url(r'^report/', include(report_urls)),
     url(r'^report_builder/', include(report_builder_urls)),
 
-    # Advanced search
-    url(r'^advance-search/$',
-        TemplateView.as_view(template_name="advanced_search/deprecation_warning.html")),
-    url(r'^deprecated/advanced-search/$', advanced_search.advance_search, name='advance_search'),
-
-    # JavScript translations, see
+    # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
