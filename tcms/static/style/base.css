@@ -528,25 +528,12 @@ ul.runcc{ margin:0px;}
 #id_address{ width:500px;height:50px;}
 
 /*Treeview*/
-.treeview_toolbar{ background:url(../images/note_bg.png) repeat-x left bottom; padding:3px 0; margin-top:35px; position:relative}
-.treeview_tools{ margin:5px 10px;}
-.treeview_tools span{ margin-right:5px;}
-.treeview_toolbar_text{ position:absolute; right:10px; top:35px; border:dotted 1px #ccc;}
-.treeview_toolbar_text ul{ margin:-10px 0;}
-.treeview_toolbar_text ul li{ height:15px; line-height:20px; list-style-type:disc}
 #treeview ul { margin:0 20px;}
 #treeview ul li{ margin:5px 0 5px 13px;}
 #treeview ul li.no-list-style{margin-left:0px;}
 #treeview ul li img {float:left; margin:3px 2px 0 -2px;}
 #treeview .current{ font-weight:bold;}
 #treeview .current ul li{ font-weight:normal; list-style-position:inside;}
-/*
-#treeview ul li.expand,#treeview ul li.collapse{ list-style-type:none;}
-#treeview ul li ul li{ list-style:square; list-style-position:inside}
-#treeview .expand ul{ margin:0 20px;}
-#treeview .collapse{ background:url(../images/t1.gif) no-repeat -2px top; padding-left:13px;}
-#treeview .expand{ background:url(../images/t2.gif) no-repeat left top; padding-left:13px;}
-*/
 .down{background:url(../images/t2.gif) no-repeat center bottom; width:30px; height:16px; display:inline-block;cursor:pointer;}
 .up{background:url(../images/t3.gif) no-repeat center bottom; width:30px; height:16px; display:inline-block;cursor:pointer;}
 
