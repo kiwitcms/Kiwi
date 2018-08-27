@@ -11,7 +11,6 @@ Submodules
 
 .. toctree::
 
-   tcms.search.advanced_search
    tcms.search.forms
    tcms.search.order
    tcms.search.query

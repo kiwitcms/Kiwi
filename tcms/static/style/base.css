@@ -54,9 +54,6 @@ html .fixed { height: 1%; }
 .menu li.current{background:url(../images/bg_menu_current.png) no-repeat center;}
 .menu .current a{font-weight:bold; color:#FFFFFF;}
 .submenu{background:#3E3E3F;width:100%;}
-.menu .linkAdvancedSearch{width:115px; display: inline-block;}
-.menu .linkAdvancedSearch a:link,.menu .linkAdvancedSearch a:visited{text-decoration:underline;}
-.menu .linkAdvancedSearch a:hover{text-decoration:none; font-weight:normal;}
 #nav{list-style-type:none; overflow:hidden;float:left;padding:0px;margin:0px;}
 #nav li{display: block; width: 120px; text-align:center; padding:0px; margin:0px; cursor:pointer; float: left; height:auto;}
 #nav li ul {position: absolute;margin-left:-1px;padding:0px;z-index:100; width:120px;}
@@ -788,37 +785,10 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .list_filter .priority_filter ul li{ float:left; padding:0px; margin:0px;}
 .list_filter td  input[ type="text" ]{ width:100%;}
 
-/* advancedSearch */
-
-.advancedSearch{padding:10px; width:1200px; margin:0px auto;}
-.advancedSearch h2{margin:0px; padding:0 0 0 8px;}
-.advancedSearch .selectM{height:70px;}
-.advancedSearch .product li{float:left; width:18%;}
-.advancedSearch .product li.btn10{width:10%;}
-.advancedSearch .product li h4{margin:0px; font-weight:normal; padding:0 0 3px 2px; color:#004481;}
-.advancedSearch .product li h4 span{color:red; padding-right:3px;}
-.advancedSearch .product li select{width:205px;}
-.advancedSearch .productSelected{border:1px solid #FFE4B5; background:#FFF8E9; padding:2px 5px 0 5px; margin:10px 0 0 0;}
-.advancedSearch .productSelected li span{float:left; width:18%; padding:5px 0 3px 2px; display:block;}
-.advancedSearch .productSelected li.clear{border-bottom:1px solid #FFE4B5; width:auto; clear:both;}
-.advancedSearch .planCaseRun{padding:10px 0 0 0;}
-.advancedSearch .planCaseRun .containerTabGrey{float:left; width:32%; margin:0 0.5%;}
-.advancedSearch .planCaseRun .containerTabGrey .content{padding:10px 5px 20px 0;}
-.advancedSearch .planCaseRun .title{width:100px;}
-.advancedSearch .planCaseRun .listinfo{padding:5px 0;}
-.advancedSearchTip h3{margin-left:0px; margin-top:0px;}
-.advancedSearchTip h4{margin:0 0 0 20px;}
-.advancedSearchTip ul{margin-left:10px;}
-.advancedSearchTip li{color:#FF6600; list-style: disc; margin-left:10px;}
-.advancedSearchTip p{margin:0; color:#333333;}
 .queries{border:1px solid #FFE4B5; background:#FFF8E9; float:left; margin:10px; padding:5px 10px;}
 .queries li{float:left; padding:0 15px 0 0; list-style:none;}
 .queries li label{padding:0 3px 0 0; color:#999999;}
 .queries p{clear:none; padding:0px; margin:0px;}
-
-.containerTabGrey .top{height:16px; background:url(../images/containerTab_bg_grey.png) repeat-x 0px 15px;}
-.containerTabGrey .top h3{height:16px; line-height:18px; width:70px; margin:0px; background:url(../images/containerTab_bg_grey.png) no-repeat; text-align:center; color:#0E5A99; font-size:12px;}
-.containerTabGrey .content{border:1px solid #CCCCCC; border-top-width:0px; background:#FFFFFF;}
 
 /* caserun stutas icon */
 .icon_status {display:inline-block; padding-left:23px; height:23px; line-height:23px; background:url(../images/ico_status.png) no-repeat;}

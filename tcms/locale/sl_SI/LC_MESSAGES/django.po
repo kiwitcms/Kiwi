@@ -149,10 +149,6 @@ msgstr "Iskanje testiranj"
 msgid "Search Test Cases"
 msgstr "Iskanje testnih scenarijev"
 
-#: tcms/settings/common.py:92
-msgid "Advanced Search"
-msgstr "Napredno iskanje"
-
 #: tcms/settings/common.py:94
 msgid "REPORTING"
 msgstr "POROČANJE"
