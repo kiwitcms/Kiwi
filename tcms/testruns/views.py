@@ -252,7 +252,7 @@ def load_runs_of_one_plan(request, plan_id,
                            for key, value in form.cleaned_data.items())
 
         query_set = TestCaseRun.objects.filter(
-            case_run_status=TestCaseRunStatus.id_failed(),
+            case_run_status=TestCaseRunStatus.objects.get(name=TestCaseRunStatus.FAILED).pk,
             **run_filters
         ).values(
             'run', 'case_run_status'
@@ -262,7 +262,7 @@ def load_runs_of_one_plan(request, plan_id,
         failure_subtotal = magic_convert(query_set, key_name='run', value_name='count')
 
         query_set = TestCaseRun.objects.filter(
-            case_run_status=TestCaseRunStatus.id_passed(),
+            case_run_status=TestCaseRunStatus.objects.get(name=TestCaseRunStatus.PASSED).pk,
             **run_filters
         ).values(
             'run', 'case_run_status'
