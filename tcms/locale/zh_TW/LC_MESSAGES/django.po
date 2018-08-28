@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-21 18:20+0000\n"
+"POT-Creation-Date: 2018-08-28 18:59+0000\n"
 "PO-Revision-Date: 2018-08-21 19:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:290 tcms/testruns/views.py:1180
+#: tcms/core/ajax.py:290 tcms/testruns/views.py:1141
 #, python-format
 msgid "User %s not found!"
 msgstr ""
@@ -47,11 +47,13 @@ msgid "Your new %s account confirmation"
 msgstr "您的新帳戶 %s 確認"
 
 #: tcms/core/contrib/auth/views.py:47
-msgid "Your account has been created, please check your mailbox for confirmation"
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
 msgstr "您的帳戶已經新增完畢，請確認您的 E-mail 是否有啟動連結的信件。"
 
 #: tcms/core/contrib/auth/views.py:53
-msgid "Your account has been created, but you need an administrator to activate it"
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
 msgstr "您的帳戶已創建, 但您需要管理員來啟用它"
 
 #: tcms/core/contrib/auth/views.py:59
@@ -75,6 +77,7 @@ msgid "Core customized comments"
 msgstr "核心客製化附註"
 
 #: tcms/core/contrib/comments/forms.py:14
+#: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr "姓名"
 
@@ -97,9 +100,12 @@ msgstr ""
 
 #: tcms/core/history.py:47
 #, python-format
-msgid "Updated on %(history_date)s\n"
-"Updated by %(username)s\n\n"
-"%(diff)s\n\n"
+msgid ""
+"Updated on %(history_date)s\n"
+"Updated by %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "For more information:\n"
 "%(instance_url)s"
 msgstr ""
@@ -110,7 +116,9 @@ msgstr "已存在同名的環境群組"
 
 #: tcms/management/views.py:319
 #, python-format
-msgid "Value(s) named '%s' already exists in this property. Please select another name."
+msgid ""
+"Value(s) named '%s' already exists in this property. Please select another "
+"name."
 msgstr ""
 
 #: tcms/settings/common.py:81
@@ -145,43 +153,43 @@ msgstr ""
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:92
 msgid "REPORTING"
 msgstr ""
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:93
 msgid "Overall report"
 msgstr ""
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:94
 msgid "Custom report"
 msgstr ""
 
-#: tcms/settings/common.py:97
+#: tcms/settings/common.py:95
 msgid "Testing report"
 msgstr ""
 
-#: tcms/settings/common.py:99
+#: tcms/settings/common.py:97
 msgid "Report builder"
 msgstr ""
 
-#: tcms/settings/common.py:101
+#: tcms/settings/common.py:99
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:102
+#: tcms/settings/common.py:100
 msgid "Environment Groups"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:101
 msgid "Envrionment Properties"
 msgstr ""
 
-#: tcms/settings/common.py:105
+#: tcms/settings/common.py:103
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:104
 msgid "Everything else"
 msgstr ""
 
@@ -220,8 +228,10 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid "\n"
-"                %(total_count)s TestRun(s) assigned to you need to be executed.\n"
+msgid ""
+"\n"
+"                %(total_count)s TestRun(s) assigned to you need to be "
+"executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
 msgstr ""
@@ -243,10 +253,15 @@ msgid "TestPlan"
 msgstr ""
 
 #: tcms/templates/dashboard.html:49
+#: tcms/testplans/templates/testplans/search.html:66
+#: tcms/testplans/templates/testplans/search.html:153
+#: tcms/testruns/templates/testruns/mutable.html:46
 msgid "Product"
 msgstr ""
 
 #: tcms/templates/dashboard.html:50
+#: tcms/testplans/templates/testplans/search.html:86
+#: tcms/testplans/templates/testplans/search.html:154
 msgid "Type"
 msgstr ""
 
@@ -256,8 +271,10 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:72
 #, python-format
-msgid "\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+msgid ""
+"\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
+"are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
 msgstr ""
@@ -268,55 +285,77 @@ msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid "Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n\n"
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr "歡迎 %(user)s, 感謝您註冊了 %(site_domain)s 帳戶! 要啟動您的帳戶, 請按一下此連結:\n"
+msgstr ""
+"歡迎 %(user)s, 感謝您註冊了 %(site_domain)s 帳戶! 要啟動您的帳戶, 請按一下此"
+"連結:\n"
 "%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "TestCase has been updated by %(username)s!\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid "\n"
-"Test run %(pk)s has been created or updated for you.\n\n"
+msgid ""
+"\n"
+"Test run %(pk)s has been created or updated for you.\n"
+"\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n\n"
+"Summary: %(summary)s\n"
+"\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n\n"
+"Default tester: %(default_tester)s.\n"
+"\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n\n"
+"Build: %(build)s\n"
+"\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr "\n"
+msgstr ""
+"\n"
 "已為您創建或更新了Test run %(pk)s 。 # # # # # Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
-"# 基本運行資訊 # # 摘要: %(summary)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
+"# 基本運行資訊 # # 摘要: %(summary)s\n"
+"\n"
 "管理人員: %(manager)s。預設測試人員: %(default_tester)s。 產品: %(product)s\n"
 "產品版本: %(version)s\n"
-"生成版本: %(build)s\n\n"
+"生成版本: %(build)s\n"
+"\n"
 "備註:\n"
 "%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid "Dear Administrator,\n"
+msgid ""
+"Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr "親愛的管理員, 有人剛剛在您的Kiwi TCMS 註冊了一個帳戶與使用者名 %(username)s, 並等待您的批准! 至 %(user_url)s 以啟動帳戶!\n"
+msgstr ""
+"親愛的管理員, 有人剛剛在您的Kiwi TCMS 註冊了一個帳戶與使用者名 %(username)s, "
+"並等待您的批准! 至 %(user_url)s 以啟動帳戶!\n"
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
+#: tcms/testplans/templates/testplans/search.html:100
+#: tcms/testplans/templates/testplans/search.html:106
+#: tcms/testplans/templates/testplans/search.html:111
 msgid "Username"
 msgstr ""
 
@@ -344,7 +383,9 @@ msgid "Change password"
 msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid "Please enter your new password twice so we can verify you typed it in correctly"
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly"
 msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
@@ -381,8 +422,8 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr "TestPlan 未指定或不存在"
 
-#: tcms/testcases/views.py:1209 tcms/testruns/views.py:816
-#: tcms/testruns/views.py:902
+#: tcms/testcases/views.py:1209 tcms/testruns/views.py:784
+#: tcms/testruns/views.py:863
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
 
@@ -390,19 +431,87 @@ msgstr "至少需要一個 TestCase"
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
-#: tcms/testplans/views.py:422
+#: tcms/testplans/templates/testplans/search.html:5
+msgid "Search test plans"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:13
+msgid "Test plan name"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:16
+msgid "Created&nbsp;after"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:40
+msgid "Created&nbsp;before"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:76
+msgid "Version"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:98
+#: tcms/testplans/templates/testplans/search.html:151
+#: tcms/testruns/templates/testruns/mutable.html:119
+msgid "Author"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:104
+#: tcms/testplans/templates/testplans/search.html:152
+msgid "Owner"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:109
+#: tcms/testruns/templates/testruns/mutable.html:57
+msgid "Default&nbsp;tester"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:116
+msgid "Tag"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:119
+msgid "Separate multiple values with comma (,)"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:122
+msgid "Active"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:127
+msgid "Environment group"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:140
+msgid "Search"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:148
+msgid "ID"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:149
+msgid "Test plan"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:150
+msgid "Created"
+msgstr ""
+
+#: tcms/testplans/views.py:362
 msgid "Select at least one TestRun and one TestCase"
 msgstr "選擇至少一個 TestRun 和一個 TestCase"
 
-#: tcms/testplans/views.py:519
+#: tcms/testplans/views.py:459
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:742
+#: tcms/testplans/views.py:683
 msgid "At least one test plan is required for print"
 msgstr "列印時至少需要一個Test Plan"
 
-#: tcms/testplans/views.py:750
+#: tcms/testplans/views.py:691
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "TestPlan \"%s\" 不存在"
@@ -411,15 +520,104 @@ msgstr "TestPlan \"%s\" 不存在"
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "許可權被拒絕: 此TestRun 不屬於您"
 
-#: tcms/testruns/views.py:62
+#: tcms/testruns/templates/testruns/mutable.html:7
+msgid "Edit TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:9
+msgid "Clone TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:11
+msgid "New TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:23
+#: tcms/testruns/templates/testruns/mutable.html:118
+msgid "Summary"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:33
+msgid "Build"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:36
+#: tcms/testruns/templates/testruns/mutable.html:37
+msgid "add new Build"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:46
+msgid "version"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:50
+msgid "Manager"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:53
+#: tcms/testruns/templates/testruns/mutable.html:60
+msgid "Username or email"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:67
+msgid "Environment properties"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:90
+msgid "Notes"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:96
+msgid "Save"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:105
+msgid "Selected TestCase(s):"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:108
+#, python-format
+msgid ""
+"\n"
+"                    %(count)s of the pre-selected test cases is not "
+"CONFIRMED and will not be cloned!\n"
+"                    See test plan for more details!\n"
+"                    "
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:120
+msgid "Created on"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:121
+msgid "Status"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:122
+msgid "Category"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:123
+msgid "Priority"
+msgstr ""
+
+#: tcms/testruns/views.py:74
+msgid "Creating a TestRun requires a TestPlan, select one"
+msgstr ""
+
+#: tcms/testruns/views.py:84
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "創建 TestRun 至少需要一個 TestCase"
 
-#: tcms/testruns/views.py:911
+#: tcms/testruns/views.py:788
+msgid "Clone of "
+msgstr ""
+
+#: tcms/testruns/views.py:872
 msgid "TestCase ID is not a valid integer"
 msgstr "TestCase ID 不是有效的整數"
 
-#: tcms/testruns/views.py:1043
+#: tcms/testruns/views.py:1004
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d CaseRun 已更新:"
@@ -471,4 +669,3 @@ msgstr "禁用"
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr "需要更新"
-
