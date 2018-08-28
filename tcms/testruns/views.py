@@ -185,27 +185,6 @@ def get_all(request):
     return render(request, 'run/all.html', context_data)
 
 
-def run_queryset_from_querystring(querystring):
-    """Setup a run queryset from a querystring.
-
-    A querystring is used in several places in front-end
-    to query a list of runs.
-    """
-    # 'name=alice&age=20' => {'name': 'alice', 'age': ''}
-    filter_keywords = dict(k.split('=') for k in querystring.split('&'))
-    # get rid of empty values and several other noisy names
-    if "page_num" in filter_keywords:
-        filter_keywords.pop('page_num')
-    if "page_size" in filter_keywords:
-        filter_keywords.pop('page_size')
-
-    filter_keywords = dict(
-        (str(k), v) for (k, v) in filter_keywords.items() if v.strip())
-
-    trs = TestRun.objects.filter(**filter_keywords)
-    return trs
-
-
 def magic_convert(queryset, key_name, value_name):
     return dict(((row[key_name], row[value_name]) for row in queryset))
 
