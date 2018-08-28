@@ -53,6 +53,8 @@ def add_comment(case_run_id, comment, **kwargs):
     if not form.is_valid():
         return form.errors.as_json()
 
+    return None
+
 
 @permissions_required('testruns.add_testcaserun')
 @rpc_method(name='TestCaseRun.create')
@@ -86,9 +88,9 @@ def create(values):
         raise ValueError('Argument values is empty.')
 
     if form.is_valid():
-        tr = form.cleaned_data['run']
+        run = form.cleaned_data['run']
 
-        tcr = tr.add_case_run(
+        testcase_run = run.add_case_run(
             case=form.cleaned_data['case'],
             build=form.cleaned_data['build'],
             assignee=form.cleaned_data['assignee'],
@@ -100,11 +102,11 @@ def create(values):
     else:
         raise ValueError(form_errors_to_list(form))
 
-    return tcr.serialize()
+    return testcase_run.serialize()
 
 
 @rpc_method(name='TestCaseRun.filter')
-def filter(values):
+def filter(values):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC TestCaseRun.filter(values)
 
@@ -224,5 +226,5 @@ def get_logs(case_run_id):
                  objects
     """
     links = LinkReference.objects.filter(test_case_run=case_run_id)
-    s = XMLRPCSerializer(links)
-    return s.serialize_queryset()
+    serialier = XMLRPCSerializer(links)
+    return serialier.serialize_queryset()

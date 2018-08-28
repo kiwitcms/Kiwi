@@ -112,8 +112,7 @@ def distinct_m2m_rows(cls, values, op_type):
     qs = cls.objects.filter(**values)
     if op_type == QUERY_DISTINCT:
         return qs.distinct() if flag else qs
-    else:
-        raise TypeError('Not implement op type %s' % op_type)
+    raise TypeError('Not implement op type %s' % op_type)
 
 
 def distinct_filter(cls, values):

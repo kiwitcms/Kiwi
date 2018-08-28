@@ -90,7 +90,7 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.assertFalse(tag_exists)
 
 
-class TestUpdate(XmlrpcAPIBaseTest):
+class TestUpdate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
     """ Tests the XMLRPM testplan.update method """
 
     def _fixture_setup(self):

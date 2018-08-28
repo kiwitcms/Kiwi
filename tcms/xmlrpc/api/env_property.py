@@ -7,7 +7,7 @@ from tcms.xmlrpc.utils import parse_bool_value
 
 
 @rpc_method(name='Env.Property.filter')
-def filter(query):
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC Env.Property.filter(query)
 

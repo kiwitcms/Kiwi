@@ -20,7 +20,7 @@ from tcms.tests.factories import BuildFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestCaseRunCreate(XmlrpcAPIBaseTest):
+class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
     """Test testcaserun.create"""
 
     def _fixture_setup(self):

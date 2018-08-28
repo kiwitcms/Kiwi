@@ -6,7 +6,7 @@ from tcms.testcases.models import Category
 
 
 @rpc_method(name='Category.filter')
-def filter(query):
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC Category.filter(query)
 

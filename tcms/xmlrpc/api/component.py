@@ -17,7 +17,7 @@ __all__ = (
 
 
 @rpc_method(name='Component.filter')
-def filter(query):
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC Component.filter(query)
 
@@ -95,7 +95,7 @@ def update(component_id, values):
         raise ValueError('Component name is not in values {0}.'.format(values))
 
     name = values['name']
-    if not isinstance(name, str) or len(name) == 0:
+    if not isinstance(name, str) or not name:
         raise ValueError('Component name {0} is not a string value.'.format(name))
 
     component = Component.objects.get(pk=int(component_id))

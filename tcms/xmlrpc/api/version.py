@@ -17,7 +17,7 @@ __all__ = (
 
 
 @rpc_method(name='Version.filter')
-def filter(query):  # pylint: disable=invalid-name
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC Version.filter(query)
 
@@ -60,5 +60,4 @@ def create(values):
     if form.is_valid():
         version = form.save()
         return version.serialize()
-    else:
-        raise ValueError(form_errors_to_list(form))
+    raise ValueError(form_errors_to_list(form))

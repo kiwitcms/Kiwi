@@ -6,7 +6,7 @@ from tcms.management.models import Tag
 
 
 @rpc_method(name='Tag.filter')
-def filter(query):
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC Tag.filter(query)
 

@@ -6,7 +6,7 @@ from tcms.management.models import Product
 
 
 @rpc_method(name='Product.filter')
-def filter(query):
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC Product.filter(query)
 
