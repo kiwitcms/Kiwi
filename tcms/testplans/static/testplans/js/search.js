@@ -59,6 +59,10 @@ $(document).ready(function() {
 
             params['is_active'] = $('#id_active').is(':checked');
 
+            if ($('#id_env_group').val()) {
+                params['env_group'] = $('#id_env_group').val();
+            };
+
             dataTableJsonRPC('TestPlan.filter', params, callback);
         },
         columns: [
