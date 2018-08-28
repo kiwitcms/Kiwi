@@ -42,6 +42,26 @@ from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRun
 from tcms.issuetracker.types import IssueTrackerType
 
 
+def save_env_properties(request, test_run):
+    """
+        helper to save Env properties from TestRun new/edit views
+    """
+    env_property_id_set = set(request.POST.getlist("env_property_id"))
+    if env_property_id_set:
+        args = []
+        for property_id in env_property_id_set:
+            select_name = 'select_property_value_%s' % property_id
+            env_values = request.POST.getlist(select_name)
+            if not env_values:
+                continue
+
+            for value_id in env_values:
+                if value_id:
+                    args.append(EnvRunValueMap(run=test_run, value_id=value_id))
+
+        EnvRunValueMap.objects.bulk_create(args)
+
+
 @require_POST
 @permission_required('testruns.add_testrun')
 def new(request):
@@ -119,26 +139,7 @@ def new(request):
                                       assignee=assignee_tester)
                 loop += 1
 
-            # Write the values into tcms_env_run_value_map table
-            env_property_id_set = set(request.POST.getlist("env_property_id"))
-            if env_property_id_set:
-                args = list()
-                for property_id in env_property_id_set:
-                    checkbox_name = 'select_property_id_%s' % property_id
-                    select_name = 'select_property_value_%s' % property_id
-                    checked = request.POST.getlist(checkbox_name)
-                    if checked:
-                        env_values = request.POST.getlist(select_name)
-                        if not env_values:
-                            continue
-
-                        if len(env_values) != len(checked):
-                            raise ValueError('Invalid number of env values.')
-
-                        for value_id in env_values:
-                            args.append(EnvRunValueMap(run=test_run, value_id=value_id))
-
-                EnvRunValueMap.objects.bulk_create(args)
+            save_env_properties(request, test_run)
 
             return HttpResponseRedirect(
                 reverse('testruns-get', args=[test_run.run_id, ])
@@ -157,6 +158,7 @@ def new(request):
         form.populate(product_id=test_plan.product_id)
 
     context_data = {
+        'show_env': True,
         'test_plan': test_plan,
         'test_cases': tcs_values,
         'form': form,
@@ -536,6 +538,7 @@ def edit(request, run_id):
             test_run.notes = form.cleaned_data['notes']
             test_run.estimated_time = form.cleaned_data['estimated_time']
             test_run.save()
+
             return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
     else:
         # Generate a blank form
@@ -552,6 +555,7 @@ def edit(request, run_id):
         form.populate(test_run.plan.product_id)
 
     context_data = {
+        'show_env': False,
         'test_run': test_run,
         'test_plan': test_run.plan,
         'form': form,
@@ -790,6 +794,7 @@ def clone(request, run_id):
     form.populate(product_id=test_run.plan.product_id)
 
     context_data = {
+        'show_env': True,
         'is_cloning': True,
         'disabled_cases': disabled_cases,
         'test_plan': test_run.plan,

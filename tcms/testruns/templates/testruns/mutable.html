@@ -11,15 +11,6 @@
         {% trans "New TestRun" %}
     {% endif %}
 {% endblock %}
-{% block head %}
-    {{ block.super }}
-
-    <script src="{% static "grappelli/jquery/jquery.min.js" %}" type="text/javascript"></script>
-    <script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
-    <script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}" type="text/javascript"></script>
-
-    <script src="{% static 'testruns/js/mutable.js' %}"></script>
-{% endblock %}
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
@@ -70,6 +61,30 @@
                 {{ form.default_tester.errors }}
             </div>
         </div>
+
+        {% if show_env and test_plan.env_group.first %}
+        <div class="form-group">
+            <label class="col-md-12 col-lg-12">{% trans "Environment properties" %}</label>
+        </div>
+
+        {% for property in test_plan.env_group.first.property.all %}
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1">
+                {{ property.name }}
+            </label>
+
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <input type="hidden" name="env_property_id" value="{{ property.id }}">
+                <select class="form-control selectpicker" name="select_property_value_{{ property.id }}">
+                    <option value="">----------</option>
+                    {% for value in property.value.all %}
+                    <option value="{{ value.id }}">{{ value.value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
 
         <div class="form-group">
             <label class="col-lg-12" for="id_notes">{% trans "Notes" %}</label>
@@ -133,4 +148,12 @@
         {% endif %}
     </form>
 </div><!-- /container -->
+
+<script src="{% static "grappelli/jquery/jquery.min.js" %}" type="text/javascript"></script>
+<script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
+<script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}" type="text/javascript"></script>
+
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+
+<script src="{% static 'testruns/js/mutable.js' %}"></script>
 {% endblock %}
