@@ -170,33 +170,6 @@ class BaseCaseRunForm(forms.Form):
     sortkey = forms.IntegerField(label='Sortkey', required=False)
 
 
-class PlanFilterRunForm(forms.Form):
-    build = forms.ModelChoiceField(
-        label='Build', queryset=Build.objects.all(),
-        required=False
-    )
-    manager__username__iexact = UserField(required=False)
-    plan = forms.IntegerField(required=True)
-    run_id = forms.IntegerField(required=False)
-    start_date__gt = forms.DateTimeField(required=False)
-    summary__icontains = forms.CharField(required=False)
-    default_tester__username__iexact = UserField(required=False)
-
-    def __init__(self, request_data):
-        super(PlanFilterRunForm, self).__init__(
-            dict((k, v) for k, v in request_data.items() if v.strip())
-        )
-
-    def clean(self):
-        cleaned_data = {}
-        for key, value in self.cleaned_data.items():
-            if not value:
-                continue
-            if not (isinstance(value, str) and not value.strip()):
-                cleaned_data[key] = value
-        return cleaned_data
-
-
 # =========== Forms for XML-RPC functions ==============
 
 class XMLRPCNewCaseRunForm(BaseCaseRunForm):

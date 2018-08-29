@@ -88,13 +88,13 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/run/'+ data.run_id + '">' + data.summary + '</a>';
+                    return '<a href="/run/'+ data.run_id + '" target="_parent">' + data.summary + '</a>';
                 }
             },
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/plan/'+ data.plan_id + '">TP-' + data.plan_id + ': ' + data.plan + '</a>';
+                    return '<a href="/plan/'+ data.plan_id + '" target="_parent">TP-' + data.plan_id + ': ' + data.plan + '</a>';
                 }
             },
             { data: "manager" },

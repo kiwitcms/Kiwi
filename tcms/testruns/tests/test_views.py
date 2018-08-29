@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import json
 from http import HTTPStatus
 from datetime import timedelta
 
@@ -22,7 +21,6 @@ from tcms.tests.factories import EnvPropertyFactory
 from tcms.tests.factories import EnvValueFactory
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
 
 
@@ -257,57 +255,6 @@ class TestSearchRuns(BaseCaseRun):
     def test_search_page_is_shown(self):
         response = self.client.get(self.search_runs_url)
         self.assertContains(response, '<input id="id_summary" type="text"')
-
-
-class TestLoadRunsOfOnePlan(BaseCaseRun):
-    """
-    When the user goes to Test Plan -> Runs tab this view gets loaded.
-    It also uses a JSON template like AJAX search and it is succeptible to
-    bad characters in the Test Run summary.
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestLoadRunsOfOnePlan, cls).setUpTestData()
-
-        # test data for Issue #78
-        # https://github.com/kiwitcms/Kiwi/issues/78
-        cls.run_bogus_summary = TestRunFactory(
-            summary=r"""A summary with backslash(\), single quotes(') and double quotes(")""",
-            plan=cls.plan)
-
-        # test data for Issue #234
-        # https://github.com/kiwitcms/Kiwi/issues/234
-        cls.run_with_angle_brackets = TestRunFactory(
-            summary=r"""A summary with <angle> brackets in <summary>""",
-            plan=cls.plan)
-
-    def test_load_runs(self):
-        load_url = reverse('load_runs_of_one_plan_url', args=[self.plan.pk])
-        response = self.client.get(load_url, {'plan': self.plan.pk})
-
-        # verify JSON can be parsed correctly (for #78)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        # verify there is the same number of objects loaded
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalRecords'])
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(),
-                         data['iTotalDisplayRecords'])
-
-    def test_with_angle_brackets(self):
-        load_url = reverse('load_runs_of_one_plan_url', args=[self.plan.pk])
-        response = self.client.get(load_url, {'plan': self.plan.pk})
-
-        # verify JSON can be parsed correctly (for #234)
-        # we can't really validate that the angle brackets are shown correctly
-        # because the rendering is done by jQuery dataTables on the browser
-        # and the default Django client does not support JavaScript!
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        # verify there is the same number of objects loaded
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalRecords'])
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(),
-                         data['iTotalDisplayRecords'])
 
 
 class TestAddRemoveRunCC(BaseCaseRun):

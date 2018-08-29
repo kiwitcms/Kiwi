@@ -178,7 +178,14 @@ Nitrate.TestPlans.Instance = {
 				{% include "plan/get_attachments.html" %}
 			</div>
 			<div id="testruns" class="tab_list" style="display:none;">
-				{% include "plan/get_runs.html" %}
+                            <!--
+                                todo:
+                                a temporary solution until we can convert the entire page to Patternfly
+                                and figure out a way to re-use the search forms!
+                             -->
+                            <iframe src="{% url 'testruns-search' %}?nonav=1&plan={{ test_plan.pk }}&product={{ test_plan.product_id }}&product_version={{ test_plan.product_version_id }}"
+                                    width="100%" height="1000px" scrolling="auto" frameBorder="0">
+                            </iframe>
 			</div>
 			<div id="treeview" class="tab_list" style="display:none;">
 				{% include "plan/get_treeview.html" %}

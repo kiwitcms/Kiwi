@@ -11,7 +11,9 @@
     {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
-    {% include 'navbar.html' %}
+    {% if not REQUEST_CONTENTS.nonav %}
+        {% include 'navbar.html' %}
+    {% endif %}
 
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissable">
