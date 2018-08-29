@@ -186,8 +186,8 @@ class SearchRunForm(forms.Form):
                 product__pk=product_id
             )
         else:
-            self.fields['product_version'].queryset = Version.objects.all()
-            self.fields['build'].queryset = Build.list_active()
+            self.fields['product_version'].queryset = Version.objects.none()
+            self.fields['build'].queryset = Build.objects.none()
 
 
 # ===========================================================================

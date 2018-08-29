@@ -1,13 +1,3 @@
-function updateVersionSelect(data){
-    // the zero-th option is a special one
-    var new_options = $('#id_version')[0].options[0].outerHTML;
-    data.forEach(function(element) {
-        new_options += '<option value="' + element.id + '">' + element.value + '</option>';
-    });
-    $('#id_version')[0].innerHTML = new_options;
-    $('.selectpicker').selectpicker('refresh');
-}
-
 $(document).ready(function() {
     var table = $("#resultsTable").DataTable({
         ajax: function(data, callback, settings) {

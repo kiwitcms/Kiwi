@@ -15,7 +15,7 @@
 				<td><span class="tagvalue">{{ tag }}</span></td>
 				<td><a href="{% url "plans-search" %}?tag__name__in={{ tag }}" title="{{ tag.num_plans }} plans tagged {{ tag }}">{{ tag.num_plans }}</a></td>
 				<td><a href="{% url "testcases-search" %}?a=search&tag__name__in={{ tag }}"  title="{{ tag.num_cases }} cases tagged {{ tag }}">{{ tag.num_cases }}</a></td>
-				<td><a href="{% url "testruns-all" %}?action=search&tag__name__in={{ tag }}"  title="{{ tag.num_runs }} runs tagged {{ tag }}">{{ tag.num_runs }}</a></td>
+				<td><a href="{% url "testruns-search" %}?tag__name__in={{ tag }}"  title="{{ tag.num_runs }} runs tagged {{ tag }}">{{ tag.num_runs }}</a></td>
 				{% if object.plan_id and perms.testplans.delete_testplantag or object.case_id and perms.testcases.delete_testcasetag %}
 				<td><a href="#tag" class="remove js-remove-tag" title="remove tag from this plan" >Remove</a></td>
 				{% else %}

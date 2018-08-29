@@ -1,8 +1,9 @@
 // JSON-RPC client inspired by
 // https://stackoverflow.com/questions/8147211/jquery-jsonrpc-2-0-call-via-ajax-gets-correct-response-but-does-not-work
-function jsonRPC(rpc_method, rpc_params, callback) {
+function jsonRPC(rpc_method, rpc_params, callback, is_sync) {
    $.ajax({
       url: '/json-rpc/',
+      async: is_sync !== true,
       data: JSON.stringify({jsonrpc: '2.0',
                             method: rpc_method,
                             params: [rpc_params],
@@ -23,8 +24,12 @@ function jsonRPC(rpc_method, rpc_params, callback) {
 
 // used by DataTables to convert a list of objects to a dict
 // suitable for loading data into the table
-function dataTableJsonRPC(rpc_method, rpc_params, callback) {
+function dataTableJsonRPC(rpc_method, rpc_params, callback, pre_process_data) {
     var internal_callback = function(data) {
+        // used to collect additional information about columns via ForeignKeys
+        if (pre_process_data !== undefined) {
+            pre_process_data(data);
+        }
         callback({'data': data})
     };
 

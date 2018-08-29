@@ -1,60 +1,9 @@
 Nitrate.TestRuns = {};
-Nitrate.TestRuns.List = {};
 Nitrate.TestRuns.Details = {};
 Nitrate.TestRuns.Execute = {}
 Nitrate.TestRuns.ChooseRuns = {};
 Nitrate.TestRuns.AssignCase = {}
 
-Nitrate.TestRuns.List.on_load = function() {
-  bind_version_selector_to_product(true, jQ('#id_product')[0]);
-  bind_build_selector_to_product(true, jQ('#id_product')[0]);
-
-  if (jQ('#id_people_type').length) {
-    jQ('#id_search_people').attr('name', jQ('#id_people_type').val());
-    jQ('#id_people_type').bind('change', function() {
-      jQ('#id_search_people').attr('name', jQ('#id_people_type').val());
-    });
-  }
-
-  if (jQ('#run_column_add').length) {
-    jQ('#run_column_add').bind('change', function(t) {
-      switch(this.value) {
-        case 'col_plan':
-          jQ('#col_plan_head').show();
-          jQ('.col_plan_content').show();
-          jQ('#col_plan_option').hide();
-          break;
-      };
-    });
-  }
-
-  if (!jQ('#testruns_table').hasClass('js-advance-search-runs')) {
-    var oTable = jQ('#testruns_table').dataTable({
-      "iDisplayLength": 20,
-      "sPaginationType": "full_numbers",
-      "bFilter": false,
-      "bLengthChange": false,
-      "aaSorting": [[ 1, "desc" ]],
-      "bProcessing": true,
-      "bServerSide": true,
-      "sAjaxSource": "/runs/ajax/" + this.window.location.search,
-      "aoColumns": [
-        {"sType": "numeric"},
-        {"sType": "html"},
-        {"sType": "html"},
-        {"sType": "html"},
-        {"bVisible": false},
-        null,
-        null,
-        null,
-        {"sType": "numeric", "bSortable": false},
-        null,
-        {"bSortable": false }
-      ],
-      "oLanguage": { "sEmptyTable": "No run was found." }
-    });
-  }
-};
 
 Nitrate.TestRuns.Details.on_load = function() {
   // Observe the interface buttons

@@ -53,6 +53,7 @@ class TestRun(TCMSActionModel):
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run',
                              on_delete=models.CASCADE)
+    # todo: what is this? looks like redundant code
     environment_id = models.IntegerField(default=0)
     build = models.ForeignKey('management.Build', related_name='build_run',
                               on_delete=models.CASCADE)

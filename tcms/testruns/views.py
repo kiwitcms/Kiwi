@@ -167,22 +167,14 @@ def new(request):
 
 
 @require_GET
-def get_all(request):
-    """Read the test runs from database and display them."""
-    query_result = len(request.GET) > 0
-
-    if request.GET:
-        search_form = SearchRunForm(request.GET)
-        search_form.populate(product_id=request.GET.get('product'))
-        search_form.is_valid()
-    else:
-        search_form = SearchRunForm()
+def search(request):
+    form = SearchRunForm(request.GET)
+    form.populate(product_id=request.GET.get('product'))
 
     context_data = {
-        'query_result': query_result,
-        'search_form': search_form,
+        'form': form,
     }
-    return render(request, 'run/all.html', context_data)
+    return render(request, 'testruns/search.html', context_data)
 
 
 def magic_convert(queryset, key_name, value_name):
@@ -276,85 +268,6 @@ def load_runs_of_one_plan(request, plan_id,
             'iTotalRecords': 0,
             'iTotalDisplayRecords': 0,
             'querySet': TestRun.objects.none(),
-        }
-
-    json_data = render_to_string(template_name, response_data, request=request)
-    return HttpResponse(json_data, content_type='application/json')
-
-
-@require_GET
-def ajax_search(request, template_name='run/common/json_runs.txt'):
-    """Response request to search test runs from Search Runs"""
-    search_form = SearchRunForm(request.GET)
-    if request.GET.get('product'):
-        search_form.populate(product_id=request.GET['product'])
-    else:
-        search_form.populate()
-
-    if search_form.is_valid():
-        test_runs = TestRun.list(
-            search_form.cleaned_data
-        ).select_related(
-            'manager',
-            'default_tester',
-            'plan',
-            'build'
-        ).only('run_id',
-               'summary',
-               'manager__username',
-               'default_tester__id',
-               'default_tester__username',
-               'plan__name',
-               'env_value',
-               'build__product__name',
-               'stop_date',
-               'product_version__value')
-
-        # Further optimize by adding caserun attributes:
-        column_names = [
-            '',
-            'run_id',
-            'summary',
-            'manager__username',
-            'default_tester__username',
-            'plan',
-            'build__product__name',
-            'product_version',
-            'total_num_caseruns',
-            'stop_date',
-            'completed',
-        ]
-
-        data_table_result = DataTableResult(request.GET, test_runs, column_names)
-        response_data = data_table_result.get_response_data()
-        searched_runs = response_data['querySet']
-
-        # Get associated statistics data
-        run_ids = []
-        for run in searched_runs:
-            run_ids.append(run.pk)
-
-        query_set = TestCaseRun.objects.filter(
-            run__in=run_ids
-        ).values(
-            'run'
-        ).annotate(
-            cases_count=Count('case')
-        )
-        cases_subtotal = magic_convert(query_set, key_name='run', value_name='cases_count')
-
-        for run in searched_runs:
-            run_id = run.pk
-            cases_count = cases_subtotal.get(run_id, 0)
-            run.nitrate_stats = {
-                'cases': cases_count,
-            }
-    else:
-        response_data = {
-            'sEcho': int(request.GET.get('sEcho', 0)),
-            'iTotalRecords': 0,
-            'iTotalDisplayRecords': 0,
-            'runs': TestRun.objects.none(),
         }
 
     json_data = render_to_string(template_name, response_data, request=request)
