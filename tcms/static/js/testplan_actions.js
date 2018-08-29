@@ -579,9 +579,6 @@ Nitrate.TestPlans.Details = {
 
     Nitrate.Utils.enableShiftSelectOnCheckbox('case_selector');
 
-    Nitrate.TestPlans.Runs.initializaRunTab();
-    Nitrate.TestPlans.Runs.bind();
-
     jQ('#btn_edit').bind('click', function() {
       window.location.href = jQ(this).data('param');
     });
@@ -1495,85 +1492,6 @@ function resortCasesDragAndDrop(container, button, form, table, parameters, call
   }
 }
 
-/*
- * Handle events within Runs tab in a plan page.
- */
-Nitrate.TestPlans.Runs = {
-  'bind': function () {
-    // Bind everything.
-    var that = this;
-    jQ('#show_more_runs').live('click', that.showMore);
-    jQ('#reload_runs').live('click', that.reload);
-    jQ('#tab_testruns').live('click', that.initializaRunTab);
-  },
-  'makeUrlFromPlanId': function (planId) {
-    return '/plan/' + planId + '/runs/';
-  },
-  'render': function (data, textStatus, jqXHR) {
-    var tbody = jQ('#testruns_body');
-    var html = jQ(data.html);
-    tbody.append(html);
-  },
-  'initializaRunTab': function () {
-    /*
-     * Load the first page of the runs when:
-     * 1. Current active tab is #testrun;
-     * AND
-     * 2. No testruns are ever loaded.
-     *
-     */
-    var that = Nitrate.TestPlans.Runs;
-    if (jQ('#tab_testruns').hasClass('tab_focus')) {
-      if (!jQ.fn.DataTable.fnIsDataTable(jQ('#testruns_table')[0])) {
-        var url = that.makeUrlFromPlanId(jQ('#testruns_table').data('param'));
-        jQ('#testruns_table').dataTable({
-          "aoColumnDefs":[
-            { "bSortable": false, "aTargets":[0, 8, 9, 10] },
-            { "sType": "numeric", "aTargets": [1, 6, 8, 9, 10 ] },
-            { "sType": "date", "aTargets": [5] }
-          ],
-          'bSort': true,
-          'bProcessing': true,
-          'bFilter': false,
-          "bLengthChange": false,
-          "oLanguage": {"sEmptyTable": "No test run was found in this plan."},
-          "bServerSide": true,
-          "sAjaxSource": url,
-          "iDisplayLength": 20,
-          "sPaginationType": "full_numbers",
-          "fnServerParams": function(aoData) {
-            var params = jQ("#run_filter").serializeArray();
-            params.forEach(function(param) {
-              aoData.push(param);
-            });
-          }
-        });
-      }
-    }
-  },
-  'nextPage': function (planId) {
-    var that = this;
-    var url = that.makeUrlFromPlanId(planId);
-    var request = jQ.ajax({
-      'dataType': 'json',
-      'url': url,
-      'data': that.filter(),
-      'beforeSend': that.showLoading
-    }).done(that.render);
-    return request;
-  },
-  'filter': function (data) {
-    var queryString = jQ("#run_filter").serialize();
-    return queryString;
-  },
-  'reload': function () {
-    jQ('#testruns_body').children().remove();
-    jQ('#js-page-num').val('1');
-    jQ('#testruns_table').dataTable().fnDraw();
-
-    return false;
-  }
-};
 
 /*
  * Request specific operation upon filtered TestCases.

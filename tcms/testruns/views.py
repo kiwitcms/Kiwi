@@ -16,7 +16,6 @@ from django.db.models import Q
 from django.forms import ValidationError
 from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
@@ -27,7 +26,6 @@ from django.views.generic.base import View
 from django_comments.models import Comment
 
 from tcms.core.utils import clean_request
-from tcms.core.utils import DataTableResult
 from tcms.core.utils.validations import validate_bug_id
 from tcms.management.models import Priority, EnvValue, Tag
 from tcms.testcases.forms import CaseBugForm
@@ -36,7 +34,6 @@ from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
 from tcms.testruns.data import TestCaseRunDataMixin
-from tcms.testruns.forms import PlanFilterRunForm
 from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
 from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus, EnvRunValueMap
 from tcms.issuetracker.types import IssueTrackerType
@@ -175,103 +172,6 @@ def search(request):
         'form': form,
     }
     return render(request, 'testruns/search.html', context_data)
-
-
-def magic_convert(queryset, key_name, value_name):
-    return dict(((row[key_name], row[value_name]) for row in queryset))
-
-
-@require_GET
-def load_runs_of_one_plan(request, plan_id,
-                          template_name='plan/common/json_plan_runs.txt'):
-    """A dedicated view to return a set of runs of a plan
-
-    This view is used in a plan detail page, for the contained testrun tab. It
-    replaces the original solution, with a paginated resultset in return,
-    serves as a performance healing. Also, in order for user to locate the
-    data, it accepts field lookup parameters collected from the filter panel
-    in the UI.
-    """
-    column_names = [
-        '',
-        'run_id',
-        'summary',
-        'manager__username',
-        'default_tester__username',
-        'start_date',
-        'build__name',
-        'stop_date',
-        'total_num_caseruns',
-        'failure_caseruns_percent',
-        'successful_caseruns_percent',
-    ]
-
-    test_plan = TestPlan.objects.get(plan_id=plan_id)
-    form = PlanFilterRunForm(request.GET)
-
-    if form.is_valid():
-        queryset = test_plan.run.filter(**form.cleaned_data)
-        queryset = queryset.select_related(
-            'build', 'manager', 'default_tester').order_by('-pk')
-
-        data_table_result = DataTableResult(request.GET, queryset, column_names)
-        response_data = data_table_result.get_response_data()
-        searched_runs = response_data['querySet']
-
-        # Get associated statistics data
-        run_filters = dict(('run__{0}'.format(key), value)
-                           for key, value in form.cleaned_data.items())
-
-        query_set = TestCaseRun.objects.filter(
-            case_run_status=TestCaseRunStatus.objects.get(name=TestCaseRunStatus.FAILED).pk,
-            **run_filters
-        ).values(
-            'run', 'case_run_status'
-        ).annotate(
-            count=Count('pk')
-        ).order_by('run', 'case_run_status')
-        failure_subtotal = magic_convert(query_set, key_name='run', value_name='count')
-
-        query_set = TestCaseRun.objects.filter(
-            case_run_status=TestCaseRunStatus.objects.get(name=TestCaseRunStatus.PASSED).pk,
-            **run_filters
-        ).values(
-            'run', 'case_run_status'
-        ).annotate(
-            count=Count('pk')
-        ).order_by('run', 'case_run_status')
-        success_subtotal = magic_convert(query_set, key_name='run', value_name='count')
-
-        query_set = TestCaseRun.objects.filter(
-            **run_filters
-        ).values('run').annotate(
-            count=Count('case')
-        ).order_by('run')
-        cases_subtotal = magic_convert(query_set, key_name='run', value_name='count')
-
-        for run in searched_runs:
-            run_id = run.pk
-            cases_count = cases_subtotal.get(run_id, 0)
-            if cases_count:
-                failure_percent = failure_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
-                success_percent = success_subtotal.get(run_id, 0) * 1.0 / cases_count * 100
-            else:
-                failure_percent = success_percent = 0
-            run.nitrate_stats = {
-                'cases': cases_count,
-                'failure_percent': failure_percent,
-                'success_percent': success_percent,
-            }
-    else:
-        response_data = {
-            'sEcho': int(request.GET.get('sEcho', 0)),
-            'iTotalRecords': 0,
-            'iTotalDisplayRecords': 0,
-            'querySet': TestRun.objects.none(),
-        }
-
-    json_data = render_to_string(template_name, response_data, request=request)
-    return HttpResponse(json_data, content_type='application/json')
 
 
 def open_run_get_case_runs(request, run):
