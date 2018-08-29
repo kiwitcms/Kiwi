@@ -28,7 +28,7 @@
                 Here are the latest {{ count }}.
                 {% endblocktrans %}
 
-                <a href="{% url "testruns-all" %}?people={{ user.username|iriencode }}&status=running">
+                <a href="{% url "testruns-search" %}?default_tester={{ user.username|iriencode }}">
                     {% trans "SEE ALL" %}
                 </a>
             {% else %}

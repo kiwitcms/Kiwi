@@ -86,7 +86,7 @@ MENU_ITEMS = [
     ]),
     (_('SEARCH'), [
         (_('Search Test Plans'), reverse_lazy('plans-search')),
-        (_('Search Test Runs'), reverse_lazy('testruns-all')),
+        (_('Search Test Runs'), reverse_lazy('testruns-search')),
         (_('Search Test Cases'), reverse_lazy('testcases-search')),
     ]),
     (_('REPORTING'), [

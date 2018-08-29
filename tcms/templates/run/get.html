@@ -64,7 +64,7 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Product Version&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "testruns-all" %}?product={{ test_run.plan.product_id }}&product_version={{ test_run.plan.product_version_id }}" title="Search test runs of {{ test_run.plan.product_version.value }}">{{ test_run.plan.product_version.value }}</a>
+					<a href="{% url "testruns-search" %}?product={{ test_run.plan.product_id }}&product_version={{ test_run.plan.product_version_id }}" title="Search test runs of {{ test_run.plan.product_version.value }}">{{ test_run.plan.product_version.value }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
@@ -113,13 +113,13 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Product&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "testruns-all" %}?product={{ test_run.product_version.product_id }}" title="Search test runs of {{ test_run.product_version.product }}">{{ test_run.product_version.product }}</a>
+					<a href="{% url "testruns-search" %}?product={{ test_run.product_version.product_id }}" title="Search test runs of {{ test_run.product_version.product }}">{{ test_run.product_version.product }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Build&nbsp;:</div>
 				<div class="name">
-					<a href="{% url "testruns-all" %}?build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
+					<a href="{% url "testruns-search" %}?product={{ test_run.plan.product_id }}&product_version={{ test_run.plan.product_version_id }}&build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
 				</div>
 			</div>
 			<div class="listinfo">

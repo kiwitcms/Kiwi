@@ -25,7 +25,7 @@
                     <ul class="dropdown-menu">
                     {% if user.is_authenticated %}
                         <li>
-                            <a href="{% url "testruns-all" %}?people={{ user.username }}" target="_parent">My Test Runs</a>
+                            <a href="{% url "testruns-search" %}?default_tester={{ user.username }}" target="_parent">My Test Runs</a>
                         </li>
 
                         <li>
