@@ -18,7 +18,7 @@ class TestCaseAdmin(ReadOnlyHistoryAdmin):
     def add_view(self, request, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('testcases-new'))
 
-    def change_view(self, request, object_id, extra_context=None):
+    def change_view(self, request, object_id, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('testcases-get', args=[object_id]))
 
 
