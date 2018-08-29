@@ -15,7 +15,7 @@ class TestRunAdmin(ReadOnlyHistoryAdmin):
     def add_view(self, request, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('admin:testruns_testrun_changelist'))
 
-    def change_view(self, request, object_id, extra_context=None):
+    def change_view(self, request, object_id, form_url='', extra_context=None):
         return HttpResponseRedirect(reverse('testruns-get', args=[object_id]))
 
     @admin.options.csrf_protect_m
