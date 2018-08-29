@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
+from django.utils.translation import ugettext_lazy as _
+
 from tcms.core.widgets import SimpleMDE
 from tcms.core.forms.fields import UserField, StripURLField
 from tcms.core.utils import string_to_list
@@ -11,6 +13,7 @@ from tcms.management.models import Priority, Product, Component, Tag
 from .models import TestCase, Category, TestCaseStatus, TestCaseTag
 from .models import Bug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from .fields import MultipleEmailField
+
 
 AUTOMATED_CHOICES = (
     (0, 'Manual'),
@@ -29,6 +32,10 @@ ITEMS_PER_PAGE_CHOICES = (
     ('50', '50'),
     ('100', '100')
 )
+
+VALIDATION_ERROR_MESSAGE = _('Please input valid case id(s). '
+                             'use comma to split more than one '
+                             'case id. e.g. "111, 222"')
 
 
 class BugField(forms.CharField):
@@ -142,18 +149,16 @@ class BaseCaseForm(forms.Form):
         return data
 
     def clean_script(self):
-        if self.script_val == '':
-            return u''
-        elif self.script_val:
+        if self.script_val:
             return self.cleaned_data['script']
-        return None
+
+        return ''
 
     def clean_notes(self):
-        if self.notes_val == '':
-            return u''
-        elif self.notes_val:
+        if self.notes_val:
             return self.cleaned_data['notes']
-        return None
+
+        return ''
 
     def clean_tag(self):
         tags = []
@@ -252,9 +257,6 @@ class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
     )
 
 
-# =========== Forms for search/filter ==============
-
-
 class BaseCaseSearchForm(forms.Form):
     summary = forms.CharField(required=False)
     author = forms.CharField(required=False)
@@ -338,20 +340,18 @@ class QuickSearchCaseForm(forms.Form):
 
     def clean_case_id_set(self):
         case_id_set = self.cleaned_data['case_id_set']
-        if case_id_set:
-            try:
-                return [int(cid) for cid in set(case_id_set.split(','))]
-            except ValueError:
-                raise forms.ValidationError('Please input valid case id(s). '
-                                            'use comma to split more than one '
-                                            'case id. e.g. "111, 222"')
-        else:
-            raise forms.ValidationError('Please input valid case id(s). '
-                                        'use comma to split more than one '
-                                        'case id. e.g. "111, 222"')
 
+        if not case_id_set:
+            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE)
 
-# =========== Mist Forms ==============
+        try:
+            case_ids = []
+            for case_id in case_id_set.split(','):
+                case_ids.append(int(case_id))
+            return case_ids
+        except ValueError:
+            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE)
+
 
 class CloneCaseForm(forms.Form):
     case = forms.ModelMultipleChoiceField(
