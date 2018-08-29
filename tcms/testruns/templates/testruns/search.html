@@ -15,7 +15,8 @@
 
             <label class="col-md-1 col-lg-1" for="id_plan">{% trans "Plan ID" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input id="id_plan" type="text" class="form-control" placeholder="{% trans 'TestPlan ID' %}">
+                <input id="id_plan" type="text" class="form-control" placeholder="{% trans 'TestPlan ID' %}"
+                    value="{{ form.plan.value|default:'' }}">
             </div>
         </div>
 
