@@ -19,10 +19,6 @@ Nitrate.Utils.after_page_load = function(callback) {
   jQ(window).bind('load', callback);
 };
 
-Nitrate.Utils.enableShiftSelectOnCheckbox = function (className){
-  jQ('.' + className).shiftcheckbox();
-};
-
 Nitrate.Utils.convert = function(argument, data) {
   switch(argument) {
     case 'obj_to_list':

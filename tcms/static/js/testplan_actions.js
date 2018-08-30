@@ -577,8 +577,6 @@ Nitrate.TestPlans.Details = {
     Nitrate.TestPlans.Details.observeEvents(plan_id);
     Nitrate.TestPlans.Details.initTabs();
 
-    Nitrate.Utils.enableShiftSelectOnCheckbox('case_selector');
-
     jQ('#btn_edit').bind('click', function() {
       window.location.href = jQ(this).data('param');
     });
