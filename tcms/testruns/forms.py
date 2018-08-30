@@ -12,26 +12,6 @@ from tcms.testcases.models import TestCase
 from .models import TestRun, TestCaseRunStatus
 
 
-STATUS_CHOICES = (
-    ('', '---------'),
-    ('running', 'Running'),
-    ('finished', 'Finished')
-)
-
-BOOLEAN_STATUS_CHOICES = (
-    (1, 'Running'),
-    (0, 'Finished')
-)
-
-PEOPLE_TYPE_CHOICES = (
-    ('people', 'Manager | Tester'),
-    ('manager', 'Manager'),
-    ('default_tester', 'Defaut tester')
-)
-
-# =========== Forms for create/update ==============
-
-
 class BaseRunForm(forms.Form):
     summary = forms.CharField(max_length=255)
     manager = UserField()
@@ -46,10 +26,6 @@ class BaseRunForm(forms.Form):
     )
 
     def populate(self, product_id):
-        # We can dynamically set choices for a form field:
-        # Seen at: http://my.opera.com/jacob7908/blog/2009/06/19/
-        #          django-choicefield-queryset (Chinese)
-        # Is this documented elsewhere?
         query = {'product_id': product_id}
         self.fields['build'].queryset = Build.list_active(query)
 
@@ -135,8 +111,10 @@ class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
 # =========== Forms for search/filter ==============
 
 class SearchRunForm(forms.Form):
-    search = forms.CharField(required=False)
-    summary = forms.CharField(required=False)
+    """
+        Includes *only* fields used in search.html b/c
+        the actual search is now done via JSON RPC.
+    """
     plan = forms.CharField(required=False)
     product = forms.ModelChoiceField(
         queryset=Product.objects.all(),
@@ -146,38 +124,22 @@ class SearchRunForm(forms.Form):
         queryset=Version.objects.none(),
         required=False
     )
-    env_group = forms.ModelChoiceField(
-        label='Environment Group',
-        queryset=EnvGroup.get_active().all(),
-        required=False
-    )
     build = forms.ModelChoiceField(
         label='Build',
         queryset=Build.objects.none(),
         required=False,
     )
-    people_type = forms.ChoiceField(choices=PEOPLE_TYPE_CHOICES,
-                                    required=False)
-    people = UserField(required=False)
-    manager = UserField(required=False)
     default_tester = UserField(required=False)
-    status = forms.ChoiceField(choices=STATUS_CHOICES, required=False)
-    tag__name__in = forms.CharField(label='Tag', required=False)
-    env_value__value__in = forms.CharField(label='Environment', required=False)
-
-    case_run__assignee = UserField(required=False)
+    tag__name__in = forms.CharField(required=False)
+    env_group = forms.ModelChoiceField(
+        queryset=EnvGroup.get_active().all(),
+        required=False
+    )
 
     def clean_tag__name__in(self):
         return string_to_list(self.cleaned_data['tag__name__in'])
 
-    def clean_env_value__value__in(self):
-        return string_to_list(self.cleaned_data['env_value__value__in'])
-
     def populate(self, product_id=None):
-        # We can dynamically set choices for a form field:
-        # Seen at: http://my.opera.com/jacob7908/blog/2009/06/19/
-        #          django-choicefield-queryset (Chinese)
-        # Is this documented elsewhere?
         if product_id:
             self.fields['product_version'].queryset = Version.objects.filter(
                 product__pk=product_id
@@ -185,9 +147,6 @@ class SearchRunForm(forms.Form):
             self.fields['build'].queryset = Build.objects.filter(
                 product__pk=product_id
             )
-        else:
-            self.fields['product_version'].queryset = Version.objects.none()
-            self.fields['build'].queryset = Build.objects.none()
 
 
 # ===========================================================================
