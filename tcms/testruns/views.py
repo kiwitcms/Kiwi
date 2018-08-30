@@ -416,7 +416,7 @@ def edit(request, run_id):
     # If the form is submitted
     if request.method == "POST":
         form = BaseRunForm(request.POST)
-        form.populate(product_id=request.POST.get('product', test_run.plan.product_id))
+        form.populate(product_id=test_run.plan.product_id)
 
         # FIXME: Error handler
         if form.is_valid():
