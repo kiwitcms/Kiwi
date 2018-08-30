@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-28 18:59+0000\n"
+"POT-Creation-Date: 2018-08-30 19:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -395,6 +395,12 @@ msgstr ""
 
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
+msgstr ""
+
+#: tcms/testcases/forms.py:36
+msgid ""
+"Please input valid case id(s). use comma to split more than one case id. e."
+"g. \"111, 222\""
 msgstr ""
 
 #: tcms/testcases/helpers/email.py:22
