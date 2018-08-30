@@ -211,6 +211,8 @@ class ProductBuildReport(TemplateView, ProductBuildReportData):
             else:
                 build.finished_case_run_percent = .0
 
+        return builds
+
 
 class ProductComponentReport(TemplateView, ProductComponentReportData):
     template_name = 'report/component.html'
