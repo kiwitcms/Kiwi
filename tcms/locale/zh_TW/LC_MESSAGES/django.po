@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-21 18:20+0000\n"
-"PO-Revision-Date: 2018-08-21 19:41\n"
+"POT-Creation-Date: 2018-08-28 18:59+0000\n"
+"PO-Revision-Date: 2018-08-30 10:21\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:290 tcms/testruns/views.py:1180
+#: tcms/core/ajax.py:290 tcms/testruns/views.py:1141
 #, python-format
 msgid "User %s not found!"
 msgstr ""
@@ -75,6 +75,7 @@ msgid "Core customized comments"
 msgstr "核心客製化附註"
 
 #: tcms/core/contrib/comments/forms.py:14
+#: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr "姓名"
 
@@ -145,43 +146,43 @@ msgstr ""
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:92
 msgid "REPORTING"
 msgstr ""
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:93
 msgid "Overall report"
 msgstr ""
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:94
 msgid "Custom report"
 msgstr ""
 
-#: tcms/settings/common.py:97
+#: tcms/settings/common.py:95
 msgid "Testing report"
 msgstr ""
 
-#: tcms/settings/common.py:99
+#: tcms/settings/common.py:97
 msgid "Report builder"
 msgstr ""
 
-#: tcms/settings/common.py:101
+#: tcms/settings/common.py:99
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:102
+#: tcms/settings/common.py:100
 msgid "Environment Groups"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:101
 msgid "Envrionment Properties"
 msgstr ""
 
-#: tcms/settings/common.py:105
+#: tcms/settings/common.py:103
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:104
 msgid "Everything else"
 msgstr ""
 
@@ -243,10 +244,15 @@ msgid "TestPlan"
 msgstr ""
 
 #: tcms/templates/dashboard.html:49
+#: tcms/testplans/templates/testplans/search.html:66
+#: tcms/testplans/templates/testplans/search.html:153
+#: tcms/testruns/templates/testruns/mutable.html:46
 msgid "Product"
 msgstr ""
 
 #: tcms/templates/dashboard.html:50
+#: tcms/testplans/templates/testplans/search.html:86
+#: tcms/testplans/templates/testplans/search.html:154
 msgid "Type"
 msgstr ""
 
@@ -317,6 +323,9 @@ msgstr "親愛的管理員, 有人剛剛在您的Kiwi TCMS 註冊了一個帳戶
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
+#: tcms/testplans/templates/testplans/search.html:100
+#: tcms/testplans/templates/testplans/search.html:106
+#: tcms/testplans/templates/testplans/search.html:111
 msgid "Username"
 msgstr ""
 
@@ -381,8 +390,8 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr "TestPlan 未指定或不存在"
 
-#: tcms/testcases/views.py:1209 tcms/testruns/views.py:816
-#: tcms/testruns/views.py:902
+#: tcms/testcases/views.py:1209 tcms/testruns/views.py:784
+#: tcms/testruns/views.py:863
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
 
@@ -390,19 +399,87 @@ msgstr "至少需要一個 TestCase"
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
-#: tcms/testplans/views.py:422
+#: tcms/testplans/templates/testplans/search.html:5
+msgid "Search test plans"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:13
+msgid "Test plan name"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:16
+msgid "Created&nbsp;after"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:40
+msgid "Created&nbsp;before"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:76
+msgid "Version"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:98
+#: tcms/testplans/templates/testplans/search.html:151
+#: tcms/testruns/templates/testruns/mutable.html:119
+msgid "Author"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:104
+#: tcms/testplans/templates/testplans/search.html:152
+msgid "Owner"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:109
+#: tcms/testruns/templates/testruns/mutable.html:57
+msgid "Default&nbsp;tester"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:116
+msgid "Tag"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:119
+msgid "Separate multiple values with comma (,)"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:122
+msgid "Active"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:127
+msgid "Environment group"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:140
+msgid "Search"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:148
+msgid "ID"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:149
+msgid "Test plan"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/search.html:150
+msgid "Created"
+msgstr ""
+
+#: tcms/testplans/views.py:362
 msgid "Select at least one TestRun and one TestCase"
 msgstr "選擇至少一個 TestRun 和一個 TestCase"
 
-#: tcms/testplans/views.py:519
+#: tcms/testplans/views.py:459
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:742
+#: tcms/testplans/views.py:683
 msgid "At least one test plan is required for print"
 msgstr "列印時至少需要一個Test Plan"
 
-#: tcms/testplans/views.py:750
+#: tcms/testplans/views.py:691
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "TestPlan \"%s\" 不存在"
@@ -411,15 +488,102 @@ msgstr "TestPlan \"%s\" 不存在"
 msgid "Permission denied: TestRun does not belong to you"
 msgstr "許可權被拒絕: 此TestRun 不屬於您"
 
-#: tcms/testruns/views.py:62
+#: tcms/testruns/templates/testruns/mutable.html:7
+msgid "Edit TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:9
+msgid "Clone TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:11
+msgid "New TestRun"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:23
+#: tcms/testruns/templates/testruns/mutable.html:118
+msgid "Summary"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:33
+msgid "Build"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:36
+#: tcms/testruns/templates/testruns/mutable.html:37
+msgid "add new Build"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:46
+msgid "version"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:50
+msgid "Manager"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:53
+#: tcms/testruns/templates/testruns/mutable.html:60
+msgid "Username or email"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:67
+msgid "Environment properties"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:90
+msgid "Notes"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:96
+msgid "Save"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:105
+msgid "Selected TestCase(s):"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:108
+#, python-format
+msgid "\n"
+"                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
+"                    See test plan for more details!\n"
+"                    "
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:120
+msgid "Created on"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:121
+msgid "Status"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:122
+msgid "Category"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/mutable.html:123
+msgid "Priority"
+msgstr ""
+
+#: tcms/testruns/views.py:74
+msgid "Creating a TestRun requires a TestPlan, select one"
+msgstr ""
+
+#: tcms/testruns/views.py:84
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "創建 TestRun 至少需要一個 TestCase"
 
-#: tcms/testruns/views.py:911
+#: tcms/testruns/views.py:788
+msgid "Clone of "
+msgstr ""
+
+#: tcms/testruns/views.py:872
 msgid "TestCase ID is not a valid integer"
 msgstr "TestCase ID 不是有效的整數"
 
-#: tcms/testruns/views.py:1043
+#: tcms/testruns/views.py:1004
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d CaseRun 已更新:"
