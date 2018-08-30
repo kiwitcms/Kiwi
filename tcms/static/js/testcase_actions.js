@@ -241,8 +241,7 @@ Nitrate.TestCases.Details.on_load = function() {
     "bAutoWidth": false,
     "aaSorting": [[ 0, "desc" ]],
     "aoColumns": [
-      {"sType": "num-html"},
-      null,
+      {"sType": "html"},
       {"sType": "html"},
       {"sType": "html"},
       {"sType": "html"},
