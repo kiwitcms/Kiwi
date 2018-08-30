@@ -67,13 +67,7 @@ $(document).ready(function() {
                 params['default_tester__username__startswith'] = $('#id_default_tester').val();
             };
 
-            if ($('#id_tag').val()) {
-                var tag_list = [];
-                $('#id_tag').val().split(',').forEach(function(element) {
-                    tag_list.push(element.trim());
-                });
-                params['tag__name__in'] = tag_list;
-            };
+            updateParamsToSearchTags('#id_tag', params);
 
             params['stop_date__isnull'] = $('#id_running').is(':checked');
 
