@@ -53,3 +53,25 @@ function updateParamsToSearchTags(selector, params) {
         params['tag__name__in'] = tag_list;
     };
 }
+
+
+/*
+    Replaces HTML characters for display in DataTables
+
+    backslash(\), quotes('), double quotes (")
+    https://github.com/kiwitcms/Kiwi/issues/78
+
+    angle brackets (<>)
+    https://github.com/kiwitcms/Kiwi/issues/234
+*/
+function escapeHTML(unsafe) {
+  return unsafe.replace(/[&<>"']/g, function(m) {
+    return ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&#039;'
+    })[m]
+  });
+}
