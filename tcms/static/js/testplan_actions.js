@@ -23,20 +23,7 @@ Nitrate.TestPlans.TreeView = {
   'default_container': 'id_tree_container',
   'default_parameters': { t: 'ajax' }, // FIXME: Doesn't make effect here.
   'filter': function(parameters, callback) {
-    var url = Nitrate.http.URLConf.reverse({ name: 'plans' });
-
-    jQ.ajax({
-      'type': 'GET',
-      'url': url,
-      'data': parameters,
-      'async': false,
-      'success': function (data, textStatus, jqXHR) {
-        callback(jqXHR);
-      },
-      'error': function (jqXHR, textStatus, errorThrown) {
-        json_failure(jqXHR);
-      }
-    });
+    jsonRPC('TestPlan.filter', parameters, callback, true);
   },
   'init': function(plan_id) {
     this.pk = plan_id;
@@ -45,9 +32,8 @@ Nitrate.TestPlans.TreeView = {
     var c_plan, p_plan, b_plans, ch_plans, tc_plan;
 
     // Get the current plan
-    var p1 = {pk: plan_id, t: 'ajax'};
-    var c1 = function(t) {
-      var returnobj = jQ.parseJSON(t.responseText);
+    var p1 = {pk: plan_id};
+    var c1 = function(returnobj) {
       if (returnobj.length) {
         c_plan = returnobj[0];
       }
@@ -60,9 +46,8 @@ Nitrate.TestPlans.TreeView = {
 
     // Get the parent plan
     if (c_plan.parent) {
-      var p2 = { pk: c_plan.parent, t: 'ajax'};
-      var c2 = function(t) {
-        var returnobj = jQ.parseJSON(t.responseText);
+      var p2 = { pk: c_plan.parent_id};
+      var c2 = function(returnobj) {
         p_plan = returnobj[0];
       };
       this.filter(p2, c2);
@@ -70,18 +55,16 @@ Nitrate.TestPlans.TreeView = {
 
     // Get the brother plans
     if (c_plan.parent) {
-      var p3 = { parent__pk: c_plan.parent, t: 'ajax'};
-      var c3 = function(t) {
-        var returnobj = jQ.parseJSON(t.responseText);
+      var p3 = { parent: c_plan.parent_id};
+      var c3 = function(returnobj) {
         b_plans = returnobj;
       };
       this.filter(p3, c3);
     }
 
     // Get the child plans
-    var p4 = { 'parent__pk': c_plan.pk, 't': 'ajax'};
-    var c4 = function(t) {
-      var returnobj = jQ.parseJSON(t.responseText);
+    var p4 = { parent: c_plan.plan_id};
+    var c4 = function(returnobj) {
       ch_plans = returnobj;
     };
     this.filter(p4, c4);
@@ -90,13 +73,13 @@ Nitrate.TestPlans.TreeView = {
     // Presume the plan have parent and brother at first
     if (p_plan && b_plans) {
       p_plan.children = b_plans;
-      tc_plan = this.traverse(p_plan.children, c_plan.pk);
+      tc_plan = this.traverse(p_plan.children, c_plan.plan_id);
       tc_plan.is_current = true;
       if (ch_plans) {
         tc_plan.children = ch_plans;
       }
 
-      if (p_plan.pk) {
+      if (p_plan.plan_id) {
         p_plan = Nitrate.Utils.convert('obj_to_list', p_plan);
       }
 
@@ -109,49 +92,12 @@ Nitrate.TestPlans.TreeView = {
       this.data = Nitrate.Utils.convert('obj_to_list', c_plan);
     }
   },
-  'up': function(e) {
-    var tree = Nitrate.TestPlans.TreeView;
-    var parent_obj, brother_obj;
-
-    var parent_param = { pk: tree.data[0].parent, t: 'ajax' };
-
-    var parent_callback = function(t) {
-      var returnobj = jQ.parseJSON(t.responseText);
-      parent_obj = {0: returnobj[0], length: 1};
-    };
-    tree.filter(parent_param, parent_callback);
-
-    var brother_param = { parent__pk: tree.data[0].parent, t: 'ajax' };
-
-    var brother_callback = function(t){
-      var returnobj = jQ.parseJSON(t.responseText);
-      brother_obj = returnobj;
-    };
-
-    tree.filter(brother_param, brother_callback);
-
-    if (parent_obj && brother_obj.length) {
-      parent_obj[0].children = brother_obj;
-      var brother_numbers = brother_obj.length;
-      for (i = 0; i < brother_numbers; i++) {
-        if (parent_obj[0].children[i].pk == tree.data[0].pk) {
-           parent_obj[0].children[i] = tree.data[0];
-           break;
-        }
-      }
-      tree.data = parent_obj;
-      tree.render_page();
-    }
-  },
   'blind': function(e) {
-    var tree = Nitrate.TestPlans.TreeView;
     var e_container = this;
     var li_container = jQ(e_container).parent().parent();
-    var e_pk = jQ(e_container).next('a').eq(0).html();
     var container_clns = jQ(e_container).attr('class').split(/\s+/);
     var expand_icon_url = '/static/images/t2.gif';
     var collapse_icon_url = '/static/images/t1.gif';
-    var obj = tree.traverse(tree.data, e_pk);
 
     container_clns.forEach(function(className, index) {
       if (typeof className === 'string') {
@@ -164,18 +110,6 @@ Nitrate.TestPlans.TreeView = {
             break;
 
           case 'collapse_icon':
-            if (typeof obj.children != 'object' || obj.children == []) {
-              var cbGetChildPlans = function(t) {
-                var returnobj = jQ.parseJSON(t.responseText);
-                returnobj = Nitrate.Utils.convert('obj_to_list', returnobj);
-                tree.insert(obj, returnobj);
-                var ul = tree.render(returnobj);
-                li_container.append(ul);
-              };
-              var p = { parent__pk: e_pk, t: 'ajax' };
-              tree.filter(p, cbGetChildPlans);
-            }
-
             li_container.find('ul').eq(0).show();
             e_container.src = expand_icon_url;
             jQ(e_container).removeClass('collapse_icon');
@@ -190,27 +124,18 @@ Nitrate.TestPlans.TreeView = {
     var icon_expand = '<img src="/static/images/t2.gif" class="expand_icon js-toggle-icon">';
     var icon_collapse = '<img src="/static/images/t1.gif" class="collapse_icon js-toggle-icon">';
 
-    // Add the 'Up' button
     if (!data && this.data) {
       var data = this.data;
-      if (data && data[0].parent) {
-        var li = jQ('<li>');
-        var btn = jQ('<input>', {'type': 'button', 'value': 'Up'});
-        li.html(btn);
-        btn.bind('click', this.up);
-        li.addClass('no-list-style');
-        ul.append(li);
-      }
     }
 
     // Add the child plans to parent
     for (var i in data) {
-      if (!data[i].pk) {
+      if (!data[i].plan_id) {
         continue;
       }
 
       var li = jQ('<li>');
-      var title = '[<a href="' + data[i].plan_url + '">' + data[i].pk + '</a>] ';
+      var title = '[<a href="/plan/' + data[i].plan_id + '/">' + data[i].plan_id + '</a>] ';
 
 
       if (data[i].children) {
@@ -231,7 +156,7 @@ Nitrate.TestPlans.TreeView = {
       }
 
       // Construct the items
-      title += '<a class="plan_name" href="' + data[i].plan_url + '">' + data[i].name + '</a>';
+      title += '<a class="plan_name" href="/plan/' + data[i].plan_id + '/">' + data[i].name + '</a>';
       title += '</div>';
 
       li.html(title);
@@ -259,7 +184,7 @@ Nitrate.TestPlans.TreeView = {
         continue;
       }
 
-      if (typeof data[i].pk === 'number' && data[i].pk == pk) {
+      if (typeof data[i].plan_id === 'number' && data[i].plan_id === pk) {
         return data[i];
       }
 
