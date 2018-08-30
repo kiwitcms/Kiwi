@@ -108,7 +108,6 @@ var default_messages = {
 
       modify_plan : '/plan/$id/modify/',
       plan_assign_case: '/plan/$id/assigncase/apply/',
-      plans: '/plans/',
 
       case_change_status: '/cases/changestatus/',
       case_details: '/case/$id/',

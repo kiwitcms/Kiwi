@@ -34,6 +34,10 @@ Nitrate.TestPlans.Instance = {
 	},
 }
 </script>
+
+<!-- temporary workaround so we can convert TestPlans.TreeView.filter to JSON RPC -->
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
 {% endblock %}
 
 {% block content_type %}

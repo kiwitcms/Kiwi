@@ -141,18 +141,6 @@ class PlanTests(test.TestCase):
         response = self.client.get(location)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
-    def test_plan_treeview(self):
-        location = reverse('plans-all')
-        response = self.client.get(location, {'t': 'ajax', 'pk': self.test_plan.pk})
-
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertEqual(1, len(data))
-        self.assertEqual(self.test_plan.pk, data[0]['pk'])
-        self.assertEqual(reverse('test_plan_url_short', args=[self.test_plan.pk]),
-                         data[0]['plan_url'])
-        self.assertEqual(None, data[0]['parent'])
-
     def test_plan_new_get(self):
         location = reverse('plans-new')
         response = self.client.get(location, follow=True)

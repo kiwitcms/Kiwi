@@ -9,7 +9,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
 from django.contrib import messages
-from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
@@ -129,24 +128,20 @@ def get_all(request):
         # Set search active plans only by default
         search_form = SearchPlanForm(initial={'is_active': True})
 
+    # fixme: this view is scheduled for deletion
+    # TestCase clone workflow must be redesigned so it uses
+    # the TestPlan search page
+    template_name = ''
     if request.GET.get('action') == 'clone_case':
         template_name = 'case/clone_select_plan.html'
         tps = tps.order_by('name')
 
-    # test plan TreeView
-    if request.GET.get('t') == 'ajax':
-        results = []
-        for obj in tps:
-            dict_obj = model_to_dict(obj, fields=('name', 'parent', 'is_active'))
-
-            for attr in ['pk']:
-                dict_obj[attr] = getattr(obj, attr)
-            dict_obj['plan_url'] = reverse('test_plan_url_short', args=[obj.pk])
-
-            results.append(dict_obj)
-        return JsonResponse(results, safe=False)
-
-    # used in tree preview
+    # used in tree preview & TestCase add plan
+    # fixme: must be replaced by JSON RPC and the
+    # JavaScript dialog that displays the preview
+    # should be converted to Patternfly
+    # todo: when this is done SearchPlanForm must contain only the
+    # fields which are used in search.html
     if request.GET.get('t') == 'html':
         if request.GET.get('f') == 'preview':
             template_name = 'plan/preview.html'
