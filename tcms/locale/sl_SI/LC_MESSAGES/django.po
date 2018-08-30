@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-28 18:59+0000\n"
-"PO-Revision-Date: 2018-08-30 10:21\n"
+"PO-Revision-Date: 2018-08-30 10:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -421,71 +421,71 @@ msgstr "Kloniranje testnega scenarija je uspelo"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Iskanje baz testnih scenarijev"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Naziv baze testni scenarijev"
 
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "Created&nbsp;after"
-msgstr ""
+msgstr "Ustvarjeno&nbsp;po"
 
 #: tcms/testplans/templates/testplans/search.html:40
 msgid "Created&nbsp;before"
-msgstr ""
+msgstr "Ustvarjeno&nbsp;pred"
 
 #: tcms/testplans/templates/testplans/search.html:76
 msgid "Version"
-msgstr ""
+msgstr "Verzija"
 
 #: tcms/testplans/templates/testplans/search.html:98
 #: tcms/testplans/templates/testplans/search.html:151
 #: tcms/testruns/templates/testruns/mutable.html:119
 msgid "Author"
-msgstr ""
+msgstr "Avtor"
 
 #: tcms/testplans/templates/testplans/search.html:104
 #: tcms/testplans/templates/testplans/search.html:152
 msgid "Owner"
-msgstr ""
+msgstr "Lastnik"
 
 #: tcms/testplans/templates/testplans/search.html:109
 #: tcms/testruns/templates/testruns/mutable.html:57
 msgid "Default&nbsp;tester"
-msgstr ""
+msgstr "Privzeti&nbsp;tester"
 
 #: tcms/testplans/templates/testplans/search.html:116
 msgid "Tag"
-msgstr ""
+msgstr "Značka"
 
 #: tcms/testplans/templates/testplans/search.html:119
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Ločite več oznak z vejicami (,)"
 
 #: tcms/testplans/templates/testplans/search.html:122
 msgid "Active"
-msgstr ""
+msgstr "Aktiven"
 
 #: tcms/testplans/templates/testplans/search.html:127
 msgid "Environment group"
-msgstr ""
+msgstr "Okoljske skupine"
 
 #: tcms/testplans/templates/testplans/search.html:140
 msgid "Search"
-msgstr ""
+msgstr "Iskanje"
 
 #: tcms/testplans/templates/testplans/search.html:148
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/testplans/templates/testplans/search.html:149
 msgid "Test plan"
-msgstr ""
+msgstr "Baza testni scenarijev"
 
 #: tcms/testplans/templates/testplans/search.html:150
 msgid "Created"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #: tcms/testplans/views.py:362
 msgid "Select at least one TestRun and one TestCase"
@@ -510,58 +510,58 @@ msgstr "Zavrnjeno: niste avtor ali zadolženi za testiranje"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Uredi testiranje"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Kloniraj testiranje"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Novo testiranje"
 
 #: tcms/testruns/templates/testruns/mutable.html:23
 #: tcms/testruns/templates/testruns/mutable.html:118
 msgid "Summary"
-msgstr ""
+msgstr "Povzetek"
 
 #: tcms/testruns/templates/testruns/mutable.html:33
 msgid "Build"
-msgstr ""
+msgstr "Build"
 
 #: tcms/testruns/templates/testruns/mutable.html:36
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "add new Build"
-msgstr ""
+msgstr "dodaj nov build"
 
 #: tcms/testruns/templates/testruns/mutable.html:46
 msgid "version"
-msgstr ""
+msgstr "verzija"
 
 #: tcms/testruns/templates/testruns/mutable.html:50
 msgid "Manager"
-msgstr ""
+msgstr "Vodja"
 
 #: tcms/testruns/templates/testruns/mutable.html:53
 #: tcms/testruns/templates/testruns/mutable.html:60
 msgid "Username or email"
-msgstr ""
+msgstr "Uporabniško ime ali elektronski naslov"
 
 #: tcms/testruns/templates/testruns/mutable.html:67
 msgid "Environment properties"
-msgstr ""
+msgstr "Lastnosti okolja"
 
 #: tcms/testruns/templates/testruns/mutable.html:90
 msgid "Notes"
-msgstr ""
+msgstr "Opombe"
 
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Save"
-msgstr ""
+msgstr "Shrani"
 
 #: tcms/testruns/templates/testruns/mutable.html:105
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Izbrani testni scenariji(s):"
 
 #: tcms/testruns/templates/testruns/mutable.html:108
 #, python-format
@@ -569,27 +569,30 @@ msgid "\n"
 "                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr ""
+msgstr "\n"
+"                    %(count)s testni scenarijev ni v statusu potrjen in se ne bodo prenesli.\n"
+"                    Več podrobnosti je na voljo v informacijah testiranja!\n"
+"                    "
 
 #: tcms/testruns/templates/testruns/mutable.html:120
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno dne"
 
 #: tcms/testruns/templates/testruns/mutable.html:121
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: tcms/testruns/templates/testruns/mutable.html:122
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #: tcms/testruns/templates/testruns/mutable.html:123
 msgid "Priority"
-msgstr ""
+msgstr "Prioriteta"
 
 #: tcms/testruns/views.py:74
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "V kolikor želite kreirati novo testiranje morate imeti ustvarjen testni repozitorij"
 
 #: tcms/testruns/views.py:84
 msgid "Creating a TestRun requires at least one TestCase"
@@ -597,7 +600,7 @@ msgstr "V kolikor želite kreirati novo testiranje morate dodati najmanj en test
 
 #: tcms/testruns/views.py:788
 msgid "Clone of "
-msgstr ""
+msgstr "Klon "
 
 #: tcms/testruns/views.py:872
 msgid "TestCase ID is not a valid integer"
