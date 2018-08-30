@@ -24,3 +24,32 @@ function updateBuildSelect(data) {
     $('#id_build')[0].innerHTML = new_options;
     $('#id_build').selectpicker('refresh');
 }
+
+/*
+    Split the input string by comma and return
+    a list of trimmed values
+*/
+function splitByComma(input) {
+    var result = [];
+
+    input.split(',').forEach(function(element) {
+        element = element.trim();
+        if (element) {
+            result.push(element);
+        }
+    });
+    return result;
+}
+
+/*
+    Given a params dictionary and a selector update
+    the dictionary so we can search by tags!
+    Used in search.js
+*/
+function updateParamsToSearchTags(selector, params) {
+    var tag_list = splitByComma($(selector).val());
+
+    if (tag_list.length > 0) {
+        params['tag__name__in'] = tag_list;
+    };
+}
