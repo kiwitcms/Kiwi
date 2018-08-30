@@ -977,15 +977,6 @@ function serialzeCaseForm(form, table, serialized) {
   return data;
 }
 
-function sortCaseRun(form, order) {
-  if (form.order_by.value == order) {
-    form.order_by.value = '-' + order;
-  } else {
-    form.order_by.value = order;
-  }
-  fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
-}
-
 function showCaseRunsWithSelectedStatus(form, status_id) {
   form.case_run_status__pk.value = status_id;
   fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
