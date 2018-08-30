@@ -54,7 +54,7 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/plan/'+ data.plan_id + '">' + data.name + '</a>';
+                    return '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
                 }
             },
             { data: "create_date" },
