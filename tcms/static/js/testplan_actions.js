@@ -1264,6 +1264,10 @@ function constructPlanDetailsCasesZoneCallback(options) {
         }
         form.tag__name__in.value = form.tag__name__in.value ? (form.tag__name__in.value
           + ',' + this.textContent) : this.textContent;
+
+        // after clicking one of the tag values submit the form to refresh the list
+        // of test cases. See https://github.com/kiwitcms/Kiwi/issues/426
+        jQ(form).trigger('submit');
       });
     }
 
