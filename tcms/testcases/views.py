@@ -858,7 +858,7 @@ def printable(request, template_name='case/printable.html'):
             test_plan = TestPlan.objects.get(pk=plan_pk)
             # search cases from a TestPlan, used when printing entire plan
             case_filter = {
-                'case__plan': plan_pk,
+                'case__in': test_plan.case.all(),
                 'case__case_status': TestCaseStatus.objects.get(name='CONFIRMED').pk,
             }
         except (ValueError, TestPlan.DoesNotExist):
