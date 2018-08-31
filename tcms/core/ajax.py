@@ -92,8 +92,7 @@ def tags(request):
         different objects. Used in TP -> Tags and TC -> Tags tabs!
     """
 
-    tag_objects = _TagObjects(request)
-    template_name, obj = tag_objects.get()
+    template_name, obj = _TagObjects(request).get()
 
     all_tags = obj.tag.all().order_by('pk')
     test_plan_tags = TestPlanTag.objects.filter(
@@ -290,7 +289,10 @@ def comment_case_runs(request):
     comment = data.get('comment', None)
     if not comment:
         return say_no('Comments needed')
-    run_ids = [i for i in data.get('run', '').split(',') if i]
+    run_ids = []
+    for run_id in data.get('run', '').split(','):
+        if run_id:
+            run_ids.append(run_id)
     if not run_ids:
         return say_no('No runs selected.')
     runs = TestCaseRun.objects.filter(pk__in=run_ids).only('pk')
@@ -360,11 +362,13 @@ def update_bugs_to_caseruns(request):
                 for bug in bugs:
                     if bug.case_run_id == run.pk:
                         run.remove_bug(bug.bug_id, run.pk)
-    except Exception as error:
+    except ValueError as error:
         return say_no(str(error))
     return say_yes()
 
 
+# TODO: replace this with JSON-RPC API calls
+# discussed in https://github.com/kiwitcms/Kiwi/pull/512
 def get_prod_related_objs(p_pks, target):
     """
     Get Component, Version, Category, and Build\n
@@ -376,9 +380,10 @@ def get_prod_related_objs(p_pks, target):
         'build': (Build, 'name'),
         'category': (Category, 'name'),
     }
-    results = ctypes[target][0]._default_manager.filter(product__in=p_pks)
     attr = ctypes[target][1]
-    results = [(r.pk, getattr(r, attr)) for r in results]
+    results = []
+    for result in ctypes[target][0].objects.filter(product__in=p_pks):
+        results.append((result.pk, getattr(result, attr)))
     return results
 
 
@@ -389,12 +394,15 @@ def get_prod_related_obj_json(request):
     """
     data = request.GET.copy()
     target = data.get('target', None)
-    p_pks = data.get('p_ids', None)
+    product_ids = data.get('p_ids', None)
     sep = data.get('sep', None)
     # py2.6: all(*values) => boolean ANDs
-    if target and p_pks and sep:
-        p_pks = [k for k in p_pks.split(sep) if k]
-        res = get_prod_related_objs(p_pks, target)
+    if target and product_ids and sep:
+        product_pks = []
+        for key in product_ids.split(sep):
+            if key:
+                product_pks.append(key)
+        result = get_prod_related_objs(product_pks, target)
     else:
-        res = []
-    return JsonResponse(res, safe=False)
+        result = []
+    return JsonResponse(result, safe=False)
