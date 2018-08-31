@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-12 19:11+0000\n"
-"PO-Revision-Date: 2018-08-13 21:10\n"
+"PO-Revision-Date: 2018-08-31 06:50\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -18,5 +18,5 @@ msgstr ""
 
 #: tcms/static/js/management_actions.js:55
 msgid "New environment group name"
-msgstr ""
+msgstr "Novo poimenovanje okoljske skupine"
 
