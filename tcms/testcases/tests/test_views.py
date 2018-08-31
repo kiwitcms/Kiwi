@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import json
 import unittest
 from uuslug import slugify
 from http import HTTPStatus
@@ -12,7 +11,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
 from django.forms import ValidationError
-from django.test import RequestFactory
 
 from tcms.testcases.fields import MultipleEmailField
 from tcms.testcases.forms import CaseTagForm
@@ -21,7 +19,6 @@ from tcms.testcases.models import TestCase
 from tcms.testcases.models import BugSystem
 from tcms.testcases.models import TestCaseComponent
 from tcms.testcases.models import TestCasePlan
-from tcms.testcases.views import ajax_response
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import CategoryFactory
@@ -609,43 +606,6 @@ class TestEditCase(BasePlanCase):
         self.assertRedirects(response, redirect_url, target_status_code=301)
 
 
-class TestAJAXSearchCases(BasePlanCase):
-    """Test ajax_search"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestAJAXSearchCases, cls).setUpTestData()
-
-        # test data for Issue #78
-        # https://github.com/kiwitcms/Kiwi/issues/78
-        cls.case_bogus_summary = TestCaseFactory(
-            summary=r"""A Test Case with backslash(\), single quotes(') and double quotes(")""",
-            plan=[cls.plan])
-
-        cls.search_data = {
-            'summary': '',
-            'author': '',
-            'product': '',
-            'plan': '',
-            'is_automated': '',
-            'category': '',
-            'component': '',
-            'bug_id': '',
-            'tag__name__in': '',
-            'a': 'search',
-        }
-
-        cls.search_url = reverse('testcases-ajax_search')
-
-    def test_search_all_cases(self):
-        response = self.client.get(self.search_url, self.search_data)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        cases_count = self.plan.case.count()
-        self.assertEqual(cases_count, data['iTotalRecords'])
-        self.assertEqual(cases_count, data['iTotalDisplayRecords'])
-
-
 class TestChangeCasesAutomated(BasePlanCase):
     """Test automated view method"""
 
@@ -803,103 +763,13 @@ class TestSearchCases(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestSearchCases, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.search_url = reverse('testcases-search')
 
-    def test_search_without_selected_product(self):
+    def test_page_renders(self):
         response = self.client.get(self.search_url, {})
-        self.assertContains(
-            response,
-            '<option value="" selected="selected">---------</option>',
-            html=True)
-
-    def test_search_with_selected_product(self):
-        response = self.client.get(self.search_url,
-                                   {'product': self.product.pk})
-        self.assertContains(
-            response,
-            '<option value="{0}" selected="selected">{1}</option>'.format(
-                self.product.pk, self.product.name),
-            html=True
-        )
-
-
-class TestAJAXResponse(BasePlanCase):
-    """Test ajax_response"""
-
-    def setUp(self):
-        self.factory = RequestFactory()
-
-        self.column_names = [
-            'case_id',
-            'summary',
-            'author__username',
-            'default_tester__username',
-            'is_automated',
-            'case_status__name',
-            'category__name',
-            'priority__value',
-            'create_date',
-        ]
-
-        self.template = 'case/common/json_cases.txt'
-
-    def test_return_empty_cases(self):
-        url = reverse('testcases-ajax_search')
-        request = self.factory.get(url, {
-
-        })
-        request.user = self.tester
-
-        empty_cases = TestCase.objects.none()
-        response = ajax_response(request, empty_cases, self.column_names, self.template)
-
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        self.assertEqual(0, data['sEcho'])
-        self.assertEqual(0, data['iTotalRecords'])
-        self.assertEqual(0, data['iTotalDisplayRecords'])
-        self.assertEqual([], data['aaData'])
-
-    def test_return_sorted_cases_by_name_desc(self):
-        url = reverse('testcases-ajax_search')
-        request = self.factory.get(url, {
-            'sEcho': 1,
-            'iDisplayStart': 0,
-            'iDisplayLength': 2,
-            'iSortCol_0': 0,
-            'sSortDir_0': 'desc',
-            'iSortingCols': 1,
-            'bSortable_0': 'true',
-            'bSortable_1': 'true',
-            'bSortable_2': 'true',
-            'bSortable_3': 'true',
-        })
-        request.user = self.tester
-
-        cases = self.plan.case.all()
-        response = ajax_response(request, cases, self.column_names, self.template)
-
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        total = self.plan.case.count()
-        self.assertEqual(1, data['sEcho'])
-        self.assertEqual(total, data['iTotalRecords'])
-        self.assertEqual(total, data['iTotalDisplayRecords'])
-        self.assertEqual(2, len(data['aaData']))
-
-        id_links = [row[2] for row in data['aaData']]
-        id_links.sort()
-        expected_id_links = [
-            "<a href='{0}'>{1}</a>".format(
-                reverse('testcases-get', args=[case.pk]),
-                case.pk,
-            )
-            for case in self.plan.case.order_by('-pk')[0:2]
-        ]
-        expected_id_links.sort()
-        self.assertEqual(expected_id_links, id_links)
+        self.assertContains(response, '<option value="">----------</option>', html=True)
 
 
 class TestGetCasesFromPlan(BasePlanCase):
