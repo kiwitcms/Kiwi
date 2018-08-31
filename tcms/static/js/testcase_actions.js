@@ -1,5 +1,4 @@
 Nitrate.TestCases = {};
-Nitrate.TestCases.List = {};
 Nitrate.TestCases.Details = {};
 Nitrate.TestCases.Create = {};
 Nitrate.TestCases.Edit = {};
@@ -26,74 +25,6 @@ Nitrate.TestCases.Clone = {};
 
   window.Nitrate.TestCases = TestCases;
 }());
-
-Nitrate.TestCases.List.on_load = function() {
-  bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);
-  bind_component_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_component')[0]);
-
-  jQ('#id_blind_all_link').live('click', function(e) {
-    if (!jQ('div[id^="id_loading_"]').length) {
-      jQ(this).removeClass('locked');
-    }
-    if (jQ(this).is('.locked')) {
-      //To disable the 'expand all' until all case runs are expanded.
-      return false;
-    } else {
-      jQ(this).addClass('locked');
-      var element = jQ(this).children()[0];
-      if (jQ(element).is('.collapse-all')) {
-        this.title = "Collapse all cases";
-        blinddownAllCases(element);
-      } else {
-        this.title = "Expand all cases";
-        blindupAllCases(element);
-      }
-    }
-  });
-
-  if (window.location.hash === '#expandall') {
-    blinddownAllCases();
-  }
-
-  var oTable;
-  oTable = jQ('#testcases_table').dataTable({
-    "iDisplayLength": 20,
-    "sPaginationType": "full_numbers",
-    "bFilter": false,
-    "bLengthChange": false,
-    "aaSorting": [[ 2, "desc" ]],
-    "bProcessing": true,
-    "bServerSide": true,
-    "sAjaxSource": "/cases/ajax/"+this.window.location.search,
-    "aoColumns": [
-      {"bSortable": false,"sClass": "expandable" },
-      {"bSortable": false },
-      {"sType": "html","sClass": "expandable"},
-      {"sType": "html","sClass": "expandable"},
-      {"sType": "html","sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"}
-    ]
-  });
-
-  jQ("#testcases_table tbody tr td.expandable").live("click", function() {
-    var tr = jQ(this).parent();
-    var caseRowContainer = tr;
-    var case_id = caseRowContainer.find('input[name="case"]').attr('value');
-    var detail_td = '<tr class="case_content hide" style="display: none;"><td colspan="11">' +
-      '<div id="id_loading_' + case_id + '" class="ajax_loading"></div></td></tr>';
-    if (!caseRowContainer.next().hasClass('hide')) {
-      caseRowContainer.after(detail_td);
-    }
-
-    toggleTestCasePane({ case_id: case_id, casePaneContainer: tr.next() });
-    toggleExpandArrow({ caseRowContainer: tr, expandPaneContainer: tr.next() });
-  });
-};
 
 Nitrate.TestCases.Details.on_load = function() {
   var case_id = Nitrate.TestCases.Instance.pk;

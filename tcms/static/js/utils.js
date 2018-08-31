@@ -1,28 +1,29 @@
 /*
+    Used to update a select when something else changes.
+*/
+function updateSelect(data, selector, id_attr, value_attr) {
+    // the zero-th option is a special one
+    var new_options = $(selector)[0].options[0].outerHTML;
+    data.forEach(function(element) {
+        new_options += '<option value="' + element[id_attr] + '">' + element[value_attr] + '</option>';
+    });
+    $(selector)[0].innerHTML = new_options;
+    $(selector).selectpicker('refresh');
+}
+
+
+/*
     Used to update a Version select when Product changes.
 */
 function updateVersionSelect(data) {
-    // the zero-th option is a special one
-    var new_options = $('#id_version')[0].options[0].outerHTML;
-    data.forEach(function(element) {
-        new_options += '<option value="' + element.id + '">' + element.value + '</option>';
-    });
-    $('#id_version')[0].innerHTML = new_options;
-    $('#id_version').selectpicker('refresh');
+    updateSelect(data, '#id_version', 'id', 'value')
 }
-
 
 /*
     Used to update a Build select when Product changes.
 */
 function updateBuildSelect(data) {
-    // the zero-th option is a special one
-    var new_options = $('#id_build')[0].options[0].outerHTML;
-    data.forEach(function(element) {
-        new_options += '<option value="' + element.build_id + '">' + element.name + '</option>';
-    });
-    $('#id_build')[0].innerHTML = new_options;
-    $('#id_build').selectpicker('refresh');
+    updateSelect(data, '#id_build', 'build_id', 'name')
 }
 
 /*

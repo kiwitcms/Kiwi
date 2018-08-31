@@ -11,7 +11,6 @@ from django.urls import reverse
 from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
@@ -20,7 +19,6 @@ from django.views.generic.base import TemplateView
 from django_comments.models import Comment
 
 from tcms.core.utils import form_errors_to_list
-from tcms.core.utils import DataTableResult
 from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
@@ -570,118 +568,20 @@ def all(request):
 
 
 @require_GET
-def search(request, template_name='case/all.html'):
+def search(request):
     """
-    generate the function of searching cases with search criteria
+        Shows the search form which uses JSON RPC to fetch the resuts
     """
-    search_form = SearchCaseForm(request.GET)
+    form = SearchCaseForm(request.GET)
     if request.GET.get('product'):
-        search_form.populate(product_id=request.GET['product'])
+        form.populate(product_id=request.GET['product'])
     else:
-        search_form.populate()
+        form.populate()
 
     context_data = {
-        'search_form': search_form,
+        'form': form,
     }
-    return render(request, template_name, context_data)
-
-
-@require_GET
-def ajax_search(request, template_name='case/common/json_cases.txt'):
-    """Generate the case list in search case and case zone in plan
-    """
-    tp = plan_from_request_or_none(request)
-
-    action = request.GET.get('a')
-
-    # Initial the form and template
-    if action in ('search', 'sort'):
-        search_form = SearchCaseForm(request.GET)
-    else:
-        # Hacking for case plan
-        confirmed_status_name = 'CONFIRMED'
-        # 'c' is meaning component
-        template_type = request.GET.get('template_type')
-        if template_type == 'case':
-            d_status = TestCaseStatus.objects.filter(name=confirmed_status_name)
-        elif template_type == 'review_case':
-            d_status = TestCaseStatus.objects.exclude(name=confirmed_status_name)
-        else:
-            d_status = TestCaseStatus.objects.all()
-
-        d_status_ids = d_status.values_list('pk', flat=True)
-
-        search_form = SearchCaseForm(initial={'case_status': d_status_ids})
-
-    # Populate the form
-    if request.GET.get('product'):
-        search_form.populate(product_id=request.GET['product'])
-    elif tp and tp.product_id:
-        search_form.populate(product_id=tp.product_id)
-    else:
-        search_form.populate()
-
-    # Query the database when search
-    if action in ('search', 'sort') and search_form.is_valid():
-        tcs = TestCase.list(search_form.cleaned_data)
-    elif action == 'initial':
-        tcs = TestCase.objects.filter(case_status__in=d_status)
-    else:
-        tcs = TestCase.objects.none()
-
-    # Search the relationship
-    if tp:
-        tcs = tcs.filter(plan=tp)
-
-    tcs = tcs.select_related(
-        'author',
-        'default_tester',
-        'case_status',
-        'priority',
-        'category'
-    ).only(
-        'case_id',
-        'summary',
-        'create_date',
-        'is_automated',
-        'is_automated_proposed',
-        'case_status__name',
-        'category__name',
-        'priority__value',
-        'author__username',
-        'default_tester__id',
-        'default_tester__username'
-    )
-
-    # columnIndexNameMap is required for correct sorting behavior, 5 should be
-    # product, but we use run.build.product
-    column_names = [
-        '',
-        '',
-        'case_id',
-        'summary',
-        'author__username',
-        'default_tester__username',
-        'is_automated',
-        'case_status__name',
-        'category__name',
-        'priority__value',
-        'create_date',
-    ]
-    return ajax_response(request, tcs, column_names, template_name)
-
-
-def ajax_response(request, queryset, column_names, template_name):
-    """json template for the ajax request for searching"""
-    dt = DataTableResult(request.GET, queryset, column_names)
-
-    # todo: prepare the JSON with the response, consider using :
-    # from django.template.defaultfilters import escapejs
-    json_result = render_to_string(
-        template_name,
-        dt.get_response_data(),
-        request=request)
-    return HttpResponse(json_result, content_type='application/json')
+    return render(request, 'testcases/search.html', context_data)
 
 
 class SimpleTestCaseView(TemplateView):

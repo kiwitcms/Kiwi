@@ -311,7 +311,7 @@ def filter(query):  # pylint: disable=redefined-builtin
         query['estimated_time'] = parse_duration(query.get('estimated_time'))
 
     results = []
-    for case in TestCase.objects.filter(**query):
+    for case in TestCase.objects.filter(**query).distinct():
         serialized_case = case.serialize()
         serialized_case['text'] = case.latest_text().serialize()
         results.append(serialized_case)

@@ -269,6 +269,7 @@ class BaseCaseSearchForm(forms.Form):
     )
     priority = forms.ModelMultipleChoiceField(
         label="Priority",
+        # todo: this needs to filter out inactive priorities
         queryset=Priority.objects.all(),
         widget=forms.CheckboxSelectMultiple(),
         required=False
@@ -319,8 +320,11 @@ class BaseCaseSearchForm(forms.Form):
                 product__id=product_id)
 
 
+# todo BaseCaseSearchForm is never used stand-alone and nothing else
+# inherits from it so this class can be merged above
 class SearchCaseForm(BaseCaseSearchForm):
     search = forms.CharField(required=False)
+    # todo: is the plan field used ?
     plan = forms.CharField(required=False)
     product = forms.ModelChoiceField(
         label="Product",
