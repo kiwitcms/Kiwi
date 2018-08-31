@@ -23,15 +23,15 @@
     <!-- Title area -->
     <div class="plan_title">
         <div>
-            <h1>[{{ test_plan.pk }}] <b>{{ test_plan.name }}</b></h1>
+            <h1>TP-{{ test_plan.pk }}: <b>{{ test_plan.name }}</b></h1>
         </div>
         <div class="thick-line"></div>
         <div class="contents">
             <h3>Contents</h3>
             <div>
                 <ol>
-                    {% for test_case in test_plan.result_set %}
-                    <li>[{{ test_case.case }}] {{ test_case.case__summary }}</li>
+                    {% for test_case in test_plan.case.all %}
+                    <li>TC-{{ test_case.pk }}: {{ test_case.summary }}, {{ test_case.case_status }}</li>
                     {% endfor %}
                 </ol>
             </div>
@@ -50,7 +50,7 @@
 	{% for case_id, test_cases in test_cases.items %}
         <div style="clear: left">
             {% for test_case in test_cases %}
-		<h3>[{{ test_case.case_id }}] {{ test_case.case__summary }}</h3>
+		<h3>TC-{{ test_case.case_id }}: {{ test_case.case__summary }}</h3>
 		<div class="thin-line"></div>
 		<div class="case-stage">
 			<h4>Set up</h4>

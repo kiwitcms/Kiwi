@@ -690,14 +690,14 @@ class TestPrintablePage(BasePlanCase):
         # response contains the first TestCase
         self.assertContains(
             response,
-            '<h3>[{0}] {1}</h3>'.format(self.case_1.pk, self.case_1.summary),
+            '<h3>TC-{0}: {1}</h3>'.format(self.case_1.pk, self.case_1.summary),
             html=True
         )
 
         # but not the second TestCase b/c it was not selected
         self.assertNotContains(
             response,
-            '<h3>[{0}] {1}</h3>'.format(self.case_2.pk, self.case_2.summary),
+            '<h3>TC-{0}: {1}'.format(self.case_2.pk, self.case_2.summary),
             html=True
         )
 
