@@ -3,7 +3,6 @@
 
 import re
 import sys
-from django.conf import settings
 
 
 def is_int(string):
@@ -37,13 +36,6 @@ def form_errors_to_list(form):
     return errors
 
 
-def calc_percent(dividend, divisor):
-    if not dividend or not divisor:
-        return 0
-
-    return float(dividend) / divisor * 100
-
-
 def request_host_link(request, domain_name=None):
     protocol = 'https://'
     if 'runserver' in sys.argv:
@@ -60,6 +52,7 @@ def request_host_link(request, domain_name=None):
     return protocol + domain_name
 
 
+# todo: remove this
 def clean_request(request, keys=None):
     """
     Clean the request strings
@@ -136,61 +129,3 @@ class QuerySetIterationProxy:
                         getattr(next_one, self._associate_name, None),
                         ()))
         return next_one
-
-
-class DataTableResult:
-    """Paginate and order queryset for rendering DataTable response"""
-
-    def __init__(self, request_data, queryset, column_names):
-        self.queryset = queryset
-        self.request_data = request_data
-        self.column_names = column_names
-
-    def _iter_sorting_columns(self):
-        number_of_sorting_cols = int(self.request_data.get('iSortingCols', 0))
-        for idx_which_column in range(number_of_sorting_cols):
-            sorting_col_index = int(
-                self.request_data.get('iSortCol_{}'.format(idx_which_column),
-                                      0))
-
-            sortable_key = 'bSortable_{}'.format(sorting_col_index)
-            sort_dir_key = 'sSortDir_{}'.format(idx_which_column)
-
-            sortable = self.request_data.get(sortable_key, 'false')
-            if sortable == 'false':
-                continue
-
-            sorting_col_name = self.column_names[sorting_col_index]
-            sorting_direction = self.request_data.get(sort_dir_key, 'asc')
-            yield sorting_col_name, sorting_direction
-
-    def _sort_result(self):
-        sorting_columns = self._iter_sorting_columns()
-        order_fields = []
-        for col_name, direction in sorting_columns:
-            if direction == 'desc':
-                order_fields.append('-{}'.format(col_name))
-            else:
-                order_fields.append(col_name)
-
-        if order_fields:
-            self.queryset = self.queryset.order_by(*order_fields)
-
-    def _paginate_result(self):
-        display_length = int(self.request_data.get('iDisplayLength', settings.DEFAULT_PAGE_SIZE))
-        display_start = int(self.request_data.get('iDisplayStart', 0))
-        display_end = display_start + display_length
-        self.queryset = self.queryset[display_start:display_end]
-
-    def get_response_data(self):
-        total_records = total_display_records = self.queryset.count()
-
-        self._sort_result()
-        self._paginate_result()
-
-        return {
-            'sEcho': int(self.request_data.get('sEcho', 0)),
-            'iTotalRecords': total_records,
-            'iTotalDisplayRecords': total_display_records,
-            'querySet': self.queryset,
-        }
