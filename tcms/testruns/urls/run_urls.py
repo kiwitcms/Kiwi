@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^(?P<run_id>\d+)/update/$', views.update_case_run_text,
         name='testruns-update_case_run_text'),
     url(r'^update-assignee/$', views.UpdateAssigneeView.as_view()),
-    url(r'^case-run-update-status/$', views.UpdateCaseRunStatusView.as_view()),
+    url(r'^case-run-update-status/$', views.UpdateCaseRunStatusView.as_view(),
+        name='testruns-update_caserun_status'),
 ]
