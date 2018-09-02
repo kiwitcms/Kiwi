@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from datetime import datetime
 from http import HTTPStatus
 from functools import reduce
 
@@ -956,6 +957,8 @@ class UpdateCaseRunStatusView(View):
         for caserun_pk in object_ids:
             test_case_run = get_object_or_404(TestCaseRun, pk=int(caserun_pk))
             test_case_run.case_run_status_id = status_id
+            test_case_run.tested_by = request.user
+            test_case_run.close_date = datetime.now()
             test_case_run.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

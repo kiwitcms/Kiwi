@@ -173,6 +173,8 @@ class BaseCaseRun(BasePlanCase):
     def setUpTestData(cls):
         super(BaseCaseRun, cls).setUpTestData()
 
+        # todo: we need a linter to find all places where we get statuses
+        # by hard-coded names instead of class based attribute constants!
         cls.case_run_status_idle = TestCaseRunStatus.objects.get(name='IDLE')
 
         cls.build = BuildFactory(product=cls.product)
@@ -184,7 +186,7 @@ class BaseCaseRun(BasePlanCase):
                                       default_tester=cls.tester)
 
         cls.case_run_1, cls.case_run_2, cls.case_run_3 = [
-            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
+            TestCaseRunFactory(assignee=cls.tester,
                                run=cls.test_run, build=cls.build,
                                case_run_status=cls.case_run_status_idle,
                                case=case, sortkey=i * 10)
