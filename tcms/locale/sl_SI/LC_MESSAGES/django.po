@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-03 10:28+0000\n"
-"PO-Revision-Date: 2018-09-03 11:32\n"
+"PO-Revision-Date: 2018-09-03 12:01\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -188,23 +188,23 @@ msgstr "Ostalo"
 
 #: tcms/settings/common.py:108
 msgid "Report an Issue"
-msgstr ""
+msgstr "Prijavi težavo"
 
 #: tcms/settings/common.py:109
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Postavite vprašanje glede uporabe KiwiTCMS na StackOverflow"
 
 #: tcms/settings/common.py:110
 msgid "User Guide"
-msgstr ""
+msgstr "Uporabniški vodnik"
 
 #: tcms/settings/common.py:111
 msgid "Administration Guide"
-msgstr ""
+msgstr "Administracijski vodnik"
 
 #: tcms/settings/common.py:112
 msgid "API Help"
-msgstr ""
+msgstr "Pomoč za API"
 
 #: tcms/signals.py:74
 msgid "New user awaiting approval"
@@ -425,7 +425,7 @@ msgstr "Registracija"
 
 #: tcms/testcases/forms.py:36
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Prosimo vnesite veljavne Id-je testni scenarijev. Uporabite vejico za več primerov npr. \"111, 222\""
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
@@ -434,7 +434,7 @@ msgstr "Izbrisan: Testni scenarij #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Iskanje testnih scenarijev"
 
 #: tcms/testcases/templates/testcases/search.html:11
 #: tcms/testcases/templates/testcases/search.html:121
@@ -448,20 +448,20 @@ msgstr "Povzetek"
 #: tcms/testcases/templates/testcases/search.html:13
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Povzetek testiranja"
 
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testcases/templates/testcases/search.html:124
 msgid "Automated"
-msgstr ""
+msgstr "Avtomatizirano"
 
 #: tcms/testcases/templates/testcases/search.html:26
 msgid "Proposed for automation"
-msgstr ""
+msgstr "Predlagano za avtomatizacijo"
 
 #: tcms/testcases/templates/testcases/search.html:29
 msgid "Search all when OFF"
-msgstr ""
+msgstr "Išči ko je vse nastavljeno na IZKLOPLJENO"
 
 #: tcms/testcases/templates/testcases/search.html:44
 #: tcms/testcases/templates/testcases/search.html:126
@@ -471,7 +471,7 @@ msgstr "Kategorija"
 
 #: tcms/testcases/templates/testcases/search.html:54
 msgid "Component"
-msgstr ""
+msgstr "Komponenta"
 
 #: tcms/testcases/templates/testcases/search.html:66
 #: tcms/testcases/templates/testcases/search.html:127
@@ -509,7 +509,7 @@ msgstr "Ločite več oznak z vejicami (,)"
 #: tcms/testcases/templates/testcases/search.html:103
 #: tcms/testcases/templates/testcases/search.html:105
 msgid "Bug ID"
-msgstr ""
+msgstr "Identifikator buga"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testplans/templates/testplans/search.html:140
@@ -526,11 +526,11 @@ msgstr "ID"
 #: tcms/testcases/templates/testcases/search.html:123
 #: tcms/testruns/templates/testruns/search.html:105
 msgid "Default tester"
-msgstr ""
+msgstr "Privzeti tester"
 
 #: tcms/testcases/templates/testcases/search.html:128
 msgid "Created at"
-msgstr ""
+msgstr "Ustvarjeno ob"
 
 #: tcms/testcases/views.py:521
 msgid "TestPlan not specified or does not exist"
@@ -688,27 +688,27 @@ msgstr "Ustvarjeno dne"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Iskanje testiranj"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "ID načrta"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "ID repozitorija testov"
 
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "V teku"
 
 #: tcms/testruns/templates/testruns/search.html:109
 msgid "Environment"
-msgstr ""
+msgstr "Okolje"
 
 #: tcms/testruns/templates/testruns/search.html:110
 msgid "Finished at"
-msgstr ""
+msgstr "Končano ob"
 
 #: tcms/testruns/views.py:72
 msgid "Creating a TestRun requires a TestPlan, select one"
