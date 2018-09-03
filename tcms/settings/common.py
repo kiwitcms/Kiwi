@@ -93,8 +93,6 @@ MENU_ITEMS = [
         (_('Overall report'), reverse_lazy('report-overall')),
         (_('Custom report'), reverse_lazy('report-custom')),
         (_('Testing report'), reverse_lazy('testing-report')),
-        ('-', '-'),
-        (_('Report builder'), '/report_builder/'),
     ]),
     (_('ADMIN'), [
         (_('Environment Groups'), reverse_lazy('mgmt-environment_groups')),
@@ -235,7 +233,6 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.static',
-                'django.template.context_processors.media',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -271,7 +268,6 @@ INSTALLED_APPS = [
     'attachments',
     'django_comments',
     'modernrpc',
-    'report_builder',
     'simple_history',
 
     'tcms.core',
