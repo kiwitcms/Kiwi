@@ -61,7 +61,7 @@ def create(values, **kwargs):
 
     if form.is_valid():
         request = kwargs.get(REQUEST_KEY)
-        tp = TestPlan.objects.create(
+        test_plan = TestPlan.objects.create(
             product=form.cleaned_data['product'],
             name=form.cleaned_data['name'],
             type=form.cleaned_data['type'],
@@ -72,13 +72,12 @@ def create(values, **kwargs):
             text=form.cleaned_data['text'],
         )
 
-        return tp.serialize()
-    else:
-        raise ValueError(form_errors_to_list(form))
+        return test_plan.serialize()
+    raise ValueError(form_errors_to_list(form))
 
 
 @rpc_method(name='TestPlan.filter')
-def filter(query={}):
+def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC TestPlan.filter(query)
 
@@ -89,8 +88,14 @@ def filter(query={}):
         :return: List of serialized :class:`tcms.testplans.models.TestPlan` objects
         :rtype: list(dict)
     """
+
+    if query is None:
+        query = {}
+
+    test_plans = TestPlan.objects.filter(**query).distinct()
+
     results = []
-    for plan in TestPlan.objects.filter(**query).distinct():
+    for plan in test_plans:
         serialized_plan = plan.serialize()
         results.append(serialized_plan)
 
@@ -99,42 +104,42 @@ def filter(query={}):
 
 @permissions_required('testplans.add_testplantag')
 @rpc_method(name='TestPlan.add_tag')
-def add_tag(plan_id, tag):
+def add_tag(plan_id, tag_name):
     """
-    .. function:: XML-RPC TestPlan.add_tag(plan_id, tag)
+    .. function:: XML-RPC TestPlan.add_tag(plan_id, tag_name)
 
         Add a tag to the specified test plan.
 
         :param plan_id: PK of TestPlan to modify
         :type plan_id: int
-        :param tag: Tag name to add
-        :type tag: str
+        :param tag_name: Tag name to add
+        :type tag_name: str
         :return: None
         :raises: PermissionDenied if missing *testplans.add_testplantag* permission
         :raises: TestPlan.DoesNotExist if object specified by PK doesn't exist
     """
-    t, _ = Tag.objects.get_or_create(name=tag)
-    TestPlan.objects.get(pk=plan_id).add_tag(t)
+    tag, _ = Tag.objects.get_or_create(name=tag_name)
+    TestPlan.objects.get(pk=plan_id).add_tag(tag)
 
 
 @permissions_required('testplans.delete_testplantag')
 @rpc_method(name='TestPlan.remove_tag')
-def remove_tag(plan_id, tag):
+def remove_tag(plan_id, tag_name):
     """
-    .. function:: XML-RPC TestPlan.remove_tag(plan_id, tag)
+    .. function:: XML-RPC TestPlan.remove_tag(plan_id, tag_name)
 
         Remove tag from the specified test plan.
 
         :param plan_id: PK of TestPlan to modify
         :type plan_id: int
-        :param tag: Tag name to remove
-        :type tag: str
+        :param tag_name: Tag name to remove
+        :type tag_name: str
         :return: None
         :raises: PermissionDenied if missing *testplans.delete_testplantag* permission
         :raises: DoesNotExist if objects specified don't exist
     """
-    t = Tag.objects.get(name=tag)
-    TestPlan.objects.get(pk=plan_id).remove_tag(t)
+    tag = Tag.objects.get(name=tag_name)
+    TestPlan.objects.get(pk=plan_id).remove_tag(tag)
 
 
 @permissions_required('testplans.change_testplan')
@@ -169,42 +174,46 @@ def update(plan_id, values):
     if values.get('product_version') and values.get('product'):
         form.populate(product_id=values['product'])
 
-    tp = TestPlan.objects.get(pk=plan_id)
+    test_plan = TestPlan.objects.get(pk=plan_id)
 
     if form.is_valid():
-        if form.cleaned_data['name']:
-            tp.name = form.cleaned_data['name']
+        return _get_updated_test_plan(values, form, test_plan).serialize()
 
-        if form.cleaned_data['type']:
-            tp.type = form.cleaned_data['type']
+    raise ValueError(form_errors_to_list(form))
 
-        if form.cleaned_data['product']:
-            tp.product = form.cleaned_data['product']
 
-        if form.cleaned_data['product_version']:
-            tp.product_version = form.cleaned_data['product_version']
+def _get_updated_test_plan(values, form, test_plan):
+    if form.cleaned_data['name']:
+        test_plan.name = form.cleaned_data['name']
 
-        if form.cleaned_data['owner']:
-            tp.owner = form.cleaned_data['owner']
+    if form.cleaned_data['type']:
+        test_plan.type = form.cleaned_data['type']
 
-        if form.cleaned_data['parent']:
-            tp.parent = form.cleaned_data['parent']
+    if form.cleaned_data['product']:
+        test_plan.product = form.cleaned_data['product']
 
-        if values.get('is_active') is not None:
-            tp.is_active = form.cleaned_data['is_active']
+    if form.cleaned_data['product_version']:
+        test_plan.product_version = form.cleaned_data['product_version']
 
-        if form.cleaned_data['text']:
-            tp.text = form.cleaned_data['text']
+    if form.cleaned_data['owner']:
+        test_plan.owner = form.cleaned_data['owner']
 
-        tp.save()
+    if form.cleaned_data['parent']:
+        test_plan.parent = form.cleaned_data['parent']
 
-        if form.cleaned_data['env_group']:
-            tp.clear_env_groups()
-            tp.add_env_group(form.cleaned_data['env_group'])
-    else:
-        raise ValueError(form_errors_to_list(form))
+    if values.get('is_active') is not None:
+        test_plan.is_active = form.cleaned_data['is_active']
 
-    return tp.serialize()
+    if form.cleaned_data['text']:
+        test_plan.text = form.cleaned_data['text']
+
+    test_plan.save()
+
+    if form.cleaned_data['env_group']:
+        test_plan.clear_env_groups()
+        test_plan.add_env_group(form.cleaned_data['env_group'])
+
+    return test_plan
 
 
 @permissions_required('testcases.add_testcaseplan')
