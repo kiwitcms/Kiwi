@@ -4,7 +4,6 @@ django-contrib-comments
 django-glrm
 django-grappelli
 django-modern-rpc
-django-report-builder
 django-simple-history
 django-uuslug
 django-vinaigrette
