@@ -107,10 +107,11 @@ MENU_ITEMS = [
 
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
-    ('https://github.com/kiwitcms/Kiwi/issues/new', 'Report an Issue'),
-    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', 'User Guide'),
-    ('http://kiwitcms.readthedocs.io/en/latest/admin.html', 'Administration Guide'),
-    ('http://kiwitcms.readthedocs.io/en/latest/api/index.html', 'API Help'),
+    ('https://github.com/kiwitcms/Kiwi/issues/new', _('Report an Issue')),
+    ('https://stackoverflow.com/questions/tagged/kiwi-tcms', _('Ask for help on StackOverflow')),
+    ('http://kiwitcms.readthedocs.io/en/latest/tutorial.html', _('User Guide')),
+    ('http://kiwitcms.readthedocs.io/en/latest/admin.html', _('Administration Guide')),
+    ('http://kiwitcms.readthedocs.io/en/latest/api/index.html', _('API Help')),
 ]
 
 
