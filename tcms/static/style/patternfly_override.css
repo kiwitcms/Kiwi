@@ -1,8 +1,5 @@
 /* override some default Patternfly styles */
 nav.navbar-default { border-top-color: #9ab451; }
-/*
-.login-pf body { background-image: url('../images/background.svg'); }
-*/
 
 /* continue with styles for Kiwi TCMS */
 
