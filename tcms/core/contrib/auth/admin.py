@@ -74,7 +74,7 @@ class KiwiUserAdmin(UserAdmin):
                 (_('Permissions'), {'fields': ('is_active', 'groups')}))
 
     @sensitive_post_parameters_m
-    def user_change_password(self, request, id, form_url=''):
+    def user_change_password(self, request, id, form_url=''):  # pylint: disable=redefined-builtin
         return HttpResponseRedirect(reverse('admin:password_change'))
 
     @admin.options.csrf_protect_m
