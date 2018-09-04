@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-03 10:28+0000\n"
+"POT-Creation-Date: 2018-09-04 11:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -352,6 +352,26 @@ msgid ""
 "Kiwi TCMS instance and is awaiting your approval!\n"
 "\n"
 "Go to %(user_url)s to activate the account!\n"
+msgstr ""
+
+#: tcms/templates/pagination.html:7
+msgid "First page"
+msgstr ""
+
+#: tcms/templates/pagination.html:10
+msgid "Previous page"
+msgstr ""
+
+#: tcms/templates/pagination.html:14
+msgid "Current page"
+msgstr ""
+
+#: tcms/templates/pagination.html:22
+msgid "Next page"
+msgstr ""
+
+#: tcms/templates/pagination.html:25
+msgid "Last page"
 msgstr ""
 
 #: tcms/templates/registration/login.html:17
