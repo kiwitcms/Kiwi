@@ -4,7 +4,7 @@ from django.contrib.sites.models import Site
 from tcms.core.utils import request_host_link
 
 
-class UrlMixin:
+class UrlMixin:  # pylint: disable=too-few-public-methods
     """Mixin class for getting full URL"""
 
     def get_full_url(self):
