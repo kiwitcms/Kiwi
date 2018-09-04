@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Kiwi TCMS 5.3.1 (04 Sept 2018)
+----------------------------
+
+Visual changes
+~~~~~~~~~~~~~~
+
+- Adds pagination controls to pages with search results
+
+
+
 Kiwi TCMS 5.3 (04 Sept 2018)
 ----------------------------
 
