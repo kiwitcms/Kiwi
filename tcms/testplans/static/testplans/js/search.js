@@ -70,6 +70,8 @@ $(document).ready(function() {
         order: [[ 0, 'asc' ]],
     });
 
+    hookIntoPagination('#resultsTable', table);
+
     $('#btn_search').click(function() {
         table.ajax.reload();
         return false; // so we don't actually send the form

@@ -111,6 +111,9 @@
                 </tr>
             </thead>
         </table>
+
+        {% include 'pagination.html' %}
+
     </div>
 </div><!-- /container -->
 
@@ -120,5 +123,6 @@
 
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'js/pagination.js' %}"></script>
 <script src="{% static 'testruns/js/search.js' %}"></script>
 {% endblock %}

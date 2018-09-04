@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<form class="content-view-pf-pagination table-view-pf-pagination clearfix" id="pagination1">
+    <div class="form-group">
+        <ul class="pagination pagination-pf-back">
+            <li class="first-page">
+                <a href="#" title="{% trans 'First page' %}"><span class="i fa fa-angle-double-left"></span></a>
+            </li>
+            <li class="previous-page">
+                <a href="#" title="{% trans 'Previous page' %}"><span class="i fa fa-angle-left"></span></a>
+            </li>
+        </ul>
+
+        <label for="pagination1-page" class="sr-only">{% trans 'Current page' %}</label>
+
+        <input class="pagination-pf-page current-page" type="text" value="1">
+
+        <span>- <span class="pagination-pf-pages total-pages">1</span></span>
+
+        <ul class="pagination pagination-pf-forward">
+            <li class="next-page">
+                <a href="#" title="{% trans 'Next page' %}"><span class="i fa fa-angle-right"></span></a>
+            </li>
+            <li class="last-page">
+                <a href="#" title="{% trans 'Last page' %}"><span class="i fa fa-angle-double-right"></span></a>
+            </li>
+        </ul>
+    </div>
+</form>
