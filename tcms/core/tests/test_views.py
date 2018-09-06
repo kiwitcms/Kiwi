@@ -21,6 +21,7 @@ from tcms.tests import BasePlanCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
+from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import EnvGroupFactory
 from tcms.tests.factories import EnvGroupPropertyMapFactory
 from tcms.tests.factories import EnvPropertyFactory
@@ -48,6 +49,14 @@ class TestNavigation(test.TestCase):
 
 
 class TestDashboard(BaseCaseRun):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        # used to reproduce Sentry #KIWI-TCMS-38 where rendering fails
+        # with that particular value
+        cls.chinese_tp = TestPlanFactory(name="缺货反馈测试需求",
+                                         author=cls.tester)
+
     def test_when_not_logged_in_redirects_to_login(self):
         response = self.client.get(reverse('core-views-index'))
         self.assertRedirects(

@@ -29,7 +29,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 		</tr>
 		<tr class="cell">
 			<td class="lab">Test Plan</td>
-			<td><a href="{% url 'test_plan_url' test_run.plan.pk test_run.plan.name|slugify %}">{{ test_run.plan.name }}</a></td>
+			<td><a href="{% url 'test_plan_url_short' test_run.plan.pk %}">{{ test_run.plan.name }}</a></td>
 			<td class="lab">All Confirmed Cases</td>
 			<td><a>{{ confirmed_cases_count }}</a></td>
 		</tr>

@@ -25,7 +25,7 @@
 
 	{% for plan, builds_count, runs_count, caseruns_count, status_matrix in report_data.reports %}
 	<div class="reportSummary01">
-		<ul><li class="tagTab">Plan: <a href="{% url 'test_plan_url' plan.pk plan.name|slugify %}">{{ plan }}</a></li></ul>
+		<ul><li class="tagTab">Plan: <a href="{% url 'test_plan_url_short' plan.pk %}">{{ plan }}</a></li></ul>
 		<ul>
 			<li>Builds:<span>{{ builds_count }}</span></li>
 			<li>Runs:<span>{{ runs_count }}</span></li>

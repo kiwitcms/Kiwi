@@ -59,7 +59,7 @@ Nitrate.TestCases.Instance = {
                 {% endif %}
 		{% if test_plan %}
 		<span class="right-action">
-			<a href="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}">Back to Test Plan</a>
+			<a href="{% url 'test_plan_url_short' test_plan.pk %}">Back to Test Plan</a>
 		</span>
 		{% endif %}
 	</div>

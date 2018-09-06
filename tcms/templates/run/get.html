@@ -58,7 +58,7 @@ jQ(function() {
 			<div class="listinfo">
 				<div class="title grey">Test Plan&nbsp;:</div>
 				<div class="name">
-					<a href="{% url 'test_plan_url' test_run.plan.pk test_run.plan.name|slugify %}">[{{ test_run.plan.pk }}] {{ test_run.plan.name }}</a>
+					<a href="{% url 'test_plan_url_short' test_run.plan.pk %}">[{{ test_run.plan.pk }}] {{ test_run.plan.name }}</a>
 				</div>
 			</div>
 			<div class="listinfo">

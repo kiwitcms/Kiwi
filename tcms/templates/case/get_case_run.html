@@ -7,7 +7,7 @@
 		<td class="plan_expandable listGroupBlue" colspan="12">
 		<img class="blind_icon collapse" src="{% static 'images/t1.gif' %}" border="0" alt="">
 		<input type="hidden" name="case" value="{{ test_case.pk }}" />
-		Plan:<span style="padding:0 0 0 6px;"><a href="{% url 'test_plan_url' plan.pk plan.name|slugify %}">TP-{{ plan.pk }}: {{ plan.name }}</a></span>
+		Plan:<span style="padding:0 0 0 6px;"><a href="{% url 'test_plan_url_short' plan.pk %}">TP-{{ plan.pk }}: {{ plan.name }}</a></span>
 		</td>
 	</tr>
 	<tr class="case_run_list hide" style="display:none;">

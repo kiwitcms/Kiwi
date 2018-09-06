@@ -12,7 +12,7 @@
 {% for test_plan in test_plans %}
 <tr class="{% cycle 'odd' 'even' %}">
     <td align="center"><input type="checkbox" name="plan" value="{{ test_plan.plan_id }}" /></td>
-    <td><a href="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}" target="_blank">TP-{{ test_plan.pk }} - {{ test_plan }}</a></td>
+    <td><a href="{% url 'test_plan_url_short' test_plan.pk %}" target="_blank">TP-{{ test_plan.pk }} - {{ test_plan }}</a></td>
     <td>{{ test_plan.type }}</td>
     <td>{{ test_plan.author }}</td>
     <td>{% if test_plan.is_active %} Yes {% else %} No {% endif %}</td>

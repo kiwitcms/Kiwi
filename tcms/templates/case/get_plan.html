@@ -12,7 +12,7 @@
     <tbody>
         {% for test_plan in test_plans %}
         <tr class="{% cycle 'even' 'odd' %}">
-            <td><a href="{% url 'test_plan_url' test_plan.pk test_plan.name|slugify %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></td>
+            <td><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></td>
             <td><a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author.username }}</a></td>
             <td>{{ test_plan.type }}</td>
             <td>{{ test_plan.product }}</td>

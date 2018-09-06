@@ -2,7 +2,6 @@
 # pylint: disable=invalid-name
 
 import unittest
-from uuslug import slugify
 from http import HTTPStatus
 from urllib.parse import urlencode
 
@@ -408,7 +407,7 @@ class TestOperateCasePlans(BasePlanCase):
             self.assertContains(
                 response,
                 '<a href="{0}">TP-{1}: {2}</a>'.format(
-                    reverse('test_plan_url', args=[plan.pk, slugify(plan.name)]),
+                    reverse('test_plan_url_short', args=[plan.pk]),
                     plan.pk,
                     plan.name),
                 html=True)
