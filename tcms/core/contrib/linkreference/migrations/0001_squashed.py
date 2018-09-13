@@ -5,12 +5,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('linkreference', '0001_initial'),
-                ('linkreference', '0002_make_url_a_urlfield'),
-                ('linkreference', '0003_disconect_from_content_types'),
-                ('linkreference', '0004_make_object_pk_foreign_key'),
-                ('linkreference', '0005_drop_meta_db_name')]
-
     initial = True
 
     dependencies = [
