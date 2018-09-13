@@ -14,7 +14,6 @@ Subpackages
     tcms.core
     tcms.issuetracker
     tcms.management
-    tcms.profiles
     tcms.report
     tcms.search
     tcms.settings
