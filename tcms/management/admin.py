@@ -6,7 +6,7 @@ from tcms.management.models import Classification
 from tcms.management.models import Component, Version
 from tcms.management.models import Priority
 from tcms.management.models import Product
-from tcms.management.models import Build
+from tcms.management.models import Build, Tag
 
 
 class ClassificationAdmin(admin.ModelAdmin):
@@ -54,9 +54,14 @@ class AttachmentAdmin(admin.ModelAdmin):
                     'create_date', 'mime_type')
 
 
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name')
+
+
 admin.site.register(Classification, ClassificationAdmin)
 admin.site.register(Product, ProductsAdmin)
 admin.site.register(Priority, PriorityAdmin)
 admin.site.register(Component, ComponentAdmin)
 admin.site.register(Version, VersionAdmin)
 admin.site.register(Build, BuildAdmin)
+admin.site.register(Tag, TagAdmin)
