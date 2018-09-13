@@ -49,10 +49,6 @@ def reverse_remove_default_perms(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    replaces = [('core', '0001_django_comments__object_pk'),
-                ('core', '0002_add_initial_data'),
-                ('core', '0003_add_default_permissions_to_groups')]
-
     initial = True
 
     dependencies = [
