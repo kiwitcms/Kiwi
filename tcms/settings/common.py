@@ -274,7 +274,6 @@ INSTALLED_APPS = [
     'tcms.core.contrib.auth.apps.AppConfig',
     'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
-    'tcms.core.logs',
     'tcms.management',
     'tcms.profiles',
     'tcms.testcases.apps.AppConfig',
