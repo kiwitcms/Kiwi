@@ -8,16 +8,15 @@ WARNING: do not publically report security issues in the bug tracker!
 Ping us via email to coordinate the fix and disclosure of the problem!
 
 
+HINT: try to reproduce bugs and errors at https://demo.kiwitcms.org!
+This is always running the latest version and will automatically submit
+traceback and debugging information to us!
+
+
 ### Description of problem
 
 
-### Component (web, API, etc)
-
-
 ### Version or commit hash (if applicable)
-
-
-### How often reproducible
 
 
 ### Steps to Reproduce
@@ -32,4 +31,4 @@ Ping us via email to coordinate the fix and disclosure of the problem!
 ### Expected results
 
 
-### Additional info
+### Additional info (Python traceback, logs, etc.)
