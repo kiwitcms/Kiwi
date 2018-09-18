@@ -32,11 +32,17 @@ stages:
 jobs:
   allow_failures:
     - env: CMD=pylint
+    - env: CMD=bandit_site_packages
 
   include:
     - stage: static_analysis
       env:
         - CMD=bandit
+
+    - stage: static_analysis
+      if: branch = master AND type = push
+      env:
+        - CMD=bandit_site_packages
 
     - stage: static_analysis
       if: branch = master AND type = push
