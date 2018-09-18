@@ -44,7 +44,7 @@ RUN pip install --no-cache-dir --upgrade pip mod_wsgi && \
            /usr/lib64/httpd/modules/mod_wsgi.so
 
 COPY ./requirements/ /Kiwi/requirements/
-RUN pip install --no-cache-dir -r /Kiwi/requirements/mariadb.txt
+RUN pip install --no-cache-dir -r /Kiwi/requirements/postgres.txt
 
 COPY ./manage.py /Kiwi/
 COPY ./etc/kiwitcms/ssl/ /Kiwi/ssl/

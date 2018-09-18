@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kiwi-web
+  labels:
+    app: kiwi
+spec:
+  ports:
+    - name: "80"
+      port: 80
+      targetPort: 8080
+    - name: "443"
+      port: 443
+      targetPort: 8443
+  selector:
+    app: kiwi
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: kiwi-web
+  labels:
+    app: kiwi
+spec:
+  selector:
+    matchLabels:
+      app: kiwi
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: kiwi
+        tier: frontend
+    spec:
+      containers:
+        - image: gcr.io/cyrus-playground/kiwitcms/kiwi:latest
+          name: kiwi-web
+          imagePullPolicy: Always
+          env:
+            - name: KIWI_DB_HOST
+              value: kiwi-db
+            - name: KIWI_DB_NAME
+              value: kiwi
+            - name: KIWI_DB_PASSWORD
+              value: kiwi-1s-aw3s0m3
+            - name: KIWI_DB_PORT
+              value: "5432"
+            - name: KIWI_DB_USER
+              value: kiwi
+            - name: GOOGLE_OAUTH2_KEY
+              valueFrom:
+                secretRef:
+                  name: googleAuth
+                  key: key
+            - name: GOOGLE_OAUTH2_SECRET
+              valueFrom:
+                secretRef:
+                  name: googleAuth
+                  key: secret
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+      imagePullSecrets:
+        - name: gcrcreds
+
+

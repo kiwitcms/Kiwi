@@ -35,6 +35,8 @@
           </div>
         </div>
       </form>
+        <p><strong>-- OR --</strong></p>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
 
       {% block custom_login %}
       {% endblock %}

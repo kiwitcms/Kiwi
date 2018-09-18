@@ -7,7 +7,7 @@
 from .common import *  # noqa: F401,F403
 
 # Debug settings
-DEBUG = False
+DEBUG = True
 
 try:
     from .local_settings import *  # noqa: F401,F403
