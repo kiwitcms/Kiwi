@@ -65,6 +65,13 @@ bandit:
 	bandit -r *.py tcms/ tcms_api/ kiwi_lint/
 
 
+.PHONY: bandit_site_packages
+bandit_site_packages:
+	if [ -d "~/virtualenv/python3.6.3/lib/python3.6/site-packages/" ]; then \
+	    bandit -r ~/virtualenv/python3.6.3/lib/python3.6/site-packages/; \
+	fi
+
+
 .PHONY: tags
 tags:
 	@rm -f .tags
