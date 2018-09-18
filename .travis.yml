@@ -39,10 +39,7 @@ jobs:
       env:
         - CMD=bandit
 
-    - stage: static_analysis
-      if: branch = master AND type = push
-      env:
-        - CMD=bandit_site_packages
+    - { stage: static_analysis, env: CMD=bandit_site_packages, if: branch = master AND type = push }
 
     - stage: static_analysis
       if: branch = master AND type = push
