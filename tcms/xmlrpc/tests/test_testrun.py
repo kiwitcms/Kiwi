@@ -67,3 +67,43 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.rpc_client.exec.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
         tag_exists = TestRun.objects.filter(pk=self.test_runs[0].pk, tag__pk=self.tag0.pk).exists()
         self.assertFalse(tag_exists)
+
+
+class TestProductVersionWhenCreating(XmlrpcAPIBaseTest):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.product = ProductFactory()
+        self.version = VersionFactory()
+        self.build = self.product.build.first()
+        self.plan = TestPlanFactory(author=self.api_user,
+                                    owner=self.api_user,
+                                    product=self.product,
+                                    product_version=self.version)
+
+    def test_create_without_product_version(self):
+        test_run_fields = {
+            'plan': self.plan.pk,
+            'build': self.build.pk,
+            'summary': 'TR without product_version',
+            'manager': self.api_user.username,
+        }
+
+        result = self.rpc_client.exec.TestRun.create(test_run_fields)
+        self.assertEqual(result['product_version'], self.plan.product_version.value)
+
+    def test_create_with_product_version(self):
+        version2 = VersionFactory()
+
+        test_run_fields = {
+            'plan': self.plan.pk,
+            'build': self.build.pk,
+            'summary': 'TR with product_version',
+            'manager': self.api_user.pk,
+            'product_version': version2.pk,
+        }
+
+        result = self.rpc_client.exec.TestRun.create(test_run_fields)
+        # the result is still using product_version from TR.plan.product_version
+        # not the one we specified above
+        self.assertEqual(result['product_version'], self.plan.product_version.value)

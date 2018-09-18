@@ -46,33 +46,12 @@ class NewRunForm(BaseRunForm):
 
 class XMLRPCNewRunForm(BaseRunForm):
     plan = forms.ModelChoiceField(
-        label='Test Plan',
-        queryset=TestPlan.objects.all(),
-    )
-    manager = forms.ModelChoiceField(
-        label='Manager', queryset=User.objects.all()
-    )
-    default_tester = forms.ModelChoiceField(
-        label='Default tester', queryset=User.objects.all(), required=False
-    )
-    status = forms.TypedChoiceField(
-        coerce=int, choices=((0, 0), (1, 1)), required=False
-    )
-    tag = forms.CharField(
-        label='Tag',
-        required=False
+        queryset=TestPlan.objects.none(),
     )
 
-    def clean_status(self):
-        data = self.cleaned_data.get('status')
-        if not data:
-            data = 0
-
-        return data
-
-    def clean_tag(self):
-        tag = self.cleaned_data.get('tag')
-        return str(tag)
+    def assign_plan(self, plan_id):
+        self.fields['plan'].queryset = TestPlan.objects.filter(pk=plan_id)
+        self.populate(self.fields['plan'].queryset.first().product_id)
 
 
 class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
