@@ -12,8 +12,8 @@ DEBUG = True
 # Database settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/kiwi.devel.sqlite',  # nosec:B108:hardcoded_tmp_directory
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '/tmp/kiwi.devel.postgres',  # nosec:B108:hardcoded_tmp_directory
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '',

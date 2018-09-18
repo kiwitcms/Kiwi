@@ -12,3 +12,4 @@ jira==1.0.10
 Markdown
 python-bugzilla
 PyGithub
+social-auth-app-django

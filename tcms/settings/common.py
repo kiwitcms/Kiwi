@@ -22,15 +22,12 @@ SECRET_KEY = '^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv'
 # Database settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('KIWI_DB_NAME', 'kiwi'),
         'USER': os.environ.get('KIWI_DB_USER', 'kiwi'),
         'PASSWORD': os.environ.get('KIWI_DB_PASSWORD', 'kiwi'),
         'HOST': os.environ.get('KIWI_DB_HOST', ''),
         'PORT': os.environ.get('KIWI_DB_PORT', ''),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
     },
 }
 
@@ -133,6 +130,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'global_login_required.GlobalLoginRequiredMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 
@@ -240,6 +239,9 @@ TEMPLATES = [
 
                 'tcms.core.context_processors.request_contents_processor',
                 'tcms.core.context_processors.settings_processor',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
@@ -269,6 +271,7 @@ INSTALLED_APPS = [
     'django_comments',
     'modernrpc',
     'simple_history',
+    'social_django',
 
     'tcms.core',
     'tcms.core.contrib.auth.apps.AppConfig',
@@ -384,3 +387,35 @@ LOGGING = {
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+PUBLIC_VIEWS.extend([
+    'social_django.views.auth',
+    'social_django.views.complete',
+    'social_django.views.disconnect',
+])
+
+AUTHENTICATION_BACKENDS = (
+    ['social_core.backends.google.GoogleOAuth2']
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.profile'
+]
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_STRATEGY = 'social_django.strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social_django.models.DjangoStorage'
+LOGIN_REDIRECT_URL = '//'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_OAUTH2_SECRET')
