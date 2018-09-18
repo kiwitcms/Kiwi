@@ -156,27 +156,21 @@ def create(values):
             >>> values = {'build': 384,
                 'manager': 137,
                 'plan': 137,
-                'product': 61,
-                'product_version': 93,
                 'summary': 'Testing XML-RPC for TCMS',
             }
             >>> TestRun.create(values)
     """
-    if not values.get('product'):
-        raise ValueError('Value of product is required')
     # TODO: XMLRPC only accept HH:MM:SS rather than DdHhMm
-
     if values.get('estimated_time'):
         values['estimated_time'] = parse_duration(
             values.get('estimated_time'))
 
     form = XMLRPCNewRunForm(values)
-    form.populate(product_id=values['product'])
+    form.assign_plan(values.get('plan'))
 
     if form.is_valid():
         test_run = TestRun.objects.create(
-            product_version=form.cleaned_data['product_version'],
-            stop_date=form.cleaned_data['status'] and datetime.now() or None,
+            product_version=form.cleaned_data['plan'].product_version,
             summary=form.cleaned_data['summary'],
             notes=form.cleaned_data['notes'],
             estimated_time=form.cleaned_data['estimated_time'],
@@ -185,15 +179,6 @@ def create(values):
             manager=form.cleaned_data['manager'],
             default_tester=form.cleaned_data['default_tester'],
         )
-
-        if form.cleaned_data['tag']:
-            tag_names = form.cleaned_data['tag']
-            if isinstance(tag_names, str):
-                tag_names = [c.strip() for c in tag_names.split(',') if c]
-
-            for tag_name in tag_names:
-                tag, _ = Tag.objects.get_or_create(name=tag_name)
-                test_run.add_tag(tag=tag)
     else:
         raise ValueError(form_errors_to_list(form))
 
