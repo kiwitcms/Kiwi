@@ -71,16 +71,19 @@ jobs:
         mariadb: 10.1
 
     - stage: testing
+      if: branch = master AND type = push
       env:
         - TEST_DB=SQLite
         - CMD=test
 
     - stage: testing
+      if: branch = master AND type = push
       env:
         - TEST_DB=MySQL
         - CMD=test
 
     - stage: testing
+      if: branch = master AND type = push
       env:
         - TEST_DB=Postgres
         - CMD=test
