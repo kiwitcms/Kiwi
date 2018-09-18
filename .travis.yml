@@ -54,7 +54,7 @@ jobs:
             name: "kiwitcms/Kiwi"
             description: "Open source test case management system"
           notification_email: info@kiwitcms.org
-          build_command: "--no-command --fs-capture-search ./"
+          build_command: "--no-command --fs-capture-search ./ ~/virtualenv/python3.6.3/lib/python3.6/site-packages/"
           branch_pattern: master
 
     - stage: static_analysis
