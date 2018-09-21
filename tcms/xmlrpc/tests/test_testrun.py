@@ -36,7 +36,11 @@ class TestAddTag(XmlrpcAPIBaseTest):
         self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
 
     def test_add_tag(self):
-        self.rpc_client.exec.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
+        result = self.rpc_client.exec.TestRun.add_tag(self.test_runs[0].pk, self.tag0.name)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['id'], self.tag0.pk)
+        self.assertEqual(result[0]['name'], self.tag0.name)
+
         tag_exists = TestRun.objects.filter(pk=self.test_runs[0].pk, tag__pk=self.tag0.pk).exists()
         self.assertTrue(tag_exists)
 
@@ -60,13 +64,21 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         self.tag0 = TagFactory(name='xmlrpc_test_tag_0')
         self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
 
-        self.test_runs[0].add_tag(self.tag0)
-        self.test_runs[1].add_tag(self.tag1)
+        for tag in [self.tag0, self.tag1]:
+            self.test_runs[0].add_tag(tag)
+            self.test_runs[1].add_tag(tag)
 
     def test_remove_tag(self):
-        self.rpc_client.exec.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
+        result = self.rpc_client.exec.TestRun.remove_tag(self.test_runs[0].pk, self.tag0.name)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['id'], self.tag1.pk)
+        self.assertEqual(result[0]['name'], self.tag1.name)
+
         tag_exists = TestRun.objects.filter(pk=self.test_runs[0].pk, tag__pk=self.tag0.pk).exists()
         self.assertFalse(tag_exists)
+
+        tag_exists = TestRun.objects.filter(pk=self.test_runs[0].pk, tag__pk=self.tag1.pk).exists()
+        self.assertTrue(tag_exists)
 
 
 class TestProductVersionWhenCreating(XmlrpcAPIBaseTest):
