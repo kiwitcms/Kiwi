@@ -109,12 +109,14 @@ def add_tag(run_id, tag_name):
         :type run_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :return: None
+        :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :raises: PermissionDenied if missing *testruns.add_testruntag* permission
         :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
     """
     tag, _ = Tag.objects.get_or_create(name=tag_name)
-    TestRun.objects.get(pk=run_id).add_tag(tag)
+    test_run = TestRun.objects.get(pk=run_id)
+    test_run.add_tag(tag)
+    return Tag.to_xmlrpc({'pk__in': test_run.tag.all()})
 
 
 @permissions_required('testruns.delete_testruntag')
@@ -129,12 +131,14 @@ def remove_tag(run_id, tag_name):
         :type run_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :return: None
+        :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :raises: PermissionDenied if missing *testruns.delete_testruntag* permission
         :raises: DoesNotExist if objects specified don't exist
     """
     tag = Tag.objects.get(name=tag_name)
-    TestRun.objects.get(pk=run_id).remove_tag(tag)
+    test_run = TestRun.objects.get(pk=run_id)
+    test_run.remove_tag(tag)
+    return Tag.to_xmlrpc({'pk__in': test_run.tag.all()})
 
 
 @permissions_required('testruns.add_testrun')
