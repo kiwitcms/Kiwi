@@ -13,13 +13,16 @@ from tcms.testcases.models import BugSystem
 from tcms.testruns.models import EnvRunValueMap
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
+from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import EnvPropertyFactory
 from tcms.tests.factories import EnvValueFactory
 from tcms.tests.factories import BuildFactory
+from tcms.tests.factories import TagFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import UserFactory
 
@@ -29,7 +32,18 @@ class TestGetRun(BaseCaseRun):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestGetRun, cls).setUpTestData()
+        super().setUpTestData()
+        initiate_user_with_default_setups(cls.tester)
+
+        for _ in range(3):
+            cls.test_run.add_tag(TagFactory())
+
+        cls.unauthorized = UserFactory()
+        cls.unauthorized.set_password('password')
+        cls.unauthorized.save()
+
+        remove_perm_from_user(cls.unauthorized, 'testruns.add_testruntag')
+        remove_perm_from_user(cls.unauthorized, 'testruns.delete_testruntag')
 
     def test_404_if_non_existing_pk(self):
         url = reverse('testruns-get', args=[99999999])
@@ -41,6 +55,8 @@ class TestGetRun(BaseCaseRun):
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, 'Add Tag')
+        self.assertContains(response, 'js-remove-tag')
 
         for i, case_run in enumerate(
                 (self.case_run_1, self.case_run_2, self.case_run_3), 1):
@@ -53,6 +69,20 @@ class TestGetRun(BaseCaseRun):
                 '<a id="link_{0}" href="#caserun_{1}" title="Expand test case">'
                 '{2}</a>'.format(i, case_run.pk, case_run.case.summary),
                 html=True)
+
+    def test_get_run_without_permissions_to_add_or_remove_tags(self):
+        self.client.logout()
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.unauthorized.username,
+            password='password')
+
+        url = reverse('testruns-get', args=[self.test_run.pk])
+        response = self.client.get(url)
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertNotContains(response, 'Add Tag')
+        self.assertNotContains(response, 'js-remove-tag')
 
 
 class TestCreateNewRun(BasePlanCase):
