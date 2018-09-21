@@ -423,15 +423,6 @@ class TestCase(TCMSActionModel):
         qs = self.text.order_by('-case_text_version').only('case_text_version')[0:1]
         return 0 if len(qs) == 0 else qs[0].case_text_version
 
-    def mail(self, template, subject, context={}, to=[], request=None):
-        from tcms.core.utils.mailto import mailto
-
-        if not to:
-            to = self.author.email
-
-        to = list(set(to))
-        mailto(template, subject, to, context, request)
-
     def remove_bug(self, bug_id, run_id=None):
         query = Bug.objects.filter(
             bug_id=bug_id,
