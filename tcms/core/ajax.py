@@ -27,7 +27,7 @@ from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseTag
 from tcms.testplans.models import TestPlan, TestPlanTag
-from tcms.testruns.models import TestRun, TestCaseRun, TestRunTag
+from tcms.testruns.models import TestCaseRun, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
 
@@ -133,7 +133,7 @@ class _TagObjects:
                         and the type of object to be selected
         :type request: HttpRequest
         """
-        for obj in ['plan', 'case', 'run']:
+        for obj in ['plan', 'case']:
             if request.GET.get(obj):
                 self.object = obj
                 self.object_pk = request.GET.get(obj)
@@ -149,9 +149,6 @@ class _TagObjects:
     def case(self):
         return 'management/get_tag.html', TestCase.objects.get(pk=self.object_pk)
 
-    def run(self):
-        return 'run/get_tag.html', TestRun.objects.get(pk=self.object_pk)
-
 
 class _TagActions:
     """ Used for performing the 'add' and 'remove' actions on a given tag """
@@ -159,9 +156,8 @@ class _TagActions:
     def __init__(self, obj, tag_name):
         """
         :param obj: the object for which the tag actions would be performed
-        :type obj: either a :class:`tcms.testplans.models.TestPlan`,
-                          a :class:`tcms.testcases.models.TestCase` or
-                          a :class:`tcms.testruns.models.TestRun`
+        :type obj: either a :class:`tcms.testplans.models.TestPlan` or
+                          a :class:`tcms.testcases.models.TestCase`
         :param tag_name: The name of the tag to be manipulated
         :type tag_name: str
         """

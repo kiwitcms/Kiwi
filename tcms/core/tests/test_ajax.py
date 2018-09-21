@@ -406,7 +406,6 @@ class Test_Tag_Objects(test.TestCase):
 
         cls.test_plan = TestPlanFactory()
         cls.test_case = TestCaseFactory()
-        cls.test_run = TestRunFactory()
 
     def test_get_plan(self):
         self.request.GET = {'plan': self.test_plan.pk}
@@ -421,13 +420,6 @@ class Test_Tag_Objects(test.TestCase):
 
         self.assertEqual(tag_objects.get()[0], 'management/get_tag.html')
         self.assertEqual(tag_objects.get()[1], self.test_case)
-
-    def test_get_run(self):
-        self.request.GET = {'run': self.test_run.pk}
-        tag_objects = _TagObjects(self.request)
-
-        self.assertEqual(tag_objects.get()[0], 'run/get_tag.html')
-        self.assertEqual(tag_objects.get()[1], self.test_run)
 
 
 class Test_Tag_Actions(test.TestCase):
