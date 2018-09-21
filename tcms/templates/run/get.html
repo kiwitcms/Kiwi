@@ -19,6 +19,13 @@ jQ(function() {
     initialize_addlink_dialog();
 });
 </script>
+
+<!-- temporary workaround so we can convert addRunTag/removeRuntag to JSON RPC -->
+<!-- FA CSS needed for the delete tag icon -->
+<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+
 {% endblock %}
 
 {% block content_type %}
@@ -87,7 +94,9 @@ jQ(function() {
 						<li>
 							{{ tag }}
 						{% if perms.testruns.delete_testruntag %}
-						<a href="javascript:void(0)" class="js-remove-tag" data-params='["{{ test_run.run_id }}", "{{ tag }}"]'><img src="{% static 'images/remove_small.png' %}" width="9" height="9" title="remove this tag" /></a>
+						<a href="#" class="js-remove-tag" data-params='["{{ test_run.run_id }}", "{{ tag }}"]'>
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
 						{% endif %}
 						</li>
 						{% endfor %}

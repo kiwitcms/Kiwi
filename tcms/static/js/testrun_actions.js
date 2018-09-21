@@ -166,10 +166,8 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('#btn_delete').bind('click', function() {
     window.location.href = jQ(this).data('param');
   });
-  jQ('.js-remove-tag').bind('click', function() {
-    var params = jQ(this).data('params');
-    removeRuntag(jQ('.js-tag-ul')[0], params[0], params[1]);
-  });
+
+  bindJSRemoveTagButton();
   jQ('.js-add-tag').bind('click', function() {
     addRunTag(jQ('.js-tag-ul')[0], jQ(this).data('param'));
   });
@@ -832,41 +830,50 @@ function add_property_to_env(run_id, env_value_id) {
   });
 }
 
-function addRunTag(container, run_id) {
-  var tag = window.prompt('Please type new tag.');
-  if (!tag) {
-    return false;
-  }
 
-  var url = '/management/tags/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'a': 'add', 'run': run_id, 'tags': tag},
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-      jQ('.js-remove-tag').bind('click', function() {
-        var params = jQ(this).data('params');
-        removeRuntag(jQ('.js-tag-ul')[0], params[0], params[1]);
-      });
-    }
+// binds the remove buttons for all tags
+function bindJSRemoveTagButton() {
+  $('.js-remove-tag').bind('click', function() {
+    var params = $(this).data('params');
+    removeRunTag($('.js-tag-ul')[0], params[0], params[1]);
   });
 }
 
-function removeRuntag(container, run_id, tag) {
-  var url = '/management/tags/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'a': 'remove', 'run': run_id, 'tags': tag},
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-      jQ('.js-remove-tag').bind('click', function() {
-        var params = jQ(this).data('params');
-        removeRuntag(jQ('.js-tag-ul')[0], params[0], params[1]);
-      });
+
+// data is an array of id/name for tags
+function updateTagContainer(container, data, run_id) {
+    var html = '';
+
+    data.forEach(function(element) {
+        var li = '<li>' + element['name'] +
+                    '<a href="#" class="js-remove-tag" data-params=\'["'+ run_id + '", "' + element['name'] + '"]\'>' +
+                        '&nbsp;<i class="fa fa-trash-o"></i>' +
+                    '</a>' +
+                 '</li>';
+        html += li;
+    });
+
+    $(container).html(html);
+    bindJSRemoveTagButton();
+}
+
+function addRunTag(container, run_id) {
+    var tag = window.prompt('Please type new tag.');
+    if (!tag) {
+        return false;
     }
-  });
+
+    var inner_callback = function(data) {
+        updateTagContainer(container, data, run_id);
+    }
+    jsonRPC('TestRun.add_tag', [run_id, tag], inner_callback);
+}
+
+function removeRunTag(container, run_id, tag) {
+    var inner_callback = function(data) {
+        updateTagContainer(container, data, run_id);
+    }
+    jsonRPC('TestRun.remove_tag', [run_id, tag], inner_callback);
 }
 
 function constructRunCC(container, run_id, parameters) {
