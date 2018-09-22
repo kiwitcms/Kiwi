@@ -32,6 +32,8 @@ from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
 
 
+# todo: all calls on the front-end can be replaced with jsonRPC
+# and this must be removed
 @require_GET
 def info(request):
     """Ajax responder for misc information"""
@@ -75,9 +77,6 @@ class _InfoObjects:
 
     def env_values(self):
         return EnvValue.objects.filter(property_id=self.request.GET.get('env_property_id'))
-
-    def tags(self):
-        return Tag.objects.filter(name__startswith=self.request.GET['name__startswith'])
 
     def versions(self):
         return Version.objects.filter(product__id=self.product_id)

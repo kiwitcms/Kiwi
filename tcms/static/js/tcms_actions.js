@@ -575,14 +575,13 @@ function constructTagZone(container, parameters) {
   var complete = function(t) {
     jQ('#id_tags').autocomplete({
       'source': function(request, response) {
-        getInfo({'info_type': 'tags', 'name__startswith': request.term},
-                function(data) {
-                    var processedData = [];
-                    jQ.parseJSON(data.responseText).forEach(function (element){
-                        processedData.push(element.fields.name);
-                    });
-                    response(processedData);
-                });
+        jsonRPC('Tag.filter', {'name__startswith': request.term}, function(data) {
+            var processedData = [];
+            data.forEach(function(element) {
+                processedData.push(element.name);
+            });
+            response(processedData);
+        });
       },
       'minLength': 2,
       'appendTo': '#id_tags_autocomplete'
