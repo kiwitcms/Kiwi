@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init, invalid-name, objects-update-used
+from xmlrpc.client import ProtocolError
+from django.contrib.auth.models import Permission
+
+from tcms_api.xmlrpc import TCMSXmlrpc
 
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCasePlan
 from tcms.testplans.models import EnvPlanMap
 
+from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
@@ -66,6 +71,25 @@ class TestAddTag(XmlrpcAPIBaseTest):
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag1.pk).exists()
         self.assertTrue(tag_exists)
 
+    def test_add_tag_without_permissions(self):
+        unauthorized_user = UserFactory()
+        unauthorized_user.set_password('api-testing')
+        unauthorized_user.save()
+
+        unauthorized_user.user_permissions.add(*Permission.objects.all())
+        remove_perm_from_user(unauthorized_user, 'testplans.add_testplantag')
+
+        rpc_client = TCMSXmlrpc(unauthorized_user.username,
+                                'api-testing',
+                                '%s/xml-rpc/' % self.live_server_url).server
+
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
+
+        # tags were not modified
+        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag1.pk).exists()
+        self.assertFalse(tag_exists)
+
 
 class TestRemoveTag(XmlrpcAPIBaseTest):
 
@@ -87,6 +111,28 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
     def test_remove_tag(self):
         self.rpc_client.exec.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
         tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag0.pk).exists()
+        self.assertFalse(tag_exists)
+
+    def test_remove_tag_without_permissions(self):
+        unauthorized_user = UserFactory()
+        unauthorized_user.set_password('api-testing')
+        unauthorized_user.save()
+
+        unauthorized_user.user_permissions.add(*Permission.objects.all())
+        remove_perm_from_user(unauthorized_user, 'testplans.delete_testplantag')
+
+        rpc_client = TCMSXmlrpc(unauthorized_user.username,
+                                'api-testing',
+                                '%s/xml-rpc/' % self.live_server_url).server
+
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            rpc_client.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
+
+        # tags were not modified
+        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag0.pk).exists()
+        self.assertTrue(tag_exists)
+
+        tag_exists = TestPlan.objects.filter(pk=self.plans[0].pk, tag__pk=self.tag1.pk).exists()
         self.assertFalse(tag_exists)
 
 

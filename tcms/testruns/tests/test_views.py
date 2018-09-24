@@ -7,6 +7,7 @@ from datetime import timedelta
 from django.utils import formats
 from django.urls import reverse
 from django.conf import settings
+from django.contrib.auth.models import Permission
 
 from tcms.testcases.models import Bug
 from tcms.testcases.models import BugSystem
@@ -42,6 +43,7 @@ class TestGetRun(BaseCaseRun):
         cls.unauthorized.set_password('password')
         cls.unauthorized.save()
 
+        cls.unauthorized.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(cls.unauthorized, 'testruns.add_testruntag')
         remove_perm_from_user(cls.unauthorized, 'testruns.delete_testruntag')
 
