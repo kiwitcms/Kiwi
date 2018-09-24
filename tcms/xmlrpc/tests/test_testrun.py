@@ -2,6 +2,7 @@
 # pylint: disable=attribute-defined-outside-init
 
 from xmlrpc.client import ProtocolError
+from django.contrib.auth.models import Permission
 
 from tcms_api.xmlrpc import TCMSXmlrpc
 
@@ -15,12 +16,6 @@ from tcms.tests.factories import TagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
-
-
-__all__ = (
-    'TestAddTag',
-    'TestRemoveTag',
-)
 
 
 class TestAddTag(XmlrpcAPIBaseTest):
@@ -56,6 +51,7 @@ class TestAddTag(XmlrpcAPIBaseTest):
         unauthorized_user.set_password('api-testing')
         unauthorized_user.save()
 
+        unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testruns.add_testruntag')
 
         rpc_client = TCMSXmlrpc(unauthorized_user.username,
@@ -110,6 +106,7 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         unauthorized_user.set_password('api-testing')
         unauthorized_user.save()
 
+        unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testruns.delete_testruntag')
 
         rpc_client = TCMSXmlrpc(unauthorized_user.username,
