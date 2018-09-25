@@ -124,6 +124,8 @@ def tags(request):
         'object': obj,
         'api_module': api_module,
     }
+    # todo: convert this method into returning pure JSON and
+    # render inside the browser. Also move it under management.views
     return render(request, template_name, context_data)
 
 
