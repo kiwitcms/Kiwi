@@ -570,7 +570,7 @@ function postToURL(path, params, method) {
 }
 
 function constructTagZone(container, parameters) {
-  jQ(container).html('<div class="ajax_loading"></div>');
+  $(container).html('<div class="ajax_loading"></div>');
 
   var complete = function(t) {
     jQ('#id_tags').autocomplete({
@@ -587,22 +587,22 @@ function constructTagZone(container, parameters) {
       'appendTo': '#id_tags_autocomplete'
     });
 
-    jQ('#id_tag_form').bind('submit', function(e){
+    $('#id_tag_form').bind('submit', function(e){
       e.stopPropagation();
       e.preventDefault();
 
-      constructTagZone(container, Nitrate.Utils.formSerialize(this));
+      addTag(container);
     });
-    var count = jQ('tbody#tag').attr('count');
-    jQ('#tag_count').text(count);
+    var count = $('tbody#tag').attr('count');
+    $('#tag_count').text(count);
   };
 
-  jQ.ajax({
+  $.ajax({
     'url': '/management/tags/',
     'type': 'GET',
     'data': parameters,
     'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
+      $(container).html(data);
     },
     'complete': function () {
       complete();
@@ -611,22 +611,34 @@ function constructTagZone(container, parameters) {
 }
 
 
+// add tag to TestPlan or TestCase
+// called from the 'Tabs' tab in the get view
 function addTag(container) {
-  var tag_name = jQ('#id_tags').attr('value');
-  if (!tag_name.length) {
-    jQ('#id_tags').focus();
-  } else {
-    constructTagZone(container, Nitrate.Utils.formSerialize(jQ('#id_tag_form')[0]));
-  }
+    var tags = $('#id_tags')[0];
+    var tag_name = tags.value;
+    var params = $(tags).data('params');
+    var method = params[0] + '.add_tag';
+    var search_params = {};
+    search_params[params[0].replace('Test', '').toLowerCase()] = params[1];
+
+    if (tag_name.length > 0) {
+        jsonRPC(method, [params[1], tag_name], function(data) {
+            constructTagZone(container, search_params);
+        });
+    }
 }
 
-function removeTag(container, tag) {
-  jQ('#id_tag_form').parent().find('input[name="a"]')[0].value = 'remove';
 
-  var parameters = Nitrate.Utils.formSerialize(jQ('#id_tag_form')[0]);
-  parameters.tags = tag;
+// remove tag from TestPlan or TestCase
+// called from the 'Tabs' tab in the get view
+function removeTag(container, params) {
+    var method = params[0] + '.remove_tag';
+    var search_params = {};
+    search_params[params[0].replace('Test', '').toLowerCase()] = params[1];
 
-  constructTagZone(container, parameters);
+    jsonRPC(method, [params[1], params[2]], function(data) {
+        constructTagZone(container, search_params);
+    });
 }
 
 function removeComment(form, callback) {
