@@ -21,7 +21,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import Component, Build, Version
-from tcms.management.models import Tag
 from tcms.management.models import EnvGroup, EnvProperty, EnvValue
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
@@ -87,17 +86,14 @@ class _InfoObjects:
 
 
 def tags(request):
-    """ Get tags for TestPlan, TestCase or TestRun """
+    """
+        Get tags for TestPlan or TestCase.
+        Also counts how many times the same tag has been used for
+        different objects. Used in TP -> Tags and TC -> Tags tabs!
+    """
 
     tag_objects = _TagObjects(request)
     template_name, obj = tag_objects.get()
-
-    q_tag = request.GET.get('tags')
-    q_action = request.GET.get('a')
-
-    if q_action:
-        tag_actions = _TagActions(obj=obj, tag_name=q_tag)
-        getattr(tag_actions, q_action)()
 
     all_tags = obj.tag.all().order_by('pk')
     test_plan_tags = TestPlanTag.objects.filter(
@@ -116,9 +112,17 @@ def tags(request):
         tag.num_cases = case_counter.calculate_tag_count(tag)
         tag.num_runs = run_counter.calculate_tag_count(tag)
 
+    api_module = 'NotExisting'
+    if isinstance(obj, TestPlan):
+        api_module = 'TestPlan'
+
+    if isinstance(obj, TestCase):
+        api_module = 'TestCase'
+
     context_data = {
         'tags': all_tags,
         'object': obj,
+        'api_module': api_module,
     }
     return render(request, template_name, context_data)
 
@@ -147,29 +151,6 @@ class _TagObjects:
 
     def case(self):
         return 'management/get_tag.html', TestCase.objects.get(pk=self.object_pk)
-
-
-class _TagActions:
-    """ Used for performing the 'add' and 'remove' actions on a given tag """
-
-    def __init__(self, obj, tag_name):
-        """
-        :param obj: the object for which the tag actions would be performed
-        :type obj: either a :class:`tcms.testplans.models.TestPlan` or
-                          a :class:`tcms.testcases.models.TestCase`
-        :param tag_name: The name of the tag to be manipulated
-        :type tag_name: str
-        """
-        self.obj = obj
-        self.tag_name = tag_name
-
-    def add(self):
-        tag, _ = Tag.objects.get_or_create(name=self.tag_name)
-        self.obj.add_tag(tag)
-
-    def remove(self):
-        tag = Tag.objects.get(name=self.tag_name)
-        self.obj.remove_tag(tag)
 
 
 class _TagCounter:  # pylint: disable=too-few-public-methods

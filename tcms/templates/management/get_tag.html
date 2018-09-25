@@ -11,7 +11,7 @@
 		</thead>
 		<tbody id='tag' count='{{tags.count}}'>
 			{% for tag in tags %}
-			<tr class="{% cycle 'even' 'odd'%} js-one-tag" data-param="{{ tag }}">
+			<tr class="{% cycle 'even' 'odd'%} js-one-tag" data-params='["{{ api_module}}", {{ object.pk }}, "{{ tag }}"]'>
 				<td><span class="tagvalue">{{ tag }}</span></td>
 				<td><a href="{% url "plans-search" %}?tag__name__in={{ tag }}" title="{{ tag.num_plans }} plans tagged {{ tag }}">{{ tag.num_plans }}</a></td>
 				<td><a href="{% url "testcases-search" %}?tag__name__in={{ tag }}"  title="{{ tag.num_cases }} cases tagged {{ tag }}">{{ tag.num_cases }}</a></td>
@@ -32,10 +32,7 @@
 				{% if object.plan_id and perms.testplans.add_testplantag or object.case_id and perms.testcases.add_testcasetag %}
 				<div class="addtag">
 						<span class="tit">Add Tag</span>
-						<input type="hidden" name="a" value="add">
-						{% if object.plan_id %}<input type="hidden" name="plan" value="{{ object.plan_id }}" />{% endif %}
-						{% if object.case_id %}<input type="hidden" name="case" value="{{ object.case_id }}" />{% endif %}
-						<input id="id_tags" type="text" name="tags" />
+						<input id="id_tags" type="text" name="tags" data-params='["{{ api_module}}", {{ object.pk }}]'>
 						<a href="#tag" class="addlink" id="js-add-tag">Add</a>
 						<div id="id_tags_autocomplete"></div>
 				</div>
@@ -46,10 +43,12 @@
 	</table>
 </form>
 <script type="text/javascript">
-	jQ('.js-remove-tag').bind('click', function() {
-		removeTag(jQ('#tag')[0], jQ(this).parents('.js-one-tag').attr('data-param'));
-	});
-	jQ('#js-add-tag').bind('click', function() {
-		addTag(jQ('#tag')[0]);
-	});
+$('.js-remove-tag').bind('click', function() {
+    var tag = $(this).parents('.js-one-tag');
+    removeTag($('#tag')[0], $(tag).data('params'));
+});
+
+$('#js-add-tag').bind('click', function() {
+    addTag($('#tag')[0]);
+});
 </script>
