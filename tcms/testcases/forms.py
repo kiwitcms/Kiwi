@@ -160,6 +160,10 @@ class BaseCaseForm(forms.Form):
 
         return ''
 
+    # todo: fix-tag-permissions
+    # we have to redesign the new TC form with Patternfly and figure out
+    # if tags will be visible in the form b/c they can also be added later
+    # todo: this also needs to support autocomplete
     def clean_tag(self):
         tags = []
         if self.cleaned_data['tag']:

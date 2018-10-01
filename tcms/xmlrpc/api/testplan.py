@@ -104,7 +104,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 
 @permissions_required('testplans.add_testplantag')
 @rpc_method(name='TestPlan.add_tag')
-def add_tag(plan_id, tag_name):
+def add_tag(plan_id, tag_name, **kwargs):
     """
     .. function:: XML-RPC TestPlan.add_tag(plan_id, tag_name)
 
@@ -117,8 +117,11 @@ def add_tag(plan_id, tag_name):
         :return: None
         :raises: PermissionDenied if missing *testplans.add_testplantag* permission
         :raises: TestPlan.DoesNotExist if object specified by PK doesn't exist
+        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag_name*
+                 doesn't exist in the database!
     """
-    tag, _ = Tag.objects.get_or_create(name=tag_name)
+    request = kwargs.get(REQUEST_KEY)
+    tag, _ = Tag.get_or_create(request.user, tag_name)
     TestPlan.objects.get(pk=plan_id).add_tag(tag)
 
 

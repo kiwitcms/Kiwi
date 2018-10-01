@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from modernrpc.core import rpc_method
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from django.utils.dateparse import parse_duration
 
@@ -99,7 +99,7 @@ def get_cases(run_id):
 
 @permissions_required('testruns.add_testruntag')
 @rpc_method(name='TestRun.add_tag')
-def add_tag(run_id, tag_name):
+def add_tag(run_id, tag_name, **kwargs):
     """
     .. function:: XML-RPC TestRun.add_tag(run_id, tag)
 
@@ -112,8 +112,11 @@ def add_tag(run_id, tag_name):
         :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :raises: PermissionDenied if missing *testruns.add_testruntag* permission
         :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
+        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag_name*
+                 doesn't exist in the database!
     """
-    tag, _ = Tag.objects.get_or_create(name=tag_name)
+    request = kwargs.get(REQUEST_KEY)
+    tag, _ = Tag.get_or_create(request.user, tag_name)
     test_run = TestRun.objects.get(pk=run_id)
     test_run.add_tag(tag)
     return Tag.to_xmlrpc({'pk__in': test_run.tag.all()})

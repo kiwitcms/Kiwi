@@ -192,7 +192,7 @@ def get_notification_cc(case_id):
 
 @permissions_required('testcases.add_testcasetag')
 @rpc_method(name='TestCase.add_tag')
-def add_tag(case_id, tag):
+def add_tag(case_id, tag, **kwargs):
     """
     .. function:: XML-RPC TestCase.add_tag(case_id, tag)
 
@@ -205,8 +205,11 @@ def add_tag(case_id, tag):
         :return: None
         :raises: PermissionDenied if missing *testcases.add_testcasetag* permission
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
+        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag*
+                 doesn't exist in the database!
     """
-    tag, _ = Tag.objects.get_or_create(name=tag)
+    request = kwargs.get(REQUEST_KEY)
+    tag, _ = Tag.get_or_create(request.user, tag)
     TestCase.objects.get(pk=case_id).add_tag(tag)
 
 
@@ -279,6 +282,7 @@ def create(values, **kwargs):
         )
 
         # Add tag to the case
+        # todo: fix-tag-permissions: see BaseCaseForm as well
         for tag in string_to_list(values.get('tag', [])):
             tag, _ = Tag.objects.get_or_create(name=tag)
             test_case.add_tag(tag=tag)
