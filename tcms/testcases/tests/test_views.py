@@ -5,14 +5,12 @@ import unittest
 from http import HTTPStatus
 from urllib.parse import urlencode
 
-from django import test
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
 from django.forms import ValidationError
 
 from tcms.testcases.fields import MultipleEmailField
-from tcms.testcases.forms import CaseTagForm
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import BugSystem
@@ -24,7 +22,6 @@ from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TagFactory
 from tcms.tests import BasePlanCase, BaseCaseRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
@@ -113,39 +110,6 @@ class TestMultipleEmailField(unittest.TestCase):
         self.field.required = False
         data = self.field.clean(value)
         self.assertEqual(data, [])
-
-
-class CaseTagFormTest(test.TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.tag_1 = TagFactory(name='tag one')
-        cls.tag_2 = TagFactory(name='tag two')
-        cls.tag_3 = TagFactory(name='tag three')
-
-        cls.cases = []
-        for i in range(5):
-            case = TestCaseFactory(summary='test_case_number_%d' % i)
-            case.add_tag(cls.tag_1)
-            if i % 2 == 0:
-                case.add_tag(cls.tag_2)
-            if i % 3 == 0:
-                case.add_tag(cls.tag_3)
-            cls.cases.append(case)
-
-    def test_populate_from_cases_contains_all_three_tags(self):
-        case_ids = [case.pk for case in self.cases]
-        form = CaseTagForm()
-        form.populate(case_ids=case_ids)
-
-        self.assertEqual(3, len(form.fields['o_tag'].queryset))
-        form_tags = form.fields['o_tag'].queryset.values_list('name', flat=True)
-        self.assertIn(self.tag_1.name, form_tags)
-        self.assertIn(self.tag_2.name, form_tags)
-        self.assertIn(self.tag_3.name, form_tags)
-
-
-# ### Test cases for view methods ###
 
 
 class TestOperateComponentView(BasePlanCase):
