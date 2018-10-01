@@ -155,6 +155,21 @@ class Tag(TCMSActionModel):
             tags.append(new_tag)
         return tags
 
+    @classmethod
+    def get_or_create(cls, user, tag_name):
+        """
+            Helper method used to check if @user is allowed
+            to automatically create new Tag in the database!
+
+            If they are not, e.g. in environment where users
+            are forced to use pre-existing tags created by admin,
+            then it will raise a DoesNotExist exception.
+        """
+        if user.has_perm('management.add_tag'):
+            return cls.objects.get_or_create(name=tag_name)
+
+        return cls.objects.get(name=tag_name), False
+
 
 class EnvGroup(TCMSActionModel):
     name = models.CharField(unique=True, max_length=255)
