@@ -102,7 +102,11 @@ jQ(function() {
 						{% endfor %}
 					</ul>
 					{% if perms.testruns.add_testruntag %}
-					<div><a class="addlink js-add-tag" href="javascript:void(0)" data-param="{{ test_run.run_id }}">Add Tag</a></div>
+					<div>
+                                            <input id="id_tags" type="text">
+                                            <a class="addlink js-add-tag" href="#" data-param="{{ test_run.run_id }}">Add Tag</a>
+                                            <div id="id_tags_autocomplete"></div>
+                                        </div>
 					{% endif %}
 				</div>
 			</div>
