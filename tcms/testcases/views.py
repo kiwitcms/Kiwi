@@ -914,7 +914,6 @@ def update_testcase(request, tc, tc_form):
             tc.default_tester = tc_form.cleaned_data['default_tester']
     except ObjectDoesNotExist:
         pass
-    tc.update_tags(tc_form.cleaned_data.get('tag'))
 
     # FIXME: Bug here, timedelta from form cleaned data need to convert.
     tc.estimated_time = tc_form.cleaned_data['estimated_time']
@@ -1047,7 +1046,6 @@ def edit(request, case_id, template_name='case/edit.html'):
             'action': tctxt.action,
             'effect': tctxt.effect,
             'breakdown': tctxt.breakdown,
-            'tag': ','.join(tc.tag.values_list('name', flat=True)),
         })
 
         form.populate(product_id=tc.category.product_id)
