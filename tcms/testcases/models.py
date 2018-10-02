@@ -305,20 +305,6 @@ class TestCase(TCMSActionModel):
     def add_tag(self, tag):
         return TestCaseTag.objects.get_or_create(case=self, tag=tag)
 
-    def update_tags(self, new_tags):
-        """
-        Update case.tag
-        so that case.tag == new_tags
-        """
-        if new_tags is None or not isinstance(new_tags, list):
-            return
-        owning_tags = set(self.tag.iterator())
-        new_tags = set(new_tags)
-        tags_to_remove = owning_tags.difference(new_tags)
-        tags_to_add = new_tags.difference(owning_tags)
-        map(lambda c: self.add_tag(c), tags_to_add)
-        map(lambda c: self.remove_tag(c), tags_to_remove)
-
     def add_text(
             self,
             action,

@@ -9,7 +9,7 @@ from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
-from tcms.management.models import Priority, Product, Component, Tag
+from tcms.management.models import Priority, Product, Component
 from tcms.testcases.models import TestCase, Category, TestCaseStatus
 from tcms.testcases.models import Bug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from tcms.testcases.fields import MultipleEmailField
@@ -117,11 +117,6 @@ class BaseCaseForm(forms.Form):
     effect = forms.CharField(label="Expect results", widget=SimpleMDE(), required=False)
     breakdown = forms.CharField(label="Breakdown", widget=SimpleMDE(), required=False)
 
-    tag = forms.CharField(
-        label="Tag",
-        required=False
-    )
-
     def __init__(self, *args, **kwargs):
         if args:
             self.notes_val = args[0].get('notes', None)
@@ -159,17 +154,6 @@ class BaseCaseForm(forms.Form):
             return self.cleaned_data['notes']
 
         return ''
-
-    # todo: fix-tag-permissions
-    # we have to redesign the new TC form with Patternfly and figure out
-    # if tags will be visible in the form b/c they can also be added later
-    # todo: this also needs to support autocomplete
-    def clean_tag(self):
-        tags = []
-        if self.cleaned_data['tag']:
-            tag_names = string_to_list(self.cleaned_data['tag'])
-            tags = Tag.get_or_create_many_by_name(tag_names)
-        return tags
 
     def populate(self, product_id=None):
         if product_id:

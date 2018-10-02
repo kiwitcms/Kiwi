@@ -135,7 +135,6 @@ class Build(TCMSActionModel):
         return self.name
 
 
-# Test tag zone
 class Tag(TCMSActionModel):
     id = models.AutoField(db_column='tag_id', max_length=10, primary_key=True)
     name = models.CharField(db_column='tag_name', max_length=255)
@@ -146,14 +145,6 @@ class Tag(TCMSActionModel):
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def get_or_create_many_by_name(cls, names):
-        tags = []
-        for name in names:
-            new_tag = cls.objects.get_or_create(name=name)[0]
-            tags.append(new_tag)
-        return tags
 
     @classmethod
     def get_or_create(cls, user, tag_name):
