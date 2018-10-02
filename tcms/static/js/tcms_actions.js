@@ -569,23 +569,31 @@ function postToURL(path, params, method) {
   form.submit();
 }
 
+/*
+    Used to configure autocomplete for 'Add Tag' widgets
+*/
+function setAddTagAutocomplete() {
+    jQ('#id_tags').autocomplete({
+        'source': function(request, response) {
+            jsonRPC('Tag.filter', {'name__startswith': request.term}, function(data) {
+                var processedData = [];
+                data.forEach(function(element) {
+                    processedData.push(element.name);
+                });
+                response(processedData);
+            });
+        },
+        'minLength': 2,
+        'appendTo': '#id_tags_autocomplete'
+    });
+}
+
+
 function constructTagZone(container, parameters) {
   $(container).html('<div class="ajax_loading"></div>');
 
   var complete = function(t) {
-    jQ('#id_tags').autocomplete({
-      'source': function(request, response) {
-        jsonRPC('Tag.filter', {'name__startswith': request.term}, function(data) {
-            var processedData = [];
-            data.forEach(function(element) {
-                processedData.push(element.name);
-            });
-            response(processedData);
-        });
-      },
-      'minLength': 2,
-      'appendTo': '#id_tags_autocomplete'
-    });
+    setAddTagAutocomplete();
 
     $('#id_tag_form').bind('submit', function(e){
       e.stopPropagation();

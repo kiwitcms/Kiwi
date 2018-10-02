@@ -6,6 +6,8 @@ Nitrate.TestRuns.AssignCase = {}
 
 
 Nitrate.TestRuns.Details.on_load = function() {
+  setAddTagAutocomplete();
+
   // Observe the interface buttons
   jQ('#id_check_all_button').bind('click', function(e) {
     toggleAllCheckBoxes(this, 'id_table_cases', 'case_run');
@@ -858,13 +860,16 @@ function updateTagContainer(container, data, run_id) {
 }
 
 function addRunTag(container, run_id) {
-    var tag = window.prompt('Please type new tag.');
+    var tag_container = $('#id_tags');
+    var tag = tag_container.val();
+
     if (!tag) {
         return false;
     }
 
     var inner_callback = function(data) {
         updateTagContainer(container, data, run_id);
+        tag_container.val('');
     }
     jsonRPC('TestRun.add_tag', [run_id, tag], inner_callback);
 }
