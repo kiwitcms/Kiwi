@@ -5,7 +5,7 @@ from django.forms import EmailField, ValidationError
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from tcms.core.utils import string_to_list, form_errors_to_list
+from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
@@ -280,12 +280,6 @@ def create(values, **kwargs):
             setup=form.cleaned_data['setup'] or '',
             breakdown=form.cleaned_data['breakdown'] or '',
         )
-
-        # Add tag to the case
-        # todo: fix-tag-permissions: see BaseCaseForm as well
-        for tag in string_to_list(values.get('tag', [])):
-            tag, _ = Tag.objects.get_or_create(name=tag)
-            test_case.add_tag(tag=tag)
     else:
         # Print the errors if the form is not passed validation.
         raise ValueError(form_errors_to_list(form))
