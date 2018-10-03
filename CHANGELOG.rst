@@ -16,7 +16,7 @@ Improvements
 ~~~~~~~~~~~~
 
 - Update to `Django 2.1.2 <https://docs.djangoproject.com/en/2.1/releases/2.1.2/>`_
-  due to medium severity security issue
+  due to high severity security issue
 - Update to `Patternfly 3.54.8 <https://github.com/patternfly/patternfly/releases>`_
 - ``Tag`` objects are now shown in Admin panel
 - Add autocomplete when adding tags to ``TestRun`` via UI
