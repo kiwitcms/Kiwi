@@ -119,7 +119,7 @@ class TestCreateNewRun(BasePlanCase):
         })
 
         # Assert listed cases
-        for i, case in enumerate((self.case_1, self.case_2, self.case_3), 1):
+        for _i, case in enumerate((self.case_1, self.case_2, self.case_3), 1):
             case_url = reverse('testcases-get', args=[case.pk])
             self.assertContains(
                 response,
@@ -257,9 +257,9 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             response,
             reverse('testruns-get', args=[cloned_run.pk]))
 
-        self.assert_cloned_run(self.test_run, cloned_run)
+        self.assert_cloned_run(cloned_run)
 
-    def assert_cloned_run(self, origin_run, cloned_run):
+    def assert_cloned_run(self, cloned_run):
         # Assert clone settings result
         for origin_case_run, cloned_case_run in zip((self.case_run_1, self.case_run_2),
                                                     cloned_run.case_run.order_by('pk')):
@@ -473,11 +473,15 @@ class TestRemoveCaseRuns(BaseCaseRun):
                              reverse('testruns-get', args=[self.test_run.pk]))
 
     def test_redirect_to_add_case_runs_if_all_case_runs_are_removed(self):
+        case_runs = []
+
+        for case_run in self.test_run.case_run.all():
+            case_runs.append(case_run.pk)
+
         response = self.client.post(
             self.remove_case_run_url,
             {
-                'case_run': [case_run.pk for case_run
-                             in self.test_run.case_run.all()]
+                'case_run': case_runs
             })
 
         self.assertRedirects(response,

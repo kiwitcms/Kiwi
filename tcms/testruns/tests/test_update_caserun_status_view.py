@@ -31,7 +31,7 @@ class TestUpdateCaseRunStatusView(BaseCaseRun):
 
         self.assertJSONEqual(
             str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0,  'response': 'ok'})
+            {'rc': 0, 'response': 'ok'})
 
         for caserun in [self.case_run_1, self.case_run_2]:
             caserun.refresh_from_db()

@@ -334,6 +334,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
     """Test Run report"""
 
     template_name = 'run/report.html'
+    run_id = None
 
     def get(self, request, run_id):
         self.run_id = run_id
@@ -451,7 +452,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 test_case_run.add_bug(bug_id=bug_id,
                                       bug_system_id=bug_system_id,
                                       bz_external_track=bz_external_track)
-            except Exception as error:
+            except ValueError as error:
                 msg = str(error) if str(error) else 'Failed to add bug %s' % bug_id
                 return JsonResponse({'rc': 1,
                                      'response': msg})
