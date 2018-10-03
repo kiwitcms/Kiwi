@@ -461,7 +461,6 @@ class TestEditCase(BasePlanCase):
             'product': cls.case_1.category.product.pk,
             'category': cls.case_1.category.pk,
             'default_tester': '',
-            'estimated_time': '0',
             'case_status': cls.case_status_confirmed.pk,
             'arguments': '',
             'extra_link': '',

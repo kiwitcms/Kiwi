@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from django.conf import settings
 from django.urls import reverse
@@ -107,7 +107,6 @@ class TestCase(TCMSActionModel):
     summary = models.CharField(max_length=255)
     requirement = models.CharField(max_length=255, blank=True, null=True)
     alias = models.CharField(max_length=255, blank=True)
-    estimated_time = models.DurationField(default=timedelta(0))
     notes = models.TextField(blank=True, null=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
@@ -170,7 +169,6 @@ class TestCase(TCMSActionModel):
             summary=values['summary'],
             requirement=values['requirement'],
             alias=values['alias'],
-            estimated_time=values['estimated_time'],
             case_status=values['case_status'],
             category=values['category'],
             priority=values['priority'],

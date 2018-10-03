@@ -2,7 +2,6 @@
 
 from datetime import datetime
 from http import HTTPStatus
-from functools import reduce
 
 from django.conf import settings
 from django.contrib import messages
@@ -95,7 +94,6 @@ def new(request):
                 build=form.cleaned_data['build'],
                 manager=form.cleaned_data['manager'],
                 default_tester=default_tester,
-                estimated_time=form.cleaned_data['estimated_time'],
             )
 
             try:
@@ -302,7 +300,6 @@ def edit(request, run_id):
             test_run.build = form.cleaned_data['build']
             test_run.product_version = test_run.plan.product_version
             test_run.notes = form.cleaned_data['notes']
-            test_run.estimated_time = form.cleaned_data['estimated_time']
             test_run.save()
 
             return HttpResponseRedirect(reverse('testruns-get', args=[run_id, ]))
@@ -316,7 +313,6 @@ def edit(request, run_id):
             'version': test_run.product_version_id,
             'build': test_run.build_id,
             'notes': test_run.notes,
-            'estimated_time': test_run.estimated_time,
         })
         form.populate(test_run.plan.product_id)
 
@@ -649,13 +645,8 @@ class AddCasesToRunView(View):
 
         test_plan = test_run.plan
         test_cases = test_run.plan.case.filter(case_status__name='CONFIRMED').select_related(
-            'default_tester').only('default_tester__id', 'estimated_time').filter(
+            'default_tester').only('default_tester__id').filter(
                 case_id__in=test_cases_ids)
-
-        estimated_time = reduce(lambda x, y: x + y,
-                                (test_case.estimated_time for test_case in test_cases))
-        test_run.estimated_time = test_run.estimated_time + estimated_time
-        test_run.save(update_fields=['estimated_time'])
 
         if request.POST.get('_use_plan_sortkey'):
             test_case_pks = (test_case.pk for test_case in test_cases)

@@ -333,13 +333,6 @@ def _add_cases_to_runs(request, plan_id):
             if test_case.case_id not in existing_cases:
                 test_run.add_case_run(case=test_case)
 
-        estimated_time = datetime.timedelta(0)
-        for case in to_be_added_cases:
-            estimated_time += case.estimated_time
-
-        test_run.estimated_time = test_run.estimated_time + estimated_time
-        test_run.save()
-
     if not cases_selected:
         messages.add_message(request,
                              messages.ERROR,
