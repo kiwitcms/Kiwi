@@ -1,13 +1,91 @@
 Change Log
 ==========
 
+
+Kiwi TCMS 6.0 (04 Oct 2018)
+---------------------------
+
+**IMPORTANT:** this release introduces new database migrations, removal of
+environment properties in favor of tags, internal updates and bug fixes.
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update to `Django 2.1.2 <https://docs.djangoproject.com/en/2.1/releases/2.1.2/>`_
+  due to medium severity security issue
+- Update to `Patternfly 3.54.8 <https://github.com/patternfly/patternfly/releases>`_
+- ``Tag`` objects are now shown in Admin panel
+- Add autocomplete when adding tags to ``TestRun`` via UI
+
+
+Removed functionality
+~~~~~~~~~~~~~~~~~~~~~
+
+- TestCase new and edit views no longer allow editting of tags. Tags can be
+  added/removed from the Tags tab which also makes sure to properly account
+  for permissions
+- Remove ``EnvGroup``, ``EnvProperty`` and ``EnvValue`` models in favor of tags.
+  Existing values and properties are converted into tags and automatically added
+  to test runs!
+- Convert squashed database migrations to regular ones and remove older migrations.
+  **WARNING:** upgrade from versions <= 5.3.1 to 6.0 will break without an intermediate
+  upgrade to ``kiwitcms/kiwi:5.3.1 a420465852be``.
+- Remove deprecated ``TestCase.estimated_time`` and ``TestRun.estimated_time``. Fixes
+  `Issue #514 <https://github.com/kiwitcms/Kiwi/issues/514>`_
+
+
+Backend API
+-----------
+
+- No longer use ``product_version`` for ``TestRun.create``. Fixes
+  `Issue #522 <https://github.com/kiwitcms/Kiwi/issues/522>`_
+
+  - 'product' is no longer required
+  - 'product_version' is no longer required
+  - 'manager' and 'default_tester' can be usernames or IDs
+
+- ``TestCase.create`` no longer accepts 'tag' values
+- ``TestRun.add_tag`` and ``TestRun.remove_tag`` now return list of tags.
+  Previously these methods returned ``None``!
+  This is the list of tags assigned to the TestRun that is being modified!
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix mismatched HTML tag in ``plan/get.html`` template (Oleg Kainov)
+- Don't use ``|slugify`` filter in templates which breaks HTML links with non-ASCII
+  TestPlan names. Fixes
+  `Sentry KIWI-TCMS-38 <https://sentry.io/open-technologies-bulgaria-ltd/kiwi-tcms/issues/676626096/>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Fix pylint errors (Ivaylo Ivanov, Anton Sankov)
+- Use existing JSON-RPC methods to add/remove tags via webUI and remove specialized
+  backend methods that handled these requests. Also make sure to obey respective
+  permissions
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 5.3.1 (04 Sept 2018)
 ----------------------------
 
 Visual changes
 ~~~~~~~~~~~~~~
 
-- Adds pagination controls to pages with search results
+- Add pagination controls to pages with search results
 
 
 
@@ -24,7 +102,7 @@ tag on StackOverflow to track questions.
 
 This will be the last release to carry around squashed migrations. In version
 6.0 older migrations will be deleted and upgrades from versions <=5.2 to 6.0
-will break without an intermediate upgrade to 5.3! Use ``kiwitcms/Kiwi:5.3``
+will break without an intermediate upgrade to 5.3! Use ``kiwitcms/kiwi:5.3.1``
 from Docker Hub when upgrading at some point in the future!
 
 
