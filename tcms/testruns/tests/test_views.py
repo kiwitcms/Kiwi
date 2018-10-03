@@ -2,7 +2,6 @@
 # pylint: disable=invalid-name
 
 from http import HTTPStatus
-from datetime import timedelta
 
 from django.utils import formats
 from django.urls import reverse
@@ -157,7 +156,6 @@ class TestCreateNewRun(BasePlanCase):
         self.assertEqual(self.version, new_run.product_version)
         self.assertEqual(None, new_run.stop_date)
         self.assertEqual('Clone new run', new_run.notes)
-        self.assertEqual(timedelta(0), new_run.estimated_time)
         self.assertEqual(self.build_fast, new_run.build)
         self.assertEqual(self.tester, new_run.manager)
         self.assertEqual(self.tester, new_run.default_tester)
@@ -245,7 +243,6 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'errata_id': '',
             'manager': self.test_run.manager.email,
             'default_tester': self.test_run.default_tester.email,
-            'estimated_time': '0',
             'notes': '',
             'case': [self.case_run_1.case.pk, self.case_run_2.case.pk],
             'case_run_id': [self.case_run_1.pk, self.case_run_2.pk],

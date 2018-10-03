@@ -3,8 +3,6 @@ from datetime import datetime
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from django.utils.dateparse import parse_duration
-
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
@@ -164,11 +162,6 @@ def create(values):
             }
             >>> TestRun.create(values)
     """
-    # TODO: XMLRPC only accept HH:MM:SS rather than DdHhMm
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(
-            values.get('estimated_time'))
-
     form = XMLRPCNewRunForm(values)
     form.assign_plan(values.get('plan'))
 
@@ -177,7 +170,6 @@ def create(values):
             product_version=form.cleaned_data['plan'].product_version,
             summary=form.cleaned_data['summary'],
             notes=form.cleaned_data['notes'],
-            estimated_time=form.cleaned_data['estimated_time'],
             plan=form.cleaned_data['plan'],
             build=form.cleaned_data['build'],
             manager=form.cleaned_data['manager'],
@@ -227,10 +219,6 @@ def update(run_id, values):
     if (values.get('product_version') and not values.get('product')):
         raise ValueError('Field "product" is required by product_version')
 
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(
-            values.get('estimated_time'))
-
     form = XMLRPCUpdateRunForm(values)
     if values.get('product_version'):
         form.populate(product_id=values['product'])
@@ -259,9 +247,6 @@ def _get_updated_test_run(run_id, values, form):
 
     if form.cleaned_data['summary']:
         test_run.summary = form.cleaned_data['summary']
-
-    if values.get('estimated_time') is not None:
-        test_run.estimated_time = form.cleaned_data['estimated_time']
 
     if form.cleaned_data['product_version']:
         test_run.product_version = form.cleaned_data['product_version']

@@ -196,30 +196,6 @@ function checkCookie() {
   }
 }
 
-function removeItem(item, tc_estimated_time) {
-  var tr_estimated_time = parseInt(jQ('#estimated_time').data('time'));
-  var remain_estimated_time = tr_estimated_time - tc_estimated_time;
-  var second_value = remain_estimated_time % 60;
-  var minute = parseInt(remain_estimated_time / 60);
-  var minute_value = minute % 60;
-  var hour = parseInt(minute / 60);
-  var hour_value = hour % 24;
-  var day_value = parseInt(hour / 24);
-
-  var remain_estimated_time_value = day_value ? day_value + ' ' : '';
-  remain_estimated_time_value += hour_value + ':';
-  remain_estimated_time_value += minute_value + ':';
-  remain_estimated_time_value += second_value;
-
-  if (!remain_estimated_time_value.length) {
-    remain_estimated_time_value = '0';
-  }
-
-  jQ('#estimated_time').data('time', remain_estimated_time);
-  document.getElementById('id_estimated_time').value = remain_estimated_time_value;
-  jQ('#' + item).remove();
-}
-
 function splitString(str, num) {
   cut_for_dot = num - 3;
 

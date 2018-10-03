@@ -111,7 +111,6 @@ class BaseCaseForm(forms.Form):
         widget=forms.Textarea,
         required=False
     )
-    estimated_time = forms.DurationField(label='Estimated Time', initial='0', required=False)
     setup = forms.CharField(label="Setup", widget=SimpleMDE(), required=False)
     action = forms.CharField(label="Actions", widget=SimpleMDE(), required=False)
     effect = forms.CharField(label="Expect results", widget=SimpleMDE(), required=False)
@@ -200,7 +199,6 @@ class CaseNotifyForm(forms.Form):
 
 
 class XMLRPCBaseCaseForm(BaseCaseForm):
-    estimated_time = forms.DurationField(required=False)
     is_automated = forms.ChoiceField(
         choices=FULL_AUTOMATED_CHOICES,
         widget=forms.CheckboxSelectMultiple(),

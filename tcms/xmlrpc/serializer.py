@@ -459,7 +459,6 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """Serializer for TestRun"""
 
     values_fields_mapping = {
-        'estimated_time': ('estimated_time', timedelta_to_str),
         'notes': ('notes', do_nothing),
         'run_id': ('run_id', do_nothing),
         'start_date': ('start_date', datetime_to_str),
@@ -487,7 +486,6 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'arguments': ('arguments', do_nothing),
         'case_id': ('case_id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
-        'estimated_time': ('estimated_time', timedelta_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_automated': ('is_automated', do_nothing),
         'is_automated_proposed': ('is_automated_proposed', do_nothing),

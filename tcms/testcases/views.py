@@ -915,8 +915,6 @@ def update_testcase(request, tc, tc_form):
     except ObjectDoesNotExist:
         pass
 
-    # FIXME: Bug here, timedelta from form cleaned data need to convert.
-    tc.estimated_time = tc_form.cleaned_data['estimated_time']
     # IMPORTANT! tc.current_user is an instance attribute,
     # added so that in post_save, current logged-in user info
     # can be accessed.
@@ -1041,7 +1039,6 @@ def edit(request, case_id, template_name='case/edit.html'):
             'category': tc.category_id,
             'notes': tc.notes,
             'component': [c.pk for c in tc.component.all()],
-            'estimated_time': tc.estimated_time,
             'setup': tctxt.setup,
             'action': tctxt.action,
             'effect': tctxt.effect,
@@ -1130,7 +1127,6 @@ def clone(request, template_name='case/clone.html'):
                         summary=tc_src.summary,
                         requirement=tc_src.requirement,
                         alias=tc_src.alias,
-                        estimated_time=tc_src.estimated_time,
                         case_status=TestCaseStatus.get_PROPOSED(),
                         category=tc_src.category,
                         priority=tc_src.priority,

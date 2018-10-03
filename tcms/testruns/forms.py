@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import timedelta
-
 from django import forms
 from django.contrib.auth.models import User
 
@@ -16,7 +14,6 @@ class BaseRunForm(forms.Form):
     summary = forms.CharField(max_length=255)
     manager = UserField()
     default_tester = UserField(required=False)
-    estimated_time = forms.DurationField(required=False)
     build = forms.ModelChoiceField(
         queryset=Build.objects.none(),
     )
@@ -28,13 +25,6 @@ class BaseRunForm(forms.Form):
     def populate(self, product_id):
         query = {'product_id': product_id}
         self.fields['build'].queryset = Build.list_active(query)
-
-    def clean_estimated_time(self):
-        estimated_time = self.cleaned_data.get('estimated_time', timedelta(0))
-        # can be either None, '', 0 or timedelta(0)
-        if not estimated_time:
-            estimated_time = timedelta(0)
-        return estimated_time
 
 
 class NewRunForm(BaseRunForm):

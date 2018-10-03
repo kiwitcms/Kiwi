@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.utils.dateparse import parse_duration
 from django.forms import EmailField, ValidationError
 
 from modernrpc.core import rpc_method, REQUEST_KEY
@@ -263,9 +262,6 @@ def create(values, **kwargs):
     if not (values.get('category') or values.get('summary')):
         raise ValueError()
 
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(values.get('estimated_time'))
-
     form = NewCaseForm(values)
     form.populate(values.get('product'))
 
@@ -305,9 +301,6 @@ def filter(query):  # pylint: disable=redefined-builtin
                  :class:`tcms.testcases.models.TestCaseText` object!
         :rtype: list(dict)
     """
-    if query.get('estimated_time'):
-        query['estimated_time'] = parse_duration(query.get('estimated_time'))
-
     results = []
     for case in TestCase.objects.filter(**query).distinct():
         serialized_case = case.serialize()
@@ -337,9 +330,6 @@ def update(case_id, values, **kwargs):
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
     """
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(values.get('estimated_time'))
-
     form = UpdateCaseForm(values)
 
     if values.get('category') and not values.get('product'):
