@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-03 06:58+0000\n"
-"PO-Revision-Date: 2018-10-04 11:11\n"
+"PO-Revision-Date: 2018-10-04 11:20\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -370,11 +370,11 @@ msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Bitte geben Sie Ihr neues Kennwort erneut ein, damit wir überprüfen können das Sie es korrekt eingegeben haben"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "E-Mail zum Zurücksetzung des Passworts wurde gesendet"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
@@ -391,15 +391,15 @@ msgstr ""
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Neues Benutzerkonto anlegen"
 
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Registrieren"
 
 #: tcms/testcases/forms.py:36
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Bitte Eingabe gültiger Fall IDs. Verwenden Sie ein Komma um mehrere Fall-Ids zu trennen. z.B. \"111, 222\""
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
@@ -471,7 +471,7 @@ msgstr "Ersteller"
 #: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Schlagwort"
 
 #: tcms/testcases/templates/testcases/search.html:100
 #: tcms/testcases/templates/testcases/search.html:106
@@ -483,19 +483,19 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:103
 #: tcms/testcases/templates/testcases/search.html:105
 msgid "Bug ID"
-msgstr ""
+msgstr "Fehler-ID"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testplans/templates/testplans/search.html:129
 #: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
-msgstr ""
+msgstr "Suche"
 
 #: tcms/testcases/templates/testcases/search.html:120
 #: tcms/testplans/templates/testplans/search.html:137
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/testcases/templates/testcases/search.html:123
 #: tcms/testruns/templates/testruns/search.html:94
@@ -504,7 +504,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:128
 msgid "Created at"
-msgstr ""
+msgstr "Angelegt am"
 
 #: tcms/testcases/views.py:521
 msgid "TestPlan not specified or does not exist"
@@ -563,7 +563,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:139
 msgid "Created"
-msgstr ""
+msgstr "Angelegt"
 
 #: tcms/testplans/views.py:346
 msgid "Select at least one TestRun and one TestCase"
@@ -571,7 +571,7 @@ msgstr ""
 
 #: tcms/testplans/views.py:424
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Testplan ist erforderlich"
 
 #: tcms/testplans/views.py:645
 msgid "At least one test plan is required for print"
@@ -596,18 +596,18 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Neuer Testlauf"
 
 #: tcms/testruns/templates/testruns/mutable.html:33
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Build"
-msgstr ""
+msgstr "Build"
 
 #: tcms/testruns/templates/testruns/mutable.html:36
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "add new Build"
-msgstr ""
+msgstr "neuen Build hinzufügen"
 
 #: tcms/testruns/templates/testruns/mutable.html:46
 msgid "version"
