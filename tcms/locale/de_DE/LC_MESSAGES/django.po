@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-03 06:58+0000\n"
-"PO-Revision-Date: 2018-10-04 11:20\n"
+"PO-Revision-Date: 2018-10-04 11:31\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -115,7 +115,7 @@ msgstr "TESTEN"
 
 #: tcms/settings/common.py:83
 msgid "New Test Plan"
-msgstr ""
+msgstr "Neuer Testplan"
 
 #: tcms/settings/common.py:85
 msgid "New Test Case"
@@ -127,15 +127,15 @@ msgstr "SUCHEN"
 
 #: tcms/settings/common.py:88
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Suche Testplan"
 
 #: tcms/settings/common.py:89
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Suche Testlauf"
 
 #: tcms/settings/common.py:90
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Suche Testfall"
 
 #: tcms/settings/common.py:92
 msgid "REPORTING"
@@ -143,15 +143,15 @@ msgstr "BERICHTERSTATTUNG"
 
 #: tcms/settings/common.py:93
 msgid "Overall report"
-msgstr ""
+msgstr "Gesamtbericht"
 
 #: tcms/settings/common.py:94
 msgid "Custom report"
-msgstr ""
+msgstr "Benutzerdefinierter Bericht"
 
 #: tcms/settings/common.py:95
 msgid "Testing report"
-msgstr ""
+msgstr "Test-Bericht"
 
 #: tcms/settings/common.py:97
 msgid "ADMIN"
@@ -159,27 +159,27 @@ msgstr "ADMIN"
 
 #: tcms/settings/common.py:98
 msgid "Users and groups"
-msgstr ""
+msgstr "Benutzer und Gruppen"
 
 #: tcms/settings/common.py:100
 msgid "Everything else"
-msgstr ""
+msgstr "Alles andere"
 
 #: tcms/settings/common.py:106
 msgid "Report an Issue"
-msgstr ""
+msgstr "Einen Fehler melden"
 
 #: tcms/settings/common.py:107
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Bitten Sie um Hilfe auf StackOverflow"
 
 #: tcms/settings/common.py:108
 msgid "User Guide"
-msgstr ""
+msgstr "Benutzerhandbuch"
 
 #: tcms/settings/common.py:109
 msgid "Administration Guide"
-msgstr ""
+msgstr "Administratorhandbuch"
 
 #: tcms/settings/common.py:110
 msgid "API Help"
