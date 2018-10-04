@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-03 06:58+0000\n"
-"PO-Revision-Date: 2018-10-04 11:06\n"
+"PO-Revision-Date: 2018-10-04 11:11\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -52,7 +52,7 @@ msgstr "Ihr Konto wurde erstellt, bitte überprüfen Sie Ihre Mailbox für die B
 
 #: tcms/core/contrib/auth/views.py:53
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Ihr Konto wurde erstellt, wenden Sie sich an einen Administrator um es zu aktivieren"
 
 #: tcms/core/contrib/auth/views.py:59
 msgid "Following is the administrator list"
@@ -328,11 +328,11 @@ msgstr ""
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Nächste Seite"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Letzte Seite"
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
@@ -343,7 +343,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Benutzername"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
@@ -379,11 +379,11 @@ msgstr ""
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "E-Mail-Adresse"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Passwort zurücksetzen"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
@@ -404,7 +404,7 @@ msgstr ""
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
-msgstr ""
+msgstr "GELÖSCHT: Testfall #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -417,17 +417,17 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:91
 msgid "Summary"
-msgstr ""
+msgstr "Zusammenfassung"
 
 #: tcms/testcases/templates/testcases/search.html:13
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Zusammenfassung Testlauf"
 
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testcases/templates/testcases/search.html:124
 msgid "Automated"
-msgstr ""
+msgstr "Automatisiert"
 
 #: tcms/testcases/templates/testcases/search.html:26
 msgid "Proposed for automation"
@@ -451,13 +451,13 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:127
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
-msgstr ""
+msgstr "Priorität"
 
 #: tcms/testcases/templates/testcases/search.html:75
 #: tcms/testcases/templates/testcases/search.html:125
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: tcms/testcases/templates/testcases/search.html:88
 #: tcms/testcases/templates/testcases/search.html:122
@@ -465,7 +465,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Ersteller"
 
 #: tcms/testcases/templates/testcases/search.html:97
 #: tcms/testplans/templates/testplans/search.html:116
