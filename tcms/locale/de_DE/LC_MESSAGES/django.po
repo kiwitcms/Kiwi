@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-03 06:58+0000\n"
-"PO-Revision-Date: 2018-10-04 11:51\n"
+"PO-Revision-Date: 2018-10-04 12:10\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -119,7 +119,7 @@ msgstr "Neuer Testplan"
 
 #: tcms/settings/common.py:85
 msgid "New Test Case"
-msgstr ""
+msgstr "Neuer Testfall"
 
 #: tcms/settings/common.py:87
 msgid "SEARCH"
@@ -289,7 +289,8 @@ msgstr ""
 #, python-format
 msgid "\n"
 "TestCase has been updated by %(username)s!\n"
-msgstr ""
+msgstr "\n"
+"Testfall wurde von %(username)s aktualisiert!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -411,7 +412,7 @@ msgstr "GELÖSCHT: Testfall #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Suche Testfall"
 
 #: tcms/testcases/templates/testcases/search.html:11
 #: tcms/testcases/templates/testcases/search.html:121
@@ -516,11 +517,11 @@ msgstr ""
 #: tcms/testcases/views.py:1107 tcms/testruns/views.py:549
 #: tcms/testruns/views.py:627
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Mindestens ein Testfall ist erforderlich"
 
 #: tcms/testcases/views.py:1256
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Das Konen des Testfalls war erfolgreich"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -637,7 +638,7 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:81
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Ausgewählte/r Testfall/-fälle:"
 
 #: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
@@ -690,7 +691,7 @@ msgstr "Testfall-ID ist keine gültige Ganzzahl"
 #: tcms/testruns/views.py:768
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr "%d Testläufe aktualisiert:"
+msgstr "%d einzelne Tests aktualisiert:"
 
 #: tcms/xmlrpc/serializer.py:298
 #, python-format
@@ -727,7 +728,7 @@ msgstr "FEHLER"
 
 #: vinaigrette-deleteme.py:9
 msgid "WAIVED"
-msgstr "VERZICHTET"
+msgstr "ÜBERSPRUNGEN"
 
 #: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
