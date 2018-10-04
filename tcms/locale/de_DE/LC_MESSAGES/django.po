@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-03 06:58+0000\n"
-"PO-Revision-Date: 2018-10-04 11:44\n"
+"PO-Revision-Date: 2018-10-04 11:51\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -64,7 +64,7 @@ msgstr ""
 
 #: tcms/core/contrib/auth/views.py:95
 msgid "This activation key has expired"
-msgstr "Dieser Aktivierungslink ist nicht mehr gültig"
+msgstr "Diese Aktivierungs-Code ist abgelaufen"
 
 #: tcms/core/contrib/auth/views.py:107
 msgid "Your account has been activated successfully"
@@ -661,36 +661,36 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "Testplan ID"
 
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "Wird durchgeführt"
 
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Finished at"
-msgstr ""
+msgstr "Abgeschlossen am"
 
 #: tcms/testruns/views.py:51
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Das Erstellen eines Testlaufs erfordert einen Testplan, bitte wählen Sie einen aus"
 
 #: tcms/testruns/views.py:61
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Das Erstellen eines Testlaufs erfordert mindestens einen Testfall"
 
 #: tcms/testruns/views.py:553
 msgid "Clone of "
-msgstr ""
+msgstr "Klon von "
 
 #: tcms/testruns/views.py:636
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "Testfall-ID ist keine gültige Ganzzahl"
 
 #: tcms/testruns/views.py:768
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "%d Testläufe aktualisiert:"
 
 #: tcms/xmlrpc/serializer.py:298
 #, python-format
@@ -699,7 +699,7 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
-msgstr ""
+msgstr "INAKTIV"
 
 #: vinaigrette-deleteme.py:3
 msgid "RUNNING"
