@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-03 06:58+0000\n"
-"PO-Revision-Date: 2018-10-04 11:31\n"
+"PO-Revision-Date: 2018-10-04 11:44\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -183,7 +183,7 @@ msgstr "Administratorhandbuch"
 
 #: tcms/settings/common.py:110
 msgid "API Help"
-msgstr ""
+msgstr "API-Hilfe"
 
 #: tcms/signals.py:74
 msgid "New user awaiting approval"
@@ -192,31 +192,31 @@ msgstr ""
 #: tcms/signals.py:149
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "Neu: Testlauf #%(pk)d - %(summary)s"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Die Seite wurde nicht gefunden"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Interner Serverfehler"
 
 #: tcms/templates/base.html:9 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "das führende Open-Source Testfall-Management-System"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Übersicht"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Testausführungen"
 
 #: tcms/templates/dashboard.html:18
 msgid "Started at"
-msgstr ""
+msgstr "Gestartet am"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -228,7 +228,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
-msgstr ""
+msgstr "ALLE ANZEIGEN"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
@@ -236,11 +236,11 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
-msgstr ""
+msgstr "Ihre Testpläne"
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
-msgstr ""
+msgstr "Testplan"
 
 #: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/search.html:34
@@ -250,17 +250,17 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #: tcms/templates/dashboard.html:50
 #: tcms/testplans/templates/testplans/search.html:86
 #: tcms/testplans/templates/testplans/search.html:143
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: tcms/templates/dashboard.html:51
 msgid "Executions"
-msgstr ""
+msgstr "Ausführungen"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
@@ -268,7 +268,10 @@ msgid "\n"
 "                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"                Sie verwalten, %(total_count)s Testplan/-pläne, %(disabled_count)s ist/sind deaktiviert.\n"
+"                Hier sind die neuesten %(count)s.\n"
+"                "
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
@@ -316,15 +319,15 @@ msgstr ""
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Erste Seite"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Vorherige Seite"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Aktuelle Seite"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
@@ -349,24 +352,24 @@ msgstr "Benutzername"
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Login"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Willkommen beim Kiwi TCMS"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 msgid "Confirm"
-msgstr ""
+msgstr "Bestätige"
 
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Passwort ändern"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
