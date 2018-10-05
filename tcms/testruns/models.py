@@ -78,49 +78,6 @@ class TestRun(TCMSActionModel):
         serializer = TestRunXMLRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
-    @classmethod
-    def list(cls, query):
-        mapping = {
-            'search': lambda value: Q(run_id__icontains=value) | Q(summary__icontains=value),
-            'summary': lambda value: Q(summary__icontains=value),
-            'product': lambda value: Q(build__product=value),
-            'product_version': lambda value: Q(product_version=value),
-            'plan': plan_by_id_or_name,
-            'build': lambda value: Q(build=value),
-            'people_id': lambda value: Q(manager__id=value) | Q(default_tester__id=value),
-            'manager': lambda value: Q(manager=value),
-            'default_tester': lambda value: Q(default_tester=value),
-            'tag__name__in': lambda value: Q(tag__name__in=value),
-            'case_run__assignee': lambda value: Q(case_run__assignee=value),
-            'status': lambda value: {
-                'running': Q(stop_date__isnull=True),
-                'finished': Q(stop_date__isnull=False),
-            }[value.lower()],
-            'people': lambda value: {
-                'default_tester': Q(default_tester=value),
-                'manager': Q(manager=value),
-                'people': Q(manager=value) | Q(default_tester=value),
-                # TODO: Remove first one after upgrade to newer version.
-                # query.set can return either '' or None sometimes, so
-                # currently keeping these two lines here is a workaround.
-                '': Q(manager=value) | Q(default_tester=value),
-                None: Q(manager=value) | Q(default_tester=value),
-            }[query.get('people_type')],
-        }
-
-        conditions = []
-        for key, value in query.items():
-            if value and key in mapping:
-                conditions.append(mapping[key](value))
-
-        runs = cls.objects.filter(*conditions)
-
-        value = query.get('sortby')
-        if value:
-            runs = runs.order_by(value)
-
-        return runs.distinct()
-
     def _get_absolute_url(self):
         return reverse('testruns-get', args=[self.pk, ])
 

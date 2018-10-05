@@ -265,16 +265,6 @@ class TestCase(TCMSActionModel):
 
         return q.distinct()
 
-    @classmethod
-    def list_confirmed(cls):
-        confirmed_case_status = TestCaseStatus.get_CONFIRMED()
-
-        query = {
-            'case_status_id': confirmed_case_status.case_status_id,
-        }
-
-        return cls.list(query)
-
     def add_bug(self, bug_id, bug_system_id, summary=None, description=None,
                 case_run=None, bz_external_track=False):
         bug, created = self.case_bug.get_or_create(
