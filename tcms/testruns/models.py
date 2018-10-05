@@ -9,7 +9,6 @@ from django.db.models import Q, Count
 
 import vinaigrette
 
-from tcms.core.utils import is_int
 from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.contrib.linkreference.models import LinkReference
@@ -25,12 +24,6 @@ TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
     'CompletedPercentage',
     'FailurePercentage',
     'SuccessPercentage'])
-
-
-def plan_by_id_or_name(value):
-    if is_int(value):
-        return Q(plan__plan_id=int(value))
-    return Q(plan__name__icontains=value)
 
 
 class TestRun(TCMSActionModel):
