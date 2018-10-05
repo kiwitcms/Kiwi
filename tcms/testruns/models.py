@@ -251,14 +251,13 @@ class TestRun(TCMSActionModel):
                                          for status in case_run_statuses)
 
         for row in rows:
-            status_pk = row['case_run_status']
-            caserun_statuses_subtotal[status_pk][0] = row['status_count']
+            caserun_statuses_subtotal[row['case_run_status']][0] = row['status_count']
 
         complete_count = 0
         failure_count = 0
         caseruns_total_count = 0
 
-        for status_pk, total_info in caserun_statuses_subtotal.items():
+        for _status_pk, total_info in caserun_statuses_subtotal.items():
             status_caseruns_count, caserun_status = total_info
             status_name = caserun_status.name
 
