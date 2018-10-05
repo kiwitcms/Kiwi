@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 #  pylint: disable=too-few-public-methods
 
-import re
 import sys
-
-
-def is_int(string):
-    return re.compile(r'^\d+$').match(string) is not None
 
 
 def string_to_list(strs, spliter=','):
