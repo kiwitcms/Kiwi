@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
 import itertools
 
 from django.conf import settings
@@ -12,7 +11,6 @@ from django.urls import reverse
 from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
@@ -21,13 +19,12 @@ from django.views.generic.base import TemplateView
 from django_comments.models import Comment
 
 from tcms.core.utils import form_errors_to_list
-from tcms.core.utils import DataTableResult
 from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases import actions
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCasePlan, BugSystem, TestCaseText, TestCaseComponent
+    TestCasePlan, BugSystem, TestCaseText
 from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -92,7 +89,6 @@ def update_case_email_settings(tc, n_form):
         'default_testers_of_runs']
     tc.emailing.auto_to_case_run_assignee = n_form.cleaned_data[
         'assignees_of_case_runs']
-    tc.emailing.save()
 
     default_tester = n_form.cleaned_data['default_tester_of_case']
     if (default_tester and tc.default_tester_id):
@@ -100,7 +96,9 @@ def update_case_email_settings(tc, n_form):
 
     # Continue to update CC list
     valid_emails = n_form.cleaned_data['cc_list']
-    tc.emailing.update_cc_list(valid_emails)
+    tc.emailing.cc_list = CC_LIST_DEFAULT_DELIMITER.join(valid_emails)
+
+    tc.emailing.save()
 
 
 def group_case_bugs(bugs):
@@ -205,7 +203,7 @@ def new(request, template_name='case/new.html'):
         if form.is_valid():
             tc = create_testcase(request, form, tp)
 
-            class ReturnActions(object):
+            class ReturnActions:
                 def __init__(self, case, plan):
                     self.__all__ = ('_addanother', '_continue', '_returntocase', '_returntoplan')
                     self.case = case
@@ -305,7 +303,6 @@ def calculate_for_testcases(plan, testcases):
     sortkey_tcpkan_pks = get_testcaseplan_sortkey_pk_for_testcases(
         plan, tc_ids)
 
-    # FIXME: strongly recommended to upgrade to Python +2.6
     for tc in testcases:
         data = sortkey_tcpkan_pks.get(tc.pk, None)
         if data:
@@ -571,118 +568,20 @@ def all(request):
 
 
 @require_GET
-def search(request, template_name='case/all.html'):
+def search(request):
     """
-    generate the function of searching cases with search criteria
+        Shows the search form which uses JSON RPC to fetch the resuts
     """
-    search_form = SearchCaseForm(request.GET)
+    form = SearchCaseForm(request.GET)
     if request.GET.get('product'):
-        search_form.populate(product_id=request.GET['product'])
+        form.populate(product_id=request.GET['product'])
     else:
-        search_form.populate()
+        form.populate()
 
     context_data = {
-        'search_form': search_form,
+        'form': form,
     }
-    return render(request, template_name, context_data)
-
-
-@require_GET
-def ajax_search(request, template_name='case/common/json_cases.txt'):
-    """Generate the case list in search case and case zone in plan
-    """
-    tp = plan_from_request_or_none(request)
-
-    action = request.GET.get('a')
-
-    # Initial the form and template
-    if action in ('search', 'sort'):
-        search_form = SearchCaseForm(request.GET)
-    else:
-        # Hacking for case plan
-        confirmed_status_name = 'CONFIRMED'
-        # 'c' is meaning component
-        template_type = request.GET.get('template_type')
-        if template_type == 'case':
-            d_status = TestCaseStatus.objects.filter(name=confirmed_status_name)
-        elif template_type == 'review_case':
-            d_status = TestCaseStatus.objects.exclude(name=confirmed_status_name)
-        else:
-            d_status = TestCaseStatus.objects.all()
-
-        d_status_ids = d_status.values_list('pk', flat=True)
-
-        search_form = SearchCaseForm(initial={'case_status': d_status_ids})
-
-    # Populate the form
-    if request.GET.get('product'):
-        search_form.populate(product_id=request.GET['product'])
-    elif tp and tp.product_id:
-        search_form.populate(product_id=tp.product_id)
-    else:
-        search_form.populate()
-
-    # Query the database when search
-    if action in ('search', 'sort') and search_form.is_valid():
-        tcs = TestCase.list(search_form.cleaned_data)
-    elif action == 'initial':
-        tcs = TestCase.objects.filter(case_status__in=d_status)
-    else:
-        tcs = TestCase.objects.none()
-
-    # Search the relationship
-    if tp:
-        tcs = tcs.filter(plan=tp)
-
-    tcs = tcs.select_related(
-        'author',
-        'default_tester',
-        'case_status',
-        'priority',
-        'category'
-    ).only(
-        'case_id',
-        'summary',
-        'create_date',
-        'is_automated',
-        'is_automated_proposed',
-        'case_status__name',
-        'category__name',
-        'priority__value',
-        'author__username',
-        'default_tester__id',
-        'default_tester__username'
-    )
-
-    # columnIndexNameMap is required for correct sorting behavior, 5 should be
-    # product, but we use run.build.product
-    column_names = [
-        '',
-        '',
-        'case_id',
-        'summary',
-        'author__username',
-        'default_tester__username',
-        'is_automated',
-        'case_status__name',
-        'category__name',
-        'priority__value',
-        'create_date',
-    ]
-    return ajax_response(request, tcs, column_names, template_name)
-
-
-def ajax_response(request, queryset, column_names, template_name):
-    """json template for the ajax request for searching"""
-    dt = DataTableResult(request.GET, queryset, column_names)
-
-    # todo: prepare the JSON with the response, consider using :
-    # from django.template.defaultfilters import escapejs
-    json_result = render_to_string(
-        template_name,
-        dt.get_response_data(),
-        request=request)
-    return HttpResponse(json_result, content_type='application/json')
+    return render(request, 'testcases/search.html', context_data)
 
 
 class SimpleTestCaseView(TemplateView):
@@ -710,7 +609,6 @@ class SimpleTestCaseView(TemplateView):
             data.update({
                 'review_mode': self.review_mode,
                 'test_case_text': case.latest_text(),
-                'logs': case.log(),
                 'components': case.component.only('name'),
                 'tags': case.tag.only('name'),
                 'case_comments': get_comments(case),
@@ -793,8 +691,7 @@ class TestCaseSimpleCaseRunView(TemplateView):
         except (TypeError, ValueError):
             raise Http404
 
-        this_cls = TestCaseSimpleCaseRunView
-        return super(this_cls, self).get(request, case_id)
+        return super().get(request, case_id)
 
     def get_caserun(self):
         try:
@@ -804,16 +701,13 @@ class TestCaseSimpleCaseRunView(TemplateView):
             raise Http404
 
     def get_context_data(self, **kwargs):
-        this_cls = TestCaseSimpleCaseRunView
-        data = super(this_cls, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
 
         caserun = self.get_caserun()
-        logs = caserun.log()
         comments = get_comments(caserun)
 
         data.update({
             'test_caserun': caserun,
-            'logs': logs.iterator(),
             'comments': comments.iterator(),
         })
         return data
@@ -832,12 +726,10 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
         except (TypeError, ValueError):
             raise Http404
 
-        this_cls = TestCaseCaseRunDetailPanelView
-        return super(this_cls, self).get(request, case_id)
+        return super().get(request, case_id)
 
     def get_context_data(self, **kwargs):
-        this_cls = TestCaseCaseRunDetailPanelView
-        data = super(this_cls, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
 
         try:
             qs = TestCase.objects.filter(pk=self.case_id)
@@ -855,7 +747,6 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
 
         # Data of TestCaseRun
         caserun_comments = get_comments(case_run)
-        caserun_logs = case_run.log()
 
         caserun_status = TestCaseRunStatus.objects.values('pk', 'name')
         caserun_status = caserun_status.order_by('pk')
@@ -868,7 +759,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
             'test_case_run': case_run,
             'comments_count': len(caserun_comments),
             'caserun_comments': caserun_comments,
-            'caserun_logs': caserun_logs,
+            'caserun_logs': case_run.history.all(),
             'test_case_run_status': caserun_status,
             'grouped_case_bugs': bugs,
         })
@@ -890,11 +781,6 @@ def get(request, case_id):
     # Get the test plans
     tps = tc.plan.select_related('author', 'product', 'type').all()
 
-    # log
-    logs = tc.log()
-
-    logs = itertools.groupby(logs, lambda l: l.date)
-    logs = [(day, list(log_actions)) for day, log_actions in logs]
     try:
         tp = tps.get(pk=request.GET.get('from_plan', 0))
     except (TestPlan.DoesNotExist, ValueError):
@@ -934,7 +820,6 @@ def get(request, case_id):
     grouped_case_bugs = tcr and group_case_bugs(tcr.case.get_bugs())
     # Render the page
     context_data = {
-        'logs': logs,
         'test_case': tc,
         'test_plan': tp,
         'test_plans': tps,
@@ -957,6 +842,9 @@ def printable(request, template_name='case/printable.html'):
         Create the printable copy for plan/case.
         Only CONFIRMED TestCases are printed when printing a TestPlan!
     """
+    # fixme: remove when TestPlan and TestCase templates have been converted to Patternfly
+    # instead of generating the print values on the backend we can use CSS to do
+    # this in the browser
     # search only by case PK. Used when printing selected cases
     case_ids = request.POST.getlist('case')
     case_filter = {'case__in': case_ids}
@@ -970,7 +858,7 @@ def printable(request, template_name='case/printable.html'):
             test_plan = TestPlan.objects.get(pk=plan_pk)
             # search cases from a TestPlan, used when printing entire plan
             case_filter = {
-                'case__plan': plan_pk,
+                'case__in': test_plan.case.all(),
                 'case__case_status': TestCaseStatus.objects.get(name='CONFIRMED').pk,
             }
         except (ValueError, TestPlan.DoesNotExist):
@@ -991,75 +879,6 @@ def printable(request, template_name='case/printable.html'):
     return render(request, template_name, context_data)
 
 
-@require_POST
-def export(request, template_name='case/export.xml'):
-    """Export the plan"""
-    case_pks = request.POST.getlist('case')
-    context_data = {
-        'data_generator': generator_proxy(case_pks),
-    }
-
-    response = render(request, template_name, context_data)
-
-    response['Content-Disposition'] = \
-        'attachment; filename=tcms-testcases-%s.xml' % datetime.datetime.now().strftime('%Y-%m-%d')
-    return response
-
-
-def generator_proxy(case_pks):
-    metas = TestCase.objects.filter(
-        pk__in=case_pks
-    ).exclude(
-        case_status__name='DISABLED'
-    ).values(
-        'case_id', 'summary', 'is_automated', 'notes',
-        'priority__value', 'case_status__name',
-        'author__email', 'default_tester__email',
-        'category__name')
-
-    component_dict = create_dict_from_query(
-        TestCaseComponent.objects.filter(
-            case__in=case_pks
-        ).values(
-            'case_id', 'component_id', 'component__name', 'component__product__name'
-        ).order_by('case_id'),
-        'case_id'
-    )
-
-    tag_dict = create_dict_from_query(
-        TestCase.objects.filter(
-            pk__in=case_pks
-        ).values('case_id', 'tag__name').order_by('case_id'),
-        'case_id'
-    )
-
-    plan_text_dict = create_dict_from_query(
-        TestCaseText.objects.filter(
-            case__in=case_pks
-        ).values(
-            'case_id', 'setup', 'action', 'effect', 'breakdown'
-        ).order_by('case_id', '-case_text_version'),
-        'case_id',
-        True
-    )
-
-    for meta in metas:
-        case_id = meta['case_id']
-        c_meta = component_dict.get(case_id, None)
-        if c_meta:
-            meta['c_meta'] = c_meta
-
-        tag = tag_dict.get(case_id, None)
-        if tag:
-            meta['tag'] = tag
-
-        plan_text = plan_text_dict.get(case_id, None)
-        if plan_text:
-            meta['latest_text'] = plan_text
-
-        yield meta
-
-
 def update_testcase(request, tc, tc_form):
     """Updating information of specific TestCase
 
@@ -1070,6 +889,9 @@ def update_testcase(request, tc, tc_form):
     - tc_form: instance of django.forms.Form, holding validated data.
     """
 
+    # TODO: this entire function doesn't seem very useful
+    # part if it was logging the changes but now this is
+    # done by simple_history. Should we remove it ???
     # Modify the contents
     fields = ['summary',
               'case_status',
@@ -1086,48 +908,19 @@ def update_testcase(request, tc, tc_form):
 
     for field in fields:
         if getattr(tc, field) != tc_form.cleaned_data[field]:
-            tc.log_action(request.user,
-                          'Case %s changed from %s to %s in edit page.' % (
-                              field, getattr(tc, field),
-                              tc_form.cleaned_data[field]
-                          ))
             setattr(tc, field, tc_form.cleaned_data[field])
     try:
         if tc.default_tester != tc_form.cleaned_data['default_tester']:
-            tc.log_action(
-                request.user,
-                'Case default tester changed from %s to %s in edit page.' % (
-                    tc.default_tester_id and tc.default_tester,
-                    tc_form.cleaned_data['default_tester']
-                ))
             tc.default_tester = tc_form.cleaned_data['default_tester']
     except ObjectDoesNotExist:
         pass
-    tc.update_tags(tc_form.cleaned_data.get('tag'))
-    try:
-        fields_text = ['action', 'effect', 'setup', 'breakdown']
-        latest_text = tc.latest_text()
 
-        for field in fields_text:
-            form_cleaned = tc_form.cleaned_data[field]
-            if not (getattr(latest_text, field) or form_cleaned):
-                continue
-            if getattr(latest_text, field) != form_cleaned:
-                tc.log_action(
-                    request.user,
-                    ' Case %s changed from %s to %s in edit page.' % (
-                        field, getattr(latest_text, field) or None,
-                        form_cleaned or None
-                    ))
-    except ObjectDoesNotExist:
-        pass
-
-    # FIXME: Bug here, timedelta from form cleaned data need to convert.
-    tc.estimated_time = tc_form.cleaned_data['estimated_time']
     # IMPORTANT! tc.current_user is an instance attribute,
     # added so that in post_save, current logged-in user info
     # can be accessed.
     # Instance attribute is usually not a desirable solution.
+    # TODO: current_user is probbably not necessary now that we have proper history
+    # it is used in email templates though !!!
     tc.current_user = request.user
     tc.save()
 
@@ -1246,12 +1039,10 @@ def edit(request, case_id, template_name='case/edit.html'):
             'category': tc.category_id,
             'notes': tc.notes,
             'component': [c.pk for c in tc.component.all()],
-            'estimated_time': tc.estimated_time,
             'setup': tctxt.setup,
             'action': tctxt.action,
             'effect': tctxt.effect,
             'breakdown': tctxt.breakdown,
-            'tag': ','.join(tc.tag.values_list('name', flat=True)),
         })
 
         form.populate(product_id=tc.category.product_id)
@@ -1336,7 +1127,6 @@ def clone(request, template_name='case/clone.html'):
                         summary=tc_src.summary,
                         requirement=tc_src.requirement,
                         alias=tc_src.alias,
-                        estimated_time=tc_src.estimated_time,
                         case_status=TestCaseStatus.get_PROPOSED(),
                         category=tc_src.category,
                         priority=tc_src.priority,
@@ -1460,7 +1250,7 @@ def clone(request, template_name='case/clone.html'):
             messages.add_message(request,
                                  messages.SUCCESS,
                                  _('TestCase cloning was successful'))
-            return HttpResponseRedirect(reverse('plans-all'))
+            return HttpResponseRedirect(reverse('plans-search'))
     else:
         selected_cases = get_selected_testcases(request)
         # Initial the clone case form
@@ -1530,23 +1320,13 @@ def attachment(request, case_id, template_name='case/attachment.html'):
     return render(request, template_name, context)
 
 
-def get_log(request, case_id, template_name="management/get_log.html"):
-    """Get the case log"""
-    tc = get_object_or_404(TestCase, case_id=case_id)
-
-    context = {
-        'object': tc
-    }
-    return render(request, template_name, context)
-
-
 @permission_required('testcases.change_bug')
 def bug(request, case_id, template_name='case/get_bug.html'):
     """Process the bugs for cases"""
     # FIXME: Rewrite these codes for Ajax.Request
     tc = get_object_or_404(TestCase, case_id=case_id)
 
-    class CaseBugActions(object):
+    class CaseBugActions:
         __all__ = ['get_form', 'render', 'add', 'remove']
 
         def __init__(self, request, case, template_name):

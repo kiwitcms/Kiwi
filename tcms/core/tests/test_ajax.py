@@ -8,12 +8,11 @@ from django.conf import settings
 from django.db.models import Count
 from django.http.request import HttpRequest
 
-from tcms.core.ajax import _TagCounter, _TagActions, _TagObjects, _InfoObjects
+from tcms.core.ajax import _TagCounter, _TagObjects, _InfoObjects
 from tcms.testplans.models import TestPlanTag
 from tcms.testruns.models import TestRunTag
 from tcms.testcases.models import TestCase, TestCaseTag, Category
 from tcms.tests import BasePlanCase
-from tcms.management.models import Tag
 
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import TestRunFactory
@@ -21,16 +20,12 @@ from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import EnvGroupFactory
-from tcms.tests.factories import EnvPropertyFactory
-from tcms.tests.factories import EnvGroupPropertyMapFactory
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import EnvValueFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.tests.factories import BuildFactory
 
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestInfo(test.TestCase):
@@ -103,16 +98,6 @@ class Test_InfoObjects(test.TestCase):
         cls.component_two = ComponentFactory(product=cls.product)
         cls.component_three = ComponentFactory()
 
-        cls.env_group_one = EnvGroupFactory()
-        cls.env_group_two = EnvGroupFactory()
-
-        cls.env_property_one = EnvPropertyFactory()
-        cls.env_property_two = EnvPropertyFactory()
-        EnvGroupPropertyMapFactory(group=cls.env_group_one, property=cls.env_property_one)
-
-        cls.env_value_one = EnvValueFactory(property=cls.env_property_one)
-        cls.env_value_two = EnvValueFactory()
-
         cls.user_one = UserFactory()
         cls.user_two = UserFactory()
 
@@ -153,38 +138,6 @@ class Test_InfoObjects(test.TestCase):
         self.assertIn(self.component_two, components)
         self.assertNotIn(self.component_three, components)
 
-    def test_env_groups(self):
-
-        env_groups = self.info_objects.env_groups()
-
-        self.assertIn(self.env_group_one, env_groups)
-        self.assertIn(self.env_group_two, env_groups)
-
-    def test_env_properties(self):
-
-        env_properties = self.info_objects.env_properties()
-
-        self.assertIn(self.env_property_one, env_properties)
-        self.assertIn(self.env_property_two, env_properties)
-
-    def test_env_properties_by_env_group(self):
-        self.request.GET = {'env_group_id': self.env_group_one.pk}
-
-        info_objects = _InfoObjects(self.request)
-        env_properties = info_objects.env_properties()
-
-        self.assertIn(self.env_property_one, env_properties)
-        self.assertNotIn(self.env_property_two, env_properties)
-
-    def test_env_values(self):
-        self.request.GET = {'env_property_id': self.env_property_one.pk}
-
-        info_objects = _InfoObjects(self.request)
-        env_values = info_objects.env_values()
-
-        self.assertIn(self.env_value_one, env_values)
-        self.assertNotIn(self.env_value_two, env_values)
-
     def test_users(self):
         self.request.GET = {'username': self.user_one.username}
 
@@ -202,7 +155,7 @@ class Test_InfoObjects(test.TestCase):
         self.assertNotIn(self.version_two, test_versions)
 
 
-class Test_TestCaseUpdateActions(BasePlanCase):
+class Test_TestCaseUpdates(BasePlanCase):
     """
         Tests for TC bulk update actions triggered via
         TP sub-menu.
@@ -213,20 +166,19 @@ class Test_TestCaseUpdateActions(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(Test_TestCaseUpdateActions, cls).setUpTestData()
+        super().setUpTestData()
         initiate_user_with_default_setups(cls.tester)
+        cls.url = reverse('ajax.update.cases-actor')
 
     def setUp(self):
         super().setUp()
         self._assert_default_tester_is(None)
 
     def test_update_default_tester_via_username(self):
-        url = reverse('ajax-update_cases_default_tester')
-        response = self.client.post(url, {
-            'from_plan': self.plan.pk,
-            'case': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
-            'target_field': 'default_tester',
-            'new_value': self.tester.username
+        response = self.client.post(self.url, {
+            'case[]': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
+            'what_to_update': 'default_tester',
+            'username': self.tester.username
         })
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -238,12 +190,10 @@ class Test_TestCaseUpdateActions(BasePlanCase):
 
     def test_update_default_tester_via_email(self):
         # test for https://github.com/kiwitcms/Kiwi/issues/85
-        url = reverse('ajax-update_cases_default_tester')
-        response = self.client.post(url, {
-            'from_plan': self.plan.pk,
-            'case': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
-            'target_field': 'default_tester',
-            'new_value': self.tester.email
+        response = self.client.post(self.url, {
+            'case[]': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
+            'what_to_update': 'default_tester',
+            'username': self.tester.email
         })
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -254,12 +204,10 @@ class Test_TestCaseUpdateActions(BasePlanCase):
         self._assert_default_tester_is(self.tester)
 
     def test_update_default_tester_non_existing_user(self):
-        url = reverse('ajax-update_cases_default_tester')
-        response = self.client.post(url, {
-            'from_plan': self.plan.pk,
-            'case': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
-            'target_field': 'default_tester',
-            'new_value': 'user which doesnt exist'
+        response = self.client.post(self.url, {
+            'case[]': [case.pk for case in TestCase.objects.filter(plan=self.plan)],
+            'what_to_update': 'default_tester',
+            'usernmae': 'user which doesnt exist'
         })
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -411,7 +359,6 @@ class Test_Tag_Objects(test.TestCase):
 
         cls.test_plan = TestPlanFactory()
         cls.test_case = TestCaseFactory()
-        cls.test_run = TestRunFactory()
 
     def test_get_plan(self):
         self.request.GET = {'plan': self.test_plan.pk}
@@ -426,46 +373,6 @@ class Test_Tag_Objects(test.TestCase):
 
         self.assertEqual(tag_objects.get()[0], 'management/get_tag.html')
         self.assertEqual(tag_objects.get()[1], self.test_case)
-
-    def test_get_run(self):
-        self.request.GET = {'run': self.test_run.pk}
-        tag_objects = _TagObjects(self.request)
-
-        self.assertEqual(tag_objects.get()[0], 'run/get_tag.html')
-        self.assertEqual(tag_objects.get()[1], self.test_run)
-
-
-class Test_Tag_Actions(test.TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.test_plan = TestPlanFactory()
-        cls.test_case = TestCaseFactory()
-        cls.test_run = TestRunFactory()
-
-        cls.tag = TagFactory()
-
-        cls.test_run.add_tag(cls.tag)
-
-    def test_add_tag_to_obj(self):
-        tag_actions = _TagActions(self.test_plan, self.tag.name)
-        tag_actions.add()
-
-        self.assertEqual(TestPlanTag.objects.filter(plan=self.test_plan).count(), 1)
-
-    def test_create_tag_and_add_to_obj(self):
-        tag_actions = _TagActions(self.test_case, 'tag_name')
-        tag_actions.add()
-
-        self.assertEqual(Tag.objects.filter(name='tag_name').count(), 1)
-        self.assertEqual(TestCaseTag.objects.filter(case=self.test_case).count(), 1)
-
-    def test_remove_tag_from_obj(self):
-        tag_actions = _TagActions(self.test_run, self.tag.name)
-        tag_actions.remove()
-
-        self.assertEqual(Tag.objects.filter(name=self.tag.name).count(), 1)
-        self.assertEqual(TestRunTag.objects.filter(run=self.test_run).count(), 0)
 
 
 class Test_Tag_Counter(test.TestCase):

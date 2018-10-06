@@ -15,7 +15,7 @@ h1,h2,h3,h4{margin:10px;color:#333;}
 
 /*---------------Display Depatrtment-----------------*/
 input,select,#header,.crumble,#footer,#response{ display:none}
-.actions .export,.actions .filter_action, .actions .import, .actions .print_view,.actions .add_new, .actions .clone, .actions .add_new , .actions .delete,.actions .new_run ,.actions .proposed ,.actions .confirmed ,.actions .disabled,.actions .new_review,.actions .sortlink, .actions .search {border:none;background:url("../images/operation.png") no-repeat;height:16px; line-height:16px; cursor:pointer; font-size:12px; display:none}
+.actions .filter_action, .actions .import, .actions .print_view,.actions .add_new, .actions .clone, .actions .add_new , .actions .delete,.actions .new_run ,.actions .proposed ,.actions .confirmed ,.actions .disabled,.actions .new_review,.actions .sortlink, .actions .search {border:none;background:url("../images/operation.png") no-repeat;height:16px; line-height:16px; cursor:pointer; font-size:12px; display:none}
 
 /*---------------End Display Depatrtment-----------------*/
 
@@ -61,7 +61,7 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .tit{font-weight:bold;margin-left:10px;}
 .mixbar.tit{font-size:1.2em;}
 .errors{color:#ff0000;}
-.disablelink, .enablelink,.spadelink , .addlink, .editlink, .deletelink, .sortlink,.updatelink,.updategrey{background:transparent url(../images/operation.png) no-repeat;text-decoration:none; font-size:12px; display:none}
+.disablelink, .enablelink,.spadelink , .addlink, .editlink, .sortlink,.updatelink,.updategrey{background:transparent url(../images/operation.png) no-repeat;text-decoration:none; font-size:12px; display:none}
 .historylink{float:left;text-shadow:1px 1px 1px #ddd;float:right;}
 .historylink :visited{color:#FFFAB3;}
 .applylink{background:transparent url(../images/apply.png) no-repeat  0px 1px ;padding-left:20px;margin-right:10px;}
@@ -91,9 +91,7 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .option_prefer lable{ margin-left:5px;}
 
 
-/***********************Environment Start***************************/
 .titlelink input[type="text"] { width: 40%; }
-.env-list-side{ width:50%; float:left; }
 /***********************Report Start***************************/
 .nav{ margin-left:1%; float:left; margin-top:10px; width:98%; border-bottom:1px solid #ccc; }
 .nav .head{ font-weight:bold; font-size:1.3em; float:left; }
@@ -206,7 +204,6 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 .new_comment .submit-post{ margin:5px 0; cursor:pointer}
 .case_run .collapse-control{ width:30px; padding:2px; float:left; color:#333;}
 .case_run .buglink{ float:right; margin-right:40px; color:#fbbf2c;}
-.case_run .hiddenRow{ height:auto; float:left; width:100%;}
 .textbox{ border: #7F9DB9 1px solid;overflow:auto; width:60%;}
 /***********************Run End***************************/
 
@@ -296,7 +293,6 @@ hr.dotted{ border:dotted #ccc 0px;border-top-width:1px;}
 #itemFilter{ width:100%; float:right; background:#F8FFF2; border:1px solid #D5DBD0;}
 #itemFilter td{}
 #itemFilter tfoot td{ background:#f1f1f1; border-top:1px solid #ccc;}
-.hiddenRow{ width:100%; background:#f3f8fe;}
 .remove a :hover img{ border:1px solid #ccc; }
 .query_cases_content { float:left; width:100%; padding-left:10px;}
 .query_cases_content label{ width:60%; margin-left:10px; float:left; border-bottom:1px dotted #235C82;}
@@ -430,27 +426,12 @@ ul.runcc{ margin:0px;}
 .casedoc{ padding-left:20px;}
 .casedoc ul,.casedoc ol{ padding-left:20px;}
 
-.envlog{ background:url(../images/envlog_bg.png) repeat-x left top #f8f7f7; height:23px; padding:0;}
-.envlog_time{ width:15%;padding:3px 0px 0 0px; float:left; text-align:center;}
-.envlog_who{ width:15%;padding:3px 5px 0 10px;float:left;}
-.envlog_content{ width:auto; padding:3px 5px 0 0px;float:left}
-.envlog_nocontent{ text-align:center; padding-top:3px;}
-.env_properties{ background:#f3f8fe;}
-
 .action_property{ margin-left:5px;}
 .detail_title{ margin-right:10px;color:#235D9F;}
 
 .assignee{ padding-left:18px; cursor:pointer; border:none; height:16px; line-height:16px; font-size:12px; display:none}
 #dialog{ width:500px;height:300px; z-index:1000; position:fixed; left:50%; top:50%; margin-left:-250px; margin-top:-150px; border:solid 4px #CCC; background:#f5f5f5;-moz-border-radius:5px 5px 5px 5px;}
 .popup_window{ width:500px;height:400px; z-index:1000; position:fixed; left:50%; top:50%; margin-left:-250px; margin-top:-200px; border:solid 4px #CCC; background:#f5f5f5;-moz-border-radius:5px 5px 5px 5px;}
-.add_env_content{ margin:10px; position:relative;}
-.add_env_close{ position:absolute; right:-5px; top:-15px; background:url(../images/icon_cross.png) no-repeat left top; width:16px; height:16px; cursor:pointer}
-.env_title{ margin:20px 0 20px 10px;}
-.env_title input{ margin-right:10px;}
-.add_env_box{float:left; width:80%; margin:20px;}
-.add_env_box select{ width:98%; }
-.add_env_button{ float:left; margin:20px 10px 10px 20px; }
-.add_env_button input{ margin-right:5px; }
 .comment{ width:98%;}
 .comment li{margin:5px 0px;border-bottom:1px dotted #666666; position:relative}
 .notes_title{ margin:0px; color:#235d9f; font-size:1.0em; font-weight:bold; }

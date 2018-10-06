@@ -75,18 +75,18 @@ class TestLogout(TestCase):
             password='password')
         cls.logout_url = reverse('tcms-logout')
 
-    def test_logout_then_redirect_to_next(self):
+    def test_logout_redirects_to_login_page(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
         response = self.client.get(self.logout_url, follow=True)
-        self.assertRedirects(response, reverse('tcms-login') + '?next=/')
+        self.assertRedirects(response, reverse('tcms-login'))
 
     def test_logout_then_goto_next(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        next_url = reverse('tcms-login') + '?next=' + reverse('plans-all')
+        next_url = reverse('tcms-login') + '?next=' + reverse('plans-search')
         response = self.client.get(self.logout_url, {'next': next_url}, follow=True)
         self.assertRedirects(response, next_url)
 
@@ -99,10 +99,7 @@ class TestRegistration(TestCase):
 
     def test_open_registration_page(self):
         response = self.client.get(self.register_url)
-        self.assertContains(
-            response,
-            '<input value="Register" class="loginbutton sprites" type="submit">',
-            html=True)
+        self.assertContains(response, '>Register</button>')
 
     def assert_user_registration(self, username, follow=False):
 

@@ -54,9 +54,6 @@ html .fixed { height: 1%; }
 .menu li.current{background:url(../images/bg_menu_current.png) no-repeat center;}
 .menu .current a{font-weight:bold; color:#FFFFFF;}
 .submenu{background:#3E3E3F;width:100%;}
-.menu .linkAdvancedSearch{width:115px; display: inline-block;}
-.menu .linkAdvancedSearch a:link,.menu .linkAdvancedSearch a:visited{text-decoration:underline;}
-.menu .linkAdvancedSearch a:hover{text-decoration:none; font-weight:normal;}
 #nav{list-style-type:none; overflow:hidden;float:left;padding:0px;margin:0px;}
 #nav li{display: block; width: 120px; text-align:center; padding:0px; margin:0px; cursor:pointer; float: left; height:auto;}
 #nav li ul {position: absolute;margin-left:-1px;padding:0px;z-index:100; width:120px;}
@@ -189,34 +186,6 @@ table.noborder,table.noborder td{border:none;background:transparent;}
     font-weight:bold;
 }
 
-/***********************Environment Start***************************/
-.titlelink input[type="text"] { width: 40%; }
-.env-list-side{ width:50%; float:left; }
-
-.manage{ background:#fff; border-collapse:collapse; margin-left:auto; margin-right:auto; }
-.manage .manage-tit{ font-weight:bold; padding-left:10px; background:#f1f1f1; }
-.manage .manage-tit label{  }
-.manage td{ border:1px solid #CCC; color:#333; padding-left:5px; }
-.manage th{ border:1px solid #CCC; }
-.titlelink{ background:#235d9f; border:1px solid  #ccc; width:100%; height:24px; color:#fff; }
-.titlelink a{ cursor:pointer; }
-.groupul{ padding:0px; list-style-type:none; margin:0px; float:none; line-height:2.0em; }
-.groupul li{ margin:0px;padding:0px; border-bottom:1px solid #ccc; border-top:none; width:100%; float:left; border-left:1px solid #ccc; border-right:1px solid #ccc; }
-.groupul li a{ cursor:pointer; }
-.groupul li:hover{ background:#FFEFC6; }
-.groupul .focus{ background:#FFE59F url("../images/forward.png") no-repeat right; font-weight:bold; }
-.manage .selectgroup_ul { clear:both; margin-top:5px; width:100%; }
-.manage .selectgroup_ul span{ display:block; width:198px; border:1px solid #ccc; float:left; background:#f1f1f1; font-weight:bold; margin:0px; font-size:0.9em; }
-.manage .selectgroup{ float:left; margin:0px 0px; } 
-
-.manage .control{ float:left; background:#fff; margin:5px 10px; padding:0px 10px; vertical-align:middle; height:300px; width:100px; }
-.manage .control input{ width:100px; clear:both; margin-top:10px; }
-.manage .values{ float:left; border:1px solid #ccc; background:#fff; margin:5px 0px; height:330px; overflow-y:auto; }
-.manage .values ul{ padding:0px; margin:0px; }
-.manage .values ul li{ padding:0px; border-bottom:1px solid #ccc; line-height:24px; }
-.manage .values ul li:hover{ background:#EDEDED; }
-/***********************End Environment***************************/
-
 /***********************Report Start***************************/
 
 
@@ -295,7 +264,6 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 .new_comment .submit-post{ margin:5px 0; cursor:pointer}
 .case_run .collapse-control{ width:30px; padding:2px; float:left; color:#333;}
 .case_run .buglink{background:transparent url(../images/bug_fire.png) no-repeat; padding:0px 15px; text-decoration:none; }
-.case_run .hiddenRow{ height:auto; float:left; width:100%;}
 .textbox{ border: #7F9DB9 1px solid;overflow:auto; width:60%;}
 /***********************Run End***************************/
 
@@ -333,7 +301,6 @@ table.noborder,table.noborder td{border:none;background:transparent;}
 /************************************form**********************************/
 #itemFilter{ width:100%; float:right; background:#F8FFF2; border:1px solid #D5DBD0;}
 #itemFilter tfoot td{ background:#f1f1f1; border-top:1px solid #ccc;}
-.hiddenRow{ width:100%; background:#f3f8fe;}
 .remove a :hover img{ border:1px solid #ccc; }
 .query_cases_content { float:left; width:100%; padding-left:10px;}
 .query_cases_content label{ width:60%; margin-left:10px; float:left; border-bottom:1px dotted #235C82;}
@@ -467,24 +434,8 @@ ul.runcc{ margin:0px;}
 .casedoc{ padding-left:20px;}
 .casedoc ul,.casedoc ol{ padding-left:20px;}
 
-.envlog{ border-bottom:dotted 1px #aaa; min-height:23px; line-height:20px; padding:0; margin-bottom:5px;}
-.envlog_time{ width:15%;padding:3px 0px 0 0px; float:left; text-align:center;}
-.envlog_who{ width:15%;padding:3px 5px 0 10px;float:left;}
-.envlog_content{ width:auto; padding:3px 5px 0 0px;float:left}
-.envlog_nocontent{ text-align:center; padding-top:3px;}
-.env_properties{ background:#f3f8fe;}
-
 .action_property{ margin-left:5px;}
 .detail_title{ margin-right:10px;color:#235D9F;}
-
-.add_env_content{ margin:10px; position:relative;}
-.add_env_close{ position:absolute; right:-5px; top:-15px; background:url(../images/icon_cross.png) no-repeat left top; width:16px; height:16px; cursor:pointer}
-.env_title{ margin:20px 0 20px 10px;}
-.env_title input{ margin-right:10px;}
-.add_env_box{float:left; width:80%; margin:20px;}
-.add_env_box select{ width:98%; }
-.add_env_button{ float:left; margin:20px 10px 10px 20px;}
-.add_env_button input{ margin-right:5px; }
 
 /*Popup style*/
 #dialog{z-index:1000; position:fixed; left:50%; top:40%; margin-left:-250px; margin-top:-100px; background:url(../images/login_bg.png) repeat-x left top #e7e7e7;min-width:500px;min-height:200px;max-width:600px;max-height:400px;box-shadow: 2px 2px 2px #c5c3c3;-moz-border-radius: 5px;-khtml-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px; border:solid 1px #CCC;padding:10px; overflow:auto;}
@@ -533,25 +484,12 @@ ul.runcc{ margin:0px;}
 #id_address{ width:500px;height:50px;}
 
 /*Treeview*/
-.treeview_toolbar{ background:url(../images/note_bg.png) repeat-x left bottom; padding:3px 0; margin-top:35px; position:relative}
-.treeview_tools{ margin:5px 10px;}
-.treeview_tools span{ margin-right:5px;}
-.treeview_toolbar_text{ position:absolute; right:10px; top:35px; border:dotted 1px #ccc;}
-.treeview_toolbar_text ul{ margin:-10px 0;}
-.treeview_toolbar_text ul li{ height:15px; line-height:20px; list-style-type:disc}
 #treeview ul { margin:0 20px;}
 #treeview ul li{ margin:5px 0 5px 13px;}
 #treeview ul li.no-list-style{margin-left:0px;}
 #treeview ul li img {float:left; margin:3px 2px 0 -2px;}
 #treeview .current{ font-weight:bold;}
 #treeview .current ul li{ font-weight:normal; list-style-position:inside;}
-/*
-#treeview ul li.expand,#treeview ul li.collapse{ list-style-type:none;}
-#treeview ul li ul li{ list-style:square; list-style-position:inside}
-#treeview .expand ul{ margin:0 20px;}
-#treeview .collapse{ background:url(../images/t1.gif) no-repeat -2px top; padding-left:13px;}
-#treeview .expand{ background:url(../images/t2.gif) no-repeat left top; padding-left:13px;}
-*/
 .down{background:url(../images/t2.gif) no-repeat center bottom; width:30px; height:16px; display:inline-block;cursor:pointer;}
 .up{background:url(../images/t3.gif) no-repeat center bottom; width:30px; height:16px; display:inline-block;cursor:pointer;}
 
@@ -698,12 +636,11 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 
 /* ico start */
 
-.disablelink, .enablelink,.spadelink , .editlink, .deletelink, .sortlink,.updatelink,.updategrey,.comment_add,.bug_add{background:transparent url(../images/operation.png) no-repeat;text-decoration:none;height:16px;line-height:16px;cursor:pointer; }
+.disablelink, .enablelink,.spadelink , .editlink, .sortlink,.updatelink,.updategrey,.comment_add,.bug_add{background:transparent url(../images/operation.png) no-repeat;text-decoration:none;height:16px;line-height:16px;cursor:pointer; }
 .addlink{padding:0px;cursor:pointer; background:transparent url(../images/operation_ico.png) no-repeat 0px 5px; padding-left:12px;}
 .updatelink{ padding-left:16px; cursor:pointer; background-position:0px -984px;}
 .updategrey{ padding-left:16px; cursor:pointer; background-position:0px -1000px; color:graytext}
 .editlink{padding:0px 18px;background-position: 0 -124px;}
-.deletelink{padding-left:18px;background-position: 0 -159px; }
 .comment_add{padding-left:18px;background-position: 0 -1112px;border:none;}
 .comment_add_disable{padding-left:18px;background-position: 0 -1142px;border:none;color:graytext}
 .bug_add{padding-left:18px;background-position: 0 -1128px;border:none;}
@@ -791,37 +728,10 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .list_filter .priority_filter ul li{ float:left; padding:0px; margin:0px;}
 .list_filter td  input[ type="text" ]{ width:100%;}
 
-/* advancedSearch */
-
-.advancedSearch{padding:10px; width:1200px; margin:0px auto;}
-.advancedSearch h2{margin:0px; padding:0 0 0 8px;}
-.advancedSearch .selectM{height:70px;}
-.advancedSearch .product li{float:left; width:18%;}
-.advancedSearch .product li.btn10{width:10%;}
-.advancedSearch .product li h4{margin:0px; font-weight:normal; padding:0 0 3px 2px; color:#004481;}
-.advancedSearch .product li h4 span{color:red; padding-right:3px;}
-.advancedSearch .product li select{width:205px;}
-.advancedSearch .productSelected{border:1px solid #FFE4B5; background:#FFF8E9; padding:2px 5px 0 5px; margin:10px 0 0 0;}
-.advancedSearch .productSelected li span{float:left; width:18%; padding:5px 0 3px 2px; display:block;}
-.advancedSearch .productSelected li.clear{border-bottom:1px solid #FFE4B5; width:auto; clear:both;}
-.advancedSearch .planCaseRun{padding:10px 0 0 0;}
-.advancedSearch .planCaseRun .containerTabGrey{float:left; width:32%; margin:0 0.5%;}
-.advancedSearch .planCaseRun .containerTabGrey .content{padding:10px 5px 20px 0;}
-.advancedSearch .planCaseRun .title{width:100px;}
-.advancedSearch .planCaseRun .listinfo{padding:5px 0;}
-.advancedSearchTip h3{margin-left:0px; margin-top:0px;}
-.advancedSearchTip h4{margin:0 0 0 20px;}
-.advancedSearchTip ul{margin-left:10px;}
-.advancedSearchTip li{color:#FF6600; list-style: disc; margin-left:10px;}
-.advancedSearchTip p{margin:0; color:#333333;}
 .queries{border:1px solid #FFE4B5; background:#FFF8E9; float:left; margin:10px; padding:5px 10px;}
 .queries li{float:left; padding:0 15px 0 0; list-style:none;}
 .queries li label{padding:0 3px 0 0; color:#999999;}
 .queries p{clear:none; padding:0px; margin:0px;}
-
-.containerTabGrey .top{height:16px; background:url(../images/containerTab_bg_grey.png) repeat-x 0px 15px;}
-.containerTabGrey .top h3{height:16px; line-height:18px; width:70px; margin:0px; background:url(../images/containerTab_bg_grey.png) no-repeat; text-align:center; color:#0E5A99; font-size:12px;}
-.containerTabGrey .content{border:1px solid #CCCCCC; border-top-width:0px; background:#FFFFFF;}
 
 /* caserun stutas icon */
 .icon_status {display:inline-block; padding-left:23px; height:23px; line-height:23px; background:url(../images/ico_status.png) no-repeat;}
@@ -859,8 +769,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 
 .category{background-position:0px -1011px;}
 
-.export{background-position:0px -161px;}
-.export[disabled='true']{background-position: 0px -184px; color:graytext;}
 .import{background-position:0px -69px;}
 .import[disabled='true']{background-position:0px -92px; color:graytext;}
 .print_view{background-position:0px -207px;}
@@ -890,7 +798,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .add_node{background-position:0px -966px; padding-left:16px;}
 .edit_node{background-position:0px -23px; padding-left:16px;}
 .remove_node{background-position:0px -989px; padding-left:16px;}
-.sort_list{background-position:0px -1032px;}
 
 .noContentOrange{text-align:center; color:#FF6600; padding:15px 0 20px 0;}
 

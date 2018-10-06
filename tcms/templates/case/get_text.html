@@ -1,3 +1,4 @@
+{% load extra_filters %}
 <table width="100%">
 	<tr>
 		<td colspan="2">
@@ -11,21 +12,21 @@
 	<tr>
 		<td valign="top" >
 			<h4>Setup:</h4>
-			<div class="casedoc">{{ test_case_text.setup|safe }}</div>
+			<div class="casedoc">{{ test_case_text.setup|markdown2html }}</div>
 		</td>
 		<td valign="top" >
 			<h4>Breakdown:</h4>
-			<div class="casedoc">{{ test_case_text.breakdown|safe }}</div>
+			<div class="casedoc">{{ test_case_text.breakdown|markdown2html }}</div>
 		</td>
 	</tr>
 	<tr>
 		<td valign="top">
 			<h4>Actions:</h4>
-			<div class="casedoc">{{ test_case_text.action|safe }}</div>
+			<div class="casedoc">{{ test_case_text.action|markdown2html }}</div>
 		</td>
 		<td valign="top" >
 			<h4>Expected Results:</h4>
-			<div class="casedoc">{{ test_case_text.effect|safe }}</div>
+			<div class="casedoc">{{ test_case_text.effect|markdown2html }}</div>
 		</td>
 	</tr>
 </table>

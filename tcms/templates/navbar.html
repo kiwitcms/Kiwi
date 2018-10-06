@@ -1,0 +1,108 @@
+{% load static %}
+
+    <!-- PatternFly Horizontal Nav -->
+    <nav class="navbar navbar-default navbar-pf" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" target="_parent">
+                <img src="{% static 'images/kiwi_h20.png' %}" alt="Kiwi TCMS" />
+            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-utility">
+
+                <li class="dropdown" style="float:right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="pficon pficon-user"></span>
+                        {% if user.is_authenticated %}{{ user }}{% else %}Welcome Guest{% endif %}
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url "testruns-search" %}?default_tester={{ user.username }}" target="_parent">My Test Runs</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url "plans-search" %}?author__username__startswith={{ user.username }}" target="_parent">My Test Plans</a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{% url "tcms-profile" user.username %}" target="_parent">My profile</a>
+                        </li>
+
+                        <li>
+                            <a href="{% url "admin:password_change" %}" target="_parent">Change password</a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{% url "tcms-logout" %}" target="_parent">Logout</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url "tcms-login" %}" target="_parent">Login</a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="{% url "tcms-register" %}" target="_parent">Register</a>
+                        </li>
+                    {% endif %}
+                    </ul>
+                </li>
+
+                <li class="dropdown" style="float:right">
+                    <a class="nav-item-iconic" id="horizontalDropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span title="Help" class="fa pficon-help"></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="horizontalDropdownMenu1">
+                        {% for link in SETTINGS.HELP_MENU_ITEMS %}
+                        <li><a href="{{ link.0 }}" target="_parent">{{ link.1 }}</a></li>
+                        {% endfor %}
+                        <li class="divider"></li>
+                        <li><a target="_parent" href="https://github.com/kiwitcms/Kiwi/blob/master/CHANGELOG.rst#change-log">Version {{ SETTINGS.KIWI_VERSION }}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-primary">
+                {% for name, target in SETTINGS.MENU_ITEMS %}
+                    {% if target|length == 1 %}
+                    <li>
+                        <a href="{{ target }}" target="_parent">{{ name }}</a>
+                    </li>
+                    {% else %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ name }}
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                        {% for name, target in target %}
+                            {% if name == '-' %}
+                                <li class="divider"></li>
+                            {% else %}
+                            <li>
+                                <a href="{{ target }}" target="_parent">{{ name }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>

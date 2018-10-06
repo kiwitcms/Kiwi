@@ -43,6 +43,6 @@ URL: %s
 Summary: %s""" % (self.testcase.get_full_url(), self.testcase.summary)
 
             self.repo.get_issue(int(self.bug.bug_id)).create_comment(text)
-        except Exception as err:
+        except Exception as err:  # pylint: disable=broad-except
             message = '%s: %s' % (err.__class__.__name__, err)
             warnings.warn(message)

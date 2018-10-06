@@ -15,8 +15,8 @@ to update some of them for your particular production environment.
 
 .. note::
 
-    Additional information how to override the default settings and Docker image is
-    available at `<https://github.com/MrSenko/kiwi-docker>`_!
+    Additional information how to override the defaults can be found at
+    `<http://kiwitcms.org/blog/tags/customization/>`_!
 
 
 Augmenting behavior with signal handlers

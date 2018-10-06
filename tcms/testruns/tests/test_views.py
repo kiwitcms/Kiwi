@@ -1,33 +1,26 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import json
 from http import HTTPStatus
-from datetime import timedelta
 
 from django.utils import formats
 from django.urls import reverse
-from django.conf import settings
+from django.contrib.auth.models import Permission
 
 from tcms.testcases.models import Bug
 from tcms.testcases.models import BugSystem
-from tcms.testruns.models import EnvRunValueMap
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
+from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import EnvPropertyFactory
-from tcms.tests.factories import EnvValueFactory
 from tcms.tests.factories import BuildFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
+from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
 
 
 class TestGetRun(BaseCaseRun):
@@ -35,7 +28,19 @@ class TestGetRun(BaseCaseRun):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestGetRun, cls).setUpTestData()
+        super().setUpTestData()
+        initiate_user_with_default_setups(cls.tester)
+
+        for _ in range(3):
+            cls.test_run.add_tag(TagFactory())
+
+        cls.unauthorized = UserFactory()
+        cls.unauthorized.set_password('password')
+        cls.unauthorized.save()
+
+        cls.unauthorized.user_permissions.add(*Permission.objects.all())
+        remove_perm_from_user(cls.unauthorized, 'testruns.add_testruntag')
+        remove_perm_from_user(cls.unauthorized, 'testruns.delete_testruntag')
 
     def test_404_if_non_existing_pk(self):
         url = reverse('testruns-get', args=[99999999])
@@ -47,6 +52,8 @@ class TestGetRun(BaseCaseRun):
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, 'Add Tag')
+        self.assertContains(response, 'js-remove-tag')
 
         for i, case_run in enumerate(
                 (self.case_run_1, self.case_run_2, self.case_run_3), 1):
@@ -59,6 +66,20 @@ class TestGetRun(BaseCaseRun):
                 '<a id="link_{0}" href="#caserun_{1}" title="Expand test case">'
                 '{2}</a>'.format(i, case_run.pk, case_run.case.summary),
                 html=True)
+
+    def test_get_run_without_permissions_to_add_or_remove_tags(self):
+        self.client.logout()
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.unauthorized.username,
+            password='password')
+
+        url = reverse('testruns-get', args=[self.test_run.pk])
+        response = self.client.get(url)
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertNotContains(response, 'Add Tag')
+        self.assertNotContains(response, 'js-remove-tag')
 
 
 class TestCreateNewRun(BasePlanCase):
@@ -78,7 +99,7 @@ class TestCreateNewRun(BasePlanCase):
             username=self.tester.username,
             password='password')
         response = self.client.post(self.url, {})
-        self.assertRedirects(response, reverse('plans-all'))
+        self.assertRedirects(response, reverse('plans-search'))
 
     def test_refuse_if_missing_cases_pks(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -98,15 +119,11 @@ class TestCreateNewRun(BasePlanCase):
         })
 
         # Assert listed cases
-        for i, case in enumerate((self.case_1, self.case_2, self.case_3), 1):
+        for _i, case in enumerate((self.case_1, self.case_2, self.case_3), 1):
+            case_url = reverse('testcases-get', args=[case.pk])
             self.assertContains(
                 response,
-                '<a href="/case/{0}/">{0}</a>'.format(case.pk),
-                html=True)
-            self.assertContains(
-                response,
-                '<a id="link_{0}" class="blind_title_link js-case-summary" '
-                'data-param="{0}">{1}</a>'.format(i, case.summary),
+                '<a href="%s">TC-%d: %s</a>' % (case_url, case.pk, case.summary),
                 html=True)
 
     def test_create_a_new_run(self):
@@ -117,16 +134,11 @@ class TestCreateNewRun(BasePlanCase):
         clone_data = {
             'summary': self.plan.name,
             'from_plan': self.plan.pk,
-            'product': self.product.pk,
-            'product_version': self.version.pk,
             'build': self.build_fast.pk,
-            'errata_id': '',
             'manager': self.tester.email,
             'default_tester': self.tester.email,
-            'estimated_time': '0',
             'notes': 'Clone new run',
             'case': [self.case_1.pk, self.case_2.pk],
-            'do': 'clone_run',
             'POSTING_TO_CREATE': 'YES',
         }
 
@@ -144,7 +156,6 @@ class TestCreateNewRun(BasePlanCase):
         self.assertEqual(self.version, new_run.product_version)
         self.assertEqual(None, new_run.stop_date)
         self.assertEqual('Clone new run', new_run.notes)
-        self.assertEqual(timedelta(0), new_run.estimated_time)
         self.assertEqual(self.build_fast, new_run.build)
         self.assertEqual(self.tester, new_run.manager)
         self.assertEqual(self.tester, new_run.default_tester)
@@ -158,7 +169,6 @@ class TestCreateNewRun(BasePlanCase):
                              case_run.case_run_status)
             self.assertEqual(0, case_run.case_text_version)
             self.assertEqual(new_run.build, case_run.build)
-            self.assertEqual(new_run.environment_id, case_run.environment_id)
             self.assertEqual(None, case_run.running_date)
             self.assertEqual(None, case_run.close_date)
 
@@ -170,23 +180,17 @@ class CloneRunBaseTest(BaseCaseRun):
 
         self.assertContains(
             response,
-            '<input id="id_summary" maxlength="255" name="summary" '
-            'type="text" value="{}" required>'.format(self.test_run.summary),
+            '<input id="id_summary" class="form-control" name="summary" '
+            'type="text" value="Clone of {}" required>'.format(self.test_run.summary),
             html=True)
 
-        for_loop_counter = 1
         for case_run in (self.case_run_1, self.case_run_2):
+            case_url = reverse('testcases-get', args=[case_run.case.pk])
+
             self.assertContains(
                 response,
-                '<a href="/case/{0}/">{0}</a>'.format(case_run.case.pk),
+                '<a href="%s">TC-%d: %s</a>' % (case_url, case_run.case.pk, case_run.case.summary),
                 html=True)
-            self.assertContains(
-                response,
-                '<a id="link_{0}" class="blind_title_link" '
-                'href="javascript:toggleTestCaseContents(\'{0}\')">{1}</a>'.format(
-                    for_loop_counter, case_run.case.summary),
-                html=True)
-            for_loop_counter += 1
 
 
 class TestStartCloneRunFromRunPage(CloneRunBaseTest):
@@ -203,7 +207,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        url = reverse('testruns-clone-with-caseruns', args=[self.test_run.pk])
+        url = reverse('testruns-clone', args=[self.test_run.pk])
 
         response = self.client.post(url, {}, follow=True)
 
@@ -213,13 +217,13 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
-        url = reverse('testruns-clone-with-caseruns', args=[self.test_run.pk])
+        url = reverse('testruns-clone', args=[self.test_run.pk])
 
         response = self.client.post(url, {'case_run': [self.case_run_1.pk, self.case_run_2.pk]})
 
         self.assert_one_run_clone_page(response)
 
-    def assert_clone_a_run(self, reserve_status=False, reserve_assignee=True):
+    def test_clone_a_run(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
@@ -239,18 +243,10 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'errata_id': '',
             'manager': self.test_run.manager.email,
             'default_tester': self.test_run.default_tester.email,
-            'estimated_time': '0',
             'notes': '',
             'case': [self.case_run_1.case.pk, self.case_run_2.case.pk],
             'case_run_id': [self.case_run_1.pk, self.case_run_2.pk],
         }
-
-        # Set clone settings
-
-        if reserve_status:
-            clone_data['keep_status'] = 'on'
-        if reserve_assignee:
-            clone_data['keep_assignee'] = 'on'
 
         url = reverse('testruns-new')
         response = self.client.post(url, clone_data)
@@ -261,57 +257,15 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             response,
             reverse('testruns-get', args=[cloned_run.pk]))
 
-        self.assert_cloned_run(self.test_run, cloned_run,
-                               reserve_status=reserve_status,
-                               reserve_assignee=reserve_assignee)
+        self.assert_cloned_run(cloned_run)
 
-    def assert_cloned_run(self, origin_run, cloned_run,
-                          reserve_status=False, reserve_assignee=True):
+    def assert_cloned_run(self, cloned_run):
         # Assert clone settings result
         for origin_case_run, cloned_case_run in zip((self.case_run_1, self.case_run_2),
                                                     cloned_run.case_run.order_by('pk')):
-            if not reserve_status and not reserve_assignee:
-                self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                                 cloned_case_run.case_run_status)
-                self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
-                continue
-
-            if reserve_status and reserve_assignee:
-                self.assertEqual(origin_case_run.case_run_status,
-                                 cloned_case_run.case_run_status)
-                self.assertEqual(origin_case_run.assignee,
-                                 cloned_case_run.assignee)
-                continue
-
-            if reserve_status and not reserve_assignee:
-                self.assertEqual(origin_case_run.case_run_status,
-                                 cloned_case_run.case_run_status)
-
-                if origin_case_run.case.default_tester is not None:
-                    expected_assignee = origin_case_run.case.default_tester
-                else:
-                    expected_assignee = self.test_run.default_tester
-
-                self.assertEqual(expected_assignee, cloned_case_run.assignee)
-
-                continue
-
-            if not reserve_status and reserve_assignee:
-                self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                                 cloned_case_run.case_run_status)
-                self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
-
-    def test_clone_a_run_with_default_clone_settings(self):
-        self.assert_clone_a_run()
-
-    def test_clone_a_run_by_reserving_status(self):
-        self.assert_clone_a_run(reserve_status=True, reserve_assignee=False)
-
-    def test_clone_a_run_by_reserving_both_status_assignee(self):
-        self.assert_clone_a_run(reserve_status=True, reserve_assignee=True)
-
-    def test_clone_a_run_by_not_reserve_both_status_assignee(self):
-        self.assert_clone_a_run(reserve_status=False, reserve_assignee=False)
+            self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
+                             cloned_case_run.case_run_status)
+            self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
 
 
 class TestSearchRuns(BaseCaseRun):
@@ -320,332 +274,11 @@ class TestSearchRuns(BaseCaseRun):
     def setUpTestData(cls):
         super(TestSearchRuns, cls).setUpTestData()
 
-        cls.search_runs_url = reverse('testruns-all')
-
-    def test_search_runs(self):
-        search_criteria = {'summary': 'run'}
-
-        response = self.client.get(self.search_runs_url, search_criteria)
-
-        self.assertContains(
-            response,
-            '<input id="id_summary" name="summary" value="run" type="text">',
-            html=True)
-
-        # Assert table with this ID exists. Because searching runs actually
-        # happens in an AJAX requested from DataTable, no need to verify
-        # search runs at this moment.
-        self.assertContains(response, 'id="testruns_table"')
-
-
-class TestAJAXSearchRuns(BaseCaseRun):
-    """Test ajax_search view
-
-    View method ajax_search is called by DataTable in a AJAX GET request. This
-    test aims to test the search, so DataTable related behavior do not belong
-    to test purpose, ignore it.
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestAJAXSearchRuns, cls).setUpTestData()
-
-        cls.search_url = reverse('testruns-ajax_search')
-
-        # Add more test runs for testing different search criterias
-
-        cls.run_tester = UserFactory(username='run_tester',
-                                     email='runtester@example.com')
-
-        cls.product_issuetracker = ProductFactory(name='issuetracker')
-        cls.version_issuetracker_0_1 = VersionFactory(
-            value='0.1', product=cls.product_issuetracker)
-        cls.version_issuetracker_1_2 = VersionFactory(
-            value='1.2', product=cls.product_issuetracker)
-
-        cls.plan_issuetracker = TestPlanFactory(
-            name='Test issue tracker releases',
-            author=cls.tester,
-            owner=cls.tester,
-            product=cls.product_issuetracker,
-            product_version=cls.version_issuetracker_0_1)
-
-        # Probably need more cases as well in order to create case runs to
-        # test statistcis in search result
-
-        cls.build_issuetracker_fast = BuildFactory(
-            product=cls.product_issuetracker)
-
-        cls.run_hotfix = TestRunFactory(
-            summary='Fast verify hotfix',
-            product_version=cls.version_issuetracker_0_1,
-            plan=cls.plan_issuetracker,
-            build=cls.build_issuetracker_fast,
-            manager=cls.tester,
-            default_tester=cls.run_tester,
-            tag=[TagFactory(name='fedora'),
-                 TagFactory(name='rhel')])
-
-        cls.run_release = TestRunFactory(
-            summary='Smoke test before release',
-            product_version=cls.version_issuetracker_1_2,
-            plan=cls.plan_issuetracker,
-            build=cls.build_issuetracker_fast,
-            manager=cls.tester,
-            default_tester=cls.run_tester)
-
-        cls.run_daily = TestRunFactory(
-            summary='Daily test during sprint',
-            product_version=cls.version_issuetracker_0_1,
-            plan=cls.plan_issuetracker,
-            build=cls.build_issuetracker_fast,
-            manager=cls.tester,
-            default_tester=cls.run_tester,
-            tag=[TagFactory(name='rhel')])
-
-        # test data for Issue #78
-        # https://github.com/kiwitcms/Kiwi/issues/78
-        cls.run_bogus_summary = TestRunFactory(
-            summary=r"""A summary with backslash(\), single quotes(') and double quotes(")""",
-            manager=cls.tester,
-            default_tester=UserFactory(username='bogus_tester', email='bogus@example.com'))
-
-        cls.search_data = {
-            'action': 'search',
-            # Add criteria for searching runs in each test
-
-            # DataTable properties: pagination and sorting
-            'sEcho': 1,
-            'iDisplayStart': 0,
-            # Make enough length to display all searched runs in one page
-            'iDisplayLength': TestRun.objects.count() + 1,
-            'iSortCol_0': 1,
-            'sSortDir_0': 'asc',
-            'iSortingCols': 1,
-            # In the view, first column is not sortable.
-            'bSortable_0': 'false',
-            'bSortable_1': 'true',
-            'bSortable_2': 'true',
-            'bSortable_3': 'true',
-            'bSortable_4': 'true',
-            'bSortable_5': 'true',
-            'bSortable_6': 'true',
-            'bSortable_7': 'true',
-            'bSortable_8': 'true',
-            'bSortable_9': 'true',
-            'bSortable_10': 'true',
-            'bSortable_11': 'true',
-        }
-
-    def assert_found_runs(self, expected_found_runs, search_result):
-        expected_runs_count = len(expected_found_runs)
-        self.assertEqual(expected_runs_count, search_result['iTotalRecords'])
-        self.assertEqual(expected_runs_count, search_result['iTotalDisplayRecords'])
-        self.assertEqual(expected_runs_count, len(search_result['aaData']))
-
-        # used for assertIn b/c on Postgres the order in which items
-        # are returned is not guaranteed at all
-        links_id = [r[0] for r in search_result['aaData']]
-        links_summary = [r[1] for r in search_result['aaData']]
-
-        for run in expected_found_runs:
-            self.assertIn(
-                "<a href='{}'>{}</a>".format(
-                    reverse('testruns-get', args=[run.pk]), run.pk),
-                links_id)
-            self.assertIn(
-                "<a href='{}'>{}</a>".format(
-                    reverse('testruns-get', args=[run.pk]), run.summary),
-                links_summary)
-
-    def test_search_all_runs(self):
-        response = self.client.get(self.search_url)
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(TestRun.objects.all(), search_result)
-
-    def test_empty_search_result(self):
-        response = self.client.get(self.search_url, {'build': 9999})
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([], search_result)
-
-    def test_search_by_summary(self):
-        response = self.client.get(self.search_url, {'summary': 'run'})
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([self.test_run, self.test_run_1], search_result)
-
-    def test_search_by_product(self):
-        response = self.client.get(self.search_url,
-                                   {'product': self.product_issuetracker.pk})
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(
-            [self.run_hotfix, self.run_release, self.run_daily],
-            search_result)
-
-    def test_search_by_product_and_version(self):
-        query_criteria = {
-            'product': self.product_issuetracker.pk,
-            'product_version': self.version_issuetracker_1_2.pk,
-        }
-        response = self.client.get(self.search_url, query_criteria)
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([self.run_release], search_result)
-
-    def test_search_by_product_and_build(self):
-        query_criteria = {
-            'product': self.product_issuetracker.pk,
-            'build': self.build_issuetracker_fast.pk,
-        }
-        response = self.client.get(self.search_url, query_criteria)
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(
-            [self.run_hotfix, self.run_release, self.run_daily],
-            search_result)
-
-    def test_search_by_product_and_other_product_build(self):
-        query_criteria = {
-            'product': self.product_issuetracker.pk,
-            'build': self.build.pk,
-        }
-        response = self.client.get(self.search_url, query_criteria)
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([], search_result)
-
-    def test_search_by_plan_name(self):
-        response = self.client.get(self.search_url, {'plan': 'Issue'})
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(
-            [self.run_hotfix, self.run_release, self.run_daily],
-            search_result)
-
-    def test_search_by_empty_plan_name(self):
-        response = self.client.get(self.search_url, {'plan': ''})
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(TestRun.objects.all(), search_result)
-
-    def test_search_by_plan_id(self):
-        response = self.client.get(self.search_url, {'plan': self.plan.pk})
-
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([self.test_run, self.test_run_1], search_result)
-
-    def test_search_by_manager_or_default_tester(self):
-        response = self.client.get(self.search_url, {'people_type': 'people',
-                                                     'people': self.run_tester})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(
-            [self.run_hotfix, self.run_release, self.run_daily],
-            search_result)
-
-        response = self.client.get(self.search_url, {'people_type': 'people',
-                                                     'people': self.tester})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(TestRun.objects.all(), search_result)
-
-    def test_search_by_manager(self):
-        response = self.client.get(self.search_url,
-                                   {'people_type': 'manager',
-                                    'people': self.tester.username})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(TestRun.objects.all(), search_result)
-
-    def test_search_by_non_existing_manager(self):
-        response = self.client.get(self.search_url,
-                                   {'people_type': 'manager',
-                                    'people': 'nonexisting-manager'})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([], search_result)
-
-    def test_search_by_default_tester(self):
-        response = self.client.get(self.search_url,
-                                   {'people_type': 'default_tester',
-                                    'people': self.run_tester.username})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(
-            [self.run_hotfix, self.run_release, self.run_daily],
-            search_result)
-
-    def test_search_by_non_existing_default_tester(self):
-        response = self.client.get(self.search_url,
-                                   {'people_type': 'default_tester',
-                                    'people': 'nonexisting-default-tester'})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([], search_result)
-
-    def test_search_running_runs(self):
-        response = self.client.get(self.search_url, {'status': 'running'})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs(TestRun.objects.all(), search_result)
-
-    def test_search_finished_runs(self):
-        response = self.client.get(self.search_url, {'status': 'finished'})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([], search_result)
-
-    def test_search_by_tag(self):
-        response = self.client.get(self.search_url, {'tag__name__in': 'rhel'})
-        search_result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assert_found_runs([self.run_hotfix, self.run_daily],
-                               search_result)
-
-
-class TestLoadRunsOfOnePlan(BaseCaseRun):
-    """
-    When the user goes to Test Plan -> Runs tab this view gets loaded.
-    It also uses a JSON template like AJAX search and it is succeptible to
-    bad characters in the Test Run summary.
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestLoadRunsOfOnePlan, cls).setUpTestData()
-
-        # test data for Issue #78
-        # https://github.com/kiwitcms/Kiwi/issues/78
-        cls.run_bogus_summary = TestRunFactory(
-            summary=r"""A summary with backslash(\), single quotes(') and double quotes(")""",
-            plan=cls.plan)
-
-        # test data for Issue #234
-        # https://github.com/kiwitcms/Kiwi/issues/234
-        cls.run_with_angle_brackets = TestRunFactory(
-            summary=r"""A summary with <angle> brackets in <summary>""",
-            plan=cls.plan)
-
-    def test_load_runs(self):
-        load_url = reverse('load_runs_of_one_plan_url', args=[self.plan.pk])
-        response = self.client.get(load_url, {'plan': self.plan.pk})
-
-        # verify JSON can be parsed correctly (for #78)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        # verify there is the same number of objects loaded
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalRecords'])
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(),
-                         data['iTotalDisplayRecords'])
-
-    def test_with_angle_brackets(self):
-        load_url = reverse('load_runs_of_one_plan_url', args=[self.plan.pk])
-        response = self.client.get(load_url, {'plan': self.plan.pk})
-
-        # verify JSON can be parsed correctly (for #234)
-        # we can't really validate that the angle brackets are shown correctly
-        # because the rendering is done by jQuery dataTables on the browser
-        # and the default Django client does not support JavaScript!
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        # verify there is the same number of objects loaded
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(), data['iTotalRecords'])
-        self.assertEqual(TestRun.objects.filter(plan=self.plan).count(),
-                         data['iTotalDisplayRecords'])
+        cls.search_runs_url = reverse('testruns-search')
+
+    def test_search_page_is_shown(self):
+        response = self.client.get(self.search_runs_url)
+        self.assertContains(response, '<input id="id_summary" type="text"')
 
 
 class TestAddRemoveRunCC(BaseCaseRun):
@@ -729,90 +362,6 @@ class TestAddRemoveRunCC(BaseCaseRun):
             'The user you typed does not exist in database')
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
-
-
-class TestEnvValue(BaseCaseRun):
-    """Test env_value view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestEnvValue, cls).setUpTestData()
-
-        cls.property_os = EnvPropertyFactory(name='os')
-        cls.value_linux = EnvValueFactory(value='Linux',
-                                          property=cls.property_os)
-        cls.value_bsd = EnvValueFactory(value='BSD',
-                                        property=cls.property_os)
-        cls.value_mac = EnvValueFactory(value='Mac',
-                                        property=cls.property_os)
-
-        cls.test_run.add_env_value(cls.value_linux)
-        cls.test_run_1.add_env_value(cls.value_linux)
-
-        cls.env_value_url = reverse('testruns-env_value')
-        user_should_have_perm(cls.tester, 'testruns.add_envrunvaluemap')
-        user_should_have_perm(cls.tester, 'testruns.delete_envrunvaluemap')
-
-    def test_refuse_if_action_is_unknown(self):
-        response = self.client.get(self.env_value_url, {
-            'env_value_id': self.value_bsd,
-            'run_id': self.test_run.pk
-        })
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': 'Unrecognizable actions'})
-
-    def test_add_env_value(self):
-        self.client.get(self.env_value_url, {
-            'a': 'add',
-            'env_value_id': self.value_bsd.pk,
-            'run_id': self.test_run.pk
-        })
-
-        rel = EnvRunValueMap.objects.filter(run=self.test_run, value=self.value_bsd)
-        self.assertTrue(rel.exists())
-
-    def test_add_env_value_to_runs(self):
-        self.client.get(self.env_value_url, {
-            'a': 'add',
-            'env_value_id': self.value_bsd.pk,
-            'run_id': [self.test_run.pk, self.test_run_1.pk]
-        })
-
-        rel = EnvRunValueMap.objects.filter(run=self.test_run,
-                                            value=self.value_bsd)
-        self.assertTrue(rel.exists())
-
-        rel = EnvRunValueMap.objects.filter(run=self.test_run_1,
-                                            value=self.value_bsd)
-        self.assertTrue(rel.exists())
-
-    def test_delete_env_value(self):
-        self.client.get(self.env_value_url, {
-            'a': 'remove',
-            'env_value_id': self.value_linux.pk,
-            'run_id': self.test_run.pk,
-        })
-
-        rel = EnvRunValueMap.objects.filter(run=self.test_run,
-                                            value=self.value_linux)
-        self.assertFalse(rel.exists())
-
-    def test_delete_env_value_from_runs(self):
-        self.client.get(self.env_value_url, {
-            'a': 'remove',
-            'env_value_id': self.value_linux.pk,
-            'run_id': [self.test_run.pk, self.test_run_1.pk],
-        })
-
-        rel = EnvRunValueMap.objects.filter(run=self.test_run,
-                                            value=self.value_linux)
-        self.assertFalse(rel.exists())
-
-        rel = EnvRunValueMap.objects.filter(run=self.test_run_1,
-                                            value=self.value_linux)
-        self.assertFalse(rel.exists())
 
 
 class TestBugActions(BaseCaseRun):
@@ -924,11 +473,15 @@ class TestRemoveCaseRuns(BaseCaseRun):
                              reverse('testruns-get', args=[self.test_run.pk]))
 
     def test_redirect_to_add_case_runs_if_all_case_runs_are_removed(self):
+        case_runs = []
+
+        for case_run in self.test_run.case_run.all():
+            case_runs.append(case_run.pk)
+
         response = self.client.post(
             self.remove_case_run_url,
             {
-                'case_run': [case_run.pk for case_run
-                             in self.test_run.case_run.all()]
+                'case_run': case_runs
             })
 
         self.assertRedirects(response,
@@ -978,11 +531,8 @@ class TestEditRun(BaseCaseRun):
         user_should_have_perm(cls.tester, 'testruns.change_testrun')
         cls.edit_url = reverse('testruns-edit', args=[cls.test_run.pk])
 
-        cls.new_product = ProductFactory(name='Nitrate Dev')
         cls.new_build = BuildFactory(name='FastTest',
-                                     product=cls.new_product)
-        cls.new_version = VersionFactory(value='dev0.1',
-                                         product=cls.new_product)
+                                     product=cls.test_run.plan.product)
         cls.intern = UserFactory(username='intern',
                                  email='intern@example.com')
 
@@ -996,13 +546,9 @@ class TestEditRun(BaseCaseRun):
 
         post_data = {
             'summary': 'New run summary',
-            'product': self.new_product.pk,
-            'product_version': self.new_version.pk,
             'build': self.new_build.pk,
-            'errata_id': '',
             'manager': self.test_run.manager.email,
             'default_tester': self.intern.email,
-            'estimated_time': '00:03:00',
             'notes': 'easytest',
         }
 
@@ -1010,7 +556,6 @@ class TestEditRun(BaseCaseRun):
 
         run = TestRun.objects.get(pk=self.test_run.pk)
         self.assertEqual('New run summary', run.summary)
-        self.assertEqual(self.new_version, run.product_version)
         self.assertEqual(self.new_build, run.build)
 
         self.assertRedirects(response, reverse('testruns-get', args=[run.pk]))

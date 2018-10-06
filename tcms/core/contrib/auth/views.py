@@ -6,31 +6,27 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render
+from django.contrib.auth import views
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
 from tcms.signals import USER_REGISTERED_SIGNAL
-from tcms.core.contrib.auth import get_using_backend
 from tcms.core.contrib.auth.forms import RegistrationForm
 from tcms.core.contrib.auth.models import UserActivationKey
 
 
-@require_http_methods(['GET', 'POST'])
-def register(request, template_name='registration/registration_form.html'):
-    """Register method of account"""
-    # Check that registration is allowed by backend
-    backend = get_using_backend()
-    can_register = getattr(backend, 'can_register')
-    if not can_register:
-        messages.add_message(
-            request,
-            messages.ERROR,
-            _('This backend does not allow user registration')
-        )
-        return HttpResponseRedirect(reverse('tcms-login'))
+class LoginViewWithCustomTemplate(views.LoginView):
+    def get_template_names(self):
+        return ['registration/custom_login.html', 'registration/login.html']
 
+
+@require_http_methods(['GET', 'POST'])
+def register(request):
+    """Register method of account"""
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
@@ -39,8 +35,7 @@ def register(request, template_name='registration/registration_form.html'):
             # send a signal that new user has been registered
             USER_REGISTERED_SIGNAL.send(sender=form.__class__,
                                         request=request,
-                                        user=new_user,
-                                        backend=backend)
+                                        user=new_user)
 
             # Send confirmation email to new user
             if settings.DEFAULT_FROM_EMAIL and settings.AUTO_APPROVE_NEW_USERS:
@@ -48,7 +43,7 @@ def register(request, template_name='registration/registration_form.html'):
 
                 messages.add_message(
                     request,
-                    messages.INFO,
+                    messages.SUCCESS,
                     _('Your account has been created, please check your mailbox for confirmation')
                 )
             else:
@@ -77,7 +72,7 @@ def register(request, template_name='registration/registration_form.html'):
     context_data = {
         'form': form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'registration/registration_form.html', context_data)
 
 
 @require_GET
@@ -111,4 +106,10 @@ def confirm(request, activation_key):
         messages.SUCCESS,
         _('Your account has been activated successfully')
     )
-    return HttpResponseRedirect(request.GET.get('next', reverse('tcms-dashboard')))
+    return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
+
+
+def profile(request, username):
+    """Show user profiles"""
+    user = get_object_or_404(User, username=username)
+    return HttpResponseRedirect(reverse('admin:auth_user_change', args=[user.pk]))

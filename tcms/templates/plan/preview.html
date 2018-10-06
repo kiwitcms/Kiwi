@@ -1,3 +1,5 @@
+{% load extra_filters %}
+
 {% for test_plan in test_plans %}
 <div class="listinfo_content">
         <div class="listinfo">
@@ -37,7 +39,7 @@
 		<div class="listinfo">
 			<div class="title">Document</div>
 			<div class="contenttext">
-				{{ test_plan.text|safe }}
+				{{ test_plan.text|markdown2html }}
 			</div>
 		</div>
         <div class="clear"></div>

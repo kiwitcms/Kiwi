@@ -1,5 +1,6 @@
 {% load static %}
 {% load comments %}
+{% load extra_filters %}
 {% load attachments_tags %}
 
 <td colspan="13" style="padding:10px;">
@@ -117,7 +118,7 @@
 				<h4 class="borderB">Change Log<span>[ <a href="javascript:void(0);" class="js-show-changelog" data-param="changeLog{{ test_case_run.pk }}">Show All</a> ]</span></h4>
 				<ul id="changeLog{{test_case_run.pk}}" style="display:none;">
 					{% for log in caserun_logs %}
-					<li><span>{{ log.date }}</span><span>{{ log.who__username }}</span><br />{{ log.action }}</li>
+					<li><span>{{ log.history_date }}</span><span>{{ log.history_user }}</span><br />{{ log.history_change_reason }}</li>
 					{% endfor %}
 				</ul>
 				{% else %}
@@ -132,14 +133,14 @@
 					<td>
 						<div class="container">
 							<h4>Setup</h4>
-							<div class="content">{{ test_case_text.setup|safe }}</div>
+							<div class="content">{{ test_case_text.setup|markdown2html }}</div>
 						</div>
 					</td>
 					<td style="width:5px;"></td>
 					<td>
 						<div class="container">
 							<h4>Breakdown</h4>
-							<div class="content">{{ test_case_text.breakdown|safe }}</div>
+							<div class="content">{{ test_case_text.breakdown|markdown2html }}</div>
 						</div>
 					</td>
 				</tr>
@@ -147,7 +148,7 @@
 					<td>
 						<div class="container">
 							<h4>Actions</h4>
-							<div class="content">{{ test_case_text.action|safe }}</div>
+							<div class="content">{{ test_case_text.action|markdown2html }}</div>
 						</div>
 						
 					</td>
@@ -155,7 +156,7 @@
 					<td>
 						<div class="container">
 							<h4>Expected Results</h4>
-							<div class="content">{{ test_case_text.effect|safe }}</div>
+							<div class="content">{{ test_case_text.effect|markdown2html }}</div>
 						</div>
 					</td>
 				</tr>

@@ -7,8 +7,8 @@ from django.template.loader import render_to_string
 
 
 def mailto(template_name, subject, recipients=None,  # pylint: disable=invalid-name
-           context=None, sender=settings.DEFAULT_FROM_EMAIL,
-           cc=None):
+           context=None, cc=None):
+
     # make a list with recipients and filter out duplicates
     if isinstance(recipients, list):
         recipients = list(set(recipients))
@@ -24,8 +24,13 @@ def mailto(template_name, subject, recipients=None,  # pylint: disable=invalid-n
         for _, admin_email in settings.ADMINS:
             recipients.append(admin_email)
 
-    body = render_to_string(template_name, context)
+    # this is a workaround to allow passing body text directly
+    if template_name:
+        body = render_to_string(template_name, context)
+    else:
+        body = context
 
+    sender = settings.DEFAULT_FROM_EMAIL
     email_thread = threading.Thread(
         target=send_mail,
         args=(settings.EMAIL_SUBJECT_PREFIX + subject, body, sender, recipients),

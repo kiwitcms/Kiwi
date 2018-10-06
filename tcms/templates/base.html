@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load static %}
+{% load extra_filters %}
+
+<!DOCTYPE html>
+<html class="{% block html_class%}{% endblock %}" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiwi TCMS - {% block title %}{% trans "the leading open source test case management system" %}{% endblock %}</title>
+    {% include 'patternfly.html' %}
+    {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    {% if not REQUEST_CONTENTS.nonav %}
+        {% include 'navbar.html' %}
+    {% endif %}
+
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span class="pficon pficon-close"></span>
+            </button>
+            <span class="pficon {{ message|message_icon }}"></span>
+            <strong>{{ message|safe }}!</strong>
+        </div>
+    {% endfor %}
+
+    {% block contents %}{% endblock %}
+</body>
+</html>

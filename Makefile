@@ -29,11 +29,11 @@ flake8:
 DJANGO_SETTINGS_MODULE="tcms.settings.test"
 
 ifeq ($(TEST_DB),MySQL)
-	DJANGO_SETTINGS_MODULE="tcms.settings.test.mysql"
+	DJANGO_SETTINGS_MODULE="tcms.settings.test.mariadb"
 endif
 
 ifeq ($(TEST_DB),MariaDB)
-	DJANGO_SETTINGS_MODULE="tcms.settings.test.mysql"
+	DJANGO_SETTINGS_MODULE="tcms.settings.test.mariadb"
 endif
 
 ifeq ($(TEST_DB),Postgres)
@@ -58,11 +58,18 @@ check: flake8 test
 pylint:
 	pylint -d missing-docstring *.py kiwi_lint/
 	PYTHONPATH=. pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring tcms/
-	PYTHONPATH=. pylint --load-plugins=kiwi_lint tcms_api/
+	PYTHONPATH=. pylint --load-plugins=kiwi_lint --extension-pkg-whitelist=kerberos tcms_api/
 
 .PHONY: bandit
 bandit:
 	bandit -r *.py tcms/ tcms_api/ kiwi_lint/
+
+
+.PHONY: bandit_site_packages
+bandit_site_packages:
+	if [ -d "/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/" ]; then \
+	    bandit -r /home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/; \
+	fi
 
 
 .PHONY: tags

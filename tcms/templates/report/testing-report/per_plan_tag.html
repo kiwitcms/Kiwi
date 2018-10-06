@@ -54,10 +54,10 @@
 			{% endifnotequal %}
 			{% ifnotequal plan.1 None %}
 			<td {% ifnotequal plan.1 1 %}rowspan="{{ plan.1 }}"{% endifnotequal %} class="bgRowspan">
-				<a href="{{ plan.0.get_full_url }}">[{{ plan.0.pk }}] {{ plan.0.name }}</a>
+				<a href="{% url 'test_plan_url_short' plan.0.pk %}">TP-{{ plan.0.pk }}: {{ plan.0.name }}</a>
 			</td>
 			{% endifnotequal %}
-			<td><a href="{{ run.get_full_url }}">{{ run.summary }}</a></td>
+			<td><a href="{% url 'testruns-get' run.pk %}">{{ run.summary }}</a></td>
 			<td><a href="{{ report_url }}{{path_without_build}}&r_build={{ build.0.pk }}&plan_tag={{ tag_name }}&run={{ run.pk }}&status=idle">{{ status_subtotal.IDLE|default:0 }}</a></td>
 			<td><a href="{{ report_url }}{{path_without_build}}&r_build={{ build.0.pk }}&plan_tag={{ tag_name }}&run={{ run.pk }}&status=running">{{ status_subtotal.RUNNING|default:0 }}</a></td>
 			<td><a href="{{ report_url }}{{path_without_build}}&r_build={{ build.0.pk }}&plan_tag={{ tag_name }}&run={{ run.pk }}&status=paused">{{ status_subtotal.PAUSED|default:0 }}</a></td>

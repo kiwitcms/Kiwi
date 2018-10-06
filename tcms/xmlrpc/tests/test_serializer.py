@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, protected-access
 
 import unittest
 from django import test
@@ -12,6 +12,7 @@ from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.xmlrpc.serializer import datetime_to_str
 from tcms.xmlrpc.serializer import do_nothing
 from tcms.xmlrpc.serializer import to_str
+from tcms.xmlrpc.serializer import _get_related_object_pks
 
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
@@ -36,7 +37,11 @@ class TestXMLSerializer(test.TestCase):
         self.assertEqual(self.testcase.category.pk, result['category_id'])
         self.assertEqual(str(self.testcase.category), result['category'])
 
-        component_pks = [c.pk for c in self.testcase.component.all()]
+        component_pks = []
+
+        for component in self.testcase.component.all():
+            component_pks.append(component.pk)
+
         component_pks.sort()
         result['component'].sort()
         self.assertEqual(component_pks, result['component'])
@@ -123,7 +128,13 @@ class TestQuerySetBasedSerializer(test.TestCase):
         TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[2]])
         TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[2]])
         TestCaseFactory(author=cls.case_author, default_tester=None, plan=[cls.plans[2]])
-        cls.plans = TestPlan.objects.filter(pk__in=[plan.pk for plan in cls.plans])
+
+        plan_keys = []
+
+        for plan in cls.plans:
+            plan_keys.append(plan.pk)
+
+        cls.plans = TestPlan.objects.filter(pk__in=plan_keys)
         cls.plan_serializer = MockTestPlanSerializer(TestPlan, cls.plans)
 
         cls.cases = [
@@ -131,11 +142,23 @@ class TestQuerySetBasedSerializer(test.TestCase):
             TestCaseFactory(author=cls.case_author, default_tester=None),
             TestCaseFactory(author=cls.case_author, default_tester=None),
         ]
-        cls.cases = TestCase.objects.filter(pk__in=[case.pk for case in cls.cases])
+
+        case_keys = []
+
+        for case in cls.cases:
+            case_keys.append(case.pk)
+
+        cls.cases = TestCase.objects.filter(pk__in=case_keys)
         cls.case_serializer = MockTestCaseSerializer(TestCase, cls.cases)
 
         cls.products = [ProductFactory(), ProductFactory(), ProductFactory()]
-        cls.products = Product.objects.filter(pk__in=[product.pk for product in cls.products])
+
+        product_keys = []
+
+        for product in cls.products:
+            product_keys.append(product.pk)
+
+        cls.products = Product.objects.filter(pk__in=product_keys)
         cls.product_serializer = MockProductSerializer(Product, cls.products)
 
     def test_get_values_fields_mapping(self):
@@ -145,7 +168,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
         mapping = self.case_serializer._get_values_fields_mapping()
         self.assertEqual(mapping, MockTestCaseSerializer.values_fields_mapping)
 
-    def test_get_values_fields(self):
+    def testget_values_fields(self):
         fields = list(self.case_serializer._get_values_fields())
         fields.sort()
         expected_fields = list(MockTestCaseSerializer.values_fields_mapping.keys())
@@ -154,7 +177,11 @@ class TestQuerySetBasedSerializer(test.TestCase):
 
         fields = self.product_serializer._get_values_fields()
         fields.sort()
-        expected_fields = [field.name for field in Product._meta.fields]
+        expected_fields = []
+
+        for field in Product._meta.fields:
+            expected_fields.append(field.name)
+
         expected_fields.sort()
         self.assertEqual(expected_fields, fields)
 
@@ -167,7 +194,11 @@ class TestQuerySetBasedSerializer(test.TestCase):
 
         fields = list(self.case_serializer._get_m2m_fields())
         fields.sort()
-        expected_fields = [field.name for field in TestCase._meta.many_to_many]
+        expected_fields = []
+
+        for field in TestCase._meta.many_to_many:
+            expected_fields.append(field.name)
+
         expected_fields.sort()
         self.assertEqual(expected_fields, fields)
 
@@ -181,8 +212,12 @@ class TestQuerySetBasedSerializer(test.TestCase):
         self.assertEqual(field_name, MockTestCaseSerializer.primary_key)
 
         field_name = self.plan_serializer._get_primary_key_field()
-        expected_field_name = [field.name for field in TestPlan._meta.fields
-                               if field.primary_key][0]
+
+        for field in TestPlan._meta.fields:
+            if field.primary_key:
+                expected_field_name = field.name
+                break
+
         self.assertEqual(expected_field_name, field_name)
 
     def verify_m2m_field_query_result(self, m2m_field_name, result):
@@ -194,6 +229,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
 
     def test_query_m2m_field(self):
         m2m_field_name = 'case'
+
         result = self.plan_serializer._query_m2m_field(m2m_field_name)
 
         self.assertEqual(len(result), len(self.plans),
@@ -216,13 +252,19 @@ class TestQuerySetBasedSerializer(test.TestCase):
 
     def test_get_related_object_pks(self):
         m2m_field_name = 'case'
+
         m2m_query_result = self.plan_serializer._query_m2m_fields()
-        result = self.plan_serializer._get_related_object_pks(m2m_query_result,
-                                                              self.plans[0].pk,
-                                                              m2m_field_name)
+
+        result = _get_related_object_pks(m2m_query_result,
+                                         self.plans[0].pk,
+                                         m2m_field_name)
         result.sort()
 
-        expected_values = [case.pk for case in self.plans[0].case.all()]
+        expected_values = []
+
+        for case in self.plans[0].case.all():
+            expected_values.append(case.pk)
+
         expected_values.sort()
         self.assertEqual(expected_values, result)
 
@@ -239,6 +281,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
     def test_handle_extra_fields_alias(self):
         serialize_result = {'plan_id': 1000, 'product_version': 1}
         test_data = serialize_result.copy()
+
         self.plan_serializer._handle_extra_fields(test_data)
         self.assertTrue('default_product_version' in test_data)
         self.assertEqual(test_data['default_product_version'],
@@ -248,6 +291,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
                          serialize_result['product_version'])
 
         test_data = serialize_result.copy()
+
         self.case_serializer._handle_extra_fields(test_data)
         self.assertEqual(test_data, serialize_result)
 

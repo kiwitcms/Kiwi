@@ -41,14 +41,14 @@ This object is used to record scenarios in the database.
 
 For every distinct product build that is being tested you have to create
 a Test Run artifact. The Test Run holds a collection of Test Case Run objects,
-information about the testing environment (via tags and/or properties),
+information about the testing environment (via tags),
 who the default tester is, start/finish timestamps, etc.
 
 A Test Case Run object is the container that links together the actual
 testing scenario with its execution status, additional comments and bugs
 found during testing! A Test Case Run object has a 1-to-1 relation to the
 Test Case for which it holds status. Thus a Test Case Run object represents
-the actual Test Cases that will be/were executed against a particular product build
+the actual Test Case that will be/was executed against a particular product build
 and environment combination!
 
 
@@ -78,8 +78,8 @@ activities within your team:
    - If you don't want to execute all Test Cases you can leave their status
      as IDLE or remove them from the Test Run!
    - In case you test in multiple environments then create a Test Run for each
-     environment/build combination. Annotate the Test Run with tags or environment
-     properties to be able to search for it later!
+     environment/build combination. Annotate the Test Run with tags to be able
+     to search for it later!
    - QA engineers will execute the Test Runs and update statuses as appropriate.
 
 **Question:** How do I show all executions for a given Test Case?
@@ -99,8 +99,7 @@ Product/Plan/Build/Environment ?
 
 **Answer:** Navigate to **Search::Search Test Runs** and filter Test Runs by desired properties.
 If you want to filter runs from a particular Test Plan make sure to specify the plan
-name in the **Plan** field. You can also filter Test Runs by tags and environment
-if necessary, specifying multiple values separated by comma.
+name in the **Plan** field. You can also filter Test Runs by tags if necessary.
 
 **Question:** Is this the first time that Test Case is failing on envrionment X/Y/Z ?
 
@@ -141,22 +140,6 @@ When you click over a menu item, a sub-menu appears. To navigate to a previous s
 the breadcrumb located below the menu bar.
 
 |The TCMS menu bar and breadcrumbs|
-
-Bookmarks
-~~~~~~~~~
-
-Any page in Kiwi TCMS can be bookmarked.
-
--  Click the **My bookmarks** item from the **Personal menu** to view your bookmarks.
--  Click **Bookmark this page** icon to add the current page to your bookmarks.
-
-.. note::
-
-    Kiwi TCMS is transitioning to a a new UI which conflicts with the existing jQuery
-    versions. Because of this the navigation bar is loaded via an iframe and the
-    **Bookark this page** button is disabled. It will be located to the left of the
-    **Help menu** once re-enabled!
-
 
 Personal dashboard
 ~~~~~~~~~~~~~~~~~~~

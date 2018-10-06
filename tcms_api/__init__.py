@@ -22,47 +22,85 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-Python API for the Kiwi TCMS test case management system
+This module provides a dictionary based Python interface for the
+Kiwi TCMS test case management system.
 
-This module provides a low-level(dictionary based) Python interface.
+Installation::
 
-Synopsis:
+    pip install tcms-api
 
-    Minimal config file ~/.tcms.conf::
+Minimal config file ``~/.tcms.conf``::
 
-        [tcms]
-        url = https://tcms.server/xml-rpc/
+    [tcms]
+    url = https://tcms.server/xml-rpc/
+    username = your-username
+    password = your-password
 
-    Initialize or create an object::
+For Kerberos specify ``use_mod_kerb = True`` key!
+It's also possible to provide system-wide config in ``/etc/tcms.conf``.
 
-        testcase = TestCase(pk='1234')
-        testrun = TestRun(testplan=<plan>, summary=<summary>)
+Connect to backend::
 
-    Iterate over all container objects::
+    from tcms_api import TCMS
 
-        for case in TestRun(1234):
-            if case.automated:
-                case.status = TestCaseRunStatus("RUNNING")
-                case.update()
+    rpc_client = TCMS()
 
-    Link test case to a test plan::
+    for test_case in rpc_client.exec.TestCase.filter({'pk': 46490}):
+        print(test_case)
 
-        testplan.testcases.add(testcase)
-        testplan.update()
-
-For details see pydoc documentation for individual modules:
-
-    tcms_api.base ......... TCMS class, search support
-    tcms_api.config ....... Configuration, logging, caching
-    tcms_api.tests ........ Test suite
-    tcms_api.xmlrpc ....... XMLRPC driver
 """
+import os
+from configparser import ConfigParser
 
-# TCMS objects
-from tcms_api.base import TCMS
+from .xmlrpc import TCMSXmlrpc, TCMSKerbXmlrpc
 
-# Logging and caching configuration
-from tcms_api.config import (
-    Config,
-    Logging, get_log_level, set_log_level, log,
-    LOG_ERROR, LOG_WARN, LOG_INFO, LOG_DEBUG, LOG_CACHE, LOG_DATA, LOG_ALL)  # flake8: noqa
+
+class TCMS:  # pylint: disable=too-few-public-methods
+    """
+    Takes care of initiating the connection to the TCMS server and
+    parses user configuration.
+    """
+
+    _connection = None
+    _path = os.path.expanduser("~/.tcms.conf")
+
+    def __init__(self):
+        # Connect to the server unless already connected
+        if TCMS._connection is not None:
+            return
+
+        # Try system settings when the config does not exist in user directory
+        if not os.path.exists(self._path):
+            self._path = "/etc/tcms.conf"
+        if not os.path.exists(self._path):
+            raise Exception("Config file '%s' not found" % self._path)
+
+        config = ConfigParser()
+        config.read(self._path)
+
+        # Make sure the server URL is set
+        try:
+            config['tcms']['url'] is not None
+        except (KeyError, AttributeError):
+            raise Exception("No url found in %s" % self._path)
+        self._parsed = True
+
+        if config['tcms'].get('use_mod_kerb', False):
+            # use Kerberos
+            TCMS._connection = TCMSKerbXmlrpc(config['tcms']['url']).server
+
+        # use plain authentication otherwise
+        try:
+            TCMS._connection = TCMSXmlrpc(config['tcms']['username'],
+                                          config['tcms']['password'],
+                                          config['tcms']['url']).server
+        except KeyError:
+            raise Exception("username/password are required in %s" % self._path)
+
+    @property
+    def exec(self):
+        """
+        Property that returns the underlying XML-RPC connection on which
+        you can call various server-side functions.
+        """
+        return TCMS._connection

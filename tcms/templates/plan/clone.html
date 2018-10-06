@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
@@ -16,51 +15,14 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 {% block contents %}
 
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		{% ifequal testplans|length 1 %}
-		>> <a href="{{ testplans.0.get_full_url }}">{{ testplans.0.plan_id }}: {{ testplans.0.name }}</a> 
-		>> Clone Plan
-		{% else %}
-		>> Clone plans
-		{% endifequal %}
-	</div>
-	<h2>Clone Test Plan</h2>
-	<p class="help">
-		select different product 
-	</p>
+	<h2>Clone TestPlan {{ test_plan.name }}</h2>
 	<div class="Detailform border-1">
 		<form action="{% url "plans-clone" %}" method="post">
-			{% for testplan in testplans %}
-			<input type="hidden" name="plan" value="{{ testplan.pk }}" />
-			{% endfor %}
+			<input type="hidden" name="plan" value="{{ test_plan.pk }}" />
 			<table	class="editor" cellspacing="0" cellspan="0"> 
 				<tr>
-					{% ifequal testplans|length 1 %}
 					<td width="20%" ><label class="strong" for="id_name">New Plan Name</label> </td>
 					<td class="name" >{{ clone_form.name }}</td>
-					{% else %}
-					<td width="20%" >
-						<label class="strong">Plans</label>
-						<span class="help">Note:Can't change plan name when clone multiple plans, you can edit them after cloned.</span>
-					 </td>
-					<td class="name" >
-						<ul class="ul-no-format">
-							{% for testplan in testplans %}
-							<li>
-								<span class="lab-50">{{ testplan.plan_id }}</span>
-								<span class="lab-100">{{ testplan.type }}</span>
-								<span>
-									<a href="{{ testplan.get_full_url }}">
-									 {{ testplan.name }}
-									</a>
-								</span>
-							</li>
-							{% endfor %}
-						</ul>
-					</td>
-					{% endifequal %}
 				</tr>
 				<tr >
 					<td><label class="strong" for="id_product_id">Copy to Product</label></td>
@@ -79,7 +41,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 						<ul class="ul-no-format">
 							<li>{{ clone_form.set_parent }}{{ clone_form.set_parent.label }} ({{ clone_form.set_parent.help_text }})</li>
 							<li>{{ clone_form.keep_orignal_author }}{{ clone_form.keep_orignal_author.label }} ({{ clone_form.keep_orignal_author.help_text }})</li>
-							<li>{{ clone_form.copy_environment_group }}{{ clone_form.copy_environment_group.label }} ({{ clone_form.copy_environment_group.help_text }})</li>
 							<li>
 								<fieldset class="choose">
 									<legend>{{ clone_form.link_testcases }}Copy {{ clone_form.link_testcases.label }}</legend>

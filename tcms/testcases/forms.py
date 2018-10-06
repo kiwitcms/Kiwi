@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from tinymce.widgets import TinyMCE
+from django.utils.translation import ugettext_lazy as _
 
+from tcms.core.widgets import SimpleMDE
 from tcms.core.forms.fields import UserField, StripURLField
 from tcms.core.utils import string_to_list
 from tcms.core.utils.validations import validate_bug_id
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
-from tcms.management.models import Priority, Product, Component, Tag
-from .models import TestCase, Category, TestCaseStatus, TestCaseTag
-from .models import Bug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
-from .fields import MultipleEmailField
+from tcms.management.models import Priority, Product, Component
+from tcms.testcases.models import TestCase, Category, TestCaseStatus
+from tcms.testcases.models import Bug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
+from tcms.testcases.fields import MultipleEmailField
+
 
 AUTOMATED_CHOICES = (
     (0, 'Manual'),
@@ -30,6 +32,10 @@ ITEMS_PER_PAGE_CHOICES = (
     ('50', '50'),
     ('100', '100')
 )
+
+VALIDATION_ERROR_MESSAGE = _('Please input valid case id(s). '
+                             'use comma to split more than one '
+                             'case id. e.g. "111, 222"')
 
 
 class BugField(forms.CharField):
@@ -105,16 +111,10 @@ class BaseCaseForm(forms.Form):
         widget=forms.Textarea,
         required=False
     )
-    estimated_time = forms.DurationField(label='Estimated Time', initial='0', required=False)
-    setup = forms.CharField(label="Setup", widget=TinyMCE(), required=False)
-    action = forms.CharField(label="Actions", widget=TinyMCE(), required=False)
-    effect = forms.CharField(label="Expect results", widget=TinyMCE(), required=False)
-    breakdown = forms.CharField(label="Breakdown", widget=TinyMCE(), required=False)
-
-    tag = forms.CharField(
-        label="Tag",
-        required=False
-    )
+    setup = forms.CharField(label="Setup", widget=SimpleMDE(), required=False)
+    action = forms.CharField(label="Actions", widget=SimpleMDE(), required=False)
+    effect = forms.CharField(label="Expect results", widget=SimpleMDE(), required=False)
+    breakdown = forms.CharField(label="Breakdown", widget=SimpleMDE(), required=False)
 
     def __init__(self, *args, **kwargs):
         if args:
@@ -143,25 +143,16 @@ class BaseCaseForm(forms.Form):
         return data
 
     def clean_script(self):
-        if self.script_val == '':
-            return u''
-        elif self.script_val:
+        if self.script_val:
             return self.cleaned_data['script']
-        return None
+
+        return ''
 
     def clean_notes(self):
-        if self.notes_val == '':
-            return u''
-        elif self.notes_val:
+        if self.notes_val:
             return self.cleaned_data['notes']
-        return None
 
-    def clean_tag(self):
-        tags = []
-        if self.cleaned_data['tag']:
-            tag_names = string_to_list(self.cleaned_data['tag'])
-            tags = Tag.get_or_create_many_by_name(tag_names)
-        return tags
+        return ''
 
     def populate(self, product_id=None):
         if product_id:
@@ -208,7 +199,6 @@ class CaseNotifyForm(forms.Form):
 
 
 class XMLRPCBaseCaseForm(BaseCaseForm):
-    estimated_time = forms.DurationField(required=False)
     is_automated = forms.ChoiceField(
         choices=FULL_AUTOMATED_CHOICES,
         widget=forms.CheckboxSelectMultiple(),
@@ -253,9 +243,6 @@ class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
     )
 
 
-# =========== Forms for search/filter ==============
-
-
 class BaseCaseSearchForm(forms.Form):
     summary = forms.CharField(required=False)
     author = forms.CharField(required=False)
@@ -268,6 +255,7 @@ class BaseCaseSearchForm(forms.Form):
     )
     priority = forms.ModelMultipleChoiceField(
         label="Priority",
+        # todo: this needs to filter out inactive priorities
         queryset=Priority.objects.all(),
         widget=forms.CheckboxSelectMultiple(),
         required=False
@@ -318,8 +306,11 @@ class BaseCaseSearchForm(forms.Form):
                 product__id=product_id)
 
 
+# todo BaseCaseSearchForm is never used stand-alone and nothing else
+# inherits from it so this class can be merged above
 class SearchCaseForm(BaseCaseSearchForm):
     search = forms.CharField(required=False)
+    # todo: is the plan field used ?
     plan = forms.CharField(required=False)
     product = forms.ModelChoiceField(
         label="Product",
@@ -339,20 +330,18 @@ class QuickSearchCaseForm(forms.Form):
 
     def clean_case_id_set(self):
         case_id_set = self.cleaned_data['case_id_set']
-        if case_id_set:
-            try:
-                return [int(cid) for cid in set(case_id_set.split(','))]
-            except ValueError:
-                raise forms.ValidationError('Please input valid case id(s). '
-                                            'use comma to split more than one '
-                                            'case id. e.g. "111, 222"')
-        else:
-            raise forms.ValidationError('Please input valid case id(s). '
-                                        'use comma to split more than one '
-                                        'case id. e.g. "111, 222"')
 
+        if not case_id_set:
+            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE)
 
-# =========== Mist Forms ==============
+        try:
+            case_ids = []
+            for case_id in case_id_set.split(','):
+                case_ids.append(int(case_id))
+            return case_ids
+        except ValueError:
+            raise forms.ValidationError(VALIDATION_ERROR_MESSAGE)
+
 
 class CloneCaseForm(forms.Form):
     case = forms.ModelMultipleChoiceField(
@@ -493,23 +482,5 @@ class CaseCategoryForm(forms.Form):
     def populate(self, product_id=None):
         if product_id:
             self.fields['o_category'].queryset = Category.objects.filter(product__id=product_id)
-        else:
-            self.fields['o_category'].queryset = Category.objects.all()
-
-
-class CaseTagForm(forms.Form):
-    o_tag = forms.ModelMultipleChoiceField(
-        label="Tags",
-        queryset=Tag.objects.none(),
-        required=False,
-    )
-
-    def populate(self, case_ids=None):
-        if case_ids:
-            # note: backwards relationship filter. TestCaseTag -> Tag
-            tag_ids = TestCaseTag.objects.filter(
-                case__in=case_ids
-            ).values_list('tag').distinct()
-            self.fields['o_tag'].queryset = Tag.objects.filter(pk__in=tag_ids).order_by('name')
         else:
             self.fields['o_category'].queryset = Category.objects.all()

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from modernrpc.core import rpc_method
-
-from django.utils.dateparse import parse_duration
+from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import form_errors_to_list
-from tcms.management.models import Tag, EnvValue
+from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestRun
@@ -22,9 +20,6 @@ __all__ = (
     'add_case',
     'get_cases',
     'remove_case',
-
-    'add_env_value',
-    'remove_env_value',
 
     'add_tag',
     'remove_tag',
@@ -99,7 +94,7 @@ def get_cases(run_id):
 
 @permissions_required('testruns.add_testruntag')
 @rpc_method(name='TestRun.add_tag')
-def add_tag(run_id, tag_name):
+def add_tag(run_id, tag_name, **kwargs):
     """
     .. function:: XML-RPC TestRun.add_tag(run_id, tag)
 
@@ -109,12 +104,17 @@ def add_tag(run_id, tag_name):
         :type run_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :return: None
+        :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :raises: PermissionDenied if missing *testruns.add_testruntag* permission
         :raises: TestRun.DoesNotExist if object specified by PK doesn't exist
+        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag_name*
+                 doesn't exist in the database!
     """
-    tag, _ = Tag.objects.get_or_create(name=tag_name)
-    TestRun.objects.get(pk=run_id).add_tag(tag)
+    request = kwargs.get(REQUEST_KEY)
+    tag, _ = Tag.get_or_create(request.user, tag_name)
+    test_run = TestRun.objects.get(pk=run_id)
+    test_run.add_tag(tag)
+    return Tag.to_xmlrpc({'pk__in': test_run.tag.all()})
 
 
 @permissions_required('testruns.delete_testruntag')
@@ -129,12 +129,14 @@ def remove_tag(run_id, tag_name):
         :type run_id: int
         :param tag_name: Tag name to add
         :type tag_name: str
-        :return: None
+        :return: Serialized list of :class:`tcms.management.models.Tag` objects
         :raises: PermissionDenied if missing *testruns.delete_testruntag* permission
         :raises: DoesNotExist if objects specified don't exist
     """
     tag = Tag.objects.get(name=tag_name)
-    TestRun.objects.get(pk=run_id).remove_tag(tag)
+    test_run = TestRun.objects.get(pk=run_id)
+    test_run.remove_tag(tag)
+    return Tag.to_xmlrpc({'pk__in': test_run.tag.all()})
 
 
 @permissions_required('testruns.add_testrun')
@@ -156,44 +158,23 @@ def create(values):
             >>> values = {'build': 384,
                 'manager': 137,
                 'plan': 137,
-                'product': 61,
-                'product_version': 93,
                 'summary': 'Testing XML-RPC for TCMS',
             }
             >>> TestRun.create(values)
     """
-    if not values.get('product'):
-        raise ValueError('Value of product is required')
-    # TODO: XMLRPC only accept HH:MM:SS rather than DdHhMm
-
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(
-            values.get('estimated_time'))
-
     form = XMLRPCNewRunForm(values)
-    form.populate(product_id=values['product'])
+    form.assign_plan(values.get('plan'))
 
     if form.is_valid():
         test_run = TestRun.objects.create(
-            product_version=form.cleaned_data['product_version'],
-            stop_date=form.cleaned_data['status'] and datetime.now() or None,
+            product_version=form.cleaned_data['plan'].product_version,
             summary=form.cleaned_data['summary'],
             notes=form.cleaned_data['notes'],
-            estimated_time=form.cleaned_data['estimated_time'],
             plan=form.cleaned_data['plan'],
             build=form.cleaned_data['build'],
             manager=form.cleaned_data['manager'],
             default_tester=form.cleaned_data['default_tester'],
         )
-
-        if form.cleaned_data['tag']:
-            tag_names = form.cleaned_data['tag']
-            if isinstance(tag_names, str):
-                tag_names = [c.strip() for c in tag_names.split(',') if c]
-
-            for tag_name in tag_names:
-                tag, _ = Tag.objects.get_or_create(name=tag_name)
-                test_run.add_tag(tag=tag)
     else:
         raise ValueError(form_errors_to_list(form))
 
@@ -201,7 +182,7 @@ def create(values):
 
 
 @rpc_method(name='TestRun.filter')
-def filter(query={}):  # pylint: disable=invalid-name
+def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC TestRun.filter(query)
 
@@ -212,6 +193,10 @@ def filter(query={}):  # pylint: disable=invalid-name
         :return: List of serialized :class:`tcms.testruns.models.TestRun` objects
         :rtype: list(dict)
     """
+
+    if query is None:
+        query = {}
+
     return TestRun.to_xmlrpc(query)
 
 
@@ -234,98 +219,49 @@ def update(run_id, values):
     if (values.get('product_version') and not values.get('product')):
         raise ValueError('Field "product" is required by product_version')
 
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(
-            values.get('estimated_time'))
-
     form = XMLRPCUpdateRunForm(values)
     if values.get('product_version'):
         form.populate(product_id=values['product'])
 
     if form.is_valid():
-        test_run = TestRun.objects.get(pk=run_id)
-        if form.cleaned_data['plan']:
-            test_run.plan = form.cleaned_data['plan']
+        return _get_updated_test_run(run_id, values, form).serialize()
 
-        if form.cleaned_data['build']:
-            test_run.build = form.cleaned_data['build']
-
-        if form.cleaned_data['manager']:
-            test_run.manager = form.cleaned_data['manager']
-
-        if 'default_tester' in values:
-            if values.get('default_tester') and \
-                    form.cleaned_data['default_tester']:
-                test_run.default_tester = form.cleaned_data['default_tester']
-            else:
-                test_run.default_tester = None
-
-        if form.cleaned_data['summary']:
-            test_run.summary = form.cleaned_data['summary']
-
-        if values.get('estimated_time') is not None:
-            test_run.estimated_time = form.cleaned_data['estimated_time']
-
-        if form.cleaned_data['product_version']:
-            test_run.product_version = form.cleaned_data['product_version']
-
-        if 'notes' in values:
-            if values['notes'] in (None, ''):
-                test_run.notes = values['notes']
-            if form.cleaned_data['notes']:
-                test_run.notes = form.cleaned_data['notes']
-
-        if isinstance(form.cleaned_data['status'], int):
-            if form.cleaned_data['status']:
-                test_run.stop_date = datetime.now()
-            else:
-                test_run.stop_date = None
-
-        test_run.save()
-    else:
-        raise ValueError(form_errors_to_list(form))
-
-    return test_run.serialize()
+    raise ValueError(form_errors_to_list(form))
 
 
-@permissions_required('testruns.add_envrunvaluemap')
-@rpc_method(name='TestRun.add_env_value')
-def add_env_value(run_id, env_value_id):
-    """
-    .. function:: XML-RPC TestRun.add_env_value(run_id, env_value_id)
+def _get_updated_test_run(run_id, values, form):
+    test_run = TestRun.objects.get(pk=run_id)
+    if form.cleaned_data['plan']:
+        test_run.plan = form.cleaned_data['plan']
 
-        Add environment values to the given TestRun.
+    if form.cleaned_data['build']:
+        test_run.build = form.cleaned_data['build']
 
-        :param run_id: PK of TestRun to modify
-        :type run_id: int
-        :param env_value_id: PK of :class:`tcms.management.models.EnvValue`
-                             object to add
-        :type env_value_id: int
-        :return: None
-        :raises: PermissionDenied if missing *testruns.add_envrunvaluemap* permission
-        :raises: DoesNotExist if objects specified by PKs don't exist
-    """
-    TestRun.objects.get(pk=run_id).add_env_value(
-        EnvValue.objects.get(pk=env_value_id)
-    )
+    if form.cleaned_data['manager']:
+        test_run.manager = form.cleaned_data['manager']
 
+    test_run.default_tester = None
 
-@permissions_required('testruns.delete_envrunvaluemap')
-@rpc_method(name='TestRun.remove_env_value')
-def remove_env_value(run_id, env_value_id):
-    """
-    .. function:: XML-RPC TestRun.remove_env_value(run_id, env_value_id)
+    if form.cleaned_data['default_tester']:
+        test_run.default_tester = form.cleaned_data['default_tester']
 
-        Remove environment value from the given TestRun.
+    if form.cleaned_data['summary']:
+        test_run.summary = form.cleaned_data['summary']
 
-        :param run_id: PK of TestRun to modify
-        :type run_id: int
-        :param env_value_id: PK of :class:`tcms.management.models.EnvValue`
-                             object to be removed
-        :type env_value_id: int
-        :return: None
-        :raises: PermissionDenied if missing *testruns.delete_envrunvaluemap* permission
-    """
-    TestRun.objects.get(pk=run_id).remove_env_value(
-        EnvValue.objects.get(pk=env_value_id)
-    )
+    if form.cleaned_data['product_version']:
+        test_run.product_version = form.cleaned_data['product_version']
+
+    if 'notes' in values:
+        if values['notes'] in (None, ''):
+            test_run.notes = values['notes']
+        if form.cleaned_data['notes']:
+            test_run.notes = form.cleaned_data['notes']
+
+    test_run.stop_date = None
+
+    if isinstance(form.cleaned_data['status'], int) and \
+       form.cleaned_data['status']:
+        test_run.stop_date = datetime.now()
+
+    test_run.save()
+    return test_run

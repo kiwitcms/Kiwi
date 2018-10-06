@@ -12,13 +12,16 @@ from tcms.testcases.models import Category
 __all__ = ('CategoryActions', 'ComponentActions')
 
 
-class BaseActions(object):
+class BaseActions:
     """Base class for all Actions"""
 
     def __init__(self, request):
         self.ajax_response = {'rc': 0, 'response': 'ok', 'errors_list': []}
         self.request = request
         self.product_id = request.POST.get('product')
+
+    def _get_form(self):
+        raise NotImplementedError()
 
     def _check_form_validation(self):
         form = self._get_form()

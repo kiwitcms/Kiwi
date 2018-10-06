@@ -47,7 +47,7 @@ def do_nothing(value):
     return value
 
 
-class ProductBuildReportData(object):
+class ProductBuildReportData:
     """Report data by builds of a Product"""
 
     def finished_runs_count(self, product_id):
@@ -112,7 +112,7 @@ class ProductBuildReportData(object):
         return builds
 
 
-class ProductComponentReportData(object):
+class ProductComponentReportData:
 
     def failed_case_runs_count(self, product_id):
         return self.total_cases(
@@ -171,7 +171,7 @@ class ProductComponentReportData(object):
         return total
 
 
-class ProductVersionReportData(object):
+class ProductVersionReportData:
     """Report data by versions of a Product"""
 
     def finished_case_runs_subtotal(self, product_id):
@@ -286,7 +286,7 @@ class ProductVersionReportData(object):
         return subtotal
 
 
-class CustomReportData(object):
+class CustomReportData:
     """Data for custom report
 
     In this data class, a major task is to construct INNER JOINS dynamically
@@ -329,7 +329,7 @@ class CustomReportData(object):
 
         return query
 
-    def _get_builds(self):
+    def get_builds(self):
         """Get builds statistics from valid search form.
 
         @param form: the form containing valid data
@@ -419,7 +419,6 @@ class CustomDetailsReportData(CustomReportData):
     @staticmethod
     def generate_status_matrix(build_ids):
         matrix_dataset = {}
-        # TODO: replace defaultdict with GroupByResult
         status_total_line = defaultdict(int)
 
         rows = TestCaseRun.objects.filter(
@@ -435,17 +434,13 @@ class CustomDetailsReportData(CustomReportData):
         ).order_by('run__plan', 'run')
 
         for row in rows:
-            plan_id = row['run__plan']
-            plan_name = row['run__plan__name']
-            run_id = row['run']
-            run_summary = row['run__summary']
             status_name = row['case_run_status__name']
             status_count = row['total_count']
 
-            plan = TestPlan(pk=plan_id, name=plan_name)
+            plan = TestPlan(pk=row['run__plan'], name=row['run__plan__name'])
             plan_node = matrix_dataset.setdefault(plan, {})
 
-            run = TestRun(pk=run_id, summary=run_summary)
+            run = TestRun(pk=row['run'], summary=row['run__summary'])
             run_node = plan_node.setdefault(run, defaultdict(int))
 
             run_node[status_name] = status_count
@@ -548,7 +543,7 @@ class CustomDetailsReportData(CustomReportData):
         return case_run_comments
 
 
-class TestingReportBaseData(object):
+class TestingReportBaseData:
     """Base data of various testing report"""
     # filter criteria is against TestCaseRun
     report_criteria = {
@@ -1044,24 +1039,14 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
         )
 
         for row in query:
-            tag_id = row['run__plan__tag']
-            build_id = row['build']
-            build_name = row['build__name']
-            plan_id = row['run__plan']
-            plan_name = row['run__plan__name']
-            run_id = row['run']
-            run_summary = row['run__summary']
-            status_name = row['case_run_status__name']
-            total_count = row['total_count']
-
-            builds = status_matrix.setdefault(tag_id, GroupByResult())
-            plans = builds.setdefault(Build(pk=build_id, name=build_name),
+            builds = status_matrix.setdefault(row['run__plan__tag'], GroupByResult())
+            plans = builds.setdefault(Build(pk=row['build'], name=row['build__name']),
                                       GroupByResult())
-            runs = plans.setdefault(TestPlan(pk=plan_id, name=plan_name),
+            runs = plans.setdefault(TestPlan(pk=row['run__plan'], name=row['run__plan__name']),
                                     GroupByResult())
             status_subtotal = runs.setdefault(
-                TestRun(pk=run_id, summary=run_summary), GroupByResult())
-            status_subtotal[status_name] = total_count
+                TestRun(pk=row['run'], summary=row['run__summary']), GroupByResult())
+            status_subtotal[row['case_run_status__name']] = row['total_count']
 
         return status_matrix
 
@@ -1082,21 +1067,17 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
         prev_build = None
         prev_plan = None
 
-        ordered_builds = sorted(root_matrix.items(), key=sort_key)
-        for build, plans in ordered_builds:
-            ordered_plans = sorted(plans.items(), key=sort_key)
+        for build, plans in sorted(root_matrix.items(), key=sort_key):
             build_rowspan = plans.leaf_values_count(value_in_row=True)
-            for plan, runs in ordered_plans:
-                ordered_runs = sorted(runs.items(), key=sort_key)
+            for plan, runs in sorted(plans.items(), key=sort_key):
                 plan_rowspan = runs.leaf_values_count(value_in_row=True)
-                for run, status_subtotal in ordered_runs:
+                for run, status_subtotal in sorted(runs.items(), key=sort_key):
                     if build == prev_build:
                         _build = (build, None)
                     else:
                         _build = (build, build_rowspan)
                         prev_build = build
-                    # FIXME: find a better way, building a tuple seems not a
-                    # good way, may cause performance issue
+
                     if (build, plan) == prev_plan:
                         _plan = (plan, None)
                     else:
@@ -1246,24 +1227,15 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
         status_matrix = GroupByResult()
 
         for row in query:
-            plan_id = row['run__plan']
-            plan_name = row['run__plan__name']
-            build_id = row['build']
-            build_name = row['build__name']
-            run_id = row['run']
-            run_summary = row['run__summary']
-            status_name = row['case_run_status__name']
-            total_count = row['total_count']
-
-            plan = TestPlan(pk=plan_id, name=plan_name)
+            plan = TestPlan(pk=row['run__plan'], name=row['run__plan__name'])
             builds = status_matrix.setdefault(plan, GroupByResult())
 
-            build = Build(pk=build_id, name=build_name)
+            build = Build(pk=row['build'], name=row['build__name'])
             runs = builds.setdefault(build, GroupByResult())
 
-            run = TestRun(pk=run_id, summary=run_summary)
+            run = TestRun(pk=row['run'], summary=row['run__summary'])
             status_subtotal = runs.setdefault(run, GroupByResult())
-            status_subtotal[status_name] = total_count
+            status_subtotal[row['case_run_status__name']] = row['total_count']
 
         return status_matrix
 
@@ -1288,7 +1260,7 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
                 yield _build, run, status_subtotal
 
 
-class TestingReportCaseRunsData(object):
+class TestingReportCaseRunsData:
     """Data of case runs from testing report
 
     Case runs will be search by following criteria,

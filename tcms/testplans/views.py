@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-from urllib.parse import urlencode
 
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -9,22 +8,17 @@ from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
-from django.db.models import Q
 from django.contrib import messages
-from django.forms.models import model_to_dict
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.template.loader import render_to_string
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.http import require_http_methods
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from uuslug import slugify
 
-from tcms.core.utils import DataTableResult
-from tcms.management.models import EnvGroup
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_plan_queryset
 from tcms.testcases.forms import SearchCaseForm, QuickSearchCaseForm
@@ -36,7 +30,7 @@ from tcms.testplans.forms import ClonePlanForm
 from tcms.testplans.forms import EditPlanForm
 from tcms.testplans.forms import NewPlanForm
 from tcms.testplans.forms import SearchPlanForm
-from tcms.testplans.models import TestPlan
+from tcms.testplans.models import TestPlan, PlanType
 from tcms.testruns.models import TestRun, TestCaseRun
 
 
@@ -66,7 +60,7 @@ def new(request, template_name='plan/new.html'):
     # If the form has been submitted...
     if request.method == 'POST':
         # A form bound to the POST data
-        form = NewPlanForm(request.POST, request.FILES)
+        form = NewPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
         if form.is_valid():
@@ -82,16 +76,6 @@ def new(request, template_name='plan/new.html'):
                 parent=form.cleaned_data['parent'],
                 text=form.cleaned_data['text'],
             )
-
-            # Add test plan environment groups
-            if request.user.has_perm('testplans.add_envplanmap'):
-                if request.POST.get('env_group'):
-                    env_groups = EnvGroup.objects.filter(
-                        id__in=request.POST.getlist('env_group')
-                    )
-
-                    for env_group in env_groups:
-                        test_plan.add_env_group(env_group=env_group)
 
             # create emailing settings to avoid Issue #181 on MySQL
             test_plan.emailing.save()
@@ -109,7 +93,7 @@ def new(request, template_name='plan/new.html'):
 
 
 @require_GET
-def get_all(request, template_name='plan/all.html'):
+def get_all(request):
     """Display all testplans"""
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
@@ -128,46 +112,25 @@ def get_all(request, template_name='plan/all.html'):
             # build a QuerySet:
             tps = TestPlan.list(search_form.cleaned_data)
             tps = tps.select_related('author', 'type', 'product')
-
-            # We want to get the number of cases and runs, without doing
-            # lots of per-test queries.
-            #
-            # Ideally we would get the case/run counts using m2m field tricks
-            # in the ORM
-            # Unfortunately, Django's select_related only works on ForeignKey
-            # relationships, not on ManyToManyField attributes
-            # See http://code.djangoproject.com/ticket/6432
-
-            # SQLAlchemy can handle this kind of thing in several ways.
-            # Unfortunately we're using Django
-
-            # The cleanest way I can find to get it into one query is to
-            # use QuerySet.extra()
-            # See http://docs.djangoproject.com/en/dev/ref/models/querysets
-            tps = tps.annotate(num_cases=Count('case', distinct=True),
-                               num_runs=Count('run', distinct=True),
-                               num_children=Count('child_set', distinct=True))
             tps = order_plan_queryset(tps, order_by, asc)
     else:
         # Set search active plans only by default
         search_form = SearchPlanForm(initial={'is_active': True})
 
+    # fixme: this view is scheduled for deletion
+    # TestCase clone workflow must be redesigned so it uses
+    # the TestPlan search page
+    template_name = ''
     if request.GET.get('action') == 'clone_case':
         template_name = 'case/clone_select_plan.html'
         tps = tps.order_by('name')
 
-    if request.GET.get('t') == 'ajax':
-        results = []
-        for obj in tps:
-            dict_obj = model_to_dict(obj, fields=('name', 'parent', 'is_active'))
-
-            for attr in ['pk', 'num_cases', 'num_cases', 'num_runs', 'num_children']:
-                dict_obj[attr] = getattr(obj, attr)
-            dict_obj['get_full_url'] = obj.get_full_url()
-
-            results.append(dict_obj)
-        return JsonResponse(results, safe=False)
-
+    # used in tree preview & TestCase add plan
+    # fixme: must be replaced by JSON RPC and the
+    # JavaScript dialog that displays the preview
+    # should be converted to Patternfly
+    # todo: when this is done SearchPlanForm must contain only the
+    # fields which are used in search.html
     if request.GET.get('t') == 'html':
         if request.GET.get('f') == 'preview':
             template_name = 'plan/preview.html'
@@ -191,6 +154,18 @@ def get_all(request, template_name='plan/all.html'):
         'page_type': page_type
     }
     return render(request, template_name, context_data)
+
+
+@require_GET
+def search(request):
+    form = SearchPlanForm(request.GET)
+    form.populate(product_id=request.GET.get('product'))
+
+    context_data = {
+        'form': form,
+        'plan_types': PlanType.objects.all().only('pk', 'name').order_by('name'),
+    }
+    return render(request, 'testplans/search.html', context_data)
 
 
 def get_number_of_plans_cases(plan_ids):
@@ -278,64 +253,6 @@ def calculate_stats_for_testplans(plans):
     return plans
 
 
-@require_GET
-def ajax_search(request, template_name='plan/common/json_plans.txt'):
-    """Display all testplans"""
-    # If it's not a search the page will be blank
-    test_plans = TestPlan.objects.none()
-    # if it's a search request the request will be full
-    if request.GET:
-        search_form = SearchPlanForm(request.GET)
-        search_form.populate(product_id=request.GET.get('product'))
-
-        if search_form.is_valid():
-            # Detemine the query is the user's plans and change the sub
-            # module value
-            author = request.GET.get('author__email__startswith')
-            if author and len(search_form.changed_data) == 1:
-                if request.user.is_authenticated:
-                    if author == request.user.username or author == request.user.email:
-                        query = Q(author__email__startswith=author) | \
-                            Q(owner__email__startswith=author)
-                        test_plans = TestPlan.objects.filter(query).distinct()
-            else:
-                test_plans = TestPlan.list(search_form.cleaned_data)
-                test_plans = test_plans.select_related('author', 'owner', 'type', 'product')
-
-    # columnIndexNameMap is required for correct sorting behavior, 5 should
-    # be product, but we use run.build.product
-    column_names = [
-        '',
-        'plan_id',
-        'name',
-        'author__username',
-        'owner__username',
-        'product',
-        'product_version',
-        'type',
-        'num_cases',
-        'num_runs',
-        ''
-    ]
-    return ajax_response(request, test_plans, column_names, template_name)
-
-
-def ajax_response(request, queryset, column_names, template_name):
-    """ JSON template for the ajax request for searching """
-    data_table_result = DataTableResult(request.GET, queryset, column_names)
-
-    data = data_table_result.get_response_data()
-    data['querySet'] = calculate_stats_for_testplans(data['querySet'])
-
-    # todo: prepare the JSON with the response, consider using :
-    # from django.template.defaultfilters import escapejs
-    json_result = render_to_string(
-        template_name,
-        data,
-        request=request)
-    return HttpResponse(json_result, content_type='application/json')
-
-
 def get(request, plan_id, slug=None, template_name='plan/get.html'):
     """Display the plan details."""
 
@@ -344,9 +261,9 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
     except ObjectDoesNotExist:
         raise Http404
 
-    # redirect if has a cheated slug
-    if slug != slugify(test_plan.name):
-        return HttpResponsePermanentRedirect(test_plan.get_full_url())
+    if slug is None:
+        return HttpResponsePermanentRedirect(reverse('test_plan_url',
+                                                     args=[plan_id, slugify(test_plan.name)]))
 
     # Initial the case counter
     confirm_status_name = 'CONFIRMED'
@@ -365,65 +282,63 @@ def choose_run(request, plan_id):
     """Choose one run to add cases"""
 
     if request.method == 'GET':
-        try:
-            test_plan = TestPlan.objects.get(pk=int(plan_id))
-        except ObjectDoesNotExist:
-            raise Http404
+        return _write_cases_to_test_plan(request, plan_id)
+    return _add_cases_to_runs(request, plan_id)
 
-        test_runs = TestRun.objects.filter(plan=plan_id).values('pk',
-                                                                'summary',
-                                                                'build__name',
-                                                                'manager__username')
 
-        # Ready to write cases to test plan
-        test_cases = get_selected_testcases(request).values('pk', 'summary',
-                                                            'author__username',
-                                                            'create_date',
-                                                            'category__name',
-                                                            'priority__value', )
+def _write_cases_to_test_plan(request, plan_id):
+    try:
+        test_plan = TestPlan.objects.get(pk=int(plan_id))
+    except ObjectDoesNotExist:
+        raise Http404
 
-        context_data = {
-            'plan_id': plan_id,
-            'plan': test_plan,
-            'test_runs': test_runs.iterator(),
-            'test_cases': test_cases.iterator(),
-        }
-        return render(request, 'plan/choose_testrun.html', context_data)
+    test_runs = TestRun.objects.filter(plan=plan_id).values('pk',
+                                                            'summary',
+                                                            'build__name',
+                                                            'manager__username')
 
-    # Add cases to runs
-    if request.method == 'POST':
-        chosen_test_run_ids = request.POST.getlist('testrun_ids')
-        to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
+    # Ready to write cases to test plan
+    test_cases = get_selected_testcases(request).values('pk', 'summary',
+                                                        'author__username',
+                                                        'create_date',
+                                                        'category__name',
+                                                        'priority__value', )
 
-        # Adding cases to runs by recursion
-        cases_selected = 0
-        for test_run_id in chosen_test_run_ids:
-            test_run = get_object_or_404(TestRun, run_id=test_run_id)
-            cases = TestCaseRun.objects.filter(run=test_run_id)
-            existing_cases = cases.values_list('case', flat=True)
+    context_data = {
+        'plan_id': plan_id,
+        'plan': test_plan,
+        'test_runs': test_runs.iterator(),
+        'test_cases': test_cases.iterator(),
+    }
+    return render(request, 'plan/choose_testrun.html', context_data)
 
-            for test_case in to_be_added_cases:
-                # counter used as a flag that runs or cases were selected
-                # in the form, regardless of whether or not they were actually added
-                # used to produce an error message if user clicked the Update button
-                # without selecting anything on the screen
-                cases_selected += 1
-                if test_case.case_id not in existing_cases:
-                    test_run.add_case_run(case=test_case)
 
-            estimated_time = datetime.timedelta(0)
-            for case in to_be_added_cases:
-                estimated_time += case.estimated_time
+def _add_cases_to_runs(request, plan_id):
+    chosen_test_run_ids = request.POST.getlist('testrun_ids')
+    to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
 
-            test_run.estimated_time = test_run.estimated_time + estimated_time
-            test_run.save()
+    # Adding cases to runs by recursion
+    cases_selected = 0
+    for test_run_id in chosen_test_run_ids:
+        test_run = get_object_or_404(TestRun, run_id=test_run_id)
+        cases = TestCaseRun.objects.filter(run=test_run_id)
+        existing_cases = cases.values_list('case', flat=True)
 
-        if not cases_selected:
-            messages.add_message(request,
-                                 messages.ERROR,
-                                 _('Select at least one TestRun and one TestCase'))
+        for test_case in to_be_added_cases:
+            # counter used as a flag that runs or cases were selected
+            # in the form, regardless of whether or not they were actually added
+            # used to produce an error message if user clicked the Update button
+            # without selecting anything on the screen
+            cases_selected += 1
+            if test_case.case_id not in existing_cases:
+                test_run.add_case_run(case=test_case)
 
-        return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
+    if not cases_selected:
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('Select at least one TestRun and one TestCase'))
+
+    return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
 
 @require_http_methods(['GET', 'POST'])
@@ -438,7 +353,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 
     # If the form is submitted
     if request.method == "POST":
-        form = EditPlanForm(request.POST, request.FILES)
+        form = EditPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
         # FIXME: Error handle
@@ -460,29 +375,11 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 test_plan.text = form.cleaned_data['text']
                 test_plan.save()
 
-            if request.user.has_perm('testplans.change_envplanmap'):
-                test_plan.clear_env_groups()
-
-                if request.POST.get('env_group'):
-                    env_groups = EnvGroup.objects.filter(
-                        id__in=request.POST.getlist('env_group'))
-
-                    for env_group in env_groups:
-                        test_plan.add_env_group(env_group=env_group)
             # Update plan email settings
             update_plan_email_settings(test_plan, form)
             return HttpResponseRedirect(
                 reverse('test_plan_url', args=[plan_id, slugify(test_plan.name)]))
     else:
-        # Generate a blank form
-        # Temporary use one environment group in this case
-        if test_plan.env_group.all():
-            for env_group in test_plan.env_group.all():
-                env_group_id = env_group.id
-                break
-        else:
-            env_group_id = None
-
         form = EditPlanForm(initial={
             'name': test_plan.name,
             'product': test_plan.product_id,
@@ -490,7 +387,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             'type': test_plan.type_id,
             'text': test_plan.text,
             'parent': test_plan.parent_id,
-            'env_group': env_group_id,
             'is_active': test_plan.is_active,
             'extra_link': test_plan.extra_link,
             'owner': test_plan.owner,
@@ -510,121 +406,77 @@ def edit(request, plan_id, template_name='plan/edit.html'):
     return render(request, template_name, context_data)
 
 
-@require_http_methods(['GET', 'POST'])
+@require_POST
 @permission_required('testplans.add_testplan')
-def clone(request, template_name='plan/clone.html'):
+def clone(request):
     """Clone testplan"""
 
-    req_data = request.GET or request.POST
-    if 'plan' not in req_data:
+    if 'plan' not in request.POST:
         messages.add_message(request,
                              messages.ERROR,
-                             _('At least one TestPlan is required'))
+                             _('TestPlan is required'))
         # redirect back where we came from
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    plan_ids = req_data.getlist('plan')
-    test_plans = TestPlan.objects.filter(pk__in=plan_ids)
+    plan_id = request.POST.get('plan')
+    test_plan = get_object_or_404(TestPlan, pk=int(plan_id))
 
-    if not test_plans:
-        # note: if at least one of the specified plans is found
-        # we're not going to show this message
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('TestPlan(s) "%s" do not exist') % plan_ids)
-        # redirect back where we came from
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    post_data = request.POST.copy()
+    if not request.POST.get('name'):
+        post_data['name'] = test_plan.make_cloned_name()
 
-    # Clone the plan if the form is submitted
-    if request.method == "POST":
-        clone_form = ClonePlanForm(request.POST)
-        clone_form.populate(product_id=request.POST.get('product_id'))
+    clone_form = ClonePlanForm(post_data)
+    clone_form.populate(product_id=request.POST.get('product_id'))
 
-        if clone_form.is_valid():
-            clone_options = clone_form.cleaned_data
+    # if required values are missing we are still going to show
+    # the form below, otherwise clone & redirect
+    if clone_form.is_valid():
+        clone_options = clone_form.cleaned_data
 
-            # Create new test plan.
-            for test_plan in test_plans:
+        # Create new test plan.
+        new_name = clone_options['name']
 
-                new_name = clone_options['name'] if len(test_plans) == 1 else None
+        clone_params = dict(
+            # Cloned plan properties
+            new_name=new_name,
+            product=clone_options['product'],
+            version=clone_options['product_version'],
+            set_parent=clone_options['set_parent'],
 
-                clone_params = dict(
-                    # Cloned plan properties
-                    new_name=new_name,
-                    product=clone_options['product'],
-                    version=clone_options['product_version'],
-                    set_parent=clone_options['set_parent'],
+            # Link or copy cases
+            link_cases=clone_options['link_testcases'],
+            copy_cases=clone_options['copy_testcases'],
+            default_component_initial_owner=request.user,
+        )
 
-                    # Related data
-                    copy_environment_group=clone_options['copy_environment_group'],
+        assign_me_as_plan_author = not clone_options['keep_orignal_author']
+        if assign_me_as_plan_author:
+            clone_params['new_original_author'] = request.user
 
-                    # Link or copy cases
-                    link_cases=clone_options['link_testcases'],
-                    copy_cases=clone_options['copy_testcases'],
-                    default_component_initial_owner=request.user,
-                )
+        assign_me_as_copied_case_author = \
+            clone_options['copy_testcases'] and \
+            not clone_options['maintain_case_orignal_author']
+        if assign_me_as_copied_case_author:
+            clone_params['new_case_author'] = request.user
 
-                assign_me_as_plan_author = not clone_options['keep_orignal_author']
-                if assign_me_as_plan_author:
-                    clone_params['new_original_author'] = request.user
+        # pylint: disable=invalid-name
+        assign_me_as_copied_case_default_tester = \
+            clone_options['copy_testcases'] and \
+            not clone_options['keep_case_default_tester']
+        if assign_me_as_copied_case_default_tester:
+            clone_params['new_case_default_tester'] = request.user
 
-                assign_me_as_copied_case_author = \
-                    clone_options['copy_testcases'] and \
-                    not clone_options['maintain_case_orignal_author']
-                if assign_me_as_copied_case_author:
-                    clone_params['new_case_author'] = request.user
+        cloned_plan = test_plan.clone(**clone_params)
 
-                assign_me_as_copied_case_default_tester = \
-                    clone_options['copy_testcases'] and \
-                    not clone_options['keep_case_default_tester']
-                if assign_me_as_copied_case_default_tester:
-                    clone_params['new_case_default_tester'] = request.user
+        return HttpResponseRedirect(
+            reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
 
-                cloned_plan = test_plan.clone(**clone_params)
-
-            if len(test_plans) == 1:
-                return HttpResponseRedirect(
-                    reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
-
-            args = {
-                'action': 'search',
-                'product': clone_form.cleaned_data['product'].id,
-                'product_version': clone_form.cleaned_data['product_version'].id,
-            }
-            url_args = urlencode(args)
-            return HttpResponseRedirect(
-                '{}?{}'.format(reverse('plans-all'), url_args))
-    else:
-        # Generate the default values for the form
-        if len(test_plans) == 1:
-            clone_form = ClonePlanForm(initial={
-                'product': test_plans[0].product_id,
-                'product_version': test_plans[0].product_version_id,
-                'set_parent': True,
-                'copy_attachements': True,
-                'copy_environment_group': True,
-                'link_testcases': True,
-                'copy_testcases': False,
-                'maintain_case_orignal_author': True,
-                'keep_case_default_tester': False,
-                'name': test_plans[0].make_cloned_name(),
-            })
-            clone_form.populate(product_id=test_plans[0].product.id)
-        else:
-            clone_form = ClonePlanForm(initial={
-                'set_parent': True,
-                'copy_attachements': True,
-                'link_testcases': True,
-                'copy_testcases': False,
-                'maintain_case_orignal_author': True,
-                'keep_case_default_tester': True,
-            })
-
+    # clone form wasn't valid
     context_data = {
-        'testplans': test_plans,
+        'test_plan': test_plan,
         'clone_form': clone_form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'plan/clone.html', context_data)
 
 
 def attachment(request, plan_id, template_name='plan/attachment.html'):
@@ -769,14 +621,7 @@ class DeleteCasesView(View):
             })
 
         cases = get_selected_testcases(request).only('pk')
-
-        # Log Action
         for case in cases:
-            plan.log_action(
-                who=request.user,
-                action='Remove case {} from plan {}'.format(case.pk, plan.pk))
-            case.log_action(who=request.user,
-                            action='Remove from plan {}'.format(plan.pk))
             plan.delete_case(case=case)
 
         return JsonResponse({'rc': 0, 'response': 'ok'})

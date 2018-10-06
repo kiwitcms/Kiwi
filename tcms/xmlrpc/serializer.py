@@ -4,6 +4,8 @@ from datetime import datetime
 from datetime import timedelta
 from itertools import groupby
 
+from django.utils.translation import ugettext_lazy as _
+
 from django.db.models import ObjectDoesNotExist
 from django.db.models.fields.related import ForeignKey
 
@@ -49,7 +51,7 @@ def timedelta_to_str(value):
 # ## End of functions ###
 
 
-class XMLRPCSerializer(object):
+class XMLRPCSerializer:
     """
     Django XMLRPC Serializer
     The goal is to process the datetime and timedelta data structure
@@ -73,7 +75,7 @@ class XMLRPCSerializer(object):
         if hasattr(queryset, '__iter__'):
             self.queryset = queryset
             return
-        elif hasattr(model, '__dict__'):
+        if hasattr(model, '__dict__'):
             self.model = model
             return
 
@@ -121,13 +123,57 @@ class XMLRPCSerializer(object):
         Returns: List
         """
         response = []
-        for m in self.queryset:
-            self.model = m
-            m = self.serialize_model()
-            response.append(m)
+        for model in self.queryset:
+            self.model = model
+            model = self.serialize_model()
+            response.append(model)
 
         del self.queryset
         return response
+
+
+def _get_single_field_related_object_pks(m2m_field_query, model_pk, field_name):
+    field_names = []
+    for item in m2m_field_query[model_pk]:
+        if item[field_name]:
+            field_names.append(item[field_name])
+    return field_names
+
+
+def _get_related_object_pks(m2m_fields_query, model_pk, field_name):
+    """Return related object pks from query result via ManyToManyFields
+
+    Any object pk with value 0 or None values will be excluded in the final
+    list.
+
+    :param dict m2m_field_query: the result returned from _query_m2m_fields
+    :param model_pk: whose object's related object pks will be retrieved
+    :type model_pk: int or long
+    :param str field_name: field name of the related object
+    :return: list of related objects' pks
+    :rtype: list
+    """
+    data = m2m_fields_query[field_name]
+    return _get_single_field_related_object_pks(data, model_pk, field_name)
+
+
+def _serialize_names(row, values_fields_mapping):
+    """Replace name from ORM side to the serialization side as expected"""
+    new_serialized_data = {}
+
+    if not values_fields_mapping:
+        # If no fields mapping, just use the original row as the
+        # serialization result, and no data format conversion is
+        # required obviously
+        new_serialized_data.update(row)  # pylint: disable=objects-update-used
+        return new_serialized_data
+
+    for orm_name, serialize_info in values_fields_mapping.items():
+        serialize_name, conv_func = serialize_info
+        value = conv_func(row[orm_name])
+        new_serialized_data[serialize_name] = value
+
+    return new_serialized_data
 
 
 class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
@@ -151,6 +197,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
     extra_fields = {}
 
     def __init__(self, model_class, queryset):
+        super().__init__(model_class, queryset)
         if model_class is None:
             raise ValueError('model_class should not be None')
         if queryset is None:
@@ -197,8 +244,13 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         values_fields_mapping = self._get_values_fields_mapping()
         if values_fields_mapping:
             return values_fields_mapping.keys()
-        else:
-            return [field.name for field in self.model_class._meta.fields]
+
+        field_names = []
+
+        for field in self.model_class._meta.fields:
+            field_names.append(field.name)
+
+        return field_names
 
     def _get_m2m_fields(self):
         """Return names of fields with type ManyToManyField in ORM side
@@ -215,9 +267,9 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         """
         if hasattr(self.__class__, 'm2m_fields'):
             return self.__class__.m2m_fields
-        else:
-            return tuple(field.name for field in
-                         self.model_class._meta.many_to_many)
+
+        return tuple(field.name for field in
+                     self.model_class._meta.many_to_many)
 
     # TODO: how to deal with the situation that is primary key does not appear
     # in values fields, although such thing could not happen.
@@ -237,14 +289,14 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         """
         if hasattr(self.__class__, 'primary_key'):
             return self.__class__.primary_key
-        else:
-            fields = [field.name for field in self.model_class._meta.fields
-                      if field.primary_key]
-            if not fields:
-                raise ValueError(
-                    'Model %s has no primary key. You have to specify such '
-                    'field manually.' % self.model_class.__name__)
-            return fields[0]
+
+        for field in self.model_class._meta.fields:
+            if field.primary_key:
+                return field.name
+
+        raise ValueError(
+            _('Model %s has no primary key. You have to specify such '
+              'field manually.') % self.model_class.__name__)
 
     def _query_m2m_field(self, field_name):
         """Query ManyToManyField order by model's pk
@@ -274,26 +326,6 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         result = ((field_name, self._query_m2m_field(field_name))
                   for field_name in m2m_fields)
         return dict(result)
-
-    def _get_single_field_related_object_pks(self, m2m_field_query, model_pk, field_name):
-        return [item[field_name] for item in m2m_field_query[model_pk]
-                if item[field_name]]
-
-    def _get_related_object_pks(self, m2m_fields_query, model_pk, field_name):
-        """Return related object pks from query result via ManyToManyFields
-
-        Any object pk with value 0 or None values will be excluded in the final
-        list.
-
-        :param dict m2m_field_query: the result returned from _query_m2m_fields
-        :param model_pk: whose object's related object pks will be retrieved
-        :type model_pk: int or long
-        :param str field_name: field name of the related object
-        :return: list of related objects' pks
-        :rtype: list
-        """
-        data = m2m_fields_query[field_name]
-        return self._get_single_field_related_object_pks(data, model_pk, field_name)
 
     def _handle_extra_fields(self, data):
         """Add extra fields
@@ -329,7 +361,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
           ManyToManyField should be retrieved from database and attached to
           each serialized data object.
         """
-        qs = self.queryset.values(*self._get_values_fields())
+        queryset = self.queryset.values(*self._get_values_fields())
         primary_key_field = self._get_primary_key_field()
         values_fields_mapping = self._get_values_fields_mapping()
         m2m_fields = self._get_m2m_fields()
@@ -338,20 +370,8 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
 
         # Handle ManyToManyFields, add such fields' values to final
         # serialization
-        for row in qs.iterator():
-            # Replace name from ORM side to the serialization side as expected
-            new_serialized_data = {}
-            if values_fields_mapping:
-                for orm_name, serialize_info in \
-                        values_fields_mapping.items():
-                    serialize_name, conv_func = serialize_info
-                    value = conv_func(row[orm_name])
-                    new_serialized_data[serialize_name] = value
-            else:
-                # If no fields mapping, just use the original row as the
-                # serialization result, and no data format conversion is
-                # required obviously
-                new_serialized_data.update(row)  # pylint: disable=objects-update-used
+        for row in queryset.iterator():
+            new_serialized_data = _serialize_names(row, values_fields_mapping)
 
             # Attach values of each ManyToManyField field
             # Lazy ManyToManyField query, to avoid query on ManyToManyFields if
@@ -361,7 +381,7 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
                 m2m_not_queried = False
             model_pk = row[primary_key_field]
             for field_name in m2m_fields:
-                related_object_pks = self._get_related_object_pks(
+                related_object_pks = _get_related_object_pks(
                     m2m_fields_query, model_pk, field_name)
                 new_serialized_data[field_name] = related_object_pks
 
@@ -406,7 +426,7 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'alias': {'product_version': 'default_product_version'},
     }
 
-    m2m_fields = ('case', 'env_group', 'tag')
+    m2m_fields = ('case', 'tag')
 
 
 class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
@@ -416,7 +436,6 @@ class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'case_run_id': ('case_run_id', do_nothing),
         'case_text_version': ('case_text_version', do_nothing),
         'close_date': ('close_date', datetime_to_str),
-        'environment_id': ('environment_id', do_nothing),
         'notes': ('notes', do_nothing),
         'running_date': ('running_date', datetime_to_str),
         'sortkey': ('sortkey', do_nothing),
@@ -440,9 +459,6 @@ class TestRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """Serializer for TestRun"""
 
     values_fields_mapping = {
-        'auto_update_run_status': ('auto_update_run_status', do_nothing),
-        'environment_id': ('environment_id', do_nothing),
-        'estimated_time': ('estimated_time', timedelta_to_str),
         'notes': ('notes', do_nothing),
         'run_id': ('run_id', do_nothing),
         'start_date': ('start_date', datetime_to_str),
@@ -470,7 +486,6 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'arguments': ('arguments', do_nothing),
         'case_id': ('case_id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
-        'estimated_time': ('estimated_time', timedelta_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_automated': ('is_automated', do_nothing),
         'is_automated_proposed': ('is_automated_proposed', do_nothing),

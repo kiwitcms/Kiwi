@@ -283,6 +283,23 @@ Build and Version to be specified when testing. If you don't use builds we
 advise you either to leave as "undefined" or use the same value as for the
 version being tested.
 
+Tags
+~~~~
+
+Kiwi TCMS uses tags to assign additional meta-data during testing. Tags can
+be assigned to TestPlan, TestCase and TestRun objects. The following permissions
+are taken into account:
+
+- ``management.add_tag`` - if missing users will not be able to auto-create tags
+  and are instead forced to use pre-existing ones. Inside the web UI autocomplete
+  widgets help figure out what is available. This is useful in organizations where
+  freely creating tags is not allowed! Also controls adding new objects via admin
+  panel.
+- ``management.delete_tag`` - controls deleting tags from the database via admin
+  panel
+- ``test{case|run|plan}.{add|delete}_test{case|run|plan}tag`` - control if user
+  can assign or remove tags to test case, test run or test plan objects respectively.
+
 
 Components
 ~~~~~~~~~~
@@ -314,12 +331,6 @@ A test case category may be used to further describe the type of test being
 performed or convey additional information about the test case. Similar
 information may also be conveyed with tags, properties or in other way
 so it is up to you to decide how you want to organize your testing workflow!
-
-Environment groups and properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Environment groups and properties are explained in
-:ref:`environment`.
 
 
 .. |The Administration screen| image:: ./_static/Admin_Home.png

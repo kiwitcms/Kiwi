@@ -6,7 +6,7 @@ from django import test
 
 import tcms_api
 from tcms.tests.factories import UserFactory
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class XmlrpcAPIBaseTest(test.LiveServerTestCase):
@@ -26,10 +26,7 @@ class XmlrpcAPIBaseTest(test.LiveServerTestCase):
 
         # reset connection to server b/c the address changes for
         # every test and the client caches this as a class attribute
-        tcms_api.TCMS._connection = None
-        # also the config is a singleton so reset that too
-        # to force config reload
-        tcms_api.Config._instance = None
+        tcms_api.TCMS._connection = None  # pylint: disable=protected-access
 
         # WARNING: for now we override the config file
         # until we can pass the testing configuration
@@ -44,9 +41,4 @@ password = %s
         conf_fh.close()
 
         # this is the XML-RPC ServerProxy with cookies support
-        self.rpc_client = tcms_api.TCMS()._server
-
-    def setUp(self):
-        # make sure we're logged-in before each test
-        super(XmlrpcAPIBaseTest, self).setUp()
-        self.rpc_client.Auth.login(self.api_user.username, 'api-testing')
+        self.rpc_client = tcms_api.TCMS()

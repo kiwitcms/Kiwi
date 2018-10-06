@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^(?P<case_id>\d+)/edit/$', views.edit, name='testcases-edit'),
     url(r'^(?P<case_id>\d+)/history/$', views.text_history, name='testcases-text_history'),
     url(r'^(?P<case_id>\d+)/attachment/$', views.attachment, name='testcases-attachment'),
-    url(r'^(?P<case_id>\d+)/log/$', views.get_log),
     url(r'^(?P<case_id>\d+)/bug/$', views.bug, name='testcases-bug'),
     url(r'^(?P<case_id>\d+)/plan/$', views.plan, name='testcases-plan'),
     url(r'^(?P<case_id>\d+)/readonly-pane/$', views.SimpleTestCaseView.as_view(),

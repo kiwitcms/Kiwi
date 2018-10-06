@@ -2,7 +2,7 @@
 #  pylint: disable=too-few-public-methods
 
 import re
-from django.conf import settings
+import sys
 
 
 def is_int(string):
@@ -36,29 +36,23 @@ def form_errors_to_list(form):
     return errors
 
 
-def calc_percent(dividend, divisor):
-    if not dividend or not divisor:
-        return 0
-
-    return float(dividend) / divisor * 100
-
-
-def request_host_link(request=None, domain_name=None):
-    if request is None and settings.DEBUG is False:
-        # default to https if in production and we don't know
-        # what else to do
-        protocol = 'https://'
-    elif request and request.is_secure():
-        protocol = 'https://'
-    else:
+def request_host_link(request, domain_name=None):
+    protocol = 'https://'
+    if 'runserver' in sys.argv:
         protocol = 'http://'
 
-    if not domain_name:
-        domain_name = request.get_host()
+    if request:
+        if not domain_name:
+            domain_name = request.get_host()
+        # default to https if in production and we don't know
+        protocol = 'https://'
+        if not request.is_secure():
+            protocol = 'http://'
 
     return protocol + domain_name
 
 
+# todo: remove this
 def clean_request(request, keys=None):
     """
     Clean the request strings
@@ -70,7 +64,7 @@ def clean_request(request, keys=None):
     for key in keys:
         key = str(key)
         if request_contents.get(key):
-            if key == 'order_by' or key == 'from_plan':
+            if key in ('order_by', 'from_plan'):
                 continue
 
             value = request.GET[key]
@@ -81,7 +75,7 @@ def clean_request(request, keys=None):
     return cleaned_request
 
 
-class QuerySetIterationProxy(object):
+class QuerySetIterationProxy:
     """Iterate a series of object and its associated objects at once
 
     This iteration proxy applies to this kind of structure especially.
@@ -135,61 +129,3 @@ class QuerySetIterationProxy(object):
                         getattr(next_one, self._associate_name, None),
                         ()))
         return next_one
-
-
-class DataTableResult(object):
-    """Paginate and order queryset for rendering DataTable response"""
-
-    def __init__(self, request_data, queryset, column_names):
-        self.queryset = queryset
-        self.request_data = request_data
-        self.column_names = column_names
-
-    def _iter_sorting_columns(self):
-        number_of_sorting_cols = int(self.request_data.get('iSortingCols', 0))
-        for idx_which_column in range(number_of_sorting_cols):
-            sorting_col_index = int(
-                self.request_data.get('iSortCol_{}'.format(idx_which_column),
-                                      0))
-
-            sortable_key = 'bSortable_{}'.format(sorting_col_index)
-            sort_dir_key = 'sSortDir_{}'.format(idx_which_column)
-
-            sortable = self.request_data.get(sortable_key, 'false')
-            if sortable == 'false':
-                continue
-
-            sorting_col_name = self.column_names[sorting_col_index]
-            sorting_direction = self.request_data.get(sort_dir_key, 'asc')
-            yield sorting_col_name, sorting_direction
-
-    def _sort_result(self):
-        sorting_columns = self._iter_sorting_columns()
-        order_fields = []
-        for col_name, direction in sorting_columns:
-            if direction == 'desc':
-                order_fields.append('-{}'.format(col_name))
-            else:
-                order_fields.append(col_name)
-
-        if order_fields:
-            self.queryset = self.queryset.order_by(*order_fields)
-
-    def _paginate_result(self):
-        display_length = int(self.request_data.get('iDisplayLength', settings.DEFAULT_PAGE_SIZE))
-        display_start = int(self.request_data.get('iDisplayStart', 0))
-        display_end = display_start + display_length
-        self.queryset = self.queryset[display_start:display_end]
-
-    def get_response_data(self):
-        total_records = total_display_records = self.queryset.count()
-
-        self._sort_result()
-        self._paginate_result()
-
-        return {
-            'sEcho': int(self.request_data.get('sEcho', 0)),
-            'iTotalRecords': total_records,
-            'iTotalDisplayRecords': total_display_records,
-            'querySet': self.queryset,
-        }

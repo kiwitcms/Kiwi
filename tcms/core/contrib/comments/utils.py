@@ -7,6 +7,9 @@ from django.contrib.contenttypes.models import ContentType
 import django_comments
 
 
+# todo: this is duplicate with tcms.core.contrib.comments.utils
+# and is only used in tests and core/ajax.py. Should be removed
+# in favor of the other method!
 def add_comment(request, data):
     """
         Helper method which is used to add comments to objects.
@@ -26,7 +29,7 @@ def add_comment(request, data):
     object_pk = data.get("object_pk")
 
     model = apps.get_model(*ctype.split(".", 1))
-    target = model._default_manager.get(pk=object_pk)
+    target = model.objects.get(pk=object_pk)
 
     # Construct the comment form
     form = django_comments.get_form()(target, data=data)

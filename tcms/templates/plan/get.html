@@ -1,19 +1,18 @@
 {% extends "tcms_base.html" %}
 {% load static %}
+{% load extra_filters %}
 {% load attachments_tags %}
 {% block subtitle %}{{ test_plan.name }}{% endblock %}
 
 {% block custom_stylesheet %}
-<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
-<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables_themeroller.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print">
 {% endblock %}
 {% block custom_javascript %}
 <script type="text/javascript" src="{% static 'js/lib/tablednd.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lib/jquery.dataTables.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
-<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
@@ -33,6 +32,10 @@ Nitrate.TestPlans.Instance = {
 	},
 }
 </script>
+
+<!-- temporary workaround so we can convert TestPlans.TreeView.filter to JSON RPC -->
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
 {% endblock %}
 
 {% block content_type %}
@@ -43,11 +46,6 @@ Nitrate.TestPlans.Instance = {
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> {{ test_plan.plan_id }}: {{ test_plan.name }}
-	</div>
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
 	<div class="control">
 		<span id="id_buttons" class="button">
@@ -57,7 +55,7 @@ Nitrate.TestPlans.Instance = {
                    title="Print Plan"
                    data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>
                     {% if perms.testplans.delete_testplan %}
-                        <a href="{% url 'admin:testplans_testplan_delete' test_plan.pk %}"><strong>DELETE PLAN<strong></a>
+                        <a href="{% url 'admin:testplans_testplan_delete' test_plan.pk %}"><strong>DELETE PLAN</strong></a>
                     {% endif %}
 		</span>
 	</div>
@@ -82,7 +80,7 @@ Nitrate.TestPlans.Instance = {
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Product&nbsp;:</div>
-				<div id="display_product"  class="name "><a href="{% url "plans-all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&is_active=on&product={{ test_plan.product_id }}&product_version=&env_group=&create_date__gte=&create_date__lte=" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
+				<div id="display_product"  class="name "><a href="{% url "plans-search" %}?product={{ test_plan.product_id }}" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
 			</div>
 			<div class="listinfo">
 				<div class="title grey">Version&nbsp;:</div>
@@ -94,19 +92,6 @@ Nitrate.TestPlans.Instance = {
 			</div>
 		 </div>
 		<div class="rightlistinfo">
-			<div class="listinfo">
-				<div class="title grey">Environment Group&nbsp;:</div>
-				<div class="name">
-					{% for env_group in test_plan.env_group.all %}
-					<span class="blue strong"><a href="{% url "plans-all" %}?action=search&name__icontains=&author__email__startswith=&owner__username__startswith=&type=&tag__name__in=&case__default_tester__username__startswith=&product=&product_version=&env_group={{ env_group.id }}&create_date__gte=&create_date__lte=" title="Search plans of use {{ env_group.name }} ">{{ env_group.name }}</a></span>
-					{% endfor %}
-				</div>
-				<div>
-					{% for env_property in env_properties %}
-					{{ env_property.property.name }},
-					{% endfor %}
-				</div>
-			</div>
 			<div class="listinfo">
 				<div class="title grey">Reference Link&nbsp;:</div>
 				<div class="name">
@@ -126,7 +111,7 @@ Nitrate.TestPlans.Instance = {
 				<div class="title grey">Parent&nbsp;:</div>
 				<div class="name ">
 				{% if test_plan.parent.pk %}
-					<a href="{{ test_plan.parent.get_full_url }}">{{ test_plan.parent.pk }}</a>
+					<a href="{% url 'test_plan_url_short' test_plan.parent.pk %}">{{ test_plan.parent.pk }}</a>
 				{% else %}
 					None
 				{% endif %}
@@ -159,9 +144,6 @@ Nitrate.TestPlans.Instance = {
 				<li id="tab_tag" class="tab">
 					<a href="#tag" title="tag">Tags (<span id='tag_count'>{{ test_plan.tag.count }}</span>)</a>
 				</li>
-				<li id="tab_log" class="tab">
-					<a href="#log" title="log">Log</a>
-				</li>
 				<li id="tab_treeview" class="tab">
 					<a href="#treeview" title="treeview">Tree View</a>
 				</li>
@@ -170,7 +152,7 @@ Nitrate.TestPlans.Instance = {
                             <div class="listinfo_doc_content">
                                 <div id="display_summary" class="listinfo_doc">
                                 {% if test_plan.text %}
-                                    {{ test_plan.text|safe }}
+                                    {{ test_plan.text|markdown2html }}
                                 {% else %}
                                     <span style="color: #666">The document for this plan hasn't been written yet.</span>
                                 {% endif %}
@@ -181,10 +163,14 @@ Nitrate.TestPlans.Instance = {
 				{% include "plan/get_attachments.html" %}
 			</div>
 			<div id="testruns" class="tab_list" style="display:none;">
-				{% include "plan/get_runs.html" %}
-			</div>
-			<div id="log" class="tab_list" style="display:none;">
-				{% include "plan/get_log.html" %}
+                            <!--
+                                todo:
+                                a temporary solution until we can convert the entire page to Patternfly
+                                and figure out a way to re-use the search forms!
+                             -->
+                            <iframe src="{% url 'testruns-search' %}?nonav=1&plan={{ test_plan.pk }}&product={{ test_plan.product_id }}&product_version={{ test_plan.product_version_id }}"
+                                    width="100%" height="1000px" scrolling="auto" frameBorder="0">
+                            </iframe>
 			</div>
 			<div id="treeview" class="tab_list" style="display:none;">
 				{% include "plan/get_treeview.html" %}

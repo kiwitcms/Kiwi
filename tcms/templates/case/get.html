@@ -9,7 +9,6 @@
 
 {% block custom_javascript %}
 <script type="text/javascript" src="{% static 'js/lib/jquery.dataTables.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/lib/dataTables.numHTML.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestCases.Details.on_load);
@@ -21,6 +20,9 @@ Nitrate.TestCases.Instance = {
 	author_id: {{ test_case.author_id }},
 }
 </script>
+
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
 {% endblock %}
 
 {% block content_type %}
@@ -37,17 +39,7 @@ Nitrate.TestCases.Instance = {
 		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_plan.product_id }}" />
 		<input id="id_case_id" type="hidden" name="case_id" value="{{ test_case.case_id }}" />
 	</div>
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> Plan: <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}:{{ test_plan.name }}</a>
-		>>Case: {{ test_case.case_id }}: {{ test_case.summary }}
-	</div>
 	{% else %}
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		&gt;&gt; <a href="{% url "testcases-search" %}">Search Case</a>
-		&gt;&gt; Case: {{ test_case.case_id }}: {{ test_case.summary }}
-	</div>
 	<div id="tcms_values" class="hidden">
 		<input id="id_case_id" type="hidden" name="case_id" value="{{ test_case.case_id }}" />
 	</div>
@@ -55,17 +47,22 @@ Nitrate.TestCases.Instance = {
 	<div class="control">
 		{% if perms.testcases.change_testcase %}
                 <strong>
-                    <a href="{% url "testcases-edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">EDIT</a> |
+                    <a href="{% url "testcases-edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">EDIT</a>
                 </strong>
 		{% endif %}
 		{% if perms.testcases.add_testcaseplan %}
                 <strong>
-		    <a href="{% url "testcases-clone" %}?from_plan={{ test_plan.plan_id }}&case={{ test_case.case_id }}">CLONE</a>
+                    | <a href="{% url "testcases-clone" %}?from_plan={{ test_plan.plan_id }}&case={{ test_case.case_id }}">CLONE</a>
                 </strong>
 		{% endif %}
+                {% if perms.testcases.delete_testcase %}
+                <strong>
+                    | <a href="{% url 'admin:testcases_testcase_delete' test_case.pk %}">DELETE</a>
+                </strong>
+                {% endif %}
 		{% if test_plan %}
 		<span class="right-action">
-			<a href="{{ test_plan.get_full_url }}">Back to Test Plan</a>
+			<a href="{% url 'test_plan_url_short' test_plan.pk %}">Back to Test Plan</a>
 		</span>
 		{% endif %}
 	</div>
@@ -97,10 +94,6 @@ Nitrate.TestCases.Instance = {
 					</div>
 				</div>
 				<div class="listinfo">
-					<div class="title grey">Estimated Time&nbsp;:</div>
-					<div id="display_estimated_time" class="name">{{ test_case.estimated_time }}</div>
-				</div>
-				<div class="listinfo">
 					<div class="title grey">Priority&nbsp;:</div>
 					<div class="name"><span id="display_priority" >{{ test_case.priority }}</span></div>
 				</div>
@@ -114,8 +107,12 @@ Nitrate.TestCases.Instance = {
 						<span id="display_script" >{{ test_case.alias|default:'None' }}</span>
 					</div>
 				</div>
-
+			        <div class="listinfo">
+				    <div class="title grey">Notes&nbsp;:</div>
+				    <div class="name" style="max-width:800px;"><span id="display_priority" >{{ test_case.notes|urlize|linebreaksbr }}</span></div>
+			    </div>
 			</div>
+
 			<div class="rightlistinfo">
 				<div class="listinfo">
 					<div class="title grey">Author&nbsp;:</div>
@@ -165,12 +162,12 @@ Nitrate.TestCases.Instance = {
 						</span>
 					</div>
 				</div>
+
+		                <div class="listinfo">
+			            <div class="title"><a href="/admin/testcases/testcase/{{ test_case.pk }}/history/">View Edit History</a></div>
+			        </div>
 			</div>
 			<div class="clear"></div>
-			<div class="listinfo">
-				<div class="title grey">Notes&nbsp;:</div>
-				<div class="name" style="max-width:800px;"><span id="display_priority" >{{ test_case.notes|urlize|linebreaksbr }}</span></div>
-			</div>
 		</fieldset>
 	</div>
 	
@@ -197,9 +194,6 @@ Nitrate.TestCases.Instance = {
 			<li id="tab_case_run" class="tab">
 				<a href="#case_run" title="case_run">Case Runs (<span id='case_run_count'>{{ test_case_runs.count }}</span>)</a>
 			</li>
-			<li id="tab_case_log" class="tab">
-				<a href="#log" title="log">Change Logs</a>
-			</li>
 		</ul>
 		<div  id="document" class="Detailform-variety_2 tab_list" style="clear:left;">
 			{% include "case/get_text.html" %}
@@ -224,9 +218,6 @@ Nitrate.TestCases.Instance = {
 		</div>
 		 <div id="case_run" class="tab_list" style="display:none">
 			{% include "case/get_case_run.html" %}
-		</div>
-		<div id="log" class="tab_list"	style="display:none">
-			{% include "case/get_log.html" %}
 		</div>
 	</div>
 </div>

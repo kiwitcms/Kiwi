@@ -14,11 +14,9 @@ Subpackages
     tcms.core.contrib
     tcms.core.forms
     tcms.core.helpers
-    tcms.core.logs
     tcms.core.models
     tcms.core.templatetags
     tcms.core.utils
-    tcms.core.views
 
 Submodules
 ----------
@@ -32,4 +30,6 @@ Submodules
    tcms.core.history
    tcms.core.managers
    tcms.core.middleware
+   tcms.core.views
+   tcms.core.widgets
 

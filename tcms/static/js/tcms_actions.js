@@ -1,3 +1,7 @@
+if (!jQ) {
+    var jQ = $;
+}
+
 // Create a dictionary to avoid polluting the global namespace:
 var Nitrate = window.Nitrate || {}; // Ironically, this global name is not respected. So u r on ur own.
 window.Nitrate = Nitrate;
@@ -13,10 +17,6 @@ var nil;
 Nitrate.Utils.after_page_load = function(callback) {
   var that = this;
   jQ(window).bind('load', callback);
-};
-
-Nitrate.Utils.enableShiftSelectOnCheckbox = function (className){
-  jQ('.' + className).shiftcheckbox();
 };
 
 Nitrate.Utils.convert = function(argument, data) {
@@ -104,7 +104,6 @@ var default_messages = {
 
       modify_plan : '/plan/$id/modify/',
       plan_assign_case: '/plan/$id/assigncase/apply/',
-      plans: '/plans/',
 
       case_change_status: '/cases/changestatus/',
       case_details: '/case/$id/',
@@ -119,11 +118,6 @@ var default_messages = {
       create_case: '/case/create/',
       modify_case: '/case/$id/modify/',
       search_case: '/cases/',
-
-      manage_env_categories: '/management/environments/categories/',
-      manage_env_properties: '/management/environments/properties/',
-      manage_env_property_values: '/management/environments/propertyvalues/',
-      runs_env_value: '/runs/env_value/'
     },
 
     reverse: function(options) {
@@ -200,30 +194,6 @@ function checkCookie() {
   } else {
     return false;
   }
-}
-
-function removeItem(item, tc_estimated_time) {
-  var tr_estimated_time = parseInt(jQ('#estimated_time').data('time'));
-  var remain_estimated_time = tr_estimated_time - tc_estimated_time;
-  var second_value = remain_estimated_time % 60;
-  var minute = parseInt(remain_estimated_time / 60);
-  var minute_value = minute % 60;
-  var hour = parseInt(minute / 60);
-  var hour_value = hour % 24;
-  var day_value = parseInt(hour / 24);
-
-  var remain_estimated_time_value = day_value ? day_value + ' ' : '';
-  remain_estimated_time_value += hour_value + ':';
-  remain_estimated_time_value += minute_value + ':';
-  remain_estimated_time_value += second_value;
-
-  if (!remain_estimated_time_value.length) {
-    remain_estimated_time_value = '0';
-  }
-
-  jQ('#estimated_time').data('time', remain_estimated_time);
-  document.getElementById('id_estimated_time').value = remain_estimated_time_value;
-  jQ('#' + item).remove();
 }
 
 function splitString(str, num) {
@@ -570,41 +540,48 @@ function postToURL(path, params, method) {
   form.submit();
 }
 
+/*
+    Used to configure autocomplete for 'Add Tag' widgets
+*/
+function setAddTagAutocomplete() {
+    jQ('#id_tags').autocomplete({
+        'source': function(request, response) {
+            jsonRPC('Tag.filter', {'name__startswith': request.term}, function(data) {
+                var processedData = [];
+                data.forEach(function(element) {
+                    processedData.push(element.name);
+                });
+                response(processedData);
+            });
+        },
+        'minLength': 2,
+        'appendTo': '#id_tags_autocomplete'
+    });
+}
+
+
 function constructTagZone(container, parameters) {
-  jQ(container).html('<div class="ajax_loading"></div>');
+  $(container).html('<div class="ajax_loading"></div>');
 
   var complete = function(t) {
-    jQ('#id_tags').autocomplete({
-      'source': function(request, response) {
-        getInfo({'info_type': 'tags', 'name__startswith': request.term},
-                function(data) {
-                    var processedData = [];
-                    jQ.parseJSON(data.responseText).forEach(function (element){
-                        processedData.push(element.fields.name);
-                    });
-                    response(processedData);
-                });
-      },
-      'minLength': 2,
-      'appendTo': '#id_tags_autocomplete'
-    });
+    setAddTagAutocomplete();
 
-    jQ('#id_tag_form').bind('submit', function(e){
+    $('#id_tag_form').bind('submit', function(e){
       e.stopPropagation();
       e.preventDefault();
 
-      constructTagZone(container, Nitrate.Utils.formSerialize(this));
+      addTag(container);
     });
-    var count = jQ('tbody#tag').attr('count');
-    jQ('#tag_count').text(count);
+    var count = $('tbody#tag').attr('count');
+    $('#tag_count').text(count);
   };
 
-  jQ.ajax({
+  $.ajax({
     'url': '/management/tags/',
     'type': 'GET',
     'data': parameters,
     'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
+      $(container).html(data);
     },
     'complete': function () {
       complete();
@@ -613,22 +590,34 @@ function constructTagZone(container, parameters) {
 }
 
 
+// add tag to TestPlan or TestCase
+// called from the 'Tabs' tab in the get view
 function addTag(container) {
-  var tag_name = jQ('#id_tags').attr('value');
-  if (!tag_name.length) {
-    jQ('#id_tags').focus();
-  } else {
-    constructTagZone(container, Nitrate.Utils.formSerialize(jQ('#id_tag_form')[0]));
-  }
+    var tags = $('#id_tags')[0];
+    var tag_name = tags.value;
+    var params = $(tags).data('params');
+    var method = params[0] + '.add_tag';
+    var search_params = {};
+    search_params[params[0].replace('Test', '').toLowerCase()] = params[1];
+
+    if (tag_name.length > 0) {
+        jsonRPC(method, [params[1], tag_name], function(data) {
+            constructTagZone(container, search_params);
+        });
+    }
 }
 
-function removeTag(container, tag) {
-  jQ('#id_tag_form').parent().find('input[name="a"]')[0].value = 'remove';
 
-  var parameters = Nitrate.Utils.formSerialize(jQ('#id_tag_form')[0]);
-  parameters.tags = tag;
+// remove tag from TestPlan or TestCase
+// called from the 'Tabs' tab in the get view
+function removeTag(container, params) {
+    var method = params[0] + '.remove_tag';
+    var search_params = {};
+    search_params[params[0].replace('Test', '').toLowerCase()] = params[1];
 
-  constructTagZone(container, parameters);
+    jsonRPC(method, [params[1], params[2]], function(data) {
+        constructTagZone(container, search_params);
+    });
 }
 
 function removeComment(form, callback) {
@@ -845,7 +834,7 @@ function popupAddAnotherWindow(triggeringLink, parameters) {
   return false;
 }
 
-function exportCase(url, form, table) {
+function printableCases(url, form, table) {
   var selection = serializeCaseFromInputList2(table);
   var emptySelection = !selection.selectAll & selection.selectedCasesIds.length === 0;
   if (emptySelection) {
@@ -861,8 +850,6 @@ function exportCase(url, form, table) {
   params.case = selection.selectedCasesIds;
   postToURL(url, params);
 }
-
-var printableCases = exportCase;
 
 function validateIssueID(bugRegExp, bugId) {
   // if bugRegExp is empty string then all input is valid!

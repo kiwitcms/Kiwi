@@ -1,5 +1,6 @@
 {% extends "tcms_base.html" %}
 {% load static %}
+{% load extra_filters %}
 {% block subtitle %}Case History{% endblock %}
 
 {% block custom_stylesheet %}
@@ -17,16 +18,7 @@
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		&gt;&gt; <a href="{% url "plans-all" %}">...</a>
-		{% if testplan %}
-		&gt;&gt; <a href="{{ test_plan.get_full_url }}">{{ testplan.plan_id }}: {{ testplan.name }}</a>
-		{% endif %}
-		&gt;&gt; <a href="{% url "testcases-get" testcase.case_id %}?from_plan={{ testplan.plan_id }}">{{ testcase.case_id }}: {{ testcase.summary }}</a>
-		&gt;&gt; View edit history
-	</div>
-	<h2>Test Case History</h2>
+	<h2>{{ testcase.summary }} History</h2>
 	<div class="Detailform border-1">
 	<table cellpadding="0" cellspacing="0" class="list">
 		<tr>
@@ -47,19 +39,19 @@
 					{% for text in text_to_show %}
 					<div class="action">
 						<b>SETUP:</b>
-						{{ text.setup|safe }}
+						{{ text.setup|markdown2html }}
 					</div>
 					<div class="effect">
 						<b>ACTION:</b>
-						{{ text.action|safe }}
+						{{ text.action|markdown2html }}
 					</div>
 					<div class="action">
 						<b>EXPECTED RESULT:</b>
-						{{ text.effect|safe }}
+						{{ text.effect|markdown2html }}
 					</div>
 					<div class="effect">
 						<b>BREAKDOWN:</b>
-						{{ text.breakdown|safe }}
+						{{ text.breakdown|markdown2html }}
 					</div>
 					{% endfor %}
 				</div>

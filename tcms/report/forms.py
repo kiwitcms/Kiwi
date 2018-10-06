@@ -51,19 +51,8 @@ class CustomSearchForm(forms.Form):
                     'name')
             self.fields['testcaserun__case__component'].queryset = \
                 Component.objects.filter(product__id=product_id).only('name')
-        else:
-            # FIXME: is this branch necessary? when I notice this, I'm
-            # optimizing custom report here. If product_id is None, it's an
-            # critical error for the search operation and everything should be
-            # stopped. Therefor, in my opinion, following 4 lines of code
-            # waste time and resources.
-            self.fields['build_run__product_version'].queryset = \
-                Version.objects.only('value')
-            self.fields['pk__in'].queryset = Build.objects.only('name')
-            self.fields['testcaserun__case__category'].queryset = \
-                Category.objects.only('name')
-            self.fields['testcaserun__case__component'].queryset = \
-                Component.objects.only('name')
+        # note: .populate() is executed by CustomReport only if
+        # a=Search (action) which always sends product_id!
 
 
 class CustomSearchDetailsForm(CustomSearchForm):

@@ -39,7 +39,7 @@ Dependencies
 
 First install RPM packages which are needed to compile some of the Python dependencies::
 
-    sudo yum install gcc python-devel mysql-devel libxml2-devel libxslt-devel graphviz
+    sudo yum install gcc python-devel mariadb-devel libxml2-devel libxslt-devel graphviz
 
 .. note::
 
@@ -48,7 +48,7 @@ First install RPM packages which are needed to compile some of the Python depend
 Then install dependencies for development::
 
     . ~/virtualenvs/kiwi/bin/activate
-    pip install -r requirements/mysql.txt
+    pip install -r requirements/mariadb.txt
     pip install -r requirements/devel.txt
 
 
@@ -71,11 +71,6 @@ Initialize database
     In development mode Kiwi TCMS is configured to use SQLite!
     You may want to adjust the database and/or other configuration settings.
     Override them in ``./tcms/settings/devel.py`` if necessary.
-
-.. warning::
-
-    At the moment Kiwi TCMS is not 100% portable between database backends!
-    We recommend either MySQL or MariaDB for running Kiwi TCMS!
 
 Load database schema and create initial user::
 

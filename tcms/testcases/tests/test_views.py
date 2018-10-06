@@ -1,39 +1,31 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 
-import json
 import unittest
 from http import HTTPStatus
-import xml.etree.ElementTree  # nosec:B405:blacklist
-from datetime import datetime
 from urllib.parse import urlencode
 
-from django import test
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
 from django.forms import ValidationError
-from django.test import RequestFactory
 
 from tcms.testcases.fields import MultipleEmailField
-from tcms.testcases.forms import CaseTagForm
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import BugSystem
 from tcms.testcases.models import TestCaseComponent
 from tcms.testcases.models import TestCasePlan
-from tcms.testcases.views import ajax_response
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import TagFactory
 from tcms.tests import BasePlanCase, BaseCaseRun
 from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
-from tcms.core.contrib.auth.backends import initiate_user_with_default_setups
+from tcms.utils.permissions import initiate_user_with_default_setups
 
 
 class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
@@ -118,39 +110,6 @@ class TestMultipleEmailField(unittest.TestCase):
         self.field.required = False
         data = self.field.clean(value)
         self.assertEqual(data, [])
-
-
-class CaseTagFormTest(test.TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.tag_1 = TagFactory(name='tag one')
-        cls.tag_2 = TagFactory(name='tag two')
-        cls.tag_3 = TagFactory(name='tag three')
-
-        cls.cases = []
-        for i in range(5):
-            case = TestCaseFactory(summary='test_case_number_%d' % i)
-            case.add_tag(cls.tag_1)
-            if i % 2 == 0:
-                case.add_tag(cls.tag_2)
-            if i % 3 == 0:
-                case.add_tag(cls.tag_3)
-            cls.cases.append(case)
-
-    def test_populate_from_cases_contains_all_three_tags(self):
-        case_ids = [case.pk for case in self.cases]
-        form = CaseTagForm()
-        form.populate(case_ids=case_ids)
-
-        self.assertEqual(3, len(form.fields['o_tag'].queryset))
-        form_tags = form.fields['o_tag'].queryset.values_list('name', flat=True)
-        self.assertIn(self.tag_1.name, form_tags)
-        self.assertIn(self.tag_2.name, form_tags)
-        self.assertIn(self.tag_3.name, form_tags)
-
-
-# ### Test cases for view methods ###
 
 
 class TestOperateComponentView(BasePlanCase):
@@ -411,12 +370,10 @@ class TestOperateCasePlans(BasePlanCase):
             plan = case_plan_rel.plan
             self.assertContains(
                 response,
-                '<a href="{0}">{1}</a>'.format(plan.get_full_url(), plan.pk),
-                html=True)
-
-            self.assertContains(
-                response,
-                '<a href="{}">{}</a>'.format(plan.get_full_url(), plan.name),
+                '<a href="{0}">TP-{1}: {2}</a>'.format(
+                    reverse('test_plan_url_short', args=[plan.pk]),
+                    plan.pk,
+                    plan.name),
                 html=True)
 
     def test_list_plans(self):
@@ -504,7 +461,6 @@ class TestEditCase(BasePlanCase):
             'product': cls.case_1.category.product.pk,
             'category': cls.case_1.category.pk,
             'default_tester': '',
-            'estimated_time': '0',
             'case_status': cls.case_status_confirmed.pk,
             'arguments': '',
             'extra_link': '',
@@ -612,43 +568,6 @@ class TestEditCase(BasePlanCase):
         self.assertRedirects(response, redirect_url, target_status_code=301)
 
 
-class TestAJAXSearchCases(BasePlanCase):
-    """Test ajax_search"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestAJAXSearchCases, cls).setUpTestData()
-
-        # test data for Issue #78
-        # https://github.com/kiwitcms/Kiwi/issues/78
-        cls.case_bogus_summary = TestCaseFactory(
-            summary=r"""A Test Case with backslash(\), single quotes(') and double quotes(")""",
-            plan=[cls.plan])
-
-        cls.search_data = {
-            'summary': '',
-            'author': '',
-            'product': '',
-            'plan': '',
-            'is_automated': '',
-            'category': '',
-            'component': '',
-            'bug_id': '',
-            'tag__name__in': '',
-            'a': 'search',
-        }
-
-        cls.search_url = reverse('testcases-ajax_search')
-
-    def test_search_all_cases(self):
-        response = self.client.get(self.search_url, self.search_data)
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        cases_count = self.plan.case.count()
-        self.assertEqual(cases_count, data['iTotalRecords'])
-        self.assertEqual(cases_count, data['iTotalDisplayRecords'])
-
-
 class TestChangeCasesAutomated(BasePlanCase):
     """Test automated view method"""
 
@@ -705,31 +624,6 @@ class TestChangeCasesAutomated(BasePlanCase):
             self.assertTrue(case.is_automated_proposed)
 
 
-class TestExportCases(BasePlanCase):
-    """Test export view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestExportCases, cls).setUpTestData()
-        cls.export_url = reverse('testcases-export')
-
-    def test_export_cases(self):
-        response = self.client.post(self.export_url,
-                                    {'case': [self.case_1.pk, self.case_2.pk]})
-
-        today = datetime.now()
-        # Verify header
-        self.assertEqual(
-            'attachment; filename=tcms-testcases-%02i-%02i-%02i.xml' % (
-                today.year, today.month, today.day),
-            response['Content-Disposition'])
-        # verify content
-
-        xmldoc = xml.etree.ElementTree.fromstring(response.content)  # nosec:B314:blacklist
-        exported_cases_count = xmldoc.findall('testcase')
-        self.assertEqual(2, len(exported_cases_count))
-
-
 class TestPrintablePage(BasePlanCase):
     """Test printable page view method"""
 
@@ -758,14 +652,14 @@ class TestPrintablePage(BasePlanCase):
         # response contains the first TestCase
         self.assertContains(
             response,
-            '<h3>[{0}] {1}</h3>'.format(self.case_1.pk, self.case_1.summary),
+            '<h3>TC-{0}: {1}</h3>'.format(self.case_1.pk, self.case_1.summary),
             html=True
         )
 
         # but not the second TestCase b/c it was not selected
         self.assertNotContains(
             response,
-            '<h3>[{0}] {1}</h3>'.format(self.case_2.pk, self.case_2.summary),
+            '<h3>TC-{0}: {1}'.format(self.case_2.pk, self.case_2.summary),
             html=True
         )
 
@@ -831,103 +725,13 @@ class TestSearchCases(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestSearchCases, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.search_url = reverse('testcases-search')
 
-    def test_search_without_selected_product(self):
+    def test_page_renders(self):
         response = self.client.get(self.search_url, {})
-        self.assertContains(
-            response,
-            '<option value="" selected="selected">---------</option>',
-            html=True)
-
-    def test_search_with_selected_product(self):
-        response = self.client.get(self.search_url,
-                                   {'product': self.product.pk})
-        self.assertContains(
-            response,
-            '<option value="{0}" selected="selected">{1}</option>'.format(
-                self.product.pk, self.product.name),
-            html=True
-        )
-
-
-class TestAJAXResponse(BasePlanCase):
-    """Test ajax_response"""
-
-    def setUp(self):
-        self.factory = RequestFactory()
-
-        self.column_names = [
-            'case_id',
-            'summary',
-            'author__username',
-            'default_tester__username',
-            'is_automated',
-            'case_status__name',
-            'category__name',
-            'priority__value',
-            'create_date',
-        ]
-
-        self.template = 'case/common/json_cases.txt'
-
-    def test_return_empty_cases(self):
-        url = reverse('testcases-ajax_search')
-        request = self.factory.get(url, {
-
-        })
-        request.user = self.tester
-
-        empty_cases = TestCase.objects.none()
-        response = ajax_response(request, empty_cases, self.column_names, self.template)
-
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        self.assertEqual(0, data['sEcho'])
-        self.assertEqual(0, data['iTotalRecords'])
-        self.assertEqual(0, data['iTotalDisplayRecords'])
-        self.assertEqual([], data['aaData'])
-
-    def test_return_sorted_cases_by_name_desc(self):
-        url = reverse('testcases-ajax_search')
-        request = self.factory.get(url, {
-            'sEcho': 1,
-            'iDisplayStart': 0,
-            'iDisplayLength': 2,
-            'iSortCol_0': 0,
-            'sSortDir_0': 'desc',
-            'iSortingCols': 1,
-            'bSortable_0': 'true',
-            'bSortable_1': 'true',
-            'bSortable_2': 'true',
-            'bSortable_3': 'true',
-        })
-        request.user = self.tester
-
-        cases = self.plan.case.all()
-        response = ajax_response(request, cases, self.column_names, self.template)
-
-        data = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
-
-        total = self.plan.case.count()
-        self.assertEqual(1, data['sEcho'])
-        self.assertEqual(total, data['iTotalRecords'])
-        self.assertEqual(total, data['iTotalDisplayRecords'])
-        self.assertEqual(2, len(data['aaData']))
-
-        id_links = [row[2] for row in data['aaData']]
-        id_links.sort()
-        expected_id_links = [
-            "<a href='{0}'>{1}</a>".format(
-                reverse('testcases-get', args=[case.pk]),
-                case.pk,
-            )
-            for case in self.plan.case.order_by('-pk')[0:2]
-        ]
-        expected_id_links.sort()
-        self.assertEqual(expected_id_links, id_links)
+        self.assertContains(response, '<option value="">----------</option>', html=True)
 
 
 class TestGetCasesFromPlan(BasePlanCase):

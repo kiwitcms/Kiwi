@@ -20,7 +20,7 @@ from tcms.issuetracker import jira_integration
 from tcms.issuetracker import github_integration
 
 
-class IssueTrackerType(object):
+class IssueTrackerType:
     """
         Represents actions which can be performed with issue trackers.
         This is a common interface for all issue trackers that Kiwi TCMS
@@ -97,7 +97,7 @@ class IssueTrackerType(object):
 
             :return: - None if not suported or string representing the URL
         """
-        return None
+        pass
 
 
 class Bugzilla(IssueTrackerType):
@@ -158,12 +158,10 @@ class Bugzilla(IssueTrackerType):
 
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
 
-        if txt and isinstance(txt, TestCaseText):
-            plain_txt = txt.get_plain_text()
-
-            setup = plain_txt.setup
-            action = plain_txt.action
-            effect = plain_txt.effect
+        if isinstance(txt, TestCaseText):
+            setup = txt.setup
+            action = txt.action
+            effect = txt.effect
         else:
             setup = 'None'
             action = 'None'
@@ -269,12 +267,10 @@ class JIRA(IssueTrackerType):
 
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
 
-        if txt and isinstance(txt, TestCaseText):
-            plain_txt = txt.get_plain_text()
-
-            setup = plain_txt.setup
-            action = plain_txt.action
-            effect = plain_txt.effect
+        if isinstance(txt, TestCaseText):
+            setup = txt.setup
+            action = txt.action
+            effect = txt.effect
         else:
             setup = 'None'
             action = 'None'
@@ -343,12 +339,10 @@ class GitHub(IssueTrackerType):
 
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
 
-        if txt and isinstance(txt, TestCaseText):
-            plain_txt = txt.get_plain_text()
-
-            setup = plain_txt.setup
-            action = plain_txt.action
-            effect = plain_txt.effect
+        if isinstance(txt, TestCaseText):
+            setup = txt.setup
+            action = txt.action
+            effect = txt.effect
         else:
             setup = 'None'
             action = 'None'

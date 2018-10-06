@@ -20,7 +20,7 @@
 
 {% block custom_javascript %}
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
-<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
@@ -38,18 +38,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		{% if test_plan %}
-		>>Plan: <a href="{{ test_plan.get_full_url }}">{{ test_plan.plan_id }}: {{ test_plan.name }}</a>
-		>>Case: <a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
-		{% else %}
-		>> Case:<a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.case_id }}: {{ test_case }}</a>
-		{% endif %}
-		>> Edit
-	</div>
-  
-	
 	<span class="right-action">
 		<a href="{% url "testcases-text_history" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="historylink">
 			Edit History
@@ -76,15 +64,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 						<label>Default Tester</label>
 						<span >{{ form.default_tester }}</span>
 						<div class="errors">{{ form.default_tester.errors }}</div>
-					</div>
-					
-					<div class="data_row">
-						<label>Estimated Time</label>
-						<div id="form_estimated_time" >
-							<span id="form_estimated_time">{{ form.estimated_time }}</span>
-							<span class="grey">(eg. 3 04:30:00)</span>
-							<div class="errors">{{ form.estimated_time.errors }}</div>
-						</div>
 					</div>
 					<div class="data_row">
 						<label >Status</label>
@@ -174,10 +153,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 					<div class="data_row">
 						<label>Priority</label>
 						<span id="form_priority" >{{ form.priority }}</span>
-					</div>
-					<div class="data_row">
-						<label>Tags</label>
-						{{ form.tag }}
 					</div>
 				</div>
 			</fieldset>

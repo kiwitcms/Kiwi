@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import json
-
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
 import django_comments as comments
@@ -19,7 +17,7 @@ def post(request):
 
     # Fill out some initial data fields from an authenticated user, if present
     data = request.POST.copy()
-    form, target = add_comment(request, data)
+    _form, _target = add_comment(request, data)
 
     return JsonResponse({'rc': 0})
 
@@ -40,7 +38,7 @@ def delete(request):
     if not comments_s:
         if request.is_ajax():
             ajax_response = {'rc': 1, 'response': 'Object does not exist.'}
-            return HttpResponse(json.dumps(ajax_response))
+            return JsonResponse(ajax_response)
 
         raise ObjectDoesNotExist()
 
@@ -62,4 +60,4 @@ def delete(request):
                 request=request,
             )
 
-    return HttpResponse(json.dumps(ajax_response))
+    return JsonResponse(ajax_response)

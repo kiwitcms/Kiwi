@@ -4,42 +4,34 @@ Shared functions for plan/case/run.
 
 Most of these functions are use for Ajax.
 """
-import json
+from http import HTTPStatus
 from distutils.util import strtobool
 
-from django import http
-from django.db.models import Q, Count
+from django.db.models import Count
 from django.contrib.auth.models import User
 from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist
 from django.forms import ValidationError
-from django.http import Http404
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.views.generic.base import View
+from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
+from django.shortcuts import get_object_or_404, render
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import permission_required
 
 from tcms.management.models import Component, Build, Version
-from tcms.management.models import Priority
-from tcms.management.models import Tag
-from tcms.management.models import EnvGroup, EnvProperty, EnvValue
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import Category
-from tcms.testcases.models import TestCaseStatus, TestCaseTag
-from tcms.testcases.views import plan_from_request_or_none
-from tcms.testplans.models import TestPlan, TestCasePlan, TestPlanTag
-from tcms.testruns.models import TestRun, TestCaseRun, TestRunTag
+from tcms.testcases.models import TestCaseTag
+from tcms.testplans.models import TestPlan, TestPlanTag
+from tcms.testruns.models import TestCaseRun, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
 
 
-def check_permission(request, ctype):
-    perm = '%s.change_%s' % tuple(ctype.split('.'))
-    if request.user.has_perm(perm):
-        return True
-    return False
-
-
+# todo: all calls on the front-end can be replaced with jsonRPC
+# and this must be removed
 @require_GET
 def info(request):
     """Ajax responder for misc information"""
@@ -53,7 +45,7 @@ def info(request):
     return HttpResponse(serializers.serialize('json', info_type(), fields=('name', 'value')))
 
 
-class _InfoObjects(object):
+class _InfoObjects:
 
     def __init__(self, request, product_id=None):
         self.request = request
@@ -76,37 +68,18 @@ class _InfoObjects(object):
     def components(self):
         return Component.objects.filter(product__id=self.product_id)
 
-    def env_properties(self):
-        if self.request.GET.get('env_group_id'):
-            return EnvGroup.objects.get(id=self.request.GET['env_group_id']).property.all()
-        return EnvProperty.objects.all()
-
-    def env_values(self):
-        return EnvValue.objects.filter(property__id=self.request.GET.get('env_property_id'))
-
-    def tags(self):
-        return Tag.objects.filter(name__startswith=self.request.GET['name__startswith'])
-
     def versions(self):
         return Version.objects.filter(product__id=self.product_id)
 
-    @staticmethod
-    def env_groups():
-        return EnvGroup.objects.all()
-
 
 def tags(request):
-    """ Get tags for TestPlan, TestCase or TestRun """
+    """
+        Get tags for TestPlan or TestCase.
+        Also counts how many times the same tag has been used for
+        different objects. Used in TP -> Tags and TC -> Tags tabs!
+    """
 
-    tag_objects = _TagObjects(request)
-    template_name, obj = tag_objects.get()
-
-    q_tag = request.GET.get('tags')
-    q_action = request.GET.get('a')
-
-    if q_action:
-        tag_actions = _TagActions(obj=obj, tag_name=q_tag)
-        getattr(tag_actions, q_action)()
+    template_name, obj = _TagObjects(request).get()
 
     all_tags = obj.tag.all().order_by('pk')
     test_plan_tags = TestPlanTag.objects.filter(
@@ -125,14 +98,24 @@ def tags(request):
         tag.num_cases = case_counter.calculate_tag_count(tag)
         tag.num_runs = run_counter.calculate_tag_count(tag)
 
+    api_module = 'NotExisting'
+    if isinstance(obj, TestPlan):
+        api_module = 'TestPlan'
+
+    if isinstance(obj, TestCase):
+        api_module = 'TestCase'
+
     context_data = {
         'tags': all_tags,
         'object': obj,
+        'api_module': api_module,
     }
+    # todo: convert this method into returning pure JSON and
+    # render inside the browser. Also move it under management.views
     return render(request, template_name, context_data)
 
 
-class _TagObjects(object):
+class _TagObjects:
     """ Used for getting the chosen object(TestPlan, TestCase or TestRun) from the database """
 
     def __init__(self, request):
@@ -141,7 +124,7 @@ class _TagObjects(object):
                         and the type of object to be selected
         :type request: HttpRequest
         """
-        for obj in ['plan', 'case', 'run']:
+        for obj in ['plan', 'case']:
             if request.GET.get(obj):
                 self.object = obj
                 self.object_pk = request.GET.get(obj)
@@ -157,35 +140,8 @@ class _TagObjects(object):
     def case(self):
         return 'management/get_tag.html', TestCase.objects.get(pk=self.object_pk)
 
-    def run(self):
-        return 'run/get_tag.html', TestRun.objects.get(pk=self.object_pk)
 
-
-class _TagActions(object):
-    """ Used for performing the 'add' and 'remove' actions on a given tag """
-
-    def __init__(self, obj, tag_name):
-        """
-        :param obj: the object for which the tag actions would be performed
-        :type obj: either a :class:`tcms.testplans.models.TestPlan`,
-                          a :class:`tcms.testcases.models.TestCase` or
-                          a :class:`tcms.testruns.models.TestRun`
-        :param tag_name: The name of the tag to be manipulated
-        :type tag_name: str
-        """
-        self.obj = obj
-        self.tag_name = tag_name
-
-    def add(self):
-        tag, _ = Tag.objects.get_or_create(name=self.tag_name)
-        self.obj.add_tag(tag)
-
-    def remove(self):
-        tag = Tag.objects.get(name=self.tag_name)
-        self.obj.remove_tag(tag)
-
-
-class _TagCounter(object):  # pylint: disable=too-few-public-methods
+class _TagCounter:  # pylint: disable=too-few-public-methods
     """ Used for counting the number of times a tag is assigned to TestRun/TestCase/TestPlan """
 
     def __init__(self, key, test_tags):
@@ -227,181 +183,88 @@ def say_yes():
     return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
-class TestCaseUpdateActions(object):
-    """Actions to update each possible property of TestCases
+@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+class UpdateTestCaseStatusView(View):
+    """Updates TestCase.case_status_id. Called from the front-end."""
 
-    Define your own method named _update_[property name] to hold specific
-    update logic.
-    """
+    http_method_names = ['post']
 
-    ctype = 'testcases.testcase'
+    def post(self, request):
+        status_id = int(request.POST.get('new_value'))
+        case_ids = request.POST.getlist('case[]')
 
-    def __init__(self, request):
-        self.request = request
-        self.target_field = request.POST.get('target_field')
-        self.new_value = request.POST.get('new_value')
+        for test_case in TestCase.objects.filter(pk__in=case_ids):
+            test_case.case_status_id = status_id
+            test_case.save()
 
-    def get_update_action(self):
-        return getattr(self, '_update_%s' % self.target_field, None)
-
-    def update(self):
-        has_perms = check_permission(self.request, self.ctype)
-        if not has_perms:
-            return say_no("You don't have enough permission to update TestCases.")
-
-        action = self.get_update_action()
-        if action is not None:
-            try:
-                resp = action()
-                self._sendmail()
-            except ObjectDoesNotExist as err:
-                return say_no(str(err))
-            except Exception:
-                # TODO: besides this message to users, what happening should be
-                # recorded in the system log.
-                return say_no('Update failed. Please try again or request '
-                              'support from your organization.')
-            else:
-                if resp is None:
-                    resp = say_yes()
-                return resp
-        return say_no('Not know what to update.')
-
-    def get_update_targets(self):
-        """Get selected cases to update their properties"""
-        case_ids = map(int, self.request.POST.getlist('case[]'))
-        self._update_objects = TestCase.objects.filter(pk__in=case_ids)
-        return self._update_objects
-
-    def get_plan(self, pk_enough=True):
-        try:
-            return plan_from_request_or_none(self.request, pk_enough)
-        except Http404:
-            return None
-
-    def _sendmail(self):
-        mail_context = TestCase.mail_scene(objects=self._update_objects, field=self.target_field)
-        if mail_context:
-            from tcms.core.utils.mailto import mailto
-
-            mail_context['context']['user'] = self.request.user
-            try:
-                mailto(**mail_context)
-            except Exception:  # nosec:B110:try_except_pass
-                pass
-
-    def _update_priority(self):
-        exists = Priority.objects.filter(pk=self.new_value).exists()
-        if not exists:
-            raise ObjectDoesNotExist('The priority you specified to change '
-                                     'does not exist.')
-        self.get_update_targets().update(**{str(self.target_field): self.new_value})
-
-    def _update_default_tester(self):
-        try:
-            user = User.objects.get(Q(username=self.new_value) | Q(email=self.new_value))
-        except User.DoesNotExist:
-            raise ObjectDoesNotExist('Default tester not found!')
-        self.get_update_targets().update(**{str(self.target_field): user.pk})
-
-    def _update_case_status(self):
-        try:
-            new_status = TestCaseStatus.objects.get(pk=self.new_value)
-        except TestCaseStatus.DoesNotExist:
-            raise ObjectDoesNotExist('The status you choose does not exist.')
-
-        update_object = self.get_update_targets()
-        if not update_object:
-            return say_no('No record(s) found')
-
-        for testcase in update_object:
-            if hasattr(testcase, 'log_action'):
-                testcase.log_action(
-                    who=self.request.user,
-                    action='Field %s changed from %s to %s.' % (
-                        self.target_field, testcase.case_status, new_status.name
-                    )
-                )
-        update_object.update(**{str(self.target_field): self.new_value})
-
-        # ###
         # Case is moved between Cases and Reviewing Cases tabs accoding to the
         # change of status. Meanwhile, the number of cases with each status
         # should be updated also.
+        plan_id = request.POST.get("from_plan")
+        test_plan = get_object_or_404(TestPlan, pk=plan_id)
 
-        try:
-            plan = plan_from_request_or_none(self.request)
-        except Http404:
-            return say_no("No plan record found.")
-        else:
-            if plan is None:
-                return say_no('No plan record found.')
+        confirmed_cases_count = test_plan.case.filter(case_status__name='CONFIRMED').count()
+        total_cases_count = test_plan.case.count()
+        review_cases_count = total_cases_count - confirmed_cases_count
 
-        confirm_status_name = 'CONFIRMED'
-        plan.run_case = plan.case.filter(case_status__name=confirm_status_name)
-        plan.review_case = plan.case.exclude(case_status__name=confirm_status_name)
-        run_case_count = plan.run_case.count()
-        case_count = plan.case.count()
-        # FIXME: why not calculate review_case_count or run_case_count by using
-        # substraction, which saves one SQL query.
-        review_case_count = plan.review_case.count()
-
-        return http.JsonResponse({
-            'rc': 0, 'response': 'ok',
-            'run_case_count': run_case_count,
-            'case_count': case_count,
-            'review_case_count': review_case_count,
+        return JsonResponse({
+            'rc': 0,
+            'response': 'ok',
+            'run_case_count': confirmed_cases_count,
+            'case_count': total_cases_count,
+            'review_case_count': review_cases_count,
         })
 
-    def _update_sortkey(self):
+
+@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+class UpdateTestCasePriorityView(View):
+    """Updates TestCase.priority_id. Called from the front-end."""
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        priority_id = int(request.POST.get('new_value'))
+        case_ids = request.POST.getlist('case[]')
+
+        for test_case in TestCase.objects.filter(pk__in=case_ids):
+            test_case.priority_id = priority_id
+            test_case.save()
+
+        return JsonResponse({'rc': 0, 'response': 'ok'})
+
+
+@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
+class UpdateTestCaseActorsView(View):
+    """
+        Updates TestCase.default_tester_id or TestCase.reviewer_id.
+        Called from the front-end.
+    """
+
+    http_method_names = ['post']
+
+    def post(self, request):
+        username = request.POST.get('username')
         try:
-            sortkey = int(self.new_value)
-            if sortkey < 0 or sortkey > 32300:
-                return say_no('New sortkey is out of range [0, 32300].')
-        except ValueError:
-            return say_no('New sortkey is not an integer.')
-        plan = plan_from_request_or_none(self.request, pk_enough=True)
-        if plan is None:
-            return say_no('No plan record found.')
-        update_targets = self.get_update_targets()
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(email=username)
+            except User.DoesNotExist:
+                return JsonResponse({'rc': 1,
+                                     'response': _('User %s not found!' % username)},
+                                    status=HTTPStatus.NOT_FOUND)
 
-        # ##
-        # MySQL does not allow to exeucte UPDATE statement that contains
-        # subquery querying from same table. In this case, OperationError will
-        # be raised.
-        offset = 0
-        step_length = 500
-        while True:
-            sub_cases = update_targets[offset:offset + step_length]
-            case_pks = [case.pk for case in sub_cases]
-            if not case_pks:
-                break
-            TestCasePlan.objects.filter(plan=plan,
-                                        case__in=case_pks).update(**{self.target_field: sortkey})
-            # Move to next batch of cases to change.
-            offset += step_length
+        what_to_update = request.POST.get('what_to_update')
+        case_ids = request.POST.getlist('case[]')
+        for test_case in TestCase.objects.filter(pk__in=case_ids):
+            if what_to_update == 'default_tester':
+                test_case.default_tester_id = user.pk
+            elif what_to_update == 'reviewer':
+                test_case.reviewer_id = user.pk
 
-    def _update_reviewer(self):
-        reviewers = User.objects.filter(username=self.new_value).values_list('pk', flat=True)
-        if not reviewers:
-            err_msg = 'Reviewer %s is not found' % self.new_value
-            raise ObjectDoesNotExist(err_msg)
-        self.get_update_targets().update(**{str(self.target_field): reviewers[0]})
+            test_case.save()
 
-
-# NOTE: what permission is necessary
-# FIXME: find a good chance to map all TestCase property change request to this
-@require_POST
-def update_cases_default_tester(request):
-    """Update default tester upon selected TestCases"""
-    proxy = TestCaseUpdateActions(request)
-    return proxy.update()  # pylint: disable=objects-update-used
-
-
-UPDATE_CASES_PRIORITY = update_cases_default_tester
-UPDATE_CASES_CASE_STATUS = update_cases_default_tester
-UPDATE_CASES_SORTKEY = update_cases_default_tester
-UPDATE_CASES_REVIEWER = update_cases_default_tester
+        return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
 @require_POST
@@ -413,7 +276,10 @@ def comment_case_runs(request):
     comment = data.get('comment', None)
     if not comment:
         return say_no('Comments needed')
-    run_ids = [i for i in data.get('run', '').split(',') if i]
+    run_ids = []
+    for run_id in data.get('run', '').split(','):
+        if run_id:
+            run_ids.append(run_id)
     if not run_ids:
         return say_no('No runs selected.')
     runs = TestCaseRun.objects.filter(pk__in=run_ids).only('pk')
@@ -443,8 +309,8 @@ def clean_bug_form(request):
 
     if request.GET.get('a') not in ('add', 'remove'):
         return (None, 'Actions only allow "add" and "remove".')
-    else:
-        data['action'] = request.GET.get('a')
+
+    data['action'] = request.GET.get('a')
     data['bz_external_track'] = True if request.GET.get('bz_external_track',
                                                         False) else False
 
@@ -483,11 +349,13 @@ def update_bugs_to_caseruns(request):
                 for bug in bugs:
                     if bug.case_run_id == run.pk:
                         run.remove_bug(bug.bug_id, run.pk)
-    except Exception as error:
+    except ValueError as error:
         return say_no(str(error))
     return say_yes()
 
 
+# TODO: replace this with JSON-RPC API calls
+# discussed in https://github.com/kiwitcms/Kiwi/pull/512
 def get_prod_related_objs(p_pks, target):
     """
     Get Component, Version, Category, and Build\n
@@ -499,9 +367,10 @@ def get_prod_related_objs(p_pks, target):
         'build': (Build, 'name'),
         'category': (Category, 'name'),
     }
-    results = ctypes[target][0]._default_manager.filter(product__in=p_pks)
     attr = ctypes[target][1]
-    results = [(r.pk, getattr(r, attr)) for r in results]
+    results = []
+    for result in ctypes[target][0].objects.filter(product__in=p_pks):
+        results.append((result.pk, getattr(result, attr)))
     return results
 
 
@@ -512,12 +381,15 @@ def get_prod_related_obj_json(request):
     """
     data = request.GET.copy()
     target = data.get('target', None)
-    p_pks = data.get('p_ids', None)
+    product_ids = data.get('p_ids', None)
     sep = data.get('sep', None)
     # py2.6: all(*values) => boolean ANDs
-    if target and p_pks and sep:
-        p_pks = [k for k in p_pks.split(sep) if k]
-        res = get_prod_related_objs(p_pks, target)
+    if target and product_ids and sep:
+        product_pks = []
+        for key in product_ids.split(sep):
+            if key:
+                product_pks.append(key)
+        result = get_prod_related_objs(product_pks, target)
     else:
-        res = []
-    return HttpResponse(json.dumps(res))
+        result = []
+    return JsonResponse(result, safe=False)

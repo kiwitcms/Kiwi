@@ -19,12 +19,6 @@
 {% block contents %}
 
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.name }}</a>
-		>> Add Attachment
-	</div>
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
 	<div id="" class="planDetail">
 		<h2 id="display_title" style="line-height:1.2em;">{{ test_plan.name }}</h2>

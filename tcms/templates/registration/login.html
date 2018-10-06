@@ -1,10 +1,7 @@
-{% extends "tcms_base.html" %}
-{% load static %}
+{% extends "base.html" %}
+{% load i18n %}
 {% block html_class %}login-pf{% endblock %}
-{% block subtitle %}Login{% endblock %}
-{% block custom_javascript %}
-    {% include 'patternfly.html' %}
-{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block contents %}
 <div class="container">
@@ -17,14 +14,14 @@
 
         <div class="form-group">
           {{ form.username.errors }}
-          <label for="inputUsername" class="col-sm-2 col-md-2 control-label">Username</label>
+          <label for="inputUsername" class="col-sm-2 col-md-2 control-label">{% trans "Username" %}</label>
           <div class="col-sm-10 col-md-10">
             <input type="text" class="form-control" id="inputUsername" name="username" placeholder="" tabindex="1">
           </div>
         </div>
         <div class="form-group">
           {{ form.password.errors }}
-          <label for="inputPassword" class="col-sm-2 col-md-2 control-label">Password</label>
+          <label for="inputPassword" class="col-sm-2 col-md-2 control-label">{% trans "Password" %}</label>
           <div class="col-sm-10 col-md-10">
             <input type="password" class="form-control" id="inputPassword" name="password" placeholder="" tabindex="2">
           </div>
@@ -34,33 +31,25 @@
             <span class="help-block">Forgot <a href="{% url "tcms-password_reset" %}" tabindex="6">password</a>?</span>
           </div>
           <div class="col-xs-4 col-sm-4 col-md-4 submit">
-            <button type="submit" class="btn btn-primary btn-lg" tabindex="4">Log In</button>
+            <button type="submit" class="btn btn-primary btn-lg" tabindex="4">{% trans "Log in" %}</button>
           </div>
         </div>
       </form>
+
+      {% block custom_login %}
+      {% endblock %}
     </div><!--/.col-*-->
     <div class="col-sm-5 col-md-6 col-lg-7 details">
       <p>
         <strong>
-        {% if SETTINGS.WELCOME_MESSAGE %}
-            {{ SETTINGS.WELCOME_MESSAGE }}
-        {% else %}
-            Welcome to Kiwi TCMS | the leading open source test case management system!
-        {% endif %}
+            {% trans "Welcome to Kiwi TCMS" %} |
+            {% trans "the leading open source test case management system" %}!
         </strong>
       </p>
       <p>
-        {% if SETTINGS.MOTD_LOGIN %}
-            {{ SETTINGS.MOTD_LOGIN|safe}}
-        {% endif %}
-      </p>
-      <p>
         Please login to get started
-        {% if AUTH_BACKEND.can_register %}
         or <a href="{% url "tcms-register" %}" style="color:white;text-decoration:underline">register an account</a>
-        if you don't have one
-        {% endif %}
-        !
+        if you don't have one!
       </p>
     </div><!--/.col-*-->
   </div><!--/.row-->

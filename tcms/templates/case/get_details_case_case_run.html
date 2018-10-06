@@ -14,13 +14,4 @@
 		<li class="grey" style='border:none;margin:0px;padding:0px'>No comments found.</li>
 		{% endfor %}
 	</ul>
-
-	<h4>Change Log:</h4>
-	<ul>
-		{% for log in logs %}
-		<li>[{{ log.date }}] - [{{ log.who__username }}] - {{ log.action }}</li>
-		{% empty %}
-		<li class="grey">No log found.</li>
-		{% endfor %}
-	</ul>
 </td>

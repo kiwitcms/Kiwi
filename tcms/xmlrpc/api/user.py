@@ -18,15 +18,14 @@ __all__ = (
 
 
 def _get_user_dict(user):
-    u = XMLRPCSerializer(model=user)
-    u = u.serialize_model()
-    if 'password' in u:
-        del u['password']
-    return u
+    user_dict = XMLRPCSerializer(model=user).serialize_model()
+    if 'password' in user_dict:
+        del user_dict['password']
+    return user_dict
 
 
 @rpc_method(name='User.filter')
-def filter(query={}, **kwargs):
+def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC User.filter(query)
 
@@ -48,7 +47,12 @@ def filter(query={}, **kwargs):
     if 'is_active' in query:
         query['is_active'] = parse_bool_value(query['is_active'])
     users = User.objects.filter(**query)
-    return [_get_user_dict(u) for u in users]
+
+    filtered_users = []
+    for user in users:
+        filtered_users.append(_get_user_dict(user))
+
+    return filtered_users
 
 
 @rpc_method(name='User.update')

@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
-from html2text import html2text
+from datetime import datetime
 
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.db.models import ObjectDoesNotExist
-from django.contrib.contenttypes.fields import GenericRelation
-from django.utils.encoding import smart_str
 
 import vinaigrette
 
 from tcms.core.models import TCMSActionModel
-from tcms.core.models.base import TCMSContentTypeBaseModel
 from tcms.core.utils.checksum import checksum
+from tcms.core.history import KiwiHistoricalRecords
 from tcms.issuetracker.types import IssueTrackerType
+from tcms.testcases.fields import CC_LIST_DEFAULT_DELIMITER
 
 
 AUTOMATED_CHOICES = (
@@ -36,16 +34,6 @@ class NoneText:
     @classmethod
     def serialize(cls):
         return {}
-
-
-class PlainText(object):
-    """Contains plain text converted from four text"""
-
-    def __init__(self, action, setup, effect, breakdown):
-        self.action = action
-        self.setup = setup
-        self.effect = effect
-        self.breakdown = breakdown
 
 
 class TestCaseStatus(TCMSActionModel):
@@ -107,7 +95,9 @@ class Category(TCMSActionModel):
 
 
 class TestCase(TCMSActionModel):
-    case_id = models.AutoField(max_length=10, primary_key=True)
+    history = KiwiHistoricalRecords()
+
+    case_id = models.AutoField(primary_key=True)
     create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
     is_automated = models.IntegerField(db_column='isautomated', default=0)
     is_automated_proposed = models.BooleanField(default=False)
@@ -117,7 +107,6 @@ class TestCase(TCMSActionModel):
     summary = models.CharField(max_length=255)
     requirement = models.CharField(max_length=255, blank=True, null=True)
     alias = models.CharField(max_length=255, blank=True)
-    estimated_time = models.DurationField(default=timedelta(0))
     notes = models.TextField(blank=True, null=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
@@ -180,7 +169,6 @@ class TestCase(TCMSActionModel):
             summary=values['summary'],
             requirement=values['requirement'],
             alias=values['alias'],
-            estimated_time=values['estimated_time'],
             case_status=values['case_status'],
             category=values['category'],
             priority=values['priority'],
@@ -287,20 +275,6 @@ class TestCase(TCMSActionModel):
 
         return cls.list(query)
 
-    @classmethod
-    def mail_scene(cls, objects, field=None):
-        tcs = objects.select_related()
-        scence_templates = {
-            'reviewer': {
-                'template_name': 'mail/change_case_reviewer.txt',
-                'subject': 'You have been speicific to be the reviewer of cases',
-                'recipients': list(set(tcs.values_list('reviewer__email', flat=True))),
-                'context': {'test_cases': tcs},
-            }
-        }
-
-        return scence_templates.get(field)
-
     def add_bug(self, bug_id, bug_system_id, summary=None, description=None,
                 case_run=None, bz_external_track=False):
         bug, created = self.case_bug.get_or_create(
@@ -328,20 +302,6 @@ class TestCase(TCMSActionModel):
 
     def add_tag(self, tag):
         return TestCaseTag.objects.get_or_create(case=self, tag=tag)
-
-    def update_tags(self, new_tags):
-        """
-        Update case.tag
-        so that case.tag == new_tags
-        """
-        if new_tags is None or not isinstance(new_tags, list):
-            return
-        owning_tags = set(self.tag.iterator())
-        new_tags = set(new_tags)
-        tags_to_remove = owning_tags.difference(new_tags)
-        tags_to_add = new_tags.difference(owning_tags)
-        map(lambda c: self.add_tag(c), tags_to_add)
-        map(lambda c: self.remove_tag(c), tags_to_remove)
 
     def add_text(
             self,
@@ -447,15 +407,6 @@ class TestCase(TCMSActionModel):
         qs = self.text.order_by('-case_text_version').only('case_text_version')[0:1]
         return 0 if len(qs) == 0 else qs[0].case_text_version
 
-    def mail(self, template, subject, context={}, to=[], request=None):
-        from tcms.core.utils.mailto import mailto
-
-        if not to:
-            to = self.author.email
-
-        to = list(set(to))
-        mailto(template, subject, to, context, request)
-
     def remove_bug(self, bug_id, run_id=None):
         query = Bug.objects.filter(
             bug_id=bug_id,
@@ -504,14 +455,6 @@ class TestCaseText(TCMSActionModel):
     class Meta:
         ordering = ['case', '-case_text_version']
         unique_together = ('case', 'case_text_version')
-
-    def get_plain_text(self):
-        action = html2text(smart_str(self.action)).rstrip()
-        effect = html2text(smart_str(self.effect)).rstrip()
-        setup = html2text(smart_str(self.setup)).rstrip()
-        breakdown = html2text(smart_str(self.breakdown)).rstrip()
-        return PlainText(action=action, setup=setup,
-                         effect=effect, breakdown=breakdown)
 
 
 class TestCasePlan(models.Model):
@@ -674,36 +617,6 @@ class Bug(TCMSActionModel):
         return self.bug_system.url_reg_exp % self.bug_id
 
 
-class Contact(TCMSContentTypeBaseModel):
-    """ A Contact that can be added into Email settings' CC list """
-
-    name = models.CharField(max_length=50)
-    email = models.EmailField(db_index=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        index_together = (('content_type', 'object_pk', 'site'),)
-
-    @classmethod
-    def create(cls, email, content_object, name=None):
-        """ Factory method to create a new Contact """
-
-        if not name:
-            store_name = email.split('@')[0]
-        else:
-            store_name = name
-
-        c = cls(name=store_name,
-                email=email,
-                content_object=content_object,
-                site_id=settings.SITE_ID)
-        c.save()
-        return c
-
-
 class TestCaseEmailSettings(models.Model):
     case = models.OneToOneField(TestCase, related_name='email_settings', on_delete=models.CASCADE)
     notify_on_case_update = models.BooleanField(default=False)
@@ -714,10 +627,7 @@ class TestCaseEmailSettings(models.Model):
     auto_to_run_tester = models.BooleanField(default=False)
     auto_to_case_run_assignee = models.BooleanField(default=False)
 
-    cc_list = GenericRelation(Contact, object_id_field='object_pk')
-
-    class Meta:
-        pass
+    cc_list = models.TextField(default='')
 
     def add_cc(self, email_addrs):
         """Add email addresses to CC list
@@ -726,19 +636,23 @@ class TestCaseEmailSettings(models.Model):
         - email_addrs: str or list, holding one or more email addresses
         """
 
-        emailaddr_list = []
+        emailaddr_list = self.get_cc_list()
         if not isinstance(email_addrs, list):
-            emailaddr_list.append(email_addrs)
-        else:
-            emailaddr_list = list(email_addrs)
+            email_addrs = [email_addrs]
 
-        for email_addr in emailaddr_list:
-            Contact.create(email=email_addr, content_object=self)
+        # skip addresses already in the list
+        for address in email_addrs:
+            if address not in emailaddr_list:
+                emailaddr_list.append(address)
+
+        self.cc_list = CC_LIST_DEFAULT_DELIMITER.join(emailaddr_list)
+        self.save()
 
     def get_cc_list(self):
         """ Return the whole CC list """
-
-        return [c.email for c in self.cc_list.all()]
+        if not self.cc_list:
+            return []
+        return self.cc_list.split(CC_LIST_DEFAULT_DELIMITER)
 
     def remove_cc(self, email_addrs):
         """Remove one or more email addresses from EmailSettings' CC list
@@ -748,36 +662,12 @@ class TestCaseEmailSettings(models.Model):
         Arguments:
         - email_addrs: str or list, holding one or more email addresses
         """
-
-        emailaddr_list = []
+        emailaddr_list = self.get_cc_list()
         if not isinstance(email_addrs, list):
-            emailaddr_list.append(email_addrs)
-        else:
-            emailaddr_list = list(email_addrs)
+            email_addrs = [email_addrs]
+        for address in email_addrs:
+            if address in emailaddr_list:
+                emailaddr_list.remove(address)
 
-        self.cc_list.filter(email__in=emailaddr_list).delete()
-
-    def filter_new_emails(self, origin_emails, new_emails):
-        """ Find out the new email addresses to be added """
-
-        return list(set(new_emails) - set(origin_emails))
-
-    def filter_unnecessary_emails(self, origin_emails, new_emails):
-        """ Find out the unnecessary addresses to be delete """
-
-        return list(set(origin_emails) - set(new_emails))
-
-    def update_cc_list(self, email_addrs):
-        """Add the new emails and delete unnecessary ones
-
-        Arguments:
-        - email_addrs: list, a instance of list holding emails user
-        input via UI
-        """
-
-        origin_emails = self.get_cc_list()
-
-        emails_to_delete = self.filter_unnecessary_emails(origin_emails,
-                                                          email_addrs)
-        self.remove_cc(emails_to_delete)
-        self.add_cc(self.filter_new_emails(origin_emails, email_addrs))
+        self.cc_list = CC_LIST_DEFAULT_DELIMITER.join(emailaddr_list)
+        self.save()

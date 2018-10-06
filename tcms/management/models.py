@@ -3,31 +3,6 @@
 from django.db import models
 
 from tcms.core.models import TCMSActionModel
-from tcms.core.utils import calc_percent
-
-# Products zone
-
-
-def get_as_choices(iterable, allow_blank):
-    # Generate a list of (id, string) pairs suitable
-    # for a ChoiceField's "choices".
-    #
-    # Prepend with a blank entry if "allow_blank" is True
-    #
-    # Turn each object in the list into a choice
-    # using its "as_choice" method
-    if allow_blank:
-        result = [('', '')]
-    else:
-        result = []
-    result += [obj.as_choice() for obj in iterable]
-    return result
-
-
-def get_all_choices(cls, allow_blank=True):
-    # Generate a list of (id, string) pairs suitable
-    # for a ChoiceField's "choices", based on all instances of a class:
-    return get_as_choices(cls.objects.all(), allow_blank)
 
 
 class Classification(TCMSActionModel):
@@ -64,35 +39,6 @@ class Product(TCMSActionModel):
         self.category.get_or_create(name='--default--')
         self.version.get_or_create(value='unspecified')
         self.build.get_or_create(name='unspecified')
-
-    def get_version_choices(self, allow_blank):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices":
-        return get_as_choices(self.version.all(), allow_blank)
-
-    def get_build_choices(self, allow_blank, only_active):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices"
-        #
-        # @only_active: restrict to only show builds flagged as "active"
-        query = self.build
-        if only_active:
-            query = self.build.filter(is_active=True)
-        return get_as_choices(query.all(), allow_blank)
-
-    def get_environment_choices(self, allow_blank):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices":
-        return get_as_choices(self.environments.all(), allow_blank)
-
-    @classmethod
-    def get_choices(cls, allow_blank):
-        # Generate a list of (id, string) pairs suitable
-        # for a ChoiceField's "choices":
-        return get_as_choices(cls.objects.order_by('name').all(), allow_blank)
-
-    def as_choice(self):
-        return (self.id, self.name)
 
 
 class Priority(TCMSActionModel):
@@ -158,9 +104,6 @@ class Version(TCMSActionModel):
         except cls.DoesNotExist:
             return None
 
-    def as_choice(self):
-        return (self.id, self.value)
-
 
 class Build(TCMSActionModel):
     build_id = models.AutoField(max_length=10, unique=True, primary_key=True)
@@ -191,23 +134,7 @@ class Build(TCMSActionModel):
     def __str__(self):
         return self.name
 
-    def as_choice(self):
-        return (self.build_id, self.name)
 
-    def get_case_runs_failed_percent(self):
-        if hasattr(self, 'case_runs_failed_count'):
-            return calc_percent(self.case_runs_failed_count,
-                                self.case_runs_count)
-        return None
-
-    def get_case_runs_passed_percent(self):
-        if hasattr(self, 'case_runs_passed_count'):
-            return calc_percent(self.case_runs_passed_count,
-                                self.case_runs_count)
-        return None
-
-
-# Test tag zone
 class Tag(TCMSActionModel):
     id = models.AutoField(db_column='tag_id', max_length=10, primary_key=True)
     name = models.CharField(db_column='tag_name', max_length=255)
@@ -220,60 +147,16 @@ class Tag(TCMSActionModel):
         return self.name
 
     @classmethod
-    def get_or_create_many_by_name(cls, names):
-        tags = []
-        for name in names:
-            new_tag = cls.objects.get_or_create(name=name)[0]
-            tags.append(new_tag)
-        return tags
+    def get_or_create(cls, user, tag_name):
+        """
+            Helper method used to check if @user is allowed
+            to automatically create new Tag in the database!
 
+            If they are not, e.g. in environment where users
+            are forced to use pre-existing tags created by admin,
+            then it will raise a DoesNotExist exception.
+        """
+        if user.has_perm('management.add_tag'):
+            return cls.objects.get_or_create(name=tag_name)
 
-class EnvGroup(TCMSActionModel):
-    name = models.CharField(unique=True, max_length=255)
-    is_active = models.BooleanField(default=True)
-    property = models.ManyToManyField(
-        'management.EnvProperty',
-        through='management.EnvGroupPropertyMap',
-        related_name='group'
-    )
-
-    def __str__(self):
-        return self.name
-
-    @classmethod
-    def get_active(cls):
-        return cls.objects.filter(is_active=True)
-
-
-class EnvProperty(TCMSActionModel):
-    name = models.CharField(unique=True, max_length=255)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
-
-    @classmethod
-    def get_active(cls):
-        return cls.objects.filter(is_active=True)
-
-
-class EnvGroupPropertyMap(models.Model):
-    group = models.ForeignKey(EnvGroup, on_delete=models.CASCADE)
-    property = models.ForeignKey(EnvProperty, on_delete=models.CASCADE)
-
-
-class EnvValue(TCMSActionModel):
-    value = models.CharField(max_length=255)
-    property = models.ForeignKey(EnvProperty, related_name='value', on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        unique_together = ('property', 'value')
-        ordering = ['property__name', 'value']
-
-    def __str__(self):
-        return self.value
-
-    @classmethod
-    def get_active(cls):
-        return cls.objects.filter(is_active=True)
+        return cls.objects.get(name=tag_name), False

@@ -71,7 +71,7 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
         subtotal[self.case_run_status_waived.pk][0] = 3
 
         expected_completed_percentage = 5.0 * 100 / 6
-        expected_failure_percentage = 2.0 * 100 / 5
+        expected_failure_percentage = 2.0 * 100 / 6
 
         self.assertEqual(subtotal, data.StatusSubtotal)
         self.assertEqual(6, data.CaseRunsTotalCount)

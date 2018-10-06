@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% if test_run %}
+        {% trans "Edit TestRun" %}
+    {% elif is_cloning %}
+        {% trans "Clone TestRun" %}
+    {% else %}
+        {% trans "New TestRun" %}
+    {% endif %}
+{% endblock %}
+
+{% block contents %}
+<div class="container-fluid container-cards-pf">
+    {{ form.errors }}
+
+    <form class="form-horizontal" action="{% if test_run %}{% url 'testruns-edit' test_run.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
+            <div class="col-md-11 col-lg-11">
+                <input type="text" id="id_summary" name="summary" value="{{ form.summary.value }}" class="form-control" required>
+                <input type="hidden" name="from_plan" value="{{ test_plan.pk }}"> <!-- used in new() -->
+                <p class="help-block"><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-1 col-lg-1">
+                <label for="id_build">{% trans "Build" %}</label>
+                <a href="{% url 'admin:management_build_add' %}?_popup=1&product={{ test_plan.product_id }}"
+                    id="add_id_build"
+                    alt="{% trans 'add new Build' %}"
+                    title="{% trans 'add new Build' %}">+</a>
+            </div>
+            <div class="col-md-3 col-lg-3">
+                <select class="form-control" id="id_build" name="build">
+                {% for option in form.build.field.queryset %}
+                    <option value="{{ option.pk }}" {% if option.pk == form.build.value %}selected{% endif %}>{{ option.name }}</option>
+                {% endfor %}
+                </select>
+                <p class="help-block">
+                    {% trans "Product" %}: {{ test_plan.product.name }}, {% trans "version" %} {{ test_plan.product_version.value }}
+                </p>
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_manager">{% trans "Manager" %}</label>
+            <div class="col-md-3 col-lg-3 {% if form.manager.errors %}has-error{% endif %}">
+                <input id="id_manager" name="manager" value="{{ form.manager.value }}" type="text"
+                    class="form-control" placeholder="{% trans 'Username or email' %}" required>
+                {{ form.manager.errors }}
+            </div>
+
+            <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default&nbsp;tester" %}</label>
+            <div class="col-md-3 col-lg-3 {% if form.default_tester.errors %}has-error{% endif %}">
+                <input id="id_default_tester" name="default_tester" value="{{ form.default_tester.value }}" type="text"
+                    class="form-control" placeholder="{% trans 'Username or email' %}">
+                {{ form.default_tester.errors }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-12" for="id_notes">{% trans "Notes" %}</label>
+            <div class="col-lg-12">
+                <textarea class="form-control" id="id_notes" name="notes">{{ form.notes.value }}</textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+
+        {% if test_cases %}
+        {# Working around for the bug https://bugzilla.redhat.com/show_bug.cgi?id=715499 #}
+        <input type="hidden" name="POSTING_TO_CREATE" value="YES" />
+
+        <div class="panel {% if disabled_cases %}panel-danger{% else%}panel-default{% endif%} col-lg-12"
+             style="padding:0; margin-top:2em">
+            <div class="panel-heading">
+                <strong>{% trans "Selected TestCase(s):" %}</strong>
+                {% if disabled_cases %}
+                    <span class="danger">
+                    {% blocktrans with count=disabled_cases %}
+                    {{ count }} of the pre-selected test cases is not CONFIRMED and will not be cloned!
+                    See test plan for more details!
+                    {% endblocktrans %}
+                    </span>
+                {% endif %}
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% trans "Summary" %}</th>
+                        <th>{% trans "Author" %}</th>
+                        <th>{% trans "Created on" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "Category" %}</th>
+                        <th>{% trans "Priority" %}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for test_case in test_cases %}
+                    <tr>
+                        <td>
+                            <input type="hidden" name="case" value="{{ test_case.pk }}">
+                            <a href="{% url 'testcases-get' test_case.pk %}">
+                                TC-{{ test_case.case_id }}: {{ test_case.summary }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'tcms-profile' test_case.author.username %}">{{ test_case.author.username }}</a>
+                        </td>
+                        <td>{{ test_case.create_date }}</td>
+                        <td>{{ test_case.case_status }}</td>
+                        <td>{{ test_case.category }}</td>
+                        <td>{{ test_case.priority }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> <!-- /panel -->
+        {% endif %}
+    </form>
+</div><!-- /container -->
+
+<script src="{% static "grappelli/jquery/jquery.min.js" %}" type="text/javascript"></script>
+<script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
+<script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}" type="text/javascript"></script>
+
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+
+<script src="{% static 'testruns/js/mutable.js' %}"></script>
+{% endblock %}

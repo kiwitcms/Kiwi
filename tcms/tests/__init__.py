@@ -70,20 +70,12 @@ def create_request_user(username=None, password=None):
     return user
 
 
-class HelperAssertions(object):
-    """Helper assertion methods"""
-
-    def assert404(self, response):
-        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
-
-    def assertJsonResponse(self, response, expected, status_code=200):
-        self.assertEqual(status_code, response.status_code)
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            expected)
-
-
 class LoggedInTestCase(test.TestCase):
+    """
+        Test case class for logged-in users which also provides couple of
+        helper assertion methods.
+    """
+
     @classmethod
     def setUpTestData(cls):
         cls.tester = UserFactory()
@@ -98,8 +90,19 @@ class LoggedInTestCase(test.TestCase):
         self.client.login(username=self.tester.username,  # nosec:B106:hardcoded_password_funcarg
                           password='password')
 
+    # todo: create a lint plugin for that to enforce using the helper
+    def assert404(self, response):
+        self.assertEqual(HTTPStatus.NOT_FOUND, response.status_code)
 
-class BasePlanCase(HelperAssertions, LoggedInTestCase):
+    # todo: create a lint plugin for that to enforce using the helper
+    def assertJsonResponse(self, response, expected, status_code=200):
+        self.assertEqual(status_code, response.status_code)
+        self.assertJSONEqual(
+            str(response.content, encoding=settings.DEFAULT_CHARSET),
+            expected)
+
+
+class BasePlanCase(LoggedInTestCase):
     """Base test case by providing essential Plan and Case objects used in tests"""
 
     @classmethod
@@ -170,6 +173,8 @@ class BaseCaseRun(BasePlanCase):
     def setUpTestData(cls):
         super(BaseCaseRun, cls).setUpTestData()
 
+        # todo: we need a linter to find all places where we get statuses
+        # by hard-coded names instead of class based attribute constants!
         cls.case_run_status_idle = TestCaseRunStatus.objects.get(name='IDLE')
 
         cls.build = BuildFactory(product=cls.product)
@@ -181,7 +186,7 @@ class BaseCaseRun(BasePlanCase):
                                       default_tester=cls.tester)
 
         cls.case_run_1, cls.case_run_2, cls.case_run_3 = [
-            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
+            TestCaseRunFactory(assignee=cls.tester,
                                run=cls.test_run, build=cls.build,
                                case_run_status=cls.case_run_status_idle,
                                case=case, sortkey=i * 10)

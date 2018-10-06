@@ -24,6 +24,7 @@ class UserFactory(DjangoModelFactory):
 
     username = factory.Sequence(lambda n: 'User%d' % n)
     email = factory.LazyAttribute(lambda user: '%s@example.com' % user.username)
+    is_staff = True
 
     @factory.post_generation
     def groups(self, create, extracted, **kwargs):
@@ -108,51 +109,6 @@ class TagFactory(DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Tag %d' % n)
 
 
-class EnvGroupFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvGroup'
-
-    name = factory.Sequence(lambda n: 'Env group %d' % n)
-
-    @factory.post_generation
-    def property(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for property in extracted:
-                EnvGroupPropertyMapFactory(group=self, property=property)
-
-
-class EnvPropertyFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvProperty'
-
-    name = factory.Sequence(lambda n: 'Env property %d' % n)
-
-
-class EnvGroupPropertyMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvGroupPropertyMap'
-
-    group = factory.SubFactory(EnvGroupFactory)
-    property = factory.SubFactory(EnvPropertyFactory)
-
-
-class EnvValueFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'management.EnvValue'
-
-    value = factory.Sequence(lambda n: 'Env value %d' % n)
-    property = factory.SubFactory(EnvPropertyFactory)
-
-
-# ### Factories for app testplans ###
-
-
 class PlanTypeFactory(DjangoModelFactory):
 
     class Meta:
@@ -174,15 +130,6 @@ class TestPlanFactory(DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)
     type = factory.SubFactory(PlanTypeFactory)
-    # FIXME: How to create field for field parent
-
-    @factory.post_generation
-    def env_group(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for group in extracted:
-                EnvPlanMapFactory(plan=self, group=group)
 
     @factory.post_generation
     def tag(self, create, extracted, **kwargs):
@@ -200,15 +147,6 @@ class TestPlanTagFactory(DjangoModelFactory):
 
     plan = factory.SubFactory(TestPlanFactory)
     tag = factory.SubFactory(TagFactory)
-
-
-class EnvPlanMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testplans.EnvPlanMap'
-
-    plan = factory.SubFactory(TestPlanFactory)
-    group = factory.SubFactory(EnvGroupFactory)
 
 
 class TestPlanEmailSettingsFactory(DjangoModelFactory):
@@ -327,15 +265,6 @@ class BugFactory(DjangoModelFactory):
     case = factory.SubFactory(TestCaseFactory)
 
 
-class ContactFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testcases.Contact'
-
-    name = factory.Sequence(lambda n: 'contact_%d' % n)
-    email = factory.LazyAttribute(lambda obj: '%s@example.com' % obj.name.replace(' ', '_'))
-
-
 class TestCaseEmailSettingsFactory(DjangoModelFactory):
 
     class Meta:
@@ -355,18 +284,9 @@ class TestRunFactory(DjangoModelFactory):
     stop_date = None
     notes = ''
     plan = factory.SubFactory(TestPlanFactory)
-    # FIXME: field name build conflicts with method Factory.build
     build = factory.SubFactory(BuildFactory)
     manager = factory.SubFactory(UserFactory)
     default_tester = factory.SubFactory(UserFactory)
-
-    @factory.post_generation
-    def env_group(self, create, extracted, **kwargs):
-        if not create:
-            return
-        if extracted:
-            for value in extracted:
-                EnvRunValueMapFactory(run=self, value=value)
 
     @factory.post_generation
     def tag(self, create, extracted, **kwargs):
@@ -418,23 +338,4 @@ class TestRunCCFactory(DjangoModelFactory):
         model = 'testruns.TestRunCC'
 
     run = factory.SubFactory(TestRunFactory)
-    user = factory.SubFactory(UserFactory)
-
-
-class EnvRunValueMapFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testruns.EnvRunValueMap'
-
-    run = factory.SubFactory(TestRunFactory)
-    value = factory.SubFactory(EnvValueFactory)
-
-
-# ### Factories for app profiles ###
-
-class UserProfileFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'profiles.UserProfile'
-
     user = factory.SubFactory(UserFactory)

@@ -3,7 +3,6 @@
 from django.conf.urls import url
 
 from tcms.testplans import views
-from tcms.testruns.views import load_runs_of_one_plan
 
 urlpatterns = [
     url(r'^(?P<plan_id>\d+)/$', views.get, name='test_plan_url_short'),
@@ -23,6 +22,5 @@ urlpatterns = [
     url(r'^(?P<plan_id>\d+)/delete-cases/$', views.DeleteCasesView.as_view(),
         name='plan-delete-cases'),
 
-    url(r'^(?P<plan_id>\d+)/runs/$', load_runs_of_one_plan, name='load_runs_of_one_plan_url'),
     url(r'^update-parent/$', views.UpdateParentView.as_view()),
 ]

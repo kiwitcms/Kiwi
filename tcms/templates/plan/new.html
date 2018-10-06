@@ -20,11 +20,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 {% block contents %}
 
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> New Test Plan
-	</div>
 	<form method="post" action="{% url "plans-new" %}" enctype="multipart/form-data">
 		<h2>Create New Test Plan</h2>
 		<div class="Detailform border-1" >
@@ -76,31 +71,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Create.on_load);
 					<td valign="top"><label class="lab" for="id_summary">Plan Document: </label></td>
 					<td>
 						<div class="mec">{{ form.text }}</div>
-						<div >{{ form.text.errors }}</div>
-						<span>Or upload a plan document</span>
-						{{ form.upload_plan_text }}
-						<span class="grey">Html, Plain text or ODT is acceptable.</span>
-						<div >{{ form.upload_plan_text.errors }}</div>
-					</td>
-				</tr>
-				<tr>
-					<td valign="top"><label class="lab" for="id_env_group_id">Environment Group</label></td>
-					<td colspan="3">
-						<span class="name">{{ form.env_group }}{{ form.env_group.errors }}</span>
-						<span>
-							<a class="system_help" href="javascript:void(0)" title="" id="env_group_help_link">What is environment group?</a>
-							<div id="env_group_help" class="system_info" style="display:none">
-								<p>
-									Environment Group represent group of environment properties and all values of these properties. <br/>
-									Kiwi TCMS uses environment variables to define the test hardware setup. The Environment Group is the top level container object, it contains one or more Properties, each having a range of values. Properties can belong to more than one group.
-									<br/>
-									Then when creating test run , you can set one value of each property under this environment group as environment of run testing.
-									<br/>
-									<a href="javascript:void(0)" class="right-action" title="close the tip" id="env_group_help_close">Close</a>
-								</p>
-
-							</div>
-						</span>
+						<div>{{ form.text.errors }}</div>
 					</td>
 				</tr>
 				<tr>

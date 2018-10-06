@@ -1,14 +1,10 @@
 Nitrate.TestCases = {};
-Nitrate.TestCases.List = {};
-Nitrate.TestCases.AdvanceList = {};
 Nitrate.TestCases.Details = {};
 Nitrate.TestCases.Create = {};
 Nitrate.TestCases.Edit = {};
 Nitrate.TestCases.Clone = {};
 
 (function() {
-  'use restrict';
-
   var TestCases = window.Nitrate.TestCases || {};
 
   TestCases.CasesSelection = function(options) {
@@ -29,165 +25,6 @@ Nitrate.TestCases.Clone = {};
 
   window.Nitrate.TestCases = TestCases;
 }());
-
-Nitrate.TestCases.AdvanceList.on_load = function() {
-  bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);
-  bind_component_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_component')[0]);
-  if (jQ('#id_checkbox_all_case').length) {
-    jQ('#id_checkbox_all_case').bind('click', function(e) {
-      clickedSelectAll(this, jQ(this).closest('form')[0], 'case');
-      if (this.checked) {
-        jQ('#case_advance_printable').attr('disabled', false);
-      } else {
-        jQ('#case_advance_printable').attr('disabled', true);
-      }
-    });
-  };
-
-  jQ('#id_blind_all_link').bind('click', function(e) {
-    if (!jQ('div[id^="id_loading_"]').length) {
-      jQ(this).removeClass('locked');
-    }
-    if (jQ(this).is('.locked')) {
-      //To disable the 'expand all' until all case runs are expanded.
-      return false;
-    } else {
-      jQ(this).addClass('locked');
-      var element = jQ(this).children()[0];
-      if (jQ(element).is('.collapse-all')) {
-        this.title = 'Collapse all cases';
-        blinddownAllCases(element);
-      } else {
-        this.title = 'Expand all cases';
-        blindupAllCases(element);
-      }
-    }
-  });
-
-  var toggle_case = function(e) {
-    var c = jQ(this).parent()[0]; // Container
-    var c_container = jQ(c).next()[0]; // Content Containers
-    var case_id = jQ(c).find('input[name="case"]')[0].value;
-
-    toggleTestCasePane({ case_id: case_id, casePaneContainer: jQ(c_container) });
-    toggleExpandArrow({ caseRowContainer: jQ(c), expandPaneContainer: jQ(c_container) });
-  };
-
-  jQ('.expandable').bind('click', toggle_case);
-
-  jQ("#testcases_table tbody tr input[type=checkbox][name=case]").live('click', function() {
-    if (jQ('input[type=checkbox][name=case]:checked').length) {
-      jQ("#case_advance_printable").attr('disabled', false);
-    } else {
-      jQ("#case_advance_printable").attr('disabled', true);
-    }
-  });
-
-  if (window.location.hash === '#expandall') {
-    blinddownAllCases();
-  }
-
-  var listParams = Nitrate.TestCases.List.Param;
-  jQ('#case_advance_printable').bind('click', function() {
-    postToURL(listParams.case_printable, Nitrate.Utils.formSerialize(this.form));
-  });
-  jQ('#export_selected_cases').bind('click', function() {
-    postToURL(listParams.case_export, Nitrate.Utils.formSerialize(this.form));
-  });
-};
-
-Nitrate.TestCases.List.on_load = function() {
-  bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);
-  bind_component_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_component')[0]);
-  if (jQ('#id_checkbox_all_case')[0]) {
-    jQ('#id_checkbox_all_case').bind('click', function(e) {
-      clickedSelectAll(this, jQ(this).closest('table')[0], 'case');
-      if (this.checked) {
-        jQ('#case_list_printable').attr('disabled', false);
-      } else {
-        jQ('#case_list_printable').attr('disabled', true);
-      }
-    });
-  }
-
-  jQ('#id_blind_all_link').live('click', function(e) {
-    if (!jQ('div[id^="id_loading_"]').length) {
-      jQ(this).removeClass('locked');
-    }
-    if (jQ(this).is('.locked')) {
-      //To disable the 'expand all' until all case runs are expanded.
-      return false;
-    } else {
-      jQ(this).addClass('locked');
-      var element = jQ(this).children()[0];
-      if (jQ(element).is('.collapse-all')) {
-        this.title = "Collapse all cases";
-        blinddownAllCases(element);
-      } else {
-        this.title = "Expand all cases";
-        blindupAllCases(element);
-      }
-    }
-  });
-
-  if (window.location.hash === '#expandall') {
-    blinddownAllCases();
-  }
-
-  var oTable;
-  oTable = jQ('#testcases_table').dataTable({
-    "iDisplayLength": 20,
-    "sPaginationType": "full_numbers",
-    "bFilter": false,
-    "bLengthChange": false,
-    "aaSorting": [[ 2, "desc" ]],
-    "bProcessing": true,
-    "bServerSide": true,
-    "sAjaxSource": "/cases/ajax/"+this.window.location.search,
-    "aoColumns": [
-      {"bSortable": false,"sClass": "expandable" },
-      {"bSortable": false },
-      {"sType": "html","sClass": "expandable"},
-      {"sType": "html","sClass": "expandable"},
-      {"sType": "html","sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"},
-      {"sClass": "expandable"}
-    ]
-  });
-  jQ("#testcases_table tbody tr td.expandable").live("click", function() {
-    var tr = jQ(this).parent();
-    var caseRowContainer = tr;
-    var case_id = caseRowContainer.find('input[name="case"]').attr('value');
-    var detail_td = '<tr class="case_content hide" style="display: none;"><td colspan="11">' +
-      '<div id="id_loading_' + case_id + '" class="ajax_loading"></div></td></tr>';
-    if (!caseRowContainer.next().hasClass('hide')) {
-      caseRowContainer.after(detail_td);
-    }
-
-    toggleTestCasePane({ case_id: case_id, casePaneContainer: tr.next() });
-    toggleExpandArrow({ caseRowContainer: tr, expandPaneContainer: tr.next() });
-  });
-
-  jQ("#testcases_table tbody tr input[type=checkbox][name=case]").live("click", function() {
-    if (jQ("input[type=checkbox][name=case]:checked").length) {
-      jQ("#case_list_printable").attr('disabled', false);
-    } else {
-      jQ("#case_list_printable").attr('disabled', true);
-    }
-  });
-
-  var listParams = Nitrate.TestCases.List.Param;
-  jQ('#case_list_printable').bind('click', function() {
-    postToURL(listParams.case_printable, Nitrate.Utils.formSerialize(this.form));
-  });
-  jQ('#export_selected_cases').bind('click', function() {
-    postToURL(listParams.case_export, Nitrate.Utils.formSerialize(this.form));
-  });
-};
 
 Nitrate.TestCases.Details.on_load = function() {
   var case_id = Nitrate.TestCases.Instance.pk;
@@ -335,8 +172,7 @@ Nitrate.TestCases.Details.on_load = function() {
     "bAutoWidth": false,
     "aaSorting": [[ 0, "desc" ]],
     "aoColumns": [
-      {"sType": "num-html"},
-      null,
+      {"sType": "html"},
       {"sType": "html"},
       {"sType": "html"},
       {"sType": "html"},
@@ -358,17 +194,6 @@ Nitrate.TestCases.Details.on_load = function() {
     addCaseBugViaEnterKey(jQ('#id_case_bug_form')[0], event);
   });
 };
-
-/*
- * Resize all editors within the webpage after they are rendered.
- * This is used to avoid a bug of TinyMCE in Firefox 11.
- */
-function resize_tinymce_editors() {
-  jQ('.mceEditor .mceIframeContainer iframe').each(function(item) {
-	  var elem = jQ(this);
-	  elem.height(elem.height() + 1);
-	});
-}
 
 Nitrate.TestCases.Create.on_load = function() {
   SelectFilter.init("id_component", "component", 0, "/static/admin/");
@@ -403,8 +228,6 @@ Nitrate.TestCases.Create.on_load = function() {
     getCategorisByProductId(false, jQ('#id_product')[0], jQ('#id_category')[0]);
   });
 
-  resize_tinymce_editors();
-
   jQ('.js-case-cancel').bind('click', function() {
     window.history.go(-1);
   });
@@ -417,7 +240,6 @@ Nitrate.TestCases.Create.on_load = function() {
 
 Nitrate.TestCases.Edit.on_load = function() {
   bind_category_selector_to_product(false, false, jQ('#id_product')[0], jQ('#id_category')[0]);
-  resize_tinymce_editors();
 
   jQ('.js-back-button').bind('click', function() {
     window.history.go(-1);
@@ -650,49 +472,6 @@ function blindupAllCases(element) {
   }
 }
 
-function changeCaseOrder2(parameters, callback) {
-  var nsk = '';
-  if (parameters.hasOwnProperty('sortkey')) {
-    nsk = window.prompt('Enter your new order number', parameters['sortkey']);   // New sort key
-    if (nsk == parameters['sortkey']) {
-      window.alert('Nothing changed');
-      return false;
-    }
-  } else {
-    nsk = window.prompt('Enter your new order number');
-  }
-
-  if (!nsk) {
-    return false;
-  }
-
-  if (nsk != window.parseInt(nsk)) {
-    window.alert('The value must be an integer number and limit between 0 to 32300.');
-    return false;
-  }
-
-  if (nsk > 32300 || nsk < 0) {
-    window.alert('The value must be an integer number and limit between 0 to 32300.');
-    return false;
-  }
-
-  parameters.target_field = 'sortkey';
-  parameters.new_value = nsk;
-
-  jQ.ajax({
-    'url': '/ajax/update/cases-sortkey/',
-    'type': 'POST',
-    'data': parameters,
-    'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
-
 function addCaseBug(form, callback) {
   var addBugInfo = Nitrate.Utils.formSerialize(form);
   addBugInfo.bug_validation_regexp = jQ('select[name="bug_system"] option:selected').data('validation-regexp');
@@ -818,7 +597,6 @@ function constructPlanCaseZone(container, case_id, parameters) {
         "bAutoWidth": false,
         "aaSorting": [[ 0, "desc" ]],
         "aoColumns": [
-          {"sType": "num-html"},
           null,
           {"sType": "html"},
           {"sType": "html"},

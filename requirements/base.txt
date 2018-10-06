@@ -1,18 +1,13 @@
-Django==2.0.7
+Django==2.1.2
 django-attachments>=1.3
+django-contrib-comments
 django-glrm
 django-grappelli
-django-simple-history
-django-vinaigrette
-django-uuslug
-odfpy
-python-bugzilla
-# because of https://github.com/pycontribs/jira/issues/501
-jira==2.0.0
-PyGithub
-dj-pagination
-django-tinymce
-beautifulsoup4
-django-contrib-comments
-html2text
 django-modern-rpc
+django-simple-history
+django-uuslug
+django-vinaigrette
+jira
+Markdown
+python-bugzilla
+PyGithub

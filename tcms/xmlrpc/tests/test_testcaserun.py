@@ -20,7 +20,7 @@ from tcms.tests.factories import BuildFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-class TestCaseRunCreate(XmlrpcAPIBaseTest):
+class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
     """Test testcaserun.create"""
 
     def _fixture_setup(self):
@@ -62,10 +62,10 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         ]
         for value in values:
             with self.assertRaisesRegex(XmlRPCFault, 'This field is required'):
-                self.rpc_client.TestCaseRun.create(value)
+                self.rpc_client.exec.TestCaseRun.create(value)
 
     def test_create_with_required_fields(self):
-        tcr = self.rpc_client.TestCaseRun.create({
+        tcr = self.rpc_client.exec.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -78,7 +78,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         self.assertEqual(tcr['run_id'], self.test_run.pk)
 
     def test_create_with_all_fields(self):
-        tcr = self.rpc_client.TestCaseRun.create({
+        tcr = self.rpc_client.exec.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -118,10 +118,10 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         ]
         for value in values:
             with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
-                self.rpc_client.TestCaseRun.create(value)
+                self.rpc_client.exec.TestCaseRun.create(value)
 
     def test_create_with_chinese(self):
-        tcr = self.rpc_client.TestCaseRun.create({
+        tcr = self.rpc_client.exec.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -148,7 +148,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"""
-        tcr = self.rpc_client.TestCaseRun.create({
+        tcr = self.rpc_client.exec.TestCaseRun.create({
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
@@ -173,9 +173,9 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):
             "sortkey": 2,
             "case_run_status": self.case_run_status.pk,
         }
-        self.rpc_client.Auth.logout()
+        self.rpc_client.exec.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCaseRun.create(values)
+            self.rpc_client.exec.TestCaseRun.create(values)
 
 
 class TestCaseRunAddComment(XmlrpcAPIBaseTest):
@@ -188,7 +188,7 @@ class TestCaseRunAddComment(XmlrpcAPIBaseTest):
         self.case_run_2 = TestCaseRunFactory()
 
     def test_add_comment_with_int(self):
-        comment = self.rpc_client.TestCaseRun.add_comment(self.case_run_2.pk, "Hello World!")
+        comment = self.rpc_client.exec.TestCaseRun.add_comment(self.case_run_2.pk, "Hello World!")
         self.assertIsNone(comment)
 
 
@@ -202,15 +202,15 @@ class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
 
     def test_attach_log_with_non_existing_id(self):
         with self.assertRaisesRegex(XmlRPCFault, 'constraint fail|violates foreign key'):
-            self.rpc_client.TestCaseRun.add_log(-5, 'A test log', 'http://example.com')
+            self.rpc_client.exec.TestCaseRun.add_log(-5, 'A test log', 'http://example.com')
 
     def test_attach_log_with_invalid_url(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Enter a valid URL'):
-            self.rpc_client.TestCaseRun.add_log(self.case_run.pk, "UT test logs", 'aaaaaaaaa')
+            self.rpc_client.exec.TestCaseRun.add_log(self.case_run.pk, "UT test logs", 'aaaaaaaaa')
 
     def test_attach_log(self):
         url = "http://127.0.0.1/test/test-log.log"
-        log_id = self.rpc_client.TestCaseRun.add_log(self.case_run.pk, "UT test logs", url)
+        log_id = self.rpc_client.exec.TestCaseRun.add_log(self.case_run.pk, "UT test logs", url)
         self.assertGreater(log_id, 0)
 
 
@@ -229,24 +229,24 @@ class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
     def setUp(self):
         super(TestCaseRunDetachLog, self).setUp()
 
-        self.rpc_client.TestCaseRun.add_log(
+        self.rpc_client.exec.TestCaseRun.add_log(
             self.case_run.pk, 'Related issue', 'https://localhost/issue/1')
         self.link = self.case_run.links()[0]
 
     def test_doesnt_raise_with_non_existing_id(self):
-        self.rpc_client.TestCaseRun.remove_log(-9, self.link.pk)
+        self.rpc_client.exec.TestCaseRun.remove_log(-9, self.link.pk)
         links = self.case_run.links()
         self.assertEqual(1, links.count())
         self.assertEqual(self.link.pk, links[0].pk)
 
     def test_detach_log_with_non_exist_log(self):
-        self.rpc_client.TestCaseRun.remove_log(self.case_run.pk, 999999999)
+        self.rpc_client.exec.TestCaseRun.remove_log(self.case_run.pk, 999999999)
         links = self.case_run.links()
         self.assertEqual(1, links.count())
         self.assertEqual(self.link.pk, links[0].pk)
 
     def test_detach_log(self):
-        self.rpc_client.TestCaseRun.remove_log(self.case_run.pk, self.link.pk)
+        self.rpc_client.exec.TestCaseRun.remove_log(self.case_run.pk, self.link.pk)
         self.assertEqual([], list(self.case_run.links()))
 
 
@@ -263,11 +263,11 @@ class TestCaseRunFilter(XmlrpcAPIBaseTest):
                                            case_run_status=self.status_idle)
 
     def test_with_non_exist_id(self):
-        found = self.rpc_client.TestCaseRun.filter({'pk': -1})
+        found = self.rpc_client.exec.TestCaseRun.filter({'pk': -1})
         self.assertEqual(0, len(found))
 
     def test_filter_by_id(self):
-        tcr = self.rpc_client.TestCaseRun.filter({'pk': self.case_run.pk})[0]
+        tcr = self.rpc_client.exec.TestCaseRun.filter({'pk': self.case_run.pk})[0]
         self.assertIsNotNone(tcr)
         self.assertEqual(tcr['build_id'], self.case_run.build.pk)
         self.assertEqual(tcr['case_id'], self.case_run.case.pk)
@@ -287,23 +287,23 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
         self.case_run_1 = TestCaseRunFactory()
         self.case_run_2 = TestCaseRunFactory()
 
-        self.rpc_client.TestCaseRun.add_log(
+        self.rpc_client.exec.TestCaseRun.add_log(
             self.case_run_1.pk,
             "Test logs",
             "http://www.google.com")
 
     def test_get_logs_with_non_exist_id(self):
-        result = self.rpc_client.TestCaseRun.get_logs(-9)
+        result = self.rpc_client.exec.TestCaseRun.get_logs(-9)
         self.assertEqual([], result)
 
     def test_get_empty_logs(self):
-        logs = self.rpc_client.TestCaseRun.get_logs(self.case_run_2.pk)
+        logs = self.rpc_client.exec.TestCaseRun.get_logs(self.case_run_2.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 0)
 
     def test_get_logs(self):
         tcr_log = LinkReference.objects.get(test_case_run=self.case_run_1.pk)
-        logs = self.rpc_client.TestCaseRun.get_logs(self.case_run_1.pk)
+        logs = self.rpc_client.exec.TestCaseRun.get_logs(self.case_run_1.pk)
         self.assertIsInstance(logs, list)
         self.assertEqual(len(logs), 1)
         self.assertEqual(logs[0]['id'], tcr_log.pk)
@@ -323,7 +323,7 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         self.status_running = TestCaseRunStatus.objects.get(name='RUNNING')
 
     def test_update_with_single_caserun(self):
-        tcr = self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {
+        tcr = self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {
             "build": self.build.pk,
             "assignee": self.user.pk,
             "case_run_status": self.status_running.pk,
@@ -338,18 +338,19 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
 
     def test_update_with_non_existing_build(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
-            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"build": 1111111})
+            self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {"build": 1111111})
 
     def test_update_with_non_existing_assignee(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
-            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"assignee": 1111111})
+            self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {"assignee": 1111111})
 
     def test_update_with_non_existing_status(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
-            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"case_run_status": 1111111})
+            self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk,
+                                                    {"case_run_status": 1111111})
 
     def test_update_by_ignoring_undocumented_fields(self):
-        case_run = self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {
+        case_run = self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {
             "notes": "AAAA",
             "close_date": datetime.now(),
             'anotherone': 'abc',
@@ -357,6 +358,6 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         self.assertEqual('AAAA', case_run['notes'])
 
     def test_update_with_no_perm(self):
-        self.rpc_client.Auth.logout()
+        self.rpc_client.exec.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.TestCaseRun.update(self.case_run_1.pk, {"notes": "AAAA"})
+            self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {"notes": "AAAA"})

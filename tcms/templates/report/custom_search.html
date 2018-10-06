@@ -5,9 +5,7 @@
 {% block subtitle %}Custom Report{% endblock %}
 
 {% block custom_stylesheet %}
-<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print" />
-<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'style/dataTables/jquery.dataTables_themeroller.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print">
 {% endblock %}
 
 {% block custom_javascript %}
@@ -20,7 +18,6 @@ Nitrate.Utils.after_page_load(Nitrate.Report.CustomSearch.on_load);
 
 {% block contents %}
 <div id="content">
-	<div class="sprites crumble"><a href="{% url "core-views-index" %}">Home</a> &gt;&gt; Custom Reporting</div>
 	<div class="itemSearch">
 		<h2>Report Options</h2>
 		<form id="id_form_search" action="{% url "report-custom" %}">
@@ -57,7 +54,7 @@ Nitrate.Utils.after_page_load(Nitrate.Report.CustomSearch.on_load);
 				<td valign="top">{{ build.plans_count|default_if_none:0 }}</td>
 				<td valign="top">
 				{% if build.runs_count %}
-					<a href="{% url "testruns-all" %}?product={{ build.product.pk }}&build={{ build.pk }}&product_version={{ REQUEST_CONTENTS.build_run__product_version }}">{{ build.runs_count }}</a>
+					<a href="{% url "testruns-search" %}?product={{ build.product.pk }}&build={{ build.pk }}&product_version={{ REQUEST_CONTENTS.build_run__product_version }}">{{ build.runs_count }}</a>
 				{% else %}{{ build.runs_count|default_if_none:0 }}{% endif %}
 				</td>
 				<td valign="top">{{ build.case_runs_count|default_if_none:0 }}</td>

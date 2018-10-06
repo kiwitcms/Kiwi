@@ -37,7 +37,7 @@ sys.path.append(os.path.join(tcms.__path__[0], 'core', 'lib'))
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
-_application = get_wsgi_application()
+_APPLICATION = get_wsgi_application()
 
 
 def application(environ, start_response):
@@ -45,7 +45,7 @@ def application(environ, start_response):
     if environ['wsgi.url_scheme'] == 'https':
         environ['HTTPS'] = 'on'
 
-    return _application(environ, start_response)
+    return _APPLICATION(environ, start_response)
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication

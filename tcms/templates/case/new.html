@@ -12,7 +12,7 @@
 {% block custom_javascript %}
 <script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
-<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectFilter2.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin/js/SelectBox.js' %}"></script>
@@ -24,16 +24,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 {% block contents %}
 <!--add new case -->
 <div id="content">
-	<div class="sprites crumble">
-		<a href="{% url "core-views-index" %}">Home</a>
-		{% if test_plan %}
-		>> <a href="{% url "plans-all" %}">Planning</a>
-		>> <a href="{{ test_plan.get_full_url }}">{{ test_plan.name }}</a>
-		{% else %}
-		>> <a href="{% url "testcases-search" %}">Testing</a>
-		{% endif %}
-		>> Create new case
-	</div>
 	<form action="{% url "testcases-new" %}{% if test_plan %}?from_plan={{ test_plan.plan_id }}{% endif %}" method="POST">
 		{% if test_plan %}
 		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}" />
@@ -101,14 +91,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 					</div>
 					
 					<div class="data_row">
-						<label >Estimated Time</label>
-						<div class="time">
-							{{ form.estimated_time }}
-							<span class="grey">(eg. 3 04:30:00)</span> 
-							<div class="errors">{{ form.estimated_time.errors }}</div>
-						</div>
-					</div>
-					<div class="data_row">
 						<label>Priority</label>
 						{{ form.priority }}<div class="errors">{{ form.priority.errors }}</div>
 					</div>
@@ -120,10 +102,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
                         <label>Reference Link</label>
                         {{ form.extra_link }}<div class="errors">{{ form.extra_link.errors }}</div>
                     </div>
-					<div class="data_row">
-						<label class="lab">Tags</label>
-						{{ form.tag }}
-					</div>
+
                     <div class="data_row">
 						<label>Notes</label>
 						{{ form.notes }}<div class="errors">{{ form.notes.errors }}</div>
@@ -164,7 +143,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Create.on_load);
 				{% if test_plan %}
 				<input type="submit" name="_addanother" value="Save and add another" />
 				<input type="submit" name="_returntoplan" value="Save and return to plan" />
-				<input type="button" value="Cancel" class="js-plan-cancel" data-param="{{ test_plan.get_full_url }}" />
+				<input type="button" value="Cancel" class="js-plan-cancel" data-param="{% url 'test_plan_url_short' test_plan.pk %}" />
 				{% else %}
 				<input type="button" value="cancel" class="js-case-cancel" >
 				{% endif %}

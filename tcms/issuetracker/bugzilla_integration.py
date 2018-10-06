@@ -39,6 +39,6 @@ Summary: %s""" % (self.testcase.get_full_url(), self.testcase.summary)
 
             self.rpc.update_bugs(self.bug.bug_id, {'comment': {'comment': text,
                                                                'is_private': False}})
-        except Exception as err:
+        except Exception as err:  # pylint: disable=broad-except
             message = '%s: %s' % (err.__class__.__name__, err)
             warnings.warn(message)

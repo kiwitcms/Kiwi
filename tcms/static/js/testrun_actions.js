@@ -1,71 +1,17 @@
 Nitrate.TestRuns = {};
-Nitrate.TestRuns.List = {};
 Nitrate.TestRuns.Details = {};
-Nitrate.TestRuns.New = {};
-Nitrate.TestRuns.Edit = {};
 Nitrate.TestRuns.Execute = {}
-Nitrate.TestRuns.Clone = {};
 Nitrate.TestRuns.ChooseRuns = {};
 Nitrate.TestRuns.AssignCase = {}
 
-Nitrate.TestRuns.List.on_load = function() {
-  bind_version_selector_to_product(true, jQ('#id_product')[0]);
-  bind_build_selector_to_product(true, jQ('#id_product')[0]);
-
-  if (jQ('#id_people_type').length) {
-    jQ('#id_search_people').attr('name', jQ('#id_people_type').val());
-    jQ('#id_people_type').bind('change', function() {
-      jQ('#id_search_people').attr('name', jQ('#id_people_type').val());
-    });
-  }
-
-  if (jQ('#run_column_add').length) {
-    jQ('#run_column_add').bind('change', function(t) {
-      switch(this.value) {
-        case 'col_plan':
-          jQ('#col_plan_head').show();
-          jQ('.col_plan_content').show();
-          jQ('#col_plan_option').hide();
-          break;
-      };
-    });
-  }
-
-  if (!jQ('#testruns_table').hasClass('js-advance-search-runs')) {
-    var oTable = jQ('#testruns_table').dataTable({
-      "iDisplayLength": 20,
-      "sPaginationType": "full_numbers",
-      "bFilter": false,
-      "bLengthChange": false,
-      "aaSorting": [[ 1, "desc" ]],
-      "bProcessing": true,
-      "bServerSide": true,
-      "sAjaxSource": "/runs/ajax/" + this.window.location.search,
-      "aoColumns": [
-        {"sType": "numeric"},
-        {"sType": "html"},
-        {"sType": "html"},
-        {"sType": "html"},
-        {"bVisible": false},
-        null,
-        null,
-        null,
-        {"sType": "numeric", "bSortable": false},
-        null,
-        {"bSortable": false }
-      ],
-      "oLanguage": { "sEmptyTable": "No run was found." }
-    });
-  }
-};
 
 Nitrate.TestRuns.Details.on_load = function() {
+  setAddTagAutocomplete();
+
   // Observe the interface buttons
   jQ('#id_check_all_button').bind('click', function(e) {
     toggleAllCheckBoxes(this, 'id_table_cases', 'case_run');
   });
-
-  Nitrate.Utils.enableShiftSelectOnCheckbox('caserun_selector');
 
   if (jQ('#id_check_box_highlight').attr('checked')) {
     jQ('.mine').addClass('highlight');
@@ -222,10 +168,8 @@ Nitrate.TestRuns.Details.on_load = function() {
   jQ('#btn_delete').bind('click', function() {
     window.location.href = jQ(this).data('param');
   });
-  jQ('.js-remove-tag').bind('click', function() {
-    var params = jQ(this).data('params');
-    removeRuntag(jQ('.js-tag-ul')[0], params[0], params[1]);
-  });
+
+  bindJSRemoveTagButton();
   jQ('.js-add-tag').bind('click', function() {
     addRunTag(jQ('.js-tag-ul')[0], jQ(this).data('param'));
   });
@@ -260,94 +204,11 @@ Nitrate.TestRuns.Details.on_load = function() {
     var params = jQ(this).data('params');
     removeRunCC(params[0], params[1], jQ('.js-cc-ul')[0]);
   });
-  jQ('.js-add-property').bind('click', function() {
-    var params = jQ(this).data('params');
-    addProperty(params[0], params[1]);
-  });
-  jQ('.js-edit-property').bind('click', function() {
-    var params = jQ(this).data('params');
-    editValue(jQ(this).parents('form.js-run-env')[0], params[0], params[1], params[2]);
-  });
-  jQ('.js-remove-property').bind('click', function() {
-    removeProperty(jQ(this).data('param'), this);
-  });
-  jQ('.js-env-submit').bind('click', function() {
-    var params = jQ(this).data('params');
-    submitValue(params[0],params[1],params[2], jQ(this).prev()[0], params[3]);
-  });
   jQ('.js-caserun-total').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], '');
   });
   jQ('.js-status-subtotal').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], jQ(this).data('param'));
-  });
-};
-
-Nitrate.TestRuns.New.on_load = function() {
-  if (jQ('#testcases').length) {
-    jQ('#testcases').dataTable({ "bPaginate": false, "bFilter": false, "bProcessing": true });
-  }
-
-  jQ('#add_id_product_version, #add_id_build').bind('click', function() {
-    return popupAddAnotherWindow(this, 'product');
-  });
-  jQ('.js-cancel-button').bind('click', function() {
-    window.history.go(-1);
-  });
-  jQ('.js-case-summary').bind('click', function() {
-    toggleTestCaseContents(jQ(this).data('param'));
-  });
-  jQ('.js-remove-case').bind('click', function() {
-    var params = jQ(this).data('params');
-    removeItem(params[0], params[1]);
-  });
-};
-
-Nitrate.TestRuns.Edit.on_load = function() {
-  bind_version_selector_to_product(false);
-  bind_build_selector_to_product(false);
-  if (jQ('#id_auto_update_run_status').attr('checked')) {
-    jQ('#id_finished').attr({'checked': false, 'disabled': true});
-  }
-  jQ('#id_auto_update_run_status').bind('click', function(){
-    if (jQ('#id_auto_update_run_status').attr('checked')) {
-      jQ('#id_finished').attr({'checked': false, 'disabled': true});
-    } else {
-      if (jQ('#id_finished').attr('disabled')) {
-        jQ('#id_finished').attr('disabled', false);
-      }
-    }
-  });
-  jQ('#add_id_product_version, #add_id_build').bind('click', function() {
-    return popupAddAnotherWindow(this, 'product');
-  });
-};
-
-Nitrate.TestRuns.Clone.on_load = function() {
-  bind_version_selector_to_product(false);
-  bind_build_selector_to_product(false);
-  jQ("input[type=checkbox][name^=select_property_id_]").each(function() {
-    $this = jQ(this);
-    $this.bind('click', function(){
-      var parent = jQ(this).parent();
-      if (this.checked) {
-        jQ('select', parent).attr("disabled", false);
-        jQ('input[type=hidden]', parent).attr("disabled", false);
-      } else {
-        jQ('select', parent).attr("disabled", true);
-        jQ('input[type=hidden]', parent).attr("disabled", true);
-      }
-    });
-  });
-
-  jQ('#add_id_product_version, #add_id_build').bind('click', function() {
-    return popupAddAnotherWindow(this, 'product');
-  });
-  jQ('.js-cancel-button').bind('click', function() {
-    window.history.go(-1);
-  });
-  jQ('.js-remove-button').bind('click', function() {
-    jQ(this).parents('.js-one-case').remove();
   });
 };
 
@@ -766,231 +627,54 @@ function delCaseRun(run_id) {
   }
 }
 
-function editValue(form,hidebox,selectid,submitid) {
-  jQ('#' + hidebox).hide();
-  jQ('#' + selectid).show();
-  jQ('#' + submitid).show();
 
-  var data = Nitrate.Utils.formSerialize(form);
-  var env_property_id = data.env_property_id;
+// binds the remove buttons for all tags
+function bindJSRemoveTagButton() {
+  $('.js-remove-tag').bind('click', function() {
+    var params = $(this).data('params');
+    removeRunTag($('.js-tag-ul')[0], params[0], params[1]);
+  });
+}
 
-  var success = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-    var current_value = jQ("input[type=hidden][name=current_run_env]:eq(0)", form);
-    var excludeValues = [];
-    jQ("input[type=hidden][name=current_run_env]").each(function(index, element) {
-      if (element.value != current_value.val()) {
-        excludeValues.push(window.parseInt(element.value));
-      }
-      return true;
+
+// data is an array of id/name for tags
+function updateTagContainer(container, data, run_id) {
+    var html = '';
+
+    data.forEach(function(element) {
+        var li = '<li>' + element['name'] +
+                    '<a href="#" class="js-remove-tag" data-params=\'["'+ run_id + '", "' + element['name'] + '"]\'>' +
+                        '&nbsp;<i class="fa fa-trash-o"></i>' +
+                    '</a>' +
+                 '</li>';
+        html += li;
     });
 
-    var values = [];
-    jQ.each(returnobj, function(index, value){
-      if (jQ.inArray(value.pk, excludeValues) < 0) {
-        values.push([value.pk, value.fields.value]);
-      }
-      return true;
-    });
-
-    set_up_choices(jQ('#' + selectid)[0], values, 0);
-  };
-
-  getInfo({'info_type': 'env_values', 'env_property_id': env_property_id}, success);
+    $(container).html(html);
+    bindJSRemoveTagButton();
 }
 
-function submitValue(run_id,value,hidebox,select_field,submitid) {
-  var new_value = select_field.options[select_field.selectedIndex].innerHTML;
-  var old_value = jQ(select_field).prev().prev().val();
-
-  var dup_values = [];
-  jQ("input[type=hidden][name=current_run_env]").each(function(index, element) {
-    if (element.value != old_value) {
-        dup_values.push(element.value);
-    }
-    return true;
-  });
-  if (jQ.inArray(select_field.value, dup_values) >= 0) {
-    window.alert("The value is exist for this run");
-    return false;
-  }
-
-  var success = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-    if (returnobj.rc == 0) {
-      jQ('#' + hidebox).html(new_value).show();
-      jQ(select_field).hide();
-      jQ('#' + submitid).hide();
-      jQ(select_field).prev().prev().val(select_field.value);
-    } else {
-      window.alert(returnobj.response);
-    }
-  };
-
-  var failure = function(t) { window.alert("Edit value failed"); };
-
-  var url  = '/runs/env_value/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'a': 'change', 'old_env_value_id': old_value,
-      'new_env_value_id': select_field.value, 'run_id': run_id},
-    'success': function(data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function(jqXHR, textStatus, errorThrown) {
-      failure();
-    }
-  });
-}
-
-function removeProperty(run_id, element) {
-  if (!window.confirm('Are you sure to remove this porperty?')) {
-    return false;
-  }
-
-  var parent = jQ(element).closest("form");
-  var emptySelf = jQ(element).closest("li");
-  var env_value_id = jQ("input[type=hidden][name=current_run_env]", parent).get(0).value;
-
-  var success = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-    if (returnobj.rc == 0) {
-      emptySelf.remove();
-    } else {
-      window.alert(returnobj.response);
-    }
-  };
-
-  var failure = function(t) { window.alert("Edit value failed"); };
-  var url = '/runs/env_value/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'a': 'remove', 'info_type': 'env_values', 'env_value_id': env_value_id, 'run_id': run_id},
-    'success': function(data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function(jqXHR, textStatus, errorThrown) {
-      failure();
-    }
-  });
-}
-
-function addProperty(run_id,env_group_id) {
-  var template = Handlebars.compile(jQ('#add_property_template').html());
-  jQ('#dialog').html(template())
-    .find('.js-close-button, .js-cancel-button').bind('click', function() {
-      jQ('#dialog').hide();
-    })
-    .end().show();
-
-  var success = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-    var values = returnobj.map(function(o) {
-      return [o.pk, o.fields.name];
-    });
-
-    set_up_choices(jQ('#id_add_env_property')[0], values, 0);
-    // load values for the first property in the group. See
-    // https://github.com/kiwitcms/Kiwi/issues/142
-    change_value(jQ('#id_add_env_property').val(), 'id_add_env_value');
-  };
-
-  getInfo({'info_type': 'env_properties', 'env_group_id': env_group_id}, success);
-
-  jQ('#id_add_env_property').bind('change', function(e) {
-    change_value(jQ('#id_add_env_property').val(), 'id_add_env_value');
-  });
-
-  jQ('#id_env_add').bind('click',function(e) {
-    add_property_to_env(run_id, jQ('#id_add_env_value').val());
-  });
-}
-
-function change_value(env_property_id,selectid) {
-  var success = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-    var values = returnobj.map(function(o) {
-      return [o.pk, o.fields.value];
-    });
-
-    set_up_choices(jQ('#' + selectid)[0], values, 0);
-  };
-
-  getInfo({'info_type': 'env_values', 'env_property_id': env_property_id}, success);
-}
-
-function add_property_to_env(run_id, env_value_id) {
-  var callback = function(data, textStatus, jqXHR) {
-    jQ('#dialog').hide();
-    if (data.rc == 0) {
-      jQ("#env_area").html(data.fragment);
-      jQ('.js-edit-property').bind('click', function() {
-        var params = jQ(this).data('params');
-        editValue(jQ(this).parents('form.js-run-env')[0], params[0], params[1], params[2]);
-      });
-      jQ('.js-remove-property').bind('click', function() {
-        removeProperty(jQ(this).data('param'), this);
-      });
-      jQ('.js-env-submit').bind('click', function() {
-        var params = jQ(this).data('params');
-        submitValue(params[0],params[1],params[2], jQ(this).prev()[0], params[3]);
-      });
-    } else {
-      window.alert(data.response);
-    }
-  };
-
-  var failure = function(t) { window.alert("Edit value failed"); };
-  var url = '/runs/env_value/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'a': 'add', 'info_type': 'env_values', 'env_value_id':env_value_id, 'run_id': run_id},
-    'dataType': 'json',
-    'success': callback,
-    'error': function (jqXHR, textStatus, errorThrown) {
-      failure();
-    }
-  });
-}
 
 function addRunTag(container, run_id) {
-  var tag = window.prompt('Please type new tag.');
-  if (!tag) {
-    return false;
-  }
+    var tag_container = $('#id_tags');
+    var tag = tag_container.val();
 
-  var url = '/management/tags/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'a': 'add', 'run': run_id, 'tags': tag},
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-      jQ('.js-remove-tag').bind('click', function() {
-        var params = jQ(this).data('params');
-        removeRuntag(jQ('.js-tag-ul')[0], params[0], params[1]);
-      });
+    if (!tag) {
+        return false;
     }
-  });
+
+    var inner_callback = function(data) {
+        updateTagContainer(container, data, run_id);
+        tag_container.val('');
+    }
+    jsonRPC('TestRun.add_tag', [run_id, tag], inner_callback);
 }
 
-function removeRuntag(container, run_id, tag) {
-  var url = '/management/tags/';
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': {'a': 'remove', 'run': run_id, 'tags': tag},
-    'success': function (data, textStatus, jqXHR) {
-      jQ(container).html(data);
-      jQ('.js-remove-tag').bind('click', function() {
-        var params = jQ(this).data('params');
-        removeRuntag(jQ('.js-tag-ul')[0], params[0], params[1]);
-      });
+function removeRunTag(container, run_id, tag) {
+    var inner_callback = function(data) {
+        updateTagContainer(container, data, run_id);
     }
-  });
+    jsonRPC('TestRun.remove_tag', [run_id, tag], inner_callback);
 }
 
 function constructRunCC(container, run_id, parameters) {
@@ -1099,15 +783,6 @@ function serialzeCaseForm(form, table, serialized) {
 
   data['case_run'] = serializeCaseFromInputList(table);
   return data;
-}
-
-function sortCaseRun(form, order) {
-  if (form.order_by.value == order) {
-    form.order_by.value = '-' + order;
-  } else {
-    form.order_by.value = order;
-  }
-  fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
 }
 
 function showCaseRunsWithSelectedStatus(form, status_id) {

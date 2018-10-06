@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from django.utils.dateparse import parse_duration
 from django.forms import EmailField, ValidationError
 
 from modernrpc.core import rpc_method, REQUEST_KEY
 
-from tcms.core.utils import string_to_list, form_errors_to_list
+from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
@@ -148,13 +147,7 @@ def add_notification_cc(case_id, cc_list):
     _validate_cc_list(cc_list)
 
     test_case = TestCase.objects.get(pk=case_id)
-
-    # First, find those that do not exist yet.
-    existing_cc = test_case.emailing.get_cc_list()
-    adding_cc = list(set(cc_list) - set(existing_cc))
-
-    # add the ones which are new
-    test_case.emailing.add_cc(adding_cc)
+    test_case.emailing.add_cc(cc_list)
 
 
 @permissions_required('testcases.change_testcase')
@@ -198,7 +191,7 @@ def get_notification_cc(case_id):
 
 @permissions_required('testcases.add_testcasetag')
 @rpc_method(name='TestCase.add_tag')
-def add_tag(case_id, tag):
+def add_tag(case_id, tag, **kwargs):
     """
     .. function:: XML-RPC TestCase.add_tag(case_id, tag)
 
@@ -211,8 +204,11 @@ def add_tag(case_id, tag):
         :return: None
         :raises: PermissionDenied if missing *testcases.add_testcasetag* permission
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
+        :raises: Tag.DoesNotExist if missing *management.add_tag* permission and *tag*
+                 doesn't exist in the database!
     """
-    tag, _ = Tag.objects.get_or_create(name=tag)
+    request = kwargs.get(REQUEST_KEY)
+    tag, _ = Tag.get_or_create(request.user, tag)
     TestCase.objects.get(pk=case_id).add_tag(tag)
 
 
@@ -266,9 +262,6 @@ def create(values, **kwargs):
     if not (values.get('category') or values.get('summary')):
         raise ValueError()
 
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(values.get('estimated_time'))
-
     form = NewCaseForm(values)
     form.populate(values.get('product'))
 
@@ -283,11 +276,6 @@ def create(values, **kwargs):
             setup=form.cleaned_data['setup'] or '',
             breakdown=form.cleaned_data['breakdown'] or '',
         )
-
-        # Add tag to the case
-        for tag in string_to_list(values.get('tag', [])):
-            tag, _ = Tag.objects.get_or_create(name=tag)
-            test_case.add_tag(tag=tag)
     else:
         # Print the errors if the form is not passed validation.
         raise ValueError(form_errors_to_list(form))
@@ -313,11 +301,8 @@ def filter(query):  # pylint: disable=redefined-builtin
                  :class:`tcms.testcases.models.TestCaseText` object!
         :rtype: list(dict)
     """
-    if query.get('estimated_time'):
-        query['estimated_time'] = parse_duration(query.get('estimated_time'))
-
     results = []
-    for case in TestCase.objects.filter(**query):
+    for case in TestCase.objects.filter(**query).distinct():
         serialized_case = case.serialize()
         serialized_case['text'] = case.latest_text().serialize()
         results.append(serialized_case)
@@ -345,9 +330,6 @@ def update(case_id, values, **kwargs):
         :raises: TestCase.DoesNotExist if object specified by PK doesn't exist
         :raises: PermissionDenied if missing *testcases.change_testcase* permission
     """
-    if values.get('estimated_time'):
-        values['estimated_time'] = parse_duration(values.get('estimated_time'))
-
     form = UpdateCaseForm(values)
 
     if values.get('category') and not values.get('product'):

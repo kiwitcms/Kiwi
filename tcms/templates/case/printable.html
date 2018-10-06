@@ -1,4 +1,5 @@
 {% load static %}
+{% load extra_filters %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -22,15 +23,15 @@
     <!-- Title area -->
     <div class="plan_title">
         <div>
-            <h1>[{{ test_plan.pk }}] <b>{{ test_plan.name }}</b></h1>
+            <h1>TP-{{ test_plan.pk }}: <b>{{ test_plan.name }}</b></h1>
         </div>
         <div class="thick-line"></div>
         <div class="contents">
             <h3>Contents</h3>
             <div>
                 <ol>
-                    {% for test_case in test_plan.result_set %}
-                    <li>[{{ test_case.case }}] {{ test_case.case__summary }}</li>
+                    {% for test_case in test_plan.case.all %}
+                    <li>TC-{{ test_case.pk }}: {{ test_case.summary }}, {{ test_case.case_status }}</li>
                     {% endfor %}
                 </ol>
             </div>
@@ -38,7 +39,7 @@
         <div>
             <h2 id="plan_document">Test Plan Document</h2>
             <div class="thick-line"></div>
-            {{ test_plan.text|safe }}
+            {{ test_plan.text|markdown2html }}
         </div>
     </div>
     {% endif %}
@@ -49,23 +50,23 @@
 	{% for case_id, test_cases in test_cases.items %}
         <div style="clear: left">
             {% for test_case in test_cases %}
-		<h3>[{{ test_case.case_id }}] {{ test_case.case__summary }}</h3>
+		<h3>TC-{{ test_case.case_id }}: {{ test_case.case__summary }}</h3>
 		<div class="thin-line"></div>
 		<div class="case-stage">
 			<h4>Set up</h4>
-			{{ test_case.setup|safe }}
+			{{ test_case.setup|markdown2html }}
 		</div>
 		<div class="case-stage">
 			<h4>Actions</h4>
-			{{ test_case.action|safe }}
+			{{ test_case.action|markdown2html }}
 		</div>
 		<div class="case-stage">
 			<h4>Expected Results</h4>
-			{{ test_case.effect|safe }}
+			{{ test_case.effect|markdown2html }}
 		</div>
 		<div class="case-stage">
 			<h4>Breakdown</h4>
-			{{ test_case.breakdown|safe }}
+			{{ test_case.breakdown|markdown2html }}
 		</div>
             {% endfor %}
 	</div>

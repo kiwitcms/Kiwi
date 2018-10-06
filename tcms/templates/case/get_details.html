@@ -1,14 +1,15 @@
 {% load comments %}
+{% load extra_filters %}
 <td id="id_case_text_{{ forloop.counter }}" colspan="12">
 	<table class="case_detail">
 		<tr>
 			<td valign="top">
 				<h4>Setup:</h4>
-				<div class="content">{{ test_case_text.setup|safe }}</div>
+				<div class="content">{{ test_case_text.setup|markdown2html }}</div>
 			</td>
 			<td class="" valign="top">
 				<h4>Breakdown:</h4>
-				<div class="content">{{ test_case_text.breakdown|safe }}</div>
+				<div class="content">{{ test_case_text.breakdown|markdown2html }}</div>
 			</td>
 			<td valign="top" rowspan="2" width="200">
 				<h4><span class="title strong">Attachment:</span></h4>
@@ -58,11 +59,11 @@
 		<tr>
 			<td class="" valign="top">
 				<h4>Actions:</h4>
-				<div class="content">{{ test_case_text.action|safe }}</div>
+				<div class="content">{{ test_case_text.action|markdown2html }}</div>
 			</td>
 			<td class="" valign="top">
 				<h4>Expected Results:</h4>
-				<div class="content">{{ test_case_text.effect|safe }}</div>
+				<div class="content">{{ test_case_text.effect|markdown2html }}</div>
 			</td>
 		</tr>
 		<tr>
@@ -115,10 +116,5 @@
 			</td>
 		</tr>
                 {% endif %}
-		<tr>
-			<td colspan="3" class="row">
-				{% include 'case/case_details_changelog.html' %}
-			</td>
-		</tr>
 	</table>
 </td>

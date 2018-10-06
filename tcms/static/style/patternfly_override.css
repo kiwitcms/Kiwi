@@ -1,0 +1,7 @@
+/* override some default Patternfly styles */
+nav.navbar-default { border-top-color: #9ab451; }
+
+/* continue with styles for Kiwi TCMS */
+
+/* todo: used in form error messages, can be improved */
+.errorlist { background: #AF2B2B; border:1px solid #6F1B1B; color:#FFF; font-weight:bold; }

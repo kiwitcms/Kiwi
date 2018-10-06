@@ -9,20 +9,22 @@ from django.db.models import Q, Count
 
 import vinaigrette
 
-from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.core.models import TCMSActionModel
 from tcms.core.utils import is_int
+from tcms.core.models import TCMSActionModel
+from tcms.core.history import KiwiHistoricalRecords
+from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testcases.models import Bug, TestCaseText, NoneText
 from tcms.xmlrpc.serializer import TestCaseRunXMLRPCSerializer
 from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
 
 
-TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal',
-                                       'StatusSubtotal '
-                                       'CaseRunsTotalCount '
-                                       'CompletedPercentage '
-                                       'FailurePercentage')
+TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
+    'StatusSubtotal',
+    'CaseRunsTotalCount',
+    'CompletedPercentage',
+    'FailurePercentage',
+    'SuccessPercentage'])
 
 
 def plan_by_id_or_name(value):
@@ -32,8 +34,12 @@ def plan_by_id_or_name(value):
 
 
 class TestRun(TCMSActionModel):
+    history = KiwiHistoricalRecords()
+
     run_id = models.AutoField(primary_key=True)
 
+    # todo: this field should be removed in favor of plan.product_version
+    # no longer shown in edit forms
     product_version = models.ForeignKey('management.Version', related_name='version_run',
                                         on_delete=models.CASCADE)
 
@@ -41,11 +47,9 @@ class TestRun(TCMSActionModel):
     stop_date = models.DateTimeField(null=True, blank=True, db_index=True)
     summary = models.TextField()
     notes = models.TextField(blank=True)
-    estimated_time = models.DurationField(default=datetime.timedelta(0))
 
     plan = models.ForeignKey('testplans.TestPlan', related_name='run',
                              on_delete=models.CASCADE)
-    environment_id = models.IntegerField(default=0)
     build = models.ForeignKey('management.Build', related_name='build_run',
                               on_delete=models.CASCADE)
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='manager',
@@ -55,15 +59,11 @@ class TestRun(TCMSActionModel):
                                        related_name='default_tester',
                                        on_delete=models.CASCADE)
 
-    env_value = models.ManyToManyField('management.EnvValue',
-                                       through='testruns.EnvRunValueMap')
-
     tag = models.ManyToManyField('management.Tag',
                                  through='testruns.TestRunTag',
                                  related_name='run')
 
     cc = models.ManyToManyField('auth.User', through='testruns.TestRunCC')
-    auto_update_run_status = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('run_id', 'product_version')
@@ -87,12 +87,10 @@ class TestRun(TCMSActionModel):
             'product_version': lambda value: Q(product_version=value),
             'plan': plan_by_id_or_name,
             'build': lambda value: Q(build=value),
-            'env_group': lambda value: Q(plan__env_group=value),
             'people_id': lambda value: Q(manager__id=value) | Q(default_tester__id=value),
             'manager': lambda value: Q(manager=value),
             'default_tester': lambda value: Q(default_tester=value),
             'tag__name__in': lambda value: Q(tag__name__in=value),
-            'env_value__value__in': lambda value: Q(env_value__value__in=value),
             'case_run__assignee': lambda value: Q(case_run__assignee=value),
             'status': lambda value: {
                 'running': Q(stop_date__isnull=True),
@@ -110,8 +108,10 @@ class TestRun(TCMSActionModel):
             }[query.get('people_type')],
         }
 
-        conditions = [mapping[key](value) for key, value in query.items()
-                      if value and key in mapping]
+        conditions = []
+        for key, value in query.items():
+            if value and key in mapping:
+                conditions.append(mapping[key](value))
 
         runs = cls.objects.filter(*conditions)
 
@@ -120,12 +120,6 @@ class TestRun(TCMSActionModel):
             runs = runs.order_by(value)
 
         return runs.distinct()
-
-    def belong_to(self, user):
-        if self.manager == user or self.plan.author == user:
-            return True
-
-        return False
 
     def _get_absolute_url(self):
         return reverse('testruns-get', args=[self.pk, ])
@@ -142,7 +136,11 @@ class TestRun(TCMSActionModel):
         for tcr in self.case_run.select_related('assignee').all():
             if tcr.assignee_id:
                 send_to.append(tcr.assignee.email)
-        return list(set(send_to))
+
+        send_to = set(send_to)
+        # don't email author of last change
+        send_to.discard(getattr(self.history.latest().history_user, 'email', ''))
+        return list(send_to)
 
     # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, case_run_status=1, assignee=None,
@@ -168,7 +166,6 @@ class TestRun(TCMSActionModel):
                                     build=build or self.build,
                                     notes=notes,
                                     sortkey=sortkey,
-                                    environment_id=self.environment_id,
                                     running_date=None,
                                     close_date=None)
 
@@ -184,17 +181,11 @@ class TestRun(TCMSActionModel):
             user=user,
         )
 
-    def add_env_value(self, env_value):
-        return EnvRunValueMap.objects.get_or_create(run=self, value=env_value)
-
     def remove_tag(self, tag):
         TestRunTag.objects.filter(run=self, tag=tag).delete()
 
     def remove_cc(self, user):
         TestRunCC.objects.filter(run=self, user=user).delete()
-
-    def remove_env_value(self, env_value):
-        EnvRunValueMap.objects.filter(run=self, value=env_value).delete()
 
     def get_bug_count(self):
         """
@@ -231,29 +222,11 @@ class TestRun(TCMSActionModel):
 
     total_num_caseruns = property(_get_total_case_run_num)
 
-    def update_completion_status(self, is_auto_updated, is_finish=None):
-        if is_auto_updated and self.auto_update_run_status:
-            if self.completed_case_run_percent == 100.0:
-                self.stop_date = datetime.datetime.now()
-            else:
-                self.stop_date = None
-            self.save()
-        if not is_auto_updated and not self.auto_update_run_status:
-            if is_finish:
-                self.stop_date = datetime.datetime.now()
-            else:
-                self.stop_date = None
-            self.save()
-
-    def env_values_str(self):
-        """
-            Return a string representation of environment properties
-            used for display purposes.
-        """
-        result = ""
-        for env_value in self.env_value.all():
-            result += "%s:%s\n" % (env_value.property.name, env_value.value)
-        return result
+    def update_completion_status(self, is_finished):
+        if is_finished:
+            self.stop_date = datetime.datetime.now()
+        else:
+            self.stop_date = None
 
     def stats_caseruns_status(self, case_run_statuses=None):
         """Get statistics based on case runs' status
@@ -278,14 +251,13 @@ class TestRun(TCMSActionModel):
                                          for status in case_run_statuses)
 
         for row in rows:
-            status_pk = row['case_run_status']
-            caserun_statuses_subtotal[status_pk][0] = row['status_count']
+            caserun_statuses_subtotal[row['case_run_status']][0] = row['status_count']
 
         complete_count = 0
         failure_count = 0
         caseruns_total_count = 0
 
-        for status_pk, total_info in caserun_statuses_subtotal.items():
+        for _status_pk, total_info in caserun_statuses_subtotal.items():
             status_caseruns_count, caserun_status = total_info
             status_name = caserun_status.name
 
@@ -302,18 +274,24 @@ class TestRun(TCMSActionModel):
             complete_percent = complete_count * 100.0 / caseruns_total_count
         failure_percent = .0
         if complete_count:
-            failure_percent = failure_count * 100.0 / complete_count
+            failure_percent = failure_count * 100.0 / caseruns_total_count
 
         return TestCaseRunStatusSubtotal(caserun_statuses_subtotal,
                                          caseruns_total_count,
                                          complete_percent,
-                                         failure_percent)
+                                         failure_percent,
+                                         complete_percent - failure_percent)
 
 
 class TestCaseRunStatus(TCMSActionModel):
-    complete_status_names = ('PASSED', 'ERROR', 'FAILED', 'WAIVED')
-    failure_status_names = ('ERROR', 'FAILED')
-    idle_status_names = ('IDLE',)
+    FAILED = 'FAILED'
+    BLOCKED = 'BLOCKED'
+    PASSED = 'PASSED'
+    IDLE = 'IDLE'
+
+    complete_status_names = (PASSED, 'ERROR', FAILED, 'WAIVED')
+    failure_status_names = ('ERROR', FAILED)
+    idle_status_names = (IDLE,)
 
     id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
@@ -331,65 +309,13 @@ class TestCaseRunStatus(TCMSActionModel):
         """ Get all status names in reverse mapping between name and id """
         return dict((name, _id) for _id, name in cls.get_names().items())
 
-    @classmethod
-    def id_to_string(cls, _id):
-        try:
-            return cls.objects.get(id=_id).name
-        except cls.DoesNotExist:
-            return None
-
-    @classmethod
-    def _status_to_id(cls, status):
-        try:
-            return cls.objects.get(name=status.upper()).pk
-        except cls.DoesNotExist:
-            return None
-
-    @classmethod
-    def _get_failed_status_ids(cls):
-        """
-        There are some status indicate that
-        the testcaserun is failed.
-        Return IDs of these statuses.
-        """
-        failed_status = cls.objects.filter(name__in=('FAILED', 'ERROR'))
-
-        return failed_status.values_list('pk', flat=True)
-
-    # TODO: gather following id_xxx into one method
-
-    @classmethod
-    def id_passed(cls):
-        return cls._status_to_id('passed')
-
-    @classmethod
-    def id_failed(cls):
-        return cls._status_to_id('failed')
-
-    @classmethod
-    def id_blocked(cls):
-        return cls._status_to_id('blocked')
-
 
 # register model for DB translations
 vinaigrette.register(TestCaseRunStatus, ['name'])
 
 
-class TestCaseRunManager(models.Manager):
-    def get_automated_case_count(self):
-        return self.filter(case__is_automated=1).count()
-
-    def get_manual_case_count(self):
-        return self.filter(case__is_automated=0).count()
-
-    def get_both(self):
-        count1 = self.get_automated_case_count()
-        count2 = self.get_manual_case_count()
-        return self.count() - count1 - count2
-
-
 class TestCaseRun(TCMSActionModel):
-    objects = TestCaseRunManager()
+    history = KiwiHistoricalRecords()
 
     case_run_id = models.AutoField(primary_key=True)
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
@@ -409,7 +335,6 @@ class TestCaseRun(TCMSActionModel):
                              on_delete=models.CASCADE)
     case_run_status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
     build = models.ForeignKey('management.Build', on_delete=models.CASCADE)
-    environment_id = models.IntegerField(default=0)
 
     class Meta:
         unique_together = ('case', 'run', 'case_text_version')
@@ -424,27 +349,12 @@ class TestCaseRun(TCMSActionModel):
         return '%s: %s' % (self.pk, self.case_id)
 
     @classmethod
-    def to_xmlrpc(cls, query={}):
-        qs = distinct_filter(TestCaseRun, query).order_by('pk')
-        serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=qs)
+    def to_xmlrpc(cls, query: dict = None):
+        if query is None:
+            query = {}
+        query_set = distinct_filter(TestCaseRun, query).order_by('pk')
+        serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
-
-    @classmethod
-    def mail_scene(cls, objects, field=None):
-        test_run = objects[0].run
-        # scence_templates format:
-        # template, subject, context
-        test_case_runs = objects.select_related()
-        scence_templates = {
-            'assignee': {
-                'template_name': 'mail/change_case_run_assignee.txt',
-                'subject': 'Assignee of run %s has been changed' % test_run.run_id,
-                'recipients': test_run.get_notify_addrs(),
-                'context': {'test_run': test_run, 'test_case_runs': test_case_runs},
-            }
-        }
-
-        return scence_templates.get(field)
 
     def add_bug(self, bug_id, bug_system_id,
                 summary=None, description=None, bz_external_track=False):
@@ -514,8 +424,3 @@ class TestRunCC(models.Model):
 
     class Meta:
         unique_together = ('run', 'user')
-
-
-class EnvRunValueMap(models.Model):
-    run = models.ForeignKey(TestRun, on_delete=models.CASCADE)
-    value = models.ForeignKey('management.EnvValue', on_delete=models.CASCADE)

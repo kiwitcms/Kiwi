@@ -1,7 +1,6 @@
-header#grp-header {
-    position: static;
-}
+/* so that header elements in admin pages are shown under the navigation menu */
+header#grp-header { position: static; }
+#grp-content { top: 0; }
 
-#grp-content {
-    top: 0;
-}
+/* so that the filter dropdown shows to the right */
+aside div#search { width: 200px; }

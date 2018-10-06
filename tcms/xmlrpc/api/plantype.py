@@ -6,7 +6,7 @@ from tcms.testplans.models import PlanType
 
 
 @rpc_method(name='PlanType.filter')
-def filter(query):  # pylint: disable=invalid-name
+def filter(query):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC PlanType.filter(query)
 

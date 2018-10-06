@@ -1,6 +1,10 @@
 Kiwi TCMS - Open Source Test Case Management System
 ===================================================
 
+.. image:: https://badges.greenkeeper.io/kiwitcms/Kiwi.svg
+   :alt: Greenkeeper badge
+   :target: https://greenkeeper.io/
+
 .. image:: https://travis-ci.org/kiwitcms/Kiwi.svg?branch=master
     :target: https://travis-ci.org/kiwitcms/Kiwi
     :alt: Travis CI

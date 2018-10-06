@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Dashboard" %}{% endblock %}
+
+{% block contents %}
+<div class="container-fluid container-cards-pf">
+    <div class="panel panel-default col-sm-12 col-md-5 col-lg-5" style="padding:0; margin-right:1%">
+        <div class="panel-heading"><strong>{% trans "Test executions" %}</strong></div>
+        <table class="table table-striped">
+            <tbody>
+            {% for test_run in last_15_test_runs %}
+                <tr>
+                    <td>
+                        {% include "run/status_progress_patternfly.html" with stats=test_run.stats_caseruns_status %}
+                    </td>
+                    <td>
+                        <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a>
+                        <div>{% trans "Started at" %} {{ test_run.start_date }}</div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="panel-footer">
+            {% if test_runs_count %}
+                {% blocktrans with total_count=test_runs_count count=last_15_test_runs|length %}
+                {{ total_count }} TestRun(s) assigned to you need to be executed.
+                Here are the latest {{ count }}.
+                {% endblocktrans %}
+
+                <a href="{% url "testruns-search" %}?default_tester={{ user.username|iriencode }}">
+                    {% trans "SEE ALL" %}
+                </a>
+            {% else %}
+                {% trans "There are no TestRun(s) assigned to you" %}
+            {% endif %}
+        </div>
+    </div> <!-- /panel -->
+
+    <div class="panel panel-default col-sm-12 col-md-6 col-lg-6" style="padding:0">
+        <div class="panel-heading">
+            <strong>{% trans "Your Test plans" %}</strong>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "TestPlan" %}</th>
+                    <th>{% trans "Product" %}</th>
+                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Executions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for test_plan in last_15_test_plans %}
+                {% if test_plan.is_active %}
+                <tr>
+                    <td>
+                        <a href="{% url 'test_plan_url_short' test_plan.pk %}">{{ test_plan.name }}</a>
+                    </td>
+                    <td>{{ test_plan.product }}</td>
+                    <td>{{ test_plan.type }}</td>
+                    <td><a href="{% url 'testruns-search' %}?plan={{ test_plan.plan_id }}">{{ test_plan.num_runs }}</a></td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="panel-footer">
+            {% if test_plans_count %}
+                {% blocktrans with total_count=test_plans_count disabled_count=test_plans_disable_count count=last_15_test_plans|length %}
+                You manage {{ total_count }} TestPlan(s), {{ disabled_count }} are disabled.
+                Here are the latest {{ count }}.
+                {% endblocktrans %}
+
+                <a href="{% url "plans-search" %}?author__username__startswith={{ user.username }}">
+                    {% trans "SEE ALL" %}
+                </a>
+            {% else %}
+                {% trans "There are no TestPlan(s) that belong to you" %}
+            {% endif %}
+        </div>
+    </div> <!-- /panel -->
+
+</div><!-- /container -->
+{% endblock %}
