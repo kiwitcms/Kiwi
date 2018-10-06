@@ -198,9 +198,6 @@ def _get_updated_test_plan(values, form, test_plan):
     if form.cleaned_data['product_version']:
         test_plan.product_version = form.cleaned_data['product_version']
 
-    if form.cleaned_data['owner']:
-        test_plan.owner = form.cleaned_data['owner']
-
     if form.cleaned_data['parent']:
         test_plan.parent = form.cleaned_data['parent']
 

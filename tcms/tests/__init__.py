@@ -117,7 +117,6 @@ class BasePlanCase(LoggedInTestCase):
 
         cls.plan = TestPlanFactory(
             author=cls.tester,
-            owner=cls.tester,
             product=cls.product,
             product_version=cls.version)
 

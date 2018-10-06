@@ -127,7 +127,6 @@ class TestPlanFactory(DjangoModelFactory):
     text = factory.Sequence(lambda n: 'Plan document %d' % n)
     create_date = factory.LazyFunction(datetime.now)
     product_version = factory.SubFactory(VersionFactory)
-    owner = factory.SubFactory(UserFactory)
     author = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)
     type = factory.SubFactory(PlanTypeFactory)

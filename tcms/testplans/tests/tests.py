@@ -44,7 +44,6 @@ class PlanTests(test.TestCase):
 
         cls.test_plan = TestPlanFactory(name='another test plan for testing',
                                         product_version=cls.product_version,
-                                        owner=cls.user,
                                         author=cls.user,
                                         product=cls.product,
                                         type=cls.plan_type)
@@ -232,7 +231,6 @@ class TestLinkCases(BasePlanCase):
 
         cls.another_plan = TestPlanFactory(
             author=cls.tester,
-            owner=cls.tester,
             product=cls.product,
             product_version=cls.version)
 
@@ -366,7 +364,7 @@ class TestCloneView(BasePlanCase):
 
         cls.another_plan = TestPlanFactory(
             name='Another plan for test',
-            author=cls.tester, owner=cls.tester,
+            author=cls.tester,
             product=cls.product, product_version=cls.version)
         cls.another_case_1 = TestCaseFactory(
             author=cls.tester, default_tester=None,
@@ -377,7 +375,7 @@ class TestCloneView(BasePlanCase):
 
         cls.third_plan = TestPlanFactory(
             name='Third plan for test',
-            author=cls.tester, owner=cls.tester,
+            author=cls.tester,
             product=cls.product, product_version=cls.version)
         cls.third_case_1 = TestCaseFactory(
             author=cls.tester, default_tester=None,
@@ -388,7 +386,7 @@ class TestCloneView(BasePlanCase):
 
         cls.totally_new_plan = TestPlanFactory(
             name='Test clone plan with copying cases',
-            author=cls.tester, owner=cls.tester,
+            author=cls.tester,
             product=cls.product, product_version=cls.version)
         cls.case_maintain_original_author = TestCaseFactory(
             author=cls.tester, default_tester=None,

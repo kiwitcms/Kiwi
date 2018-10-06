@@ -57,8 +57,8 @@ class TestAddTag(XmlrpcAPIBaseTest):
 
         self.product = ProductFactory()
         self.plans = [
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
         ]
 
         self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
@@ -96,8 +96,8 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
 
         self.product = ProductFactory()
         self.plans = [
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
         ]
 
         self.tag0 = TagFactory(name='xmlrpc_test_tag_0')
