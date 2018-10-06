@@ -235,7 +235,6 @@ class TestCaseTagFactory(DjangoModelFactory):
 
     case = factory.SubFactory(TestCaseFactory)
     tag = factory.SubFactory(TagFactory)
-    user = 0
 
 
 class TestCaseTextFactory(DjangoModelFactory):
