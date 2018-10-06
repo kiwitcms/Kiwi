@@ -251,7 +251,6 @@ class TestPlan(TCMSActionModel):
 class TestPlanTag(models.Model):
     tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
     plan = models.ForeignKey(TestPlan, on_delete=models.CASCADE)
-    user = models.IntegerField(default="1", db_column='userid')
 
 
 class TestPlanEmailSettings(models.Model):

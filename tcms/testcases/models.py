@@ -467,7 +467,6 @@ class TestCaseComponent(models.Model):
 class TestCaseTag(models.Model):
     tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
     case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
-    user = models.IntegerField(db_column='userid', default='0')
 
 
 class BugSystem(TCMSActionModel):

@@ -151,8 +151,8 @@ class TestCaseRemoveTag(BasePlanCase):
 
         cls.tag_rhel = TagFactory(name='rhel')
         cls.tag_fedora = TagFactory(name='fedora')
-        TestCaseTagFactory(case=cls.case, tag=cls.tag_rhel, user=cls.tester.pk)
-        TestCaseTagFactory(case=cls.case, tag=cls.tag_fedora, user=cls.tester.pk)
+        TestCaseTagFactory(case=cls.case, tag=cls.tag_rhel)
+        TestCaseTagFactory(case=cls.case, tag=cls.tag_fedora)
 
     def test_remove_tag(self):
         self.case.remove_tag(self.tag_rhel)

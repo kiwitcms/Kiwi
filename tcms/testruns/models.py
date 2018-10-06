@@ -5,7 +5,7 @@ from collections import namedtuple
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
-from django.db.models import Q, Count
+from django.db.models import Count
 
 import vinaigrette
 
@@ -365,7 +365,6 @@ class TestCaseRun(TCMSActionModel):
 class TestRunTag(models.Model):
     tag = models.ForeignKey('management.Tag', on_delete=models.CASCADE)
     run = models.ForeignKey(TestRun, related_name='tags', on_delete=models.CASCADE)
-    user = models.IntegerField(db_column='userid', default='0')
 
 
 class TestRunCC(models.Model):
