@@ -7,8 +7,7 @@ django-modern-rpc
 django-simple-history
 django-uuslug
 django-vinaigrette
-# because of https://github.com/pycontribs/jira/issues/501
-jira==1.0.10
+jira
 Markdown
 python-bugzilla
 PyGithub
