@@ -14,10 +14,7 @@ def email_plan_update(plan):
 def get_plan_notification_recipients(plan):  # pylint: disable=invalid-name
     recipients = set()
 
-    if plan.owner and plan.emailing.auto_to_plan_owner:
-        recipients.add(plan.owner.email)
-
-    if plan.emailing.auto_to_plan_author:
+    if plan.author and plan.emailing.auto_to_plan_author:
         recipients.add(plan.author.email)
 
     if plan.emailing.auto_to_case_owner:

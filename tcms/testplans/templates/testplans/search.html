@@ -101,11 +101,6 @@
                         value="{{ form.author__username__startswith.value|default:'' }}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_owner">{% trans "Owner" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <input id="id_owner" type="text" class="form-control" placeholder="{% trans 'Username' %}">
-            </div>
-
             <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default&nbsp;tester" %}</label>
             <div class="col-md-3 col-lg-3">
                 <input id="id_default_tester" type="text" class="form-control" placeholder="{% trans 'Username' %}">
@@ -138,7 +133,6 @@
                     <th>{% trans "Test plan" %}</th>
                     <th>{% trans "Created" %}</th>
                     <th>{% trans "Author" %}</th>
-                    <th>{% trans "Owner" %}</th>
                     <th>{% trans "Product" %}</th>
                     <th>{% trans "Type" %}</th>
                 </tr>

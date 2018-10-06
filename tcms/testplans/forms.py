@@ -37,11 +37,6 @@ class BasePlanForm(forms.Form):
     )
     parent = forms.IntegerField(required=False)
 
-    owner = forms.CharField(
-        label="Plan Document",
-        required=False
-    )
-
     def clean_parent(self):
         try:
             parent_pk = self.cleaned_data['parent']
@@ -66,10 +61,6 @@ class NewPlanForm(BasePlanForm):
     )
 
     # Display radio buttons instead of checkboxes
-    auto_to_plan_owner = forms.BooleanField(
-        label=' plan\'s owner',
-        required=False
-    )
     auto_to_plan_author = forms.BooleanField(
         label=' plan\'s author',
         required=False
@@ -104,10 +95,6 @@ class EditPlanForm(NewPlanForm):
         empty_label=None,
     )
     is_active = forms.BooleanField(label="Active", required=False)
-    owner = UserField(
-        label=' plan\'s owner',
-        required=False
-    )
     author = UserField(
         label=' plan\'s author',
         required=False
@@ -140,7 +127,6 @@ class SearchPlanForm(forms.Form):
     )
     author__username__startswith = forms.CharField(required=False)
     author__email__startswith = forms.CharField(required=False)
-    owner__username__startswith = forms.CharField(required=False)
     case__default_tester__username__startswith = forms.CharField(
         required=False)
     tag__name__in = forms.CharField(required=False)

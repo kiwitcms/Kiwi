@@ -40,7 +40,6 @@ def update_plan_email_settings(test_plan, form):
         'notify_on_plan_update']
     test_plan.emailing.notify_on_case_update = form.cleaned_data[
         'notify_on_case_update']
-    test_plan.emailing.auto_to_plan_owner = form.cleaned_data['auto_to_plan_owner']
     test_plan.emailing.auto_to_plan_author = form.cleaned_data['auto_to_plan_author']
     test_plan.emailing.auto_to_case_owner = form.cleaned_data['auto_to_case_owner']
     test_plan.emailing.auto_to_case_default_tester = form.cleaned_data[
@@ -67,7 +66,6 @@ def new(request, template_name='plan/new.html'):
             test_plan = TestPlan.objects.create(
                 product=form.cleaned_data['product'],
                 author=request.user,
-                owner=request.user,
                 product_version=form.cleaned_data['product_version'],
                 type=form.cleaned_data['type'],
                 name=form.cleaned_data['name'],
@@ -367,7 +365,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
                 test_plan.type = form.cleaned_data['type']
                 test_plan.is_active = form.cleaned_data['is_active']
                 test_plan.extra_link = form.cleaned_data['extra_link']
-                test_plan.owner = form.cleaned_data['owner']
                 # IMPORTANT! tp.current_user is an instance attribute,
                 # added so that in post_save, current logged-in user info
                 # can be accessed.
@@ -390,8 +387,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             'parent': test_plan.parent_id,
             'is_active': test_plan.is_active,
             'extra_link': test_plan.extra_link,
-            'owner': test_plan.owner,
-            'auto_to_plan_owner': test_plan.emailing.auto_to_plan_owner,
             'auto_to_plan_author': test_plan.emailing.auto_to_plan_author,
             'auto_to_case_owner': test_plan.emailing.auto_to_case_owner,
             'auto_to_case_default_tester': test_plan.emailing.auto_to_case_default_tester,

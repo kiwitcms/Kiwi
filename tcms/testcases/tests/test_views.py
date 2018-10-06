@@ -182,15 +182,12 @@ class TestOperateCasePlans(BasePlanCase):
         # remove a plan from a case.
 
         cls.plan_test_case_plans = TestPlanFactory(author=cls.tester,
-                                                   owner=cls.tester,
                                                    product=cls.product,
                                                    product_version=cls.version)
         cls.plan_test_add = TestPlanFactory(author=cls.tester,
-                                            owner=cls.tester,
                                             product=cls.product,
                                             product_version=cls.version)
         cls.plan_test_remove = TestPlanFactory(author=cls.tester,
-                                               owner=cls.tester,
                                                product=cls.product,
                                                product_version=cls.version)
 

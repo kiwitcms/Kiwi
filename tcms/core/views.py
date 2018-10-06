@@ -16,7 +16,7 @@ from tcms.testruns.models import TestRun
 def dashboard(request):
     """List all recent TestPlans and TestRuns"""
     test_plans = TestPlan.objects.filter(
-        Q(author=request.user) | Q(owner=request.user)
+        author=request.user
     ).order_by(
         '-plan_id'
     ).select_related(

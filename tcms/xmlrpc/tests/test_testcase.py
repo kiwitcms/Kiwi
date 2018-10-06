@@ -52,7 +52,7 @@ class TestFilterCases(XmlrpcAPIBaseTest):
         self.product = ProductFactory(name='StarCraft')
         self.version = VersionFactory(value='0.1', product=self.product)
         self.plan = TestPlanFactory(name='Test product.get_cases',
-                                    owner=self.tester, author=self.tester,
+                                    author=self.tester,
                                     product=self.product,
                                     product_version=self.version)
         self.case_category = CategoryFactory(product=self.product)

@@ -31,10 +31,6 @@ $(document).ready(function() {
                 params['author__username__startswith'] = $('#id_author').val();
             };
 
-            if ($('#id_owner').val()) {
-                params['owner__username__startswith'] = $('#id_owner').val();
-            };
-
             if ($('#id_default_tester').val()) {
                 params['case__default_tester__username__startswith'] = $('#id_default_tester').val();
             };
@@ -55,7 +51,6 @@ $(document).ready(function() {
             },
             { data: "create_date" },
             { data: "author" },
-            { data: "owner" },
             { data: "product" },
             { data: "type"}
         ],

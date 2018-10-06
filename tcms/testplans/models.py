@@ -42,8 +42,6 @@ class TestPlan(TCMSActionModel):
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
     product_version = models.ForeignKey(Version, related_name='plans', on_delete=models.CASCADE)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
-                              related_name='myplans', on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey('management.Product', related_name='plan',
                                 on_delete=models.CASCADE)
@@ -258,7 +256,6 @@ class TestPlanTag(models.Model):
 class TestPlanEmailSettings(models.Model):
     plan = models.OneToOneField(TestPlan, related_name='email_settings', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
-    auto_to_plan_owner = models.BooleanField(default=False)
     auto_to_plan_author = models.BooleanField(default=False)
     auto_to_case_owner = models.BooleanField(default=False)
     auto_to_case_default_tester = models.BooleanField(default=False)

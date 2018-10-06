@@ -410,8 +410,6 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
         'author': ('author_id', do_nothing),
         'author__username': ('author', to_str),
-        'owner': ('owner_id', do_nothing),
-        'owner__username': ('owner', to_str),
         'parent': ('parent_id', do_nothing),
         'parent__name': ('parent', do_nothing),
         'product': ('product_id', do_nothing),
