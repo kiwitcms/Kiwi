@@ -54,9 +54,7 @@ Nitrate.TestPlans.Instance = {
 			<input id="btn_print" type="button" value="Print Plan "
                    title="Print Plan"
                    data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>
-                    {% if perms.testplans.delete_testplan %}
-                        <a href="{% url 'admin:testplans_testplan_delete' test_plan.pk %}"><strong>DELETE PLAN</strong></a>
-                    {% endif %}
+			<input id="btn_delete" type="button" value="Delete Plan " title="Delete test plan" data-param="{% url 'admin:testplans_testplan_delete' test_plan.pk %}" {% if perms.testplans.delete_testplan %}{% else %}disabled{% endif %}>
 		</span>
 	</div>
 	<h2 id="display_title" class="{% ifequal test_plan.is_active 0 %}line-through{% endifequal %}">
