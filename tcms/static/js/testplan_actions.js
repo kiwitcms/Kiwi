@@ -565,7 +565,7 @@ Nitrate.TestPlans.Details = {
     Nitrate.TestPlans.Details.observeEvents(plan_id);
     Nitrate.TestPlans.Details.initTabs();
 
-    jQ('#btn_edit').bind('click', function() {
+    jQ('#btn_edit, #btn_delete').bind('click', function() {
       window.location.href = jQ(this).data('param');
     });
     jQ('#btn_clone, #btn_print').bind('click', function() {
