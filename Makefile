@@ -68,7 +68,7 @@ bandit:
 .PHONY: bandit_site_packages
 bandit_site_packages:
 	if [ -d "/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/" ]; then \
-	    bandit -r /home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/; \
+	    bandit -a vuln -r /home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/; \
 	fi
 
 
