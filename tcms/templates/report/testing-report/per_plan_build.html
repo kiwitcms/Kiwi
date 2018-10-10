@@ -1,17 +1,6 @@
 {% extends "report/common/search_run.html" %}
 {% block report %}
 {% if report_data %}
-	{% if queries %}
-	<div class="queries">
-		<ul>
-		{% for k, v in queries.items %}
-			<li><label>{{ k|title }}:</label>{{ v|safe }};</li>
-		{% endfor %}
-			<li class="clear"></li>
-		</ul>
-	</div>
-	{% endif %}
-
 	<div class="reportSummary01">
 		<ul>
 			<li>

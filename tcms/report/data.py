@@ -547,11 +547,11 @@ class TestingReportBaseData:
     """Base data of various testing report"""
     # filter criteria is against TestCaseRun
     report_criteria = {
-        'r_product': ('build__product', lambda obj: obj.pk),
-        'r_build': ('build__in', models_to_pks),
-        'r_created_since': ('run__start_date__gte', do_nothing),
-        'r_created_before': ('run__start_date__lte', do_nothing),
-        'r_version': ('run__product_version__in', models_to_pks),
+        'product': ('build__product', lambda obj: obj.pk),
+        'build': ('build__in', models_to_pks),
+        'created_since': ('run__start_date__gte', do_nothing),
+        'created_before': ('run__start_date__lte', do_nothing),
+        'version': ('run__product_version__in', models_to_pks),
     }
 
     def _filter_query(self, form, query):
@@ -595,10 +595,10 @@ class TestingReportBaseData:
     @staticmethod
     def _get_builds(form):
         """Get selected or all product's builds for display"""
-        builds = form.cleaned_data['r_build']
+        builds = form.cleaned_data['build']
         builds_selected = len(builds) > 0
         if not builds:
-            product = form.cleaned_data['r_product']
+            product = form.cleaned_data['product']
             builds = Build.objects.filter(product=product).only('name')
         return builds, builds_selected
 
@@ -1278,11 +1278,11 @@ class TestingReportCaseRunsData:
     """
 
     run_filter_criteria = {
-        'r_product': ('run__build__product', do_nothing),
-        'r_build': ('run__build__in', models_to_pks),
-        'r_created_since': ('run__start_date__gte', do_nothing),
-        'r_created_before': ('run__start_date__lte', do_nothing),
-        'r_version': ('run__product_version__in', models_to_pks),
+        'product': ('run__build__product', do_nothing),
+        'build': ('run__build__in', models_to_pks),
+        'created_since': ('run__start_date__gte', do_nothing),
+        'created_before': ('run__start_date__lte', do_nothing),
+        'version': ('run__product_version__in', models_to_pks),
         'run': ('run__pk', do_nothing),
     }
 

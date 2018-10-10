@@ -2,23 +2,6 @@
 
 {% block report %}
 {% if report_data %}
-	{% if queries %}
-	<div class="queries">
-		<ul>
-			{% for k, v in queries.items %}
-			<li><label>{{ k|title }}:</label>{{ v|safe }};</li>
-			{% endfor %}
-			{% if not report_data.builds_selected %}
-			<li>
-				<label>Builds:</label>
-				{% for b in report_data.builds %}{{ b }}, {% endfor %}
-			</li>
-			{% endif %}
-			<li class="clear"></li>
-		</ul>
-	</div>
-	{% endif %}
-
 	<div class="reportSummary01">
 		<ul><li class="tagTab">Tester:<span>All Testers</span></li></ul>
 		<ul>

@@ -77,7 +77,7 @@ REPORT_TYPES = (
 class BasicTestingReportFormFields(forms.Form):
     """Testing report form with basic necessary fields"""
 
-    r_product = forms.ModelChoiceField(
+    product = forms.ModelChoiceField(
         required=True,
         label='Product',
         empty_label=None,
@@ -88,10 +88,10 @@ class BasicTestingReportFormFields(forms.Form):
             'invalid_choice': '%(value)s is not a valid product.',
         },
         widget=forms.Select(attrs={
-            'id': 'r_product',
+            'id': 'product',
         }))
 
-    r_build = forms.ModelMultipleChoiceField(
+    build = forms.ModelMultipleChoiceField(
         required=False,
         label='Build',
         queryset=Build.objects.none(),
@@ -100,11 +100,11 @@ class BasicTestingReportFormFields(forms.Form):
             'invalid_choice': 'Test build ID %s does not exist.',
         },
         widget=forms.SelectMultiple(attrs={
-            'id': 'r_build',
+            'id': 'build',
             'size': '5',
         }))
 
-    r_version = forms.ModelMultipleChoiceField(
+    version = forms.ModelMultipleChoiceField(
         required=False,
         label='Version',
         queryset=Version.objects.none(),
@@ -113,11 +113,11 @@ class BasicTestingReportFormFields(forms.Form):
             'invalid_pk_value': '%s is not a valid version ID.',
         },
         widget=forms.SelectMultiple(attrs={
-            'id': 'r_version',
+            'id': 'version',
             'size': '5',
         }))
 
-    r_created_since = forms.DateField(
+    created_since = forms.DateField(
         required=False,
         input_formats=['%Y-%m-%d'],
         error_messages={
@@ -125,12 +125,12 @@ class BasicTestingReportFormFields(forms.Form):
                        ' is YYYY-MM-DD.',
         },
         widget=forms.TextInput(attrs={
-            'id': 'r_created_since',
+            'id': 'created_since',
             'style': 'width:130px;',
             'class': 'vDateField',
         }))
 
-    r_created_before = forms.DateField(
+    created_before = forms.DateField(
         required=False,
         input_formats=['%Y-%m-%d'],
         error_messages={
@@ -138,20 +138,20 @@ class BasicTestingReportFormFields(forms.Form):
                        'is YYYY-MM-DD.',
         },
         widget=forms.TextInput(attrs={
-            'id': 'r_created_before',
+            'id': 'created_before',
             'style': 'width:130px;',
             'class': 'vDateField',
         }))
 
     def populate(self, product_id):
         if product_id:
-            self.fields['r_build'].queryset = Build.objects.filter(
+            self.fields['build'].queryset = Build.objects.filter(
                 product=product_id).only('name')
-            self.fields['r_version'].queryset = Version.objects.filter(
+            self.fields['version'].queryset = Version.objects.filter(
                 product=product_id).only('value')
         else:
-            self.fields['r_build'].queryset = Build.objects.none()
-            self.fields['r_version'].queryset = Version.objects.none()
+            self.fields['build'].queryset = Build.objects.none()
+            self.fields['version'].queryset = Version.objects.none()
 
 
 class TestingReportCaseRunsListForm(BasicTestingReportFormFields):
