@@ -66,10 +66,10 @@ jQ(function() {
 
 jQ(function() {
   // product select on change event binding
-  updateOptionOnProdChange('version', 'pl_product', 'pl_version');
-  updateOptionOnProdChange('version', 'r_product','r_version');
-  updateOptionOnProdChange('build', 'r_product', 'r_build');
-  updateOptionOnProdChange('component', 'pl_product', 'pl_component');
-  updateOptionOnProdChange('component', 'cs_product', 'cs_component');
-  updateOptionOnProdChange('category', 'cs_product', 'cs_category');
+  updateOptionOnProdChange('version', 'product', 'version');
+  updateOptionOnProdChange('version', 'product','version');
+  updateOptionOnProdChange('build', 'product', 'build');
+  updateOptionOnProdChange('component', 'product', 'component');
+  updateOptionOnProdChange('component', 'product', 'component');
+  updateOptionOnProdChange('category', 'product', 'category');
 });

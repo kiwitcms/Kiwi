@@ -55,7 +55,7 @@ class TestingReportTestCase(test.TestCase):
 
         url = reverse('testing-report')
         response = self.client.get(url, {
-            'r_product': run.plan.product.pk,
+            'product': run.plan.product.pk,
             'report_type': 'per_build_report'
         })
 
