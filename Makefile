@@ -1,29 +1,11 @@
 default: help
 
-DIST_DIR=$(shell pwd)/dist/
-
-
-.PHONY: tarball
-tarball:
-	@python setup.py sdist
-
-
-.PHONY: build
-build:
-	python setup.py build
-
-
-.PHONY: install
-install:
-	python setup.py install
-
-
-FLAKE8_EXCLUDE=.git,*raw_sql.py
+FLAKE8_EXCLUDE=.git
 
 .PHONY: flake8
 flake8:
 	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms *.py kiwi_lint
-	@flake8 --exclude=$(FLAKE8_EXCLUDE) --ignore=F405 tcms_api
+	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms_api
 
 
 DJANGO_SETTINGS_MODULE="tcms.settings.test"
@@ -72,25 +54,10 @@ bandit_site_packages:
 	fi
 
 
-.PHONY: tags
-tags:
-	@rm -f .tags
-	@ctags -R --languages=Python,CSS,Javascript --python-kinds=-im \
-		--exclude=build --exclude=tcms/static/js/lib -f .tags
-
-
-.PHONY: etags
-etags:
-	@rm -f TAGS
-	@ctags -R -e --languages=Python,CSS,Javascript --python-kinds=-im \
-		--exclude=build --exclude=tcms/static/js/lib -f TAGS
-
+.PHONY: docker-image
 docker-image:
 	find -name "*.pyc" -delete
 	docker build -t kiwitcms/kiwi:latest .
-
-run:
-	docker-compose up
 
 .PHONY: docs
 docs:
@@ -117,15 +84,13 @@ help:
 	@echo ''
 	@echo 'Available commands:'
 	@echo ''
-	@echo '  tarball          - Create tarball. Run command: python setup.py sdist'
 	@echo '  flake8           - Check Python code style throughout whole source code tree'
-	@echo '  test             - Run all tests.'
-	@echo '  build            - Run command: python setup.py build'
-	@echo '  install          - Run command: python setup.py install'
-	@echo '  tags             - Refresh tags for VIM. Default filename is .tags'
-	@echo '  etags            - Refresh tags for Emacs. Default filename is TAGS'
+	@echo '  check            - Run all tests.'
+	@echo '  docker-image     - Build Docker image'
 	@echo '  help             - Show this help message and exit. Default if no command is given'
 
+
+# only necessary b/c in Travis we call `make smt`
 .PHONY: coverity
 coverity:
 	@echo 'Everything is handled by the Coverity add-on in Travis'
