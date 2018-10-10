@@ -144,9 +144,9 @@ PUBLIC_VIEWS = [
     'django.contrib.auth.views.PasswordResetDoneView',
     'django.contrib.auth.views.PasswordResetConfirmView',
     'django.contrib.auth.views.PasswordResetCompleteView',
-    'tcms.core.contrib.auth.views.LoginViewWithCustomTemplate',
-    'tcms.core.contrib.auth.views.register',
-    'tcms.core.contrib.auth.views.confirm',
+    'tcms.kiwi_auth.views.LoginViewWithCustomTemplate',
+    'tcms.kiwi_auth.views.register',
+    'tcms.kiwi_auth.views.confirm',
     'tcms.core.views.navigation',
 ]
 
@@ -269,7 +269,7 @@ INSTALLED_APPS = [
     'simple_history',
 
     'tcms.core',
-    'tcms.core.contrib.auth.apps.AppConfig',
+    'tcms.kiwi_auth',
     'tcms.core.contrib.comments.apps.AppConfig',
     'tcms.core.contrib.linkreference',
     'tcms.management',

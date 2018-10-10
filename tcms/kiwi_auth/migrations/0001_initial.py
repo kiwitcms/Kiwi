@@ -4,6 +4,25 @@ from django.conf import settings
 from django.db import migrations, models
 
 
+class NoExceptionRunSQL(migrations.RunSQL):
+    """
+        Try to remove an SQL table but don't fail if it
+        doesn't exist.
+
+        We need this class because not all DB backends support
+        `IF EXISTS` and because when creating the DB schema initially
+        this table isn't present.
+
+        This is all result from renaming a badly named app and can be removed
+        after several versions when everyone has upgraded!
+    """
+    def _run_sql(self, schema_editor, sqls):
+        try:
+            super()._run_sql()
+        except:  # nosec # noqa
+            pass
+
+
 class Migration(migrations.Migration):
 
     initial = True
@@ -13,6 +32,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # remove old table before app rename,
+        NoExceptionRunSQL('DROP TABLE "tcms_auth_useractivationkey";'),
+
         migrations.CreateModel(
             name='UserActivationKey',
             fields=[

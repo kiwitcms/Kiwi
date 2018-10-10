@@ -27,7 +27,7 @@ class TestSetRandomKey(TestCase):
             email='new-tester@example.com',
             password='password')
 
-    @patch('tcms.core.contrib.auth.models.datetime')
+    @patch('tcms.kiwi_auth.models.datetime')
     def test_set_random_key(self, mock_datetime):
         now = datetime.datetime.now()
         in_7_days = datetime.timedelta(7)
@@ -103,7 +103,7 @@ class TestRegistration(TestCase):
 
     def assert_user_registration(self, username, follow=False):
 
-        with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
+        with patch('tcms.kiwi_auth.models.secrets') as _secrets:
             _secrets.token_hex.return_value = self.fake_activate_key
 
             response = self.client.post(self.register_url,
@@ -220,7 +220,7 @@ class TestConfirm(TestCase):
     def test_fail_if_activation_key_expired(self):
         fake_activation_key = 'secret-activation-key'
 
-        with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
+        with patch('tcms.kiwi_auth.models.secrets') as _secrets:
             _secrets.token_hex.return_value = fake_activation_key
             key = UserActivationKey.set_random_key_for_user(self.new_user)
             key.key_expires = datetime.datetime.now() - datetime.timedelta(days=10)
@@ -238,7 +238,7 @@ class TestConfirm(TestCase):
     def test_confirm(self):
         fake_activate_key = 'secret-activate-key'
 
-        with patch('tcms.core.contrib.auth.models.secrets') as _secrets:
+        with patch('tcms.kiwi_auth.models.secrets') as _secrets:
             _secrets.token_hex.return_value = fake_activate_key
             UserActivationKey.set_random_key_for_user(self.new_user)
 

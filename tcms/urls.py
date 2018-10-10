@@ -18,7 +18,7 @@ from tcms.core.contrib.comments import views as comments_views
 from tcms.core.contrib.linkreference import views as linkreference_views
 from tcms.testplans import urls as testplans_urls
 from tcms.testcases import urls as testcases_urls
-from tcms.core.contrib.auth import urls as auth_urls
+from tcms.kiwi_auth import urls as auth_urls
 from tcms.testruns import urls as testruns_urls
 from tcms.testruns import views as testruns_views
 from tcms.report import urls as report_urls

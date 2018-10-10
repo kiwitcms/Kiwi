@@ -11,7 +11,6 @@ Subpackages
 
 .. toctree::
 
-    tcms.core.contrib.auth
     tcms.core.contrib.comments
     tcms.core.contrib.linkreference
 
