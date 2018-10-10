@@ -4,7 +4,7 @@ from django.conf.urls import url
 from django.urls import reverse_lazy
 from django.contrib.auth import views as contrib_auth_views
 
-from tcms.core.contrib.auth import views
+from tcms.kiwi_auth import views
 
 urlpatterns = [
     url(r'^(?P<username>[\w.@+-]+)/profile/$', views.profile,

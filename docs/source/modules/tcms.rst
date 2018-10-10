@@ -13,6 +13,7 @@ Subpackages
 
     tcms.core
     tcms.issuetracker
+    tcms.kiwi_auth
     tcms.management
     tcms.report
     tcms.search
