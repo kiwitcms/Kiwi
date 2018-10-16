@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
         ('testruns', '0001_initial'),
         ('contenttypes', '0002_remove_content_type_name'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('management', '0001_initial'),
+        ('management', '0001_squashed'),
         ('testcases', '0001_initial'),
         ('sites', '0001_initial'),
     ]

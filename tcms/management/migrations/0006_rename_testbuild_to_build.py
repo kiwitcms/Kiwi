@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     atomic = False
 
     dependencies = [
-        ('management', '0005_remove_testenvironment_models'),
+        ('management', '0001_squashed'),
     ]
 
     operations = [
