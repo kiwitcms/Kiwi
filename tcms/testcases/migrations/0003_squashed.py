@@ -48,20 +48,6 @@ class Migration(migrations.Migration):
     # because renaming tables in transaction fails while testing on SQLite
     atomic = False
 
-    replaces = [
-        ('testcases', '0013_rename_testcasecategory_to_casecategory'),
-        ('testcases', '0014_rename_testtag'),
-        ('testcases', '0015_rename_testcasebug'),
-        ('testcases', '0016_duration_field'),
-        ('testcases', '0017_increase_checksum_fields_size'),
-        ('testcases', '0018_remove_checksum_fields'),
-        ('testcases', '0019_drop_meta_db_name'),
-        ('testcases', '0020_historicaltestcase'),
-        ('testcases', '0021_convert_cc_list_to_string'),
-        ('testcases', '0022_remove_estimated_time'),
-        ('testcases', '0023_remove_testcasetag_user')
-    ]
-
     dependencies = [
         ('testcases', '0002_squashed'),
         ('management', '0002_squashed'),

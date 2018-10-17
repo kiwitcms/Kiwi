@@ -35,20 +35,6 @@ def reverse_add_initial_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('testcases', '0002_auto_20160828_1427'),
-        ('testcases', '0003_add_initial_data'),
-        ('testcases', '0004_add_unique_to_testcasebugsystem_name'),
-        ('testcases', '0005_change_meta_options_on_testcasebugsystem'),
-        ('testcases', '0006_add_bugtracker_integration_fields'),
-        ('testcases', '0005_allow_null_to_testcaseattachment_case_run'),
-        ('testcases', '0007_merge'),
-        ('testcases', '0008_testcasebug_field_options'),
-        ('testcases', '0009_testcasebug_rename_report_url_to_base_url'),
-        ('testcases', '0010_update_blank_and_null_constraints'),
-        ('testcases', '0011_delete_attachments')
-    ]
-
     dependencies = [
         ('testruns', '0001_initial'),
         ('sites', '0001_initial'),
