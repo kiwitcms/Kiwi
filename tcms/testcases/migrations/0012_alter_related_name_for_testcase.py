@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testcases', '0011_delete_attachments'),
+        ('testcases', '0002_squashed'),
     ]
 
     operations = [
