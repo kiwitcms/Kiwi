@@ -9,7 +9,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testplans', '0005_delete_attachments'),
+        ('testplans', '0001_squashed'),
     ]
 
     operations = [
