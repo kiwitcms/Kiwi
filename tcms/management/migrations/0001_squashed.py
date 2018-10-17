@@ -23,14 +23,6 @@ def reverse_remove_initial_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('management', '0001_initial'),
-        ('management', '0002_add_initial_data'),
-        ('management', '0003_delete_attachments'),
-        ('management', '0004_update_tcmsenvvalue_ordering'),
-        ('management', '0005_remove_testenvironment_models')
-    ]
-
     initial = True
 
     dependencies = [

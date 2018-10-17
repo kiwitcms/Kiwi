@@ -6,16 +6,6 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
     atomic = False
 
-    replaces = [
-        ('management', '0006_rename_testbuild_to_build'),
-        ('management', '0007_rename_env'),
-        ('management', '0008_rename_testtag'),
-        ('management', '0009_remove_milestone'),
-        ('management', '0010_remove_unused_fields_from_product'),
-        ('management', '0011_drop_meta_db_name'),
-        ('management', '0012_remove_user_fks_from_envgroup')
-    ]
-
     dependencies = [
         ('testcases', '0002_squashed'),
         ('management', '0001_squashed'),
