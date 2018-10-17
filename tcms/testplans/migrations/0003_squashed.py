@@ -6,15 +6,6 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
     atomic = False
 
-    replaces = [
-        ('testplans', '0010_rename_testtag'),
-        ('testplans', '0011_remove_testplanemailsettings_notify_on_plan_delete'),
-        ('testplans', '0012_increase_checksum_field_size'),
-        ('testplans', '0013_remove_plan_text_version'),
-        ('testplans', '0014_remove_testplantext_checksum'),
-        ('testplans', '0015_drop_meta_db_name')
-    ]
-
     dependencies = [
         ('testplans', '0002_squashed'),
     ]

@@ -17,13 +17,6 @@ def forward_copy_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('testplans', '0016_historicaltestplan'),
-        ('testplans', '0017_move_text_into_testplan'),
-        ('testplans', '0018_remove_env'),
-        ('testplans', '0019_remove_testplantag_user')
-    ]
-
     dependencies = [
         ('testplans', '0003_squashed'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
