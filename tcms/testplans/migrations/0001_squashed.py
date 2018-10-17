@@ -39,14 +39,6 @@ def delete_stale_content_type(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('testplans', '0001_initial'),
-        ('testplans', '0002_add_initial_data'),
-        ('testplans', '0003_delete_testplanpermissions_model'),
-        ('testplans', '0004_remove_model_TestPlanActivity'),
-        ('testplans', '0005_delete_attachments')
-    ]
-
     initial = True
 
     dependencies = [
