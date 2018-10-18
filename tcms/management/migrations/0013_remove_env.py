@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testruns', '0017_remove_env'),
+        ('testruns', '0003_squashed'),
         ('testplans', '0018_remove_env'),
         ('management', '0012_remove_user_fks_from_envgroup'),
     ]
