@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testruns', '0006_add_related_name_to_testrun'),
+        ('testruns', '0005_alter_testrun_tag'),
         ('management', '0006_rename_testbuild_to_build'),
     ]
 

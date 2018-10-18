@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('testplans', '0017_move_text_into_testplan'),
         ('management', '0012_remove_user_fks_from_envgroup'),
-        ('testruns', '0014_historicaltestcaserun'),
+        ('testruns', '0002_squashed'),
     ]
 
     operations = [
