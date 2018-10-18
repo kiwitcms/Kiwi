@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('management', '0007_rename_env'),
         # run after the migrations below b/c TestTag is referenced inside of them
-        ('testcases', '0012_alter_related_name_for_testcase'),
+        ('testcases', '0002_squashed'),
         ('testplans', '0007_add_related_name_to_testplan'),
         ('testruns', '0006_add_related_name_to_testrun'),
     ]
