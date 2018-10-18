@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
     atomic = False
 
     dependencies = [
-        ('testplans', '0009_rename_testplantype'),
+        ('testplans', '0002_squashed'),
         ('management', '0008_rename_testtag'),
     ]
 
