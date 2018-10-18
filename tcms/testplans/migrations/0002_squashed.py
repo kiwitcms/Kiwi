@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     ]
 
     dependencies = [
-        ('management', '0012_remove_user_fks_from_envgroup'),
+        ('management', '0002_squashed'),
         ('testplans', '0001_squashed'),
     ]
 
