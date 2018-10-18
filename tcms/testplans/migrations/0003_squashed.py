@@ -16,7 +16,6 @@ class Migration(migrations.Migration):
     ]
 
     dependencies = [
-        ('management', '0008_rename_testtag'),
         ('testplans', '0002_squashed'),
     ]
 
