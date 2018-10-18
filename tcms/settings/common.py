@@ -131,6 +131,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'global_login_required.GlobalLoginRequiredMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+    'tcms.core.middleware.CheckSettingsMiddleware',
 ]
 
 
