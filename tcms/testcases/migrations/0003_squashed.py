@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('testcases', '0002_squashed'),
-        ('management', '0008_rename_testtag'),
+        ('management', '0002_squashed'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
