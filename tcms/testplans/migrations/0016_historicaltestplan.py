@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('management', '0011_drop_meta_db_name'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('testplans', '0015_drop_meta_db_name'),
+        ('testplans', '0003_squashed'),
     ]
 
     operations = [
