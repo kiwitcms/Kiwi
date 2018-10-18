@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
     atomic = False
 
     dependencies = [
-        ('testcases', '0012_alter_related_name_for_testcase'),
+        ('testcases', '0002_squashed'),
     ]
 
     operations = [
