@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from modernrpc.core import rpc_method, REQUEST_KEY
 
 from tcms.core.utils import form_errors_to_list
@@ -257,11 +255,12 @@ def _get_updated_test_run(run_id, values, form):
         if form.cleaned_data['notes']:
             test_run.notes = form.cleaned_data['notes']
 
-    test_run.stop_date = None
+    # todo: form doesn't allow stop_date to be updated
+    # test_run.stop_date = None
 
-    if isinstance(form.cleaned_data['status'], int) and \
-       form.cleaned_data['status']:
-        test_run.stop_date = datetime.now()
+    # if isinstance(form.cleaned_data['status'], int) and \
+    #   form.cleaned_data['status']:
+    #    test_run.stop_date = datetime.now()
 
     test_run.save()
     return test_run
