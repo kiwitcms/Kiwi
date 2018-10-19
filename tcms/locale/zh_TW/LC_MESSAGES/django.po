@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-03 06:58+0000\n"
+"POT-Creation-Date: 2018-10-19 10:17+0000\n"
 "PO-Revision-Date: 2018-09-03 11:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -16,61 +16,10 @@ msgstr ""
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:254 tcms/testruns/views.py:820
+#: tcms/core/ajax.py:254 tcms/testruns/views.py:812
 #, python-format
 msgid "User %s not found!"
 msgstr ""
-
-#: tcms/core/contrib/auth/admin.py:24
-msgid "This email address is already in use"
-msgstr ""
-
-#: tcms/core/contrib/auth/admin.py:73
-msgid "Personal info"
-msgstr ""
-
-#: tcms/core/contrib/auth/admin.py:74
-msgid "Permissions"
-msgstr ""
-
-#: tcms/core/contrib/auth/apps.py:8
-msgid "Core auth"
-msgstr "核心身份驗證"
-
-#: tcms/core/contrib/auth/forms.py:29
-msgid "A user with that email already exists."
-msgstr "使用此電子郵件的用戶已經存在"
-
-#: tcms/core/contrib/auth/forms.py:57
-#, python-format
-msgid "Your new %s account confirmation"
-msgstr "您的新帳戶 %s 確認"
-
-#: tcms/core/contrib/auth/views.py:47
-msgid ""
-"Your account has been created, please check your mailbox for confirmation"
-msgstr "您的帳戶已經新增完畢，請確認您的 E-mail 是否有啟動連結的信件。"
-
-#: tcms/core/contrib/auth/views.py:53
-msgid ""
-"Your account has been created, but you need an administrator to activate it"
-msgstr "您的帳戶已創建, 但您需要管理員來啟用它"
-
-#: tcms/core/contrib/auth/views.py:59
-msgid "Following is the administrator list"
-msgstr "以下是管理員清單"
-
-#: tcms/core/contrib/auth/views.py:90
-msgid "This activation key no longer exists in the database"
-msgstr "此啟用金鑰不存在於資料庫中"
-
-#: tcms/core/contrib/auth/views.py:95
-msgid "This activation key has expired"
-msgstr "此啟用金鑰已過期"
-
-#: tcms/core/contrib/auth/views.py:107
-msgid "Your account has been activated successfully"
-msgstr "您的帳戶已成功啟用"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -109,6 +58,60 @@ msgid ""
 "For more information:\n"
 "%(instance_url)s"
 msgstr ""
+
+#: tcms/core/middleware.py:25
+#, python-format
+msgid ""
+"Base URL is not configured! See <a href=\"%s\">documentation</a> and <a href="
+"\"%s\">change it</a>"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:24
+msgid "This email address is already in use"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:73
+msgid "Personal info"
+msgstr ""
+
+#: tcms/kiwi_auth/admin.py:74
+msgid "Permissions"
+msgstr ""
+
+#: tcms/kiwi_auth/forms.py:29
+msgid "A user with that email already exists."
+msgstr "使用此電子郵件的用戶已經存在"
+
+#: tcms/kiwi_auth/forms.py:57
+#, python-format
+msgid "Your new %s account confirmation"
+msgstr "您的新帳戶 %s 確認"
+
+#: tcms/kiwi_auth/views.py:47
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
+msgstr "您的帳戶已經新增完畢，請確認您的 E-mail 是否有啟動連結的信件。"
+
+#: tcms/kiwi_auth/views.py:53
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
+msgstr "您的帳戶已創建, 但您需要管理員來啟用它"
+
+#: tcms/kiwi_auth/views.py:59
+msgid "Following is the administrator list"
+msgstr "以下是管理員清單"
+
+#: tcms/kiwi_auth/views.py:90
+msgid "This activation key no longer exists in the database"
+msgstr "此啟用金鑰不存在於資料庫中"
+
+#: tcms/kiwi_auth/views.py:95
+msgid "This activation key has expired"
+msgstr "此啟用金鑰已過期"
+
+#: tcms/kiwi_auth/views.py:107
+msgid "Your account has been activated successfully"
+msgstr "您的帳戶已成功啟用"
 
 #: tcms/settings/common.py:81
 msgid "DASHBOARD"
@@ -551,12 +554,12 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr "TestPlan 未指定或不存在"
 
-#: tcms/testcases/views.py:1107 tcms/testruns/views.py:549
-#: tcms/testruns/views.py:627
+#: tcms/testcases/views.py:1104 tcms/testruns/views.py:546
+#: tcms/testruns/views.py:624
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
 
-#: tcms/testcases/views.py:1256
+#: tcms/testcases/views.py:1252
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
@@ -606,19 +609,19 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: tcms/testplans/views.py:346
+#: tcms/testplans/views.py:339
 msgid "Select at least one TestRun and one TestCase"
 msgstr "選擇至少一個 TestRun 和一個 TestCase"
 
-#: tcms/testplans/views.py:424
+#: tcms/testplans/views.py:417
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:645
+#: tcms/testplans/views.py:638
 msgid "At least one test plan is required for print"
 msgstr "列印時至少需要一個Test Plan"
 
-#: tcms/testplans/views.py:653
+#: tcms/testplans/views.py:646
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "TestPlan \"%s\" 不存在"
@@ -711,23 +714,23 @@ msgstr ""
 msgid "Finished at"
 msgstr ""
 
-#: tcms/testruns/views.py:51
+#: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr ""
 
-#: tcms/testruns/views.py:61
+#: tcms/testruns/views.py:60
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "創建 TestRun 至少需要一個 TestCase"
 
-#: tcms/testruns/views.py:553
+#: tcms/testruns/views.py:550
 msgid "Clone of "
 msgstr ""
 
-#: tcms/testruns/views.py:636
+#: tcms/testruns/views.py:633
 msgid "TestCase ID is not a valid integer"
 msgstr "TestCase ID 不是有效的整數"
 
-#: tcms/testruns/views.py:768
+#: tcms/testruns/views.py:760
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d CaseRun 已更新:"
