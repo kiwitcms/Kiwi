@@ -45,21 +45,6 @@ def reverse_duration_field(apps, schema_editor):
 class Migration(migrations.Migration):
     atomic = False
 
-    replaces = [
-        ('testruns', '0002_add_initial_data'),
-        ('testruns', '0003_testrun_estimated_time_remove_max_length'),
-        ('testruns', '0004_remove_testrun_errata_id'),
-        ('testruns', '0005_alter_testrun_tag'),
-        ('testruns', '0007_rename_testbuild_to_build'),
-        ('testruns', '0008_rename_env'),
-        ('testruns', '0009_rename_testtag'),
-        ('testruns', '0010_duration_field'),
-        ('testruns', '0011_remove_plan_text_version'),
-        ('testruns', '0012_drop_fields_from_testcaserunstatus'),
-        ('testruns', '0013_drop_meta_db_name'),
-        ('testruns', '0014_historicaltestcaserun')
-    ]
-
     dependencies = [
         ('management', '0002_squashed'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
