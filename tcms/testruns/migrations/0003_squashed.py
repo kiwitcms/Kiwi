@@ -25,14 +25,6 @@ def forwards_env_to_tag(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('testruns', '0015_historicaltestrun'),
-        ('testruns', '0016_remove_auto_update_run_status'),
-        ('testruns', '0017_remove_env'),
-        ('testruns', '0018_remove_estimated_time'),
-        ('testruns', '0019_remove_testruntag_user')
-    ]
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('testruns', '0002_squashed'),
