@@ -2,6 +2,74 @@ Change Log
 ==========
 
 
+Kiwi TCMS 6.1 (20 Oct 2018)
+---------------------------
+
+**IMPORTANT:** this release introduces new database migrations,
+internal updates and bug fixes. It is a small release designed
+to minimize the number of database migrations by squashing them together.
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.1
+
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update `Jira from 1.0.10 to 2.0.0 <https://github.com/pycontribs/jira>`_
+- Update to `Patternfly 3.55.0 <https://github.com/patternfly/patternfly/releases>`_
+- Use button instead of HTML link for deleting test plan (Oleg Kainov)
+- New middleware that will check missing settings. At the moment will only
+  check Base URL configuration which often gets forgotten!
+
+
+Bug fixes
+~~~~~~~~~
+
+- Hot-fix for error caused by the API method ``TestRun.update``. Error was
+  initially reported on
+  `StackOverflow <https://stackoverflow.com/questions/52865463/>`_.
+  This patch makes it possible to use the API without crashing however the
+  ``TestRun.update`` method doesn't handle the ``stop_date`` field at the moment!
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated translation source strings
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Fix pylint errors (Ivaylo Ivanov)
+- Remove unused ``TestRun.list`` and ``TestCase.list_confirmed`` methods
+- Remove unused ``plan_by_id_or_name()`` and ``is_int()``. Fixes
+  `Issue #269 <https://github.com/kiwitcms/Kiwi/issues/269>`_
+
+
+Database
+~~~~~~~~
+
+- Rename ``tcms.core.contrib.auth`` to ``tcms.kiwi_auth``
+- Remove field ``user`` from ``TestCaseTag``, ``TestRunTag`` and ``TestPlanTag``
+  models
+- Squash migrations for ``management`` app
+- Squash migrations for ``testcases`` app
+- Squash migrations for ``testplans`` app
+- Squash migrations for ``testruns`` app
+
+
+
 Kiwi TCMS 6.0 (04 Oct 2018)
 ---------------------------
 
