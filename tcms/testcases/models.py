@@ -54,14 +54,14 @@ class TestCaseStatus(TCMSActionModel):
         return self.name
 
     @classmethod
-    def get_PROPOSED(cls):
+    def get_proposed(cls):
         try:
             return cls.objects.get(name='PROPOSED')
         except cls.DoesNotExist:
             return None
 
     @classmethod
-    def get_CONFIRMED(cls):
+    def get_confirmed(cls):
         try:
             return cls.objects.get(name='CONFIRMED')
         except cls.DoesNotExist:

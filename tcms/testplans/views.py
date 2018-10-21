@@ -565,7 +565,7 @@ class LinkCasesSearchView(View):
         normal_form = SearchCaseForm(initial={
             'product': plan.product_id,
             'product_version': plan.product_version_id,
-            'case_status_id': TestCaseStatus.get_CONFIRMED()
+            'case_status_id': TestCaseStatus.get_confirmed()
         })
         quick_form = QuickSearchCaseForm()
         return render(self.request, self.template_name, {
