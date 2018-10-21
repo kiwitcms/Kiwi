@@ -58,47 +58,47 @@ def plan_from_request_or_none(request, pk_enough=False):
     Arguments:
     - pk_enough: a choice for invoker to determine whether the ID is enough.
     """
-    tp_id = request.POST.get("from_plan") or request.GET.get("from_plan")
-    if tp_id:
+    test_plan_id = request.POST.get("from_plan") or request.GET.get("from_plan")
+    if test_plan_id:
         if pk_enough:
             try:
-                tp = int(tp_id)
+                test_plan = int(test_plan_id)
             except ValueError:
-                tp = None
+                test_plan = None
         else:
-            tp = get_object_or_404(TestPlan, plan_id=tp_id)
+            test_plan = get_object_or_404(TestPlan, plan_id=test_plan_id)
     else:
-        tp = None
-    return tp
+        test_plan = None
+    return test_plan
 
 
-def update_case_email_settings(tc, n_form):
+def update_case_email_settings(test_case, n_form):
     """Update testcase's email settings."""
 
-    tc.emailing.notify_on_case_update = n_form.cleaned_data[
+    test_case.emailing.notify_on_case_update = n_form.cleaned_data[
         'notify_on_case_update']
-    tc.emailing.notify_on_case_delete = n_form.cleaned_data[
+    test_case.emailing.notify_on_case_delete = n_form.cleaned_data[
         'notify_on_case_delete']
-    tc.emailing.auto_to_case_author = n_form.cleaned_data[
+    test_case.emailing.auto_to_case_author = n_form.cleaned_data[
         'author']
-    tc.emailing.auto_to_case_tester = n_form.cleaned_data[
+    test_case.emailing.auto_to_case_tester = n_form.cleaned_data[
         'default_tester_of_case']
-    tc.emailing.auto_to_run_manager = n_form.cleaned_data[
+    test_case.emailing.auto_to_run_manager = n_form.cleaned_data[
         'managers_of_runs']
-    tc.emailing.auto_to_run_tester = n_form.cleaned_data[
+    test_case.emailing.auto_to_run_tester = n_form.cleaned_data[
         'default_testers_of_runs']
-    tc.emailing.auto_to_case_run_assignee = n_form.cleaned_data[
+    test_case.emailing.auto_to_case_run_assignee = n_form.cleaned_data[
         'assignees_of_case_runs']
 
     default_tester = n_form.cleaned_data['default_tester_of_case']
-    if (default_tester and tc.default_tester_id):
-        tc.emailing.auto_to_case_tester = True
+    if (default_tester and test_case.default_tester_id):
+        test_case.emailing.auto_to_case_tester = True
 
     # Continue to update CC list
     valid_emails = n_form.cleaned_data['cc_list']
-    tc.emailing.cc_list = CC_LIST_DEFAULT_DELIMITER.join(valid_emails)
+    test_case.emailing.cc_list = CC_LIST_DEFAULT_DELIMITER.join(valid_emails)
 
-    tc.emailing.save()
+    test_case.emailing.save()
 
 
 def group_case_bugs(bugs):
@@ -111,24 +111,24 @@ def group_case_bugs(bugs):
     return grouped_bugs
 
 
-def create_testcase(request, form, tp):
+def create_testcase(request, form, test_plan):
     """Create testcase"""
-    tc = TestCase.create(author=request.user, values=form.cleaned_data)
-    tc.add_text(case_text_version=1,
-                author=request.user,
-                action=form.cleaned_data['action'],
-                effect=form.cleaned_data['effect'],
-                setup=form.cleaned_data['setup'],
-                breakdown=form.cleaned_data['breakdown'])
+    test_case = TestCase.create(author=request.user, values=form.cleaned_data)
+    test_case.add_text(case_text_version=1,
+                       author=request.user,
+                       action=form.cleaned_data['action'],
+                       effect=form.cleaned_data['effect'],
+                       setup=form.cleaned_data['setup'],
+                       breakdown=form.cleaned_data['breakdown'])
 
     # Assign the case to the plan
-    if tp:
-        tc.add_to_plan(plan=tp)
+    if test_plan:
+        test_case.add_to_plan(plan=test_plan)
 
     # Add components into the case
     for component in form.cleaned_data['component']:
-        tc.add_component(component=component)
-    return tc
+        test_case.add_component(component=component)
+    return test_case
 
 
 @require_GET
@@ -185,11 +185,11 @@ def automated(request):
 @permission_required('testcases.add_testcase')
 def new(request, template_name='case/new.html'):
     """New testcase"""
-    tp = plan_from_request_or_none(request)
+    test_plan = plan_from_request_or_none(request)
     # Initial the form parameters when write new case from plan
-    if tp:
+    if test_plan:
         default_form_parameters = {
-            'product': tp.product_id,
+            'product': test_plan.product_id,
             'is_automated': '0',
         }
     # Initial the form parameters when write new case directly
@@ -204,11 +204,11 @@ def new(request, template_name='case/new.html'):
             form.populate()
 
         if form.is_valid():
-            tc = create_testcase(request, form, tp)
+            test_case = create_testcase(request, form, test_plan)
 
             class ReturnActions:
                 def __init__(self, case, plan):
-                    self.__all__ = ('_addanother', '_continue', '_returntocase', '_returntoplan')
+                    self.__all__ = ('_addanother', '_continue', 'returntocase', '_returntoplan')
                     self.case = case
                     self.plan = plan
 
@@ -220,17 +220,17 @@ def new(request, template_name='case/new.html'):
                                                  self.plan.plan_id))
 
                     return HttpResponseRedirect(
-                        reverse('testcases-edit', args=[tc.case_id]))
+                        reverse('testcases-edit', args=[test_case.case_id]))
 
                 def _addanother(self):
                     form = NewCaseForm(initial=default_form_parameters)
 
-                    if tp:
+                    if self.plan:
                         form.populate(product_id=self.plan.product_id)
 
                     return form
 
-                def _returntocase(self):
+                def returntocase(self):
                     if self.plan:
                         return HttpResponseRedirect(
                             '%s?from_plan=%s' % (reverse('testcases-get',
@@ -248,32 +248,31 @@ def new(request, template_name='case/new.html'):
                         '%s#reviewcases' % reverse('test_plan_url_short',
                                                    args=[self.plan.pk]))
 
-            # Genrate the instance of actions
-            ras = ReturnActions(case=tc, plan=tp)
+            # Generate the instance of actions
+            ras = ReturnActions(case=test_case, plan=test_plan)
             for ra_str in ras.__all__:
                 if request.POST.get(ra_str):
                     func = getattr(ras, ra_str)
                     break
             else:
-                func = ras._returntocase
+                func = ras.returntocase
 
             # Get the function and return back
             result = func()
             if isinstance(result, HttpResponseRedirect):
                 return result
-            else:
-                # Assume here is the form
-                form = result
+            # Assume here is the form
+            form = result
 
     # Initial NewCaseForm for submit
     else:
-        tp = plan_from_request_or_none(request)
+        test_plan = plan_from_request_or_none(request)
         form = NewCaseForm(initial=default_form_parameters)
-        if tp:
-            form.populate(product_id=tp.product_id)
+        if test_plan:
+            form.populate(product_id=test_plan.product_id)
 
     context_data = {
-        'test_plan': tp,
+        'test_plan': test_plan,
         'form': form
     }
     return render(request, template_name, context_data)
@@ -285,10 +284,11 @@ def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
     if plan is not None:
         qs = qs.filter(plan__pk=plan.pk)
     qs = qs.values('pk', 'sortkey', 'case')
-    return dict([(item['case'], {
-        'testcaseplan_pk': item['pk'],
-        'sortkey': item['sortkey']
-    }) for item in qs])
+    return {
+        item['case']:
+        {'testcaseplan_pk': item['pk'], 'sortkey': item['sortkey']}
+        for item in qs
+    }
 
 
 def calculate_for_testcases(plan, testcases):
@@ -302,20 +302,23 @@ def calculate_for_testcases(plan, testcases):
       are not limited to a specific TestPlan.
     - testcases: a queryset of TestCases.
     """
-    tc_ids = [tc.pk for tc in testcases]
+    tc_ids = []
+    for test_case in testcases:
+        tc_ids.append(test_case.pk)
+
     sortkey_tcpkan_pks = get_testcaseplan_sortkey_pk_for_testcases(
         plan, tc_ids)
 
-    for tc in testcases:
-        data = sortkey_tcpkan_pks.get(tc.pk, None)
+    for test_case in testcases:
+        data = sortkey_tcpkan_pks.get(test_case.pk, None)
         if data:
             # todo: these properties appear to be redundant since the same
-            # info should be available from the tc query
-            setattr(tc, 'cal_sortkey', data['sortkey'])
-            setattr(tc, 'cal_testcaseplan_pk', data['testcaseplan_pk'])
+            # info should be available from the test_case query
+            setattr(test_case, 'cal_sortkey', data['sortkey'])
+            setattr(test_case, 'cal_testcaseplan_pk', data['testcaseplan_pk'])
         else:
-            setattr(tc, 'cal_sortkey', None)
-            setattr(tc, 'cal_testcaseplan_pk', None)
+            setattr(test_case, 'cal_sortkey', None)
+            setattr(test_case, 'cal_testcaseplan_pk', None)
 
     return testcases
 
@@ -370,13 +373,14 @@ def paginate_testcases(request, testcases):
 
     Return value: return the queryset for chain call
     """
-    DEFAULT_PAGE_INDEX = 1
 
-    POST = request.POST
-    page_index = int(POST.get('page_index', DEFAULT_PAGE_INDEX))
-    page_size = int(POST.get('items_per_page',
-                             request.session.get('items_per_page',
-                                                 settings.DEFAULT_PAGE_SIZE)))
+    page_index = int(request.POST.get('page_index', 1))
+    page_size = int(request.POST.get(
+        'items_per_page',
+        request.session.get(
+            'items_per_page', settings.DEFAULT_PAGE_SIZE
+        )
+    ))
     offset = (page_index - 1) * page_size
     return testcases[offset:offset + page_size]
 
@@ -457,14 +461,13 @@ def get_selected_testcases(request):
     Arguments:
     - request: REQUEST object.
     """
-    REQ = request.POST or request.GET
-    if REQ.get('selectAll', None):
+    method = request.POST or request.GET
+    if method.get('selectAll', None):
         plan = plan_from_request_or_none(request)
         cases, _search_form = query_testcases_from_request(request, plan)
         return cases
-    else:
-        pks = [int(pk) for pk in REQ.getlist('case')]
-        return TestCase.objects.filter(pk__in=pks)
+    pks = [int(pk) for pk in method.getlist('case')]
+    return TestCase.objects.filter(pk__in=pks)
 
 
 def load_more_cases(request, template_name='plan/cases_rows.html'):
@@ -477,7 +480,9 @@ def load_more_cases(request, template_name='plan/cases_rows.html'):
         cases = sort_queried_testcases(request, cases)
         cases = paginate_testcases(request, cases)
         cases = calculate_for_testcases(plan, cases)
-        selected_case_ids = [tc.pk for tc in cases]
+        selected_case_ids = []
+        for test_case in cases:
+            selected_case_ids.append(test_case.pk)
     context_data = {
         'test_plan': plan,
         'test_cases': cases,
@@ -517,19 +522,19 @@ def all(request):
 
     """
     # Intial the plan in plan details page
-    tp = plan_from_request_or_none(request)
-    if not tp:
+    test_plan = plan_from_request_or_none(request)
+    if not test_plan:
         messages.add_message(request,
                              messages.ERROR,
                              _('TestPlan not specified or does not exist'))
         return HttpResponseRedirect(reverse('core-views-index'))
 
-    tcs, search_form = query_testcases_from_request(request, tp)
+    tcs, search_form = query_testcases_from_request(request, test_plan)
     tcs = sort_queried_testcases(request, tcs)
     total_cases_count = tcs.count()
 
     # Get the tags own by the cases
-    ttags = get_tags_from_cases((case.pk for case in tcs), tp)
+    ttags = get_tags_from_cases((case.pk for case in tcs), test_plan)
 
     tcs = paginate_testcases(request, tcs)
 
@@ -537,7 +542,7 @@ def all(request):
     # also. This step must be the very final one, because the calculation of
     # related data requires related TestCases' IDs, that is the queryset of
     # TestCases should be evaluated in advance.
-    tcs = calculate_for_testcases(tp, tcs)
+    tcs = calculate_for_testcases(test_plan, tcs)
 
     # generating a query_url with order options
     #
@@ -551,12 +556,16 @@ def all(request):
     else:
         query_url = '%s&asc=True' % query_url
 
+    selected_case_ids = []
+    for test_case in get_selected_testcases(request):
+        selected_case_ids.append(test_case.pk)
+
     context_data = {
         'test_cases': tcs,
-        'test_plan': tp,
+        'test_plan': test_plan,
         'search_form': search_form,
         # selected_case_ids is used in template to decide whether or not this TestCase is selected
-        'selected_case_ids': [test_case.pk for test_case in get_selected_testcases(request)],
+        'selected_case_ids': selected_case_ids,
         'case_status': TestCaseStatus.objects.all(),
         'priorities': Priority.objects.filter(is_active=True),
         'case_own_tags': ttags,
@@ -591,12 +600,14 @@ class SimpleTestCaseView(TemplateView):
     """Simple read-only TestCase View used in TestPlan page"""
 
     template_name = 'case/get_details.html'
+    case_id = None
+    review_mode = None
 
     # NOTES: what permission is proper for this request?
     def get(self, request, case_id):
         self.case_id = case_id
         self.review_mode = request.GET.get('review_mode')
-        return super(SimpleTestCaseView, self).get(request, case_id)
+        return super().get(request, self.case_id)
 
     def get_case(self):
         cases = TestCase.objects.filter(pk=self.case_id).only('notes')
@@ -620,10 +631,25 @@ class SimpleTestCaseView(TemplateView):
         return data
 
 
+def get_comments_count(caserun_ids):
+    content_type = ContentType.objects.get_for_model(TestCaseRun)
+    comments = Comment.objects.filter(content_type=content_type,
+                                      object_pk__in=caserun_ids,
+                                      site_id=settings.SITE_ID,
+                                      is_removed=False)
+    comments = comments.values('object_pk').annotate(comment_count=Count('pk'))
+    result = {}
+    for item in comments.iterator():
+        result[int(item['object_pk'])] = item['comment_count']
+    return result
+
+
 class TestCaseCaseRunListPaneView(TemplateView):
     """Display case runs list when expand a plan from case page"""
 
     template_name = 'case/get_case_runs_by_plan.html'
+    case_id = None
+    plan_id = None
 
     # FIXME: what permission here?
     def get(self, request, case_id):
@@ -632,13 +658,13 @@ class TestCaseCaseRunListPaneView(TemplateView):
         plan_id = self.request.GET.get('plan_id', None)
         self.plan_id = int(plan_id) if plan_id is not None else None
 
-        this_cls = TestCaseCaseRunListPaneView
-        return super(this_cls, self).get(request, case_id)
+        return super().get(request, case_id)
 
     def get_case_runs(self):
-        qs = TestCaseRun.objects.filter(case=self.case_id,
-                                        run__plan=self.plan_id)
-        qs = qs.values(
+        return TestCaseRun.objects.filter(
+            case=self.case_id,
+            run__plan=self.plan_id
+        ).values(
             'pk', 'case_id', 'run_id', 'case_text_version',
             'close_date', 'sortkey',
             'tested_by__username', 'assignee__username',
@@ -646,19 +672,6 @@ class TestCaseCaseRunListPaneView(TemplateView):
             'case__category__name', 'case__priority__value',
             'case_run_status__name',
         ).order_by('pk')
-        return qs
-
-    def get_comments_count(self, caserun_ids):
-        ct = ContentType.objects.get_for_model(TestCaseRun)
-        qs = Comment.objects.filter(content_type=ct,
-                                    object_pk__in=caserun_ids,
-                                    site_id=settings.SITE_ID,
-                                    is_removed=False)
-        qs = qs.values('object_pk').annotate(comment_count=Count('pk'))
-        result = {}
-        for item in qs.iterator():
-            result[int(item['object_pk'])] = item['comment_count']
-        return result
 
     def get_context_data(self, **kwargs):
         this_cls = TestCaseCaseRunListPaneView
@@ -668,8 +681,12 @@ class TestCaseCaseRunListPaneView(TemplateView):
 
         # Get the number of each caserun's comments, and put the count into
         # comments query result.
-        caserun_ids = [item['pk'] for item in case_runs]
-        comments_count = self.get_comments_count(caserun_ids)
+        caserun_ids = []
+
+        for item in case_runs:
+            caserun_ids.append(item['pk'])
+
+        comments_count = get_comments_count(caserun_ids)
         for case_run in case_runs:
             case_run['comments_count'] = comments_count.get(case_run['pk'], 0)
 
@@ -686,6 +703,7 @@ class TestCaseSimpleCaseRunView(TemplateView):
     """
 
     template_name = 'case/get_details_case_case_run.html'
+    caserun_id = None
 
     # what permission here?
     def get(self, request, case_id):
@@ -720,16 +738,20 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
     """Display case run detail in run page"""
 
     template_name = 'case/get_details_case_run.html'
+    case_id = None
+    caserun_id = None
+    case_text_version = None
 
     def get(self, request, case_id):
         self.case_id = case_id
+
         try:
             self.caserun_id = int(request.GET.get('case_run_id'))
             self.case_text_version = int(request.GET.get('case_text_version'))
         except (TypeError, ValueError):
             raise Http404
 
-        return super().get(request, case_id)
+        return super().get(request, self.case_id)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -774,7 +796,7 @@ def get(request, case_id):
     """Get the case content"""
     # Get the case
     try:
-        tc = TestCase.objects.select_related(
+        test_case = TestCase.objects.select_related(
             'author', 'default_tester',
             'category', 'category',
             'priority', 'case_status').get(case_id=case_id)
@@ -782,17 +804,17 @@ def get(request, case_id):
         raise Http404
 
     # Get the test plans
-    tps = tc.plan.select_related('author', 'product', 'type').all()
+    tps = test_case.plan.select_related('author', 'product', 'type').all()
 
     try:
-        tp = tps.get(pk=request.GET.get('from_plan', 0))
+        test_plan = tps.get(pk=request.GET.get('from_plan', 0))
     except (TestPlan.DoesNotExist, ValueError):
         # ValueError is raised when from_plan is empty string
         # not viewing TC from a Plan or specified Plan does not exist (e.g. broken link)
-        tp = None
+        test_plan = None
 
     # Get the test case runs
-    tcrs = tc.case_run.select_related(
+    tcrs = test_case.case_run.select_related(
         'run', 'tested_by',
         'assignee', 'case',
         'case', 'case_run_status').order_by('run__plan')
@@ -802,7 +824,10 @@ def get(request, case_id):
     for key, value in itertools.groupby(tcrs, lambda t: t.run.plan):
         runs_ordered_by_plan.append((key, list(value)))
 
-    case_run_plans = [k for k, v in runs_ordered_by_plan]
+    case_run_plans = []
+    for key, _value in runs_ordered_by_plan:
+        case_run_plans.append(key)
+
     # Get the specific test case run
     if request.GET.get('case_run_id'):
         tcr = tcrs.get(pk=request.GET['case_run_id'])
@@ -820,13 +845,13 @@ def get(request, case_id):
         case_runs_by_plan = None
 
     # Get the case texts
-    tc_text = tc.get_text_with_version(request.GET.get('case_text_version'))
+    tc_text = test_case.get_text_with_version(request.GET.get('case_text_version'))
 
     grouped_case_bugs = tcr and group_case_bugs(tcr.case.get_bugs())
     # Render the page
     context_data = {
-        'test_case': tc,
-        'test_plan': tp,
+        'test_case': test_case,
+        'test_plan': test_plan,
         'test_plans': tps,
         'test_case_runs': tcrs,
         'case_run_plans': case_run_plans,
@@ -884,13 +909,13 @@ def printable(request, template_name='case/printable.html'):
     return render(request, template_name, context_data)
 
 
-def update_testcase(request, tc, tc_form):
+def update_testcase(request, test_case, tc_form):
     """Updating information of specific TestCase
 
     This is called by views.edit internally. Don't call this directly.
 
     Arguments:
-    - tc: instance of a TestCase being updated
+    - test_case: instance of a TestCase being updated
     - tc_form: instance of django.forms.Form, holding validated data.
     """
 
@@ -912,40 +937,40 @@ def update_testcase(request, tc, tc_form):
               'alias']
 
     for field in fields:
-        if getattr(tc, field) != tc_form.cleaned_data[field]:
-            setattr(tc, field, tc_form.cleaned_data[field])
+        if getattr(test_case, field) != tc_form.cleaned_data[field]:
+            setattr(test_case, field, tc_form.cleaned_data[field])
     try:
-        if tc.default_tester != tc_form.cleaned_data['default_tester']:
-            tc.default_tester = tc_form.cleaned_data['default_tester']
+        if test_case.default_tester != tc_form.cleaned_data['default_tester']:
+            test_case.default_tester = tc_form.cleaned_data['default_tester']
     except ObjectDoesNotExist:
         pass
 
-    # IMPORTANT! tc.current_user is an instance attribute,
+    # IMPORTANT! test_case.current_user is an instance attribute,
     # added so that in post_save, current logged-in user info
     # can be accessed.
     # Instance attribute is usually not a desirable solution.
     # TODO: current_user is probbably not necessary now that we have proper history
     # it is used in email templates though !!!
-    tc.current_user = request.user
-    tc.save()
+    test_case.current_user = request.user
+    test_case.save()
 
 
 @permission_required('testcases.change_testcase')
 def edit(request, case_id, template_name='case/edit.html'):
     """Edit case detail"""
     try:
-        tc = TestCase.objects.select_related().get(case_id=case_id)
+        test_case = TestCase.objects.select_related().get(case_id=case_id)
     except ObjectDoesNotExist:
         raise Http404
 
-    tp = plan_from_request_or_none(request)
+    test_plan = plan_from_request_or_none(request)
 
     if request.method == "POST":
         form = EditCaseForm(request.POST)
         if request.POST.get('product'):
             form.populate(product_id=request.POST['product'])
-        elif tp:
-            form.populate(product_id=tp.product_id)
+        elif test_plan:
+            form.populate(product_id=test_plan.product_id)
         else:
             form.populate()
 
@@ -953,16 +978,16 @@ def edit(request, case_id, template_name='case/edit.html'):
 
         if form.is_valid() and n_form.is_valid():
 
-            update_testcase(request, tc, form)
+            update_testcase(request, test_case, form)
 
-            tc.add_text(author=request.user,
-                        action=form.cleaned_data['action'],
-                        effect=form.cleaned_data['effect'],
-                        setup=form.cleaned_data['setup'],
-                        breakdown=form.cleaned_data['breakdown'])
+            test_case.add_text(author=request.user,
+                               action=form.cleaned_data['action'],
+                               effect=form.cleaned_data['effect'],
+                               setup=form.cleaned_data['setup'],
+                               breakdown=form.cleaned_data['breakdown'])
 
             # Notification
-            update_case_email_settings(tc, n_form)
+            update_case_email_settings(test_case, n_form)
 
             # Returns
             if request.POST.get('_continue'):
@@ -972,40 +997,39 @@ def edit(request, case_id, template_name='case/edit.html'):
                 ))
 
             if request.POST.get('_continuenext'):
-                if not tp:
+                if not test_plan:
                     raise Http404
 
                 # find out test case list which belong to the same
                 # classification
                 confirm_status_name = 'CONFIRMED'
-                if tc.case_status.name == confirm_status_name:
-                    pk_list = tp.case.filter(
+                if test_case.case_status.name == confirm_status_name:
+                    pk_list = test_plan.case.filter(
                         case_status__name=confirm_status_name)
                 else:
-                    pk_list = tp.case.exclude(
+                    pk_list = test_plan.case.exclude(
                         case_status__name=confirm_status_name)
                 pk_list = list(pk_list.defer('case_id').values_list('pk', flat=True))
                 pk_list.sort()
 
-                # Get the previous and next case
-                p_tc, n_tc = tc.get_previous_and_next(pk_list=pk_list)
+                # Get the next case
+                _prev_case, next_case = test_case.get_previous_and_next(pk_list=pk_list)
                 return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('testcases-edit', args=[n_tc.pk, ]),
-                    tp.pk,
+                    reverse('testcases-edit', args=[next_case.pk, ]),
+                    test_plan.pk,
                 ))
 
             if request.POST.get('_returntoplan'):
-                if not tp:
+                if not test_plan:
                     raise Http404
                 confirm_status_name = 'CONFIRMED'
-                if tc.case_status.name == confirm_status_name:
+                if test_case.case_status.name == confirm_status_name:
                     return HttpResponseRedirect('%s#testcases' % (
-                        reverse('test_plan_url_short', args=[tp.pk, ]),
+                        reverse('test_plan_url_short', args=[test_plan.pk, ]),
                     ))
-                else:
-                    return HttpResponseRedirect('%s#reviewcases' % (
-                        reverse('test_plan_url_short', args=[tp.pk, ]),
-                    ))
+                return HttpResponseRedirect('%s#reviewcases' % (
+                    reverse('test_plan_url_short', args=[test_plan.pk, ]),
+                ))
 
             return HttpResponseRedirect('%s?from_plan=%s' % (
                 reverse('testcases-get', args=[case_id, ]),
@@ -1013,48 +1037,52 @@ def edit(request, case_id, template_name='case/edit.html'):
             ))
 
     else:
-        tctxt = tc.latest_text()
+        tctxt = test_case.latest_text()
         # Notification form initial
         n_form = CaseNotifyForm(initial={
-            'notify_on_case_update': tc.emailing.notify_on_case_update,
-            'notify_on_case_delete': tc.emailing.notify_on_case_delete,
-            'author': tc.emailing.auto_to_case_author,
-            'default_tester_of_case': tc.emailing.auto_to_case_tester,
-            'managers_of_runs': tc.emailing.auto_to_run_manager,
-            'default_testers_of_runs': tc.emailing.auto_to_run_tester,
-            'assignees_of_case_runs': tc.emailing.auto_to_case_run_assignee,
+            'notify_on_case_update': test_case.emailing.notify_on_case_update,
+            'notify_on_case_delete': test_case.emailing.notify_on_case_delete,
+            'author': test_case.emailing.auto_to_case_author,
+            'default_tester_of_case': test_case.emailing.auto_to_case_tester,
+            'managers_of_runs': test_case.emailing.auto_to_run_manager,
+            'default_testers_of_runs': test_case.emailing.auto_to_run_tester,
+            'assignees_of_case_runs': test_case.emailing.auto_to_case_run_assignee,
             'cc_list': CC_LIST_DEFAULT_DELIMITER.join(
-                tc.emailing.get_cc_list()),
+                test_case.emailing.get_cc_list()),
         })
-        default_tester = tc.default_tester_id and tc.default_tester.\
-            email or None
+
+        components = []
+        for component in test_case.component.all():
+            components.append(component.pk)
+
+        default_tester = test_case.default_tester_id and test_case.default_tester.email or None
         form = EditCaseForm(initial={
-            'summary': tc.summary,
+            'summary': test_case.summary,
             'default_tester': default_tester,
-            'requirement': tc.requirement,
-            'is_automated': tc.get_is_automated_form_value(),
-            'is_automated_proposed': tc.is_automated_proposed,
-            'script': tc.script,
-            'arguments': tc.arguments,
-            'extra_link': tc.extra_link,
-            'alias': tc.alias,
-            'case_status': tc.case_status_id,
-            'priority': tc.priority_id,
-            'product': tc.category.product_id,
-            'category': tc.category_id,
-            'notes': tc.notes,
-            'component': [c.pk for c in tc.component.all()],
+            'requirement': test_case.requirement,
+            'is_automated': test_case.get_is_automated_form_value(),
+            'is_automated_proposed': test_case.is_automated_proposed,
+            'script': test_case.script,
+            'arguments': test_case.arguments,
+            'extra_link': test_case.extra_link,
+            'alias': test_case.alias,
+            'case_status': test_case.case_status_id,
+            'priority': test_case.priority_id,
+            'product': test_case.category.product_id,
+            'category': test_case.category_id,
+            'notes': test_case.notes,
+            'component': components,
             'setup': tctxt.setup,
             'action': tctxt.action,
             'effect': tctxt.effect,
             'breakdown': tctxt.breakdown,
         })
 
-        form.populate(product_id=tc.category.product_id)
+        form.populate(product_id=test_case.category.product_id)
 
     context_data = {
-        'test_case': tc,
-        'test_plan': tp,
+        'test_case': test_case,
+        'test_plan': test_plan,
         'form': form,
         'notify_form': n_form,
     }
@@ -1064,22 +1092,22 @@ def edit(request, case_id, template_name='case/edit.html'):
 def text_history(request, case_id, template_name='case/history.html'):
     """View test plan text history"""
 
-    tc = get_object_or_404(TestCase, case_id=case_id)
-    tp = plan_from_request_or_none(request)
-    tctxts = tc.text.values('case_id',
-                            'case_text_version',
-                            'author__email',
-                            'create_date').order_by('-case_text_version')
+    test_case = get_object_or_404(TestCase, case_id=case_id)
+    test_plan = plan_from_request_or_none(request)
+    tctxts = test_case.text.values('case_id',
+                                   'case_text_version',
+                                   'author__email',
+                                   'create_date').order_by('-case_text_version')
 
     context = {
-        'testplan': tp,
-        'testcase': tc,
+        'testplan': test_plan,
+        'testcase': test_case,
         'test_case_texts': tctxts.iterator(),
     }
 
     try:
         case_text_version = int(request.GET.get('case_text_version'))
-        text_to_show = tc.text.filter(case_text_version=case_text_version)
+        text_to_show = test_case.text.filter(case_text_version=case_text_version)
         text_to_show = text_to_show.values('action',
                                            'effect',
                                            'setup',
@@ -1110,8 +1138,8 @@ def clone(request, template_name='case/clone.html'):
         # redirect back where we came from
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    tp_src = plan_from_request_or_none(request)
-    tp = None
+    test_plan_src = plan_from_request_or_none(request)
+    test_plan = None
     search_plan_form = SearchPlanForm()
 
     # Do the clone action
@@ -1144,19 +1172,19 @@ def clone(request, template_name='case/clone.html'):
                         tc_src.author or request.user,
                     )
 
-                    for tp in clone_form.cleaned_data['plan']:
+                    for test_plan in clone_form.cleaned_data['plan']:
                         # copy a case and keep origin case's sortkey
-                        if tp_src:
+                        if test_plan_src:
                             try:
-                                tcp = TestCasePlan.objects.get(plan=tp_src,
+                                tcp = TestCasePlan.objects.get(plan=test_plan_src,
                                                                case=tc_src)
                                 sortkey = tcp.sortkey
                             except ObjectDoesNotExist:
-                                sortkey = tp.get_case_sortkey()
+                                sortkey = test_plan.get_case_sortkey()
                         else:
-                            sortkey = tp.get_case_sortkey()
+                            sortkey = test_plan.get_case_sortkey()
 
-                        tp.add_case(tc_dest, sortkey)
+                        test_plan.add_case(tc_dest, sortkey)
 
                     tc_dest.add_text(
                         author=clone_form.cleaned_data[
@@ -1182,30 +1210,30 @@ def clone(request, template_name='case/clone.html'):
                             'maintain_case_orignal_default_tester'] \
                         and tc_src.author or request.user
                     tc_dest.save()
-                    for tp in clone_form.cleaned_data['plan']:
+                    for test_plan in clone_form.cleaned_data['plan']:
                         # create case link and keep origin plan's sortkey
-                        if tp_src:
+                        if test_plan_src:
                             try:
-                                tcp = TestCasePlan.objects.get(plan=tp_src,
+                                tcp = TestCasePlan.objects.get(plan=test_plan_src,
                                                                case=tc_dest)
                                 sortkey = tcp.sortkey
                             except ObjectDoesNotExist:
-                                sortkey = tp.get_case_sortkey()
+                                sortkey = test_plan.get_case_sortkey()
                         else:
-                            sortkey = tp.get_case_sortkey()
+                            sortkey = test_plan.get_case_sortkey()
 
-                        tp.add_case(tc_dest, sortkey)
+                        test_plan.add_case(tc_dest, sortkey)
 
                 # Add the cases to plan
-                for tp in clone_form.cleaned_data['plan']:
+                for test_plan in clone_form.cleaned_data['plan']:
                     # Clone the categories to new product
                     if clone_form.cleaned_data['copy_case']:
                         try:
-                            tc_category = tp.product.category.get(
+                            tc_category = test_plan.product.category.get(
                                 name=tc_src.category.name
                             )
                         except ObjectDoesNotExist:
-                            tc_category = tp.product.category.create(
+                            tc_category = test_plan.product.category.create(
                                 name=tc_src.category.name,
                                 description=tc_src.category.description,
                             )
@@ -1219,11 +1247,11 @@ def clone(request, template_name='case/clone.html'):
                             clone_form.cleaned_data['copy_case']:
                         for component in tc_src.component.all():
                             try:
-                                new_c = tp.product.component.get(
+                                new_c = test_plan.product.component.get(
                                     name=component.name
                                 )
                             except ObjectDoesNotExist:
-                                new_c = tp.product.component.create(
+                                new_c = test_plan.product.component.create(
                                     name=component.name,
                                     initial_owner=request.user,
                                     description=component.description,
@@ -1238,7 +1266,7 @@ def clone(request, template_name='case/clone.html'):
             if cases_count == 1 and plans_count == 1:
                 return HttpResponseRedirect('%s?from_plan=%s' % (
                     reverse('testcases-get', args=[tc_dest.pk, ]),
-                    tp.pk
+                    test_plan.pk
                 ))
 
             if cases_count == 1:
@@ -1248,7 +1276,7 @@ def clone(request, template_name='case/clone.html'):
 
             if plans_count == 1:
                 return HttpResponseRedirect(
-                    reverse('test_plan_url_short', args=[tp.pk, ])
+                    reverse('test_plan_url_short', args=[test_plan.pk, ])
                 )
 
             # Otherwise it will prompt to user the clone action is successful.
@@ -1270,14 +1298,14 @@ def clone(request, template_name='case/clone.html'):
 
     # Generate search plan form
     if request_data.get('from_plan'):
-        tp = TestPlan.objects.get(plan_id=request_data['from_plan'])
+        test_plan = TestPlan.objects.get(plan_id=request_data['from_plan'])
         search_plan_form = SearchPlanForm(
-            initial={'product': tp.product_id, 'is_active': True})
-        search_plan_form.populate(product_id=tp.product_id)
+            initial={'product': test_plan.product_id, 'is_active': True})
+        search_plan_form.populate(product_id=test_plan.product_id)
 
     submit_action = request_data.get('submit', None)
     context = {
-        'test_plan': tp,
+        'test_plan': test_plan,
         'search_form': search_plan_form,
         'clone_form': clone_form,
         'submit_action': submit_action,
@@ -1314,12 +1342,12 @@ def category(request):
 def attachment(request, case_id, template_name='case/attachment.html'):
     """Manage test case attachments"""
 
-    tc = get_object_or_404(TestCase, case_id=case_id)
-    tp = plan_from_request_or_none(request)
+    test_case = get_object_or_404(TestCase, case_id=case_id)
+    test_plan = plan_from_request_or_none(request)
 
     context = {
-        'testplan': tp,
-        'testcase': tc,
+        'testplan': test_plan,
+        'testcase': test_case,
         'limit': settings.FILE_UPLOAD_MAX_SIZE,
     }
     return render(request, template_name, context)
@@ -1329,7 +1357,7 @@ def attachment(request, case_id, template_name='case/attachment.html'):
 def bug(request, case_id, template_name='case/get_bug.html'):
     """Process the bugs for cases"""
     # FIXME: Rewrite these codes for Ajax.Request
-    tc = get_object_or_404(TestCase, case_id=case_id)
+    test_case = get_object_or_404(TestCase, case_id=case_id)
 
     class CaseBugActions:
         __all__ = ['get_form', 'render', 'add', 'remove']
@@ -1364,7 +1392,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             form = CaseBugForm(request.GET)
             if not form.is_valid():
                 errors = []
-                for field_name, error_messages in form.errors.items():
+                for _field_name, error_messages in form.errors.items():
                     for item in error_messages:
                         errors.append(item)
                 response = '\n'.join(errors)
@@ -1377,8 +1405,8 @@ def bug(request, case_id, template_name='case/get_bug.html'):
                     summary=form.cleaned_data['summary'],
                     description=form.cleaned_data['description'],
                 )
-            except Exception as e:
-                return self.render(response=str(e))
+            except Exception as exception:
+                return self.render(response=str(exception))
 
             return self.render()
 
@@ -1395,7 +1423,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
 
     case_bug_actions = CaseBugActions(
         request=request,
-        case=tc,
+        case=test_case,
         template_name=template_name
     )
 
@@ -1409,7 +1437,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
 @require_GET
 def plan(request, case_id):
     """Add and remove plan in plan tab"""
-    tc = get_object_or_404(TestCase, case_id=case_id)
+    test_case = get_object_or_404(TestCase, case_id=case_id)
     if request.GET.get('a'):
         # Search the plans from database
         if not request.GET.getlist('plan_id'):
@@ -1438,7 +1466,7 @@ def plan(request, case_id):
         if request.GET['a'] == 'add':
             if not request.user.has_perm('testcases.add_testcaseplan'):
                 context = {
-                    'test_case': tc,
+                    'test_case': test_case,
                     'test_plans': tps,
                     'message': 'Permission denied',
                 }
@@ -1447,14 +1475,14 @@ def plan(request, case_id):
                     'case/get_plan.html',
                     context)
 
-            for tp in tps:
-                tc.add_to_plan(tp)
+            for test_plan in tps:
+                test_case.add_to_plan(test_plan)
 
         # Remove case plan action
         if request.GET['a'] == 'remove':
             if not request.user.has_perm('testcases.change_testcaseplan'):
                 context = {
-                    'test_case': tc,
+                    'test_case': test_case,
                     'test_plans': tps,
                     'message': 'Permission denied',
                 }
@@ -1463,16 +1491,16 @@ def plan(request, case_id):
                     'case/get_plan.html',
                     context)
 
-            for tp in tps:
-                tc.remove_plan(tp)
+            for test_plan in tps:
+                test_case.remove_plan(test_plan)
 
-    tps = tc.plan.all()
+    tps = test_case.plan.all()
     tps = tps.select_related('author',
                              'type',
                              'product')
 
     context = {
-        'test_case': tc,
+        'test_case': test_case,
         'test_plans': tps,
     }
     return render(
