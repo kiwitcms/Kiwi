@@ -208,7 +208,7 @@ class TestPlan(TCMSActionModel):
                         summary=tpcase_src.summary,
                         requirement=tpcase_src.requirement,
                         alias=tpcase_src.alias,
-                        case_status=TestCaseStatus.get_PROPOSED(),
+                        case_status=TestCaseStatus.get_proposed(),
                         category=tc_category,
                         priority=tpcase_src.priority,
                         author=author,

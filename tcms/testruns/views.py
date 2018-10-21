@@ -527,7 +527,7 @@ def clone(request, run_id):
     """Clone cases from filter caserun"""
 
     test_run = get_object_or_404(TestRun, run_id=run_id)
-    confirmed_case_status = TestCaseStatus.get_CONFIRMED()
+    confirmed_case_status = TestCaseStatus.get_confirmed()
     disabled_cases = 0
 
     if request.POST.get('case_run'):
