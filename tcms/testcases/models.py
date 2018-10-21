@@ -150,8 +150,8 @@ class TestCase(TCMSActionModel):
 
         _query = query or {}
         qs = distinct_filter(TestCase, _query).order_by('pk')
-        s = TestCaseXMLRPCSerializer(model_class=cls, queryset=qs)
-        return s.serialize_queryset()
+        serializer = TestCaseXMLRPCSerializer(model_class=cls, queryset=qs)
+        return serializer.serialize_queryset()
 
     @classmethod
     def create(cls, author, values):
@@ -177,7 +177,7 @@ class TestCase(TCMSActionModel):
         )
         tags = values.get('tag')
         if tags:
-            map(lambda c: case.add_tag(c), tags)
+            map(case.add_tag, tags)
         return case
 
     @classmethod
@@ -186,25 +186,25 @@ class TestCase(TCMSActionModel):
         from django.db.models import Q
 
         if not plan:
-            q = cls.objects
+            queryset = cls.objects
         else:
-            q = cls.objects.filter(plan=plan)
+            queryset = cls.objects.filter(plan=plan)
 
         if query.get('case_id_set'):
-            q = q.filter(pk__in=query['case_id_set'])
+            queryset = queryset.filter(pk__in=query['case_id_set'])
 
         if query.get('search'):
-            q = q.filter(
+            queryset = queryset.filter(
                 Q(pk__icontains=query['search']) |
                 Q(summary__icontains=query['search']) |
                 Q(author__email__startswith=query['search'])
             )
 
         if query.get('summary'):
-            q = q.filter(Q(summary__icontains=query['summary']))
+            queryset = queryset.filter(Q(summary__icontains=query['summary']))
 
         if query.get('author'):
-            q = q.filter(
+            queryset = queryset.filter(
                 Q(author__first_name__startswith=query['author']) |
                 Q(author__last_name__startswith=query['author']) |
                 Q(author__username__icontains=query['author']) |
@@ -212,7 +212,7 @@ class TestCase(TCMSActionModel):
             )
 
         if query.get('default_tester'):
-            q = q.filter(
+            queryset = queryset.filter(
                 Q(default_tester__first_name__startswith=query[
                     'default_tester']) |
                 Q(default_tester__last_name__startswith=query[
@@ -224,16 +224,16 @@ class TestCase(TCMSActionModel):
             )
 
         if query.get('tag__name__in'):
-            q = q.filter(tag__name__in=query['tag__name__in'])
+            queryset = queryset.filter(tag__name__in=query['tag__name__in'])
 
         if query.get('category'):
-            q = q.filter(category__name=query['category'].name)
+            queryset = queryset.filter(category__name=query['category'].name)
 
         if query.get('priority'):
-            q = q.filter(priority__in=query['priority'])
+            queryset = queryset.filter(priority__in=query['priority'])
 
         if query.get('case_status'):
-            q = q.filter(case_status__in=query['case_status'])
+            queryset = queryset.filter(case_status__in=query['case_status'])
 
         # If plan exists, remove leading and trailing whitespace from it.
         plan_str = query.get('plan', '').strip()
@@ -241,29 +241,29 @@ class TestCase(TCMSActionModel):
             try:
                 # Is it an integer?  If so treat as a plan_id:
                 plan_id = int(plan_str)
-                q = q.filter(plan__plan_id=plan_id)
+                queryset = queryset.filter(plan__plan_id=plan_id)
             except ValueError:
                 # Not an integer - treat plan_str as a plan name:
-                q = q.filter(plan__name__icontains=plan_str)
+                queryset = queryset.filter(plan__name__icontains=plan_str)
         del plan_str
 
         if query.get('product'):
-            q = q.filter(category__product=query['product'])
+            queryset = queryset.filter(category__product=query['product'])
 
         if query.get('component'):
-            q = q.filter(component=query['component'])
+            queryset = queryset.filter(component=query['component'])
 
         if query.get('bug_id'):
-            q = q.filter(case_bug__bug_id__in=query['bug_id'])
+            queryset = queryset.filter(case_bug__bug_id__in=query['bug_id'])
 
         if query.get('is_automated'):
-            q = q.filter(is_automated=query['is_automated'])
+            queryset = queryset.filter(is_automated=query['is_automated'])
 
         if query.get('is_automated_proposed'):
-            q = q.filter(
+            queryset = queryset.filter(
                 is_automated_proposed=query['is_automated_proposed'])
 
-        return q.distinct()
+        return queryset.distinct()
 
     def add_bug(self, bug_id, bug_system_id, summary=None, description=None,
                 case_run=None, bz_external_track=False):
@@ -278,9 +278,9 @@ class TestCase(TCMSActionModel):
         if created:
             if bz_external_track:
                 bug_system = BugSystem.objects.get(pk=bug_system_id)
-                it = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-                if not it.is_adding_testcase_to_issue_disabled():
-                    it.add_testcase_to_issue([self], bug)
+                issue_tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
+                if not issue_tracker.is_adding_testcase_to_issue_disabled():
+                    issue_tracker.add_testcase_to_issue([self], bug)
                 else:
                     raise ValueError('Enable linking test cases by configuring API parameters '
                                      'for this Issue Tracker!')
@@ -346,14 +346,6 @@ class TestCase(TCMSActionModel):
     def get_component_names(self):
         return self.component.values_list('name', flat=True)
 
-    def get_choiced(self, obj_value, choices):
-        for x in choices:
-            if x[0] == obj_value:
-                return x[1]
-
-    def get_is_automated(self):
-        return self.get_choiced(self.is_automated, AUTOMATED_CHOICES)
-
     def get_is_automated_form_value(self):
         if self.is_automated == 2:
             return [0, 1]
@@ -361,8 +353,11 @@ class TestCase(TCMSActionModel):
         return (self.is_automated, )
 
     def get_is_automated_status(self):
-        return self.get_is_automated() + (
-            self.is_automated_proposed and ' (Autoproposed)' or '')
+        for choice in AUTOMATED_CHOICES:
+            if choice[0] == self.is_automated:
+                return choice[1] + (self.is_automated_proposed and ' (Autoproposed)' or '')
+
+        return None
 
     def get_previous_and_next(self, pk_list):
         current_idx = pk_list.index(self.pk)
@@ -590,8 +585,7 @@ class Bug(TCMSActionModel):
                           ('bug_id', 'case_run'))
         if unique_check in bug_id_uniques:
             return 'Bug %d exists in run %d already.' % (self.bug_id, self.case_run.pk)
-        else:
-            return super(Bug, self).unique_error_message(model_class, unique_check)
+        return super().unique_error_message(model_class, unique_check)
 
     def __str__(self):
         return self.bug_id
