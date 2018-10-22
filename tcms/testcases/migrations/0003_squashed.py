@@ -50,7 +50,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('testcases', '0002_squashed'),
-        ('management', '0002_squashed'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -64,12 +63,6 @@ class Migration(migrations.Migration):
             name='category',
             field=models.ForeignKey(on_delete=models.deletion.CASCADE,
                                     related_name='category_case', to='testcases.Category'),
-        ),
-        migrations.AlterField(
-            model_name='TestCaseTag',
-            name='tag',
-            field=models.ForeignKey(
-                on_delete=models.deletion.CASCADE, to='management.Tag'),
         ),
         migrations.AlterField(
             model_name='TestCase',
