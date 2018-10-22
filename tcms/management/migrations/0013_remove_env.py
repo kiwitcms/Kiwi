@@ -6,8 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testruns', '0003_squashed'),
-        ('testplans', '0004_squashed'),
+        ('testruns', '0004_squashed'),
+        ('testplans', '0005_squashed'),
         ('management', '0002_squashed'),
     ]
 

@@ -8,8 +8,8 @@ import tcms.core.models.base
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('management', '0001_squashed'),
-        ('testplans', '0001_squashed'),
+        ('management', '0002_squashed'),
+        ('testplans', '0005_squashed'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -173,7 +173,7 @@ class Migration(migrations.Migration):
                                         primary_key=True)),
                 ('user', models.IntegerField(default='0', db_column='userid')),
                 ('case', models.ForeignKey(to='testcases.TestCase', on_delete=models.CASCADE)),
-                ('tag', models.ForeignKey(to='management.TestTag', on_delete=models.CASCADE)),
+                ('tag', models.ForeignKey(to='management.Tag', on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'test_case_tags',

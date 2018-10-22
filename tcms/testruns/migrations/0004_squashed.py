@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('management', '0002_squashed'),
         ('testcases', '0001_initial'),
-        ('testplans', '0001_squashed'),
+        ('testplans', '0005_squashed'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 

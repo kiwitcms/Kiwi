@@ -36,11 +36,10 @@ def reverse_add_initial_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testruns', '0001_initial'),
+        ('testruns', '0004_squashed'),
         ('sites', '0001_initial'),
         ('contenttypes', '0002_remove_content_type_name'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('management', '0001_squashed'),
         ('testcases', '0001_initial'),
     ]
 
@@ -113,7 +112,7 @@ class Migration(migrations.Migration):
             model_name='testcase',
             name='tag',
             field=models.ManyToManyField(
-                related_name='cases', through='testcases.TestCaseTag', to='management.TestTag'),
+                related_name='cases', through='testcases.TestCaseTag', to='management.Tag'),
         ),
         migrations.AddField(
             model_name='contact',
