@@ -54,7 +54,7 @@ class IssueTrackerTypeSelectWidget(Select):
         for module_object in types.__dict__.values():
             if inspect.isclass(module_object) and \
                issubclass(module_object, types.IssueTrackerType) and \
-               module_object != types.IssueTrackerType:  # flake8: noqa
+               module_object != types.IssueTrackerType:  # noqa: E721
                 trackers.append(module_object.__name__)
         return (('', ''), ) + tuple(zip(trackers, trackers))
 
@@ -94,7 +94,7 @@ class BugSystemAdmin(admin.ModelAdmin):
             'fields': ('name', 'description', 'url_reg_exp', 'validate_reg_exp'),
         }),
         ('External Issue Tracker Integration', {
-            'fields':('tracker_type', 'base_url', 'api_url', 'api_username', 'api_password'),
+            'fields': ('tracker_type', 'base_url', 'api_url', 'api_username', 'api_password'),
             'description': """<h1>Warning: read the
 <a href="http://kiwitcms.readthedocs.io/en/latest/admin.html#configure-external-bug-trackers">
 Configure external bug trackers</a> section before editting the values below!</h1>""",
