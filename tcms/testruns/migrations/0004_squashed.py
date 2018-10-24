@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('management', '0002_squashed'),
+        ('management', '0003_squashed'),
         ('testcases', '0001_initial'),
         ('testplans', '0005_squashed'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
