@@ -11,6 +11,7 @@ from .auth_user import AuthUserChecker
 from .bulk_create import BulkCreateChecker
 from .objects_update import ObjectsUpdateChecker
 from .tags import TagsChecker
+from .empty_module import EmptyModuleChecker
 
 
 def register(linter):
@@ -22,3 +23,4 @@ def register(linter):
     linter.register_checker(BulkCreateChecker(linter))
     linter.register_checker(ObjectsUpdateChecker(linter))
     linter.register_checker(TagsChecker(linter))
+    linter.register_checker(EmptyModuleChecker(linter))
