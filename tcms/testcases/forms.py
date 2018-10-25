@@ -88,7 +88,7 @@ class BaseCaseForm(forms.Form):
     )
     priority = forms.ModelChoiceField(
         label="Priority",
-        queryset=Priority.objects.all(),
+        queryset=Priority.objects.filter(is_active=True),
         empty_label=None,
     )
     product = forms.ModelChoiceField(

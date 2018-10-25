@@ -11,7 +11,7 @@ from django.conf import settings
 from django.forms import ValidationError
 
 from tcms.testcases.fields import MultipleEmailField
-from tcms.management.models import Tag
+from tcms.management.models import Priority, Tag
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import BugSystem
 from tcms.testcases.models import TestCaseComponent
@@ -451,6 +451,10 @@ class TestEditCase(BasePlanCase):
             case_status=cls.case_status_proposed,
             plan=[cls.plan])
 
+        # test data for https://github.com/kiwitcms/Kiwi/issues/334
+        # pylint: disable=objects-update-used
+        Priority.objects.filter(value='P4').update(is_active=False)
+
         user_should_have_perm(cls.tester, 'testcases.change_testcase')
         cls.case_edit_url = reverse('testcases-edit', args=[cls.case_1.pk])
 
@@ -490,6 +494,7 @@ class TestEditCase(BasePlanCase):
     def test_show_edit_page(self):
         response = self.client.get(self.case_edit_url)
         self.assertEqual(200, response.status_code)
+        self.assertNotContains(response, ">P4</option")
 
     def test_edit_a_case(self):
         edit_data = self.edit_data.copy()
@@ -735,7 +740,13 @@ class TestSearchCases(BasePlanCase):
 
 
 class TestGetCasesFromPlan(BasePlanCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        initiate_user_with_default_setups(cls.tester)
+
     def test_casetags_are_shown_in_template(self):
+        # pylint: disable=tag-objects-get_or_create
         tag, _ = Tag.objects.get_or_create(name='Linux')
         self.case.add_tag(tag)
 
@@ -751,3 +762,21 @@ class TestGetCasesFromPlan(BasePlanCase):
         self.assertEqual(HTTPStatus.OK, response.status_code)
         self.assertContains(response, 'Tags:')
         self.assertContains(response, '<a href="#testcases">Linux</a>')
+
+    def test_disabled_priority_now_shown(self):
+        # test data for https://github.com/kiwitcms/Kiwi/issues/334
+        # pylint: disable=objects-update-used
+        Priority.objects.filter(value='P4').update(is_active=False)
+
+        url = reverse('testcases-all')
+        response_data = urlencode({
+            'from_plan': self.plan.pk,
+            'template_type': 'case',
+            'a': 'initial'})
+        # note: this is how the UI sends the request
+        response = self.client.post(url, data=response_data,
+                                    content_type='application/x-www-form-urlencoded; charset=UTF-8',
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response,    'Set P3')
+        self.assertNotContains(response, 'Set P4')

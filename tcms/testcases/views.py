@@ -555,7 +555,7 @@ def all(request):
         # selected_case_ids is used in template to decide whether or not this TestCase is selected
         'selected_case_ids': [test_case.pk for test_case in get_selected_testcases(request)],
         'case_status': TestCaseStatus.objects.all(),
-        'priorities': Priority.objects.all(),
+        'priorities': Priority.objects.filter(is_active=True),
         'case_own_tags': ttags,
         'query_url': query_url,
 
