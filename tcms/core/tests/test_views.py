@@ -18,6 +18,8 @@ from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import TestPlanFactory
+from tcms.tests.factories import TestRunFactory
+from tcms.tests.factories import TestCaseRunFactory
 
 
 class TestNavigation(test.TestCase):
@@ -62,6 +64,24 @@ class TestDashboard(BaseCaseRun):
         response = self.client.get(reverse('core-views-index'))
         self.assertContains(response, 'Test Plans')
         self.assertContains(response, 'Test Runs')
+
+    def test_dashboard_shows_testruns_for_manager(self):
+        test_run = TestRunFactory(manager=self.tester)
+
+        response = self.client.get(reverse('core-views-index'))
+        self.assertContains(response, test_run.summary)
+
+    def test_dashboard_shows_testruns_for_default_tester(self):
+        test_run = TestRunFactory(default_tester=self.tester)
+
+        response = self.client.get(reverse('core-views-index'))
+        self.assertContains(response, test_run.summary)
+
+    def test_dashboard_shows_testruns_for_test_case_run_assignee(self):
+        test_case_run = TestCaseRunFactory(assignee=self.tester)
+
+        response = self.client.get(reverse('core-views-index'))
+        self.assertContains(response, test_case_run.run.summary)
 
 
 class TestCommentCaseRuns(BaseCaseRun):
