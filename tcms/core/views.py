@@ -27,7 +27,9 @@ def dashboard(request):
     test_plans_disable_count = test_plans.filter(is_active=False).count()
 
     test_runs = TestRun.objects.filter(
-        Q(manager=request.user) | Q(default_tester=request.user),
+        Q(manager=request.user) |
+        Q(default_tester=request.user) |
+        Q(case_run__assignee=request.user),
         stop_date__isnull=True,
     ).order_by('-run_id')
 

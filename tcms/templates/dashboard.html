@@ -24,7 +24,7 @@
         <div class="panel-footer">
             {% if test_runs_count %}
                 {% blocktrans with total_count=test_runs_count count=last_15_test_runs|length %}
-                {{ total_count }} TestRun(s) assigned to you need to be executed.
+                {{ total_count }} TestRun(s) or TestCase(s) assigned to you need to be executed.
                 Here are the latest {{ count }}.
                 {% endblocktrans %}
 
