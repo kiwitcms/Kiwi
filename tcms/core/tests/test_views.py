@@ -51,16 +51,14 @@ class TestDashboard(BaseCaseRun):
                                          author=cls.tester)
 
     def test_when_not_logged_in_redirects_to_login(self):
+        self.client.logout()
         response = self.client.get(reverse('core-views-index'))
         self.assertRedirects(
             response,
-            reverse('tcms-login'),
+            reverse('tcms-login')+'?next=/',
             target_status_code=HTTPStatus.OK)
 
     def test_when_logged_in_renders_dashboard(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
         response = self.client.get(reverse('core-views-index'))
         self.assertContains(response, 'Test Plans')
         self.assertContains(response, 'Test Runs')
