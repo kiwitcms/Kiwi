@@ -31,7 +31,7 @@ def dashboard(request):
         Q(default_tester=request.user) |
         Q(case_run__assignee=request.user),
         stop_date__isnull=True,
-    ).order_by('-run_id')
+    ).order_by('-run_id').distinct()
 
     context_data = {
         'test_plans_count': test_plans.count(),
