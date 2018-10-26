@@ -56,6 +56,8 @@ def add_comment(case_run_id, comment, **kwargs):
     return None
 
 
+# todo: this is very similar, if not duplicate to TestRun.add_case IMO
+# should we schedule it for removal ?!?
 @permissions_required('testruns.add_testcaserun')
 @rpc_method(name='TestCaseRun.create')
 def create(values):

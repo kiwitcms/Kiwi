@@ -36,13 +36,14 @@ def add_case(run_id, case_id):
         :type run_id: int
         :param case_id: PK of TestCase to be added
         :type case_id: int
-        :return: None
+        :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
         :raises: DoesNotExist if objects specified by the PKs don't exist
         :raises: PermissionDenied if missing *testruns.add_testcaserun* permission
     """
-    TestRun.objects.get(pk=run_id).add_case_run(
+    test_case_run = TestRun.objects.get(pk=run_id).add_case_run(
         case=TestCase.objects.get(pk=case_id)
     )
+    return test_case_run.serialize()
 
 
 @permissions_required('testruns.delete_testcaserun')
