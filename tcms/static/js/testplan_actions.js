@@ -1091,13 +1091,20 @@ function onTestCaseComponentClick(options) {
   var container = options.container;
   var parameters = options.parameters;
 
+  return function(e) {
     if (this.diabled) {
       return false;
     }
     var c = getDialog();
     var params = {
+      // FIXME: remove this line. It's unnecessary any more.
       'case': serializeCaseFromInputList(table),
+      'product': Nitrate.TestPlans.Instance.fields.product_id
     };
+    if (params['case'] && params['case'].length == 0) {
+      window.alert(default_messages.alert.no_case_selected);
+      return false;
+    }
     var form_observe = function(e) {
       e.stopPropagation();
       e.preventDefault();
@@ -1129,6 +1136,7 @@ function onTestCaseComponentClick(options) {
       updateCaseComponent(url, params, cbAfterComponentChanged);
     };
     renderComponentForm(c, params, form_observe);
+  };
 }
 
 
