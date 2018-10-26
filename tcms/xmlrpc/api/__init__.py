@@ -30,13 +30,6 @@ How does the XML-RPC interface work?
   documentation. This is the standard behavior for Python. Keyword
   arguments, where supported will be documented explicitly!
 
-.. note::
-
-    When using the tcms-api client library make sure to pass arguments
-    in the way expected by its functions! In case the client library methods
-    have a different signature from their server-side counter parts
-    please report it as a bug so we can unify them!
-
 
 How to handle ForeignKey arguments?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
