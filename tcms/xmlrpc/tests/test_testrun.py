@@ -6,9 +6,10 @@ from django.contrib.auth.models import Permission
 
 from tcms_api.xmlrpc import TCMSXmlrpc
 
-from tcms.testruns.models import TestRun
+from tcms.testruns.models import TestRun, TestCaseRun
 
 from tcms.tests import remove_perm_from_user
+from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestPlanFactory
@@ -16,6 +17,45 @@ from tcms.tests.factories import TagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
+
+
+class TestAddCase(XmlrpcAPIBaseTest):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.plan = TestPlanFactory(author=self.api_user)
+
+        self.test_case = TestCaseFactory()
+        self.plan.add_case(self.test_case)
+
+        self.test_run = TestRunFactory(plan=self.plan)
+
+    def test_add_case(self):
+        result = self.rpc_client.exec.TestRun.add_case(self.test_run.pk, self.test_case.pk)
+        self.assertTrue(isinstance(result, dict))
+
+        test_case_run = TestCaseRun.objects.get(run=self.test_run.pk, case=self.test_case.pk)
+        self.assertEqual(test_case_run.pk, result['case_run_id'])
+        self.assertEqual(test_case_run.case.pk, result['case_id'])
+        self.assertEqual(test_case_run.run.pk, result['run_id'])
+
+    def test_add_case_without_permissions(self):
+        unauthorized_user = UserFactory()
+        unauthorized_user.set_password('api-testing')
+        unauthorized_user.save()
+
+        unauthorized_user.user_permissions.add(*Permission.objects.all())
+        remove_perm_from_user(unauthorized_user, 'testruns.add_testcaserun')
+
+        rpc_client = TCMSXmlrpc(unauthorized_user.username,
+                                'api-testing',
+                                '%s/xml-rpc/' % self.live_server_url).server
+
+        with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
+            rpc_client.TestRun.add_case(self.test_run.pk, self.test_case.pk)
+
+        exists = TestCaseRun.objects.filter(run=self.test_run.pk, case=self.test_case.pk).exists()
+        self.assertFalse(exists)
 
 
 class TestAddTag(XmlrpcAPIBaseTest):
