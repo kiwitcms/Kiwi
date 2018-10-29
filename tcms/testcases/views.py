@@ -793,10 +793,12 @@ def get(request, case_id):
         'run', 'tested_by',
         'assignee', 'case',
         'case', 'case_run_status').order_by('run__plan')
-    runs_ordered_by_plan = itertools.groupby(tcrs, lambda t: t.run.plan)
     # FIXME: Just don't know why Django template does not evaluate a generator,
     # and had to evaluate the groupby generator manually like below.
-    runs_ordered_by_plan = [(k, list(v)) for k, v in runs_ordered_by_plan]
+    runs_ordered_by_plan = []
+    for key, value in itertools.groupby(tcrs, lambda t: t.run.plan):
+        runs_ordered_by_plan.append((key, list(value)))
+
     case_run_plans = [k for k, v in runs_ordered_by_plan]
     # Get the specific test case run
     if request.GET.get('case_run_id'):
