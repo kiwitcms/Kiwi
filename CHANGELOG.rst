@@ -23,7 +23,7 @@ Improvements
 - Dashboard will now show TestRuns which have test cases assigned to current
   user. Fixes
   `Issue #520 <https://github.com/kiwitcms/Kiwi/issues/520>`_
-- API method ``TestRun.add_case() now returns a serialized TestCaseRun object.
+- API method ``TestRun.add_case()`` now returns a serialized TestCaseRun object.
   Previously this method returned None
 
 
