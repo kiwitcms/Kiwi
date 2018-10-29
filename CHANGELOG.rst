@@ -2,6 +2,60 @@ Change Log
 ==========
 
 
+Kiwi TCMS 6.1.1 (29 Oct 2018)
+-----------------------------
+
+**IMPORTANT:** this release squashes database migrations and removes
+older migrations that have been squashed in previous releases, a few
+improvements and bug fixes.
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Dashboard will now show TestRuns which have test cases assigned to current
+  user. Fixes
+  `Issue #520 <https://github.com/kiwitcms/Kiwi/issues/520>`_
+- API method ``TestRun.add_case() now returns a serialized TestCaseRun object.
+  Previously this method returned None
+
+
+Bug fixes
+~~~~~~~~~
+
+- Don't show disabled Priority records in UI. Fixes
+  `Issue #334 <https://github.com/kiwitcms/Kiwi/issues/334>`_
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Fix some pylint errors (Ivaylo Ivanov)
+
+
+Database
+~~~~~~~~
+
+- Remove old squashed migrations for ``management``, ``testplans``,
+  ``testcases`` and ``testruns`` apps
+- Squash the remaining migrations for ``management``, ``testplans``,
+  ``testcases`` and ``testruns`` apps
+
+
+
 Kiwi TCMS 6.1 (20 Oct 2018)
 ---------------------------
 
