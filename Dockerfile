@@ -50,6 +50,9 @@ COPY ./manage.py /Kiwi/
 COPY ./etc/kiwitcms/ssl/ /Kiwi/ssl/
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py
 
+# create a mount directory so we can properly set ownership for it
+RUN mkdir /Kiwi/uploads
+
 # install patternfly
 COPY package.json /Kiwi/
 RUN cd /Kiwi/ && npm install && \
