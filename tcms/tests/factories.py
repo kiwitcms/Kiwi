@@ -251,19 +251,6 @@ class TestCaseTextFactory(DjangoModelFactory):
     breakdown = 'breakdown'
 
 
-class BugFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testcases.Bug'
-
-    bug_id = '12345678'
-    summary = factory.LazyAttribute(lambda obj: 'Summary of bug %s' % obj.bug_id)
-    description = ''
-    bug_system = factory.LazyFunction(lambda: BugSystem.objects.all()[0:1][0])
-    case_run = factory.SubFactory('tests.TestCaseRunFactory')
-    case = factory.SubFactory(TestCaseFactory)
-
-
 class TestCaseEmailSettingsFactory(DjangoModelFactory):
 
     class Meta:
@@ -320,6 +307,19 @@ class TestCaseRunFactory(DjangoModelFactory):
     case = factory.SubFactory(TestCaseFactory)
     case_run_status = factory.LazyFunction(lambda: TestCaseRunStatus.objects.order_by('pk').first())
     build = factory.SubFactory(BuildFactory)
+
+
+class BugFactory(DjangoModelFactory):
+
+    class Meta:
+        model = 'testcases.Bug'
+
+    bug_id = factory.Sequence(lambda n: n)
+    summary = factory.LazyAttribute(lambda obj: 'Summary of bug %s' % obj.bug_id)
+    description = ''
+    bug_system = factory.LazyFunction(lambda: BugSystem.objects.first())
+    case_run = factory.SubFactory(TestCaseRunFactory)
+    case = factory.SubFactory(TestCaseFactory)
 
 
 class TestRunTagFactory(DjangoModelFactory):
