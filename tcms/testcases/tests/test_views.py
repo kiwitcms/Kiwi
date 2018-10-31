@@ -19,6 +19,7 @@ from tcms.testcases.models import TestCasePlan
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import CategoryFactory
+from tcms.tests.factories import BugFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
@@ -63,6 +64,26 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
                 "title=\"%s\"" % (status.name.lower(), status.name),
                 html=False
             )
+
+    def test_user_sees_bugs(self):
+        bug_1 = BugFactory()
+        bug_2 = BugFactory()
+
+        self.case_run_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
+        self.case_run_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)
+
+        url = reverse('caserun-detail-pane', args=[self.case_run_1.case.pk])
+        response = self.client.get(
+            url,
+            {
+                'case_run_id': self.case_run_1.pk,
+                'case_text_version': self.case_run_1.case.latest_text_version()
+            }
+        )
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, bug_1.get_full_url())
+        self.assertContains(response, bug_2.get_full_url())
 
 
 class TestMultipleEmailField(unittest.TestCase):
