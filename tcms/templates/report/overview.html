@@ -3,13 +3,6 @@
 {% load static %}
 {% block subtitle %}Reporting - {{ product }}{% endblock %}
 
-{% block custom_javascript %}
-<script type="text/javascript" src="{% static 'js/report.js' %}"></script>
-<script type="text/javascript">
-Nitrate.Utils.after_page_load(Nitrate.Report.List.on_load);
-</script>
-{% endblock %}
-
 {% block contents %}
 <div id="content">
 	{% include 'report/nav.html' %}
