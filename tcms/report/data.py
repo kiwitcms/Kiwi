@@ -302,7 +302,7 @@ class CustomReportData:
     # All data are selected from TestCaseRuns, so following filters are
     # relative to that table.
     report_criteria = {
-        'pk__in': ('build__in', models_to_pks),
+        'build': ('build__in', models_to_pks),
         'product': ('build__product', model_to_pk),
         'build_run__product_version': ('run__product_version', model_to_pk),
         'build_run__plan__name__icontains': ('run__plan__name__icontains', do_nothing),
@@ -414,7 +414,7 @@ class CustomDetailsReportData(CustomReportData):
 
     # In detail report, there is only one selected test build at a time.
     report_criteria = CustomReportData.report_criteria.copy()
-    report_criteria['pk__in'] = ('build', model_to_pk)
+    report_criteria['build'] = ('build', model_to_pk)
 
     @staticmethod
     def generate_status_matrix(build_ids):

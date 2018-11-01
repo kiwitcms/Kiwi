@@ -16,8 +16,8 @@ Nitrate.Report.Builds.on_load = function() {
 };
 
 Nitrate.Report.CustomSearch.on_load = function() {
-  if (jQ('#id_pk__in').length) {
-    bind_build_selector_to_product(false, jQ('#id_product')[0], jQ('#id_pk__in')[0]);
+  if (jQ('#id_build').length) {
+    bind_build_selector_to_product(false, jQ('#id_product')[0], jQ('#id_build')[0]);
   }
 
   if (jQ('#id_build_run__product_version').length) {
@@ -47,15 +47,15 @@ Nitrate.Report.CustomSearch.on_load = function() {
     e.preventDefault();
     var params = Nitrate.Utils.formSerialize(jQ('#id_form_search')[0]);
     var build_id = jQ(this).siblings().eq(0).val();
-    params.pk__in = build_id;
+    params.build = build_id;
         
     postToURL(this.href, params, 'get');
   });
 };
 
 Nitrate.Report.CustomDetails.on_load = function() {
-  if (jQ('#id_pk__in').length) {
-    bind_build_selector_to_product(false, jQ('#id_product')[0], jQ('#id_pk__in')[0]);
+  if (jQ('#id_build').length) {
+    bind_build_selector_to_product(false, jQ('#id_product')[0], jQ('#id_build')[0]);
   }
 
   if (jQ('#id_build_run__product_version').length) {

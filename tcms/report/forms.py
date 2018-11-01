@@ -6,7 +6,7 @@ from tcms.testcases.models import Category
 
 
 class CustomSearchForm(forms.Form):
-    pk__in = forms.ModelMultipleChoiceField(
+    build = forms.ModelMultipleChoiceField(
         label='Build',
         queryset=Build.objects.none(),
         required=False,
@@ -44,7 +44,7 @@ class CustomSearchForm(forms.Form):
         if product_id:
             self.fields['build_run__product_version'].queryset = \
                 Version.objects.filter(product__id=product_id).only('value')
-            self.fields['pk__in'].queryset = Build.objects.filter(
+            self.fields['build'].queryset = Build.objects.filter(
                 product__id=product_id).only('name')
             self.fields['testcaserun__case__category'].queryset = \
                 Category.objects.filter(product__id=product_id).only(
@@ -56,7 +56,7 @@ class CustomSearchForm(forms.Form):
 
 
 class CustomSearchDetailsForm(CustomSearchForm):
-    pk__in = forms.ModelChoiceField(
+    build = forms.ModelChoiceField(
         label='Build',
         queryset=Build.objects.none(),
         error_messages={

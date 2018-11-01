@@ -20,7 +20,7 @@ Nitrate.Utils.after_page_load(Nitrate.Report.CustomDetails.on_load);
 	<div class="report_title_bg">
 		<form action="{% url "report-custom-details" %}">
 			{{ form.product.label }}: {{ form.product }}<br />
-			{{ form.pk__in.label }}: {{ form.pk__in }}<br />
+			{{ form.build.label }}: {{ form.build }}<br />
 			<input type="submit" value="Submit" />
 		</form>
 		{% if report_errors %}
