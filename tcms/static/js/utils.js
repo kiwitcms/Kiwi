@@ -2,12 +2,20 @@
     Used to update a select when something else changes.
 */
 function updateSelect(data, selector, id_attr, value_attr) {
-    // the zero-th option is a special one
-    var new_options = $(selector)[0].options[0].outerHTML;
+    var _select_tag = $(selector)[0];
+    var new_options = '';
+
+    // in some cases, e.g. TestRun search, the 1st <option> element is ---
+    // which must always be there to indicate nothing selected
+    if (_select_tag.options.length) {
+        new_options = _select_tag.options[0].outerHTML;
+    }
+
     data.forEach(function(element) {
         new_options += '<option value="' + element[id_attr] + '">' + element[value_attr] + '</option>';
     });
-    $(selector)[0].innerHTML = new_options;
+
+    _select_tag.innerHTML = new_options;
     $(selector).selectpicker('refresh');
 }
 

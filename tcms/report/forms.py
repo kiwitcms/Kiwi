@@ -51,8 +51,6 @@ class CustomSearchForm(forms.Form):
                     'name')
             self.fields['testcaserun__case__component'].queryset = \
                 Component.objects.filter(product__id=product_id).only('name')
-        # note: .populate() is executed by CustomReport only if
-        # a=Search (action) which always sends product_id!
 
 
 class CustomSearchDetailsForm(CustomSearchForm):

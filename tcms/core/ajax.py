@@ -5,7 +5,6 @@ Shared functions for plan/case/run.
 Most of these functions are use for Ajax.
 """
 from http import HTTPStatus
-from distutils.util import strtobool
 
 from django.db.models import Count
 from django.contrib.auth.models import User
@@ -53,14 +52,6 @@ class _InfoObjects:
             self.product_id = int(product_id)
         except (ValueError, TypeError):
             self.product_id = 0
-
-    def builds(self):
-        try:
-            is_active = strtobool(self.request.GET.get('is_active', default='False'))
-        except (ValueError, TypeError):
-            is_active = False
-
-        return Build.objects.filter(product_id=self.product_id, is_active=is_active)
 
     def categories(self):
         return Category.objects.filter(product__id=self.product_id)

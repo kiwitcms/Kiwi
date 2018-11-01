@@ -23,7 +23,6 @@ from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import VersionFactory
-from tcms.tests.factories import BuildFactory
 
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -41,12 +40,12 @@ class TestInfo(test.TestCase):
         cls.categories = [cls.default_category, cls.category_one, cls.category_two]
 
     def test_lowercase_string_is_converted_to_bool(self):
-        url = "%s?info_type=builds&product_id=1&is_active=true" % reverse('ajax-info')
+        url = "%s?info_type=versions&product_id=1&is_active=true" % reverse('ajax-info')
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
 
     def test_empty_string_is_converted_to_bool(self):
-        url = "%s?info_type=builds&product_id=1&is_active=" % reverse('ajax-info')
+        url = "%s?info_type=versions&product_id=1&is_active=" % reverse('ajax-info')
         response = self.client.get(url)
         self.assertEqual(200, response.status_code)
 
@@ -85,11 +84,6 @@ class Test_InfoObjects(test.TestCase):
 
         cls.info_objects = _InfoObjects(cls.request, cls.product.pk)
 
-        cls.build_one = BuildFactory(product=cls.product)
-        cls.build_two = BuildFactory(product=cls.product)
-        cls.build_two.is_active = False
-        cls.build_two.save()
-
         cls.category_one = CategoryFactory(product=cls.product)
         cls.category_two = CategoryFactory(product=cls.product)
         cls.category_three = CategoryFactory()
@@ -103,24 +97,6 @@ class Test_InfoObjects(test.TestCase):
 
         cls.version_one = VersionFactory(product=cls.product)
         cls.version_two = VersionFactory()
-
-    def test_active_builds(self):
-        self.request.GET = {'is_active': 'True'}
-
-        info_objects = _InfoObjects(self.request, self.product.pk)
-        builds = info_objects.builds()
-
-        self.assertIn(self.build_one, builds)
-        self.assertNotIn(self.build_two, builds)
-
-    def test_non_active_builds(self):
-        self.request.GET = {'is_active': 'False'}
-
-        info_objects = _InfoObjects(self.request, self.product.pk)
-        builds = info_objects.builds()
-
-        self.assertIn(self.build_two, builds)
-        self.assertNotIn(self.build_one, builds)
 
     def test_categories(self):
 
