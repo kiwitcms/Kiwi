@@ -2,11 +2,6 @@ Nitrate.Report = {};
 Nitrate.Report.List = {};
 Nitrate.Report.CustomSearch = {};
 Nitrate.Report.CustomDetails = {};
-
-Nitrate.Report.List.on_load = function(){
-	
-}
-
 Nitrate.Report.Builds = {};
 
 Nitrate.Report.Builds.on_load = function() {
