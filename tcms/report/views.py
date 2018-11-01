@@ -359,7 +359,7 @@ class CustomReport(TemplateView):
 
     def _initial_context(self):
         return {
-            'form': self.__class__.form_class(),
+            'form': self.form_class(),
             'builds': (),
         }
 
@@ -369,7 +369,7 @@ class CustomReport(TemplateView):
         return self._initial_context()
 
     def get_context_data(self, **kwargs):
-        data = super(CustomReport, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
         data.update(self._get_report_data_context())
         return data
 

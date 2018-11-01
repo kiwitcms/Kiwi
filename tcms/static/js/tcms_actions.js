@@ -266,42 +266,6 @@ function set_up_choices(element, values, allow_blank) {
   element.innerHTML = innerHTML;
 }
 
-function getBuildsByProductId(allow_blank, product_field, build_field) {
-  if (!product_field) {
-    var product_field = jQ('#id_product')[0];
-  }
-
-  if (!build_field) {
-    if (jQ('#id_build').length) {
-      var build_field = jQ('#id_build')[0];
-    } else {
-      window.alert('Build field does not exist');
-      return false;
-    }
-  }
-
-  var product_id = jQ(product_field).val();
-  no_product_is_selected = product_id === '' || product_id === null;
-  if (no_product_is_selected) {
-    jQ(build_field).html('<option value="">---------</option>');
-    return false;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    set_up_choices(
-      build_field,
-      returnobj.map(function(o) { return [o.pk, o.fields.name]; }),
-      allow_blank
-    );
-  };
-
-  getInfo({'info_type': 'builds', 'product_id': product_id, 'is_active': true},
-          success);
-}
-
-
 function getVersionsByProductId(allow_blank, product_field, version_field) {
   var product_field = jQ('#id_product')[0];
 
@@ -434,19 +398,6 @@ function checkProductField(product_field) {
 
   return false;
 }
-
-function bind_build_selector_to_product(allow_blank, product_field, build_field) {
-  var product_field = checkProductField(product_field);
-
-  if (product_field) {
-    jQ(product_field).bind('change', function() {
-      getBuildsByProductId(allow_blank, product_field, build_field);
-    });
-
-    getBuildsByProductId(allow_blank, product_field, build_field);
-  }
-}
-
 
 function bind_version_selector_to_product(allow_blank, load, product_field, version_field) {
   var product_field = checkProductField(product_field);

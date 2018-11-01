@@ -4,6 +4,7 @@ Nitrate.Report.CustomSearch = {};
 Nitrate.Report.CustomDetails = {};
 Nitrate.Report.Builds = {};
 
+
 Nitrate.Report.Builds.on_load = function() {
   if (jQ('#report_build').length) {
     jQ('#report_build').dataTable({
@@ -15,10 +16,27 @@ Nitrate.Report.Builds.on_load = function() {
   }
 };
 
+function update_build_select() {
+    // reset the options list b/c updateBuildSelect
+    // will reuse the 1st one if it exists
+    $('#id_build')[0].innerHTML = '';
+
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Build.filter', {product: product_id}, updateBuildSelect);
+    } else {
+        updateBuildSelect([]);
+    }
+}
+
+
 Nitrate.Report.CustomSearch.on_load = function() {
-  if (jQ('#id_build').length) {
-    bind_build_selector_to_product(false, jQ('#id_product')[0], jQ('#id_build')[0]);
-  }
+    $('#id_product').change(update_build_select);
+
+    if (!$('#id_build').val().length) {
+        $('#id_product').change();
+    }
+
 
   if (jQ('#id_build_run__product_version').length) {
     bind_version_selector_to_product(true, false, jQ('#id_product')[0], jQ('#id_build_run__product_version')[0]);
@@ -54,9 +72,7 @@ Nitrate.Report.CustomSearch.on_load = function() {
 };
 
 Nitrate.Report.CustomDetails.on_load = function() {
-  if (jQ('#id_build').length) {
-    bind_build_selector_to_product(false, jQ('#id_product')[0], jQ('#id_build')[0]);
-  }
+    $('#id_product').change(update_build_select);
 
   if (jQ('#id_build_run__product_version').length) {
     bind_version_selector_to_product(true, false, jQ('#id_product')[0], jQ('#id_build_run__product_version')[0]);
