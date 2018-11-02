@@ -2,6 +2,51 @@ Change Log
 ==========
 
 
+Kiwi TCMS 6.2 (02 Nov 2018)
+---------------------------
+
+**IMPORTANT:** this is a small release that removes squashed migrations
+from previous releases and includes a few improvements.
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update to `Django 2.1.3 <https://docs.djangoproject.com/en/2.1/releases/2.1.3/>`_
+- Update Apache config to print logs on the console. Fixes
+  `Issue #549 <https://github.com/kiwitcms/Kiwi/issues/549>`_
+
+
+Database
+~~~~~~~~
+
+- Remove old variants of squashed migrations from earlier releases
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Update ``tcms.tests.factories.BugFactory`` (Ivaylo Ivanov)
+- Add test for ``tcms.testcases.views.group_case_bugs`` (Ivaylo Ivanov)
+- Pylint fixes (Ivaylo Ivanov)
+- Remove unused JavaScript and re-use the existing JSON RPC methods
+
+
+
 Kiwi TCMS 6.1.1 (29 Oct 2018)
 -----------------------------
 
