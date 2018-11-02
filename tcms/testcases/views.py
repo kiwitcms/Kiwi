@@ -103,9 +103,12 @@ def update_case_email_settings(tc, n_form):
 
 def group_case_bugs(bugs):
     """Group bugs using bug_id."""
-    bugs = itertools.groupby(bugs, lambda b: b.bug_id)
-    bugs = [(pk, list(_bugs)) for pk, _bugs in bugs]
-    return bugs
+    grouped_bugs = []
+
+    for pk, _bugs in itertools.groupby(bugs, lambda b: b.bug_id):
+        grouped_bugs.append((pk, list(_bugs)))
+
+    return grouped_bugs
 
 
 def create_testcase(request, form, tp):
