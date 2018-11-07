@@ -20,7 +20,7 @@ class CustomSearchForm(forms.Form):
             'invalid_choice': '%(value)s is not a valid product ID for '
                               'generating this report.',
         })
-    build_run__product_version = forms.ModelChoiceField(
+    version = forms.ModelChoiceField(
         label='Product version',
         queryset=Version.objects.none(),
         required=False,
@@ -42,8 +42,8 @@ class CustomSearchForm(forms.Form):
 
     def populate(self, product_id):
         if product_id:
-            self.fields['build_run__product_version'].queryset = \
-                Version.objects.filter(product__id=product_id).only('value')
+            self.fields['version'].queryset = Version.objects.filter(
+                product__id=product_id).only('value')
             self.fields['build'].queryset = Build.objects.filter(
                 product__id=product_id).only('name')
             self.fields['testcaserun__case__category'].queryset = \
