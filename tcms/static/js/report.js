@@ -29,18 +29,26 @@ function update_build_select() {
     }
 }
 
+function update_version_select() {
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
+    } else {
+        updateVersionSelect([]);
+    }
+}
+
 
 Nitrate.Report.CustomSearch.on_load = function() {
-    $('#id_product').change(update_build_select);
-
-    if (!$('#id_build').val().length) {
-        $('#id_product').change();
+    $('#id_product').change(update_version_select);
+    if (!$('#id_version').val().length) {
+        update_version_select();
     }
 
-
-  if (jQ('#id_build_run__product_version').length) {
-    bind_version_selector_to_product(true, false, jQ('#id_product')[0], jQ('#id_build_run__product_version')[0]);
-  }
+    $('#id_product').change(update_build_select);
+    if (!$('#id_build').val().length) {
+        update_build_select();
+    }
 
   if (jQ('#id_testcaserun__case__category').length) {
     bind_category_selector_to_product(true, false, jQ('#id_product')[0], jQ('#id_testcaserun__case__category')[0]);
@@ -66,15 +74,12 @@ Nitrate.Report.CustomSearch.on_load = function() {
     var params = Nitrate.Utils.formSerialize(jQ('#id_form_search')[0]);
     var build_id = jQ(this).siblings().eq(0).val();
     params.build = build_id;
-        
+
     postToURL(this.href, params, 'get');
   });
 };
 
 Nitrate.Report.CustomDetails.on_load = function() {
+    $('#id_product').change(update_version_select);
     $('#id_product').change(update_build_select);
-
-  if (jQ('#id_build_run__product_version').length) {
-    bind_version_selector_to_product(true, false, jQ('#id_product')[0], jQ('#id_build_run__product_version')[0]);
-  }
 };
