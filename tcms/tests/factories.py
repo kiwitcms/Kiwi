@@ -4,6 +4,7 @@
 from datetime import datetime
 
 from django.db.models import signals
+from django.conf import settings
 
 import factory
 from factory.django import DjangoModelFactory
@@ -20,7 +21,7 @@ from tcms.testruns.models import TestCaseRunStatus
 class UserFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'auth.User'
+        model = settings.AUTH_USER_MODEL
 
     username = factory.Sequence(lambda n: 'User%d' % n)
     email = factory.LazyAttribute(lambda user: '%s@example.com' % user.username)

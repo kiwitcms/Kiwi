@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.conf import settings
 
 from tcms.core.models import TCMSActionModel
 
@@ -59,14 +60,14 @@ class Component(TCMSActionModel):
     name = models.CharField(max_length=64)
     product = models.ForeignKey(Product, related_name='component', on_delete=models.CASCADE)
     initial_owner = models.ForeignKey(
-        'auth.User',
+        settings.AUTH_USER_MODEL,
         db_column='initialowner',
         related_name='initialowner',
         null=True,
         on_delete=models.CASCADE
     )
     initial_qa_contact = models.ForeignKey(
-        'auth.User',
+        settings.AUTH_USER_MODEL,
         db_column='initialqacontact',
         related_name='initialqacontact',
         blank=True,
