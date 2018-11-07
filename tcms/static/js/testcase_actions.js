@@ -246,8 +246,21 @@ Nitrate.TestCases.Edit.on_load = function() {
   });
 };
 
+// todo: this is duplicated in reports.js
+function update_version_select() {
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
+    } else {
+        updateVersionSelect([]);
+    }
+}
+
 Nitrate.TestCases.Clone.on_load = function() {
-  bind_version_selector_to_product(true);
+    $('#id_product').change(update_version_select);
+    if (!$('#id_version').val().length) {
+        update_version_select();
+    }
 
   jQ('#id_form_search_plan').bind('submit', function(e) {
     e.stopPropagation();

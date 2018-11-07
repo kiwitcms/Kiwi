@@ -4,6 +4,11 @@
 {% block custom_stylesheet %}
 {% endblock %}
 {% block custom_javascript %}
+
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript">
 Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
@@ -42,7 +47,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
                                                 </div>
                                                 <div class="cell">
                                                     <label class="sd" for="id_version_id">Product Version</label>
-                                                    {{ search_form.product_version }}
+                                                    {{ search_form.version }}
                                                 </div>
                                                 <div class="cell">
                                                     <label class="sd" for="id_type_id">Plan Type</label>

@@ -77,8 +77,8 @@
             <div class="col-md-3 col-lg-3">
                 <select class="form-control selectpicker" id="id_version">
                     <option value="">----------</option>
-                {% for option in form.product_version.field.queryset %}
-                    <option value="{{ option.pk }}" {% if form.product_version.value|add:'0' == option.pk %}selected{% endif %}>{{ option.value }}</option>
+                {% for option in form.version.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.version.value|add:'0' == option.pk %}selected{% endif %}>{{ option.value }}</option>
                 {% endfor %}
                 </select>
             </div>
