@@ -91,12 +91,12 @@ $(document).ready(function() {
     });
 
     $('#id_product').change(function() {
+        update_version_select_from_product();
+
         var product_id = $(this).val();
         if (product_id) {
-            jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
             jsonRPC('Build.filter', {product: product_id}, updateBuildSelect);
         } else {
-            updateVersionSelect([]);
             updateBuildSelect([]);
         }
     });

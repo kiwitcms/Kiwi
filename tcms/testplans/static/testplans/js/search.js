@@ -73,14 +73,7 @@ $(document).ready(function() {
         return false; // so we don't actually send the form
     });
 
-    $('#id_product').change(function() {
-        var product_id = $(this).val();
-        if (product_id) {
-            jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
-        } else {
-            updateVersionSelect([]);
-        }
-    });
+    $('#id_product').change(update_version_select_from_product);
 
     $('.bootstrap-switch').bootstrapSwitch();
 
