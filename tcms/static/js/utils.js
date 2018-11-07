@@ -47,6 +47,23 @@ function updateBuildSelect(data) {
 }
 
 /*
+    Used for on-change event handlers
+*/
+function update_build_select_from_product() {
+    // reset the options list b/c updateBuildSelect
+    // will reuse the 1st one if it exists
+    $('#id_build')[0].innerHTML = '';
+
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Build.filter', {product: product_id}, updateBuildSelect);
+    } else {
+        updateBuildSelect([]);
+    }
+}
+
+
+/*
     Split the input string by comma and return
     a list of trimmed values
 */

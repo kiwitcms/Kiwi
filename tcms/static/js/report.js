@@ -16,18 +16,6 @@ Nitrate.Report.Builds.on_load = function() {
   }
 };
 
-function update_build_select() {
-    // reset the options list b/c updateBuildSelect
-    // will reuse the 1st one if it exists
-    $('#id_build')[0].innerHTML = '';
-
-    var product_id = $('#id_product').val();
-    if (product_id) {
-        jsonRPC('Build.filter', {product: product_id}, updateBuildSelect);
-    } else {
-        updateBuildSelect([]);
-    }
-}
 
 Nitrate.Report.CustomSearch.on_load = function() {
     $('#id_product').change(update_version_select_from_product);
@@ -35,9 +23,9 @@ Nitrate.Report.CustomSearch.on_load = function() {
         update_version_select_from_product();
     }
 
-    $('#id_product').change(update_build_select);
+    $('#id_product').change(update_build_select_from_product);
     if (!$('#id_build').val().length) {
-        update_build_select();
+        update_build_select_from_product();
     }
 
   if ($('#id_testcaserun__case__category').length) {
@@ -71,5 +59,5 @@ Nitrate.Report.CustomSearch.on_load = function() {
 
 Nitrate.Report.CustomDetails.on_load = function() {
     $('#id_product').change(update_version_select_from_product);
-    $('#id_product').change(update_build_select);
+    $('#id_product').change(update_build_select_from_product);
 };
