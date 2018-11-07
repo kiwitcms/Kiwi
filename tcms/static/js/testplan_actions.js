@@ -255,8 +255,17 @@ Nitrate.TestPlans.TreeView = {
   },
 };
 
+function configure_product_on_load() {
+    $('#id_product').change(function() {
+        $('#id_product_version').find('option').remove();
+        update_version_select_from_product($(this), '#id_product_version')
+    });
+}
+
 Nitrate.TestPlans.Create.on_load = function() {
-  bind_version_selector_to_product(false);
+    configure_product_on_load();
+    update_version_select_from_product($('#id_product'), '#id_product_version')
+
 
   jQ('#add_id_product').bind('click', function() {
     return popupAddAnotherWindow(this);
@@ -267,15 +276,10 @@ Nitrate.TestPlans.Create.on_load = function() {
   jQ('.js-cancel-button').bind('click', function() {
     window.history.back();
   });
-
-  // Populate product version field.
-  if (jQ('#id_product').length && !jQ('#id_product_version').val()) {
-    fireEvent(jQ('#id_product')[0],'change');
-  }
 };
 
 Nitrate.TestPlans.Edit.on_load = function() {
-  bind_version_selector_to_product(false);
+    configure_product_on_load();
 }
 
 Nitrate.TestPlans.Details = {
@@ -645,7 +649,8 @@ Nitrate.TestPlans.SearchCase.on_load = function() {
 };
 
 Nitrate.TestPlans.Clone.on_load = function() {
-  bind_version_selector_to_product(false);
+    configure_product_on_load();
+    update_version_select_from_product($('#id_product'), '#id_product_version')
 
   jQ('#id_link_testcases').bind('change', function(e) {
     if (this.checked) {
@@ -666,10 +671,6 @@ Nitrate.TestPlans.Clone.on_load = function() {
       jQ('#id_keep_case_default_tester')[0].disabled = true;
     }
   });
-  // Populate product version field.
-  if (jQ('#id_product').length && !jQ('#id_product_version').val()) {
-    fireEvent(jQ('#id_product')[0],'change');
-  }
 
   jQ('.js-cancel-button').bind('click', function() {
     window.history.back();
