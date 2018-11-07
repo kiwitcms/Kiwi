@@ -266,41 +266,6 @@ function set_up_choices(element, values, allow_blank) {
   element.innerHTML = innerHTML;
 }
 
-function getVersionsByProductId(allow_blank, product_field, version_field) {
-  var product_field = jQ('#id_product')[0];
-
-  if (!version_field) {
-    if (jQ('#id_product_version').length) {
-      var version_field = jQ('#id_product_version')[0];
-    } else {
-      window.alert('Version field does not exist');
-      return false;
-    }
-  }
-
-  product_id = jQ(product_field).val();
-
-  if (product_id == "" && allow_blank) {
-    jQ(version_field).html('<option value="">---------</option>');
-      return true;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    set_up_choices(
-      version_field,
-      returnobj.map(function(o) {
-        return [o.pk, o.fields.value];
-      }),
-      allow_blank
-    );
-  };
-
-  getInfo({'info_type': 'versions', 'product_id': product_id},
-          success);
-}
-
 function getComponentsByProductId(allow_blank, product_field, component_field, callback, parameters) {
   if (!parameters) {
     var parameters = {};
@@ -397,19 +362,6 @@ function checkProductField(product_field) {
   }
 
   return false;
-}
-
-function bind_version_selector_to_product(allow_blank, load, product_field, version_field) {
-  var product_field = checkProductField(product_field);
-
-  if (product_field) {
-    jQ(product_field).bind('change', function() {
-      getVersionsByProductId(allow_blank, product_field, version_field);
-    });
-    if (load) {
-      getVersionsByProductId(allow_blank, product_field, version_field);
-    }
-  }
 }
 
 function bind_category_selector_to_product(allow_blank, load, product_field, category_field) {

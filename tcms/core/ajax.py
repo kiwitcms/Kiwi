@@ -59,9 +59,6 @@ class _InfoObjects:
     def components(self):
         return Component.objects.filter(product__id=self.product_id)
 
-    def versions(self):
-        return Version.objects.filter(product__id=self.product_id)
-
 
 def tags(request):
     """

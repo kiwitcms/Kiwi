@@ -22,7 +22,6 @@ from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
 
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -38,16 +37,6 @@ class TestInfo(test.TestCase):
         cls.category_two = CategoryFactory(product=cls.product)
 
         cls.categories = [cls.default_category, cls.category_one, cls.category_two]
-
-    def test_lowercase_string_is_converted_to_bool(self):
-        url = "%s?info_type=versions&product_id=1&is_active=true" % reverse('ajax-info')
-        response = self.client.get(url)
-        self.assertEqual(200, response.status_code)
-
-    def test_empty_string_is_converted_to_bool(self):
-        url = "%s?info_type=versions&product_id=1&is_active=" % reverse('ajax-info')
-        response = self.client.get(url)
-        self.assertEqual(200, response.status_code)
 
     def test_with_unrecognisable_info_type(self):
         """ When a request comes with invalid info_type,
@@ -95,9 +84,6 @@ class Test_InfoObjects(test.TestCase):
         cls.user_one = UserFactory()
         cls.user_two = UserFactory()
 
-        cls.version_one = VersionFactory(product=cls.product)
-        cls.version_two = VersionFactory()
-
     def test_categories(self):
 
         categories = self.info_objects.categories()
@@ -122,13 +108,6 @@ class Test_InfoObjects(test.TestCase):
 
         self.assertIn(self.user_one, users)
         self.assertNotIn(self.user_two, users)
-
-    def test_version(self):
-
-        test_versions = self.info_objects.versions()
-
-        self.assertIn(self.version_one, test_versions)
-        self.assertNotIn(self.version_two, test_versions)
 
 
 class Test_TestCaseUpdates(BasePlanCase):
