@@ -56,7 +56,7 @@ class TestRun(TCMSActionModel):
                                  through='testruns.TestRunTag',
                                  related_name='run')
 
-    cc = models.ManyToManyField('auth.User', through='testruns.TestRunCC')
+    cc = models.ManyToManyField(settings.AUTH_USER_MODEL, through='testruns.TestRunCC')
 
     class Meta:
         unique_together = ('run_id', 'product_version')
