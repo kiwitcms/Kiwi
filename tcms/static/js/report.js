@@ -6,8 +6,8 @@ Nitrate.Report.Builds = {};
 
 
 Nitrate.Report.Builds.on_load = function() {
-  if (jQ('#report_build').length) {
-    jQ('#report_build').dataTable({
+  if ($('#report_build').length) {
+    $('#report_build').dataTable({
       "bPaginate": false,
       "bFilter": false,
       "bProcessing": true,
@@ -29,20 +29,10 @@ function update_build_select() {
     }
 }
 
-function update_version_select() {
-    var product_id = $('#id_product').val();
-    if (product_id) {
-        jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
-    } else {
-        updateVersionSelect([]);
-    }
-}
-
-
 Nitrate.Report.CustomSearch.on_load = function() {
-    $('#id_product').change(update_version_select);
+    $('#id_product').change(update_version_select_from_product);
     if (!$('#id_version').val().length) {
-        update_version_select();
+        update_version_select_from_product();
     }
 
     $('#id_product').change(update_build_select);
@@ -50,16 +40,16 @@ Nitrate.Report.CustomSearch.on_load = function() {
         update_build_select();
     }
 
-  if (jQ('#id_testcaserun__case__category').length) {
-    bind_category_selector_to_product(true, false, jQ('#id_product')[0], jQ('#id_testcaserun__case__category')[0]);
+  if ($('#id_testcaserun__case__category').length) {
+    bind_category_selector_to_product(true, false, $('#id_product')[0], $('#id_testcaserun__case__category')[0]);
   }
 
-  if (jQ('#id_testcaserun__case__component').length) {
-    bind_component_selector_to_product(true, false, jQ('#id_product')[0], jQ('#id_testcaserun__case__component')[0]);
+  if ($('#id_testcaserun__case__component').length) {
+    bind_component_selector_to_product(true, false, $('#id_product')[0], $('#id_testcaserun__case__component')[0]);
   }
 
-  if (jQ('#id_table_report').length) {
-    jQ('#id_table_report').dataTable({
+  if ($('#id_table_report').length) {
+    $('#id_table_report').dataTable({
       "aoColumnDefs":[{ "sType": "numeric", "aTargets": [1, 2, 3, 4, 5 ] }],
       "bPaginate": false,
       "bFilter": false,
@@ -68,11 +58,11 @@ Nitrate.Report.CustomSearch.on_load = function() {
     });
   }
 
-  jQ('.build_link').bind('click', function(e) {
+  $('.build_link').bind('click', function(e) {
     e.stopPropagation();
     e.preventDefault();
-    var params = Nitrate.Utils.formSerialize(jQ('#id_form_search')[0]);
-    var build_id = jQ(this).siblings().eq(0).val();
+    var params = Nitrate.Utils.formSerialize($('#id_form_search')[0]);
+    var build_id = $(this).siblings().eq(0).val();
     params.build = build_id;
 
     postToURL(this.href, params, 'get');
@@ -80,6 +70,6 @@ Nitrate.Report.CustomSearch.on_load = function() {
 };
 
 Nitrate.Report.CustomDetails.on_load = function() {
-    $('#id_product').change(update_version_select);
+    $('#id_product').change(update_version_select_from_product);
     $('#id_product').change(update_build_select);
 };

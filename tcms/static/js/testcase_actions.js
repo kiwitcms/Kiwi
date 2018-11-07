@@ -246,20 +246,10 @@ Nitrate.TestCases.Edit.on_load = function() {
   });
 };
 
-// todo: this is duplicated in reports.js
-function update_version_select() {
-    var product_id = $('#id_product').val();
-    if (product_id) {
-        jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
-    } else {
-        updateVersionSelect([]);
-    }
-}
-
 Nitrate.TestCases.Clone.on_load = function() {
-    $('#id_product').change(update_version_select);
+    $('#id_product').change(update_version_select_from_product);
     if (!$('#id_version').val().length) {
-        update_version_select();
+        update_version_select_from_product();
     }
 
   jQ('#id_form_search_plan').bind('submit', function(e) {

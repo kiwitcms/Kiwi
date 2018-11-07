@@ -28,6 +28,18 @@ function updateVersionSelect(data) {
 }
 
 /*
+    Used for on-change event handlers
+*/
+function update_version_select_from_product() {
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
+    } else {
+        updateVersionSelect([]);
+    }
+}
+
+/*
     Used to update a Build select when Product changes.
 */
 function updateBuildSelect(data) {
