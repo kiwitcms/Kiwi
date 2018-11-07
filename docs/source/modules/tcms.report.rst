@@ -13,7 +13,6 @@ Submodules
 
    tcms.report.data
    tcms.report.forms
-   tcms.report.models
    tcms.report.urls
    tcms.report.views
 
