@@ -21,21 +21,23 @@ function updateSelect(data, selector, id_attr, value_attr) {
 
 
 /*
-    Used to update a Version select when Product changes.
-*/
-function updateVersionSelect(data) {
-    updateSelect(data, '#id_version', 'id', 'value')
-}
-
-/*
     Used for on-change event handlers
+    @sender - the element trigerring the on-change event
 */
-function update_version_select_from_product() {
+function update_version_select_from_product(sender, version_selector) {
+    if (version_selector === undefined) {
+        version_selector = '#id_version';
+    }
+
+    var updateVersionSelectCallback = function(data) {
+        updateSelect(data, version_selector, 'id', 'value')
+    }
+
     var product_id = $('#id_product').val();
     if (product_id) {
-        jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
+        jsonRPC('Version.filter', {product: product_id}, updateVersionSelectCallback);
     } else {
-        updateVersionSelect([]);
+        updateVersionSelectCallback([]);
     }
 }
 
