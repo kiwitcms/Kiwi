@@ -128,7 +128,7 @@ class SearchPlanForm(forms.Form):
         queryset=Product.objects.all().order_by('name'),
         required=False
     )
-    product_version = forms.ModelChoiceField(
+    version = forms.ModelChoiceField(
         label="Product Version",
         queryset=Version.objects.none(),
         required=False
@@ -173,10 +173,10 @@ class SearchPlanForm(forms.Form):
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields['product_version'].queryset = Version.objects.filter(
+            self.fields['version'].queryset = Version.objects.filter(
                 product__id=product_id)
         else:
-            self.fields['product_version'].queryset = Version.objects.none()
+            self.fields['version'].queryset = Version.objects.none()
 
 
 class ClonePlanForm(BasePlanForm):

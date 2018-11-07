@@ -80,6 +80,8 @@ class TestPlan(TCMSActionModel):
 
         for key, value in query.items():
             if value and key not in ['action', 't', 'f', 'a']:
+                if key == 'version':  # comes from case/clone.html
+                    key = 'product_version'
                 new_query[key] = value.strip() if hasattr(value, 'strip') else value
 
         query_set = cls.objects

@@ -95,6 +95,7 @@ def new(request, template_name='plan/new.html'):
 @require_GET
 def get_all(request):
     """Display all testplans"""
+    # todo: this function can be replaced with the existing JSON-RPC search
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
     # If it's not a search the page will be blank
