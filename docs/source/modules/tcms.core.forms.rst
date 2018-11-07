@@ -12,5 +12,4 @@ Submodules
 .. toctree::
 
    tcms.core.forms.fields
-   tcms.core.forms.forms
 
