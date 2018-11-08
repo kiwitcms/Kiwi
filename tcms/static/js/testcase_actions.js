@@ -164,23 +164,6 @@ Nitrate.TestCases.Details.on_load = function() {
 
   jQ('.plan_expandable').bind('click', toggle_case_runs_by_plan);
 
-  jQ('#testplans_table').dataTable({
-    "bFilter": false,
-    "bLengthChange": false,
-    "bPaginate": false,
-    "bInfo": false,
-    "bAutoWidth": false,
-    "aaSorting": [[ 0, "desc" ]],
-    "aoColumns": [
-      {"sType": "html"},
-      {"sType": "html"},
-      {"sType": "html"},
-      {"sType": "html"},
-      null,
-      {"bSortable": false}
-    ]
-  });
-
   jQ('.js-remove-button').bind('click', function(event) {
     var params = jQ(event.target).data('params');
     removeCaseBug(params.id, params.caseId, params.caseRunId);
