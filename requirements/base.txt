@@ -2,7 +2,7 @@ Django==2.1.3
 django-attachments>=1.3
 django-contrib-comments
 django-glrm
-django-grappelli
+django-grappelli==2.12.1
 django-modern-rpc
 django-simple-history==2.5.1
 django-uuslug
