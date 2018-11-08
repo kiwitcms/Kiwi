@@ -5,7 +5,7 @@ django-glrm
 django-grappelli==2.12.1
 django-modern-rpc
 django-simple-history==2.5.1
-django-uuslug
+django-uuslug==1.1.8
 django-vinaigrette==1.1.1
 jira
 Markdown==3.0.1
