@@ -575,7 +575,7 @@ function constructPlanCaseZone(container, case_id, parameters) {
       previewPlan(p, action_url, callback);
     });
     if (jQ('#testplans_table td a').length) {
-      jQ('#testplans_table').dataTable({
+      jQ('#testplans_table').DataTable({
         "bFilter": false,
         "bLengthChange": false,
         "bPaginate": false,
