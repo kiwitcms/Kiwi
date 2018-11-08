@@ -4,7 +4,7 @@ django-contrib-comments
 django-glrm
 django-grappelli
 django-modern-rpc
-django-simple-history
+django-simple-history==2.5.1
 django-uuslug
 django-vinaigrette==1.1.1
 jira
