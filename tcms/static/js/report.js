@@ -7,7 +7,7 @@ Nitrate.Report.Builds = {};
 
 Nitrate.Report.Builds.on_load = function() {
   if ($('#report_build').length) {
-    $('#report_build').dataTable({
+    $('#report_build').DataTable({
       "bPaginate": false,
       "bFilter": false,
       "bProcessing": true,
@@ -37,7 +37,7 @@ Nitrate.Report.CustomSearch.on_load = function() {
   }
 
   if ($('#id_table_report').length) {
-    $('#id_table_report').dataTable({
+    $('#id_table_report').DataTable({
       "aoColumnDefs":[{ "sType": "numeric", "aTargets": [1, 2, 3, 4, 5 ] }],
       "bPaginate": false,
       "bFilter": false,
