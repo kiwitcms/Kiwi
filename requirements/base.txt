@@ -7,7 +7,7 @@ django-modern-rpc
 django-simple-history==2.5.1
 django-uuslug
 django-vinaigrette==1.1.1
-jira
+jira==2.0.0
 Markdown==3.0.1
 python-bugzilla
 PyGithub==1.43.3
