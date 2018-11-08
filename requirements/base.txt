@@ -9,5 +9,5 @@ django-uuslug==1.1.8
 django-vinaigrette==1.1.1
 jira==2.0.0
 Markdown==3.0.1
-python-bugzilla
+python-bugzilla==2.2.0
 PyGithub==1.43.3
