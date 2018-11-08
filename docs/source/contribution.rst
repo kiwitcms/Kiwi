@@ -99,12 +99,3 @@ you are not sure what these functions are!
 
     At the moment there is no test for this because Django doesn't make it easier
     to implement a quick test based on 'git status'!
-
-.. note::
-
-    To update .mo files once new translations have been added or updated
-    you have to execute the following command and commit the results in git::
-
-        ./manage.py compilemessages
-
-    There is also an automated test for this via ``make check-mo-files``!
