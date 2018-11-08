@@ -10,4 +10,4 @@ django-vinaigrette
 jira
 Markdown
 python-bugzilla
-PyGithub
+PyGithub==1.43.3
