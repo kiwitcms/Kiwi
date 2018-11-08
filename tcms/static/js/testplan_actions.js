@@ -1412,6 +1412,8 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
         toggleAllCases(this);
       });
       jQ(casesTable).find('.js-case-field').bind('click', function() {
+// todo: we don't need a POST and resort. This can be done with DataTables
+// and we can leave sorting to the widget
         sortCase(container, jQ(this).parents('thead').data('param'), jQ(this).data('param'));
       });
     },
