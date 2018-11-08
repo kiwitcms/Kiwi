@@ -8,6 +8,6 @@ django-simple-history
 django-uuslug
 django-vinaigrette
 jira
-Markdown
+Markdown==3.0.1
 python-bugzilla
 PyGithub==1.43.3
