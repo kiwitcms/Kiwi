@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-11-09 06:01\n"
+"PO-Revision-Date: 2018-11-09 06:11\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -291,7 +291,8 @@ msgstr ""
 #, python-format
 msgid "\n"
 "TestCase has been updated by %(username)s!\n"
-msgstr ""
+msgstr "\n"
+"Le cas de test a été mis à jour par %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -317,27 +318,30 @@ msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
 "Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr ""
+msgstr "Chèr(e) Administra(teur/trice),\n"
+"une personne s'est enregistré un compte avec le nom %(username)s sur votre instance\n"
+"Kiwi TCMS et attend votre approbation!\n\n"
+"Aller à l'adresse %(user_url)s pour activer ce compte!\n"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Première page"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Page précédente"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Page en cours"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Page suivante"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Dernière page"
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
@@ -348,30 +352,30 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Connexion"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Bienvenue sur Kiwi TCMS"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmer"
 
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Changer le mot de passe"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
