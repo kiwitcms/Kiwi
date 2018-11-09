@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-11-08 22:51\n"
+"PO-Revision-Date: 2018-11-09 05:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -28,24 +28,24 @@ msgstr ""
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "Courriel"
 
 #: tcms/core/contrib/comments/forms.py:21
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/core/contrib/comments/forms.py:25
 msgid "Comment"
-msgstr ""
+msgstr "Commentaire"
 
 #: tcms/core/history.py:41
 #, python-format
 msgid "UPDATE: %(model_name)s #%(pk)d - %(title)s"
-msgstr ""
+msgstr "MAJ: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
@@ -54,7 +54,11 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "Mise à jour le %(history_date)s\n"
+"Mise à jour par %(username)s\n\n"
+"%(diff)s\n\n"
+"Pour plus d'information:\n"
+"%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
