@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-11-09 06:21\n"
+"PO-Revision-Date: 2018-11-09 06:31\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -23,7 +23,7 @@ msgstr "L'utilisateur %s non trouvé!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr ""
+msgstr "Commentaires de noyau personnalisé"
 
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/testplans/templates/testplans/search.html:11
@@ -116,7 +116,7 @@ msgstr "TABLEAU DE BORD"
 
 #: tcms/settings/common.py:82
 msgid "TESTING"
-msgstr ""
+msgstr "EN_TEST"
 
 #: tcms/settings/common.py:83
 msgid "New Test Plan"
@@ -229,7 +229,10 @@ msgid "\n"
 "                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"                %(total_count)s essai de test ou cas de tests qui vous sont assignés pour être exécuté.\n"
+"                Voici le dernier %(count)s.\n"
+"                "
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
@@ -277,7 +280,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "Il n’y a aucun plan(s) de test qui vous est assigné"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -285,7 +288,10 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr ""
+msgstr "Bienvenu %(user)s,\n"
+"Merci pour votre inscription sur %(site_domain)s!\n\n"
+"Pour activer votre compte cliquer sur le lien suivant:\n"
+"%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
@@ -526,7 +532,7 @@ msgstr ""
 
 #: tcms/testcases/views.py:1252
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Le clonage du cas de test a été réalisé avec succès"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -593,7 +599,7 @@ msgstr "Le plan de test \"%s\" n'existe pas"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Permission refusé: L'essai de test ne vous est plus assigné"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
@@ -683,7 +689,7 @@ msgstr ""
 
 #: tcms/testruns/views.py:60
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Créé un essai de test requiert au moins un cas de test"
 
 #: tcms/testruns/views.py:550
 msgid "Clone of "
@@ -701,7 +707,7 @@ msgstr "Essai du cas %d mis à jour:"
 #: tcms/xmlrpc/serializer.py:298
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "Le modèle %s ne possède aucune clé primaire. Vous devez spécifier tel champ manuellement."
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
