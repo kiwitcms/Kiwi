@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-11-09 06:31\n"
+"PO-Revision-Date: 2018-11-09 06:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -240,7 +240,7 @@ msgstr "VOIR TOUT"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Il n'y a aucune plan de test assigné à vous"
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
@@ -276,7 +276,10 @@ msgid "\n"
 "                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"                Vous gérez %(total_count)s plan(s) de test, %(disabled_count)s sont désactivés.\n"
+"                Voici le dernier %(count)s.\n"
+"                "
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
@@ -316,7 +319,20 @@ msgid "\n"
 "Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr ""
+msgstr "\n"
+"L'essai de test %(pk)s à été créé ou mis à jour pour vous.\n\n"
+"### Liens ###\n"
+"Essai de test: %(run_url)s\n"
+"Plan de test: %(plan_url)s\n\n"
+"### Information de lancement ###\n"
+"Résumé: %(summary)s\n\n"
+"Géré par: %(manager)s.\n"
+"Testeur par défaut: %(default_tester)s.\n\n"
+"Produit: %(product)s\n"
+"Version du produit: %(version)s\n"
+"Construction: %(build)s\n\n"
+"Récapitulatif:\n"
+"%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
@@ -419,7 +435,7 @@ msgstr "Veuillez entrer un/des id(s) de cas valide(s). utiliser le virgule pour 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
-msgstr ""
+msgstr "SUPPRIMÉ: Cas de test #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -523,12 +539,12 @@ msgstr "Créé le"
 
 #: tcms/testcases/views.py:521
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Plan de test non spécifié ou n'existe pas"
 
 #: tcms/testcases/views.py:1104 tcms/testruns/views.py:546
 #: tcms/testruns/views.py:624
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Au moins un cas de test est requis"
 
 #: tcms/testcases/views.py:1252
 msgid "TestCase cloning was successful"
@@ -657,7 +673,10 @@ msgid "\n"
 "                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr ""
+msgstr "\n"
+"                    %(count)s cas de test pré-sélectionné et qui ne sont pas confirmé et qui n'ont pas été cloné!\n"
+"                    Voir le plan de test pour plus de détail!\n"
+"                    "
 
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
@@ -685,7 +704,7 @@ msgstr "Fini à"
 
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Créé un essai de test requiert un plan de test, veuillez en sélectionné un"
 
 #: tcms/testruns/views.py:60
 msgid "Creating a TestRun requires at least one TestCase"
