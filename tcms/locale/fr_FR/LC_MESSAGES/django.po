@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-11-09 06:11\n"
+"PO-Revision-Date: 2018-11-09 06:21\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -379,36 +379,36 @@ msgstr "Changer le mot de passe"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
 msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
+msgstr "Entrez votre nouveau mot de passe deux fois, afin de vérifier qu'il est bien écrit"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
-msgstr ""
+msgstr "E-mail de réinitialisation du mot de passe a été envoyé"
 
 #: tcms/templates/registration/password_reset_form.html:16
 #: tcms/templates/registration/registration_form.html:39
 msgid "E-mail"
-msgstr ""
+msgstr "Courriel"
 
 #: tcms/templates/registration/password_reset_form.html:23
 msgid "Password reset"
-msgstr ""
+msgstr "Réinitialisation du mot de passe"
 
 #: tcms/templates/registration/password_reset_form.html:30
 msgid "Kiwi TCMS password reset"
-msgstr ""
+msgstr "Réinitialisation de mot de passe pour le Kiwi TCMS"
 
 #: tcms/templates/registration/registration_form.html:4
 msgid "Register new account"
-msgstr ""
+msgstr "Créer un nouveau compte"
 
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Inscription"
 
 #: tcms/testcases/forms.py:36
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "Veuillez entrer un/des id(s) de cas valide(s). utiliser le virgule pour séparer plus d'un id de cas.ex: \"111, 222\""
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
@@ -417,7 +417,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Rechercher des cas de tests"
 
 #: tcms/testcases/templates/testcases/search.html:11
 #: tcms/testcases/templates/testcases/search.html:121
@@ -426,47 +426,47 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:91
 msgid "Summary"
-msgstr ""
+msgstr "Récapitulatif"
 
 #: tcms/testcases/templates/testcases/search.html:13
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "Résumé des essais de test"
 
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testcases/templates/testcases/search.html:124
 msgid "Automated"
-msgstr ""
+msgstr "Automatiser"
 
 #: tcms/testcases/templates/testcases/search.html:26
 msgid "Proposed for automation"
-msgstr ""
+msgstr "Proposé pour l’automatisation"
 
 #: tcms/testcases/templates/testcases/search.html:29
 msgid "Search all when OFF"
-msgstr ""
+msgstr "Recherché tous les ETEINTS"
 
 #: tcms/testcases/templates/testcases/search.html:44
 #: tcms/testcases/templates/testcases/search.html:126
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: tcms/testcases/templates/testcases/search.html:54
 msgid "Component"
-msgstr ""
+msgstr "Composant"
 
 #: tcms/testcases/templates/testcases/search.html:66
 #: tcms/testcases/templates/testcases/search.html:127
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
-msgstr ""
+msgstr "Priorité"
 
 #: tcms/testcases/templates/testcases/search.html:75
 #: tcms/testcases/templates/testcases/search.html:125
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: tcms/testcases/templates/testcases/search.html:88
 #: tcms/testcases/templates/testcases/search.html:122
@@ -474,20 +474,20 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:140
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #: tcms/testcases/templates/testcases/search.html:97
 #: tcms/testplans/templates/testplans/search.html:116
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Étiquette"
 
 #: tcms/testcases/templates/testcases/search.html:100
 #: tcms/testcases/templates/testcases/search.html:106
 #: tcms/testplans/templates/testplans/search.html:119
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Séparez les valeurs multiples avec une virgule (,)"
 
 #: tcms/testcases/templates/testcases/search.html:103
 #: tcms/testcases/templates/testcases/search.html:105
@@ -534,7 +534,7 @@ msgstr "Rechercher des plan de test"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Nom du plan de test"
 
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "Created&nbsp;after"
@@ -576,7 +576,7 @@ msgstr "Créé"
 
 #: tcms/testplans/views.py:339
 msgid "Select at least one TestRun and one TestCase"
-msgstr ""
+msgstr "Sélectionné au moins un essai de test et un cas de test"
 
 #: tcms/testplans/views.py:417
 msgid "TestPlan is required"
@@ -696,7 +696,7 @@ msgstr "ID du cas de test n'est plus un entier valide"
 #: tcms/testruns/views.py:760
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "Essai du cas %d mis à jour:"
 
 #: tcms/xmlrpc/serializer.py:298
 #, python-format
@@ -717,37 +717,37 @@ msgstr "MIS EN PAUSE"
 
 #: vinaigrette-deleteme.py:5
 msgid "PASSED"
-msgstr ""
+msgstr "PASSÉ"
 
 #: vinaigrette-deleteme.py:6
 msgid "FAILED"
-msgstr ""
+msgstr "EN ÉCHEC"
 
 #: vinaigrette-deleteme.py:7
 msgid "BLOCKED"
-msgstr ""
+msgstr "BLOQUÉ"
 
 #: vinaigrette-deleteme.py:8
 msgid "ERROR"
-msgstr ""
+msgstr "ERREUR"
 
 #: vinaigrette-deleteme.py:9
 msgid "WAIVED"
-msgstr ""
+msgstr "RENONCÉ À"
 
 #: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
-msgstr ""
+msgstr "PROPOSÉ"
 
 #: vinaigrette-deleteme.py:11
 msgid "CONFIRMED"
-msgstr ""
+msgstr "CONFIRMÉ"
 
 #: vinaigrette-deleteme.py:12
 msgid "DISABLED"
-msgstr ""
+msgstr "DÉSACTIVÉ"
 
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
-msgstr ""
+msgstr "DOIT_ÊTRE_MAJ"
 
