@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-11-09 05:41\n"
+"PO-Revision-Date: 2018-11-09 05:51\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -63,56 +63,56 @@ msgstr "Mise à jour le %(history_date)s\n"
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%s\">documentation</a> and <a href=\"%s\">change it</a>"
-msgstr ""
+msgstr "L'URL racine n'est pas configuré! voir <a href=\"%s\">la documentation</a> et <a href=\"%s\">le modifier</a>"
 
 #: tcms/kiwi_auth/admin.py:24
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Cette adresse e-mail est déjà utilisée"
 
 #: tcms/kiwi_auth/admin.py:73
 msgid "Personal info"
-msgstr ""
+msgstr "Information personnelle"
 
 #: tcms/kiwi_auth/admin.py:74
 msgid "Permissions"
-msgstr ""
+msgstr "Droits"
 
 #: tcms/kiwi_auth/forms.py:29
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Un utilisateur avec cette adresse mail existe déjà."
 
 #: tcms/kiwi_auth/forms.py:57
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "Votre confirmation du nouveau compte %s"
 
 #: tcms/kiwi_auth/views.py:47
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Votre compte a été créé. Veuillez Vérifier votre boite de courriel pour le lien de confirmation"
 
 #: tcms/kiwi_auth/views.py:53
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Votre compte a été créé, mais vous avez besoin d’un administrateur pour l’activer"
 
 #: tcms/kiwi_auth/views.py:59
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Ci-dessous la liste des administrateurs"
 
 #: tcms/kiwi_auth/views.py:90
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Cette clé d'activation n'existe plus dans la base de données"
 
 #: tcms/kiwi_auth/views.py:95
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Cette clé d'activation a expiré"
 
 #: tcms/kiwi_auth/views.py:107
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Votre compte a été activé avec succès"
 
 #: tcms/settings/common.py:81
 msgid "DASHBOARD"
-msgstr ""
+msgstr "TABLEAU DE BORD"
 
 #: tcms/settings/common.py:82
 msgid "TESTING"
@@ -120,31 +120,31 @@ msgstr ""
 
 #: tcms/settings/common.py:83
 msgid "New Test Plan"
-msgstr ""
+msgstr "Nouveau plan de test"
 
 #: tcms/settings/common.py:85
 msgid "New Test Case"
-msgstr ""
+msgstr "Nouveau cas de test"
 
 #: tcms/settings/common.py:87
 msgid "SEARCH"
-msgstr ""
+msgstr "RECHERCHER"
 
 #: tcms/settings/common.py:88
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Rechercher des plan de test"
 
 #: tcms/settings/common.py:89
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Rechercher des essais réalisés"
 
 #: tcms/settings/common.py:90
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Rechercher des cas de tests"
 
 #: tcms/settings/common.py:92
 msgid "REPORTING"
-msgstr ""
+msgstr "RAPPORTS"
 
 #: tcms/settings/common.py:93
 msgid "Overall report"
@@ -152,60 +152,60 @@ msgstr ""
 
 #: tcms/settings/common.py:94
 msgid "Custom report"
-msgstr ""
+msgstr "Rapport personnalisé"
 
 #: tcms/settings/common.py:95
 msgid "Testing report"
-msgstr ""
+msgstr "Rapport de test"
 
 #: tcms/settings/common.py:97
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMINISTRATEUR"
 
 #: tcms/settings/common.py:98
 msgid "Users and groups"
-msgstr ""
+msgstr "Utilisateurs et groupes"
 
 #: tcms/settings/common.py:100
 msgid "Everything else"
-msgstr ""
+msgstr "Tout le reste"
 
 #: tcms/settings/common.py:106
 msgid "Report an Issue"
-msgstr ""
+msgstr "Signaler un problème"
 
 #: tcms/settings/common.py:107
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Demander de l’aide sur StackOverflow"
 
 #: tcms/settings/common.py:108
 msgid "User Guide"
-msgstr ""
+msgstr "Guide de l'utilisateur"
 
 #: tcms/settings/common.py:109
 msgid "Administration Guide"
-msgstr ""
+msgstr "Guide de l'administrateur"
 
 #: tcms/settings/common.py:110
 msgid "API Help"
-msgstr ""
+msgstr "Aide sur l’API"
 
 #: tcms/signals.py:74
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Nouvel utilisateur en attente d’approbation"
 
 #: tcms/signals.py:149
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NOUVEAU: Essai #%(pk)d - %(summary)s"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Page non trouvée"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Erreur interne du serveur"
 
 #: tcms/templates/base.html:9 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
