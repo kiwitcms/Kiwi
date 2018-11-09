@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-11-09 05:51\n"
+"PO-Revision-Date: 2018-11-09 06:01\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: tcms/core/ajax.py:254 tcms/testruns/views.py:812
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "L'utilisateur %s non trouvé!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -148,7 +148,7 @@ msgstr "RAPPORTS"
 
 #: tcms/settings/common.py:93
 msgid "Overall report"
-msgstr ""
+msgstr "Rapport global"
 
 #: tcms/settings/common.py:94
 msgid "Custom report"
@@ -209,19 +209,19 @@ msgstr "Erreur interne du serveur"
 
 #: tcms/templates/base.html:9 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "le système de gestion de cas de test leader en open source"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Tableau de bord"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Exécution des tests"
 
 #: tcms/templates/dashboard.html:18
 msgid "Started at"
-msgstr ""
+msgstr "Démarré le"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -233,7 +233,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
-msgstr ""
+msgstr "VOIR TOUT"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
@@ -241,11 +241,11 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
-msgstr ""
+msgstr "Vos plans de test"
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
-msgstr ""
+msgstr "Plan de test"
 
 #: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/search.html:34
@@ -255,17 +255,17 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #: tcms/templates/dashboard.html:50
 #: tcms/testplans/templates/testplans/search.html:86
 #: tcms/testplans/templates/testplans/search.html:143
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: tcms/templates/dashboard.html:51
 msgid "Executions"
-msgstr ""
+msgstr "Exécutions"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
@@ -488,28 +488,28 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:103
 #: tcms/testcases/templates/testcases/search.html:105
 msgid "Bug ID"
-msgstr ""
+msgstr "ID de l'anomalie"
 
 #: tcms/testcases/templates/testcases/search.html:112
 #: tcms/testplans/templates/testplans/search.html:129
 #: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
-msgstr ""
+msgstr "Recherche"
 
 #: tcms/testcases/templates/testcases/search.html:120
 #: tcms/testplans/templates/testplans/search.html:137
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/testcases/templates/testcases/search.html:123
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Default tester"
-msgstr ""
+msgstr "Testeur par défaut"
 
 #: tcms/testcases/templates/testcases/search.html:128
 msgid "Created at"
-msgstr ""
+msgstr "Créé le"
 
 #: tcms/testcases/views.py:521
 msgid "TestPlan not specified or does not exist"
@@ -526,7 +526,7 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Rechercher des plan de test"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
@@ -534,41 +534,41 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "Created&nbsp;after"
-msgstr ""
+msgstr "Créé&nbsp;après"
 
 #: tcms/testplans/templates/testplans/search.html:40
 msgid "Created&nbsp;before"
-msgstr ""
+msgstr "Créé&nbsp;avant"
 
 #: tcms/testplans/templates/testplans/search.html:76
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: tcms/testplans/templates/testplans/search.html:104
 #: tcms/testplans/templates/testplans/search.html:141
 msgid "Owner"
-msgstr ""
+msgstr "Propriétaire"
 
 #: tcms/testplans/templates/testplans/search.html:109
 #: tcms/testruns/templates/testruns/mutable.html:57
 #: tcms/testruns/templates/testruns/search.html:61
 msgid "Default&nbsp;tester"
-msgstr ""
+msgstr "Testeur&nbsp;par&nbsp;défaut"
 
 #: tcms/testplans/templates/testplans/search.html:122
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #: tcms/testplans/templates/testplans/search.html:138
 #: tcms/testruns/templates/testruns/search.html:92
 msgid "Test plan"
-msgstr ""
+msgstr "Plan de test"
 
 #: tcms/testplans/templates/testplans/search.html:139
 msgid "Created"
-msgstr ""
+msgstr "Créé"
 
 #: tcms/testplans/views.py:339
 msgid "Select at least one TestRun and one TestCase"
@@ -576,16 +576,16 @@ msgstr ""
 
 #: tcms/testplans/views.py:417
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Le plan de test est requis"
 
 #: tcms/testplans/views.py:638
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Au moins un plan de test est requis pur l'impression"
 
 #: tcms/testplans/views.py:646
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Le plan de test \"%s\" n'existe pas"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
@@ -593,53 +593,53 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Editer un essai"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Cloner un essai"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Nouvel essai"
 
 #: tcms/testruns/templates/testruns/mutable.html:33
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Build"
-msgstr ""
+msgstr "Construire"
 
 #: tcms/testruns/templates/testruns/mutable.html:36
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "add new Build"
-msgstr ""
+msgstr "ajoute une nouvelle Construction"
 
 #: tcms/testruns/templates/testruns/mutable.html:46
 msgid "version"
-msgstr ""
+msgstr "version"
 
 #: tcms/testruns/templates/testruns/mutable.html:50
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "Manager"
-msgstr ""
+msgstr "Responsable"
 
 #: tcms/testruns/templates/testruns/mutable.html:53
 #: tcms/testruns/templates/testruns/mutable.html:60
 msgid "Username or email"
-msgstr ""
+msgstr "Nom d'utilisateur(rice) ou e-mail"
 
 #: tcms/testruns/templates/testruns/mutable.html:66
 msgid "Notes"
-msgstr ""
+msgstr "Remarques"
 
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
-msgstr ""
+msgstr "Sauvegarder"
 
 #: tcms/testruns/templates/testruns/mutable.html:81
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Sélectionner des Cas de Tests:"
 
 #: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
@@ -651,27 +651,27 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:96
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "Rechercher des essais réalisés"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "ID du plan"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "ID du plan de test"
 
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "En cours"
 
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Finished at"
-msgstr ""
+msgstr "Fini à"
 
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
@@ -683,11 +683,11 @@ msgstr ""
 
 #: tcms/testruns/views.py:550
 msgid "Clone of "
-msgstr ""
+msgstr "Clone de "
 
 #: tcms/testruns/views.py:633
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "ID du cas de test n'est plus un entier valide"
 
 #: tcms/testruns/views.py:760
 #, python-format
@@ -701,15 +701,15 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
-msgstr ""
+msgstr "EN VEILLE"
 
 #: vinaigrette-deleteme.py:3
 msgid "RUNNING"
-msgstr ""
+msgstr "EN COURS"
 
 #: vinaigrette-deleteme.py:4
 msgid "PAUSED"
-msgstr ""
+msgstr "MIS EN PAUSE"
 
 #: vinaigrette-deleteme.py:5
 msgid "PASSED"
