@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-25 11:46+0000\n"
-"PO-Revision-Date: 2018-09-03 11:32\n"
+"PO-Revision-Date: 2018-11-10 05:05\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -49,21 +49,16 @@ msgstr ""
 
 #: tcms/core/history.py:47
 #, python-format
-msgid ""
-"Updated on %(history_date)s\n"
-"Updated by %(username)s\n"
-"\n"
-"%(diff)s\n"
-"\n"
+msgid "Updated on %(history_date)s\n"
+"Updated by %(username)s\n\n"
+"%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
 msgstr ""
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid ""
-"Base URL is not configured! See <a href=\"%s\">documentation</a> and <a href="
-"\"%s\">change it</a>"
+msgid "Base URL is not configured! See <a href=\"%s\">documentation</a> and <a href=\"%s\">change it</a>"
 msgstr ""
 
 #: tcms/kiwi_auth/admin.py:24
@@ -88,13 +83,11 @@ msgid "Your new %s account confirmation"
 msgstr ""
 
 #: tcms/kiwi_auth/views.py:47
-msgid ""
-"Your account has been created, please check your mailbox for confirmation"
+msgid "Your account has been created, please check your mailbox for confirmation"
 msgstr "您的账户已创建，请检查您的收件箱进行确认"
 
 #: tcms/kiwi_auth/views.py:53
-msgid ""
-"Your account has been created, but you need an administrator to activate it"
+msgid "Your account has been created, but you need an administrator to activate it"
 msgstr "您的账户已创建，但您需要管理员来激活它"
 
 #: tcms/kiwi_auth/views.py:59
@@ -115,7 +108,7 @@ msgstr "您的账户已被成功激活"
 
 #: tcms/settings/common.py:81
 msgid "DASHBOARD"
-msgstr ""
+msgstr "仪表 板"
 
 #: tcms/settings/common.py:82
 msgid "TESTING"
@@ -131,7 +124,7 @@ msgstr ""
 
 #: tcms/settings/common.py:87
 msgid "SEARCH"
-msgstr ""
+msgstr "搜索"
 
 #: tcms/settings/common.py:88
 msgid "Search Test Plans"
@@ -147,7 +140,7 @@ msgstr ""
 
 #: tcms/settings/common.py:92
 msgid "REPORTING"
-msgstr ""
+msgstr "报告"
 
 #: tcms/settings/common.py:93
 msgid "Overall report"
@@ -228,10 +221,8 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid ""
-"\n"
-"                %(total_count)s TestRun(s) or TestCase(s) assigned to you "
-"need to be executed.\n"
+msgid "\n"
+"                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
 msgstr ""
@@ -274,10 +265,8 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:72
 #, python-format
-msgid ""
-"\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
-"are disabled.\n"
+msgid "\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
 msgstr ""
@@ -288,77 +277,57 @@ msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
+msgid "Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
 msgstr ""
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid ""
-"\n"
+msgid "\n"
 "TestCase has been updated by %(username)s!\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid ""
-"\n"
-"Test run %(pk)s has been created or updated for you.\n"
-"\n"
+msgid "\n"
+"Test run %(pk)s has been created or updated for you.\n\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n"
-"\n"
+"Test plan: %(plan_url)s\n\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n"
-"\n"
+"Summary: %(summary)s\n\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n"
-"\n"
+"Default tester: %(default_tester)s.\n\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n"
-"\n"
+"Build: %(build)s\n\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr ""
-"\n"
-"已为您新建或更新测试运行 %(pk)s 。\n"
-"\n"
+msgstr "\n"
+"已为您新建或更新测试运行 %(pk)s 。\n\n"
 "### 链接 ###\n"
 "测试运行: %(run_url)s\n"
-"测试计划: %(plan_url)s\n"
-"\n"
+"测试计划: %(plan_url)s\n\n"
 "### 基本运行信息 ###\n"
-"摘要: %(summary)s\n"
-"\n"
+"摘要: %(summary)s\n\n"
 "管理: %(manager)s.\n"
-"默认测试者: %(default_tester)s.\n"
-"\n"
+"默认测试者: %(default_tester)s.\n\n"
 "产品: %(product)s\n"
 "产品版本: %(version)s\n"
-"构建版本: %(build)s\n"
-"\n"
+"构建版本: %(build)s\n\n"
 "备注:\n"
 "%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid ""
-"Dear Administrator,\n"
+msgid "Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
+"Kiwi TCMS instance and is awaiting your approval!\n\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr ""
-"亲爱的管理员,\n"
-"有人刚刚在您的 Kiwi TCMS 实例上注册了以 %(username)s 为名的用户并等待您的审批"
-"通过！\n"
-"\n"
+msgstr "亲爱的管理员,\n"
+"有人刚刚在您的 Kiwi TCMS 实例上注册了以 %(username)s 为名的用户并等待您的审批通过！\n\n"
 "请前往 %(user_url)s 激活账户！\n"
 
 #: tcms/templates/pagination.html:7
@@ -416,9 +385,7 @@ msgid "Change password"
 msgstr ""
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly"
+msgid "Please enter your new password twice so we can verify you typed it in correctly"
 msgstr ""
 
 #: tcms/templates/registration/password_reset_done.html:11
@@ -447,9 +414,7 @@ msgid "Register"
 msgstr ""
 
 #: tcms/testcases/forms.py:36
-msgid ""
-"Please input valid case id(s). use comma to split more than one case id. e."
-"g. \"111, 222\""
+msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
 msgstr ""
 
 #: tcms/testcases/helpers/email.py:22
@@ -689,10 +654,8 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
-msgid ""
-"\n"
-"                    %(count)s of the pre-selected test cases is not "
-"CONFIRMED and will not be cloned!\n"
+msgid "\n"
+"                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
 msgstr ""
@@ -794,3 +757,4 @@ msgstr "已禁用"
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr "需要更新"
+
