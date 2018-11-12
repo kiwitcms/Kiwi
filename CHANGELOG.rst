@@ -23,7 +23,7 @@ Improvements
 - Update to `Patternfly 3.57.0 <https://github.com/patternfly/patternfly/releases>`_
 - Update to `psycopg2 2.7.6.1 <http://initd.org/psycopg/articles/tag/release/>`_
 
-Big fixes
+Bug fixes
 ~~~~~~~~~
 
 - Fix InvalidQuery, field ``TestCase.default_tester`` cannot be both deferred and
