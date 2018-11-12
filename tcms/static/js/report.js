@@ -28,10 +28,13 @@ Nitrate.Report.CustomSearch.on_load = function() {
         update_build_select_from_product();
     }
 
-  if ($('#id_testcaserun__case__category').length) {
-    bind_category_selector_to_product(true, false, $('#id_product')[0], $('#id_testcaserun__case__category')[0]);
-  }
+    $('#id_product').change(update_category_select_from_product);
+    if (!$('#id_category').val().length) {
+        update_category_select_from_product();
+    }
 
+//todo: this is wrong, component must be updated when product is loaded/changed
+// the same like category
   if ($('#id_testcaserun__case__component').length) {
     bind_component_selector_to_product(true, false, $('#id_product')[0], $('#id_testcaserun__case__component')[0]);
   }
