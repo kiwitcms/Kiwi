@@ -99,24 +99,13 @@ var default_messages = {
       login: '/accounts/login/',
       logout: '/accounts/logout/',
 
-      change_user_group: '/management/account/$id/changegroup/',
-      change_user_status: '/management/account/$id/changestatus/',
-
-      modify_plan : '/plan/$id/modify/',
-      plan_assign_case: '/plan/$id/assigncase/apply/',
-
-      case_change_status: '/cases/changestatus/',
       case_details: '/case/$id/',
       case_plan: '/case/$id/plan/',
       case_run_bug: '/caserun/$id/bug/',
       cases_automated: '/cases/automated/',
+    // todo: replace category and component with JSON-RPC
       cases_category: '/cases/category/',
       cases_component: '/cases/component/',
-      change_case_order: '/case/$id/changecaseorder/',
-      change_case_run_order: '/run/$id/changecaserunorder/',
-      change_case_run_status: '/run/$id/execute/changestatus/',
-      create_case: '/case/create/',
-      modify_case: '/case/$id/modify/',
       search_case: '/cases/',
     },
 
