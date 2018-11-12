@@ -178,10 +178,21 @@ Nitrate.TestCases.Details.on_load = function() {
   });
 };
 
+function configure_product_on_load() {
+    $('#id_product').change(function() {
+        $('#id_category').find('option').remove();
+        update_category_select_from_product();
+    });
+}
+
 Nitrate.TestCases.Create.on_load = function() {
+  // todo: what does SelectFilter.init do ?
   SelectFilter.init("id_component", "component", 0, "/static/admin/");
-  //init category and components
-  getCategorisByProductId(false, jQ('#id_product')[0], jQ('#id_category')[0]);
+
+    configure_product_on_load();
+    update_category_select_from_product();
+
+//todo: deal with components later
   var from = 'id_component_from';
   var to = 'id_component_to';
   var from_field = jQ('#' + from)[0];
@@ -208,7 +219,6 @@ Nitrate.TestCases.Create.on_load = function() {
         SelectBox.cache[from].push({value: node.value, text: node.text, displayed: 1});
       }
     });
-    getCategorisByProductId(false, jQ('#id_product')[0], jQ('#id_category')[0]);
   });
 
   jQ('.js-case-cancel').bind('click', function() {
@@ -222,7 +232,7 @@ Nitrate.TestCases.Create.on_load = function() {
 };
 
 Nitrate.TestCases.Edit.on_load = function() {
-  bind_category_selector_to_product(false, false, jQ('#id_product')[0], jQ('#id_category')[0]);
+    configure_product_on_load();
 
   jQ('.js-back-button').bind('click', function() {
     window.history.go(-1);

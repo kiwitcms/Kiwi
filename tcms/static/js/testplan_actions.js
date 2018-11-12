@@ -588,9 +588,11 @@ Nitrate.TestPlans.Details = {
 };
 
 Nitrate.TestPlans.SearchCase.on_load = function() {
+    $('#id_product').change(update_category_select_from_product);
+    update_category_select_from_product();
+
   if (jQ('#id_product').length) {
     if (jQ('#id_product').val() != "") {
-      bind_category_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_category')[0]);
       bind_component_selector_to_product(true, true, jQ('#id_product')[0], jQ('#id_component')[0]);
     }
   }

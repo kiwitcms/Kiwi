@@ -29,7 +29,7 @@ class CustomSearchForm(forms.Form):
         label='Plan name',
         required=False,
     )
-    testcaserun__case__category = forms.ModelChoiceField(
+    category = forms.ModelChoiceField(
         label='Case category',
         queryset=Category.objects.none(),
         required=False,
@@ -46,7 +46,7 @@ class CustomSearchForm(forms.Form):
                 product__id=product_id).only('value')
             self.fields['build'].queryset = Build.objects.filter(
                 product__id=product_id).only('name')
-            self.fields['testcaserun__case__category'].queryset = \
+            self.fields['category'].queryset = \
                 Category.objects.filter(product__id=product_id).only(
                     'name')
             self.fields['testcaserun__case__component'].queryset = \

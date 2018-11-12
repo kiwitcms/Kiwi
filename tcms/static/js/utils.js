@@ -64,6 +64,21 @@ function update_build_select_from_product() {
     }
 }
 
+/*
+    Used for on-change event handlers
+*/
+function update_category_select_from_product() {
+    var updateCallback = function(data) {
+        updateSelect(data, '#id_category', 'id', 'name')
+    }
+
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Category.filter', {product: product_id}, updateCallback);
+    } else {
+        updateCallback([]);
+    }
+}
 
 /*
     Split the input string by comma and return
