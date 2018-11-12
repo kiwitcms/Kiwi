@@ -317,12 +317,6 @@ def edit(request, run_id):
     return render(request, 'testruns/mutable.html', context_data)
 
 
-@permission_required('testruns.change_testcaserun')
-def execute(request, run_id, template_name='run/execute.html'):
-    """Execute test run"""
-    return get(request, run_id, template_name)
-
-
 class TestRunReportView(TemplateView, TestCaseRunDataMixin):
     """Test Run report"""
 
