@@ -64,18 +64,11 @@ def new(request):
     test_cases = get_selected_testcases(request)
     test_plan = TestPlan.objects.get(plan_id=plan_id)
 
+    # note: ordered by case_id for test_show_create_new_run_page()
     tcs_values = test_cases.select_related('author',
                                            'case_status',
                                            'category',
-                                           'priority')
-    # note: ordered by case_id for test_show_create_new_run_page()
-    tcs_values = tcs_values.only('case_id',
-                                 'summary',
-                                 'author__email',
-                                 'create_date',
-                                 'category__name',
-                                 'priority__value',
-                                 'case_status__name').order_by('case_id')
+                                           'priority').order_by('case_id')
 
     if request.POST.get('POSTING_TO_CREATE'):
         form = NewRunForm(request.POST)
