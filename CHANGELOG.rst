@@ -2,6 +2,51 @@ Change Log
 ==========
 
 
+Kiwi TCMS 6.2.1 (12 Nov 2018)
+-----------------------------
+
+**IMPORTANT:** this is a small release that includes some improvements
+and bug-fixes
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update to `Patternfly 3.57.0 <https://github.com/patternfly/patternfly/releases>`_
+- Update to `psycopg2 2.7.6.1 <http://initd.org/psycopg/articles/tag/release/>`_
+
+Big fixes
+~~~~~~~~~
+
+- Fix InvalidQuery, field ``TestCase.default_tester`` cannot be both deferred and
+  traversed using ``select_related`` at the same time. References
+  `Issue #346 <https://github.com/kiwitcms/Kiwi/issues/346>`_
+
+Refactoring
+~~~~~~~~~~~
+
+- Pylint fixes (Ivaylo Ivanov)
+- Remove JavaScript and Python functions in favor of existing JSON-RPC
+- Remove vendored-in ``js/lib/jquery.dataTables.js`` which is now replaced by
+  the npm package ``datatables.net`` (required by Patternfly)
+
+
+Translations
+~~~~~~~~~~~~
+
+- New `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+  (Christophe CHAUVET)
+
+
+
 Kiwi TCMS 6.2 (02 Nov 2018)
 ---------------------------
 
