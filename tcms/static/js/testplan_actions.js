@@ -1020,65 +1020,6 @@ function onTestCaseAutomatedClick(options) {
 
 
 /*
- * To change selected cases' component.
- */
-function onTestCaseComponentClick(options) {
-  var form = options.form;
-  var table = options.table;
-  var plan_id = options.planId;
-  var container = options.container;
-  var parameters = options.parameters;
-
-  return function(e) {
-    if (this.diabled) {
-      return false;
-    }
-    var c = getDialog();
-    var params = {
-      // FIXME: remove this line. It's unnecessary any more.
-      'case': serializeCaseFromInputList(table),
-      'product': Nitrate.TestPlans.Instance.fields.product_id
-    };
-    if (params['case'] && params['case'].length == 0) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-    var form_observe = function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-
-      var selection = serializeCaseFromInputList2(table);
-      if (selection.empty()) {
-        window.alert(default_messages.alert.no_case_selected);
-        return false;
-      }
-
-      var params = serializeFormData({
-        'form': this,
-        'zoneContainer': container,
-        'casesSelection': selection
-      });
-
-      var url = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
-      var cbAfterComponentChanged = function(response) {
-        returnobj = jQ.parseJSON(response.responseText);
-        if (returnobj.rc != 0) {
-          window.alert(returnobj.response);
-          return false;
-        }
-        parameters['case'] = selection.selectedCasesIds;
-        constructPlanDetailsCasesZone(container, plan_id, parameters);
-        clearDialog(c);
-      };
-
-      updateCaseComponent(url, params, cbAfterComponentChanged);
-    };
-    renderComponentForm(c, params, form_observe);
-  };
-}
-
-
-/*
  * To change selected cases' Reviewer or Default tester.
  */
 function changeTestCaseActor(plan_id, case_ids, container, what_to_update) {
@@ -1219,13 +1160,6 @@ function constructPlanDetailsCasesZoneCallback(options) {
     if (element !== undefined) {
       jQ(element).bind('click', onTestCaseAutomatedClick({
         'form': form, 'table': table, 'container': container, 'planId': plan_id
-      }));
-    }
-
-    element = jQ(form).parent().find('input.btn_component')[0];
-    if (element !== undefined) {
-      jQ(element).bind('click', onTestCaseComponentClick({
-        'container': container, 'form': form, 'planId': plan_id, 'table': table, 'parameters': parameters
       }));
     }
 
