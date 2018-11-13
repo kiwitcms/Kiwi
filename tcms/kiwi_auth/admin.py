@@ -62,16 +62,21 @@ class KiwiUserAdmin(UserAdmin):
         return readonly_fields
 
     def get_fieldsets(self, request, obj=None):
-        if request.user.is_superuser:
-            return super().get_fieldsets(request, obj)
-
         first_fieldset_fields = ('username',)
         if _modifying_myself(request, obj.pk):
             first_fieldset_fields = first_fieldset_fields + ('password',)
 
-        return ((None, {'fields': first_fieldset_fields}),
-                (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
-                (_('Permissions'), {'fields': ('is_active', 'groups')}))
+        remaining_fieldsets = (
+            (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+            (_('Permissions'), {'fields': ('is_active', 'groups')}),
+        )
+
+        if request.user.is_superuser:
+            field_sets = super().get_fieldsets(request, obj)
+            if field_sets[0][0] is None and 'password' in field_sets[0][1]['fields']:
+                remaining_fieldsets = field_sets[1:]
+
+        return ((None, {'fields': first_fieldset_fields}),) + remaining_fieldsets
 
     @sensitive_post_parameters_m
     def user_change_password(self, request, id, form_url=''):  # pylint: disable=redefined-builtin
