@@ -1018,71 +1018,6 @@ function onTestCaseAutomatedClick(options) {
   };
 }
 
-/*
- * To change selected cases' category.
- */
-function onCategoryClick(options) {
-  var form = options.form;
-  var table = options.table;
-  var plan_id = options.planId;
-  var container = options.container;
-  var parameters = options.parameters;
-
-  return function(e) {
-    if (this.diabled) {
-      return false;
-    }
-    var c = getDialog();
-    var params = {
-      /*
-       * FIXME: the first time execute this code, it's unnecessary
-       *        to pass selected cases' ids to the server.
-       */
-      'case': serializeCaseFromInputList(table),
-      'product': Nitrate.TestPlans.Instance.fields.product_id
-    };
-    if (params['case'] && params['case'].length == 0) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-    var form_observe = function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-
-      var selection = serializeCaseFromInputList2(table);
-      if (selection.empty()) {
-        window.alert(default_messages.alert.no_case_selected);
-        return false;
-      }
-
-      var params = serializeFormData({
-        'form': this,
-        'zoneContainer': container,
-        'casesSelection': selection
-      });
-      if (params.indexOf('o_category') < 0) {
-        window.alert(default_messages.alert.no_category_selected);
-        return false;
-      }
-
-      var url = Nitrate.http.URLConf.reverse({ name: 'cases_category' });
-      var callback = function(response) {
-        var returnobj = jQ.parseJSON(response.responseText);
-        if (returnobj.rc != 0) {
-          window.alert(returnobj.response);
-          return false;
-        }
-        // TODO: whether can use params rather than parameters.
-        parameters['case'] = selection.selectedCasesIds;
-        constructPlanDetailsCasesZone(container, plan_id, parameters);
-        clearDialog(c);
-      };
-
-      updateCaseCategory(url, params, callback);
-    };
-    renderCategoryForm(c, params, form_observe);
-  };
-}
 
 /*
  * To change selected cases' component.
@@ -1290,13 +1225,6 @@ function constructPlanDetailsCasesZoneCallback(options) {
     element = jQ(form).parent().find('input.btn_component')[0];
     if (element !== undefined) {
       jQ(element).bind('click', onTestCaseComponentClick({
-        'container': container, 'form': form, 'planId': plan_id, 'table': table, 'parameters': parameters
-      }));
-    }
-
-    element = jQ(form).parent().find('input.btn_category')[0];
-    if (element !== undefined) {
-      jQ(element).bind('click', onCategoryClick({
         'container': container, 'form': form, 'planId': plan_id, 'table': table, 'parameters': parameters
       }));
     }

@@ -5,12 +5,10 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 
 from tcms.core.utils import form_errors_to_list
-from tcms.testcases.forms import CaseCategoryForm
 from tcms.testcases.forms import CaseComponentForm
-from tcms.testcases.models import Category
 
 
-__all__ = ('CategoryActions', 'ComponentActions')
+__all__ = ('ComponentActions')
 
 
 class BaseActions:  # pylint: disable=too-few-public-methods
@@ -34,42 +32,6 @@ class BaseActions:  # pylint: disable=too-few-public-methods
     def get_testcases(self):
         from tcms.testcases.views import get_selected_testcases
         return get_selected_testcases(self.request)
-
-
-class CategoryActions(BaseActions):
-    """Category actions used by view function `category`"""
-
-    form = None
-
-    def _get_form(self):
-        self.form = CaseCategoryForm(self.request.POST)
-        self.form.populate(product_id=self.product_id)
-        return self.form
-
-    # todo: the caller checks the wrong permissions
-    def update(self):
-        is_valid, form = self._check_form_validation()
-        if not is_valid:
-            return form
-
-        category_pk = self.request.POST.get('o_category')
-        # FIXME: no exception hanlder when pk does not exist.
-        category = Category.objects.get(pk=category_pk)
-
-        testcases = self.get_testcases()
-        for testcase in testcases:
-            testcase.category = category
-            testcase.save()
-        return JsonResponse(self.ajax_response)
-
-    def render_form(self):
-        form = CaseCategoryForm(initial={
-            'product': self.product_id,
-            'category': self.request.POST.get('o_category'),
-        })
-        form.populate(product_id=self.product_id)
-
-        return HttpResponse(form.as_p())
 
 
 class ComponentActions(BaseActions):

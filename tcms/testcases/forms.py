@@ -465,22 +465,3 @@ class CaseComponentForm(forms.Form):
                 product__id=product_id)
         else:
             self.fields['o_component'].queryset = Component.objects.all()
-
-
-class CaseCategoryForm(forms.Form):
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        empty_label=None,
-        required=False,
-    )
-    o_category = forms.ModelMultipleChoiceField(
-        label="Categorys",
-        queryset=Category.objects.none(),
-        required=False,
-    )
-
-    def populate(self, product_id=None):
-        if product_id:
-            self.fields['o_category'].queryset = Category.objects.filter(product__id=product_id)
-        else:
-            self.fields['o_category'].queryset = Category.objects.all()

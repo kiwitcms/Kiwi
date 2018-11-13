@@ -18,7 +18,6 @@ from tcms.testcases.models import TestCaseComponent
 from tcms.testcases.models import TestCasePlan
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import CategoryFactory
 from tcms.tests.factories import BugFactory
 from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
@@ -244,65 +243,6 @@ class TestOperateComponentView(BasePlanCase):
             case_components = TestCaseComponent.objects.filter(
                 case=self.case_1, component=comp)
             self.assertFalse(case_components.exists())
-
-
-class TestOperateCategoryView(BasePlanCase):
-    """Tests for operating category on cases"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestOperateCategoryView, cls).setUpTestData()
-
-        cls.case_cat_full_auto = CategoryFactory(name='Full Auto', product=cls.product)
-        cls.case_cat_full_manual = CategoryFactory(name='Full Manual', product=cls.product)
-
-        user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
-
-        cls.case_category_url = reverse('testcases-category')
-
-    def test_show_categories_form(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.case_category_url, {'product': self.product.pk})
-
-        self.assertContains(
-            response,
-            '<option value="{}" selected="selected">{}</option>'.format(
-                self.product.pk, self.product.name),
-            html=True)
-
-        categories = ('<option value="{}">{}</option>'.format(category.pk, category.name)
-                      for category in self.product.category.all())
-        self.assertContains(
-            response,
-            """<select multiple="multiple" id="id_o_category" name="o_category">
-{}
-</select>""".format(''.join(categories)),
-            html=True)
-
-    def test_update_cases_category(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        post_data = {
-            'from_plan': self.plan.pk,
-            'product': self.product.pk,
-            'case': [self.case_1.pk, self.case_3.pk],
-            'a': 'update',
-            'o_category': self.case_cat_full_auto.pk,
-        }
-        response = self.client.post(self.case_category_url, post_data)
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok', 'errors_list': []})
-
-        for pk in (self.case_1.pk, self.case_3.pk):
-            case = TestCase.objects.get(pk=pk)
-            self.assertEqual(self.case_cat_full_auto, case.category)
 
 
 class TestAddIssueToCase(BasePlanCase):
