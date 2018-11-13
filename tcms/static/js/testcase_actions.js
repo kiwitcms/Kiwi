@@ -676,45 +676,6 @@ function renderComponentForm(container, parameters, form_observe) {
 }
 
 
-function renderCategoryForm(container, parameters, form_observe) {
-  var d = jQ('<div>');
-  if (!container) {
-    var container = getDialog();
-  }
-  jQ(container).show();
-
-  var callback = function(t) {
-    var action = Nitrate.http.URLConf.reverse({ name: 'cases_category' });
-    var notice = 'Select Category';
-    var h = jQ('<input>', {'type': 'hidden', 'name': 'a', 'value': 'add'});
-    var a = jQ('<input>', {'type': 'submit', 'value': 'Select'});
-    var c = jQ('<label>');
-    c.append(h);
-    c.append(a);
-    a.bind('click', function(e) { h.val('update'); });
-    var f = constructForm(d.html(), action, form_observe, notice, c[0]);
-    jQ(container).html(f);
-    bind_category_selector_to_product(false, false, jQ('#id_product')[0], jQ('#id_o_category')[0]);
-  };
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'cases_category' });
-
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      d.html(data);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      html_failure();
-    },
-    'complete': function() {
-      callback();
-    }
-  });
-}
-
 // FIXME: this
 function updateCaseComponent(url, parameters, callback) {
   jQ.ajax({
@@ -722,21 +683,6 @@ function updateCaseComponent(url, parameters, callback) {
     'type': 'POST',
     'data': parameters,
     'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
-
-// FIXME: this, and other code that calls Ajax.Request
-function updateCaseCategory(url, parameters, callback) {
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
     'success': function (data, textStatus, jqXHR) {
       callback(jqXHR);
     },

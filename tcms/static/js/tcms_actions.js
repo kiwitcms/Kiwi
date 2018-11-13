@@ -103,8 +103,7 @@ var default_messages = {
       case_plan: '/case/$id/plan/',
       case_run_bug: '/caserun/$id/bug/',
       cases_automated: '/cases/automated/',
-    // todo: replace category and component with JSON-RPC
-      cases_category: '/cases/category/',
+    // todo: replace component with JSON-RPC
       cases_component: '/cases/component/',
       search_case: '/cases/',
     },
@@ -304,43 +303,6 @@ function getComponentsByProductId(allow_blank, product_field, component_field, c
   getInfo(parameters, success);
 }
 
-function getCategorisByProductId(allow_blank, product_field, category_field) {
-  if (!product_field) {
-    var product_field = jQ('#id_product')[0];
-  }
-
-  product_id = jQ(product_field).val();
-
-  if (!category_field) {
-    if (jQ('#id_category').length) {
-      var category_field = jQ('#id_category')[0];
-    } else {
-      window.alert('Category field does not exist');
-      return false;
-    }
-  }
-
-  if (product_id === '') {
-    jQ(category_field).html('<option value="">---------</option>');
-    return true;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    set_up_choices(
-      category_field,
-      returnobj.map(function(o) {
-        return [o.pk, o.fields.name];
-      }),
-      allow_blank
-    );
-  };
-
-  getInfo({'info_type': 'categories', 'product_id': product_id},
-          success);
-}
-
 function checkProductField(product_field) {
   if (product_field) {
     return product_field;
@@ -351,19 +313,6 @@ function checkProductField(product_field) {
   }
 
   return false;
-}
-
-function bind_category_selector_to_product(allow_blank, load, product_field, category_field) {
-  var product_field = checkProductField(product_field);
-
-  if (product_field) {
-    jQ(product_field).bind('change', function() {
-      getCategorisByProductId(allow_blank, product_field, category_field);
-    });
-    if (load) {
-      getCategorisByProductId(allow_blank);
-    }
-  }
 }
 
 function bind_component_selector_to_product(allow_blank, load, product_field, component_field) {

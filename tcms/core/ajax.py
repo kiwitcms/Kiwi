@@ -53,9 +53,6 @@ class _InfoObjects:
         except (ValueError, TypeError):
             self.product_id = 0
 
-    def categories(self):
-        return Category.objects.filter(product__id=self.product_id)
-
     def components(self):
         return Component.objects.filter(product__id=self.product_id)
 
