@@ -534,62 +534,6 @@ class TestEditCase(BasePlanCase):
         self.assertRedirects(response, redirect_url, target_status_code=301)
 
 
-class TestChangeCasesAutomated(BasePlanCase):
-    """Test automated view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestChangeCasesAutomated, cls).setUpTestData()
-
-        cls.change_data = {
-            'case': [cls.case_1.pk, cls.case_2.pk],
-            'a': 'change',
-            # Add necessary automated value here:
-            # o_is_automated
-            # o_is_manual
-            # o_is_automated_proposed
-        }
-
-        user_should_have_perm(cls.tester, 'testcases.change_testcase')
-        cls.change_url = reverse('testcases-automated')
-
-    def test_update_automated(self):
-        change_data = self.change_data.copy()
-        change_data['o_is_automated'] = 'on'
-
-        response = self.client.post(self.change_url, change_data)
-
-        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
-
-        for pk in self.change_data['case']:
-            case = TestCase.objects.get(pk=pk)
-            self.assertEqual(1, case.is_automated)
-
-    def test_update_manual(self):
-        change_data = self.change_data.copy()
-        change_data['o_is_manual'] = 'on'
-
-        response = self.client.post(self.change_url, change_data)
-
-        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
-
-        for pk in self.change_data['case']:
-            case = TestCase.objects.get(pk=pk)
-            self.assertEqual(0, case.is_automated)
-
-    def test_update_automated_proposed(self):
-        change_data = self.change_data.copy()
-        change_data['o_is_automated_proposed'] = 'on'
-
-        response = self.client.post(self.change_url, change_data)
-
-        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
-
-        for pk in self.change_data['case']:
-            case = TestCase.objects.get(pk=pk)
-            self.assertTrue(case.is_automated_proposed)
-
-
 class TestPrintablePage(BasePlanCase):
     """Test printable page view method"""
 

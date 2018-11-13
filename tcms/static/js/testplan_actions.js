@@ -975,50 +975,6 @@ function changeTestCasePriority(plan_id, case_ids, new_value, container) {
     });
 }
 
-
-/*
- * Event handler invoked when TestCases' Automated is changed.
- */
-function onTestCaseAutomatedClick(options) {
-  var form = options.form;
-  var table = options.table;
-  var plan_id = options.planId;
-  var container = options.container;
-
-  return function(e) {
-    var selection = serializeCaseFromInputList2(table);
-    if (selection.empty()) {
-      window.alert(default_messages.alert.no_case_selected);
-      return false;
-    }
-
-    var dialogContainer = getDialog();
-    var afterAutomatedChangedCallback = function(response) {
-      var returnobj = jQ.parseJSON(response.responseText);
-      if (returnobj.rc != 0) {
-        window.alert(returnobj.response);
-        return false;
-      }
-
-      var params = serialzeCaseForm(form, table, true, true);
-      /*
-       * FIXME: this is confuse. There is no need to assign this
-       *        value explicitly when update component and category.
-       */
-      params.a = 'search';
-      params.case = selection.selectedCasesIds;
-      constructPlanDetailsCasesZone(container, plan_id, params);
-      clearDialog(dialogContainer);
-    };
-
-    constructCaseAutomatedForm(dialogContainer, afterAutomatedChangedCallback, {
-        'zoneContainer': container,
-        'casesSelection': selection
-      });
-  };
-}
-
-
 /*
  * To change selected cases' Reviewer or Default tester.
  */
@@ -1153,14 +1109,6 @@ function constructPlanDetailsCasesZoneCallback(options) {
         };
         resortCasesDragAndDrop(container, this, form, table, params, callback);
       });
-    }
-
-    // Observe the batch case automated status button
-    element = jQ(form).parent().find('input.btn_automated')[0];
-    if (element !== undefined) {
-      jQ(element).bind('click', onTestCaseAutomatedClick({
-        'form': form, 'table': table, 'container': container, 'planId': plan_id
-      }));
     }
 
     jQ(container).find('input[value="all"]').live('click', function(e) {

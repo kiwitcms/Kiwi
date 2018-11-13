@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
-from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
@@ -18,7 +18,6 @@ from django.views.generic.base import TemplateView
 
 from django_comments.models import Comment
 
-from tcms.core.utils import form_errors_to_list
 from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
@@ -29,7 +28,7 @@ from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
-from tcms.testcases.forms import CaseAutomatedForm, NewCaseForm, \
+from tcms.testcases.forms import NewCaseForm, \
     SearchCaseForm, EditCaseForm, CaseNotifyForm, \
     CloneCaseForm, CaseBugForm
 from tcms.testplans.forms import SearchPlanForm
@@ -129,57 +128,6 @@ def create_testcase(request, form, test_plan):
     for component in form.cleaned_data['component']:
         test_case.add_component(component=component)
     return test_case
-
-
-@require_GET
-def form_automated(request):
-    """
-        Return HTML for the form which allows changing of automated status.
-        Form submission is handled by automated() below.
-    """
-    form = CaseAutomatedForm()
-    return HttpResponse(form.as_p())
-
-
-@require_POST
-@permission_required('testcases.change_testcase')
-def automated(request):
-    """Change the automated status for cases
-
-    Parameters:
-    - a: Actions
-    - case: IDs for case_id
-    - o_is_automated: Status for is_automated
-    - o_is_automated_proposed: Status for is_automated_proposed
-
-    Returns:
-    - Serialized JSON
-
-    """
-    ajax_response = {'rc': 0, 'response': 'ok'}
-
-    form = CaseAutomatedForm(request.POST)
-    if form.is_valid():
-        tcs = get_selected_testcases(request)
-
-        if form.cleaned_data['a'] == 'change':
-            is_automated = 0
-            is_auto_proposed = False
-            if isinstance(form.cleaned_data['is_automated'], int):
-                is_automated = form.cleaned_data['is_automated']
-
-            if isinstance(form.cleaned_data['is_automated_proposed'], bool):
-                is_auto_proposed = form.cleaned_data['is_automated_proposed']
-
-            for test_case in tcs:
-                test_case.is_automated = is_automated
-                test_case.is_automated_proposed = is_auto_proposed
-                test_case.save()
-    else:
-        ajax_response['rc'] = 1
-        ajax_response['response'] = form_errors_to_list(form)
-
-    return JsonResponse(ajax_response)
 
 
 @permission_required('testcases.add_testcase')

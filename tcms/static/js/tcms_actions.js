@@ -94,7 +94,6 @@ var default_messages = {
       case_details: '/case/$id/',
       case_plan: '/case/$id/plan/',
       case_run_bug: '/caserun/$id/bug/',
-      cases_automated: '/cases/automated/',
     // todo: replace component with JSON-RPC
       cases_component: '/cases/component/',
       search_case: '/cases/',

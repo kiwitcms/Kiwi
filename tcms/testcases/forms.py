@@ -383,49 +383,6 @@ class CloneCaseForm(forms.Form):
         self.fields['case'].queryset = TestCase.objects.filter(case_id__in=case_ids)
 
 
-class CaseAutomatedForm(forms.Form):
-    a = forms.ChoiceField(
-        choices=(('change', 'Change'),),
-        widget=forms.HiddenInput(),
-    )
-    o_is_automated = forms.BooleanField(
-        label='Automated', required=False,
-        help_text='This is an automated test case.',
-    )
-    o_is_manual = forms.BooleanField(
-        label='Manual', required=False,
-        help_text='This is a manual test case.',
-    )
-    o_is_automated_proposed = forms.BooleanField(
-        label='Autoproposed', required=False,
-        help_text='This test case is planned to be automated.'
-    )
-
-    def clean(self):
-        super(CaseAutomatedForm, self).clean()
-        cdata = self.cleaned_data.copy()  # Cleanen data
-
-        cdata['is_automated'] = None
-        cdata['is_automated_proposed'] = None
-
-        if cdata['o_is_manual'] and cdata['o_is_automated']:
-            cdata['is_automated'] = 2
-        else:
-            if cdata['o_is_manual']:
-                cdata['is_automated'] = 0
-
-            if cdata['o_is_automated']:
-                cdata['is_automated'] = 1
-
-        cdata['is_automated_proposed'] = cdata['o_is_automated_proposed']
-
-        return cdata
-
-    def populate(self):
-
-        self.fields['case'].queryset = TestCase.objects.all()
-
-
 class CaseBugForm(forms.ModelForm):
     case = forms.ModelChoiceField(queryset=TestCase.objects.all(),
                                   widget=forms.HiddenInput())
