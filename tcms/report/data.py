@@ -307,7 +307,7 @@ class CustomReportData:
         'version': ('run__plan__product_version', model_to_pk),
         'build_run__plan__name__icontains': ('run__plan__name__icontains', do_nothing),
         'category': ('case__category', model_to_pk),
-        'testcaserun__case__component': ('case__component', model_to_pk),
+        'component': ('case__component', model_to_pk),
     }
 
     def __init__(self, form):
