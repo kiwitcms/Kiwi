@@ -45,14 +45,6 @@ Nitrate.Utils.formSerialize = function(f) {
   return params;
 };
 
-jQ(window).bind('load', function(e) {
-  // Initial the drop menu
-  jQ('.nav_li').hover(
-    function() { jQ(this).children(':eq(1)').show(); },
-    function() { jQ(this).children(':eq(1)').hide(); }
-  );
-});
-
 var default_messages = {
   'alert': {
     'no_case_selected': 'No cases selected! Please select at least one case.',
@@ -157,32 +149,6 @@ var json_success_refresh_page = function(t) {
   }
 };
 
-
-function setCookie(name, value, expires, path, domain, secure) { 
-  var curCookie = name + "=" + escape(value) +
-    ((expires) ? "; expires=" + expires.toGMTString() : "") +
-    ((path) ? "; path=" + path : "") +
-    ((domain) ? "; domain=" + domain : "") +
-    ((secure) ? "; secure" : "");
-  document.cookie = curCookie;
-}
-
-function checkCookie() {
-  var exp = new Date();
-  exp.setTime(exp.getTime() + 1800000);
-  // first write a test cookie
-  setCookie("cookies", "cookies", exp, false, false, false);
-  if (document.cookie.indexOf('cookies') != -1) {
-    // now delete the test cookie
-    exp = new Date();
-    exp.setTime(exp.getTime() - 1800000);
-    setCookie("cookies", "cookies", exp, false, false, false);
-
-    return true;
-  } else {
-    return false;
-  }
-}
 
 function splitString(str, num) {
   cut_for_dot = num - 3;
@@ -329,10 +295,7 @@ function bind_component_selector_to_product(allow_blank, load, product_field, co
   }
 }
 
-function myCustomURLConverter(url, node, on_save) {
-  return url;
-}
-
+// todo: remove this
 // Stolen from http://www.webdeveloper.com/forum/showthread.php?t=161317
 function fireEvent(obj,evt) {
   var fireOnThis = obj;
@@ -345,6 +308,7 @@ function fireEvent(obj,evt) {
   }
 }
 
+// todo: remove this
 // Stolen from http://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 function postToURL(path, params, method) {
   method = method || "post"; // Set method to post by default, if not specified.
