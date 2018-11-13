@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "patternfly": "3.57.1",
+    "patternfly": "3.57.2",
     "simplemde": "1.11.2"
   }
 }
