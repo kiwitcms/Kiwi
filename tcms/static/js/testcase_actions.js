@@ -105,8 +105,6 @@ Nitrate.TestCases.Details.on_load = function() {
                     jQ('input[name="component"]')[jQ('.link_remove_component').index(this)].value);
   });
 
-  bindSelectAllCheckbox(jQ('#id_checkbox_all_components')[0], jQ('#id_form_case_component')[0], 'component');
-
   var toggle_case_run = function(e) {
     var c = jQ(this).parent(); // Container
     var c_container = c.next(); // Content Containers
