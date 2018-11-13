@@ -10,7 +10,7 @@
 		</thead>
 		<tbody>
 			{% for component in test_case.component.all %}
-			<tr class="{% cycle 'odd' 'even' %}">
+			<tr class="{% cycle 'odd' 'even' %}" id="row-{{ component.pk }}">
 				<td><input type="checkbox" name="component" value="{{ component.pk }}" /></td>
 				<td>{{ component.name }}</td>
 				<td>{{ component.product }}</td>
