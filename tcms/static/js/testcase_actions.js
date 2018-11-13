@@ -602,61 +602,6 @@ function removePlanFromCase(container, plan_id, case_id) {
   jQ('#plan_count').text(jQ('table#testplans_table').attr('count'));
 }
 
-function renderComponentForm(container, parameters, form_observe) {
-  var d = jQ('<div>');
-  if (!container) {
-    var container = getDialog();
-  }
-  jQ(container).show();
-
-  var callback = function(t) {
-    var action = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
-    var notice = 'Press "Ctrl" to select multiple default component';
-    var h = jQ('<input>', {'type': 'hidden', 'name': 'a', 'value': 'add'});
-    var a = jQ('<input>', {'type': 'submit', 'value': 'Add'});
-    var c = jQ('<label>');
-    c.append(h);
-    c.append(a);
-    a.bind('click', function(e) { h.val('add'); });
-    var f = constructForm(d.html(), action, form_observe, notice, c[0]);
-    jQ(container).html(f);
-    bind_component_selector_to_product(false, false, jQ('#id_product')[0], jQ('#id_o_component')[0]);
-  };
-
-  var url = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
-
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-      d.html(data);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      html_failure();
-    },
-    'complete': function() {
-      callback();
-    }
-  });
-}
-
-
-// FIXME: this
-function updateCaseComponent(url, parameters, callback) {
-  jQ.ajax({
-    'url': url,
-    'type': 'POST',
-    'data': parameters,
-    'traditional': true,
-    'success': function (data, textStatus, jqXHR) {
-      callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
-}
 
 /*
  * Serialize selected cases' Ids.

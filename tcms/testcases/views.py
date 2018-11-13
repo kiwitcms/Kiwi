@@ -21,7 +21,6 @@ from django_comments.models import Comment
 from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
-from tcms.testcases import actions
 from tcms.testcases.models import TestCase, TestCaseStatus, \
     TestCasePlan, BugSystem, TestCaseText
 from tcms.management.models import Priority, Tag
@@ -1258,20 +1257,6 @@ def clone(request, template_name='case/clone.html'):
         'submit_action': submit_action,
     }
     return render(request, template_name, context)
-
-
-@require_POST
-@permission_required('testcases.add_testcasecomponent')
-def component(request):
-    """
-    Management test case components
-    """
-    # FIXME: It will update product/category/component at one time so far.
-    # We may disconnect the component from case product in future.
-    cas = actions.ComponentActions(request)
-    action = request.POST.get('a', 'render_form')
-    func = getattr(cas, action.lower())
-    return func()
 
 
 @permission_required('testcases.add_testcaseattachment')

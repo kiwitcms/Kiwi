@@ -402,23 +402,3 @@ class CaseBugForm(forms.ModelForm):
     class Meta:
         model = Bug
         fields = '__all__'
-
-
-class CaseComponentForm(forms.Form):
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        empty_label=None,
-        required=False,
-    )
-    o_component = forms.ModelMultipleChoiceField(
-        label="Components",
-        queryset=Component.objects.none(),
-        required=False,
-    )
-
-    def populate(self, product_id=None):
-        if product_id:
-            self.fields['o_component'].queryset = Component.objects.filter(
-                product__id=product_id)
-        else:
-            self.fields['o_component'].queryset = Component.objects.all()
