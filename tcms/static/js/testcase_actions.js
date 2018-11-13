@@ -26,6 +26,21 @@ Nitrate.TestCases.Clone = {};
   window.Nitrate.TestCases = TestCases;
 }());
 
+function addComponent(component_name) {
+    jsonRPC('Component.filter',
+            {
+                'name': component_name,
+                'product_id': Nitrate.TestCases.Instance.product_id
+            }, function(data){
+                jsonRPC('TestCase.add_component',
+                        [Nitrate.TestCases.Instance.pk, data[0].id],
+                        function(data) {
+                            window.location.reload();
+                        }
+                );
+            }
+    );
+}
 
 function removeComponent(case_id, component_id) {
     if (! window.confirm(default_messages.confirm.remove_case_component)) {
@@ -52,53 +67,28 @@ Nitrate.TestCases.Details.on_load = function() {
     fireEvent(jQ('a[href=\"' + window.location.hash + '\"]')[0], 'click');
   }
 
-  jQ('#id_update_component').bind('click', function(e) {
-    if (this.diabled) {
-      return false;
-    }
-
-    var params = {
-      'case': Nitrate.TestCases.Instance.pk,
-      'product': Nitrate.TestCases.Instance.product_id,
-      'category': Nitrate.TestCases.Instance.category_id
-    };
-
-    var form_observe = function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-
-      var params = Nitrate.Utils.formSerialize(this);
-      params['case'] = Nitrate.TestCases.Instance.pk;
-
-      var url = Nitrate.http.URLConf.reverse({ name: 'cases_component' });
-      var success = function(t) {
-        returnobj = jQ.parseJSON(t.responseText);
-
-        if (returnobj.rc === 0) {
-          window.location.reload();
-        } else {
-          window.alert(returnobj.response);
-          return false;
-        }
-      };
-
-      jQ.ajax({
-        'url': url,
-        'type': 'POST',
-        'data': params,
-        'traditional': true,
-        'success': function (data, textStatus, jqXHR) {
-          success(jqXHR);
+    // configure autocomplete for components
+    jQ('#id_components').autocomplete({
+        'source': function(request, response) {
+            jsonRPC('Component.filter',
+                    {
+                        'name__startswith': request.term,
+                        'product_id': Nitrate.TestCases.Instance.product_id,
+                    }, function(data) {
+                        var processedData = [];
+                        data.forEach(function(element) {
+                            processedData.push(element.name);
+                        });
+                        response(processedData);
+                    }
+            );
         },
-        'error': function (jqXHR, textStatus, errorThrown) {
-          json_failure(jqXHR);
-        }
-      });
-    };
+        'appendTo': '#id_components_autocomplete'
+    });
 
-    renderComponentForm(getDialog(), params, form_observe);
-  });
-
+    $('#js-add-component').bind('click', function() {
+        addComponent($('#id_components').val());
+    });
 
   jQ('.link_remove_component').bind('click', function(e) {
     removeComponent(Nitrate.TestCases.Instance.pk,
