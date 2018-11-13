@@ -277,19 +277,6 @@ function checkProductField(product_field) {
   return false;
 }
 
-function bind_component_selector_to_product(allow_blank, load, product_field, component_field) {
-  var product_field = checkProductField(product_field);
-
-  if (product_field) {
-    jQ(product_field).bind('change', function() {
-      getComponentsByProductId(allow_blank, product_field, component_field);
-    });
-
-    if (load) {
-      getComponentsByProductId(allow_blank);
-    }
-  }
-}
 
 // todo: remove this
 // Stolen from http://www.webdeveloper.com/forum/showthread.php?t=161317

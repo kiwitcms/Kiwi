@@ -34,7 +34,7 @@ class CustomSearchForm(forms.Form):
         queryset=Category.objects.none(),
         required=False,
     )
-    testcaserun__case__component = forms.ModelChoiceField(
+    component = forms.ModelChoiceField(
         label='Case component',
         queryset=Component.objects.none(),
         required=False,
@@ -49,7 +49,7 @@ class CustomSearchForm(forms.Form):
             self.fields['category'].queryset = \
                 Category.objects.filter(product__id=product_id).only(
                     'name')
-            self.fields['testcaserun__case__component'].queryset = \
+            self.fields['component'].queryset = \
                 Component.objects.filter(product__id=product_id).only('name')
 
 
