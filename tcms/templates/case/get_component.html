@@ -23,20 +23,21 @@
 					{% endif %}
 				</td>
 			</tr>
-			 {% empty %}
+			{% empty %}
 			<tr>
-				<td colspan="4" align="center" class="grey">No component</td>
+				<td colspan="3" align="center" class="grey">No component</td>
 			</tr>
 			{% endfor %}
 			<tr>
-				<td colspan="4">
+				<td colspan="3">
+				{% if perms.testcases.add_testcasecomponent %}
 					<div class="addtag">
-						{% if perms.testcases.change_testcasecomponent %}
-						<input id="id_update_component" type="button" value="Add Component" />
-						{% else %}
-						<input id="id_update_component" type="button" value="Add Component" disabled />
-						{% endif %}
+                                            <span class="tit">Add Component</span>
+                                            <input id="id_components" type="text" name="components">
+                                            <a href="#component" class="addlink" id="js-add-component">Add</a>
+                                            <div id="id_components_autocomplete"></div>
 					</div>
+                                {% endif %}
 				</td>
 			</tr>
 		</tbody>
