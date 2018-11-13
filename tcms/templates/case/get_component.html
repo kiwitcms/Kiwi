@@ -2,7 +2,6 @@
 	<table class="list" cellspacing="0" cellspan="0" width="100%">
 		<thead>
 			<tr>
-				<th  class="table_width_checkbox" align="left"><input id="id_checkbox_all_components" type="checkbox" /></th>
 				<th align="left">Name</th>
 				<th align="left">Product</th>
 				<th align="left">Actions</th>
@@ -11,8 +10,10 @@
 		<tbody>
 			{% for component in test_case.component.all %}
 			<tr class="{% cycle 'odd' 'even' %}" id="row-{{ component.pk }}">
-				<td><input type="checkbox" name="component" value="{{ component.pk }}" /></td>
-				<td>{{ component.name }}</td>
+				<td>
+                                    {{ component.name }}
+                                    <input type="hidden" name="component" value="{{ component.pk }}">
+                                </td>
 				<td>{{ component.product }}</td>
 				<td>
 					{% if perms.testcases.delete_testcasecomponent %}
