@@ -60,7 +60,6 @@ var default_messages = {
     'change_case_status': 'Are you sure you want to change the status?',
     'change_case_priority': 'Are you sure you want to change the priority?',
     'remove_case_component': 'Are you sure you want to delete these component(s)?\nYou cannot undo.',
-    'remove_case_component': 'Are you sure you want to delete these component(s)?\nYou cannot undo.',
     'remove_comment': 'Are you sure to delete the comment?',
     'remove_tag': 'Are you sure you wish to delete the tag(s)'
   },

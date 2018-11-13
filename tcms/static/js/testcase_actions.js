@@ -88,29 +88,6 @@ Nitrate.TestCases.Details.on_load = function() {
     renderComponentForm(getDialog(), params, form_observe);
   });
 
-  jQ('#id_form_case_component').bind('submit', function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    var params = Nitrate.Utils.formSerialize(this);
-    var submitButton = jQ(this).find(':submit')[0];
-    params[submitButton.name] = submitButton.value;
-    var parameters = {
-      'a': params['a'],
-      'case': Nitrate.TestCases.Instance.pk,
-      'o_component': params['component']
-    };
-
-    if (!parameters['o_component']) {
-      return false;
-    }
-
-    var c = window.confirm(default_messages.confirm.remove_case_component);
-    if (!c) {
-      return false;
-    }
-
-    updateCaseComponent(this.action, parameters, json_success_refresh_page);
-  });
 
   jQ('.link_remove_component').bind('click', function(e) {
     var c = window.confirm(default_messages.confirm.remove_case_component);
