@@ -26,6 +26,17 @@ Nitrate.TestCases.Clone = {};
   window.Nitrate.TestCases = TestCases;
 }());
 
+
+function removeComponent(case_id, component_id) {
+    if (! window.confirm(default_messages.confirm.remove_case_component)) {
+      return false;
+    }
+
+    jsonRPC('TestCase.remove_component', [case_id, component_id], function(data){
+        $('#row-' + component_id).hide();
+    });
+}
+
 Nitrate.TestCases.Details.on_load = function() {
   var case_id = Nitrate.TestCases.Instance.pk;
   constructTagZone(jQ('#tag')[0], { 'case': case_id });
@@ -90,18 +101,8 @@ Nitrate.TestCases.Details.on_load = function() {
 
 
   jQ('.link_remove_component').bind('click', function(e) {
-    var c = window.confirm(default_messages.confirm.remove_case_component);
-    if (!c) {
-      return false;
-    }
-
-    var form = jQ('#id_form_case_component')[0];
-    var parameters = {
-      'a': 'Remove',
-      'case': Nitrate.TestCases.Instance.pk,
-      'o_component': jQ('input[name="component"]')[jQ('.link_remove_component').index(this)].value
-    };
-    updateCaseComponent(form.action, parameters, json_success_refresh_page);
+    removeComponent(Nitrate.TestCases.Instance.pk,
+                    jQ('input[name="component"]')[jQ('.link_remove_component').index(this)].value);
   });
 
   bindSelectAllCheckbox(jQ('#id_checkbox_all_components')[0], jQ('#id_form_case_component')[0], 'component');
