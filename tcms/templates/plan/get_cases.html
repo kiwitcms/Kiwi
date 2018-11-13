@@ -44,7 +44,6 @@
                                 </li>
                         {% endif %}
 			{% if perms.testcases.change_testcase %}
-				<li><input type="button" value="Automated" title="change automated" class="btn_automated automated sprites icon_plan" /></li>
                                 {% if REQUEST_CONTENTS.template_type == 'review_case' %}
                                 <li><input type="button" value="Reviewer"       title="Change TestCase reviewer" class="btn_reviewer       assignee sprites icon_plan" /></li>
                                 {% else %}
