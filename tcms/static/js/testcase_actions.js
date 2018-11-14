@@ -199,6 +199,9 @@ Nitrate.TestCases.Create.on_load = function() {
 
 Nitrate.TestCases.Edit.on_load = function() {
     configure_product_on_load();
+    if ($('#id_category').val() === null || !$('#id_category').val().length) {
+        update_category_select_from_product();
+    }
 
   jQ('.js-back-button').bind('click', function() {
     window.history.go(-1);

@@ -1,6 +1,12 @@
 {% extends "tcms_base.html" %}
 {% load static %}
-{% block subtitle %}Edit test case - {{ test_case.summary }}{% endblock %}
+{% block subtitle %}
+    {% if test_case %}
+        Edit test case - {{ test_case.summary }}
+    {% else %}
+        Add new test case
+    {% endif %}
+{% endblock %}
 
 {% block extra_head %}
 {{ form.media }}
@@ -34,21 +40,31 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 {% endblock %}
 
 {% block content_type %}
+    {% if test_case %}
 	<input type="hidden" name="content_type" value="testcases.testcase" />
 	<input type="hidden" name="object_pk" value="{{ test_case.pk }}" />
 	<input type="hidden" name="name" value="{{ test_case.summary }}" />
 	<input type="hidden" name="description" value="{{ test_case.notes }}" />
+    {% endif %}
 {% endblock %}
 
 {% block contents %}
 <div id="content">
 	<span class="right-action">
+            {% if test_case %}
 		<a href="{% url "testcases-text_history" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="historylink">
 			Edit History
 		</a>
+            {% endif %}
 	</span>
-	<form action="{% url "testcases-edit" test_case.case_id %}" method="post">
-		<input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}">
+    {% if test_case %}
+        <form action="{% url "testcases-edit" test_case.case_id %}" method="post">
+    {% else %}
+        <form action="{% url "testcases-new" %}{% if test_plan %}?from_plan={{ test_plan.plan_id }}{% endif %}" method="POST">
+    {% endif %}
+            {% if test_plan %}
+                <input type="hidden" name="from_plan" value="{{ test_plan.plan_id }}" />
+            {% endif %}
 		<div class="Detailform border-1" >
 			<fieldset class="no-border background-light-grey">
 				<div class="editor-side">
@@ -90,16 +106,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 					
 				</div>
 				<div class="editor-side">
-					{% if testplan %}
-					<div class="data_row">
-						<label >Product </label>
-						<div id="display_product">{{ testplan.product }}</div>
-					</div>
-					<div class="data_row">
-						<label>Plan</label>
-						<p>{{ testplan.name }}</p>
-					</div>
-					{% endif %}
+                                    {% if test_case %}
 					<div class="data_row">
                                             <label>Author</label>
                                             <div class="name">
@@ -128,7 +135,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 						<label >Last Modified</label>
 						<div id="display_modify_date" >{{ test_case.latest_text.create_date }}</div>
 					</div>
-					
+                                    {% endif %}
 					
 					<div class="data_row">
 						<label>Automated</label>
@@ -174,6 +181,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 					<div class="" id="form_effect">{{ form.effect }}</div>
 				</div>
 			</fieldset>
+                    {% if notify_form %}
 			<fieldset class="no-border notification">
 				<label class="strong">Send new case instance after editing <label class="grey">(The author of this case will receive the notification by default)</label>:</label>
 				<div>
@@ -192,6 +200,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 					<span>{{ notify_form.cc_list.help_text }}</span>
 				</div>
 			</fieldset>
+                    {% endif %}
 			<div id="control_box" class="submit-row">
 				<div class="errors">{{ form.errors }}{{ notify_form.errors }}</div>
 				<input type="submit" value="Save"/>
