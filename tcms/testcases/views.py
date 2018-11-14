@@ -32,7 +32,7 @@ from tcms.testcases.forms import NewCaseForm, \
     CloneCaseForm, CaseBugForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_dict_from_query
-from .fields import CC_LIST_DEFAULT_DELIMITER
+from tcms.testcases.fields import MultipleEmailField
 
 
 TESTCASE_OPERATION_ACTIONS = (
@@ -94,7 +94,7 @@ def update_case_email_settings(test_case, n_form):
 
     # Continue to update CC list
     valid_emails = n_form.cleaned_data['cc_list']
-    test_case.emailing.cc_list = CC_LIST_DEFAULT_DELIMITER.join(valid_emails)
+    test_case.emailing.cc_list = MultipleEmailField.delimiter.join(valid_emails)
 
     test_case.emailing.save()
 
@@ -993,7 +993,7 @@ def edit(request, case_id, template_name='case/edit.html'):
             'managers_of_runs': test_case.emailing.auto_to_run_manager,
             'default_testers_of_runs': test_case.emailing.auto_to_run_tester,
             'assignees_of_case_runs': test_case.emailing.auto_to_case_run_assignee,
-            'cc_list': CC_LIST_DEFAULT_DELIMITER.join(
+            'cc_list': MultipleEmailField.delimiter.join(
                 test_case.emailing.get_cc_list()),
         })
 

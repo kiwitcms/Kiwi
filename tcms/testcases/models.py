@@ -12,7 +12,7 @@ from tcms.core.models import TCMSActionModel
 from tcms.core.utils.checksum import checksum
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.issuetracker.types import IssueTrackerType
-from tcms.testcases.fields import CC_LIST_DEFAULT_DELIMITER
+from tcms.testcases.fields import MultipleEmailField
 
 
 AUTOMATED_CHOICES = (
@@ -628,14 +628,14 @@ class TestCaseEmailSettings(models.Model):
             if address not in emailaddr_list:
                 emailaddr_list.append(address)
 
-        self.cc_list = CC_LIST_DEFAULT_DELIMITER.join(emailaddr_list)
+        self.cc_list = MultipleEmailField.delimiter.join(emailaddr_list)
         self.save()
 
     def get_cc_list(self):
         """ Return the whole CC list """
         if not self.cc_list:
             return []
-        return self.cc_list.split(CC_LIST_DEFAULT_DELIMITER)
+        return self.cc_list.split(MultipleEmailField.delimiter)
 
     def remove_cc(self, email_addrs):
         """Remove one or more email addresses from EmailSettings' CC list
@@ -652,5 +652,5 @@ class TestCaseEmailSettings(models.Model):
             if address in emailaddr_list:
                 emailaddr_list.remove(address)
 
-        self.cc_list = CC_LIST_DEFAULT_DELIMITER.join(emailaddr_list)
+        self.cc_list = MultipleEmailField.delimiter.join(emailaddr_list)
         self.save()

@@ -85,9 +85,8 @@ class TestMultipleEmailField(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestMultipleEmailField, cls).setUpClass()
-        cls.default_delimiter = ','
-        cls.field = MultipleEmailField(delimiter=cls.default_delimiter)
+        super().setUpClass()
+        cls.field = MultipleEmailField()
 
     def test_to_python(self):
         value = u'zhangsan@localhost'
