@@ -9,20 +9,20 @@ def email_case_update(case):
     recipients = get_case_notification_recipients(case)
     if not recipients:
         return
-    cc = case.emailing.get_cc_list()
+    cc_list = case.emailing.get_cc_list()
     subject, body = history_email_for(case, case.summary)
-    mailto(None, subject, recipients, body, cc=cc)
+    mailto(None, subject, recipients, body, cc=cc_list)
 
 
 def email_case_deletion(case):
     recipients = get_case_notification_recipients(case)
-    cc = case.emailing.get_cc_list()
+    cc_list = case.emailing.get_cc_list()
     if not recipients:
         return
     subject = _('DELETED: TestCase #%{pk}d - %{summary}s') % {'pk': case.pk,
                                                               'summary': case.summary}
     context = {'case': case}
-    mailto('email/post_case_delete/email.txt', subject, recipients, context, cc=cc)
+    mailto('email/post_case_delete/email.txt', subject, recipients, context, cc=cc_list)
 
 
 def get_case_notification_recipients(case):
@@ -49,4 +49,4 @@ def get_case_notification_recipients(case):
 
     # don't email author of last change
     recipients.discard(getattr(case.history.latest().history_user, 'email', ''))
-    return list(filter(lambda e: bool(e), recipients))
+    return list(filter(None, recipients))

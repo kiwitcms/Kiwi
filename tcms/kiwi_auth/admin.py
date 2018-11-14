@@ -41,13 +41,19 @@ class KiwiUserAdmin(UserAdmin):
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser or obj is not None
 
+    # pylint: disable=too-many-arguments
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         if obj and not (_modifying_myself(request, obj.pk) or request.user.is_superuser):
             context.update({
                 'show_save': False,
                 'show_save_and_continue': False,
             })
-        return super().render_change_form(request, context, add, change, form_url, obj)
+        return super().render_change_form(request,
+                                          context,
+                                          add=add,
+                                          change=change,
+                                          form_url=form_url,
+                                          obj=obj)
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:

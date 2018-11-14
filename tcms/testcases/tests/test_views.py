@@ -565,5 +565,5 @@ class TestGetCasesFromPlan(BasePlanCase):
                                     content_type='application/x-www-form-urlencoded; charset=UTF-8',
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response,    'Set P3')
+        self.assertContains(response, 'Set P3')
         self.assertNotContains(response, 'Set P4')

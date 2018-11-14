@@ -185,12 +185,17 @@ class BaseCaseRun(BasePlanCase):
                                       manager=cls.tester,
                                       default_tester=cls.tester)
 
-        cls.case_run_1, cls.case_run_2, cls.case_run_3 = [
-            TestCaseRunFactory(assignee=cls.tester,
-                               run=cls.test_run, build=cls.build,
-                               case_run_status=cls.case_run_status_idle,
-                               case=case, sortkey=i * 10)
-            for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1)]
+        case_runs = []
+        for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1):
+            case_runs.append(TestCaseRunFactory(assignee=cls.tester,
+                                                run=cls.test_run, build=cls.build,
+                                                case_run_status=cls.case_run_status_idle,
+                                                case=case, sortkey=i * 10))
+
+        # used in other tests as well
+        cls.case_run_1 = case_runs[0]
+        cls.case_run_2 = case_runs[1]
+        cls.case_run_3 = case_runs[2]
 
         cls.test_run_1 = TestRunFactory(product_version=cls.version,
                                         plan=cls.plan,
@@ -198,9 +203,13 @@ class BaseCaseRun(BasePlanCase):
                                         manager=cls.tester,
                                         default_tester=cls.tester)
 
-        cls.case_run_4, cls.case_run_5, cls.case_run_6 = [
-            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                               run=cls.test_run_1, build=cls.build,
-                               case_run_status=cls.case_run_status_idle,
-                               case=case, sortkey=i * 10)
-            for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1)]
+        # create a few more TestCaseRun objects
+        for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1):
+            case_runs.append(TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
+                                                run=cls.test_run_1, build=cls.build,
+                                                case_run_status=cls.case_run_status_idle,
+                                                case=case, sortkey=i * 10))
+        # used in other tests as well
+        cls.case_run_4 = case_runs[3]
+        cls.case_run_5 = case_runs[4]
+        cls.case_run_6 = case_runs[5]
