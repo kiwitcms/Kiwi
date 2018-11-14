@@ -33,10 +33,13 @@ class Product(TCMSActionModel):
         serializer = ProductXMLRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
-    def save(self, *args, **kwargs):
-        super(Product, self).save(*args, **kwargs)
-        # reverse many-to-one relations from other models
-        # which point to Product via FK
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super().save(force_insert=force_insert,
+                     force_update=force_update,
+                     using=using,
+                     update_fields=update_fields)
+
         self.category.get_or_create(name='--default--')
         self.version.get_or_create(value='unspecified')
         self.build.get_or_create(name='unspecified')

@@ -337,8 +337,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         4. Statistics
         5. bugs
         """
-        run = TestRun.objects.select_related('manager', 'plan').get(
-            pk=self.run_id)
+        run = TestRun.objects.select_related('manager', 'plan').get(pk=self.run_id)
 
         case_runs = TestCaseRun.objects.filter(
             run=run
@@ -389,11 +388,10 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         comments = self.get_case_runs_comments(run.pk)
 
         for case_run in case_runs:
-            bugs = case_run_bugs.get(case_run.pk, ())
-            case_run.bugs = bugs
+            case_run.bugs = case_run_bugs.get(case_run.pk, ())
             case_run.user_comments = comments.get(case_run.pk, [])
 
-        context = super(TestRunReportView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'test_run': run,
             'test_case_runs': case_runs,

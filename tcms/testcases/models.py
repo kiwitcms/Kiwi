@@ -363,11 +363,11 @@ class TestCase(TCMSActionModel):
         current_idx = pk_list.index(self.pk)
         prev = TestCase.objects.get(pk=pk_list[current_idx - 1])
         try:
-            next = TestCase.objects.get(pk=pk_list[current_idx + 1])
+            _next = TestCase.objects.get(pk=pk_list[current_idx + 1])
         except IndexError:
-            next = TestCase.objects.get(pk=pk_list[0])
+            _next = TestCase.objects.get(pk=pk_list[0])
 
-        return (prev, next)
+        return (prev, _next)
 
     def get_text_with_version(self, case_text_version=None):
         if case_text_version:
@@ -385,12 +385,14 @@ class TestCase(TCMSActionModel):
         text = self.text
         if not text_required:
             text = text.defer('action', 'effect', 'setup', 'breakdown')
-        qs = text.order_by('-case_text_version')[0:1]
-        return NoneText if len(qs) == 0 else qs[0]
+        latest_text = text.order_by('-case_text_version').first()
+        return latest_text or NoneText
 
     def latest_text_version(self):
-        qs = self.text.order_by('-case_text_version').only('case_text_version')[0:1]
-        return 0 if len(qs) == 0 else qs[0].case_text_version
+        latest_version = self.text.order_by('-case_text_version').only('case_text_version').first()
+        if latest_version:
+            return latest_version.case_text_version
+        return 0
 
     def remove_bug(self, bug_id, run_id=None):
         query = Bug.objects.filter(

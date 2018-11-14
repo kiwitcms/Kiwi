@@ -318,7 +318,9 @@ class BugFactory(DjangoModelFactory):
     bug_id = factory.Sequence(lambda n: n)
     summary = factory.LazyAttribute(lambda obj: 'Summary of bug %s' % obj.bug_id)
     description = ''
-    bug_system = factory.LazyFunction(lambda: BugSystem.objects.first())
+    bug_system = factory.LazyFunction(
+        lambda: BugSystem.objects.first()  # pylint: disable=unnecessary-lambda
+    )
     case_run = factory.SubFactory(TestCaseRunFactory)
     case = factory.SubFactory(TestCaseFactory)
 
