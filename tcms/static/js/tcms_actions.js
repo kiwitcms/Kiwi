@@ -8,7 +8,6 @@ window.Nitrate = Nitrate;
 
 Nitrate.Utils = {};
 var short_string_length = 100;
-var nil;
 
 /*
     Utility function.
@@ -155,67 +154,6 @@ function splitString(str, num) {
 
   return str;
 }
-
-/* 
-    Set up the <option> children of the given <select> element.
-    Preserving the existing selection (if any).
-
-    @element: a <select> element
-    @values: a list of (id, name) pairs
-    @allow_blank: boolean.  If true, prepend a "blank" option
-*/
-function set_up_choices(element, values, allow_blank) {
-  var innerHTML = "";
-  var selected_ids = [];
-
-  if (!element.multiple) {
-    // Process the single select box
-    selected_ids.push(parseInt(element.value));
-  } else {
-    // Process the select box with multiple attribute
-    for (var i = 0; (node = element.options[i]); i++) {
-      if (node.selected) {
-        selected_ids.push(node.value);
-      }
-    }
-  }
-
-  // Set up blank option, if there is one:
-  if (allow_blank) {
-    innerHTML += '<option value="">---------</option>';
-  }
-
-  // Add an <option> for each value:
-  values.forEach( function(item) {
-    var item_id = item[0];
-    var item_name = item[1];
-    var optionHTML = '<option value="' + item_id + '"';
-
-    var display_item_name = item_name;
-    var cut_for_short = false;
-    if (item_name.length > short_string_length) {
-      display_item_name = splitString(item_name, short_string_length);
-      var cut_for_short = true;
-    }
-
-    selected_ids.forEach(function(i) {
-      if (i === item_id) {
-        optionHTML += ' selected="selected"';
-      }
-    });
-
-    if (cut_for_short) {
-      optionHTML += ' title="' + item_name + '"';
-    }
-
-    optionHTML += '>' + display_item_name + '</option>';
-    innerHTML += optionHTML;
-  });
-
-  // Copy it up to the element in the DOM:
-  element.innerHTML = innerHTML;
-}
-
 
 // todo: remove this
 // Stolen from http://www.webdeveloper.com/forum/showthread.php?t=161317
@@ -444,11 +382,6 @@ function getDialog(element) {
 
   return element;
 }
-
-var showDialog = function(element) {
-  var dialog = getDialog(element);
-  return jQ(dialog).show()[0];
-};
 
 var clearDialog = function(element) {
   var dialog = getDialog(element);
