@@ -2,25 +2,17 @@
 from django.forms import EmailField
 from django.forms import ValidationError
 
-__all__ = ['MultipleEmailField', 'CC_LIST_DEFAULT_DELIMITER', ]
-
-CC_LIST_DEFAULT_DELIMITER = ','
-
 
 class MultipleEmailField(EmailField):
     """ Holding mulitple email addresses """
+
+    delimiter = ','
 
     default_error_messages = {
         'invalid': u'%(value)s is/are not valid email addresse(s).',
     }
 
-    def __init__(self, delimiter=CC_LIST_DEFAULT_DELIMITER, *args, **kwargs):
-
-        super(MultipleEmailField, self).__init__(*args, **kwargs)
-        self.delimiter = delimiter
-
     def to_python(self, value):
-
         if not value:
             return []
 
