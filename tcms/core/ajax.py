@@ -8,12 +8,10 @@ from http import HTTPStatus
 
 from django.db.models import Count
 from django.contrib.auth.models import User
-from django.core import serializers
 from django.forms import ValidationError
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.generic.base import View
 from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
@@ -27,34 +25,6 @@ from tcms.testplans.models import TestPlan, TestPlanTag
 from tcms.testruns.models import TestCaseRun, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
-
-
-# todo: all calls on the front-end can be replaced with jsonRPC
-# and this must be removed
-@require_GET
-def info(request):
-    """Ajax responder for misc information"""
-
-    objects = _InfoObjects(request=request, product_id=request.GET.get('product_id'))
-    info_type = getattr(objects, request.GET.get('info_type'))
-
-    if not info_type:
-        return HttpResponse('Unrecognizable info-type')
-
-    return HttpResponse(serializers.serialize('json', info_type(), fields=('name', 'value')))
-
-
-class _InfoObjects:
-
-    def __init__(self, request, product_id=None):
-        self.request = request
-        try:
-            self.product_id = int(product_id)
-        except (ValueError, TypeError):
-            self.product_id = 0
-
-    def components(self):
-        return Component.objects.filter(product__id=self.product_id)
 
 
 def tags(request):
