@@ -23,8 +23,8 @@ class BaseRunForm(forms.Form):
     )
 
     def populate(self, product_id):
-        query = {'product_id': product_id}
-        self.fields['build'].queryset = Build.list_active(query)
+        query = {'product_id': product_id, 'is_active': True}
+        self.fields['build'].queryset = Build.objects.filter(**query)
 
 
 class NewRunForm(BaseRunForm):

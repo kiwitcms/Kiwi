@@ -126,12 +126,6 @@ class Build(TCMSActionModel):
         serializer = BuildXMLRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
-    @classmethod
-    def list_active(cls, query={}):
-        if isinstance(query, dict):
-            query['is_active'] = True
-        return cls.objects.filter(**query)
-
     def __str__(self):
         return self.name
 
