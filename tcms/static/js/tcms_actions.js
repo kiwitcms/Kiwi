@@ -216,67 +216,6 @@ function set_up_choices(element, values, allow_blank) {
   element.innerHTML = innerHTML;
 }
 
-function getComponentsByProductId(allow_blank, product_field, component_field, callback, parameters) {
-  if (!parameters) {
-    var parameters = {};
-  }
-
-  parameters.info_type = 'components';
-
-  // Initial the product get from
-  if (!parameters || !parameters.product_id) {
-    if (!product_field) {
-      var product_field = jQ('#id_product')[0];
-    }
-    product_id = jQ(product_field).val();
-    parameters.product_id = product_id;
-  }
-
-  if (!component_field) {
-    if (jQ('#id_component').length) {
-      var component_field = jQ('#id_component')[0];
-    } else {
-      window.alert('Component field does not exist');
-      return false;
-    }
-  }
-
-  if (parameters.product_id === '') {
-    jQ(component_field).html('<option value="">---------</option>');
-    return true;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    set_up_choices(
-      component_field,
-      returnobj.map(function(o) {
-        return [o.pk, o.fields.name];
-      }),
-      allow_blank
-    );
-
-    if (typeof callback === 'function') {
-      callback.call();
-    }
-  };
-
-  getInfo(parameters, success);
-}
-
-function checkProductField(product_field) {
-  if (product_field) {
-    return product_field;
-  }
-
-  if (jQ('#id_product').length) {
-    return jQ('#id_product')[0];
-  }
-
-  return false;
-}
-
 
 // todo: remove this
 // Stolen from http://www.webdeveloper.com/forum/showthread.php?t=161317
@@ -497,22 +436,6 @@ function previewPlan(parameters, action, callback) {
     }
   });
 }
-
-function getInfo(parameters, callback) {
-  jQ.ajax({
-    'url': '/management/getinfo/',
-    'type': 'GET',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-        callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-        window.alert("Get info " + parameters.info_type + " failed");
-        return false;
-    }
-  });
-}
-
 
 function getDialog(element) {
   if (!element) {

@@ -1,6 +1,5 @@
 Nitrate.TestCases = {};
 Nitrate.TestCases.Details = {};
-Nitrate.TestCases.Create = {};
 Nitrate.TestCases.Edit = {};
 Nitrate.TestCases.Clone = {};
 
@@ -150,52 +149,6 @@ function configure_product_on_load() {
         update_category_select_from_product();
     });
 }
-
-Nitrate.TestCases.Create.on_load = function() {
-  // todo: what does SelectFilter.init do ?
-  SelectFilter.init("id_component", "component", 0, "/static/admin/");
-
-    configure_product_on_load();
-    update_category_select_from_product();
-
-//todo: deal with components later
-  var from = 'id_component_from';
-  var to = 'id_component_to';
-  var from_field = jQ('#' + from)[0];
-  var to_field = jQ('#' + to)[0];
-  jQ(to_field).html('');
-  getComponentsByProductId(false, jQ('#id_product')[0], from_field, function() {
-    SelectBox.cache[from] = [];
-    SelectBox.cache[to] = [];
-    for (var i = 0; (node = from_field.options[i]); i++) {
-      SelectBox.cache[from].push({value: node.value, text: node.text, displayed: 1});
-    }
-  });
-  // bind change on product to update component and category
-  jQ('#id_product').change(function () {
-    var from = 'id_component_from';
-    var to = 'id_component_to';
-    var from_field = jQ('#' + from)[0];
-    var to_field = jQ('#' + to)[0];
-    jQ(to_field).html('');
-    getComponentsByProductId(false, jQ('#id_product')[0], from_field, function() {
-      SelectBox.cache[from] = [];
-      SelectBox.cache[to] = [];
-      for (var i = 0; (node = from_field.options[i]); i++) {
-        SelectBox.cache[from].push({value: node.value, text: node.text, displayed: 1});
-      }
-    });
-  });
-
-  jQ('.js-case-cancel').bind('click', function() {
-    window.history.go(-1);
-  });
-  if (jQ('.js-plan-cancel').length) {
-    jQ('.js-plan-cancel').bind('click', function() {
-      window.location.href = jQ(this).data('param');
-    });
-  }
-};
 
 Nitrate.TestCases.Edit.on_load = function() {
     configure_product_on_load();
