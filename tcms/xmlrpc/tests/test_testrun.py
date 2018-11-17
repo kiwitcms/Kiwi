@@ -3,13 +3,14 @@
 
 from xmlrpc.client import ProtocolError
 from django.contrib.auth.models import Permission
+from datetime import datetime
 
 from tcms_api.xmlrpc import TCMSXmlrpc
 
 from tcms.testruns.models import TestRun, TestCaseRun
 
 from tcms.tests import remove_perm_from_user
-from tcms.tests.factories import TestCaseFactory
+from tcms.tests.factories import TestCaseFactory, BuildFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestPlanFactory
@@ -202,3 +203,65 @@ class TestProductVersionWhenCreating(XmlrpcAPIBaseTest):
         # the result is still using product_version from TR.plan.product_version
         # not the one we specified above
         self.assertEqual(result['product_version'], self.plan.product_version.value)
+
+
+class TestUpdateTestRun(XmlrpcAPIBaseTest):
+    def _fixture_setup(self):
+        super()._fixture_setup()
+
+        self.test_run = TestRunFactory()
+
+        self.updated_test_plan = TestPlanFactory()
+        self.updated_build = BuildFactory()
+        self.updated_summary = 'Updated summary.'
+        self.updated_stop_date = datetime.strptime('2020-05-05', '%Y-%m-%d')
+
+    def test_successful_update(self):
+        update_fields = {
+            'plan': self.updated_test_plan.pk,
+            'build': self.updated_build.pk,
+            'summary': self.updated_summary,
+            'stop_date': self.updated_stop_date
+        }
+
+        # assert test plan is not already updated
+        self.assertNotEqual(self.updated_test_plan, self.test_run.plan.name)
+        self.assertNotEqual(self.updated_build, self.test_run.build.name)
+        self.assertNotEqual(self.updated_summary, self.test_run.summary)
+        self.assertNotEqual(self.updated_stop_date, self.test_run.stop_date)
+
+        updated_test_run = self.rpc_client.exec.TestRun.update(self.test_run.pk, update_fields)
+        self.test_run.refresh_from_db()
+
+        # compare result, returned from API call with test run from DB
+        self.assertEqual(updated_test_run['plan'], self.test_run.plan.name)
+        self.assertEqual(updated_test_run['build'], self.test_run.build.name)
+        self.assertEqual(updated_test_run['summary'], self.test_run.summary)
+        self.assertEqual(updated_test_run['stop_date'], str(self.test_run.stop_date))
+
+        # compare result, returned from API call with params sent to the API
+        self.assertEqual(updated_test_run['plan'], self.updated_test_plan.name)
+        self.assertEqual(updated_test_run['build'], self.updated_build.name)
+        self.assertEqual(updated_test_run['summary'], self.updated_summary)
+        self.assertEqual(updated_test_run['stop_date'], str(self.updated_stop_date))
+
+    def test_wrong_date_format(self):
+        test_run = TestRunFactory()
+        update_fields = {
+            'plan': self.updated_test_plan.pk,
+            'build': self.updated_build.pk,
+            'summary': self.updated_summary,
+            'stop_date': '10-10-2010'
+        }
+
+        with self.assertRaisesMessage(Exception,
+                                      'The stop date is invalid. The valid format is YYYY-MM-DD.'):
+            self.rpc_client.exec.TestRun.update(test_run.pk, update_fields)
+
+        # assert test run fields have not been updated
+        test_run.refresh_from_db()
+        self.assertNotEqual(update_fields['plan'], test_run.plan.pk)
+        self.assertNotEqual(update_fields['build'], test_run.build.pk)
+        self.assertNotEqual(update_fields['summary'], test_run.summary)
+        self.assertNotEqual(datetime.strptime(update_fields['stop_date'], '%d-%m-%Y'),
+                            test_run.stop_date)
