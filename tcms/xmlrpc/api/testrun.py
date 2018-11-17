@@ -215,20 +215,16 @@ def update(run_id, values):
         :raises: PermissionDenied if missing *testruns.change_testrun* permission
         :raises: ValueError if data validations fail
     """
-    if (values.get('product_version') and not values.get('product')):
+    if values.get('product_version') and not values.get('product'):
         raise ValueError('Field "product" is required by product_version')
 
     form = XMLRPCUpdateRunForm(values)
     if values.get('product_version'):
         form.populate(product_id=values['product'])
 
-    if form.is_valid():
-        return _get_updated_test_run(run_id, values, form).serialize()
+    if not form.is_valid():
+        raise ValueError(form_errors_to_list(form))
 
-    raise ValueError(form_errors_to_list(form))
-
-
-def _get_updated_test_run(run_id, values, form):
     test_run = TestRun.objects.get(pk=run_id)
     if form.cleaned_data['plan']:
         test_run.plan = form.cleaned_data['plan']
@@ -256,12 +252,8 @@ def _get_updated_test_run(run_id, values, form):
         if form.cleaned_data['notes']:
             test_run.notes = form.cleaned_data['notes']
 
-    # todo: form doesn't allow stop_date to be updated
-    # test_run.stop_date = None
-
-    # if isinstance(form.cleaned_data['status'], int) and \
-    #   form.cleaned_data['status']:
-    #    test_run.stop_date = datetime.now()
+    if form.cleaned_data['stop_date']:
+        test_run.stop_date = form.cleaned_data['stop_date']
 
     test_run.save()
-    return test_run
+    return test_run.serialize()

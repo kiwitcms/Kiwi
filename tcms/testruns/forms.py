@@ -72,6 +72,13 @@ class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
         queryset=Build.objects.all(),
         required=False
     )
+    stop_date = forms.DateTimeField(
+        required=False,
+        input_formats=['%Y-%m-%d'],
+        error_messages={
+            'invalid': 'The stop date is invalid. The valid format is YYYY-MM-DD.'
+        }
+    )
 
     def clean_status(self):
         return self.cleaned_data.get('status')
