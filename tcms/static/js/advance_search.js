@@ -51,6 +51,4 @@ jQ(function() {
   // product select on change event binding
   updateOptionOnProdChange('version', 'product', 'version');
   updateOptionOnProdChange('build', 'product', 'build');
-  updateOptionOnProdChange('component', 'product', 'component');
-  updateOptionOnProdChange('category', 'product', 'category');
 });
