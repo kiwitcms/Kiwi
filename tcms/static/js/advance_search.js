@@ -49,11 +49,8 @@ function updateOptionOnProdChange(target, productID, targetID) {
 
 jQ(function() {
   // product select on change event binding
-//todo: duplicate calls introduced in #546
   updateOptionOnProdChange('version', 'product', 'version');
-  updateOptionOnProdChange('version', 'product','version');
   updateOptionOnProdChange('build', 'product', 'build');
-  updateOptionOnProdChange('component', 'product', 'component');
   updateOptionOnProdChange('component', 'product', 'component');
   updateOptionOnProdChange('category', 'product', 'category');
 });
