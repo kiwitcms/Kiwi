@@ -86,10 +86,7 @@ class BasicTestingReportFormFields(forms.Form):
             'required': 'You have to select a product to generate this '
                         'testing report.',
             'invalid_choice': '%(value)s is not a valid product.',
-        },
-        widget=forms.Select(attrs={
-            'id': 'product',
-        }))
+        })
 
     build = forms.ModelMultipleChoiceField(
         required=False,
@@ -98,11 +95,7 @@ class BasicTestingReportFormFields(forms.Form):
         error_messages={
             'invalid_pk_value': '%s is not a valid test build ID.',
             'invalid_choice': 'Test build ID %s does not exist.',
-        },
-        widget=forms.SelectMultiple(attrs={
-            'id': 'build',
-            'size': '5',
-        }))
+        })
 
     version = forms.ModelMultipleChoiceField(
         required=False,
@@ -111,11 +104,7 @@ class BasicTestingReportFormFields(forms.Form):
         error_messages={
             'invalid_choice': 'Version ID %s does not exist.',
             'invalid_pk_value': '%s is not a valid version ID.',
-        },
-        widget=forms.SelectMultiple(attrs={
-            'id': 'version',
-            'size': '5',
-        }))
+        })
 
     created_since = forms.DateField(
         required=False,

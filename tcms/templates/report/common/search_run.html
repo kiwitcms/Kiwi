@@ -3,7 +3,16 @@
 {% block subtitle %}CaseRun Report{% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{% static 'js/advance_search.js' %}"></script>
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/report.js' %}"></script>
+
+<script type="text/javascript">
+Nitrate.Utils.after_page_load(Nitrate.Report.TestingReport.on_load);
+</script>
 {% endblock %}
 
 {% block contents %}
