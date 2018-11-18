@@ -46,23 +46,6 @@ function updateOptionOnProdChange(target, productID, targetID) {
   }
 }
 
-jQ(function() {
-  var searchForm = jQ('#frmSearch');
-  var targetInp = jQ('#inpTarget');
-  // event listening for form submission
-  jQ('#btnSearchPlan').click(function() {
-    targetInp.val('plan');
-    searchForm.submit();
-  });
-  jQ('#btnSearchCase').click(function() {
-    targetInp.val('case');
-    searchForm.submit();
-  });
-  jQ('#btnSearchRun').click(function() {
-    targetInp.val('run');
-    searchForm.submit();
-  });
-});
 
 jQ(function() {
   // product select on change event binding
