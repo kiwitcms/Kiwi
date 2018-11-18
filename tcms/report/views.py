@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=too-many-ancestors
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
