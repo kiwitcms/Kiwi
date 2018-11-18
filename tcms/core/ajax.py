@@ -17,9 +17,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import permission_required
 
-from tcms.management.models import Component, Build, Version
 from tcms.testcases.models import TestCase, Bug
-from tcms.testcases.models import Category
 from tcms.testcases.models import TestCaseTag
 from tcms.testplans.models import TestPlan, TestPlanTag
 from tcms.testruns.models import TestCaseRun, TestRunTag
@@ -307,44 +305,3 @@ def update_bugs_to_caseruns(request):
     except ValueError as error:
         return say_no(str(error))
     return say_yes()
-
-
-# TODO: replace this with JSON-RPC API calls
-# discussed in https://github.com/kiwitcms/Kiwi/pull/512
-def get_prod_related_objs(p_pks, target):
-    """
-    Get Component, Version, Category, and Build\n
-    Return [(id, name), (id, name)]
-    """
-    ctypes = {
-        'component': (Component, 'name'),
-        'version': (Version, 'value'),
-        'build': (Build, 'name'),
-        'category': (Category, 'name'),
-    }
-    attr = ctypes[target][1]
-    results = []
-    for result in ctypes[target][0].objects.filter(product__in=p_pks):
-        results.append((result.pk, getattr(result, attr)))
-    return results
-
-
-def get_prod_related_obj_json(request):
-    """
-    View for updating product drop-down\n
-    in a Ajax way.
-    """
-    data = request.GET.copy()
-    target = data.get('target', None)
-    product_ids = data.get('p_ids', None)
-    sep = data.get('sep', None)
-    # py2.6: all(*values) => boolean ANDs
-    if target and product_ids and sep:
-        product_pks = []
-        for key in product_ids.split(sep):
-            if key:
-                product_pks.append(key)
-        result = get_prod_related_objs(product_pks, target)
-    else:
-        result = []
-    return JsonResponse(result, safe=False)

@@ -41,7 +41,6 @@ urlpatterns = [
         name='ajax.update.cases-priority'),
     url(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
         name='ajax.update.cases-actor'),
-    url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
 
     # comments
