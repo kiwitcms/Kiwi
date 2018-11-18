@@ -3,6 +3,7 @@ Nitrate.Report.List = {};
 Nitrate.Report.CustomSearch = {};
 Nitrate.Report.CustomDetails = {};
 Nitrate.Report.Builds = {};
+Nitrate.Report.TestingReport = {};
 
 
 Nitrate.Report.Builds.on_load = function() {
@@ -63,3 +64,19 @@ Nitrate.Report.CustomDetails.on_load = function() {
     $('#id_product').change(update_version_select_from_product);
     $('#id_product').change(update_build_select_from_product);
 };
+
+
+Nitrate.Report.TestingReport.on_load = function() {
+    $('#id_product').change(function() {
+        $('#id_version').find('option').remove();
+        update_version_select_from_product($(this))
+    });
+    if (!$('#id_version').val().length) {
+        update_version_select_from_product();
+    }
+
+    $('#id_product').change(update_build_select_from_product);
+    if (!$('#id_build').val().length) {
+        update_build_select_from_product();
+    }
+}
