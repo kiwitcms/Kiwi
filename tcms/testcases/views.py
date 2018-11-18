@@ -48,26 +48,15 @@ TESTCASE_OPERATION_ACTIONS = (
 # helper functions
 
 
-def plan_from_request_or_none(request, pk_enough=False):
+def plan_from_request_or_none(request):
     """Get TestPlan from REQUEST
 
     This method relies on the existence of from_plan within REQUEST.
-
-    Arguments:
-    - pk_enough: a choice for invoker to determine whether the ID is enough.
     """
     test_plan_id = request.POST.get("from_plan") or request.GET.get("from_plan")
-    if test_plan_id:
-        if pk_enough:
-            try:
-                test_plan = int(test_plan_id)
-            except ValueError:
-                test_plan = None
-        else:
-            test_plan = get_object_or_404(TestPlan, plan_id=test_plan_id)
-    else:
-        test_plan = None
-    return test_plan
+    if not test_plan_id:
+        return None
+    return get_object_or_404(TestPlan, plan_id=test_plan_id)
 
 
 def update_case_email_settings(test_case, n_form):
