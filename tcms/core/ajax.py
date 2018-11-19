@@ -170,23 +170,6 @@ class UpdateTestCaseStatusView(View):
 
 
 @method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
-class UpdateTestCasePriorityView(View):
-    """Updates TestCase.priority_id. Called from the front-end."""
-
-    http_method_names = ['post']
-
-    def post(self, request):
-        priority_id = int(request.POST.get('new_value'))
-        case_ids = request.POST.getlist('case[]')
-
-        for test_case in TestCase.objects.filter(pk__in=case_ids):
-            test_case.priority_id = priority_id
-            test_case.save()
-
-        return JsonResponse({'rc': 0, 'response': 'ok'})
-
-
-@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
 class UpdateTestCaseActorsView(View):
     """
         Updates TestCase.default_tester_id or TestCase.reviewer_id.

@@ -9,13 +9,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django_comments.models import Comment
 
-from tcms.management.models import Priority
-from tcms.testcases.forms import TestCase
 from tcms.testruns.models import TestCaseRun
 from tcms.tests import BaseCaseRun
-from tcms.tests import BasePlanCase
-from tcms.tests import remove_perm_from_user
-from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
@@ -155,52 +150,3 @@ class TestCommentCaseRuns(BaseCaseRun):
                                               content_type=case_run_ct)
             self.assertEqual(new_comment, comments[0].comment)
             self.assertEqual(self.tester, comments[0].user)
-
-
-class TestUpdateCasePriority(BasePlanCase):
-    @classmethod
-    def setUpTestData(cls):
-        super(TestUpdateCasePriority, cls).setUpTestData()
-
-        cls.permission = 'testcases.change_testcase'
-        cls.url = reverse('ajax.update.cases-priority')
-
-    def setUp(self):
-        user_should_have_perm(self.tester, self.permission)
-
-    def test_refuse_if_missing_permission(self):
-        remove_perm_from_user(self.tester, self.permission)
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(
-            self.url,
-            {
-                'case[]': [self.case_1.pk, self.case_3.pk],
-                'new_value': Priority.objects.get(value='P3').pk,
-            })
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': "You don't have enough permission to "
-                                  "update TestCases."})
-
-    def test_update_case_priority(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(
-            self.url,
-            {
-                'case[]': [self.case_1.pk, self.case_3.pk],
-                'new_value': Priority.objects.get(value='P3').pk,
-            })
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok'})
-
-        for pk in (self.case_1.pk, self.case_3.pk):
-            self.assertEqual('P3', TestCase.objects.get(pk=pk).priority.value)

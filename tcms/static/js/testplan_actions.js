@@ -946,39 +946,21 @@ function selectedCaseIds(container) {
 
 
 function changeTestCasePriority(plan_id, case_ids, new_value, container) {
-    var afterPriorityChangedCallback = function(response) {
-      var returnobj = jQ.parseJSON(response.responseText);
-      if (returnobj.rc != 0) {
-        window.alert(returnobj.response);
-        return false;
-      }
-
-      var template_type = 'case';
-
-      if (container.attr('id') === 'reviewcases') {
-          template_type = 'review_case';
-      }
-
-      var parameters = {
-          'a': 'initial',
-          'from_plan': plan_id,
-          'template_type': template_type,
-      };
-
-      constructPlanDetailsCasesZone(container, plan_id, parameters);
-    };
-
-    jQ.ajax({
-      'type': 'POST',
-      'url': '/ajax/update/cases-priority/',
-      'data': {'case': case_ids, 'new_value': new_value },
-      'success': function (data, textStatus, jqXHR) {
-        afterPriorityChangedCallback(jqXHR);
-      },
-      'error': function (jqXHR, textStatus, errorThrown) {
-        json_failure(jqXHR);
-      }
+    case_ids.forEach(function(element){
+        jsonRPC('TestCase.update', [element, {priority: new_value}], function(data) {});
     });
+
+    var template_type = 'case';
+    if (container.attr('id') === 'reviewcases') {
+        template_type = 'review_case';
+    }
+
+    var parameters = {
+        'a': 'initial',
+        'from_plan': plan_id,
+        'template_type': template_type,
+    };
+    constructPlanDetailsCasesZone(container, plan_id, parameters);
 }
 
 /*
