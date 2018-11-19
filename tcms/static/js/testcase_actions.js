@@ -292,16 +292,13 @@ function toggleTestCaseContents(template_type, container, content_container, obj
   toggleExpandArrow({ caseRowContainer: jQ(container), expandPaneContainer: jQ(content_container) });
 }
 
-function changeTestCaseStatus(plan_id, case_id, new_value, container) {
-  var success = function(data, textStatus, jqXHR) {
-    var returnobj = jQ.parseJSON(jqXHR.responseText);
-    if (returnobj.rc !== 0) {
-      window.alert(returnobj.response);
-      return false;
-    }
+function changeTestCaseStatus(plan_id, case_ids, new_value, container) {
+    case_ids.forEach(function(element) {
+        jsonRPC('TestCase.update', [element, {case_status: new_value}], function(data) {});
+    });
+
 
     var template_type = 'case';
-
     if (container.attr('id') === 'reviewcases') {
         template_type = 'review_case';
     }
@@ -312,31 +309,11 @@ function changeTestCaseStatus(plan_id, case_id, new_value, container) {
         'template_type': template_type,
     };
 
+    // todo: #run_case_count, #case_count, #review_case_count
+    // are no longer updated
     constructPlanDetailsCasesZone(container, plan_id, parameters);
 
-    jQ('#run_case_count').text(returnobj.run_case_count);
-    jQ('#case_count').text(returnobj.case_count);
-    jQ('#review_case_count').text(returnobj.review_case_count);
-
     Nitrate.TestPlans.Details.reopenTabHelper(jQ(container));
-  };
-
-  var data = {
-    'from_plan': plan_id,
-    'case': case_id,
-    'target_field': 'case_status',
-    'new_value': new_value,
-  };
-
-  jQ.ajax({
-    'url': '/ajax/update/case-status/',
-    'type': 'POST',
-    'data': data,
-    'success': success,
-    'error': function (jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
 }
 
 function toggleAllCheckBoxes(element, container, name) {
