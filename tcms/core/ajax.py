@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import permission_required
 
@@ -134,39 +134,6 @@ def say_no(error_msg):
 
 def say_yes():
     return JsonResponse({'rc': 0, 'response': 'ok'})
-
-
-@method_decorator(permission_required('testcases.change_testcase'), name='dispatch')
-class UpdateTestCaseStatusView(View):
-    """Updates TestCase.case_status_id. Called from the front-end."""
-
-    http_method_names = ['post']
-
-    def post(self, request):
-        status_id = int(request.POST.get('new_value'))
-        case_ids = request.POST.getlist('case[]')
-
-        for test_case in TestCase.objects.filter(pk__in=case_ids):
-            test_case.case_status_id = status_id
-            test_case.save()
-
-        # Case is moved between Cases and Reviewing Cases tabs accoding to the
-        # change of status. Meanwhile, the number of cases with each status
-        # should be updated also.
-        plan_id = request.POST.get("from_plan")
-        test_plan = get_object_or_404(TestPlan, pk=plan_id)
-
-        confirmed_cases_count = test_plan.case.filter(case_status__name='CONFIRMED').count()
-        total_cases_count = test_plan.case.count()
-        review_cases_count = total_cases_count - confirmed_cases_count
-
-        return JsonResponse({
-            'rc': 0,
-            'response': 'ok',
-            'run_case_count': confirmed_cases_count,
-            'case_count': total_cases_count,
-            'review_case_count': review_cases_count,
-        })
 
 
 @method_decorator(permission_required('testcases.change_testcase'), name='dispatch')

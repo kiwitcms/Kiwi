@@ -36,7 +36,6 @@ urlpatterns = [
     url(r'^attachments/', include(attachments_urls, namespace='attachments')),
 
     # Ajax call responder
-    url(r'^ajax/update/case-status/$', ajax.UpdateTestCaseStatusView.as_view()),
     url(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
         name='ajax.update.cases-actor'),
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
