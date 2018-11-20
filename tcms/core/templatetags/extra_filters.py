@@ -17,7 +17,8 @@ def markdown2html(md_str):
         Returns markdown string as HTML.
     """
     return mark_safe(markdown.markdown(md_str,  # nosec:B308:blacklist
-                                       extensions=['markdown.extensions.fenced_code']))
+                                       extensions=['markdown.extensions.fenced_code',
+                                                   'markdown.extensions.nl2br']))
 
 
 @register.filter(name='message_icon')
