@@ -448,6 +448,9 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                                  'caserun_bugs_count': self.case_run.get_bugs_count()})
 
         def file(self):
+            response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker '
+                                             'by configuring its base_url!'}
+
             bug_system_id = request.GET.get('bug_system_id')
             bug_system = BugSystem.objects.get(pk=bug_system_id)
 
@@ -456,8 +459,6 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 url = tracker.report_issue_from_testcase(self.case_run)
                 response = {'rc': 0, 'response': url}
 
-            response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker '
-                                             'by configuring its base_url!'}
             return JsonResponse(response)
 
         def remove(self):
