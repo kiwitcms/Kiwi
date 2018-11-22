@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -f /run/httpd/*
+
+exec /usr/sbin/apachectl -DFOREGROUND
+
