@@ -59,6 +59,10 @@ docker-image:
 	find -name "*.pyc" -delete
 	docker build -t kiwitcms/kiwi:latest .
 
+.PHONY: test-docker-image
+test-docker-image: docker-image
+	sudo ./tests/runner.sh
+
 .PHONY: docs
 docs:
 	make -C docs/ html
