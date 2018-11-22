@@ -10,7 +10,8 @@ RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-rele
 # Apache configuration for non-root users
 EXPOSE 8080
 EXPOSE 8443
-CMD /usr/sbin/apachectl -DFOREGROUND
+COPY ./httpd-foreground /httpd-foreground
+CMD /httpd-foreground
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf && \
     sed -i 's/Listen 443/Listen 8443/' /etc/httpd/conf.d/ssl.conf && \
     sed -i 's!ErrorLog "logs/error_log"!ErrorLog "/dev/stderr"!' /etc/httpd/conf/httpd.conf && \
