@@ -17,10 +17,10 @@ class MyUserChangeForm(UserChangeForm):
     email = forms.EmailField(required=True)
 
     def clean_email(self):
-        qs = User.objects.filter(email=self.cleaned_data['email'])
+        query_set = User.objects.filter(email=self.cleaned_data['email'])
         if self.instance:
-            qs = qs.exclude(pk=self.instance.pk)
-        if qs.count():
+            query_set = query_set.exclude(pk=self.instance.pk)
+        if query_set.count():
             raise forms.ValidationError(_('This email address is already in use'))
         else:
             return self.cleaned_data['email']
