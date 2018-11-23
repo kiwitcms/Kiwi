@@ -29,8 +29,8 @@ class Product(TCMSActionModel):
     def to_xmlrpc(cls, query=None):
         from tcms.xmlrpc.serializer import ProductXMLRPCSerializer
         _query = query or {}
-        qs = cls.objects.filter(**_query).order_by('pk')
-        serializer = ProductXMLRPCSerializer(model_class=cls, queryset=qs)
+        query_set = cls.objects.filter(**_query).order_by('pk')
+        serializer = ProductXMLRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -124,9 +124,9 @@ class Build(TCMSActionModel):
     @classmethod
     def to_xmlrpc(cls, query=None):
         from tcms.xmlrpc.serializer import BuildXMLRPCSerializer
-        _query = query or {}
-        qs = cls.objects.filter(**_query).order_by('pk')
-        serializer = BuildXMLRPCSerializer(model_class=cls, queryset=qs)
+        query = query or {}
+        query_set = cls.objects.filter(**query).order_by('pk')
+        serializer = BuildXMLRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def __str__(self):
