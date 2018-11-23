@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, too-many-ancestors
 
 import unittest
 from http import HTTPStatus
