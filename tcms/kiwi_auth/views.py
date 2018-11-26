@@ -52,18 +52,28 @@ def register(request):
                     messages.WARNING,
                     _('Your account has been created, but you need an administrator to activate it')
                 )
-                if settings.ADMINS:
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    _('Following is the administrator list')
+                )
+
+                # super-users can approve others
+                for user in User.objects.filter(is_superuser=True):
                     messages.add_message(
                         request,
                         messages.INFO,
-                        _('Following is the administrator list')
+                        '<a href="mailto:{}">{}</a>'.format(user.email,
+                                                            user.get_full_name() or user.username)
                     )
-                    for name, email in settings.ADMINS:
-                        messages.add_message(
-                            request,
-                            messages.INFO,
-                            '<a href="mailto:{}">{}</a>'.format(email, name)
-                        )
+
+                # site admins should be able to do so too
+                for name, email in settings.ADMINS:
+                    messages.add_message(
+                        request,
+                        messages.WARNING,
+                        '<a href="mailto:{}">{}</a>'.format(email, name)
+                    )
 
             return HttpResponseRedirect(reverse('core-views-index'))
     else:
