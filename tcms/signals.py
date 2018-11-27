@@ -60,17 +60,16 @@ def notify_admins(sender, **kwargs):
     if kwargs.get('raw', False):
         return
 
-    request = kwargs.get('request')
-    user = kwargs.get('user')
-
     admin_emails = set()
     # super-users can approve others
-    for user in User.objects.filter(is_superuser=True):
-        admin_emails.add(user.email)
+    for super_user in User.objects.filter(is_superuser=True):
+        admin_emails.add(super_user.email)
     # site admins should be able to do so as well
     for _name, email in settings.ADMINS:
         admin_emails.add(email)
 
+    request = kwargs.get('request')
+    user = kwargs.get('user')
     user_url = request_host_link(request) + reverse('admin:auth_user_change', args=[user.pk])
 
     mailto(
