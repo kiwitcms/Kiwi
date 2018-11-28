@@ -63,6 +63,22 @@ Brief history
   to work with the current code base.
 
 
+Security issues
+---------------
+
+* The reported
+  `XSS in SimpleMDE <https://snyk.io/vuln/SNYK-JS-SIMPLEMDE-72570>`_ has been
+  resolved by overriding its configuration and by using
+  `bleach <https://github.com/mozilla/bleach>`_ to sanitize the rendered text
+  before showing it inside our templates. See
+  ``tcms/static/js/simplemde_security_override.js`` and
+  ``tcms/core/templatetags/extra_filters.py``.
+* The reported
+  `XSS in Bootstrap <https://snyk.io/vuln/npm:bootstrap:20160627>`_ is fixed in
+  version 3.4 which is expected around
+  `Dec 10th 2018 <https://github.com/twbs/bootstrap/issues/25679#issuecomment-442502490>`_
+
+
 Documentation
 -------------
 
