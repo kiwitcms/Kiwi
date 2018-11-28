@@ -25,4 +25,5 @@ var simplemde = new SimpleMDE({ element: document.getElementById("%s") });
         css = {
             'all': ['simplemde/dist/simplemde.min.css']
         }
-        js = ['simplemde/dist/simplemde.min.js']
+        js = ['simplemde/dist/simplemde.min.js',
+              'js/simplemde_security_override.js']
