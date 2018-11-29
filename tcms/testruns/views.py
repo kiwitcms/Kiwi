@@ -262,7 +262,7 @@ def get(request, run_id, template_name='run/get.html'):
         'status_stats': status_stats_result,
         'test_case_run_bugs_count': test_case_run_bugs_count,
         'test_case_run_status': case_run_status,
-        'priorities': Priority.objects.all(),
+        'priorities': Priority.objects.filter(is_active=True),
         'case_own_tags': tags,
         'bug_trackers': BugSystem.objects.all(),
     }
