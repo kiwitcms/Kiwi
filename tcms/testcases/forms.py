@@ -255,8 +255,7 @@ class BaseCaseSearchForm(forms.Form):
     )
     priority = forms.ModelMultipleChoiceField(
         label="Priority",
-        # todo: this needs to filter out inactive priorities
-        queryset=Priority.objects.all(),
+        queryset=Priority.objects.filter(is_active=True),
         widget=forms.CheckboxSelectMultiple(),
         required=False
     )
