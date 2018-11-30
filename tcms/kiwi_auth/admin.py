@@ -62,14 +62,18 @@ class KiwiUserAdmin(UserAdmin):
         readonly_fields = ['username', 'is_staff', 'is_active',
                            'is_superuser', 'last_login', 'date_joined',
                            'groups', 'user_permissions']
-        if not _modifying_myself(request, obj.pk):
+        if obj and not _modifying_myself(request, obj.pk):
             readonly_fields.extend(['first_name', 'last_name', 'email'])
 
         return readonly_fields
 
     def get_fieldsets(self, request, obj=None):
+        # super-user adding new account
+        if not obj and request.user.is_superuser:
+            return super().get_fieldsets(request, obj)
+
         first_fieldset_fields = ('username',)
-        if _modifying_myself(request, obj.pk):
+        if obj and _modifying_myself(request, obj.pk):
             first_fieldset_fields = first_fieldset_fields + ('password',)
 
         remaining_fieldsets = (
