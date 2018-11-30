@@ -382,7 +382,7 @@ class Gitlab(IssueTrackerType):
     def __init__(self, tracker):
         super(Gitlab, self).__init__(tracker)
 
-        # NOTE: we use an access token so only the password field is required
+        # we use an access token so only the password field is required
         self.rpc = gitlab.Gitlab(self.tracker.api_url, private_token=self.tracker.api_password)
 
     def add_testcase_to_issue(self, testcases, issue):
@@ -413,7 +413,8 @@ class Gitlab(IssueTrackerType):
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "**Product**:\n%s\n\n" % caserun.run.plan.product.name
-        comment += "**Component(s)**:\n%s\n\n" % caserun.case.component.values_list('name', flat=True)
+        comment += "**Component(s)**:\n%s\n\n"\
+                   % caserun.case.component.values_list('name', flat=True)
         comment += "Version-Release number of selected " \
                    "component (if applicable):\n"
         comment += "%s\n\n" % caserun.build.name
