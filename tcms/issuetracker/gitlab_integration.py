@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Helper which facilitate actual communications with GitHub.
+    Helper which facilitate actual communications with Gitlab.
 """
 
 import warnings
