@@ -12,12 +12,14 @@ from urllib.parse import urlencode
 import jira
 import github
 import bugzilla
+import gitlab
 
 from django.conf import settings
 
 from tcms.issuetracker import bugzilla_integration
 from tcms.issuetracker import jira_integration
 from tcms.issuetracker import github_integration
+from tcms.issuetracker import gitlab_integration
 
 
 class IssueTrackerType:
@@ -113,6 +115,7 @@ class Bugzilla(IssueTrackerType):
         is not provided a temporary directory will be used each time we try to login
         into Bugzilla!
     """
+
     def __init__(self, tracker):
         super(Bugzilla, self).__init__(tracker)
 
@@ -201,6 +204,7 @@ class JIRA(IssueTrackerType):
         setting (in ``product.py``). By default this setting is not provided and
         the code uses ``jira.JIRA.DEFAULT_OPTIONS`` from the ``jira`` Python module!
     """
+
     def __init__(self, tracker):
         super(JIRA, self).__init__(tracker)
 
@@ -313,6 +317,7 @@ class GitHub(IssueTrackerType):
             see GitHub issues listed one by one and there will not be a link to open all
             of them inside GitHub's interface!
     """
+
     def __init__(self, tracker):
         super(GitHub, self).__init__(tracker)
 
@@ -358,6 +363,65 @@ class GitHub(IssueTrackerType):
         comment += "Actual results: \n<describe what happened>\n\n"
         comment += "Expected results:\n%s\n\n" % effect
         args['body'] = comment
+
+        url = self.tracker.base_url
+        if not url.endswith('/'):
+            url += '/'
+
+        return url + '/issues/new?' + urlencode(args, True)
+
+
+class Gitlab(IssueTrackerType):
+    """
+        Support for Gitlab. Requires:
+
+        :base_url: - URL to a Gitlab repository for which we're going to report issues
+        :api_password: - Gitlab API token.
+    """
+
+    def __init__(self, tracker):
+        super(Gitlab, self).__init__(tracker)
+
+        # we use an access token so only the password field is required
+        self.rpc = gitlab.Gitlab(self.tracker.api_url, private_token=self.tracker.api_password)
+
+    def add_testcase_to_issue(self, testcases, issue):
+        for case in testcases:
+            gitlab_integration.GitlabThread(self.rpc, self.tracker, case, issue).start()
+
+    def is_adding_testcase_to_issue_disabled(self):
+        return not (self.tracker.base_url and self.tracker.api_password)
+
+    def report_issue_from_testcase(self, caserun):
+        # because of circular dependencies
+        from tcms.testcases.models import TestCaseText
+
+        args = {
+            'issue[title]': 'Failed test: %s' % caserun.case.summary,
+        }
+
+        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
+
+        if isinstance(txt, TestCaseText):
+            setup = txt.setup
+            action = txt.action
+            effect = txt.effect
+        else:
+            setup = 'None'
+            action = 'None'
+            effect = 'None'
+
+        comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
+        comment += "**Product**:\n%s\n\n" % caserun.run.plan.product.name
+        comment += "**Component(s)**:\n%s\n\n"\
+                   % caserun.case.component.values_list('name', flat=True)
+        comment += "Version-Release number of selected " \
+                   "component (if applicable):\n"
+        comment += "%s\n\n" % caserun.build.name
+        comment += "**Steps to Reproduce**: \n%s\n%s\n\n" % (setup, action)
+        comment += "**Actual results**: \n<describe what happened>\n\n"
+        comment += "**Expected results**:\n%s\n\n" % effect
+        args['issue[description]'] = comment
 
         url = self.tracker.base_url
         if not url.endswith('/'):

@@ -13,3 +13,4 @@ jira==2.0.0
 Markdown==3.0.1
 python-bugzilla==2.2.0
 PyGithub==1.43.3
+python-gitlab==1.6.0
