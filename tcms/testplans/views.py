@@ -53,7 +53,7 @@ def update_plan_email_settings(test_plan, form):
 
 @require_http_methods(['GET', 'POST'])
 @permission_required('testplans.add_testplan')
-def new(request, template_name='plan/new.html'):
+def new(request):
     """New testplan"""
 
     # If the form has been submitted...
@@ -87,7 +87,7 @@ def new(request, template_name='plan/new.html'):
     context_data = {
         'form': form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'testplans/mutable.html', context_data)
 
 
 @require_GET
