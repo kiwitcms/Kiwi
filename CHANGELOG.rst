@@ -2,6 +2,130 @@ Change Log
 ==========
 
 
+Kiwi TCMS 6.3 (4 Dec 2018) - Heisenbug Edition
+----------------------------------------------
+
+**IMPORTANT:** this is a medium severity security update that includes new versions
+of Django and Patternfly, new database migrations, lots of improvements, bug fixes
+and internal refactoring.
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- Resolve medium severity XSS vulnerability which can be exploited when
+  previewing malicious text in Simple MDE editor. See
+  `CVE-2018-19057 <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-19057>`_,
+  `SNYK-JS-SIMPLEMDE-72570 <https://snyk.io/vuln/SNYK-JS-SIMPLEMDE-72570>`_
+- Use ``mozilla/bleach`` before rendering Markdown to the user as a second layer
+  of protection against the previously mentioned XSS vulnerability.
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update to `Django 2.1.4 <https://docs.djangoproject.com/en/2.1/releases/2.1.4/>`_
+- Update to `Patternfly 3.58.0 <https://github.com/patternfly/patternfly/releases>`_
+- Make docker container restartable (Maik Opitz, Adam Hall)
+- Add GitLab issue tracker integration. Fixes
+  `Issue #176 <https://github.com/kiwitcms/Kiwi/issues/176>`_
+  (Filipe Arruda, Federal Institute of Pernambuco)
+- Convert ``Create new TestPlan`` page to Patternfly (Anton Sankov)
+- Upon successfull registration show the list of super-users in case new
+  accounts must be activated manually. This can be the same or expanded
+  version of the addresses in the ``ADMIN`` setting. Include super-users
+  in email notifications sent via ``tcms.signals.notify_admins()``.
+- Don't include ``admin/js/*.js`` files in templates when not
+  necessary. Results in faster page load. Fixes
+  `Issue #209 <https://github.com/kiwitcms/Kiwi/issues/209>`_
+- Enable ``nl2br`` Markdown extension which allows newline characters
+  to be rendered as ``<br>`` tags in HTML. Visually the rendered
+  text will look closer to what you seen in the text editor. Fixes
+  `Issue #623 <https://github.com/kiwitcms/Kiwi/issues/623>`_
+- Use auto-complete for adding components to TestCase
+
+
+Removed functionality
+~~~~~~~~~~~~~~~~~~~~~
+
+- Bulk-update of Category for selected TestCase(s) inside of
+  TestPlan
+- Bulk-update of Components for selected TestCase(s) inside of
+  TestPlan
+- Bulk-update of automated status for selected TestCase(s) inside of
+  TestPlan
+- Bulk-remove for TestCase Component tab
+
+These actions have always been a bit broken and didn't check the
+correct permission labels. You can still update items idividually!
+
+- Selection of Components when creating new TestCase. Closes
+  `Issue #565 <https://github.com/kiwitcms/Kiwi/issues/565>`_.
+  Everywhere else Kiwi TCMS doesn't allow selection of many-to-many
+  relationships when creating or editing objects. Tags, Bugs, Components,
+  TestPlans can be added via dedicated tabs once the object has been saved.
+
+
+Bug fixes
+~~~~~~~~~
+
+- Hide ``KiwiUserAdmin.password`` field from super-user. Fixes
+  `Issue #610 <https://github.com/kiwitcms/Kiwi/issues/610>`_
+- Don't show inactive Priority. Fixes
+  `Issue #637 <https://github.com/kiwitcms/Kiwi/issues/637>`_
+- Don't traceback when adding new users via Admin. Fixes
+  `Issue #642 <https://github.com/kiwitcms/Kiwi/issues/642>`_
+- Teach ``TestRun.update()`` API method to process the ``stop_date``
+  field. Fixes
+  `Issue #554 <https://github.com/kiwitcms/Kiwi/issues/554>`_ (Anton Sankov)
+- Previously when reporting issues to Bugzilla, directly from a TestRun,
+  Kiwi TCMS displayed the error ``Enable reporting to this Issue Tracker by
+  configuring its base_url`` although that has already been configured.
+  This is now fixed. See
+  `Stack Overflow #53434949 <https://stackoverflow.com/questions/53434949/>`_
+
+
+Database
+~~~~~~~~
+
+- Remove ``TestPlan.owner`` field, duplicates ``TestPlan.author``
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove ``fmt_queries()``. Fixes
+  `Issue #330 <https://github.com/kiwitcms/Kiwi/issues/330>`_ (Anton Sankov)
+- Remove unused parameter from ``plan_from_request_or_none()``. Refers to
+  `Issue #303 <https://github.com/kiwitcms/Kiwi/issues/303>`_ (Anton Sankov)
+- Remove ``ComponentActions()`` class. Fixes
+  `Issue #20 <https://github.com/kiwitcms/Kiwi/issues/20>`_
+- Convert lots of AJAX calls to JSON-RPC
+- Remove lots of unused Python, JavaScript and templates. Both after migration
+  to JSON RPC and other leftovers
+- Pylint fixes (Alexander Todorov, Anton Sankov)
+
+
+
 Kiwi TCMS 6.2.1 (12 Nov 2018)
 -----------------------------
 
@@ -273,7 +397,7 @@ Improvements
 Removed functionality
 ~~~~~~~~~~~~~~~~~~~~~
 
-- TestCase new and edit views no longer allow editting of tags. Tags can be
+- TestCase new and edit views no longer allow editing of tags. Tags can be
   added/removed from the Tags tab which also makes sure to properly account
   for permissions
 - Remove ``EnvGroup``, ``EnvProperty`` and ``EnvValue`` models in favor of tags.
@@ -1403,7 +1527,7 @@ IMPORTANT: this release introduces new database migrations!
 - Fix 500 ISE when viewing other user profiles (Mr. Senko)
 - Add a more visible link to account registration in the MOTD section
   of the login page (Mr. Senko)
-- Use correct permission names when editting Test Plan Environment Group field.
+- Use correct permission names when editing Test Plan Environment Group field.
   Fixes `Issue #73 <https://github.com/MrSenko/Kiwi/issues/73>`_ (Mr. Senko)
 - Update how we render the XMLRPC info page. Fixes
   `Issue #80 <https://github.com/MrSenko/Kiwi/issues/80>`_ (Mr. Senko)
