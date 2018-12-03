@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-25 11:46+0000\n"
+"POT-Creation-Date: 2018-12-03 08:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: tcms/core/ajax.py:254 tcms/testruns/views.py:812
+#: tcms/core/ajax.py:157 tcms/testruns/views.py:798
 #, python-format
 msgid "User %s not found!"
 msgstr ""
@@ -27,6 +27,7 @@ msgid "Core customized comments"
 msgstr ""
 
 #: tcms/core/contrib/comments/forms.py:14
+#: tcms/testplans/templates/testplans/mutable.html:20
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr ""
@@ -71,11 +72,11 @@ msgstr ""
 msgid "This email address is already in use"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:73
+#: tcms/kiwi_auth/admin.py:80
 msgid "Personal info"
 msgstr ""
 
-#: tcms/kiwi_auth/admin.py:74
+#: tcms/kiwi_auth/admin.py:81
 msgid "Permissions"
 msgstr ""
 
@@ -98,19 +99,19 @@ msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr ""
 
-#: tcms/kiwi_auth/views.py:59
+#: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
 msgstr ""
 
-#: tcms/kiwi_auth/views.py:90
+#: tcms/kiwi_auth/views.py:100
 msgid "This activation key no longer exists in the database"
 msgstr ""
 
-#: tcms/kiwi_auth/views.py:95
+#: tcms/kiwi_auth/views.py:105
 msgid "This activation key has expired"
 msgstr ""
 
-#: tcms/kiwi_auth/views.py:107
+#: tcms/kiwi_auth/views.py:117
 msgid "Your account has been activated successfully"
 msgstr ""
 
@@ -194,11 +195,11 @@ msgstr ""
 msgid "API Help"
 msgstr ""
 
-#: tcms/signals.py:74
+#: tcms/signals.py:78
 msgid "New user awaiting approval"
 msgstr ""
 
-#: tcms/signals.py:149
+#: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr ""
@@ -255,8 +256,9 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/search.html:34
+#: tcms/testplans/templates/testplans/mutable.html:29
 #: tcms/testplans/templates/testplans/search.html:66
-#: tcms/testplans/templates/testplans/search.html:142
+#: tcms/testplans/templates/testplans/search.html:136
 #: tcms/testruns/templates/testruns/mutable.html:46
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:95
@@ -264,8 +266,9 @@ msgid "Product"
 msgstr ""
 
 #: tcms/templates/dashboard.html:50
+#: tcms/testplans/templates/testplans/mutable.html:62
 #: tcms/testplans/templates/testplans/search.html:86
-#: tcms/testplans/templates/testplans/search.html:143
+#: tcms/testplans/templates/testplans/search.html:137
 msgid "Type"
 msgstr ""
 
@@ -363,7 +366,6 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:90
 #: tcms/testplans/templates/testplans/search.html:100
 #: tcms/testplans/templates/testplans/search.html:106
-#: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
@@ -490,20 +492,20 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:88
 #: tcms/testcases/templates/testcases/search.html:122
 #: tcms/testplans/templates/testplans/search.html:98
-#: tcms/testplans/templates/testplans/search.html:140
+#: tcms/testplans/templates/testplans/search.html:135
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:97
-#: tcms/testplans/templates/testplans/search.html:116
+#: tcms/testplans/templates/testplans/search.html:111
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:100
 #: tcms/testcases/templates/testcases/search.html:106
-#: tcms/testplans/templates/testplans/search.html:119
+#: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
 msgstr ""
@@ -514,13 +516,13 @@ msgid "Bug ID"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:112
-#: tcms/testplans/templates/testplans/search.html:129
+#: tcms/testplans/templates/testplans/search.html:124
 #: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:120
-#: tcms/testplans/templates/testplans/search.html:137
+#: tcms/testplans/templates/testplans/search.html:132
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
 msgstr ""
@@ -534,17 +536,53 @@ msgstr ""
 msgid "Created at"
 msgstr ""
 
-#: tcms/testcases/views.py:521
+#: tcms/testcases/views.py:464
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:1104 tcms/testruns/views.py:546
-#: tcms/testruns/views.py:624
+#: tcms/testcases/views.py:1072 tcms/testruns/views.py:532
+#: tcms/testruns/views.py:610
 msgid "At least one TestCase is required"
 msgstr ""
 
-#: tcms/testcases/views.py:1252
+#: tcms/testcases/views.py:1220
 msgid "TestCase cloning was successful"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:10
+msgid "Create new TestPlan"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:30
+msgid "add new Product"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:44
+#: tcms/testplans/templates/testplans/search.html:76
+#: tcms/testruns/templates/testruns/search.html:34
+#: tcms/testruns/templates/testruns/search.html:96
+msgid "Version"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:46
+msgid "add new Version"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:75
+msgid "Parent ID"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:80
+msgid "Reference link"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:88
+msgid "Test plan document:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:95
+#: tcms/testruns/templates/testruns/mutable.html:72
+msgid "Save"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:5
@@ -563,55 +601,48 @@ msgstr ""
 msgid "Created&nbsp;before"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:76
-#: tcms/testruns/templates/testruns/search.html:34
-#: tcms/testruns/templates/testruns/search.html:96
-msgid "Version"
-msgstr ""
-
 #: tcms/testplans/templates/testplans/search.html:104
-#: tcms/testplans/templates/testplans/search.html:141
-msgid "Owner"
-msgstr ""
-
-#: tcms/testplans/templates/testplans/search.html:109
 #: tcms/testruns/templates/testruns/mutable.html:57
 #: tcms/testruns/templates/testruns/search.html:61
 msgid "Default&nbsp;tester"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:122
+#: tcms/testplans/templates/testplans/search.html:117
 msgid "Active"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:138
+#: tcms/testplans/templates/testplans/search.html:133
 #: tcms/testruns/templates/testruns/search.html:92
 msgid "Test plan"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:139
+#: tcms/testplans/templates/testplans/search.html:134
 msgid "Created"
 msgstr ""
 
-#: tcms/testplans/views.py:339
+#: tcms/testplans/views.py:338
 msgid "Select at least one TestRun and one TestCase"
 msgstr ""
 
-#: tcms/testplans/views.py:417
+#: tcms/testplans/views.py:413
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:638
+#: tcms/testplans/views.py:634
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:646
+#: tcms/testplans/views.py:642
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
+msgstr ""
+
+#: tcms/testruns/forms.py:80
+msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
 msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:7
@@ -654,10 +685,6 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:66
 msgid "Notes"
-msgstr ""
-
-#: tcms/testruns/templates/testruns/mutable.html:72
-msgid "Save"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/mutable.html:81
@@ -706,15 +733,15 @@ msgstr ""
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:550
+#: tcms/testruns/views.py:536
 msgid "Clone of "
 msgstr ""
 
-#: tcms/testruns/views.py:633
+#: tcms/testruns/views.py:619
 msgid "TestCase ID is not a valid integer"
 msgstr ""
 
-#: tcms/testruns/views.py:760
+#: tcms/testruns/views.py:746
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr ""
