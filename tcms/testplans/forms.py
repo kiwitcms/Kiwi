@@ -9,7 +9,10 @@ from .models import TestPlan, PlanType
 
 
 class BasePlanForm(forms.Form):
-    name = forms.CharField(label="Plan name")
+    name = forms.CharField(
+        label="Plan name",
+        required=True
+    )
     type = forms.ModelChoiceField(
         label="Type",
         queryset=PlanType.objects.all(),

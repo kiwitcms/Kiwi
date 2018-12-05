@@ -19,7 +19,7 @@
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_name">{% trans "Name" %}</label>
                 <div class="col-md-11 col-lg-11 {% if form.name.errors %}has-error{% endif %}">
-                    <input type="text" id="id_name" name="name" value="{% firstof form.name.value "" %}" class="form-control">
+                    <input type="text" id="id_name" name="name" value="{% firstof form.name.value "" %}" class="form-control" required>
                 {{ form.name.errors }}
                 </div>
             </div>
