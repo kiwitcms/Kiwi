@@ -13,7 +13,7 @@
 {% block contents %}
 
     <div class="container-fluid container-cards-pf">
-        <form class="form-horizontal" action="{% url 'plans-new' %}" enctype="multipart/form-data" method="post">
+        <form class="form-horizontal" action="{% url 'plans-new' %}" method="post">
             {% csrf_token %}
 
             <div class="form-group">
