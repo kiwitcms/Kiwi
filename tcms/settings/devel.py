@@ -4,7 +4,7 @@
 """
 
 import os
-from .product import *  # noqa: F403
+from .common import *  # noqa: F403
 
 # Debug settings
 DEBUG = True
