@@ -12,6 +12,7 @@ from attachments import urls as attachments_urls
 from modernrpc.core import JSONRPC_PROTOCOL
 from modernrpc.core import XMLRPC_PROTOCOL
 from modernrpc.views import RPCEntryPoint
+from social_django import urls as social_auth_urls
 from tcms.core import ajax
 from tcms.core import views as core_views
 from tcms.core.contrib.comments import views as comments_views
@@ -46,6 +47,9 @@ urlpatterns = [
 
     # Account information zone, such as login method
     url(r'^accounts/', include(auth_urls)),
+
+    # Social Authentication routing
+    url(r'^auth/', include(social_auth_urls, namespace='social')),
 
     # Testplans zone
     url(r'^plan/', include(testplans_urls.plan_urls)),

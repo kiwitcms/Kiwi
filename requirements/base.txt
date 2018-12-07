@@ -14,3 +14,4 @@ Markdown==3.0.1
 python-bugzilla==2.2.0
 PyGithub==1.43.3
 python-gitlab==1.6.0
+social-auth-app-django==3.1.0

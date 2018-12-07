@@ -139,6 +139,8 @@ MIDDLEWARE = [
 # anonymous users here. Take care to keep the default ones!
 PUBLIC_VIEWS = [
     'modernrpc.views.RPCEntryPoint',
+    'social_django.views.auth',
+    'social_django.views.complete',
     'django.contrib.auth.views.LoginView',
     'django.contrib.auth.views.LogoutView',
     'django.contrib.auth.views.PasswordResetView',
@@ -237,6 +239,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
 
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+
                 'tcms.core.context_processors.request_contents_processor',
                 'tcms.core.context_processors.settings_processor',
             ],
@@ -268,6 +273,7 @@ INSTALLED_APPS = [
     'django_comments',
     'modernrpc',
     'simple_history',
+    'social_django',
 
     'tcms.core',
     'tcms.kiwi_auth',
@@ -281,6 +287,15 @@ INSTALLED_APPS = [
 ]
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
 
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
