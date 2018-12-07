@@ -277,7 +277,7 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 
 @require_http_methods(['GET', 'POST'])
 @permission_required('testplans.change_testplan')
-def edit(request, plan_id, template_name='plan/edit.html'):
+def edit(request, plan_id):
     """Edit test plan view"""
 
     try:
@@ -334,7 +334,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
         'test_plan': test_plan,
         'form': form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'testplans/mutable.html', context_data)
 
 
 @require_POST
