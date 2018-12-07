@@ -5,15 +5,18 @@
 {% block head %}
     {{ form.media }}
 {% endblock %}
-
-<head>
-    <title>{% block title %}{% trans "Create new TestPlan" %}{% endblock %}</title>
-</head>
+{% block title %}
+    {% if test_plan %}
+        {% trans "Edit TestPlan" %}
+    {% else %}
+        {% trans "Create new TestPlan" %}
+    {% endif %}
+{% endblock %}
 
 {% block contents %}
 
     <div class="container-fluid container-cards-pf">
-        <form class="form-horizontal" action="{% url 'plans-new' %}" method="post">
+        <form class="form-horizontal" action="{% if test_plan %}{% url 'plan-edit' test_plan.plan_id %}{% else %}{% url 'plans-new' %}{% endif %}" method="post">
             {% csrf_token %}
 
             <div class="form-group">
