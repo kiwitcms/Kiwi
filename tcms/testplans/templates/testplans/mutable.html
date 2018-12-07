@@ -30,7 +30,7 @@
                     <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
                 </div>
                 <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
-                    <select id="id_product" name="product" class="form-control">
+                    <select id="id_product" name="product" class="form-control selectpicker">
                         {% for product in form.product.field.queryset %}
                             <option value="{{ product.pk }}" {% if product.pk == form.product.value %}selected{% endif %}>
                                 {{ product.name }}
@@ -48,7 +48,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 col-lg-3 {% if form.product_version.errors %}has-error{% endif %}">
-                    <select id="id_version" name="product_version" class="form-control">
+                    <select id="id_version" name="product_version" class="form-control selectpicker">
                         {% for product_version in form.product_version.field.queryset %}
                             <option value="{{ product_version.pk }}" {% if product_version.pk == form.product_version.value %}selected{% endif %}>
                                 {{ product_version.value }}
@@ -62,7 +62,7 @@
                     <label for="id_type">{% trans "Type" %}</label>
                 </div>
                 <div class="col-md-3 col-lg-3 {% if form.type.errors %}has-error{% endif %}">
-                    <select class="form-control" id="id_type" name="type">
+                    <select class="form-control selectpicker" id="id_type" name="type">
                         {% for type in form.type.field.queryset %}
                             <option value="{{ type.pk }}"> {{ type }} </option>
                         {% endfor %}
@@ -97,6 +97,7 @@
         </form>
     </div>
 
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
 <script src="{% static "grappelli/jquery/jquery.min.js" %}" type="text/javascript"></script>
 <script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
 <script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}" type="text/javascript"></script>

@@ -1,8 +1,6 @@
 $(document).ready((function () {
     populateProductVersion();
 
-    $('#id_product').change(populateProductVersion);
-
     $('#add_id_product').click(function () {
         return showRelatedObjectPopup(this);
     });
@@ -10,6 +8,17 @@ $(document).ready((function () {
     $('#add_id_version').click(function () {
         return showRelatedObjectPopup(this);
     });
+
+    $('.selectpicker').selectpicker();
+
+    document.getElementById('id_product').onchange = function () {
+        $('#id_product').selectpicker('refresh');
+        populateProductVersion();
+    };
+
+    document.getElementById('id_version').onchange = function () {
+        $('#id_version').selectpicker('refresh');
+    }
 }));
 
 function populateProductVersion() {
