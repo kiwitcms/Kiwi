@@ -68,6 +68,12 @@ DEFAULT_GROUPS = ['Tester']
 AUTO_APPROVE_NEW_USERS = True
 
 
+# How often will session cookies expire? We set this to 24hrs by default.
+# You may override based on your security policies
+# https://docs.djangoproject.com/en/2.1/ref/settings/#session-cookie-age
+SESSION_COOKIE_AGE = 86400
+
+
 # Maximum upload file size, default set to 5MB.
 FILE_UPLOAD_MAX_SIZE = 5242880
 
@@ -282,6 +288,8 @@ INSTALLED_APPS = [
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
 COMMENTS_APP = 'tcms.core.contrib.comments'
@@ -304,8 +312,6 @@ MODERNRPC_METHODS_MODULES = [
     'tcms.xmlrpc.api.user',
     'tcms.xmlrpc.api.version',
 ]
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.
