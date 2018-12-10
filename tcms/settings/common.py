@@ -288,6 +288,8 @@ INSTALLED_APPS = [
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
+
+# Social authentication related settings
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',
     'social_core.backends.google.GoogleOpenId',
@@ -296,6 +298,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIAL_AUTH_USER_MODEL = 'auth.User'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''  # Google Oauth2 client ID
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''  # Google Oauth2 client secret
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {}  # Extra authentication settings eg: domain specific login
 
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
