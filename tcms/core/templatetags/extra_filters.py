@@ -18,6 +18,9 @@ def markdown2html(md_str):
     """
         Returns markdown string as HTML.
     """
+    if md_str is None:
+        md_str = ''
+
     rendered_md = markdown.markdown(md_str,
                                     extensions=['markdown.extensions.fenced_code',
                                                 'markdown.extensions.nl2br'])
