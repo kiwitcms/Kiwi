@@ -31,15 +31,22 @@
             <span class="help-block">Forgot <a href="{% url "tcms-password_reset" %}" tabindex="6">password</a>?</span>
           </div>
           <div class="col-xs-4 col-sm-4 col-md-4 submit">
-            <button type="submit" class="btn btn-primary btn-lg" tabindex="4">{% trans "Log in" %}</button>
+            <button type="submit" class="btn btn-primary btn-lg" tabindex="5">{% trans "Log in" %}</button>
           </div>
         </div>
       </form>
+            <hr id="hr-style">
+            <a href="{% url 'social:begin' 'google-oauth2' %}"
+               class="btn btn-block btn-social btn-lg btn-google google-btn-custom">
+                <span class="fa fa-google" id="google-fa-span"></span>
+                    Login with Google
+            </a>
+
 
       {% block custom_login %}
       {% endblock %}
     </div><!--/.col-*-->
-    <div class="col-sm-5 col-md-6 col-lg-7 details">
+    <div class="col-sm-5 col-md-6 col-lg-7 details login-register-section" style="padding-top: 71px;padding-bottom: 70px;">
       <p>
         <strong>
             {% trans "Welcome to Kiwi TCMS" %} |
@@ -54,7 +61,6 @@
     </div><!--/.col-*-->
   </div><!--/.row-->
   <div>
-    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
   </div>
 </div><!--/.container-->
 {% endblock %}

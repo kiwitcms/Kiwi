@@ -4,3 +4,7 @@ header#grp-header { position: static; }
 
 /* so that the filter dropdown shows to the right */
 aside div#search { width: 200px; }
+#hr-style{width: 400px; float: right;}
+.google-btn-custom{max-width:400px; float: right; margin: auto;}
+#google-fa-span{line-height: 29px;}
+.login-register-section{padding-top: 71px;padding-bottom: 70px;}
