@@ -4,7 +4,7 @@ header#grp-header { position: static; }
 
 /* so that the filter dropdown shows to the right */
 aside div#search { width: 200px; }
-#hr-style{width: 400px; float: right;}
-.google-btn-custom{max-width:400px; float: right; margin: auto;}
-#google-fa-span{line-height: 29px;}
-.login-register-section{padding-top: 71px;padding-bottom: 70px;}
+#google-fa-span { line-height: 29px; }
+.login-register-section { padding-top: 71px; padding-bottom: 70px; }
+.login-horizontal-line { border-top: 1px solid rgba(255,255,255,.3); float:right; margin-top:10px; }
+.google-login { margin-top: 15px;  float: right; padding: 0 0 0 5px;}

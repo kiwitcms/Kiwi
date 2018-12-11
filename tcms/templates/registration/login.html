@@ -35,13 +35,14 @@
           </div>
         </div>
       </form>
-            <hr id="hr-style">
-            <a href="{% url 'social:begin' 'google-oauth2' %}"
+        <div class="login-horizontal-line col-sm-10 col-md-10"></div>
+        <div class="google-login col-sm-10 col-md-10">
+          <a href="{% url 'social:begin' 'google-oauth2' %}"
                class="btn btn-block btn-social btn-lg btn-google google-btn-custom">
                 <span class="fa fa-google" id="google-fa-span"></span>
                     Login with Google
-            </a>
-
+          </a>
+        </div>
 
       {% block custom_login %}
       {% endblock %}
