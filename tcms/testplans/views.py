@@ -31,7 +31,7 @@ from tcms.testplans.forms import EditPlanForm
 from tcms.testplans.forms import NewPlanForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.testplans.models import TestPlan, PlanType
-from tcms.testruns.models import TestRun, TestCaseRun
+from tcms.testruns.models import TestRun
 
 
 def update_plan_email_settings(test_plan, form):
@@ -273,71 +273,6 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
         'test_plan': test_plan,
     }
     return render(request, template_name, context_data)
-
-
-@require_http_methods(['GET', 'POST'])
-@permission_required('testruns.change_testrun')
-def choose_run(request, plan_id):
-    """Choose one run to add cases"""
-
-    if request.method == 'GET':
-        return _write_cases_to_test_plan(request, plan_id)
-    return _add_cases_to_runs(request, plan_id)
-
-
-def _write_cases_to_test_plan(request, plan_id):
-    try:
-        test_plan = TestPlan.objects.get(pk=int(plan_id))
-    except ObjectDoesNotExist:
-        raise Http404
-
-    test_runs = TestRun.objects.filter(plan=plan_id).values('pk',
-                                                            'summary',
-                                                            'build__name',
-                                                            'manager__username')
-
-    # Ready to write cases to test plan
-    test_cases = get_selected_testcases(request).values('pk', 'summary',
-                                                        'author__username',
-                                                        'create_date',
-                                                        'category__name',
-                                                        'priority__value', )
-
-    context_data = {
-        'plan_id': plan_id,
-        'plan': test_plan,
-        'test_runs': test_runs.iterator(),
-        'test_cases': test_cases.iterator(),
-    }
-    return render(request, 'plan/choose_testrun.html', context_data)
-
-
-def _add_cases_to_runs(request, plan_id):
-    chosen_test_run_ids = request.POST.getlist('testrun_ids')
-    to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
-
-    # Adding cases to runs by recursion
-    cases_selected = 0
-    for test_run_id in chosen_test_run_ids:
-        test_run = get_object_or_404(TestRun, run_id=test_run_id)
-        cases = TestCaseRun.objects.filter(run=test_run_id)
-        existing_cases = cases.values_list('case', flat=True)
-
-        for test_case in to_be_added_cases:
-            # counter used as a flag that runs or cases were selected
-            # in the form, regardless of whether or not they were actually added
-            # used to produce an error message if user clicked the Update button
-            # without selecting anything on the screen
-            cases_selected += 1
-            if test_case.case_id not in existing_cases:
-                test_run.add_case_run(case=test_case)
-
-    if not cases_selected:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Select at least one TestRun and one TestCase'))
-
-    return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
 
 @require_http_methods(['GET', 'POST'])
