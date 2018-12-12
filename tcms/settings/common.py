@@ -145,6 +145,8 @@ MIDDLEWARE = [
 # anonymous users here. Take care to keep the default ones!
 PUBLIC_VIEWS = [
     'modernrpc.views.RPCEntryPoint',
+    'social_django.views.auth',
+    'social_django.views.complete',
     'django.contrib.auth.views.LoginView',
     'django.contrib.auth.views.LogoutView',
     'django.contrib.auth.views.PasswordResetView',
@@ -243,6 +245,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
 
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+
                 'tcms.core.context_processors.request_contents_processor',
                 'tcms.core.context_processors.settings_processor',
             ],
@@ -274,6 +279,7 @@ INSTALLED_APPS = [
     'django_comments',
     'modernrpc',
     'simple_history',
+    'social_django',
 
     'tcms.core',
     'tcms.kiwi_auth',
@@ -289,6 +295,24 @@ INSTALLED_APPS = [
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+
+# Social authentication related settings
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''  # Google Oauth2 client ID
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''  # Google Oauth2 client secret
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {}  # Extra authentication settings eg: domain specific login
+
 
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
