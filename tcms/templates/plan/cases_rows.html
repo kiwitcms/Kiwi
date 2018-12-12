@@ -23,8 +23,8 @@ test_cases should be a queryset of a list of TestCases.
 	<td>
 		<a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.pk }}</a>
 	</td>
-	<td class="subject expandable">
-		<a class="blind_down_link">{{ test_case.summary }}</a>
+	<td>
+		<a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.summary }}</a>
 	</td>
 	<td class="col_author_content"><a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author }}</a></td>
 	<td class="col_author_content">
