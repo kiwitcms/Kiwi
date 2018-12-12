@@ -56,6 +56,8 @@ $(document).ready(function() {
         ],
         dom: "t",
         language: {
+            loadingRecords: '<div class="spinner spinner-lg"></div>',
+            processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: "No records found"
         },
         order: [[ 0, 'asc' ]],
