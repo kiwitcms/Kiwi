@@ -1159,7 +1159,7 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
         printableCases(jQ(this).data('param'), navForm, casesTable);
       });
       jQ('#js-clone-case').bind('click', function() {
-        requestCloneFilteredCases({
+        requestOperationUponFilteredCases({
           'url': jQ(this).data('param'),
           'form': navForm,
           'table': casesTable,
@@ -1170,7 +1170,7 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
         unlinkCasesFromPlan(container, navForm, casesTable);
       });
       jQ('#js-new-run').bind('click', function() {
-        writeNewRunFromFilteredCases({
+        requestOperationUponFilteredCases({
           'url': jQ(this).data('param'),
           'form': navForm,
           'table': casesTable,
@@ -1311,18 +1311,4 @@ function requestOperationUponFilteredCases(options) {
   }
   params.case = selection.selectedCasesIds;
   postToURL(url, params, requestMethod);
-}
-
-/*
- * Write new run from partial or all filtered cases.
- */
-function writeNewRunFromFilteredCases(options) {
-  return requestOperationUponFilteredCases(options);
-}
-
-/*
- * Request clone current selected TestCases
- */
-function requestCloneFilteredCases(options) {
-  return requestOperationUponFilteredCases(options);
 }
