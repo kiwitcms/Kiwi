@@ -1,7 +1,6 @@
 Nitrate.TestRuns = {};
 Nitrate.TestRuns.Details = {};
 Nitrate.TestRuns.Execute = {}
-Nitrate.TestRuns.ChooseRuns = {};
 Nitrate.TestRuns.AssignCase = {}
 
 
@@ -209,32 +208,6 @@ Nitrate.TestRuns.Details.on_load = function() {
   });
   jQ('.js-status-subtotal').bind('click', function() {
     showCaseRunsWithSelectedStatus(jQ('#id_filter')[0], jQ(this).data('param'));
-  });
-};
-
-Nitrate.TestRuns.ChooseRuns.on_load = function() {
-  if (jQ('#id_check_all_button').length) {
-    jQ('#id_check_all_button').bind('click', function(m) {
-      toggleAllCheckBoxes(this, 'id_table_runs', 'run');
-    });
-  }
-  jQ('.js-update-button').bind('click', function() {
-    insertCasesIntoTestRun();
-  });
-  jQ('.js-help-info').bind('click', function() {
-    jQ('#help_assign').show();
-  });
-  jQ('.js-close-help').bind('click', function() {
-    jQ('#help_assign').hide();
-  });
-  jQ('.js-toggle-button').bind('click', function() {
-    var c = jQ(this).parents('.js-one-case');
-    var c_container = c.next();
-    var case_id = c.find('input[name="case"]').val();
-    toggleTestCasePane({ 'case_id': case_id, 'casePaneContainer': c_container }, function() {
-      c_container.children().attr('colspan', 9);
-    });
-    toggleExpandArrow({ 'caseRowContainer': c, 'expandPaneContainer': c_container });
   });
 };
 
@@ -788,39 +761,6 @@ function serialzeCaseForm(form, table, serialized) {
 function showCaseRunsWithSelectedStatus(form, status_id) {
   form.case_run_status__pk.value = status_id;
   fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
-}
-
-//Added for choose runs and add cases to those runs
-function serializeRunsFromInputList(table) {
-  var elements = jQ('#' + table).parent().find('input[name="run"]:checked');
-  var case_ids = [];
-  elements.each(function(i) {
-    if (typeof this.value === 'string') {
-      case_ids.push(this.value);
-    }
-  });
-  return case_ids;
-}
-
-function insertCasesIntoTestRun() {
-  var answer = window.confirm("Are you sure to add cases to the run?");
-  if (!answer) {
-    return false;
-  }
-
-  var trs = serializeRunsFromInputList("id_table_runs");
-  var elements = jQ('[name="case"]');
-  var case_ids = [];
-  elements.each(function(i) {
-    case_ids.push(this.value);
-  });
-
-  var data_to_post = {};
-  data_to_post['testrun_ids'] = trs;
-  data_to_post['case_ids'] = case_ids;
-
-  var url = "../chooseruns/";
-  postToURL(url, data_to_post, 'POST');
 }
 
 function updateBugsActionAdd(case_runs) {

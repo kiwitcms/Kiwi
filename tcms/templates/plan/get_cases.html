@@ -39,7 +39,6 @@
                                     <span class='sprites toolbar_run{% if not perms.testruns.add_testrun %}_disabled{% endif %} icon_plan'>Run</span>
                                     <ul>
                                         <li><input type="button" class="new_run icon_plan" value="Create new TestRun" id="js-new-run" data-param="{% url "testruns-new" %}" /></li>
-                                        <li><input type="button" class="search icon_plan" value="Add cases to run" id="js-add-case-to-run" data-param="{% url "plan-choose_run" test_plan.plan_id %}" /></li>
                                     </ul>
                                 </li>
                         {% endif %}

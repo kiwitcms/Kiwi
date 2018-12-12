@@ -9,24 +9,8 @@ from django.contrib.auth.models import Permission
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import UserFactory
 from tcms.tests import remove_perm_from_user
-from tcms.tests import BaseCaseRun, BasePlanCase
+from tcms.tests import BasePlanCase
 from tcms.utils.permissions import initiate_user_with_default_setups
-
-
-class TestAddCasesToRuns(BaseCaseRun):
-    """Test adding cases to runs from the TestPlan page"""
-
-    def test_view_loads_fine(self):
-        initiate_user_with_default_setups(self.tester)
-
-        url = reverse('plan-choose_run', args=[self.plan.pk])
-        response = self.client.get(url, follow=True)
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-
-        # assert basic data is shown
-        self.assertContains(response, self.plan.name)
-        for test_run in self.plan.run.all():
-            self.assertContains(response, test_run.summary)
 
 
 class TestViewPlanTags(BasePlanCase):

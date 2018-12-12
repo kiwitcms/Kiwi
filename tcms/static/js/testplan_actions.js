@@ -1177,14 +1177,6 @@ function constructPlanDetailsCasesZone(container, plan_id, parameters) {
           'requestMethod': 'post'
         });
       });
-      jQ('#js-add-case-to-run').bind('click', function() {
-        addFilteredCasesToRun({
-          'url': jQ(this).data('param'),
-          'form': navForm,
-          'table': casesTable,
-          'requestMethod': 'get'
-        });
-      });
 
       jQ('.js-status-item').bind('click', function() {
         var new_value = jQ(this).data('param');
@@ -1325,13 +1317,6 @@ function requestOperationUponFilteredCases(options) {
  * Write new run from partial or all filtered cases.
  */
 function writeNewRunFromFilteredCases(options) {
-  return requestOperationUponFilteredCases(options);
-}
-
-/*
- * Add partial or all filtered cases to an existing TestRun.
- */
-function addFilteredCasesToRun(options) {
   return requestOperationUponFilteredCases(options);
 }
 
