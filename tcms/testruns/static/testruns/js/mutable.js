@@ -4,4 +4,8 @@ $(document).ready(function() {
     });
 
     $('.selectpicker').selectpicker();
+
+    document.getElementById('id_build').onchange = function() {
+        $('#id_build').selectpicker('refresh');
+    };
 });
