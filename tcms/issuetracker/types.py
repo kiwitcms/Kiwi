@@ -99,7 +99,6 @@ class IssueTrackerType:
 
             :return: - None if not suported or string representing the URL
         """
-        pass
 
 
 class Bugzilla(IssueTrackerType):
@@ -153,22 +152,14 @@ class Bugzilla(IssueTrackerType):
         return self.tracker.base_url + 'buglist.cgi?bugidtype=include&bug_id=%s' % ','.join(ids)
 
     def report_issue_from_testcase(self, caserun):
-        # because of circular dependencies
-        from tcms.testcases.models import TestCaseText
-
         args = {}
         args['cf_build_id'] = caserun.run.build.name
 
+        # this is a TestCaseText model or NoneText
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        if isinstance(txt, TestCaseText):
-            setup = txt.setup
-            action = txt.action
-            effect = txt.effect
-        else:
-            setup = 'None'
-            action = 'None'
-            effect = 'None'
+        setup = txt.setup
+        action = txt.action
+        effect = txt.effect
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Version-Release number of selected " \
@@ -240,9 +231,6 @@ class JIRA(IssueTrackerType):
             For the HTML API description see:
             https://confluence.atlassian.com/display/JIRA050/Creating+Issues+via+direct+HTML+links
         """
-        # because of circular dependencies
-        from tcms.testcases.models import TestCaseText
-
         # note: your jira instance needs to have the same projects
         # defined otherwise this will fail!
         project = self.rpc.project(caserun.run.plan.product.name)
@@ -268,17 +256,11 @@ class JIRA(IssueTrackerType):
             args['reporter'] = self.rpc.user(tested_by.username).key
         except jira.JIRAError:
             pass
-
+        # this is a TestCaseText model or NoneText
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        if isinstance(txt, TestCaseText):
-            setup = txt.setup
-            action = txt.action
-            effect = txt.effect
-        else:
-            setup = 'None'
-            action = 'None'
-            effect = 'None'
+        setup = txt.setup
+        action = txt.action
+        effect = txt.effect
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
@@ -335,23 +317,15 @@ class GitHub(IssueTrackerType):
         """
             GitHub only supports title and body parameters
         """
-        # because of circular dependencies
-        from tcms.testcases.models import TestCaseText
-
         args = {
             'title': 'Failed test: %s' % caserun.case.summary,
         }
 
+        # this is a TestCaseText model or NoneText
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        if isinstance(txt, TestCaseText):
-            setup = txt.setup
-            action = txt.action
-            effect = txt.effect
-        else:
-            setup = 'None'
-            action = 'None'
-            effect = 'None'
+        setup = txt.setup
+        action = txt.action
+        effect = txt.effect
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
@@ -393,23 +367,15 @@ class Gitlab(IssueTrackerType):
         return not (self.tracker.base_url and self.tracker.api_password)
 
     def report_issue_from_testcase(self, caserun):
-        # because of circular dependencies
-        from tcms.testcases.models import TestCaseText
-
         args = {
             'issue[title]': 'Failed test: %s' % caserun.case.summary,
         }
 
+        # this is a TestCaseText model or NoneText
         txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-
-        if isinstance(txt, TestCaseText):
-            setup = txt.setup
-            action = txt.action
-            effect = txt.effect
-        else:
-            setup = 'None'
-            action = 'None'
-            effect = 'None'
+        setup = txt.setup
+        action = txt.action
+        effect = txt.effect
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "**Product**:\n%s\n\n" % caserun.run.plan.product.name

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=attribute-defined-outside-init
-
-from xmlrpc.client import ProtocolError
-from django.contrib.auth.models import Permission
+# pylint: disable=attribute-defined-outside-init, objects-update-used
 from datetime import datetime
+from xmlrpc.client import ProtocolError
+
+from django.contrib.auth.models import Permission
 
 from tcms_api.xmlrpc import TCMSXmlrpc
 

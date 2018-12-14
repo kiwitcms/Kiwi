@@ -214,8 +214,7 @@ def clean_bug_form(request):
         return (None, 'Actions only allow "add" and "remove".')
 
     data['action'] = request.GET.get('a')
-    data['bz_external_track'] = True if request.GET.get('bz_external_track',
-                                                        False) else False
+    data['bz_external_track'] = bool(request.GET.get('bz_external_track', False))
 
     return (data, '')
 
