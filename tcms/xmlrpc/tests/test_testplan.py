@@ -178,13 +178,13 @@ class TestRemoveCase(XmlrpcAPIBaseTest):
 
     def test_remove_case_with_single_plan(self):
         self.rpc_client.exec.TestPlan.remove_case(self.plan_1.pk, self.testcase_1.pk)
-        self.assertEqual(0, self.testcase_1.plan.count())
+        self.assertEqual(0, self.testcase_1.plan.count())  # pylint: disable=no-member
 
     def test_remove_case_with_two_plans(self):
-        self.assertEqual(2, self.testcase_2.plan.count())
+        self.assertEqual(2, self.testcase_2.plan.count())  # pylint: disable=no-member
 
         self.rpc_client.exec.TestPlan.remove_case(self.plan_1.pk, self.testcase_2.pk)
-        self.assertEqual(1, self.testcase_2.plan.count())
+        self.assertEqual(1, self.testcase_2.plan.count())  # pylint: disable=no-member
 
 
 class TestAddCase(XmlrpcAPIBaseTest):

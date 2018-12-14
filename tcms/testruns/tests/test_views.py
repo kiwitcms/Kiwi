@@ -306,7 +306,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
         self.assert404(response)
 
     def assert_cc(self, response, expected_cc):
-        self.assertEqual(len(expected_cc), self.test_run.cc.count())
+        self.assertEqual(len(expected_cc), self.test_run.cc.count())  # pylint: disable=no-member
 
         for cc in expected_cc:
             href = reverse('tcms-profile', args=[cc.username])
