@@ -30,7 +30,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
 
         self.product = ProductFactory(name='Nitrate')
         self.version = VersionFactory(value='0.1', product=self.product)
-        self.build = self.product.build.all()[0]
+        self.build = self.product.build.first()
         self.plan = TestPlanFactory(author=self.api_user, product=self.product)
         self.test_run = TestRunFactory(product_version=self.version, build=self.build,
                                        default_tester=None, plan=self.plan)
