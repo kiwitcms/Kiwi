@@ -39,7 +39,7 @@ class TestXMLSerializer(test.TestCase):
 
         component_pks = []
 
-        for component in self.testcase.component.all():
+        for component in self.testcase.component.all():  # pylint: disable=no-member
             component_pks.append(component.pk)
 
         component_pks.sort()
@@ -317,7 +317,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
                              plan['product_version'])
 
     def test_serialize_queryset_with_empty_querset(self):
-        cases = self.cases.filter(pk__lt=0)
+        cases = self.cases.filter(pk__lt=0)  # pylint: disable=no-member
         serializer = MockTestCaseSerializer(TestCase, cases)
         result = serializer.serialize_queryset()
         self.assertTrue(len(result) == 0)
