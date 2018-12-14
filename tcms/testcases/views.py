@@ -540,33 +540,24 @@ class SimpleTestCaseView(TemplateView):
     """Simple read-only TestCase View used in TestPlan page"""
 
     template_name = 'case/get_details.html'
-    case_id = None
     review_mode = None
 
-    # NOTES: what permission is proper for this request?
-    def get(self, request, case_id):
-        self.case_id = case_id
+    def get(self, request, *args, **kwargs):
         self.review_mode = request.GET.get('review_mode')
-        return super().get(request, self.case_id)
-
-    def get_case(self):
-        cases = TestCase.objects.filter(pk=self.case_id).only('notes')
-        cases = list(cases.iterator())
-        return cases[0] if cases else None
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        data = super(SimpleTestCaseView, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
 
-        case = self.get_case()
-        data['test_case'] = case
-        if case is not None:
-            data.update({
-                'review_mode': self.review_mode,
-                'test_case_text': case.latest_text(),
-                'components': case.component.only('name'),
-                'tags': case.tag.only('name'),
-                'case_comments': get_comments(case),
-            })
+        case = TestCase.objects.get(pk=kwargs['case_id'])
+        data.update({
+            'test_case': case,
+            'review_mode': self.review_mode,
+            'test_case_text': case.latest_text(),
+            'components': case.component.only('name'),
+            'tags': case.tag.only('name'),
+            'case_comments': get_comments(case),
+        })
 
         return data
 
@@ -585,24 +576,21 @@ def get_comments_count(caserun_ids):
 
 
 class TestCaseCaseRunListPaneView(TemplateView):
-    """Display case runs list when expand a plan from case page"""
+    """Display case runs list when expand a plan item from case page, Case Runs tab"""
 
     template_name = 'case/get_case_runs_by_plan.html'
-    case_id = None
     plan_id = None
 
-    # FIXME: what permission here?
-    def get(self, request, case_id):
-        self.case_id = case_id
-
+    def get(self, request, *args, **kwargs):
         plan_id = self.request.GET.get('plan_id', None)
         self.plan_id = int(plan_id) if plan_id is not None else None
+        return super().get(request, *args, **kwargs)
 
-        return super().get(request, case_id)
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
 
-    def get_case_runs(self):
-        return TestCaseRun.objects.filter(
-            case=self.case_id,
+        case_runs = TestCaseRun.objects.filter(
+            case=kwargs['case_id'],
             run__plan=self.plan_id
         ).values(
             'pk', 'case_id', 'run_id', 'case_text_version',
@@ -612,12 +600,6 @@ class TestCaseCaseRunListPaneView(TemplateView):
             'case__category__name', 'case__priority__value',
             'case_run_status__name',
         ).order_by('pk')
-
-    def get_context_data(self, **kwargs):
-        this_cls = TestCaseCaseRunListPaneView
-        data = super(this_cls, self).get_context_data(**kwargs)
-
-        case_runs = self.get_case_runs()
 
         # Get the number of each caserun's comments, and put the count into
         # comments query result.
@@ -645,26 +627,18 @@ class TestCaseSimpleCaseRunView(TemplateView):
     template_name = 'case/get_details_case_case_run.html'
     caserun_id = None
 
-    # what permission here?
-    def get(self, request, case_id):
+    def get(self, request, *args, **kwargs):
         try:
             self.caserun_id = int(request.GET.get('case_run_id', None))
         except (TypeError, ValueError):
             raise Http404
 
-        return super().get(request, case_id)
-
-    def get_caserun(self):
-        try:
-            return TestCaseRun.objects.filter(
-                pk=self.caserun_id).only('notes')[0]
-        except IndexError:
-            raise Http404
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
-        caserun = self.get_caserun()
+        caserun = TestCaseRun.objects.get(pk=self.caserun_id)
         comments = get_comments(caserun)
 
         data.update({
@@ -678,34 +652,23 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
     """Display case run detail in run page"""
 
     template_name = 'case/get_details_case_run.html'
-    case_id = None
     caserun_id = None
     case_text_version = None
 
-    def get(self, request, case_id):
-        self.case_id = case_id
-
+    def get(self, request, *args, **kwargs):
         try:
             self.caserun_id = int(request.GET.get('case_run_id'))
             self.case_text_version = int(request.GET.get('case_text_version'))
         except (TypeError, ValueError):
             raise Http404
 
-        return super().get(request, self.case_id)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
 
-        try:
-            qs = TestCase.objects.filter(pk=self.case_id)
-            qs = qs.prefetch_related('component',
-                                     'tag').only('pk')
-            case = qs[0]
-
-            qs = TestCaseRun.objects.filter(pk=self.caserun_id).order_by('pk')
-            case_run = qs[0]
-        except IndexError:
-            raise Http404
+        case = TestCase.objects.get(pk=kwargs['case_id'])
+        case_run = TestCaseRun.objects.get(pk=self.caserun_id)
 
         # Data of TestCase
         test_case_text = case.get_text_with_version(self.case_text_version)

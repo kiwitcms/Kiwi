@@ -321,11 +321,6 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
     """Test Run report"""
 
     template_name = 'run/report.html'
-    run_id = None
-
-    def get(self, request, run_id):
-        self.run_id = run_id
-        return super(TestRunReportView, self).get(request, run_id)
 
     def get_context_data(self, **kwargs):
         """Generate report for specific TestRun
@@ -337,7 +332,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         4. Statistics
         5. bugs
         """
-        run = TestRun.objects.select_related('manager', 'plan').get(pk=self.run_id)
+        run = TestRun.objects.select_related('manager', 'plan').get(pk=kwargs['run_id'])
 
         case_runs = TestCaseRun.objects.filter(
             run=run
@@ -356,7 +351,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
 
         test_case_run_bugs = []
         bug_system_types = {}
-        for _bug in get_run_bug_ids(self.run_id):
+        for _bug in get_run_bug_ids(run.pk):
             # format the bug URLs based on DB settings
             test_case_run_bugs.append((
                 _bug['bug_id'],
