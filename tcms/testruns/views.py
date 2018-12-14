@@ -430,8 +430,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
                 return JsonResponse({'rc': 1,
                                      'response': str(error)})
 
-            bz_external_track = True if request.GET.get('bz_external_track',
-                                                        False) else False
+            bz_external_track = bool(request.GET.get('bz_external_track', False))
 
             try:
                 test_case_run.add_bug(bug_id=bug_id,

@@ -92,8 +92,8 @@ def group_case_bugs(bugs):
     """Group bugs using bug_id."""
     grouped_bugs = []
 
-    for pk, _bugs in itertools.groupby(bugs, lambda b: b.bug_id):
-        grouped_bugs.append((pk, list(_bugs)))
+    for _pk, _bugs in itertools.groupby(bugs, lambda b: b.bug_id):
+        grouped_bugs.append((_pk, list(_bugs)))
 
     return grouped_bugs
 
@@ -116,6 +116,51 @@ def create_testcase(request, form, test_plan):
     for component in form.cleaned_data['component']:
         test_case.add_component(component=component)
     return test_case
+
+
+class ReturnActions:
+    all_actions = ('_addanother', '_continue', 'returntocase', '_returntoplan')
+
+    def __init__(self, case, plan, default_form_parameters):
+        self.case = case
+        self.plan = plan
+        self.default_form_parameters = default_form_parameters
+
+    def _continue(self):
+        if self.plan:
+            return HttpResponseRedirect(
+                '%s?from_plan=%s' % (reverse('testcases-edit',
+                                             args=[self.case.case_id]),
+                                     self.plan.plan_id))
+
+        return HttpResponseRedirect(
+            reverse('testcases-edit', args=[self.case.case_id]))
+
+    def _addanother(self):
+        form = NewCaseForm(initial=self.default_form_parameters)
+
+        if self.plan:
+            form.populate(product_id=self.plan.product_id)
+
+        return form
+
+    def returntocase(self):
+        if self.plan:
+            return HttpResponseRedirect(
+                '%s?from_plan=%s' % (reverse('testcases-get',
+                                             args=[self.case.pk]),
+                                     self.plan.plan_id))
+
+        return HttpResponseRedirect(
+            reverse('testcases-get', args=[self.case.pk]))
+
+    def _returntoplan(self):
+        if not self.plan:
+            raise Http404
+
+        return HttpResponseRedirect(
+            '%s#reviewcases' % reverse('test_plan_url_short',
+                                       args=[self.plan.pk]))
 
 
 @permission_required('testcases.add_testcase')
@@ -141,52 +186,9 @@ def new(request, template_name='case/edit.html'):
 
         if form.is_valid():
             test_case = create_testcase(request, form, test_plan)
-
-            class ReturnActions:
-                def __init__(self, case, plan):
-                    self.__all__ = ('_addanother', '_continue', 'returntocase', '_returntoplan')
-                    self.case = case
-                    self.plan = plan
-
-                def _continue(self):
-                    if self.plan:
-                        return HttpResponseRedirect(
-                            '%s?from_plan=%s' % (reverse('testcases-edit',
-                                                         args=[self.case.case_id]),
-                                                 self.plan.plan_id))
-
-                    return HttpResponseRedirect(
-                        reverse('testcases-edit', args=[test_case.case_id]))
-
-                def _addanother(self):
-                    form = NewCaseForm(initial=default_form_parameters)
-
-                    if self.plan:
-                        form.populate(product_id=self.plan.product_id)
-
-                    return form
-
-                def returntocase(self):
-                    if self.plan:
-                        return HttpResponseRedirect(
-                            '%s?from_plan=%s' % (reverse('testcases-get',
-                                                         args=[self.case.pk]),
-                                                 self.plan.plan_id))
-
-                    return HttpResponseRedirect(
-                        reverse('testcases-get', args=[self.case.pk]))
-
-                def _returntoplan(self):
-                    if not self.plan:
-                        raise Http404
-
-                    return HttpResponseRedirect(
-                        '%s#reviewcases' % reverse('test_plan_url_short',
-                                                   args=[self.plan.pk]))
-
             # Generate the instance of actions
-            ras = ReturnActions(case=test_case, plan=test_plan)
-            for ra_str in ras.__all__:
+            ras = ReturnActions(test_case, test_plan, default_form_parameters)
+            for ra_str in ras.all_actions:
                 if request.POST.get(ra_str):
                     func = getattr(ras, ra_str)
                     break
@@ -401,8 +403,11 @@ def get_selected_testcases(request):
         plan = plan_from_request_or_none(request)
         cases, _search_form = query_testcases_from_request(request, plan)
         return cases
-    pks = [int(pk) for pk in method.getlist('case')]
-    return TestCase.objects.filter(pk__in=pks)
+
+    primary_keys = []
+    for _pk in method.getlist('case'):
+        primary_keys.append(int(_pk))
+    return TestCase.objects.filter(pk__in=primary_keys)
 
 
 def load_more_cases(request, template_name='plan/cases_rows.html'):
@@ -446,7 +451,7 @@ def get_tags_from_cases(case_ids, plan=None):
 
 
 @require_POST
-def all(request):
+def list_all(request):
     """
     Generate the TestCase list for the UI tabs in TestPlan page view.
 
@@ -990,7 +995,10 @@ def edit(request, case_id, template_name='case/edit.html'):
         for component in test_case.component.all():
             components.append(component.pk)
 
-        default_tester = test_case.default_tester_id and test_case.default_tester.email or None
+        default_tester = None
+        if test_case.default_tester_id:
+            default_tester = test_case.default_tester.email
+
         form = EditCaseForm(initial={
             'summary': test_case.summary,
             'default_tester': default_tester,
@@ -1136,15 +1144,16 @@ def clone(request, template_name='case/clone.html'):
                         tc_dest.add_tag(tag=tag)
                 else:
                     tc_dest = tc_src
-                    tc_dest.author = \
-                        clone_form.cleaned_data[
-                            'maintain_case_orignal_author'] \
-                        and tc_src.author or request.user
-                    tc_dest.default_tester = \
-                        clone_form.cleaned_data[
-                            'maintain_case_orignal_default_tester'] \
-                        and tc_src.author or request.user
+                    tc_dest.author = request.user
+                    if clone_form.cleaned_data['maintain_case_orignal_author']:
+                        tc_dest.author = tc_src.author
+
+                    tc_dest.default_tester = request.user
+                    if clone_form.cleaned_data['maintain_case_orignal_default_tester']:
+                        tc_dest.default_tester = tc_src.default_tester
+
                     tc_dest.save()
+
                     for test_plan in clone_form.cleaned_data['plan']:
                         # create case link and keep origin plan's sortkey
                         if test_plan_src:
@@ -1270,7 +1279,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
     test_case = get_object_or_404(TestCase, case_id=case_id)
 
     class CaseBugActions:
-        __all__ = ['get_form', 'render', 'add', 'remove']
+        all_actions = ['get_form', 'render', 'add', 'remove']
 
         def __init__(self, request, case, template_name):
             self.request = request
@@ -1337,7 +1346,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
         template_name=template_name
     )
 
-    if not request.GET.get('handle') in case_bug_actions.__all__:
+    if not request.GET.get('handle') in case_bug_actions.all_actions:
         return case_bug_actions.render(response='Unrecognizable actions')
 
     func = getattr(case_bug_actions, request.GET['handle'])
@@ -1345,7 +1354,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
 
 
 @require_GET
-def plan(request, case_id):
+def case_plan(request, case_id):
     """Add and remove plan in plan tab"""
     test_case = get_object_or_404(TestCase, case_id=case_id)
     if request.GET.get('a'):
