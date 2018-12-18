@@ -9,11 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import ObjectDoesNotExist
 from django.db.models.fields.related import ForeignKey
 
-# TODO: to encode all strings in UTF-8 instead of mixing unicode and byte
-# string.
-# TODO: to claim the sequence of the primary keys of each ManyToManyField is
-# arbitrary.
-
 SECONDS_PER_MIN = 60
 SECONDS_PER_HOUR = 3600
 SECONDS_PER_DAY = 86400
