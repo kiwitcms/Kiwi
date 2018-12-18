@@ -89,7 +89,8 @@ class TestRun(TCMSActionModel):
 
         send_to = set(send_to)
         # don't email author of last change
-        send_to.discard(getattr(self.history.latest().history_user, 'email', ''))
+        send_to.discard(getattr(self.history.latest().history_user,  # pylint: disable=no-member
+                                'email', ''))
         return list(send_to)
 
     # FIXME: rewrite to use multiple values INSERT statement

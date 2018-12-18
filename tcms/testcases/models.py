@@ -22,7 +22,7 @@ AUTOMATED_CHOICES = (
 )
 
 
-class NoneText:
+class NoneText:  # pylint: disable=too-few-public-methods
     author = None
     case_text_version = 0
     action = ''
