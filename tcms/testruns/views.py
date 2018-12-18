@@ -456,8 +456,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 
         def remove(self):
             if not self.request.user.has_perm('testcases.delete_bug'):
-                response = {'rc': 1, 'response': 'Permission denied'}
-                return self.render(response=response)
+                return JsonResponse({'rc': 1, 'response': 'Permission denied'})
 
             try:
                 bug_id = self.request.GET.get('bug_id')
