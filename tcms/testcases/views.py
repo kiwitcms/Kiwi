@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
@@ -1248,15 +1248,6 @@ def bug(request, case_id, template_name='case/get_bug.html'):
             self.request = request
             self.case = case
             self.template_name = template_name
-
-        def render_form(self):
-            form = CaseBugForm(initial={
-                'case': self.case,
-            })
-            if request.GET.get('type') == 'table':
-                return HttpResponse(form.as_table())
-
-            return HttpResponse(form.as_p())
 
         def render(self, response=None):
             context = {
