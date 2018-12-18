@@ -11,7 +11,7 @@
        
 	</tr>
 	{% for bug in test_case.get_bugs %}
-	<tr class="{% cycle 'even' 'odd' %}">
+	<tr class="{% cycle 'even' 'odd' %}" id="bug_{{ bug.bug_id}}_{{ bug.case_id }}_{{ bug.case_run_id|default:'' }}">
 		<td>{{ bug.case_run_id }}</td>
 		<td>{% if bug.case_run_id %}<a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>{% else %}None{% endif %}</td>
 		<td><a href="{{ bug.get_full_url }}">{{ bug.get_full_url }}</a></td>

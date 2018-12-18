@@ -1242,7 +1242,7 @@ def bug(request, case_id, template_name='case/get_bug.html'):
     test_case = get_object_or_404(TestCase, case_id=case_id)
 
     class CaseBugActions:
-        all_actions = ['get_form', 'render', 'add', 'remove']
+        all_actions = ['get_form', 'render', 'add']
 
         def __init__(self, request, case, template_name):
             self.request = request
@@ -1280,17 +1280,6 @@ def bug(request, case_id, template_name='case/get_bug.html'):
                 )
             except Exception as exception:
                 return self.render(response=str(exception))
-
-            return self.render()
-
-        def remove(self):
-            if not request.user.has_perm('testcases.delete_bug'):
-                return self.render(response='Permission denied.')
-
-            try:
-                self.case.remove_bug(request.GET.get('id'), request.GET.get('run_id'))
-            except ObjectDoesNotExist as error:
-                return self.render(response=error)
 
             return self.render()
 

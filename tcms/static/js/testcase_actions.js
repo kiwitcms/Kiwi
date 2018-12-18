@@ -415,42 +415,25 @@ function addCaseBug(form, callback) {
 }
 
 function removeCaseBug(id, case_id, case_run_id) {
-  if(!window.confirm('Are you sure to remove the bug?')) {
-    return false;
-  }
-
-  var parameteres = { 'handle': 'remove', 'id': id, 'run_id': case_run_id };
-
-  var complete = function(t) {
-    jQ('.js-remove-button').bind('click', function(event) {
-      var params = jQ(event.target).data('params');
-      removeCaseBug(params.id, params.caseId, params.caseRunId);
-    });
-    jQ('.js-add-bug').bind('click', function(event) {
-      addCaseBug(jQ('#id_case_bug_form')[0]);
-    });
-    jQ('#id_bugs').bind('keydown', function(event) {
-      addCaseBugViaEnterKey(jQ('#id_case_bug_form')[0], event);
-    });
-
-    if (jQ('#response').length) {
-      window.alert(jQ('#response').html());
-      return false;
+    if(!window.confirm('Are you sure?')) {
+        return false;
     }
-    jQ('#case_bug_count').text(jQ('table#bugs').attr('count'));
-  };
 
-  jQ.ajax({
-    'url': '/case/' + case_id + '/bug/',
-    'type': 'GET',
-    'data': parameteres,
-    'success': function (data, textStatus, jqXHR) {
-      jQ('#bug_list').html(data);
-    },
-    'complete': function () {
-      complete();
+    var params = {bug_id: id};
+    let row_selector = `#bug_${id}_${case_id}_${case_run_id}`;
+
+    if(case_run_id) {
+        params['case_run_id'] = case_run_id;
+    } else {
+        params['case_id'] = case_id;
+        params['case_run__isnull'] = true;
     }
-  });
+
+    var callback = function(data) {
+        $(row_selector).hide();
+    }
+
+    jsonRPC('Bug.remove', [params], callback);
 }
 
 function constructPlanCaseZone(container, case_id, parameters) {
