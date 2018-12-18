@@ -33,7 +33,7 @@ class UserFactory(DjangoModelFactory):
             return
         if extracted:
             for group in extracted:
-                self.groups.add(group)
+                self.groups.add(group)  # pylint: disable=no-member
 
 
 class GroupFactory(DjangoModelFactory):

@@ -196,6 +196,8 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
     # result beside valid fields in database.
     extra_fields = {}
 
+    m2m_fields = ()
+
     def __init__(self, model_class, queryset):
         super().__init__(model_class, queryset)
         if model_class is None:
@@ -265,31 +267,23 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :return: names of fields with type ManyToManyField
         :rtype: list
         """
-        if hasattr(self.__class__, 'm2m_fields'):
-            return self.__class__.m2m_fields
+        if self.m2m_fields:
+            return self.m2m_fields
 
         return tuple(field.name for field in
                      self.model_class._meta.many_to_many)
 
-    # TODO: how to deal with the situation that is primary key does not appear
-    # in values fields, although such thing could not happen.
     def _get_primary_key_field(self):
-        """Return the primary key field name
-
-        The primary key field name can be specified by defining `primary_key`
-        in class. Otherwise, QuerySetBasedXMLRPCSerializer will attempt to get
-        the primary key field by inspecting Model's fields.
+        """
+        Return the primary key field name by inspecting Model's fields.
 
         This method can be overrided in subclass to provide custom primary key.
 
         :return: the name of primary key field
         :rtype: str
         :raises ValueError: if model does not have a primary key field during
-        the process of inspecting primary key from model's field.
+                the process of inspecting primary key from model's field.
         """
-        if hasattr(self.__class__, 'primary_key'):
-            return self.__class__.primary_key
-
         for field in self.model_class._meta.fields:
             if field.primary_key:
                 return field.name
