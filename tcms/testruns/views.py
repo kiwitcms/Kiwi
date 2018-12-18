@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.db.models import Count
 from django.db.models import Q
 from django.forms import ValidationError
-from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
+from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -27,7 +27,6 @@ from django_comments.models import Comment
 from tcms.core.utils import clean_request
 from tcms.core.utils.validations import validate_bug_id
 from tcms.management.models import Priority, Tag
-from tcms.testcases.forms import CaseBugForm
 from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
@@ -470,16 +469,6 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
             return JsonResponse({'rc': 0,
                                  'response': 'ok',
                                  'run_bug_count': self.get_run_bug_count()})
-
-        def render_form(self):
-            form = CaseBugForm(initial={
-                'case_run': self.case_run.case_run_id,
-                'case': self.case_run.case_id,
-            })
-            if self.request.GET.get('type') == 'table':
-                return HttpResponse(form.as_table())
-
-            return HttpResponse(form.as_p())
 
         def get_run_bug_count(self):
             run = self.case_run.run
