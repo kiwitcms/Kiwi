@@ -242,7 +242,7 @@ Nitrate.TestRuns.AssignCase.on_load = function() {
 
 function updateRunStatus(object_pk, value, callback) {
   jQ.ajax({
-    'url': '/run/case-run-update-status/',
+    'url': '/runs/case-run-update-status/',
     'type': 'POST',
     'data': {'object_pk': object_pk, 'status_id': value },
     'success': function (data, textStatus, jqXHR) {
@@ -518,7 +518,7 @@ function addCaseRunBug(run_id, title_container, container, case_id, case_run_id,
           // Update the total bugs count of this run
           var html = null;
           if (jQ('span#total_run_bug_count a').text() === 'No Bugs') {
-            html = "<a title='Show All Bugs' href='/run/" + run_id + "/report/#buglist'>Bugs [" + returnobj.run_bug_count + "]</a>";
+            html = "<a title='Show All Bugs' href='/runs/" + run_id + "/report/#buglist'>Bugs [" + returnobj.run_bug_count + "]</a>";
             jQ('span#total_run_bug_count').html(html);
           } else {
             html = "Bugs [" + returnobj.run_bug_count + "]";
@@ -611,7 +611,7 @@ function constructRunCC(container, run_id, parameters) {
       return false;
     }
   };
-  var url = '/run/' + run_id + '/cc/';
+  var url = '/runs/' + run_id + '/cc/';
   jQ.ajax({
     'url': url,
     'type': 'GET',
@@ -658,7 +658,7 @@ function changeCaseRunAssignee() {
   }
 
   jQ.ajax({
-    'url': '/run/update-assignee/',
+    'url': '/runs/update-assignee/',
     'type': 'POST',
     'data': { ids: runs, assignee: p },
     'success': function (data, textStatus, jqXHR) {

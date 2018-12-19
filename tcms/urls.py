@@ -20,7 +20,6 @@ from tcms.testplans import urls as testplans_urls
 from tcms.testcases import urls as testcases_urls
 from tcms.kiwi_auth import urls as auth_urls
 from tcms.testruns import urls as testruns_urls
-from tcms.testruns import views as testruns_views
 from tcms.report import urls as report_urls
 
 
@@ -56,10 +55,8 @@ urlpatterns = [
     url(r'^cases/', include(testcases_urls.cases_urls)),
 
     # Testruns zone
-    url(r'^run/', include(testruns_urls.run_urls)),
-    url(r'^runs/', include(testruns_urls.runs_urls)),
+    url(r'^runs/', include(testruns_urls)),
 
-    url(r'^caserun/(?P<case_run_id>\d+)/bug/$', testruns_views.bug, name='testruns-bug'),
     url(r'^caserun/comment-many/', ajax.comment_case_runs, name='ajax-comment_case_runs'),
     url(r'^caserun/update-bugs-for-many/', ajax.update_bugs_to_caseruns),
 

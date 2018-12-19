@@ -6,13 +6,6 @@ tcms.testruns package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    tcms.testruns.urls
-
 Submodules
 ----------
 
@@ -22,5 +15,6 @@ Submodules
    tcms.testruns.data
    tcms.testruns.forms
    tcms.testruns.models
+   tcms.testruns.urls
    tcms.testruns.views
 
