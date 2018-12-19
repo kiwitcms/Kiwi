@@ -4,6 +4,13 @@
 {% block subtitle %}{{ test_run.summary }}{% endblock %}
 
 {% block custom_javascript %}
+<!-- temporary workaround so we can convert addRunTag/removeRuntag to JSON RPC -->
+<!-- FA CSS needed for the delete tag icon -->
+<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/bugs.js' %}"></script>
+
 <script type="text/javascript" src="{% static 'js/testrun_actions.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript">
@@ -19,13 +26,6 @@ jQ(function() {
     initialize_addlink_dialog();
 });
 </script>
-
-<!-- temporary workaround so we can convert addRunTag/removeRuntag to JSON RPC -->
-<!-- FA CSS needed for the delete tag icon -->
-<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
-<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-<script src="{% static 'js/jsonrpc.js' %}"></script>
-
 {% endblock %}
 
 {% block content_type %}

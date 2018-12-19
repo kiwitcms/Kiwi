@@ -454,21 +454,6 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
 
             return JsonResponse(response)
 
-        def remove(self):
-            if not self.request.user.has_perm('testcases.delete_bug'):
-                return JsonResponse({'rc': 1, 'response': 'Permission denied'})
-
-            try:
-                bug_id = self.request.GET.get('bug_id')
-                run_id = self.request.GET.get('case_run')
-                self.case_run.remove_bug(bug_id, run_id)
-            except ObjectDoesNotExist as error:
-                return JsonResponse({'rc': 1, 'response': str(error)})
-
-            return JsonResponse({'rc': 0,
-                                 'response': 'ok',
-                                 'run_bug_count': self.get_run_bug_count()})
-
         def get_run_bug_count(self):
             run = self.case_run.run
             return run.get_bug_count()

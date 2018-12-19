@@ -88,7 +88,7 @@
 				</h4>
 				<ul class="ul-no-format">
 					{% for bug_id, bugs in grouped_case_bugs %}
-						<li>
+						<li id="bug_item">
 							<table cellpadding="3" cellspacing="0" border="0">
 								<tr>
 									<td><a href="{{ bugs.0.get_full_url }}">{{ bug_id }}</a></td>
@@ -97,7 +97,9 @@
 								    {% if bug.case_run_id %}
 								        <span class="grey">From Run</span><a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
 								        {% if bug.case_run_id == test_case_run.pk and perms.testcases.delete_bug %}
-								        <a href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'><img width="9" height="9" title="remove this bug" src="{% static 'images/remove_small.png' %}"></a>
+								        <a id="bug_{{ bug_id }}_{{ bug.case_id }}_{{ bug.case_run_id }}" href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ bug.case_id }}, {{ bug.case_run_id }}]'>
+                                                                            <img width="9" height="9" title="remove this bug" src="{% static 'images/remove_small.png' %}">
+                                                                        </a>
 								        {% endif %}
 								    {% else %}
 								        <span class="grey">From Case</span>

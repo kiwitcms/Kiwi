@@ -7,7 +7,6 @@ from django.utils import formats
 from django.urls import reverse
 from django.contrib.auth.models import Permission
 
-from tcms.testcases.models import Bug
 from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
@@ -404,25 +403,6 @@ class TestBugActions(BaseCaseRun):
         self.assertJsonResponse(
             response,
             {'rc': 1, 'response': 'Unrecognizable actions'})
-
-    def test_remove_bug_from_case_run(self):
-        post_data = {
-            'a': 'remove',
-            'case_run': self.case_run_1.pk,
-            'bug_id': self.bug_12345,
-        }
-
-        response = self.client.get(self.case_run_bug_url, post_data)
-
-        bug_exists = Bug.objects.filter(
-            bug_id=self.bug_12345,
-            case=self.case_run_1.case,
-            case_run=self.case_run_1).exists()
-        self.assertFalse(bug_exists)
-
-        self.assertJsonResponse(
-            response,
-            {'rc': 0, 'response': 'ok', 'run_bug_count': 1})
 
 
 class TestRemoveCaseRuns(BaseCaseRun):
