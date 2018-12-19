@@ -60,7 +60,7 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/run/'+ data.run_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
+                    return '<a href="/runs/'+ data.run_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
                 }
             },
             {

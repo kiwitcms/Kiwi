@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
 from django.conf.urls import url
 
-from .. import views
+from . import views
 
 urlpatterns = [
     url(r'^new/$', views.new, name='testruns-new'),
@@ -26,4 +24,8 @@ urlpatterns = [
     url(r'^update-assignee/$', views.UpdateAssigneeView.as_view()),
     url(r'^case-run-update-status/$', views.UpdateCaseRunStatusView.as_view(),
         name='testruns-update_caserun_status'),
+
+    url(r'^search/$', views.search, name='testruns-search'),
+
+    url(r'^(?P<case_run_id>\d+)/bug/$', views.bug, name='testruns-bug'),
 ]
