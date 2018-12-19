@@ -17,6 +17,7 @@ __all__ = (
     'create',
     'update',
     'filter',
+    'remove',
 
     'add_component',
     'get_components',
@@ -367,3 +368,25 @@ def update(case_id, values, **kwargs):
         raise ValueError(form_errors_to_list(form))
 
     return test_case.serialize()
+
+
+@permissions_required('testcases.delete_testcase')
+@rpc_method(name='TestCase.remove')
+def remove(query):
+    """
+    .. function:: XML-RPC TestCase.remove(query)
+
+        Remove TestCase object(s).
+
+        :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
+        :type query: dict
+        :return: None
+        :raises: PermissionDenied if missing the *testcases.delete_testcase* permission
+
+        Example - removing bug from TestCase::
+
+            >>> TestCase.remove({
+                'pk__in': [1, 2, 3, 4],
+            })
+    """
+    return TestCase.objects.filter(**query).delete()
