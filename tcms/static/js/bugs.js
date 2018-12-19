@@ -23,6 +23,7 @@ function removeCaseBug(id, case_id, case_run_id) {
 
     var callback = function(data) {
         $(row_selector).hide();
+        $(row_selector).parents('li#bug_item').hide();
     }
 
     jsonRPC('Bug.remove', [params], callback);

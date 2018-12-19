@@ -88,7 +88,7 @@ Nitrate.TestRuns.Details.on_load = function() {
       });
       c_container.find('.js-remove-caserun-bug').bind('click', function(){
         var params = jQ(this).data('params');
-        removeCaseRunBug(params[0], c[0], c_container[0], params[1], params[2], params[3]);
+        removeCaseBug(params[1], params[2], params[3]);
       });
       c_container.find('.js-add-testlog').bind('click', function(){
         var params = jQ(this).data('params');
@@ -539,56 +539,6 @@ function addCaseRunBug(run_id, title_container, container, case_id, case_run_id,
   });
 
   dialog.show();
-}
-
-
-function removeCaseRunBug(run_id, title_container, container, bug_id, case_id, case_run_id, callback) {
-  if (!bug_id) {
-    return false;
-  }
-
-  if (!window.confirm('Are you sure to remove the bug?')) {
-    return false;
-  }
-
-  var url = '/caserun/' + case_run_id + '/bug/';
-  var parameters = { 'a': 'remove', 'case_run': case_run_id, 'bug_id': bug_id };
-  var success = function(t) {
-    var returnobj = jQ.parseJSON(t.responseText);
-
-    if (!returnobj.rc) {
-      if (callback) {
-        return callback();
-      }
-      //update bug count
-      jQ('span#' + case_run_id + '_case_bug_count')
-        .text(window.parseInt(jQ('span#' + case_run_id + '_case_bug_count').text()) - 1);
-      if (jQ('span#' + case_run_id + '_case_bug_count').text() == '0') {
-        jQ('span#' + case_run_id + '_case_bug_count').removeClass('have_bug');
-      }
-      if (returnobj.run_bug_count == 0) {
-        jQ('span#total_run_bug_count').html("<a>No Bugs</a>");
-      } else {
-        jQ('span#total_run_bug_count a').html("Bugs [" + returnobj.run_bug_count + "]");
-      }
-      return constructCaseRunZone(container, title_container, case_id);
-    } else {
-      window.alert(returnobj.response);
-      return false;
-    }
-  };
-
-  jQ.ajax({
-    'url': url,
-    'type': 'GET',
-    'data': parameters,
-    'success': function(data, textStatus, jqXHR) {
-      success(jqXHR);
-    },
-    'error': function(jqXHR, textStatus, errorThrown) {
-      json_failure(jqXHR);
-    }
-  });
 }
 
 
