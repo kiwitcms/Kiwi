@@ -414,28 +414,6 @@ function addCaseBug(form, callback) {
   });
 }
 
-function removeCaseBug(id, case_id, case_run_id) {
-    if(!window.confirm('Are you sure?')) {
-        return false;
-    }
-
-    var params = {bug_id: id};
-    let row_selector = `#bug_${id}_${case_id}_${case_run_id}`;
-
-    if(case_run_id) {
-        params['case_run_id'] = case_run_id;
-    } else {
-        params['case_id'] = case_id;
-        params['case_run__isnull'] = true;
-    }
-
-    var callback = function(data) {
-        $(row_selector).hide();
-    }
-
-    jsonRPC('Bug.remove', [params], callback);
-}
-
 function constructPlanCaseZone(container, case_id, parameters) {
   var complete = function(t) {
     jQ('#id_plan_form').bind('submit', function(e) {
