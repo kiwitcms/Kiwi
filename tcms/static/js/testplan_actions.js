@@ -1,5 +1,4 @@
 Nitrate.TestPlans = {};
-Nitrate.TestPlans.Create = {};
 Nitrate.TestPlans.Details = {};
 Nitrate.TestPlans.Edit = {};
 Nitrate.TestPlans.SearchCase = {};
@@ -261,22 +260,6 @@ function configure_product_on_load() {
         update_version_select_from_product($(this), '#id_product_version')
     });
 }
-
-Nitrate.TestPlans.Create.on_load = function() {
-    configure_product_on_load();
-    update_version_select_from_product($('#id_product'), '#id_product_version')
-
-
-  jQ('#add_id_product').bind('click', function() {
-    return popupAddAnotherWindow(this);
-  });
-  jQ('#add_id_product_version').bind('click', function() {
-    return popupAddAnotherWindow(this, 'product');
-  });
-  jQ('.js-cancel-button').bind('click', function() {
-    window.history.back();
-  });
-};
 
 Nitrate.TestPlans.Edit.on_load = function() {
     configure_product_on_load();

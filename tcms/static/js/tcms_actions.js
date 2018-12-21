@@ -454,30 +454,6 @@ var reloadWindow = function(t) {
   window.location.reload(true);
 };
 
-// Enhanced from showAddAnotherPopup in RelatedObjectLookups.js for Admin
-// todo: this duplicates existing functionality in admin/grappelli in the
-// above mentioned JS files. Needs to be refactored.
-function popupAddAnotherWindow(triggeringLink, parameters) {
-  var name = triggeringLink.id.replace(/^add_/, '');
-  name = id_to_windowname(name);
-  href = triggeringLink.href;
-  if (href.indexOf('?') === -1) {
-    href += '?_popup=1';
-  } else {
-    href += '&_popup=1';
-  }
-
-  // IMPOROMENT: Add parameters.
-  // FIXME: Add multiple parameters here
-  if (parameters) {
-    href += '&' + parameters + '=' + jQ('#id_' + parameters).val();
-  }
-
-  var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=no');
-  win.focus();
-  return false;
-}
-
 function printableCases(url, form, table) {
   var selection = serializeCaseFromInputList2(table);
   var emptySelection = !selection.selectAll & selection.selectedCasesIds.length === 0;
