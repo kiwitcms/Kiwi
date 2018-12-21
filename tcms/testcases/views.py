@@ -404,10 +404,7 @@ def get_selected_testcases(request):
         cases, _search_form = query_testcases_from_request(request, plan)
         return cases
 
-    primary_keys = []
-    for _pk in method.getlist('case'):
-        primary_keys.append(int(_pk))
-    return TestCase.objects.filter(pk__in=primary_keys)
+    return TestCase.objects.filter(pk__in=method.getlist('case'))
 
 
 def load_more_cases(request, template_name='plan/cases_rows.html'):
