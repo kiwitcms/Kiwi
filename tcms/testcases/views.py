@@ -4,6 +4,7 @@ import itertools
 
 from django.conf import settings
 from django.contrib import messages
+from django.test import modify_settings
 from django.contrib.auth.decorators import permission_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
@@ -763,7 +764,34 @@ def get(request, case_id):
         'test_case_run_status': TestCaseRunStatus.objects.all(),
         'bug_trackers': BugSystem.objects.all(),
     }
-    return render(request, 'case/get.html', context_data)
+
+    url_params = "?case=%d" % test_case.pk
+    if test_plan:
+        url_params += "&from_plan=%d" % test_plan.pk
+
+    with modify_settings(
+            MENU_ITEMS={'append': [
+                ('...', [
+                    (
+                        _('Edit'),
+                        reverse('testcases-edit', args=[test_case.pk])
+                    ),
+                    (
+                        _('Clone'),
+                        reverse('testcases-clone') + url_params
+                    ),
+                    (
+                        _('History'),
+                        "/admin/testcases/testcase/%d/history/" % test_case.pk
+                    ),
+                    ('-', '-'),
+                    (
+                        _('Delete'),
+                        reverse('admin:testcases_testcase_delete', args=[test_case.pk])
+                    )])]
+            }
+         ):
+        return render(request, 'testcases/get.html', context_data)
 
 
 @require_POST
