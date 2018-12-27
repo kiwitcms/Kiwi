@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load extra_filters %}
+
+{% block title %}TC-{{ test_case.pk }}: {{ test_case.summary }}{% endblock %}
+{% block body_class %}cards-pf{% endblock %}
+
+{% block contents %}
+<div class="container-cards-pf">
+    <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
+    <h1 class="col-md-12" style="margin-top: 0">
+        <span id="test_case_pk" data-pk="{{ test_case.pk }}">TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
+    </h1>
+
+    <div class="col-xs-12 col-sm-12 col-md-9">
+        <div class="card-pf card-pf-accented">
+            <div class="card-pf-body">
+                <p>
+                    <strong>{% trans 'Setup' %}:</strong>
+                    {{ test_case_text.setup|markdown2html }}
+                </p>
+
+                <p>
+                    <strong>{% trans 'Actions' %}:</strong>
+                    {{ test_case_text.action|markdown2html }}
+                </p>
+
+                <p>
+                    <strong>{% trans 'Expected result' %}:</strong>
+                    {{ test_case_text.effect|markdown2html }}
+                </p>
+
+                <p>
+                    <strong>{% trans 'Breakdown' %}:</strong>
+                    {{ test_case_text.breakdown|markdown2html }}
+                </p>
+
+                <p>
+                    <strong>{% trans 'Notes' %}:</strong>
+                    {{ test_case.notes }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-user-secret"></span>{% trans 'Author' %}:
+                <a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author.username }}</a>
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-search"></span>{% trans 'Default tester' %}:
+                {% if test_case.default_tester  %}
+                <a href="{% url "tcms-profile" test_case.default_tester.username %}">{{ test_case.default_tester.username }}</a>
+                {% else %}
+                -
+                {% endif %}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
+                {{ test_case.category.product }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-tag"></span>{% trans 'Category' %}:
+                {{ test_case.category }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa
+                    {% if test_case.case_status.is_confirmed %}
+                        fa-check-square
+                    {% else %}
+                        fa-times
+                    {% endif %}"></span>{% trans 'Status' %}:
+                {{ test_case.case_status }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-hourglass"></span>{% trans 'Priority' %}:
+                {{ test_case.priority }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-calendar"></span>{{ test_case.create_date }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa 
+                    {% if test_case.is_automated %}
+                        fa-cog
+                    {% else %}
+                        fa-thumbs-up
+                    {% endif %}"></span>{% trans 'Automated' %}:
+                {{ test_case.get_is_automated_status }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-terminal"></span>{% trans 'Script' %}:
+                {{ test_case.script|default:'-' }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-terminal"></span>{% trans 'Arguments' %}:
+                {{ test_case.arguments|default:'-' }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-file-text"></span>{% trans 'Requirements' %}:
+                {{ test_case.requirement|default:'-' }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-link"></span>{% trans 'Reference link' %}:
+                {% if test_case.extra_link %}
+                    <a href="{{ test_case.extra_link }}">{{ test_case.extra_link }}</a>
+                {% else %}
+                    -
+                {% endif %}
+            </h2>
+
+            <div class="card-pf-body"></div>
+        </div>
+    </div>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-tag"></span>
+                    {% trans 'Tags' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="tags">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Name' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        {% if perms.testcases.add_testcasetag %}
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <div class="input-group input-group-sm mb-3">
+                                        <input type="text" class="form-control" id="id_tags">
+                                    </div>
+                                    <div id="id_tags_autocomplete"></div>
+                                </th>
+                                <th>
+                                    <a href="#" id="js-add-tag" title="{% trans 'Add' %}">
+                                        <span class="fa fa-plus"></span>
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-tag"></span>
+                    {% trans 'Components' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <p>
+                        <strong>{% trans 'Setup' %}:</strong>
+                        {{ test_case_text.setup|markdown2html }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-tag"></span>
+                    {% trans 'Attachments' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <p>
+                        <strong>{% trans 'Setup' %}:</strong>
+                        {{ test_case_text.setup|markdown2html }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-bug"></span>
+                    {% trans 'Bugs' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <p>
+                        <strong>{% trans 'Setup' %}:</strong>
+                        {{ test_case_text.setup|markdown2html }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /row -->
+</div>
+
+<!-- for removeTag -->
+<script src="{% static 'js/tcms_actions.js' %}"></script>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/tags.js' %}"></script>
+<script src="{% static 'testcases/js/get.js' %}"></script>
+{% endblock %}
