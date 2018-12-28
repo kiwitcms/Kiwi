@@ -75,8 +75,7 @@ def new(request):
                 text=form.cleaned_data['text'],
             )
 
-            # create emailing settings to avoid Issue #181 on MySQL
-            test_plan.emailing.save()
+            update_plan_email_settings(test_plan, form)
 
             return HttpResponseRedirect(
                 reverse('test_plan_url_short', args=[test_plan.plan_id, ])
