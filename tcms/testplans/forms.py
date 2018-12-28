@@ -93,11 +93,6 @@ class NewPlanForm(BasePlanForm):
 
 
 class EditPlanForm(NewPlanForm):
-    product_version = forms.ModelChoiceField(
-        label="Product Version",
-        queryset=Version.objects.all(),
-        empty_label=None,
-    )
     author = UserField(
         label=' plan\'s author',
         required=False
