@@ -73,6 +73,7 @@ def new(request):
                 extra_link=form.cleaned_data['extra_link'],
                 parent=form.cleaned_data['parent'],
                 text=form.cleaned_data['text'],
+                is_active=form.cleaned_data['is_active'],
             )
 
             update_plan_email_settings(test_plan, form)
