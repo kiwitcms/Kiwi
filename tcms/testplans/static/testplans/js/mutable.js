@@ -11,6 +11,8 @@ $(document).ready((function () {
 
     $('.selectpicker').selectpicker();
 
+    $('.bootstrap-switch').bootstrapSwitch();
+
     document.getElementById('id_product').onchange = function () {
         $('#id_product').selectpicker('refresh');
         populateProductVersion();
