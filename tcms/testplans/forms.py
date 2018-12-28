@@ -84,6 +84,7 @@ class NewPlanForm(BasePlanForm):
         label=' when cases of a plan are updated',
         required=False
     )
+    is_active = forms.BooleanField(label="Active", required=False, initial=True)
 
     def clean_tag(self):
         return Tag.objects.filter(
@@ -97,7 +98,6 @@ class EditPlanForm(NewPlanForm):
         queryset=Version.objects.all(),
         empty_label=None,
     )
-    is_active = forms.BooleanField(label="Active", required=False)
     author = UserField(
         label=' plan\'s author',
         required=False
