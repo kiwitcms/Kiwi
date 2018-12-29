@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-03 09:04+0000\n"
+"POT-Creation-Date: 2018-12-30 18:09+0000\n"
 "PO-Revision-Date: 2018-11-10 05:05\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:157 tcms/testruns/views.py:798
+#: tcms/core/ajax.py:157 tcms/testruns/views.py:765
 #, python-format
 msgid "User %s not found!"
 msgstr ""
@@ -114,83 +114,83 @@ msgstr "此激活密钥已过期"
 msgid "Your account has been activated successfully"
 msgstr "您的账户已被成功激活"
 
-#: tcms/settings/common.py:81
+#: tcms/settings/common.py:87
 msgid "DASHBOARD"
 msgstr "仪表 板"
 
-#: tcms/settings/common.py:82
+#: tcms/settings/common.py:88
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:83
+#: tcms/settings/common.py:89
 msgid "New Test Plan"
 msgstr ""
 
-#: tcms/settings/common.py:85
+#: tcms/settings/common.py:91
 msgid "New Test Case"
 msgstr ""
 
-#: tcms/settings/common.py:87
+#: tcms/settings/common.py:93
 msgid "SEARCH"
 msgstr "搜索"
 
-#: tcms/settings/common.py:88
+#: tcms/settings/common.py:94
 msgid "Search Test Plans"
 msgstr ""
 
-#: tcms/settings/common.py:89
+#: tcms/settings/common.py:95
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:90
+#: tcms/settings/common.py:96
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:92
+#: tcms/settings/common.py:98
 msgid "REPORTING"
 msgstr "报告"
 
-#: tcms/settings/common.py:93
+#: tcms/settings/common.py:99
 msgid "Overall report"
 msgstr ""
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:100
 msgid "Custom report"
 msgstr ""
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:101
 msgid "Testing report"
 msgstr ""
 
-#: tcms/settings/common.py:97
+#: tcms/settings/common.py:103
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:104
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:100
+#: tcms/settings/common.py:106
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:112
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:107
+#: tcms/settings/common.py:113
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:108
+#: tcms/settings/common.py:114
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:109
+#: tcms/settings/common.py:115
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:110
+#: tcms/settings/common.py:116
 msgid "API Help"
 msgstr ""
 
@@ -514,6 +514,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:88
 #: tcms/testcases/templates/testcases/search.html:122
+#: tcms/testplans/templates/testplans/mutable.html:98
 #: tcms/testplans/templates/testplans/search.html:98
 #: tcms/testplans/templates/testplans/search.html:135
 #: tcms/testruns/templates/testruns/mutable.html:95
@@ -551,6 +552,7 @@ msgid "ID"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:123
+#: tcms/testplans/templates/testplans/mutable.html:110
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Default tester"
 msgstr ""
@@ -559,16 +561,16 @@ msgstr ""
 msgid "Created at"
 msgstr ""
 
-#: tcms/testcases/views.py:464
+#: tcms/testcases/views.py:466
 msgid "TestPlan not specified or does not exist"
 msgstr "测试计划未指定或不存在"
 
-#: tcms/testcases/views.py:1072 tcms/testruns/views.py:532
-#: tcms/testruns/views.py:610
+#: tcms/testcases/views.py:1040 tcms/testruns/views.py:499
+#: tcms/testruns/views.py:577
 msgid "At least one TestCase is required"
 msgstr "需要至少一个测试实例"
 
-#: tcms/testcases/views.py:1220
+#: tcms/testcases/views.py:1189
 msgid "TestCase cloning was successful"
 msgstr "测试实例克隆成功"
 
@@ -603,7 +605,32 @@ msgstr ""
 msgid "Test plan document:"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/mutable.html:95
+#: tcms/testplans/templates/testplans/mutable.html:96
+msgid "Notify:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:104
+msgid "TestCase author"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:118
+msgid "Notify when:"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:120
+msgid "TestPlan is updated"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:126
+msgid "Test cases are updated"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:134
+#: tcms/testplans/templates/testplans/search.html:117
+msgid "Active"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:140
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
 msgstr ""
@@ -630,10 +657,6 @@ msgstr ""
 msgid "Default&nbsp;tester"
 msgstr ""
 
-#: tcms/testplans/templates/testplans/search.html:117
-msgid "Active"
-msgstr ""
-
 #: tcms/testplans/templates/testplans/search.html:133
 #: tcms/testruns/templates/testruns/search.html:92
 msgid "Test plan"
@@ -643,19 +666,15 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: tcms/testplans/views.py:338
-msgid "Select at least one TestRun and one TestCase"
-msgstr "请选择至少一条测试运行和测试实例"
-
-#: tcms/testplans/views.py:413
+#: tcms/testplans/views.py:348
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:634
+#: tcms/testplans/views.py:569
 msgid "At least one test plan is required for print"
 msgstr "需要至少一个测试计划进行打印"
 
-#: tcms/testplans/views.py:642
+#: tcms/testplans/views.py:577
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "测试计划 \"%s\" 不存在"
@@ -748,28 +767,28 @@ msgstr ""
 msgid "Finished at"
 msgstr ""
 
-#: tcms/testruns/views.py:50
+#: tcms/testruns/views.py:49
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr ""
 
-#: tcms/testruns/views.py:60
+#: tcms/testruns/views.py:59
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "新建测试计划至少需要一个测试实例"
 
-#: tcms/testruns/views.py:536
+#: tcms/testruns/views.py:503
 msgid "Clone of "
 msgstr ""
 
-#: tcms/testruns/views.py:619
+#: tcms/testruns/views.py:586
 msgid "TestCase ID is not a valid integer"
 msgstr "测试实例编号不是有效的整数"
 
-#: tcms/testruns/views.py:746
+#: tcms/testruns/views.py:713
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "已更新 %d 个测试运行:"
 
-#: tcms/xmlrpc/serializer.py:298
+#: tcms/xmlrpc/serializer.py:287
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr ""
