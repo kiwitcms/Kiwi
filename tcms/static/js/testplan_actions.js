@@ -1,6 +1,5 @@
 Nitrate.TestPlans = {};
 Nitrate.TestPlans.Details = {};
-Nitrate.TestPlans.Edit = {};
 Nitrate.TestPlans.SearchCase = {};
 Nitrate.TestPlans.Clone = {};
 
@@ -259,10 +258,6 @@ function configure_product_on_load() {
         $('#id_product_version').find('option').remove();
         update_version_select_from_product($(this), '#id_product_version')
     });
-}
-
-Nitrate.TestPlans.Edit.on_load = function() {
-    configure_product_on_load();
 }
 
 Nitrate.TestPlans.Details = {
