@@ -50,15 +50,20 @@ def update_plan_email_settings(test_plan, form):
 # _____________________________________________________________________________
 # view functons
 
+@method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
+class NewTestPlanView(View):
+    template_name = 'testplans/mutable.html'
 
-@require_http_methods(['GET', 'POST'])
-@permission_required('testplans.add_testplan')
-def new(request):
-    """New testplan"""
+    def get(self, request):
+        form = NewPlanForm()
 
-    # If the form has been submitted...
-    if request.method == 'POST':
-        # A form bound to the POST data
+        context_data = {
+            'form': form
+        }
+
+        return render(request, self.template_name, context_data)
+
+    def post(self, request):
         form = NewPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
@@ -81,13 +86,11 @@ def new(request):
             return HttpResponseRedirect(
                 reverse('test_plan_url_short', args=[test_plan.plan_id, ])
             )
-    else:
-        form = NewPlanForm()
 
-    context_data = {
-        'form': form,
-    }
-    return render(request, 'testplans/mutable.html', context_data)
+        context_data = {
+            'form': form,
+        }
+        return render(request, self.template_name, context_data)
 
 
 @require_GET
