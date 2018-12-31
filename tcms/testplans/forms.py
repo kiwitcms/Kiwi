@@ -58,38 +58,29 @@ class BasePlanForm(forms.Form):
 
 
 class NewPlanForm(BasePlanForm):
-    tag = forms.CharField(
-        label="Tag",
-        required=False
-    )
+    tag = forms.CharField(required=False)
 
-    # Display radio buttons instead of checkboxes
     auto_to_plan_author = forms.BooleanField(
-        label=' plan\'s author',
         initial=True,
         required=False
     )
     auto_to_case_owner = forms.BooleanField(
-        label=' the author of the case under a plan',
         initial=True,
         required=False
     )
     auto_to_case_default_tester = forms.BooleanField(
-        label=' the default tester of the case under a plan',
         initial=True,
         required=False
     )
     notify_on_plan_update = forms.BooleanField(
-        label=' when plan is updated',
         initial=True,
         required=False
     )
     notify_on_case_update = forms.BooleanField(
-        label=' when cases of a plan are updated',
         initial=True,
         required=False
     )
-    is_active = forms.BooleanField(label="Active", required=False, initial=True)
+    is_active = forms.BooleanField(required=False, initial=True)
 
     def clean_tag(self):
         return Tag.objects.filter(
@@ -98,10 +89,7 @@ class NewPlanForm(BasePlanForm):
 
 
 class EditPlanForm(NewPlanForm):
-    author = UserField(
-        label=' plan\'s author',
-        required=False
-    )
+    author = UserField(required=False)
 
 
 # =========== Forms for search/filter ==============
