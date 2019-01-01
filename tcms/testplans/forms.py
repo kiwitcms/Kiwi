@@ -183,31 +183,3 @@ class ClonePlanForm(BasePlanForm):
                   'plan.',
         required=False
     )
-
-
-# =========== Forms for XML-RPC functions ==============
-
-
-class XMLRPCNewPlanForm(NewPlanForm):
-    text = forms.CharField()
-
-
-class XMLRPCEditPlanForm(NewPlanForm):
-    name = forms.CharField(
-        label="Plan name", required=False
-    )
-    type = forms.ModelChoiceField(
-        label="Type",
-        queryset=PlanType.objects.all(),
-        required=False
-    )
-    product = forms.ModelChoiceField(
-        label="Product",
-        queryset=Product.objects.all(),
-        required=False,
-    )
-    product_version = forms.ModelChoiceField(
-        label="Product Version",
-        queryset=Version.objects.none(),
-        required=False
-    )
