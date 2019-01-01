@@ -3,7 +3,7 @@ from django import forms
 
 from tcms.core.widgets import SimpleMDE
 from tcms.core.utils import string_to_list
-from tcms.core.forms.fields import UserField, StripURLField
+from tcms.core.forms.fields import StripURLField
 from tcms.management.models import Product, Version
 from .models import TestPlan, PlanType
 
@@ -58,6 +58,7 @@ class BasePlanForm(forms.Form):
 
 
 class NewPlanForm(BasePlanForm):
+
     auto_to_plan_author = forms.BooleanField(
         initial=True,
         required=False
@@ -79,10 +80,6 @@ class NewPlanForm(BasePlanForm):
         required=False
     )
     is_active = forms.BooleanField(required=False, initial=True)
-
-
-class EditPlanForm(NewPlanForm):
-    author = UserField(required=False)
 
 
 # =========== Forms for search/filter ==============
@@ -191,11 +188,11 @@ class ClonePlanForm(BasePlanForm):
 # =========== Forms for XML-RPC functions ==============
 
 
-class XMLRPCNewPlanForm(EditPlanForm):
+class XMLRPCNewPlanForm(NewPlanForm):
     text = forms.CharField()
 
 
-class XMLRPCEditPlanForm(EditPlanForm):
+class XMLRPCEditPlanForm(NewPlanForm):
     name = forms.CharField(
         label="Plan name", required=False
     )
