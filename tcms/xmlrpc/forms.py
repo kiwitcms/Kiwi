@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from django.forms import BooleanField
+from django.forms import BooleanField, CharField, ModelChoiceField
 from django.forms.widgets import CheckboxInput
 
+from tcms.management.models import Product, Version
 from tcms.testcases.forms import XMLRPCNewCaseForm
 from tcms.testcases.forms import XMLRPCUpdateCaseForm
-from tcms.testplans.forms import XMLRPCNewPlanForm
-from tcms.testplans.forms import XMLRPCEditPlanForm
+from tcms.testplans.forms import NewPlanForm
+from tcms.testplans.models import PlanType
 from tcms.xmlrpc.utils import parse_bool_value
 
 
@@ -30,11 +31,34 @@ class UpdateCaseForm(XMLRPCUpdateCaseForm):
                                          widget=XMLRPCCheckboxInput)
 
 
-class NewPlanForm(XMLRPCNewPlanForm):
-    is_active = BooleanField(label="Active", required=False,
-                             widget=XMLRPCCheckboxInput)
+class BasePlanForm(NewPlanForm):
+    is_active = BooleanField(
+        label="Active",
+        required=False,
+        widget=XMLRPCCheckboxInput
+    )
 
 
-class EditPlanForm(XMLRPCEditPlanForm):
-    is_active = BooleanField(label="Active", required=False,
-                             widget=XMLRPCCheckboxInput)
+class NewPlanForm(BasePlanForm):
+    text = CharField()
+
+
+class EditPlanForm(BasePlanForm):
+    name = CharField(
+        label="Plan name", required=False
+    )
+    type = ModelChoiceField(
+        label="Type",
+        queryset=PlanType.objects.all(),
+        required=False
+    )
+    product = ModelChoiceField(
+        label="Product",
+        queryset=Product.objects.all(),
+        required=False,
+    )
+    product_version = ModelChoiceField(
+        label="Product Version",
+        queryset=Version.objects.none(),
+        required=False
+    )
