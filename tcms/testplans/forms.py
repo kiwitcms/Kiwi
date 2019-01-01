@@ -4,7 +4,7 @@ from django import forms
 from tcms.core.widgets import SimpleMDE
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField, StripURLField
-from tcms.management.models import Product, Version, Tag
+from tcms.management.models import Product, Version
 from .models import TestPlan, PlanType
 
 
@@ -58,8 +58,6 @@ class BasePlanForm(forms.Form):
 
 
 class NewPlanForm(BasePlanForm):
-    tag = forms.CharField(required=False)
-
     auto_to_plan_author = forms.BooleanField(
         initial=True,
         required=False
@@ -81,11 +79,6 @@ class NewPlanForm(BasePlanForm):
         required=False
     )
     is_active = forms.BooleanField(required=False, initial=True)
-
-    def clean_tag(self):
-        return Tag.objects.filter(
-            name__in=string_to_list(self.cleaned_data['tag'])
-        )
 
 
 class EditPlanForm(NewPlanForm):
