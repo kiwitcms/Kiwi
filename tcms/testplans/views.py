@@ -27,7 +27,6 @@ from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import printable as testcases_printable
 from tcms.testplans.forms import ClonePlanForm
-from tcms.testplans.forms import EditPlanForm
 from tcms.testplans.forms import NewPlanForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.testplans.models import TestPlan, PlanType
@@ -290,7 +289,7 @@ def edit(request, plan_id):
 
     # If the form is submitted
     if request.method == "POST":
-        form = EditPlanForm(request.POST)
+        form = NewPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
         # FIXME: Error handle
@@ -316,7 +315,7 @@ def edit(request, plan_id):
             return HttpResponseRedirect(
                 reverse('test_plan_url', args=[plan_id, slugify(test_plan.name)]))
     else:
-        form = EditPlanForm(initial={
+        form = NewPlanForm(initial={
             'name': test_plan.name,
             'product': test_plan.product_id,
             'product_version': test_plan.product_version_id,
