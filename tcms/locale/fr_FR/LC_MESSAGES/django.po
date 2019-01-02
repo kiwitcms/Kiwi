@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-30 18:09+0000\n"
-"PO-Revision-Date: 2019-01-02 08:21\n"
+"PO-Revision-Date: 2019-01-02 08:33\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -587,23 +587,23 @@ msgstr "Document du plan de test"
 
 #: tcms/testplans/templates/testplans/mutable.html:96
 msgid "Notify:"
-msgstr ""
+msgstr "Notification:"
 
 #: tcms/testplans/templates/testplans/mutable.html:104
 msgid "TestCase author"
-msgstr ""
+msgstr "Auteur du TestCase"
 
 #: tcms/testplans/templates/testplans/mutable.html:118
 msgid "Notify when:"
-msgstr ""
+msgstr "Être notifié quand:"
 
 #: tcms/testplans/templates/testplans/mutable.html:120
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Le TestPlan a été mis à jour"
 
 #: tcms/testplans/templates/testplans/mutable.html:126
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Les plans de test ont été mis à jour"
 
 #: tcms/testplans/templates/testplans/mutable.html:134
 #: tcms/testplans/templates/testplans/search.html:117
@@ -665,7 +665,7 @@ msgstr "Permission refusé: L'essai de test ne vous est plus assigné"
 
 #: tcms/testruns/forms.py:80
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "La date de fin est non valide. Le format correcte est AAAA-MM-JJ."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
