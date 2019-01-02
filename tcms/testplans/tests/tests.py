@@ -27,7 +27,7 @@ from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 
 
-class PlanTests(test.TestCase):
+class BasePlanTest(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -65,6 +65,9 @@ class PlanTests(test.TestCase):
         super().setUp()
         self.client.login(username=self.user.username,  # nosec:B106:hardcoded_password_funcarg
                           password='admin')
+
+
+class PlanTests(BasePlanTest):
 
     def test_open_plans_search(self):
         location = reverse('plans-search')
