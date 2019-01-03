@@ -33,7 +33,6 @@ class UpdateCaseForm(XMLRPCUpdateCaseForm):
 
 class BasePlanForm(NewPlanForm):
     is_active = BooleanField(
-        label="Active",
         required=False,
         widget=XMLRPCCheckboxInput
     )
@@ -45,20 +44,17 @@ class NewPlanForm(BasePlanForm):
 
 class EditPlanForm(BasePlanForm):
     name = CharField(
-        label="Plan name", required=False
+        required=False
     )
     type = ModelChoiceField(
-        label="Type",
         queryset=PlanType.objects.all(),
         required=False
     )
     product = ModelChoiceField(
-        label="Product",
         queryset=Product.objects.all(),
         required=False,
     )
     product_version = ModelChoiceField(
-        label="Product Version",
         queryset=Version.objects.none(),
         required=False
     )
