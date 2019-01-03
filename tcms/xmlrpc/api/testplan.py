@@ -7,7 +7,7 @@ from tcms.management.models import Tag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase, TestCasePlan
 
-from tcms.xmlrpc.forms import EditPlanForm, NewPlanForm
+from tcms.xmlrpc.api.forms.testplan import EditPlanForm, NewPlanForm
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
