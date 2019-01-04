@@ -101,7 +101,7 @@ See http://kiwitcms.readthedocs.org/en/latest/contribution.html
 
 You are more than welcome to make a monthly donation and help us continue
 improving Kiwi TCMS.
-[`Become a sponsor <https://opencollective.com/kiwitcms#contributors>_`]
+[`Become a sponsor <https://opencollective.com/kiwitcms#contributors>`_]
 
 
 Support
