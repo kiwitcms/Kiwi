@@ -1,10 +1,6 @@
 Kiwi TCMS - Open Source Test Case Management System
 ===================================================
 
-.. image:: https://badges.greenkeeper.io/kiwitcms/Kiwi.svg
-   :alt: Greenkeeper badge
-   :target: https://greenkeeper.io/
-
 .. image:: https://travis-ci.org/kiwitcms/Kiwi.svg?branch=master
     :target: https://travis-ci.org/kiwitcms/Kiwi
     :alt: Travis CI
@@ -12,6 +8,14 @@ Kiwi TCMS - Open Source Test Case Management System
 .. image:: https://readthedocs.org/projects/kiwitcms/badge/?version=latest
     :target: http://kiwitcms.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation
+
+.. image:: https://pyup.io/repos/github/kiwitcms/Kiwi/shield.svg
+    :target: https://pyup.io/repos/github/kiwitcms/Kiwi/
+    :alt: Python updates
+
+.. image:: https://badges.greenkeeper.io/kiwitcms/Kiwi.svg
+   :alt: Greenkeeper badge
+   :target: https://greenkeeper.io/
 
 .. image:: https://scan.coverity.com/projects/15921/badge.svg
     :target: https://scan.coverity.com/projects/kiwitcms-kiwi
@@ -25,13 +29,14 @@ Kiwi TCMS - Open Source Test Case Management System
     :target: https://coveralls.io/github/kiwitcms/Kiwi?branch=master
     :alt: Code coverage
 
-.. image:: https://pyup.io/repos/github/kiwitcms/Kiwi/shield.svg
-    :target: https://pyup.io/repos/github/kiwitcms/Kiwi/
-    :alt: Python updates
-
 .. image:: https://api.codeclimate.com/v1/badges/3f4e108ea369f625f112/maintainability
    :target: https://codeclimate.com/github/kiwitcms/Kiwi/maintainability
    :alt: Maintainability
+
+.. image:: https://opencollective.com/kiwitcms/tiers/sponsor/badge.svg?label=sponsors&color=brightgreen
+   :target: https://opencollective.com/kiwitcms#contributors
+   :alt: Become a sponsor
+
 
 Introduction
 ------------
@@ -93,6 +98,11 @@ Contribution
 ------------
 
 See http://kiwitcms.readthedocs.org/en/latest/contribution.html
+
+You are more than welcome to make a monthly donation and help us continue
+improving Kiwi TCMS.
+[`Become a sponsor <https://opencollective.com/kiwitcms#contributors>_`]
+
 
 Support
 -------
