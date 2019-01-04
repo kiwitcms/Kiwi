@@ -12,6 +12,7 @@ from .bulk_create import BulkCreateChecker
 from .objects_update import ObjectsUpdateChecker
 from .tags import TagsChecker
 from .empty_module import EmptyModuleChecker
+from .nested_definition import NestedDefinitionChecker
 
 
 def register(linter):
@@ -24,3 +25,4 @@ def register(linter):
     linter.register_checker(ObjectsUpdateChecker(linter))
     linter.register_checker(TagsChecker(linter))
     linter.register_checker(EmptyModuleChecker(linter))
+    linter.register_checker(NestedDefinitionChecker(linter))
