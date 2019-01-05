@@ -19,7 +19,7 @@ class MissingPermissionsChecker(checkers.BaseChecker):
 
     __implements__ = (interfaces.IAstroidChecker,)
 
-    name = 'nested-definition-checker'
+    name = 'mising-permissions-checker'
 
     msgs = {'R4511': ("View is missing @permission_required decorator!",
                       'missing-permission-required',
