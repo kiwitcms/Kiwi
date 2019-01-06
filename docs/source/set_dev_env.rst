@@ -39,7 +39,7 @@ Dependencies
 
 First install RPM packages which are needed to compile some of the Python dependencies::
 
-    sudo yum install gcc python-devel mariadb-devel libxml2-devel libxslt-devel graphviz
+    sudo yum install gcc python-devel mariadb-devel libxml2-devel libxslt-devel graphviz krb5-config
 
 .. note::
 
