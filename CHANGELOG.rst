@@ -1,6 +1,108 @@
 Change Log
 ==========
 
+Kiwi TCMS 6.4 (7 Jan 2018)
+--------------------------
+
+**IMPORTANT:** this is a security, improvement and bug-fix update that includes new
+versions of Django, Patternfly and other dependencies.
+
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- Update Django from 2.1.4 to 2.1.5, which deals with CVE-2019-3498:
+  Content spoofing possibility in the default 404 page
+- Update Patternfly to version 3.59.0, which deals with XSS issue in bootstrap.
+  See CVE-2018-14041
+- By default session cookies will expire after 24 hours. This can be controlled
+  via the ``SESSION_COOKIE_AGE`` setting. Fixes
+  `Issue #556 <https://github.com/kiwitcms/Kiwi/issues/556>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update mysqlclient from 1.3.13 to 1.3.14
+- Update python-gitlab from 1.6.0 to 1.7.0
+- Update django-simple-history from 2.5.1 to 2.6.0
+- Update pygithub from 1.43.3 to 1.43.4
+- New API method ``TestCase.remove()``. Initially requested as
+  `SO #53844380 <https://stackoverflow.com/questions/53844380/>`_
+- Drop down select widges in Patternfly pages are now styled with
+  ``bootstrap-select`` giving them more consistent look and feel with
+  the rest of the page (Anton Sankov)
+- Create new TestPlan page now includes toggles to control notifications
+  and whether or not the test plan is active. This was previously available
+  only in edit page (Anton Sankov)
+- By default TestPlan notification toggles are turned on. Previously they
+  were off (Anton Sankov)
+- Create and Edit TestPlan pages now look the same (Anton Sankov)
+- Kiwi TCMS is now accepting donations via
+  `Open Collective <https://opencollective.com/kiwitcms>`_
+
+
+Removed functionality
+~~~~~~~~~~~~~~~~~~~~~
+
+- Remove ``TestPlan page -> Run menu -> Add cases to run`` action.
+  This is the same as ``TestRun page -> Cases menu -> Add`` action
+- Legacy reports will be removed after 1st March 2019. Provide your
+  feedback in
+  `Issue #657 <https://github.com/kiwitcms/Kiwi/issues/657>`_
+- The ``/run/`` URL path has been merged with ``/runs/`` due to configuration
+  refactoring. This may break your bookmarks or permalinks!
+
+
+Bug fixes
+~~~~~~~~~
+
+- Don't traceback if markdown text is ``None``. Originally reported as
+  `SO #53662887 <https://stackoverflow.com/questions/53662887/>`_
+- Show loading spinner when searching. Fixes
+  `Issue #653 <https://github.com/kiwitcms/Kiwi/issues/653>`_
+- Quick fix: when viewing TestPlan cases make TC summary link to the test case.
+  Previously the summary column was a link to nowhere.
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- New and updated internal linters
+- Refactor ``testplans.views.new`` to class based view (Anton Sankov)
+- Refactor ``TestCase -> Bugs tab -> Remove`` to JSON-RPC. References
+  `Issue #18 <https://github.com/kiwitcms/Kiwi/issues/18>`_
+- Refactor ``removeCaseRunBug()`` to JSON-RPC, References
+  `Issue #18 <https://github.com/kiwitcms/Kiwi/issues/18>`_
+- Remove unused ``render_form()`` methods
+- Remove unnecessary string-to-int conversion (Ivaylo Ivanov)
+- Remove obsolete label fields. References
+  `Issue #652 <https://github.com/kiwitcms/Kiwi/issues/652>`_ (Anton Sankov)
+- Pylint fixes
+- Remove JavaScript that duplicates ``requestOperationUponFilteredCases()``
+- Remove ``QuerySetIterationProxy`` class - not used anymore
+
+
 
 Kiwi TCMS 6.3 (4 Dec 2018) - Heisenbug Edition
 ----------------------------------------------
