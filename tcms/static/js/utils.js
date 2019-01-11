@@ -16,7 +16,12 @@ function updateSelect(data, selector, id_attr, value_attr) {
     });
 
     _select_tag.innerHTML = new_options;
-    $(selector).selectpicker('refresh');
+
+    try {
+        $(selector).selectpicker('refresh');
+    } catch(e) {
+        console.warn(e);
+    }
 }
 
 
