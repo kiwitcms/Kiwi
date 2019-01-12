@@ -5,3 +5,18 @@ nav.navbar-default { border-top-color: #9ab451; }
 
 /* todo: used in form error messages, can be improved */
 .errorlist { background: #AF2B2B; border:1px solid #6F1B1B; color:#FFF; font-weight:bold; }
+
+/* typeahead.js styling for autocomplete */
+.tt-menu {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    padding: 8px;
+    width: 200px;
+}
+
+.tt-suggestion.tt-cursor {
+    background-color: #0088ce;
+    color: #fff;
+}
