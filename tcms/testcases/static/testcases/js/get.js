@@ -1,7 +1,20 @@
+function addTag(module, object_id, tag_input, to_table) {
+    var tag_name = tag_input.value;
+
+    if (tag_name.length > 0) {
+        jsonRPC(module + '.add_tag', [object_id, tag_name], function(data) {
+            to_table.row.add({name: tag_name}).draw();
+            $(tag_input).val('');
+        });
+    }
+}
+
+
 $(document).ready(function() {
     var case_id = $('#test_case_pk').data('pk');
+    var perm_remove_tag = $('#test_case_pk').data('perm-remove-tag') === 'True';
 
-    var table = $('#tags').DataTable({
+    var tags_table = $('#tags').DataTable({
         ajax: function(data, callback, settings) {
             var params = {};
             dataTableJsonRPC('Tag.filter', {case: case_id}, callback);
@@ -12,7 +25,10 @@ $(document).ready(function() {
                 data: null,
                 sortable: false,
                 render: function (data, type, full, meta) {
-                    return '<a href="#" class="remove-tag" data-param="' + data.id  + '"><span class="pficon-error-circle-o"></span></a>';
+                    if (perm_remove_tag) {
+                        return '<a href="#tags" class="remove-tag" data-name="' + data.name  + '"><span class="pficon-error-circle-o"></span></a>';
+                    }
+                    return '';
                 }
             },
         ],
@@ -25,17 +41,42 @@ $(document).ready(function() {
         order: [[ 0, 'asc' ]],
     });
 
-    table.on('draw', function() {
+    // remove button
+    tags_table.on('draw', function() {
         $('.remove-tag').click(function() {
-            jsonRPC('TestCase.remove_tag', [case_id, $(this).data('param')], console.log)
+            var tr = $(this).parents('tr');
+
+            jsonRPC('TestCase.remove_tag', [case_id, $(this).data('name')], function(data) {
+                tags_table.row($(tr)).remove().draw();
+            });
         });
     });
 
+    // add button and Enter key
+    $('#add-tag').click(function() {
+        addTag('TestCase', case_id, $('#id_tags')[0], tags_table);
+    });
 
-    setAddTagAutocomplete();
+    $('#id_tags').keyup(function(event) {
+        if (event.keyCode === 13) {
+            addTag('TestCase', case_id, $('#id_tags')[0], tags_table);
+        };
+    });
 
-//    $('#js-add-tag').bind('click', function() {
-//        addTag($('#tag')[0]);
-//    });
-
+    // autocomplete
+    $('.typeahead').typeahead({
+        minLength: 3,
+        highlight: true
+        }, {
+        name: 'tags-autocomplete',
+        source: function(query, processSync, processAsync) {
+            jsonRPC('Tag.filter', {'name__startswith': query}, function(data) {
+                var processedData = [];
+                data.forEach(function(element) {
+                    processedData.push(element.name);
+                });
+                return processAsync(processedData);
+            });
+        }
+    });
 });

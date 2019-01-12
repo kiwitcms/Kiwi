@@ -10,7 +10,10 @@
 <div class="container-cards-pf">
     <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
     <h1 class="col-md-12" style="margin-top: 0">
-        <span id="test_case_pk" data-pk="{{ test_case.pk }}">TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
+        <span id="test_case_pk"
+            data-pk="{{ test_case.pk }}"
+            data-perm-remove-tag="{{ perms.testcases.delete_testcasetag }}"
+        >TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
     </h1>
 
     <div class="col-xs-12 col-sm-12 col-md-9">
@@ -90,7 +93,7 @@
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
-                <span class="fa 
+                <span class="fa
                     {% if test_case.is_automated %}
                         fa-cog
                     {% else %}
@@ -149,12 +152,11 @@
                             <tr>
                                 <th>
                                     <div class="input-group input-group-sm mb-3">
-                                        <input type="text" class="form-control" id="id_tags">
+                                        <input type="text" class="form-control typeahead" id="id_tags">
                                     </div>
-                                    <div id="id_tags_autocomplete"></div>
                                 </th>
                                 <th>
-                                    <a href="#" id="js-add-tag" title="{% trans 'Add' %}">
+                                    <a href="#tags" id="add-tag" title="{% trans 'Add' %}">
                                         <span class="fa fa-plus"></span>
                                     </a>
                                 </th>
@@ -174,10 +176,6 @@
                 </h2>
 
                 <div class="card-pf-body">
-                    <p>
-                        <strong>{% trans 'Setup' %}:</strong>
-                        {{ test_case_text.setup|markdown2html }}
-                    </p>
                 </div>
             </div>
         </div>
@@ -190,10 +188,6 @@
                 </h2>
 
                 <div class="card-pf-body">
-                    <p>
-                        <strong>{% trans 'Setup' %}:</strong>
-                        {{ test_case_text.setup|markdown2html }}
-                    </p>
                 </div>
             </div>
         </div>
@@ -206,21 +200,14 @@
                 </h2>
 
                 <div class="card-pf-body">
-                    <p>
-                        <strong>{% trans 'Setup' %}:</strong>
-                        {{ test_case_text.setup|markdown2html }}
-                    </p>
                 </div>
             </div>
         </div>
 
     </div><!-- /row -->
 </div>
-
-<!-- for removeTag -->
-<script src="{% static 'js/tcms_actions.js' %}"></script>
+<script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 
 <script src="{% static 'js/jsonrpc.js' %}"></script>
-<script src="{% static 'js/tags.js' %}"></script>
 <script src="{% static 'testcases/js/get.js' %}"></script>
 {% endblock %}
