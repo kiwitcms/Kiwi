@@ -50,7 +50,7 @@
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="card-pf card-pf-accented card-pf-aggregate-status">
             <h2 class="card-pf-title" style="text-align: left">
-                <span class="fa fa-user-secret"></span>{% trans 'Author' %}:
+                <span class="fa pficon-user"></span>{% trans 'Author' %}:
                 <a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author.username }}</a>
             </h2>
 
@@ -134,7 +134,7 @@
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="card-pf card-pf-accented">
                 <h2 class="card-pf-title">
-                    <span class="fa fa-tag"></span>
+                    <span class="fa fa-tags"></span>
                     {% trans 'Tags' %}
                 </h2>
 
@@ -171,7 +171,7 @@
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="card-pf card-pf-accented">
                 <h2 class="card-pf-title">
-                    <span class="fa fa-tag"></span>
+                    <span class="fa pficon-build"></span>
                     {% trans 'Components' %}
                 </h2>
 
@@ -183,7 +183,7 @@
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="card-pf card-pf-accented">
                 <h2 class="card-pf-title">
-                    <span class="fa fa-tag"></span>
+                    <span class="fa fa-paperclip"></span>
                     {% trans 'Attachments' %}
                 </h2>
 
@@ -197,6 +197,30 @@
                 <h2 class="card-pf-title">
                     <span class="fa fa-bug"></span>
                     {% trans 'Bugs' %}
+                </h2>
+
+                <div class="card-pf-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa pficon-topology"></span>
+                    {% trans 'Test plans' %}
+                </h2>
+
+                <div class="card-pf-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-forward"></span>
+                    {% trans 'Executions' %}
                 </h2>
 
                 <div class="card-pf-body">
