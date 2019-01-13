@@ -154,7 +154,7 @@ class ReturnActions:
 
 
 @permission_required('testcases.add_testcase')
-def new(request, template_name='case/edit.html'):
+def new(request):
     """New testcase"""
     test_plan = plan_from_request_or_none(request)
     default_form_parameters = {}
@@ -195,7 +195,7 @@ def new(request, template_name='case/edit.html'):
         'test_plan': test_plan,
         'form': form
     }
-    return render(request, template_name, context_data)
+    return render(request, 'testcases/mutable.html', context_data)
 
 
 def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
