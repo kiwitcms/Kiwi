@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+    {{ form.media }}
+{% endblock %}
+{% block title %}
+    {% trans "New TestCase" %}
+{% endblock %}
+
+{% block contents %}
+
+    <div class="container-fluid container-cards-pf">
+        <form class="form-horizontal" action="{% url 'testcases-new' %}" method="post">
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
+                <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">
+                    <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required>
+                    {% if test_plan %}
+                        <p class="help-block"><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
+                    {% endif %}
+                    {{ form.name.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <input type="text" id="id_default_tester" name="default_tester" value="{{ form.default_tester.value|default:'' }}" class="form-control">
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_product">{% trans "Product" %}</label>
+                    <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
+                    <select id="id_product" name="product" class="form-control selectpicker">
+                        {% for product in form.product.field.queryset %}
+                            <option value="{{ product.pk }}" {% if product.pk == form.product.value %}selected{% endif %}>
+                                {{ product.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.product.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_category">{% trans "Category" %}</label>
+                    <a href="{% url 'admin:testcases_category_add' %}?_popup&product=" id="add_id_category" alt="{% trans 'add new Category' %}" title="{% trans 'add new Category' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.category.errors %}has-error{% endif %}">
+                    <select id="id_category" name="category" class="form-control selectpicker">
+                        {% for category in form.category.field.queryset %}
+                            <option value="{{ category.pk }}" {% if category.pk == form.category.value %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.category.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_status">{% trans "Status" %}</label>
+                <div class="col-md-3 col-lg-3 {% if form.case_status.errors %}has-error{% endif %}">
+                    <select id="id_status" name="case_status" class="form-control selectpicker">
+                        {% for case_status in form.case_status.field.queryset %}
+                            <option value="{{ case_status.pk }}" {% if case_status.pk == form.case_status.value %}selected{% endif %}>
+                                {{ case_status.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.case_status.errors }}
+                </div>
+
+                <label class="col-md-1 col-lg-1" for="id_priority">{% trans "Priority" %}</label>
+                <div class="col-md-3 col-lg-3 {% if form.case_status.errors %}has-error{% endif %}">
+                    <select id="id_priority" name="priority" class="form-control selectpicker">
+                        {% for priority in form.priority.field.queryset %}
+                            <option value="{{ priority.pk }}" {% if priority.pk == form.priority.pk %}selected{% endif %}>
+                                {{ priority.value }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.priority.errors }}
+                </div>
+
+                <label class="col-md-1 col-lg-1">{% trans "Automated" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="is_automated" type="checkbox">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12 col-lg-12">
+                    <label class="{% if form.setup.errors %}has-error{% endif %}">{% trans "Text" %}:</label>
+                    <div>{{ form.text }}</div>
+                    {{ form.text.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_script">{% trans "Script" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.script.errors %}has-error{% endif %}">
+                    <input type="text" id="id_script" name="script" value="" class="form-control">
+                    {{ form.script.errors }}
+                </div>
+
+                <label class="col-md-1 col-lg-1" for="id_arguments">{% trans "Arguments" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.arguments.errors %}has-error{% endif %}">
+                    <input type="text" id="id_arguments" name="arguments" value="" class="form-control">
+                    {{ form.arguments.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_requirments">{% trans "Requirments" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.requirment.errors %}has-error{% endif %}">
+                    <input type="text" id="id_requirments" name="requirement" value="" class="form-control">
+                    {{ form.requirment.errors }}
+                </div>
+                <label class="col-md-1 col-lg-1" for="id_reference_link">{% trans "Reference link" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.extra_link.errors %}has-error{% endif %}">
+                    <input type="text" id="id_reference_link" name="extra_link" value="" class="form-control">
+                    {{ form.extra_link.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_notes" class="col-md-1 col-lg-1">{% trans "Notes" %}</label>
+                <div class="col-md-12 col-lg-12">
+                    <textarea id="id_notes" rows="4" name="notes" class="form-control"></textarea>
+                    {{ form.notes.errors }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+
+        </form>
+    </div>
+
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
+<script src="{% static "grappelli/jquery/jquery.min.js" %}"></script>
+<script src="{% static "grappelli/js/grappelli.min.js" %}"></script>
+<script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}"></script>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
+<script src="{% static 'testcases/js/mutable.js' %}"></script>
+
+{% endblock %}
+
