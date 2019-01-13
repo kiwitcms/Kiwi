@@ -7,6 +7,7 @@
 log/
 dist/
 build/
+uploads/
 docs/source/*.dot
 docs/guide/target
 docs/target/
