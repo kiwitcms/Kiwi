@@ -16,6 +16,7 @@
             data-perm-remove-tag="{{ perms.testcases.delete_testcasetag }}"
             data-perm-remove-component="{{ perms.testcases.delete_testcasecomponent }}"
             data-perm-remove-plan="{{ perms.testcases.delete_testcaseplan }}"
+            data-perm-remove-bug="{{ perms.testcases.delete_bug }}"
         >TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
     </h1>
 
@@ -152,6 +153,25 @@
     </div>
 
     <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-bug"></span>
+                    {% trans 'Bugs' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="bugs">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Bug URL' %}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xs-12 col-sm-6 col-md-9">
             <div class="card-pf card-pf-accented">
                 <h2 class="card-pf-title">
@@ -176,17 +196,6 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <span class="fa fa-bug"></span>
-                    {% trans 'Bugs' %}
-                </h2>
-
-                <div class="card-pf-body">
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="row row-cards-pf">
