@@ -13,6 +13,7 @@
         <span id="test_case_pk"
             data-pk="{{ test_case.pk }}"
             data-perm-remove-tag="{{ perms.testcases.delete_testcasetag }}"
+            data-perm-remove-component="{{ perms.testcases.delete_testcasecomponent }}"
         >TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
     </h1>
 
@@ -64,7 +65,9 @@
             </h2>
 
             <h2 class="card-pf-title" style="text-align: left">
-                <span class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
+                <span id="product_pk"
+                    data-pk="{{ test_case.category.product.pk }}"
+                    class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
                 {{ test_case.category.product }}
             </h2>
 
@@ -176,6 +179,31 @@
                 </h2>
 
                 <div class="card-pf-body">
+                    <table class="table" id="components">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Name' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        {% if perms.testcases.add_testcasecomponent %}
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <div class="input-group input-group-sm mb-3">
+                                        <input type="text" class="form-control typeahead" id="id_components">
+                                    </div>
+                                </th>
+                                <th>
+                                    <a href="#components" id="add-component" title="{% trans 'Add' %}">
+                                        <span class="fa fa-plus"></span>
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
                 </div>
             </div>
         </div>

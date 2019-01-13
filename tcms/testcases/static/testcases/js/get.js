@@ -10,10 +10,30 @@ function addTag(module, object_id, tag_input, to_table) {
 }
 
 
+function addComponent(object_id, _input, to_table) {
+    var _name = _input.value;
+
+    if (_name.length > 0) {
+        jsonRPC('TestCase.add_component', [object_id, _name], function(data) {
+            if (data !== undefined) {
+                to_table.row.add({name: _name}).draw();
+                $(_input).val('');
+            } else {
+                $(_input).parents('div.input-group').addClass('has-error');
+            }
+        });
+    }
+}
+
+
 $(document).ready(function() {
     var case_id = $('#test_case_pk').data('pk');
+    var product_id = $('#product_pk').data('pk');
     var perm_remove_tag = $('#test_case_pk').data('perm-remove-tag') === 'True';
+    var perm_remove_component = $('#test_case_pk').data('perm-remove-component') === 'True';
 
+
+    // tags table
     var tags_table = $('#tags').DataTable({
         ajax: function(data, callback, settings) {
             var params = {};
@@ -41,7 +61,7 @@ $(document).ready(function() {
         order: [[ 0, 'asc' ]],
     });
 
-    // remove button
+    // remove tags button
     tags_table.on('draw', function() {
         $('.remove-tag').click(function() {
             var tr = $(this).parents('tr');
@@ -52,7 +72,7 @@ $(document).ready(function() {
         });
     });
 
-    // add button and Enter key
+    // add tag button and Enter key
     $('#add-tag').click(function() {
         addTag('TestCase', case_id, $('#id_tags')[0], tags_table);
     });
@@ -63,14 +83,14 @@ $(document).ready(function() {
         };
     });
 
-    // autocomplete
-    $('.typeahead').typeahead({
+    // tag autocomplete
+    $('#id_tags.typeahead').typeahead({
         minLength: 3,
         highlight: true
         }, {
         name: 'tags-autocomplete',
         source: function(query, processSync, processAsync) {
-            jsonRPC('Tag.filter', {'name__startswith': query}, function(data) {
+            jsonRPC('Tag.filter', {name__startswith: query}, function(data) {
                 var processedData = [];
                 data.forEach(function(element) {
                     processedData.push(element.name);
@@ -79,4 +99,72 @@ $(document).ready(function() {
             });
         }
     });
+
+    // components table
+    var components_table = $('#components').DataTable({
+        ajax: function(data, callback, settings) {
+            var params = {};
+            dataTableJsonRPC('TestCase.get_components', [case_id], callback);
+        },
+        columns: [
+            { data: "name" },
+            {
+                data: null,
+                sortable: false,
+                render: function (data, type, full, meta) {
+                    if (perm_remove_component) {
+                        return '<a href="#components" class="remove-component" data-pk="' + data.id  + '"><span class="pficon-error-circle-o"></span></a>';
+                    }
+                    return '';
+                }
+            },
+        ],
+        dom: "t",
+        language: {
+            loadingRecords: '<div class="spinner spinner-lg"></div>',
+            processing: '<div class="spinner spinner-lg"></div>',
+            zeroRecords: "No records found"
+        },
+        order: [[ 0, 'asc' ]],
+    });
+
+    // remove component button
+    components_table.on('draw', function() {
+        $('.remove-component').click(function() {
+            var tr = $(this).parents('tr');
+
+            jsonRPC('TestCase.remove_component', [case_id, $(this).data('pk')], function(data) {
+                components_table.row($(tr)).remove().draw();
+            });
+        });
+    });
+
+    // add component button and Enter key
+    $('#add-component').click(function() {
+        addComponent(case_id, $('#id_components')[0], components_table);
+    });
+
+    $('#id_components').keyup(function(event) {
+        if (event.keyCode === 13) {
+            addComponent(case_id, $('#id_components')[0], components_table);
+        };
+    });
+
+    // components autocomplete
+    $('#id_components.typeahead').typeahead({
+        minLength: 3,
+        highlight: true
+        }, {
+        name: 'components-autocomplete',
+        source: function(query, processSync, processAsync) {
+            jsonRPC('Component.filter', {name__startswith: query, product: product_id}, function(data) {
+                var processedData = [];
+                data.forEach(function(element) {
+                    processedData.push(element.name);
+                });
+                return processAsync(processedData);
+            });
+        }
+    });
+
 });
