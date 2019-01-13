@@ -147,7 +147,96 @@
                 </h2>
 
                 <div class="card-pf-body">
-                </div>
+                    <div class="list-group tree-list-view-pf">
+                        {% for plan in case_run_plans %}
+                        <div class="list-group-item">
+                            <div class="list-group-item-header">
+                                <div class="list-view-pf-main-info">
+                                    <div class="list-view-pf-left">
+                                        <span class="fa fa-angle-right"></span>
+                                    </div>
+
+                                    <div class="list-view-pf-body">
+                                        <div class="list-view-pf-description">
+                                            <div class="list-group-item-text">
+                                                <a href="{% url 'test_plan_url_short' plan.pk %}">TP-{{ plan.pk }}: {{ plan.name }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- /main info -->
+                            </div> <!-- /header -->
+
+                            <!-- start caseruns -->
+                            <div class="list-group-item-container container-fluid">
+                                <div class="list-group-item">
+                                    <div class="list-group-item-header">
+                                        <div class="list-view-pf-main-info">
+                                            <div class="list-view-pf-left">
+                                                <span class="fa fa-angle-right"></span>
+                                            </div>
+
+                                            <div class="list-view-pf-body">
+                                                <div class="list-view-pf-description">
+                                                    <div class="list-group-item-heading">
+                                                        CR-1659
+                                                    </div>
+                                                    <div class="list-group-item-text">
+                                                        <a href="#">TR-566: Performance baseline at 2018-10-26 15:18:09</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="list-view-pf-additional-info">
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-check-circle-o"></span>
+                                                        <strong>PASS</strong>
+                                                    </div>
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="pficon pficon-user"></span>
+                                                        <a href="#">atodorov</a>
+                                                    </div>
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-calendar-o"></span>
+                                                        Ян. 13, 2019, 9:54 след обяд
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- / caserun header -->
+                                    <!-- comments -->
+                                    <div class="list-group-item-container container-fluid">
+                                        <div class="list-group-item">
+                                            <div class="list-group-item-header">
+                                                <div class="list-view-pf-main-info">
+                                                    <div class="list-view-pf-left">
+                                                        <span class="fa fa-comment"></span>
+                                                    </div>
+
+                                                    <div class="list-view-pf-body">
+                                                        <div class="list-view-pf-description">
+                                                            <div class="list-group-item-heading">
+                                                                #1
+                                                            </div>
+                                                            <div class="list-group-item-text">
+                                                                The following explains why this test failed.
+                                                            </div>
+                                                        </div>
+                                                        <div class="list-view-pf-additional-info">
+                                                            <div class="list-view-pf-additional-info-item">
+                                                                <span class="fa fa-calendar-o"></span>
+                                                                Ян. 13, 2019, 9:22 след обяд
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- /header -->
+                                        </div>
+                                    </div> <!-- /2nd level -->
+                                </div>
+                            </div> <!-- /children -->
+                        </div> <!-- /plan -->
+                        {% endfor %}
+                    </div>
+                </div> <!-- /card -->
             </div>
         </div>
     </div>
