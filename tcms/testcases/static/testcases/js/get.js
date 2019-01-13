@@ -1,8 +1,3 @@
-$(function() {
-    // matchHeight the contents of each .card-pf and then the .card-pf itself
-    $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-body").matchHeight();
-});
-
 function addTag(module, object_id, tag_input, to_table) {
     var tag_name = tag_input.value;
 
@@ -36,12 +31,12 @@ $(document).ready(function() {
     var product_id = $('#product_pk').data('pk');
     var perm_remove_tag = $('#test_case_pk').data('perm-remove-tag') === 'True';
     var perm_remove_component = $('#test_case_pk').data('perm-remove-component') === 'True';
+    var perm_remove_plan = $('#test_case_pk').data('perm-remove-plan') === 'True';
 
 
     // tags table
     var tags_table = $('#tags').DataTable({
         ajax: function(data, callback, settings) {
-            var params = {};
             dataTableJsonRPC('Tag.filter', {case: case_id}, callback);
         },
         columns: [
@@ -108,7 +103,6 @@ $(document).ready(function() {
     // components table
     var components_table = $('#components').DataTable({
         ajax: function(data, callback, settings) {
-            var params = {};
             dataTableJsonRPC('TestCase.get_components', [case_id], callback);
         },
         columns: [
@@ -170,6 +164,53 @@ $(document).ready(function() {
                 return processAsync(processedData);
             });
         }
+    });
+
+    // testplans table
+    var plans_table = $('#plans').DataTable({
+        ajax: function(data, callback, settings) {
+            dataTableJsonRPC('TestPlan.filter', {case: case_id}, callback);
+        },
+        columns: [
+            { data: "plan_id" },
+            {
+                data: null,
+                render: function (data, type, full, meta) {
+                    return '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
+                }
+            },
+            { data: "author" },
+            { data: "type"},
+            { data: "product" },
+            {
+                data: null,
+                sortable: false,
+                render: function (data, type, full, meta) {
+                    if (perm_remove_plan) {
+                        return '<a href="#plans" class="remove-plan" data-pk="' + data.plan_id  + '"><span class="pficon-error-circle-o"></span></a>';
+                    }
+                    return '';
+                }
+            },
+        ],
+        dom: "t",
+        language: {
+            loadingRecords: '<div class="spinner spinner-lg"></div>',
+            processing: '<div class="spinner spinner-lg"></div>',
+            zeroRecords: "No records found"
+        },
+        order: [[ 0, 'asc' ]],
+    });
+
+    // remove plan button
+    plans_table.on('draw', function() {
+        $('.remove-plan').click(function() {
+            var tr = $(this).parents('tr');
+
+            jsonRPC('TestPlan.remove_case', [$(this).data('pk'), case_id], function(data) {
+                plans_table.row($(tr)).remove().draw();
+            });
+        });
     });
 
 });
