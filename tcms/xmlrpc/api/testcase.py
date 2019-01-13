@@ -34,7 +34,7 @@ __all__ = (
 
 @permissions_required('testcases.add_testcasecomponent')
 @rpc_method(name='TestCase.add_component')
-def add_component(case_id, component_id):
+def add_component(case_id, component):
     """
     .. function:: XML-RPC TestCase.add_component(case_id, component_id)
 
@@ -42,8 +42,8 @@ def add_component(case_id, component_id):
 
         :param case_id: PK of TestCase to modify
         :type case_id: int
-        :param component_id: PK of Component to add
-        :type component_id: int
+        :param component: Name of Component to add
+        :type component_id: str
         :return: None
         :raises: PermissionDenied if missing the *testcases.add_testcasecomponent*
                  permission
@@ -51,7 +51,7 @@ def add_component(case_id, component_id):
                  specified PKs
     """
     TestCase.objects.get(pk=case_id).add_component(
-        Component.objects.get(pk=component_id)
+        Component.objects.get(name=component)
     )
 
 
