@@ -18,6 +18,7 @@
         >TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
     </h1>
 
+<div class="row row-cards-pf">
     <div class="col-xs-12 col-sm-12 col-md-9">
         <div class="card-pf card-pf-accented">
             <div class="card-pf-body">
@@ -131,6 +132,47 @@
             </h2>
 
             <div class="card-pf-body"></div>
+        </div>
+    </div>
+</div>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-forward"></span>
+                    {% trans 'Executions' %}
+                </h2>
+
+                <div class="card-pf-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-6 col-md-9">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa pficon-topology"></span>
+                    {% trans 'Test plans' %}
+                </h2>
+
+                <div class="card-pf-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-bug"></span>
+                    {% trans 'Bugs' %}
+                </h2>
+
+                <div class="card-pf-body">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -253,44 +295,9 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <span class="fa fa-bug"></span>
-                    {% trans 'Bugs' %}
-                </h2>
-
-                <div class="card-pf-body">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <span class="fa pficon-topology"></span>
-                    {% trans 'Test plans' %}
-                </h2>
-
-                <div class="card-pf-body">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-3">
-            <div class="card-pf card-pf-accented">
-                <h2 class="card-pf-title">
-                    <span class="fa fa-forward"></span>
-                    {% trans 'Executions' %}
-                </h2>
-
-                <div class="card-pf-body">
-                </div>
-            </div>
-        </div>
-
     </div><!-- /row -->
 </div>
+<script src="{% static 'jquery-match-height/dist/jquery.matchHeight-min.js' %}"></script>
 <script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
 
 <script src="{% static 'js/jsonrpc.js' %}"></script>
