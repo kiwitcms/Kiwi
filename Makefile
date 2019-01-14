@@ -33,6 +33,13 @@ test:
 		PYTHONWARNINGS=d coverage run --source='.' ./manage.py test --noinput --settings=$(DJANGO_SETTINGS_MODULE); \
 	fi
 
+# test for missing migrations
+# https://stackoverflow.com/questions/54177838/
+.PHONY: test_for_missing_migrations
+test_for_missing_migrations:
+	./manage.py migrate --settings=$(DJANGO_SETTINGS_MODULE)
+	./manage.py makemigrations --check --settings=$(DJANGO_SETTINGS_MODULE)
+
 .PHONY: check
 check: flake8 test
 
