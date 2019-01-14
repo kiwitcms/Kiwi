@@ -240,6 +240,17 @@ class TestCaseRunStatus(TCMSActionModel):
     PASSED = 'PASSED'
     IDLE = 'IDLE'
 
+    _icons = {
+        'IDLE': 'fa fa-question-circle-o',
+        'RUNNING': 'fa fa-play-circle-o',
+        'PAUSED': 'fa fa-pause-circle-o',
+        PASSED: 'fa fa-check-circle-o',
+        FAILED: 'fa fa-times-circle-o',
+        BLOCKED: 'fa fa-stop-circle-o',
+        'ERROR': 'fa fa-minus-circle',
+        'WAIVED': 'fa fa-commenting-o',
+    }
+
     complete_status_names = (PASSED, 'ERROR', FAILED, 'WAIVED')
     failure_status_names = ('ERROR', FAILED)
     idle_status_names = (IDLE,)
@@ -259,6 +270,9 @@ class TestCaseRunStatus(TCMSActionModel):
     def get_names_ids(cls):
         """ Get all status names in reverse mapping between name and id """
         return dict((name, _id) for _id, name in cls.get_names().items())
+
+    def icon(self):
+        return self._icons[self.name]
 
 
 # register model for DB translations
