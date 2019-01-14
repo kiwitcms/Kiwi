@@ -95,6 +95,11 @@ jobs:
           packages:
             - graphviz
 
+    - stage: non_functional_testing
+      env:
+        - TEST_DB=SQLite
+        - CMD=test_for_missing_migrations
+
     - stage: docker
       env:
         - CMD=test-docker-image
