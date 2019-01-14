@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
+{% load comments %}
 {% load extra_filters %}
 {% load attachments_tags %}
 
@@ -148,8 +149,13 @@
 
                 <div class="card-pf-body">
                     <div class="list-group tree-list-view-pf">
-                        {% for plan in case_run_plans %}
-                        <div class="list-group-item">
+                {% for execution in test_case_runs %}
+                    {% ifchanged execution.run.plan.pk %}
+                        {% if not forloop.first %}
+                        </div> <!-- /plan -->
+                        {% endif %}
+
+                        <div class="list-group-item" id="execution-for-plan-{{ execution.run.plan.pk }}">
                             <div class="list-group-item-header">
                                 <div class="list-view-pf-main-info">
                                     <div class="list-view-pf-left">
@@ -159,37 +165,51 @@
                                     <div class="list-view-pf-body">
                                         <div class="list-view-pf-description">
                                             <div class="list-group-item-text">
-                                                <a href="{% url 'test_plan_url_short' plan.pk %}">TP-{{ plan.pk }}: {{ plan.name }}</a>
+                                                <a href="{% url 'test_plan_url_short' execution.run.plan.pk %}">TP-{{ execution.run.plan.pk }}: {{ execution.run.plan.name }}</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div> <!-- /main info -->
                             </div> <!-- /header -->
-
+                    {% endifchanged %}
                             <!-- start caseruns -->
                             <div class="list-group-item-container container-fluid">
+                            {% get_comment_list for execution as case_run_comments %}
+                            {% with bugs=execution.get_bugs %}
                                 <div class="list-group-item">
                                     <div class="list-group-item-header">
                                         <div class="list-view-pf-main-info">
                                             <div class="list-view-pf-left">
-                                                <span class="fa fa-angle-right"></span>
+                                                <span class="fa {% if case_run_comments or bugs %}fa-angle-right{% else %}fa-exclamation{% endif %}"></span>
                                             </div>
 
                                             <div class="list-view-pf-body">
                                                 <div class="list-view-pf-description">
                                                     <div class="list-group-item-heading">
-                                                        CR-1659
+                                                        CR-{{ execution.pk }}
                                                     </div>
                                                     <div class="list-group-item-text">
-                                                        <a href="#">TR-566: Performance baseline at 2018-10-26 15:18:09</a>
+                                                        <a href="{% url 'testruns-get' execution.run.pk %}">TR-{{ execution.run.pk }}: {{ execution.run.summary }}</a>
                                                     </div>
                                                 </div>
 
                                                 <div class="list-view-pf-additional-info">
                                                     <div class="list-view-pf-additional-info-item">
-                                                        <span class="fa fa-check-circle-o"></span>
-                                                        <strong>PASS</strong>
+                                                        <span class="{{ execution.case_run_status.icon }}"></span>
+                                                        <strong>{{ execution.case_run_status.name }}</strong>
                                                     </div>
+                                                    {% if bugs %}
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-bug"></span>
+                                                        <strong>{{ bugs|length }}</strong>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if case_run_comments %}
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-comments"></span>
+                                                        <strong>{{ case_run_comments|length }}</strong>
+                                                    </div>
+                                                    {% endif %}
                                                     <div class="list-view-pf-additional-info-item">
                                                         <span class="pficon pficon-user"></span>
                                                         <a href="#">atodorov</a>
@@ -202,6 +222,33 @@
                                             </div>
                                         </div>
                                     </div> <!-- / caserun header -->
+                                {% for bug in bugs %}
+                                    <div class="list-group-item-container container-fluid">
+                                        <div class="list-group-item">
+                                            <div class="list-group-item-header">
+                                                <div class="list-view-pf-main-info">
+                                                    <div class="list-view-pf-left">
+                                                        <span class="fa fa-bug"></span>
+                                                    </div>
+                                                    <div class="list-view-pf-body">
+                                                        <div class="list-view-pf-description">
+                                                            <div class="list-group-item-heading">
+                                                                <a href="{{ bug.get_full_url }}">{{ bug.bug_id }}</a>
+                                                            </div>
+                                                            <div class="list-group-item-text">
+                                                                <a href="{{ bug.get_full_url }}">{{ bug.get_full_url }}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="list-view-pf-additional-info">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- /bug -->
+                                {% endfor %}
+
+                                {% for comment in case_run_comments %}
                                     <!-- comments -->
                                     <div class="list-group-item-container container-fluid">
                                         <div class="list-group-item">
@@ -214,27 +261,31 @@
                                                     <div class="list-view-pf-body">
                                                         <div class="list-view-pf-description">
                                                             <div class="list-group-item-heading">
-                                                                #1
+                                                                #{{ forloop.counter }}
                                                             </div>
                                                             <div class="list-group-item-text">
-                                                                The following explains why this test failed.
+                                                                {{ comment.comment }}
                                                             </div>
                                                         </div>
                                                         <div class="list-view-pf-additional-info">
                                                             <div class="list-view-pf-additional-info-item">
                                                                 <span class="fa fa-calendar-o"></span>
-                                                                Ян. 13, 2019, 9:22 след обяд
+                                                                {{ comment.submit_date }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div> <!-- /header -->
                                         </div>
-                                    </div> <!-- /2nd level -->
+                                    </div> <!-- /comment -->
+                                {% endfor %}
                                 </div>
-                            </div> <!-- /children -->
+                            {% endwith %}
+                            </div> <!-- /caseruns -->
+                        {% if forloop.last %}
                         </div> <!-- /plan -->
-                        {% endfor %}
+                        {% endif %}
+                {% endfor %}
                     </div>
                 </div> <!-- /card -->
             </div>

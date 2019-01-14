@@ -718,7 +718,7 @@ def get(request, case_id):
     tcrs = test_case.case_run.select_related(
         'run', 'tested_by',
         'assignee', 'case',
-        'case', 'case_run_status').order_by('run__plan')
+        'case', 'case_run_status').order_by('run__plan', 'run')
     # FIXME: Just don't know why Django template does not evaluate a generator,
     # and had to evaluate the groupby generator manually like below.
     runs_ordered_by_plan = []
