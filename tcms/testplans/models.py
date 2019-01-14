@@ -46,7 +46,7 @@ class TestPlan(TCMSActionModel):
     product = models.ForeignKey('management.Product', related_name='plan',
                                 on_delete=models.CASCADE)
     type = models.ForeignKey(PlanType, on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
+    parent = models.ForeignKey('TestPlan', blank=True, null=True, related_name='child_set',
                                on_delete=models.CASCADE)
 
     tag = models.ManyToManyField('management.Tag',
