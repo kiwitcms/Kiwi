@@ -708,8 +708,6 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .list .hide li{ margin-left:12px;}
 .list .hide li td{border:0px; padding:0 4px 0 0; line-height:18px;}
 .list .right_panel{ border:1px solid #ccc; background:#fff; vertical-align:top; padding:10px;}
-.list .listGroupBlue{background:#C2DFFF; padding:0px 5px; color:#000000;}
-
 
 #sort{ margin:2px 0px; color:#fff; }
 #sort a{ color:#fff; }
