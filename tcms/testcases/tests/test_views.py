@@ -5,7 +5,6 @@ import unittest
 from http import HTTPStatus
 from urllib.parse import urlencode
 
-from django.contrib.auth.models import User
 from django.urls import reverse
 from django.forms import ValidationError
 from django.test import RequestFactory
@@ -13,15 +12,11 @@ from django.test import RequestFactory
 from tcms.testcases.fields import MultipleEmailField
 from tcms.management.models import Priority, Tag
 from tcms.testcases.models import TestCase
-from tcms.testcases.models import BugSystem
-from tcms.testcases.models import TestCasePlan
 from tcms.testcases.views import get_selected_testcases
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import BugFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestPlanFactory
 from tcms.tests import BasePlanCase, BaseCaseRun
-from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -127,156 +122,6 @@ class TestMultipleEmailField(unittest.TestCase):
         self.field.required = False
         data = self.field.clean(value)
         self.assertEqual(data, [])
-
-
-class TestAddIssueToCase(BasePlanCase):
-    """Tests for adding issue to case"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestAddIssueToCase, cls).setUpTestData()
-
-        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='plantester',
-            email='plantester@example.com',
-            password='password')
-        user_should_have_perm(cls.plan_tester, 'testcases.change_bug')
-
-        cls.case_bug_url = reverse('testcases-bug', args=[cls.case_1.pk])
-        cls.issue_tracker = BugSystem.objects.get(name='Bugzilla')
-
-    def test_add_and_remove_a_bug(self):
-        user_should_have_perm(self.plan_tester, 'testcases.add_bug')
-        user_should_have_perm(self.plan_tester, 'testcases.delete_bug')
-
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        request_data = {
-            'handle': 'add',
-            'case': self.case_1.pk,
-            'bug_id': '123456',
-            'bug_system': self.issue_tracker.pk,
-        }
-        self.client.get(self.case_bug_url, request_data)
-        self.assertTrue(self.case_1.case_bug.filter(bug_id='123456').exists())
-
-        request_data = {
-            'handle': 'remove',
-            'case': self.case_1.pk,
-            'bug_id': '123456',
-        }
-        self.client.get(self.case_bug_url, request_data)
-
-        not_have_bug = self.case_1.case_bug.filter(bug_id='123456').exists()
-        self.assertTrue(not_have_bug)
-
-
-class TestOperateCasePlans(BasePlanCase):
-    """Test operation in case' plans tab"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestOperateCasePlans, cls).setUpTestData()
-
-        # Besides the plan and its cases created in parent class, this test case
-        # also needs other cases in order to list multiple plans of a case and
-        # remove a plan from a case.
-
-        cls.plan_test_case_plans = TestPlanFactory(author=cls.tester,
-                                                   product=cls.product,
-                                                   product_version=cls.version)
-        cls.plan_test_add = TestPlanFactory(author=cls.tester,
-                                            product=cls.product,
-                                            product_version=cls.version)
-        cls.plan_test_remove = TestPlanFactory(author=cls.tester,
-                                               product=cls.product,
-                                               product_version=cls.version)
-
-        cls.case_1.add_to_plan(cls.plan_test_case_plans)
-        cls.case_1.add_to_plan(cls.plan_test_remove)
-
-        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='plantester',
-            email='plantester@example.com',
-            password='password')
-
-        cls.case_plans_url = reverse('testcases-plan', args=[cls.case_1.pk])
-
-    def tearDown(self):
-        remove_perm_from_user(self.plan_tester, 'testcases.add_testcaseplan')
-        remove_perm_from_user(self.plan_tester, 'testcases.change_testcaseplan')
-
-    def assert_list_case_plans(self, response, case):
-        for case_plan_rel in TestCasePlan.objects.filter(case=case):
-            plan = case_plan_rel.plan
-            self.assertContains(
-                response,
-                '<a href="{0}">TP-{1}: {2}</a>'.format(
-                    reverse('test_plan_url_short', args=[plan.pk]),
-                    plan.pk,
-                    plan.name),
-                html=True)
-
-    def test_list_plans(self):
-        response = self.client.get(self.case_plans_url)
-        self.assert_list_case_plans(response, self.case_1)
-
-    def test_missing_permission_to_add(self):
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'add', 'plan_id': self.plan_test_add.pk})
-        self.assertContains(response, 'Permission denied')
-
-    def test_missing_permission_to_remove(self):
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'remove', 'plan_id': self.plan_test_remove.pk})
-        self.assertContains(response, 'Permission denied')
-
-    def test_add_a_plan(self):
-        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'add', 'plan_id': self.plan_test_add.pk})
-
-        self.assert_list_case_plans(response, self.case_1)
-
-        self.assertTrue(TestCasePlan.objects.filter(
-            plan=self.plan_test_add, case=self.case_1).exists())
-
-    def test_remove_a_plan(self):
-        user_should_have_perm(self.plan_tester, 'testcases.change_testcaseplan')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'remove', 'plan_id': self.plan_test_remove.pk})
-
-        self.assert_list_case_plans(response, self.case_1)
-
-        not_linked_to_plan = not TestCasePlan.objects.filter(
-            case=self.case_1, plan=self.plan_test_remove).exists()
-        self.assertTrue(not_linked_to_plan)
-
-    def test_add_a_few_plans(self):
-        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        # This time, add a few plans to another case
-        url = reverse('testcases-plan', args=[self.case_2.pk])
-
-        response = self.client.get(url,
-                                   {'a': 'add', 'plan_id': [self.plan_test_add.pk,
-                                                            self.plan_test_remove.pk]})
-
-        self.assert_list_case_plans(response, self.case_2)
-
-        self.assertTrue(TestCasePlan.objects.filter(
-            case=self.case_2, plan=self.plan_test_add).exists())
-        self.assertTrue(TestCasePlan.objects.filter(
-            case=self.case_2, plan=self.plan_test_remove).exists())
 
 
 class TestEditCase(BasePlanCase):

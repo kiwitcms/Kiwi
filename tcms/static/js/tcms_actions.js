@@ -53,7 +53,6 @@ var default_messages = {
     'last_case_run': 'It is the last case run',
     'invalid_bug_id': 'Please input a valid bug id!',
     'no_bugs_specified': 'Please specify bug ID',
-    'no_plan_specified': 'Please specify one plan at least.'
   },
   'confirm': {
     'change_case_status': 'Are you sure you want to change the status?',
@@ -90,7 +89,6 @@ var default_messages = {
       logout: '/accounts/logout/',
 
       case_details: '/case/$id/',
-      case_plan: '/case/$id/plan/',
       case_run_bug: '/runs/$id/bug/',
       search_case: '/cases/',
     },

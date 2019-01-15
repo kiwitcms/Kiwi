@@ -6,18 +6,14 @@ from django.conf import settings
 from django.contrib import messages
 from django.test import modify_settings
 from django.contrib.auth.decorators import permission_required
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
-from django.db.models import Count
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
-
-from django_comments.models import Comment
 
 from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
@@ -30,7 +26,7 @@ from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.forms import NewCaseForm, \
     SearchCaseForm, EditCaseForm, CaseNotifyForm, \
-    CloneCaseForm, CaseBugForm
+    CloneCaseForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.utils.dict_utils import create_dict_from_query
 from tcms.testcases.fields import MultipleEmailField
@@ -557,92 +553,6 @@ class SimpleTestCaseView(TemplateView):
             'case_comments': get_comments(case),
         })
 
-        return data
-
-
-def get_comments_count(caserun_ids):
-    content_type = ContentType.objects.get_for_model(TestCaseRun)
-    comments = Comment.objects.filter(content_type=content_type,
-                                      object_pk__in=caserun_ids,
-                                      site_id=settings.SITE_ID,
-                                      is_removed=False)
-    comments = comments.values('object_pk').annotate(comment_count=Count('pk'))
-    result = {}
-    for item in comments.iterator():
-        result[int(item['object_pk'])] = item['comment_count']
-    return result
-
-
-class TestCaseCaseRunListPaneView(TemplateView):
-    """Display case runs list when expand a plan item from case page, Case Runs tab"""
-
-    template_name = 'case/get_case_runs_by_plan.html'
-    plan_id = None
-
-    def get(self, request, *args, **kwargs):
-        plan_id = self.request.GET.get('plan_id', None)
-        self.plan_id = int(plan_id) if plan_id is not None else None
-        return super().get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-
-        case_runs = TestCaseRun.objects.filter(
-            case=kwargs['case_id'],
-            run__plan=self.plan_id
-        ).values(
-            'pk', 'case_id', 'run_id', 'case_text_version',
-            'close_date', 'sortkey',
-            'tested_by__username', 'assignee__username',
-            'run__plan_id', 'run__summary',
-            'case__category__name', 'case__priority__value',
-            'case_run_status__name',
-        ).order_by('pk')
-
-        # Get the number of each caserun's comments, and put the count into
-        # comments query result.
-        caserun_ids = []
-
-        for item in case_runs:
-            caserun_ids.append(item['pk'])
-
-        comments_count = get_comments_count(caserun_ids)
-        for case_run in case_runs:
-            case_run['comments_count'] = comments_count.get(case_run['pk'], 0)
-
-        data.update({
-            'case_runs': case_runs,
-        })
-        return data
-
-
-class TestCaseSimpleCaseRunView(TemplateView):
-    """Display caserun information in Case Runs tab in case page
-
-    This view only shows notes, comments and logs simply. So, call it simple.
-    """
-
-    template_name = 'case/get_details_case_case_run.html'
-    caserun_id = None
-
-    def get(self, request, *args, **kwargs):
-        try:
-            self.caserun_id = int(request.GET.get('case_run_id', None))
-        except (TypeError, ValueError):
-            raise Http404
-
-        return super().get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-
-        caserun = TestCaseRun.objects.get(pk=self.caserun_id)
-        comments = get_comments(caserun)
-
-        data.update({
-            'test_caserun': caserun,
-            'comments': comments.iterator(),
-        })
         return data
 
 
@@ -1258,139 +1168,3 @@ def attachment(request, case_id, template_name='case/attachment.html'):
         'limit': settings.FILE_UPLOAD_MAX_SIZE,
     }
     return render(request, template_name, context)
-
-
-@permission_required('testcases.change_bug')
-def bug(request, case_id, template_name='case/get_bug.html'):
-    """Process the bugs for cases"""
-    # FIXME: Rewrite these codes for Ajax.Request
-    test_case = get_object_or_404(TestCase, case_id=case_id)
-
-    class CaseBugActions:
-        all_actions = ['get_form', 'render', 'add']
-
-        def __init__(self, request, case, template_name):
-            self.request = request
-            self.case = case
-            self.template_name = template_name
-
-        def render(self, response=None):
-            context = {
-                'test_case': self.case,
-                'response': response
-            }
-            return render(request, template_name, context)
-
-        def add(self):
-            # FIXME: It's may use ModelForm.save() method here.
-            #        Maybe in future.
-            if not self.request.user.has_perm('testcases.add_bug'):
-                return self.render(response='Permission denied.')
-
-            form = CaseBugForm(request.GET)
-            if not form.is_valid():
-                errors = []
-                for _field_name, error_messages in form.errors.items():
-                    for item in error_messages:
-                        errors.append(item)
-                response = '\n'.join(errors)
-                return self.render(response=response)
-
-            try:
-                self.case.add_bug(
-                    bug_id=form.cleaned_data['bug_id'],
-                    bug_system_id=form.cleaned_data['bug_system'].pk,
-                    summary=form.cleaned_data['summary'],
-                    description=form.cleaned_data['description'],
-                )
-            except Exception as exception:
-                return self.render(response=str(exception))
-
-            return self.render()
-
-    case_bug_actions = CaseBugActions(
-        request=request,
-        case=test_case,
-        template_name=template_name
-    )
-
-    if not request.GET.get('handle') in case_bug_actions.all_actions:
-        return case_bug_actions.render(response='Unrecognizable actions')
-
-    func = getattr(case_bug_actions, request.GET['handle'])
-    return func()
-
-
-@require_GET
-def case_plan(request, case_id):
-    """Add and remove plan in plan tab"""
-    test_case = get_object_or_404(TestCase, case_id=case_id)
-    if request.GET.get('a'):
-        # Search the plans from database
-        if not request.GET.getlist('plan_id'):
-            context = {
-                'message': 'The case must specific one plan at leaset for '
-                           'some action',
-            }
-            return render(
-                request,
-                'case/get_plan.html',
-                context)
-
-        tps = TestPlan.objects.filter(pk__in=request.GET.getlist('plan_id'))
-
-        if not tps:
-            context = {
-                'testplans': tps,
-                'message': 'The plan id are not exist in database at all.'
-            }
-            return render(
-                request,
-                'case/get_plan.html',
-                context)
-
-        # Add case plan action
-        if request.GET['a'] == 'add':
-            if not request.user.has_perm('testcases.add_testcaseplan'):
-                context = {
-                    'test_case': test_case,
-                    'test_plans': tps,
-                    'message': 'Permission denied',
-                }
-                return render(
-                    request,
-                    'case/get_plan.html',
-                    context)
-
-            for test_plan in tps:
-                test_case.add_to_plan(test_plan)
-
-        # Remove case plan action
-        if request.GET['a'] == 'remove':
-            if not request.user.has_perm('testcases.change_testcaseplan'):
-                context = {
-                    'test_case': test_case,
-                    'test_plans': tps,
-                    'message': 'Permission denied',
-                }
-                return render(
-                    request,
-                    'case/get_plan.html',
-                    context)
-
-            for test_plan in tps:
-                test_case.remove_plan(test_plan)
-
-    tps = test_case.plan.all()
-    tps = tps.select_related('author',
-                             'type',
-                             'product')
-
-    context = {
-        'test_case': test_case,
-        'test_plans': tps,
-    }
-    return render(
-        request,
-        'case/get_plan.html',
-        context)
