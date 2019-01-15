@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-30 18:09+0000\n"
+"POT-Creation-Date: 2019-01-15 22:16+0000\n"
 "PO-Revision-Date: 2019-01-02 19:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
@@ -10,7 +10,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: kiwitcms\n"
 "X-Crowdin-Language: sl\n"
@@ -26,7 +27,10 @@ msgid "Core customized comments"
 msgstr "Jedrni komentarji - po meri"
 
 #: tcms/core/contrib/comments/forms.py:14
-#: tcms/testplans/templates/testplans/mutable.html:20
+#: tcms/testcases/templates/testcases/get.html:327
+#: tcms/testcases/templates/testcases/get.html:353
+#: tcms/testcases/templates/testcases/get.html:390
+#: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
 msgstr "Ime"
@@ -50,21 +54,31 @@ msgstr "POSODOBITEV: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
-msgid "Updated on %(history_date)s\n"
-"Updated by %(username)s\n\n"
-"%(diff)s\n\n"
+msgid ""
+"Updated on %(history_date)s\n"
+"Updated by %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr "Čas posodobitve %(history_date)s\n"
-"Posodobil %(username)s\n\n"
-"%(diff)s\n\n"
+msgstr ""
+"Čas posodobitve %(history_date)s\n"
+"Posodobil %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "Dodatne informacije:\n"
 "%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "URL aplikacije ni nastavljen! <a href=\"%(doc_url)s\">Preverite dokumentacijo</a> in ga <a href=\"%(admin_url)s\">spremenite</a>"
+msgid ""
+"Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> "
+"and <a href=\"%(admin_url)s\">change it</a>"
+msgstr ""
+"URL aplikacije ni nastavljen! <a href=\"%(doc_url)s\">Preverite "
+"dokumentacijo</a> in ga <a href=\"%(admin_url)s\">spremenite</a>"
 
 #: tcms/kiwi_auth/admin.py:24
 msgid "This email address is already in use"
@@ -88,12 +102,18 @@ msgid "Your new %s account confirmation"
 msgstr "Informacije o uporabniškem računu %s ."
 
 #: tcms/kiwi_auth/views.py:47
-msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Uporabniški račun je bil uspešno kreiran, preverite vaš e-poštni nabiralnik za potrditveno povezavo preko katere ga aktivirate"
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+"Uporabniški račun je bil uspešno kreiran, preverite vaš e-poštni nabiralnik "
+"za potrditveno povezavo preko katere ga aktivirate"
 
 #: tcms/kiwi_auth/views.py:53
-msgid "Your account has been created, but you need an administrator to activate it"
-msgstr "Uporabniški račun je bil ustvarjen. Pred uporabo ga mora potrditi še administrator"
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
+msgstr ""
+"Uporabniški račun je bil ustvarjen. Pred uporabo ga mora potrditi še "
+"administrator"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
@@ -208,7 +228,7 @@ msgstr "Strani ni mogoče najti"
 msgid "Internal Server Error"
 msgstr "Notranja napaka na strežniku"
 
-#: tcms/templates/base.html:9 tcms/templates/registration/login.html:46
+#: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
 msgstr "vodilni odprtokodni sistem za upravljanje s testnimi scenariji"
 
@@ -226,12 +246,16 @@ msgstr "Začeto ob"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid "\n"
-"                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
+msgid ""
+"\n"
+"                %(total_count)s TestRun(s) or TestCase(s) assigned to you "
+"need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"                %(total_count)s testiranj in/ali testov na katere ste dodeljeni scenarijev čaka na izvedbo.\n"
+msgstr ""
+"\n"
+"                %(total_count)s testiranj in/ali testov na katere ste "
+"dodeljeni scenarijev čaka na izvedbo.\n"
 "               Prikazanih je zadnjih %(count)s.\n"
 "                "
 
@@ -252,8 +276,10 @@ msgid "TestPlan"
 msgstr "Repozitorij testov"
 
 #: tcms/templates/dashboard.html:49
+#: tcms/testcases/templates/testcases/get.html:75
+#: tcms/testcases/templates/testcases/get.html:330
 #: tcms/testcases/templates/testcases/search.html:34
-#: tcms/testplans/templates/testplans/mutable.html:29
+#: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:66
 #: tcms/testplans/templates/testplans/search.html:136
 #: tcms/testruns/templates/testruns/mutable.html:46
@@ -263,24 +289,30 @@ msgid "Product"
 msgstr "Izdelek"
 
 #: tcms/templates/dashboard.html:50
-#: tcms/testplans/templates/testplans/mutable.html:62
+#: tcms/testcases/templates/testcases/get.html:329
+#: tcms/testplans/templates/testplans/mutable.html:65
 #: tcms/testplans/templates/testplans/search.html:86
 #: tcms/testplans/templates/testplans/search.html:137
 msgid "Type"
 msgstr "Tip"
 
 #: tcms/templates/dashboard.html:51
+#: tcms/testcases/templates/testcases/get.html:147
 msgid "Executions"
 msgstr "Izvedbe"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
-msgid "\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+msgid ""
+"\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
+"are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"                Imate %(total_count)s reopozitorijev testov, %(disabled_count)s je onemogočenih.\n"
+msgstr ""
+"\n"
+"                Imate %(total_count)s reopozitorijev testov, "
+"%(disabled_count)s je onemogočenih.\n"
 "                Tukaj so zadnji %(count)s.\n"
 "                "
 
@@ -290,61 +322,84 @@ msgstr "Noben testni plan vam ni dodeljen"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid "Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n\n"
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr "Pozdravljen-/a %(user)s,\n"
-"uspešno je bil kreiran uporabniški račun za domeno %(site_domain)s !\n\n"
+msgstr ""
+"Pozdravljen-/a %(user)s,\n"
+"uspešno je bil kreiran uporabniški račun za domeno %(site_domain)s !\n"
+"\n"
 "Za aktivacijo računa kliknite na spodnjo povezavo\n"
 "%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "TestCase has been updated by %(username)s!\n"
-msgstr "\n"
+msgstr ""
+"\n"
 "Testni scenarij je posodobil %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid "\n"
-"Test run %(pk)s has been created or updated for you.\n\n"
+msgid ""
+"\n"
+"Test run %(pk)s has been created or updated for you.\n"
+"\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n\n"
+"Summary: %(summary)s\n"
+"\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n\n"
+"Default tester: %(default_tester)s.\n"
+"\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n\n"
+"Build: %(build)s\n"
+"\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr "\n"
-"Testiranje %(pk)s je bilo ustvarjeno ali posobljeno.\n\n"
+msgstr ""
+"\n"
+"Testiranje %(pk)s je bilo ustvarjeno ali posobljeno.\n"
+"\n"
 "### Povezano ###\n"
 "Testiranje: %(run_url)s\n"
-"Baza testnih scenarijev: %(plan_url)s\n\n"
+"Baza testnih scenarijev: %(plan_url)s\n"
+"\n"
 "### Osnovne informacije o testiranju ###\n"
-"Povzetek: %(summary)s\n\n"
+"Povzetek: %(summary)s\n"
+"\n"
 "Vodja testiranja: %(manager)s.\n"
-"Zadolženi tester: %(default_tester)s.\n\n"
+"Zadolženi tester: %(default_tester)s.\n"
+"\n"
 "Produkt: %(product)s\n"
 "Verzija produkta: %(version)s\n"
-"Build: %(build)s\n\n"
+"Build: %(build)s\n"
+"\n"
 "Zapiski:\n"
 "%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid "Dear Administrator,\n"
+msgid ""
+"Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr "Spoštovani administrator,\n"
-"uporabnik %(username)s je kreiral nov uporabniški račun v sistemu Kiwi TCMS, kateri čaka na potrditev.\n\n"
+msgstr ""
+"Spoštovani administrator,\n"
+"uporabnik %(username)s je kreiral nov uporabniški račun v sistemu Kiwi TCMS, "
+"kateri čaka na potrditev.\n"
+"\n"
 "Aktivacija računa je mogoča na sledeči povezavi %(user_url)s !\n"
 
 #: tcms/templates/pagination.html:7
@@ -401,7 +456,9 @@ msgid "Change password"
 msgstr "Spremeni geslo"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid "Please enter your new password twice so we can verify you typed it in correctly"
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly"
 msgstr "Novo geslo vnesite dvakrat"
 
 #: tcms/templates/registration/password_reset_done.html:11
@@ -430,13 +487,152 @@ msgid "Register"
 msgstr "Registracija"
 
 #: tcms/testcases/forms.py:36
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "Prosimo vnesite veljavne Id-je testni scenarijev. Uporabite vejico za več primerov npr. \"111, 222\""
+msgid ""
+"Please input valid case id(s). use comma to split more than one case id. e."
+"g. \"111, 222\""
+msgstr ""
+"Prosimo vnesite veljavne Id-je testni scenarijev. Uporabite vejico za več "
+"primerov npr. \"111, 222\""
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
 msgstr "Izbrisan: Testni scenarij #%{pk}d - %{summary}s"
+
+#: tcms/testcases/templates/testcases/get.html:29
+msgid "Setup"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:34
+msgid "Actions"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:39
+msgid "Expected result"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:44
+msgid "Breakdown"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:49
+#: tcms/testruns/templates/testruns/mutable.html:66
+msgid "Notes"
+msgstr "Opombe"
+
+#: tcms/testcases/templates/testcases/get.html:59
+#: tcms/testcases/templates/testcases/get.html:328
+#: tcms/testcases/templates/testcases/search.html:88
+#: tcms/testcases/templates/testcases/search.html:122
+#: tcms/testplans/templates/testplans/mutable.html:101
+#: tcms/testplans/templates/testplans/search.html:98
+#: tcms/testplans/templates/testplans/search.html:135
+#: tcms/testruns/templates/testruns/mutable.html:95
+msgid "Author"
+msgstr "Avtor"
+
+#: tcms/testcases/templates/testcases/get.html:64
+#: tcms/testcases/templates/testcases/search.html:123
+#: tcms/testplans/templates/testplans/mutable.html:113
+#: tcms/testruns/templates/testruns/search.html:94
+msgid "Default tester"
+msgstr "Privzeti tester"
+
+#: tcms/testcases/templates/testcases/get.html:80
+#: tcms/testcases/templates/testcases/search.html:44
+#: tcms/testcases/templates/testcases/search.html:126
+#: tcms/testruns/templates/testruns/mutable.html:98
+msgid "Category"
+msgstr "Kategorija"
+
+#: tcms/testcases/templates/testcases/get.html:90
+#: tcms/testcases/templates/testcases/search.html:75
+#: tcms/testcases/templates/testcases/search.html:125
+#: tcms/testruns/templates/testruns/mutable.html:97
+msgid "Status"
+msgstr "Status"
+
+#: tcms/testcases/templates/testcases/get.html:95
+#: tcms/testcases/templates/testcases/search.html:66
+#: tcms/testcases/templates/testcases/search.html:127
+#: tcms/testruns/templates/testruns/mutable.html:99
+msgid "Priority"
+msgstr "Prioriteta"
+
+#: tcms/testcases/templates/testcases/get.html:109
+#: tcms/testcases/templates/testcases/search.html:16
+#: tcms/testcases/templates/testcases/search.html:124
+msgid "Automated"
+msgstr "Avtomatizirano"
+
+#: tcms/testcases/templates/testcases/get.html:114
+msgid "Script"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:119
+msgid "Arguments"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:124
+msgid "Requirements"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:129
+#: tcms/testplans/templates/testplans/mutable.html:83
+msgid "Reference link"
+msgstr "Referenčna povezava"
+
+#: tcms/testcases/templates/testcases/get.html:300
+msgid "Bugs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:307
+msgid "Bug URL"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:319
+msgid "Test plans"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:326
+#: tcms/testcases/templates/testcases/search.html:120
+#: tcms/testplans/templates/testplans/search.html:132
+#: tcms/testruns/templates/testruns/search.html:90
+msgid "ID"
+msgstr "ID"
+
+#: tcms/testcases/templates/testcases/get.html:346
+msgid "Tags"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:367
+#: tcms/testcases/templates/testcases/get.html:404
+msgid "Add"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:383
+msgid "Components"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:420
+msgid "Attachments"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:427
+msgid "File"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:428
+msgid "Owner"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:429
+msgid "Date"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/get.html:443
+msgid "No records found"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -456,11 +652,6 @@ msgstr "Povzetek"
 msgid "Test run summary"
 msgstr "Povzetek testiranja"
 
-#: tcms/testcases/templates/testcases/search.html:16
-#: tcms/testcases/templates/testcases/search.html:124
-msgid "Automated"
-msgstr "Avtomatizirano"
-
 #: tcms/testcases/templates/testcases/search.html:26
 msgid "Proposed for automation"
 msgstr "Predlagano za avtomatizacijo"
@@ -469,36 +660,9 @@ msgstr "Predlagano za avtomatizacijo"
 msgid "Search all when OFF"
 msgstr "Išči ko je vse nastavljeno na IZKLOPLJENO"
 
-#: tcms/testcases/templates/testcases/search.html:44
-#: tcms/testcases/templates/testcases/search.html:126
-#: tcms/testruns/templates/testruns/mutable.html:98
-msgid "Category"
-msgstr "Kategorija"
-
 #: tcms/testcases/templates/testcases/search.html:54
 msgid "Component"
 msgstr "Komponenta"
-
-#: tcms/testcases/templates/testcases/search.html:66
-#: tcms/testcases/templates/testcases/search.html:127
-#: tcms/testruns/templates/testruns/mutable.html:99
-msgid "Priority"
-msgstr "Prioriteta"
-
-#: tcms/testcases/templates/testcases/search.html:75
-#: tcms/testcases/templates/testcases/search.html:125
-#: tcms/testruns/templates/testruns/mutable.html:97
-msgid "Status"
-msgstr "Status"
-
-#: tcms/testcases/templates/testcases/search.html:88
-#: tcms/testcases/templates/testcases/search.html:122
-#: tcms/testplans/templates/testplans/mutable.html:98
-#: tcms/testplans/templates/testplans/search.html:98
-#: tcms/testplans/templates/testplans/search.html:135
-#: tcms/testruns/templates/testruns/mutable.html:95
-msgid "Author"
-msgstr "Avtor"
 
 #: tcms/testcases/templates/testcases/search.html:97
 #: tcms/testplans/templates/testplans/search.html:111
@@ -524,92 +688,96 @@ msgstr "Identifikator buga"
 msgid "Search"
 msgstr "Iskanje"
 
-#: tcms/testcases/templates/testcases/search.html:120
-#: tcms/testplans/templates/testplans/search.html:132
-#: tcms/testruns/templates/testruns/search.html:90
-msgid "ID"
-msgstr "ID"
-
-#: tcms/testcases/templates/testcases/search.html:123
-#: tcms/testplans/templates/testplans/mutable.html:110
-#: tcms/testruns/templates/testruns/search.html:94
-msgid "Default tester"
-msgstr "Privzeti tester"
-
 #: tcms/testcases/templates/testcases/search.html:128
 msgid "Created at"
 msgstr "Ustvarjeno ob"
 
-#: tcms/testcases/views.py:466
+#: tcms/testcases/views.py:463
 msgid "TestPlan not specified or does not exist"
 msgstr "Baza testnih scenarijev ni izbrana ali ne obstaja"
 
-#: tcms/testcases/views.py:1040 tcms/testruns/views.py:499
+#: tcms/testcases/views.py:642
+msgid "Edit"
+msgstr ""
+
+#: tcms/testcases/views.py:646
+msgid "Clone"
+msgstr ""
+
+#: tcms/testcases/views.py:650
+msgid "History"
+msgstr ""
+
+#: tcms/testcases/views.py:655
+msgid "Delete"
+msgstr ""
+
+#: tcms/testcases/views.py:934 tcms/testruns/views.py:499
 #: tcms/testruns/views.py:577
 msgid "At least one TestCase is required"
 msgstr "Vsaj en testni scenarij je zahtevan"
 
-#: tcms/testcases/views.py:1189
+#: tcms/testcases/views.py:1083
 msgid "TestCase cloning was successful"
 msgstr "Kloniranje testnega scenarija je uspelo"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
+msgid "Edit TestPlan"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
 msgstr "Ustvari nov testni plan"
 
-#: tcms/testplans/templates/testplans/mutable.html:30
+#: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "dodaj produkt"
 
-#: tcms/testplans/templates/testplans/mutable.html:44
+#: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:76
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Version"
 msgstr "Verzija"
 
-#: tcms/testplans/templates/testplans/mutable.html:46
+#: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
 msgstr "dodaj verzijo"
 
-#: tcms/testplans/templates/testplans/mutable.html:75
+#: tcms/testplans/templates/testplans/mutable.html:78
 msgid "Parent ID"
 msgstr "Nadrejen ID"
 
-#: tcms/testplans/templates/testplans/mutable.html:80
-msgid "Reference link"
-msgstr "Referenčna povezava"
-
-#: tcms/testplans/templates/testplans/mutable.html:88
+#: tcms/testplans/templates/testplans/mutable.html:91
 msgid "Test plan document:"
 msgstr "Dokumentacija testnega plana:"
 
-#: tcms/testplans/templates/testplans/mutable.html:96
+#: tcms/testplans/templates/testplans/mutable.html:99
 msgid "Notify:"
 msgstr "Obvesti:"
 
-#: tcms/testplans/templates/testplans/mutable.html:104
+#: tcms/testplans/templates/testplans/mutable.html:107
 msgid "TestCase author"
 msgstr "Avtor testnega scenarija"
 
-#: tcms/testplans/templates/testplans/mutable.html:118
+#: tcms/testplans/templates/testplans/mutable.html:121
 msgid "Notify when:"
 msgstr "Obvesti me, ko:"
 
-#: tcms/testplans/templates/testplans/mutable.html:120
+#: tcms/testplans/templates/testplans/mutable.html:123
 msgid "TestPlan is updated"
 msgstr "Repozitorij testov je posodobljen"
 
-#: tcms/testplans/templates/testplans/mutable.html:126
+#: tcms/testplans/templates/testplans/mutable.html:129
 msgid "Test cases are updated"
 msgstr "Testni scenariji so posodobljeni"
 
-#: tcms/testplans/templates/testplans/mutable.html:134
+#: tcms/testplans/templates/testplans/mutable.html:137
 #: tcms/testplans/templates/testplans/search.html:117
 msgid "Active"
 msgstr "Aktiven"
 
-#: tcms/testplans/templates/testplans/mutable.html:140
+#: tcms/testplans/templates/testplans/mutable.html:143
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
 msgstr "Shrani"
@@ -645,15 +813,15 @@ msgstr "Baza testni scenarijev"
 msgid "Created"
 msgstr "Ustvarjeno"
 
-#: tcms/testplans/views.py:348
+#: tcms/testplans/views.py:350
 msgid "TestPlan is required"
 msgstr "Testni repozitorij je obvezen"
 
-#: tcms/testplans/views.py:569
+#: tcms/testplans/views.py:571
 msgid "At least one test plan is required for print"
 msgstr "Za tiskanje je potrebno izbrati vsaj eno bazo testnih scenarijev"
 
-#: tcms/testplans/views.py:577
+#: tcms/testplans/views.py:579
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Testiranje \"%s\" ne obstaja"
@@ -704,22 +872,22 @@ msgstr "Vodja"
 msgid "Username or email"
 msgstr "Uporabniško ime ali elektronski naslov"
 
-#: tcms/testruns/templates/testruns/mutable.html:66
-msgid "Notes"
-msgstr "Opombe"
-
 #: tcms/testruns/templates/testruns/mutable.html:81
 msgid "Selected TestCase(s):"
 msgstr "Izbrani testni scenariji(s):"
 
 #: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
-msgid "\n"
-"                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
+msgid ""
+"\n"
+"                    %(count)s of the pre-selected test cases is not "
+"CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr "\n"
-"                    %(count)s testni scenarijev ni v statusu potrjen in se ne bodo prenesli.\n"
+msgstr ""
+"\n"
+"                    %(count)s testni scenarijev ni v statusu potrjen in se "
+"ne bodo prenesli.\n"
 "                    Več podrobnosti je na voljo v informacijah testiranja!\n"
 "                    "
 
@@ -749,11 +917,15 @@ msgstr "Končano ob"
 
 #: tcms/testruns/views.py:49
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr "V kolikor želite kreirati novo testiranje morate imeti ustvarjen testni repozitorij"
+msgstr ""
+"V kolikor želite kreirati novo testiranje morate imeti ustvarjen testni "
+"repozitorij"
 
 #: tcms/testruns/views.py:59
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr "V kolikor želite kreirati novo testiranje morate dodati najmanj en testni scenarij"
+msgstr ""
+"V kolikor želite kreirati novo testiranje morate dodati najmanj en testni "
+"scenarij"
 
 #: tcms/testruns/views.py:503
 msgid "Clone of "
@@ -820,4 +992,3 @@ msgstr "ONEMOGOČEN"
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr "ZA POPRAVITI"
-
