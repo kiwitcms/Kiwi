@@ -19,7 +19,7 @@ from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCasePlan, BugSystem, TestCaseText
+    TestCasePlan, TestCaseText
 from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -614,70 +614,26 @@ def get(request, case_id):
     except ObjectDoesNotExist:
         raise Http404
 
-    # Get the test plans
-    tps = test_case.plan.select_related('author', 'product', 'type').all()
-
-    try:
-        test_plan = tps.get(pk=request.GET.get('from_plan', 0))
-    except (TestPlan.DoesNotExist, ValueError):
-        # ValueError is raised when from_plan is empty string
-        # not viewing TC from a Plan or specified Plan does not exist (e.g. broken link)
-        test_plan = None
-
     # Get the test case runs
     tcrs = test_case.case_run.select_related(
         'run', 'tested_by',
         'assignee', 'case',
         'case', 'case_run_status').order_by('run__plan', 'run')
-    # FIXME: Just don't know why Django template does not evaluate a generator,
-    # and had to evaluate the groupby generator manually like below.
-    runs_ordered_by_plan = []
-    for key, value in itertools.groupby(tcrs, lambda t: t.run.plan):
-        runs_ordered_by_plan.append((key, list(value)))
-
-    case_run_plans = []
-    for key, _value in runs_ordered_by_plan:
-        case_run_plans.append(key)
-
-    # Get the specific test case run
-    if request.GET.get('case_run_id'):
-        tcr = tcrs.get(pk=request.GET['case_run_id'])
-    else:
-        tcr = None
-    case_run_plan_id = request.GET.get('case_run_plan_id', None)
-    if case_run_plan_id:
-        for item in runs_ordered_by_plan:
-            if item[0].pk == int(case_run_plan_id):
-                case_runs_by_plan = item[1]
-                break
-            else:
-                continue
-    else:
-        case_runs_by_plan = None
 
     # Get the case texts
     tc_text = test_case.get_text_with_version(request.GET.get('case_text_version'))
 
-    grouped_case_bugs = tcr and group_case_bugs(tcr.case.get_bugs())
     # Render the page
     context_data = {
         'test_case': test_case,
-        'test_plan': test_plan,
-        'test_plans': tps,
         'test_case_runs': tcrs,
-        'case_run_plans': case_run_plans,
-        'test_case_runs_by_plan': case_runs_by_plan,
-        'test_case_run': tcr,
-        'grouped_case_bugs': grouped_case_bugs,
         'test_case_text': tc_text,
-        'test_case_status': TestCaseStatus.objects.all(),
-        'test_case_run_status': TestCaseRunStatus.objects.all(),
-        'bug_trackers': BugSystem.objects.all(),
     }
 
     url_params = "?case=%d" % test_case.pk
+    test_plan = request.GET.get('from_plan', 0)
     if test_plan:
-        url_params += "&from_plan=%d" % test_plan.pk
+        url_params += "&from_plan=%s" % test_plan
 
     with modify_settings(
             MENU_ITEMS={'append': [
