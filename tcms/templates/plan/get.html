@@ -148,7 +148,7 @@ Nitrate.TestPlans.Instance = {
                                 a temporary solution until we can convert the entire page to Patternfly
                                 and figure out a way to re-use the search forms!
                              -->
-                            <iframe src="{% url 'testruns-search' %}?nonav=1&plan={{ test_plan.pk }}&product={{ test_plan.product_id }}&product_version={{ test_plan.product_version_id }}"
+                            <iframe src="{% url 'testruns-search' %}?nonav=1&plan={{ test_plan.pk }}"
                                     width="100%" height="1000px" scrolling="auto" frameBorder="0">
                             </iframe>
 			</div>
