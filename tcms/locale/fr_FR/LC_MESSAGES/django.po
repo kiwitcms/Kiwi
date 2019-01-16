@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-15 22:16+0000\n"
-"PO-Revision-Date: 2019-01-16 11:47\n"
+"PO-Revision-Date: 2019-01-16 12:21\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -448,19 +448,19 @@ msgstr "SUPPRIMÉ: Cas de test #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/get.html:29
 msgid "Setup"
-msgstr ""
+msgstr "Configuration"
 
 #: tcms/testcases/templates/testcases/get.html:34
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: tcms/testcases/templates/testcases/get.html:39
 msgid "Expected result"
-msgstr ""
+msgstr "Résultats attendus"
 
 #: tcms/testcases/templates/testcases/get.html:44
 msgid "Breakdown"
-msgstr ""
+msgstr "Panne"
 
 #: tcms/testcases/templates/testcases/get.html:49
 #: tcms/testruns/templates/testruns/mutable.html:66
@@ -514,15 +514,15 @@ msgstr "Automatiser"
 
 #: tcms/testcases/templates/testcases/get.html:114
 msgid "Script"
-msgstr ""
+msgstr "Script"
 
 #: tcms/testcases/templates/testcases/get.html:119
 msgid "Arguments"
-msgstr ""
+msgstr "Arguments"
 
 #: tcms/testcases/templates/testcases/get.html:124
 msgid "Requirements"
-msgstr ""
+msgstr "Spécifications requises"
 
 #: tcms/testcases/templates/testcases/get.html:129
 #: tcms/testplans/templates/testplans/mutable.html:83
@@ -531,7 +531,7 @@ msgstr "Lien référencé"
 
 #: tcms/testcases/templates/testcases/get.html:300
 msgid "Bugs"
-msgstr ""
+msgstr "Anomalies"
 
 #: tcms/testcases/templates/testcases/get.html:307
 msgid "Bug URL"
