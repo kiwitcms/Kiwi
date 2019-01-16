@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-15 22:16+0000\n"
-"PO-Revision-Date: 2019-01-16 12:21\n"
+"PO-Revision-Date: 2019-01-16 12:31\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -535,11 +535,11 @@ msgstr "Anomalies"
 
 #: tcms/testcases/templates/testcases/get.html:307
 msgid "Bug URL"
-msgstr ""
+msgstr "URL de remonter d'anomalie"
 
 #: tcms/testcases/templates/testcases/get.html:319
 msgid "Test plans"
-msgstr ""
+msgstr "Plans de test"
 
 #: tcms/testcases/templates/testcases/get.html:326
 #: tcms/testcases/templates/testcases/search.html:120
@@ -550,36 +550,36 @@ msgstr "ID"
 
 #: tcms/testcases/templates/testcases/get.html:346
 msgid "Tags"
-msgstr ""
+msgstr "Étiquettes"
 
 #: tcms/testcases/templates/testcases/get.html:367
 #: tcms/testcases/templates/testcases/get.html:404
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: tcms/testcases/templates/testcases/get.html:383
 msgid "Components"
-msgstr ""
+msgstr "Composants"
 
 #: tcms/testcases/templates/testcases/get.html:420
 msgid "Attachments"
-msgstr ""
+msgstr "Pièces jointes"
 
 #: tcms/testcases/templates/testcases/get.html:427
 msgid "File"
-msgstr ""
+msgstr "Fichier"
 
 #: tcms/testcases/templates/testcases/get.html:428
 msgid "Owner"
-msgstr ""
+msgstr "Propriétaire"
 
 #: tcms/testcases/templates/testcases/get.html:429
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: tcms/testcases/templates/testcases/get.html:443
 msgid "No records found"
-msgstr ""
+msgstr "Pas d'enregistrements trouvés"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -645,19 +645,19 @@ msgstr "Plan de test non spécifié ou n'existe pas"
 
 #: tcms/testcases/views.py:642
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
 #: tcms/testcases/views.py:646
 msgid "Clone"
-msgstr ""
+msgstr "Dupliquer"
 
 #: tcms/testcases/views.py:650
 msgid "History"
-msgstr ""
+msgstr "Historique"
 
 #: tcms/testcases/views.py:655
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: tcms/testcases/views.py:934 tcms/testruns/views.py:499
 #: tcms/testruns/views.py:577
@@ -670,7 +670,7 @@ msgstr "Le clonage du cas de test a été réalisé avec succès"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Modifier le plan de test"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
