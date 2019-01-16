@@ -6,12 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 from tcms.core.widgets import SimpleMDE
 from tcms.core.forms.fields import UserField, StripURLField
 from tcms.core.utils import string_to_list
-from tcms.core.utils.validations import validate_bug_id
 from tcms.testplans.models import TestPlan
-from tcms.testruns.models import TestCaseRun
 from tcms.management.models import Priority, Product, Component
 from tcms.testcases.models import TestCase, Category, TestCaseStatus
-from tcms.testcases.models import Bug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
+from tcms.testcases.models import AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from tcms.testcases.fields import MultipleEmailField
 
 
@@ -380,24 +378,3 @@ class CloneCaseForm(forms.Form):
 
     def populate(self, case_ids):
         self.fields['case'].queryset = TestCase.objects.filter(case_id__in=case_ids)
-
-
-class CaseBugForm(forms.ModelForm):
-    case = forms.ModelChoiceField(queryset=TestCase.objects.all(),
-                                  widget=forms.HiddenInput())
-    case_run = forms.ModelChoiceField(queryset=TestCaseRun.objects.all(),
-                                      widget=forms.HiddenInput(),
-                                      required=False)
-
-    def clean(self):
-        super(CaseBugForm, self).clean()
-        bug_id = self.cleaned_data['bug_id']
-        bug_system_id = self.cleaned_data['bug_system'].pk
-
-        validate_bug_id(bug_id, bug_system_id)
-
-        return self.cleaned_data
-
-    class Meta:
-        model = Bug
-        fields = '__all__'
