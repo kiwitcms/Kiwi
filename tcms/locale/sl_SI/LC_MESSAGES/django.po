@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-15 22:16+0000\n"
-"PO-Revision-Date: 2019-01-16 11:47\n"
+"PO-Revision-Date: 2019-01-17 17:11\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -447,19 +447,19 @@ msgstr "Izbrisan: Testni scenarij #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/get.html:29
 msgid "Setup"
-msgstr ""
+msgstr "Priprava"
 
 #: tcms/testcases/templates/testcases/get.html:34
 msgid "Actions"
-msgstr ""
+msgstr "Koraki"
 
 #: tcms/testcases/templates/testcases/get.html:39
 msgid "Expected result"
-msgstr ""
+msgstr "Pričakovan rezultat"
 
 #: tcms/testcases/templates/testcases/get.html:44
 msgid "Breakdown"
-msgstr ""
+msgstr "Po končanem testu"
 
 #: tcms/testcases/templates/testcases/get.html:49
 #: tcms/testruns/templates/testruns/mutable.html:66
@@ -513,15 +513,15 @@ msgstr "Avtomatizirano"
 
 #: tcms/testcases/templates/testcases/get.html:114
 msgid "Script"
-msgstr ""
+msgstr "Skripta"
 
 #: tcms/testcases/templates/testcases/get.html:119
 msgid "Arguments"
-msgstr ""
+msgstr "Argumenti"
 
 #: tcms/testcases/templates/testcases/get.html:124
 msgid "Requirements"
-msgstr ""
+msgstr "Zahteve"
 
 #: tcms/testcases/templates/testcases/get.html:129
 #: tcms/testplans/templates/testplans/mutable.html:83
@@ -530,15 +530,15 @@ msgstr "Referenčna povezava"
 
 #: tcms/testcases/templates/testcases/get.html:300
 msgid "Bugs"
-msgstr ""
+msgstr "Napake"
 
 #: tcms/testcases/templates/testcases/get.html:307
 msgid "Bug URL"
-msgstr ""
+msgstr "URL napake"
 
 #: tcms/testcases/templates/testcases/get.html:319
 msgid "Test plans"
-msgstr ""
+msgstr "Testni plani"
 
 #: tcms/testcases/templates/testcases/get.html:326
 #: tcms/testcases/templates/testcases/search.html:120
@@ -549,36 +549,36 @@ msgstr "ID"
 
 #: tcms/testcases/templates/testcases/get.html:346
 msgid "Tags"
-msgstr ""
+msgstr "Značke"
 
 #: tcms/testcases/templates/testcases/get.html:367
 #: tcms/testcases/templates/testcases/get.html:404
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: tcms/testcases/templates/testcases/get.html:383
 msgid "Components"
-msgstr ""
+msgstr "Komponente"
 
 #: tcms/testcases/templates/testcases/get.html:420
 msgid "Attachments"
-msgstr ""
+msgstr "Priloge"
 
 #: tcms/testcases/templates/testcases/get.html:427
 msgid "File"
-msgstr ""
+msgstr "Datoteka"
 
 #: tcms/testcases/templates/testcases/get.html:428
 msgid "Owner"
-msgstr ""
+msgstr "Zadolženi"
 
 #: tcms/testcases/templates/testcases/get.html:429
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: tcms/testcases/templates/testcases/get.html:443
 msgid "No records found"
-msgstr ""
+msgstr "Ni iskalnih zadetkov"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
@@ -644,19 +644,19 @@ msgstr "Baza testnih scenarijev ni izbrana ali ne obstaja"
 
 #: tcms/testcases/views.py:642
 msgid "Edit"
-msgstr ""
+msgstr "Uredi"
 
 #: tcms/testcases/views.py:646
 msgid "Clone"
-msgstr ""
+msgstr "Podvoji"
 
 #: tcms/testcases/views.py:650
 msgid "History"
-msgstr ""
+msgstr "Zgodovina"
 
 #: tcms/testcases/views.py:655
 msgid "Delete"
-msgstr ""
+msgstr "Izbriši"
 
 #: tcms/testcases/views.py:934 tcms/testruns/views.py:499
 #: tcms/testruns/views.py:577
