@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-15 22:16+0000\n"
-"PO-Revision-Date: 2019-01-17 17:11\n"
+"PO-Revision-Date: 2019-01-17 17:23\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -538,7 +538,7 @@ msgstr "URL napake"
 
 #: tcms/testcases/templates/testcases/get.html:319
 msgid "Test plans"
-msgstr "Testni plani"
+msgstr "Načrti testiranj"
 
 #: tcms/testcases/templates/testcases/get.html:326
 #: tcms/testcases/templates/testcases/search.html:120
@@ -669,7 +669,7 @@ msgstr "Kloniranje testnega scenarija je uspelo"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Uredi testni načrt"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
