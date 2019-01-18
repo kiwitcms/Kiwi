@@ -46,7 +46,6 @@ class TestXMLSerializer(test.TestCase):
         result['component'].sort()
         self.assertEqual(component_pks, result['component'])
 
-        self.assertEqual(self.testcase.alias, result['alias'])
         self.assertEqual(self.testcase.arguments, result['arguments'])
 
 
@@ -91,7 +90,6 @@ class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
     primary_key = 'case_id'
 
     values_fields_mapping = {
-        'alias': ('alias', do_nothing),
         'arguments': ('arguments', do_nothing),
         'case_id': ('case_id', do_nothing),
         'create_date': ('create_date', datetime_to_str),

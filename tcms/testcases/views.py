@@ -727,8 +727,7 @@ def update_testcase(request, test_case, tc_form):
               'script',
               'arguments',
               'extra_link',
-              'requirement',
-              'alias']
+              'requirement']
 
     for field in fields:
         if getattr(test_case, field) != tc_form.cleaned_data[field]:
@@ -862,7 +861,6 @@ def edit(request, case_id, template_name='case/edit.html'):
             'script': test_case.script,
             'arguments': test_case.arguments,
             'extra_link': test_case.extra_link,
-            'alias': test_case.alias,
             'case_status': test_case.case_status_id,
             'priority': test_case.priority_id,
             'product': test_case.category.product_id,
@@ -956,7 +954,6 @@ def clone(request, template_name='case/clone.html'):
                         extra_link=tc_src.extra_link,
                         summary=tc_src.summary,
                         requirement=tc_src.requirement,
-                        alias=tc_src.alias,
                         case_status=TestCaseStatus.get_proposed(),
                         category=tc_src.category,
                         priority=tc_src.priority,

@@ -469,7 +469,6 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """Serializer for TestCase"""
 
     values_fields_mapping = {
-        'alias': ('alias', do_nothing),
         'arguments': ('arguments', do_nothing),
         'case_id': ('case_id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
