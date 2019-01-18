@@ -44,20 +44,17 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
             {
                 "assignee": self.staff.pk,
                 "case_run_status": self.case_run_status.pk,
-                "notes": "unit test 2"
             },
             {
                 "build": self.build.pk,
                 "assignee": self.staff.pk,
                 "case_run_status": 1,
-                "notes": "unit test 2"
             },
             {
                 "run": self.test_run.pk,
                 "build": self.build.pk,
                 "assignee": self.staff.pk,
                 "case_run_status": self.case_run_status.pk,
-                "notes": "unit test 2"
             },
         ]
         for value in values:
@@ -83,7 +80,6 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
             "build": self.build.pk,
             "case": self.case.pk,
             "assignee": self.api_user.pk,
-            "notes": "test_create_with_all_fields",
             "sortkey": 90,
             "case_run_status": self.case_run_status.pk,
             "case_text_version": 3,
@@ -93,7 +89,6 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
         self.assertEqual(tcr['build_id'], self.build.pk)
         self.assertEqual(tcr['case_id'], self.case.pk)
         self.assertEqual(tcr['assignee_id'], self.api_user.pk)
-        self.assertEqual(tcr['notes'], "test_create_with_all_fields")
         self.assertEqual(tcr['sortkey'], 90)
         self.assertEqual(tcr['case_run_status'], 'IDLE')
         self.assertEqual(tcr['case_text_version'], 3)
@@ -120,56 +115,12 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
             with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
                 self.rpc_client.exec.TestCaseRun.create(value)
 
-    def test_create_with_chinese(self):
-        tcr = self.rpc_client.exec.TestCaseRun.create({
-            "run": self.test_run.pk,
-            "build": self.build.pk,
-            "case": self.case.pk,
-            "notes": u"开源中国",
-            "case_text_version": 2,
-        })
-        self.assertIsNotNone(tcr)
-        self.case_run_pks.append(tcr['case_run_id'])
-        self.assertEqual(tcr['build_id'], self.build.pk)
-        self.assertEqual(tcr['case_id'], self.case.pk)
-        self.assertEqual(tcr['assignee_id'], None)
-        self.assertEqual(tcr['case_text_version'], 2)
-        self.assertEqual(tcr['notes'], u"\u5f00\u6e90\u4e2d\u56fd")
-
-    def test_create_with_long_field(self):
-        large_str = """aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"""
-        tcr = self.rpc_client.exec.TestCaseRun.create({
-            "run": self.test_run.pk,
-            "build": self.build.pk,
-            "case": self.case.pk,
-            "notes": large_str,
-            "case_text_version": 2,
-        })
-        self.assertIsNotNone(tcr)
-        self.case_run_pks.append(tcr['case_run_id'])
-        self.assertEqual(tcr['build_id'], self.build.pk)
-        self.assertEqual(tcr['case_id'], self.case.pk)
-        self.assertEqual(tcr['assignee_id'], None)
-        self.assertEqual(tcr['case_text_version'], 2)
-        self.assertEqual(tcr['notes'], large_str)
-
     def test_create_with_no_perm(self):
         values = {
             "run": self.test_run.pk,
             "build": self.build.pk,
             "case": self.case.pk,
             "assignee": self.api_user.pk,
-            "notes": "test_create_with_all_fields",
             "sortkey": 2,
             "case_run_status": self.case_run_status.pk,
         }
@@ -222,7 +173,6 @@ class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
         self.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
         self.tester = UserFactory()
         self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
-                                           notes='testing ...',
                                            sortkey=10,
                                            case_run_status=self.status_idle)
 
@@ -258,7 +208,6 @@ class TestCaseRunFilter(XmlrpcAPIBaseTest):
         self.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
         self.tester = UserFactory()
         self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
-                                           notes='testing ...',
                                            sortkey=10,
                                            case_run_status=self.status_idle)
 
@@ -273,7 +222,6 @@ class TestCaseRunFilter(XmlrpcAPIBaseTest):
         self.assertEqual(tcr['case_id'], self.case_run.case.pk)
         self.assertEqual(tcr['assignee_id'], self.tester.pk)
         self.assertEqual(tcr['tested_by_id'], None)
-        self.assertEqual(tcr['notes'], 'testing ...')
         self.assertEqual(tcr['sortkey'], 10)
         self.assertEqual(tcr['case_run_status'], 'IDLE')
         self.assertEqual(tcr['case_run_status_id'], self.status_idle.pk)
@@ -327,13 +275,11 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
             "build": self.build.pk,
             "assignee": self.user.pk,
             "case_run_status": self.status_running.pk,
-            "notes": "AAAAAAAA",
             "sortkey": 90
         })
         self.assertEqual(tcr['build'], self.build.name)
         self.assertEqual(tcr['assignee'], self.user.username)
         self.assertEqual(tcr['case_run_status'], 'RUNNING')
-        self.assertEqual(tcr['notes'], "AAAAAAAA")
         self.assertEqual(tcr['sortkey'], 90)
 
     def test_update_with_non_existing_build(self):
@@ -349,15 +295,8 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
             self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk,
                                                     {"case_run_status": 1111111})
 
-    def test_update_by_ignoring_undocumented_fields(self):
-        case_run = self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {
-            "notes": "AAAA",
-            "close_date": datetime.now(),
-            'anotherone': 'abc',
-        })
-        self.assertEqual('AAAA', case_run['notes'])
-
     def test_update_with_no_perm(self):
         self.rpc_client.exec.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
-            self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {"notes": "AAAA"})
+            self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk,
+                                                    {"close_date": datetime.now()})

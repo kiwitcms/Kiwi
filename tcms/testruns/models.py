@@ -96,7 +96,7 @@ class TestRun(TCMSActionModel):
     # FIXME: rewrite to use multiple values INSERT statement
     def add_case_run(self, case, case_run_status=1, assignee=None,
                      case_text_version=None, build=None,
-                     notes=None, sortkey=0):
+                     sortkey=0):
         _case_text_version = case_text_version
         if not _case_text_version:
             _case_text_version = case.latest_text(
@@ -115,7 +115,6 @@ class TestRun(TCMSActionModel):
                                     case_run_status=_case_run_status,
                                     case_text_version=_case_text_version,
                                     build=build or self.build,
-                                    notes=notes,
                                     sortkey=sortkey,
                                     close_date=None)
 
@@ -290,7 +289,6 @@ class TestCaseRun(TCMSActionModel):
                                   on_delete=models.CASCADE)
     case_text_version = models.IntegerField()
     close_date = models.DateTimeField(null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
     sortkey = models.IntegerField(null=True, blank=True)
 
     run = models.ForeignKey(TestRun, related_name='case_run', on_delete=models.CASCADE)
