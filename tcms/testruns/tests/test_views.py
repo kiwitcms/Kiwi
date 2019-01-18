@@ -168,7 +168,6 @@ class TestCreateNewRun(BasePlanCase):
                              case_run.case_run_status)
             self.assertEqual(0, case_run.case_text_version)
             self.assertEqual(new_run.build, case_run.build)
-            self.assertEqual(None, case_run.running_date)
             self.assertEqual(None, case_run.close_date)
 
 
