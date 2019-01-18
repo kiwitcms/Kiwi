@@ -117,7 +117,6 @@ class TestRun(TCMSActionModel):
                                     build=build or self.build,
                                     notes=notes,
                                     sortkey=sortkey,
-                                    running_date=None,
                                     close_date=None)
 
     def add_tag(self, tag):
@@ -290,7 +289,6 @@ class TestCaseRun(TCMSActionModel):
                                   related_name='case_run_tester',
                                   on_delete=models.CASCADE)
     case_text_version = models.IntegerField()
-    running_date = models.DateTimeField(null=True, blank=True)
     close_date = models.DateTimeField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     sortkey = models.IntegerField(null=True, blank=True)
