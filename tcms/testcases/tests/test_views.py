@@ -159,7 +159,6 @@ class TestEditCase(BasePlanCase):
             'is_automated': '0',
             'requirement': '',
             'script': '',
-            'alias': '',
             'priority': cls.case_1.priority.pk,
             'tag': 'RHEL',
             'setup': '',

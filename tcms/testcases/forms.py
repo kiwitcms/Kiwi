@@ -71,7 +71,6 @@ class BaseCaseForm(forms.Form):
     )
     script = forms.CharField(label="Script", required=False)
     arguments = forms.CharField(label="Arguments", required=False)
-    alias = forms.CharField(label="Alias", required=False)
     extra_link = StripURLField(
         label='Extra link',
         max_length=1024,

@@ -192,6 +192,8 @@ class TestPlan(TCMSActionModel):
             tpcases_src = self.case.all()
 
             if copy_cases:
+                # todo: use the function which clones the test cases instead of
+                # duplicating the clone operation here
                 for tpcase_src in tpcases_src:
                     tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
                     author = new_case_author or tpcase_src.author
@@ -207,7 +209,6 @@ class TestPlan(TCMSActionModel):
                         arguments=tpcase_src.arguments,
                         summary=tpcase_src.summary,
                         requirement=tpcase_src.requirement,
-                        alias=tpcase_src.alias,
                         case_status=TestCaseStatus.get_proposed(),
                         category=tc_category,
                         priority=tpcase_src.priority,

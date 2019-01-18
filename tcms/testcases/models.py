@@ -106,7 +106,6 @@ class TestCase(TCMSActionModel):
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
     summary = models.CharField(max_length=255)
     requirement = models.CharField(max_length=255, blank=True, null=True)
-    alias = models.CharField(max_length=255, blank=True)
     notes = models.TextField(blank=True, null=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
@@ -153,6 +152,7 @@ class TestCase(TCMSActionModel):
         serializer = TestCaseXMLRPCSerializer(model_class=cls, queryset=qs)
         return serializer.serialize_queryset()
 
+    # todo: does this check permissions ???
     @classmethod
     def create(cls, author, values):
         """
@@ -168,13 +168,14 @@ class TestCase(TCMSActionModel):
             extra_link=values['extra_link'],
             summary=values['summary'],
             requirement=values['requirement'],
-            alias=values['alias'],
             case_status=values['case_status'],
             category=values['category'],
             priority=values['priority'],
             default_tester=values['default_tester'],
             notes=values['notes'],
         )
+
+        # todo: should use add_tag
         tags = values.get('tag')
         if tags:
             map(case.add_tag, tags)
