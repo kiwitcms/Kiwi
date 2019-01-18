@@ -139,7 +139,6 @@ class BaseCaseRunForm(forms.Form):
     case_text_version = forms.IntegerField(
         label='Case text version', required=False
     )
-    notes = forms.CharField(label='Notes', required=False)
     sortkey = forms.IntegerField(label='Sortkey', required=False)
 
 

@@ -73,9 +73,6 @@
 				<h4>Test Case Run Detail Information</h4>
 				<div><span class="detail_title"><span class="detail_title">Run Date:</span>{{ test_case_run.close_date }}</div>
 				<div><span class="detail_title">Build:</span>{{ test_case_run.build }} <span class="detail_title marginLeft">Text Version:</span>{{ test_case_run.case_text_version }}</div>
-				{% if test_case_run.notes %}
-				<div><div class="detail_title">Notes</div>{{ test_case_run.notes|urlize|linebreaksbr }}</div>
-				{% endif %}	
 			</div>
 			<div class="container">
 				<h4 class="borderB">bug

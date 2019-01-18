@@ -300,7 +300,6 @@ class TestCaseRunFactory(DjangoModelFactory):
     tested_by = factory.SubFactory(UserFactory)
     case_text_version = 1
     close_date = None
-    notes = ''
     sortkey = factory.Sequence(lambda n: n)
     run = factory.SubFactory(TestRunFactory)
     case = factory.SubFactory(TestCaseFactory)

@@ -423,7 +423,6 @@ class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'case_run_id': ('case_run_id', do_nothing),
         'case_text_version': ('case_text_version', do_nothing),
         'close_date': ('close_date', datetime_to_str),
-        'notes': ('notes', do_nothing),
         'sortkey': ('sortkey', do_nothing),
 
         'assignee': ('assignee_id', do_nothing),
