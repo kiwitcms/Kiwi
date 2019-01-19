@@ -23,13 +23,13 @@ class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):
         cls.empty_test_run = TestRunFactory(manager=cls.tester, default_tester=cls.tester,
                                             plan=cls.plan)
 
-        cls.case_run_statuss = TestCaseRunStatus.objects.all().order_by('pk')
+        cls.statuss = TestCaseRunStatus.objects.all().order_by('pk')
 
     def test_get_from_empty_case_runs(self):
-        data = self.empty_test_run.stats_caseruns_status(self.case_run_statuss)
+        data = self.empty_test_run.stats_caseruns_status(self.statuss)
 
         subtotal = dict((status.pk, [0, status])
-                        for status in self.case_run_statuss)
+                        for status in self.statuss)
 
         self.assertEqual(subtotal, data.StatusSubtotal)
         self.assertEqual(0, data.CaseRunsTotalCount)
@@ -43,32 +43,32 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
     def setUpTestData(cls):
         super(TestGetCaseRunsStatsByStatus, cls).setUpTestData()
 
-        cls.case_run_statuss = TestCaseRunStatus.objects.all().order_by('pk')
+        cls.statuss = TestCaseRunStatus.objects.all().order_by('pk')
 
-        cls.case_run_status_idle = TestCaseRunStatus.objects.get(name='IDLE')
-        cls.case_run_status_failed = TestCaseRunStatus.objects.get(name='FAILED')
-        cls.case_run_status_waived = TestCaseRunStatus.objects.get(name='WAIVED')
+        cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+        cls.status_failed = TestCaseRunStatus.objects.get(name='FAILED')
+        cls.status_waived = TestCaseRunStatus.objects.get(name='WAIVED')
 
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)
 
-        for case, status in ((cls.case_1, cls.case_run_status_idle),
-                             (cls.case_2, cls.case_run_status_failed),
-                             (cls.case_3, cls.case_run_status_failed),
-                             (cls.case_4, cls.case_run_status_waived),
-                             (cls.case_5, cls.case_run_status_waived),
-                             (cls.case_6, cls.case_run_status_waived)):
+        for case, status in ((cls.case_1, cls.status_idle),
+                             (cls.case_2, cls.status_failed),
+                             (cls.case_3, cls.status_failed),
+                             (cls.case_4, cls.status_waived),
+                             (cls.case_5, cls.status_waived),
+                             (cls.case_6, cls.status_waived)):
             TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                               run=cls.test_run, case=case, case_run_status=status)
+                               run=cls.test_run, case=case, status=status)
 
     def test_get_stats(self):
-        data = self.test_run.stats_caseruns_status(self.case_run_statuss)
+        data = self.test_run.stats_caseruns_status(self.statuss)
 
         subtotal = dict((status.pk, [0, status])
-                        for status in self.case_run_statuss)
-        subtotal[self.case_run_status_idle.pk][0] = 1
-        subtotal[self.case_run_status_failed.pk][0] = 2
-        subtotal[self.case_run_status_waived.pk][0] = 3
+                        for status in self.statuss)
+        subtotal[self.status_idle.pk][0] = 1
+        subtotal[self.status_failed.pk][0] = 2
+        subtotal[self.status_waived.pk][0] = 3
 
         expected_completed_percentage = 5.0 * 100 / 6
         expected_failure_percentage = 2.0 * 100 / 6

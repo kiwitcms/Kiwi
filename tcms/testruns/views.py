@@ -146,7 +146,7 @@ def open_run_get_case_runs(request, run):
     tcrs = run.case_run.select_related('run', 'case')
     tcrs = tcrs.only('run__run_id',
                      'run__plan',
-                     'case_run_status',
+                     'status',
                      'assignee', 'tested_by',
                      'case_text_version',
                      'sortkey',
@@ -215,11 +215,11 @@ def get(request, run_id, template_name='run/get.html'):
     # 2. get test run's all case runs
     test_case_runs = open_run_get_case_runs(request, test_run)
 
-    case_run_status = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')
+    status = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')
 
     # Count the status
     # 3. calculate number of case runs of each status
-    status_stats_result = test_run.stats_caseruns_status(case_run_status)
+    status_stats_result = test_run.stats_caseruns_status(status)
 
     # Get the test case run bugs summary
     # 6. get the number of bugs of this run
@@ -243,14 +243,14 @@ def get(request, run_id, template_name='run/get.html'):
         for test_case_run in test_case_runs:
             test_case_run_pks.append(test_case_run.pk)
         comments_subtotal = open_run_get_comments_subtotal(test_case_run_pks)
-        case_run_status = TestCaseRunStatus.get_names()
+        status = TestCaseRunStatus.get_names()
 
         for case_run in test_case_runs:
             yield (case_run,
                    testers.get(case_run.tested_by_id, None),
                    assignees.get(case_run.assignee_id, None),
                    priorities.get(case_run.case.priority_id),
-                   case_run_status[case_run.case_run_status_id],
+                   status[case_run.status_id],
                    comments_subtotal.get(case_run.pk, 0))
 
     context_data = {
@@ -260,7 +260,7 @@ def get(request, run_id, template_name='run/get.html'):
         'test_case_runs_count': len(test_case_runs),
         'status_stats': status_stats_result,
         'test_case_run_bugs_count': test_case_run_bugs_count,
-        'test_case_run_status': case_run_status,
+        'test_status': status,
         'priorities': Priority.objects.filter(is_active=True),
         'case_own_tags': tags,
         'bug_trackers': BugSystem.objects.all(),
@@ -336,10 +336,10 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         case_runs = TestCaseRun.objects.filter(
             run=run
         ).select_related(
-            'case_run_status', 'case', 'tested_by'
+            'status', 'case', 'tested_by'
         ).only(
             'close_date',
-            'case_run_status__name',
+            'status__name',
             'case__category__name',
             'case__summary', 'case__is_automated',
             'case__is_automated_proposed',
@@ -696,7 +696,7 @@ def update_case_run_text(request, run_id):
     else:
         test_case_runs = test_run.case_run.all()
 
-    test_case_runs = test_case_runs.filter(case_run_status__name='IDLE')
+    test_case_runs = test_case_runs.filter(status__name='IDLE')
 
     count = 0
     updated_test_case_runs = ''
@@ -743,7 +743,7 @@ def get_caseruns_of_runs(runs, kwargs=None):
         caseruns = caseruns.filter(tested_by__pk=tester)
     status = kwargs.get('status', None)
     if status:
-        caseruns = caseruns.filter(case_run_status__name__iexact=status)
+        caseruns = caseruns.filter(status__name__iexact=status)
     return caseruns
 
 
@@ -777,7 +777,7 @@ class UpdateAssigneeView(View):
 
 @method_decorator(permission_required('testruns.change_testcaserun'), name='dispatch')
 class UpdateCaseRunStatusView(View):
-    """Updates TestCaseRun.case_run_status_id. Called from the front-end."""
+    """Updates TestCaseRun.status_id. Called from the front-end."""
 
     http_method_names = ['post']
 
@@ -787,7 +787,7 @@ class UpdateCaseRunStatusView(View):
 
         for caserun_pk in object_ids:
             test_case_run = get_object_or_404(TestCaseRun, pk=int(caserun_pk))
-            test_case_run.case_run_status_id = status_id
+            test_case_run.status_id = status_id
             test_case_run.tested_by = request.user
             test_case_run.close_date = datetime.now()
             test_case_run.save()

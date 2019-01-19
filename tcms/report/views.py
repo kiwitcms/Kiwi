@@ -66,9 +66,9 @@ def overview(request, product_id, template_name='report/overview.html'):
     total = 0
     for row in TestCaseRun.objects.filter(
             run__plan__product=product_id
-        ).values('case_run_status__name').annotate(
-            status_count=Count('case_run_status__name')):
-        caserun_status_count[row['case_run_status__name']] = row['status_count']
+        ).values('status__name').annotate(
+            status_count=Count('status__name')):
+        caserun_status_count[row['status__name']] = row['status_count']
         total += row['status_count']
     caserun_status_count['TOTAL'] = total
 
@@ -630,7 +630,7 @@ class TestingReportCaseRuns(TestingReportBase, TestingReportCaseRunsData):
         assignees = self.get_related_users(assignees_ids)
 
         for case_run in test_case_runs:
-            status_name = status_names[case_run.case_run_status_id]
+            status_name = status_names[case_run.status_id]
             priority_value = priority_values[case_run.case.priority_id]
             tester_username = testers.get(case_run.tested_by_id, None)
             assignee_username = assignees.get(case_run.assignee_id, None)

@@ -56,13 +56,13 @@ class ProductBuildReportData:
     def finished_caseruns_count(self, product_id):
         return self.caseruns_count(
             product_id,
-            {'case_run_status__name__in': TestCaseRunStatus.complete_status_names}
+            {'status__name__in': TestCaseRunStatus.complete_status_names}
         )
 
     def failed_caseruns_count(self, product_id):
         return self.caseruns_count(
             product_id,
-            {'case_run_status__name': 'FAILED'}
+            {'status__name': 'FAILED'}
         )
 
     @staticmethod
@@ -86,13 +86,13 @@ class ProductBuildReportData:
             run__plan__product=product_id,
             run__build=build_id
         ).values(
-            'case_run_status__name'
-        ).annotate(status_count=Count('case_run_status__name'))
+            'status__name'
+        ).annotate(status_count=Count('status__name'))
 
         subtotal = {}
         total = 0
         for test_case_run in test_case_runs:
-            subtotal[test_case_run['case_run_status__name']] = test_case_run['status_count']
+            subtotal[test_case_run['status__name']] = test_case_run['status_count']
             total += test_case_run['status_count']
         subtotal['TOTAL'] = total
 
@@ -118,7 +118,7 @@ class ProductComponentReportData:
         return self.total_cases(
             product_id,
             {
-                'case_run_status__name__in':
+                'status__name__in':
                     TestCaseRunStatus.failure_status_names
             }
         )
@@ -127,7 +127,7 @@ class ProductComponentReportData:
         return self.total_cases(
             product_id,
             {
-                'case_run_status__name__in':
+                'status__name__in':
                     TestCaseRunStatus.complete_status_names
             }
         )
@@ -139,11 +139,11 @@ class ProductComponentReportData:
         query = TestCaseRun.objects.filter(
             case__component=component_id
         ).values(
-            'case_run_status__name'
-        ).annotate(status_count=Count('case_run_status__name'))
+            'status__name'
+        ).annotate(status_count=Count('status__name'))
 
         for row in query:
-            subtotal[row['case_run_status__name']] = row['status_count']
+            subtotal[row['status__name']] = row['status_count']
             total += row['status_count']
         subtotal['TOTAL'] = total
         return subtotal
@@ -178,7 +178,7 @@ class ProductVersionReportData:
         return self.case_runs_subtotal(
             product_id,
             {
-                'case_run_status__name__in':
+                'status__name__in':
                     TestCaseRunStatus.complete_status_names
             }
         )
@@ -187,7 +187,7 @@ class ProductVersionReportData:
         return self.case_runs_subtotal(
             product_id,
             {
-                'case_run_status__name__in':
+                'status__name__in':
                     TestCaseRunStatus.failure_status_names
             }
         )
@@ -273,13 +273,13 @@ class ProductVersionReportData:
             run__plan__product=product_id,
             run__plan__product_version=version_id
         ).values(
-            'case_run_status__name'
-        ).annotate(status_count=Count('case_run_status__name'))
+            'status__name'
+        ).annotate(status_count=Count('status__name'))
 
         total = 0
         subtotal = {}
         for row in test_case_runs:
-            subtotal[row['case_run_status__name']] = row['status_count']
+            subtotal[row['status__name']] = row['status_count']
             total += row['status_count']
         subtotal['TOTAL'] = total
 
@@ -385,18 +385,18 @@ class CustomReportData:
 
         test_case_runs = TestCaseRun.objects.filter(
             build__in=build_ids,
-            case_run_status__name__in=('PASSED', 'FAILED')
+            status__name__in=('PASSED', 'FAILED')
         ).values(
             'build',
-            'case_run_status__name'
-        ).annotate(case_run_total=Count('case_run_status__name'))
+            'status__name'
+        ).annotate(case_run_total=Count('status__name'))
 
         builds = {}
         for test_case_run in test_case_runs:
             bid = test_case_run['build']
             if bid not in builds.keys():
                 builds[bid] = {}
-            builds[bid][test_case_run['case_run_status__name']] = test_case_run['case_run_total']
+            builds[bid][test_case_run['status__name']] = test_case_run['case_run_total']
 
         return builds
 
@@ -428,13 +428,13 @@ class CustomDetailsReportData(CustomReportData):
             'run__plan__name',
             'run',
             'run__summary',
-            'case_run_status__name'
+            'status__name'
         ).annotate(
             total_count=Count('pk')
         ).order_by('run__plan', 'run')
 
         for row in rows:
-            status_name = row['case_run_status__name']
+            status_name = row['status__name']
             status_count = row['total_count']
 
             plan = TestPlan(pk=row['run__plan'], name=row['run__plan__name'])
@@ -467,7 +467,7 @@ class CustomDetailsReportData(CustomReportData):
         """
         return TestCaseRun.objects.filter(
             run__build__in=build_ids,
-            case_run_status_id__in=status_ids
+            status_id__in=status_ids
         ).select_related(
             'run',
             'case',
@@ -493,7 +493,7 @@ class CustomDetailsReportData(CustomReportData):
         """
         bugs = Bug.objects.filter(
             case_run__run__build__in=build_ids,
-            case_run__case_run_status_id__in=status_ids
+            case_run__status_id__in=status_ids
         ).select_related(
             'bug_system'
         ).only('bug_id',
@@ -525,7 +525,7 @@ class CustomDetailsReportData(CustomReportData):
             is_removed=False,
             object_pk__in=TestCaseRun.objects.filter(
                 build__in=build_ids,
-                case_run_status__in=status_ids
+                status__in=status_ids
             )
         ).annotate(
             case_run_id=F('object_pk')
@@ -740,7 +740,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
             form,
             TestCaseRun.objects.values(
                 'tested_by',
-                'case_run_status__name'
+                'status__name'
             ).annotate(
                 total_count=Count('pk')
             )
@@ -750,7 +750,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
             tested_by_id = row['tested_by']
             if tested_by_id is None:
                 tested_by_id = 0
-            name = row['case_run_status__name']
+            name = row['status__name']
             total_count = row['total_count']
 
             status_subtotal = status_matrix.setdefault(
@@ -766,7 +766,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
             TestCaseRun.objects.values(
                 'build',
                 'tested_by',
-                'case_run_status__name'
+                'status__name'
             ).annotate(
                 total_count=Count('pk')
             )
@@ -775,7 +775,7 @@ class TestingReportByCaseRunTesterData(TestingReportBaseData):
         for row in query:
             build_id = row['build']
             tested_by_id = row['tested_by']
-            name = row['case_run_status__name']
+            name = row['status__name']
             total_count = row['total_count']
 
             tested_by_ids = builds.setdefault(build_id, GroupByResult({}))
@@ -871,7 +871,7 @@ class TestingReportByCasePriorityData(TestingReportBaseData):
                 'build',
                 'case__priority',
                 'case__priority__value',
-                'case_run_status__name'
+                'status__name'
             ).annotate(total_count=Count('pk'))
         )
 
@@ -879,7 +879,7 @@ class TestingReportByCasePriorityData(TestingReportBaseData):
             build_id = row['build']
             priority_id = row['case__priority']
             priority_value = row['case__priority__value']
-            name = row['case_run_status__name']
+            name = row['status__name']
             total_count = row['total_count']
             priorities = builds.setdefault(build_id, GroupByResult())
             priority = Priority(pk=priority_id, value=priority_value)
@@ -954,16 +954,16 @@ class TestingReportByPlanTagsData(TestingReportBaseData):
         query = self._filter_query(
             form,
             TestCaseRun.objects.values(
-                'run__plan__tag', 'case_run_status__name'
-            ).filter(case_run_status__name__in=['PASSED', 'FAILED']).annotate(
-                total_count=Count('case_run_status')
+                'run__plan__tag', 'status__name'
+            ).filter(status__name__in=['PASSED', 'FAILED']).annotate(
+                total_count=Count('status')
             )
         )
 
         tags = GroupByResult()
         for row in query:
             tag_id = row['run__plan__tag']
-            name = row['case_run_status__name']
+            name = row['status__name']
             total_count = row['total_count']
 
             status_subtotal = tags.setdefault(tag_id, GroupByResult())
@@ -1034,7 +1034,7 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
                 'run__plan__tag',
                 'run__plan', 'run__plan__name',
                 'run', 'run__summary',
-                'case_run_status__name'
+                'status__name'
             ).annotate(total_count=Count('pk'))
         )
 
@@ -1046,7 +1046,7 @@ class TestingReportByPlanTagsDetailData(TestingReportByPlanTagsData):
                                     GroupByResult())
             status_subtotal = runs.setdefault(
                 TestRun(pk=row['run'], summary=row['run__summary']), GroupByResult())
-            status_subtotal[row['case_run_status__name']] = row['total_count']
+            status_subtotal[row['status__name']] = row['total_count']
 
         return status_matrix
 
@@ -1163,9 +1163,9 @@ class TestingReportByPlanBuildData(TestingReportBaseData):
             TestCaseRun.objects.values(
                 'run__plan',
                 'run__plan__name',
-                'case_run_status__name'
+                'status__name'
             ).filter(
-                case_run_status__name__in=('PASSED', 'FAILED')
+                status__name__in=('PASSED', 'FAILED')
             ).annotate(
                 total_count=Count('run', distinct=True)
             )
@@ -1174,7 +1174,7 @@ class TestingReportByPlanBuildData(TestingReportBaseData):
         for row in query:
             plan_id = row['run__plan']
             plan_name = row['run__plan__name']
-            status_name = row['case_run_status__name']
+            status_name = row['status__name']
             total_count = row['total_count']
             plan = TestPlan(pk=plan_id, name=plan_name)
             status_subtotal = status_matrix.setdefault(plan, GroupByResult())
@@ -1221,7 +1221,7 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
                 'run__plan', 'run__plan__name',
                 'build', 'build__name',
                 'run', 'run__summary',
-                'case_run_status__name'
+                'status__name'
             ).annotate(total_count=Count('pk'))
         )
         status_matrix = GroupByResult()
@@ -1235,7 +1235,7 @@ class TestingReportByPlanBuildDetailData(TestingReportByPlanBuildData):
 
             run = TestRun(pk=row['run'], summary=row['run__summary'])
             status_subtotal = runs.setdefault(run, GroupByResult())
-            status_subtotal[row['case_run_status__name']] = row['total_count']
+            status_subtotal[row['status__name']] = row['total_count']
 
         return status_matrix
 
@@ -1308,7 +1308,7 @@ class TestingReportCaseRunsData:
                                 'case__category__name',
                                 'case__priority',
                                 'case_text_version',
-                                'case_run_status',
+                                'status',
                                 'sortkey')
 
     def runs_filter_criteria(self, form):
@@ -1348,6 +1348,6 @@ class TestingReportCaseRunsData:
         status = form.cleaned_data['status']
         if status:
             status_id = TestCaseRunStatus.get_names_ids()[status.upper()]
-            filter_criteria['case_run_status'] = status_id
+            filter_criteria['status'] = status_id
 
         return filter_criteria

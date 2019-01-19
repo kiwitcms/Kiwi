@@ -709,7 +709,7 @@ function serialzeCaseForm(form, table, serialized) {
 }
 
 function showCaseRunsWithSelectedStatus(form, status_id) {
-  form.case_run_status__pk.value = status_id;
+  form.status__pk.value = status_id;
   fireEvent(jQ(form).find('input[type="submit"]')[0], 'click');
 }
 

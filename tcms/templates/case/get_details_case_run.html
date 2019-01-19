@@ -25,14 +25,14 @@
 						<tr>
 							<td style="padding:5px 9px 10px 9px;">
 								<input type="hidden" name="type" value="html" />
-								<input type="hidden" name="field" value="case_run_status" />
+								<input type="hidden" name="field" value="status" />
 								<input type="hidden" name="case_id" value="{{ test_case_run.case_id }}" />
 								<input type="hidden" name="assignee" value="{{ test_case_run.assignee_id }}" />
 								<input type="hidden" name="tested_by" value="{{ test_case_run.tested_by_id }}" />
 								<input type="hidden" name="value" value="" />
 								{% if perms.testruns.change_testcaserun %}
-								{% for status in test_case_run_status %}
-								<input type="submit" class="btn btn_{{ status.name.lower }} btn_status js-status-button" title="{{ status.name }}" value="" crs_id="{{ status.pk }}" {% ifequal status.pk test_case_run.case_run_status_id %}disabled="True"{% endifequal %} data-formvalue="{{ status.pk }}" />
+								{% for status in test_status %}
+								<input type="submit" class="btn btn_{{ status.name.lower }} btn_status js-status-button" title="{{ status.name }}" value="" crs_id="{{ status.pk }}" {% ifequal status.pk test_case_run.status_id %}disabled="True"{% endifequal %} data-formvalue="{{ status.pk }}" />
 								{% endfor %}
 								{% endif %}
 								<input type="submit" class="submit-post" value="Submit">

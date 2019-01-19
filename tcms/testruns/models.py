@@ -94,7 +94,7 @@ class TestRun(TCMSActionModel):
         return list(send_to)
 
     # FIXME: rewrite to use multiple values INSERT statement
-    def add_case_run(self, case, case_run_status=1, assignee=None,
+    def add_case_run(self, case, status=1, assignee=None,
                      case_text_version=None, build=None,
                      sortkey=0):
         _case_text_version = case_text_version
@@ -106,13 +106,13 @@ class TestRun(TCMSActionModel):
             or (case.default_tester_id and case.default_tester) \
             or (self.default_tester_id and self.default_tester)
 
-        _case_run_status = TestCaseRunStatus.objects.get(id=case_run_status) \
-            if isinstance(case_run_status, int) else case_run_status
+        _status = TestCaseRunStatus.objects.get(id=status) \
+            if isinstance(status, int) else status
 
         return self.case_run.create(case=case,
                                     assignee=_assignee,
                                     tested_by=None,
-                                    case_run_status=_case_run_status,
+                                    status=_status,
                                     case_text_version=_case_text_version,
                                     build=build or self.build,
                                     sortkey=sortkey,
@@ -160,7 +160,7 @@ class TestRun(TCMSActionModel):
             name__in=TestCaseRunStatus.complete_status_names).values_list('pk', flat=True)
 
         completed_caserun = self.case_run.filter(
-            case_run_status__in=ids)
+            status__in=ids)
 
         return self.get_percentage(completed_caserun.count())
 
@@ -177,30 +177,30 @@ class TestRun(TCMSActionModel):
         else:
             self.stop_date = None
 
-    def stats_caseruns_status(self, case_run_statuses=None):
+    def stats_caseruns_status(self, statuses=None):
         """Get statistics based on case runs' status
 
-        @param case_run_statuss: iterable object containing TestCaseRunStatus
+        @param statuss: iterable object containing TestCaseRunStatus
             objects representing PASS, FAIL, WAIVED, etc.
-        @type case_run_statuses: iterable object
+        @type statuses: iterable object
         @return: the statistics including the number of each status mapping,
             total number of case runs, complete percent, and failure percent.
         @rtype: namedtuple
         """
-        if case_run_statuses is None:
-            case_run_statuses = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')
+        if statuses is None:
+            statuses = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')
 
         rows = TestCaseRun.objects.filter(
             run=self.pk
         ).values(
-            'case_run_status'
-        ).annotate(status_count=Count('case_run_status'))
+            'status'
+        ).annotate(status_count=Count('status'))
 
         caserun_statuses_subtotal = dict((status.pk, [0, status])
-                                         for status in case_run_statuses)
+                                         for status in statuses)
 
         for row in rows:
-            caserun_statuses_subtotal[row['case_run_status']][0] = row['status_count']
+            caserun_statuses_subtotal[row['status']][0] = row['status_count']
 
         complete_count = 0
         failure_count = 0
@@ -294,7 +294,7 @@ class TestCaseRun(TCMSActionModel):
     run = models.ForeignKey(TestRun, related_name='case_run', on_delete=models.CASCADE)
     case = models.ForeignKey('testcases.TestCase', related_name='case_run',
                              on_delete=models.CASCADE)
-    case_run_status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
+    status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
     build = models.ForeignKey('management.Build', on_delete=models.CASCADE)
 
     class Meta:

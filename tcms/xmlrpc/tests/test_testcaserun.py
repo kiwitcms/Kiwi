@@ -34,7 +34,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
         self.plan = TestPlanFactory(author=self.api_user, product=self.product)
         self.test_run = TestRunFactory(product_version=self.version, build=self.build,
                                        default_tester=None, plan=self.plan)
-        self.case_run_status = TestCaseRunStatus.objects.get(name='IDLE')
+        self.status = TestCaseRunStatus.objects.get(name='IDLE')
         self.case = TestCaseFactory(author=self.api_user, default_tester=None, plan=[self.plan])
 
         self.case_run_pks = []
@@ -43,18 +43,18 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
         values = [
             {
                 "assignee": self.staff.pk,
-                "case_run_status": self.case_run_status.pk,
+                "status": self.status.pk,
             },
             {
                 "build": self.build.pk,
                 "assignee": self.staff.pk,
-                "case_run_status": 1,
+                "status": 1,
             },
             {
                 "run": self.test_run.pk,
                 "build": self.build.pk,
                 "assignee": self.staff.pk,
-                "case_run_status": self.case_run_status.pk,
+                "status": self.status.pk,
             },
         ]
         for value in values:
@@ -81,7 +81,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
             "case": self.case.pk,
             "assignee": self.api_user.pk,
             "sortkey": 90,
-            "case_run_status": self.case_run_status.pk,
+            "status": self.status.pk,
             "case_text_version": 3,
         })
         self.assertIsNotNone(tcr)
@@ -90,7 +90,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
         self.assertEqual(tcr['case_id'], self.case.pk)
         self.assertEqual(tcr['assignee_id'], self.api_user.pk)
         self.assertEqual(tcr['sortkey'], 90)
-        self.assertEqual(tcr['case_run_status'], 'IDLE')
+        self.assertEqual(tcr['status'], 'IDLE')
         self.assertEqual(tcr['case_text_version'], 3)
 
     def test_create_with_non_exist_fields(self):
@@ -122,7 +122,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
             "case": self.case.pk,
             "assignee": self.api_user.pk,
             "sortkey": 2,
-            "case_run_status": self.case_run_status.pk,
+            "status": self.status.pk,
         }
         self.rpc_client.exec.Auth.logout()
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
@@ -174,7 +174,7 @@ class TestCaseRunDetachLog(XmlrpcAPIBaseTest):
         self.tester = UserFactory()
         self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
                                            sortkey=10,
-                                           case_run_status=self.status_idle)
+                                           status=self.status_idle)
 
     def setUp(self):
         super(TestCaseRunDetachLog, self).setUp()
@@ -209,7 +209,7 @@ class TestCaseRunFilter(XmlrpcAPIBaseTest):
         self.tester = UserFactory()
         self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
                                            sortkey=10,
-                                           case_run_status=self.status_idle)
+                                           status=self.status_idle)
 
     def test_with_non_exist_id(self):
         found = self.rpc_client.exec.TestCaseRun.filter({'pk': -1})
@@ -223,8 +223,8 @@ class TestCaseRunFilter(XmlrpcAPIBaseTest):
         self.assertEqual(tcr['assignee_id'], self.tester.pk)
         self.assertEqual(tcr['tested_by_id'], None)
         self.assertEqual(tcr['sortkey'], 10)
-        self.assertEqual(tcr['case_run_status'], 'IDLE')
-        self.assertEqual(tcr['case_run_status_id'], self.status_idle.pk)
+        self.assertEqual(tcr['status'], 'IDLE')
+        self.assertEqual(tcr['status_id'], self.status_idle.pk)
 
 
 class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
@@ -274,12 +274,12 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         tcr = self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {
             "build": self.build.pk,
             "assignee": self.user.pk,
-            "case_run_status": self.status_running.pk,
+            "status": self.status_running.pk,
             "sortkey": 90
         })
         self.assertEqual(tcr['build'], self.build.name)
         self.assertEqual(tcr['assignee'], self.user.username)
-        self.assertEqual(tcr['case_run_status'], 'RUNNING')
+        self.assertEqual(tcr['status'], 'RUNNING')
         self.assertEqual(tcr['sortkey'], 90)
 
     def test_update_with_non_existing_build(self):
@@ -293,7 +293,7 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
     def test_update_with_non_existing_status(self):
         with self.assertRaisesRegex(XmlRPCFault, 'Select a valid choice'):
             self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk,
-                                                    {"case_run_status": 1111111})
+                                                    {"status": 1111111})
 
     def test_update_with_no_perm(self):
         self.rpc_client.exec.Auth.logout()

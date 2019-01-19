@@ -41,14 +41,14 @@ class TestingReportTestCase(test.TestCase):
 
         for status in TestCaseRunStatus.objects.all():
             TestCaseRunFactory(
-                case_run_status=status,
+                status=status,
                 run=run,
                 build=product_build)
 
         # Create an untested testcase run to assert that issue #88 does not arise.
         TestCaseRunFactory(
             tested_by=None,
-            case_run_status=TestCaseRunStatus.objects.get(name='IDLE'),
+            status=TestCaseRunStatus.objects.get(name='IDLE'),
             run=run,
             build=product_build,
         )

@@ -150,7 +150,7 @@ class TestCaseRunDataMixin:
         idle_status_names = TestCaseRunStatus.idle_status_names
 
         for case_run in case_runs:
-            status_name = case_run.case_run_status.name
+            status_name = case_run.status.name
             if status_name in idle_status_names:
                 idle_count += 1
             elif status_name in complete_status_names:
