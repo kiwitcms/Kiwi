@@ -699,13 +699,13 @@ def update_case_run_text(request, run_id):
     count = 0
     updated_test_case_runs = ''
     for test_case_run in test_case_runs:
-        latest_text = test_case_run.latest_text().case_text_version
-        if test_case_run.case_text_version != latest_text:
+        latest_version = test_case_run.case.history.latest().history_id
+        if test_case_run.case_text_version != latest_version:
             count += 1
             updated_test_case_runs += '<li>%s: %s -> %s</li>' % (
-                test_case_run.case.summary, test_case_run.case_text_version, latest_text
+                test_case_run.case.summary, test_case_run.case_text_version, latest_version
             )
-            test_case_run.case_text_version = latest_text
+            test_case_run.case_text_version = latest_version
             test_case_run.save()
 
     info = "<p>%s</p><ul>%s</ul>" % (_("%d CaseRun(s) updated:") % count, updated_test_case_runs)

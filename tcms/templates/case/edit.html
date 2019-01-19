@@ -46,13 +46,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 
 {% block contents %}
 <div id="content">
-	<span class="right-action">
-            {% if test_case %}
-		<a href="{% url "testcases-text_history" test_case.case_id %}?from_plan={{ test_plan.plan_id }}" class="historylink">
-			Edit History
-		</a>
-            {% endif %}
-	</span>
     {% if test_case %}
         <form action="{% url "testcases-edit" test_case.case_id %}" method="post">
     {% else %}
@@ -114,22 +107,8 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
                                             </div>
 					</div>
 					<div class="data_row">
-                                            <label >Last Editor</label>
-                                            <div id="display_editor">
-                                                {% if test_case.latest_text.author %}
-                                                <a href="{% url "tcms-profile" test_case.latest_text.author.username %}">
-                                                   {{ test_case.latest_text.author.username }}
-                                                </a>
-                                                {% endif %}
-                                            </div>
-					</div>
-					<div class="data_row">
 						<label >Created</label>
 						<div class="name">{{ test_case.create_date }}</div>
-					</div>
-					<div class="data_row">
-						<label >Last Modified</label>
-						<div id="display_modify_date" >{{ test_case.latest_text.create_date }}</div>
 					</div>
                                     {% endif %}
 					
@@ -157,15 +136,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 			<fieldset class="no-border background-light-grey">
 				<div class="editor-side">
 					<h4 class="strong">Setup</h4>
-					<div class="form" id="form_setup">{{ form.setup }}</div>
-					<h4 class="strong">Actions</h4>
-					<div class="form" id="form_action">{{ form.action }}</div>
-				</div>
-				<div class="editor-side">
-					<h4 class="strong">Break down</h4>
-					<div class="" id="form_breakdown">{{ form.breakdown }}</div>
-					<h4 class="strong">Expected Results</h4>
-					<div class="" id="form_effect">{{ form.effect }}</div>
+					<div class="form" id="form_text">{{ form.text }}</div>
 				</div>
 			</fieldset>
                     {% if notify_form %}

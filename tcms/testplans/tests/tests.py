@@ -17,7 +17,7 @@ from tcms.testplans.models import TestPlan
 
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory, TestCaseTextFactory
+from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import UserFactory
@@ -49,14 +49,12 @@ class BasePlanTest(test.TestCase):
                                         type=cls.plan_type)
         # add TestCases to plan with status CONFIRMED
         for _i in range(5):
-            case = TestCaseFactory(plan=[cls.test_plan],
-                                   case_status=TestCaseStatus.objects.get(name='CONFIRMED'))
-            TestCaseTextFactory(case=case)
+            TestCaseFactory(plan=[cls.test_plan],
+                            case_status=TestCaseStatus.objects.get(name='CONFIRMED'))
 
         # also add a few PROPOSED TestCases
         for _i in range(3):
-            case = TestCaseFactory(plan=[cls.test_plan])
-            TestCaseTextFactory(case=case)
+            TestCaseFactory(plan=[cls.test_plan])
 
         cls.plan_id = cls.test_plan.pk
         cls.child_plan = TestPlanFactory(parent=cls.test_plan)
@@ -103,11 +101,7 @@ class PlanTests(BasePlanTest):
         confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
         for case in self.test_plan.case.filter(case_status=confirmed):
             self.assertContains(response, case.summary)
-            # factory sets all 4
-            self.assertContains(response, case.latest_text().setup)
-            self.assertContains(response, case.latest_text().action)
-            self.assertContains(response, case.latest_text().effect)
-            self.assertContains(response, case.latest_text().breakdown)
+            self.assertContains(response, case.text)
 
     def test_plan_attachment(self):
         location = reverse('plan-attachment',

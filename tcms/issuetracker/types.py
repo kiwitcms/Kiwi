@@ -155,19 +155,14 @@ class Bugzilla(IssueTrackerType):
         args = {}
         args['cf_build_id'] = caserun.run.build.name
 
-        # this is a TestCaseText model or NoneText
-        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-        setup = txt.setup
-        action = txt.action
-        effect = txt.effect
+        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Version-Release number of selected " \
                    "component (if applicable):\n"
         comment += '%s\n\n' % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n%s\n\n" % (setup, action)
+        comment += "Steps to Reproduce: \n%s\n\n" % txt
         comment += "Actual results: \n<describe what happened>\n\n"
-        comment += "Expected results:\n%s\n\n" % effect
 
         args['comment'] = comment
         args['component'] = caserun.case.component.values_list('name',
@@ -256,11 +251,8 @@ class JIRA(IssueTrackerType):
             args['reporter'] = self.rpc.user(tested_by.username).key
         except jira.JIRAError:
             pass
-        # this is a TestCaseText model or NoneText
-        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-        setup = txt.setup
-        action = txt.action
-        effect = txt.effect
+
+        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
@@ -268,9 +260,8 @@ class JIRA(IssueTrackerType):
         comment += "Version-Release number of selected " \
                    "component (if applicable):\n"
         comment += "%s\n\n" % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n%s\n\n" % (setup, action)
+        comment += "Steps to Reproduce: \n%s\n\n" % txt
         comment += "Actual results: \n<describe what happened>\n\n"
-        comment += "Expected results:\n%s\n\n" % effect
         args['description'] = comment
 
         url = self.tracker.base_url
@@ -321,11 +312,7 @@ class GitHub(IssueTrackerType):
             'title': 'Failed test: %s' % caserun.case.summary,
         }
 
-        # this is a TestCaseText model or NoneText
-        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-        setup = txt.setup
-        action = txt.action
-        effect = txt.effect
+        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "Product:\n%s\n\n" % caserun.run.plan.product.name
@@ -333,9 +320,8 @@ class GitHub(IssueTrackerType):
         comment += "Version-Release number of selected " \
                    "component (if applicable):\n"
         comment += "%s\n\n" % caserun.build.name
-        comment += "Steps to Reproduce: \n%s\n%s\n\n" % (setup, action)
+        comment += "Steps to Reproduce: \n%s\n\n" % txt
         comment += "Actual results: \n<describe what happened>\n\n"
-        comment += "Expected results:\n%s\n\n" % effect
         args['body'] = comment
 
         url = self.tracker.base_url
@@ -371,11 +357,7 @@ class Gitlab(IssueTrackerType):
             'issue[title]': 'Failed test: %s' % caserun.case.summary,
         }
 
-        # this is a TestCaseText model or NoneText
-        txt = caserun.get_text_with_version(case_text_version=caserun.case_text_version)
-        setup = txt.setup
-        action = txt.action
-        effect = txt.effect
+        txt = caserun.case.get_text_with_version(case_text_version=caserun.case_text_version)
 
         comment = "Filed from caserun %s\n\n" % caserun.get_full_url()
         comment += "**Product**:\n%s\n\n" % caserun.run.plan.product.name
@@ -384,9 +366,8 @@ class Gitlab(IssueTrackerType):
         comment += "Version-Release number of selected " \
                    "component (if applicable):\n"
         comment += "%s\n\n" % caserun.build.name
-        comment += "**Steps to Reproduce**: \n%s\n%s\n\n" % (setup, action)
+        comment += "**Steps to Reproduce**: \n%s\n\n" % txt
         comment += "**Actual results**: \n<describe what happened>\n\n"
-        comment += "**Expected results**:\n%s\n\n" % effect
         args['issue[description]'] = comment
 
         url = self.tracker.base_url

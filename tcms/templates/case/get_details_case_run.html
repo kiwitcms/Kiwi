@@ -129,33 +129,10 @@
 		<div class="caseInfo">
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
 				<tr>
-					<td>
+					<td colspan='3'>
 						<div class="container">
-							<h4>Setup</h4>
-							<div class="content">{{ test_case_text.setup|markdown2html }}</div>
-						</div>
-					</td>
-					<td style="width:5px;"></td>
-					<td>
-						<div class="container">
-							<h4>Breakdown</h4>
-							<div class="content">{{ test_case_text.breakdown|markdown2html }}</div>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="container">
-							<h4>Actions</h4>
-							<div class="content">{{ test_case_text.action|markdown2html }}</div>
-						</div>
-						
-					</td>
-					<td style="width:5px;"></td>
-					<td>
-						<div class="container">
-							<h4>Expected Results</h4>
-							<div class="content">{{ test_case_text.effect|markdown2html }}</div>
+							<h4>Text</h4>
+							<div class="content">{{ test_case_text|markdown2html }}</div>
 						</div>
 					</td>
 				</tr>

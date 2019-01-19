@@ -105,10 +105,7 @@ class BaseCaseForm(forms.Form):
         widget=forms.Textarea,
         required=False
     )
-    setup = forms.CharField(label="Setup", widget=SimpleMDE(), required=False)
-    action = forms.CharField(label="Actions", widget=SimpleMDE(), required=False)
-    effect = forms.CharField(label="Expect results", widget=SimpleMDE(), required=False)
-    breakdown = forms.CharField(label="Breakdown", widget=SimpleMDE(), required=False)
+    text = forms.CharField(widget=SimpleMDE(), required=False)
 
     def __init__(self, *args, **kwargs):
         if args:

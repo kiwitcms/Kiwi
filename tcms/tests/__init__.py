@@ -126,24 +126,31 @@ class BasePlanCase(LoggedInTestCase):
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case.save()  # will generate history object
+
         cls.case_1 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_1.save()  # will generate history object
+
         cls.case_2 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_2.save()  # will generate history object
+
         cls.case_3 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_3.save()  # will generate history object
 
         cls.case_4 = TestCaseFactory(
             author=cls.tester,
@@ -151,18 +158,23 @@ class BasePlanCase(LoggedInTestCase):
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_4.save()  # will generate history object
+
         cls.case_5 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_5.save()  # will generate history object
+
         cls.case_6 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_6.save()  # will generate history object
 
 
 class BaseCaseRun(BasePlanCase):
