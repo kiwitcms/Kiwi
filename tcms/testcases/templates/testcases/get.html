@@ -26,23 +26,7 @@
         <div class="card-pf card-pf-accented">
             <div class="card-pf-body">
                 <p>
-                    <strong>{% trans 'Setup' %}:</strong>
-                    {{ test_case_text.setup|markdown2html }}
-                </p>
-
-                <p>
-                    <strong>{% trans 'Actions' %}:</strong>
-                    {{ test_case_text.action|markdown2html }}
-                </p>
-
-                <p>
-                    <strong>{% trans 'Expected result' %}:</strong>
-                    {{ test_case_text.effect|markdown2html }}
-                </p>
-
-                <p>
-                    <strong>{% trans 'Breakdown' %}:</strong>
-                    {{ test_case_text.breakdown|markdown2html }}
+                    {{ test_case.text|markdown2html }}
                 </p>
 
                 <p>

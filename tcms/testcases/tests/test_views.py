@@ -24,10 +24,6 @@ from tcms.utils.permissions import initiate_user_with_default_setups
 class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
     """Assert what a default user (non-admin) will see"""
 
-    @classmethod
-    def setUpTestData(cls):
-        super(TestGetCaseRunDetailsAsDefaultUser, cls).setUpTestData()
-
     def test_user_in_default_group_sees_comments(self):
         # test for https://github.com/kiwitcms/Kiwi/issues/74
         initiate_user_with_default_setups(self.tester)
@@ -37,7 +33,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
             url,
             {
                 'case_run_id': self.case_run_1.pk,
-                'case_text_version': self.case_run_1.case.latest_text_version()
+                'case_text_version': self.case_run_1.case.history.latest().history_id,
             }
         )
 
@@ -69,7 +65,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
             url,
             {
                 'case_run_id': self.case_run_1.pk,
-                'case_text_version': self.case_run_1.case.latest_text_version()
+                'case_text_version': self.case_run_1.case.history.latest().history_id,
             }
         )
 
@@ -161,10 +157,7 @@ class TestEditCase(BasePlanCase):
             'script': '',
             'priority': cls.case_1.priority.pk,
             'tag': 'RHEL',
-            'setup': '',
-            'action': '',
-            'breakdown': '',
-            'effect': '',
+            'text': 'Given-When-Then',
             'cc_list': '',
         }
 
@@ -264,17 +257,8 @@ class TestPrintablePage(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestPrintablePage, cls).setUpTestData()
+        super().setUpTestData()
         cls.printable_url = reverse('testcases-printable')
-
-        cls.case_1.add_text(action='action',
-                            effect='effect',
-                            setup='setup',
-                            breakdown='breakdown')
-        cls.case_2.add_text(action='action',
-                            effect='effect',
-                            setup='setup',
-                            breakdown='breakdown')
 
     def test_printable_page(self):
         # printing only 1 of the cases

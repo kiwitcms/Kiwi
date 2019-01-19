@@ -13,7 +13,6 @@ from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseComponentFactory
-from tcms.tests.factories import TestCaseEmailSettingsFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseTagFactory
@@ -165,14 +164,11 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
     """Test send mail on case post_save signal is triggered"""
     @classmethod
     def setUpTestData(cls):
-        super(TestSendMailOnCaseIsUpdated, cls).setUpTestData()
+        super().setUpTestData()
 
-        cls.case.add_text('action', 'effect', 'setup', 'breakdown')
-
-        cls.email_setting = TestCaseEmailSettingsFactory(
-            case=cls.case,
-            notify_on_case_update=True,
-            auto_to_case_author=True)
+        cls.case.emailing.notify_on_case_update = True
+        cls.case.emailing.auto_to_case_author = True
+        cls.case.emailing.save()
 
         cls.case_editor = User.objects.create_user(username='editor')
         # This is actually done when update a case. Setting current_user

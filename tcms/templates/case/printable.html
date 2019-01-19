@@ -47,28 +47,13 @@
     <div>
         <h2 id="plan_cases">Test Cases</h2>
         <div class="thick-line"></div>
-	{% for case_id, test_cases in test_cases.items %}
+	{% for test_case in test_cases %}
         <div style="clear: left">
-            {% for test_case in test_cases %}
-		<h3>TC-{{ test_case.case_id }}: {{ test_case.case__summary }}</h3>
+		<h3>TC-{{ test_case.case_id }}: {{ test_case.summary }}</h3>
 		<div class="thin-line"></div>
 		<div class="case-stage">
-			<h4>Set up</h4>
-			{{ test_case.setup|markdown2html }}
+			{{ test_case.text|markdown2html }}
 		</div>
-		<div class="case-stage">
-			<h4>Actions</h4>
-			{{ test_case.action|markdown2html }}
-		</div>
-		<div class="case-stage">
-			<h4>Expected Results</h4>
-			{{ test_case.effect|markdown2html }}
-		</div>
-		<div class="case-stage">
-			<h4>Breakdown</h4>
-			{{ test_case.breakdown|markdown2html }}
-		</div>
-            {% endfor %}
 	</div>
 	{% endfor %}
     </div>

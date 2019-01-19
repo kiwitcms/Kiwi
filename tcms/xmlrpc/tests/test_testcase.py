@@ -78,37 +78,24 @@ class TestUpdate(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super(TestUpdate, self)._fixture_setup()
 
-        self.testcase = TestCaseFactory()
+        self.testcase = TestCaseFactory(text='')
 
     def test_update_text_and_product(self):
-        case_text = self.testcase.latest_text()
-        self.assertEqual('', case_text.setup)
-        self.assertEqual('', case_text.breakdown)
-        self.assertEqual('', case_text.action)
-        self.assertEqual('', case_text.effect)
-        self.assertNotEqual(self.api_user, case_text.author)
+        self.assertEqual('', self.testcase.text)
 
         # update the test case
         updated = self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
                 'summary': 'This was updated',
-                'setup': 'new',
-                'breakdown': 'new',
-                'action': 'new',
-                'effect': 'new',
+                'text': 'new TC text',
             }
         )
         self.testcase.refresh_from_db()  # refresh before assertions
 
         self.assertEqual(updated['case_id'], self.testcase.pk)
         self.assertEqual('This was updated', self.testcase.summary)
-        case_text = self.testcase.latest_text()  # grab text again
-        self.assertEqual('new', case_text.setup)
-        self.assertEqual('new', case_text.breakdown)
-        self.assertEqual('new', case_text.action)
-        self.assertEqual('new', case_text.effect)
-        self.assertEqual(self.api_user, case_text.author)
+        self.assertEqual('new TC text', self.testcase.text)
 
 
 class TestAddTag(XmlrpcAPIBaseTest):

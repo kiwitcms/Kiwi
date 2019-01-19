@@ -27,6 +27,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
         self.plan = TestPlanFactory(author=self.api_user)
 
         self.test_case = TestCaseFactory()
+        self.test_case.save()  # generate history object
         self.plan.add_case(self.test_case)
 
         self.test_run = TestRunFactory(plan=self.plan)

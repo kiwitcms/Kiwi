@@ -269,20 +269,11 @@ def create(values, **kwargs):
     if form.is_valid():
         # Create the case
         test_case = TestCase.create(author=request.user, values=form.cleaned_data)
-
-        # Add case text to the case
-        test_case.add_text(
-            action=form.cleaned_data['action'] or '',
-            effect=form.cleaned_data['effect'] or '',
-            setup=form.cleaned_data['setup'] or '',
-            breakdown=form.cleaned_data['breakdown'] or '',
-        )
     else:
         # Print the errors if the form is not passed validation.
         raise ValueError(form_errors_to_list(form))
 
     result = test_case.serialize()
-    result['text'] = test_case.latest_text().serialize()
 
     return result
 
@@ -298,14 +289,11 @@ def filter(query):  # pylint: disable=redefined-builtin
         :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
         :type query: dict
         :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects.
-                 The key ``text`` holds a the latest version of a serialized
-                 :class:`tcms.testcases.models.TestCaseText` object!
         :rtype: list(dict)
     """
     results = []
     for case in TestCase.objects.filter(**query).distinct():
         serialized_case = case.serialize()
-        serialized_case['text'] = case.latest_text().serialize()
         results.append(serialized_case)
 
     return results
@@ -322,9 +310,6 @@ def update(case_id, values, **kwargs):
         :param case_id: PK of TestCase to be modified
         :type case_id: int
         :param values: Field values for :class:`tcms.testcases.models.TestCase`.
-                       The special keys ``setup``, ``breakdown``, ``action`` and
-                       ``effect`` are recognized and will cause update of the underlying
-                       :class:`tcms.testcases.models.TestCaseText` object!
         :type values: dict
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
@@ -347,23 +332,6 @@ def update(case_id, values, **kwargs):
             if key not in ['component', 'tag'] and hasattr(test_case, key):
                 setattr(test_case, key, form.cleaned_data[key])
         test_case.save()
-
-        # if we're updating the text if any one of these parameters was
-        # specified
-        if any(x in ['setup', 'action', 'effect', 'breakdown'] for x in values.keys()):
-            action = form.cleaned_data.get('action', '').strip()
-            effect = form.cleaned_data.get('effect', '').strip()
-            setup = form.cleaned_data.get('setup', '').strip()
-            breakdown = form.cleaned_data.get('breakdown', '').strip()
-            author = kwargs.get(REQUEST_KEY).user
-
-            test_case.add_text(
-                author=author,
-                action=action,
-                effect=effect,
-                setup=setup,
-                breakdown=breakdown,
-            )
     else:
         raise ValueError(form_errors_to_list(form))
 

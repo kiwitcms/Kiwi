@@ -12,7 +12,7 @@ import vinaigrette
 from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.testcases.models import Bug, TestCaseText, NoneText
+from tcms.testcases.models import Bug
 from tcms.xmlrpc.serializer import TestCaseRunXMLRPCSerializer
 from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
@@ -99,8 +99,7 @@ class TestRun(TCMSActionModel):
                      sortkey=0):
         _case_text_version = case_text_version
         if not _case_text_version:
-            _case_text_version = case.latest_text(
-                text_required=False).case_text_version
+            _case_text_version = case.history.latest().history_id
 
         _assignee = assignee \
             or (case.default_tester_id and case.default_tester) \
@@ -337,36 +336,6 @@ class TestCaseRun(TCMSActionModel):
 
     def get_bugs_count(self):
         return self.get_bugs().count()
-
-    def get_text_versions(self):
-        return TestCaseText.objects.filter(
-            case__pk=self.case.pk
-        ).values_list('case_text_version', flat=True)
-
-    def get_text_with_version(self, case_text_version=None):
-        if case_text_version:
-            try:
-                return TestCaseText.objects.get(
-                    case__case_id=self.case_id,
-                    case_text_version=case_text_version
-                )
-            except TestCaseText.DoesNotExist:
-                return NoneText
-        try:
-            return TestCaseText.objects.get(
-                case__case_id=self.case_id,
-                case_text_version=self.case_text_version
-            )
-        except TestCaseText.DoesNotExist:
-            return NoneText
-
-    def latest_text(self):
-        try:
-            return TestCaseText.objects.filter(
-                case__case_id=self.case_id
-            ).order_by('-case_text_version')[0]
-        except IndexError:
-            return NoneText
 
     def _get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestCaseRun!

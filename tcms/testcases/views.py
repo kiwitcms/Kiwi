@@ -19,7 +19,7 @@ from tcms.core.contrib.comments.utils import get_comments
 from tcms.search import remove_from_request_path
 from tcms.search.order import order_case_queryset
 from tcms.testcases.models import TestCase, TestCaseStatus, \
-    TestCasePlan, TestCaseText
+    TestCasePlan
 from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
@@ -28,7 +28,6 @@ from tcms.testcases.forms import NewCaseForm, \
     SearchCaseForm, EditCaseForm, CaseNotifyForm, \
     CloneCaseForm
 from tcms.testplans.forms import SearchPlanForm
-from tcms.utils.dict_utils import create_dict_from_query
 from tcms.testcases.fields import MultipleEmailField
 
 
@@ -98,12 +97,6 @@ def group_case_bugs(bugs):
 def create_testcase(request, form, test_plan):
     """Create testcase"""
     test_case = TestCase.create(author=request.user, values=form.cleaned_data)
-    test_case.add_text(case_text_version=1,
-                       author=request.user,
-                       action=form.cleaned_data['action'],
-                       effect=form.cleaned_data['effect'],
-                       setup=form.cleaned_data['setup'],
-                       breakdown=form.cleaned_data['breakdown'])
 
     # Assign the case to the plan
     if test_plan:
@@ -547,7 +540,6 @@ class SimpleTestCaseView(TemplateView):
         data.update({
             'test_case': case,
             'review_mode': self.review_mode,
-            'test_case_text': case.latest_text(),
             'components': case.component.only('name'),
             'tags': case.tag.only('name'),
             'case_comments': get_comments(case),
@@ -620,14 +612,10 @@ def get(request, case_id):
         'assignee', 'case',
         'case', 'status').order_by('run__plan', 'run')
 
-    # Get the case texts
-    tc_text = test_case.get_text_with_version(request.GET.get('case_text_version'))
-
     # Render the page
     context_data = {
         'test_case': test_case,
         'test_case_runs': tcrs,
-        'test_case_text': tc_text,
     }
 
     url_params = "?case=%d" % test_case.pk
@@ -671,7 +659,7 @@ def printable(request, template_name='case/printable.html'):
     # this in the browser
     # search only by case PK. Used when printing selected cases
     case_ids = request.POST.getlist('case')
-    case_filter = {'case__in': case_ids}
+    case_filter = {'pk__in': case_ids}
 
     test_plan = None
     # plan_pk is passed from the TestPlan.printable function
@@ -682,19 +670,15 @@ def printable(request, template_name='case/printable.html'):
             test_plan = TestPlan.objects.get(pk=plan_pk)
             # search cases from a TestPlan, used when printing entire plan
             case_filter = {
-                'case__in': test_plan.case.all(),
-                'case__case_status': TestCaseStatus.objects.get(name='CONFIRMED').pk,
+                'pk__in': test_plan.case.all(),
+                'case_status': TestCaseStatus.objects.get(name='CONFIRMED').pk,
             }
         except (ValueError, TestPlan.DoesNotExist):
             test_plan = None
 
-    tcs = create_dict_from_query(
-        TestCaseText.objects.filter(**case_filter).values(
-            'case_id', 'case__summary', 'setup', 'action', 'effect', 'breakdown'
-        ).order_by('case_id', '-case_text_version'),
-        'case_id',
-        True
-    )
+    tcs = TestCase.objects.filter(**case_filter).values(
+            'case_id', 'summary', 'text'
+    ).order_by('case_id')
 
     context_data = {
         'test_plan': test_plan,
@@ -722,6 +706,7 @@ def update_testcase(request, test_case, tc_form):
               'category',
               'priority',
               'notes',
+              'text',
               'is_automated',
               'script',
               'arguments',
@@ -771,12 +756,6 @@ def edit(request, case_id, template_name='case/edit.html'):
         if form.is_valid() and n_form.is_valid():
 
             update_testcase(request, test_case, form)
-
-            test_case.add_text(author=request.user,
-                               action=form.cleaned_data['action'],
-                               effect=form.cleaned_data['effect'],
-                               setup=form.cleaned_data['setup'],
-                               breakdown=form.cleaned_data['breakdown'])
 
             # Notification
             update_case_email_settings(test_case, n_form)
@@ -829,7 +808,6 @@ def edit(request, case_id, template_name='case/edit.html'):
             ))
 
     else:
-        tctxt = test_case.latest_text()
         # Notification form initial
         n_form = CaseNotifyForm(initial={
             'notify_on_case_update': test_case.emailing.notify_on_case_update,
@@ -865,10 +843,7 @@ def edit(request, case_id, template_name='case/edit.html'):
             'category': test_case.category_id,
             'notes': test_case.notes,
             'component': components,
-            'setup': tctxt.setup,
-            'action': tctxt.action,
-            'effect': tctxt.effect,
-            'breakdown': tctxt.breakdown,
+            'text': test_case.text,
         })
 
         form.populate(product_id=test_case.category.product_id)
@@ -880,42 +855,6 @@ def edit(request, case_id, template_name='case/edit.html'):
         'notify_form': n_form,
     }
     return render(request, template_name, context_data)
-
-
-def text_history(request, case_id, template_name='case/history.html'):
-    """View test plan text history"""
-
-    test_case = get_object_or_404(TestCase, case_id=case_id)
-    test_plan = plan_from_request_or_none(request)
-    tctxts = test_case.text.values('case_id',
-                                   'case_text_version',
-                                   'author__email',
-                                   'create_date').order_by('-case_text_version')
-
-    context = {
-        'testplan': test_plan,
-        'testcase': test_case,
-        'test_case_texts': tctxts.iterator(),
-    }
-
-    try:
-        case_text_version = int(request.GET.get('case_text_version'))
-        text_to_show = test_case.text.filter(case_text_version=case_text_version)
-        text_to_show = text_to_show.values('action',
-                                           'effect',
-                                           'setup',
-                                           'breakdown')
-
-        context.update({
-            'select_case_text_version': case_text_version,
-            'text_to_show': text_to_show.iterator(),
-        })
-    except (TypeError, ValueError):
-        # If case_text_version is not a valid number, no text to display for a
-        # selected text history
-        pass
-
-    return render(request, template_name, context)
 
 
 @permission_required('testcases.add_testcase')
@@ -955,6 +894,7 @@ def clone(request, template_name='case/clone.html'):
                         category=tc_src.category,
                         priority=tc_src.priority,
                         notes=tc_src.notes,
+                        text=tc_src.text,
                         author=clone_form.cleaned_data[
                             'maintain_case_orignal_author'] and
                         tc_src.author or request.user,
@@ -976,17 +916,6 @@ def clone(request, template_name='case/clone.html'):
                             sortkey = test_plan.get_case_sortkey()
 
                         test_plan.add_case(tc_dest, sortkey)
-
-                    tc_dest.add_text(
-                        author=clone_form.cleaned_data[
-                            'maintain_case_orignal_author'] and
-                        tc_src.author or request.user,
-                        create_date=tc_src.latest_text().create_date,
-                        action=tc_src.latest_text().action,
-                        effect=tc_src.latest_text().effect,
-                        setup=tc_src.latest_text().setup,
-                        breakdown=tc_src.latest_text().breakdown
-                    )
 
                     for tag in tc_src.tag.all():
                         tc_dest.add_tag(tag=tag)

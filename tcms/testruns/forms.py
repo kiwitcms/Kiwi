@@ -170,9 +170,7 @@ class XMLRPCNewCaseRunForm(BaseCaseRunForm):
     def clean_case_text_version(self):
         data = self.cleaned_data.get('case_text_version')
         if not data and self.cleaned_data.get('case'):
-            tc_ltxt = self.cleaned_data['case'].latest_text()
-            if tc_ltxt:
-                data = tc_ltxt.case_text_version
+            data = self.cleaned_data['case'].history.latest().history_id
 
         return data
 

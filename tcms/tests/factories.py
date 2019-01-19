@@ -183,6 +183,7 @@ class TestCaseFactory(DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     default_tester = factory.SubFactory(UserFactory)
     reviewer = factory.SubFactory(UserFactory)
+    text = factory.Sequence(lambda n: 'Given-When-Then %d' % n)
 
     @factory.post_generation
     def plan(self, create, extracted, **kwargs):
@@ -237,20 +238,6 @@ class TestCaseTagFactory(DjangoModelFactory):
     tag = factory.SubFactory(TagFactory)
 
 
-class TestCaseTextFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testcases.TestCaseText'
-
-    case = factory.SubFactory(TestCaseFactory)
-    case_text_version = 1
-    author = factory.SubFactory(UserFactory)
-    action = 'action'
-    effect = 'effect'
-    setup = 'setup'
-    breakdown = 'breakdown'
-
-
 class TestCaseEmailSettingsFactory(DjangoModelFactory):
 
     class Meta:
@@ -298,7 +285,7 @@ class TestCaseRunFactory(DjangoModelFactory):
 
     assignee = factory.SubFactory(UserFactory)
     tested_by = factory.SubFactory(UserFactory)
-    case_text_version = 1
+    case_text_version = factory.LazyAttribute(lambda obj: obj.case.history.latest().history_id)
     close_date = None
     sortkey = factory.Sequence(lambda n: n)
     run = factory.SubFactory(TestRunFactory)

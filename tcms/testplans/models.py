@@ -213,7 +213,8 @@ class TestPlan(TCMSActionModel):
                         category=tc_category,
                         priority=tpcase_src.priority,
                         author=author,
-                        default_tester=default_tester)
+                        default_tester=default_tester,
+                        text=tpcase_src.text)
 
                     # Add case to plan.
                     tp_dest.add_case(tpcase_dest, tcp.sortkey)
@@ -231,16 +232,6 @@ class TestPlan(TCMSActionModel):
                                 description=component.description)
 
                         tpcase_dest.add_component(new_c)
-
-                    text = tpcase_src.latest_text()
-
-                    if text:
-                        tpcase_dest.add_text(author=text.author,
-                                             action=text.action,
-                                             effect=text.effect,
-                                             setup=text.setup,
-                                             breakdown=text.breakdown,
-                                             create_date=text.create_date)
             else:
                 for tpcase_src in tpcases_src:
                     tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
@@ -9,7 +7,6 @@ from django.db.models import ObjectDoesNotExist
 import vinaigrette
 
 from tcms.core.models import TCMSActionModel
-from tcms.core.utils.checksum import checksum
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.issuetracker.types import IssueTrackerType
 from tcms.testcases.fields import MultipleEmailField
@@ -20,20 +17,6 @@ AUTOMATED_CHOICES = (
     (1, 'Auto'),
     (2, 'Both'),
 )
-
-
-class NoneText:  # pylint: disable=too-few-public-methods
-    author = None
-    case_text_version = 0
-    action = ''
-    effect = ''
-    setup = ''
-    breakdown = ''
-    create_date = datetime.now()
-
-    @classmethod
-    def serialize(cls):
-        return {}
 
 
 class TestCaseStatus(TCMSActionModel):
@@ -106,6 +89,7 @@ class TestCase(TCMSActionModel):
     summary = models.CharField(max_length=255)
     requirement = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
+    text = models.TextField(blank=True)
 
     case_status = models.ForeignKey(TestCaseStatus, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='category_case',
@@ -134,9 +118,6 @@ class TestCase(TCMSActionModel):
 
     tag = models.ManyToManyField('management.Tag', related_name='case',
                                  through='testcases.TestCaseTag')
-
-    # todo: Auto-generated attributes from back-references:
-    # 'texts' : list of TestCaseTexts (from TestCaseTexts.case)
 
     def __str__(self):
         return self.summary
@@ -171,6 +152,7 @@ class TestCase(TCMSActionModel):
             priority=values['priority'],
             default_tester=values['default_tester'],
             notes=values['notes'],
+            text=values['text'],
         )
 
         # todo: should use add_tag
@@ -288,40 +270,6 @@ class TestCase(TCMSActionModel):
     def add_tag(self, tag):
         return TestCaseTag.objects.get_or_create(case=self, tag=tag)
 
-    def add_text(
-            self,
-            action,
-            effect,
-            setup,
-            breakdown,
-            author=None,
-            create_date=datetime.now(),
-            case_text_version=1):
-        if not author:
-            author = self.author
-
-        new_checksum = checksum(action + effect + setup + breakdown)
-        latest_text = self.latest_text()
-        old_checksum = checksum(latest_text.action +
-                                latest_text.effect +
-                                latest_text.setup +
-                                latest_text.breakdown)
-
-        if old_checksum == new_checksum:
-            return latest_text
-
-        case_text_version = self.latest_text_version() + 1
-        return TestCaseText.objects.create(
-            case=self,
-            case_text_version=case_text_version,
-            create_date=create_date,
-            author=author,
-            action=action,
-            effect=effect,
-            setup=setup,
-            breakdown=breakdown
-        )
-
     def add_to_plan(self, plan):
         TestCasePlan.objects.get_or_create(case=self, plan=plan)
 
@@ -367,27 +315,11 @@ class TestCase(TCMSActionModel):
     def get_text_with_version(self, case_text_version=None):
         if case_text_version:
             try:
-                return TestCaseText.objects.get(
-                    case__case_id=self.case_id,
-                    case_text_version=case_text_version
-                )
-            except TestCaseText.DoesNotExist:
-                return NoneText
+                return self.history.get(history_id=case_text_version).text
+            except ObjectDoesNotExist:
+                return self.text
 
-        return self.latest_text()
-
-    def latest_text(self, text_required=True):
-        text = self.text
-        if not text_required:
-            text = text.defer('action', 'effect', 'setup', 'breakdown')
-        latest_text = text.order_by('-case_text_version').first()
-        return latest_text or NoneText
-
-    def latest_text_version(self):
-        latest_version = self.text.order_by('-case_text_version').only('case_text_version').first()
-        if latest_version:
-            return latest_version.case_text_version
-        return 0
+        return self.text
 
     def remove_bug(self, bug_id, run_id=None):
         query = Bug.objects.filter(
@@ -422,21 +354,6 @@ class TestCase(TCMSActionModel):
             return TestCaseEmailSettings.objects.create(case=self)
 
     emailing = property(_get_email_conf)
-
-
-class TestCaseText(TCMSActionModel):
-    case = models.ForeignKey(TestCase, related_name='text', on_delete=models.CASCADE)
-    case_text_version = models.IntegerField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, db_column='who', on_delete=models.CASCADE)
-    create_date = models.DateTimeField(db_column='creation_ts', auto_now_add=True)
-    action = models.TextField(blank=True)
-    effect = models.TextField(blank=True)
-    setup = models.TextField(blank=True)
-    breakdown = models.TextField(blank=True)
-
-    class Meta:
-        ordering = ['case', '-case_text_version']
-        unique_together = ('case', 'case_text_version')
 
 
 class TestCasePlan(models.Model):
