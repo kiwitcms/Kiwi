@@ -723,7 +723,6 @@ def update_testcase(request, test_case, tc_form):
               'priority',
               'notes',
               'is_automated',
-              'is_automated_proposed',
               'script',
               'arguments',
               'extra_link',
@@ -857,7 +856,6 @@ def edit(request, case_id, template_name='case/edit.html'):
             'default_tester': default_tester,
             'requirement': test_case.requirement,
             'is_automated': test_case.get_is_automated_form_value(),
-            'is_automated_proposed': test_case.is_automated_proposed,
             'script': test_case.script,
             'arguments': test_case.arguments,
             'extra_link': test_case.extra_link,
@@ -948,7 +946,6 @@ def clone(request, template_name='case/clone.html'):
                 if clone_form.cleaned_data['copy_case']:
                     tc_dest = TestCase.objects.create(
                         is_automated=tc_src.is_automated,
-                        is_automated_proposed=tc_src.is_automated_proposed,
                         script=tc_src.script,
                         arguments=tc_src.arguments,
                         extra_link=tc_src.extra_link,

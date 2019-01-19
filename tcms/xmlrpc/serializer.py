@@ -472,7 +472,6 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'create_date': ('create_date', datetime_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_automated': ('is_automated', do_nothing),
-        'is_automated_proposed': ('is_automated_proposed', do_nothing),
         'notes': ('notes', do_nothing),
         'requirement': ('requirement', do_nothing),
         'script': ('script', do_nothing),

@@ -151,7 +151,6 @@ def open_run_get_case_runs(request, run):
                      'case_text_version',
                      'sortkey',
                      'case__summary',
-                     'case__is_automated_proposed',
                      'case__is_automated',
                      'case__priority',
                      'case__category__name')
@@ -342,7 +341,6 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
             'status__name',
             'case__category__name',
             'case__summary', 'case__is_automated',
-            'case__is_automated_proposed',
             'tested_by__username'
         )
         mode_stats = self.stats_mode_case_runs(case_runs)

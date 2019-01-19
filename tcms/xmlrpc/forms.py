@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from django.forms import BooleanField
 from django.forms.widgets import CheckboxInput
 
 from tcms.testcases.forms import XMLRPCNewCaseForm
@@ -17,12 +16,8 @@ class XMLRPCCheckboxInput(CheckboxInput):
 
 
 class NewCaseForm(XMLRPCNewCaseForm):
-    is_automated_proposed = BooleanField(label='Autoproposed',
-                                         required=False,
-                                         widget=XMLRPCCheckboxInput)
+    pass
 
 
 class UpdateCaseForm(XMLRPCUpdateCaseForm):
-    is_automated_proposed = BooleanField(label='Autoproposed',
-                                         required=False,
-                                         widget=XMLRPCCheckboxInput)
+    pass

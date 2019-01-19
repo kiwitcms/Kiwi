@@ -68,9 +68,6 @@ class BaseCaseForm(forms.Form):
         choices=AUTOMATED_CHOICES,
         widget=forms.CheckboxSelectMultiple(),
     )
-    is_automated_proposed = forms.BooleanField(
-        label='Autoproposed', required=False
-    )
     script = forms.CharField(label="Script", required=False)
     arguments = forms.CharField(label="Arguments", required=False)
     extra_link = StripURLField(
@@ -273,9 +270,6 @@ class BaseCaseSearchForm(forms.Form):
     is_automated = forms.ChoiceField(
         choices=AUTOMATED_SERCH_CHOICES,
         required=False,
-    )
-    is_automated_proposed = forms.BooleanField(
-        label='Autoproposed', required=False
     )
     items_per_page = forms.ChoiceField(label='Items per page',
                                        required=False,
