@@ -100,7 +100,6 @@ class TestCase(TCMSActionModel):
     case_id = models.AutoField(primary_key=True)
     create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
     is_automated = models.IntegerField(db_column='isautomated', default=0)
-    is_automated_proposed = models.BooleanField(default=False)
     script = models.TextField(blank=True, null=True)
     arguments = models.TextField(blank=True, null=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
@@ -161,7 +160,6 @@ class TestCase(TCMSActionModel):
         case = cls.objects.create(
             author=author,
             is_automated=values['is_automated'],
-            is_automated_proposed=values['is_automated_proposed'],
             # sortkey = values['sortkey'],
             script=values['script'],
             arguments=values['arguments'],
@@ -260,10 +258,6 @@ class TestCase(TCMSActionModel):
         if query.get('is_automated'):
             queryset = queryset.filter(is_automated=query['is_automated'])
 
-        if query.get('is_automated_proposed'):
-            queryset = queryset.filter(
-                is_automated_proposed=query['is_automated_proposed'])
-
         return queryset.distinct()
 
     def add_bug(self, bug_id, bug_system_id, summary=None, description=None,
@@ -356,7 +350,7 @@ class TestCase(TCMSActionModel):
     def get_is_automated_status(self):
         for choice in AUTOMATED_CHOICES:
             if choice[0] == self.is_automated:
-                return choice[1] + (self.is_automated_proposed and ' (Autoproposed)' or '')
+                return choice[1]
 
         return None
 

@@ -38,10 +38,6 @@ $(document).ready(function() {
                 params['case_bug__bug_id__in'] = bug_list;
             };
 
-            if ($('#id_autoproposed').is(':checked')) {
-                params['is_automated_proposed'] = $('#id_autoproposed').is(':checked');
-            }
-
             dataTableJsonRPC('TestCase.filter', params, callback);
         },
         columns: [
@@ -93,8 +89,6 @@ $(document).ready(function() {
             updateComponent([]);
         }
     });
-
-    $('.bootstrap-switch').bootstrapSwitch();
 
     $('.selectpicker').selectpicker();
 });

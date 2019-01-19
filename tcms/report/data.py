@@ -1304,7 +1304,6 @@ class TestingReportCaseRunsData:
                                 'run__plan',
                                 'case__summary',
                                 'case__is_automated',
-                                'case__is_automated_proposed',
                                 'case__category__name',
                                 'case__priority',
                                 'case_text_version',
