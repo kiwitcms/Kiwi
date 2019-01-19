@@ -165,7 +165,7 @@ class TestCreateNewRun(BasePlanCase):
             self.assertEqual(None, case_run.tested_by)
             self.assertEqual(self.tester, case_run.assignee)
             self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                             case_run.case_run_status)
+                             case_run.status)
             self.assertEqual(0, case_run.case_text_version)
             self.assertEqual(new_run.build, case_run.build)
             self.assertEqual(None, case_run.close_date)
@@ -262,7 +262,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         for origin_case_run, cloned_case_run in zip((self.case_run_1, self.case_run_2),
                                                     cloned_run.case_run.order_by('pk')):
             self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                             cloned_case_run.case_run_status)
+                             cloned_case_run.status)
             self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
 
 

@@ -596,7 +596,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
             'comments_count': len(caserun_comments),
             'caserun_comments': caserun_comments,
             'caserun_logs': case_run.history.all(),
-            'test_case_run_status': caserun_status,
+            'test_status': caserun_status,
             'grouped_case_bugs': bugs,
         })
 
@@ -618,7 +618,7 @@ def get(request, case_id):
     tcrs = test_case.case_run.select_related(
         'run', 'tested_by',
         'assignee', 'case',
-        'case', 'case_run_status').order_by('run__plan', 'run')
+        'case', 'status').order_by('run__plan', 'run')
 
     # Get the case texts
     tc_text = test_case.get_text_with_version(request.GET.get('case_text_version'))

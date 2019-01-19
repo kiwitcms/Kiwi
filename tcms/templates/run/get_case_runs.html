@@ -33,7 +33,7 @@
 		<div class="btnBlueCaserun">
 			<span>Status</span>
 			<ul class="statusOptions">
-				{% for tcrs in test_case_run_status %}
+				{% for tcrs in test_status %}
 				<li><a value="{{ tcrs.pk }}" href="#" class="{{ tcrs|lower }}Blue9">{{ tcrs }}</a></li>
 				{% endfor %}
 			</ul>
@@ -87,11 +87,11 @@
 				<span class='grey'>You can type multiple bugs by comma.</span>
 			</div>
 			<div class="listinfo">
-				<span class="title"><label for="id_case_run_status">Status&nbsp;:</label></span>
-				<select id="id_case_run_status" name="case_run_status__pk">
+				<span class="title"><label for="id_status">Status&nbsp;:</label></span>
+				<select id="id_status" name="status__pk">
 					<option value="">--------</option>
-					{% for case_run_status in test_case_run_status %}
-					<option value="{{ case_run_status.pk }}" {% if case_run_status.pk|escape == REQUEST_CONTENTS.case_run_status__pk %}selected="selected"{% endif %}>{{ case_run_status }}</option>
+					{% for status in test_status %}
+					<option value="{{ status.pk }}" {% if status.pk|escape == REQUEST_CONTENTS.status__pk %}selected="selected"{% endif %}>{{ status }}</option>
 					{% endfor %}
 				</select>
 			</div>

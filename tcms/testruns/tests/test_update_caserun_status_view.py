@@ -36,13 +36,13 @@ class TestUpdateCaseRunStatusView(BaseCaseRun):
 
         for caserun in [self.case_run_1, self.case_run_2]:
             caserun.refresh_from_db()
-            self.assertEqual(caserun.case_run_status_id, status_passed.pk)
+            self.assertEqual(caserun.status_id, status_passed.pk)
             self.assertEqual(caserun.tested_by, self.tester)
             self.assertGreater(caserun.close_date, before_update)
             self.assertLess(caserun.close_date, datetime.now())
 
         # verify we didn't update the last TCR by mistake
         self.case_run_3.refresh_from_db()
-        self.assertEqual(self.case_run_3.case_run_status.name, TestCaseRunStatus.IDLE)
+        self.assertEqual(self.case_run_3.status.name, TestCaseRunStatus.IDLE)
         self.assertNotEqual(self.case_run_3.tested_by, self.tester)
         self.assertIsNone(self.case_run_3.close_date)

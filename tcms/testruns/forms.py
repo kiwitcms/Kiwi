@@ -131,7 +131,7 @@ class BaseCaseRunForm(forms.Form):
     build = forms.ModelChoiceField(
         label='Build', queryset=Build.objects.all(),
     )
-    case_run_status = forms.ModelChoiceField(
+    status = forms.ModelChoiceField(
         label='Case Run Status', queryset=TestCaseRunStatus.objects.all(),
         required=False,
     )
@@ -176,8 +176,8 @@ class XMLRPCNewCaseRunForm(BaseCaseRunForm):
 
         return data
 
-    def clean_case_run_status(self):
-        data = self.cleaned_data.get('case_run_status')
+    def clean_status(self):
+        data = self.cleaned_data.get('status')
         if not data:
             data = TestCaseRunStatus.objects.get(name='IDLE')
 
