@@ -12,13 +12,6 @@ from tcms.issuetracker.types import IssueTrackerType
 from tcms.testcases.fields import MultipleEmailField
 
 
-AUTOMATED_CHOICES = (
-    (0, 'Manual'),
-    (1, 'Auto'),
-    (2, 'Both'),
-)
-
-
 class TestCaseStatus(TCMSActionModel):
     id = models.AutoField(
         db_column='case_status_id', max_length=6, primary_key=True
@@ -82,7 +75,7 @@ class TestCase(TCMSActionModel):
 
     case_id = models.AutoField(primary_key=True)
     create_date = models.DateTimeField(db_column='creation_date', auto_now_add=True)
-    is_automated = models.IntegerField(db_column='isautomated', default=0)
+    is_automated = models.BooleanField(default=False)
     script = models.TextField(blank=True, null=True)
     arguments = models.TextField(blank=True, null=True)
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
@@ -288,19 +281,6 @@ class TestCase(TCMSActionModel):
 
     def get_component_names(self):
         return self.component.values_list('name', flat=True)
-
-    def get_is_automated_form_value(self):
-        if self.is_automated == 2:
-            return [0, 1]
-
-        return (self.is_automated, )
-
-    def get_is_automated_status(self):
-        for choice in AUTOMATED_CHOICES:
-            if choice[0] == self.is_automated:
-                return choice[1]
-
-        return None
 
     def get_previous_and_next(self, pk_list):
         current_idx = pk_list.index(self.pk)

@@ -313,6 +313,7 @@ class CustomReport(TemplateView):
             runs_total = 0
             case_runs_total = 0
             automation_total = self._data.automation_total(build_ids)
+            print(automation_total)
 
             # Status matrix used to render progress bar for each build
             status_matrix = self._data.status_matrix(build_ids)
@@ -350,9 +351,8 @@ class CustomReport(TemplateView):
                     build__in=build_ids
                 ).values('plan').distinct().count(),
                 'total_count': case_runs_total,
-                'manual_count': automation_total.get('Manual', 0),
-                'auto_count': automation_total.get('Auto', 0),
-                'both_count': automation_total.get('Both', 0),
+                'manual_count': automation_total.get(False, 0),
+                'auto_count': automation_total.get(True, 0),
             })
 
         context.update({'builds': builds})

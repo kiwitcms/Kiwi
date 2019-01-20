@@ -37,26 +37,21 @@ class TestCaseRunDataMixin:
         @param case_runs: iteratable object to access each case run
         @type case_runs: iterable, list, tuple
         @return: mapping between mode and the count. Example return value is
-            { 'manual': I, 'automated': J, 'manual_automated': N }
+            { 'manual': I, 'automated': J }
         @rtype: dict
         """
         manual_count = 0
         automated_count = 0
-        manual_automated_count = 0
 
         for case_run in case_runs:
-            is_automated = case_run.case.is_automated
-            if is_automated == 1:
+            if case_run.case.is_automated:
                 automated_count += 1
-            elif is_automated == 0:
-                manual_count += 1
             else:
-                manual_automated_count += 1
+                manual_count += 1
 
         return {
             'manual': manual_count,
             'automated': automated_count,
-            'manual_automated': manual_automated_count,
         }
 
     @staticmethod
