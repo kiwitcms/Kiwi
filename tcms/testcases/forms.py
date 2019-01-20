@@ -105,7 +105,26 @@ class BaseCaseForm(forms.Form):
         widget=forms.Textarea,
         required=False
     )
-    text = forms.CharField(widget=SimpleMDE(), required=False)
+    text = forms.CharField(
+        widget=SimpleMDE(),
+        required=False,
+        initial="""**Scenario**: ... what behavior will be tested ...
+  **Given** ... conditions ...
+  **When** ... actions ...
+  **Then** ... expected results ...
+
+*Actions*:
+
+1. item
+2. item
+3. item
+
+*Expected results*:
+
+1. item
+2. item
+3. item
+""")
 
     def __init__(self, *args, **kwargs):
         if args:
