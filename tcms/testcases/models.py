@@ -263,24 +263,10 @@ class TestCase(TCMSActionModel):
     def add_tag(self, tag):
         return TestCaseTag.objects.get_or_create(case=self, tag=tag)
 
-    def add_to_plan(self, plan):
-        TestCasePlan.objects.get_or_create(case=self, plan=plan)
-
-    def clear_components(self):
-        return TestCaseComponent.objects.filter(
-            case=self,
-        ).delete()
-
     def get_bugs(self):
         return Bug.objects.select_related(
             'case_run', 'bug_system'
         ).filter(case__case_id=self.case_id)
-
-    def get_components(self):
-        return self.component.all()
-
-    def get_component_names(self):
-        return self.component.values_list('name', flat=True)
 
     def get_previous_and_next(self, pk_list):
         current_idx = pk_list.index(self.pk)
@@ -317,9 +303,6 @@ class TestCase(TCMSActionModel):
         # note: cannot use self.component.remove(component) on a ManyToManyField
         # which specifies an intermediary model so we use the model manager!
         self.component.through.objects.filter(case=self.pk, component=component.pk).delete()
-
-    def remove_plan(self, plan):
-        self.plan.through.objects.filter(case=self.pk, plan=plan.pk).delete()
 
     def remove_tag(self, tag):
         self.tag.through.objects.filter(case=self.pk, tag=tag.pk).delete()
