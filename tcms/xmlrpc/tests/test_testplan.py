@@ -171,10 +171,10 @@ class TestRemoveCase(XmlrpcAPIBaseTest):
         self.plan_1 = TestPlanFactory()
         self.plan_2 = TestPlanFactory()
 
-        self.testcase_1.add_to_plan(self.plan_1)
+        self.plan_1.add_case(self.testcase_1)
+        self.plan_1.add_case(self.testcase_2)
 
-        self.testcase_2.add_to_plan(self.plan_1)
-        self.testcase_2.add_to_plan(self.plan_2)
+        self.plan_2.add_case(self.testcase_2)
 
     def test_remove_case_with_single_plan(self):
         self.rpc_client.exec.TestPlan.remove_case(self.plan_1.pk, self.testcase_1.pk)
@@ -191,7 +191,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
     """ Test the XML-RPC method TestPlan.add_case() """
 
     def _fixture_setup(self):
-        super(TestAddCase, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.testcase_1 = TestCaseFactory()
         self.testcase_2 = TestCaseFactory()
@@ -202,7 +202,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
         self.plan_3 = TestPlanFactory()
 
         # case 1 is already linked to plan 1
-        self.testcase_1.add_to_plan(self.plan_1)
+        self.plan_1.add_case(self.testcase_1)
 
     def test_ignores_existing_mappings(self):
         plans = [self.plan_1.pk, self.plan_2.pk, self.plan_3.pk]

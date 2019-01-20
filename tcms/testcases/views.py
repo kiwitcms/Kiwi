@@ -100,7 +100,7 @@ def create_testcase(request, form, test_plan):
 
     # Assign the case to the plan
     if test_plan:
-        test_case.add_to_plan(plan=test_plan)
+        test_plan.add_case(test_case)
 
     # Add components into the case
     for component in form.cleaned_data['component']:
