@@ -11,7 +11,6 @@ from django.db.models import Count, F
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCase
 from tcms.testcases.models import Bug
-from tcms.testcases.forms import AUTOMATED_SERCH_CHOICES
 from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
@@ -355,20 +354,12 @@ class CustomReportData:
         :param build_ids: list of IDs of the builds, by which the TestCaseRuns are filtered
         :type build_ids: list
         """
-        automated_name_map = {}
-
-        # convert tuples to map for easier indexing
-        for _id, name in AUTOMATED_SERCH_CHOICES:
-            if isinstance(_id, int):
-                automated_name_map[_id] = name
-
         results = {}
         for obj in TestCaseRun.objects.filter(
                 build__in=build_ids
             ).values('case__is_automated').distinct().annotate(
                 total_count=Count('case__is_automated')):
-            automation_id = obj['case__is_automated']
-            results[automated_name_map[automation_id]] = obj['total_count']
+            results[obj['case__is_automated']] = obj['total_count']
 
         return results
 

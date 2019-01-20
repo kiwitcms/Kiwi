@@ -55,7 +55,6 @@
 		<div class="table_noborder">
 			Manual Cases<span class="red">{{ mode_stats.manual|percentage:test_case_runs_count }}({{ mode_stats.manual }}/{{ test_case_runs_count }})</span>
 			Automated Cases<span class="red">{{ mode_stats.automated|percentage:test_case_runs_count }}({{ mode_stats.automated }}/{{ test_case_runs_count }})</span>
-			Manual/Automated Cases<span class="red">{{ mode_stats.manual_automated|percentage:test_case_runs_count }}({{ mode_stats.manual_automated }}/{{ test_case_runs_count }})</span></td>
 		</div>
 
 		{% if test_case_runs %}
@@ -64,7 +63,7 @@
 				<th class="widthID">Case-Run ID</th>
 				<th class="widthID">Case ID</th>
 				<th>Summary</th>
-				<th width="100">Mode</th>
+				<th width="100">Automated</th>
 				<th width="100">Tested by</th>
 				<th width="150">Category</th>
 				<th width="100">Status</th>
@@ -75,7 +74,7 @@
 				<td>{{ test_case_run.case_run_id }}</td>
 				<td>{{ test_case_run.case_id }}</td>
 				<td>{{ test_case_run.case.summary }}</td>
-				<td>{{ test_case_run.case.get_is_automated_status }}</td>
+				<td>{{ test_case_run.case.is_automated }}</td>
 				<td>{{ test_case_run.tested_by.username }}</td>
 				<td>{{ test_case_run.case.category.name }}</td>
 				<td><span class="highlight">{{ test_case_run.status.name|upper }}</span></td>

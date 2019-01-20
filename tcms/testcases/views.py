@@ -157,15 +157,9 @@ class ReturnActions:
 def new(request, template_name='case/edit.html'):
     """New testcase"""
     test_plan = plan_from_request_or_none(request)
-    # Initial the form parameters when write new case from plan
+    default_form_parameters = {}
     if test_plan:
-        default_form_parameters = {
-            'product': test_plan.product_id,
-            'is_automated': '0',
-        }
-    # Initial the form parameters when write new case directly
-    else:
-        default_form_parameters = {'is_automated': '0'}
+        default_form_parameters['product'] = test_plan.product_id
 
     if request.method == "POST":
         form = NewCaseForm(request.POST)
@@ -196,8 +190,6 @@ def new(request, template_name='case/edit.html'):
     else:
         test_plan = plan_from_request_or_none(request)
         form = NewCaseForm(initial=default_form_parameters)
-        if test_plan:
-            form.populate(product_id=test_plan.product_id)
 
     context_data = {
         'test_plan': test_plan,
@@ -833,7 +825,7 @@ def edit(request, case_id, template_name='case/edit.html'):
             'summary': test_case.summary,
             'default_tester': default_tester,
             'requirement': test_case.requirement,
-            'is_automated': test_case.get_is_automated_form_value(),
+            'is_automated': test_case.is_automated,
             'script': test_case.script,
             'arguments': test_case.arguments,
             'extra_link': test_case.extra_link,

@@ -57,7 +57,7 @@
 				<a href="{% url "tcms-profile" assignee %}" class="link_assignee">{{ assignee }}</a>
 				{% else %}None{% endif %}
 			</td>
-			<td class="expandable">{{ test_case_run.case.get_is_automated_status }}</td>
+			<td class="expandable">{{ test_case_run.case.is_automated }}</td>
 			<td class="expandable">{{ test_case_run.case.category }}</td>
 			<td class="expandable">{{ priority_value }}</td>
 			<td class="expandable"><span id="{{ test_case_run.pk }}_case_bug_count" {% if test_case_run.num_bug %}class="have_bug"{% endif %}>{{ test_case_run.num_bug }}</span></td>

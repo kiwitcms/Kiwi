@@ -34,7 +34,7 @@ test_cases should be a queryset of a list of TestCases.
 			{% if test_case.reviewer_id %}<a href="{% url "tcms-profile" test_case.reviewer.username %}">{% endif %}{{ test_case.reviewer }}{% if test_case.reviewer_id %}</a>{% endif %}</td>
 		{% endif %}
 	</td>
-	<td class="col_tester_content expandable">{{ test_case.get_is_automated_status }}</td>
+	<td class="col_tester_content expandable">{{ test_case.is_automated }}</td>
 
 	<td status='{{ test_case.case_status }}'>
 		{% if perms.testcases.change_testcase %}

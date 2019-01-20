@@ -44,7 +44,6 @@ Nitrate.Utils.after_page_load(Nitrate.Report.CustomDetails.on_load);
 				Run<span class="red">{{ build.runs_count|default_if_none:0 }}</span>
 				Manual Cases<span class="red">{{manual_count|percentage:total_count}} ({{manual_count}}/{{total_count}})</span>
 				Automated Cases<span class="red">{{auto_count|percentage:total_count}} ({{auto_count}}/{{total_count}})</span>
-				Manual/Automated<span class="red">{{both_count|percentage:total_count}} ({{both_count}}/{{total_count}})</span>
 			</td>
 			<td width="110">Passed Case-Run</td>
 			<td width="100">

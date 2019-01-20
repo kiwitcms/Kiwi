@@ -9,21 +9,8 @@ from tcms.core.utils import string_to_list
 from tcms.testplans.models import TestPlan
 from tcms.management.models import Priority, Product, Component
 from tcms.testcases.models import TestCase, Category, TestCaseStatus
-from tcms.testcases.models import AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from tcms.testcases.fields import MultipleEmailField
 
-
-AUTOMATED_CHOICES = (
-    (0, 'Manual'),
-    (1, 'Auto'),
-)
-
-AUTOMATED_SERCH_CHOICES = (
-    ('', '----------'),
-    (0, 'Manual'),
-    (1, 'Auto'),
-    (2, 'Both'),
-)
 
 ITEMS_PER_PAGE_CHOICES = (
     ('20', '20'),
@@ -62,10 +49,7 @@ class BaseCaseForm(forms.Form):
     summary = forms.CharField(label="Summary", )
     default_tester = UserField(label="Default tester", required=False)
     requirement = forms.CharField(label="Requirement", required=False)
-    is_automated = forms.MultipleChoiceField(
-        choices=AUTOMATED_CHOICES,
-        widget=forms.CheckboxSelectMultiple(),
-    )
+    is_automated = forms.BooleanField(initial=False, required=False)
     script = forms.CharField(label="Script", required=False)
     arguments = forms.CharField(label="Arguments", required=False)
     extra_link = StripURLField(
@@ -138,20 +122,6 @@ class BaseCaseForm(forms.Form):
             self.script_val = ''
         super(BaseCaseForm, self).__init__(*args, **kwargs)
 
-    def clean_is_automated(self):
-        data = self.cleaned_data['is_automated']
-        if len(data) == 2:
-            return 2
-
-        if data:
-            # FIXME: Should data always be a list?
-            try:
-                return int(data[0])
-            except ValueError:
-                return data[0]
-
-        return data
-
     def clean_script(self):
         if self.script_val:
             return self.cleaned_data['script']
@@ -209,11 +179,7 @@ class CaseNotifyForm(forms.Form):
 
 
 class XMLRPCBaseCaseForm(BaseCaseForm):
-    is_automated = forms.ChoiceField(
-        choices=FULL_AUTOMATED_CHOICES,
-        widget=forms.CheckboxSelectMultiple(),
-        required=False,
-    )
+    pass
 
 
 class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
@@ -222,12 +188,6 @@ class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
             return TestCaseStatus.get_proposed()
 
         return self.cleaned_data['case_status']
-
-    def clean_is_automated(self):
-        if self.cleaned_data['is_automated'] == '':
-            return 0
-
-        return self.cleaned_data['is_automated']
 
 
 class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
@@ -281,10 +241,7 @@ class BaseCaseSearchForm(forms.Form):
         required=False
     )
     bug_id = BugField(label="Bug ID", required=False)
-    is_automated = forms.ChoiceField(
-        choices=AUTOMATED_SERCH_CHOICES,
-        required=False,
-    )
+    is_automated = forms.BooleanField(required=False)
     items_per_page = forms.ChoiceField(label='Items per page',
                                        required=False,
                                        choices=ITEMS_PER_PAGE_CHOICES)
