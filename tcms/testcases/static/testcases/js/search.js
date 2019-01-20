@@ -31,6 +31,14 @@ $(document).ready(function() {
                 params['author__username__startswith'] = $('#id_author').val();
             };
 
+            if ($('input[name=is_automated]:checked').val() === 'true') {
+                params['is_automated'] = true;
+            };
+
+            if ($('input[name=is_automated]:checked').val() === 'false') {
+                params['is_automated'] = false;
+            };
+
             updateParamsToSearchTags('#id_tag', params);
 
             var bug_list = splitByComma($('#id_bugs').val());

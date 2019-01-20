@@ -13,14 +13,16 @@
                 <input id="id_summary" type="text" class="form-control" placeholder="{% trans 'Test run summary' %}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_automated">{% trans "Automated" %}</label>
+            <label class="col-md-1 col-lg-1">{% trans "Status" %}</label>
             <div class="col-md-3 col-lg-3">
-                <select class="form-control selectpicker" id="id_automated">
-                    <option value="">----------</option>
-                {% for option in form.is_automated.field.queryset %}
-                    <option value="{{ option.pk }}">{{ option.name }}</option>
-                {% endfor %}
-                </select>
+                <input type="radio" name="is_automated" value="true">
+                <label>{% trans "Automated" %}</label>
+
+                <input type="radio" name="is_automated" value="false">
+                <label>{% trans "Manual" %}</label>
+
+                <input type="radio" name="is_automated" checked value="both">
+                <label class="active">{% trans "Both" %}</label>
             </div>
         </div>
 
