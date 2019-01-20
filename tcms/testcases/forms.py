@@ -110,30 +110,6 @@ class BaseCaseForm(forms.Form):
 3. item
 """)
 
-    def __init__(self, *args, **kwargs):
-        if args:
-            self.notes_val = args[0].get('notes', None)
-            self.script_val = args[0].get('script', None)
-        elif kwargs:
-            self.notes_val = kwargs.get('notes', None)
-            self.script_val = kwargs.get('script', None)
-        else:
-            self.notes_val = ''
-            self.script_val = ''
-        super(BaseCaseForm, self).__init__(*args, **kwargs)
-
-    def clean_script(self):
-        if self.script_val:
-            return self.cleaned_data['script']
-
-        return ''
-
-    def clean_notes(self):
-        if self.notes_val:
-            return self.cleaned_data['notes']
-
-        return ''
-
     def populate(self, product_id=None):
         if product_id:
             self.fields['category'].queryset = Category.objects.filter(
