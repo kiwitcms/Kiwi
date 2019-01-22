@@ -1,12 +1,13 @@
+{% load i18n %}
 <form id="id_tag_form">
 	<table class="list" cellpadding="0" cellspacing="0" border="0">
 		<thead>
 			<tr>
-				<th>Tag</th>
-				<th>Plans</th>
-				<th>Cases</th>
-				<th>Runs</th>
-				<th>Action</th>
+                            <th>{% trans "Tag" %}</th>
+                            <th>{% trans "Plans" %}</th>
+                            <th>{% trans "Cases" %}</th>
+                            <th>{% trans "Runs" %}</th>
+                            <th>{% trans "Action" %}</th>
 			</tr>
 		</thead>
 		<tbody id='tag' count='{{tags.count}}'>
@@ -17,23 +18,23 @@
 				<td><a href="{% url "testcases-search" %}?tag__name__in={{ tag }}"  title="{{ tag.num_cases }} cases tagged {{ tag }}">{{ tag.num_cases }}</a></td>
 				<td><a href="{% url "testruns-search" %}?tag__name__in={{ tag }}"  title="{{ tag.num_runs }} runs tagged {{ tag }}">{{ tag.num_runs }}</a></td>
 				{% if object.plan_id and perms.testplans.delete_testplantag or object.case_id and perms.testcases.delete_testcasetag %}
-				<td><a href="#tag" class="remove js-remove-tag" title="remove tag">Remove</a></td>
+                                <td><a href="#tag" class="remove js-remove-tag" title="remove tag">{% trans "Remove" %}</a></td>
 				{% else %}
-				<td><span class="disabled grey">Remove</span></td>
+                                <td><span class="disabled grey">{% trans "Remove" %}</span></td>
 				{% endif %}
 			</tr>
 			{% empty %}
 			<tr>
-				<td colspan="5" align="center"><span class="grey">No tag found</span></td>
+                            <td colspan="5" align="center"><span class="grey">{% trans "No tag found" %}</span></td>
 			</tr>
 			{% endfor %}
 			<tr>
 				<td colspan="5" align="center" style="padding:0">
 				{% if object.plan_id and perms.testplans.add_testplantag or object.case_id and perms.testcases.add_testcasetag %}
 				<div class="addtag">
-						<span class="tit">Add Tag</span>
+                                    <span class="tit">{% trans "Add Tag" %}</span>
 						<input id="id_tags" type="text" name="tags" data-params='["{{ api_module}}", {{ object.pk }}]'>
-						<a href="#tag" class="addlink" id="js-add-tag">Add</a>
+                                                <a href="#tag" class="addlink" id="js-add-tag">{% trans "Add" %}</a>
 						<div id="id_tags_autocomplete"></div>
 				</div>
 				{% endif %}
