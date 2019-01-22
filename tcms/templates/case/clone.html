@@ -1,4 +1,5 @@
 {% extends "tcms_base.html" %}
+{% load i18n %}
 {% load static %}
 {% block subtitle %}Clone Test Case{% endblock %}
 {% block custom_stylesheet %}
@@ -20,53 +21,53 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 		<input id="value_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}" />
 	</div>
 
-	<h2>Clone TestCase(s)</h2>
+	<h2>{% trans "Clone TestCase(s)" %}</h2>
 	<div class="Detailform border-1">
 		<div class="editor" cellspacing="0" cellspan="0">
 			<div class="listinfo">
-				<label class="strong title">Select Plan </label>
+				<label class="strong title">{% trans "Select Plan " %}</label>
 				{% if test_plan %}
 				<div>
 					<input type="radio" id="id_use_sameplan" name="selectplan" value="{{ test_plan.plan_id }}"/>
-					<label for="id_use_sameplan" class="strong">Use the same Plan -- {{ test_plan.plan_id }} : {{ test_plan.name }}</label>
+                                        <label for="id_use_sameplan" class="strong">{% trans "Use the same Plan" %} -- {{ test_plan.plan_id }} : {{ test_plan.name }}</label>
 				</div>
 				{% endif %}
 				<div>
 					<input type="radio" id="id_use_filterplan" checked="checked"  name="selectplan"/>
-					<label for="id_use_filterplan" class="strong">Filter another plan</label>
+                                        <label for="id_use_filterplan" class="strong">{% trans "Filter another plan" %}</label>
 					<div id="id_filterPlan">
 					<form id="id_form_search_plan" action="{% url "plans-all" %}" method="get">
 						<input type="hidden" name="action" value="clone_case" />
                                                 <div class="cell">
-                                                    <label class="sd" for="id_pk__in">ID</label>
+                                                    <label class="sd" for="id_pk__in">{% trans "ID" %}</label>
                                                     {{ search_form.pk__in }}
                                                 </div>
                                                 <div class="cell">
-                                                    <label class="sd" for="id_product_id">Product</label>
+                                                    <label class="sd" for="id_product_id">{% trans "Product" %}</label>
                                                     {{ search_form.product }}
                                                 </div>
                                                 <div class="cell">
-                                                    <label class="sd" for="id_version_id">Product Version</label>
+                                                    <label class="sd" for="id_version_id">{% trans "Product Version" %}</label>
                                                     {{ search_form.version }}
                                                 </div>
                                                 <div class="cell">
-                                                    <label class="sd" for="id_type_id">Plan Type</label>
+                                                    <label class="sd" for="id_type_id">{% trans "Plan Type" %}</label>
                                                     {{ search_form.type }}
                                                 </div>
                                                 <div class="cell">
-                                                    <label class="sd" for="id_author_id">Plan Author</label>
+                                                    <label class="sd" for="id_author_id">{% trans "Plan Author" %}</label>
                                                     {{ search_form.author__email__startswith }}
                                                 </div>
                                                 <div class="cell">
-                                                    <label class="sd" for="id_tag_id">Tag</label>
+                                                    <label class="sd" for="id_tag_id">{% trans "Tag" %}</label>
                                                     {{ search_form.tag__name__in }}
                                                 </div>
                                                 <div class="cell">
-                                                    <label class="sd" for="id_name_id">Plan Summary</label>
+                                                    <label class="sd" for="id_name_id">{% trans "Plan Summary" %}</label>
                                                     {{ search_form.name__icontains }}
                                                 </div>
                                                 <div class="cell">
-                                                    <label class="sd" for="id_is_active_id">Active</label>
+                                                    <label class="sd" for="id_is_active_id">{% trans "Active" %}</label>
                                                     {{ search_form.is_active }}
                                                 </div>
 						<div class="cell" style=" margin-left:0">
@@ -89,13 +90,13 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 					</div>
 				</div>
 				<div class="listinfo">
-					<label class="strong title">Case(s)</label>
+                                    <label class="strong title">{% trans "Case(s)" %}</label>
 					<div class="linotype">{{ clone_form.case }}</div>
 				</div>
 				<div class="listinfo">
-					<label class="strong title">Clone Settings</label>
+                                    <label class="strong title">{% trans "Clone Settings" %}</label>
 					<fieldset class="choose">
-						<legend class="">Case Properties</legend>
+                                            <legend class="">{% trans "Case Properties" %}</legend>
 						<ul class="ul-no-format">
 							<li>
 								{{ clone_form.copy_case }}

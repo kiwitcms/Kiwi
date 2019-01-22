@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 {% load comments %}
 {% load extra_filters %}
@@ -43,9 +44,9 @@
 				{% endif %}
 				<h4 class="borderB">Comments History ({{ comments_count }}):
 				{% ifequal comments_count 0 %}
-					<span>[ <a id="showText" href="javascript:void(0);">Show All</a> ]</span>
+                                <span>[ <a id="showText" href="javascript:void(0);">{% trans "Show All" %}</a> ]</span>
 				{% else %}
-					<span>[ <a id="showText" class="js-show-comments" data-param="comment{{ test_case_run.pk }}" href="javascript:void(0);">Show All</a> ]</span>
+                                <span>[ <a id="showText" class="js-show-comments" data-param="comment{{ test_case_run.pk }}" href="javascript:void(0);">{% trans "Show All" %}</a> ]</span>
 				{% endifequal %}
 				</h4>
 				<ul class="comment" id="comment{{ test_case_run.pk }}" style="display:none;">
@@ -71,15 +72,15 @@
 			</div>
 			<div style="padding: 5px 9px 15px 18px;">
 				<h4>Test Case Run Detail Information</h4>
-				<div><span class="detail_title"><span class="detail_title">Run Date:</span>{{ test_case_run.close_date }}</div>
-				<div><span class="detail_title">Build:</span>{{ test_case_run.build }} <span class="detail_title marginLeft">Text Version:</span>{{ test_case_run.case_text_version }}</div>
+                                <div><span class="detail_title"><span class="detail_title">{% trans "Run Date:" %}</span>{{ test_case_run.close_date }}</div>
+                                <div><span class="detail_title">{% trans "Build:" %}</span>{{ test_case_run.build }} <span class="detail_title marginLeft">{% trans "Text Version:" %}</span>{{ test_case_run.case_text_version }}</div>
 			</div>
 			<div class="container">
-				<h4 class="borderB">bug
+                            <h4 class="borderB">{% trans "bug" %}
 					<span>
-						<a href="javascript:void(0);" title="File" class="js-file-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Report</a>&nbsp;|&nbsp;
+                                            <a href="javascript:void(0);" title="File" class="js-file-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>{% trans "Report" %}</a>&nbsp;|&nbsp;
 						{% if perms.testcases.add_bug %}
-						<a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Add</a>
+                                                <a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>{% trans "Add" %}</a>
 						{% endif %} ]
 					</span>
 				</h4>
@@ -92,14 +93,14 @@
 								<td>
 								{% for bug in bugs %}
 								    {% if bug.case_run_id %}
-								        <span class="grey">From Run</span><a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
+                                                                    <span class="grey">{% trans "From Run" %}</span><a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
 								        {% if bug.case_run_id == test_case_run.pk and perms.testcases.delete_bug %}
 								        <a id="bug_{{ bug_id }}_{{ bug.case_id }}_{{ bug.case_run_id }}" href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ bug.case_id }}, {{ bug.case_run_id }}]'>
                                                                             <img width="9" height="9" title="remove this bug" src="{% static 'images/remove_small.png' %}">
                                                                         </a>
 								        {% endif %}
 								    {% else %}
-								        <span class="grey">From Case</span>
+                                                                    <span class="grey">{% trans "From Case" %}</span>
 								        <a href="{% url "testcases-get" bug.case_id %}">{{ bug.case_id }}</a>
 								    {% endif %}
 								{% endfor %}
@@ -108,7 +109,7 @@
 							</table>
 						</li>
 					{% empty %}
-					<li class="grey">No bug found</li>
+                                        <li class="grey">{% trans "No bug found" %}</li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -122,7 +123,7 @@
 				</ul>
 				{% else %}
 				<h4 class="borderB">Change Log</h4>
-				<ul><li class="grey">No log recorded.</li></ul>
+                                <ul><li class="grey">{% trans "No log recorded" %}.</li></ul>
 				{% endif %}
 			</div>
 		</div>
@@ -156,18 +157,18 @@
                                                                     <a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a>
 								</li>
 								{% empty %}
-								<li class="grey">No attachment found</li>
+                                                                <li class="grey">{% trans "No attachment found" %}</li>
 								{% endfor %}
 							</ul>
 						</td>
 						<td style="width:24px;"></td>
 						<td>
-							<h4 class="borderB">Component</h4>
+                                                    <h4 class="borderB">{% trans "Component" %}</h4>
 							<ul class="ul-no-format">
 								{% for component in test_case.component.all %}
 								<li>{{ component.name }}</li>
 								{% empty %}
-								<li class="grey">No component found</li>
+                                                                <li class="grey">{% trans "No component found" %}</li>
 								{% endfor %}
 							</ul>
 						</td>
@@ -178,7 +179,7 @@
 								{% for tag in test_case.tag.all %}
 								<li>{{ tag }}</li>
 								{% empty %}
-								<li class="grey">No tag found</li>
+                                                                <li class="grey">{% trans "No tag found" %}</li>
 								{% endfor %}
 							</ul>
 						</td>
@@ -189,7 +190,7 @@
 				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
 					<tr>
 						<td>
-							<h4 class="borderB">Test Link <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>Add</a>]</span></h4>
+                                                    <h4 class="borderB">{% trans "Test Link" %} <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>{% trans "Add" %}</a>]</span></h4>
 							<div class="content">
 									<ul class="ul-format">
 										{% for link in test_case_run.links %}

@@ -1,10 +1,11 @@
 {% extends "tcms_base.html" %}
+{% load i18n %}
 {% load static %}
 {% block subtitle %}
     {% if test_case %}
-        Edit test case - {{ test_case.summary }}
+        {% trans "Edit test case" %} - {{ test_case.summary }}
     {% else %}
-        Add new test case
+        {% trans "Add new test case" %}
     {% endif %}
 {% endblock %}
 
@@ -58,37 +59,37 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 			<fieldset class="no-border background-light-grey">
 				<div class="editor-side">
 					<div class="data_row">
-						<label id="item_title">Summary</label>
+                                            <label id="item_title">{% trans "Summary" %}</label>
 						<div id="form_title" class="name summary" tabindex="1">{{ form.summary }}</div>
 					</div>
 					<div class="data_row">
-						<label>Product</label>
+                                            <label>{% trans "Product" %}</label>
 						<div>{{ form.product }}</div>
 					</div>
 					<div class="data_row">
-						<label>Category</label>
+                                            <label>{% trans "Category" %}</label>
 						<span id="form_category" >{{ form.category }}</span><a href="{% url 'admin:testcases_category_add' %}" class="addlink" id="id_addt_product_casecategory" target="_blank">Add Category</a><span class="grey">After Add and Refresh page</span>
 					</div>
 					<div class="data_row">
-						<label>Default Tester</label>
+                                            <label>{% trans "Default Tester" %}</label>
 						<span >{{ form.default_tester }}</span>
 						<div class="errors">{{ form.default_tester.errors }}</div>
 					</div>
 					<div class="data_row">
-						<label >Status</label>
+                                            <label>{% trans "Status" %}</label>
 						<span id="form_status" >{{ form.case_status }}</span>
 					</div>
 					<div class="data_row">
-						<label >Arguments</label>
+                                            <label>{% trans "Arguments" %}</label>
 						<span id="form_arguments" >{{ form.arguments }}</span>
 						<div class="errors">{{ form.arguments.errors }}</div>
 					</div>
 					<div class="data_row">
-                        <label >Reference Link</label>
+                        <label>{% trans "Reference Link" %}</label>
                         <span id="form_extra_link" >{{ form.extra_link }}</span>
                     </div>
 					<div class="data_row">
-						<label >Notes</label>
+                                            <label>{% trans "Notes" %}</label>
 						<span id="form_notes" >{{ form.notes }}</span>
 						<div class="errors">{{ form.notes.errors }}</div>
 					</div>
@@ -97,7 +98,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 				<div class="editor-side">
                                     {% if test_case %}
 					<div class="data_row">
-                                            <label>Author</label>
+                                            <label>{% trans "Author" %}</label>
                                             <div class="name">
                                                 {% if test_case.author %}
                                                 <a href="{% url "tcms-profile" test_case.author.username %}">
@@ -107,41 +108,41 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
                                             </div>
 					</div>
 					<div class="data_row">
-						<label >Created</label>
+                                            <label>{% trans "Created" %}</label>
 						<div class="name">{{ test_case.create_date }}</div>
 					</div>
                                     {% endif %}
 					
 					<div class="data_row">
-						<label>Automated</label>
+                                            <label>{% trans "Automated" %}</label>
 							{{ form.is_automated }}
 						<div class="errors">
 							{{ form.is_automated.errors }}
 						</div>
 					</div>
 					<div class="data_row">
-						<label >Requirement</label>
+                                            <label>{% trans "Requirement" %}</label>
 						<div id="form_requirement"  >{{ form.requirement }}</div>
 					</div>
 					<div class="data_row">
-						<label >Script</label>
+                                            <label>{% trans "Script" %}</label>
 						<div id="form_script" >{{ form.script }}</div>
 					</div>
 					<div class="data_row">
-						<label>Priority</label>
+                                            <label>{% trans "Priority" %}</label>
 						<span id="form_priority" >{{ form.priority }}</span>
 					</div>
 				</div>
 			</fieldset>
 			<fieldset class="no-border background-light-grey">
 				<div class="editor-side">
-					<h4 class="strong">Setup</h4>
+                                    <h4 class="strong">{% trans "Setup" %}</h4>
 					<div class="form" id="form_text">{{ form.text }}</div>
 				</div>
 			</fieldset>
                     {% if notify_form %}
 			<fieldset class="no-border notification">
-				<label class="strong">Send new case instance after editing <label class="grey">(The author of this case will receive the notification by default)</label>:</label>
+                            <label class="strong">{% trans "Send new case instance after editing " %}<label class="grey">{% trans "(The author of this case will receive the notification by default)" %}</label>:</label>
 				<div>
 					{{ notify_form.notify_on_case_update }}{{ notify_form.notify_on_case_update.label }}
 					{{ notify_form.notify_on_case_delete }}{{ notify_form.notify_on_case_delete.label }}
@@ -153,7 +154,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Edit.on_load);
 					<br />
 				</div>
 				<div id="testcase_cc">
-					<label for="id_cc_list">{{ notify_form.cc_list.label }} ({% if notify_form.cc_list.required %}<span style="color:red">*</span>{% else %}optional{% endif %})</label>
+                                    <label for="id_cc_list">{{ notify_form.cc_list.label }} ({% if notify_form.cc_list.required %}<span style="color:red">*</span>{% else %}{% trans "optional" %}{% endif %})</label>
 					{{ notify_form.cc_list }}
 					<span>{{ notify_form.cc_list.help_text }}</span>
 				</div>
