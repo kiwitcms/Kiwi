@@ -13,6 +13,9 @@ class Classification(TCMSActionModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 
 class Product(TCMSActionModel):
     id = models.AutoField(max_length=5, primary_key=True)
@@ -42,6 +45,9 @@ class Product(TCMSActionModel):
         self.version.get_or_create(value='unspecified')
         self.build.get_or_create(name='unspecified')
 
+    class Meta:
+        ordering = ['name']
+
 
 class Priority(TCMSActionModel):
     id = models.AutoField(max_length=5, primary_key=True)
@@ -49,6 +55,7 @@ class Priority(TCMSActionModel):
     is_active = models.BooleanField(db_column='isactive', default=True)
 
     class Meta:
+        ordering = ['value']
         verbose_name_plural = u'priorities'
 
     def __str__(self):
@@ -80,6 +87,7 @@ class Component(TCMSActionModel):
     #   'cases' : list of TestCases (from TestCases.components)
 
     class Meta:
+        ordering = ['name']
         unique_together = ('product', 'name')
 
     def __str__(self):
@@ -92,6 +100,7 @@ class Version(TCMSActionModel):
     product = models.ForeignKey(Product, related_name='version', on_delete=models.CASCADE)
 
     class Meta:
+        ordering = ['value']
         unique_together = ('product', 'value')
 
     def __str__(self):
@@ -113,6 +122,7 @@ class Build(TCMSActionModel):
     is_active = models.BooleanField(db_column='isactive', default=True)
 
     class Meta:
+        ordering = ['name']
         unique_together = ('product', 'name')
         verbose_name = u'build'
         verbose_name_plural = u'builds'
@@ -134,6 +144,7 @@ class Tag(TCMSActionModel):
     name = models.CharField(db_column='tag_name', max_length=255)
 
     class Meta:
+        ordering = ['name']
         verbose_name = u'tag'
         verbose_name_plural = u'tags'
 
