@@ -116,27 +116,30 @@ class Bugzilla(IssueTrackerType):
     """
 
     def __init__(self, tracker):
-        super(Bugzilla, self).__init__(tracker)
+        super().__init__(tracker)
 
         # directory for Bugzilla credentials
-        bugzilla_cache_dir = getattr(
+        self._bugzilla_cache_dir = getattr(
             settings,
             "BUGZILLA_AUTH_CACHE_DIR",
             tempfile.mkdtemp(prefix='.bugzilla-')
         )
-        if not os.path.exists(bugzilla_cache_dir):
-            os.makedirs(bugzilla_cache_dir, 0o700)
+        if not os.path.exists(self._bugzilla_cache_dir):
+            os.makedirs(self._bugzilla_cache_dir, 0o700)
 
-        # passing user & password will attemt to authenticate
-        # when the __init__ method runs. Do it here so that we don't
-        # have to do it everywhere else where it might be needed.
-        self.rpc = bugzilla.Bugzilla(
-            tracker.api_url,
-            user=self.tracker.api_username,
-            password=self.tracker.api_password,
-            cookiefile=bugzilla_cache_dir + 'cookie',
-            tokenfile=bugzilla_cache_dir + 'token',
-        )
+        self._rpc = None
+
+    @property
+    def rpc(self):
+        if self._rpc is None:
+            self._rpc = bugzilla.Bugzilla(
+                self.tracker.api_url,
+                user=self.tracker.api_username,
+                password=self.tracker.api_password,
+                cookiefile=self._bugzilla_cache_dir + 'cookie',
+                tokenfile=self._bugzilla_cache_dir + 'token',
+            )
+        return self._rpc
 
     def add_testcase_to_issue(self, testcases, issue):
         for case in testcases:
