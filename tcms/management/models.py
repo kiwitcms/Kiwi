@@ -9,8 +9,6 @@ from tcms.core.models import TCMSActionModel
 class Classification(TCMSActionModel):
     id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=64)
-    description = models.TextField(blank=True)
-    sortkey = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -48,7 +46,6 @@ class Product(TCMSActionModel):
 class Priority(TCMSActionModel):
     id = models.AutoField(max_length=5, primary_key=True)
     value = models.CharField(unique=True, max_length=64)
-    sortkey = models.IntegerField(default=0)
     is_active = models.BooleanField(db_column='isactive', default=True)
 
     class Meta:
@@ -113,7 +110,6 @@ class Build(TCMSActionModel):
     build_id = models.AutoField(max_length=10, unique=True, primary_key=True)
     name = models.CharField(max_length=255)
     product = models.ForeignKey(Product, related_name='build', on_delete=models.CASCADE)
-    description = models.TextField(blank=True)
     is_active = models.BooleanField(db_column='isactive', default=True)
 
     class Meta:

@@ -11,7 +11,7 @@ from tcms.management.models import Build, Tag
 
 class ClassificationAdmin(admin.ModelAdmin):
     search_fields = ('name', 'id')
-    list_display = ('id', 'name', 'description')
+    list_display = ('id', 'name')
 
 
 class ProductsAdmin(admin.ModelAdmin):
@@ -22,7 +22,7 @@ class ProductsAdmin(admin.ModelAdmin):
 
 class PriorityAdmin(admin.ModelAdmin):
     search_fields = ('value', 'id')
-    list_display = ('id', 'value', 'sortkey', 'is_active')
+    list_display = ('id', 'value', 'is_active')
     list_filter = ('is_active', )
 
 

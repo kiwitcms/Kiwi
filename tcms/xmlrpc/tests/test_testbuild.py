@@ -29,7 +29,6 @@ class BuildCreate(XmlrpcAPIBaseTest):
 
     def test_build_create_with_no_required_fields(self):
         values = {
-            "description": "Test Build",
             "is_active": False
         }
         with self.assertRaisesRegex(XmlRPCFault, 'Product and name are both required'):
@@ -44,24 +43,10 @@ class BuildCreate(XmlrpcAPIBaseTest):
         with self.assertRaisesRegex(XmlRPCFault, 'Product and name are both required'):
             self.rpc_client.exec.Build.create(values)
 
-    def test_build_create_with_illegal_fields(self):
-        values = {
-            "product": self.product.pk,
-            "name": "B7",
-        }
-        # various regex matching to account for version differences
-        # between SQLite (different versions), MySQL and Postgres
-        with self.assertRaisesRegex(
-                XmlRPCFault,
-                ".*(may not be NULL|NOT NULL constraint|violates not-null|cannot be null).*"
-        ):
-            self.rpc_client.exec.Build.create(values)
-
     def test_build_create_with_non_existing_product(self):
         values = {
             "product": 9999,
             "name": "B7",
-            "description": "Test Build",
             "is_active": False
         }
         with self.assertRaisesRegex(XmlRPCFault, 'Product matching query does not exist'):
@@ -74,29 +59,25 @@ class BuildCreate(XmlrpcAPIBaseTest):
     def test_build_create_with_chinese(self):
         values = {
             "product": self.product.pk,
-            "name": "B99",
-            "description": "开源中国",
+            "name": "开源中国",
             "is_active": False
         }
         b = self.rpc_client.exec.Build.create(values)
         self.assertIsNotNone(b)
         self.assertEqual(b['product_id'], self.product.pk)
-        self.assertEqual(b['name'], "B99")
-        self.assertEqual(b['description'], values['description'])
+        self.assertEqual(b['name'], "开源中国")
         self.assertEqual(b['is_active'], False)
 
     def test_build_create(self):
         values = {
             "product": self.product.pk,
             "name": "B7",
-            "description": "Test Build",
             "is_active": False
         }
         b = self.rpc_client.exec.Build.create(values)
         self.assertIsNotNone(b)
         self.assertEqual(b['product_id'], self.product.pk)
         self.assertEqual(b['name'], "B7")
-        self.assertEqual(b['description'], "Test Build")
         self.assertEqual(b['is_active'], False)
 
 
@@ -138,12 +119,10 @@ class BuildUpdate(XmlrpcAPIBaseTest):
         b = self.rpc_client.exec.Build.update(self.build_3.pk, {
             "product": self.another_product.pk,
             "name": "Update",
-            "description": "Update from unittest."
         })
         self.assertIsNotNone(b)
         self.assertEqual(b['product_id'], self.another_product.pk)
         self.assertEqual(b['name'], 'Update')
-        self.assertEqual(b['description'], 'Update from unittest.')
 
 
 class BuildFilter(XmlrpcAPIBaseTest):
@@ -152,7 +131,7 @@ class BuildFilter(XmlrpcAPIBaseTest):
         super(BuildFilter, self)._fixture_setup()
 
         self.product = ProductFactory()
-        self.build = BuildFactory(description='for testing', product=self.product)
+        self.build = BuildFactory(product=self.product)
 
     def test_build_filter_with_non_exist_id(self):
         self.assertEqual(0, len(self.rpc_client.exec.Build.filter({'pk': -9999})))
@@ -163,7 +142,6 @@ class BuildFilter(XmlrpcAPIBaseTest):
         self.assertEqual(b['build_id'], self.build.pk)
         self.assertEqual(b['name'], self.build.name)
         self.assertEqual(b['product_id'], self.product.pk)
-        self.assertEqual(b['description'], 'for testing')
         self.assertTrue(b['is_active'])
 
     def test_build_filter_with_name_and_product(self):
@@ -175,5 +153,4 @@ class BuildFilter(XmlrpcAPIBaseTest):
         self.assertEqual(b['build_id'], self.build.pk)
         self.assertEqual(b['name'], self.build.name)
         self.assertEqual(b['product_id'], self.product.pk)
-        self.assertEqual(b['description'], 'for testing')
         self.assertEqual(b['is_active'], True)
