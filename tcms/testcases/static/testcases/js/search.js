@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    var component_cache = {};
+
+    jsonRPC('Component.filter', {}, function(data) {
+        for (var key in data) {
+            component_cache[data[key].id] = data[key];
+        }
+    });
+
     var table = $("#resultsTable").DataTable({
         ajax: function(data, callback, settings) {
             var params = {};
@@ -63,6 +71,22 @@ $(document).ready(function() {
             { data: "category"},
             { data: "priority" },
             { data: "create_date"},
+            {
+                data: "component",
+                render: function(components) {
+                    str = '';
+                    components.forEach(function (pk) {
+                        try {
+                            str += component_cache[pk].name + ', ';
+                        } catch (e) {
+                            //TODO: implement better error handling
+                            str += '???, '
+                        }
+                    });
+                    // remove trailing coma
+                    return str.slice(0, str.lastIndexOf(','));
+                }
+            },
         ],
         dom: "t",
         language: {
