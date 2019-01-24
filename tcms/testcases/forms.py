@@ -92,7 +92,7 @@ class BaseCaseForm(forms.Form):
     text = forms.CharField(
         widget=SimpleMDE(),
         required=False,
-        initial="""**Scenario**: ... what behavior will be tested ...
+        initial=_("""**Scenario**: ... what behavior will be tested ...
   **Given** ... conditions ...
   **When** ... actions ...
   **Then** ... expected results ...
@@ -108,7 +108,7 @@ class BaseCaseForm(forms.Form):
 1. item
 2. item
 3. item
-""")
+"""))
 
     def populate(self, product_id=None):
         if product_id:
