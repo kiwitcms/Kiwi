@@ -44,15 +44,17 @@ def add_component(case_id, component):
         :type case_id: int
         :param component: Name of Component to add
         :type component_id: str
-        :return: None
+        :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :raises: PermissionDenied if missing the *testcases.add_testcasecomponent*
                  permission
         :raises: DoesNotExist if missing test case or component that match the
                  specified PKs
     """
-    TestCase.objects.get(pk=case_id).add_component(
-        Component.objects.get(name=component)
+    case = TestCase.objects.get(pk=case_id)
+    case.add_component(
+        Component.objects.get(name=component, product=case.category.product)
     )
+    return case.serialize()
 
 
 @rpc_method(name='TestCase.get_components')
