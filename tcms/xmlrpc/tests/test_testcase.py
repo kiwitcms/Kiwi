@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault, ProtocolError
 from django.contrib.auth.models import Permission
 
 from tcms_api.xmlrpc import TCMSXmlrpc
@@ -11,6 +11,7 @@ from tcms.testcases.models import TestCase
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import CategoryFactory
+from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TagFactory
@@ -170,3 +171,21 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
 
         tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag1.pk).exists()
         self.assertFalse(tag_exists)
+
+
+class TestAddComponent(XmlrpcAPIBaseTest):
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+        self.test_case = TestCaseFactory()
+        self.good_component = ComponentFactory(product=self.test_case.category.product)
+        self.bad_component = ComponentFactory()
+
+    def test_add_component_from_same_product_is_allowed(self):
+        result = self.rpc_client.exec.TestCase.add_component(self.test_case.pk,
+                                                             self.good_component.name)
+        self.assertEqual(result['component'][0], self.good_component.pk)
+
+    def test_add_component_from_another_product_is_not_allowed(self):
+        with self.assertRaisesRegex(Fault, 'Component matching query does not exist'):
+            self.rpc_client.exec.TestCase.add_component(self.test_case.pk, self.bad_component.name)
