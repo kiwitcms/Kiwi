@@ -23,6 +23,7 @@ Submodules
    tcms.xmlrpc.api.tag
    tcms.xmlrpc.api.testcase
    tcms.xmlrpc.api.testcaserun
+   tcms.xmlrpc.api.testcaserunstatus
    tcms.xmlrpc.api.testcasestatus
    tcms.xmlrpc.api.testplan
    tcms.xmlrpc.api.testrun
