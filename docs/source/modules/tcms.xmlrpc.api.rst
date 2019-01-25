@@ -16,6 +16,7 @@ Submodules
    tcms.xmlrpc.api.bugsystem
    tcms.xmlrpc.api.build
    tcms.xmlrpc.api.category
+   tcms.xmlrpc.api.classification
    tcms.xmlrpc.api.component
    tcms.xmlrpc.api.plantype
    tcms.xmlrpc.api.priority
