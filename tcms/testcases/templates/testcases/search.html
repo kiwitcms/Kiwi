@@ -104,6 +104,56 @@
 
         </div>
 
+        <div class="form-group">
+            <label for="id_before" class="col-md-1 col-lg-1">{% trans "Created&nbsp;before" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <div class="input-group date-time-picker-pf">
+                    <input type="text" class="form-control" id="id_before">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+            <script>
+                $(function () {
+                    $('#id_before').datetimepicker({
+                        locale: '{{ LANGUAGE_CODE }}',
+                        format: 'L',
+                        allowInputToggle: true,
+                        showTodayButton: true,
+                        icons: {
+                            today: 'today-button-pf'
+                        }
+                    });
+                });
+            </script>
+
+            <label for="id_after" class="col-md-1 col-lg-1">{% trans "Created&nbsp;after" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <div class="input-group date-time-picker-pf">
+                    <input type="text" class="form-control" id="id_after">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+            <script>
+                $(function () {
+                    $('#id_after').datetimepicker({
+                        locale: '{{ LANGUAGE_CODE }}',
+                        format: 'L',
+                        allowInputToggle: true,
+                        showTodayButton: true,
+                        icons: {
+                            today: 'today-button-pf'
+                        }
+                    });
+                });
+            </script>
+        </div>
+
 
         <button id="btn_search" type="submit" class="btn btn-default btn-lg">{% trans "Search" %}</button>
     </form>
@@ -135,6 +185,8 @@
 
 <!-- JavaScript that is used in this page -->
 <script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
 
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/utils.js' %}"></script>

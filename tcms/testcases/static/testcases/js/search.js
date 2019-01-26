@@ -34,6 +34,14 @@ $(document).ready(function() {
                 params['summary__icontains'] = $('#id_summary').val();
             }
 
+            if ($('#id_before').val()) {
+                params['create_date__lte'] = $('#id_before').data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+            }
+
+            if ($('#id_after').val()) {
+                params['create_date__gte'] = $('#id_after').data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
+            }
+
             if ($('#id_product').val()) {
                 params['category__product'] = $('#id_product').val();
             };
