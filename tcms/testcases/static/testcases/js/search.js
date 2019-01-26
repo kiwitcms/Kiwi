@@ -1,12 +1,31 @@
-$(document).ready(function() {
+function pre_process_data(data) {
     var component_cache = {};
+    var tags_cache = {};
 
-    jsonRPC('Component.filter', {}, function(data) {
-        for (var key in data) {
-            component_cache[data[key].id] = data[key];
+    data.forEach(function(element) {
+        addResourceToData(element, 'component', 'Component.filter', component_cache);
+        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
+    });
+}
+
+function addResourceToData(element, key, resource, cache) {
+    var data = [];
+    element[key].forEach(function(id) {
+        if (id in cache) {
+            data.push(cache[id]);
+        } else {
+            jsonRPC(resource, {pk: id}, function (result) {
+                if (result) {
+                    data.push(result[0]);
+                    cache[id] = result[0];
+                }
+            }, true);
         }
     });
+    element[key] = data;
+}
 
+$(document).ready(function() {
     var table = $("#resultsTable").DataTable({
         ajax: function(data, callback, settings) {
             var params = {};
@@ -54,7 +73,7 @@ $(document).ready(function() {
                 params['case_bug__bug_id__in'] = bug_list;
             };
 
-            dataTableJsonRPC('TestCase.filter', params, callback);
+            dataTableJsonRPC('TestCase.filter', params, callback, pre_process_data);
         },
         columns: [
             { data: "case_id" },
@@ -73,19 +92,11 @@ $(document).ready(function() {
             { data: "create_date"},
             {
                 data: "component",
-                render: function(components) {
-                    str = '';
-                    components.forEach(function (pk) {
-                        try {
-                            str += component_cache[pk].name + ', ';
-                        } catch (e) {
-                            //TODO: implement better error handling
-                            str += '???, '
-                        }
-                    });
-                    // remove trailing coma
-                    return str.slice(0, str.lastIndexOf(','));
-                }
+                render: renderData
+            },
+            {
+                data: "tag",
+                render: renderData
             },
         ],
         dom: "t",
@@ -124,3 +135,12 @@ $(document).ready(function() {
 
     $('.selectpicker').selectpicker();
 });
+
+function renderData(data) {
+    result = '';
+    data.forEach(function (el) {
+        result += el.name + ', ';
+    });
+    // remove trailing coma
+    return result.slice(0, result.lastIndexOf(','));
+}
