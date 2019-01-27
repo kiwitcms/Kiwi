@@ -21,14 +21,15 @@
                     {% if test_plan %}
                         <p class="help-block"><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
                     {% endif %}
-                    {{ form.name.errors }}
+                    {{ form.summary.errors }}
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
-                <div class="col-md-3 col-lg-3">
+                <div class="col-md-3 col-lg-3 {% if form.default_tester.errors %}has-error{% endif %}">
                     <input type="text" id="id_default_tester" name="default_tester" value="{{ form.default_tester.value|default:'' }}" class="form-control">
+                    {{ form.default_tester.errors }}
                 </div>
 
                 <div class="col-md-1 col-lg-1">
@@ -76,7 +77,7 @@
                 </div>
 
                 <label class="col-md-1 col-lg-1" for="id_priority">{% trans "Priority" %}</label>
-                <div class="col-md-3 col-lg-3 {% if form.case_status.errors %}has-error{% endif %}">
+                <div class="col-md-3 col-lg-3 {% if form.priority.errors %}has-error{% endif %}">
                     <select id="id_priority" name="priority" class="form-control selectpicker">
                         {% for priority in form.priority.field.queryset %}
                             <option value="{{ priority.pk }}" {% if priority.pk == form.priority.pk %}selected{% endif %}>
@@ -95,7 +96,7 @@
 
             <div class="form-group">
                 <div class="col-md-12 col-lg-12">
-                    <label class="{% if form.setup.errors %}has-error{% endif %}">{% trans "Text" %}:</label>
+                    <label class="{% if form.text.errors %}has-error{% endif %}">{% trans "Text" %}:</label>
                     <div>{{ form.text }}</div>
                     {{ form.text.errors }}
                 </div>
@@ -116,21 +117,21 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-1 col-lg-1" for="id_requirments">{% trans "Requirments" %}</label>
-                <div class="col-md-5 col-lg-5 {% if form.requirment.errors %}has-error{% endif %}">
-                    <input type="text" id="id_requirments" name="requirement" value="" class="form-control">
-                    {{ form.requirment.errors }}
+                <label class="col-md-1 col-lg-1" for="id_requirement">{% trans "Requirments" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.requirement.errors %}has-error{% endif %}">
+                    <input type="text" id="id_requirement" name="requirement" value="" class="form-control">
+                    {{ form.requirement.errors }}
                 </div>
-                <label class="col-md-1 col-lg-1" for="id_reference_link">{% trans "Reference link" %}</label>
+                <label class="col-md-1 col-lg-1" for="id_extra_link">{% trans "Reference link" %}</label>
                 <div class="col-md-5 col-lg-5 {% if form.extra_link.errors %}has-error{% endif %}">
-                    <input type="text" id="id_reference_link" name="extra_link" value="" class="form-control">
+                    <input type="text" id="id_extra_link" name="extra_link" value="" class="form-control">
                     {{ form.extra_link.errors }}
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="id_notes" class="col-md-1 col-lg-1">{% trans "Notes" %}</label>
-                <div class="col-md-12 col-lg-12">
+                <div class="col-md-12 col-lg-12 {% if form.notes.errors %}has-error{% endif %}">
                     <textarea id="id_notes" rows="4" name="notes" class="form-control"></textarea>
                     {{ form.notes.errors }}
                 </div>
