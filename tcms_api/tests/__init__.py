@@ -1,8 +1,8 @@
 import unittest
-from tcms_api.plugin_helpers import Backend
+from tcms_api import plugin_helpers
 
 
 class PluginTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.backend = Backend()
+        cls.backend = plugin_helpers.Backend()

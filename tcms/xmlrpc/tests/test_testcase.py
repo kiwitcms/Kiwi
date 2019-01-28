@@ -4,7 +4,7 @@
 from xmlrpc.client import Fault, ProtocolError
 from django.contrib.auth.models import Permission
 
-from tcms_api.xmlrpc import TCMSXmlrpc
+from tcms_api import xmlrpc
 
 from tcms.testcases.models import TestCase
 
@@ -122,9 +122,9 @@ class TestAddTag(XmlrpcAPIBaseTest):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testcases.add_testcasetag')
 
-        rpc_client = TCMSXmlrpc(unauthorized_user.username,
-                                'api-testing',
-                                '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
+                                       'api-testing',
+                                       '%s/xml-rpc/' % self.live_server_url).server
 
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             rpc_client.TestCase.add_tag(self.testcase.pk, self.tag1.name)
@@ -158,9 +158,9 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testcases.delete_testcasetag')
 
-        rpc_client = TCMSXmlrpc(unauthorized_user.username,
-                                'api-testing',
-                                '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
+                                       'api-testing',
+                                       '%s/xml-rpc/' % self.live_server_url).server
 
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             rpc_client.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
