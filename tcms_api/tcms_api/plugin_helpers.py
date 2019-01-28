@@ -30,7 +30,7 @@ class Backend:
     _cases_in_test_run = {}
 
     def __init__(self):
-        self.rpc = TCMS().exec
+        self.rpc = None
         self.run_id = None
         self.plan_id = None
         self.product_id = None
@@ -39,6 +39,8 @@ class Backend:
         self.confirmed_id = None
 
     def configure(self):
+        self.rpc = TCMS().exec
+
         self.run_id = self.get_run_id()
         self.plan_id = self.get_plan_id(self.run_id)
         self.product_id, _ = self.get_product_id(self.plan_id)
