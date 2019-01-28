@@ -6,10 +6,10 @@ tcms\_api package
     :undoc-members:
     :show-inheritance:
 
-Submodules
-----------
+Subpackages
+-----------
 
 .. toctree::
 
-   tcms_api.xmlrpc
+    tcms_api.tcms_api
 
