@@ -7,3 +7,6 @@ upload: build
 
 clean:
 	rm -rf build/ dist/ *.egg-info *.pyc
+
+test:
+	python -m unittest -v tests/*.py

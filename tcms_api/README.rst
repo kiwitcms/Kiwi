@@ -16,7 +16,7 @@ COPYRIGHT
 ---------
 
 Copyright (c) 2012 Red Hat, Inc. All rights reserved.
-Copyright (c) 2017-2018 Kiwi TCMS Project and its contributors. All rights reserved.
+Copyright (c) 2017-2019 Kiwi TCMS Project and its contributors. All rights reserved.
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
