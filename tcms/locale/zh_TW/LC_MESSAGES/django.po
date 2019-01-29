@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-26 10:28+0000\n"
+"POT-Creation-Date: 2019-01-29 19:00+0000\n"
 "PO-Revision-Date: 2019-01-16 11:47\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -259,7 +259,7 @@ msgstr ""
 #: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/get.html:59
 #: tcms/testcases/templates/testcases/get.html:314
-#: tcms/testcases/templates/testcases/mutable.html:35
+#: tcms/testcases/templates/testcases/mutable.html:36
 #: tcms/testcases/templates/testcases/search.html:30
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:66
@@ -481,7 +481,7 @@ msgid "DELETED: TestCase #%{pk}d - %{summary}s"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:33
-#: tcms/testcases/templates/testcases/mutable.html:132
+#: tcms/testcases/templates/testcases/mutable.html:133
 #: tcms/testruns/templates/testruns/mutable.html:66
 msgid "Notes"
 msgstr ""
@@ -489,7 +489,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:43
 #: tcms/testcases/templates/testcases/get.html:312
 #: tcms/testcases/templates/testcases/search.html:84
-#: tcms/testcases/templates/testcases/search.html:118
+#: tcms/testcases/templates/testcases/search.html:168
 #: tcms/testplans/templates/testplans/mutable.html:101
 #: tcms/testplans/templates/testplans/search.html:98
 #: tcms/testplans/templates/testplans/search.html:135
@@ -499,51 +499,51 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:48
 #: tcms/testcases/templates/testcases/mutable.html:29
-#: tcms/testcases/templates/testcases/search.html:119
+#: tcms/testcases/templates/testcases/search.html:169
 #: tcms/testplans/templates/testplans/mutable.html:113
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Default tester"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:64
-#: tcms/testcases/templates/testcases/mutable.html:50
+#: tcms/testcases/templates/testcases/mutable.html:51
 #: tcms/testcases/templates/testcases/search.html:40
-#: tcms/testcases/templates/testcases/search.html:122
+#: tcms/testcases/templates/testcases/search.html:172
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:74
-#: tcms/testcases/templates/testcases/mutable.html:66
+#: tcms/testcases/templates/testcases/mutable.html:67
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testcases/templates/testcases/search.html:71
-#: tcms/testcases/templates/testcases/search.html:121
+#: tcms/testcases/templates/testcases/search.html:171
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:79
-#: tcms/testcases/templates/testcases/mutable.html:78
+#: tcms/testcases/templates/testcases/mutable.html:79
 #: tcms/testcases/templates/testcases/search.html:62
-#: tcms/testcases/templates/testcases/search.html:123
+#: tcms/testcases/templates/testcases/search.html:173
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:93
-#: tcms/testcases/templates/testcases/mutable.html:90
+#: tcms/testcases/templates/testcases/mutable.html:91
 #: tcms/testcases/templates/testcases/search.html:19
-#: tcms/testcases/templates/testcases/search.html:120
+#: tcms/testcases/templates/testcases/search.html:170
 msgid "Automated"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:98
-#: tcms/testcases/templates/testcases/mutable.html:105
+#: tcms/testcases/templates/testcases/mutable.html:106
 msgid "Script"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:103
-#: tcms/testcases/templates/testcases/mutable.html:111
+#: tcms/testcases/templates/testcases/mutable.html:112
 msgid "Arguments"
 msgstr ""
 
@@ -552,7 +552,7 @@ msgid "Requirements"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:113
-#: tcms/testcases/templates/testcases/mutable.html:124
+#: tcms/testcases/templates/testcases/mutable.html:125
 #: tcms/testplans/templates/testplans/mutable.html:83
 msgid "Reference link"
 msgstr ""
@@ -570,7 +570,7 @@ msgid "Test plans"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:310
-#: tcms/testcases/templates/testcases/search.html:116
+#: tcms/testcases/templates/testcases/search.html:166
 #: tcms/testplans/templates/testplans/search.html:132
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
@@ -615,7 +615,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:18
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:117
+#: tcms/testcases/templates/testcases/search.html:167
 #: tcms/testruns/templates/testruns/mutable.html:23
 #: tcms/testruns/templates/testruns/mutable.html:94
 #: tcms/testruns/templates/testruns/search.html:11
@@ -623,24 +623,24 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/mutable.html:36
+#: tcms/testcases/templates/testcases/mutable.html:37
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/mutable.html:51
+#: tcms/testcases/templates/testcases/mutable.html:52
 msgid "add new Category"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/mutable.html:98
+#: tcms/testcases/templates/testcases/mutable.html:99
 msgid "Text"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/mutable.html:119
+#: tcms/testcases/templates/testcases/mutable.html:120
 msgid "Requirments"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/mutable.html:139
+#: tcms/testcases/templates/testcases/mutable.html:140
 #: tcms/testplans/templates/testplans/mutable.html:143
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
@@ -664,7 +664,7 @@ msgid "Both"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:50
-#: tcms/testcases/templates/testcases/search.html:125
+#: tcms/testcases/templates/testcases/search.html:175
 msgid "Component"
 msgstr ""
 
@@ -687,12 +687,22 @@ msgid "Bug ID"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:108
+#: tcms/testplans/templates/testplans/search.html:40
+msgid "Created&nbsp;before"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:132
+#: tcms/testplans/templates/testplans/search.html:16
+msgid "Created&nbsp;after"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/search.html:158
 #: tcms/testplans/templates/testplans/search.html:124
 #: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/search.html:124
+#: tcms/testcases/templates/testcases/search.html:174
 msgid "Created at"
 msgstr ""
 
@@ -783,14 +793,6 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
-
-#: tcms/testplans/templates/testplans/search.html:16
-msgid "Created&nbsp;after"
-msgstr ""
-
-#: tcms/testplans/templates/testplans/search.html:40
-msgid "Created&nbsp;before"
 msgstr ""
 
 #: tcms/testplans/templates/testplans/search.html:104

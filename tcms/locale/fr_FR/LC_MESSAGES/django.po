@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-26 10:28+0000\n"
+"POT-Creation-Date: 2019-01-29 19:00+0000\n"
 "PO-Revision-Date: 2019-01-27 15:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
@@ -53,21 +53,31 @@ msgstr "MAJ: %(model_name)s #%(pk)d - %(title)s"
 
 #: tcms/core/history.py:47
 #, python-format
-msgid "Updated on %(history_date)s\n"
-"Updated by %(username)s\n\n"
-"%(diff)s\n\n"
+msgid ""
+"Updated on %(history_date)s\n"
+"Updated by %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr "Mise à jour le %(history_date)s\n"
-"Mise à jour par %(username)s\n\n"
-"%(diff)s\n\n"
+msgstr ""
+"Mise à jour le %(history_date)s\n"
+"Mise à jour par %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "Pour plus d'information:\n"
 "%(instance_url)s"
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr "L'URL de base n'est pas configurée! Voir <a href=\"%(doc_url)s\">la documentation</a> et<a href=\"%(admin_url)s\">Pour la changer</a>"
+msgid ""
+"Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> "
+"and <a href=\"%(admin_url)s\">change it</a>"
+msgstr ""
+"L'URL de base n'est pas configurée! Voir <a href=\"%(doc_url)s\">la "
+"documentation</a> et<a href=\"%(admin_url)s\">Pour la changer</a>"
 
 #: tcms/kiwi_auth/admin.py:24
 msgid "This email address is already in use"
@@ -91,12 +101,18 @@ msgid "Your new %s account confirmation"
 msgstr "Votre confirmation du nouveau compte %s"
 
 #: tcms/kiwi_auth/views.py:47
-msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Votre compte a été créé. Veuillez Vérifier votre boite de courriel pour le lien de confirmation"
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+"Votre compte a été créé. Veuillez Vérifier votre boite de courriel pour le "
+"lien de confirmation"
 
 #: tcms/kiwi_auth/views.py:53
-msgid "Your account has been created, but you need an administrator to activate it"
-msgstr "Votre compte a été créé, mais vous avez besoin d’un administrateur pour l’activer"
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
+msgstr ""
+"Votre compte a été créé, mais vous avez besoin d’un administrateur pour "
+"l’activer"
 
 #: tcms/kiwi_auth/views.py:58
 msgid "Following is the administrator list"
@@ -229,12 +245,16 @@ msgstr "Démarré le"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid "\n"
-"                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
+msgid ""
+"\n"
+"                %(total_count)s TestRun(s) or TestCase(s) assigned to you "
+"need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"                %(total_count)s essai de test ou cas de tests qui vous sont assignés pour être exécuté.\n"
+msgstr ""
+"\n"
+"                %(total_count)s essai de test ou cas de tests qui vous sont "
+"assignés pour être exécuté.\n"
 "                Voici le dernier %(count)s.\n"
 "                "
 
@@ -257,7 +277,7 @@ msgstr "Plan de test"
 #: tcms/templates/dashboard.html:49
 #: tcms/testcases/templates/testcases/get.html:59
 #: tcms/testcases/templates/testcases/get.html:314
-#: tcms/testcases/templates/testcases/mutable.html:35
+#: tcms/testcases/templates/testcases/mutable.html:36
 #: tcms/testcases/templates/testcases/search.html:30
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:66
@@ -283,12 +303,16 @@ msgstr "Exécutions"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
-msgid "\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+msgid ""
+"\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
+"are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"                Vous gérez %(total_count)s plan(s) de test, %(disabled_count)s sont désactivés.\n"
+msgstr ""
+"\n"
+"                Vous gérez %(total_count)s plan(s) de test, "
+"%(disabled_count)s sont désactivés.\n"
 "                Voici le dernier %(count)s.\n"
 "                "
 
@@ -298,62 +322,85 @@ msgstr "Il n’y a aucun plan(s) de test qui vous est assigné"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid "Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n\n"
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr "Bienvenu %(user)s,\n"
-"Merci pour votre inscription sur %(site_domain)s!\n\n"
+msgstr ""
+"Bienvenu %(user)s,\n"
+"Merci pour votre inscription sur %(site_domain)s!\n"
+"\n"
 "Pour activer votre compte cliquer sur le lien suivant:\n"
 "%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "TestCase has been updated by %(username)s!\n"
-msgstr "\n"
+msgstr ""
+"\n"
 "Le cas de test a été mis à jour par %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid "\n"
-"Test run %(pk)s has been created or updated for you.\n\n"
+msgid ""
+"\n"
+"Test run %(pk)s has been created or updated for you.\n"
+"\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n\n"
+"Summary: %(summary)s\n"
+"\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n\n"
+"Default tester: %(default_tester)s.\n"
+"\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n\n"
+"Build: %(build)s\n"
+"\n"
 "Notes:\n"
 "%(notes)s\n"
-msgstr "\n"
-"L'essai de test %(pk)s à été créé ou mis à jour pour vous.\n\n"
+msgstr ""
+"\n"
+"L'essai de test %(pk)s à été créé ou mis à jour pour vous.\n"
+"\n"
 "### Liens ###\n"
 "Essai de test: %(run_url)s\n"
-"Plan de test: %(plan_url)s\n\n"
+"Plan de test: %(plan_url)s\n"
+"\n"
 "### Information de lancement ###\n"
-"Résumé: %(summary)s\n\n"
+"Résumé: %(summary)s\n"
+"\n"
 "Géré par: %(manager)s.\n"
-"Testeur par défaut: %(default_tester)s.\n\n"
+"Testeur par défaut: %(default_tester)s.\n"
+"\n"
 "Produit: %(product)s\n"
 "Version du produit: %(version)s\n"
-"Construction: %(build)s\n\n"
+"Construction: %(build)s\n"
+"\n"
 "Récapitulatif:\n"
 "%(notes)s\n"
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid "Dear Administrator,\n"
+msgid ""
+"Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
 "Go to %(user_url)s to activate the account!\n"
-msgstr "Chèr(e) Administra(teur/trice),\n"
-"une personne s'est enregistré un compte avec le nom %(username)s sur votre instance\n"
-"Kiwi TCMS et attend votre approbation!\n\n"
+msgstr ""
+"Chèr(e) Administra(teur/trice),\n"
+"une personne s'est enregistré un compte avec le nom %(username)s sur votre "
+"instance\n"
+"Kiwi TCMS et attend votre approbation!\n"
+"\n"
 "Aller à l'adresse %(user_url)s pour activer ce compte!\n"
 
 #: tcms/templates/pagination.html:7
@@ -410,8 +457,12 @@ msgid "Change password"
 msgstr "Changer le mot de passe"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr "Entrez votre nouveau mot de passe deux fois, afin de vérifier qu'il est bien écrit"
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly"
+msgstr ""
+"Entrez votre nouveau mot de passe deux fois, afin de vérifier qu'il est bien "
+"écrit"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -439,19 +490,28 @@ msgid "Register"
 msgstr "Inscription"
 
 #: tcms/testcases/forms.py:21
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "Veuillez entrer un/des id(s) de cas valide(s). utiliser le virgule pour séparer plus d'un id de cas.ex: \"111, 222\""
+msgid ""
+"Please input valid case id(s). use comma to split more than one case id. e."
+"g. \"111, 222\""
+msgstr ""
+"Veuillez entrer un/des id(s) de cas valide(s). utiliser le virgule pour "
+"séparer plus d'un id de cas.ex: \"111, 222\""
 
 #: tcms/testcases/forms.py:95
-msgid "**Scenario**: ... what behavior will be tested ...\n"
+msgid ""
+"**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
-"  **Then** ... expected results ...\n\n"
-"*Actions*:\n\n"
+"  **Then** ... expected results ...\n"
+"\n"
+"*Actions*:\n"
+"\n"
 "1. item\n"
 "2. item\n"
-"3. item\n\n"
-"*Expected results*:\n\n"
+"3. item\n"
+"\n"
+"*Expected results*:\n"
+"\n"
 "1. item\n"
 "2. item\n"
 "3. item\n"
@@ -463,7 +523,7 @@ msgid "DELETED: TestCase #%{pk}d - %{summary}s"
 msgstr "SUPPRIMÉ: Cas de test #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/get.html:33
-#: tcms/testcases/templates/testcases/mutable.html:132
+#: tcms/testcases/templates/testcases/mutable.html:133
 #: tcms/testruns/templates/testruns/mutable.html:66
 msgid "Notes"
 msgstr "Remarques"
@@ -471,7 +531,7 @@ msgstr "Remarques"
 #: tcms/testcases/templates/testcases/get.html:43
 #: tcms/testcases/templates/testcases/get.html:312
 #: tcms/testcases/templates/testcases/search.html:84
-#: tcms/testcases/templates/testcases/search.html:118
+#: tcms/testcases/templates/testcases/search.html:168
 #: tcms/testplans/templates/testplans/mutable.html:101
 #: tcms/testplans/templates/testplans/search.html:98
 #: tcms/testplans/templates/testplans/search.html:135
@@ -481,51 +541,51 @@ msgstr "Auteur"
 
 #: tcms/testcases/templates/testcases/get.html:48
 #: tcms/testcases/templates/testcases/mutable.html:29
-#: tcms/testcases/templates/testcases/search.html:119
+#: tcms/testcases/templates/testcases/search.html:169
 #: tcms/testplans/templates/testplans/mutable.html:113
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Default tester"
 msgstr "Testeur par défaut"
 
 #: tcms/testcases/templates/testcases/get.html:64
-#: tcms/testcases/templates/testcases/mutable.html:50
+#: tcms/testcases/templates/testcases/mutable.html:51
 #: tcms/testcases/templates/testcases/search.html:40
-#: tcms/testcases/templates/testcases/search.html:122
+#: tcms/testcases/templates/testcases/search.html:172
 #: tcms/testruns/templates/testruns/mutable.html:98
 msgid "Category"
 msgstr "Catégorie"
 
 #: tcms/testcases/templates/testcases/get.html:74
-#: tcms/testcases/templates/testcases/mutable.html:66
+#: tcms/testcases/templates/testcases/mutable.html:67
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testcases/templates/testcases/search.html:71
-#: tcms/testcases/templates/testcases/search.html:121
+#: tcms/testcases/templates/testcases/search.html:171
 #: tcms/testruns/templates/testruns/mutable.html:97
 msgid "Status"
 msgstr "Statut"
 
 #: tcms/testcases/templates/testcases/get.html:79
-#: tcms/testcases/templates/testcases/mutable.html:78
+#: tcms/testcases/templates/testcases/mutable.html:79
 #: tcms/testcases/templates/testcases/search.html:62
-#: tcms/testcases/templates/testcases/search.html:123
+#: tcms/testcases/templates/testcases/search.html:173
 #: tcms/testruns/templates/testruns/mutable.html:99
 msgid "Priority"
 msgstr "Priorité"
 
 #: tcms/testcases/templates/testcases/get.html:93
-#: tcms/testcases/templates/testcases/mutable.html:90
+#: tcms/testcases/templates/testcases/mutable.html:91
 #: tcms/testcases/templates/testcases/search.html:19
-#: tcms/testcases/templates/testcases/search.html:120
+#: tcms/testcases/templates/testcases/search.html:170
 msgid "Automated"
 msgstr "Automatiser"
 
 #: tcms/testcases/templates/testcases/get.html:98
-#: tcms/testcases/templates/testcases/mutable.html:105
+#: tcms/testcases/templates/testcases/mutable.html:106
 msgid "Script"
 msgstr "Script"
 
 #: tcms/testcases/templates/testcases/get.html:103
-#: tcms/testcases/templates/testcases/mutable.html:111
+#: tcms/testcases/templates/testcases/mutable.html:112
 msgid "Arguments"
 msgstr "Arguments"
 
@@ -534,7 +594,7 @@ msgid "Requirements"
 msgstr "Spécifications requises"
 
 #: tcms/testcases/templates/testcases/get.html:113
-#: tcms/testcases/templates/testcases/mutable.html:124
+#: tcms/testcases/templates/testcases/mutable.html:125
 #: tcms/testplans/templates/testplans/mutable.html:83
 msgid "Reference link"
 msgstr "Lien référencé"
@@ -552,7 +612,7 @@ msgid "Test plans"
 msgstr "Plans de test"
 
 #: tcms/testcases/templates/testcases/get.html:310
-#: tcms/testcases/templates/testcases/search.html:116
+#: tcms/testcases/templates/testcases/search.html:166
 #: tcms/testplans/templates/testplans/search.html:132
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
@@ -597,7 +657,7 @@ msgstr "Nouveau Cas de test"
 
 #: tcms/testcases/templates/testcases/mutable.html:18
 #: tcms/testcases/templates/testcases/search.html:11
-#: tcms/testcases/templates/testcases/search.html:117
+#: tcms/testcases/templates/testcases/search.html:167
 #: tcms/testruns/templates/testruns/mutable.html:23
 #: tcms/testruns/templates/testruns/mutable.html:94
 #: tcms/testruns/templates/testruns/search.html:11
@@ -605,24 +665,24 @@ msgstr "Nouveau Cas de test"
 msgid "Summary"
 msgstr "Récapitulatif"
 
-#: tcms/testcases/templates/testcases/mutable.html:36
+#: tcms/testcases/templates/testcases/mutable.html:37
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "Ajouter un nouveau produit"
 
-#: tcms/testcases/templates/testcases/mutable.html:51
+#: tcms/testcases/templates/testcases/mutable.html:52
 msgid "add new Category"
 msgstr "ajouter une nouvelle catégorie"
 
-#: tcms/testcases/templates/testcases/mutable.html:98
+#: tcms/testcases/templates/testcases/mutable.html:99
 msgid "Text"
 msgstr "Texte"
 
-#: tcms/testcases/templates/testcases/mutable.html:119
+#: tcms/testcases/templates/testcases/mutable.html:120
 msgid "Requirments"
 msgstr "Spécifications requises"
 
-#: tcms/testcases/templates/testcases/mutable.html:139
+#: tcms/testcases/templates/testcases/mutable.html:140
 #: tcms/testplans/templates/testplans/mutable.html:143
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
@@ -646,7 +706,7 @@ msgid "Both"
 msgstr "Les deux"
 
 #: tcms/testcases/templates/testcases/search.html:50
-#: tcms/testcases/templates/testcases/search.html:125
+#: tcms/testcases/templates/testcases/search.html:175
 msgid "Component"
 msgstr "Composant"
 
@@ -669,12 +729,22 @@ msgid "Bug ID"
 msgstr "ID de l'anomalie"
 
 #: tcms/testcases/templates/testcases/search.html:108
+#: tcms/testplans/templates/testplans/search.html:40
+msgid "Created&nbsp;before"
+msgstr "Créé&nbsp;avant"
+
+#: tcms/testcases/templates/testcases/search.html:132
+#: tcms/testplans/templates/testplans/search.html:16
+msgid "Created&nbsp;after"
+msgstr "Créé&nbsp;après"
+
+#: tcms/testcases/templates/testcases/search.html:158
 #: tcms/testplans/templates/testplans/search.html:124
 #: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
 msgstr "Recherche"
 
-#: tcms/testcases/templates/testcases/search.html:124
+#: tcms/testcases/templates/testcases/search.html:174
 msgid "Created at"
 msgstr "Créé le"
 
@@ -767,14 +837,6 @@ msgstr "Rechercher des plan de test"
 msgid "Test plan name"
 msgstr "Nom du plan de test"
 
-#: tcms/testplans/templates/testplans/search.html:16
-msgid "Created&nbsp;after"
-msgstr "Créé&nbsp;après"
-
-#: tcms/testplans/templates/testplans/search.html:40
-msgid "Created&nbsp;before"
-msgstr "Créé&nbsp;avant"
-
 #: tcms/testplans/templates/testplans/search.html:104
 #: tcms/testruns/templates/testruns/mutable.html:57
 #: tcms/testruns/templates/testruns/search.html:61
@@ -855,12 +917,16 @@ msgstr "Sélectionner des Cas de Tests:"
 
 #: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
-msgid "\n"
-"                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
+msgid ""
+"\n"
+"                    %(count)s of the pre-selected test cases is not "
+"CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr "\n"
-"                    %(count)s cas de test pré-sélectionné et qui ne sont pas confirmé et qui n'ont pas été cloné!\n"
+msgstr ""
+"\n"
+"                    %(count)s cas de test pré-sélectionné et qui ne sont pas "
+"confirmé et qui n'ont pas été cloné!\n"
 "                    Voir le plan de test pour plus de détail!\n"
 "                    "
 
@@ -890,7 +956,8 @@ msgstr "Fini à"
 
 #: tcms/testruns/views.py:49
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr "Créé un essai de test requiert un plan de test, veuillez en sélectionné un"
+msgstr ""
+"Créé un essai de test requiert un plan de test, veuillez en sélectionné un"
 
 #: tcms/testruns/views.py:59
 msgid "Creating a TestRun requires at least one TestCase"
@@ -912,7 +979,9 @@ msgstr "Essai du cas %d mis à jour:"
 #: tcms/xmlrpc/serializer.py:287
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr "Le modèle %s ne possède aucune clé primaire. Vous devez spécifier tel champ manuellement."
+msgstr ""
+"Le modèle %s ne possède aucune clé primaire. Vous devez spécifier tel champ "
+"manuellement."
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
@@ -961,4 +1030,3 @@ msgstr "DÉSACTIVÉ"
 #: vinaigrette-deleteme.py:13
 msgid "NEED_UPDATE"
 msgstr "DOIT_ÊTRE_MAJ"
-
