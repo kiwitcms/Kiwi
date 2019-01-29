@@ -1,0 +1,10 @@
+# these do not provide wheel packages
+
+bleach-whitelist==0.0.9
+django-glrm==1.1.3
+django-grappelli==2.12.2
+django-uuslug==1.1.8
+django-vinaigrette==1.2.0
+python-bugzilla==2.2.0
+PyGithub==1.43.5
+python-gitlab==1.7.0

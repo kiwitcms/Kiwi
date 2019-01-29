@@ -100,6 +100,10 @@ jobs:
         - TEST_DB=SQLite
         - CMD=test_for_missing_migrations
 
+    - stage: non_functional_testing
+      env:
+        - CMD=build-for-pypi
+
     - stage: docker
       env:
         - CMD=test-docker-image

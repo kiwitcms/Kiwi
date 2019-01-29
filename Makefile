@@ -98,6 +98,7 @@ help:
 	@echo ''
 	@echo '  flake8           - Check Python code style throughout whole source code tree'
 	@echo '  check            - Run all tests.'
+	@echo '  build-for-pypi   - Build tarballs and wheels for PyPI'
 	@echo '  docker-image     - Build Docker image'
 	@echo '  help             - Show this help message and exit. Default if no command is given'
 
@@ -106,3 +107,8 @@ help:
 .PHONY: coverity
 coverity:
 	@echo 'Everything is handled by the Coverity add-on in Travis'
+
+
+.PHONY: build-for-pypi
+build-for-pypi:
+	./tests/check-build
