@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Build packages for distribution on PyPI
+# and execute some sanity checks on them
+#
+# note: must be executed from the root directory of the project
+
+# first clean up the local environment
+echo "..... Clean up first"
+find . -type f -name '*.pyc' -delete
+find . -type d -name __pycache__ -delete
+find . -type d -name '*.egg-info' | xargs rm -rf
+rm -rf build/ .cache/ dist/ .eggs/ .tox/ .venv/
+rm -rf tcms_api/build/ tcms_api/dist/
+
+
+# then build the packages
+echo "..... Building PyPI packages for kiwitcms"
+set -e
+$(which python) setup.py sdist >/dev/null
+$(which python) setup.py bdist_wheel >/dev/null
+set +e
+
+echo "..... Building PyPI packages for tcms-api"
+set -e
+pushd tcms_api/
+$(which python) setup.py sdist >/dev/null
+$(which python) setup.py bdist_wheel >/dev/null
+mv dist/tcms*api* ../dist/
+popd
+set +e
+
+# check rst formatting of README before building the package
+echo "..... Check rst formatting for PyPI"
+twine check dist/* || exit 1
+
+# then run some sanity tests
+for PKG_NAME in kiwitcms tcms; do
+    echo "..... Searching for .pyc files inside the built packages"
+    matched_files=`tar -tvf dist/$PKG_NAME-*.tar.gz | grep -c "\.pyc"`
+    if [ "$matched_files" -gt "0" ]; then
+        echo "ERROR: .pyc files found in .tar.gz package"
+        exit 1
+    fi
+    matched_files=`unzip -t dist/$PKG_NAME*.whl | grep -c "\.pyc"`
+    if [ "$matched_files" -gt "0" ]; then
+        echo "ERROR: .pyc files found in wheel package"
+        exit 1
+    fi
+done
+
+# exit on error from now on
+set -e
+
+#echo "..... Trying to install the new tarballs inside a virtualenv"
+#virtualenv -q -p $(which python) .venv/test-tarball
+#source .venv/test-tarball/bin/activate
+#pip install --upgrade setuptools pip
+#pip install --no-binary :all: -f dist/ kiwitcms tcms-api
+#pip freeze | grep kiwitcms
+#pip freeze | grep tcms-api
+#deactivate
+#rm -rf .venv/
+
+echo "..... Trying to install the new wheels inside a virtualenv"
+virtualenv -q -p $(which python) .venv/test-wheel
+source .venv/test-wheel/bin/activate
+pip install --upgrade setuptools pip
+pip install -r requirements/tarballs.txt
+pip install kerberos pycparser
+pip install --only-binary :all: -f dist/ kiwitcms tcms_api
+pip freeze | grep kiwitcms
+pip freeze | grep tcms-api
+deactivate
+rm -rf .venv/
+
+echo "..... PASS"

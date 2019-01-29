@@ -12,3 +12,4 @@ pydot
 # linting tools
 pylint-django
 bandit
+twine
