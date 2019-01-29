@@ -23,13 +23,19 @@ class Backend:
             backend.add_test_case_to_plan(test_case_id, backend.plan_id)
             test_case_run_id = backend.add_test_case_to_run(test_case_id, backend.run_id)
             backend.update_test_case_run(test_case_run_id, <status_id>, <comment>)
-
     """
 
     _statuses = {}
     _cases_in_test_run = {}
 
-    def __init__(self):
+    def __init__(self, prefix=''):
+        """
+            :param prefix: Prefix which will be added to TestPlan.name and
+                           TestRun.summary
+            :type prefix: str
+        """
+        self.prefix = prefix
+
         self.rpc = None
         self.run_id = None
         self.plan_id = None
@@ -142,7 +148,7 @@ class Backend:
             product_id, product_name = self.get_product_id(0)
             version_id, version_name = self.get_version_id(product_id)
 
-            name = '[TAP] Plan for %s (%s)' % (product_name, version_name)
+            name = self.prefix + 'Plan for %s (%s)' % (product_name, version_name)
 
             result = self.rpc.TestPlan.filter({'name': name,
                                                'product': product_id,
@@ -174,7 +180,7 @@ class Backend:
             user_id = self.rpc.User.filter()[0]['id']
 
             testrun = self.rpc.TestRun.create({
-                'summary': '[TAP] Results for %s, %s, %s' % (
+                'summary': self.prefix + 'Results for %s, %s, %s' % (
                     product_name, version_val, build_number
                 ),
                 'manager': user_id,
