@@ -340,7 +340,8 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
 
         - Get data from database using QuerySet.values method
         - Transfer data to the output destiation according to serialization
-          standard, where two things must be done,
+          standard, where two things must be done:
+
           - field name must be replaced with right name rather than the
             internal name used for SQL query
           - some data must be converted in proper type. Currently, data with

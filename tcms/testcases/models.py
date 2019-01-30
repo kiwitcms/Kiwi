@@ -347,7 +347,7 @@ class BugSystem(TCMSActionModel):
         Kiwi TCMS. Fields below can be configured via
         the admin interface and their meaning is:
 
-        #. **name:** a visual name for this bug tracker, e.g. `Kiwi TCMS GitHub';
+        #. **name:** a visual name for this bug tracker, e.g. `Kiwi TCMS GitHub`;
         #. **description:** a longer description shown in the admin;
         #. **url_reg_exp:** shown as **URL format string** in the UI - a format string
            used to construct URLs from bug IDs;

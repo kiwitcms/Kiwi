@@ -216,10 +216,9 @@ def calculate_for_testcases(plan, testcases):
     Attach TestCasePlan.sortkey, TestCasePlan.pk, and the number of bugs of
     each TestCase.
 
-    Arguments:
-    - plan: the TestPlan containing searched TestCases. None means testcases
-      are not limited to a specific TestPlan.
-    - testcases: a queryset of TestCases.
+    :param plan: the TestPlan containing searched TestCases. None means testcases
+                 are not limited to a specific TestPlan.
+    :param testcases: a queryset of TestCases.
     """
     tc_ids = []
     for test_case in testcases:
@@ -332,10 +331,9 @@ def sort_queried_testcases(request, testcases):
 def query_testcases_from_request(request, plan=None):
     """Query TestCases according to criterias coming within REQUEST
 
-    Arguments:
-    - request: the REQUEST object.
-    - plan: instance of TestPlan to restrict only those TestCases belongs to
-      the TestPlan. Can be None. As you know, query from all TestCases.
+    :param request: the REQUEST object.
+    :param plan: instance of TestPlan to restrict only those TestCases belongs to
+                 the TestPlan. Can be None. As you know, query from all TestCases.
     """
     search_form = build_cases_search_form(request)
 
@@ -433,12 +431,6 @@ def get_tags_from_cases(case_ids, plan=None):
 def list_all(request):
     """
     Generate the TestCase list for the UI tabs in TestPlan page view.
-
-    POST Parameters:
-    from_plan: Plan ID
-       -- [number]: When the plan ID defined, it will build the case
-    page in plan.
-
     """
     # Intial the plan in plan details page
     test_plan = plan_from_request_or_none(request)

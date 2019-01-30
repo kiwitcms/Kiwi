@@ -32,13 +32,14 @@ class TestCaseRunDataMixin:
 
     @staticmethod
     def stats_mode_case_runs(case_runs):
-        """Statistics from case runs mode
+        """
+            Statistics from case runs mode
 
-        @param case_runs: iteratable object to access each case run
-        @type case_runs: iterable, list, tuple
-        @return: mapping between mode and the count. Example return value is
-            { 'manual': I, 'automated': J }
-        @rtype: dict
+            :param case_runs: iteratable object to access each case run
+            :type case_runs: iterable, list, tuple
+            :return: mapping between mode and the count. Example return value is
+                     `{ 'manual': I, 'automated': J }`
+            :rtype: dict
         """
         manual_count = 0
         automated_count = 0
@@ -87,10 +88,10 @@ class TestCaseRunDataMixin:
     def get_case_runs_comments(run_pk):
         """Get case runs' comments
 
-        @param run_pk: run's pk whose comments will be retrieved.
-        @type run_pk: int
-        @return: the mapping between case run id and comments
-        @rtype: dict
+        :param run_pk: run's pk whose comments will be retrieved.
+        :type run_pk: int
+        :return: the mapping between case run id and comments
+        :rtype: dict
         """
         # note: cast to string b/c object_pk is a Textield and PostgreSQL
         # doesn't like TEXT in <list of integers>
@@ -130,14 +131,15 @@ class TestCaseRunDataMixin:
         """Get summary statistics from case runs
 
         Statistics targets:
+
         - the number of pending test case runs, whose status is IDLE
         - the number of completed test case runs, whose status are PASSED,
           ERROR, FAILED, WAIVED
 
-        @param case_runs: iterable object containing case runs
-        @type case_runs: iterable
-        @return: a mapping between statistics target and its value
-        @rtype: dict
+        :param case_runs: iterable object containing case runs
+        :type case_runs: iterable
+        :return: a mapping between statistics target and its value
+        :rtype: dict
         """
         idle_count = 0
         complete_count = 0

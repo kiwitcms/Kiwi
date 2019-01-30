@@ -177,14 +177,15 @@ class TestRun(TCMSActionModel):
             self.stop_date = None
 
     def stats_caseruns_status(self, statuses=None):
-        """Get statistics based on case runs' status
+        """
+            Get statistics based on case runs' status
 
-        @param statuss: iterable object containing TestCaseRunStatus
-            objects representing PASS, FAIL, WAIVED, etc.
-        @type statuses: iterable object
-        @return: the statistics including the number of each status mapping,
-            total number of case runs, complete percent, and failure percent.
-        @rtype: namedtuple
+            :param statuses: iterable object containing TestCaseRunStatus
+                             objects representing PASS, FAIL, WAIVED, etc.
+            :type statuses: iterable
+            :return: the statistics including the number of each status mapping,
+                     total number of case runs, complete percent, and failure percent.
+            :rtype: namedtuple
         """
         if statuses is None:
             statuses = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')

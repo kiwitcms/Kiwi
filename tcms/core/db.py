@@ -116,10 +116,10 @@ class GroupByResult:
     def _get_percent(self, key):
         """Percentage of a subtotal
 
-        @param key: name of subtotal whose percentage will be calculated
-        @type key: str
-        @return: a float number representing the percentage
-        @rtype: float
+        :param key: name of subtotal whose percentage will be calculated
+        :type key: str
+        :return: a float number representing the percentage
+        :rtype: float
         """
         total = self._total_result
         subtotal = self[key]
@@ -143,13 +143,13 @@ class GroupByResult:
         directly without repeating calculation. Unless, pass True to argument
         refresh.
 
-        @param value_in_row: whether leaf value should be treated as a row, in
-            such way, leaf value will be displayed in one row.
-        @type value_in_row: bool
-        @param refresh: whether force to recalculate
-        @type refresh: bool
-        @return: the total number of leaf values under this level
-        @rtype: int
+        :param value_in_row: whether leaf value should be treated as a row, in
+                             such way, leaf value will be displayed in one row.
+        :type value_in_row: bool
+        :param refresh: whether force to recalculate
+        :type refresh: bool
+        :return: the total number of leaf values under this level
+        :rtype: int
         """
         if refresh:
             necessary_to_count = True
