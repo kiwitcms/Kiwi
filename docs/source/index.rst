@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Kiwi TCMS documentation
-=========================
+=======================
 
 .. toctree::
    :maxdepth: 1

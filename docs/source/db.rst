@@ -15,7 +15,7 @@ Database Schema
         ./manage.py graph_models --pydot -a -g -o all_models.png
 
 Test Plans model diagram
------------------------
+------------------------
 
 .. graphviz:: testplans.dot
 
