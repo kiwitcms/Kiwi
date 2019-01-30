@@ -13,3 +13,4 @@ pydot
 pylint-django
 bandit
 twine
+pyOpenSSL
