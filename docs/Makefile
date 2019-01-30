@@ -54,7 +54,7 @@ clean:
 apidoc:
 	$(SPHINXAPIDOC) -o source/modules/ -f -e -M -T ../ ../manage.py ../setup.py \
 	                ../*/tests.py ../tcms/*/tests/* ../*/test_*.py ../*/tests/*.py ../*/apps.py \
-	                ../*/settings/test/*.py ../*/migrations/*.py ../tcms_api/setup.py ../tcms_api/__init__.py \
+	                ../*/settings/test/*.py ../*/migrations/*.py ../tcms_api/setup.py \
 	                ../kiwi_lint/*.py
 
 html: clean apidoc
