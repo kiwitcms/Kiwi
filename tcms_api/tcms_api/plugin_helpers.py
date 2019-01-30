@@ -23,6 +23,12 @@ class Backend:
             backend.add_test_case_to_plan(test_case_id, backend.plan_id)
             test_case_run_id = backend.add_test_case_to_run(test_case_id, backend.run_id)
             backend.update_test_case_run(test_case_run_id, <status_id>, <comment>)
+
+        :param prefix: Prefix which will be added to TestPlan.name and
+                       TestRun.summary
+
+                       .. versionadded:: 5.2
+        :type prefix: str
     """
 
     _statuses = {}
@@ -32,6 +38,8 @@ class Backend:
         """
             :param prefix: Prefix which will be added to TestPlan.name and
                            TestRun.summary
+
+                           .. versionadded:: 5.2
             :type prefix: str
         """
         self.prefix = prefix
@@ -45,6 +53,20 @@ class Backend:
         self.confirmed_id = None
 
     def configure(self):
+        """
+            This method is reading all the configs from the environment
+            and will create necessary TestPlan and TestRun containers!
+
+            One of the main reasons for it is that
+            :py:attr:`tcms_api.tcms_api.TCMS.exec` will try to connect
+            immediately to Kiwi TCMS!
+
+            .. important::
+
+                Test runner plugins **must** call this method after
+                initializing the backend object and **before** calling
+                any of the other methods!
+        """
         self.rpc = TCMS().exec
 
         self.run_id = self.get_run_id()
@@ -60,6 +82,20 @@ class Backend:
         })[0]['id']
 
     def get_status_id(self, name):
+        """
+            Get the PK of :class:`tcms.testruns.models.TestCaseRunStatus`
+            matching the test execution status.
+
+            .. important::
+
+                Test runner plugins **must** call this method like so::
+
+                    id = backend.get_status_id('FAILED')
+
+            :param name: :class:`tcms.testruns.models.TestCaseRunStatus` name
+            :type name: str
+            :rtype: int
+        """
         if name not in self._statuses:
             self._statuses[name] = self.rpc.TestCaseRunStatus.filter({
                 'name': name
@@ -68,6 +104,27 @@ class Backend:
         return self._statuses[name]
 
     def get_product_id(self, plan_id):
+        """
+            Return a :class:`tcms.management.models.Product` PK.
+
+            .. warning::
+
+                For internal use by `.configure()`!
+
+            :param plan_id: :class:`tcms.testplans.models.TestPlan` PK
+            :type plan_id: int
+            :rtype: int
+
+            Order of precedence:
+
+            - `plan_id` is specified, then use TestPlan.product, otherwise
+            - use `$TCMS_PRODUCT` as Product.name if specified, otherwise
+            - use `$TRAVIS_REPO_SLUG` as Product.name if specified, otherwise
+            - use `$JOB_NAME` as Product.name if specified
+
+            If Product doesn't exist in the database it will be created with the
+            first :class:`tcms.management.models.Classification` found!
+        """
         product_id = None
         product_name = None
 
@@ -97,6 +154,30 @@ class Backend:
         return product_id, product_name
 
     def get_version_id(self, product_id):
+        """
+            Return a :class:`tcms.management.models.Version` (PK, name).
+
+            .. warning::
+
+                For internal use by `.configure()`!
+
+            :param product_id: :class:`tcms.management.models.Product` PK
+                               for which to look for Version
+            :type product_id: int
+            :return: (version_id, version_value)
+            :rtype: tuple(int, str)
+
+            Order of precedence:
+
+            - use `$TCMS_PRODUCT_VERSION` as Version.value if specified, otherwise
+            - use `$TRAVIS_COMMIT` as Version.value if specified, otherwise
+            - use `$TRAVIS_PULL_REQUEST_SHA` as Version.value if specified,
+              otherwise
+            - use `$GIT_COMMIT` as Version.value if specified
+
+            If Version doesn't exist in the database it will be created with the
+            specified `product_id`!
+        """
         version_val = os.environ.get(
             'TCMS_PRODUCT_VERSION',
             os.environ.get('TRAVIS_COMMIT',
@@ -117,7 +198,35 @@ class Backend:
         return version[0]['id'], version_val
 
     def get_build_id(self, product_id, _version_id):
-        # for _version_id see https://github.com/kiwitcms/Kiwi/issues/246
+        """
+            Return a :class:`tcms.management.models.Build` (PK, name).
+
+            .. warning::
+
+                For internal use by `.configure()`!
+
+            :param product_id: :class:`tcms.management.models.Product` PK
+                               for which to look for Build
+            :type product_id: int
+            :param version_id: :class:`tcms.management.models.Version` PK
+                               for which to look for Build
+            :type version_id: int
+            :return: (build_id, build_name)
+            :rtype: tuple(int, str)
+
+            Order of precedence:
+
+            - use `$TCMS_BUILD` as Build.name if specified, otherwise
+            - use `$TRAVIS_BUILD_NUMBER` as Build.name if specified, otherwise
+            - use `$BUILD_NUMBER` as Build.name if specified
+
+            If Build doesn't exist in the database it will be created with the
+            specified `product_id`!
+
+            .. note::
+
+                For `version_id` see https://github.com/kiwitcms/Kiwi/issues/246
+        """
         build_number = os.environ.get('TCMS_BUILD',
                                       os.environ.get('TRAVIS_BUILD_NUMBER',
                                                      os.environ.get(
@@ -136,6 +245,16 @@ class Backend:
         return build[0]['build_id'], build_number
 
     def get_plan_type_id(self):
+        """
+            Return an **Integration** PlanType.
+
+            .. warning::
+
+                For internal use by `.configure()`!
+
+            :return: :class:`tcms.testplans.models.PlanType` PK
+            :rtype: int
+        """
         plan_type = self.rpc.PlanType.filter({'name': 'Integration'})
         if not plan_type:
             plan_type = [self.rpc.PlanType.create({'name': 'Integration'})]
@@ -143,6 +262,20 @@ class Backend:
         return plan_type[0]['id']
 
     def get_plan_id(self, run_id):
+        """
+            If a TestRun with PK `run_id` exists then return the TestPlan to
+            which this TestRun is assigned, otherwise create new TestPlan with
+            Product and Version specified by environment variables.
+
+            .. warning::
+
+                For internal use by `.configure()`!
+
+            :param run_id: :class:`tcms.testruns.models.TestRun` PK
+            :type run_id: int
+            :return: :class:`tcms.testplans.models.TestPlan` PK
+            :rtype: int
+        """
         result = self.rpc.TestRun.filter({'pk': run_id})
         if not result:
             product_id, product_name = self.get_product_id(0)
@@ -169,6 +302,19 @@ class Backend:
         return result[0]['plan_id']
 
     def get_run_id(self):
+        """
+            If `$TCMS_RUN_ID` is specified then assume the caller knows
+            what they are doing and try to add test results to that TestRun.
+            Otherwise will create a TestPlan and TestRun in which to record
+            the results!
+
+            .. warning::
+
+                For internal use by `.configure()`!
+
+            :return: :class:`tcms.testruns.models.TestRun` PK
+            :rtype: int
+        """
         run_id = os.environ.get('TCMS_RUN_ID')
 
         if not run_id:
@@ -197,6 +343,19 @@ class Backend:
         return int(run_id)
 
     def test_case_get_or_create(self, summary):
+        """
+            Search for a TestCase with the specified `summary` and Product.
+            If it doesn't exist in the database it will be created!
+
+            .. important::
+
+                Test runner plugins **must** call this method!
+
+            :param summary: A TestCase summary
+            :type summary: str
+            :return: Serialized :class:`tcms.testcase.models.TestCase`
+            :rtype: dict
+        """
         test_case = self.rpc.TestCase.filter({
             'summary': summary,
             'category__product': self.product_id,
@@ -215,16 +374,58 @@ class Backend:
         return test_case[0]
 
     def add_test_case_to_plan(self, case_id, plan_id):
+        """
+            Add a TestCase to a TestPlan if it is not already there!
+
+            .. important::
+
+                Test runner plugins **must** call this method!
+
+            :param case_id: :class:`tcms.testcases.models.TestCase` PK
+            :type case_id: int
+            :param plan_id: :class:`tcms.testplans.models.TestPlan` PK
+            :type plan_id: int
+            :return: None
+        """
         if not self.rpc.TestCase.filter({'pk': case_id, 'plan': plan_id}):
             self.rpc.TestPlan.add_case(plan_id, case_id)
 
     def add_test_case_to_run(self, case_id, run_id):
+        """
+            Add a TestCase to a TestRun if it is not already there!
+
+            .. important::
+
+                Test runner plugins **must** call this method!
+
+            :param case_id: :class:`tcms.testcases.models.TestCase` PK
+            :type case_id: int
+            :param run_id: :class:`tcms.testruns.models.TestRun` PK
+            :type run_id: int
+            :return: :class:`tcms.testruns.models.TestCaseRun` PK
+            :rtype: int
+        """
         if case_id in self._cases_in_test_run.keys():
             return self._cases_in_test_run[case_id]
 
         return self.rpc.TestRun.add_case(run_id, case_id)['case_run_id']
 
     def update_test_case_run(self, test_case_run_id, status_id, comment=None):
+        """
+            Update TestCaseRun with a status and comment.
+
+            .. important::
+
+                Test runner plugins **must** call this method!
+
+            :param test_case_run_id: :class:`tcms.testruns.models.TestCaseRun` PK
+            :type test_case_run_id: int
+            :param status_id: :class:`tcms.testruns.models.TestCaseRunStatus` PK,
+                              for example the ID for PASSED, FAILED, etc.
+                              See :func:`tcms_api.tcms_api.plugin_helpers.Backend.get_status_id`
+            :type status_id: int
+            :return: None
+        """
         self.rpc.TestCaseRun.update(test_case_run_id,  # pylint: disable=objects-update-used
                                     {'status': status_id})
 
