@@ -14,16 +14,25 @@ from django_comments.models import Comment
 
 def add_comment(objs, comments, user, submit_date=None):
     """
-    Generic approach adding django.comment for an object.
-    params:
-        @objs: [model, model,]
-        @submit_date: datetime object
-    >>> from django.contrib.auth.models import User
-    >>> testuser = User.objects.get(email='user@example.com')
-    >>> from tcms.testruns.models import TestCaseRun as Run
-    >>> testrun = Run.objects.get(pk=171675)
-    >>> comments = 'stupid comments by Homer'
-    >>> add_comment([testrun,], comments, testuser)
+    Add django.comment for an object.
+
+    :param objs: List of object to which to add comments
+    :type objs: list
+    :param comments: The commentary
+    :type comments: str
+    :param user: Who is adding this
+    :type user: A User model
+    :param submit_date: A time stamp
+    :type submit_date: datetime.datetime
+
+    Example::
+
+        from django.contrib.auth.models import User
+        testuser = User.objects.get(email='user@example.com')
+        from tcms.testruns.models import TestCaseRun
+        testrun = TestCaseRun.objects.get(pk=171675)
+        comments = 'stupid comments by Homer'
+        add_comment([testrun,], comments, testuser)
     """
     site = Site.objects.get(pk=settings.SITE_ID)
     content_type = ContentType.objects.get_for_model(model=objs[0].__class__)

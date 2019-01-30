@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-__all__ = ('GroupByResult')
+__all__ = ('GroupByResult',)
 
 
 # TODO: redesign GroupByResult, major goal is to distiguish level node and
