@@ -91,17 +91,16 @@ $(document).ready(function() {
                     return '<a href="/case/'+ data.case_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
                 }
             },
-            { data: "author" },
-            { data: "default_tester" },
-            { data: "is_automated" },
-            { data: "case_status"},
-            { data: "category"},
-            { data: "priority" },
             { data: "create_date"},
+            { data: "category"},
             {
                 data: "component",
                 render: renderData
             },
+            { data: "priority" },
+            { data: "case_status"},
+            { data: "is_automated" },
+            { data: "author" },
             {
                 data: "tag",
                 render: renderData
