@@ -54,7 +54,7 @@
                 {{ form.manager.errors }}
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default&nbsp;tester" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
             <div class="col-md-3 col-lg-3 {% if form.default_tester.errors %}has-error{% endif %}">
                 <input id="id_default_tester" name="default_tester" value="{{ form.default_tester.value }}" type="text"
                     class="form-control" placeholder="{% trans 'Username or email' %}">
