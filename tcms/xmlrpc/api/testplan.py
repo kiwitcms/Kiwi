@@ -92,14 +92,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    test_plans = TestPlan.objects.filter(**query).distinct()
-
-    results = []
-    for plan in test_plans:
-        serialized_plan = plan.serialize()
-        results.append(serialized_plan)
-
-    return results
+    return TestPlan.to_xmlrpc(query)
 
 
 @permissions_required('testplans.add_testplantag')
