@@ -1,0 +1,13 @@
+<script>
+$(function () {
+    $('{{ selector }}').datetimepicker({
+        locale: '{{ LANGUAGE_CODE }}',
+        format: 'L',
+        allowInputToggle: true,
+        showTodayButton: true,
+        icons: {
+                today: 'today-button-pf'
+        }
+    });
+});
+</script>
