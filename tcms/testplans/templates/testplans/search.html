@@ -13,7 +13,7 @@
                 <input id="id_name" type="text" class="form-control" placeholder="{% trans 'Test plan name' %}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_after">{% trans "Created after" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_after">{% trans "After" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
                     <input type="text" class="form-control" id="id_after">
@@ -25,7 +25,7 @@
                 {% include "datetimepicker_script.html" with selector="#id_after" %}
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_before">{% trans "Created before" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_before">{% trans "Before" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
                     <input type="text" class="form-control" id="id_before">
