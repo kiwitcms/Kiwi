@@ -1,3 +1,12 @@
+function pre_process_data(data) {
+    var tags_cache = {};
+
+    data.forEach(function(element) {
+        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
+    });
+}
+
+
 $(document).ready(function() {
     var table = $("#resultsTable").DataTable({
         ajax: function(data, callback, settings) {
@@ -39,20 +48,29 @@ $(document).ready(function() {
 
             params['is_active'] = $('#id_active').is(':checked');
 
-            dataTableJsonRPC('TestPlan.filter', params, callback);
+            dataTableJsonRPC('TestPlan.filter', params, callback, pre_process_data);
         },
         columns: [
             { data: "plan_id" },
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
+                    result = '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
+                    if (! data.is_active) {
+                        result = '<strike>' + result + '</strike>';
+                    }
+                    return result;
                 }
             },
             { data: "create_date" },
-            { data: "author" },
             { data: "product" },
-            { data: "type"}
+            { data: "product_version" },
+            { data: "type"},
+            { data: "author" },
+            {
+                data: "tag",
+                render: renderFromCache,
+            },
         ],
         dom: "t",
         language: {
