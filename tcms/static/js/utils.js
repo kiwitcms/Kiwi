@@ -47,25 +47,24 @@ function update_version_select_from_product(sender, version_selector) {
 }
 
 /*
-    Used to update a Build select when Product changes.
-*/
-function updateBuildSelect(data) {
-    updateSelect(data, '#id_build', 'build_id', 'name')
-}
-
-/*
     Used for on-change event handlers
 */
-function update_build_select_from_product() {
-    // reset the options list b/c updateBuildSelect
-    // will reuse the 1st one if it exists
-    $('#id_build')[0].innerHTML = '';
+function update_build_select_from_product(keep_first) {
+    var updateCallback = function(data) {
+        updateSelect(data, '#id_build', 'build_id', 'name')
+    }
+
+    if (keep_first === true) {
+        // pass
+    } else {
+        $('#id_build').find('option').remove();
+    }
 
     var product_id = $('#id_product').val();
     if (product_id) {
-        jsonRPC('Build.filter', {product: product_id}, updateBuildSelect);
+        jsonRPC('Build.filter', {product: product_id}, updateCallback);
     } else {
-        updateBuildSelect([]);
+        updateCallback([]);
     }
 }
 

@@ -104,7 +104,7 @@ $(document).ready(function() {
 
     $('#id_product').change(function() {
         update_version_select_from_product();
-        update_build_select_from_product();
+        update_build_select_from_product(true);
     });
 
     $('.bootstrap-switch').bootstrapSwitch();
