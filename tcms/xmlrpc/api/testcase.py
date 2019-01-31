@@ -281,7 +281,7 @@ def create(values, **kwargs):
 
 
 @rpc_method(name='TestCase.filter')
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC TestCase.filter(query)
 
@@ -293,12 +293,10 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects.
         :rtype: list(dict)
     """
-    results = []
-    for case in TestCase.objects.filter(**query).distinct():
-        serialized_case = case.serialize()
-        results.append(serialized_case)
+    if query is None:
+        query = {}
 
-    return results
+    return TestCase.to_xmlrpc(query)
 
 
 @permissions_required('testcases.change_testcase')
