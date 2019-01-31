@@ -56,7 +56,7 @@
 
             <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
             <div class="col-md-3 col-lg-3 {% if form.default_tester.errors %}has-error{% endif %}">
-                <input id="id_default_tester" name="default_tester" value="{{ form.default_tester.value }}" type="text"
+                <input id="id_default_tester" name="default_tester" value="{{ form.default_tester.value|default:'' }}" type="text"
                     class="form-control" placeholder="{% trans 'Username or email' %}">
                 {{ form.default_tester.errors }}
             </div>
