@@ -8,22 +8,6 @@ function pre_process_data(data) {
     });
 }
 
-function addResourceToData(element, key, resource, cache) {
-    var data = [];
-    element[key].forEach(function(id) {
-        if (id in cache) {
-            data.push(cache[id]);
-        } else {
-            jsonRPC(resource, {pk: id}, function (result) {
-                if (result) {
-                    data.push(result[0]);
-                    cache[id] = result[0];
-                }
-            }, true);
-        }
-    });
-    element[key] = data;
-}
 
 $(document).ready(function() {
     var table = $("#resultsTable").DataTable({
@@ -95,7 +79,7 @@ $(document).ready(function() {
             { data: "category"},
             {
                 data: "component",
-                render: renderData
+                render: renderFromCache,
             },
             { data: "priority" },
             { data: "case_status"},
@@ -103,7 +87,7 @@ $(document).ready(function() {
             { data: "author" },
             {
                 data: "tag",
-                render: renderData
+                render: renderFromCache,
             },
         ],
         dom: "t",
@@ -142,12 +126,3 @@ $(document).ready(function() {
 
     $('.selectpicker').selectpicker();
 });
-
-function renderData(data) {
-    result = '';
-    data.forEach(function (el) {
-        result += el.name + ', ';
-    });
-    // remove trailing coma
-    return result.slice(0, result.lastIndexOf(','));
-}

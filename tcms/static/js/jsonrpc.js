@@ -41,3 +41,34 @@ function dataTableJsonRPC(rpc_method, rpc_params, callback, pre_process_data) {
 
     jsonRPC(rpc_method, rpc_params, internal_callback);
 }
+
+
+// called from pre_process_data to fill local cache with values
+function addResourceToData(element, key, resource, cache) {
+    var data = [];
+    element[key].forEach(function(id) {
+        if (id in cache) {
+            data.push(cache[id]);
+        } else {
+            jsonRPC(resource, {pk: id}, function (result) {
+                if (result) {
+                    data.push(result[0]);
+                    cache[id] = result[0];
+                }
+            }, true);
+        }
+    });
+    element[key] = data;
+}
+
+
+// renders values from the local cache
+// for example tags or components
+function renderFromCache(data) {
+    result = '';
+    data.forEach(function (el) {
+        result += el.name + ', ';
+    });
+    // remove trailing coma
+    return result.slice(0, result.lastIndexOf(','));
+}
