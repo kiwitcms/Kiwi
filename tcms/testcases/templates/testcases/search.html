@@ -115,19 +115,7 @@
                 </div>
             </div>
 
-            <script>
-                $(function () {
-                    $('#id_before').datetimepicker({
-                        locale: '{{ LANGUAGE_CODE }}',
-                        format: 'L',
-                        allowInputToggle: true,
-                        showTodayButton: true,
-                        icons: {
-                            today: 'today-button-pf'
-                        }
-                    });
-                });
-            </script>
+            {% include "datetimepicker_script.html" with selector="#id_before" %}
 
             <label for="id_after" class="col-md-1 col-lg-1">{% trans "Created&nbsp;after" %}</label>
             <div class="col-md-3 col-lg-3">
@@ -139,19 +127,7 @@
                 </div>
             </div>
 
-            <script>
-                $(function () {
-                    $('#id_after').datetimepicker({
-                        locale: '{{ LANGUAGE_CODE }}',
-                        format: 'L',
-                        allowInputToggle: true,
-                        showTodayButton: true,
-                        icons: {
-                            today: 'today-button-pf'
-                        }
-                    });
-                });
-            </script>
+            {% include "datetimepicker_script.html" with selector="#id_after" %}
         </div>
 
 
