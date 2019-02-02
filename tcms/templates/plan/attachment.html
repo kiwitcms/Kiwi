@@ -1,4 +1,5 @@
 {% extends "tcms_base.html" %}
+{% load i18n %}
 {% load static %}
 {% load attachments_tags %}
 {% block subtitle %} {{ test_plan.name }}{% endblock %}
@@ -26,16 +27,16 @@
 			<div class="Detailform border-1">
                             {% attachment_form test_plan %}
 				<span class="right-action">
-					Note: Each attachment size limit is {{ limit|filesizeformat }}.
+					{% trans "Note: Each attachment size limit is" %} {{ limit|filesizeformat }}.
 				</span>
 
 			<table class="list" cellspacing="0" cellspan="0">
 				<thead>
 					<tr class="titlelink">
-						<th align="left">File name</th>
-						<th align="left" width="20%">Submitter</th>
-						<th align="left" width="20%">Create date</th>
-						<th align="left" width="10%">Action</th>
+						<th align="left">{% trans "File name" %}</th>
+						<th align="left" width="20%">{% trans "Submitter" %}</th>
+						<th align="left" width="20%">{% trans "Create date" %}</th>
+						<th align="left" width="10%">{% trans "Action" %}</th>
 					</tr>
 				</thead>
 				<tbody>

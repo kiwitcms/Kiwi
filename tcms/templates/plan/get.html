@@ -1,4 +1,5 @@
 {% extends "tcms_base.html" %}
+{% load i18n %}
 {% load static %}
 {% load extra_filters %}
 {% load attachments_tags %}
@@ -55,50 +56,50 @@ Nitrate.TestPlans.Instance = {
 	<div class="listinfo_content">
 		<div class="leftlistinfo">
 			<div class="listinfo">
-				<div class="title grey">Author&nbsp;:</div>
+				<div class="title grey">{% trans "Author" %}&nbsp;:</div>
 				<div id="display_author"  class="name " > <a href="{% url "tcms-profile" test_plan.author.username %}">{{ test_plan.author.username }}</a></div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Product&nbsp;:</div>
+				<div class="title grey">{% trans "Product" %}&nbsp;:</div>
 				<div id="display_product"  class="name "><a href="{% url "plans-search" %}?product={{ test_plan.product_id }}" title="Search plans of {{ test_plan.product }} ">{{ test_plan.product }}</a></div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Version&nbsp;:</div>
+				<div class="title grey">{% trans "Version" %}&nbsp;:</div>
 				<div id="display_product_version"  class="name ">{{ test_plan.product_version.value }}</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Plan Type&nbsp;:</div>
+				<div class="title grey">{% trans "Plan Type" %}&nbsp;:</div>
 				<div id="display_type"  class="name ">{{ test_plan.type.name }}</div>
 			</div>
 		 </div>
 		<div class="rightlistinfo">
 			<div class="listinfo">
-				<div class="title grey">Reference Link&nbsp;:</div>
+				<div class="title grey">{% trans "Reference Link" %}&nbsp;:</div>
 				<div class="name">
 					{% if test_plan.extra_link %}
 					<a href="{{ test_plan.extra_link }}">{{ test_plan.extra_link }}</a>
 					{% else %}
-					None
+					{% trans "None" %}
 					{% endif %}
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Create Time&nbsp;:</div>
+				<div class="title grey">{% trans "Create Time" %}&nbsp;:</div>
 				<div class="name ">{{test_plan.create_date}}</div>
 				
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Parent&nbsp;:</div>
+				<div class="title grey">{% trans "Parent" %}&nbsp;:</div>
 				<div class="name ">
 				{% if test_plan.parent.pk %}
 					<a href="{% url 'test_plan_url_short' test_plan.parent.pk %}">{{ test_plan.parent.pk }}</a>
 				{% else %}
-					None
+					{% trans "None" %}
 				{% endif %}
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title"><a href="/admin/testplans/testplan/{{ test_plan.pk }}/history/">View Edit History</a></div>
+				<div class="title"><a href="/admin/testplans/testplan/{{ test_plan.pk }}/history/">{% trans "View Edit History" %}</a></div>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -107,25 +108,25 @@ Nitrate.TestPlans.Instance = {
 		<div class="Detailform border-1">
 			<ul id="contentTab" class="content_tab">
 				<li id="tab_document" class="tab">
-					<a href="#document" title="document">Document</a>
+					<a href="#document" title="document">{% trans "Document" %}</a>
 				</li>
 				<li id="tab_testcases" class="tab tab_focus">
-					<a href="#testcases" title="testcases">Cases (<span id='run_case_count' class="js-testcases-count">{{ test_plan.run_case.count }}</span>/<span id='case_count'>{{ test_plan.case.count }}</span>)</a>
+					<a href="#testcases" title="testcases">{% trans "Cases" %} (<span id='run_case_count' class="js-testcases-count">{{ test_plan.run_case.count }}</span>/<span id='case_count'>{{ test_plan.case.count }}</span>)</a>
 				</li>
 				<li id="tab_reviewcases" class="tab">
-					<a href="#reviewcases" title="reviewcases">Reviewing Cases (<span id='review_case_count' class="js-reviewcases-count">{{ test_plan.review_case.count }}</span>)</a>
+					<a href="#reviewcases" title="reviewcases">{% trans "Reviewing Cases" %} (<span id='review_case_count' class="js-reviewcases-count">{{ test_plan.review_case.count }}</span>)</a>
 				</li>
 				<li id="tab_testruns"  class="tab">
-					<a href="#testruns" title="testruns">Runs (<span id='run_count'>{{ test_plan.run.count }}</span>)</a>
+					<a href="#testruns" title="testruns">{% trans "Runs" %} (<span id='run_count'>{{ test_plan.run.count }}</span>)</a>
 				</li>
 				<li id="tab_attachment" class="tab">
-					<a href="#attachment" title="attachment">Attachments (<span id='attachment_count'>{% attachments_count test_plan %}</span>)</a>
+					<a href="#attachment" title="attachment">{% trans "Attachments" %} (<span id='attachment_count'>{% attachments_count test_plan %}</span>)</a>
 				</li>
 				<li id="tab_tag" class="tab">
-					<a href="#tag" title="tag">Tags (<span id='tag_count'>{{ test_plan.tag.count }}</span>)</a>
+					<a href="#tag" title="tag">{% trans "Tags" %} (<span id='tag_count'>{{ test_plan.tag.count }}</span>)</a>
 				</li>
 				<li id="tab_treeview" class="tab">
-					<a href="#treeview" title="treeview">Tree View</a>
+					<a href="#treeview" title="treeview">{% trans "Tree View" %}</a>
 				</li>
 			</ul>
 			<div id="document" class="tab_list" style="display:none">
@@ -134,7 +135,7 @@ Nitrate.TestPlans.Instance = {
                                 {% if test_plan.text %}
                                     {{ test_plan.text|markdown2html }}
                                 {% else %}
-                                    <span style="color: #666">The document for this plan hasn't been written yet.</span>
+                                    <span style="color: #666">{% trans "The document for this plan hasn't been written yet." %}</span>
                                 {% endif %}
                                 </div>
                             </div>

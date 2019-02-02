@@ -1,4 +1,5 @@
 {% load extra_filters %}
+{% load i18n %}
 
 {% for test_plan in test_plans %}
 <div class="listinfo_content">
@@ -7,37 +8,37 @@
 			<label for="id_preview_plan_{{ test_plan.pk }}">[{{ test_plan.pk }}] {{ test_plan.name }}</label>
 		</div>
 		<div class="listinfo">
-			<div class="title">Author</div>
+                    <div class="title">{% trans "Author" %}</div>
 			<div id="display_author">{{ test_plan.author.username }}</div>
 		</div>
 		<div class="listinfo">
-			<div class="title">Product</div>
+                    <div class="title">{% trans "Product" %}</div>
 			<div id="display_product">{{ test_plan.product }}</div>
 		</div>
 		<div class="listinfo">
-			<div class="title">Version</div>
+                    <div class="title">{% trans "Version" %}</div>
 			<div id="display_product_version">{{ test_plan.product_version }}</div>
 		</div>
 		<div class="listinfo">
-			<div class="title">Plan Type</div>
+                    <div class="title"{% trans ">Plan Type" %}</div>
 			<div id="display_type">{{ test_plan.type.name }}</div>
 		</div>
 		<div class="listinfo">
-			<div class="title">Parent</div>
+                    <div class="title">{% trans "Parent" %}</div>
 			<div id="display_type">{{ test_plan.parent.pk }}</div>
 		</div>
 		<div class="listinfo">
-			<div class="title">Reference Link</div>
+                    <div class="title">{% trans "Reference Link" %}</div>
 			<div>
 				{% if test_plan.extra_link %}
 				<a href="{{ test_plan.extra_link }}">{{ test_plan.extra_link }}</a>
 				{% else %}
-				None
+                                {% trans "None" %}
 				{% endif %}
 			</div>
 		</div>
 		<div class="listinfo">
-			<div class="title">Document</div>
+                    <div class="title">{% trans "Document" %}</div>
 			<div class="contenttext">
 				{{ test_plan.text|markdown2html }}
 			</div>
@@ -48,5 +49,5 @@
 <hr />
 {% endif %}
 {% empty %}
-{"msg":"The plan you specified does not exist in the database."}
+{"msg":"{% trans "The plan you specified does not exist in the database." %}"}
 {% endfor %}

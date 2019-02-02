@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <form id="js-cases-nav-form" action="{% url "testcases-all" %}" method="get">
 	<input type="hidden" name="case_sort_by" value="{{ REQUEST_CONTENTS.case_sort_by }}" />
 	<input type="hidden" name="plan" value="{{ REQUEST_CONTENTS.from_plan }}" />
@@ -9,9 +10,9 @@
 			<ul>
 				<li>
 					{% if perms.testcases.add_testcase %}
-					<span id="js-case-menu" class='sprites toolbar_case icon_plan' data-params='["{% url "testcases-new" %}", {{ test_plan.plan_id }}]'>Case</span>
+					<span id="js-case-menu" class='sprites toolbar_case icon_plan' data-params='["{% url "testcases-new" %}", {{ test_plan.plan_id }}]'>{% trans "Case" %}</span>
 					{% else %}
-					<span class='sprites toolbar_case icon_plan'>Case</span>
+					<span class='sprites toolbar_case icon_plan'>{% trans "Case" %}</span>
 					{% endif %}
 					<ul>
 						{% if perms.testcases.add_testcase %}
@@ -36,7 +37,7 @@
 				</li>
                         {% if REQUEST_CONTENTS.template_type == 'case' and perms.testruns.add_testrun %}
                                 <li>
-                                    <span class='sprites toolbar_run{% if not perms.testruns.add_testrun %}_disabled{% endif %} icon_plan'>Run</span>
+                                    <span class='sprites toolbar_run{% if not perms.testruns.add_testrun %}_disabled{% endif %} icon_plan'>{% trans "Run" %}</span>
                                     <ul>
                                         <li><input type="button" class="new_run icon_plan" value="Create new TestRun" id="js-new-run" data-param="{% url "testruns-new" %}" /></li>
                                     </ul>
@@ -48,14 +49,14 @@
                                 {% else %}
                                 <li><input type="button" value="Default Tester" title="Change default tester"    class="btn_default_tester assignee sprites icon_plan" /></li>
                                 {% endif %}
-				<li><span class='sprites toolbar_status icon_plan'>Status</span>
+				<li><span class='sprites toolbar_status icon_plan'>{% trans "Status" %}</span>
 					<ul>
 						{% for cs in case_status %}
 						<li><input type='button' value='Set {{ cs }}' class='btn_case_status {{ cs|lower }} icon_plan js-status-item' data-param="{{ cs.pk }}" /></li>
 						{% endfor %}
 					</ul>
 				</li>
-				<li><span class='sprites toolbar_priority icon_plan'>Priority</span>
+				<li><span class='sprites toolbar_priority icon_plan'>{% trans "Priority" %}</span>
 					<ul>
 						{% for priority in priorities %}
 						<li><input type='button' value='Set {{ priority }}' class='btn_case_priority {{ priority|lower }} icon_plan js-priority-item' data-param="{{ priority.pk }}" /></li>
@@ -65,19 +66,19 @@
 			{% endif %}
 			</ul>
 			<span class="reorder_case">
-				<a class="btn_filter filtercase" title="Click to show filter options">Show filter options</a>
+				<a class="btn_filter filtercase" title="Click to show filter options">{% trans "Show filter options" %}</a>
 				{% if perms.testcases.change_testcase %}
-				<a class="btn_sort sortlink" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes">Re-order cases</a>
+				<a class="btn_sort sortlink" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes">{% trans "Re-order cases" %}</a>
 				{% endif %}
 			</span>
 		</div>
 		<div class="mixbar fixed">
-			<div class="tit" style="width: 50px; float: left; height: 100%; margin: 0px; text-align: center;">Tags:</div>
+			<div class="tit" style="width: 50px; float: left; height: 100%; margin: 0px; text-align: center;">{% trans "Tags" %}:</div>
 			<div style="margin-left: 50px; line-height:22px;" class="taglist">
 				{% for tag in case_own_tags %}
 				<a href="#testcases">{{ tag.name }}</a>&nbsp;&nbsp;<span class="grey">-</span>&nbsp;&nbsp;
 				{% empty %}
-				<span class="grey">No tags in cases</span>
+				<span class="grey">{% trans "No tags in cases" %}</span>
 				{% endfor %}
 			</div>
 		</div>
@@ -87,23 +88,23 @@
             <input type="hidden" name="from_plan" value="{{ test_plan.pk }}" />
             <div class="leftlistinfo">
                 <div class="listinfo">
-                    <div class="title">Case&nbsp;:</div>
+                    <div class="title">{% trans "Case" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.summary }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Author&nbsp;:</div>
+                    <div class="title">{% trans "Author" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.author }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Tester&nbsp;:</div>
+                    <div class="title">{% trans "Tester" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.default_tester }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Priority&nbsp;:</div>
+                    <div class="title">{% trans "Priority" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.priority }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Automated&nbsp;:</div>
+                    <div class="title">{% trans "Automated" %}&nbsp;:</div>
                     <div class="listinfo_input">
                         {{ search_form.is_automated }}
                     </div>
@@ -111,23 +112,23 @@
             </div>
             <div class="rightlistinfo">
                 <div class="listinfo">
-                    <div class="title">Category&nbsp;:</div>
+                    <div class="title">{% trans "Category" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.category }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Status&nbsp;:</div>
+                    <div class="title">{% trans "Status" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.case_status }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Component&nbsp;:</div>
+                    <div class="title">{% trans "Component" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.component }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Tag&nbsp;:</div>
+                    <div class="title">{% trans "Tag" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.tag__name__in }}</div>
                 </div>
                 <div class="listinfo">
-                    <div class="title">Items per page&nbsp;:</div>
+                    <div class="title">{% trans "Items per page" %}&nbsp;:</div>
                     <div class="listinfo_input">{{ search_form.items_per_page }}</div>
                 </div>
             </div>
@@ -135,14 +136,14 @@
             <div class="clear"></div>
 
             <div class="submit-row bottom">
-                <span class="tit"><span class="js-number-of-loaded-cases">{{ total_cases_count }}</span> Cases</span>
+                <span class="tit"><span class="js-number-of-loaded-cases">{{ total_cases_count }}</span>{% trans "Cases" %}</span>
                 <input type="submit" value="Filter cases" />
             </div>
 	</div>
 </form>
 <div class="js-cases-select-all" display="display:none">
 	<input type="checkbox" id="cases-select-all" name="cases-select-all" checked />
-	<label for="cases-select-all">Also select all cases that are not yet shown below.</label>
+	<label for="cases-select-all">{% trans "Also select all cases that are not yet shown below." %}</label>
 </div>
 <table class="list js-cases-list" cellpadding="1" cellspacing="0" border="0">
 	<thead data-param="{{ test_plan.plan_id }}">
@@ -157,57 +158,57 @@
 			</th>
 			<th align="left" class="widthID">
 				<a title="Sort by case ID" href="#testcases" class="js-case-field" data-param="case_id">
-					ID
+					{% trans "ID" %}
 				</a>
 			</th>
 			<th align="left">
 				<a title="Sort by Summary" href="#testcases" class="js-case-field" data-param="summary">
-					Test Case Summary
+                                    {% trans "Test Case Summary" %}
 				</a>
 			</th>
 			<th align="left" width="90px">
 				<a title="Sort by Author" href="#testcases" class="js-case-field" data-param="author">
-					Author
+                                    {% trans "Author" %}
 				</a>
 			</th>
 			<th align="left" width="110px">
                             {% if REQUEST_CONTENTS.template_type == 'review_case' %}
                                 <a title="Sort by Reviewer" href="#reviewcases" class="js-case-field" data-param="reviewer">
-                                        Reviewer
+                                    {% trans "Reviewer" %}
                                 </a>
                             {% else %}
 				<a title="Sort by Default Tester" href="#testcases" class="js-case-field" data-param="default_tester">
-					Default Tester
+                                    {% trans "Default Tester" %}
 				</a>
                             {% endif %}
 			</th>
 			<th align="left" width="160px">
 				<a title="Sort by automated" href="#testcases" class="js-case-field" data-param="is_automated">
-					Automated
+                                    {% trans "Automated" %}
 				</a>
 			</th>
 			<th align="left" width="130px">
 				<a title="Sort by status" href="#testcases" class="js-case-field" data-param="case_status">
-					Status
+                                    {% trans "Status" %}
 				</a>
 			</th>
 			<th align="left" width="100px">
 				<a title="Sort by categoty" href="#testcases" class="js-case-field" data-param="category__name">
-					Category
+                                    {% trans "Category" %}
 				</a>
 			</th>
 			<th align="left" width="60px">
 				<a title="Sort by prority" href="#testcases" class="js-case-field" data-param="priority">
-					Priority
+                                    {% trans "Priority" %}
 				</a>
 			</th>
-			<th align="left" width="80px" style="display:none">Text version</th>
+                        <th align="left" width="80px" style="display:none">{% trans "Text version" %}</th>
 			<th align="left" width="40px">
 				<a class="js-case-field" title="Sort by sortkey" href="#testcases" data-param="sortkey">
 					Sort
 				</a>
 			</th>
-			<th align="left" width="80px">Actions</th>
+                        <th align="left" width="80px">{% trans "Actions" %}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -218,7 +219,7 @@
 <div class="cases-pagination show-more-cases">
 	<a href="javascript:void(0)" class="load-more js-load-more" data-page-index="2" data-criterias="{{ search_criterias }}">Show more</a>
 	<span class="js-loading-progress">
-		(<span class="js-remaining-cases-count" data-cases-count="{{ total_cases_count|default:"0" }}">0</span> cases left)
+            (<span class="js-remaining-cases-count" data-cases-count="{{ total_cases_count|default:"0" }}">0</span> {% trans "cases left" %})
 	</span>
-	<span class="js-nomore-msg" style="display:none">All cases have been loaded.</span>
+        <span class="js-nomore-msg" style="display:none">{% trans "All cases have been loaded." %}</span>
 </div>
