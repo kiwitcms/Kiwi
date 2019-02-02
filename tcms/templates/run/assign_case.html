@@ -1,7 +1,8 @@
 {% extends "tcms_base.html" %}
+{% load i18n %}
 {% load static %}
 
-{% block subtitle %}Add TestCase to TestRun{% endblock %}
+{% block subtitle %}{% trans "Add TestCase to TestRun" %}{% endblock %}
 
 {% block custom_stylesheet %}
 {% endblock %}
@@ -20,42 +21,42 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 	<h2 id="display_title">Add TestCase(s) to <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a></h2>
 	<table class="runsDetail" border="0" width="66%" cellspacing="0" cellpadding="0">
 		<tr class="cell">
-			<td class="lab">Build</td>
+                    <td class="lab">{% trans "Build" %}</td>
 			<td id="display_build">{{ test_run.build }}</td>
 		</tr>
 		<tr class="cell">
-			<td class="lab">Manager</td>
+                    <td class="lab">{% trans "Manager" %}</td>
 			<td class="name"><a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager.username }}</a></td>
 		</tr>
 		<tr class="cell">
-			<td class="lab">Test Plan</td>
+                    <td class="lab">{% trans "Test Plan" %}</td>
 			<td><a href="{% url 'test_plan_url_short' test_run.plan.pk %}">{{ test_run.plan.name }}</a></td>
-			<td class="lab">All Confirmed Cases</td>
+                        <td class="lab">{% trans "All Confirmed Cases" %}</td>
 			<td><a>{{ confirmed_cases_count }}</a></td>
 		</tr>
 		<tr class="cell">
 			<td></td>
 			<td></td>
-			<td class="lab"><span>Test Cases in Run</span></td>
+                        <td class="lab"><span>{% trans "Test Cases in Run" %}</span></td>
 			<td>{{ test_case_runs_count }}</td>
 		</tr>
 	</table>
 	<form action="{% url "add-cases-to-run" test_run.run_id %}" method="post">
 		<div class="Detailform border-1" id="testcases_selected">
 			<div class="mixbar">
-				<span class="tit"><b>Cases in this Run: {{ test_case_runs_count }}</b></span>
+                            <span class="tit"><b>{% trans "Cases in this Run" %}: {{ test_case_runs_count }}</b></span>
 				<input id="id_checkbox_plan_sortkey" type="checkbox" name="_use_plan_sortkey" />
-				<label for="id_checkbox_plan_sortkey" title="Uncheck it will set the sortkey to 0">Use the sortkey stored in plan</label>
+                                <label for="id_checkbox_plan_sortkey" title="Uncheck it will set the sortkey to 0">{% trans "Use the sortkey stored in plan" %}</label>
 				<input type="submit" value="Update" title="Update the cases in this run"/>
 				<input type="reset" value="Reset" title="Reset to the original cases "/>
 				<span class="right-action">	
-					<a class="helplink js-how-assign-case" id="" title="view the help information about assigning case">How to Assign case?</a>
+                                    <a class="helplink js-how-assign-case" id="" title="view the help information about assigning case">{% trans "How to Assign case?" %}</a>
 				</span>
 			</div>
 			<div class="Detailform system_info border-1" id="help_assign" style="display:none">
 				<div class="Detailform-variety_1">
 					<p>
-						The table below list all the confirmed test cases of plan {{ test_run.plan }}, check the checkbox to add cases into test run. Remember to update at last. 
+                                        {% trans "The table below list all the confirmed test cases of plan" %} {{ test_run.plan }}, {% trans "check the checkbox to add cases into test run. Remember to update at last" %}. 
 						<span class="right-action">
 							<a href="#" class="js-close-how-assign" >X</a>
 						</span>
@@ -67,13 +68,13 @@ Nitrate.Utils.after_page_load(Nitrate.TestRuns.AssignCase.on_load);
 					<tr>
 						<th class="nosort" align="left" width="20px"><input id="id_check_all_button" type="checkbox" /></th>
 						<th class="nosort" align="left" width="20px"></th>
-						<th class="sortcol widthID" align="left" width="50px">ID</th>
-						<th class="sortcol">Test Case Summary</th>
-						<th class="sortcol" width="130">Author</th>
-						<th class="sortcol" width="150">Created Date</th>
-						<th class="sortcol" width="150">Category</th>
-						<th class="sortcol"  width="70">Priority</th>
-						<th class="sortcol"  width="70">Selected</th>
+                                                <th class="sortcol widthID" align="left" width="50px">{% trans "ID" %}</th>
+                                                <th class="sortcol">{% trans "Test Case Summary" %}</th>
+                                                <th class="sortcol" width="130">{% trans "Author" %}</th>
+                                                <th class="sortcol" width="150">{% trans "Created Date" %}</th>
+                                                <th class="sortcol" width="150">{% trans "Category" %}</th>
+                                                <th class="sortcol"  width="70">{% trans "Priority" %}</th>
+                                                <th class="sortcol"  width="70">{% trans "Selected" %}</th>
 					</tr>
 				</thead>
 				<tbody>

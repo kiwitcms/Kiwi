@@ -1,4 +1,5 @@
 {% extends "tcms_base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block subtitle %}{{ test_run.summary }}{% endblock %}
@@ -63,31 +64,31 @@ jQ(function() {
 		<div ></div>
 		<div class="leftlistinfo">
 			<div class="listinfo">
-				<div class="title grey">Test Plan&nbsp;:</div>
+                            <div class="title grey">{% trans "Test Plan" %}&nbsp;:</div>
 				<div class="name">
 					<a href="{% url 'test_plan_url_short' test_run.plan.pk %}">[{{ test_run.plan.pk }}] {{ test_run.plan.name }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Product Version&nbsp;:</div>
+                            <div class="title grey">{% trans "Product Version" %}&nbsp;:</div>
 				<div class="name">
 					<a href="{% url "testruns-search" %}?product={{ test_run.plan.product_id }}&product_version={{ test_run.plan.product_version_id }}" title="Search test runs of {{ test_run.plan.product_version.value }}">{{ test_run.plan.product_version.value }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Manager&nbsp;:</div>
+                            <div class="title grey">{% trans "Manager" %}&nbsp;:</div>
 				<div class="name">
 					<a href="{% url "tcms-profile" test_run.manager.username %}">{{ test_run.manager.username }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Started at&nbsp;:</div>
+                            <div class="title grey">{% trans "Started at" %}&nbsp;:</div>
 				<div class="name">
 				{{ test_run.start_date|date:"Y-m-d H:i:s" }}
 				</div>
 			</div>
 			<div class="listinfo" >
-				<div class="title grey">Tags&nbsp;:</div>
+                            <div class="title grey">{% trans "Tags" %}&nbsp;:</div>
 				<div class="name linotype">
 					<ul class="js-tag-ul">
 						{% for tag in test_run.tag.all %}
@@ -111,26 +112,26 @@ jQ(function() {
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Note&nbsp;:</div>
+                            <div class="title grey">{% trans "Note" %}&nbsp;:</div>
 				<div class="name" style="max-width:500px;">{{ test_run.notes|urlize|linebreaksbr }}</div>
 				<div class="clear"></div>
 			</div>
 		</div>
 		<div class="rightlistinfo">
 			<div class="listinfo">
-				<div class="title grey">Product&nbsp;:</div>
+                            <div class="title grey">{% trans "Product" %}&nbsp;:</div>
 				<div class="name">
 					<a href="{% url "testruns-search" %}?product={{ test_run.product_version.product_id }}" title="Search test runs of {{ test_run.product_version.product }}">{{ test_run.product_version.product }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Build&nbsp;:</div>
+                            <div class="title grey">{% trans "Build" %}&nbsp;:</div>
 				<div class="name">
 					<a href="{% url "testruns-search" %}?product={{ test_run.plan.product_id }}&product_version={{ test_run.plan.product_version_id }}&build={{ test_run.build_id }}" title="Search test runs of {{ test_run.build_id }}">{{ test_run.build }}</a>
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Default Tester&nbsp;:</div>
+                            <div class="title grey">{% trans "Default Tester" %}&nbsp;:</div>
 				<div class="name">
 					{% if test_run.default_tester %}
 					<a href="{% url "tcms-profile" test_run.default_tester.username %}">{{ test_run.default_tester.username }}</a>
@@ -140,15 +141,15 @@ jQ(function() {
 				</div>
 			</div>
 			<div class="listinfo">
-			<div class="title grey">Status&nbsp;:</div>
+                            <div class="title grey">{% trans "Status" %}&nbsp;:</div>
 				<div class="name">
 					{% if test_run.stop_date %}
-					<span class="pauselink"> Finished </span>
+                                        <span class="pauselink"> {% trans "Finished" %} </span>
 					{% if perms.testruns.change_testrun %}
 					<input type="button"  class="spadelink js-set-running" value="Set to Running" data-param="{% url 'testruns-change_status' test_run.run_id %}">
 					{% endif %}
 					{% else %}
-					<span class="runninglink">Running</span>
+                                        <span class="runninglink">{% trans "Running" %}</span>
 					{% if perms.testruns.change_testrun %}
 					<input type="button"class="spadelink js-set-finished" value="Set to Finished" data-param="{% url 'testruns-change_status' test_run.run_id %}">
 					{% endif %}
@@ -156,13 +157,13 @@ jQ(function() {
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">Finished at&nbsp;:</div>
+                            <div class="title grey">{% trans "Finished at" %}&nbsp;:</div>
 				<div class="name">
 				{{ test_run.stop_date|date:"Y-m-d H:i:s" }}
 				</div>
 			</div>
 			<div class="listinfo">
-				<div class="title grey">CC&nbsp;:</div>
+                            <div class="title grey">{% trans "CC" %}&nbsp;:</div>
 				<div class="linotype name">
 					{% include 'run/get_cc.html' %}
 				</div>

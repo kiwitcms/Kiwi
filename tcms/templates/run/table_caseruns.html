@@ -1,27 +1,28 @@
+{% load i18n %}
 {% load static %}
 
 <table class="list" id="id_table_cases" cellspacing="0" cellspan="0">
 	<thead>
 		<tr>
 			<th width="20">
-				<input id="id_check_all_button" type="checkbox" title="Select all cases/Select none case" />
+                            <input id="id_check_all_button" type="checkbox" title="{% trans "Select all cases/Select none case" %}" />
 			</th>
 			<th width="18">
-				<a id="id_blind_all_link" title="Expand all cases">
+                            <a id="id_blind_all_link" title="{% trans "Expand all cases" %}">
 					<img id="id_blind_all_img" src="{% static 'images/t1.gif' %}" border="0" alt="" class="collapse-all">
 				</a>
 			</th>
-			<th class="widthID">Case Run ID</th>
-			<th class="widthID">Case ID</th>
-			<th>Summary</th>
-			<th width="80">Tester</th>
-			<th width="80">Assignee</th>
-			<th width="140">Automated </th>
-			<th width="100">Category</th>
-			<th width="50">Priority</th>
-			<th width="40">Bugs</th>
-			<th width="50" style='text-align:center'>Status</th>
-			<th width="65">Comments</th>
+                        <th class="widthID">{% trans "Case Run ID" %}</th>
+                        <th class="widthID">{% trans "Case ID" %}</th>
+                        <th>{% trans "Summary" %}</th>
+                        <th width="80">{% trans "Tester" %}</th>
+                        <th width="80">{% trans "Assignee" %}</th>
+                        <th width="140">{% trans "Automated" %}</th>
+                        <th width="100">{% trans "Category" %}</th>
+                        <th width="50">{% trans "Priority" %}</th>
+                        <th width="40">{% trans "Bugs" %}</th>
+                        <th width="50" style='text-align:center'>{% trans "Status" %}</th>
+                        <th width="65">{% trans "Comments" %}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -49,13 +50,13 @@
 				{% if tester %}
 				<a href="{% url "tcms-profile" tester %}" class="link_tested_by">{{ tester }}</a>
 				{% else %}
-				<a class="link_tested_by">None</a>
+                                <a class="link_tested_by">{% trans "None" %}</a>
 				{% endif %}
 			</td>
 			<td>
 				{% if assignee %}
 				<a href="{% url "tcms-profile" assignee %}" class="link_assignee">{{ assignee }}</a>
-				{% else %}None{% endif %}
+                                {% else %}{% trans "None" %}{% endif %}
 			</td>
 			<td class="expandable">{{ test_case_run.case.is_automated }}</td>
 			<td class="expandable">{{ test_case_run.case.category }}</td>
@@ -73,7 +74,7 @@
 		</tr>
 		{% empty %}
 		<tr>
-			<td colspan="13" align="center">No case run found</td>
+                    <td colspan="13" align="center">{% trans "No case run found" %}</td>
 		</tr>
 		{% endfor %}
 	</tbody>
