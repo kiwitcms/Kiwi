@@ -9,7 +9,7 @@
 				<div class="content">{{ test_case.text|markdown2html }}</div>
 			</td>
 			<td valign="top" rowspan="2" width="200">
-                            <h4><span class="title strong">{% trans "Attachment:" %}</span></h4>
+                            <h4><span class="title strong">{% trans "Attachment" %}:</span></h4>
 				<ul class="ul-no-format">
 					{% for attachment_file in attachments %}
 					<li>
@@ -21,7 +21,7 @@
                                         <li class="grey">{% trans "No attachment found" %}</li>
 					{% endfor %}
 				</ul>
-                                <h4><span class="title strong">{% trans "Component:" %}</span></h4>
+                                <h4><span class="title strong">{% trans "Component" %}:</span></h4>
 				<ul class="ul-no-format">
 					{% for component in components %}
 					<li id="display_component" >{{ component.name }}</li>
@@ -29,7 +29,7 @@
                                         <li class="grey">{% trans "No component found" %}</li>
 					{% endfor %}
 				</ul>
-                                <h4><span class="title strong">{% trans "Tag:" %}</span></h4>
+                                <h4><span class="title strong">{% trans "Tag" %}:</span></h4>
 				<ul class="ul-no-format">
 					{% for tag in tags %}
 					<li>{{ tag }}</li>
@@ -37,13 +37,13 @@
                                         <li class="grey">{% trans "No tag found" %}</li>
 					{% endfor %}
 				</ul>
-                                <h4><span class="title strong">{% trans "bug:" %}</span></h4>
+                                <h4><span class="title strong">{% trans "bug" %}:</span></h4>
 				<ul class="ul-no-format">
 					{% for bug in test_case.get_bugs %}
 					<li>
 						<a href="{{ bug.get_full_url }}">{{ bug }}</a>
 						{% if bug.case_run_id %}
-                                                <span class="grey">{% trans " - From Run" %}</span>
+                                                <span class="grey"> - {% trans "From Run" %}</span>
 						<a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
 						{% endif %}
 					</li>
@@ -55,13 +55,13 @@
 		</tr>
 		<tr>
 			<td colspan='3'>
-                            <h4>{% trans "Notes:" %}</h4>
+                            <h4>{% trans "Notes" %}:</h4>
 				<div class="content">{{ test_case.notes|urlize|linebreaksbr }}</div>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="3" style="border:none; background:none">
-                            <h4>{% trans "Comments:" %}</h4>
+                            <h4>{% trans "Comments" %}:</h4>
 				<ul class="comment ul-no-format">
 				{% for comment in case_comments %}
 					<li>
