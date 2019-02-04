@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-04 09:49+0000\n"
+"POT-Creation-Date: 2019-02-04 13:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1430,8 +1430,7 @@ msgid "Search test cases"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:13
-#: tcms/testruns/templates/testruns/search.html:13
-msgid "Test run summary"
+msgid "Test case summary"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:16
@@ -1608,6 +1607,10 @@ msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
+msgstr ""
+
+#: tcms/testruns/templates/testruns/search.html:13
+msgid "Test run summary"
 msgstr ""
 
 #: tcms/testruns/templates/testruns/search.html:16

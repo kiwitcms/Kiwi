@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-04 09:49+0000\n"
+"POT-Creation-Date: 2019-02-04 13:39+0000\n"
 "PO-Revision-Date: 2019-01-27 15:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
@@ -1488,9 +1488,8 @@ msgid "Search test cases"
 msgstr "Rechercher des cas de tests"
 
 #: tcms/testcases/templates/testcases/search.html:13
-#: tcms/testruns/templates/testruns/search.html:13
-msgid "Test run summary"
-msgstr "Résumé des essais de test"
+msgid "Test case summary"
+msgstr ""
 
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
@@ -1672,6 +1671,10 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
 msgstr "Rechercher des essais réalisés"
+
+#: tcms/testruns/templates/testruns/search.html:13
+msgid "Test run summary"
+msgstr "Résumé des essais de test"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
