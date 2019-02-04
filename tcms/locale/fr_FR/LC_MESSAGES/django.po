@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-04 16:01\n"
+"PO-Revision-Date: 2019-02-04 16:42\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -221,32 +221,32 @@ msgstr "le système de gestion de cas de test leader en open source"
 #: tcms/templates/case/attachment.html:29
 #: tcms/templates/plan/attachment.html:30
 msgid "Note: Each attachment size limit is"
-msgstr ""
+msgstr "Note: Chaque limite de taille de pièce jointe est"
 
 #: tcms/templates/case/attachment.html:35
 #: tcms/templates/plan/attachment.html:36
 #: tcms/templates/plan/get_attachments.html:13
 msgid "File name"
-msgstr ""
+msgstr "Nom du fichier"
 
 #: tcms/templates/case/attachment.html:36
 #: tcms/templates/plan/attachment.html:37
 #: tcms/templates/plan/get_attachments.html:14
 msgid "Submitter"
-msgstr ""
+msgstr "Émetteur"
 
 #: tcms/templates/case/attachment.html:37
 #: tcms/templates/plan/attachment.html:38
 #: tcms/templates/plan/get_attachments.html:15
 msgid "Create date"
-msgstr ""
+msgstr "Date de création"
 
 #: tcms/templates/case/attachment.html:38
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/attachment.html:39
 #: tcms/templates/plan/get_attachments.html:16
 msgid "Action"
-msgstr ""
+msgstr "Action"
 
 #: tcms/templates/case/clone.html:24
 msgid "Clone TestCase(s)"
@@ -254,15 +254,15 @@ msgstr ""
 
 #: tcms/templates/case/clone.html:28
 msgid "Select Plan"
-msgstr ""
+msgstr "Choisissez un plan"
 
 #: tcms/templates/case/clone.html:32
 msgid "Use the same Plan"
-msgstr ""
+msgstr "Utiliser le même plan"
 
 #: tcms/templates/case/clone.html:37
 msgid "Filter another plan"
-msgstr ""
+msgstr "Filtrer un autre plan"
 
 #: tcms/templates/case/clone.html:42 tcms/templates/plan/get_cases.html:161
 #: tcms/templates/plan/search_case.html:80
@@ -294,16 +294,16 @@ msgstr "Produit"
 #: tcms/templates/case/clone.html:50 tcms/templates/plan/clone.html:37
 #: tcms/templates/run/get.html:73 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Version du produit"
 
 #: tcms/templates/case/clone.html:54
 #: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:71
 msgid "Plan Type"
-msgstr ""
+msgstr "Type de plan"
 
 #: tcms/templates/case/clone.html:58
 msgid "Plan Author"
-msgstr ""
+msgstr "Auteur du plan"
 
 #: tcms/templates/case/clone.html:62 tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -318,7 +318,7 @@ msgstr "Étiquette"
 #: tcms/templates/case/clone.html:66
 #: tcms/templates/case/clone_select_plan.html:8
 msgid "Plan Summary"
-msgstr ""
+msgstr "Sommaire du plan"
 
 #: tcms/templates/case/clone.html:70
 #: tcms/testplans/templates/testplans/mutable.html:137
@@ -328,19 +328,19 @@ msgstr "Actif"
 
 #: tcms/templates/case/clone.html:93
 msgid "Case(s)"
-msgstr ""
+msgstr "Cas"
 
 #: tcms/templates/case/clone.html:97
 msgid "Clone Settings"
-msgstr ""
+msgstr "Paramètres du clone"
 
 #: tcms/templates/case/clone.html:99
 msgid "Case Properties"
-msgstr ""
+msgstr "Propriété du cas"
 
 #: tcms/templates/case/clone_select_plan.html:2
 msgid "Plan"
-msgstr ""
+msgstr "Plan"
 
 #: tcms/templates/case/clone_select_plan.html:10
 #: tcms/templates/case/edit.html:101 tcms/templates/plan/get.html:59
@@ -360,7 +360,7 @@ msgstr "Auteur"
 
 #: tcms/templates/case/clone_select_plan.html:11
 msgid "Is Active"
-msgstr ""
+msgstr "Est actif"
 
 #: tcms/templates/case/clone_select_plan.html:19
 #: tcms/testcases/templates/testcases/search.html:94
@@ -374,15 +374,15 @@ msgstr ""
 
 #: tcms/templates/case/clone_select_plan.html:22
 msgid "There are no plans"
-msgstr ""
+msgstr "Il n'y a pas de plans"
 
 #: tcms/templates/case/edit.html:6
 msgid "Edit test case"
-msgstr ""
+msgstr "Modifier le cas de test"
 
 #: tcms/templates/case/edit.html:8
 msgid "Add new test case"
-msgstr ""
+msgstr "Ajouter un nouveau cas de test"
 
 #: tcms/templates/case/edit.html:62 tcms/templates/plan/search_case.html:81
 #: tcms/templates/run/get_case_runs.html:64 tcms/templates/run/report.html:66
@@ -413,7 +413,7 @@ msgstr "Catégorie"
 #: tcms/templates/plan/search_case.html:83 tcms/templates/run/get.html:134
 #: tcms/templates/run/report.html:41
 msgid "Default Tester"
-msgstr ""
+msgstr "Testeur par défaut"
 
 #: tcms/templates/case/edit.html:79 tcms/templates/plan/get_cases.html:52
 #: tcms/templates/plan/get_cases.html:119
@@ -439,7 +439,7 @@ msgstr "Arguments"
 #: tcms/templates/case/edit.html:88 tcms/templates/plan/get.html:77
 #: tcms/templates/plan/preview.html:31
 msgid "Reference Link"
-msgstr ""
+msgstr "Lien de référence"
 
 #: tcms/templates/case/edit.html:92 tcms/templates/case/get_details.html:58
 #: tcms/testcases/templates/testcases/get.html:33
@@ -450,7 +450,7 @@ msgstr "Remarques"
 
 #: tcms/templates/case/edit.html:111 tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr ""
+msgstr "Créé"
 
 #: tcms/templates/case/edit.html:117 tcms/templates/plan/get_cases.html:107
 #: tcms/templates/plan/get_cases.html:187
@@ -465,7 +465,7 @@ msgstr "Automatiser"
 
 #: tcms/templates/case/edit.html:124
 msgid "Requirement"
-msgstr ""
+msgstr "Spécification requise"
 
 #: tcms/templates/case/edit.html:128
 #: tcms/testcases/templates/testcases/get.html:98
@@ -490,19 +490,19 @@ msgstr "Priorité"
 
 #: tcms/templates/case/edit.html:139
 msgid "Setup"
-msgstr ""
+msgstr "Configuration"
 
 #: tcms/templates/case/edit.html:145
 msgid "Send new case instance after editing "
-msgstr ""
+msgstr "Envoyer un nouveau cas après modification"
 
 #: tcms/templates/case/edit.html:145
 msgid "(The author of this case will receive the notification by default)"
-msgstr ""
+msgstr "(l'auteur de ce cas recevra une notification par défaut)"
 
 #: tcms/templates/case/edit.html:157
 msgid "optional"
-msgstr ""
+msgstr "optionnel"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:99
@@ -511,12 +511,12 @@ msgstr "Texte"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Pièce jointe"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:160
 msgid "No attachment found"
-msgstr ""
+msgstr "Pas de pièce jointe trouvée"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:166
@@ -529,18 +529,18 @@ msgstr "Composant"
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:171
 msgid "No component found"
-msgstr ""
+msgstr "Pas de composant trouvé"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:182
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "Pas d'étiquette trouvée"
 
 #: tcms/templates/case/get_details.html:40
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "bug"
-msgstr ""
+msgstr "anomalie"
 
 #: tcms/templates/case/get_details.html:46
 #: tcms/templates/case/get_details_case_run.html:96
@@ -550,22 +550,22 @@ msgstr ""
 #: tcms/templates/case/get_details.html:51
 #: tcms/templates/case/get_details_case_run.html:112
 msgid "No bug found"
-msgstr ""
+msgstr "Pas d'anomalie trouvée"
 
 #: tcms/templates/case/get_details.html:64
 #: tcms/templates/run/get_case_runs.html:187
 #: tcms/templates/run/table_caseruns.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Commentaires"
 
 #: tcms/templates/case/get_details_case_run.html:47
 #: tcms/templates/case/get_details_case_run.html:49
 msgid "Show All"
-msgstr ""
+msgstr "Afficher tout"
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Run Date"
-msgstr ""
+msgstr "Date d'exécution"
 
 #: tcms/templates/case/get_details_case_run.html:76
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:128
