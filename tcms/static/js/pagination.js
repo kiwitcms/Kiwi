@@ -3,6 +3,19 @@ function hookIntoPagination(tableSelector, table) {
     var updateCurrentPage = function(table) {
         var info = table.page.info();
         $('.current-page').val(info.page+1);
+        $('.total-pages').html(info.pages);
+
+        if (info.page === 0) {
+            $('.pagination-pf-back').find('li').addClass('disabled');
+        } else {
+            $('.pagination-pf-back').find('li').removeClass('disabled');
+        }
+
+        if (info.page === info.pages-1) {
+            $('.pagination-pf-forward').find('li').addClass('disabled');
+        } else {
+            $('.pagination-pf-forward').find('li').removeClass('disabled');
+        }
     };
 
     // hook into pagination controls
@@ -30,10 +43,5 @@ function hookIntoPagination(tableSelector, table) {
     // updates after sort
     $(tableSelector).on('order.dt', function() {
         updateCurrentPage(table);
-    });
-
-    $(tableSelector).on('init.dt', function() {
-        var info = table.page.info();
-        $('.total-pages').html(info.pages);
     });
 }
