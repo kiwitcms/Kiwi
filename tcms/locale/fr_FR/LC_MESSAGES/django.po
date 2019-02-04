@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-04 16:42\n"
+"PO-Revision-Date: 2019-02-04 16:53\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -578,12 +578,12 @@ msgstr "Construire"
 
 #: tcms/templates/case/get_details_case_run.html:76
 msgid "Text Version"
-msgstr ""
+msgstr "Version texte"
 
 #: tcms/templates/case/get_details_case_run.html:81
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr ""
+msgstr "Rapport"
 
 #: tcms/templates/case/get_details_case_run.html:83
 #: tcms/templates/case/get_details_case_run.html:193
@@ -598,27 +598,27 @@ msgstr "Ajouter"
 
 #: tcms/templates/case/get_details_case_run.html:103
 msgid "From Case"
-msgstr ""
+msgstr "A partir d'un cas"
 
 #: tcms/templates/case/get_details_case_run.html:126
 msgid "No log recorded"
-msgstr ""
+msgstr "Aucun journal enregistré"
 
 #: tcms/templates/case/get_details_case_run.html:193
 msgid "Test Link"
-msgstr ""
+msgstr "Lien du test"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Contenus"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Document du plan de test"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Scénario de test "
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
@@ -750,17 +750,17 @@ msgstr "Chèr(e) Administra(teur/trice),\n"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Plans"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:114
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
-msgstr ""
+msgstr "Scénarios"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:120
 msgid "Runs"
-msgstr ""
+msgstr "Exécutions"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
@@ -1040,7 +1040,7 @@ msgstr ""
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "mot de passe"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1052,27 +1052,27 @@ msgstr "Bienvenue sur Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Veuillez vous connecter pour continuer"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "Créer un compte"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "Si vous n’en avez pas !"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
-msgstr ""
+msgstr "Votre mot de passe a été défini.  Vous pouvez ouvrir une session"
 
 #: tcms/templates/registration/password_reset_complete.html:13
 msgid "now"
-msgstr ""
+msgstr "maintenant"
 
 #: tcms/templates/registration/password_reset_confirm.html:22
 #: tcms/templates/registration/registration_form.html:31
@@ -1086,7 +1086,7 @@ msgstr "Entrez votre nouveau mot de passe deux fois, afin de vérifier qu'il est
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
-msgstr ""
+msgstr "Demande de réinitialisation de mot de passe"
 
 #: tcms/templates/registration/password_reset_done.html:11
 msgid "Password reset email was sent"
@@ -1111,7 +1111,7 @@ msgstr "Créer un nouveau compte"
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "Ajouter une scénario de test pour une exécution de test"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:79
 #: tcms/templates/run/report.html:30
@@ -1124,19 +1124,19 @@ msgstr "Responsable"
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "Plan de test"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Tous les scénarios confirmés"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Scénario de test en cours d'exécution"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Scénario dans cette exécution"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
@@ -1144,11 +1144,11 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "Comment assigner ce scénario?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "Le tableau ci-dessous énumère tous les scénarios de test confirmés du plan"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1156,19 +1156,19 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Date de création"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Sélectionnés"
 
 #: tcms/templates/run/get.html:115 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Note"
 
 #: tcms/templates/run/get.html:147
 msgid "Finished"
-msgstr ""
+msgstr "Terminé"
 
 #: tcms/templates/run/get.html:152
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1177,29 +1177,29 @@ msgstr "En cours"
 
 #: tcms/templates/run/get.html:160 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Fini à"
 
 #: tcms/templates/run/get.html:166
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
-msgstr ""
+msgstr "Automatiquement"
 
 #: tcms/templates/run/get_case_runs.html:14
 msgid "Highlight"
-msgstr ""
+msgstr "Mettez en surbrillance"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
-msgstr ""
+msgstr "Mise à jour"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/templates/run/table_caseruns.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Affecté à"
 
 #: tcms/templates/run/get_case_runs.html:43
 #: tcms/templates/run/status_statistics.html:27
@@ -1221,15 +1221,15 @@ msgstr "Testeur par défaut"
 
 #: tcms/templates/run/get_case_runs.html:79
 msgid "Manual"
-msgstr ""
+msgstr "Manuelle"
 
 #: tcms/templates/run/get_case_runs.html:80
 msgid "Auto"
-msgstr ""
+msgstr "Automatique"
 
 #: tcms/templates/run/get_case_runs.html:86
 msgid "Bug"
-msgstr ""
+msgstr "Anomalie"
 
 #: tcms/templates/run/get_case_runs.html:88
 msgid "You can type multiple bugs by comma."
