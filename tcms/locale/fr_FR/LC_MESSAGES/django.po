@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-04 16:53\n"
+"PO-Revision-Date: 2019-02-04 17:02\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1233,39 +1233,39 @@ msgstr "Anomalie"
 
 #: tcms/templates/run/get_case_runs.html:88
 msgid "You can type multiple bugs by comma."
-msgstr ""
+msgstr "Vous pouvez saisir plusieurs anomalies séparé par une virgule."
 
 #: tcms/templates/run/get_case_runs.html:135
 msgid "All these fields are required."
-msgstr ""
+msgstr "Tous les champs sont obligatoires."
 
 #: tcms/templates/run/get_case_runs.html:138
 msgid "64 characters at most"
-msgstr ""
+msgstr "64 caractères au maximum"
 
 #: tcms/templates/run/get_case_runs.html:191
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "supprimer cette étiquette"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "Ajouter CC"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Rapport d'exécution du test"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Scénarios manuels"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Scénarios automatisés"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
