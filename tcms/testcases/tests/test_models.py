@@ -4,7 +4,6 @@
 from mock import patch
 
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from tcms.core.history import history_email_for
 from tcms.testcases.models import BugSystem
@@ -17,6 +16,7 @@ from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
+from tcms.tests.factories import UserFactory
 
 
 class TestCaseRemoveBug(BasePlanCase):
@@ -150,7 +150,7 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
         cls.case.emailing.auto_to_case_author = True
         cls.case.emailing.save()
 
-        cls.case_editor = User.objects.create_user(username='editor')
+        cls.case_editor = UserFactory(username='editor')
         # This is actually done when update a case. Setting current_user
         # explicitly here aims to mock that behavior.
         cls.case.current_user = cls.case_editor

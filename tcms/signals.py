@@ -52,7 +52,7 @@ def notify_admins(sender, **kwargs):
     """
     from django.urls import reverse
     from django.conf import settings
-    from django.contrib.auth.models import User
+    from django.contrib.auth import get_user_model
 
     from tcms.core.utils.mailto import mailto
     from tcms.core.utils import request_host_link
@@ -62,7 +62,7 @@ def notify_admins(sender, **kwargs):
 
     admin_emails = set()
     # super-users can approve others
-    for super_user in User.objects.filter(is_superuser=True):
+    for super_user in get_user_model().objects.filter(is_superuser=True):
         admin_emails.add(super_user.email)
     # site admins should be able to do so as well
     for _name, email in settings.ADMINS:

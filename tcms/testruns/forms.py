@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils import string_to_list
@@ -9,6 +9,9 @@ from tcms.management.models import Product, Version, Build
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
 from .models import TestRun, TestCaseRunStatus
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class BaseRunForm(forms.Form):
