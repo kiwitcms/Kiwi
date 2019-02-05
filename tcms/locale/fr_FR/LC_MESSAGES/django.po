@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-04 17:02\n"
+"PO-Revision-Date: 2019-02-05 12:52\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -250,7 +250,7 @@ msgstr "Action"
 
 #: tcms/templates/case/clone.html:24
 msgid "Clone TestCase(s)"
-msgstr ""
+msgstr "Cloner le(s) scénario(s) de test(s)"
 
 #: tcms/templates/case/clone.html:28
 msgid "Select Plan"
@@ -365,12 +365,12 @@ msgstr "Est actif"
 #: tcms/templates/case/clone_select_plan.html:19
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: tcms/templates/case/clone_select_plan.html:19
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: tcms/templates/case/clone_select_plan.html:22
 msgid "There are no plans"
@@ -767,7 +767,7 @@ msgstr "Exécutions"
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:46
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
