@@ -28,5 +28,5 @@ class NestedDefinitionChecker(checkers.BaseChecker):
 
     @utils.check_messages('nested-class-found')
     def visit_classdef(self, node):
-        if not isinstance(node.parent, astroid.Module):
+        if not isinstance(node.parent, astroid.Module) and node.name not in ['Meta', 'Media']:
             self.add_message('nested-class-found', node=node)
