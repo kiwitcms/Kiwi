@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-05 13:15\n"
+"PO-Revision-Date: 2019-02-05 13:22\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -545,7 +545,7 @@ msgstr "anomalie"
 #: tcms/templates/case/get_details.html:46
 #: tcms/templates/case/get_details_case_run.html:96
 msgid "From Run"
-msgstr ""
+msgstr "Depuis l'exécution"
 
 #: tcms/templates/case/get_details.html:51
 #: tcms/templates/case/get_details_case_run.html:112
@@ -853,7 +853,7 @@ msgstr "Nouveau nom de plan"
 
 #: tcms/templates/plan/clone.html:33
 msgid "Copy to Product"
-msgstr ""
+msgstr "Copier vers le produit"
 
 #: tcms/templates/plan/clone.html:44
 msgid "Copy Settings"
@@ -1140,7 +1140,7 @@ msgstr "Scénario dans cette exécution"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Utiliser la clé de tri stockée dans le plan"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
@@ -1307,7 +1307,7 @@ msgstr "Voir toutes les anomalies suivies"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
-msgstr ""
+msgstr "Seul les systèmes configurés qui référencent plusieurs bogues sont visibles"
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
@@ -1354,7 +1354,18 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item\n"
-msgstr ""
+msgstr "**Scenario**: ... what behavior will be tested ...\n"
+"  **Lorsque** ... conditions ...\n"
+"  **Quand** ... actions ...\n"
+"  **Alors** ... expected results ...\n\n"
+"*Actions*:\n\n"
+"1. élement\n"
+"2. élement\n"
+"3. élement\n\n"
+"*Résultat attendu*:\n\n"
+"1. élement\n"
+"2. élement\n"
+"3. élement\n"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
