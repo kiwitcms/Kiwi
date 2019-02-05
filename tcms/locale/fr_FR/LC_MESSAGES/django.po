@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-05 13:02\n"
+"PO-Revision-Date: 2019-02-05 13:15\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -131,7 +131,7 @@ msgstr "Nouveau plan de test"
 
 #: tcms/settings/common.py:91
 msgid "New Test Case"
-msgstr "Nouveau cas de test"
+msgstr "Nouveau scénario de test"
 
 #: tcms/settings/common.py:93
 msgid "SEARCH"
@@ -147,7 +147,7 @@ msgstr "Rechercher des essais réalisés"
 
 #: tcms/settings/common.py:96
 msgid "Search Test Cases"
-msgstr "Rechercher des cas de tests"
+msgstr "Rechercher des scénario de tests"
 
 #: tcms/settings/common.py:98
 msgid "REPORTING"
@@ -216,7 +216,7 @@ msgstr "Erreur interne du serveur"
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr "le système de gestion de cas de test leader en open source"
+msgstr "le système de gestion de scénario de test leader en open source"
 
 #: tcms/templates/case/attachment.html:29
 #: tcms/templates/plan/attachment.html:30
@@ -328,7 +328,7 @@ msgstr "Actif"
 
 #: tcms/templates/case/clone.html:93
 msgid "Case(s)"
-msgstr "Cas"
+msgstr "Scénario(s)"
 
 #: tcms/templates/case/clone.html:97
 msgid "Clone Settings"
@@ -378,11 +378,11 @@ msgstr "Il n'y a pas de plans"
 
 #: tcms/templates/case/edit.html:6
 msgid "Edit test case"
-msgstr "Modifier le cas de test"
+msgstr "Modifier le scénario de test"
 
 #: tcms/templates/case/edit.html:8
 msgid "Add new test case"
-msgstr "Ajouter un nouveau cas de test"
+msgstr "Ajouter un nouveau scénario de test"
 
 #: tcms/templates/case/edit.html:62 tcms/templates/plan/search_case.html:81
 #: tcms/templates/run/get_case_runs.html:64 tcms/templates/run/report.html:66
@@ -498,7 +498,7 @@ msgstr "Envoyer un nouveau cas après modification"
 
 #: tcms/templates/case/edit.html:145
 msgid "(The author of this case will receive the notification by default)"
-msgstr "(l'auteur de ce cas recevra une notification par défaut)"
+msgstr "(l'auteur de ce scénario recevra une notification par défaut)"
 
 #: tcms/templates/case/edit.html:157
 msgid "optional"
@@ -598,7 +598,7 @@ msgstr "Ajouter"
 
 #: tcms/templates/case/get_details_case_run.html:103
 msgid "From Case"
-msgstr "A partir d'un cas"
+msgstr "A partir d'un scénario"
 
 #: tcms/templates/case/get_details_case_run.html:126
 msgid "No log recorded"
@@ -640,7 +640,7 @@ msgid "\n"
 "                Here are the latest %(count)s.\n"
 "                "
 msgstr "\n"
-"                %(total_count)s essai de test ou cas de tests qui vous sont assignés pour être exécuté.\n"
+"                %(total_count)s scénario de test ou cas de tests qui vous sont assignés pour être exécuté.\n"
 "                Voici le dernier %(count)s.\n"
 "                "
 
@@ -704,7 +704,7 @@ msgstr "Bienvenu %(user)s,\n"
 msgid "\n"
 "TestCase has been updated by %(username)s!\n"
 msgstr "\n"
-"Le cas de test a été mis à jour par %(username)s!\n"
+"Le scénario de test a été mis à jour par %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -1036,7 +1036,7 @@ msgstr "Mot de passe"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Oublié"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
@@ -1152,7 +1152,7 @@ msgstr "Le tableau ci-dessous énumère tous les scénarios de test confirmés d
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "cochez la case pour ajouter des scénarios dans la série de tests. N’oubliez pas de mettre à jour à la fin"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
@@ -1269,27 +1269,27 @@ msgstr "Scénarios automatisés"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "Scénario-Exécution ID"
 
 #: tcms/templates/run/report.html:65 tcms/templates/run/table_caseruns.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "ID Scénario"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Testé par"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Terminé à"
 
 #: tcms/templates/run/report.html:87
 msgid "Bugs ID"
-msgstr ""
+msgstr "ID des anomalies"
 
 #: tcms/templates/run/report.html:116
 msgid "Bug List"
-msgstr ""
+msgstr "Liste des anomalies"
 
 #: tcms/templates/run/report.html:120
 #: tcms/testcases/templates/testcases/search.html:117
@@ -1299,11 +1299,11 @@ msgstr "ID de l'anomalie"
 
 #: tcms/templates/run/report.html:121
 msgid "Bug Url"
-msgstr ""
+msgstr "Url de remonter d'anomalie"
 
 #: tcms/templates/run/report.html:133
 msgid "View all in Issue Tracker"
-msgstr ""
+msgstr "Voir toutes les anomalies suivies"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
@@ -1311,31 +1311,31 @@ msgstr ""
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
-msgstr ""
+msgstr "Gestionnaire d'anomalie"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTAL"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "Pas d'anomalies"
 
 #: tcms/templates/run/table_caseruns.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Sélectionner tout les scénarios/Sélectionner aucun scénario"
 
 #: tcms/templates/run/table_caseruns.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Développer toutes les scénarios"
 
 #: tcms/templates/run/table_caseruns.html:15
 msgid "Case Run ID"
-msgstr ""
+msgstr "ID Scénario-Exécution"
 
 #: tcms/templates/run/table_caseruns.html:77
 msgid "No case run found"
-msgstr ""
+msgstr "Pas d'exécution de scénario trouvée"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1359,7 +1359,7 @@ msgstr ""
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
-msgstr "SUPPRIMÉ: Cas de test #%{pk}d - %{summary}s"
+msgstr "SUPPRIMÉ: scénario de test #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/get.html:108
 msgid "Requirements"
@@ -1428,17 +1428,17 @@ msgstr "Rechercher des cas de tests"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Résumé des scénarios de test"
 
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "Après"
 
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "Avant"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
@@ -1482,7 +1482,7 @@ msgstr "Supprimer"
 #: tcms/testcases/views.py:853 tcms/testruns/views.py:497
 #: tcms/testruns/views.py:575
 msgid "At least one TestCase is required"
-msgstr "Au moins un cas de test est requis"
+msgstr "Au moins un scénario de test est requis"
 
 #: tcms/testcases/views.py:990
 msgid "TestCase cloning was successful"
@@ -1514,7 +1514,7 @@ msgstr "Notification:"
 
 #: tcms/testplans/templates/testplans/mutable.html:107
 msgid "TestCase author"
-msgstr "Auteur du TestCase"
+msgstr "Auteur du ScénarioTest"
 
 #: tcms/testplans/templates/testplans/mutable.html:121
 msgid "Notify when:"
@@ -1526,7 +1526,7 @@ msgstr "Le TestPlan a été mis à jour"
 
 #: tcms/testplans/templates/testplans/mutable.html:129
 msgid "Test cases are updated"
-msgstr "Les plans de test ont été mis à jour"
+msgstr "Les scénarios de test ont été mis à jour"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
@@ -1590,7 +1590,7 @@ msgstr "Nom d'utilisateur(rice) ou e-mail"
 
 #: tcms/testruns/templates/testruns/mutable.html:81
 msgid "Selected TestCase(s):"
-msgstr "Sélectionner des Cas de Tests:"
+msgstr "Sélectionner des scénarios de Tests:"
 
 #: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
@@ -1625,7 +1625,7 @@ msgstr "Créé un essai de test requiert un plan de test, veuillez en sélection
 
 #: tcms/testruns/views.py:59
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr "Créé un essai de test requiert au moins un cas de test"
+msgstr "Créé un scénario de test requiert au moins un cas de test"
 
 #: tcms/testruns/views.py:501
 msgid "Clone of "
@@ -1633,12 +1633,12 @@ msgstr "Clone de "
 
 #: tcms/testruns/views.py:584
 msgid "TestCase ID is not a valid integer"
-msgstr "ID du cas de test n'est plus un entier valide"
+msgstr "ID du scénario de test n'est plus un entier valide"
 
 #: tcms/testruns/views.py:711
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr "Essai du cas %d mis à jour:"
+msgstr "Exécution du scénario %d mis à jour:"
 
 #: tcms/xmlrpc/serializer.py:287
 #, python-format
