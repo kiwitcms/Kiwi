@@ -301,7 +301,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
 
 @permissions_required('testcases.change_testcase')
 @rpc_method(name='TestCase.update')
-def update(case_id, values, **kwargs):
+def update(case_id, values):
     """
     .. function:: XML-RPC TestCase.update(case_id, values)
 

@@ -626,9 +626,7 @@ def get(request, case_id):
                     (
                         _('Delete'),
                         reverse('admin:testcases_testcase_delete', args=[test_case.pk])
-                    )])]
-            }
-         ):
+                    )])]}):
         return render(request, 'testcases/get.html', context_data)
 
 
@@ -661,7 +659,7 @@ def printable(request, template_name='case/printable.html'):
             test_plan = None
 
     tcs = TestCase.objects.filter(**case_filter).values(
-            'case_id', 'summary', 'text'
+        'case_id', 'summary', 'text'
     ).order_by('case_id')
 
     context_data = {
