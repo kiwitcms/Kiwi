@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from tcms.core.models.base import UrlMixin
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 
-User._meta.ordering = ['username']
+get_user_model()._meta.ordering = ['username']
 
 
 class TCMSActionModel(models.Model, UrlMixin):

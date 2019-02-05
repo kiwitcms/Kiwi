@@ -7,10 +7,10 @@ Most of these functions are use for Ajax.
 from http import HTTPStatus
 
 from django.db.models import Count
-from django.contrib.auth.models import User
 from django.forms import ValidationError
 from django.http import JsonResponse
 from django.views.generic.base import View
+from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
 from django.shortcuts import render
@@ -147,6 +147,7 @@ class UpdateTestCaseActorsView(View):
 
     def post(self, request):
         username = request.POST.get('username')
+        User = get_user_model()  # pylint: disable=invalid-name
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:

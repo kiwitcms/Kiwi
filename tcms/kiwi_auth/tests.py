@@ -6,15 +6,16 @@ from mock import patch
 
 from django.urls import reverse
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 
 from tcms import signals
+from tcms.tests.factories import UserFactory
 from .models import UserActivationKey
 
 
-# ### Test cases for models ###
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class TestSetRandomKey(TestCase):
@@ -22,10 +23,7 @@ class TestSetRandomKey(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
-            username='new-tester',
-            email='new-tester@example.com',
-            password='password')
+        cls.new_user = UserFactory()
 
     @patch('tcms.kiwi_auth.models.datetime')
     def test_set_random_key(self, mock_datetime):
@@ -46,10 +44,7 @@ class TestForceToSetRandomKey(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
-            username='new-tester',
-            email='new-tester@example.com',
-            password='password')
+        cls.new_user = UserFactory()
         cls.origin_activation_key = UserActivationKey.set_random_key_for_user(cls.new_user)
 
     def test_set_random_key_forcely(self):
@@ -69,10 +64,9 @@ class TestLogout(TestCase):
     def setUpTestData(cls):
         super(TestLogout, cls).setUpTestData()
 
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='authtester',
-            email='authtester@example.com',
-            password='password')
+        cls.tester = UserFactory()
+        cls.tester.set_password('password')
+        cls.tester.save()
         cls.logout_url = reverse('tcms-logout')
 
     def test_logout_redirects_to_login_page(self):
@@ -195,10 +189,7 @@ class TestConfirm(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
-            username='new-user',
-            email='new-user@example.com',
-            password='password')
+        cls.new_user = UserFactory()
 
     def setUp(self):
         self.new_user.is_active = False

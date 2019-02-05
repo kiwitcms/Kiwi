@@ -5,7 +5,7 @@ from itertools import groupby
 from django_comments.models import Comment
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db.models import Count, F
 
 from tcms.management.models import Priority
@@ -18,6 +18,10 @@ from tcms.testruns.models import TestRun
 from tcms.core.db import GroupByResult
 from tcms.management.models import Build
 from tcms.management.models import Tag
+
+
+User = get_user_model()  # pylint: disable=invalid-name
+
 
 __all__ = (
     'CustomDetailsReportData',

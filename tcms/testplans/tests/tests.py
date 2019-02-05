@@ -7,7 +7,6 @@ from uuslug import slugify
 
 from django import test
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.urls import reverse
 
 from tcms.management.models import Product
@@ -142,7 +141,7 @@ class TestDeleteCasesFromPlan(BasePlanCase):
     @classmethod
     def setUpTestData(cls):
         super(TestDeleteCasesFromPlan, cls).setUpTestData()
-        cls.plan_tester = User(username='tester')
+        cls.plan_tester = UserFactory(username='tester')
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
@@ -180,7 +179,7 @@ class TestSortCases(BasePlanCase):
     @classmethod
     def setUpTestData(cls):
         super(TestSortCases, cls).setUpTestData()
-        cls.plan_tester = User(username='tester')
+        cls.plan_tester = UserFactory(username='tester')
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
@@ -238,7 +237,7 @@ class TestLinkCases(BasePlanCase):
             reviewer=cls.tester,
             plan=[cls.another_plan])
 
-        cls.plan_tester = User(username='tester')
+        cls.plan_tester = UserFactory(username='tester')
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
@@ -387,10 +386,9 @@ class TestCloneView(BasePlanCase):
             author=cls.tester, default_tester=None,
             reviewer=cls.tester, plan=[cls.totally_new_plan])
 
-        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='plan_tester',
-            email='tester@example.com',
-            password='password')
+        cls.plan_tester = UserFactory()
+        cls.plan_tester.set_password('password')
+        cls.plan_tester.save()
         user_should_have_perm(cls.plan_tester, 'testplans.add_testplan')
         cls.plan_clone_url = reverse('plans-clone')
 

@@ -3,7 +3,10 @@
 from django import forms
 from django.db.models import Q
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class UserField(forms.CharField):

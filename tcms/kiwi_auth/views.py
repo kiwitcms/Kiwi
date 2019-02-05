@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render
 from django.contrib.auth import views
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
@@ -17,6 +17,9 @@ from django.views.decorators.http import require_http_methods
 from tcms.signals import USER_REGISTERED_SIGNAL
 from tcms.kiwi_auth.forms import RegistrationForm
 from tcms.kiwi_auth.models import UserActivationKey
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class LoginViewWithCustomTemplate(views.LoginView):

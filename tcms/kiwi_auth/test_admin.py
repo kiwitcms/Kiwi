@@ -2,7 +2,7 @@
 from http import HTTPStatus
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from tcms.tests import LoggedInTestCase
 from tcms.tests.factories import UserFactory
@@ -99,4 +99,4 @@ class TestUserAdmin(LoggedInTestCase):
         }, follow=True)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertTrue(User.objects.filter(username='added-by-admin').exists())
+        self.assertTrue(get_user_model().objects.filter(username='added-by-admin').exists())
