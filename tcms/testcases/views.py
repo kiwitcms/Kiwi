@@ -108,55 +108,11 @@ def create_testcase(request, form, test_plan):
     return test_case
 
 
-class ReturnActions:
-    all_actions = ('_addanother', '_continue', 'returntocase', '_returntoplan')
-
-    def __init__(self, case, plan, default_form_parameters):
-        self.case = case
-        self.plan = plan
-        self.default_form_parameters = default_form_parameters
-
-    def _continue(self):
-        if self.plan:
-            return HttpResponseRedirect(
-                '%s?from_plan=%s' % (reverse('testcases-edit',
-                                             args=[self.case.case_id]),
-                                     self.plan.plan_id))
-
-        return HttpResponseRedirect(
-            reverse('testcases-edit', args=[self.case.case_id]))
-
-    def _addanother(self):
-        form = NewCaseForm(initial=self.default_form_parameters)
-
-        if self.plan:
-            form.populate(product_id=self.plan.product_id)
-
-        return form
-
-    def returntocase(self):
-        if self.plan:
-            return HttpResponseRedirect(
-                '%s?from_plan=%s' % (reverse('testcases-get',
-                                             args=[self.case.pk]),
-                                     self.plan.plan_id))
-
-        return HttpResponseRedirect(
-            reverse('testcases-get', args=[self.case.pk]))
-
-    def _returntoplan(self):
-        if not self.plan:
-            raise Http404
-
-        return HttpResponseRedirect(
-            '%s#reviewcases' % reverse('test_plan_url_short',
-                                       args=[self.plan.pk]))
-
-
 @permission_required('testcases.add_testcase')
 def new(request):
     """New testcase"""
     test_plan = plan_from_request_or_none(request)
+
     default_form_parameters = {}
     if test_plan:
         default_form_parameters['product'] = test_plan.product_id
@@ -170,25 +126,17 @@ def new(request):
 
         if form.is_valid():
             test_case = create_testcase(request, form, test_plan)
-            # Generate the instance of actions
-            ras = ReturnActions(test_case, test_plan, default_form_parameters)
-            for ra_str in ras.all_actions:
-                if request.POST.get(ra_str):
-                    func = getattr(ras, ra_str)
-                    break
-            else:
-                func = ras.returntocase
+            if test_plan:
+                return HttpResponseRedirect(
+                    '%s?from_plan=%s' % (reverse('testcases-get',
+                                                 args=[test_case.pk]),
+                                         test_plan.pk))
 
-            # Get the function and return back
-            result = func()
-            if isinstance(result, HttpResponseRedirect):
-                return result
-            # Assume here is the form
-            form = result
+            return HttpResponseRedirect(
+                reverse('testcases-get', args=[test_case.pk]))
 
     # Initial NewCaseForm for submit
     else:
-        test_plan = plan_from_request_or_none(request)
         form = NewCaseForm(initial=default_form_parameters)
 
     context_data = {
