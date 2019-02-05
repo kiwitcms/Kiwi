@@ -64,6 +64,8 @@ class KiwiHistoricalRecords(HistoricalRecords):
         a crude changelog until upstream introduces their new interface.
     """
 
+    # todo: HistoricalRecords doesn't seem to have a pre_save method
+    # so not sure if this even works ATM
     def pre_save(self, instance, **kwargs):
         """
             Signal handlers don't have access to the previous version of
@@ -75,7 +77,7 @@ class KiwiHistoricalRecords(HistoricalRecords):
         if instance.pk and hasattr(instance, 'history'):
             instance.previous = instance.__class__.objects.get(pk=instance.pk)
 
-    def post_save(self, instance, created, **kwargs):
+    def post_save(self, instance, created, using=None, **kwargs):
         """
             Calculate the changelog and call the inherited method to
             write the data into the database.
@@ -87,7 +89,7 @@ class KiwiHistoricalRecords(HistoricalRecords):
             instance.changeReason = diff_objects(instance.previous,
                                                  instance,
                                                  self.fields_included(instance))
-        super().post_save(instance, created, **kwargs)
+        super().post_save(instance, created, using, **kwargs)
 
     def finalize(self, sender, **kwargs):
         """
