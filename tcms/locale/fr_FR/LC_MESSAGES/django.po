@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-05 12:52\n"
+"PO-Revision-Date: 2019-02-05 13:02\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -771,27 +771,27 @@ msgstr "Supprimer"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Ajouter une étiquette"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Ouvrir/fermer la navigation"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Bienvenu cher invité"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "Mes exécutions de test"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "Mes plans de tests"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Mon profil"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
@@ -800,11 +800,11 @@ msgstr "Changer le mot de passe"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Se connecter"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
@@ -837,19 +837,19 @@ msgstr "Modifier"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Aucun scénario de test a été trouvé dans ce plan."
 
 #: tcms/templates/plan/clone.html:4
 msgid "Clone Plan"
-msgstr ""
+msgstr "Dupliquer un plan"
 
 #: tcms/templates/plan/clone.html:23
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Dupliquer un plan de test"
 
 #: tcms/templates/plan/clone.html:29
 msgid "New Plan Name"
-msgstr ""
+msgstr "Nouveau nom de plan"
 
 #: tcms/templates/plan/clone.html:33
 msgid "Copy to Product"
@@ -857,11 +857,11 @@ msgstr ""
 
 #: tcms/templates/plan/clone.html:44
 msgid "Copy Settings"
-msgstr ""
+msgstr "Copier les paramètres"
 
 #: tcms/templates/plan/clone.html:51
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 #: tcms/templates/plan/get.html:67 tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -877,27 +877,27 @@ msgstr "Version"
 #: tcms/templates/run/table_caseruns.html:53
 #: tcms/templates/run/table_caseruns.html:59
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: tcms/templates/plan/get.html:87
 msgid "Create Time"
-msgstr ""
+msgstr "Date de création"
 
 #: tcms/templates/plan/get.html:92 tcms/templates/plan/preview.html:27
 msgid "Parent"
-msgstr ""
+msgstr "Parent"
 
 #: tcms/templates/plan/get.html:102
 msgid "View Edit History"
-msgstr ""
+msgstr "Voir les modifications d'historique"
 
 #: tcms/templates/plan/get.html:111 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "Document"
 
 #: tcms/templates/plan/get.html:117
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Revue de scénario"
 
 #: tcms/templates/plan/get.html:123
 #: tcms/testcases/templates/testcases/get.html:404
@@ -915,108 +915,108 @@ msgstr "Étiquettes"
 
 #: tcms/templates/plan/get.html:129
 msgid "Tree View"
-msgstr ""
+msgstr "Vue arborescente"
 
 #: tcms/templates/plan/get.html:138
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Le document pour ce plan n’a pas encore été écrit."
 
 #: tcms/templates/plan/get_attachments.html:6
 msgid "Add attachment"
-msgstr ""
+msgstr "Ajoute une pièce jointe"
 
 #: tcms/templates/plan/get_attachments.html:29
 msgid "No attachments"
-msgstr ""
+msgstr "Pas de pièces jointes"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Scénario"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "Executer"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:7
 msgid "Show filter options"
-msgstr ""
+msgstr "Afficher l'option de filtrage"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "Ré-ordonner les scénarios"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:127
 msgid "No tags in cases"
-msgstr ""
+msgstr "Pas d'étiquettes pour ces scénarios"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_caseruns.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Testeur"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "Eléments par page"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "Également sélectionner tous les scénarios qui ne sont pas encore indiqués ci-dessous."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "Résumé des scénarios de test"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "Examinateurs"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "Version texte"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "scénarios laissés"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Tous les scénarios ont été chargés."
 
 #: tcms/templates/plan/preview.html:23
 msgid ">Plan Type"
-msgstr ""
+msgstr ">Type de plan"
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
-msgstr ""
+msgstr "Le plan que vous avez spécifié n'existe pas dans la base de données."
 
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Ajouter les scénarios des autres plans"
 
 #: tcms/templates/plan/search_case.html:29
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Rechercher les scénarios à ajouter à ce plan de test."
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
-msgstr ""
+msgstr "Recherche rapide"
 
 #: tcms/templates/plan/search_case.html:45
 msgid "Normal Search"
-msgstr ""
+msgstr "Recherche normale"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "Pas de scénario de test trouvé."
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
