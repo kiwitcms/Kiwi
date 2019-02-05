@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-05 06:31\n"
+"PO-Revision-Date: 2019-02-05 06:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -896,7 +896,7 @@ msgstr "Dokument"
 
 #: tcms/templates/plan/get.html:117
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "Scenariji za pregled"
 
 #: tcms/templates/plan/get.html:123
 #: tcms/testcases/templates/testcases/get.html:404
@@ -914,108 +914,108 @@ msgstr "Značke"
 
 #: tcms/templates/plan/get.html:129
 msgid "Tree View"
-msgstr ""
+msgstr "Drevesni pogled"
 
 #: tcms/templates/plan/get.html:138
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Dokumentacija za bazo testnih scenarijev še ni bila zapisana."
 
 #: tcms/templates/plan/get_attachments.html:6
 msgid "Add attachment"
-msgstr ""
+msgstr "Dodaj priponko"
 
 #: tcms/templates/plan/get_attachments.html:29
 msgid "No attachments"
-msgstr ""
+msgstr "Ni prilog"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Testni scenariji"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "Testiranje"
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:7
 msgid "Show filter options"
-msgstr ""
+msgstr "Prikaži filtre"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
-msgstr ""
+msgstr "Razvrsti scenarije"
 
 #: tcms/templates/plan/get_cases.html:81
 #: tcms/templates/run/get_case_runs.html:127
 msgid "No tags in cases"
-msgstr ""
+msgstr "Scenariji ne vsebujejo oznak"
 
 #: tcms/templates/plan/get_cases.html:99
 #: tcms/templates/run/table_caseruns.html:18
 msgid "Tester"
-msgstr ""
+msgstr "Tester"
 
 #: tcms/templates/plan/get_cases.html:131
 msgid "Items per page"
-msgstr ""
+msgstr "Elementov na stran"
 
 #: tcms/templates/plan/get_cases.html:146
 msgid "Also select all cases that are not yet shown below."
-msgstr ""
+msgstr "Izberi tudi scenarije, kateri še niso prikazani."
 
 #: tcms/templates/plan/get_cases.html:166
 #: tcms/templates/run/assign_case.html:72
 msgid "Test Case Summary"
-msgstr ""
+msgstr "Povzetek testnega scenarija"
 
 #: tcms/templates/plan/get_cases.html:177
 msgid "Reviewer"
-msgstr ""
+msgstr "Pregledovalec"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "Verzija besedila"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "Dejanja"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "preostalih scenarijev"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Vsi scenariji so bili naloženi."
 
 #: tcms/templates/plan/preview.html:23
 msgid ">Plan Type"
-msgstr ""
+msgstr ">Vrsta baze testnih scenarijev"
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
-msgstr ""
+msgstr "Baza testni scenarijev ne obstaja."
 
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Dodaj scenarije iz ostalih baz testnih scenarijev"
 
 #: tcms/templates/plan/search_case.html:29
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Poišči scenarije za dodajanje v izbrano bazo."
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
-msgstr ""
+msgstr "Hitro iskanje"
 
 #: tcms/templates/plan/search_case.html:45
 msgid "Normal Search"
-msgstr ""
+msgstr "Iskanje"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "Testnih primerov ni mogoče najti."
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
@@ -1035,11 +1035,11 @@ msgstr "Geslo"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Pozabljeno"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "geslo"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
@@ -1051,7 +1051,7 @@ msgstr "Dobrodošli v Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Za uporabo aplikacije se morate prijaviti"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
@@ -1228,89 +1228,89 @@ msgstr "Samodejno"
 
 #: tcms/templates/run/get_case_runs.html:86
 msgid "Bug"
-msgstr "Hrošč"
+msgstr "Napaka"
 
 #: tcms/templates/run/get_case_runs.html:88
 msgid "You can type multiple bugs by comma."
-msgstr ""
+msgstr "Več napak ločite z vejico."
 
 #: tcms/templates/run/get_case_runs.html:135
 msgid "All these fields are required."
-msgstr ""
+msgstr "Izbrana polja so obvezna."
 
 #: tcms/templates/run/get_case_runs.html:138
 msgid "64 characters at most"
-msgstr ""
+msgstr "največ 64 znakov"
 
 #: tcms/templates/run/get_case_runs.html:191
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "odstrani značko"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "Dodaj Kp"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Poročilo izvedbe testiranja"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Ročni testi"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Avtomatizirani testi"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "ID testiranja"
 
 #: tcms/templates/run/report.html:65 tcms/templates/run/table_caseruns.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "ID scenarija"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Testiral"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Zaključeno ob"
 
 #: tcms/templates/run/report.html:87
 msgid "Bugs ID"
-msgstr ""
+msgstr "ID napak"
 
 #: tcms/templates/run/report.html:116
 msgid "Bug List"
-msgstr ""
+msgstr "Seznam napak"
 
 #: tcms/templates/run/report.html:120
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testcases/templates/testcases/search.html:119
 msgid "Bug ID"
-msgstr "Identifikator buga"
+msgstr "ID napake"
 
 #: tcms/templates/run/report.html:121
 msgid "Bug Url"
-msgstr ""
+msgstr "Url napake"
 
 #: tcms/templates/run/report.html:133
 msgid "View all in Issue Tracker"
-msgstr ""
+msgstr "Prikaži vse v povezani aplikaciji"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
-msgstr ""
+msgstr "Samo pravilno nastavljene aplikacije, ki podpirajo več napak so prikazane"
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
-msgstr ""
+msgstr "Aplikacija za beleženje hroščev"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
@@ -1318,7 +1318,7 @@ msgstr "SKUPAJ"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr "Ni hroščev"
+msgstr "Ni napak"
 
 #: tcms/templates/run/table_caseruns.html:8
 msgid "Select all cases/Select none case"
