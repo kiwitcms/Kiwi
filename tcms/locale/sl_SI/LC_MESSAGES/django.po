@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-04 13:39+0000\n"
-"PO-Revision-Date: 2019-02-05 06:21\n"
+"PO-Revision-Date: 2019-02-05 06:31\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -766,31 +766,31 @@ msgstr "Testiranja"
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:46
 msgid "Remove"
-msgstr ""
+msgstr "Odstrani"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Dodaj oznako"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Preklopi navigacijo"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Dobrodošel gost"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "Moja testiranja"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "Moje baze testnih scenarijev"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Moj profil"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
@@ -799,11 +799,11 @@ msgstr "Spremeni geslo"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "Odjava"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Prijava"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
@@ -836,31 +836,31 @@ msgstr "Uredi"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "Baza testnih scenarijev je prazna."
 
 #: tcms/templates/plan/clone.html:4
 msgid "Clone Plan"
-msgstr ""
+msgstr "Kloniraj bazo testnih scenarijev"
 
 #: tcms/templates/plan/clone.html:23
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Kloniraj bazo testnih scenarijev"
 
 #: tcms/templates/plan/clone.html:29
 msgid "New Plan Name"
-msgstr ""
+msgstr "Naziv nove baze testnih scenarijev"
 
 #: tcms/templates/plan/clone.html:33
 msgid "Copy to Product"
-msgstr ""
+msgstr "Kopiraj v produkt"
 
 #: tcms/templates/plan/clone.html:44
 msgid "Copy Settings"
-msgstr ""
+msgstr "Kopiraj nastavitve"
 
 #: tcms/templates/plan/clone.html:51
 msgid "Copy"
-msgstr ""
+msgstr "Kopiraj"
 
 #: tcms/templates/plan/get.html:67 tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -876,23 +876,23 @@ msgstr "Verzija"
 #: tcms/templates/run/table_caseruns.html:53
 #: tcms/templates/run/table_caseruns.html:59
 msgid "None"
-msgstr ""
+msgstr "Nobena"
 
 #: tcms/templates/plan/get.html:87
 msgid "Create Time"
-msgstr ""
+msgstr "Ustvarjeno ob"
 
 #: tcms/templates/plan/get.html:92 tcms/templates/plan/preview.html:27
 msgid "Parent"
-msgstr ""
+msgstr "Nadrejeni"
 
 #: tcms/templates/plan/get.html:102
 msgid "View Edit History"
-msgstr ""
+msgstr "Zgodovina urejanja"
 
 #: tcms/templates/plan/get.html:111 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #: tcms/templates/plan/get.html:117
 msgid "Reviewing Cases"
@@ -1127,47 +1127,47 @@ msgstr "Baza testni scenarijev"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "Vse potrjene testne scenarije"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "Testni scenariji v testiranju"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "Scenariji v tem testiranju"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "Uporabi razvrstitev iz baze testnih scenarijev"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "Kako dodeliti testni scenarij?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "V spodnji tabeli se nahajajo vsi potrjeni testni scenariji iz izbrane baze testnih scenarijev"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "označite polje da dodate scenarije v testiranje. Predlagamo, da spremenite vsaj"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Datum nastanka"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Izbrano"
 
 #: tcms/templates/run/get.html:115 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Opomba"
 
 #: tcms/templates/run/get.html:147
 msgid "Finished"
-msgstr ""
+msgstr "Končano"
 
 #: tcms/templates/run/get.html:152
 #: tcms/testruns/templates/testruns/search.html:67
@@ -1176,29 +1176,29 @@ msgstr "V teku"
 
 #: tcms/templates/run/get.html:160 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Končano ob"
 
 #: tcms/templates/run/get.html:166
 msgid "CC"
-msgstr ""
+msgstr "KP"
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
-msgstr ""
+msgstr "Samodejno"
 
 #: tcms/templates/run/get_case_runs.html:14
 msgid "Highlight"
-msgstr ""
+msgstr "Poudari"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
-msgstr ""
+msgstr "Posodobi"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/templates/run/table_caseruns.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Tester"
 
 #: tcms/templates/run/get_case_runs.html:43
 #: tcms/templates/run/status_statistics.html:27
@@ -1220,15 +1220,15 @@ msgstr "Privzeti tester"
 
 #: tcms/templates/run/get_case_runs.html:79
 msgid "Manual"
-msgstr ""
+msgstr "Ročno"
 
 #: tcms/templates/run/get_case_runs.html:80
 msgid "Auto"
-msgstr ""
+msgstr "Samodejno"
 
 #: tcms/templates/run/get_case_runs.html:86
 msgid "Bug"
-msgstr ""
+msgstr "Hrošč"
 
 #: tcms/templates/run/get_case_runs.html:88
 msgid "You can type multiple bugs by comma."
@@ -1314,27 +1314,27 @@ msgstr ""
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "SKUPAJ"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "Ni hroščev"
 
 #: tcms/templates/run/table_caseruns.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "Izberi vse / Odznači vse"
 
 #: tcms/templates/run/table_caseruns.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "Razširi vse"
 
 #: tcms/templates/run/table_caseruns.html:15
 msgid "Case Run ID"
-msgstr ""
+msgstr "ID testiranja"
 
 #: tcms/templates/run/table_caseruns.html:77
 msgid "No case run found"
-msgstr ""
+msgstr "Testiranje za ta iskalni niz ne obstaja"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
@@ -1438,7 +1438,7 @@ msgstr "Iskanje testnih scenarijev"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Povzetek testnega scenarija"
 
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
