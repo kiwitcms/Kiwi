@@ -697,7 +697,7 @@ ul.data_content_title li{ display:inline-block; margin-left:3px;}
 .list th { border-bottom : 0px solid #ccc; color:#000000; text-align:left; background:#235D9F url(../images/bg_th_list.png) repeat-x; padding:0px 0px 0px 5px; height:25px; line-height:25px; font-weight:normal;}
 .list th a{ color:#000; }
 .list td { border-top:1px solid #ccc; padding:3px 5px 2px 5px; height:23px; line-height:23px; word-wrap:break-word; }
-.list td p{line-height:16px; margin:0px;}
+.list td p{ line-height:16px; }
 .list td label{padding:0 0 0 3px;}
 .list .inactive td a{ color:#666; text-decoration:line-through; }
 .list .hide .no-border td{ border:none; }
