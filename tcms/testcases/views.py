@@ -670,7 +670,7 @@ def update_testcase(request, test_case, tc_form):
 
 
 @permission_required('testcases.change_testcase')
-def edit(request, case_id, template_name='case/edit.html'):
+def edit(request, case_id):
     """Edit case detail"""
     try:
         test_case = TestCase.objects.select_related().get(case_id=case_id)
@@ -787,7 +787,7 @@ def edit(request, case_id, template_name='case/edit.html'):
         'form': form,
         'notify_form': n_form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'testcases/mutable.html', context_data)
 
 
 @permission_required('testcases.add_testcase')
