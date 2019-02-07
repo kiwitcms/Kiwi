@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET
 from django.views.decorators.http import require_POST
@@ -108,16 +109,30 @@ def create_testcase(request, form, test_plan):
     return test_case
 
 
-@permission_required('testcases.add_testcase')
-def new(request):
-    """New testcase"""
-    test_plan = plan_from_request_or_none(request)
+@method_decorator(permission_required('testcases.add_testcase'), name='dispatch')
+class NewCaseView(TemplateView):
 
-    default_form_parameters = {}
-    if test_plan:
-        default_form_parameters['product'] = test_plan.product_id
+    template_name = 'testcases/mutable.html'
 
-    if request.method == "POST":
+    def get(self, request, *args, **kwargs):
+        test_plan = plan_from_request_or_none(request)
+
+        default_form_parameters = {}
+        if test_plan:
+            default_form_parameters['product'] = test_plan.product_id
+
+        form = NewCaseForm(initial=default_form_parameters)
+
+        context_data = {
+            'test_plan': test_plan,
+            'form': form
+        }
+
+        return render(request, self.template_name, context_data)
+
+    def post(self, request, *args, **kwargs):
+        test_plan = plan_from_request_or_none(request)
+
         form = NewCaseForm(request.POST)
         if request.POST.get('product'):
             form.populate(product_id=request.POST['product'])
@@ -129,22 +144,17 @@ def new(request):
             if test_plan:
                 test_plan.add_case(test_case)
                 return HttpResponseRedirect(
-                    '%s?from_plan=%s' % (reverse('testcases-get',
-                                                 args=[test_case.pk]),
+                    '%s?from_plan=%s' % (reverse('testcases-get', args=[test_case.pk]),
                                          test_plan.pk))
 
-            return HttpResponseRedirect(
-                reverse('testcases-get', args=[test_case.pk]))
+            return HttpResponseRedirect(reverse('testcases-get', args=[test_case.pk]))
 
-    # Initial NewCaseForm for submit
-    else:
-        form = NewCaseForm(initial=default_form_parameters)
+        context_data = {
+            'test_plan': test_plan,
+            'form': form
+        }
 
-    context_data = {
-        'test_plan': test_plan,
-        'form': form
-    }
-    return render(request, 'testcases/mutable.html', context_data)
+        return render(request, self.template_name, context_data)
 
 
 def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
