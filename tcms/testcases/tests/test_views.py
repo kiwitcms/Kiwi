@@ -11,12 +11,12 @@ from django.test import RequestFactory
 
 from tcms.testcases.fields import MultipleEmailField
 from tcms.management.models import Priority, Tag
-from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.tests.factories import BugFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests import BasePlanCase, BaseCaseRun
+from tcms.tests import BasePlanCase, BaseCaseRun, remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -118,6 +118,88 @@ class TestMultipleEmailField(unittest.TestCase):
         self.field.required = False
         data = self.field.clean(value)
         self.assertEqual(data, [])
+
+
+class TestNewCase(BasePlanCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.new_case_url = reverse('testcases-new')
+
+        cls.summary = 'summary'
+        cls.text = 'some text description'
+        cls.script = 'some script'
+        cls.arguments = 'args1, args2, args3'
+        cls.requirement = 'requirement'
+        cls.link = 'http://somelink.net'
+        cls.notes = 'notes'
+        cls.data = {
+            'summary': cls.summary,
+            'default_tester': cls.tester.pk,
+            'product': cls.case.category.product.pk,
+            'category': cls.case.category.pk,
+            'case_status': cls.case_status_confirmed.pk,
+            'priority': cls.case.priority.pk,
+            'text': cls.text,
+            'script': cls.script,
+            'arguments': cls.arguments,
+            'requirement': cls.requirement,
+            'extra_link': cls.link,
+            'notes': cls.notes
+        }
+
+        user_should_have_perm(cls.tester, 'testcases.add_testcase')
+
+    def test_create_test_case_successfully(self):
+        response = self.client.post(self.new_case_url, self.data)
+
+        test_case = TestCase.objects.get(summary=self.summary)
+        redirect_url = reverse('testcases-get', args=[test_case.pk])
+
+        self.assertRedirects(response, redirect_url)
+        self._assertTestCase(test_case)
+
+    def test_create_test_case_successfully_from_plan(self):
+        self.data['from_plan'] = self.plan.pk
+
+        response = self.client.post(self.new_case_url, self.data)
+
+        test_case = TestCase.objects.get(summary=self.summary)
+        redirect_url = "{0}?from_plan={1}".format(
+            reverse('testcases-get', args=[test_case.pk]), self.plan.pk
+        )
+
+        self.assertRedirects(response, redirect_url)
+        self.assertEqual(test_case.plan.get(), self.plan)
+        self.assertEqual(TestCasePlan.objects.filter(case=test_case, plan=self.plan).count(), 1)
+        self._assertTestCase(test_case)
+
+    def test_create_test_case_without_permissions(self):
+        remove_perm_from_user(self.tester, 'testcases.add_testcase')
+
+        response = self.client.post(self.new_case_url, self.data)
+        redirect_url = "{0}?next={1}".format(
+            reverse('tcms-login'), reverse('testcases-new')
+        )
+
+        self.assertRedirects(response, redirect_url)
+        # assert test case has not been created
+        self.assertEqual(TestCase.objects.filter(summary=self.summary).count(), 0)
+
+    def _assertTestCase(self, test_case):
+        self.assertEqual(test_case.summary, self.summary)
+        self.assertEqual(test_case.category, self.case.category)
+        self.assertEqual(test_case.default_tester, self.tester)
+        self.assertEqual(test_case.case_status, self.case_status_confirmed)
+        self.assertEqual(test_case.priority, self.case.priority)
+        self.assertEqual(test_case.text, self.text)
+        self.assertEqual(test_case.script, self.script)
+        self.assertEqual(test_case.arguments, self.arguments)
+        self.assertEqual(test_case.requirement, self.requirement)
+        self.assertEqual(test_case.extra_link, self.link)
+        self.assertEqual(test_case.notes, self.notes)
 
 
 class TestEditCase(BasePlanCase):
