@@ -142,7 +142,6 @@ class NewCaseView(TemplateView):
         if form.is_valid():
             test_case = create_testcase(request, form, test_plan)
             if test_plan:
-                test_plan.add_case(test_case)
                 return HttpResponseRedirect(
                     '%s?from_plan=%s' % (reverse('testcases-get', args=[test_case.pk]),
                                          test_plan.pk))
