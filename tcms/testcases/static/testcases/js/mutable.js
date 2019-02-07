@@ -1,5 +1,7 @@
 $(document).ready((function () {
-    populateProductCategory();
+    if ($('#id_category').find('option').length === 0) {
+        populateProductCategory();
+    }
 
     $('#add_id_product').click(function () {
         return showRelatedObjectPopup(this);

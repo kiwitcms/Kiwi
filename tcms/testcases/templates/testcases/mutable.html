@@ -12,7 +12,7 @@
 {% block contents %}
 
     <div class="container-fluid container-cards-pf">
-        <form class="form-horizontal" action="{% url 'testcases-new' %}" method="post">
+        <form class="form-horizontal" action="{% if test_case %}{% url 'testcases-edit' test_case.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
 
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
@@ -40,7 +40,7 @@
                 <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
                     <select id="id_product" name="product" class="form-control selectpicker">
                         {% for product in form.product.field.queryset %}
-                            <option value="{{ product.pk }}" {% if product.pk == form.product.value %}selected{% endif %}>
+                            <option value="{{ product.pk }}" {% if product.pk|stringformat:"d" == form.product.value %}selected{% endif %}>
                                 {{ product.name }}
                             </option>
                         {% endfor %}
@@ -55,7 +55,7 @@
                 <div class="col-md-3 col-lg-3 {% if form.category.errors %}has-error{% endif %}">
                     <select id="id_category" name="category" class="form-control selectpicker">
                         {% for category in form.category.field.queryset %}
-                            <option value="{{ category.pk }}" {% if category.pk == form.category.value %}selected{% endif %}>
+                            <option value="{{ category.pk }}" {% if category.pk|stringformat:"d" == form.category.value %}selected{% endif %}>
                                 {{ category.name }}
                             </option>
                         {% endfor %}
@@ -69,7 +69,7 @@
                 <div class="col-md-3 col-lg-3 {% if form.case_status.errors %}has-error{% endif %}">
                     <select id="id_status" name="case_status" class="form-control selectpicker">
                         {% for case_status in form.case_status.field.queryset %}
-                            <option value="{{ case_status.pk }}" {% if case_status.pk == form.case_status.value %}selected{% endif %}>
+                            <option value="{{ case_status.pk }}" {% if case_status.pk|stringformat:"d" == form.case_status.value %}selected{% endif %}>
                                 {{ case_status.name }}
                             </option>
                         {% endfor %}
@@ -81,7 +81,7 @@
                 <div class="col-md-3 col-lg-3 {% if form.priority.errors %}has-error{% endif %}">
                     <select id="id_priority" name="priority" class="form-control selectpicker">
                         {% for priority in form.priority.field.queryset %}
-                            <option value="{{ priority.pk }}" {% if priority.pk == form.priority.pk %}selected{% endif %}>
+                            <option value="{{ priority.pk }}" {% if priority.pk|stringformat:"d" == form.priority.value %}selected{% endif %}>
                                 {{ priority.value }}
                             </option>
                         {% endfor %}
