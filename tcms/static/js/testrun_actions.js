@@ -442,9 +442,6 @@ AddIssueDialog.prototype.get_data = function () {
 //// end of AddIssueDialog definition /////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-function getIssueTrackerNewURL() {
-}
-
 function fileCaseRunBug(run_id, title_container, container, case_id, case_run_id, callback) {
   var dialog = new AddIssueDialog({
     'action': 'Report',
