@@ -440,20 +440,6 @@ def bug(request, case_run_id):
                                  'run_bug_count': self.get_run_bug_count(),
                                  'caserun_bugs_count': self.case_run.get_bugs_count()})
 
-        def file(self):
-            response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker '
-                                             'by configuring its base_url!'}
-
-            bug_system_id = request.GET.get('bug_system_id')
-            bug_system = BugSystem.objects.get(pk=bug_system_id)
-
-            if bug_system.base_url:
-                tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-                url = tracker.report_issue_from_testcase(self.case_run)
-                response = {'rc': 0, 'response': url}
-
-            return JsonResponse(response)
-
         def get_run_bug_count(self):
             run = self.case_run.run
             return run.get_bug_count()
