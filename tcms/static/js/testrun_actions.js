@@ -442,36 +442,23 @@ AddIssueDialog.prototype.get_data = function () {
 //// end of AddIssueDialog definition /////////
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-function fileCaseRunBug(run_id, title_container, container, case_id, case_run_id, callback) {
+function fileCaseRunBug(run_id, title_container, container, case_id, case_run_id) {
   var dialog = new AddIssueDialog({
     'action': 'Report',
-    'a': 'file',
-    'extraFormHiddenData': { 'case_run': case_run_id, 'case': case_id },
     'onSubmit': function (e, dialog) {
       e.stopPropagation();
       e.preventDefault();
 
-      form_data = dialog.get_data();
+        var tracker_id = dialog.get_data()['bug_system_id'];
+        jsonRPC('Bug.report', [case_run_id, tracker_id], function(result) {
+            $('#dialog').hide();
 
-      var success_callback = function(t) {
-        jQ('#dialog').hide();
-        var returnobj = t;
-
-        if (returnobj.rc === 0) {
-          if (callback) {
-            return callback();
-          }
-
-          window.open(returnobj.response, '_blank');
-          return true;
-        } else {
-          window.alert(returnobj.response);
-          return false;
-        }
-      };
-
-      var url = Nitrate.http.URLConf.reverse({ 'name': 'case_run_bug', 'arguments': {'id': case_run_id} });
-      jQ.ajax({ url: url, dataType: 'json', data: form_data, success: success_callback });
+            if (result.rc === 0) {
+                window.open(result.response, '_blank');
+            } else {
+                window.alert(result.response);
+            }
+      });
     }
   });
 
