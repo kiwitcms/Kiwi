@@ -165,12 +165,16 @@
 {% verbatim %}
                     {{#if show_bug_id_field}}
 			<div id="bug-system" style="line-height:30px;">
-                                <div class="bug_id">{% trans "Bug ID" %}</div>
+                                <div class="bug_id">
+{% endverbatim %}{% trans "Bug ID" %}{% verbatim %}
+                                </div>
 				<input type="text" name="bug_id">
                             {{#if show_add_to_bugzilla_checkbox}}
 				</br>
 				<input type="checkbox" name="bz_external_track" value="bz_external_track">&nbsp;
-                                <span class="use_bz_external_track">{% trans "Check to add Test Case(s) to Issue Tracker" %}</span>
+                                <span class="use_bz_external_track">
+{% endverbatim %}{% trans "Check to add Test Case(s) to Issue Tracker" %}{% verbatim %}
+                                </span>
                             {{/if}}
 			</div>
 			</br></br>
