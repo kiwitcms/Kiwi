@@ -12,6 +12,8 @@ __all__ = (
 )
 
 
+# todo: scheduled for removal together with validation regexes
+# and validateIssueID on the JavaScript side
 def validate_bug_id(bug_id, bug_system_id):
     if not isinstance(bug_id, (str, list, tuple)):
         raise ValidationError('Type error of bug_id.')

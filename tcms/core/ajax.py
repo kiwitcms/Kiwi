@@ -243,6 +243,8 @@ def update_bugs_to_caseruns(request):
         if action == "add":
             for run in runs:
                 for bug_id in bug_ids:
+                    # todo: TestCaseRun.add_bug and TestCase.add_bug should be removed
+                    # once this function has been refactored to JSON RPC
                     run.add_bug(bug_id=bug_id,
                                 bug_system_id=bug_system_id,
                                 bz_external_track=bz_external_track)
