@@ -402,15 +402,14 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
 
 @require_GET
 @permission_required('testruns.change_testrun')
-def bug(request, case_run_id, template_name='run/execute_case_run.html'):
+def bug(request, case_run_id):
     """Process the bugs for case runs."""
 
     class CaseRunBugActions:
 
-        def __init__(self, request, case_run, template_name):
+        def __init__(self, request, case_run):
             self.request = request
             self.case_run = case_run
-            self.template_name = template_name
 
         def add(self):
             if not self.request.user.has_perm('testcases.add_bug'):
@@ -465,8 +464,7 @@ def bug(request, case_run_id, template_name='run/execute_case_run.html'):
         raise Http404
 
     case_run_bug_actions = CaseRunBugActions(request=request,
-                                             case_run=test_case_run,
-                                             template_name=template_name)
+                                             case_run=test_case_run)
 
     func = getattr(case_run_bug_actions, request.GET['a'], None)
     if func is None:
