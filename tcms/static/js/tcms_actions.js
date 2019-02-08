@@ -89,7 +89,6 @@ var default_messages = {
       logout: '/accounts/logout/',
 
       case_details: '/case/$id/',
-      case_run_bug: '/runs/$id/bug/',
       search_case: '/cases/',
     },
 

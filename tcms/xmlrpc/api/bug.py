@@ -43,14 +43,16 @@ def filter(query):  # pylint: disable=redefined-builtin
 
 @permissions_required('testcases.add_bug')
 @rpc_method(name='Bug.create')
-def create(values):
+def create(values, auto_report=False):
     """
-    .. function:: XML-RPC Bug.create(values)
+    .. function:: XML-RPC Bug.create(values, auto_report=False)
 
         Attach a bug to pre-existing TestCase or TestCaseRun object.
 
         :param values: Field values for :class:`tcms.testcases.models.Bug`
         :type values: dict
+        :param auto_report: Automatically report to Issue Tracker
+        :type auto_report: bool, default=False
         :return: Serialized :class:`tcms.testcases.models.Bug` object
         :raises: PermissionDenied if missing the *testcases.add_bug* permission
 
@@ -70,7 +72,19 @@ def create(values):
             })
     """
     bug, _ = Bug.objects.get_or_create(**values)
-    return bug.serialize()
+    response = bug.serialize()
+    response['rc'] = 0
+
+    if auto_report:
+        tracker = IssueTrackerType.from_name(bug.bug_system.tracker_type)(bug.bug_system)
+
+        if not tracker.is_adding_testcase_to_issue_disabled():
+            tracker.add_testcase_to_issue([bug.case], bug)
+        else:
+            response['rc'] = 1
+            response['response'] = _('Enable linking test cases by configuring '
+                                     'API parameters for this Issue Tracker!')
+    return response
 
 
 @permissions_required('testcases.delete_bug')

@@ -12,7 +12,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
 from django.db.models import Q
-from django.forms import ValidationError
 from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
@@ -25,7 +24,6 @@ from django.views.generic.base import View
 from django_comments.models import Comment
 
 from tcms.core.utils import clean_request
-from tcms.core.utils.validations import validate_bug_id
 from tcms.management.models import Priority, Tag
 from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
@@ -398,66 +396,6 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         })
 
         return context
-
-
-@require_GET
-@permission_required('testruns.change_testrun')
-def bug(request, case_run_id):
-    """Process the bugs for case runs."""
-
-    class CaseRunBugActions:
-
-        def __init__(self, request, case_run):
-            self.request = request
-            self.case_run = case_run
-
-        def add(self):
-            if not self.request.user.has_perm('testcases.add_bug'):
-                return JsonResponse({'rc': 1, 'response': 'Permission denied'})
-
-            bug_id = request.GET.get('bug_id')
-            bug_system_id = request.GET.get('bug_system_id')
-
-            try:
-                validate_bug_id(bug_id, bug_system_id)
-            except ValidationError as error:
-                return JsonResponse({'rc': 1,
-                                     'response': str(error)})
-
-            bz_external_track = bool(request.GET.get('bz_external_track', False))
-
-            try:
-                test_case_run.add_bug(bug_id=bug_id,
-                                      bug_system_id=bug_system_id,
-                                      bz_external_track=bz_external_track)
-            except ValueError as error:
-                msg = str(error) if str(error) else 'Failed to add bug %s' % bug_id
-                return JsonResponse({'rc': 1,
-                                     'response': msg})
-
-            return JsonResponse({'rc': 0,
-                                 'response': 'ok',
-                                 'run_bug_count': self.get_run_bug_count(),
-                                 'caserun_bugs_count': self.case_run.get_bugs_count()})
-
-        def get_run_bug_count(self):
-            run = self.case_run.run
-            return run.get_bug_count()
-
-    try:
-        test_case_run = TestCaseRun.objects.get(case_run_id=case_run_id)
-    except ObjectDoesNotExist:
-        raise Http404
-
-    case_run_bug_actions = CaseRunBugActions(request=request,
-                                             case_run=test_case_run)
-
-    func = getattr(case_run_bug_actions, request.GET['a'], None)
-    if func is None:
-        return JsonResponse({'rc': 1,
-                             'response': 'Unrecognizable actions'})
-
-    return func()
 
 
 @require_POST

@@ -26,6 +26,4 @@ urlpatterns = [
         name='testruns-update_caserun_status'),
 
     url(r'^search/$', views.search, name='testruns-search'),
-
-    url(r'^(?P<case_run_id>\d+)/bug/$', views.bug, name='testruns-bug'),
 ]

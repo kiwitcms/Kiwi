@@ -7,7 +7,6 @@ from django.utils import formats
 from django.urls import reverse
 from django.contrib.auth.models import Permission
 
-from tcms.testcases.models import BugSystem
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
 from tcms.utils.permissions import initiate_user_with_default_setups
@@ -360,48 +359,6 @@ class TestAddRemoveRunCC(BaseCaseRun):
             'The user you typed does not exist in database')
 
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
-
-
-class TestBugActions(BaseCaseRun):
-    """Test bug view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestBugActions, cls).setUpTestData()
-
-        user_should_have_perm(cls.tester, 'testruns.change_testrun')
-        user_should_have_perm(cls.tester, 'testcases.delete_bug')
-
-        cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
-        cls.jira = BugSystem.objects.get(name='JIRA')
-
-        cls.case_run_bug_url = reverse('testruns-bug', args=[cls.case_run_1.pk])
-
-        cls.bug_12345 = '12345'
-        cls.jira_kiwi_100 = 'KIWI-100'
-        cls.case_run_1.add_bug(cls.bug_12345, bug_system_id=cls.bugzilla.pk)
-        cls.case_run_1.add_bug(cls.jira_kiwi_100, bug_system_id=cls.jira.pk)
-
-    def test_404_if_case_run_id_not_exist(self):
-        self.case_run_bug_url = reverse('testruns-bug', args=[999])
-
-        response = self.client.get(self.case_run_bug_url, {})
-        self.assert404(response)
-
-    def test_refuse_if_action_is_unknown(self):
-        post_data = {
-            'a': 'unknown action',
-            'case_run': self.case_run_1.pk,
-            'case': self.case_run_1.case.pk,
-            'bug_system_id': BugSystem.objects.get(name='Bugzilla').pk,
-            'bug_id': '123456',
-        }
-
-        response = self.client.get(self.case_run_bug_url, post_data)
-
-        self.assertJsonResponse(
-            response,
-            {'rc': 1, 'response': 'Unrecognizable actions'})
 
 
 class TestRemoveCaseRuns(BaseCaseRun):
