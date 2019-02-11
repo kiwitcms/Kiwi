@@ -6,6 +6,13 @@ tcms.xmlrpc.api package
     :undoc-members:
     :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+
+    tcms.xmlrpc.api.forms
+
 Submodules
 ----------
 
