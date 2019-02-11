@@ -1,6 +1,6 @@
 # pylint: disable=missing-docstring
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 import tcms
 
@@ -49,9 +49,11 @@ setup(
     install_requires=INSTALL_REQUIRES,
     dependency_links=DEPENDENCY_LINKS,
 
-    packages=['tcms'],
+    packages=find_packages(exclude=['kiwi_lint*',
+                                    'tcms_api*',
+                                    '*.tests',
+                                    'tcms.settings.test']),
     include_package_data=True,
-
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
