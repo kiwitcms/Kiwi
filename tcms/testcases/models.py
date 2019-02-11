@@ -479,13 +479,13 @@ class Bug(TCMSActionModel):
 
 class TestCaseEmailSettings(models.Model):
     case = models.OneToOneField(TestCase, related_name='email_settings', on_delete=models.CASCADE)
-    notify_on_case_update = models.BooleanField(default=False)
-    notify_on_case_delete = models.BooleanField(default=False)
-    auto_to_case_author = models.BooleanField(default=False)
-    auto_to_case_tester = models.BooleanField(default=False)
-    auto_to_run_manager = models.BooleanField(default=False)
-    auto_to_run_tester = models.BooleanField(default=False)
-    auto_to_case_run_assignee = models.BooleanField(default=False)
+    notify_on_case_update = models.BooleanField(default=True)
+    notify_on_case_delete = models.BooleanField(default=True)
+    auto_to_case_author = models.BooleanField(default=True)
+    auto_to_case_tester = models.BooleanField(default=True)
+    auto_to_run_manager = models.BooleanField(default=True)
+    auto_to_run_tester = models.BooleanField(default=True)
+    auto_to_case_run_assignee = models.BooleanField(default=True)
 
     cc_list = models.TextField(default='')
 
