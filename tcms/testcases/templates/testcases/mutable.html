@@ -91,7 +91,7 @@
 
                 <label class="col-md-1 col-lg-1">{% trans "Automated" %}</label>
                 <div class="col-md-3 col-lg-3">
-                    <input class="bootstrap-switch" name="is_automated" type="checkbox">
+                    <input class="bootstrap-switch" name="is_automated" type="checkbox" {% if form.is_automated.value %}checked{% endif %}>
                 </div>
             </div>
 
@@ -106,13 +106,13 @@
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_script">{% trans "Script" %}</label>
                 <div class="col-md-5 col-lg-5 {% if form.script.errors %}has-error{% endif %}">
-                    <input type="text" id="id_script" name="script" value="" class="form-control">
+                    <input type="text" id="id_script" name="script" value="{{ form.script.value|default:'' }}" class="form-control">
                     {{ form.script.errors }}
                 </div>
 
                 <label class="col-md-1 col-lg-1" for="id_arguments">{% trans "Arguments" %}</label>
                 <div class="col-md-5 col-lg-5 {% if form.arguments.errors %}has-error{% endif %}">
-                    <input type="text" id="id_arguments" name="arguments" value="" class="form-control">
+                    <input type="text" id="id_arguments" name="arguments" value="{{ form.arguments.value|default:'' }}" class="form-control">
                     {{ form.arguments.errors }}
                 </div>
             </div>
@@ -120,12 +120,12 @@
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_requirement">{% trans "Requirments" %}</label>
                 <div class="col-md-5 col-lg-5 {% if form.requirement.errors %}has-error{% endif %}">
-                    <input type="text" id="id_requirement" name="requirement" value="" class="form-control">
+                    <input type="text" id="id_requirement" name="requirement" value="{{ form.requirement.value|default:'' }}" class="form-control">
                     {{ form.requirement.errors }}
                 </div>
                 <label class="col-md-1 col-lg-1" for="id_extra_link">{% trans "Reference link" %}</label>
                 <div class="col-md-5 col-lg-5 {% if form.extra_link.errors %}has-error{% endif %}">
-                    <input type="text" id="id_extra_link" name="extra_link" value="" class="form-control">
+                    <input type="text" id="id_extra_link" name="extra_link" value="{{ form.extra_link.value|default:'' }}" class="form-control">
                     {{ form.extra_link.errors }}
                 </div>
             </div>
@@ -133,7 +133,7 @@
             <div class="form-group">
                 <label for="id_notes" class="col-md-1 col-lg-1">{% trans "Notes" %}</label>
                 <div class="col-md-12 col-lg-12 {% if form.notes.errors %}has-error{% endif %}">
-                    <textarea id="id_notes" rows="4" name="notes" class="form-control"></textarea>
+                    <textarea id="id_notes" rows="4" name="notes" class="form-control">{{ form.notes.value|default:'' }}</textarea>
                     {{ form.notes.errors }}
                 </div>
             </div>
