@@ -48,9 +48,22 @@ for PKG_NAME in kiwitcms tcms; do
         exit 1
     fi
 done
-
 # exit on error from now on
 set -e
+
+# test for missing templates and static files in sub-packages
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/locale"
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/static"
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/templates"
+
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testcases/static"
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testcases/templates"
+
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testplans/static"
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testplans/templates"
+
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testplans/static"
+tar -tvf dist/kiwitcms-*.tar.gz | grep "tcms/testplans/templates"
 
 echo "..... Trying to install the new tarballs inside a virtualenv"
 virtualenv -q -p $(which python) .venv/test-tarball

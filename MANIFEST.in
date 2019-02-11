@@ -4,3 +4,5 @@ graft requirements
 graft tcms/locale
 graft tcms/static
 graft tcms/templates
+graft tcms/*/static
+graft tcms/*/templates
