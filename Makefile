@@ -65,6 +65,7 @@ bandit_site_packages:
 .PHONY: docker-image
 docker-image:
 	find -name "*.pyc" -delete
+	./tests/check-build
 	docker build -t kiwitcms/kiwi:latest .
 
 .PHONY: test-docker-image
