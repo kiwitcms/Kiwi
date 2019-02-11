@@ -629,3 +629,70 @@ class TestAddCasesToRun(BaseCaseRun):
             ]
             for html in html_pieces:
                 self.assertContains(response, html, html=True)
+
+
+class TestCaserunCasesMenu(BaseCaseRun):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.url = reverse('testruns-get', args=[cls.test_run.pk])
+
+        cls.add_cases_html = \
+            '<a href="{0}" class="addBlue9">Add</a>' \
+            .format(reverse('add-cases-to-run', args=[cls.test_run.pk]))
+
+        cls.remove_cases_html = \
+            '<a href="#" title="Remove selected cases form this test run" \
+            data-param="{0}" class="removeBlue9 js-del-case">Remove</a>' \
+            .format(cls.test_run.pk)
+
+        cls.update_case_run_text_html = \
+            '<a href="#" title="Update the IDLE case runs to newest case text" \
+            href="javascript:void(0)" data-param="{0}" \
+            class="updateBlue9 js-update-case" id="update_case_run_text">Update</a>' \
+            .format(reverse('testruns-update_case_run_text', args=[cls.test_run.pk]))
+
+        cls.change_assignee_html = \
+            '<a href="#" title="Assignee this case(s) to other people" \
+            class="assigneeBlue9 js-change-assignee">Assignee</a>'
+
+    def test_add_cases_to_run_with_permission(self):
+        user_should_have_perm(self.tester, 'testruns.add_testexecution')
+        response = self.client.get(self.url)
+        self.assertContains(response, self.add_cases_html, html=True)
+
+    def test_remove_cases_from_run_with_permission(self):
+        user_should_have_perm(self.tester, 'testruns.delete_testexecution')
+        response = self.client.get(self.url)
+        self.assertContains(response, self.remove_cases_html, html=True)
+
+    def test_update_caserun_text_with_permission(self):
+        user_should_have_perm(self.tester, 'testruns.change_testexecution')
+        response = self.client.get(self.url)
+        self.assertContains(response, self.update_case_run_text_html, html=True)
+
+    def test_change_assignee_with_permission(self):
+        user_should_have_perm(self.tester, 'testruns.change_testexecution')
+        response = self.client.get(self.url)
+        self.assertContains(response, self.change_assignee_html, html=True)
+
+    def test_add_cases_to_run_without_permission(self):
+        remove_perm_from_user(self.tester, 'testruns.add_testexecution')
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.add_cases_html, html=True)
+
+    def test_remove_cases_from_run_without_permission(self):
+        remove_perm_from_user(self.tester, 'testruns.delete_testexecution')
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.remove_cases_html, html=True)
+
+    def test_update_caserun_text_without_permission(self):
+        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.update_case_run_text_html, html=True)
+
+    def test_change_assignee_without_permission(self):
+        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.change_assignee_html, html=True)
