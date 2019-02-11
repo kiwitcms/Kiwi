@@ -34,7 +34,7 @@ class TestRunGetBugsCount(BaseCaseRun):
 
     @patch('tcms.core.utils.mailto.send_mail')
     def test_send_mail_after_test_run_creation(self, send_mail):
-        test_run = TestRunFactory()
+        test_run = TestRunFactory(plan=self.plan)
 
         recipients = test_run.get_notify_addrs()
 

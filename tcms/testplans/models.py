@@ -247,9 +247,8 @@ class TestPlanTag(models.Model):
 
 class TestPlanEmailSettings(models.Model):
     plan = models.OneToOneField(TestPlan, related_name='email_settings', on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=False)
-    auto_to_plan_author = models.BooleanField(default=False)
-    auto_to_case_owner = models.BooleanField(default=False)
-    auto_to_case_default_tester = models.BooleanField(default=False)
-    notify_on_plan_update = models.BooleanField(default=False)
-    notify_on_case_update = models.BooleanField(default=False)
+    auto_to_plan_author = models.BooleanField(default=True)
+    auto_to_case_owner = models.BooleanField(default=True)
+    auto_to_case_default_tester = models.BooleanField(default=True)
+    notify_on_plan_update = models.BooleanField(default=True)
+    notify_on_case_update = models.BooleanField(default=True)
