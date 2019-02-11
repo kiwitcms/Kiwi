@@ -33,11 +33,13 @@
 		</div>
 		<div class="btnBlueCaserun">
                     <span>{% trans "Status" %}</span>
-			<ul class="statusOptions">
-				{% for tcrs in test_status %}
-				<li><a value="{{ tcrs.pk }}" href="#" class="{{ tcrs|lower }}Blue9">{{ tcrs }}</a></li>
-				{% endfor %}
-			</ul>
+			{% if perms.testruns.change_testexecution %}
+				<ul class="statusOptions">
+					{% for tcrs in test_status %}
+					<li><a value="{{ tcrs.pk }}" href="#" class="{{ tcrs|lower }}Blue9">{{ tcrs }}</a></li>
+					{% endfor %}
+				</ul>
+			{% endif %}
 		</div>
 		<div class="btnBlueCaserun">
                     <span>{% trans "Bugs" %}</span>
