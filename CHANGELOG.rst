@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Kiwi TCMS 6.5.2 (11 Feb 2019)
+Kiwi TCMS 6.5.3 (11 Feb 2019)
 -----------------------------
 
 **IMPORTANT:** this is a security, improvement and bug-fix update that includes new
