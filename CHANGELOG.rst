@@ -1,6 +1,75 @@
 Change Log
 ==========
 
+Kiwi TCMS 6.5.1 (11 Feb 2019)
+-----------------------------
+
+**IMPORTANT:** this is a security, improvement and bug-fix update that includes new
+versions of Django, includes several database migrations and fixes several bugs.
+
+
+Security
+~~~~~~~~
+
+- Update Django from 2.1.5 to 2.1.7. Fixes CVE-2019-6975:
+  Memory exhaustion in ``django.utils.numberformat.format()``
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update mysqlclient from 1.4.1 to 1.4.2
+- Multiple template strings marked as translatable (Christophe CHAUVET)
+
+
+Database migrations
+~~~~~~~~~~~~~~~~~~~
+
+- Email notifications for TestPlan and TestCase now default to True
+- Remove ``TestPlanEmailSettings.is_active`` field
+
+
+API
+~~~
+
+- New method ``Bug.report()``, References
+  `Issue #18 <https://github.com/kiwitcms/Kiwi/issues/18>`_
+- Method ``Bug.create()`` now accepts parameter ``auto_report=False``
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Show the user who actually tested a TestCase instead of hard-coded value. Fixes
+  `Issue #765 <https://github.com/kiwitcms/Kiwi/issues/765>`_
+- Properly handle pagination button states and page numbers. Fixes
+  `Issue #767 <https://github.com/kiwitcms/Kiwi/issues/767>`_
+- Add TestCase to TestPlan if creating from inside a TestPlan. Fixes
+  `Issue #777 <https://github.com/kiwitcms/Kiwi/issues/777>`_
+- Made TestCase text more readable. Fixes
+  `Issue #764 <https://github.com/kiwitcms/Kiwi/issues/764>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Use ``find_packages()`` when building PyPI tarball
+- Install Kiwi TCMS as tarball package inside Docker image instead of copying
+  from the source directory
+- Pylint fixes
+- Remove ``testcases.views.ReturnActions()`` which is now unused
+- Refactor New TestCase to class-based view and add tests
+
+
+
 Kiwi TCMS 6.5 (1 Feb 2019)
 --------------------------
 
