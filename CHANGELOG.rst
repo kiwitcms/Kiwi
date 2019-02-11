@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Kiwi TCMS 6.5.1 (11 Feb 2019)
+Kiwi TCMS 6.5.2 (11 Feb 2019)
 -----------------------------
 
 **IMPORTANT:** this is a security, improvement and bug-fix update that includes new
@@ -56,6 +56,7 @@ Bug fixes
   `Issue #777 <https://github.com/kiwitcms/Kiwi/issues/777>`_
 - Made TestCase text more readable. Fixes
   `Issue #764 <https://github.com/kiwitcms/Kiwi/issues/764>`_
+- Include missing templates and static files from PyPI tarball
 
 
 Refactoring
