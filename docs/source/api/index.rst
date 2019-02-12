@@ -1,3 +1,5 @@
+.. _api:
+
 Kiwi TCMS Python API client
 ===========================
 
