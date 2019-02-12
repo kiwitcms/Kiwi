@@ -21,6 +21,15 @@ from tcms.tests import user_should_have_perm
 from tcms.utils.permissions import initiate_user_with_default_setups
 
 
+class TestGetTestCase(BaseCaseRun):
+    def test_test_case_is_shown(self):
+        url = reverse('testcases-get', args=[self.case_1.pk])
+        response = self.client.get(url)
+
+        # will not fail when running under different locale
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+
+
 class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
     """Assert what a default user (non-admin) will see"""
 

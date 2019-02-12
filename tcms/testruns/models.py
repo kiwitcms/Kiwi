@@ -6,6 +6,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.db.models import Count
+from django.utils.translation import override
 
 import vinaigrette
 
@@ -270,7 +271,8 @@ class TestCaseRunStatus(TCMSActionModel):
         return dict((name, _id) for _id, name in cls.get_names().items())
 
     def icon(self):
-        return self._icons[self.name]
+        with override('en'):
+            return self._icons[self.name]
 
 
 # register model for DB translations
