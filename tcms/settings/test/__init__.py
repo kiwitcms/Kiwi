@@ -1,5 +1,6 @@
 # pylint: disable=wildcard-import, unused-wildcard-import
 
+import os
 import warnings
 
 from tcms.settings.devel import *  # noqa: F401,F403
@@ -16,3 +17,7 @@ DATABASES = {
         'NAME': ':memory:',
     }
 }
+
+
+# for running localized tests, see f74c3c1
+LANGUAGE_CODE = os.environ.get('LANG', 'en')

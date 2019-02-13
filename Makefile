@@ -33,6 +33,13 @@ test:
 		PYTHONWARNINGS=d coverage run --source='.' ./manage.py test --noinput --settings=$(DJANGO_SETTINGS_MODULE); \
 	fi
 
+
+.PHONY: l10n-test
+l10n-test:
+	./manage.py compilemessages
+	@make test
+
+
 # test for missing migrations
 # https://stackoverflow.com/questions/54177838/
 .PHONY: test_for_missing_migrations

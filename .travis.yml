@@ -26,6 +26,7 @@ addons:
 stages:
   - static_analysis
   - testing
+  - localization_testing
   - non_functional_testing
   - docker
 
@@ -86,6 +87,12 @@ jobs:
         - CMD=test
       addons:
         postgresql: 9.5
+
+    - stage: localization_testing
+      env:
+        - LANG=fr-FR
+        - TEST_DB=SQLite
+        - CMD=l10n-test
 
     - stage: non_functional_testing
       env:
