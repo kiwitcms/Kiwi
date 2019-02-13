@@ -7,6 +7,7 @@ from django.test import TestCase
 from django.conf import settings
 from django.test.client import Client
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.management.models import Product, Version
 from tcms.testplans.models import TestPlan
@@ -71,11 +72,8 @@ class ProductTests(TestCase):
         )
         location = reverse(admin_delete_url, args=[product.pk])
         response = self.c.get(location)
-        self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertTrue('Are you sure you want to delete the product "%s"' % product.name
-                        in str(response.content, encoding=settings.DEFAULT_CHARSET))
-        self.assertTrue("Yes, I'm sure" in str(response.content,
-                                               encoding=settings.DEFAULT_CHARSET))
+        self.assertContains(response, product.name)
+        self.assertContains(response, _("Yes, I'm sure"))
 
         # confirm that we're sure we want to delete it
         response = self.c.post(location, {'post': 'yes'})

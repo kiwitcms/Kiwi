@@ -6,6 +6,7 @@ from http import HTTPStatus
 from django import test
 from django.urls import reverse
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _, ngettext_lazy
 
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
@@ -80,16 +81,15 @@ class TestAddView(test.TestCase):
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(result['rc'], 1)
-        self.assertIn('Enter a valid URL', result['response'])
+        self.assertIn(str(_('Enter a valid URL.')), result['response'])
 
     def test_with_name_longer_than_64_chars(self):  # pylint: disable=invalid-name
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
         response = self.client.post(self.url, {
-            'name': "Open source test case management system, with a lot of great features,"
-                    "such as bug tracker integration, fast search, powerful access control"
-                    "and external API.",
+            'name': "abcdefghij-abcdefghij-abcdefghij-"
+                    "abcdefghij-abcdefghij-abcdefghij-",
             'url': 'http://example.com',
             'target_id': self.testcaserun.pk,
         })
@@ -97,4 +97,8 @@ class TestAddView(test.TestCase):
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(result['rc'], 1)
-        self.assertIn('Ensure this value has at most 64 characters', result['response'])
+        message = ngettext_lazy(
+            'Ensure this value has at most %(limit_value)d character (it has %(show_value)d).',
+            'Ensure this value has at most %(limit_value)d characters (it has %(show_value)d).',
+            'limit_value').format(limit_value=64, show_value=66)
+        self.assertIn(message, result['response'])

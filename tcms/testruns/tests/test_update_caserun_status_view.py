@@ -5,6 +5,7 @@ from datetime import datetime
 
 from django.urls import reverse
 from django.conf import settings
+from django.utils.translation import override
 
 from tcms.testruns.models import TestCaseRunStatus
 
@@ -43,6 +44,7 @@ class TestUpdateCaseRunStatusView(BaseCaseRun):
 
         # verify we didn't update the last TCR by mistake
         self.case_run_3.refresh_from_db()
-        self.assertEqual(self.case_run_3.status.name, TestCaseRunStatus.IDLE)
+        with override('en'):
+            self.assertEqual(self.case_run_3.status.name, TestCaseRunStatus.IDLE)
         self.assertNotEqual(self.case_run_3.tested_by, self.tester)
         self.assertIsNone(self.case_run_3.close_date)

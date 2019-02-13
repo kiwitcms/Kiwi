@@ -8,6 +8,7 @@ from uuslug import slugify
 from django import test
 from django.conf import settings
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.management.models import Product
 from tcms.management.models import Version
@@ -87,7 +88,7 @@ class PlanTests(BasePlanTest):
     def test_plan_printable_without_selected_plan(self):
         location = reverse('plans-printable')
         response = self.client.post(location, follow=True)
-        self.assertContains(response, 'At least one test plan is required for print')
+        self.assertContains(response, _('At least one test plan is required for print'))
 
     def test_plan_printable(self):
         location = reverse('plans-printable')
@@ -399,7 +400,7 @@ class TestCloneView(BasePlanCase):
 
         data_missing_plan = {}  # No plan is passed
         response = self.client.post(self.plan_clone_url, data_missing_plan, follow=True)
-        self.assertContains(response, 'TestPlan is required')
+        self.assertContains(response, _('TestPlan is required'))
 
     def test_refuse_if_given_nonexisting_plan(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -418,7 +419,7 @@ class TestCloneView(BasePlanCase):
 
         self.assertContains(
             response,
-            '<label class="strong" for="id_name">New Plan Name</label>',
+            '<label class="strong" for="id_name">%s</label>' % _('New Plan Name'),
             html=True)
 
         self.assertContains(
