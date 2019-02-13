@@ -561,16 +561,18 @@ def get(request, case_id):
     }
 
     url_params = "?case=%d" % test_case.pk
+    case_edit_url = reverse('testcases-edit', args=[test_case.pk])
     test_plan = request.GET.get('from_plan', 0)
     if test_plan:
         url_params += "&from_plan=%s" % test_plan
+        case_edit_url += "?from_plan=%s" % test_plan
 
     with modify_settings(
             MENU_ITEMS={'append': [
                 ('...', [
                     (
                         _('Edit'),
-                        reverse('testcases-edit', args=[test_case.pk])
+                        case_edit_url
                     ),
                     (
                         _('Clone'),
@@ -693,12 +695,15 @@ def edit(request, case_id, template_name='case/edit.html'):
             # Notification
             update_case_email_settings(test_case, n_form)
 
+            from_plan = ""
+            if request.POST.get('from_plan'):
+                from_plan = "?from_plan=%s" % request.POST.get('from_plan')
+
             # Returns
             if request.POST.get('_continue'):
-                return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('testcases-edit', args=[case_id, ]),
-                    request.POST.get('from_plan', None),
-                ))
+                return HttpResponseRedirect(
+                    reverse('testcases-edit', args=[case_id, ]) + from_plan
+                )
 
             if request.POST.get('_continuenext'):
                 if not test_plan:
@@ -718,10 +723,9 @@ def edit(request, case_id, template_name='case/edit.html'):
 
                 # Get the next case
                 _prev_case, next_case = test_case.get_previous_and_next(pk_list=pk_list)
-                return HttpResponseRedirect('%s?from_plan=%s' % (
-                    reverse('testcases-edit', args=[next_case.pk, ]),
-                    test_plan.pk,
-                ))
+                return HttpResponseRedirect(
+                    reverse('testcases-edit', args=[next_case.pk, ]) + from_plan
+                )
 
             if request.POST.get('_returntoplan'):
                 if not test_plan:
@@ -735,10 +739,9 @@ def edit(request, case_id, template_name='case/edit.html'):
                     reverse('test_plan_url_short', args=[test_plan.pk, ]),
                 ))
 
-            return HttpResponseRedirect('%s?from_plan=%s' % (
-                reverse('testcases-get', args=[case_id, ]),
-                request.POST.get('from_plan', None),
-            ))
+            return HttpResponseRedirect(
+                reverse('testcases-get', args=[case_id, ]) + from_plan
+            )
 
     else:
         # Notification form initial
