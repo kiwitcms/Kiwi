@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.urls import reverse
 from django.db import models
+from django.utils.translation import override
 from django.db.models import ObjectDoesNotExist
 
 import vinaigrette
@@ -31,24 +32,19 @@ class TestCaseStatus(TCMSActionModel):
 
     @classmethod
     def get_proposed(cls):
-        try:
-            return cls.objects.get(name='PROPOSED')
-        except cls.DoesNotExist:
-            return None
+        return cls.objects.get(name='PROPOSED')
 
     @classmethod
     def get_confirmed(cls):
-        try:
-            return cls.objects.get(name='CONFIRMED')
-        except cls.DoesNotExist:
-            return None
+        return cls.objects.get(name='CONFIRMED')
 
     @classmethod
     def string_to_instance(cls, name):
         return cls.objects.get(name=name)
 
     def is_confirmed(self):
-        return self.name == 'CONFIRMED'
+        with override('en'):
+            return self.name == 'CONFIRMED'
 
 
 # register model for DB translations

@@ -711,13 +711,10 @@ def edit(request, case_id, template_name='case/edit.html'):
 
                 # find out test case list which belong to the same
                 # classification
-                confirm_status_name = 'CONFIRMED'
-                if test_case.case_status.name == confirm_status_name:
-                    pk_list = test_plan.case.filter(
-                        case_status__name=confirm_status_name)
+                if test_case.case_status.is_confirmed():
+                    pk_list = test_plan.case.filter(case_status=TestCaseStatus.get_confirmed())
                 else:
-                    pk_list = test_plan.case.exclude(
-                        case_status__name=confirm_status_name)
+                    pk_list = test_plan.case.exclude(case_status=TestCaseStatus.get_confirmed())
                 pk_list = list(pk_list.defer('case_id').values_list('pk', flat=True))
                 pk_list.sort()
 
@@ -730,8 +727,7 @@ def edit(request, case_id, template_name='case/edit.html'):
             if request.POST.get('_returntoplan'):
                 if not test_plan:
                     raise Http404
-                confirm_status_name = 'CONFIRMED'
-                if test_case.case_status.name == confirm_status_name:
+                if test_case.case_status.is_confirmed():
                     return HttpResponseRedirect('%s#testcases' % (
                         reverse('test_plan_url_short', args=[test_plan.pk, ]),
                     ))
