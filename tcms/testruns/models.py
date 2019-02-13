@@ -177,6 +177,7 @@ class TestRun(TCMSActionModel):
         else:
             self.stop_date = None
 
+    @override('en')
     def stats_caseruns_status(self, statuses=None):
         """
             Get statistics based on case runs' status
