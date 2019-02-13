@@ -662,13 +662,6 @@ def update_testcase(request, test_case, tc_form):
     except ObjectDoesNotExist:
         pass
 
-    # IMPORTANT! test_case.current_user is an instance attribute,
-    # added so that in post_save, current logged-in user info
-    # can be accessed.
-    # Instance attribute is usually not a desirable solution.
-    # TODO: current_user is probbably not necessary now that we have proper history
-    # it is used in email templates though !!!
-    test_case.current_user = request.user
     test_case.save()
 
 

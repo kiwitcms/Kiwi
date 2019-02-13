@@ -16,7 +16,6 @@ from tcms.tests.factories import TestCaseRunFactory
 from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
-from tcms.tests.factories import UserFactory
 
 
 class TestCaseRemoveBug(BasePlanCase):
@@ -149,11 +148,6 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
         cls.case.emailing.notify_on_case_update = True
         cls.case.emailing.auto_to_case_author = True
         cls.case.emailing.save()
-
-        cls.case_editor = UserFactory(username='editor')
-        # This is actually done when update a case. Setting current_user
-        # explicitly here aims to mock that behavior.
-        cls.case.current_user = cls.case_editor
 
     @patch('tcms.core.utils.mailto.send_mail')
     def test_send_mail_to_case_author(self, send_mail):
