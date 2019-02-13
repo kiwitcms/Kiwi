@@ -302,11 +302,6 @@ def edit(request, plan_id):
                 test_plan.type = form.cleaned_data['type']
                 test_plan.is_active = form.cleaned_data['is_active']
                 test_plan.extra_link = form.cleaned_data['extra_link']
-                # IMPORTANT! tp.current_user is an instance attribute,
-                # added so that in post_save, current logged-in user info
-                # can be accessed.
-                # Instance attribute is usually not a desirable solution.
-                test_plan.current_user = request.user
                 test_plan.text = form.cleaned_data['text']
                 test_plan.save()
 
