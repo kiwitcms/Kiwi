@@ -144,8 +144,11 @@ install:
 
 script: make $CMD
 after_success:
-  - coveralls
-  - codecov
+  - |
+        if [ "$TRAVIS_BUILD_STAGE_NAME" == "Testing" ] && [ "$TEST_DB" == "MariaDB" ]; then
+            coveralls
+            codecov
+        fi
 notifications:
   email:
     on_failure: change
