@@ -8,6 +8,8 @@ from urllib.parse import urlencode
 from django.urls import reverse
 from django.forms import ValidationError
 from django.test import RequestFactory
+from django.utils.translation import override
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.testcases.fields import MultipleEmailField
 from tcms.management.models import Priority, Tag
@@ -54,13 +56,14 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
             'rows="10">\n</textarea>',
             html=True)
 
-        for status in TestCaseRunStatus.objects.all():
-            self.assertContains(
-                response,
-                "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" "
-                "title=\"%s\"" % (status.name.lower(), status.name),
-                html=False
-            )
+        with override('en'):
+            for status in TestCaseRunStatus.objects.all():
+                self.assertContains(
+                    response,
+                    "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" "
+                    "title=\"%s\"" % (status.name.lower(), status.name),
+                    html=False
+                )
 
     def test_user_sees_bugs(self):
         bug_1 = BugFactory()
@@ -388,7 +391,7 @@ class TestCloneCase(BasePlanCase):
         # Refuse to clone cases if missing selectAll and case arguments
         response = self.client.get(self.clone_url, {}, follow=True)
 
-        self.assertContains(response, 'At least one TestCase is required')
+        self.assertContains(response, _('At least one TestCase is required'))
 
     def test_show_clone_page_with_from_plan(self):
         response = self.client.get(self.clone_url,
@@ -398,9 +401,9 @@ class TestCloneCase(BasePlanCase):
         self.assertContains(
             response,
             """<div>
-    <input type="radio" id="id_use_sameplan" name="selectplan" value="{0}">
-    <label for="id_use_sameplan" class="strong">Use the same Plan -- {0} : {1}</label>
-</div>""".format(self.plan.pk, self.plan.name),
+    <input type="radio" id="id_use_sameplan" name="selectplan" value="%s">
+    <label for="id_use_sameplan" class="strong">%s -- %s : %s</label>
+</div>""" % (self.plan.pk, _('Use the same Plan'), self.plan.pk, self.plan.name),
             html=True)
 
         for loop_counter, case in enumerate([self.case_1, self.case_2]):
@@ -452,7 +455,7 @@ class TestGetCasesFromPlan(BasePlanCase):
 
     def test_casetags_are_shown_in_template(self):
         # pylint: disable=tag-objects-get_or_create
-        tag, _ = Tag.objects.get_or_create(name='Linux')
+        tag, _created = Tag.objects.get_or_create(name='Linux')
         self.case.add_tag(tag)
 
         url = reverse('testcases-all')
@@ -465,7 +468,7 @@ class TestGetCasesFromPlan(BasePlanCase):
                                     content_type='application/x-www-form-urlencoded; charset=UTF-8',
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, 'Tags:')
+        self.assertContains(response, _('Tags'))
         self.assertContains(response, '<a href="#testcases">Linux</a>')
 
     def test_disabled_priority_now_shown(self):

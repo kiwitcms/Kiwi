@@ -5,6 +5,7 @@ from http import HTTPStatus
 
 from django.urls import reverse
 from django.contrib.auth.models import Permission
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import UserFactory
@@ -19,7 +20,7 @@ class TestViewPlanTags(BasePlanCase):
         super().setUpTestData()
 
         initiate_user_with_default_setups(cls.tester)
-        for _ in range(3):
+        for _i in range(3):
             cls.plan.add_tag(TagFactory())
 
         cls.unauthorized = UserFactory()
@@ -36,8 +37,10 @@ class TestViewPlanTags(BasePlanCase):
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
         # assert tag actions are shown
-        self.assertContains(response, 'Add Tag')
-        self.assertContains(response, 'class="remove js-remove-tag" title="remove tag">Remove</a>')
+        self.assertContains(response, _('Add Tag'))
+        self.assertContains(response,
+                            'class="remove js-remove-tag" title="remove tag">%s</a>' %
+                            _('Remove'))
 
     def test_view_tags_without_permissions(self):
         self.client.logout()
@@ -52,4 +55,4 @@ class TestViewPlanTags(BasePlanCase):
 
         # assert tag actions are shown
         self.assertNotContains(response, 'Add Tag')
-        self.assertContains(response, '<span class="disabled grey">Remove</span>')
+        self.assertContains(response, '<span class="disabled grey">%s</span>' % _('Remove'))

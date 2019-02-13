@@ -6,6 +6,7 @@ from http import HTTPStatus
 from django.utils import formats
 from django.urls import reverse
 from django.contrib.auth.models import Permission
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testruns.models import TestRun
@@ -29,7 +30,7 @@ class TestGetRun(BaseCaseRun):
         super().setUpTestData()
         initiate_user_with_default_setups(cls.tester)
 
-        for _ in range(3):
+        for _i in range(3):
             cls.test_run.add_tag(TagFactory())
 
         cls.unauthorized = UserFactory()
@@ -104,7 +105,7 @@ class TestCreateNewRun(BasePlanCase):
             username=self.tester.username,
             password='password')
         response = self.client.post(self.url, {'from_plan': self.plan.pk}, follow=True)
-        self.assertContains(response, 'Creating a TestRun requires at least one TestCase')
+        self.assertContains(response, _('Creating a TestRun requires at least one TestCase'))
 
     def test_show_create_new_run_page(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -178,7 +179,7 @@ class CloneRunBaseTest(BaseCaseRun):
         self.assertContains(
             response,
             '<input id="id_summary" class="form-control" name="summary" '
-            'type="text" value="Clone of {}" required>'.format(self.test_run.summary),
+            'type="text" value="%s%s" required>' % (_('Clone of '), self.test_run.summary),
             html=True)
 
         for case_run in (self.case_run_1, self.case_run_2):
@@ -208,7 +209,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
         response = self.client.post(url, {}, follow=True)
 
-        self.assertContains(response, 'At least one TestCase is required')
+        self.assertContains(response, _('At least one TestCase is required'))
 
     def test_open_clone_page_by_selecting_case_runs(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -450,7 +451,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
                                     {'case_run': [self.case_run_1.pk]},
                                     follow=True)
 
-        self.assertContains(response, '1 CaseRun(s) updated:')
+        self.assertContains(response, _('%d CaseRun(s) updated:') % 1)
         self.assertEqual(self.case_run_1.case.text, "Scenario Version 2")
 
 

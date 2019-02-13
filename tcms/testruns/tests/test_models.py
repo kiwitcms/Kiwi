@@ -3,6 +3,8 @@
 
 from mock import patch
 
+from django.utils.translation import ugettext_lazy as _
+
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import TestRunFactory
 from tcms.testcases.models import BugSystem
@@ -39,7 +41,7 @@ class TestRunGetBugsCount(BaseCaseRun):
         recipients = test_run.get_notify_addrs()
 
         # Verify notification mail
-        self.assertIn("NEW: TestRun #%d - %s" % (test_run.pk, test_run.summary),
+        self.assertIn(_("NEW: TestRun #%d - %s") % (test_run.pk, test_run.summary),
                       send_mail.call_args_list[0][0][0])
         self.assertIn("Summary: %s" % test_run.summary, send_mail.call_args_list[0][0][1])
         for recipient in recipients:
