@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-08 23:25+0000\n"
-"PO-Revision-Date: 2019-02-10 16:11\n"
+"PO-Revision-Date: 2019-02-14 08:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -139,7 +139,7 @@ msgstr "RECHERCHER"
 
 #: tcms/settings/common.py:94
 msgid "Search Test Plans"
-msgstr "Rechercher des plan de test"
+msgstr "Rechercher des plans de test"
 
 #: tcms/settings/common.py:95
 msgid "Search Test Runs"
@@ -147,7 +147,7 @@ msgstr "Rechercher des essais réalisés"
 
 #: tcms/settings/common.py:96
 msgid "Search Test Cases"
-msgstr "Rechercher des scénario de tests"
+msgstr "Rechercher des scénarios de tests"
 
 #: tcms/settings/common.py:98
 msgid "REPORTING"
@@ -1251,7 +1251,7 @@ msgstr "ID de l'anomalie"
 
 #: tcms/templates/run/get_case_runs.html:176
 msgid "Check to add Test Case(s) to Issue Tracker"
-msgstr "Cocher pour ajouter des scénarios de test(s) au suivi d'anomalie"
+msgstr "Cocher pour ajouter des scénarios de test(s) au gestionnaire d'anomalie"
 
 #: tcms/templates/run/get_case_runs.html:195
 msgid "Cancel"
