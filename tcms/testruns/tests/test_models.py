@@ -10,12 +10,10 @@ from tcms.tests.factories import TestRunFactory
 from tcms.testcases.models import BugSystem
 
 
-class TestRunGetBugsCount(BaseCaseRun):
-    """Test TestRun.get_bug_count"""
-
+class Test_TestRun(BaseCaseRun):  # pylint: disable=invalid-name
     @classmethod
     def setUpTestData(cls):
-        super(TestRunGetBugsCount, cls).setUpTestData()
+        super().setUpTestData()
 
         bug_tracker = BugSystem.objects.first()
         cls.empty_test_run = TestRunFactory(product_version=cls.version,
@@ -41,8 +39,8 @@ class TestRunGetBugsCount(BaseCaseRun):
         recipients = test_run.get_notify_addrs()
 
         # Verify notification mail
-        self.assertIn(_("NEW: TestRun #%d - %s") % (test_run.pk, test_run.summary),
+        self.assertIn(_("NEW: TestRun #%(pk)d - %(summary)s") %
+                      {'pk': test_run.pk, 'summary': test_run.summary},
                       send_mail.call_args_list[0][0][0])
-        self.assertIn("Summary: %s" % test_run.summary, send_mail.call_args_list[0][0][1])
         for recipient in recipients:
             self.assertIn(recipient, send_mail.call_args_list[0][0][-1])
