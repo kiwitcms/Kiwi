@@ -42,12 +42,10 @@ Nitrate.TestPlans.Instance = {
 	<input id="id_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}">
 	<div class="control">
 		<span id="id_buttons" class="button">
-			<input id="btn_edit" type="button" value="Edit Plan " title="Edit test plan" data-param="{% url 'plan-edit' test_plan.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
-			<input id="btn_clone" type="button" value="Clone Plan" title="Clone this plan to other product" data-params='["{% url "plans-clone" %}", {{ test_plan.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
-			<input id="btn_print" type="button" value="Print Plan "
-                   title="Print Plan"
-                   data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>
-			<input id="btn_delete" type="button" value="Delete Plan " title="Delete test plan" data-param="{% url 'admin:testplans_testplan_delete' test_plan.pk %}" {% if perms.testplans.delete_testplan %}{% else %}disabled{% endif %}>
+			<input id="btn_edit" type="button" value="{% trans "Edit Plan" %}" title="{% trans "Edit test plan" %}" data-param="{% url 'plan-edit' test_plan.plan_id %}" {% if perms.testplans.change_testplan %}{% else%}disabled{% endif %}>
+			<input id="btn_clone" type="button" value="{% trans "Clone Plan" %}" title="{% trans "Clone this plan to other product" %}" data-params='["{% url "plans-clone" %}", {{ test_plan.plan_id }}]' {% if perms.testplans.add_testplan %}{% else %}disabled{% endif %}>
+			<input id="btn_print" type="button" value="{% trans "Print Plan" %}" title="{% trans "Print Plan" %}" data-params='["{% url "plans-printable" %}", {{ test_plan.pk }}]'>
+			<input id="btn_delete" type="button" value="{% trans "Delete Plan" %}" title="{% trans "Delete test plan" %}" data-param="{% url 'admin:testplans_testplan_delete' test_plan.pk %}" {% if perms.testplans.delete_testplan %}{% else %}disabled{% endif %}>
 		</span>
 	</div>
 	<h2 id="display_title" class="{% ifequal test_plan.is_active 0 %}line-through{% endifequal %}">
