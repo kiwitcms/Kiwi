@@ -45,9 +45,9 @@
                         {% endif %}
 			{% if perms.testcases.change_testcase %}
                                 {% if REQUEST_CONTENTS.template_type == 'review_case' %}
-                                <li><input type="button" value="Reviewer" title="Change TestCase reviewer" class="btn_reviewer assignee sprites icon_plan" /></li>
+                                <li><input type="button" value="Reviewer" title="{% trans "Change TestCase reviewer" %}" class="btn_reviewer assignee sprites icon_plan" /></li>
                                 {% else %}
-                                <li><input type="button" value="Default Tester" title="Change default tester" class="btn_default_tester assignee sprites icon_plan" /></li>
+                                <li><input type="button" value="Default Tester" title="{% trans "Change default tester" %}" class="btn_default_tester assignee sprites icon_plan" /></li>
                                 {% endif %}
 				<li><span class='sprites toolbar_status icon_plan'>{% trans "Status" %}</span>
 					<ul>
