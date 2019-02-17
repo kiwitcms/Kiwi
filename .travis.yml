@@ -90,7 +90,13 @@ jobs:
 
     - stage: localization_testing
       env:
-        - LANG=fr-FR
+        - LANG=fr_FR.UTF-8
+        - TEST_DB=SQLite
+        - CMD=l10n-test
+
+    - stage: localization_testing
+      env:
+        - LANG=sl_SL.UTF-8
         - TEST_DB=SQLite
         - CMD=l10n-test
 
