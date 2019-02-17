@@ -46,6 +46,7 @@ def timedelta_to_str(value):
 # ## End of functions ###
 
 
+# todo: start removing these classes in favor of tcms.core.serializer
 class XMLRPCSerializer:
     """
     Django XMLRPC Serializer
