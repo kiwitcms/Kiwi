@@ -4,6 +4,8 @@
 from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
 
+from django.test import override_settings
+
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import VersionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
@@ -36,6 +38,7 @@ class TestFilterVersions(XmlrpcAPIBaseTest):
         self.assertEqual(ver[0]['value'], "0.7")
 
 
+@override_settings(LANGUAGE_CODE='en')
 class TestAddVersion(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
