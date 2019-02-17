@@ -113,3 +113,9 @@ coverity:
 .PHONY: build-for-pypi
 build-for-pypi:
 	./tests/check-build
+
+
+.PHONY: messages
+messages:
+	./manage.py makemessages --no-obsolete --ignore "test*.py"
+	ls tcms/locale/*/LC_MESSAGES/*.po | xargs -n 1 -I @ msgattrib -o @ --no-fuzzy @
