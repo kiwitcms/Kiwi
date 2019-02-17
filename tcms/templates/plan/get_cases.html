@@ -16,22 +16,22 @@
 					{% endif %}
 					<ul>
 						{% if perms.testcases.add_testcase %}
-						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="Write new case" data-params='["{% url "testcases-new" %}", {{ test_plan.plan_id }}]'/></li>
-						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="Add cases from other plans" data-param="{% url "plan-search-cases-for-link" test_plan.plan_id %}" /></li>
+						<li><input id="js-new-case" class="add_new icon_plan" type="button" value="{% trans "Write new case" %}" data-params='["{% url "testcases-new" %}", {{ test_plan.plan_id }}]'/></li>
+						<li><input id="js-add-case-to-plan" type="button" class="search icon_plan" value="{% trans "Add cases from other plans" %}" data-param="{% url "plan-search-cases-for-link" test_plan.plan_id %}" /></li>
 						{% else %}
-						<li><input type="button" class="add_new icon_plan" disabled value="Write new case"/></li>
-						<li><input type="button" class="search icon_plan" disabled value="Add cases from other plans" /></li>
+						<li><input type="button" class="add_new icon_plan" disabled value="{% trans "Write new case" %}"/></li>
+						<li><input type="button" class="search icon_plan" disabled value="{% trans "Add cases from other plans" %}" /></li>
 						{% endif %}
-						<li><input type="button" id="js-print-case" class="print_view icon_plan" value="Print"  title="print view of selected cases" data-param="{% url "testcases-printable" %}" /></li>
+						<li><input type="button" id="js-print-case" class="print_view icon_plan" value="{% trans "Print" %}"  title="{% trans "print view of selected cases" %}" data-param="{% url "testcases-printable" %}" /></li>
 						{% if perms.testcases.add_testcase %}
-						<li><input type="button" id="js-clone-case" class="clone icon_plan" value="Clone" title="Clone selected cases to another test plan" data-param="{% url "testcases-clone" %}" /></li>
+						<li><input type="button" id="js-clone-case" class="clone icon_plan" value="{% trans "Clone" %}" title="{% trans "Clone selected cases to another test plan" %}" data-param="{% url "testcases-clone" %}" /></li>
 						{% else %}
-						<li><input type="button" class="clone icon_plan" value="Clone" title="Clone selected cases to another test plan" disabled /></li>
+						<li><input type="button" class="clone icon_plan" value="{% trans "Clone" %}" title="{% trans "Clone selected cases to another test plan" %}" disabled /></li>
 						{% endif %}
 						{% if perms.testcases.delete_testcaseplan %}
-						<li><input type="button" id="js-remove-case" class="delete icon_plan" value="Remove" title="Remove selected cases from this plan" /></li>
+						<li><input type="button" id="js-remove-case" class="delete icon_plan" value="{% trans "Remove" %}" title="{% trans "Remove selected cases from this plan" %}" /></li>
 						{% else %}
-						<li><input type="button" class="delete icon_plan" value="Remove" title="Remove selected cases from this plan" disabled /></li>
+						<li><input type="button" class="delete icon_plan" value="{% trans "Remove" %}" title="{% trans "Remove selected cases from this plan" %}" disabled /></li>
 						{% endif %}
 					</ul>
 				</li>
@@ -39,15 +39,15 @@
                                 <li>
                                     <span class='sprites toolbar_run{% if not perms.testruns.add_testrun %}_disabled{% endif %} icon_plan'>{% trans "Run" %}</span>
                                     <ul>
-                                        <li><input type="button" class="new_run icon_plan" value="Create new TestRun" id="js-new-run" data-param="{% url "testruns-new" %}" /></li>
+                                        <li><input type="button" class="new_run icon_plan" value="{% trans "Create new TestRun" %}" id="js-new-run" data-param="{% url "testruns-new" %}" /></li>
                                     </ul>
                                 </li>
                         {% endif %}
 			{% if perms.testcases.change_testcase %}
                                 {% if REQUEST_CONTENTS.template_type == 'review_case' %}
-                                <li><input type="button" value="Reviewer"       title="Change TestCase reviewer" class="btn_reviewer       assignee sprites icon_plan" /></li>
+                                <li><input type="button" value="Reviewer" title="{% trans "Change TestCase reviewer" %}" class="btn_reviewer assignee sprites icon_plan" /></li>
                                 {% else %}
-                                <li><input type="button" value="Default Tester" title="Change default tester"    class="btn_default_tester assignee sprites icon_plan" /></li>
+                                <li><input type="button" value="Default Tester" title="{% trans "Change default tester" %}" class="btn_default_tester assignee sprites icon_plan" /></li>
                                 {% endif %}
 				<li><span class='sprites toolbar_status icon_plan'>{% trans "Status" %}</span>
 					<ul>
@@ -66,9 +66,9 @@
 			{% endif %}
 			</ul>
 			<span class="reorder_case">
-				<a class="btn_filter filtercase" title="Click to show filter options">{% trans "Show filter options" %}</a>
+				<a class="btn_filter filtercase" title="{% trans "Click to show filter options" %}">{% trans "Show filter options" %}</a>
 				{% if perms.testcases.change_testcase %}
-				<a class="btn_sort sortlink" title="Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes">{% trans "Re-order cases" %}</a>
+				<a class="btn_sort sortlink" title="{% trans "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes" %}">{% trans "Re-order cases" %}</a>
 				{% endif %}
 			</span>
 		</div>
@@ -217,7 +217,7 @@
 </table>
 <div class="ajax_loading" style="display:none"></div>
 <div class="cases-pagination show-more-cases">
-	<a href="javascript:void(0)" class="load-more js-load-more" data-page-index="2" data-criterias="{{ search_criterias }}">Show more</a>
+	<a href="javascript:void(0)" class="load-more js-load-more" data-page-index="2" data-criterias="{{ search_criterias }}">{% trans "Show more" %}</a>
 	<span class="js-loading-progress">
             (<span class="js-remaining-cases-count" data-cases-count="{{ total_cases_count|default:"0" }}">0</span> {% trans "cases left" %})
 	</span>
