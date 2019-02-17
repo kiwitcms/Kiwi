@@ -95,20 +95,6 @@ def group_case_bugs(bugs):
     return grouped_bugs
 
 
-def create_testcase(request, form, test_plan):
-    """Create testcase"""
-    test_case = TestCase.create(author=request.user, values=form.cleaned_data)
-
-    # Assign the case to the plan
-    if test_plan:
-        test_plan.add_case(test_case)
-
-    # Add components into the case
-    for component in form.cleaned_data['component']:
-        test_case.add_component(component=component)
-    return test_case
-
-
 @method_decorator(permission_required('testcases.add_testcase'), name='dispatch')
 class NewCaseView(TemplateView):
 
@@ -125,7 +111,8 @@ class NewCaseView(TemplateView):
 
         context_data = {
             'test_plan': test_plan,
-            'form': form
+            'form': form,
+            'notify_form': CaseNotifyForm(),
         }
 
         return render(request, self.template_name, context_data)
@@ -139,8 +126,10 @@ class NewCaseView(TemplateView):
         else:
             form.populate()
 
-        if form.is_valid():
-            test_case = create_testcase(request, form, test_plan)
+        notify_form = CaseNotifyForm(request.POST)
+
+        if form.is_valid() and notify_form.is_valid():
+            test_case = self.create_test_case(form, notify_form, test_plan)
             if test_plan:
                 return HttpResponseRedirect(
                     '%s?from_plan=%s' % (reverse('testcases-get', args=[test_case.pk]),
@@ -150,10 +139,23 @@ class NewCaseView(TemplateView):
 
         context_data = {
             'test_plan': test_plan,
-            'form': form
+            'form': form,
+            'notify_form': notify_form
         }
 
         return render(request, self.template_name, context_data)
+
+    def create_test_case(self, form, notify_form, test_plan):
+        """Create new test case"""
+        test_case = TestCase.create(author=self.request.user, values=form.cleaned_data)
+
+        # Assign the case to the plan
+        if test_plan:
+            test_plan.add_case(test_case)
+
+        update_case_email_settings(test_case, notify_form)
+
+        return test_case
 
 
 def get_testcaseplan_sortkey_pk_for_testcases(plan, tc_ids):
