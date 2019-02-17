@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-08 23:25+0000\n"
+"POT-Creation-Date: 2019-02-17 12:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -279,7 +279,7 @@ msgid "ID"
 msgstr ""
 
 #: tcms/templates/case/clone.html:46 tcms/templates/case/edit.html:66
-#: tcms/templates/dashboard.html:49 tcms/templates/plan/get.html:63
+#: tcms/templates/dashboard.html:49 tcms/templates/plan/get.html:61
 #: tcms/templates/plan/preview.html:15 tcms/templates/run/get.html:122
 #: tcms/templates/run/report.html:35
 #: tcms/testcases/templates/testcases/get.html:59
@@ -301,7 +301,7 @@ msgid "Product Version"
 msgstr ""
 
 #: tcms/templates/case/clone.html:54
-#: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:71
+#: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:69
 msgid "Plan Type"
 msgstr ""
 
@@ -347,7 +347,7 @@ msgid "Plan"
 msgstr ""
 
 #: tcms/templates/case/clone_select_plan.html:10
-#: tcms/templates/case/edit.html:101 tcms/templates/plan/get.html:59
+#: tcms/templates/case/edit.html:101 tcms/templates/plan/get.html:57
 #: tcms/templates/plan/get_cases.html:95 tcms/templates/plan/get_cases.html:171
 #: tcms/templates/plan/preview.html:11 tcms/templates/plan/search_case.html:82
 #: tcms/templates/run/assign_case.html:73
@@ -440,7 +440,7 @@ msgstr ""
 msgid "Arguments"
 msgstr ""
 
-#: tcms/templates/case/edit.html:88 tcms/templates/plan/get.html:77
+#: tcms/templates/case/edit.html:88 tcms/templates/plan/get.html:75
 #: tcms/templates/plan/preview.html:31
 msgid "Reference Link"
 msgstr ""
@@ -492,8 +492,9 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: tcms/templates/case/edit.html:139
-msgid "Setup"
+#: tcms/templates/case/edit.html:139 tcms/templates/case/get_details.html:8
+#: tcms/testcases/templates/testcases/mutable.html:100
+msgid "Text"
 msgstr ""
 
 #: tcms/templates/case/edit.html:145
@@ -506,11 +507,6 @@ msgstr ""
 
 #: tcms/templates/case/edit.html:157
 msgid "optional"
-msgstr ""
-
-#: tcms/templates/case/get_details.html:8
-#: tcms/testcases/templates/testcases/mutable.html:100
-msgid "Text"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:12
@@ -745,18 +741,19 @@ msgstr ""
 msgid "Plans"
 msgstr ""
 
-#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:114
+#: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:112
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
 msgstr ""
 
-#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:120
+#: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:118
 msgid "Runs"
 msgstr ""
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
+#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:46
 msgid "Remove"
@@ -824,7 +821,7 @@ msgstr ""
 msgid "Last page"
 msgstr ""
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:572
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
 msgid "Edit"
 msgstr ""
 
@@ -832,7 +829,7 @@ msgstr ""
 msgid "No test case was found in this plan."
 msgstr ""
 
-#: tcms/templates/plan/clone.html:4
+#: tcms/templates/plan/clone.html:4 tcms/templates/plan/get.html:46
 msgid "Clone Plan"
 msgstr ""
 
@@ -856,7 +853,31 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
-#: tcms/templates/plan/get.html:67 tcms/templates/plan/preview.html:19
+#: tcms/templates/plan/get.html:45
+msgid "Edit Plan"
+msgstr ""
+
+#: tcms/templates/plan/get.html:45
+msgid "Edit test plan"
+msgstr ""
+
+#: tcms/templates/plan/get.html:46
+msgid "Clone this plan to other product"
+msgstr ""
+
+#: tcms/templates/plan/get.html:47
+msgid "Print Plan"
+msgstr ""
+
+#: tcms/templates/plan/get.html:48
+msgid "Delete Plan"
+msgstr ""
+
+#: tcms/templates/plan/get.html:48
+msgid "Delete test plan"
+msgstr ""
+
+#: tcms/templates/plan/get.html:65 tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:112
@@ -865,39 +886,39 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: tcms/templates/plan/get.html:82 tcms/templates/plan/get.html:97
+#: tcms/templates/plan/get.html:80 tcms/templates/plan/get.html:95
 #: tcms/templates/plan/preview.html:36
 #: tcms/templates/run/table_caseruns.html:53
 #: tcms/templates/run/table_caseruns.html:59
 msgid "None"
 msgstr ""
 
-#: tcms/templates/plan/get.html:87
+#: tcms/templates/plan/get.html:85
 msgid "Create Time"
 msgstr ""
 
-#: tcms/templates/plan/get.html:92 tcms/templates/plan/preview.html:27
+#: tcms/templates/plan/get.html:90 tcms/templates/plan/preview.html:27
 msgid "Parent"
 msgstr ""
 
-#: tcms/templates/plan/get.html:102
+#: tcms/templates/plan/get.html:100
 msgid "View Edit History"
 msgstr ""
 
-#: tcms/templates/plan/get.html:111 tcms/templates/plan/preview.html:41
+#: tcms/templates/plan/get.html:109 tcms/templates/plan/preview.html:41
 msgid "Document"
 msgstr ""
 
-#: tcms/templates/plan/get.html:117
+#: tcms/templates/plan/get.html:115
 msgid "Reviewing Cases"
 msgstr ""
 
-#: tcms/templates/plan/get.html:123
+#: tcms/templates/plan/get.html:121
 #: tcms/testcases/templates/testcases/get.html:404
 msgid "Attachments"
 msgstr ""
 
-#: tcms/templates/plan/get.html:126 tcms/templates/plan/get_cases.html:76
+#: tcms/templates/plan/get.html:124 tcms/templates/plan/get_cases.html:76
 #: tcms/templates/run/get.html:91 tcms/templates/run/get_case_runs.html:122
 #: tcms/testcases/templates/testcases/get.html:330
 #: tcms/testcases/templates/testcases/search.html:141
@@ -906,11 +927,11 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: tcms/templates/plan/get.html:129
+#: tcms/templates/plan/get.html:127
 msgid "Tree View"
 msgstr ""
 
-#: tcms/templates/plan/get.html:138
+#: tcms/templates/plan/get.html:136
 msgid "The document for this plan hasn't been written yet."
 msgstr ""
 
@@ -927,13 +948,65 @@ msgstr ""
 msgid "Case"
 msgstr ""
 
+#: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
+msgid "Write new case"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
+#: tcms/templates/plan/search_case.html:4
+msgid "Add cases from other plans"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:25
+msgid "Print"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:25
+msgid "print view of selected cases"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
+#: tcms/testcases/views.py:578
+msgid "Clone"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
+msgid "Clone selected cases to another test plan"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
+msgid "Remove selected cases from this plan"
+msgstr ""
+
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:42
+msgid "Create new TestRun"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:48
+msgid "Change TestCase reviewer"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:50
+msgid "Change default tester"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:69
+msgid "Click to show filter options"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:69
 #: tcms/templates/run/get_case_runs.html:7
 msgid "Show filter options"
+msgstr ""
+
+#: tcms/templates/plan/get_cases.html:71
+msgid ""
+"Click me,then Drag and drop the rows to adjust the order,and click 'Done "
+"Sorting' link to submit your changes"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
@@ -975,6 +1048,10 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
+#: tcms/templates/plan/get_cases.html:220
+msgid "Show more"
+msgstr ""
+
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
 msgstr ""
@@ -983,16 +1060,20 @@ msgstr ""
 msgid "All cases have been loaded."
 msgstr ""
 
+#: tcms/templates/plan/get_treeview.html:4
+msgid "Add child node to current plan"
+msgstr ""
+
+#: tcms/templates/plan/get_treeview.html:6
+msgid "Remove child node from current plan"
+msgstr ""
+
 #: tcms/templates/plan/preview.html:23
 msgid ">Plan Type"
 msgstr ""
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
-msgstr ""
-
-#: tcms/templates/plan/search_case.html:4
-msgid "Add cases from other plans"
 msgstr ""
 
 #: tcms/templates/plan/search_case.html:29
@@ -1474,24 +1555,20 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:576
-msgid "Clone"
-msgstr ""
-
-#: tcms/testcases/views.py:580
+#: tcms/testcases/views.py:582
 msgid "History"
 msgstr ""
 
-#: tcms/testcases/views.py:585
+#: tcms/testcases/views.py:587
 msgid "Delete"
 msgstr ""
 
-#: tcms/testcases/views.py:809 tcms/testruns/views.py:422
+#: tcms/testcases/views.py:801 tcms/testruns/views.py:422
 #: tcms/testruns/views.py:500
 msgid "At least one TestCase is required"
 msgstr ""
 
-#: tcms/testcases/views.py:946
+#: tcms/testcases/views.py:938
 msgid "TestCase cloning was successful"
 msgstr ""
 
@@ -1548,15 +1625,15 @@ msgstr ""
 msgid "Test plan"
 msgstr ""
 
-#: tcms/testplans/views.py:350
+#: tcms/testplans/views.py:345
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:571
+#: tcms/testplans/views.py:566
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:579
+#: tcms/testplans/views.py:574
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
