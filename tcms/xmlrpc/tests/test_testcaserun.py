@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=invalid-name, attribute-defined-outside-init, objects-update-used
 
+from datetime import datetime
+
 from xmlrpc.client import ProtocolError
 from xmlrpc.client import Fault as XmlRPCFault
 
-from datetime import datetime
+from django.test import override_settings
 
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testruns.models import TestCaseRunStatus
@@ -20,6 +22,7 @@ from tcms.tests.factories import BuildFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
+@override_settings(LANGUAGE_CODE='en')
 class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
     """Test testcaserun.create"""
 
@@ -143,6 +146,7 @@ class TestCaseRunAddComment(XmlrpcAPIBaseTest):
         self.assertIsNone(comment)
 
 
+@override_settings(LANGUAGE_CODE='en')
 class TestCaseRunAttachLog(XmlrpcAPIBaseTest):
     """Test testcaserun.add_log"""
 
@@ -259,10 +263,11 @@ class TestCaseRunGetLogs(XmlrpcAPIBaseTest):
         self.assertEqual(logs[0]['url'], "http://www.google.com")
 
 
+@override_settings(LANGUAGE_CODE='en')
 class TestCaseRunUpdate(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
-        super(TestCaseRunUpdate, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.user = UserFactory()
         self.build = BuildFactory()
