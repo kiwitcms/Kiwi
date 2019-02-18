@@ -1,5 +1,4 @@
 Nitrate.TestCases = {};
-Nitrate.TestCases.Edit = {};
 Nitrate.TestCases.Clone = {};
 
 (function() {
@@ -24,23 +23,6 @@ Nitrate.TestCases.Clone = {};
   window.Nitrate.TestCases = TestCases;
 }());
 
-function configure_product_on_load() {
-    $('#id_product').change(function() {
-        $('#id_category').find('option').remove();
-        update_category_select_from_product();
-    });
-}
-
-Nitrate.TestCases.Edit.on_load = function() {
-    configure_product_on_load();
-    if ($('#id_category').val() === null || !$('#id_category').val().length) {
-        update_category_select_from_product();
-    }
-
-  jQ('.js-back-button').bind('click', function() {
-    window.history.go(-1);
-  });
-};
 
 Nitrate.TestCases.Clone.on_load = function() {
     $('#id_product').change(update_version_select_from_product);
