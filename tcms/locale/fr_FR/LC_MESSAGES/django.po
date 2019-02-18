@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-17 12:52+0000\n"
+"POT-Creation-Date: 2019-02-18 10:34+0000\n"
 "PO-Revision-Date: 2019-02-14 08:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
@@ -314,6 +314,7 @@ msgstr "Version du produit"
 
 #: tcms/templates/case/clone.html:54
 #: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:69
+#: tcms/templates/plan/preview.html:23
 msgid "Plan Type"
 msgstr "Type de plan"
 
@@ -1080,10 +1081,6 @@ msgstr ""
 msgid "Remove child node from current plan"
 msgstr ""
 
-#: tcms/templates/plan/preview.html:23
-msgid ">Plan Type"
-msgstr ">Type de plan"
-
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
 msgstr "Le plan que vous avez spécifié n'existe pas dans la base de données."
@@ -1780,7 +1777,7 @@ msgstr ""
 "Activer le suivi au gestionnaire d'anomalie en configurant le paramètre "
 "base_url!"
 
-#: tcms/xmlrpc/serializer.py:287
+#: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr ""

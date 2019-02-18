@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-17 12:52+0000\n"
+"POT-Creation-Date: 2019-02-18 10:34+0000\n"
 "PO-Revision-Date: 2019-02-04 16:02\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -301,6 +301,7 @@ msgstr ""
 
 #: tcms/templates/case/clone.html:54
 #: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:69
+#: tcms/templates/plan/preview.html:23
 msgid "Plan Type"
 msgstr ""
 
@@ -1091,10 +1092,6 @@ msgstr ""
 msgid "Remove child node from current plan"
 msgstr ""
 
-#: tcms/templates/plan/preview.html:23
-msgid ">Plan Type"
-msgstr ""
-
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
 msgstr ""
@@ -1756,7 +1753,7 @@ msgstr ""
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
 msgstr ""
 
-#: tcms/xmlrpc/serializer.py:287
+#: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr ""
