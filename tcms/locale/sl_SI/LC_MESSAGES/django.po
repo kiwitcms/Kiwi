@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-17 12:52+0000\n"
-"PO-Revision-Date: 2019-02-18 09:27\n"
+"PO-Revision-Date: 2019-02-18 09:31\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1011,7 +1011,7 @@ msgstr "Prikaži filtre"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Kliknite na gumb, povlecite vrstice v želeni vrstni ter ter kliknite na gumb 'Razvrsti', da shranite spremembe prikaza vrstnega reda elementov"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1066,11 +1066,11 @@ msgstr "Vsi scenariji so bili naloženi."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Dodaj objekt na nižjem nivoju v trenutno bazo testnih scenarijev"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Odstrani objekt na nižjem nivoju iz trenutne baze testnih scenarijev"
 
 #: tcms/templates/plan/preview.html:23
 msgid ">Plan Type"
