@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-18 10:34+0000\n"
-"PO-Revision-Date: 2019-02-18 19:31\n"
+"PO-Revision-Date: 2019-02-18 19:41\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1013,7 +1013,7 @@ msgstr "Afficher l'option de filtrage"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Sélectionner, puis Glissez et déposez les lignes pour ajuster l'ordre et cliquez sur le lien 'Terminer le tri' pour soumettre vos modifications"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -1068,11 +1068,11 @@ msgstr "Tous les scénarios ont été chargés."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Ajouter un nœud enfant au plan actuel"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Supprimer un nœud enfant au plan actuel"
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
