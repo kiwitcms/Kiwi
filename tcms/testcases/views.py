@@ -776,7 +776,6 @@ def edit(request, case_id, template_name='case/edit.html'):
             'product': test_case.category.product_id,
             'category': test_case.category_id,
             'notes': test_case.notes,
-            'component': components,
             'text': test_case.text,
         })
 
