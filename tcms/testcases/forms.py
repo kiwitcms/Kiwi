@@ -134,13 +134,13 @@ class EditCaseForm(BaseCaseForm):
 
 
 class CaseNotifyForm(forms.Form):
-    author = forms.BooleanField(required=False)
-    default_tester_of_case = forms.BooleanField(required=False)
-    managers_of_runs = forms.BooleanField(required=False)
-    default_testers_of_runs = forms.BooleanField(required=False)
-    assignees_of_case_runs = forms.BooleanField(required=False)
-    notify_on_case_update = forms.BooleanField(required=False)
-    notify_on_case_delete = forms.BooleanField(required=False)
+    author = forms.BooleanField(required=False, initial=True)
+    default_tester_of_case = forms.BooleanField(required=False, initial=True)
+    managers_of_runs = forms.BooleanField(required=False, initial=True)
+    default_testers_of_runs = forms.BooleanField(required=False, initial=True)
+    assignees_of_case_runs = forms.BooleanField(required=False, initial=True)
+    notify_on_case_update = forms.BooleanField(required=False, initial=True)
+    notify_on_case_delete = forms.BooleanField(required=False, initial=True)
 
     cc_list = MultipleEmailField(
         required=False,
