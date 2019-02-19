@@ -285,66 +285,6 @@ class TestEditCase(BasePlanCase):
         edited_case = TestCase.objects.get(pk=self.case_1.pk)
         self.assertEqual(new_summary, edited_case.summary)
 
-    def test_continue_edit_this_case_after_save(self):
-        edit_data = self.edit_data.copy()
-        edit_data['_continue'] = 'continue edit'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}?from_plan={1}'.format(
-            reverse('testcases-edit', args=[self.case_1.pk]),
-            self.plan.pk,
-        )
-        self.assertRedirects(response, redirect_url)
-
-    def test_continue_edit_next_confirmed_case_after_save(self):
-        edit_data = self.edit_data.copy()
-        edit_data['_continuenext'] = 'continue edit next case'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}?from_plan={1}'.format(
-            reverse('testcases-edit', args=[self.case_2.pk]),
-            self.plan.pk,
-        )
-        self.assertRedirects(response, redirect_url)
-
-    def test_continue_edit_next_non_confirmed_case_after_save(self):
-        edit_data = self.edit_data.copy()
-        edit_data['case_status'] = self.case_status_proposed.pk
-        edit_data['_continuenext'] = 'continue edit next case'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}?from_plan={1}'.format(
-            reverse('testcases-edit', args=[self.proposed_case.pk]),
-            self.plan.pk,
-        )
-        self.assertRedirects(response, redirect_url)
-
-    def test_return_to_plan_confirmed_cases_tab(self):
-        edit_data = self.edit_data.copy()
-        edit_data['_returntoplan'] = 'return to plan'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}#testcases'.format(
-            reverse('test_plan_url_short', args=[self.plan.pk])
-        )
-        self.assertRedirects(response, redirect_url, target_status_code=301)
-
-    def test_return_to_plan_review_cases_tab(self):
-        edit_data = self.edit_data.copy()
-        edit_data['case_status'] = self.case_status_proposed.pk
-        edit_data['_returntoplan'] = 'return to plan'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}#reviewcases'.format(
-            reverse('test_plan_url_short', args=[self.plan.pk])
-        )
-        self.assertRedirects(response, redirect_url, target_status_code=301)
-
 
 class TestPrintablePage(BasePlanCase):
     """Test printable page view method"""
