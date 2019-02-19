@@ -701,42 +701,6 @@ def edit(request, case_id):
             if request.POST.get('from_plan'):
                 from_plan = "?from_plan=%s" % request.POST.get('from_plan')
 
-            # Returns
-            if request.POST.get('_continue'):
-                return HttpResponseRedirect(
-                    reverse('testcases-edit', args=[case_id, ]) + from_plan
-                )
-
-            if request.POST.get('_continuenext'):
-                if not test_plan:
-                    raise Http404
-
-                # find out test case list which belong to the same
-                # classification
-                if test_case.case_status.is_confirmed():
-                    pk_list = test_plan.case.filter(case_status=TestCaseStatus.get_confirmed())
-                else:
-                    pk_list = test_plan.case.exclude(case_status=TestCaseStatus.get_confirmed())
-                pk_list = list(pk_list.defer('case_id').values_list('pk', flat=True))
-                pk_list.sort()
-
-                # Get the next case
-                _prev_case, next_case = test_case.get_previous_and_next(pk_list=pk_list)
-                return HttpResponseRedirect(
-                    reverse('testcases-edit', args=[next_case.pk, ]) + from_plan
-                )
-
-            if request.POST.get('_returntoplan'):
-                if not test_plan:
-                    raise Http404
-                if test_case.case_status.is_confirmed():
-                    return HttpResponseRedirect('%s#testcases' % (
-                        reverse('test_plan_url_short', args=[test_plan.pk, ]),
-                    ))
-                return HttpResponseRedirect('%s#reviewcases' % (
-                    reverse('test_plan_url_short', args=[test_plan.pk, ]),
-                ))
-
             return HttpResponseRedirect(
                 reverse('testcases-get', args=[case_id, ]) + from_plan
             )
