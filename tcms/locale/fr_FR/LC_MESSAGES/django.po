@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 15:36+0000\n"
-"PO-Revision-Date: 2019-02-14 08:32\n"
+"PO-Revision-Date: 2019-02-20 19:21\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1423,7 +1423,7 @@ msgstr "Pas d'exécution de scénario trouvée"
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
 msgstr "Veuillez entrer un/des id(s) de cas valide(s). utiliser le virgule pour séparer plus d'un id de cas.ex: \"111, 222\""
 
-#: tcms/testcases/forms.py:95
+#: tcms/testcases/forms.py:90
 msgid "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
@@ -1509,14 +1509,40 @@ msgstr "ajouter une nouvelle catégorie"
 msgid "Requirments"
 msgstr "Spécifications requises"
 
+#: tcms/testcases/templates/testcases/mutable.html:143
+msgid "Notify"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:154
+msgid "Manager of runs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:161
+msgid "Asignees"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:177
+msgid "Default tester of runs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:186
+msgid "Notify when"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:190
+msgid "TestCase is updated"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:197
+msgid "TestCase is deleted"
+msgstr ""
+
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:211
-msgid ""
-"Email addresses separated by comma. A notification email will be sent to "
-"each Email address within CC list."
+msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
 msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:214
