@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 15:36+0000\n"
-"PO-Revision-Date: 2019-02-20 19:21\n"
+"PO-Revision-Date: 2019-02-20 19:52\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1511,11 +1511,11 @@ msgstr "Spécifications requises"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "Notification"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
-msgstr ""
+msgstr "Gestionnaire des exécutions"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
@@ -1527,23 +1527,23 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
-msgstr ""
+msgstr "Être notifié quand"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Le scénario de test a été mis à jour"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Le scénario de test a été supprimé"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
-msgstr ""
+msgstr "Copie à"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "Les adresses e-mail séparées par des virgules. Un courriel de notification sera envoyé à chaque adresse email dans la liste en copie."
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 #: tcms/testplans/templates/testplans/mutable.html:143
