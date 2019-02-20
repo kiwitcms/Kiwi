@@ -20,3 +20,13 @@ nav.navbar-default { border-top-color: #9ab451; }
     background-color: #0088ce;
     color: #fff;
 }
+
+.markdown-text table {
+    margin-bottom: 8px;
+}
+
+.markdown-text table td,
+.markdown-text table th {
+    border: 1px solid #ccc;
+    padding: 5px;
+}

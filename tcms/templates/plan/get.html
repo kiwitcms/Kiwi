@@ -7,6 +7,7 @@
 
 {% block custom_stylesheet %}
 <link rel="stylesheet" type="text/css" href="{% static 'style/print.css' %}" media="print">
+<link rel="stylesheet" type="text/css" href="{% static 'style/patternfly_override.css' %}">
 {% endblock %}
 {% block custom_javascript %}
 <script type="text/javascript" src="{% static 'js/lib/tablednd.js' %}"></script>
@@ -129,7 +130,7 @@ Nitrate.TestPlans.Instance = {
 			</ul>
 			<div id="document" class="tab_list" style="display:none">
                             <div class="listinfo_doc_content">
-                                <div id="display_summary" class="listinfo_doc">
+                                <div id="display_summary" class="listinfo_doc markdown-text">
                                 {% if test_plan.text %}
                                     {{ test_plan.text|markdown2html }}
                                 {% else %}
