@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 10:34+0000\n"
+"POT-Creation-Date: 2019-02-20 15:36+0000\n"
 "PO-Revision-Date: 2019-02-18 09:31\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
@@ -367,6 +367,7 @@ msgstr "Baza testnih scenarijev"
 #: tcms/templates/run/assign_case.html:73
 #: tcms/testcases/templates/testcases/get.html:43
 #: tcms/testcases/templates/testcases/get.html:312
+#: tcms/testcases/templates/testcases/mutable.html:147
 #: tcms/testcases/templates/testcases/search.html:106
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/mutable.html:101
@@ -876,7 +877,7 @@ msgstr "Naslednja stran"
 msgid "Last page"
 msgstr "Zadnja stran"
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:576
 msgid "Edit"
 msgstr "Uredi"
 
@@ -1021,7 +1022,7 @@ msgid "print view of selected cases"
 msgstr "natisni izbrane testne scenarije"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:578
+#: tcms/testcases/views.py:580
 msgid "Clone"
 msgstr "Podvoji"
 
@@ -1345,6 +1346,7 @@ msgstr "Napake"
 #: tcms/templates/run/get_case_runs.html:68
 #: tcms/testcases/templates/testcases/get.html:48
 #: tcms/testcases/templates/testcases/mutable.html:30
+#: tcms/testcases/templates/testcases/mutable.html:170
 #: tcms/testplans/templates/testplans/mutable.html:113
 #: tcms/testplans/templates/testplans/search.html:80
 #: tcms/testruns/templates/testruns/mutable.html:57
@@ -1484,7 +1486,7 @@ msgstr ""
 "Prosimo vnesite veljavne Id-je testni scenarijev. Uporabite vejico za več "
 "primerov npr. \"111, 222\""
 
-#: tcms/testcases/forms.py:95
+#: tcms/testcases/forms.py:90
 msgid ""
 "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
@@ -1580,7 +1582,17 @@ msgstr "dodaj novo kategorijo"
 msgid "Requirments"
 msgstr "Zahteve"
 
-#: tcms/testcases/templates/testcases/mutable.html:141
+#: tcms/testcases/templates/testcases/mutable.html:206
+msgid "CC to"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:211
+msgid ""
+"Email addresses separated by comma. A notification email will be sent to "
+"each Email address within CC list."
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:214
 #: tcms/testplans/templates/testplans/mutable.html:143
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
@@ -1627,24 +1639,24 @@ msgstr "Iskanje"
 msgid "Created on"
 msgstr "Ustvarjeno dne"
 
-#: tcms/testcases/views.py:398
+#: tcms/testcases/views.py:400
 msgid "TestPlan not specified or does not exist"
 msgstr "Baza testnih scenarijev ni izbrana ali ne obstaja"
 
-#: tcms/testcases/views.py:582
+#: tcms/testcases/views.py:584
 msgid "History"
 msgstr "Zgodovina"
 
-#: tcms/testcases/views.py:587
+#: tcms/testcases/views.py:589
 msgid "Delete"
 msgstr "Izbriši"
 
-#: tcms/testcases/views.py:801 tcms/testruns/views.py:422
+#: tcms/testcases/views.py:802 tcms/testruns/views.py:422
 #: tcms/testruns/views.py:500
 msgid "At least one TestCase is required"
 msgstr "Vsaj en testni scenarij je zahtevan"
 
-#: tcms/testcases/views.py:938
+#: tcms/testcases/views.py:939
 msgid "TestCase cloning was successful"
 msgstr "Kloniranje testnega scenarija je uspelo"
 

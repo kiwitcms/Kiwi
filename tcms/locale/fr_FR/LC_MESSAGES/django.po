@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 10:34+0000\n"
-"PO-Revision-Date: 2019-02-18 19:41\n"
+"POT-Creation-Date: 2019-02-20 15:36+0000\n"
+"PO-Revision-Date: 2019-02-14 08:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -350,6 +350,7 @@ msgstr "Plan"
 #: tcms/templates/run/assign_case.html:73
 #: tcms/testcases/templates/testcases/get.html:43
 #: tcms/testcases/templates/testcases/get.html:312
+#: tcms/testcases/templates/testcases/mutable.html:147
 #: tcms/testcases/templates/testcases/search.html:106
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/mutable.html:101
@@ -829,7 +830,7 @@ msgstr "Page suivante"
 msgid "Last page"
 msgstr "Dernière page"
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:576
 msgid "Edit"
 msgstr "Modifier"
 
@@ -974,7 +975,7 @@ msgid "print view of selected cases"
 msgstr "afficher la vue des scénarios sélectionnés"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:578
+#: tcms/testcases/views.py:580
 msgid "Clone"
 msgstr "Dupliquer"
 
@@ -1287,6 +1288,7 @@ msgstr "Anomalies"
 #: tcms/templates/run/get_case_runs.html:68
 #: tcms/testcases/templates/testcases/get.html:48
 #: tcms/testcases/templates/testcases/mutable.html:30
+#: tcms/testcases/templates/testcases/mutable.html:170
 #: tcms/testplans/templates/testplans/mutable.html:113
 #: tcms/testplans/templates/testplans/search.html:80
 #: tcms/testruns/templates/testruns/mutable.html:57
@@ -1507,7 +1509,17 @@ msgstr "ajouter une nouvelle catégorie"
 msgid "Requirments"
 msgstr "Spécifications requises"
 
-#: tcms/testcases/templates/testcases/mutable.html:141
+#: tcms/testcases/templates/testcases/mutable.html:206
+msgid "CC to"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:211
+msgid ""
+"Email addresses separated by comma. A notification email will be sent to "
+"each Email address within CC list."
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:214
 #: tcms/testplans/templates/testplans/mutable.html:143
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
@@ -1554,24 +1566,24 @@ msgstr "Recherche"
 msgid "Created on"
 msgstr "Créé le"
 
-#: tcms/testcases/views.py:398
+#: tcms/testcases/views.py:400
 msgid "TestPlan not specified or does not exist"
 msgstr "Plan de test non spécifié ou n'existe pas"
 
-#: tcms/testcases/views.py:582
+#: tcms/testcases/views.py:584
 msgid "History"
 msgstr "Historique"
 
-#: tcms/testcases/views.py:587
+#: tcms/testcases/views.py:589
 msgid "Delete"
 msgstr "Supprimer"
 
-#: tcms/testcases/views.py:801 tcms/testruns/views.py:422
+#: tcms/testcases/views.py:802 tcms/testruns/views.py:422
 #: tcms/testruns/views.py:500
 msgid "At least one TestCase is required"
 msgstr "Au moins un scénario de test est requis"
 
-#: tcms/testcases/views.py:938
+#: tcms/testcases/views.py:939
 msgid "TestCase cloning was successful"
 msgstr "Le clonage du cas de test a été réalisé avec succès"
 
