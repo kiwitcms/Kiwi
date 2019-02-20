@@ -15,6 +15,7 @@ Kiwi TCMS documentation
    configuration.rst
    admin.rst
    tutorial.rst
+   plugins.rst
    import-export/index.rst
    api/index.rst
    contribution.rst
