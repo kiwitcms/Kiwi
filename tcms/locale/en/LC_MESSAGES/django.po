@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 10:34+0000\n"
+"POT-Creation-Date: 2019-02-20 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -354,6 +354,7 @@ msgstr ""
 #: tcms/templates/run/assign_case.html:73
 #: tcms/testcases/templates/testcases/get.html:43
 #: tcms/testcases/templates/testcases/get.html:312
+#: tcms/testcases/templates/testcases/mutable.html:147
 #: tcms/testcases/templates/testcases/search.html:106
 #: tcms/testcases/templates/testcases/search.html:140
 #: tcms/testplans/templates/testplans/mutable.html:101
@@ -822,7 +823,7 @@ msgstr ""
 msgid "Last page"
 msgstr ""
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:576
 msgid "Edit"
 msgstr ""
 
@@ -967,7 +968,7 @@ msgid "print view of selected cases"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:578
+#: tcms/testcases/views.py:580
 msgid "Clone"
 msgstr ""
 
@@ -1285,6 +1286,7 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:68
 #: tcms/testcases/templates/testcases/get.html:48
 #: tcms/testcases/templates/testcases/mutable.html:30
+#: tcms/testcases/templates/testcases/mutable.html:170
 #: tcms/testplans/templates/testplans/mutable.html:113
 #: tcms/testplans/templates/testplans/search.html:80
 #: tcms/testruns/templates/testruns/mutable.html:57
@@ -1421,7 +1423,7 @@ msgid ""
 "g. \"111, 222\""
 msgstr ""
 
-#: tcms/testcases/forms.py:95
+#: tcms/testcases/forms.py:90
 msgid ""
 "**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
@@ -1501,7 +1503,45 @@ msgstr ""
 msgid "Requirments"
 msgstr ""
 
-#: tcms/testcases/templates/testcases/mutable.html:141
+#: tcms/testcases/templates/testcases/mutable.html:143
+msgid "Notify"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:154
+msgid "Manager of runs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:161
+msgid "Asignees"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:177
+msgid "Default tester of runs"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:186
+msgid "Notify when"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:190
+msgid "TestCase is updated"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:197
+msgid "TestCase is deleted"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:206
+msgid "CC to"
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:211
+msgid ""
+"Email addresses separated by comma. A notification email will be sent to "
+"each Email address within CC list."
+msgstr ""
+
+#: tcms/testcases/templates/testcases/mutable.html:214
 #: tcms/testplans/templates/testplans/mutable.html:143
 #: tcms/testruns/templates/testruns/mutable.html:72
 msgid "Save"
@@ -1548,24 +1588,24 @@ msgstr ""
 msgid "Created on"
 msgstr ""
 
-#: tcms/testcases/views.py:398
+#: tcms/testcases/views.py:400
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:582
+#: tcms/testcases/views.py:584
 msgid "History"
 msgstr ""
 
-#: tcms/testcases/views.py:587
+#: tcms/testcases/views.py:589
 msgid "Delete"
 msgstr ""
 
-#: tcms/testcases/views.py:801 tcms/testruns/views.py:422
+#: tcms/testcases/views.py:802 tcms/testruns/views.py:422
 #: tcms/testruns/views.py:500
 msgid "At least one TestCase is required"
 msgstr ""
 
-#: tcms/testcases/views.py:938
+#: tcms/testcases/views.py:939
 msgid "TestCase cloning was successful"
 msgstr ""
 
