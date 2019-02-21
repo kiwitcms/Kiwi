@@ -609,6 +609,7 @@ def cc(request, run_id):  # pylint: disable=invalid-name
 
 
 @require_POST
+@permission_required('testruns.change_testcaserun')
 def update_case_run_text(request, run_id):
     """Update the IDLE cases to newest text"""
 
