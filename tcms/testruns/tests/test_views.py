@@ -434,6 +434,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
     def setUpTestData(cls):
         super().setUpTestData()
 
+        cls.testruns_url = reverse('testruns-get', args=[cls.test_run.pk])
         cls.update_url = reverse('testruns-update_case_run_text',
                                  args=[cls.test_run.pk])
 
@@ -444,7 +445,14 @@ class TestUpdateCaseRunText(BaseCaseRun):
         cls.case_run_1.case.text = "Scenario Version 2"
         cls.case_run_1.case.save()
 
-    def test_update_selected_case_runs(self):
+    def test_get_update_caserun_text_with_permissions(self):
+        user_should_have_perm(self.tester, 'testruns.change_testcaserun')
+        response = self.client.get(self.testruns_url)
+        self.assertContains(response, 'id="update_case_run_text"')
+
+    def test_update_selected_case_runs_with_permissions(self):
+        user_should_have_perm(self.tester, 'testruns.change_testcaserun')
+
         self.assertNotEqual(self.case_run_1.case.history.latest().history_id,
                             self.case_run_1.case_text_version)
         response = self.client.post(self.update_url,
@@ -452,7 +460,62 @@ class TestUpdateCaseRunText(BaseCaseRun):
                                     follow=True)
 
         self.assertContains(response, _('%d CaseRun(s) updated:') % 1)
-        self.assertEqual(self.case_run_1.case.text, "Scenario Version 2")
+
+        self.case_run_1.refresh_from_db()
+
+        self.assertEqual(
+            self.case_run_1.case.get_text_with_version(
+                self.case_run_1.case_text_version
+            ),
+            "Scenario Version 2"
+        )
+        self.assertEqual(
+            self.case_run_1.case.history.latest().history_id,
+            self.case_run_1.case_text_version
+        )
+
+    def test_get_update_caserun_text_without_permissions(self):
+        remove_perm_from_user(self.tester, 'testruns.change_testcaserun')
+        response = self.client.get(self.testruns_url)
+        self.assertNotContains(response, 'id="update_case_run_text"')
+
+    def test_update_selected_case_runs_without_permissions(self):
+        self.case_run_1.case.text = "Scenario Version 3"
+        self.case_run_1.case.save()
+
+        remove_perm_from_user(self.tester, 'testruns.change_testcaserun')
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+
+        self.assertNotEqual(
+            self.case_run_1.case.history.latest().history_id,
+            self.case_run_1.case_text_version
+        )
+
+        response = self.client.post(self.update_url,
+                                    {'case_run': [self.case_run_1.pk]},
+                                    follow=True)
+
+        self.assertRedirects(
+            response,
+            reverse('tcms-login') + '?next=' + self.update_url
+        )
+
+        self.case_run_1.refresh_from_db()
+
+        self.assertNotEqual(
+            self.case_run_1.case.get_text_with_version(
+                self.case_run_1.case_text_version
+            ),
+            "Scenario Version 3"
+        )
+
+        self.assertNotEqual(
+            self.case_run_1.case.history.latest().history_id,
+            self.case_run_1.case_text_version
+        )
 
 
 class TestEditRun(BaseCaseRun):
