@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_name">{% trans "Name" %}</label>
                 <div class="col-md-11 col-lg-11 {% if form.name.errors %}has-error{% endif %}">
-                    <input type="text" id="id_name" name="name" value="{% firstof form.name.value "" %}" class="form-control" required>
+                    <input type="text" id="id_name" name="name" value="{{ form.name.value|default:'' }}" class="form-control" required>
                 {{ form.name.errors }}
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
                     <select id="id_product" name="product" class="form-control selectpicker">
                         {% for product in form.product.field.queryset %}
-                            <option value="{{ product.pk }}" {% if product.pk == form.product.value %}selected{% endif %}>
+                            <option value="{{ product.pk }}" {% if product.pk|escape == form.product.value|escape %}selected{% endif %}>
                                 {{ product.name }}
                             </option>
                         {% endfor %}
@@ -53,7 +53,7 @@
                 <div class="col-md-3 col-lg-3 {% if form.product_version.errors %}has-error{% endif %}">
                     <select id="id_version" name="product_version" class="form-control selectpicker">
                         {% for product_version in form.product_version.field.queryset %}
-                            <option value="{{ product_version.pk }}" {% if product_version.pk == form.product_version.value %}selected{% endif %}>
+                            <option value="{{ product_version.pk }}" {% if product_version.pk|escape == form.product_version.value|escape %}selected{% endif %}>
                                 {{ product_version.value }}
                             </option>
                         {% endfor %}
@@ -67,7 +67,9 @@
                 <div class="col-md-3 col-lg-3 {% if form.type.errors %}has-error{% endif %}">
                     <select class="form-control selectpicker" id="id_type" name="type">
                         {% for type in form.type.field.queryset %}
-                            <option value="{{ type.pk }}"> {{ type }} </option>
+                            <option value="{{ type.pk }}" {% if type.pk|escape == form.type.value|escape %}selected{% endif %}>
+                                {{ type }}
+                            </option>
                         {% endfor %}
                     </select>
                     {{ form.type.errors }}
@@ -77,12 +79,12 @@
             <div class="form-group">
                 <label class="col-md-1 col-lg-1" for="id_parent">{% trans "Parent ID" %}</label>
                 <div class="col-md-3 col-lg-3 {% if form.parent.errors %}has-error{% endif %}">
-                    <input type="text" id="id_parent" name="parent" value="" class="form-control">
+                    <input type="text" id="id_parent" name="parent" value="{{ form.parent.value|default:'' }}" class="form-control">
                     {{ form.parent.errors }}
                 </div>
                 <label class="col-md-1 col-lg-1" for="id_reference_link">{% trans "Reference link" %}</label>
                 <div class="col-md-7 col-lg-7 {% if form.extra_link.errors %}has-error{% endif %}">
-                    <input type="text" id="id_reference_link" name="extra_link" value="" class="form-control">
+                    <input type="text" id="id_reference_link" name="extra_link" value="{{ form.extra_link.value|default:'' }}" class="form-control">
                     {{ form.extra_link.errors }}
                 </div>
             </div>

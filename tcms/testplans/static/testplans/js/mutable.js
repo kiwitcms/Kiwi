@@ -1,5 +1,7 @@
 $(document).ready((function () {
-    populateProductVersion();
+    if ($('#id_version').find('option').length === 0) {
+        populateProductVersion();
+    }
 
     $('#add_id_product').click(function () {
         return showRelatedObjectPopup(this);
