@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-02-22 20:21\n"
+"PO-Revision-Date: 2019-02-22 21:03\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -454,7 +454,7 @@ msgstr "Date d'exécution"
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Build"
-msgstr "Construire"
+msgstr "Construction"
 
 #: tcms/templates/case/get_details_case_run.html:76
 msgid "Text Version"
@@ -1489,11 +1489,11 @@ msgstr "Gestionnaire des exécutions"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr ""
+msgstr "Assigné à"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Testeur par défaut des exécutions"
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
