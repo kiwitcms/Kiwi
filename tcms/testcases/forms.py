@@ -121,10 +121,6 @@ class NewCaseForm(BaseCaseForm):
         return self.cleaned_data['case_status']
 
 
-class EditCaseForm(BaseCaseForm):
-    pass
-
-
 class CaseNotifyForm(forms.Form):
     author = forms.BooleanField(required=False, initial=True)
     default_tester_of_case = forms.BooleanField(required=False, initial=True)

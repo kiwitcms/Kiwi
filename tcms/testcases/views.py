@@ -26,8 +26,7 @@ from tcms.testplans.models import TestPlan
 from tcms.testruns.models import TestCaseRun
 from tcms.testruns.models import TestCaseRunStatus
 from tcms.testcases.forms import NewCaseForm, \
-    SearchCaseForm, EditCaseForm, CaseNotifyForm, \
-    CloneCaseForm
+    SearchCaseForm, CaseNotifyForm, CloneCaseForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.testcases.fields import MultipleEmailField
 
@@ -683,7 +682,7 @@ def edit(request, case_id):
         from_plan = "?from_plan=%d" % test_plan.pk
 
     if request.method == "POST":
-        form = EditCaseForm(request.POST)
+        form = NewCaseForm(request.POST)
         if request.POST.get('product'):
             form.populate(product_id=request.POST['product'])
         elif test_plan:
@@ -723,7 +722,7 @@ def edit(request, case_id):
         if test_case.default_tester_id:
             default_tester = test_case.default_tester.email
 
-        form = EditCaseForm(initial={
+        form = NewCaseForm(initial={
             'summary': test_case.summary,
             'default_tester': default_tester,
             'requirement': test_case.requirement,
