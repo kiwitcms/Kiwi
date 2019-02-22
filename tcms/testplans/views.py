@@ -294,16 +294,15 @@ def edit(request, plan_id):
 
         # FIXME: Error handle
         if form.is_valid():
-            if request.user.has_perm('testplans.change_testplan'):
-                test_plan.name = form.cleaned_data['name']
-                test_plan.parent = form.cleaned_data['parent']
-                test_plan.product = form.cleaned_data['product']
-                test_plan.product_version = form.cleaned_data['product_version']
-                test_plan.type = form.cleaned_data['type']
-                test_plan.is_active = form.cleaned_data['is_active']
-                test_plan.extra_link = form.cleaned_data['extra_link']
-                test_plan.text = form.cleaned_data['text']
-                test_plan.save()
+            test_plan.name = form.cleaned_data['name']
+            test_plan.parent = form.cleaned_data['parent']
+            test_plan.product = form.cleaned_data['product']
+            test_plan.product_version = form.cleaned_data['product_version']
+            test_plan.type = form.cleaned_data['type']
+            test_plan.is_active = form.cleaned_data['is_active']
+            test_plan.extra_link = form.cleaned_data['extra_link']
+            test_plan.text = form.cleaned_data['text']
+            test_plan.save()
 
             # Update plan email settings
             update_plan_email_settings(test_plan, form)
