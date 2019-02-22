@@ -678,6 +678,9 @@ def edit(request, case_id):
         raise Http404
 
     test_plan = plan_from_request_or_none(request)
+    from_plan = ""
+    if test_plan:
+        from_plan = "?from_plan=%d" % test_plan.pk
 
     if request.method == "POST":
         form = EditCaseForm(request.POST)
@@ -691,15 +694,8 @@ def edit(request, case_id):
         n_form = CaseNotifyForm(request.POST)
 
         if form.is_valid() and n_form.is_valid():
-
             update_testcase(request, test_case, form)
-
-            # Notification
             update_case_email_settings(test_case, n_form)
-
-            from_plan = ""
-            if request.POST.get('from_plan'):
-                from_plan = "?from_plan=%s" % request.POST.get('from_plan')
 
             return HttpResponseRedirect(
                 reverse('testcases-get', args=[case_id, ]) + from_plan
