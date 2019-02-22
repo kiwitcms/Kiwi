@@ -14,8 +14,6 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
-    {{ form.errors }}
-
     <form class="form-horizontal" action="{% if test_run %}{% url 'testruns-edit' test_run.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
 
@@ -39,7 +37,7 @@
             <div class="col-md-3 col-lg-3">
                 <select class="form-control selectpicker" id="id_build" name="build">
                 {% for option in form.build.field.queryset %}
-                    <option value="{{ option.pk }}" {% if option.pk == form.build.value %}selected{% endif %}>{{ option.name }}</option>
+                    <option value="{{ option.pk }}" {% if option.pk|escape == form.build.value|escape %}selected{% endif %}>{{ option.name }}</option>
                 {% endfor %}
                 </select>
                 <p class="help-block">
