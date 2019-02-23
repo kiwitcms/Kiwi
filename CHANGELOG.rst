@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+tcms-api 5.3 (24 Feb 2019)
+--------------------------
+
+- Add ``plugin_helpers.Backend.add_comment()`` which allows plugins to add
+  comments to test executions, for example a traceback
+
+
 Kiwi TCMS 6.5.3 (11 Feb 2019)
 -----------------------------
 
