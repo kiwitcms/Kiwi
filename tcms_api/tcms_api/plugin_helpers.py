@@ -424,10 +424,28 @@ class Backend:
                               for example the ID for PASSED, FAILED, etc.
                               See :func:`tcms_api.tcms_api.plugin_helpers.Backend.get_status_id`
             :type status_id: int
+            :param comment: the string to add as a comment, defaults to None
+            :type comment: str
             :return: None
         """
         self.rpc.TestCaseRun.update(test_case_run_id,  # pylint: disable=objects-update-used
                                     {'status': status_id})
 
         if comment:
-            self.rpc.TestCaseRun.add_comment(test_case_run_id, comment)
+            self.add_comment(test_case_run_id, comment)
+
+    def add_comment(self, test_case_run_id, comment):
+        """
+            Add comment string to TestCaseRun without changing the status
+
+            .. important::
+
+                Test runner plugins **must** call this method!
+
+            :param test_case_run_id: :class:`tcms.testruns.models.TestCaseRun` PK
+            :type test_case_run_id: int
+            :param comment: the string to add as a comment
+            :type comment: str
+            :return: None
+        """
+        self.rpc.TestCaseRun.add_comment(test_case_run_id, comment)
