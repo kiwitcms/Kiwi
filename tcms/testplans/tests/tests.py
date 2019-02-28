@@ -135,6 +135,27 @@ class TestPlanModel(test.TestCase):
         self.assertEqual(1, cases_left.count())
         self.assertEqual(self.testcase_2.pk, cases_left[0].case.pk)
 
+    def test_add_cases_sortkey_autoincrement(self):
+        """
+        When you add new cases, each new case should get a sortkey of the
+        highest sortkey in the database + 10.
+
+        The first case should get sortkey 0. The offset between the sortkeys is
+        to leave space to insert cases in between without having to update all
+        cases.
+        """
+
+        plan = TestPlanFactory()
+
+        for sequence_no in range(3):
+            case_plan = plan.add_case(TestCaseFactory())
+            self.assertEqual(sequence_no * 10, case_plan.sortkey)
+
+        # Check if you can still specify a sortkey manually to insert a case in
+        # between the other cases.
+        case_plan = plan.add_case(TestCaseFactory(), sortkey=15)
+        self.assertEqual(15, case_plan.sortkey)
+
 
 class TestDeleteCasesFromPlan(BasePlanCase):
     """Test case for deleting cases from a plan"""
