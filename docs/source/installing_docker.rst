@@ -121,9 +121,8 @@ also handle SSL termination. For example we serve https://demo.kiwitcms.org,
 https://tcms.kiwitcms.org and a few other instances through Nginx. For all of
 these domains the browser will see a wildcard SSL certificate for
 ``*.kiwitcms.org``, while the individual docker containers are still configured
-with the default self-signed certificate! Here's how the configuration looks like
+with the default self-signed certificate! Here's how the configuration looks like::
 
-    :::
     http {
         # default ssl certificates for *.kiwitcms.org
         ssl_certificate     /etc/nginx/wildcard_kiwitcms_org.crt;
@@ -156,9 +155,8 @@ with the default self-signed certificate! Here's how the configuration looks lik
 Customization
 -------------
 
-``tcms/settings/product.py`` contains the following lines at the end:
+``tcms/settings/product.py`` contains the following lines at the end::
 
-    :::python
     try:
         from .local_settings import *  # noqa: F401,F403
     except ImportError:
