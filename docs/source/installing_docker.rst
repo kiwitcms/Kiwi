@@ -169,7 +169,7 @@ This means you can edit ``docker-compose.yml`` to mount the host file
             - uploads:/Kiwi/uploads
             - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings.py
 
-Essentially overriding any stock settings in this way!
+essentially overriding any stock settings in this way!
 
 .. warning::
 
@@ -209,7 +209,7 @@ the contents of ``Dockerfile`` and then::
     you do ``git pull``. It is also not a very good idea to deploy an image built
     directly from the master branch.
 
-    The proper way to create a downstream docker image is to provie a
+    The proper way to create a downstream docker image is to provide a
     ``Dockerfile.myorg`` which inherits ``FROM kiwitcms/kiwi:latest``
     and adds your changes as separate layers! Ideally you will keep this into
     another git repository together with a ``Makefile`` and possibly your customized
