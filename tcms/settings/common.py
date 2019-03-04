@@ -96,6 +96,9 @@ MENU_ITEMS = [
         (_('Search Test Cases'), reverse_lazy('testcases-search')),
     ]),
     (_('TELEMETRY'), [
+        ('Coming soon',
+         'http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/'),
+        ('-', '-'),
     ]),
     (_('ADMIN'), [
         (_('Users and groups'), '/admin/auth/'),
