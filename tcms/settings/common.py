@@ -95,10 +95,7 @@ MENU_ITEMS = [
         (_('Search Test Runs'), reverse_lazy('testruns-search')),
         (_('Search Test Cases'), reverse_lazy('testcases-search')),
     ]),
-    (_('REPORTING'), [
-        (_('Overall report'), reverse_lazy('report-overall')),
-        (_('Custom report'), reverse_lazy('report-custom')),
-        (_('Testing report'), reverse_lazy('testing-report')),
+    (_('TELEMETRY'), [
     ]),
     (_('ADMIN'), [
         (_('Users and groups'), '/admin/auth/'),

@@ -15,7 +15,6 @@ Subpackages
     tcms.issuetracker
     tcms.kiwi_auth
     tcms.management
-    tcms.report
     tcms.search
     tcms.settings
     tcms.testcases

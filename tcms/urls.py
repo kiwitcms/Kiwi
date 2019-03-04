@@ -20,7 +20,6 @@ from tcms.testplans import urls as testplans_urls
 from tcms.testcases import urls as testcases_urls
 from tcms.kiwi_auth import urls as auth_urls
 from tcms.testruns import urls as testruns_urls
-from tcms.report import urls as report_urls
 
 
 urlpatterns = [
@@ -62,9 +61,6 @@ urlpatterns = [
 
     url(r'^linkref/add/$', linkreference_views.add, name='linkref-add'),
     url(r'^linkref/remove/(?P<link_id>\d+)/$', linkreference_views.remove),
-
-    # Report zone
-    url(r'^report/', include(report_urls)),
 
     # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
