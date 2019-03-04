@@ -50,7 +50,6 @@ setup(
     dependency_links=DEPENDENCY_LINKS,
 
     packages=find_packages(exclude=['kiwi_lint*',
-                                    'tcms_api*',
                                     '*.tests',
                                     'tcms.settings.test']),
     include_package_data=True,
