@@ -28,12 +28,3 @@ class CheckSettingsMiddleware(MiddlewareMixin):
                       'doc_url': doc_url,
                       'admin_url': reverse('admin:sites_site_change', args=[site.pk])}
             )
-
-        if request.path.find('/report/') > -1:
-            messages.add_message(
-                request,
-                messages.WARNING,
-                'WARNING: Legacy reports are going away after Mar 1st 2019! '
-                'Tell us what you need! '
-                'See <a href="https://github.com/kiwitcms/Kiwi/issues/657">Issue #657</a>'
-            )
