@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-03-07 09:16\n"
+"PO-Revision-Date: 2019-03-07 09:23\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -19,11 +19,11 @@ msgstr ""
 #: tcms/core/ajax.py:158 tcms/testruns/views.py:688
 #, python-format
 msgid "User %s not found!"
-msgstr "用户 %s 不存在"
+msgstr "用户 %s 不存在！"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
-msgstr "核心定制评论"
+msgstr "核心定制的意见"
 
 #: tcms/core/contrib/comments/forms.py:14
 #: tcms/templates/run/get_case_runs.html:138
@@ -1714,16 +1714,16 @@ msgstr "已更新 %d 个测试运行:"
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
-msgstr ""
+msgstr "通过配置API参数来使能 [ 在问题追踪器中直接链接测试用例 ]"
 
 #: tcms/xmlrpc/api/bug.py:138
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "通过配置 base_url 来使能 [ 报告给这个问题追踪器 ]"
 
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
 msgid "Model %s has no primary key. You have to specify such field manually."
-msgstr ""
+msgstr "%s 没有主键。你必须手动指定此类字段。"
 
 #: vinaigrette-deleteme.py:2
 msgid "IDLE"
