@@ -378,3 +378,14 @@ class Gitlab(IssueTrackerType):
             url += '/'
 
         return url + '/issues/new?' + urlencode(args, True)
+
+
+class LinkOnly(IssueTrackerType):
+    """
+        LinkOnly Issue Tracker, for when your issue tracker is not one of the supported ones.
+
+        Because of this, no API related functionallities are available
+    """
+
+    def is_adding_testcase_to_issue_disabled(self):
+        return True
