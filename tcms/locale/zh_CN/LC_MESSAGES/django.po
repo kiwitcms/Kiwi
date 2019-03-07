@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-03-07 08:32\n"
+"PO-Revision-Date: 2019-03-07 08:42\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -61,24 +61,28 @@ msgid "Updated on %(history_date)s\n"
 "%(diff)s\n\n"
 "For more information:\n"
 "%(instance_url)s"
-msgstr ""
+msgstr "更新于 %(history_date)s\n"
+"由 %(username)s 更新\n\n"
+"%(diff)s\n\n"
+"获取更多信息:\n"
+"%(instance_url)s _ 321"
 
 #: tcms/core/middleware.py:25
 #, python-format
 msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
-msgstr ""
+msgstr "基本URL未配置！参见 <a href=\"%(doc_url)s\">documentation</a>  和  <a href=\"%(admin_url)s\">change it</a>"
 
 #: tcms/kiwi_auth/admin.py:28
 msgid "This email address is already in use"
-msgstr ""
+msgstr "该电子邮件地址已被使用。"
 
 #: tcms/kiwi_auth/admin.py:84
 msgid "Personal info"
-msgstr ""
+msgstr "个人信息"
 
 #: tcms/kiwi_auth/admin.py:85
 msgid "Permissions"
-msgstr ""
+msgstr "权限"
 
 #: tcms/kiwi_auth/forms.py:32
 msgid "A user with that email already exists."
@@ -87,7 +91,7 @@ msgstr "已存在使用相同电子邮件的地址的用户。"
 #: tcms/kiwi_auth/forms.py:60
 #, python-format
 msgid "Your new %s account confirmation"
-msgstr ""
+msgstr "你的新帐户  %s  确认"
 
 #: tcms/kiwi_auth/views.py:50
 msgid "Your account has been created, please check your mailbox for confirmation"
@@ -119,15 +123,15 @@ msgstr "仪表 板"
 
 #: tcms/settings/common.py:88
 msgid "TESTING"
-msgstr ""
+msgstr "测试"
 
 #: tcms/settings/common.py:89
 msgid "New Test Plan"
-msgstr ""
+msgstr "新的测试计划"
 
 #: tcms/settings/common.py:91
 msgid "New Test Case"
-msgstr ""
+msgstr "新的测试用例"
 
 #: tcms/settings/common.py:93
 msgid "SEARCH"
@@ -135,15 +139,15 @@ msgstr "搜索"
 
 #: tcms/settings/common.py:94
 msgid "Search Test Plans"
-msgstr ""
+msgstr "搜索测试计划"
 
 #: tcms/settings/common.py:95
 msgid "Search Test Runs"
-msgstr ""
+msgstr "搜索测试执行"
 
 #: tcms/settings/common.py:96
 msgid "Search Test Cases"
-msgstr ""
+msgstr "搜索测试用例"
 
 #: tcms/settings/common.py:98
 msgid "REPORTING"
@@ -151,47 +155,47 @@ msgstr "报告"
 
 #: tcms/settings/common.py:99
 msgid "Overall report"
-msgstr ""
+msgstr "总体报告"
 
 #: tcms/settings/common.py:100
 msgid "Custom report"
-msgstr ""
+msgstr "自定义报告"
 
 #: tcms/settings/common.py:101
 msgid "Testing report"
-msgstr ""
+msgstr "测试报告"
 
 #: tcms/settings/common.py:103
 msgid "ADMIN"
-msgstr ""
+msgstr "管理员"
 
 #: tcms/settings/common.py:104
 msgid "Users and groups"
-msgstr ""
+msgstr "用户和用户组"
 
 #: tcms/settings/common.py:106
 msgid "Everything else"
-msgstr ""
+msgstr "管理其他事项"
 
 #: tcms/settings/common.py:112
 msgid "Report an Issue"
-msgstr ""
+msgstr "反馈问题"
 
 #: tcms/settings/common.py:113
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "在StackOflow上寻求帮助"
 
 #: tcms/settings/common.py:114
 msgid "User Guide"
-msgstr ""
+msgstr "用户指南"
 
 #: tcms/settings/common.py:115
 msgid "Administration Guide"
-msgstr ""
+msgstr "管理员指南"
 
 #: tcms/settings/common.py:116
 msgid "API Help"
-msgstr ""
+msgstr "API 参考"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
@@ -200,65 +204,65 @@ msgstr "等待审批通过的新用户"
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "NEW: 测试执行 #%(pk)d - - %(summary)s"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "页面没找到"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "内部服务器错误"
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "领先的开源测试用例管理系统"
 
 #: tcms/templates/case/attachment.html:29
 #: tcms/templates/plan/attachment.html:30
 msgid "Note: Each attachment size limit is"
-msgstr ""
+msgstr "注意: 每个附件大小限制为"
 
 #: tcms/templates/case/attachment.html:35
 #: tcms/templates/plan/attachment.html:36
 #: tcms/templates/plan/get_attachments.html:13
 msgid "File name"
-msgstr ""
+msgstr "文件名称"
 
 #: tcms/templates/case/attachment.html:36
 #: tcms/templates/plan/attachment.html:37
 #: tcms/templates/plan/get_attachments.html:14
 msgid "Submitter"
-msgstr ""
+msgstr "提交者"
 
 #: tcms/templates/case/attachment.html:37
 #: tcms/templates/plan/attachment.html:38
 #: tcms/templates/plan/get_attachments.html:15
 msgid "Create date"
-msgstr ""
+msgstr "创建日期"
 
 #: tcms/templates/case/attachment.html:38
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/attachment.html:39
 #: tcms/templates/plan/get_attachments.html:16
 msgid "Action"
-msgstr ""
+msgstr "操作"
 
 #: tcms/templates/case/clone.html:24
 msgid "Clone TestCase(s)"
-msgstr ""
+msgstr "克隆测试用例"
 
 #: tcms/templates/case/clone.html:28
 msgid "Select Plan"
-msgstr ""
+msgstr "选择计划"
 
 #: tcms/templates/case/clone.html:32
 msgid "Use the same Plan"
-msgstr ""
+msgstr "使用相同的计划"
 
 #: tcms/templates/case/clone.html:37
 msgid "Filter another plan"
-msgstr ""
+msgstr "筛选另一个计划"
 
 #: tcms/templates/case/clone.html:42 tcms/templates/plan/get_cases.html:161
 #: tcms/templates/plan/search_case.html:80
@@ -268,7 +272,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:108
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
 #: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
@@ -284,18 +288,18 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "Product"
-msgstr ""
+msgstr "产品"
 
 #: tcms/templates/case/clone.html:50 tcms/templates/plan/clone.html:37
 #: tcms/templates/run/get.html:73 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "产品版本"
 
 #: tcms/templates/case/clone.html:54
 #: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:70
 #: tcms/templates/plan/preview.html:23
 msgid "Plan Type"
-msgstr ""
+msgstr "计划类型"
 
 #: tcms/templates/case/clone.html:58
 msgid "Plan Author"
