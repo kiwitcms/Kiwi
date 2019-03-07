@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-03-07 08:53\n"
+"PO-Revision-Date: 2019-03-07 09:02\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1145,94 +1145,94 @@ msgstr "将测试用例添加到测试执行"
 #: tcms/testruns/templates/testruns/search.html:56
 #: tcms/testruns/templates/testruns/search.html:96
 msgid "Manager"
-msgstr ""
+msgstr "管理者"
 
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:24
 msgid "Test Plan"
-msgstr ""
+msgstr "测试计划"
 
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
-msgstr ""
+msgstr "所有已确认的用例"
 
 #: tcms/templates/run/assign_case.html:40
 msgid "Test Cases in Run"
-msgstr ""
+msgstr "在执行中的测试用例"
 
 #: tcms/templates/run/assign_case.html:47
 msgid "Cases in this Run"
-msgstr ""
+msgstr "在这个执行中的用例"
 
 #: tcms/templates/run/assign_case.html:49
 msgid "Use the sortkey stored in plan"
-msgstr ""
+msgstr "使用计划中存储的排序密钥"
 
 #: tcms/templates/run/assign_case.html:53
 msgid "How to Assign case?"
-msgstr ""
+msgstr "如何指派用例？"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "下表列出了计划里所有已确认测试用例"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
-msgstr ""
+msgstr "选中复选框以将用例添加到测试执行中。记得最后要更新一下"
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "创建日期"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "已选择"
 
 #: tcms/templates/run/get.html:115 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "备注"
 
 #: tcms/templates/run/get.html:147
 msgid "Finished"
-msgstr ""
+msgstr "已完成"
 
 #: tcms/templates/run/get.html:152
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "运行中"
 
 #: tcms/templates/run/get.html:160 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "完成于"
 
 #: tcms/templates/run/get.html:166
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
-msgstr ""
+msgstr "自动"
 
 #: tcms/templates/run/get_case_runs.html:14
 msgid "Highlight"
-msgstr ""
+msgstr "突出显示"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
-msgstr ""
+msgstr "更新"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/templates/run/table_caseruns.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "被分配的执行人"
 
 #: tcms/templates/run/get_case_runs.html:43
 #: tcms/templates/run/status_statistics.html:27
 #: tcms/templates/run/table_caseruns.html:23
 #: tcms/testcases/templates/testcases/get.html:284
 msgid "Bugs"
-msgstr ""
+msgstr "软件Bug"
 
 #: tcms/templates/run/get_case_runs.html:68
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1244,23 +1244,23 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Default tester"
-msgstr ""
+msgstr "默认测试者"
 
 #: tcms/templates/run/get_case_runs.html:79
 msgid "Manual"
-msgstr ""
+msgstr "手动"
 
 #: tcms/templates/run/get_case_runs.html:80
 msgid "Auto"
-msgstr ""
+msgstr "自动"
 
 #: tcms/templates/run/get_case_runs.html:86
 msgid "Bug"
-msgstr ""
+msgstr "Bug"
 
 #: tcms/templates/run/get_case_runs.html:88
 msgid "You can type multiple bugs by comma."
-msgstr ""
+msgstr "用逗号隔开多个bug。"
 
 #: tcms/templates/run/get_case_runs.html:135
 msgid "All these fields are required."
