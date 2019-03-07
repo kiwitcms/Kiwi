@@ -171,7 +171,7 @@ class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
         required=False,
     )
     category = forms.ModelChoiceField(
-        queryset=Category.objects.all(),
+        queryset=Category.objects.none(),
         empty_label=None,
         required=False,
     )
