@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-03-07 09:32\n"
+"PO-Revision-Date: 2019-03-07 09:42\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -637,7 +637,7 @@ msgstr "用例"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
-msgstr ""
+msgstr "执行"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
@@ -645,23 +645,23 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:46
 msgid "Remove"
-msgstr ""
+msgstr "删除"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "添加标签"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "切换导航"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "欢迎游客"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "我的测试执行"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
@@ -1366,19 +1366,19 @@ msgstr "选择所有的用例 / 没有选择用例"
 
 #: tcms/templates/run/table_caseruns.html:11
 msgid "Expand all cases"
-msgstr ""
+msgstr "展开所有用例"
 
 #: tcms/templates/run/table_caseruns.html:15
 msgid "Case Run ID"
-msgstr ""
+msgstr "用例执行的 ID"
 
 #: tcms/templates/run/table_caseruns.html:77
 msgid "No case run found"
-msgstr ""
+msgstr "未找到用例执行"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr ""
+msgstr "请输入有效的用例ID。使用逗号分割多个用例 id。比如“111, 222”"
 
 #: tcms/testcases/forms.py:90
 msgid "**Scenario**: ... what behavior will be tested ...\n"
@@ -1393,109 +1393,120 @@ msgid "**Scenario**: ... what behavior will be tested ...\n"
 "1. item\n"
 "2. item\n"
 "3. item\n"
-msgstr ""
+msgstr "**场景**: ... 什么行为会被测试 ...\n"
+"  **输入** ... 前提条件 ...\n"
+"  **时间** ... 做的事情 ...\n"
+"  **预期** ... 预期的结果 ...\n\n"
+"*操作*:\n\n"
+"1. 第一步\n"
+"2. 第二步\n"
+"3. 第三步\n\n"
+"*预期结果*:\n\n"
+"1. 第一个\n"
+"2. 第二个\n"
+"3. 第三个\n"
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
 msgid "DELETED: TestCase #%{pk}d - %{summary}s"
-msgstr ""
+msgstr "已删除: 测试用例 #%{pk}d - %{summary}s"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
 msgid "Script"
-msgstr ""
+msgstr "脚本"
 
 #: tcms/testcases/templates/testcases/get.html:103
 #: tcms/testcases/templates/testcases/mutable.html:113
 msgid "Arguments"
-msgstr ""
+msgstr "参数"
 
 #: tcms/testcases/templates/testcases/get.html:108
 msgid "Requirements"
-msgstr ""
+msgstr "需求"
 
 #: tcms/testcases/templates/testcases/get.html:113
 #: tcms/testcases/templates/testcases/mutable.html:126
 #: tcms/testplans/templates/testplans/mutable.html:83
 msgid "Reference link"
-msgstr ""
+msgstr "参考链接"
 
 #: tcms/testcases/templates/testcases/get.html:291
 msgid "Bug URL"
-msgstr ""
+msgstr "Bug 链接"
 
 #: tcms/testcases/templates/testcases/get.html:303
 msgid "Test plans"
-msgstr ""
+msgstr "测试计划"
 
 #: tcms/testcases/templates/testcases/get.html:367
 msgid "Components"
-msgstr ""
+msgstr "组件"
 
 #: tcms/testcases/templates/testcases/get.html:411
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: tcms/testcases/templates/testcases/get.html:412
 msgid "Owner"
-msgstr ""
+msgstr "所有者"
 
 #: tcms/testcases/templates/testcases/get.html:413
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: tcms/testcases/templates/testcases/get.html:427
 msgid "No records found"
-msgstr ""
+msgstr "没有找到记录"
 
 #: tcms/testcases/templates/testcases/mutable.html:9
 msgid "New TestCase"
-msgstr ""
+msgstr "新的测试用例"
 
 #: tcms/testcases/templates/testcases/mutable.html:38
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "添加新产品"
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
+msgstr "添加新分类"
 
 #: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirments"
-msgstr ""
+msgstr "需求"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "提醒"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
-msgstr ""
+msgstr "管理执行器"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr ""
+msgstr "受配执行者"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
-msgstr ""
+msgstr "默认的测试者"
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
-msgstr ""
+msgstr "以下情况通知我"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
-msgstr ""
+msgstr "测试用例已更新"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "测试用例已删除"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
-msgstr ""
+msgstr "抄送给"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
