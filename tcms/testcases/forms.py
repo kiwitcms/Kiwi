@@ -171,7 +171,7 @@ class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
         required=False,
     )
     category = forms.ModelChoiceField(
-        queryset=Category.objects.none(),
+        queryset=Category.objects.all(),
         empty_label=None,
         required=False,
     )
@@ -184,7 +184,7 @@ class BaseCaseSearchForm(forms.Form):
     tag__name__in = forms.CharField(required=False)
     category = forms.ModelChoiceField(
         label="Category",
-        queryset=Category.objects.none(),
+        queryset=Category.objects.all(),
         required=False
     )
     priority = forms.ModelMultipleChoiceField(
@@ -201,7 +201,7 @@ class BaseCaseSearchForm(forms.Form):
     )
     component = forms.ModelChoiceField(
         label="Components",
-        queryset=Component.objects.none(),
+        queryset=Component.objects.all(),
         required=False
     )
     bug_id = BugField(label="Bug ID", required=False)
