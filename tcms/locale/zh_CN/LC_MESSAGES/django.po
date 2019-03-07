@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-03-07 09:02\n"
+"PO-Revision-Date: 2019-03-07 09:16\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1264,97 +1264,97 @@ msgstr "用逗号隔开多个bug。"
 
 #: tcms/templates/run/get_case_runs.html:135
 msgid "All these fields are required."
-msgstr ""
+msgstr "所有字段必填。"
 
 #: tcms/templates/run/get_case_runs.html:138
 msgid "64 characters at most"
-msgstr ""
+msgstr "最多64个字符"
 
 #: tcms/templates/run/get_case_runs.html:169 tcms/templates/run/report.html:120
 #: tcms/testcases/templates/testcases/search.html:117
 #: tcms/testcases/templates/testcases/search.html:119
 msgid "Bug ID"
-msgstr ""
+msgstr "Bug 编号"
 
 #: tcms/templates/run/get_case_runs.html:176
 msgid "Check to add Test Case(s) to Issue Tracker"
-msgstr ""
+msgstr "检查，添加测试用例到问题追踪器"
 
 #: tcms/templates/run/get_case_runs.html:195
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "删除此标签"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "添加 CC"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "测试执行报告"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "手动用例"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "自动化的用例"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "用例运行 ID"
 
 #: tcms/templates/run/report.html:65 tcms/templates/run/table_caseruns.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "用例 ID"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "测试由"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "关闭于"
 
 #: tcms/templates/run/report.html:87
 msgid "Bugs ID"
-msgstr ""
+msgstr "Bug 编号"
 
 #: tcms/templates/run/report.html:116
 msgid "Bug List"
-msgstr ""
+msgstr "Bug 列表"
 
 #: tcms/templates/run/report.html:121
 msgid "Bug Url"
-msgstr ""
+msgstr "Bug 链接"
 
 #: tcms/templates/run/report.html:133
 msgid "View all in Issue Tracker"
-msgstr ""
+msgstr "在问题追踪器中查看所有"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
-msgstr ""
+msgstr "只配置了支持多bug显示的IT"
 
 #: tcms/templates/run/report.html:137
 msgid "Tracker"
-msgstr ""
+msgstr "追踪器"
 
 #: tcms/templates/run/status_statistics.html:18
 msgid "TOTAL"
-msgstr ""
+msgstr "总共"
 
 #: tcms/templates/run/status_statistics.html:29
 msgid "No Bugs"
-msgstr ""
+msgstr "没有 Bug"
 
 #: tcms/templates/run/table_caseruns.html:8
 msgid "Select all cases/Select none case"
-msgstr ""
+msgstr "选择所有的用例 / 没有选择用例"
 
 #: tcms/templates/run/table_caseruns.html:11
 msgid "Expand all cases"
@@ -1599,24 +1599,24 @@ msgstr ""
 
 #: tcms/testplans/templates/testplans/mutable.html:129
 msgid "Test cases are updated"
-msgstr ""
+msgstr "测试用例已更新"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "搜索测试用例"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "测试计划名"
 
 #: tcms/testplans/templates/testplans/search.html:109
 #: tcms/testruns/templates/testruns/search.html:92
 msgid "Test plan"
-msgstr ""
+msgstr "测试计划"
 
 #: tcms/testplans/views.py:345
 msgid "TestPlan is required"
-msgstr ""
+msgstr "需要测试计划"
 
 #: tcms/testplans/views.py:566
 msgid "At least one test plan is required for print"
@@ -1633,37 +1633,37 @@ msgstr "拒绝访问: 测试运行不属于您"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "停止日期无效。有效的格式是 YYYY-MM-DD。"
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "编辑测试执行"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "克隆测试执行"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "新的测试执行"
 
 #: tcms/testruns/templates/testruns/mutable.html:36
 #: tcms/testruns/templates/testruns/mutable.html:37
 msgid "add new Build"
-msgstr ""
+msgstr "添加新的构建"
 
 #: tcms/testruns/templates/testruns/mutable.html:46
 msgid "version"
-msgstr ""
+msgstr "版本"
 
 #: tcms/testruns/templates/testruns/mutable.html:53
 #: tcms/testruns/templates/testruns/mutable.html:60
 msgid "Username or email"
-msgstr ""
+msgstr "用户名或邮箱"
 
 #: tcms/testruns/templates/testruns/mutable.html:81
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "已选测试用例："
 
 #: tcms/testruns/templates/testruns/mutable.html:84
 #, python-format
@@ -1671,27 +1671,29 @@ msgid "\n"
 "                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr ""
+msgstr "\n"
+"共 %(count)s 预选测试用例还未确认，不会被克隆！\n"
+"详细请查看测试计划！                    "
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
-msgstr ""
+msgstr "搜索测试执行"
 
 #: tcms/testruns/templates/testruns/search.html:13
 msgid "Test run summary"
-msgstr ""
+msgstr "测试执行总结"
 
 #: tcms/testruns/templates/testruns/search.html:16
 msgid "Plan ID"
-msgstr ""
+msgstr "计划 ID"
 
 #: tcms/testruns/templates/testruns/search.html:18
 msgid "TestPlan ID"
-msgstr ""
+msgstr "测试计划 ID"
 
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "创建一个测试执行需要一个测试计划，请选择一个"
 
 #: tcms/testruns/views.py:60
 msgid "Creating a TestRun requires at least one TestCase"
@@ -1699,7 +1701,7 @@ msgstr "新建测试计划至少需要一个测试实例"
 
 #: tcms/testruns/views.py:426
 msgid "Clone of "
-msgstr ""
+msgstr "克隆来自 "
 
 #: tcms/testruns/views.py:509
 msgid "TestCase ID is not a valid integer"
