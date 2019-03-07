@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-03-07 09:23\n"
+"PO-Revision-Date: 2019-03-07 09:32\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -357,39 +357,39 @@ msgstr "计划"
 #: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/mutable.html:95
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: tcms/templates/case/clone_select_plan.html:11
 msgid "Is Active"
-msgstr ""
+msgstr "激活"
 
 #: tcms/templates/case/clone_select_plan.html:19
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "是的"
 
 #: tcms/templates/case/clone_select_plan.html:19
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "不"
 
 #: tcms/templates/case/clone_select_plan.html:22
 msgid "There are no plans"
-msgstr ""
+msgstr "没有计划"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "附件"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:160
 msgid "No attachment found"
-msgstr ""
+msgstr "未找到附件"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:166
@@ -397,55 +397,55 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:136
 msgid "Component"
-msgstr ""
+msgstr "组件"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:171
 msgid "No component found"
-msgstr ""
+msgstr "没有找到组件"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:182
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "没有找到标签"
 
 #: tcms/templates/case/get_details.html:40
 #: tcms/templates/case/get_details_case_run.html:79
 msgid "bug"
-msgstr ""
+msgstr "bug"
 
 #: tcms/templates/case/get_details.html:46
 #: tcms/templates/case/get_details_case_run.html:96
 msgid "From Run"
-msgstr ""
+msgstr "来自执行"
 
 #: tcms/templates/case/get_details.html:51
 #: tcms/templates/case/get_details_case_run.html:112
 msgid "No bug found"
-msgstr ""
+msgstr "未找到 bug"
 
 #: tcms/templates/case/get_details.html:58
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:134
 #: tcms/testruns/templates/testruns/mutable.html:66
 msgid "Notes"
-msgstr ""
+msgstr "备注"
 
 #: tcms/templates/case/get_details.html:64
 #: tcms/templates/run/get_case_runs.html:191
 #: tcms/templates/run/table_caseruns.html:25
 msgid "Comments"
-msgstr ""
+msgstr "评论"
 
 #: tcms/templates/case/get_details_case_run.html:47
 #: tcms/templates/case/get_details_case_run.html:49
 msgid "Show All"
-msgstr ""
+msgstr "显示全部"
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Run Date"
-msgstr ""
+msgstr "执行日期"
 
 #: tcms/templates/case/get_details_case_run.html:76
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:128
@@ -454,16 +454,16 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Build"
-msgstr ""
+msgstr "构建"
 
 #: tcms/templates/case/get_details_case_run.html:76
 msgid "Text Version"
-msgstr ""
+msgstr "文本版本"
 
 #: tcms/templates/case/get_details_case_run.html:81
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr ""
+msgstr "报告"
 
 #: tcms/templates/case/get_details_case_run.html:83
 #: tcms/templates/case/get_details_case_run.html:193
@@ -474,44 +474,44 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:351
 #: tcms/testcases/templates/testcases/get.html:388
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: tcms/templates/case/get_details_case_run.html:103
 msgid "From Case"
-msgstr ""
+msgstr "来自用例"
 
 #: tcms/templates/case/get_details_case_run.html:126
 msgid "No log recorded"
-msgstr ""
+msgstr "未记录日志"
 
 #: tcms/templates/case/get_details_case_run.html:193
 msgid "Test Link"
-msgstr ""
+msgstr "测试链接"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "内容"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "测试计划文档"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "测试用例"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "监控面板"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "测试执行"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:85
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "开始于"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -519,23 +519,25 @@ msgid "\n"
 "                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"共计 %(total_count)s 的测试执行或者测试用例被分配给你，需要执行。\n"
+"                这里是最新的 %(count)s 个。                "
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
-msgstr ""
+msgstr "查看全部"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "没有分配给你的测试执行"
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
-msgstr ""
+msgstr "你的测试计划"
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
-msgstr ""
+msgstr "测试计划"
 
 #: tcms/templates/dashboard.html:50
 #: tcms/testcases/templates/testcases/get.html:313
@@ -543,12 +545,12 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:62
 #: tcms/testplans/templates/testplans/search.html:113
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #: tcms/templates/dashboard.html:51
 #: tcms/testcases/templates/testcases/get.html:131
 msgid "Executions"
-msgstr ""
+msgstr "执行"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
@@ -556,11 +558,13 @@ msgid "\n"
 "                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr ""
+msgstr "\n"
+"你管理了 %(total_count)s 个测试计划， %(disabled_count)s 已被禁用.\n"
+"                这里是最新的 %(count)s 个。                "
 
 #: tcms/templates/dashboard.html:81
 msgid "There are no TestPlan(s) that belong to you"
-msgstr ""
+msgstr "没有属于你的测试计划"
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
@@ -568,13 +572,17 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr ""
+msgstr "欢迎你， %(user)s，\n"
+"感谢你注册为 %(site_domain)s 账户！\n\n"
+"点击这个链接激活你的账户：\n"
+"%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "\n"
 "TestCase has been updated by %(username)s!\n"
-msgstr ""
+msgstr "\n"
+"测试用例已被 %(username)s 更新！\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -619,13 +627,13 @@ msgstr "亲爱的管理员,\n"
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "计划"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
-msgstr ""
+msgstr "用例"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
