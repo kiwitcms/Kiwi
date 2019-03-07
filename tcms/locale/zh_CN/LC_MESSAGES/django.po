@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-20 19:22+0000\n"
-"PO-Revision-Date: 2019-03-07 08:42\n"
+"PO-Revision-Date: 2019-03-07 08:53\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -303,7 +303,7 @@ msgstr "计划类型"
 
 #: tcms/templates/case/clone.html:58
 msgid "Plan Author"
-msgstr ""
+msgstr "计划发起人"
 
 #: tcms/templates/case/clone.html:62 tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -313,34 +313,34 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "标签"
 
 #: tcms/templates/case/clone.html:66
 #: tcms/templates/case/clone_select_plan.html:8
 msgid "Plan Summary"
-msgstr ""
+msgstr "计划摘要"
 
 #: tcms/templates/case/clone.html:70
 #: tcms/testplans/templates/testplans/mutable.html:137
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "活动"
 
 #: tcms/templates/case/clone.html:93
 msgid "Case(s)"
-msgstr ""
+msgstr "用例"
 
 #: tcms/templates/case/clone.html:97
 msgid "Clone Settings"
-msgstr ""
+msgstr "克隆设置"
 
 #: tcms/templates/case/clone.html:99
 msgid "Case Properties"
-msgstr ""
+msgstr "用例属性"
 
 #: tcms/templates/case/clone_select_plan.html:2
 msgid "Plan"
-msgstr ""
+msgstr "计划"
 
 #: tcms/templates/case/clone_select_plan.html:10
 #: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
@@ -657,105 +657,105 @@ msgstr ""
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "我的测试计划"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "我的资料"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "更改密码"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "登出"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "登录"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "注册"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "第一页"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "上一页"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "当前页"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "下一页"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "最后一页"
 
 #: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:576
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "在这个计划中没有发现测试用例。"
 
 #: tcms/templates/plan/clone.html:4 tcms/templates/plan/get.html:47
 msgid "Clone Plan"
-msgstr ""
+msgstr "克隆计划"
 
 #: tcms/templates/plan/clone.html:23
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "克隆测试计划"
 
 #: tcms/templates/plan/clone.html:29
 msgid "New Plan Name"
-msgstr ""
+msgstr "新计划名称"
 
 #: tcms/templates/plan/clone.html:33
 msgid "Copy to Product"
-msgstr ""
+msgstr "复制到产品"
 
 #: tcms/templates/plan/clone.html:44
 msgid "Copy Settings"
-msgstr ""
+msgstr "复制设置"
 
 #: tcms/templates/plan/clone.html:51
 msgid "Copy"
-msgstr ""
+msgstr "复制"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
-msgstr ""
+msgstr "编辑计划"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
-msgstr ""
+msgstr "编辑测试计划"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "将此计划克隆到其他产品"
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
-msgstr ""
+msgstr "打印计划"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete Plan"
-msgstr ""
+msgstr "删除计划"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
-msgstr ""
+msgstr "删除测试计划"
 
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -764,43 +764,43 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
-msgstr ""
+msgstr "参考链接"
 
 #: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
 #: tcms/templates/plan/preview.html:36
 #: tcms/templates/run/table_caseruns.html:53
 #: tcms/templates/run/table_caseruns.html:59
 msgid "None"
-msgstr ""
+msgstr "空"
 
 #: tcms/templates/plan/get.html:86
 msgid "Create Time"
-msgstr ""
+msgstr "创建时间"
 
 #: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
 msgid "Parent"
-msgstr ""
+msgstr "上级"
 
 #: tcms/templates/plan/get.html:101
 msgid "View Edit History"
-msgstr ""
+msgstr "查看编辑历史"
 
 #: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "文档"
 
 #: tcms/templates/plan/get.html:116
 msgid "Reviewing Cases"
-msgstr ""
+msgstr "评审用例"
 
 #: tcms/templates/plan/get.html:122
 #: tcms/testcases/templates/testcases/get.html:404
 msgid "Attachments"
-msgstr ""
+msgstr "附件"
 
 #: tcms/templates/plan/get.html:125 tcms/templates/plan/get_cases.html:76
 #: tcms/templates/run/get.html:91 tcms/templates/run/get_case_runs.html:122
@@ -809,70 +809,70 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Tags"
-msgstr ""
+msgstr "标签"
 
 #: tcms/templates/plan/get.html:128
 msgid "Tree View"
-msgstr ""
+msgstr "树视图"
 
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "此计划的文档还未撰写。"
 
 #: tcms/templates/plan/get_attachments.html:6
 msgid "Add attachment"
-msgstr ""
+msgstr "添加附件"
 
 #: tcms/templates/plan/get_attachments.html:29
 msgid "No attachments"
-msgstr ""
+msgstr "无附件"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "用例"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "编辑新用例"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "从其他计划中添加用例"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "打印"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
-msgstr ""
+msgstr "选定用例的打印视图"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 #: tcms/testcases/views.py:580
 msgid "Clone"
-msgstr ""
+msgstr "克隆"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
 msgid "Clone selected cases to another test plan"
-msgstr ""
+msgstr "选定用例克隆到另一测试计划"
 
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 msgid "Remove selected cases from this plan"
-msgstr ""
+msgstr "从计划中删除选定用例"
 
 #: tcms/templates/plan/get_cases.html:40
 msgid "Run"
-msgstr ""
+msgstr "执行"
 
 #: tcms/templates/plan/get_cases.html:42
 msgid "Create new TestRun"
-msgstr ""
+msgstr "创建新的执行"
 
 #: tcms/templates/plan/get_cases.html:48
 msgid "Change TestCase reviewer"
-msgstr ""
+msgstr "更改测试用例审阅者"
 
 #: tcms/templates/plan/get_cases.html:50
 msgid "Change default tester"
@@ -1137,7 +1137,7 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:5
 msgid "Add TestCase to TestRun"
-msgstr ""
+msgstr "将测试用例添加到测试执行"
 
 #: tcms/templates/run/assign_case.html:28 tcms/templates/run/get.html:79
 #: tcms/templates/run/report.html:30
