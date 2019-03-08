@@ -151,6 +151,31 @@ with the default self-signed certificate! Here's how the configuration looks lik
         }
     }
 
+Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
+
+    frontend front_http
+        bind *:8080
+        reqadd X-Forwarded-Proto:\ http
+        redirect scheme https code 301
+    
+    frontend front_https
+        # default ssl certificates for *.kiwitcms.org
+        bind *:8443 ssl crt /etc/haproxy/ssl/
+        reqadd X-Forwarded-Proto:\ https
+    
+        acl kiwitcms hdr(host) -i demo.kiwitcms.org
+        use_backend back_kiwitcms if kiwitcms
+    
+    backend back_kiwitcms
+        http-request set-header X-Forwarded-Port %[dst_port]
+        http-request add-header X-Forwarded-Proto https
+    
+        # some security tweaks
+        rspadd Strict-Transport-Security:\ max-age=15768000
+        rspadd X-XSS-Protection:\ 1;\ mode=block
+    
+        # do not verify the self-signed cert
+        server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
 
 Customization
 -------------
