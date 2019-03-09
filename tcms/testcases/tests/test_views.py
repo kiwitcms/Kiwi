@@ -39,12 +39,12 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
         # test for https://github.com/kiwitcms/Kiwi/issues/74
         initiate_user_with_default_setups(self.tester)
 
-        url = reverse('caserun-detail-pane', args=[self.case_run_1.case_id])
+        url = reverse('caserun-detail-pane', args=[self.execution_1.case_id])
         response = self.client.get(
             url,
             {
-                'case_run_id': self.case_run_1.pk,
-                'case_text_version': self.case_run_1.case.history.latest().history_id,
+                'case_run_id': self.execution_1.pk,
+                'case_text_version': self.execution_1.case.history.latest().history_id,
             }
         )
 
@@ -69,15 +69,15 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
         bug_1 = BugFactory()
         bug_2 = BugFactory()
 
-        self.case_run_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
-        self.case_run_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)
+        self.execution_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
+        self.execution_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)
 
-        url = reverse('caserun-detail-pane', args=[self.case_run_1.case.pk])
+        url = reverse('caserun-detail-pane', args=[self.execution_1.case.pk])
         response = self.client.get(
             url,
             {
-                'case_run_id': self.case_run_1.pk,
-                'case_text_version': self.case_run_1.case.history.latest().history_id,
+                'case_run_id': self.execution_1.pk,
+                'case_text_version': self.execution_1.case.history.latest().history_id,
             }
         )
 

@@ -418,7 +418,7 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     m2m_fields = ('case', 'tag')
 
 
-class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
+class TestExecutionXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """XMLRPC serializer specific for TestCaseRun"""
 
     values_fields_mapping = {

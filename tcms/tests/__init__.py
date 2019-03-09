@@ -196,17 +196,18 @@ class BaseCaseRun(BasePlanCase):
                                       manager=cls.tester,
                                       default_tester=cls.tester)
 
-        case_runs = []
+        executions = []
         for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1):
-            case_runs.append(TestExecutionFactory(assignee=cls.tester,
-                                                  run=cls.test_run, build=cls.build,
-                                                  status=cls.status_idle,
-                                                  case=case, sortkey=i * 10))
+            executions.append(TestExecutionFactory(assignee=cls.tester,
+                                                   run=cls.test_run,
+                                                   build=cls.build,
+                                                   status=cls.status_idle,
+                                                   case=case, sortkey=i * 10))
 
         # used in other tests as well
-        cls.case_run_1 = case_runs[0]
-        cls.case_run_2 = case_runs[1]
-        cls.case_run_3 = case_runs[2]
+        cls.execution_1 = executions[0]
+        cls.execution_2 = executions[1]
+        cls.execution_3 = executions[2]
 
         cls.test_run_1 = TestRunFactory(product_version=cls.version,
                                         plan=cls.plan,
@@ -214,13 +215,15 @@ class BaseCaseRun(BasePlanCase):
                                         manager=cls.tester,
                                         default_tester=cls.tester)
 
-        # create a few more TestCaseRun objects
+        # create a few more TestExecution objects
         for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1):
-            case_runs.append(TestExecutionFactory(assignee=cls.tester, tested_by=cls.tester,
-                                                  run=cls.test_run_1, build=cls.build,
-                                                  status=cls.status_idle,
-                                                  case=case, sortkey=i * 10))
+            executions.append(TestExecutionFactory(assignee=cls.tester,
+                                                   tested_by=cls.tester,
+                                                   run=cls.test_run_1,
+                                                   build=cls.build,
+                                                   status=cls.status_idle,
+                                                   case=case, sortkey=i * 10))
         # used in other tests as well
-        cls.case_run_4 = case_runs[3]
-        cls.case_run_5 = case_runs[4]
-        cls.case_run_6 = case_runs[5]
+        cls.execution_4 = executions[3]
+        cls.execution_5 = executions[4]
+        cls.execution_6 = executions[5]

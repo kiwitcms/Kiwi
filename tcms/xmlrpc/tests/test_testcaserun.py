@@ -23,11 +23,11 @@ from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
 @override_settings(LANGUAGE_CODE='en-us')
-class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
+class TestExecutionCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
     """Test testcaserun.create"""
 
     def _fixture_setup(self):
-        super(TestCaseRunCreate, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.staff = UserFactory(username='staff', email='staff@example.com')
 
@@ -40,7 +40,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
         self.status = TestExecutionStatus.objects.get(name='IDLE')
         self.case = TestCaseFactory(author=self.api_user, default_tester=None, plan=[self.plan])
 
-        self.case_run_pks = []
+        self.execution_pks = []
 
     def test_create_with_no_required_fields(self):
         values = [
@@ -72,7 +72,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
             "case_text_version": 15,
         })
         self.assertIsNotNone(tcr)
-        self.case_run_pks.append(tcr['case_run_id'])
+        self.execution_pks.append(tcr['case_run_id'])
         self.assertEqual(tcr['build_id'], self.build.pk)
         self.assertEqual(tcr['case_id'], self.case.pk)
         self.assertEqual(tcr['run_id'], self.test_run.pk)
@@ -88,7 +88,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
             "case_text_version": 3,
         })
         self.assertIsNotNone(tcr)
-        self.case_run_pks.append(tcr['case_run_id'])
+        self.execution_pks.append(tcr['case_run_id'])
         self.assertEqual(tcr['build_id'], self.build.pk)
         self.assertEqual(tcr['case_id'], self.case.pk)
         self.assertEqual(tcr['assignee_id'], self.api_user.pk)

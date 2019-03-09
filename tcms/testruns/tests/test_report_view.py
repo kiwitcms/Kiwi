@@ -34,10 +34,10 @@ class Test_TestRunReportUnconfiguredJIRA(BaseCaseRun):
             tracker_type='JIRA'
         )
 
-        cls.case_run_1.add_bug('KIWI-1234', cls.it.pk)
+        cls.execution_1.add_bug('KIWI-1234', cls.it.pk)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.case_run_1.run_id])
+        url = reverse('run-report', args=[self.execution_1.run_id])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -62,10 +62,10 @@ class Test_TestRunReportUnconfiguredBugzilla(BaseCaseRun):
             tracker_type='Bugzilla'
         )
 
-        cls.case_run_1.add_bug('5678', cls.it.pk)
+        cls.execution_1.add_bug('5678', cls.it.pk)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.case_run_1.run_id])
+        url = reverse('run-report', args=[self.execution_1.run_id])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -94,10 +94,10 @@ class Test_TestRunReportConfiguredBugzilla(BaseCaseRun):
             api_password='secret',
         )
 
-        cls.case_run_1.add_bug('5678', cls.it.pk)
+        cls.execution_1.add_bug('5678', cls.it.pk)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.case_run_1.run_id])
+        url = reverse('run-report', args=[self.execution_1.run_id])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -122,10 +122,10 @@ class Test_TestRunReportUnconfiguredGitHub(BaseCaseRun):
             tracker_type='GitHub'
         )
 
-        cls.case_run_1.add_bug('100', cls.it.pk)
+        cls.execution_1.add_bug('100', cls.it.pk)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.case_run_1.run_id])
+        url = reverse('run-report', args=[self.execution_1.run_id])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
