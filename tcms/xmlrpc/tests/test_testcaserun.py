@@ -13,7 +13,7 @@ from tcms.testruns.models import TestExecutionStatus
 
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
@@ -138,8 +138,8 @@ class TestCaseRunAddComment(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super(TestCaseRunAddComment, self)._fixture_setup()
 
-        self.case_run_1 = TestCaseRunFactory()
-        self.case_run_2 = TestCaseRunFactory()
+        self.case_run_1 = TestExecutionFactory()
+        self.case_run_2 = TestExecutionFactory()
 
     def test_add_comment_with_int(self):
         comment = self.rpc_client.exec.TestCaseRun.add_comment(self.case_run_2.pk, "Hello World!")
@@ -153,7 +153,7 @@ class TestCaseRunAddLink(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.case_run = TestCaseRunFactory()
+        self.case_run = TestExecutionFactory()
 
     def test_attach_log_with_non_existing_id(self):
         with self.assertRaisesRegex(XmlRPCFault, 'constraint fail|violates foreign key'):
@@ -176,9 +176,9 @@ class TestCaseRunRemoveLink(XmlrpcAPIBaseTest):
 
         self.status_idle = TestExecutionStatus.objects.get(name='IDLE')
         self.tester = UserFactory()
-        self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
-                                           sortkey=10,
-                                           status=self.status_idle)
+        self.case_run = TestExecutionFactory(assignee=self.tester, tested_by=None,
+                                             sortkey=10,
+                                             status=self.status_idle)
 
     def setUp(self):
         super().setUp()
@@ -211,9 +211,9 @@ class TestCaseRunFilter(XmlrpcAPIBaseTest):
 
         self.status_idle = TestExecutionStatus.objects.get(name='IDLE')
         self.tester = UserFactory()
-        self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
-                                           sortkey=10,
-                                           status=self.status_idle)
+        self.case_run = TestExecutionFactory(assignee=self.tester, tested_by=None,
+                                             sortkey=10,
+                                             status=self.status_idle)
 
     def test_with_non_exist_id(self):
         found = self.rpc_client.exec.TestCaseRun.filter({'pk': -1})
@@ -236,8 +236,8 @@ class TestCaseRunGetLinks(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.case_run_1 = TestCaseRunFactory()
-        self.case_run_2 = TestCaseRunFactory()
+        self.case_run_1 = TestExecutionFactory()
+        self.case_run_2 = TestExecutionFactory()
 
         self.rpc_client.exec.TestCaseRun.add_link(
             self.case_run_1.pk,
@@ -271,8 +271,8 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
 
         self.user = UserFactory()
         self.build = BuildFactory()
-        self.case_run_1 = TestCaseRunFactory()
-        self.case_run_2 = TestCaseRunFactory()
+        self.case_run_1 = TestExecutionFactory()
+        self.case_run_2 = TestExecutionFactory()
         self.status_running = TestExecutionStatus.objects.get(name='RUNNING')
 
     def test_update_with_single_caserun(self):

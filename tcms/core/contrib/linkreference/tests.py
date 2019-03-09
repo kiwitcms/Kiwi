@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _, ngettext_lazy
 
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 
 
 class TestAddView(test.TestCase):
@@ -20,7 +20,7 @@ class TestAddView(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.url = reverse('linkref-add')
-        cls.testcaserun = TestCaseRunFactory()
+        cls.testcaserun = TestExecutionFactory()
 
         cls.tester = UserFactory()
         cls.tester.set_password('password')

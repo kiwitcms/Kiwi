@@ -12,7 +12,7 @@ from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseComponentFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
@@ -27,8 +27,8 @@ class TestCaseRemoveBug(BasePlanCase):
         cls.build = BuildFactory(product=cls.product)
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)
-        cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                                          case=cls.case, run=cls.test_run, build=cls.build)
+        cls.case_run = TestExecutionFactory(assignee=cls.tester, tested_by=cls.tester,
+                                            case=cls.case, run=cls.test_run, build=cls.build)
         cls.bug_system = BugSystem.objects.get(name='Bugzilla')
 
     def setUp(self):

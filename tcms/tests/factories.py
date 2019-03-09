@@ -278,7 +278,7 @@ class TestRunFactory(DjangoModelFactory):
                 TestRunCCFactory(run=self, user=user)
 
 
-class TestCaseRunFactory(DjangoModelFactory):
+class TestExecutionFactory(DjangoModelFactory):
 
     class Meta:
         model = 'testruns.TestExecution'
@@ -305,7 +305,7 @@ class BugFactory(DjangoModelFactory):
     bug_system = factory.LazyFunction(
         lambda: BugSystem.objects.first()  # pylint: disable=unnecessary-lambda
     )
-    case_run = factory.SubFactory(TestCaseRunFactory)
+    case_run = factory.SubFactory(TestExecutionFactory)
     case = factory.SubFactory(TestCaseFactory)
 
 

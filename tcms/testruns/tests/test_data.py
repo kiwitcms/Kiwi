@@ -9,7 +9,7 @@ from tcms.testruns.data import TestCaseRunDataMixin
 from tcms.testruns.data import get_run_bug_ids
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import TestExecutionStatus
 from tcms.tests.factories import TestRunFactory
 
@@ -58,8 +58,8 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
                              (cls.case_4, cls.status_waived),
                              (cls.case_5, cls.status_waived),
                              (cls.case_6, cls.status_waived)):
-            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                               run=cls.test_run, case=case, status=status)
+            TestExecutionFactory(assignee=cls.tester, tested_by=cls.tester,
+                                 run=cls.test_run, case=case, status=status)
 
     def test_get_stats(self):
         data = self.test_run.stats_caseruns_status(self.statuss)

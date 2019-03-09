@@ -14,7 +14,7 @@ from tcms.tests import BaseCaseRun
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 
 
 class TestNavigation(test.TestCase):
@@ -73,7 +73,7 @@ class TestDashboard(BaseCaseRun):
         self.assertContains(response, test_run.summary)
 
     def test_dashboard_shows_testruns_for_test_case_run_assignee(self):
-        test_case_run = TestCaseRunFactory(assignee=self.tester)
+        test_case_run = TestExecutionFactory(assignee=self.tester)
 
         response = self.client.get(reverse('core-views-index'))
         self.assertContains(response, test_case_run.run.summary)
