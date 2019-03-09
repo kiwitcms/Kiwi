@@ -11,7 +11,7 @@ from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.models import TestCaseStatus
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
@@ -198,10 +198,10 @@ class BaseCaseRun(BasePlanCase):
 
         case_runs = []
         for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1):
-            case_runs.append(TestCaseRunFactory(assignee=cls.tester,
-                                                run=cls.test_run, build=cls.build,
-                                                status=cls.status_idle,
-                                                case=case, sortkey=i * 10))
+            case_runs.append(TestExecutionFactory(assignee=cls.tester,
+                                                  run=cls.test_run, build=cls.build,
+                                                  status=cls.status_idle,
+                                                  case=case, sortkey=i * 10))
 
         # used in other tests as well
         cls.case_run_1 = case_runs[0]
@@ -216,10 +216,10 @@ class BaseCaseRun(BasePlanCase):
 
         # create a few more TestCaseRun objects
         for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1):
-            case_runs.append(TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                                                run=cls.test_run_1, build=cls.build,
-                                                status=cls.status_idle,
-                                                case=case, sortkey=i * 10))
+            case_runs.append(TestExecutionFactory(assignee=cls.tester, tested_by=cls.tester,
+                                                  run=cls.test_run_1, build=cls.build,
+                                                  status=cls.status_idle,
+                                                  case=case, sortkey=i * 10))
         # used in other tests as well
         cls.case_run_4 = case_runs[3]
         cls.case_run_5 = case_runs[4]

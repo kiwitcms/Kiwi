@@ -6,7 +6,7 @@ from xmlrpc.client import Fault as XmlRPCFault
 
 from tcms.testcases.models import BugSystem
 
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
@@ -15,7 +15,7 @@ class BugFilter(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super(BugFilter, self)._fixture_setup()
 
-        self.case_run = TestCaseRunFactory()
+        self.case_run = TestExecutionFactory()
         self.bug_system_bz = BugSystem.objects.get(name='Bugzilla')
 
         self.rpc_client.exec.Bug.create({
@@ -44,7 +44,7 @@ class BugCreate(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super(BugCreate, self)._fixture_setup()
 
-        self.case_run = TestCaseRunFactory()
+        self.case_run = TestExecutionFactory()
         self.bug_system_jira = BugSystem.objects.get(name='JIRA')
         self.bug_system_bz = BugSystem.objects.get(name='Bugzilla')
 
@@ -136,7 +136,7 @@ class BugDelete(XmlrpcAPIBaseTest):
 
         self.bug_system_bz = BugSystem.objects.get(name='Bugzilla')
         self.bug_system_jira = BugSystem.objects.get(name='JIRA')
-        self.case_run = TestCaseRunFactory()
+        self.case_run = TestExecutionFactory()
 
     def setUp(self):
         super(BugDelete, self).setUp()
