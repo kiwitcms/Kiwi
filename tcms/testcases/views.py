@@ -294,7 +294,7 @@ def query_testcases_from_request(request, plan=None):
     :param plan: instance of TestPlan to restrict only those TestCases belongs to
                  the TestPlan. Can be None. As you know, query from all TestCases.
     """
-    search_form = build_cases_search_form(request)
+    search_form = build_cases_search_form(request,True,plan)
 
     action = request.POST.get('a')
     if action == 'initial':
