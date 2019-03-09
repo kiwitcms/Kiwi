@@ -14,12 +14,12 @@ from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.testcases.models import Bug
-from tcms.xmlrpc.serializer import TestCaseRunXMLRPCSerializer
+from tcms.xmlrpc.serializer import TestExecutionXMLRPCSerializer
 from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
 
 
-TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
+TestExecutionStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
     'StatusSubtotal',
     'CaseRunsTotalCount',
     'CompletedPercentage',
@@ -227,11 +227,11 @@ class TestRun(TCMSActionModel):
         if complete_count:
             failure_percent = failure_count * 100.0 / caseruns_total_count
 
-        return TestCaseRunStatusSubtotal(caserun_statuses_subtotal,
-                                         caseruns_total_count,
-                                         complete_percent,
-                                         failure_percent,
-                                         complete_percent - failure_percent)
+        return TestExecutionStatusSubtotal(caserun_statuses_subtotal,
+                                           caseruns_total_count,
+                                           complete_percent,
+                                           failure_percent,
+                                           complete_percent - failure_percent)
 
 
 class TestExecutionStatus(TCMSActionModel):
@@ -317,7 +317,7 @@ class TestExecution(TCMSActionModel):
         if query is None:
             query = {}
         query_set = distinct_filter(TestExecution, query).order_by('pk')
-        serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=query_set)
+        serializer = TestExecutionXMLRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def add_bug(self, bug_id, bug_system_id,

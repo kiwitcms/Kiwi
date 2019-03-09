@@ -5,7 +5,7 @@ from datetime import datetime
 
 from tcms.core.helpers.comments import add_comment
 from tcms.testcases.models import BugSystem
-from tcms.testruns.data import TestCaseRunDataMixin
+from tcms.testruns.data import TestExecutionDataMixin
 from tcms.testruns.data import get_run_bug_ids
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
@@ -132,12 +132,12 @@ class TestGetCaseRunsBugs(BaseCaseRun):
         cls.execution_2.add_bug(cls.jira_nitrate_2, bug_system_id=cls.jira.pk)
 
     def test_empty_if_no_bugs(self):
-        data = TestCaseRunDataMixin()
+        data = TestExecutionDataMixin()
         result = data.get_case_runs_bugs(self.test_run_1.pk)
         self.assertEqual({}, result)
 
     def test_get_bugs(self):
-        data = TestCaseRunDataMixin()
+        data = TestExecutionDataMixin()
         result = data.get_case_runs_bugs(self.test_run.pk)
         expected_result = {
             self.execution_1.pk: [
@@ -201,12 +201,12 @@ class TestGetCaseRunsComments(BaseCaseRun):
                     submit_date=cls.submit_date)
 
     def test_get_empty_comments_if_no_comment_there(self):
-        data = TestCaseRunDataMixin()
+        data = TestExecutionDataMixin()
         comments = data.get_case_runs_comments(self.test_run.pk)
         self.assertEqual({}, comments)
 
     def test_get_comments(self):
-        data = TestCaseRunDataMixin()
+        data = TestExecutionDataMixin()
         comments = data.get_case_runs_comments(self.test_run_1.pk)
 
         # note: keys are integer but the values are all string
