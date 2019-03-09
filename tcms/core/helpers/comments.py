@@ -29,8 +29,8 @@ def add_comment(objs, comments, user, submit_date=None):
 
         from django.contrib.auth.models import User
         testuser = User.objects.get(email='user@example.com')
-        from tcms.testruns.models import TestCaseRun
-        testrun = TestCaseRun.objects.get(pk=171675)
+        from tcms.testruns.models import TestExecution
+        testrun = TestExecution.objects.get(pk=171675)
         comments = 'stupid comments by Homer'
         add_comment([testrun,], comments, testuser)
     """

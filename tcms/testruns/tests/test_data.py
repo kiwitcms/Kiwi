@@ -88,10 +88,10 @@ class TestGetRunBugIDs(BaseCaseRun):
 
         cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
 
-        cls.case_run_1.add_bug('123456', bug_system_id=cls.bugzilla.pk)
-        cls.case_run_1.add_bug('100000', bug_system_id=cls.bugzilla.pk)
-        cls.case_run_1.add_bug('100001', bug_system_id=cls.bugzilla.pk)
-        cls.case_run_2.add_bug('100001', bug_system_id=cls.bugzilla.pk)
+        cls.execution_1.add_bug('123456', bug_system_id=cls.bugzilla.pk)
+        cls.execution_1.add_bug('100000', bug_system_id=cls.bugzilla.pk)
+        cls.execution_1.add_bug('100001', bug_system_id=cls.bugzilla.pk)
+        cls.execution_2.add_bug('100001', bug_system_id=cls.bugzilla.pk)
 
     def test_get_bug_ids_when_no_bug_is_added(self):
         bug_ids = get_run_bug_ids(self.test_run_1.pk)
@@ -123,13 +123,13 @@ class TestGetCaseRunsBugs(BaseCaseRun):
         cls.jira = BugSystem.objects.get(name='JIRA')
 
         cls.bz_bug_1 = '12345'
-        cls.case_run_1.add_bug(cls.bz_bug_1, bug_system_id=cls.bugzilla.pk)
+        cls.execution_1.add_bug(cls.bz_bug_1, bug_system_id=cls.bugzilla.pk)
         cls.bz_bug_2 = '10000'
-        cls.case_run_1.add_bug(cls.bz_bug_2, bug_system_id=cls.bugzilla.pk)
+        cls.execution_1.add_bug(cls.bz_bug_2, bug_system_id=cls.bugzilla.pk)
         cls.jira_nitrate_1 = 'NITRATE-1'
-        cls.case_run_1.add_bug(cls.jira_nitrate_1, bug_system_id=cls.jira.pk)
+        cls.execution_1.add_bug(cls.jira_nitrate_1, bug_system_id=cls.jira.pk)
         cls.jira_nitrate_2 = 'NITRATE-2'
-        cls.case_run_2.add_bug(cls.jira_nitrate_2, bug_system_id=cls.jira.pk)
+        cls.execution_2.add_bug(cls.jira_nitrate_2, bug_system_id=cls.jira.pk)
 
     def test_empty_if_no_bugs(self):
         data = TestCaseRunDataMixin()
@@ -140,30 +140,30 @@ class TestGetCaseRunsBugs(BaseCaseRun):
         data = TestCaseRunDataMixin()
         result = data.get_case_runs_bugs(self.test_run.pk)
         expected_result = {
-            self.case_run_1.pk: [
+            self.execution_1.pk: [
                 {
                     'bug_id': self.bz_bug_1,
-                    'case_run': self.case_run_1.pk,
+                    'case_run': self.execution_1.pk,
                     'bug_system__url_reg_exp': self.bugzilla.url_reg_exp,
                     'bug_url': self.bugzilla.url_reg_exp % self.bz_bug_1,
                 },
                 {
                     'bug_id': self.bz_bug_2,
-                    'case_run': self.case_run_1.pk,
+                    'case_run': self.execution_1.pk,
                     'bug_system__url_reg_exp': self.bugzilla.url_reg_exp,
                     'bug_url': self.bugzilla.url_reg_exp % self.bz_bug_2,
                 },
                 {
                     'bug_id': self.jira_nitrate_1,
-                    'case_run': self.case_run_1.pk,
+                    'case_run': self.execution_1.pk,
                     'bug_system__url_reg_exp': self.jira.url_reg_exp,
                     'bug_url': self.jira.url_reg_exp % self.jira_nitrate_1,
                 }
             ],
-            self.case_run_2.pk: [
+            self.execution_2.pk: [
                 {
                     'bug_id': self.jira_nitrate_2,
-                    'case_run': self.case_run_2.pk,
+                    'case_run': self.execution_2.pk,
                     'bug_system__url_reg_exp': self.jira.url_reg_exp,
                     'bug_url': self.jira.url_reg_exp % self.jira_nitrate_2,
                 }
@@ -191,11 +191,11 @@ class TestGetCaseRunsComments(BaseCaseRun):
 
         cls.submit_date = datetime(2017, 7, 7, 7, 7, 7)
 
-        add_comment([cls.case_run_4, cls.case_run_5],
+        add_comment([cls.execution_4, cls.execution_5],
                     comments='new comment',
                     user=cls.tester,
                     submit_date=cls.submit_date)
-        add_comment([cls.case_run_4],
+        add_comment([cls.execution_4],
                     comments='make better',
                     user=cls.tester,
                     submit_date=cls.submit_date)
@@ -211,23 +211,23 @@ class TestGetCaseRunsComments(BaseCaseRun):
 
         # note: keys are integer but the values are all string
         expected_comments = {
-            self.case_run_4.pk: [
+            self.execution_4.pk: [
                 {
-                    'case_run_id': str(self.case_run_4.pk),
+                    'case_run_id': str(self.execution_4.pk),
                     'user_name': self.tester.username,
                     'submit_date': self.submit_date,
                     'comment': 'new comment'
                 },
                 {
-                    'case_run_id': str(self.case_run_4.pk),
+                    'case_run_id': str(self.execution_4.pk),
                     'user_name': self.tester.username,
                     'submit_date': self.submit_date,
                     'comment': 'make better'
                 }
             ],
-            self.case_run_5.pk: [
+            self.execution_5.pk: [
                 {
-                    'case_run_id': str(self.case_run_5.pk),
+                    'case_run_id': str(self.execution_5.pk),
                     'user_name': self.tester.username,
                     'submit_date': self.submit_date,
                     'comment': 'new comment'

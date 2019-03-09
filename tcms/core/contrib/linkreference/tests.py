@@ -20,7 +20,7 @@ class TestAddView(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.url = reverse('linkref-add')
-        cls.testcaserun = TestExecutionFactory()
+        cls.test_execution = TestExecutionFactory()
 
         cls.tester = UserFactory()
         cls.tester.set_password('password')
@@ -38,7 +38,7 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertRedirects(response, reverse('tcms-login')+'?next=/linkref/add/')
 
@@ -47,7 +47,7 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertRedirects(response, reverse('tcms-login')+'?next=/linkref/add/')
 
@@ -58,7 +58,7 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertEqual(HTTPStatus.OK, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
@@ -75,7 +75,7 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Log reference with invalid URL',
             'url': 'example dot com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertEqual(HTTPStatus.BAD_REQUEST, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
@@ -91,7 +91,7 @@ class TestAddView(test.TestCase):
             'name': "abcdefghij-abcdefghij-abcdefghij-"
                     "abcdefghij-abcdefghij-abcdefghij-",
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertEqual(HTTPStatus.BAD_REQUEST, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))

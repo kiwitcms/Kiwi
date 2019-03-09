@@ -36,7 +36,7 @@ def add_case(run_id, case_id):
         :type run_id: int
         :param case_id: PK of TestCase to be added
         :type case_id: int
-        :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
+        :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :raises: DoesNotExist if objects specified by the PKs don't exist
         :raises: PermissionDenied if missing *testruns.add_testexecution* permission
     """
