@@ -184,7 +184,7 @@ class BaseCaseSearchForm(forms.Form):
     tag__name__in = forms.CharField(required=False)
     category = forms.ModelChoiceField(
         label="Category",
-        queryset=Category.objects.all(),
+        queryset=Category.objects.none(),
         required=False
     )
     priority = forms.ModelMultipleChoiceField(
@@ -201,7 +201,7 @@ class BaseCaseSearchForm(forms.Form):
     )
     component = forms.ModelChoiceField(
         label="Components",
-        queryset=Component.objects.all(),
+        queryset=Component.objects.none(),
         required=False
     )
     bug_id = BugField(label="Bug ID", required=False)
