@@ -29,7 +29,7 @@ from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
-from tcms.testruns.data import TestCaseRunDataMixin
+from tcms.testruns.data import TestExecutionDataMixin
 from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
 from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus
 from tcms.issuetracker.types import IssueTrackerType
@@ -316,7 +316,7 @@ def edit(request, run_id):
     return render(request, 'testruns/mutable.html', context_data)
 
 
-class TestRunReportView(TemplateView, TestCaseRunDataMixin):
+class TestRunReportView(TemplateView, TestExecutionDataMixin):
     """Test Run report"""
 
     template_name = 'run/report.html'
