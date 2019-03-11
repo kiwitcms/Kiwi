@@ -9,7 +9,7 @@ from xmlrpc.client import Fault as XmlRPCFault
 from django.test import override_settings
 
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
@@ -37,7 +37,7 @@ class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance
         self.plan = TestPlanFactory(author=self.api_user, product=self.product)
         self.test_run = TestRunFactory(product_version=self.version, build=self.build,
                                        default_tester=None, plan=self.plan)
-        self.status = TestCaseRunStatus.objects.get(name='IDLE')
+        self.status = TestExecutionStatus.objects.get(name='IDLE')
         self.case = TestCaseFactory(author=self.api_user, default_tester=None, plan=[self.plan])
 
         self.case_run_pks = []
@@ -174,7 +174,7 @@ class TestCaseRunRemoveLink(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+        self.status_idle = TestExecutionStatus.objects.get(name='IDLE')
         self.tester = UserFactory()
         self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
                                            sortkey=10,
@@ -209,7 +209,7 @@ class TestCaseRunFilter(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super()._fixture_setup()
 
-        self.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+        self.status_idle = TestExecutionStatus.objects.get(name='IDLE')
         self.tester = UserFactory()
         self.case_run = TestCaseRunFactory(assignee=self.tester, tested_by=None,
                                            sortkey=10,
@@ -273,7 +273,7 @@ class TestCaseRunUpdate(XmlrpcAPIBaseTest):
         self.build = BuildFactory()
         self.case_run_1 = TestCaseRunFactory()
         self.case_run_2 = TestCaseRunFactory()
-        self.status_running = TestCaseRunStatus.objects.get(name='RUNNING')
+        self.status_running = TestExecutionStatus.objects.get(name='RUNNING')
 
     def test_update_with_single_caserun(self):
         tcr = self.rpc_client.exec.TestCaseRun.update(self.case_run_1.pk, {

@@ -4,7 +4,7 @@
 
 from modernrpc.core import rpc_method
 
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 
 
 @rpc_method(name='TestCaseRunStatus.filter')
@@ -19,4 +19,4 @@ def filter(query):  # pylint: disable=redefined-builtin
         :return: Serialized list of :class:`tcms.testruns.models.TestCaseRunStatus` objects
         :rtype: list(dict)
     """
-    return TestCaseRunStatus.to_xmlrpc(query)
+    return TestExecutionStatus.to_xmlrpc(query)

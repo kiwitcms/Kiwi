@@ -8,7 +8,7 @@ from django.contrib.auth.models import Permission
 
 from tcms_api import xmlrpc
 
-from tcms.testruns.models import TestRun, TestCaseRun
+from tcms.testruns.models import TestRun, TestExecution
 
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import TestCaseFactory, BuildFactory
@@ -37,7 +37,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
         result = self.rpc_client.exec.TestRun.add_case(self.test_run.pk, self.test_case.pk)
         self.assertTrue(isinstance(result, dict))
 
-        test_case_run = TestCaseRun.objects.get(run=self.test_run.pk, case=self.test_case.pk)
+        test_case_run = TestExecution.objects.get(run=self.test_run.pk, case=self.test_case.pk)
         self.assertEqual(test_case_run.pk, result['case_run_id'])
         self.assertEqual(test_case_run.case.pk, result['case_id'])
         self.assertEqual(test_case_run.run.pk, result['run_id'])
@@ -48,7 +48,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
         unauthorized_user.save()
 
         unauthorized_user.user_permissions.add(*Permission.objects.all())
-        remove_perm_from_user(unauthorized_user, 'testruns.add_testcaserun')
+        remove_perm_from_user(unauthorized_user, 'testruns.add_testexecution')
 
         rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
                                        'api-testing',
@@ -57,7 +57,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             rpc_client.TestRun.add_case(self.test_run.pk, self.test_case.pk)
 
-        exists = TestCaseRun.objects.filter(run=self.test_run.pk, case=self.test_case.pk).exists()
+        exists = TestExecution.objects.filter(run=self.test_run.pk, case=self.test_case.pk).exists()
         self.assertFalse(exists)
 
 

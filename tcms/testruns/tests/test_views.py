@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.models import Permission
 from django.utils.translation import ugettext_lazy as _
 
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 from tcms.testruns.models import TestRun
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -164,7 +164,7 @@ class TestCreateNewRun(BasePlanCase):
             self.assertEqual(case, case_run.case)
             self.assertEqual(None, case_run.tested_by)
             self.assertEqual(self.tester, case_run.assignee)
-            self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
+            self.assertEqual(TestExecutionStatus.objects.get(name='IDLE'),
                              case_run.status)
             self.assertEqual(case.history.latest().history_id, case_run.case_text_version)
             self.assertEqual(new_run.build, case_run.build)
@@ -261,7 +261,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
         # Assert clone settings result
         for origin_case_run, cloned_case_run in zip((self.case_run_1, self.case_run_2),
                                                     cloned_run.case_run.order_by('pk')):
-            self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
+            self.assertEqual(TestExecutionStatus.objects.get(name='IDLE'),
                              cloned_case_run.status)
             self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
 
@@ -369,7 +369,7 @@ class TestRemoveCaseRuns(BaseCaseRun):
     def setUpTestData(cls):
         super(TestRemoveCaseRuns, cls).setUpTestData()
 
-        user_should_have_perm(cls.tester, 'testruns.delete_testcaserun')
+        user_should_have_perm(cls.tester, 'testruns.delete_testexecution')
 
         cls.remove_case_run_url = reverse('testruns-remove_case_run',
                                           args=[cls.test_run.pk])
@@ -446,12 +446,12 @@ class TestUpdateCaseRunText(BaseCaseRun):
         cls.case_run_1.case.save()
 
     def test_get_update_caserun_text_with_permissions(self):
-        user_should_have_perm(self.tester, 'testruns.change_testcaserun')
+        user_should_have_perm(self.tester, 'testruns.change_testexecution')
         response = self.client.get(self.testruns_url)
         self.assertContains(response, 'id="update_case_run_text"')
 
     def test_update_selected_case_runs_with_permissions(self):
-        user_should_have_perm(self.tester, 'testruns.change_testcaserun')
+        user_should_have_perm(self.tester, 'testruns.change_testexecution')
 
         self.assertNotEqual(self.case_run_1.case.history.latest().history_id,
                             self.case_run_1.case_text_version)
@@ -475,7 +475,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
         )
 
     def test_get_update_caserun_text_without_permissions(self):
-        remove_perm_from_user(self.tester, 'testruns.change_testcaserun')
+        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
         response = self.client.get(self.testruns_url)
         self.assertNotContains(response, 'id="update_case_run_text"')
 
@@ -483,7 +483,7 @@ class TestUpdateCaseRunText(BaseCaseRun):
         self.case_run_1.case.text = "Scenario Version 3"
         self.case_run_1.case.save()
 
-        remove_perm_from_user(self.tester, 'testruns.change_testcaserun')
+        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
 
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
@@ -572,7 +572,7 @@ class TestAddCasesToRun(BaseCaseRun):
             case_status=cls.case_status_proposed,
             plan=[cls.plan])
 
-        user_should_have_perm(cls.tester, 'testruns.add_testcaserun')
+        user_should_have_perm(cls.tester, 'testruns.add_testexecution')
 
     def test_show_add_cases_to_run(self):
         url = reverse('add-cases-to-run', args=[self.test_run.pk])

@@ -441,7 +441,7 @@ Leave empty to disable!
 
 class Bug(TCMSActionModel):
     bug_id = models.CharField(max_length=25)
-    case_run = models.ForeignKey('testruns.TestCaseRun', default=None, blank=True, null=True,
+    case_run = models.ForeignKey('testruns.TestExecution', default=None, blank=True, null=True,
                                  related_name='case_run_bug', on_delete=models.CASCADE)
     case = models.ForeignKey(TestCase, related_name='case_bug', on_delete=models.CASCADE)
     bug_system = models.ForeignKey(BugSystem, default=1, on_delete=models.CASCADE)

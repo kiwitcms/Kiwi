@@ -51,7 +51,7 @@ def create_link(data):
     return {'rc': 1, 'response': form.errors.as_text()}
 
 
-@permission_required('testruns.change_testcaserun')
+@permission_required('testruns.change_testexecution')
 @require_POST
 def add(request):
     """Add new link to a specific target
@@ -77,7 +77,7 @@ def add(request):
     return http.JsonResponse(json_data, status=HTTPStatus.BAD_REQUEST)
 
 
-@permission_required('testruns.change_testcaserun')
+@permission_required('testruns.change_testexecution')
 @require_GET
 def remove(_request, link_id):
     """ Remove a specific link with ID ``link_id`` """

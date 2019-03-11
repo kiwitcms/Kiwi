@@ -8,7 +8,7 @@ from tcms.core.forms.fields import UserField
 from tcms.management.models import Product, Version, Build
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
-from .models import TestRun, TestCaseRunStatus
+from .models import TestRun, TestExecutionStatus
 
 
 User = get_user_model()  # pylint: disable=invalid-name
@@ -135,7 +135,7 @@ class BaseCaseRunForm(forms.Form):
         label='Build', queryset=Build.objects.all(),
     )
     status = forms.ModelChoiceField(
-        label='Case Run Status', queryset=TestCaseRunStatus.objects.all(),
+        label='Case Run Status', queryset=TestExecutionStatus.objects.all(),
         required=False,
     )
     assignee = UserField(label='Assignee', required=False)
@@ -180,7 +180,7 @@ class XMLRPCNewCaseRunForm(BaseCaseRunForm):
     def clean_status(self):
         data = self.cleaned_data.get('status')
         if not data:
-            data = TestCaseRunStatus.objects.get(name='IDLE')
+            data = TestExecutionStatus.objects.get(name='IDLE')
 
         return data
 

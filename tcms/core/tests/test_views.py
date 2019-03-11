@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django_comments.models import Comment
 
-from tcms.testruns.models import TestCaseRun
+from tcms.testruns.models import TestExecution
 from tcms.tests import BaseCaseRun
 from tcms.tests.factories import UserFactory
 from tcms.tests.factories import TestPlanFactory
@@ -143,7 +143,7 @@ class TestCommentCaseRuns(BaseCaseRun):
             {'rc': 0, 'response': 'ok'})
 
         # Assert comments are added
-        case_run_ct = ContentType.objects.get_for_model(TestCaseRun)
+        case_run_ct = ContentType.objects.get_for_model(TestExecution)
 
         for case_run_pk in (self.case_run_1.pk, self.case_run_2.pk):
             comments = Comment.objects.filter(object_pk=case_run_pk,

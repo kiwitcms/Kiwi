@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from tcms.testcases.models import Bug
 from tcms.testcases.models import BugSystem
-from tcms.testruns.models import TestCaseRun
+from tcms.testruns.models import TestExecution
 from tcms.issuetracker.types import IssueTrackerType
 from tcms.xmlrpc.decorators import permissions_required
 
@@ -138,7 +138,7 @@ def report(test_case_run_id, tracker_id):
         'response': _('Enable reporting to this Issue Tracker by configuring its base_url!'),
     }
 
-    test_case_run = TestCaseRun.objects.get(pk=test_case_run_id)
+    test_case_run = TestExecution.objects.get(pk=test_case_run_id)
     bug_system = BugSystem.objects.get(pk=tracker_id)
     if bug_system.base_url:
         tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)

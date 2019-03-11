@@ -23,8 +23,8 @@ from tcms.testcases.models import TestCase, TestCaseStatus, \
     TestCasePlan
 from tcms.management.models import Priority, Tag
 from tcms.testplans.models import TestPlan
-from tcms.testruns.models import TestCaseRun
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecution
+from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.forms import NewCaseForm, \
     SearchCaseForm, CaseNotifyForm, CloneCaseForm
 from tcms.testplans.forms import SearchPlanForm
@@ -511,7 +511,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
         data = super().get_context_data(**kwargs)
 
         case = TestCase.objects.get(pk=kwargs['case_id'])
-        case_run = TestCaseRun.objects.get(pk=self.caserun_id)
+        case_run = TestExecution.objects.get(pk=self.caserun_id)
 
         # Data of TestCase
         test_case_text = case.get_text_with_version(self.case_text_version)
@@ -519,7 +519,7 @@ class TestCaseCaseRunDetailPanelView(TemplateView):
         # Data of TestCaseRun
         caserun_comments = get_comments(case_run)
 
-        caserun_status = TestCaseRunStatus.objects.values('pk', 'name')
+        caserun_status = TestExecutionStatus.objects.values('pk', 'name')
         caserun_status = caserun_status.order_by('pk')
         bugs = group_case_bugs(case_run.case.get_bugs().order_by('bug_id'))
 

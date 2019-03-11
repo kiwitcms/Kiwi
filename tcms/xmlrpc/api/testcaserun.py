@@ -9,7 +9,7 @@ from tcms.core.contrib.comments import utils as comment_utils
 from tcms.core.contrib.linkreference.views import create_link
 from tcms.core.contrib.linkreference.models import LinkReference
 from tcms.xmlrpc.serializer import XMLRPCSerializer
-from tcms.testruns.models import TestCaseRun
+from tcms.testruns.models import TestExecution
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
@@ -38,10 +38,10 @@ def add_comment(case_run_id, comment, **kwargs):
         :param comment: str
         :return: None or JSON string in case of errors
     """
-    case_run = TestCaseRun.objects.get(pk=case_run_id)
+    case_run = TestExecution.objects.get(pk=case_run_id)
 
     data = {
-        'content_type': 'testruns.testcaserun',
+        'content_type': 'testruns.testexecution',
         'object_pk': str(case_run_id),
         'timestamp': str(time.time()).split('.')[0],
     }
@@ -58,7 +58,7 @@ def add_comment(case_run_id, comment, **kwargs):
 
 # todo: this is very similar, if not duplicate to TestRun.add_case IMO
 # should we schedule it for removal ?!?
-@permissions_required('testruns.add_testcaserun')
+@permissions_required('testruns.add_testexecution')
 @rpc_method(name='TestCaseRun.create')
 def create(values):
     """
@@ -69,7 +69,7 @@ def create(values):
         :param values: Field values for :class:`tcms.testruns.models.TestCaseRun`
         :type values: dict
         :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
-        :raises: PermissionDenied if missing *testruns.add_testcaserun* permission
+        :raises: PermissionDenied if missing *testruns.add_testexecution* permission
 
         Minimal parameters::
 
@@ -78,7 +78,7 @@ def create(values):
                 'case': 12345,
                 'build': 123,
             }
-            >>> TestCaseRun.create(values)
+            >>> TestExecution.create(values)
     """
     from tcms.testruns.forms import XMLRPCNewCaseRunForm
 
@@ -118,10 +118,10 @@ def filter(values):  # pylint: disable=redefined-builtin
         :return: List of serialized :class:`tcms.testruns.models.TestCaseRun` objects
         :rtype: list(dict)
     """
-    return TestCaseRun.to_xmlrpc(values)
+    return TestExecution.to_xmlrpc(values)
 
 
-@permissions_required('testruns.change_testcaserun')
+@permissions_required('testruns.change_testexecution')
 @rpc_method(name='TestCaseRun.update')
 def update(case_run_id, values, **kwargs):
     """
@@ -134,11 +134,11 @@ def update(case_run_id, values, **kwargs):
         :param values: Field values for :class:`tcms.testruns.models.TestCaseRun`
         :type values: dict
         :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
-        :raises: PermissionDenied if missing *testruns.change_testcaserun* permission
+        :raises: PermissionDenied if missing *testruns.change_testexecution* permission
     """
     from tcms.testruns.forms import XMLRPCUpdateCaseRunForm
 
-    tcr = TestCaseRun.objects.get(pk=case_run_id)
+    tcr = TestExecution.objects.get(pk=case_run_id)
     form = XMLRPCUpdateCaseRunForm(values)
 
     if form.is_valid():
@@ -184,7 +184,7 @@ def add_link(case_run_id, name, url):
     result = create_link({
         'name': name,
         'url': url,
-        'target': 'TestCaseRun',
+        'target': 'TestExecution',
         'target_id': case_run_id
     })
     if result['rc'] != 0:

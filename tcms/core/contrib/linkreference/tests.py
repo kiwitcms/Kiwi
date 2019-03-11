@@ -25,7 +25,7 @@ class TestAddView(test.TestCase):
         cls.tester = UserFactory()
         cls.tester.set_password('password')
         cls.tester.save()
-        user_should_have_perm(cls.tester, 'testruns.change_testcaserun')
+        user_should_have_perm(cls.tester, 'testruns.change_testexecution')
 
         cls.tester_without_perms = UserFactory()
         cls.tester_without_perms.set_password('password')
