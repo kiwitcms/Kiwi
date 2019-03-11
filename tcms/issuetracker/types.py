@@ -76,6 +76,10 @@ class IssueTrackerType:
         raise NotImplementedError()
 
     # pylint: disable = invalid-name, no-self-use
+    # todo: we should allow this method to raise and the specific error
+    # message must be returned to the caller instead of generic one.
+    # as it is LinkOnly tracker doesn't have any integrations but the error
+    # message is misleading
     def is_adding_testcase_to_issue_disabled(self):
         """
             When is linking a TC to a Bug report disabled?
