@@ -8,7 +8,7 @@ coverage
 factory_boy
 mock
 django-extensions
-pydot
+pydot==1.4.1
 # linting tools
 pylint-django
 bandit
