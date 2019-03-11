@@ -34,7 +34,7 @@ An example how to use this API can be found
 `here <https://gist.github.com/atodorov/f5aed028b6f254d97bcaf93453abe8d2>`_.
 
 Further information can be found at :ref:`api` and
-:mod:`tcms_api.tcms_api.plugin_helpers`.
+https://tcms-api.readthedocs.io/en/latest/modules/tcms_api.plugin_helpers.html.
 
 .. important::
 

@@ -3,5 +3,5 @@
 Kiwi TCMS Python API client
 ===========================
 
-Client side configuration is documented in :mod:`tcms_api.tcms_api`.
+Client side configuration is documented at https://tcms-api.readthedocs.io.
 Server side RPC methods are documented in :mod:`tcms.xmlrpc.api`.
