@@ -2,7 +2,7 @@
 
 django-debug-toolbar
 Sphinx
-flake8
+flake8==3.7.7
 epydoc
 coverage
 factory_boy
