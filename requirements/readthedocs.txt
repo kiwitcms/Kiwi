@@ -13,4 +13,4 @@ pydot
 pylint-django
 bandit
 twine
-pyOpenSSL
+pyOpenSSL==19.0.0
