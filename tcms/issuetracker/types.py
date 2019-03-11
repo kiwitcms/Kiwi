@@ -382,9 +382,10 @@ class Gitlab(IssueTrackerType):
 
 class LinkOnly(IssueTrackerType):
     """
-        LinkOnly Issue Tracker, for when your issue tracker is not one of the supported ones.
+        Allow only linking issues to TestExecution records. Can be used when your
+        issue tracker is not integrated with Kiwi TCMS.
 
-        Because of this, no API related functionallities are available
+        No additional API integration available!
     """
 
     def is_adding_testcase_to_issue_disabled(self):
