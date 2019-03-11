@@ -11,3 +11,6 @@ requirements:
   - requirements/devel.txt:
       update: all
       pin: False
+  - requirements/readthedocs.txt:
+      update: all
+      pin: False
