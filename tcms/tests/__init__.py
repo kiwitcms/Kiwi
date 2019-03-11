@@ -7,7 +7,7 @@ from django import test
 from django.conf import settings
 from django.contrib.auth.models import Permission
 
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.models import TestCaseStatus
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
@@ -186,7 +186,7 @@ class BaseCaseRun(BasePlanCase):
 
         # todo: we need a linter to find all places where we get statuses
         # by hard-coded names instead of class based attribute constants!
-        cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+        cls.status_idle = TestExecutionStatus.objects.get(name='IDLE')
 
         cls.build = BuildFactory(product=cls.product)
 

@@ -44,7 +44,7 @@ jQ(function() {
 		<input id="value_product_id" type="hidden" name="product_id" value="{{ test_run.plan.product_id }}" />
 	</div>
 	<div class="control">
-		{% if perms.testruns.change_testcaserun %}
+		{% if perms.testruns.change_testexecution %}
 		<input id="btn_edit" type="button" value="Edit" title="Edit this test run" data-params='["{% url 'testruns-edit' test_run.run_id %}", "{{ request.GET.from_plan }}"]'>
 		{% else %}
 		<input id="btn_edit" type="button" value="Edit" disabled="true">

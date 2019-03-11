@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import permission_required
 from tcms.testcases.models import TestCase, Bug
 from tcms.testcases.models import TestCaseTag
 from tcms.testplans.models import TestPlan, TestPlanTag
-from tcms.testruns.models import TestCaseRun, TestRunTag
+from tcms.testruns.models import TestExecution, TestRunTag
 from tcms.core.helpers.comments import add_comment
 from tcms.core.utils.validations import validate_bug_id
 
@@ -186,7 +186,7 @@ def comment_case_runs(request):
             run_ids.append(run_id)
     if not run_ids:
         return say_no('No runs selected.')
-    runs = TestCaseRun.objects.filter(pk__in=run_ids).only('pk')
+    runs = TestExecution.objects.filter(pk__in=run_ids).only('pk')
     if not runs:
         return say_no('No caserun found.')
     add_comment(runs, comment, request.user)
@@ -228,7 +228,7 @@ def update_bugs_to_caseruns(request):
     data, error = clean_bug_form(request)
     if error:
         return say_no(error)
-    runs = TestCaseRun.objects.filter(pk__in=data['runs'])
+    runs = TestExecution.objects.filter(pk__in=data['runs'])
     bug_system_id = data['bug_system_id']
     bug_ids = data['bugs']
 

@@ -8,8 +8,8 @@ from django.contrib.contenttypes.models import ContentType
 from django_comments.models import Comment
 
 from tcms.testcases.models import Bug
-from tcms.testruns.models import TestCaseRun
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecution
+from tcms.testruns.models import TestExecutionStatus
 
 
 def get_run_bug_ids(run_id):
@@ -98,12 +98,12 @@ class TestCaseRunDataMixin:
         # in Django 1.10 we have the Cast() function for similar cases, see
         # https://docs.djangoproject.com/en/1.10/ref/models/database-functions/#cast
         object_pks = []
-        for test_case_run in TestCaseRun.objects.filter(run=run_pk).only('pk'):
+        for test_case_run in TestExecution.objects.filter(run=run_pk).only('pk'):
             object_pks.append(str(test_case_run.pk))
 
         comments = Comment.objects.filter(
             site=settings.SITE_ID,
-            content_type=ContentType.objects.get_for_model(TestCaseRun).pk,
+            content_type=ContentType.objects.get_for_model(TestExecution).pk,
             is_public=True,
             is_removed=False,
             object_pk__in=object_pks
@@ -143,8 +143,8 @@ class TestCaseRunDataMixin:
         """
         idle_count = 0
         complete_count = 0
-        complete_status_names = TestCaseRunStatus.complete_status_names
-        idle_status_names = TestCaseRunStatus.idle_status_names
+        complete_status_names = TestExecutionStatus.complete_status_names
+        idle_status_names = TestExecutionStatus.idle_status_names
 
         for case_run in case_runs:
             status_name = case_run.status.name

@@ -10,7 +10,7 @@ from tcms.testruns.data import get_run_bug_ids
 from tcms.tests import BaseCaseRun
 from tcms.tests import BasePlanCase
 from tcms.tests.factories import TestCaseRunFactory
-from tcms.tests.factories import TestCaseRunStatus
+from tcms.tests.factories import TestExecutionStatus
 from tcms.tests.factories import TestRunFactory
 
 
@@ -23,7 +23,7 @@ class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):
         cls.empty_test_run = TestRunFactory(manager=cls.tester, default_tester=cls.tester,
                                             plan=cls.plan)
 
-        cls.statuss = TestCaseRunStatus.objects.all().order_by('pk')
+        cls.statuss = TestExecutionStatus.objects.all().order_by('pk')
 
     def test_get_from_empty_case_runs(self):
         data = self.empty_test_run.stats_caseruns_status(self.statuss)
@@ -43,11 +43,11 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
     def setUpTestData(cls):
         super(TestGetCaseRunsStatsByStatus, cls).setUpTestData()
 
-        cls.statuss = TestCaseRunStatus.objects.all().order_by('pk')
+        cls.statuss = TestExecutionStatus.objects.all().order_by('pk')
 
-        cls.status_idle = TestCaseRunStatus.objects.get(name='IDLE')
-        cls.status_failed = TestCaseRunStatus.objects.get(name='FAILED')
-        cls.status_waived = TestCaseRunStatus.objects.get(name='WAIVED')
+        cls.status_idle = TestExecutionStatus.objects.get(name='IDLE')
+        cls.status_failed = TestExecutionStatus.objects.get(name='FAILED')
+        cls.status_waived = TestExecutionStatus.objects.get(name='WAIVED')
 
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)

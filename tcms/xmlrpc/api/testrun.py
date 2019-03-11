@@ -4,7 +4,7 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
-from tcms.testruns.models import TestCaseRun
+from tcms.testruns.models import TestExecution
 from tcms.testruns.models import TestRun
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.testruns.forms import XMLRPCUpdateRunForm, XMLRPCNewRunForm
@@ -24,7 +24,7 @@ __all__ = (
 )
 
 
-@permissions_required('testruns.add_testcaserun')
+@permissions_required('testruns.add_testexecution')
 @rpc_method(name='TestRun.add_case')
 def add_case(run_id, case_id):
     """
@@ -38,7 +38,7 @@ def add_case(run_id, case_id):
         :type case_id: int
         :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
         :raises: DoesNotExist if objects specified by the PKs don't exist
-        :raises: PermissionDenied if missing *testruns.add_testcaserun* permission
+        :raises: PermissionDenied if missing *testruns.add_testexecution* permission
     """
     test_case_run = TestRun.objects.get(pk=run_id).add_case_run(
         case=TestCase.objects.get(pk=case_id)
@@ -46,7 +46,7 @@ def add_case(run_id, case_id):
     return test_case_run.serialize()
 
 
-@permissions_required('testruns.delete_testcaserun')
+@permissions_required('testruns.delete_testexecution')
 @rpc_method(name='TestRun.remove_case')
 def remove_case(run_id, case_id):
     """
@@ -59,9 +59,9 @@ def remove_case(run_id, case_id):
         :param case_id: PK of TestCase to be removed
         :type case_id: int
         :return: None
-        :raises: PermissionDenied if missing *testruns.delete_testcaserun* permission
+        :raises: PermissionDenied if missing *testruns.delete_testexecution* permission
     """
-    TestCaseRun.objects.filter(run=run_id, case=case_id).delete()
+    TestExecution.objects.filter(run=run_id, case=case_id).delete()
 
 
 @rpc_method(name='TestRun.get_cases')
@@ -79,7 +79,7 @@ def get_cases(run_id):
     """
     tcs_serializer = TestCase.to_xmlrpc(query={'case_run__run_id': run_id})
 
-    qs = TestCaseRun.objects.filter(run_id=run_id).values(
+    qs = TestExecution.objects.filter(run_id=run_id).values(
         'case', 'pk', 'status__name')
     extra_info = dict(((row['case'], row) for row in qs.iterator()))
 

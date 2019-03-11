@@ -15,7 +15,7 @@ from tcms.testcases.fields import MultipleEmailField
 from tcms.management.models import Priority, Tag
 from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 from tcms.tests.factories import BugFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests import BasePlanCase, BaseCaseRun, remove_perm_from_user
@@ -57,7 +57,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
             html=True)
 
         with override('en'):
-            for status in TestCaseRunStatus.objects.all():
+            for status in TestExecutionStatus.objects.all():
                 self.assertContains(
                     response,
                     "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" "

@@ -31,7 +31,7 @@
 								<input type="hidden" name="assignee" value="{{ test_case_run.assignee_id }}" />
 								<input type="hidden" name="tested_by" value="{{ test_case_run.tested_by_id }}" />
 								<input type="hidden" name="value" value="" />
-								{% if perms.testruns.change_testcaserun %}
+								{% if perms.testruns.change_testexecution %}
 								{% for status in test_status %}
 								<input type="submit" class="btn btn_{{ status.name.lower }} btn_status js-status-button" title="{{ status.name }}" value="" crs_id="{{ status.pk }}" {% ifequal status.pk test_case_run.status_id %}disabled="True"{% endifequal %} data-formvalue="{{ status.pk }}" />
 								{% endfor %}
