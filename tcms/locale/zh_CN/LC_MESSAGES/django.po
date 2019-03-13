@@ -1473,7 +1473,7 @@ msgid "add new Category"
 msgstr "添加新分类"
 
 #: tcms/testcases/templates/testcases/mutable.html:121
-msgid "Requirments"
+msgid "Requirements"
 msgstr "需求"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
