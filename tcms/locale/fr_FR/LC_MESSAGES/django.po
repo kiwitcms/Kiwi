@@ -1553,7 +1553,7 @@ msgid "add new Category"
 msgstr "ajouter une nouvelle catégorie"
 
 #: tcms/testcases/templates/testcases/mutable.html:121
-msgid "Requirments"
+msgid "Requirements"
 msgstr "Spécifications requises"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
