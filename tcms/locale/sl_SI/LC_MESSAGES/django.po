@@ -1475,7 +1475,7 @@ msgid "add new Category"
 msgstr "dodaj novo kategorijo"
 
 #: tcms/testcases/templates/testcases/mutable.html:121
-msgid "Requirments"
+msgid "Requirements"
 msgstr "Zahteve"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
