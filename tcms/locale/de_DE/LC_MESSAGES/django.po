@@ -1421,6 +1421,7 @@ msgid "Arguments"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:108
+#: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
 msgstr ""
 
@@ -1469,10 +1470,6 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
-
-#: tcms/testcases/templates/testcases/mutable.html:121
-msgid "Requirements"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:143

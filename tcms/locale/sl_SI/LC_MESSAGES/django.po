@@ -1424,6 +1424,7 @@ msgid "Arguments"
 msgstr "Argumenti"
 
 #: tcms/testcases/templates/testcases/get.html:108
+#: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
 msgstr "Zahteve"
 
@@ -1473,10 +1474,6 @@ msgstr "dodaj produkt"
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
 msgstr "dodaj novo kategorijo"
-
-#: tcms/testcases/templates/testcases/mutable.html:121
-msgid "Requirements"
-msgstr "Zahteve"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"

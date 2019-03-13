@@ -1422,6 +1422,7 @@ msgid "Arguments"
 msgstr "参数"
 
 #: tcms/testcases/templates/testcases/get.html:108
+#: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
 msgstr "需求"
 
@@ -1471,10 +1472,6 @@ msgstr "添加新产品"
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
 msgstr "添加新分类"
-
-#: tcms/testcases/templates/testcases/mutable.html:121
-msgid "Requirements"
-msgstr "需求"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
