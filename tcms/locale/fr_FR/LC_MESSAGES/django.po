@@ -1502,6 +1502,7 @@ msgid "Arguments"
 msgstr "Arguments"
 
 #: tcms/testcases/templates/testcases/get.html:108
+#: tcms/testcases/templates/testcases/mutable.html:121
 msgid "Requirements"
 msgstr "Spécifications requises"
 
@@ -1551,10 +1552,6 @@ msgstr "Ajouter un nouveau produit"
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
 msgstr "ajouter une nouvelle catégorie"
-
-#: tcms/testcases/templates/testcases/mutable.html:121
-msgid "Requirements"
-msgstr "Spécifications requises"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
