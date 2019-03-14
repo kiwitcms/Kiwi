@@ -617,8 +617,8 @@ Nitrate.TestPlans.SearchCase.on_load = function() {
     });
   });
 
-  if (jQ('#id_table_cases').length) {
-    jQ('#id_table_cases').DataTable({
+  if ($('#id_table_cases').length) {
+    $('#id_table_cases').DataTable({
       "aoColumnDefs":[{ "bSortable":false, "aTargets":[ 'nosort' ] }],
       "aaSorting": [[ 1, "desc" ]],
       "sPaginationType": "full_numbers",
