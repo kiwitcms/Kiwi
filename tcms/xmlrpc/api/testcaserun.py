@@ -19,9 +19,9 @@ __all__ = (
 
     'add_comment',
 
-    'add_log',
-    'get_logs',
-    'remove_log',
+    'add_link',
+    'get_links',
+    'remove_link',
 )
 
 
@@ -164,20 +164,20 @@ def update(case_run_id, values, **kwargs):
     return tcr.serialize()
 
 
-@rpc_method(name='TestCaseRun.add_log')
-def add_log(case_run_id, name, url):
+@rpc_method(name='TestCaseRun.add_link')
+def add_link(case_run_id, name, url):
     """
-    .. function:: XML-RPC TestCaseRun.add_log(case_run_id, name, url)
+    .. function:: XML-RPC TestCaseRun.add_link(case_run_id, name, url)
 
-        Add new log link to a TestCaseRun
+        Add new URL link to a TestCaseRun
 
         :param case_run_id: PK of a TestCaseRun object
         :type case_run_id: int
-        :param name: Name/description of the log
+        :param name: Name/description of the link
         :type name: str
-        :param url: URL of the log
+        :param url: URL address
         :type url: str
-        :return: ID of created log link
+        :return: ID of created link
         :rtype: int
         :raises: RuntimeError if operation not successfull
     """
@@ -192,12 +192,12 @@ def add_log(case_run_id, name, url):
     return result['data']['pk']
 
 
-@rpc_method(name='TestCaseRun.remove_log')
-def remove_log(case_run_id, link_id):
+@rpc_method(name='TestCaseRun.remove_link')
+def remove_link(case_run_id, link_id):
     """
-    .. function:: XML-RPC TestCaseRun.remove_log(case_run_id, link_id)
+    .. function:: XML-RPC TestCaseRun.remove_link(case_run_id, link_id)
 
-        Remove log link from TestCaseRun
+        Remove URL link from TestCaseRun
 
         :param case_run_id: PK of TestCaseRun to modify
         :type case_run_id: int
@@ -208,12 +208,12 @@ def remove_log(case_run_id, link_id):
     LinkReference.objects.filter(pk=link_id, test_case_run=case_run_id).delete()
 
 
-@rpc_method(name='TestCaseRun.get_logs')
-def get_logs(case_run_id):
+@rpc_method(name='TestCaseRun.get_links')
+def get_links(case_run_id):
     """
-    .. function:: XML-RPC TestCaseRun.get_logs(case_run_id)
+    .. function:: XML-RPC TestCaseRun.get_links(case_run_id)
 
-        Get log links for the specified TestCaseRun
+        Get URL links for the specified TestCaseRun
 
         :param case_run_id: PK of TestCaseRun object
         :type case_run_id: int
