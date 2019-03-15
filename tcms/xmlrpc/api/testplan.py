@@ -7,7 +7,7 @@ from tcms.management.models import Tag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase, TestCasePlan
 
-from tcms.xmlrpc.utils import get_attachments_for
+from tcms.xmlrpc import utils
 from tcms.xmlrpc.api.forms.testplan import EditPlanForm, NewPlanForm
 from tcms.xmlrpc.decorators import permissions_required
 
@@ -22,6 +22,7 @@ __all__ = (
     'add_tag',
     'remove_tag',
 
+    'add_attachment',
     'list_attachments',
 )
 
@@ -264,4 +265,28 @@ def list_attachments(plan_id, **kwargs):
     """
     plan = TestPlan.objects.get(pk=plan_id)
     request = kwargs.get(REQUEST_KEY)
-    return get_attachments_for(request, plan)
+    return utils.get_attachments_for(request, plan)
+
+
+@permissions_required('attachments.add_attachment')
+@rpc_method(name='TestPlan.add_attachment')
+def add_attachment(plan_id, filename, b64content, **kwargs):
+    """
+    .. function:: XML-RPC TestPlan.add_attachment(plan_id, filename, b64content)
+
+        Add attachment to the given TestPlan.
+
+        :param plan_id: PK of TestPlan
+        :type plan_id: int
+        :param filename: File name of attachment, e.g. 'logs.txt'
+        :type filename: str
+        :param b64content: Base64 encoded content
+        :type b64content: str
+        :return: None
+    """
+    utils.add_attachment(
+        plan_id,
+        'testplans.TestPlan',
+        kwargs.get(REQUEST_KEY).user,
+        filename,
+        b64content)
