@@ -1,2 +1,4 @@
 {% load i18n %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'patternfly/dist/css/patternfly-additions.min.css' %}">
 {% if delete_url %}<a class="delete-attachment" href="{{ delete_url }}?next={{ next }}"><span class="pficon-error-circle-o"></span></a>{% endif %}
