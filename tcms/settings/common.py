@@ -299,6 +299,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 COMMENTS_APP = 'tcms.core.contrib.comments'
 
 MODERNRPC_METHODS_MODULES = [
+    'tcms.xmlrpc.api.attachment',
     'tcms.xmlrpc.api.auth',
     'tcms.xmlrpc.api.bug',
     'tcms.xmlrpc.api.build',

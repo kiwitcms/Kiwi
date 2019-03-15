@@ -18,6 +18,7 @@ Submodules
 
 .. toctree::
 
+   tcms.xmlrpc.api.attachment
    tcms.xmlrpc.api.auth
    tcms.xmlrpc.api.bug
    tcms.xmlrpc.api.bugsystem
