@@ -8,10 +8,10 @@ from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
-from tcms.xmlrpc.utils import get_attachments_for
+
+from tcms.xmlrpc import utils
 from tcms.xmlrpc.forms import UpdateCaseForm, NewCaseForm
 from tcms.xmlrpc.decorators import permissions_required
-
 
 __all__ = (
     'create',
@@ -30,6 +30,7 @@ __all__ = (
     'add_tag',
     'remove_tag',
 
+    'add_attachment',
     'list_attachments',
 )
 
@@ -378,4 +379,28 @@ def list_attachments(case_id, **kwargs):
     """
     case = TestCase.objects.get(pk=case_id)
     request = kwargs.get(REQUEST_KEY)
-    return get_attachments_for(request, case)
+    return utils.get_attachments_for(request, case)
+
+
+@permissions_required('attachments.add_attachment')
+@rpc_method(name='TestCase.add_attachment')
+def add_attachment(case_id, filename, b64content, **kwargs):
+    """
+    .. function:: XML-RPC TestCase.add_attachment(case_id, filename, b64content)
+
+        Add attachment to the given TestCase.
+
+        :param case_id: PK of TestCase
+        :type case_id: int
+        :param filename: File name of attachment, e.g. 'logs.txt'
+        :type filename: str
+        :param b64content: Base64 encoded content
+        :type b64content: str
+        :return: None
+    """
+    utils.add_attachment(
+        case_id,
+        'testcases.TestCase',
+        kwargs.get(REQUEST_KEY).user,
+        filename,
+        b64content)
