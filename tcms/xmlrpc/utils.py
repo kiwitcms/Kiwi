@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from attachments.models import Attachment
 from django.db.models import FieldDoesNotExist
 
 from tcms.management.models import Product
+from tcms.core.utils import request_host_link
 
 
 QUERY_DISTINCT = 1
@@ -117,3 +119,17 @@ def distinct_m2m_rows(cls, values, op_type):
 
 def distinct_filter(cls, values):
     return distinct_m2m_rows(cls, values, op_type=QUERY_DISTINCT)
+
+
+def get_attachments_for(request, obj):
+    host_link = request_host_link(request)
+    result = []
+    for attachment in Attachment.objects.attachments_for_object(obj):
+        result.append({
+            'pk': attachment.pk,
+            'url': host_link + attachment.attachment_file.url,
+            'owner_pk': attachment.creator.pk,
+            'owner_username': attachment.creator.username,
+            'date': attachment.created.isoformat(),
+        })
+    return result

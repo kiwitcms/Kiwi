@@ -8,8 +8,8 @@ from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
+from tcms.xmlrpc.utils import get_attachments_for
 from tcms.xmlrpc.forms import UpdateCaseForm, NewCaseForm
-
 from tcms.xmlrpc.decorators import permissions_required
 
 
@@ -29,6 +29,8 @@ __all__ = (
 
     'add_tag',
     'remove_tag',
+
+    'list_attachments',
 )
 
 
@@ -358,3 +360,22 @@ def remove(query):
             })
     """
     return TestCase.objects.filter(**query).delete()
+
+
+@permissions_required('attachments.view_attachment')
+@rpc_method(name='TestCase.list_attachments')
+def list_attachments(case_id, **kwargs):
+    """
+    .. function:: XML-RPC TestCase.list_attachments(case_id)
+
+        List attachments for the given TestCase.
+
+        :param case_id: PK of TestCase to inspect
+        :type case_id: int
+        :return: A list containing information and download URLs for attachements
+        :rtype: list
+        :raises: TestCase.DoesNotExit if object specified by PK is missing
+    """
+    case = TestCase.objects.get(pk=case_id)
+    request = kwargs.get(REQUEST_KEY)
+    return get_attachments_for(request, case)
