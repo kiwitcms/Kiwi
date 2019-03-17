@@ -28,6 +28,10 @@ def forward_copy_data(apps, schema_editor):
         if latest_text:
             test_case.case_text = convert_test_case_text(latest_text)
             test_case.save()
+            # b/c the above will not generate history
+            history = test_case.history.latest()
+            history.case_text = test_case.case_text
+            history.save()
 
 
 class Migration(migrations.Migration):
