@@ -22,6 +22,7 @@ def convert_test_case_text(test_case_text):
 def forward_copy_data(apps, schema_editor):
     TestCase = apps.get_model('testcases', 'TestCase')
     TestCaseText = apps.get_model('testcases', 'TestCaseText')
+    HistoricalTestCase = apps.get_model('testcases', 'HistoricalTestCase')
 
     for test_case in TestCase.objects.all():
         latest_text = TestCaseText.objects.filter(case=test_case.pk).order_by('-pk').first()
@@ -29,7 +30,9 @@ def forward_copy_data(apps, schema_editor):
             test_case.case_text = convert_test_case_text(latest_text)
             test_case.save()
             # b/c the above will not generate history
-            history = test_case.history.latest()
+            history = HistoricalTestCase.objects.filter(
+                        case_id=test_case.pk
+                      ).order_by('-history_id').first()
             history.case_text = test_case.case_text
             history.save()
 
