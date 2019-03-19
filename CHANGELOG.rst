@@ -33,14 +33,17 @@ Improvements
 - More strings marked as translatable (Christophe CHAUVET)
 - When creating new TestCase you can now change notification settings.
   Previously this was only possible during editing
-- Document import-export approaches. Closes #795
+- Document import-export approaches. Closes
+  `Issue #795 <https://github.com/kiwitcms/Kiwi/issues/795>`_
 - Document available test automation plugins
 - Improve documentation around Docker customization and SSL termination
 - Add documentation example of reverse rroxy configuration for HAProxy (Nicolas Auvray)
 - ``TestPlan.add_case()`` will now set the sortkey to highest in plan + 10 (Rik)
-- Add ``LinkOnly`` issue tracker. Fixes #289
+- Add ``LinkOnly`` issue tracker. Fixes
+  `Issue #289 <https://github.com/kiwitcms/Kiwi/issues/289>`_
 - Use the same HTML template for both TestCase new & edit
-- New API methods for adding, removing and listing attachments. Fixes #446:
+- New API methods for adding, removing and listing attachments. Fixes
+  `Issue #446 <https://github.com/kiwitcms/Kiwi/issues/446>`_:
 
   - TestPlan.add_attachment()
   - TestCase.add_attachment()
@@ -71,7 +74,8 @@ Database migrations
 Removed functionality
 ~~~~~~~~~~~~~~~~~~~~~
 
-- Remove legacy reports. Closes #657
+- Remove legacy reports. Closes
+  `Issue #657 <https://github.com/kiwitcms/Kiwi/issues/657>`_
 - Remove "Save & Continue" functionality from TestCase edit page
 - Renamed API methods:
 
@@ -86,26 +90,35 @@ Removed functionality
 Bug fixes
 ~~~~~~~~~
 
-- Remove hard-coded timestamp in TestCase page template, Refs #765
+- Remove hard-coded timestamp in TestCase page template, References
+  `Issue #765 <https://github.com/kiwitcms/Kiwi/issues/765>`_
 - Fix handling of ``?from_plan`` URL parameter in TestCase page
-- Make ``TestCase.text`` occupy 100% width when rendered. Fixes #798
-- Enable ``markdown.extensions.tables``. Fixes #816
-- Handle form erros and default values for TestPlan new/edit. Fixes #864
+- Make ``TestCase.text`` occupy 100% width when rendered. Fixes
+  `Issue #798 <https://github.com/kiwitcms/Kiwi/issues/798>`_
+- Enable ``markdown.extensions.tables``. Fixes
+  `Issue #816 <https://github.com/kiwitcms/Kiwi/issues/816>`_
+- Handle form erros and default values for TestPlan new/edit. Fixes
+  `Issue #864 <https://github.com/kiwitcms/Kiwi/issues/864>`_
 - Tests + fix for failing TestCase rendering in French
 - Show color-coded statuses on dashboard page when seen with non-English
   language
 - Refactor check for confirmed test cases when editting to work with
   translations
-- Fix form values when filtering test cases inside TestPlan. Fixes #674 (@marion2016)
-- Show delete icon for attachments. Fixes #847
+- Fix form values when filtering test cases inside TestPlan. Fixes
+  `Issue #674 <https://github.com/kiwitcms/Kiwi/issues/674>`_ (@marion2016)
+- Show delete icon for attachments. Fixes
+  `Issue #847 <https://github.com/kiwitcms/Kiwi/issues/847>`_
 
 
 Refactoring
 ~~~~~~~~~~~
 
 - Remove unused ``.current_user`` instance attribute
-- Remove ``EditCaseForm`` and use ``NewCaseForm`` instead, Refs #708, #812
-- Fix "Select All" checkbox. Fixes #828 (Rady)
+- Remove ``EditCaseForm`` and use ``NewCaseForm`` instead, References
+  `Issue #708 <https://github.com/kiwitcms/Kiwi/issues/708>`_,
+  `Issue #812 <https://github.com/kiwitcms/Kiwi/issues/812>`_
+- Fix "Select All" checkbox. Fixes
+  `Issue #828 <https://github.com/kiwitcms/Kiwi/issues/828>`_ (Rady)
 
 
 Translations
