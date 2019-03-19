@@ -1,6 +1,125 @@
 Change Log
 ==========
 
+Kiwi TCMS 6.6 (19 Mar 2019)
+---------------------------
+
+**IMPORTANT:** this is a medium severity security update, improvement and
+bug-fix update. Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- Explicitly require marked v0.6.1 to fix medium severity ReDoS vulnerability. See
+  `SNYK-JS-MARKED-73637 <https://snyk.io/vuln/SNYK-JS-MARKED-73637>`_
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update ``python-gitlab`` from 1.7.0 to 1.8.0
+- Update ``django-contrib-comments`` from 1.9.0 to 1.9.1
+- More strings marked as translatable (Christophe CHAUVET)
+- When creating new TestCase you can now change notification settings.
+  Previously this was only possible during editing
+- Document import-export approaches. Closes #795
+- Document available test automation plugins
+- Improve documentation around Docker customization and SSL termination
+- Add documentation example of reverse rroxy configuration for HAProxy (Nicolas Auvray)
+- ``TestPlan.add_case()`` will now set the sortkey to highest in plan + 10 (Rik)
+- Add ``LinkOnly`` issue tracker. Fixes #289
+- Use the same HTML template for both TestCase new & edit
+- New API methods for adding, removing and listing attachments. Fixes #446:
+
+  - TestPlan.add_attachment()
+  - TestCase.add_attachment()
+  - TestPlan.list_attachments()
+  - TestCase.list_attachments()
+  - Attachments.remove_attachment()
+
+
+Database migrations
+~~~~~~~~~~~~~~~~~~~
+
+- Populate missing ``TestCase.text`` history.
+  In version 6.5 the ``TestCase`` model was updated to store the text
+  into a single field called ``text`` instead of 4 separate fields.
+  During that migration historical records were updated to have
+  the new ``text`` field but values were not properly assigned.
+
+  The "effect" of this is that in TestCaseRun records you were not
+  able to see the actual text b/c it was None.
+
+  This change ammends ``0006_merge_text_field_into_testcase_model`` for
+  installations which have not yet migrated to 6.5 or later. We also
+  provide the data-only migration ``0009_populate_missing_text_history``
+  which will inspect the current state of the DB and copy the text to
+  the last historical record.
+
+
+Removed functionality
+~~~~~~~~~~~~~~~~~~~~~
+
+- Remove legacy reports. Closes #657
+- Remove "Save & Continue" functionality from TestCase edit page
+- Renamed API methods:
+
+  - ``TestCaseRun.add_log()``    -> ``TestCaseRun.add_link()``
+  - ``TestCaseRun.remove_log()`` -> ``TestCaseRun.remove_link()``
+  - ``TestCaseRun.get_logs()``   -> ``TestCaseRun.get_links()``
+
+  These methods work with URL links, which can be added or removed to
+  test case runs.
+
+
+Bug fixes
+~~~~~~~~~
+
+- Remove hard-coded timestamp in TestCase page template, Refs #765
+- Fix handling of ``?from_plan`` URL parameter in TestCase page
+- Make ``TestCase.text`` occupy 100% width when rendered. Fixes #798
+- Enable ``markdown.extensions.tables``. Fixes #816
+- Handle form erros and default values for TestPlan new/edit. Fixes #864
+- Tests + fix for failing TestCase rendering in French
+- Show color-coded statuses on dashboard page when seen with non-English
+  language
+- Refactor check for confirmed test cases when editting to work with
+  translations
+- Fix form values when filtering test cases inside TestPlan. Fixes #674 (@marion2016)
+- Show delete icon for attachments. Fixes #847
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove unused ``.current_user`` instance attribute
+- Remove ``EditCaseForm`` and use ``NewCaseForm`` instead, Refs #708, #812
+- Fix "Select All" checkbox. Fixes #828 (Rady)
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Chinese Simplified translation <https://crowdin.com/project/kiwitcms/zh-CN#>`_
+- Updated `Chinese Traditional translation <https://crowdin.com/project/kiwitcms/zh-TW#>`_
+- Updated `German translation <https://crowdin.com/project/kiwitcms/de#>`_
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Changed misspelled source string ``Requirments`` -> ``Requirements`` (@Prome88)
+
+
+
 tcms-api 5.3 (24 Feb 2019)
 --------------------------
 
