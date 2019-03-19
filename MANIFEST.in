@@ -1,4 +1,4 @@
-include AUTHORS CHANGELOG.rst README.rst LICENSE manage.py
+include CHANGELOG.rst README.rst LICENSE manage.py
 
 graft requirements
 graft tcms/locale
