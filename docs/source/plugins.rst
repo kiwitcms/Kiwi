@@ -14,13 +14,13 @@ Available plugins
   Test Anything Protocol (TAP) files. Written in Python
 * `junit.xml-plugin <https://github.com/kiwitcms/junit.xml-plugin>`_:
   for reading junit.xml formatted files. Written in Python
+* Native `JUnit 5 plugin <https://github.com/kiwitcms/junit-plugin/>`_ written
+  in Java
 
 
 Plugins still in progress
 -------------------------
 
-* Native `JUnit 5 plugin <https://github.com/kiwitcms/junit-plugin/>`_ written
-  in Java
 * Native `PHPUnit plugin <https://github.com/kiwitcms/phpunit-plugin/>`_ written
   in PHP
 * Native `py.test plugin <https://github.com/kiwitcms/pytest-plugin/>`_ written
