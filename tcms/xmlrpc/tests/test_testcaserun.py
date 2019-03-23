@@ -22,7 +22,7 @@ from tcms.tests.factories import BuildFactory
 from tcms.xmlrpc.tests.utils import XmlrpcAPIBaseTest
 
 
-@override_settings(LANGUAGE_CODE='en')
+@override_settings(LANGUAGE_CODE='en-us')
 class TestCaseRunCreate(XmlrpcAPIBaseTest):  # pylint: disable=too-many-instance-attributes
     """Test testcaserun.create"""
 
@@ -146,7 +146,7 @@ class TestCaseRunAddComment(XmlrpcAPIBaseTest):
         self.assertIsNone(comment)
 
 
-@override_settings(LANGUAGE_CODE='en')
+@override_settings(LANGUAGE_CODE='en-us')
 class TestCaseRunAddLink(XmlrpcAPIBaseTest):
     """Test testcaserun.add_link"""
 
@@ -263,7 +263,7 @@ class TestCaseRunGetLinks(XmlrpcAPIBaseTest):
         self.assertEqual(logs[0]['url'], "http://www.google.com")
 
 
-@override_settings(LANGUAGE_CODE='en')
+@override_settings(LANGUAGE_CODE='en-us')
 class TestCaseRunUpdate(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):

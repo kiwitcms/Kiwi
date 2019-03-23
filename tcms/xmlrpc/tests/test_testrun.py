@@ -206,7 +206,7 @@ class TestProductVersionWhenCreating(XmlrpcAPIBaseTest):
         self.assertEqual(result['product_version'], self.plan.product_version.value)
 
 
-@override_settings(LANGUAGE_CODE='en')
+@override_settings(LANGUAGE_CODE='en-us')
 class TestUpdateTestRun(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super()._fixture_setup()
