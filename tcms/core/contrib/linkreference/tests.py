@@ -100,5 +100,5 @@ class TestAddView(test.TestCase):
         message = ngettext_lazy(
             'Ensure this value has at most %(limit_value)d character (it has %(show_value)d).',
             'Ensure this value has at most %(limit_value)d characters (it has %(show_value)d).',
-            'limit_value').format(limit_value=64, show_value=66)
+            'limit_value') % {'limit_value': 64, 'show_value': 66}
         self.assertIn(message, result['response'])
