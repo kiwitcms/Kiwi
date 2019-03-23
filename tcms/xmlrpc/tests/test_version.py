@@ -38,7 +38,7 @@ class TestFilterVersions(XmlrpcAPIBaseTest):
         self.assertEqual(ver[0]['value'], "0.7")
 
 
-@override_settings(LANGUAGE_CODE='en')
+@override_settings(LANGUAGE_CODE='en-us')
 class TestAddVersion(XmlrpcAPIBaseTest):
 
     def _fixture_setup(self):
