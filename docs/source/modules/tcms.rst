@@ -16,7 +16,6 @@ Subpackages
     tcms.kiwi_auth
     tcms.management
     tcms.search
-    tcms.settings
     tcms.telemetry
     tcms.testcases
     tcms.testplans
@@ -30,6 +29,5 @@ Submodules
 .. toctree::
 
    tcms.signals
-   tcms.urls
    tcms.wsgi
 

@@ -15,6 +15,5 @@ Submodules
    tcms.testruns.data
    tcms.testruns.forms
    tcms.testruns.models
-   tcms.testruns.urls
    tcms.testruns.views
 

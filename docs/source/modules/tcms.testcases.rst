@@ -12,7 +12,6 @@ Subpackages
 .. toctree::
 
     tcms.testcases.helpers
-    tcms.testcases.urls
 
 Submodules
 ----------
