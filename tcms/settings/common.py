@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import pkg_resources
+from importlib import import_module
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.messages import constants as messages
@@ -100,12 +103,21 @@ MENU_ITEMS = [
          'http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/'),
         ('-', '-'),
     ]),
+]
+
+# last element is always TELEMETRY
+for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+    plugin_menu = import_module('%s.menu' % plugin.module_name)
+    MENU_ITEMS[-1][1].extend(plugin_menu.MENU_ITEMS)
+
+# append the ADMIN menu at the end
+MENU_ITEMS.append(
     (_('ADMIN'), [
         (_('Users and groups'), '/admin/auth/'),
         ('-', '-'),
         (_('Everything else'), '/admin/'),
     ]),
-]
+)
 
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
@@ -285,6 +297,10 @@ INSTALLED_APPS = [
     'tcms.testruns.apps.AppConfig',
     'tcms.xmlrpc',
 ]
+
+for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+    INSTALLED_APPS.append(plugin.module_name)
+
 
 SERIALIZATION_MODULES = {
     'json': 'tcms.core.serializer',
