@@ -151,7 +151,7 @@ def encode_multipart(csrf_token, filename, b64content):
 
         .. note::
 
-            ``\r\n`` are expected! Do not change!
+            ``\\r\\n`` are expected! Do not change!
     """
     boundary = '----------%s' % int(time.time() * 1000)
     data = ['--%s' % boundary]
