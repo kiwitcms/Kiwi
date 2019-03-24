@@ -1,4 +1,4 @@
-Automation Frameworks Plugins
+Automation Frameworks plugins
 =============================
 
 Kiwi TCMS can be used with test automation frameworks. Test names and results
