@@ -329,7 +329,7 @@ MODERNRPC_METHODS_MODULES = [
     'tcms.xmlrpc.api.tag',
     'tcms.xmlrpc.api.testcase',
     'tcms.xmlrpc.api.testexecution',
-    'tcms.xmlrpc.api.testcaserunstatus',
+    'tcms.xmlrpc.api.testexecutionstatus',
     'tcms.xmlrpc.api.testcasestatus',
     'tcms.xmlrpc.api.testplan',
     'tcms.xmlrpc.api.testrun',

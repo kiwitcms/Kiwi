@@ -231,6 +231,7 @@ def test_execution_add_comment(case_run_id, comment, **kwargs):
     return add_comment(case_run_id, comment, **kwargs)
 
 
+@permissions_required('testruns.add_testexecution')
 @rpc_method(name='TestExecution.create')
 def test_execution_create(values):
     return create(values)
