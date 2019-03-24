@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}An example view of Telemetry plugin{% endblock %}
+{% block body_class %}cards-pf{% endblock %}
+
+{% block contents %}
+    <div class="container-fluid container-cards-pf">
+        <div class="row row-cards-pf">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini">
+                    <h2 class="card-pf-title">
+                        <span class="pficon pficon-template"></span>
+                        <span class="card-pf-aggregate-status-count">---</span>
+                        An example view of Telemetry plugin
+                    </h2>
+                    <div class="card-pf-body">
+                        <p class="card-pf-aggregate-status-notifications">
+                            <span class="card-pf-aggregate-status-notification">
+                                <span class="pficon pficon-info"></span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /row -->
+      </div><!-- /container -->
+{% endblock %}
