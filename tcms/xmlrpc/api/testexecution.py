@@ -223,3 +223,40 @@ def get_links(case_run_id):
     links = LinkReference.objects.filter(test_case_run=case_run_id)
     serialier = XMLRPCSerializer(links)
     return serialier.serialize_queryset()
+
+
+# workaround for keeping backward-compatibility with users of the API calling TestCaseRun.*
+@rpc_method(name='TestExecution.add_comment')
+def test_execution_add_comment(case_run_id, comment, **kwargs):
+    return add_comment(case_run_id, comment, **kwargs)
+
+
+@rpc_method(name='TestExecution.create')
+def test_execution_create(values):
+    return create(values)
+
+
+@rpc_method(name='TestExecution.filter')
+def test_execution_filter(values):
+    return filter(values)
+
+
+@rpc_method(name='TestExecution.get_links')
+def test_execution_get_links(case_run_id):
+    return get_links(case_run_id)
+
+
+@rpc_method(name='TestExecution.remove_link')
+def test_execution_remove_link(case_run_id, link_id):
+    return remove_link(case_run_id, link_id)
+
+
+@permissions_required('testruns.change_testexecution')
+@rpc_method(name='TestExecution.update')
+def test_execution_update(case_run_id, values, **kwargs):
+    return update(case_run_id, values, **kwargs)
+
+
+@rpc_method(name='TestExecution.add_link')
+def test_execution_add_link(case_run_id, name, url):
+    return add_link(case_run_id, name, url)
