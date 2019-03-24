@@ -13,6 +13,11 @@ from django.contrib.messages import constants as messages
 register = template.Library()
 
 
+@register.filter(name='is_list')
+def is_list(variable):
+    return isinstance(variable, list)
+
+
 @register.filter(name='markdown2html')
 def markdown2html(md_str):
     """
