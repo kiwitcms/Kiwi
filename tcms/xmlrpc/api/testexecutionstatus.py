@@ -20,3 +20,9 @@ def filter(query):  # pylint: disable=redefined-builtin
         :rtype: list(dict)
     """
     return TestExecutionStatus.to_xmlrpc(query)
+
+
+# workaround for keeping backward-compatibility with users of the API calling TestCaseRunStatus.*
+@rpc_method(name='TestExecutionStatus.filter')
+def test_execution_filter(query):
+    return filter(query)
