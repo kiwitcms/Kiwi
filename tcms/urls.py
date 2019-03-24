@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import pkg_resources
+from importlib import import_module
 
 from django.conf import settings
 from django.conf.urls import include, url
@@ -66,6 +68,13 @@ urlpatterns = [
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
+
+
+for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+    plugin_urls = import_module('%s.urls' % plugin.module_name)
+    urlpatterns.append(
+        url(r'^%s/' % plugin.name, include(plugin_urls))
+    )
 
 
 if settings.DEBUG:
