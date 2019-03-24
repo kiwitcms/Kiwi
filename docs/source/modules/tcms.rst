@@ -17,6 +17,7 @@ Subpackages
     tcms.management
     tcms.search
     tcms.settings
+    tcms.telemetry
     tcms.testcases
     tcms.testplans
     tcms.testruns

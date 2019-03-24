@@ -2,6 +2,15 @@
 
 import os
 import warnings
+import pkg_resources
+
+# prented there are telemetry plugins installed so we can check
+# the plugin loading code in settings/common.py
+dist = pkg_resources.Distribution(__file__)
+entry_point = pkg_resources.EntryPoint.parse('a_fake_plugin = tcms.telemetry.tests.plugin',
+                                             dist=dist)
+dist._ep_map = {'kiwitcms.telemetry.plugins': {'a_fake_plugin': entry_point}}
+pkg_resources.working_set.add(dist)
 
 from tcms.settings.devel import *  # noqa: F401,F403
 
