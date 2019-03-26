@@ -1,9 +1,30 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 {% block title %}{% trans "Dashboard" %}{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/project_filter_form.css' %}" />
+{% endblock %}
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
+
+    {% if not user.is_superuser %}
+        <div class="project_filter_form">
+            <form id="form_project_filter" name="project_filter" method="get">
+                <select name="project" id="project_select">
+                    <option value="all" selected>All projects</option>
+                    {% for project in user_projects %}
+                        <option value="{{ project.id }}">{{ project.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Filter"/>
+            </form>
+        </div>
+    {% endif %}
+
     <div class="panel panel-default col-sm-12 col-md-5 col-lg-5" style="padding:0; margin-right:1%">
         <div class="panel-heading"><strong>{% trans "Test executions" %}</strong></div>
         <table class="table table-striped">
@@ -83,5 +104,6 @@
         </div>
     </div> <!-- /panel -->
 
+    <script type="text/javascript" src="{% static 'js/project_actions.js' %}"></script>
 </div><!-- /container -->
 {% endblock %}

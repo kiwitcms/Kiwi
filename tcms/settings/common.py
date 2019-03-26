@@ -298,6 +298,12 @@ INSTALLED_APPS = [
     'tcms.xmlrpc',
 ]
 
+CUSTOM_APPS = [
+    'tcms.project',
+]
+
+INSTALLED_APPS += CUSTOM_APPS
+
 for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
     INSTALLED_APPS.append(plugin.module_name)
 
