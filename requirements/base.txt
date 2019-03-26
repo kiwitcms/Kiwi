@@ -7,4 +7,4 @@ django-contrib-comments==1.9.1
 django-modern-rpc==0.11.1
 django-simple-history==2.7.0
 jira==2.0.0
-Markdown==3.0.1
+Markdown==3.1
