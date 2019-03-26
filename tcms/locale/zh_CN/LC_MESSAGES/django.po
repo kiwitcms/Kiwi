@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-23 23:31+0000\n"
+"POT-Creation-Date: 2019-03-29 09:09+0000\n"
 "PO-Revision-Date: 2019-03-07 10:04\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -48,6 +48,20 @@ msgstr "网址"
 #: tcms/templates/run/get_case_runs.html:50
 msgid "Comment"
 msgstr "评论"
+
+#: tcms/core/contrib/linkreference/tests.py:84
+msgid "Enter a valid URL."
+msgstr ""
+
+#: tcms/core/contrib/linkreference/tests.py:101
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
 
 #: tcms/core/history.py:41
 #, python-format
@@ -98,110 +112,150 @@ msgstr "权限"
 msgid "A user with that email already exists."
 msgstr "已存在使用相同电子邮件的地址的用户。"
 
-#: tcms/kiwi_auth/forms.py:60
+#: tcms/kiwi_auth/forms.py:60 tcms/kiwi_auth/tests.py:176
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr "你的新帐户  %s  确认"
 
-#: tcms/kiwi_auth/views.py:50
+#: tcms/kiwi_auth/test_admin.py:59 tcms/management/tests/tests.py:76
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: tcms/kiwi_auth/tests.py:97 tcms/templates/navbar.html:59
+#: tcms/templates/registration/registration_form.html:47
+msgid "Register"
+msgstr "注册"
+
+#: tcms/kiwi_auth/tests.py:141 tcms/signals.py:78
+msgid "New user awaiting approval"
+msgstr "等待审批通过的新用户"
+
+#: tcms/kiwi_auth/tests.py:146
+#: tcms/templates/email/user_registered/notify_admins.txt:2
+#, python-format
+msgid ""
+"Dear Administrator,\n"
+"somebody just registered an account with username %(username)s at your\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
+"Go to %(user_url)s to activate the account!\n"
+msgstr ""
+"亲爱的管理员,\n"
+"有人刚刚在您的 Kiwi TCMS 实例上注册了以 %(username)s 为名的用户并等待您的审批"
+"通过！\n"
+"\n"
+"请前往 %(user_url)s 激活账户！\n"
+
+#: tcms/kiwi_auth/tests.py:162 tcms/kiwi_auth/views.py:50
 msgid ""
 "Your account has been created, please check your mailbox for confirmation"
 msgstr "您的账户已创建，请检查您的收件箱进行确认"
 
-#: tcms/kiwi_auth/views.py:56
+#: tcms/kiwi_auth/tests.py:177 tcms/templates/email/confirm_registration.txt:1
+#, python-format
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
+"To activate your account, click this link:\n"
+"%(confirm_url)s\n"
+msgstr ""
+"欢迎你， %(user)s，\n"
+"感谢你注册为 %(site_domain)s 账户！\n"
+"\n"
+"点击这个链接激活你的账户：\n"
+"%(confirm_url)s\n"
+
+#: tcms/kiwi_auth/tests.py:196 tcms/kiwi_auth/views.py:56
 msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr "您的账户已创建，但您需要管理员来激活它"
+
+#: tcms/kiwi_auth/tests.py:222 tcms/kiwi_auth/views.py:103
+msgid "This activation key no longer exists in the database"
+msgstr "此激活密钥不再存于数据库中"
+
+#: tcms/kiwi_auth/tests.py:240 tcms/kiwi_auth/views.py:108
+msgid "This activation key has expired"
+msgstr "此激活密钥已过期"
+
+#: tcms/kiwi_auth/tests.py:259 tcms/kiwi_auth/views.py:120
+msgid "Your account has been activated successfully"
+msgstr "您的账户已被成功激活"
 
 #: tcms/kiwi_auth/views.py:61
 msgid "Following is the administrator list"
 msgstr "以下是管理员列表"
 
-#: tcms/kiwi_auth/views.py:103
-msgid "This activation key no longer exists in the database"
-msgstr "此激活密钥不再存于数据库中"
-
-#: tcms/kiwi_auth/views.py:108
-msgid "This activation key has expired"
-msgstr "此激活密钥已过期"
-
-#: tcms/kiwi_auth/views.py:120
-msgid "Your account has been activated successfully"
-msgstr "您的账户已被成功激活"
-
-#: tcms/settings/common.py:87
+#: tcms/settings/common.py:90
 msgid "DASHBOARD"
 msgstr "仪表 板"
 
-#: tcms/settings/common.py:88
+#: tcms/settings/common.py:91
 msgid "TESTING"
 msgstr "测试"
 
-#: tcms/settings/common.py:89
+#: tcms/settings/common.py:92
 msgid "New Test Plan"
 msgstr "新的测试计划"
 
-#: tcms/settings/common.py:91
+#: tcms/settings/common.py:94
 msgid "New Test Case"
 msgstr "新的测试用例"
 
-#: tcms/settings/common.py:93
+#: tcms/settings/common.py:96
 msgid "SEARCH"
 msgstr "搜索"
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:97
 msgid "Search Test Plans"
 msgstr "搜索测试计划"
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:98
 msgid "Search Test Runs"
 msgstr "搜索测试执行"
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:99
 msgid "Search Test Cases"
 msgstr "搜索测试用例"
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:101 tcms/telemetry/tests/test_plugin_discovery.py:52
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:115
 msgid "ADMIN"
 msgstr "管理员"
 
-#: tcms/settings/common.py:104
+#: tcms/settings/common.py:116
 msgid "Users and groups"
 msgstr "用户和用户组"
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:118
 msgid "Everything else"
 msgstr "管理其他事项"
 
-#: tcms/settings/common.py:112
+#: tcms/settings/common.py:124
 msgid "Report an Issue"
 msgstr "反馈问题"
 
-#: tcms/settings/common.py:113
+#: tcms/settings/common.py:125
 msgid "Ask for help on StackOverflow"
 msgstr "在StackOflow上寻求帮助"
 
-#: tcms/settings/common.py:114
+#: tcms/settings/common.py:126
 msgid "User Guide"
 msgstr "用户指南"
 
-#: tcms/settings/common.py:115
+#: tcms/settings/common.py:127
 msgid "Administration Guide"
 msgstr "管理员指南"
 
-#: tcms/settings/common.py:116
+#: tcms/settings/common.py:128
 msgid "API Help"
 msgstr "API 参考"
 
-#: tcms/signals.py:78
-msgid "New user awaiting approval"
-msgstr "等待审批通过的新用户"
-
-#: tcms/signals.py:153
+#: tcms/signals.py:153 tcms/testruns/tests/test_models.py:42
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NEW: 测试执行 #%(pk)d - - %(summary)s"
@@ -260,7 +314,7 @@ msgstr "克隆测试用例"
 msgid "Select Plan"
 msgstr "选择计划"
 
-#: tcms/templates/case/clone.html:32
+#: tcms/templates/case/clone.html:32 tcms/testcases/tests/test_views.py:346
 msgid "Use the same Plan"
 msgstr "使用相同的计划"
 
@@ -576,26 +630,14 @@ msgstr ""
 msgid "There are no TestPlan(s) that belong to you"
 msgstr "没有属于你的测试计划"
 
-#: tcms/templates/email/confirm_registration.txt:1
-#, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
-"To activate your account, click this link:\n"
-"%(confirm_url)s\n"
-msgstr ""
-"欢迎你， %(user)s，\n"
-"感谢你注册为 %(site_domain)s 账户！\n"
-"\n"
-"点击这个链接激活你的账户：\n"
-"%(confirm_url)s\n"
-
 #: tcms/templates/email/post_case_delete/email.txt:2
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "TestCase has been updated by %(username)s!\n"
 msgid ""
 "\n"
-"TestCase has been updated by %(username)s!\n"
+"TestCase has been deleted by %(username)s!\n"
 msgstr ""
 "\n"
 "测试用例已被 %(username)s 更新！\n"
@@ -643,21 +685,6 @@ msgstr ""
 "备注:\n"
 "%(notes)s\n"
 
-#: tcms/templates/email/user_registered/notify_admins.txt:2
-#, python-format
-msgid ""
-"Dear Administrator,\n"
-"somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
-"Go to %(user_url)s to activate the account!\n"
-msgstr ""
-"亲爱的管理员,\n"
-"有人刚刚在您的 Kiwi TCMS 实例上注册了以 %(username)s 为名的用户并等待您的审批"
-"通过！\n"
-"\n"
-"请前往 %(user_url)s 激活账户！\n"
-
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
 msgstr "计划"
@@ -677,10 +704,14 @@ msgstr "执行"
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:46
+#: tcms/testcases/tests/test_tags.py:42 tcms/testcases/tests/test_tags.py:58
+#: tcms/testplans/tests/test_views.py:43 tcms/testplans/tests/test_views.py:58
 msgid "Remove"
 msgstr "删除"
 
 #: tcms/templates/management/get_tag.html:35
+#: tcms/testcases/tests/test_tags.py:39 tcms/testcases/tests/test_tags.py:56
+#: tcms/testplans/tests/test_views.py:40
 msgid "Add Tag"
 msgstr "添加标签"
 
@@ -716,11 +747,6 @@ msgstr "登出"
 #: tcms/templates/navbar.html:53
 msgid "Login"
 msgstr "登录"
-
-#: tcms/templates/navbar.html:59
-#: tcms/templates/registration/registration_form.html:47
-msgid "Register"
-msgstr "注册"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -758,7 +784,7 @@ msgstr "克隆计划"
 msgid "Clone TestPlan"
 msgstr "克隆测试计划"
 
-#: tcms/templates/plan/clone.html:29
+#: tcms/templates/plan/clone.html:29 tcms/testplans/tests/tests.py:443
 msgid "New Plan Name"
 msgstr "新计划名称"
 
@@ -847,6 +873,7 @@ msgstr "附件"
 #: tcms/templates/run/get.html:91 tcms/templates/run/get_case_runs.html:122
 #: tcms/testcases/templates/testcases/get.html:330
 #: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testcases/tests/test_views.py:411
 #: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Tags"
@@ -1457,9 +1484,9 @@ msgstr ""
 "3. 第三个\n"
 
 #: tcms/testcases/helpers/email.py:22
-#, python-brace-format
-msgid "DELETED: TestCase #%{pk}d - %{summary}s"
-msgstr "已删除: 测试用例 #%{pk}d - %{summary}s"
+#, python-format
+msgid "DELETED: TestCase #%(pk)d - %(summary)s"
+msgstr "已删除: 测试用例 #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1609,6 +1636,12 @@ msgstr "搜索"
 msgid "Created on"
 msgstr "创建于"
 
+#: tcms/testcases/tests/test_views.py:334 tcms/testcases/views.py:761
+#: tcms/testruns/tests/test_views.py:212 tcms/testruns/views.py:422
+#: tcms/testruns/views.py:500
+msgid "At least one TestCase is required"
+msgstr "需要至少一个测试实例"
+
 #: tcms/testcases/views.py:399
 msgid "TestPlan not specified or does not exist"
 msgstr "测试计划未指定或不存在"
@@ -1620,11 +1653,6 @@ msgstr "历史"
 #: tcms/testcases/views.py:588
 msgid "Delete"
 msgstr "删除"
-
-#: tcms/testcases/views.py:761 tcms/testruns/views.py:422
-#: tcms/testruns/views.py:500
-msgid "At least one TestCase is required"
-msgstr "需要至少一个测试实例"
 
 #: tcms/testcases/views.py:898
 msgid "TestCase cloning was successful"
@@ -1683,13 +1711,13 @@ msgstr "测试计划名"
 msgid "Test plan"
 msgstr "测试计划"
 
-#: tcms/testplans/views.py:344
-msgid "TestPlan is required"
-msgstr "需要测试计划"
-
-#: tcms/testplans/views.py:565
+#: tcms/testplans/tests/tests.py:91 tcms/testplans/views.py:565
 msgid "At least one test plan is required for print"
 msgstr "需要至少一个测试计划进行打印"
+
+#: tcms/testplans/tests/tests.py:424 tcms/testplans/views.py:344
+msgid "TestPlan is required"
+msgstr "需要测试计划"
 
 #: tcms/testplans/views.py:573
 #, python-format
@@ -1763,26 +1791,26 @@ msgstr "计划 ID"
 msgid "TestPlan ID"
 msgstr "测试计划 ID"
 
+#: tcms/testruns/tests/test_views.py:108 tcms/testruns/views.py:60
+msgid "Creating a TestRun requires at least one TestCase"
+msgstr "新建测试计划至少需要一个测试实例"
+
+#: tcms/testruns/tests/test_views.py:182 tcms/testruns/views.py:426
+msgid "Clone of "
+msgstr "克隆来自 "
+
+#: tcms/testruns/tests/test_views.py:462 tcms/testruns/views.py:637
+#, python-format
+msgid "%d CaseRun(s) updated:"
+msgstr "已更新 %d 个测试运行:"
+
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr "创建一个测试执行需要一个测试计划，请选择一个"
 
-#: tcms/testruns/views.py:60
-msgid "Creating a TestRun requires at least one TestCase"
-msgstr "新建测试计划至少需要一个测试实例"
-
-#: tcms/testruns/views.py:426
-msgid "Clone of "
-msgstr "克隆来自 "
-
 #: tcms/testruns/views.py:509
 msgid "TestCase ID is not a valid integer"
 msgstr "测试实例编号不是有效的整数"
-
-#: tcms/testruns/views.py:637
-#, python-format
-msgid "%d CaseRun(s) updated:"
-msgstr "已更新 %d 个测试运行:"
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid ""
@@ -1800,49 +1828,49 @@ msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "%s 没有主键。你必须手动指定此类字段。"
 
 #: vinaigrette-deleteme.py:2
-msgid "IDLE"
-msgstr "空闲"
-
-#: vinaigrette-deleteme.py:3
-msgid "RUNNING"
-msgstr "运行中"
-
-#: vinaigrette-deleteme.py:4
-msgid "PAUSED"
-msgstr "已暂停"
-
-#: vinaigrette-deleteme.py:5
-msgid "PASSED"
-msgstr "已通过"
-
-#: vinaigrette-deleteme.py:6
-msgid "FAILED"
-msgstr "失败"
-
-#: vinaigrette-deleteme.py:7
-msgid "BLOCKED"
-msgstr "已屏蔽"
-
-#: vinaigrette-deleteme.py:8
-msgid "ERROR"
-msgstr "错误"
-
-#: vinaigrette-deleteme.py:9
-msgid "WAIVED"
-msgstr "已放弃"
-
-#: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
 msgstr "已建议"
 
-#: vinaigrette-deleteme.py:11
+#: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
 msgstr "已确认"
 
-#: vinaigrette-deleteme.py:12
+#: vinaigrette-deleteme.py:4
 msgid "DISABLED"
 msgstr "已禁用"
 
-#: vinaigrette-deleteme.py:13
+#: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
 msgstr "需要更新"
+
+#: vinaigrette-deleteme.py:6
+msgid "IDLE"
+msgstr "空闲"
+
+#: vinaigrette-deleteme.py:7
+msgid "RUNNING"
+msgstr "运行中"
+
+#: vinaigrette-deleteme.py:8
+msgid "PAUSED"
+msgstr "已暂停"
+
+#: vinaigrette-deleteme.py:9
+msgid "PASSED"
+msgstr "已通过"
+
+#: vinaigrette-deleteme.py:10
+msgid "FAILED"
+msgstr "失败"
+
+#: vinaigrette-deleteme.py:11
+msgid "BLOCKED"
+msgstr "已屏蔽"
+
+#: vinaigrette-deleteme.py:12
+msgid "ERROR"
+msgstr "错误"
+
+#: vinaigrette-deleteme.py:13
+msgid "WAIVED"
+msgstr "已放弃"

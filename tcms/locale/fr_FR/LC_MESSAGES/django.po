@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-23 23:31+0000\n"
+"POT-Creation-Date: 2019-03-29 09:09+0000\n"
 "PO-Revision-Date: 2019-03-13 13:42\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
@@ -48,6 +48,21 @@ msgstr "URL"
 #: tcms/templates/run/get_case_runs.html:50
 msgid "Comment"
 msgstr "Commentaire"
+
+#: tcms/core/contrib/linkreference/tests.py:84
+msgid "Enter a valid URL."
+msgstr ""
+
+#: tcms/core/contrib/linkreference/tests.py:101
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
 
 #: tcms/core/history.py:41
 #, python-format
@@ -98,114 +113,155 @@ msgstr "Droits"
 msgid "A user with that email already exists."
 msgstr "Un utilisateur avec cette adresse mail existe déjà."
 
-#: tcms/kiwi_auth/forms.py:60
+#: tcms/kiwi_auth/forms.py:60 tcms/kiwi_auth/tests.py:176
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr "Votre confirmation du nouveau compte %s"
 
-#: tcms/kiwi_auth/views.py:50
+#: tcms/kiwi_auth/test_admin.py:59 tcms/management/tests/tests.py:76
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: tcms/kiwi_auth/tests.py:97 tcms/templates/navbar.html:59
+#: tcms/templates/registration/registration_form.html:47
+msgid "Register"
+msgstr "Inscription"
+
+#: tcms/kiwi_auth/tests.py:141 tcms/signals.py:78
+msgid "New user awaiting approval"
+msgstr "Nouvel utilisateur en attente d’approbation"
+
+#: tcms/kiwi_auth/tests.py:146
+#: tcms/templates/email/user_registered/notify_admins.txt:2
+#, python-format
+msgid ""
+"Dear Administrator,\n"
+"somebody just registered an account with username %(username)s at your\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
+"Go to %(user_url)s to activate the account!\n"
+msgstr ""
+"Chèr(e) Administra(teur/trice),\n"
+"une personne s'est enregistré un compte avec le nom %(username)s sur votre "
+"instance\n"
+"Kiwi TCMS et attend votre approbation!\n"
+"\n"
+"Aller à l'adresse %(user_url)s pour activer ce compte!\n"
+
+#: tcms/kiwi_auth/tests.py:162 tcms/kiwi_auth/views.py:50
 msgid ""
 "Your account has been created, please check your mailbox for confirmation"
 msgstr ""
 "Votre compte a été créé. Veuillez Vérifier votre boite de courriel pour le "
 "lien de confirmation"
 
-#: tcms/kiwi_auth/views.py:56
+#: tcms/kiwi_auth/tests.py:177 tcms/templates/email/confirm_registration.txt:1
+#, python-format
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
+"To activate your account, click this link:\n"
+"%(confirm_url)s\n"
+msgstr ""
+"Bienvenu %(user)s,\n"
+"Merci pour votre inscription sur %(site_domain)s!\n"
+"\n"
+"Pour activer votre compte cliquer sur le lien suivant:\n"
+"%(confirm_url)s\n"
+
+#: tcms/kiwi_auth/tests.py:196 tcms/kiwi_auth/views.py:56
 msgid ""
 "Your account has been created, but you need an administrator to activate it"
 msgstr ""
 "Votre compte a été créé, mais vous avez besoin d’un administrateur pour "
 "l’activer"
 
+#: tcms/kiwi_auth/tests.py:222 tcms/kiwi_auth/views.py:103
+msgid "This activation key no longer exists in the database"
+msgstr "Cette clé d'activation n'existe plus dans la base de données"
+
+#: tcms/kiwi_auth/tests.py:240 tcms/kiwi_auth/views.py:108
+msgid "This activation key has expired"
+msgstr "Cette clé d'activation a expiré"
+
+#: tcms/kiwi_auth/tests.py:259 tcms/kiwi_auth/views.py:120
+msgid "Your account has been activated successfully"
+msgstr "Votre compte a été activé avec succès"
+
 #: tcms/kiwi_auth/views.py:61
 msgid "Following is the administrator list"
 msgstr "Ci-dessous la liste des administrateurs"
 
-#: tcms/kiwi_auth/views.py:103
-msgid "This activation key no longer exists in the database"
-msgstr "Cette clé d'activation n'existe plus dans la base de données"
-
-#: tcms/kiwi_auth/views.py:108
-msgid "This activation key has expired"
-msgstr "Cette clé d'activation a expiré"
-
-#: tcms/kiwi_auth/views.py:120
-msgid "Your account has been activated successfully"
-msgstr "Votre compte a été activé avec succès"
-
-#: tcms/settings/common.py:87
+#: tcms/settings/common.py:90
 msgid "DASHBOARD"
 msgstr "TABLEAU DE BORD"
 
-#: tcms/settings/common.py:88
+#: tcms/settings/common.py:91
 msgid "TESTING"
 msgstr "EN_TEST"
 
-#: tcms/settings/common.py:89
+#: tcms/settings/common.py:92
 msgid "New Test Plan"
 msgstr "Nouveau plan de test"
 
-#: tcms/settings/common.py:91
+#: tcms/settings/common.py:94
 msgid "New Test Case"
 msgstr "Nouveau scénario de test"
 
-#: tcms/settings/common.py:93
+#: tcms/settings/common.py:96
 msgid "SEARCH"
 msgstr "RECHERCHER"
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:97
 msgid "Search Test Plans"
 msgstr "Rechercher des plans de test"
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:98
 msgid "Search Test Runs"
 msgstr "Rechercher des essais réalisés"
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:99
 msgid "Search Test Cases"
 msgstr "Rechercher des scénarios de tests"
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:101 tcms/telemetry/tests/test_plugin_discovery.py:52
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:115
 msgid "ADMIN"
 msgstr "ADMINISTRATEUR"
 
-#: tcms/settings/common.py:104
+#: tcms/settings/common.py:116
 msgid "Users and groups"
 msgstr "Utilisateurs et groupes"
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:118
 msgid "Everything else"
 msgstr "Tout le reste"
 
-#: tcms/settings/common.py:112
+#: tcms/settings/common.py:124
 msgid "Report an Issue"
 msgstr "Signaler un problème"
 
-#: tcms/settings/common.py:113
+#: tcms/settings/common.py:125
 msgid "Ask for help on StackOverflow"
 msgstr "Demander de l’aide sur StackOverflow"
 
-#: tcms/settings/common.py:114
+#: tcms/settings/common.py:126
 msgid "User Guide"
 msgstr "Guide de l'utilisateur"
 
-#: tcms/settings/common.py:115
+#: tcms/settings/common.py:127
 msgid "Administration Guide"
 msgstr "Guide de l'administrateur"
 
-#: tcms/settings/common.py:116
+#: tcms/settings/common.py:128
 msgid "API Help"
 msgstr "Aide sur l’API"
 
-#: tcms/signals.py:78
-msgid "New user awaiting approval"
-msgstr "Nouvel utilisateur en attente d’approbation"
-
-#: tcms/signals.py:153
+#: tcms/signals.py:153 tcms/testruns/tests/test_models.py:42
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NOUVEAU: Essai #%(pk)d - %(summary)s"
@@ -264,7 +320,7 @@ msgstr "Cloner le(s) scénario(s) de test(s)"
 msgid "Select Plan"
 msgstr "Choisissez un plan"
 
-#: tcms/templates/case/clone.html:32
+#: tcms/templates/case/clone.html:32 tcms/testcases/tests/test_views.py:346
 msgid "Use the same Plan"
 msgstr "Utiliser le même plan"
 
@@ -584,26 +640,14 @@ msgstr ""
 msgid "There are no TestPlan(s) that belong to you"
 msgstr "Il n’y a aucun plan(s) de test qui vous est assigné"
 
-#: tcms/templates/email/confirm_registration.txt:1
-#, python-format
-msgid ""
-"Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n"
-"\n"
-"To activate your account, click this link:\n"
-"%(confirm_url)s\n"
-msgstr ""
-"Bienvenu %(user)s,\n"
-"Merci pour votre inscription sur %(site_domain)s!\n"
-"\n"
-"Pour activer votre compte cliquer sur le lien suivant:\n"
-"%(confirm_url)s\n"
-
 #: tcms/templates/email/post_case_delete/email.txt:2
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "TestCase has been updated by %(username)s!\n"
 msgid ""
 "\n"
-"TestCase has been updated by %(username)s!\n"
+"TestCase has been deleted by %(username)s!\n"
 msgstr ""
 "\n"
 "Le scénario de test a été mis à jour par %(username)s!\n"
@@ -651,22 +695,6 @@ msgstr ""
 "Récapitulatif:\n"
 "%(notes)s\n"
 
-#: tcms/templates/email/user_registered/notify_admins.txt:2
-#, python-format
-msgid ""
-"Dear Administrator,\n"
-"somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n"
-"\n"
-"Go to %(user_url)s to activate the account!\n"
-msgstr ""
-"Chèr(e) Administra(teur/trice),\n"
-"une personne s'est enregistré un compte avec le nom %(username)s sur votre "
-"instance\n"
-"Kiwi TCMS et attend votre approbation!\n"
-"\n"
-"Aller à l'adresse %(user_url)s pour activer ce compte!\n"
-
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
 msgstr "Plans"
@@ -686,10 +714,14 @@ msgstr "Exécutions"
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:46
+#: tcms/testcases/tests/test_tags.py:42 tcms/testcases/tests/test_tags.py:58
+#: tcms/testplans/tests/test_views.py:43 tcms/testplans/tests/test_views.py:58
 msgid "Remove"
 msgstr "Supprimer"
 
 #: tcms/templates/management/get_tag.html:35
+#: tcms/testcases/tests/test_tags.py:39 tcms/testcases/tests/test_tags.py:56
+#: tcms/testplans/tests/test_views.py:40
 msgid "Add Tag"
 msgstr "Ajouter une étiquette"
 
@@ -725,11 +757,6 @@ msgstr "Déconnexion"
 #: tcms/templates/navbar.html:53
 msgid "Login"
 msgstr "Se connecter"
-
-#: tcms/templates/navbar.html:59
-#: tcms/templates/registration/registration_form.html:47
-msgid "Register"
-msgstr "Inscription"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
@@ -767,7 +794,7 @@ msgstr "Dupliquer un plan"
 msgid "Clone TestPlan"
 msgstr "Dupliquer un plan de test"
 
-#: tcms/templates/plan/clone.html:29
+#: tcms/templates/plan/clone.html:29 tcms/testplans/tests/tests.py:443
 msgid "New Plan Name"
 msgstr "Nouveau nom de plan"
 
@@ -856,6 +883,7 @@ msgstr "Pièces jointes"
 #: tcms/templates/run/get.html:91 tcms/templates/run/get_case_runs.html:122
 #: tcms/testcases/templates/testcases/get.html:330
 #: tcms/testcases/templates/testcases/search.html:141
+#: tcms/testcases/tests/test_views.py:411
 #: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Tags"
@@ -1479,9 +1507,9 @@ msgstr ""
 "3. élement\n"
 
 #: tcms/testcases/helpers/email.py:22
-#, python-brace-format
-msgid "DELETED: TestCase #%{pk}d - %{summary}s"
-msgstr "SUPPRIMÉ: scénario de test #%{pk}d - %{summary}s"
+#, python-format
+msgid "DELETED: TestCase #%(pk)d - %(summary)s"
+msgstr "SUPPRIMÉ: scénario de test #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
@@ -1632,6 +1660,12 @@ msgstr "Recherche"
 msgid "Created on"
 msgstr "Créé le"
 
+#: tcms/testcases/tests/test_views.py:334 tcms/testcases/views.py:761
+#: tcms/testruns/tests/test_views.py:212 tcms/testruns/views.py:422
+#: tcms/testruns/views.py:500
+msgid "At least one TestCase is required"
+msgstr "Au moins un scénario de test est requis"
+
 #: tcms/testcases/views.py:399
 msgid "TestPlan not specified or does not exist"
 msgstr "Plan de test non spécifié ou n'existe pas"
@@ -1643,11 +1677,6 @@ msgstr "Historique"
 #: tcms/testcases/views.py:588
 msgid "Delete"
 msgstr "Supprimer"
-
-#: tcms/testcases/views.py:761 tcms/testruns/views.py:422
-#: tcms/testruns/views.py:500
-msgid "At least one TestCase is required"
-msgstr "Au moins un scénario de test est requis"
 
 #: tcms/testcases/views.py:898
 msgid "TestCase cloning was successful"
@@ -1706,13 +1735,13 @@ msgstr "Nom du plan de test"
 msgid "Test plan"
 msgstr "Plan de test"
 
-#: tcms/testplans/views.py:344
-msgid "TestPlan is required"
-msgstr "Le plan de test est requis"
-
-#: tcms/testplans/views.py:565
+#: tcms/testplans/tests/tests.py:91 tcms/testplans/views.py:565
 msgid "At least one test plan is required for print"
 msgstr "Au moins un plan de test est requis pur l'impression"
+
+#: tcms/testplans/tests/tests.py:424 tcms/testplans/views.py:344
+msgid "TestPlan is required"
+msgstr "Le plan de test est requis"
 
 #: tcms/testplans/views.py:573
 #, python-format
@@ -1788,27 +1817,27 @@ msgstr "ID du plan"
 msgid "TestPlan ID"
 msgstr "ID du plan de test"
 
+#: tcms/testruns/tests/test_views.py:108 tcms/testruns/views.py:60
+msgid "Creating a TestRun requires at least one TestCase"
+msgstr "Créé un scénario de test requiert au moins un cas de test"
+
+#: tcms/testruns/tests/test_views.py:182 tcms/testruns/views.py:426
+msgid "Clone of "
+msgstr "Clone de "
+
+#: tcms/testruns/tests/test_views.py:462 tcms/testruns/views.py:637
+#, python-format
+msgid "%d CaseRun(s) updated:"
+msgstr "Exécution du scénario %d mis à jour:"
+
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
 msgstr ""
 "Créé un essai de test requiert un plan de test, veuillez en sélectionné un"
 
-#: tcms/testruns/views.py:60
-msgid "Creating a TestRun requires at least one TestCase"
-msgstr "Créé un scénario de test requiert au moins un cas de test"
-
-#: tcms/testruns/views.py:426
-msgid "Clone of "
-msgstr "Clone de "
-
 #: tcms/testruns/views.py:509
 msgid "TestCase ID is not a valid integer"
 msgstr "ID du scénario de test n'est plus un entier valide"
-
-#: tcms/testruns/views.py:637
-#, python-format
-msgid "%d CaseRun(s) updated:"
-msgstr "Exécution du scénario %d mis à jour:"
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid ""
@@ -1832,49 +1861,49 @@ msgstr ""
 "manuellement."
 
 #: vinaigrette-deleteme.py:2
-msgid "IDLE"
-msgstr "EN VEILLE"
-
-#: vinaigrette-deleteme.py:3
-msgid "RUNNING"
-msgstr "EN COURS"
-
-#: vinaigrette-deleteme.py:4
-msgid "PAUSED"
-msgstr "MIS EN PAUSE"
-
-#: vinaigrette-deleteme.py:5
-msgid "PASSED"
-msgstr "PASSÉ"
-
-#: vinaigrette-deleteme.py:6
-msgid "FAILED"
-msgstr "EN ÉCHEC"
-
-#: vinaigrette-deleteme.py:7
-msgid "BLOCKED"
-msgstr "BLOQUÉ"
-
-#: vinaigrette-deleteme.py:8
-msgid "ERROR"
-msgstr "ERREUR"
-
-#: vinaigrette-deleteme.py:9
-msgid "WAIVED"
-msgstr "RENONCÉ À"
-
-#: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
 msgstr "PROPOSÉ"
 
-#: vinaigrette-deleteme.py:11
+#: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
 msgstr "CONFIRMÉ"
 
-#: vinaigrette-deleteme.py:12
+#: vinaigrette-deleteme.py:4
 msgid "DISABLED"
 msgstr "DÉSACTIVÉ"
 
-#: vinaigrette-deleteme.py:13
+#: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
 msgstr "DOIT_ÊTRE_MAJ"
+
+#: vinaigrette-deleteme.py:6
+msgid "IDLE"
+msgstr "EN VEILLE"
+
+#: vinaigrette-deleteme.py:7
+msgid "RUNNING"
+msgstr "EN COURS"
+
+#: vinaigrette-deleteme.py:8
+msgid "PAUSED"
+msgstr "MIS EN PAUSE"
+
+#: vinaigrette-deleteme.py:9
+msgid "PASSED"
+msgstr "PASSÉ"
+
+#: vinaigrette-deleteme.py:10
+msgid "FAILED"
+msgstr "EN ÉCHEC"
+
+#: vinaigrette-deleteme.py:11
+msgid "BLOCKED"
+msgstr "BLOQUÉ"
+
+#: vinaigrette-deleteme.py:12
+msgid "ERROR"
+msgstr "ERREUR"
+
+#: vinaigrette-deleteme.py:13
+msgid "WAIVED"
+msgstr "RENONCÉ À"
