@@ -1458,8 +1458,8 @@ msgstr ""
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
-msgid "DELETED: TestCase #%{pk}d - %{summary}s"
-msgstr "已删除: 测试用例 #%{pk}d - %{summary}s"
+msgid "DELETED: TestCase #%(pk)d - %(summary)s"
+msgstr "已删除: 测试用例 #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107

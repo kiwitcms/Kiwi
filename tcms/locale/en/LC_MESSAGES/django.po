@@ -1397,7 +1397,7 @@ msgstr ""
 
 #: tcms/testcases/helpers/email.py:22
 #, python-brace-format
-msgid "DELETED: TestCase #%{pk}d - %{summary}s"
+msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:98
