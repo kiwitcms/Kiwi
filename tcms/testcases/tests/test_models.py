@@ -4,6 +4,8 @@
 from mock import patch
 
 from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.history import history_email_for
 from tcms.testcases.models import BugSystem
@@ -156,6 +158,35 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
 
         expected_subject, expected_body = history_email_for(self.case, self.case.summary)
         recipients = get_case_notification_recipients(self.case)
+
+        # Verify notification mail
+        send_mail.assert_called_once_with(settings.EMAIL_SUBJECT_PREFIX + expected_subject,
+                                          expected_body,
+                                          settings.DEFAULT_FROM_EMAIL,
+                                          recipients,
+                                          fail_silently=False)
+
+
+class TestSendMailOnCaseIsDeleted(BasePlanCase):
+    """Test send mail on case post_delete signal is triggered"""
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.case.emailing.notify_on_case_delete = True
+        cls.case.emailing.auto_to_case_author = True
+        cls.case.emailing.save()
+
+    @patch('tcms.core.utils.mailto.send_mail')
+    def test_send_mail_to_case_author(self, send_mail):
+        expected_subject = _('DELETED: TestCase #%(pk)d - %(summary)s') % {
+                'pk': self.case.pk,
+                'summary': self.case.summary
+            }
+        expected_body = render_to_string('email/post_case_delete/email.txt', {'case': self.case})
+        recipients = get_case_notification_recipients(self.case)
+
+        self.case.delete()
 
         # Verify notification mail
         send_mail.assert_called_once_with(settings.EMAIL_SUBJECT_PREFIX + expected_subject,
