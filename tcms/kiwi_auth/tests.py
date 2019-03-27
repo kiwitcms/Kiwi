@@ -6,15 +6,17 @@ from mock import patch
 
 from django.urls import reverse
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
+from django.utils.translation import ugettext_lazy as _
 
 from tcms import signals
+from tcms.tests.factories import UserFactory
 from .models import UserActivationKey
 
 
-# ### Test cases for models ###
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class TestSetRandomKey(TestCase):
@@ -22,10 +24,7 @@ class TestSetRandomKey(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
-            username='new-tester',
-            email='new-tester@example.com',
-            password='password')
+        cls.new_user = UserFactory()
 
     @patch('tcms.kiwi_auth.models.datetime')
     def test_set_random_key(self, mock_datetime):
@@ -46,10 +45,7 @@ class TestForceToSetRandomKey(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
-            username='new-tester',
-            email='new-tester@example.com',
-            password='password')
+        cls.new_user = UserFactory()
         cls.origin_activation_key = UserActivationKey.set_random_key_for_user(cls.new_user)
 
     def test_set_random_key_forcely(self):
@@ -69,10 +65,9 @@ class TestLogout(TestCase):
     def setUpTestData(cls):
         super(TestLogout, cls).setUpTestData()
 
-        cls.tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='authtester',
-            email='authtester@example.com',
-            password='password')
+        cls.tester = UserFactory()
+        cls.tester.set_password('password')
+        cls.tester.save()
         cls.logout_url = reverse('tcms-logout')
 
     def test_logout_redirects_to_login_page(self):
@@ -99,7 +94,7 @@ class TestRegistration(TestCase):
 
     def test_open_registration_page(self):
         response = self.client.get(self.register_url)
-        self.assertContains(response, '>Register</button>')
+        self.assertContains(response, '>%s</button>' % _('Register'))
 
     def assert_user_registration(self, username, follow=False):
 
@@ -120,7 +115,7 @@ class TestRegistration(TestCase):
         key = UserActivationKey.objects.get(user=user)
         self.assertEqual(self.fake_activate_key, key.activation_key)
 
-        return response
+        return response, user
 
     @patch('tcms.signals.USER_REGISTERED_SIGNAL.send')
     def test_register_user_sends_signal(self, signal_mock):
@@ -135,7 +130,7 @@ class TestRegistration(TestCase):
         signals.USER_REGISTERED_SIGNAL.connect(signals.notify_admins)
 
         try:
-            response = self.assert_user_registration('signal-handler')
+            response, user = self.assert_user_registration('signal-handler')
             self.assertRedirects(response, reverse('core-views-index'), target_status_code=302)
 
             # 1 - verification mail, 2 - email to admin
@@ -143,19 +138,28 @@ class TestRegistration(TestCase):
             self.assertEqual(2, send_mail.call_count)
 
             # verify we've actually sent the admin email
-            self.assertIn('New user awaiting approval', send_mail.call_args_list[0][0][0])
-            self.assertIn('somebody just registered an account with username signal-handler',
-                          send_mail.call_args_list[0][0][1])
+            self.assertIn(str(_('New user awaiting approval')), send_mail.call_args_list[0][0][0])
+            values = {
+                'username': 'signal-handler',
+                'user_url': 'http://testserver/admin/auth/user/%d/change/' % user.pk,
+            }
+            expected = _("""Dear Administrator,
+somebody just registered an account with username %(username)s at your
+Kiwi TCMS instance and is awaiting your approval!
+
+Go to %(user_url)s to activate the account!
+""") % values
+            self.assertEqual(expected.strip(), send_mail.call_args_list[0][0][1].strip())
             self.assertIn('admin@kiwitcms.org', send_mail.call_args_list[0][0][-1])
         finally:
             signals.USER_REGISTERED_SIGNAL.disconnect(signals.notify_admins)
 
     @patch('tcms.core.utils.mailto.send_mail')
     def test_register_user_by_email_confirmation(self, send_mail):
-        response = self.assert_user_registration('new-tester', follow=True)
+        response, user = self.assert_user_registration('new-tester', follow=True)
         self.assertContains(
             response,
-            'Your account has been created, please check your mailbox for confirmation'
+            _('Your account has been created, please check your mailbox for confirmation')
         )
 
         site = Site.objects.get_current()
@@ -163,26 +167,33 @@ class TestRegistration(TestCase):
                                                             args=[self.fake_activate_key]))
 
         # Verify notification mail
-        send_mail.assert_called_once_with(
-            settings.EMAIL_SUBJECT_PREFIX + 'Your new 127.0.0.1:8000 account confirmation',
-            """Welcome new-tester,
-thank you for signing up for an 127.0.0.1:8000 account!
+        values = {
+            'user': user.username,
+            'site_domain': site.domain,
+            'confirm_url': confirm_url,
+        }
+        expected_subject = settings.EMAIL_SUBJECT_PREFIX + \
+            _('Your new %s account confirmation') % site.domain
+        expected_body = _("""Welcome %(user)s,
+thank you for signing up for an %(site_domain)s account!
 
 To activate your account, click this link:
-%s
-
-""" % confirm_url,
-            settings.DEFAULT_FROM_EMAIL, ['new-tester@example.com'], fail_silently=False)
+%(confirm_url)s
+""") % values + "\n"
+        send_mail.assert_called_once_with(expected_subject, expected_body,
+                                          settings.DEFAULT_FROM_EMAIL,
+                                          ['new-tester@example.com'],
+                                          fail_silently=False)
 
     @override_settings(AUTO_APPROVE_NEW_USERS=False,
                        ADMINS=[('admin1', 'admin1@example.com'),
                                ('admin2', 'admin2@example.com')])
     def test_register_user_and_activate_by_admin(self):
-        response = self.assert_user_registration('plan-tester', follow=True)
+        response, _user = self.assert_user_registration('plan-tester', follow=True)
 
         self.assertContains(
             response,
-            'Your account has been created, but you need an administrator to activate it')
+            _('Your account has been created, but you need an administrator to activate it'))
 
         for (name, email) in settings.ADMINS:
             self.assertContains(response,
@@ -195,10 +206,7 @@ class TestConfirm(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.new_user = User.objects.create(  # nosec:B106:hardcoded_password_funcarg
-            username='new-user',
-            email='new-user@example.com',
-            password='password')
+        cls.new_user = UserFactory()
 
     def setUp(self):
         self.new_user.is_active = False
@@ -211,7 +219,7 @@ class TestConfirm(TestCase):
 
         self.assertContains(
             response,
-            'This activation key no longer exists in the database')
+            _('This activation key no longer exists in the database'))
 
         # user account not activated
         user = User.objects.get(username=self.new_user.username)
@@ -229,7 +237,7 @@ class TestConfirm(TestCase):
         confirm_url = reverse('tcms-confirm', args=[fake_activation_key])
         response = self.client.get(confirm_url, follow=True)
 
-        self.assertContains(response, 'This activation key has expired')
+        self.assertContains(response, _('This activation key has expired'))
 
         # user account not activated
         user = User.objects.get(username=self.new_user.username)
@@ -248,7 +256,7 @@ class TestConfirm(TestCase):
 
         self.assertContains(
             response,
-            'Your account has been activated successfully')
+            _('Your account has been activated successfully'))
 
         # user account activated
         user = User.objects.get(username=self.new_user.username)

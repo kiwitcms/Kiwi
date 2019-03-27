@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=attribute-defined-outside-init
 
-from xmlrpc.client import ProtocolError
+from xmlrpc.client import Fault, ProtocolError
 from django.contrib.auth.models import Permission
 
-from tcms_api.xmlrpc import TCMSXmlrpc
+from tcms_api import xmlrpc
 
 from tcms.testcases.models import TestCase
 
 from tcms.tests import remove_perm_from_user
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import CategoryFactory
+from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TagFactory
@@ -52,7 +53,7 @@ class TestFilterCases(XmlrpcAPIBaseTest):
         self.product = ProductFactory(name='StarCraft')
         self.version = VersionFactory(value='0.1', product=self.product)
         self.plan = TestPlanFactory(name='Test product.get_cases',
-                                    owner=self.tester, author=self.tester,
+                                    author=self.tester,
                                     product=self.product,
                                     product_version=self.version)
         self.case_category = CategoryFactory(product=self.product)
@@ -78,37 +79,24 @@ class TestUpdate(XmlrpcAPIBaseTest):
     def _fixture_setup(self):
         super(TestUpdate, self)._fixture_setup()
 
-        self.testcase = TestCaseFactory()
+        self.testcase = TestCaseFactory(text='')
 
     def test_update_text_and_product(self):
-        case_text = self.testcase.latest_text()
-        self.assertEqual('', case_text.setup)
-        self.assertEqual('', case_text.breakdown)
-        self.assertEqual('', case_text.action)
-        self.assertEqual('', case_text.effect)
-        self.assertNotEqual(self.api_user, case_text.author)
+        self.assertEqual('', self.testcase.text)
 
         # update the test case
         updated = self.rpc_client.exec.TestCase.update(  # pylint: disable=objects-update-used
             self.testcase.pk,
             {
                 'summary': 'This was updated',
-                'setup': 'new',
-                'breakdown': 'new',
-                'action': 'new',
-                'effect': 'new',
+                'text': 'new TC text',
             }
         )
         self.testcase.refresh_from_db()  # refresh before assertions
 
         self.assertEqual(updated['case_id'], self.testcase.pk)
         self.assertEqual('This was updated', self.testcase.summary)
-        case_text = self.testcase.latest_text()  # grab text again
-        self.assertEqual('new', case_text.setup)
-        self.assertEqual('new', case_text.breakdown)
-        self.assertEqual('new', case_text.action)
-        self.assertEqual('new', case_text.effect)
-        self.assertEqual(self.api_user, case_text.author)
+        self.assertEqual('new TC text', self.testcase.text)
 
 
 class TestAddTag(XmlrpcAPIBaseTest):
@@ -134,9 +122,9 @@ class TestAddTag(XmlrpcAPIBaseTest):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testcases.add_testcasetag')
 
-        rpc_client = TCMSXmlrpc(unauthorized_user.username,
-                                'api-testing',
-                                '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
+                                       'api-testing',
+                                       '%s/xml-rpc/' % self.live_server_url).server
 
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             rpc_client.TestCase.add_tag(self.testcase.pk, self.tag1.name)
@@ -170,9 +158,9 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testcases.delete_testcasetag')
 
-        rpc_client = TCMSXmlrpc(unauthorized_user.username,
-                                'api-testing',
-                                '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
+                                       'api-testing',
+                                       '%s/xml-rpc/' % self.live_server_url).server
 
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             rpc_client.TestCase.remove_tag(self.testcase.pk, self.tag0.name)
@@ -183,3 +171,21 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
 
         tag_exists = TestCase.objects.filter(pk=self.testcase.pk, tag__pk=self.tag1.pk).exists()
         self.assertFalse(tag_exists)
+
+
+class TestAddComponent(XmlrpcAPIBaseTest):
+
+    def _fixture_setup(self):
+        super()._fixture_setup()
+        self.test_case = TestCaseFactory()
+        self.good_component = ComponentFactory(product=self.test_case.category.product)
+        self.bad_component = ComponentFactory()
+
+    def test_add_component_from_same_product_is_allowed(self):
+        result = self.rpc_client.exec.TestCase.add_component(self.test_case.pk,
+                                                             self.good_component.name)
+        self.assertEqual(result['component'][0], self.good_component.pk)
+
+    def test_add_component_from_another_product_is_not_allowed(self):
+        with self.assertRaisesRegex(Fault, 'Component matching query does not exist'):
+            self.rpc_client.exec.TestCase.add_component(self.test_case.pk, self.bad_component.name)

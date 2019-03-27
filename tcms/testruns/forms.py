@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils import string_to_list
 from tcms.core.forms.fields import UserField
 from tcms.management.models import Product, Version, Build
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase
-from .models import TestRun, TestCaseRunStatus
+from .models import TestRun, TestExecutionStatus
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class BaseRunForm(forms.Form):
@@ -23,8 +27,8 @@ class BaseRunForm(forms.Form):
     )
 
     def populate(self, product_id):
-        query = {'product_id': product_id}
-        self.fields['build'].queryset = Build.list_active(query)
+        query = {'product_id': product_id, 'is_active': True}
+        self.fields['build'].queryset = Build.objects.filter(**query)
 
 
 class NewRunForm(BaseRunForm):
@@ -71,6 +75,13 @@ class XMLRPCUpdateRunForm(XMLRPCNewRunForm):
         label='Build',
         queryset=Build.objects.all(),
         required=False
+    )
+    stop_date = forms.DateTimeField(
+        required=False,
+        input_formats=['%Y-%m-%d'],
+        error_messages={
+            'invalid': _('The stop date is invalid. The valid format is YYYY-MM-DD.')
+        }
     )
 
     def clean_status(self):
@@ -123,15 +134,14 @@ class BaseCaseRunForm(forms.Form):
     build = forms.ModelChoiceField(
         label='Build', queryset=Build.objects.all(),
     )
-    case_run_status = forms.ModelChoiceField(
-        label='Case Run Status', queryset=TestCaseRunStatus.objects.all(),
+    status = forms.ModelChoiceField(
+        label='Case Run Status', queryset=TestExecutionStatus.objects.all(),
         required=False,
     )
     assignee = UserField(label='Assignee', required=False)
     case_text_version = forms.IntegerField(
         label='Case text version', required=False
     )
-    notes = forms.CharField(label='Notes', required=False)
     sortkey = forms.IntegerField(label='Sortkey', required=False)
 
 
@@ -163,16 +173,14 @@ class XMLRPCNewCaseRunForm(BaseCaseRunForm):
     def clean_case_text_version(self):
         data = self.cleaned_data.get('case_text_version')
         if not data and self.cleaned_data.get('case'):
-            tc_ltxt = self.cleaned_data['case'].latest_text()
-            if tc_ltxt:
-                data = tc_ltxt.case_text_version
+            data = self.cleaned_data['case'].history.latest().history_id
 
         return data
 
-    def clean_case_run_status(self):
-        data = self.cleaned_data.get('case_run_status')
+    def clean_status(self):
+        data = self.cleaned_data.get('status')
         if not data:
-            data = TestCaseRunStatus.objects.get(name='IDLE')
+            data = TestExecutionStatus.objects.get(name='IDLE')
 
         return data
 

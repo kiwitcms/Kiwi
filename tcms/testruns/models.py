@@ -6,19 +6,20 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.db.models import Count
+from django.utils.translation import override
 
 import vinaigrette
 
 from tcms.core.models import TCMSActionModel
 from tcms.core.history import KiwiHistoricalRecords
 from tcms.core.contrib.linkreference.models import LinkReference
-from tcms.testcases.models import Bug, TestCaseText, NoneText
-from tcms.xmlrpc.serializer import TestCaseRunXMLRPCSerializer
+from tcms.testcases.models import Bug
+from tcms.xmlrpc.serializer import TestExecutionXMLRPCSerializer
 from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
 
 
-TestCaseRunStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
+TestExecutionStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
     'StatusSubtotal',
     'CaseRunsTotalCount',
     'CompletedPercentage',
@@ -56,7 +57,7 @@ class TestRun(TCMSActionModel):
                                  through='testruns.TestRunTag',
                                  related_name='run')
 
-    cc = models.ManyToManyField('auth.User', through='testruns.TestRunCC')
+    cc = models.ManyToManyField(settings.AUTH_USER_MODEL, through='testruns.TestRunCC')
 
     class Meta:
         unique_together = ('run_id', 'product_version')
@@ -89,34 +90,32 @@ class TestRun(TCMSActionModel):
 
         send_to = set(send_to)
         # don't email author of last change
-        send_to.discard(getattr(self.history.latest().history_user, 'email', ''))
+        send_to.discard(getattr(self.history.latest().history_user,  # pylint: disable=no-member
+                                'email', ''))
         return list(send_to)
 
     # FIXME: rewrite to use multiple values INSERT statement
-    def add_case_run(self, case, case_run_status=1, assignee=None,
+    def add_case_run(self, case, status=1, assignee=None,
                      case_text_version=None, build=None,
-                     notes=None, sortkey=0):
+                     sortkey=0):
         _case_text_version = case_text_version
         if not _case_text_version:
-            _case_text_version = case.latest_text(
-                text_required=False).case_text_version
+            _case_text_version = case.history.latest().history_id
 
         _assignee = assignee \
             or (case.default_tester_id and case.default_tester) \
             or (self.default_tester_id and self.default_tester)
 
-        _case_run_status = TestCaseRunStatus.objects.get(id=case_run_status) \
-            if isinstance(case_run_status, int) else case_run_status
+        _status = TestExecutionStatus.objects.get(id=status) \
+            if isinstance(status, int) else status
 
         return self.case_run.create(case=case,
                                     assignee=_assignee,
                                     tested_by=None,
-                                    case_run_status=_case_run_status,
+                                    status=_status,
                                     case_text_version=_case_text_version,
                                     build=build or self.build,
-                                    notes=notes,
                                     sortkey=sortkey,
-                                    running_date=None,
                                     close_date=None)
 
     def add_tag(self, tag):
@@ -157,11 +156,11 @@ class TestRun(TCMSActionModel):
         return percent
 
     def _get_completed_case_run_percentage(self):
-        ids = TestCaseRunStatus.objects.filter(
-            name__in=TestCaseRunStatus.complete_status_names).values_list('pk', flat=True)
+        ids = TestExecutionStatus.objects.filter(
+            name__in=TestExecutionStatus.complete_status_names).values_list('pk', flat=True)
 
         completed_caserun = self.case_run.filter(
-            case_run_status__in=ids)
+            status__in=ids)
 
         return self.get_percentage(completed_caserun.count())
 
@@ -178,30 +177,32 @@ class TestRun(TCMSActionModel):
         else:
             self.stop_date = None
 
-    def stats_caseruns_status(self, case_run_statuses=None):
-        """Get statistics based on case runs' status
-
-        @param case_run_statuss: iterable object containing TestCaseRunStatus
-            objects representing PASS, FAIL, WAIVED, etc.
-        @type case_run_statuses: iterable object
-        @return: the statistics including the number of each status mapping,
-            total number of case runs, complete percent, and failure percent.
-        @rtype: namedtuple
+    @override('en')
+    def stats_caseruns_status(self, statuses=None):
         """
-        if case_run_statuses is None:
-            case_run_statuses = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')
+            Get statistics based on case runs' status
 
-        rows = TestCaseRun.objects.filter(
+            :param statuses: iterable object containing TestCaseRunStatus
+                             objects representing PASS, FAIL, WAIVED, etc.
+            :type statuses: iterable
+            :return: the statistics including the number of each status mapping,
+                     total number of case runs, complete percent, and failure percent.
+            :rtype: namedtuple
+        """
+        if statuses is None:
+            statuses = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
+
+        rows = TestExecution.objects.filter(
             run=self.pk
         ).values(
-            'case_run_status'
-        ).annotate(status_count=Count('case_run_status'))
+            'status'
+        ).annotate(status_count=Count('status'))
 
         caserun_statuses_subtotal = dict((status.pk, [0, status])
-                                         for status in case_run_statuses)
+                                         for status in statuses)
 
         for row in rows:
-            caserun_statuses_subtotal[row['case_run_status']][0] = row['status_count']
+            caserun_statuses_subtotal[row['status']][0] = row['status_count']
 
         complete_count = 0
         failure_count = 0
@@ -213,9 +214,9 @@ class TestRun(TCMSActionModel):
 
             caseruns_total_count += status_caseruns_count
 
-            if status_name in TestCaseRunStatus.complete_status_names:
+            if status_name in TestExecutionStatus.complete_status_names:
                 complete_count += status_caseruns_count
-            if status_name in TestCaseRunStatus.failure_status_names:
+            if status_name in TestExecutionStatus.failure_status_names:
                 failure_count += status_caseruns_count
 
         # Final calculation
@@ -226,18 +227,29 @@ class TestRun(TCMSActionModel):
         if complete_count:
             failure_percent = failure_count * 100.0 / caseruns_total_count
 
-        return TestCaseRunStatusSubtotal(caserun_statuses_subtotal,
-                                         caseruns_total_count,
-                                         complete_percent,
-                                         failure_percent,
-                                         complete_percent - failure_percent)
+        return TestExecutionStatusSubtotal(caserun_statuses_subtotal,
+                                           caseruns_total_count,
+                                           complete_percent,
+                                           failure_percent,
+                                           complete_percent - failure_percent)
 
 
-class TestCaseRunStatus(TCMSActionModel):
+class TestExecutionStatus(TCMSActionModel):
     FAILED = 'FAILED'
     BLOCKED = 'BLOCKED'
     PASSED = 'PASSED'
     IDLE = 'IDLE'
+
+    _icons = {
+        'IDLE': 'fa fa-question-circle-o',
+        'RUNNING': 'fa fa-play-circle-o',
+        'PAUSED': 'fa fa-pause-circle-o',
+        PASSED: 'fa fa-check-circle-o',
+        FAILED: 'fa fa-times-circle-o',
+        BLOCKED: 'fa fa-stop-circle-o',
+        'ERROR': 'fa fa-minus-circle',
+        'WAIVED': 'fa fa-commenting-o',
+    }
 
     complete_status_names = (PASSED, 'ERROR', FAILED, 'WAIVED')
     failure_status_names = ('ERROR', FAILED)
@@ -259,12 +271,16 @@ class TestCaseRunStatus(TCMSActionModel):
         """ Get all status names in reverse mapping between name and id """
         return dict((name, _id) for _id, name in cls.get_names().items())
 
+    def icon(self):
+        with override('en'):
+            return self._icons[self.name]
+
 
 # register model for DB translations
-vinaigrette.register(TestCaseRunStatus, ['name'])
+vinaigrette.register(TestExecutionStatus, ['name'])
 
 
-class TestCaseRun(TCMSActionModel):
+class TestExecution(TCMSActionModel):
     history = KiwiHistoricalRecords()
 
     case_run_id = models.AutoField(primary_key=True)
@@ -275,15 +291,13 @@ class TestCaseRun(TCMSActionModel):
                                   related_name='case_run_tester',
                                   on_delete=models.CASCADE)
     case_text_version = models.IntegerField()
-    running_date = models.DateTimeField(null=True, blank=True)
     close_date = models.DateTimeField(null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
     sortkey = models.IntegerField(null=True, blank=True)
 
     run = models.ForeignKey(TestRun, related_name='case_run', on_delete=models.CASCADE)
     case = models.ForeignKey('testcases.TestCase', related_name='case_run',
                              on_delete=models.CASCADE)
-    case_run_status = models.ForeignKey(TestCaseRunStatus, on_delete=models.CASCADE)
+    status = models.ForeignKey(TestExecutionStatus, on_delete=models.CASCADE)
     build = models.ForeignKey('management.Build', on_delete=models.CASCADE)
 
     class Meta:
@@ -302,8 +316,8 @@ class TestCaseRun(TCMSActionModel):
     def to_xmlrpc(cls, query: dict = None):
         if query is None:
             query = {}
-        query_set = distinct_filter(TestCaseRun, query).order_by('pk')
-        serializer = TestCaseRunXMLRPCSerializer(model_class=cls, queryset=query_set)
+        query_set = distinct_filter(TestExecution, query).order_by('pk')
+        serializer = TestExecutionXMLRPCSerializer(model_class=cls, queryset=query_set)
         return serializer.serialize_queryset()
 
     def add_bug(self, bug_id, bug_system_id,
@@ -326,36 +340,6 @@ class TestCaseRun(TCMSActionModel):
 
     def get_bugs_count(self):
         return self.get_bugs().count()
-
-    def get_text_versions(self):
-        return TestCaseText.objects.filter(
-            case__pk=self.case.pk
-        ).values_list('case_text_version', flat=True)
-
-    def get_text_with_version(self, case_text_version=None):
-        if case_text_version:
-            try:
-                return TestCaseText.objects.get(
-                    case__case_id=self.case_id,
-                    case_text_version=case_text_version
-                )
-            except TestCaseText.DoesNotExist:
-                return NoneText
-        try:
-            return TestCaseText.objects.get(
-                case__case_id=self.case_id,
-                case_text_version=self.case_text_version
-            )
-        except TestCaseText.DoesNotExist:
-            return NoneText
-
-    def latest_text(self):
-        try:
-            return TestCaseText.objects.filter(
-                case__case_id=self.case_id
-            ).order_by('-case_text_version')[0]
-        except IndexError:
-            return NoneText
 
     def _get_absolute_url(self):
         # NOTE: this returns the URL to the TestRun containing this TestCaseRun!

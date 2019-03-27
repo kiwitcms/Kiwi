@@ -7,6 +7,8 @@
 log/
 dist/
 build/
+.venv/
+uploads/
 docs/source/*.dot
 docs/guide/target
 docs/target/

@@ -5,7 +5,6 @@ FLAKE8_EXCLUDE=.git
 .PHONY: flake8
 flake8:
 	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms *.py kiwi_lint
-	@flake8 --exclude=$(FLAKE8_EXCLUDE) tcms_api
 
 
 DJANGO_SETTINGS_MODULE="tcms.settings.test"
@@ -33,18 +32,31 @@ test:
 		PYTHONWARNINGS=d coverage run --source='.' ./manage.py test --noinput --settings=$(DJANGO_SETTINGS_MODULE); \
 	fi
 
+
+.PHONY: l10n-test
+l10n-test:
+	./manage.py compilemessages
+	@make test
+
+
+# test for missing migrations
+# https://stackoverflow.com/questions/54177838/
+.PHONY: test_for_missing_migrations
+test_for_missing_migrations:
+	./manage.py migrate --settings=$(DJANGO_SETTINGS_MODULE)
+	./manage.py makemigrations --check --settings=$(DJANGO_SETTINGS_MODULE)
+
 .PHONY: check
 check: flake8 test
 
 .PHONY: pylint
 pylint:
 	pylint -d missing-docstring *.py kiwi_lint/
-	PYTHONPATH=. pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring tcms/
-	PYTHONPATH=. pylint --load-plugins=kiwi_lint --extension-pkg-whitelist=kerberos tcms_api/
+	PYTHONPATH=. pylint --load-plugins=pylint_django --load-plugins=kiwi_lint -d missing-docstring -d duplicate-code tcms/
 
 .PHONY: bandit
 bandit:
-	bandit -r *.py tcms/ tcms_api/ kiwi_lint/
+	bandit -r *.py tcms/ kiwi_lint/
 
 
 .PHONY: bandit_site_packages
@@ -57,7 +69,12 @@ bandit_site_packages:
 .PHONY: docker-image
 docker-image:
 	find -name "*.pyc" -delete
+	./tests/check-build
 	docker build -t kiwitcms/kiwi:latest .
+
+.PHONY: test-docker-image
+test-docker-image: docker-image
+	sudo ./tests/runner.sh
 
 .PHONY: docs
 docs:
@@ -86,6 +103,7 @@ help:
 	@echo ''
 	@echo '  flake8           - Check Python code style throughout whole source code tree'
 	@echo '  check            - Run all tests.'
+	@echo '  build-for-pypi   - Build tarballs and wheels for PyPI'
 	@echo '  docker-image     - Build Docker image'
 	@echo '  help             - Show this help message and exit. Default if no command is given'
 
@@ -94,3 +112,14 @@ help:
 .PHONY: coverity
 coverity:
 	@echo 'Everything is handled by the Coverity add-on in Travis'
+
+
+.PHONY: build-for-pypi
+build-for-pypi:
+	./tests/check-build
+
+
+.PHONY: messages
+messages:
+	./manage.py makemessages --no-obsolete --ignore "test*.py"
+	ls tcms/locale/*/LC_MESSAGES/*.po | xargs -n 1 -I @ msgattrib -o @ --no-fuzzy @

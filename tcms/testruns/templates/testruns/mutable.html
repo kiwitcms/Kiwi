@@ -14,8 +14,6 @@
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
-    {{ form.errors }}
-
     <form class="form-horizontal" action="{% if test_run %}{% url 'testruns-edit' test_run.run_id %}{% else %}{% url 'testruns-new' %}{% endif %}" method="post">
         {% csrf_token %}
 
@@ -37,9 +35,9 @@
                     title="{% trans 'add new Build' %}">+</a>
             </div>
             <div class="col-md-3 col-lg-3">
-                <select class="form-control" id="id_build" name="build">
+                <select class="form-control selectpicker" id="id_build" name="build">
                 {% for option in form.build.field.queryset %}
-                    <option value="{{ option.pk }}" {% if option.pk == form.build.value %}selected{% endif %}>{{ option.name }}</option>
+                    <option value="{{ option.pk }}" {% if option.pk|escape == form.build.value|escape %}selected{% endif %}>{{ option.name }}</option>
                 {% endfor %}
                 </select>
                 <p class="help-block">
@@ -54,9 +52,9 @@
                 {{ form.manager.errors }}
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default&nbsp;tester" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
             <div class="col-md-3 col-lg-3 {% if form.default_tester.errors %}has-error{% endif %}">
-                <input id="id_default_tester" name="default_tester" value="{{ form.default_tester.value }}" type="text"
+                <input id="id_default_tester" name="default_tester" value="{{ form.default_tester.value|default:'' }}" type="text"
                     class="form-control" placeholder="{% trans 'Username or email' %}">
                 {{ form.default_tester.errors }}
             </div>
@@ -125,11 +123,11 @@
     </form>
 </div><!-- /container -->
 
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
 <script src="{% static "grappelli/jquery/jquery.min.js" %}" type="text/javascript"></script>
 <script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
 <script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}" type="text/javascript"></script>
 
-<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
 
 <script src="{% static 'testruns/js/mutable.js' %}"></script>
 {% endblock %}

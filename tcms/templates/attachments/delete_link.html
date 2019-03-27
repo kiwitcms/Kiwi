@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load static %}
+{% trans 'Are you sure you want to delete this attachment?' as prompt_message %}
+
+<link rel="stylesheet" href="{% static 'patternfly/dist/css/patternfly-additions.min.css' %}">
+{% if delete_url %}<a class="delete-attachment"
+    onclick="return confirm('{{ prompt_message }}')"
+    href="{{ delete_url }}?next={{ next }}">
+    <span class="pficon-error-circle-o"></span>
+</a>{% endif %}

@@ -23,6 +23,7 @@ class RawSQLChecker(checkers.BaseChecker):
         # looking for .extra(select={}) patterns
         if node.attrname == 'extra' and isinstance(node.parent, astroid.Call):
             for keyword in node.parent.keywords:
-                if keyword.arg == 'select':
+                if keyword.arg in ['select', 'where', 'params',
+                                   'tables', 'order_by', 'select_params']:
                     self.add_message('avoid-raw-sql', node=node)
                     break

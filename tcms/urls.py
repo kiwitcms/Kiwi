@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import pkg_resources
+from importlib import import_module
 
 from django.conf import settings
 from django.conf.urls import include, url
@@ -20,8 +22,6 @@ from tcms.testplans import urls as testplans_urls
 from tcms.testcases import urls as testcases_urls
 from tcms.kiwi_auth import urls as auth_urls
 from tcms.testruns import urls as testruns_urls
-from tcms.testruns import views as testruns_views
-from tcms.report import urls as report_urls
 
 
 urlpatterns = [
@@ -36,13 +36,8 @@ urlpatterns = [
     url(r'^attachments/', include(attachments_urls, namespace='attachments')),
 
     # Ajax call responder
-    url(r'^ajax/update/case-status/$', ajax.UpdateTestCaseStatusView.as_view()),
-    url(r'^ajax/update/cases-priority/$', ajax.UpdateTestCasePriorityView.as_view(),
-        name='ajax.update.cases-priority'),
     url(r'^ajax/update/cases-actor/$', ajax.UpdateTestCaseActorsView.as_view(),
         name='ajax.update.cases-actor'),
-    url(r'^ajax/get-prod-relate-obj/$', ajax.get_prod_related_obj_json),
-    url(r'^management/getinfo/$', ajax.info, name='ajax-info'),
     url(r'^management/tags/$', ajax.tags, name='ajax-tags'),
 
     # comments
@@ -61,23 +56,25 @@ urlpatterns = [
     url(r'^cases/', include(testcases_urls.cases_urls)),
 
     # Testruns zone
-    url(r'^run/', include(testruns_urls.run_urls)),
-    url(r'^runs/', include(testruns_urls.runs_urls)),
+    url(r'^runs/', include(testruns_urls)),
 
-    url(r'^caserun/(?P<case_run_id>\d+)/bug/$', testruns_views.bug, name='testruns-bug'),
     url(r'^caserun/comment-many/', ajax.comment_case_runs, name='ajax-comment_case_runs'),
     url(r'^caserun/update-bugs-for-many/', ajax.update_bugs_to_caseruns),
 
     url(r'^linkref/add/$', linkreference_views.add, name='linkref-add'),
     url(r'^linkref/remove/(?P<link_id>\d+)/$', linkreference_views.remove),
 
-    # Report zone
-    url(r'^report/', include(report_urls)),
-
     # JavaScript translations, see
     # https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#django.views.i18n.JavaScriptCatalog
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
+
+
+for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+    plugin_urls = import_module('%s.urls' % plugin.module_name)
+    urlpatterns.append(
+        url(r'^%s/' % plugin.name, include(plugin_urls))
+    )
 
 
 if settings.DEBUG:

@@ -12,14 +12,12 @@ Subpackages
 .. toctree::
 
     tcms.testplans.helpers
-    tcms.testplans.urls
 
 Submodules
 ----------
 
 .. toctree::
 
-   tcms.testplans.actions
    tcms.testplans.admin
    tcms.testplans.forms
    tcms.testplans.models

@@ -16,22 +16,88 @@ function updateSelect(data, selector, id_attr, value_attr) {
     });
 
     _select_tag.innerHTML = new_options;
-    $(selector).selectpicker('refresh');
+
+    try {
+        $(selector).selectpicker('refresh');
+    } catch(e) {
+        console.warn(e);
+    }
 }
 
 
 /*
-    Used to update a Version select when Product changes.
+    Used for on-change event handlers
+    @sender - the element trigerring the on-change event
 */
-function updateVersionSelect(data) {
-    updateSelect(data, '#id_version', 'id', 'value')
+function update_version_select_from_product(sender, version_selector) {
+    if (version_selector === undefined) {
+        version_selector = '#id_version';
+    }
+
+    var updateVersionSelectCallback = function(data) {
+        updateSelect(data, version_selector, 'id', 'value')
+    }
+
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Version.filter', {product: product_id}, updateVersionSelectCallback);
+    } else {
+        updateVersionSelectCallback([]);
+    }
 }
 
 /*
-    Used to update a Build select when Product changes.
+    Used for on-change event handlers
 */
-function updateBuildSelect(data) {
-    updateSelect(data, '#id_build', 'build_id', 'name')
+function update_build_select_from_product(keep_first) {
+    var updateCallback = function(data) {
+        updateSelect(data, '#id_build', 'build_id', 'name')
+    }
+
+    if (keep_first === true) {
+        // pass
+    } else {
+        $('#id_build').find('option').remove();
+    }
+
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Build.filter', {product: product_id}, updateCallback);
+    } else {
+        updateCallback([]);
+    }
+}
+
+/*
+    Used for on-change event handlers
+*/
+function update_category_select_from_product() {
+    var updateCallback = function(data) {
+        updateSelect(data, '#id_category', 'id', 'name')
+    }
+
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Category.filter', {product: product_id}, updateCallback);
+    } else {
+        updateCallback([]);
+    }
+}
+
+/*
+    Used for on-change event handlers
+*/
+function update_component_select_from_product() {
+    var updateCallback = function(data) {
+        updateSelect(data, '#id_component', 'id', 'name')
+    }
+
+    var product_id = $('#id_product').val();
+    if (product_id) {
+        jsonRPC('Component.filter', {product: product_id}, updateCallback);
+    } else {
+        updateCallback([]);
+    }
 }
 
 /*

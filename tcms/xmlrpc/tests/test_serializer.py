@@ -39,14 +39,13 @@ class TestXMLSerializer(test.TestCase):
 
         component_pks = []
 
-        for component in self.testcase.component.all():
+        for component in self.testcase.component.all():  # pylint: disable=no-member
             component_pks.append(component.pk)
 
         component_pks.sort()
         result['component'].sort()
         self.assertEqual(component_pks, result['component'])
 
-        self.assertEqual(self.testcase.alias, result['alias'])
         self.assertEqual(self.testcase.arguments, result['arguments'])
 
 
@@ -91,7 +90,6 @@ class MockTestCaseSerializer(QuerySetBasedXMLRPCSerializer):
     primary_key = 'case_id'
 
     values_fields_mapping = {
-        'alias': ('alias', do_nothing),
         'arguments': ('arguments', do_nothing),
         'case_id': ('case_id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
@@ -317,7 +315,7 @@ class TestQuerySetBasedSerializer(test.TestCase):
                              plan['product_version'])
 
     def test_serialize_queryset_with_empty_querset(self):
-        cases = self.cases.filter(pk__lt=0)
+        cases = self.cases.filter(pk__lt=0)  # pylint: disable=no-member
         serializer = MockTestCaseSerializer(TestCase, cases)
         result = serializer.serialize_queryset()
         self.assertTrue(len(result) == 0)

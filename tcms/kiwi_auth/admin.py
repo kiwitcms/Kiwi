@@ -4,10 +4,14 @@ from django import forms
 from django.urls import reverse
 from django.contrib import admin
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import Permission, User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 from django.contrib.auth.forms import UserChangeForm
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin, sensitive_post_parameters_m
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class MyUserChangeForm(UserChangeForm):
@@ -17,10 +21,10 @@ class MyUserChangeForm(UserChangeForm):
     email = forms.EmailField(required=True)
 
     def clean_email(self):
-        qs = User.objects.filter(email=self.cleaned_data['email'])
+        query_set = User.objects.filter(email=self.cleaned_data['email'])
         if self.instance:
-            qs = qs.exclude(pk=self.instance.pk)
-        if qs.count():
+            query_set = query_set.exclude(pk=self.instance.pk)
+        if query_set.count():
             raise forms.ValidationError(_('This email address is already in use'))
         else:
             return self.cleaned_data['email']
@@ -41,13 +45,19 @@ class KiwiUserAdmin(UserAdmin):
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser or obj is not None
 
+    # pylint: disable=too-many-arguments
     def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
         if obj and not (_modifying_myself(request, obj.pk) or request.user.is_superuser):
             context.update({
                 'show_save': False,
                 'show_save_and_continue': False,
             })
-        return super().render_change_form(request, context, add, change, form_url, obj)
+        return super().render_change_form(request,
+                                          context,
+                                          add=add,
+                                          change=change,
+                                          form_url=form_url,
+                                          obj=obj)
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
@@ -56,22 +66,31 @@ class KiwiUserAdmin(UserAdmin):
         readonly_fields = ['username', 'is_staff', 'is_active',
                            'is_superuser', 'last_login', 'date_joined',
                            'groups', 'user_permissions']
-        if not _modifying_myself(request, obj.pk):
+        if obj and not _modifying_myself(request, obj.pk):
             readonly_fields.extend(['first_name', 'last_name', 'email'])
 
         return readonly_fields
 
     def get_fieldsets(self, request, obj=None):
-        if request.user.is_superuser:
+        # super-user adding new account
+        if not obj and request.user.is_superuser:
             return super().get_fieldsets(request, obj)
 
         first_fieldset_fields = ('username',)
-        if _modifying_myself(request, obj.pk):
+        if obj and _modifying_myself(request, obj.pk):
             first_fieldset_fields = first_fieldset_fields + ('password',)
 
-        return ((None, {'fields': first_fieldset_fields}),
-                (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
-                (_('Permissions'), {'fields': ('is_active', 'groups')}))
+        remaining_fieldsets = (
+            (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+            (_('Permissions'), {'fields': ('is_active', 'groups')}),
+        )
+
+        if request.user.is_superuser:
+            field_sets = super().get_fieldsets(request, obj)
+            if field_sets[0][0] is None and 'password' in field_sets[0][1]['fields']:
+                remaining_fieldsets = field_sets[1:]
+
+        return ((None, {'fields': first_fieldset_fields}),) + remaining_fieldsets
 
     @sensitive_post_parameters_m
     def user_change_password(self, request, id, form_url=''):  # pylint: disable=redefined-builtin

@@ -42,13 +42,11 @@ class TestPlan(TCMSActionModel):
     extra_link = models.CharField(max_length=1024, default=None, blank=True, null=True)
 
     product_version = models.ForeignKey(Version, related_name='plans', on_delete=models.CASCADE)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
-                              related_name='myplans', on_delete=models.CASCADE)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey('management.Product', related_name='plan',
                                 on_delete=models.CASCADE)
     type = models.ForeignKey(PlanType, on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set',
+    parent = models.ForeignKey('TestPlan', blank=True, null=True, related_name='child_set',
                                on_delete=models.CASCADE)
 
     tag = models.ManyToManyField('management.Tag',
@@ -80,6 +78,8 @@ class TestPlan(TCMSActionModel):
 
         for key, value in query.items():
             if value and key not in ['action', 't', 'f', 'a']:
+                if key == 'version':  # comes from case/clone.html
+                    key = 'product_version'
                 new_query[key] = value.strip() if hasattr(value, 'strip') else value
 
         query_set = cls.objects
@@ -94,15 +94,22 @@ class TestPlan(TCMSActionModel):
     def confirmed_case(self):
         return self.case.filter(case_status__name='CONFIRMED')
 
-    def add_case(self, case, sortkey=0):
+    def add_case(self, case, sortkey=None):
 
-        tcp, is_created = TestCasePlan.objects.get_or_create(
+        if sortkey is None:
+            lastcase = self.testcaseplan_set.order_by('-sortkey').first()
+            if lastcase and lastcase.sortkey is not None:
+                sortkey = lastcase.sortkey + 10
+            else:
+                sortkey = 0
+
+        return TestCasePlan.objects.get_or_create(
             plan=self,
             case=case,
-        )
-        if is_created:
-            tcp.sortkey = sortkey
-            tcp.save()
+            defaults={
+                'sortkey': sortkey
+            }
+        )[0]
 
     def add_tag(self, tag):
         return TestPlanTag.objects.get_or_create(
@@ -192,6 +199,8 @@ class TestPlan(TCMSActionModel):
             tpcases_src = self.case.all()
 
             if copy_cases:
+                # todo: use the function which clones the test cases instead of
+                # duplicating the clone operation here
                 for tpcase_src in tpcases_src:
                     tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
                     author = new_case_author or tpcase_src.author
@@ -207,12 +216,12 @@ class TestPlan(TCMSActionModel):
                         arguments=tpcase_src.arguments,
                         summary=tpcase_src.summary,
                         requirement=tpcase_src.requirement,
-                        alias=tpcase_src.alias,
                         case_status=TestCaseStatus.get_proposed(),
                         category=tc_category,
                         priority=tpcase_src.priority,
                         author=author,
-                        default_tester=default_tester)
+                        default_tester=default_tester,
+                        text=tpcase_src.text)
 
                     # Add case to plan.
                     tp_dest.add_case(tpcase_dest, tcp.sortkey)
@@ -230,16 +239,6 @@ class TestPlan(TCMSActionModel):
                                 description=component.description)
 
                         tpcase_dest.add_component(new_c)
-
-                    text = tpcase_src.latest_text()
-
-                    if text:
-                        tpcase_dest.add_text(author=text.author,
-                                             action=text.action,
-                                             effect=text.effect,
-                                             setup=text.setup,
-                                             breakdown=text.breakdown,
-                                             create_date=text.create_date)
             else:
                 for tpcase_src in tpcases_src:
                     tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
@@ -255,10 +254,8 @@ class TestPlanTag(models.Model):
 
 class TestPlanEmailSettings(models.Model):
     plan = models.OneToOneField(TestPlan, related_name='email_settings', on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=False)
-    auto_to_plan_owner = models.BooleanField(default=False)
-    auto_to_plan_author = models.BooleanField(default=False)
-    auto_to_case_owner = models.BooleanField(default=False)
-    auto_to_case_default_tester = models.BooleanField(default=False)
-    notify_on_plan_update = models.BooleanField(default=False)
-    notify_on_case_update = models.BooleanField(default=False)
+    auto_to_plan_author = models.BooleanField(default=True)
+    auto_to_case_owner = models.BooleanField(default=True)
+    auto_to_case_default_tester = models.BooleanField(default=True)
+    notify_on_plan_update = models.BooleanField(default=True)
+    notify_on_case_update = models.BooleanField(default=True)

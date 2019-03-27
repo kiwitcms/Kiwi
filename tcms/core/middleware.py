@@ -23,6 +23,8 @@ class CheckSettingsMiddleware(MiddlewareMixin):
                 request,
                 messages.ERROR,
                 _('Base URL is not configured! '
-                  'See <a href="%s">documentation</a> and <a href="%s">change it</a>') %
-                (doc_url, reverse('admin:sites_site_change', args=[site.pk]))
+                  'See <a href="%(doc_url)s">documentation</a> and '
+                  '<a href="%(admin_url)s">change it</a>') % {
+                      'doc_url': doc_url,
+                      'admin_url': reverse('admin:sites_site_change', args=[site.pk])}
             )

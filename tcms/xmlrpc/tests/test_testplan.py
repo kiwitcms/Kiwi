@@ -3,7 +3,7 @@
 from xmlrpc.client import ProtocolError
 from django.contrib.auth.models import Permission
 
-from tcms_api.xmlrpc import TCMSXmlrpc
+from tcms_api import xmlrpc
 
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCasePlan
@@ -57,8 +57,8 @@ class TestAddTag(XmlrpcAPIBaseTest):
 
         self.product = ProductFactory()
         self.plans = [
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
         ]
 
         self.tag1 = TagFactory(name='xmlrpc_test_tag_1')
@@ -77,9 +77,9 @@ class TestAddTag(XmlrpcAPIBaseTest):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testplans.add_testplantag')
 
-        rpc_client = TCMSXmlrpc(unauthorized_user.username,
-                                'api-testing',
-                                '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
+                                       'api-testing',
+                                       '%s/xml-rpc/' % self.live_server_url).server
 
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             rpc_client.TestPlan.add_tag(self.plans[0].pk, self.tag1.name)
@@ -96,8 +96,8 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
 
         self.product = ProductFactory()
         self.plans = [
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
-            TestPlanFactory(author=self.api_user, owner=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
+            TestPlanFactory(author=self.api_user, product=self.product),
         ]
 
         self.tag0 = TagFactory(name='xmlrpc_test_tag_0')
@@ -119,9 +119,9 @@ class TestRemoveTag(XmlrpcAPIBaseTest):
         unauthorized_user.user_permissions.add(*Permission.objects.all())
         remove_perm_from_user(unauthorized_user, 'testplans.delete_testplantag')
 
-        rpc_client = TCMSXmlrpc(unauthorized_user.username,
-                                'api-testing',
-                                '%s/xml-rpc/' % self.live_server_url).server
+        rpc_client = xmlrpc.TCMSXmlrpc(unauthorized_user.username,
+                                       'api-testing',
+                                       '%s/xml-rpc/' % self.live_server_url).server
 
         with self.assertRaisesRegex(ProtocolError, '403 Forbidden'):
             rpc_client.TestPlan.remove_tag(self.plans[0].pk, self.tag0.name)
@@ -171,27 +171,27 @@ class TestRemoveCase(XmlrpcAPIBaseTest):
         self.plan_1 = TestPlanFactory()
         self.plan_2 = TestPlanFactory()
 
-        self.testcase_1.add_to_plan(self.plan_1)
+        self.plan_1.add_case(self.testcase_1)
+        self.plan_1.add_case(self.testcase_2)
 
-        self.testcase_2.add_to_plan(self.plan_1)
-        self.testcase_2.add_to_plan(self.plan_2)
+        self.plan_2.add_case(self.testcase_2)
 
     def test_remove_case_with_single_plan(self):
         self.rpc_client.exec.TestPlan.remove_case(self.plan_1.pk, self.testcase_1.pk)
-        self.assertEqual(0, self.testcase_1.plan.count())
+        self.assertEqual(0, self.testcase_1.plan.count())  # pylint: disable=no-member
 
     def test_remove_case_with_two_plans(self):
-        self.assertEqual(2, self.testcase_2.plan.count())
+        self.assertEqual(2, self.testcase_2.plan.count())  # pylint: disable=no-member
 
         self.rpc_client.exec.TestPlan.remove_case(self.plan_1.pk, self.testcase_2.pk)
-        self.assertEqual(1, self.testcase_2.plan.count())
+        self.assertEqual(1, self.testcase_2.plan.count())  # pylint: disable=no-member
 
 
 class TestAddCase(XmlrpcAPIBaseTest):
     """ Test the XML-RPC method TestPlan.add_case() """
 
     def _fixture_setup(self):
-        super(TestAddCase, self)._fixture_setup()
+        super()._fixture_setup()
 
         self.testcase_1 = TestCaseFactory()
         self.testcase_2 = TestCaseFactory()
@@ -202,7 +202,7 @@ class TestAddCase(XmlrpcAPIBaseTest):
         self.plan_3 = TestPlanFactory()
 
         # case 1 is already linked to plan 1
-        self.testcase_1.add_to_plan(self.plan_1)
+        self.plan_1.add_case(self.testcase_1)
 
     def test_ignores_existing_mappings(self):
         plans = [self.plan_1.pk, self.plan_2.pk, self.plan_3.pk]

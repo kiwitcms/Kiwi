@@ -1,9 +1,0 @@
-<div class="nav">
-	<span class="head">{{ product }}</span>
-	<div class="tab_menu">
-		<div class="menu {% ifequal SUB_MODULE_NAME 'overview' %}selected{% endifequal %}"><div><a href="{% url "report-overview" product.id %}">Overview</a></div></div>
-		<div class="menu {% ifequal SUB_MODULE_NAME 'version' %}selected{% endifequal %}"><div><a href="{% url "report-overall-product-version" product.id %}">Versions</a></div></div>
-		<div class="menu {% ifequal SUB_MODULE_NAME 'build' %}selected{% endifequal %}"><div><a href="{% url "report-overall-product-build" product.id %}">Builds</a></div></div>
-		<div class="menu {% ifequal SUB_MODULE_NAME 'component' %}selected{% endifequal %}"><div><a href="{% url "report-overall-product-component" product.id %}">Components</a></div></div>
-	</div>
-</div>

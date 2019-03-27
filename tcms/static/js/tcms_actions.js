@@ -8,7 +8,6 @@ window.Nitrate = Nitrate;
 
 Nitrate.Utils = {};
 var short_string_length = 100;
-var nil;
 
 /*
     Utility function.
@@ -45,14 +44,6 @@ Nitrate.Utils.formSerialize = function(f) {
   return params;
 };
 
-jQ(window).bind('load', function(e) {
-  // Initial the drop menu
-  jQ('.nav_li').hover(
-    function() { jQ(this).children(':eq(1)').show(); },
-    function() { jQ(this).children(':eq(1)').hide(); }
-  );
-});
-
 var default_messages = {
   'alert': {
     'no_case_selected': 'No cases selected! Please select at least one case.',
@@ -62,12 +53,10 @@ var default_messages = {
     'last_case_run': 'It is the last case run',
     'invalid_bug_id': 'Please input a valid bug id!',
     'no_bugs_specified': 'Please specify bug ID',
-    'no_plan_specified': 'Please specify one plan at least.'
   },
   'confirm': {
     'change_case_status': 'Are you sure you want to change the status?',
     'change_case_priority': 'Are you sure you want to change the priority?',
-    'remove_case_component': 'Are you sure you want to delete these component(s)?\nYou cannot undo.',
     'remove_case_component': 'Are you sure you want to delete these component(s)?\nYou cannot undo.',
     'remove_comment': 'Are you sure to delete the comment?',
     'remove_tag': 'Are you sure you wish to delete the tag(s)'
@@ -99,24 +88,7 @@ var default_messages = {
       login: '/accounts/login/',
       logout: '/accounts/logout/',
 
-      change_user_group: '/management/account/$id/changegroup/',
-      change_user_status: '/management/account/$id/changestatus/',
-
-      modify_plan : '/plan/$id/modify/',
-      plan_assign_case: '/plan/$id/assigncase/apply/',
-
-      case_change_status: '/cases/changestatus/',
       case_details: '/case/$id/',
-      case_plan: '/case/$id/plan/',
-      case_run_bug: '/caserun/$id/bug/',
-      cases_automated: '/cases/automated/',
-      cases_category: '/cases/category/',
-      cases_component: '/cases/component/',
-      change_case_order: '/case/$id/changecaseorder/',
-      change_case_run_order: '/run/$id/changecaserunorder/',
-      change_case_run_status: '/run/$id/execute/changestatus/',
-      create_case: '/case/create/',
-      modify_case: '/case/$id/modify/',
       search_case: '/cases/',
     },
 
@@ -170,32 +142,6 @@ var json_success_refresh_page = function(t) {
 };
 
 
-function setCookie(name, value, expires, path, domain, secure) { 
-  var curCookie = name + "=" + escape(value) +
-    ((expires) ? "; expires=" + expires.toGMTString() : "") +
-    ((path) ? "; path=" + path : "") +
-    ((domain) ? "; domain=" + domain : "") +
-    ((secure) ? "; secure" : "");
-  document.cookie = curCookie;
-}
-
-function checkCookie() {
-  var exp = new Date();
-  exp.setTime(exp.getTime() + 1800000);
-  // first write a test cookie
-  setCookie("cookies", "cookies", exp, false, false, false);
-  if (document.cookie.indexOf('cookies') != -1) {
-    // now delete the test cookie
-    exp = new Date();
-    exp.setTime(exp.getTime() - 1800000);
-    setCookie("cookies", "cookies", exp, false, false, false);
-
-    return true;
-  } else {
-    return false;
-  }
-}
-
 function splitString(str, num) {
   cut_for_dot = num - 3;
 
@@ -206,243 +152,7 @@ function splitString(str, num) {
   return str;
 }
 
-/* 
-    Set up the <option> children of the given <select> element.
-    Preserving the existing selection (if any).
-
-    @element: a <select> element
-    @values: a list of (id, name) pairs
-    @allow_blank: boolean.  If true, prepend a "blank" option
-*/
-function set_up_choices(element, values, allow_blank) {
-  var innerHTML = "";
-  var selected_ids = [];
-
-  if (!element.multiple) {
-    // Process the single select box
-    selected_ids.push(parseInt(element.value));
-  } else {
-    // Process the select box with multiple attribute
-    for (var i = 0; (node = element.options[i]); i++) {
-      if (node.selected) {
-        selected_ids.push(node.value);
-      }
-    }
-  }
-
-  // Set up blank option, if there is one:
-  if (allow_blank) {
-    innerHTML += '<option value="">---------</option>';
-  }
-
-  // Add an <option> for each value:
-  values.forEach( function(item) {
-    var item_id = item[0];
-    var item_name = item[1];
-    var optionHTML = '<option value="' + item_id + '"';
-
-    var display_item_name = item_name;
-    var cut_for_short = false;
-    if (item_name.length > short_string_length) {
-      display_item_name = splitString(item_name, short_string_length);
-      var cut_for_short = true;
-    }
-
-    selected_ids.forEach(function(i) {
-      if (i === item_id) {
-        optionHTML += ' selected="selected"';
-      }
-    });
-
-    if (cut_for_short) {
-      optionHTML += ' title="' + item_name + '"';
-    }
-
-    optionHTML += '>' + display_item_name + '</option>';
-    innerHTML += optionHTML;
-  });
-
-  // Copy it up to the element in the DOM:
-  element.innerHTML = innerHTML;
-}
-
-function getVersionsByProductId(allow_blank, product_field, version_field) {
-  var product_field = jQ('#id_product')[0];
-
-  if (!version_field) {
-    if (jQ('#id_product_version').length) {
-      var version_field = jQ('#id_product_version')[0];
-    } else {
-      window.alert('Version field does not exist');
-      return false;
-    }
-  }
-
-  product_id = jQ(product_field).val();
-
-  if (product_id == "" && allow_blank) {
-    jQ(version_field).html('<option value="">---------</option>');
-      return true;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    set_up_choices(
-      version_field,
-      returnobj.map(function(o) {
-        return [o.pk, o.fields.value];
-      }),
-      allow_blank
-    );
-  };
-
-  getInfo({'info_type': 'versions', 'product_id': product_id},
-          success);
-}
-
-function getComponentsByProductId(allow_blank, product_field, component_field, callback, parameters) {
-  if (!parameters) {
-    var parameters = {};
-  }
-
-  parameters.info_type = 'components';
-
-  // Initial the product get from
-  if (!parameters || !parameters.product_id) {
-    if (!product_field) {
-      var product_field = jQ('#id_product')[0];
-    }
-    product_id = jQ(product_field).val();
-    parameters.product_id = product_id;
-  }
-
-  if (!component_field) {
-    if (jQ('#id_component').length) {
-      var component_field = jQ('#id_component')[0];
-    } else {
-      window.alert('Component field does not exist');
-      return false;
-    }
-  }
-
-  if (parameters.product_id === '') {
-    jQ(component_field).html('<option value="">---------</option>');
-    return true;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    set_up_choices(
-      component_field,
-      returnobj.map(function(o) {
-        return [o.pk, o.fields.name];
-      }),
-      allow_blank
-    );
-
-    if (typeof callback === 'function') {
-      callback.call();
-    }
-  };
-
-  getInfo(parameters, success);
-}
-
-function getCategorisByProductId(allow_blank, product_field, category_field) {
-  if (!product_field) {
-    var product_field = jQ('#id_product')[0];
-  }
-
-  product_id = jQ(product_field).val();
-
-  if (!category_field) {
-    if (jQ('#id_category').length) {
-      var category_field = jQ('#id_category')[0];
-    } else {
-      window.alert('Category field does not exist');
-      return false;
-    }
-  }
-
-  if (product_id === '') {
-    jQ(category_field).html('<option value="">---------</option>');
-    return true;
-  }
-
-  var success = function(t) {
-    returnobj = jQ.parseJSON(t.responseText);
-
-    set_up_choices(
-      category_field,
-      returnobj.map(function(o) {
-        return [o.pk, o.fields.name];
-      }),
-      allow_blank
-    );
-  };
-
-  getInfo({'info_type': 'categories', 'product_id': product_id},
-          success);
-}
-
-function checkProductField(product_field) {
-  if (product_field) {
-    return product_field;
-  }
-
-  if (jQ('#id_product').length) {
-    return jQ('#id_product')[0];
-  }
-
-  return false;
-}
-
-function bind_version_selector_to_product(allow_blank, load, product_field, version_field) {
-  var product_field = checkProductField(product_field);
-
-  if (product_field) {
-    jQ(product_field).bind('change', function() {
-      getVersionsByProductId(allow_blank, product_field, version_field);
-    });
-    if (load) {
-      getVersionsByProductId(allow_blank, product_field, version_field);
-    }
-  }
-}
-
-function bind_category_selector_to_product(allow_blank, load, product_field, category_field) {
-  var product_field = checkProductField(product_field);
-
-  if (product_field) {
-    jQ(product_field).bind('change', function() {
-      getCategorisByProductId(allow_blank, product_field, category_field);
-    });
-    if (load) {
-      getCategorisByProductId(allow_blank);
-    }
-  }
-}
-
-function bind_component_selector_to_product(allow_blank, load, product_field, component_field) {
-  var product_field = checkProductField(product_field);
-
-  if (product_field) {
-    jQ(product_field).bind('change', function() {
-      getComponentsByProductId(allow_blank, product_field, component_field);
-    });
-
-    if (load) {
-      getComponentsByProductId(allow_blank);
-    }
-  }
-}
-
-function myCustomURLConverter(url, node, on_save) {
-  return url;
-}
-
+// todo: remove this
 // Stolen from http://www.webdeveloper.com/forum/showthread.php?t=161317
 function fireEvent(obj,evt) {
   var fireOnThis = obj;
@@ -455,6 +165,7 @@ function fireEvent(obj,evt) {
   }
 }
 
+// todo: remove this
 // Stolen from http://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 function postToURL(path, params, method) {
   method = method || "post"; // Set method to post by default, if not specified.
@@ -661,22 +372,6 @@ function previewPlan(parameters, action, callback) {
   });
 }
 
-function getInfo(parameters, callback) {
-  jQ.ajax({
-    'url': '/management/getinfo/',
-    'type': 'GET',
-    'data': parameters,
-    'success': function (data, textStatus, jqXHR) {
-        callback(jqXHR);
-    },
-    'error': function (jqXHR, textStatus, errorThrown) {
-        window.alert("Get info " + parameters.info_type + " failed");
-        return false;
-    }
-  });
-}
-
-
 function getDialog(element) {
   if (!element) {
     var element = jQ('#dialog')[0];
@@ -684,11 +379,6 @@ function getDialog(element) {
 
   return element;
 }
-
-var showDialog = function(element) {
-  var dialog = getDialog(element);
-  return jQ(dialog).show()[0];
-};
 
 var clearDialog = function(element) {
   var dialog = getDialog(element);
@@ -760,30 +450,6 @@ var reloadWindow = function(t) {
 
   window.location.reload(true);
 };
-
-// Enhanced from showAddAnotherPopup in RelatedObjectLookups.js for Admin
-// todo: this duplicates existing functionality in admin/grappelli in the
-// above mentioned JS files. Needs to be refactored.
-function popupAddAnotherWindow(triggeringLink, parameters) {
-  var name = triggeringLink.id.replace(/^add_/, '');
-  name = id_to_windowname(name);
-  href = triggeringLink.href;
-  if (href.indexOf('?') === -1) {
-    href += '?_popup=1';
-  } else {
-    href += '&_popup=1';
-  }
-
-  // IMPOROMENT: Add parameters.
-  // FIXME: Add multiple parameters here
-  if (parameters) {
-    href += '&' + parameters + '=' + jQ('#id_' + parameters).val();
-  }
-
-  var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=no');
-  win.focus();
-  return false;
-}
 
 function printableCases(url, form, table) {
   var selection = serializeCaseFromInputList2(table);

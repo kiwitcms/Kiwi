@@ -1,51 +1,50 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, too-many-ancestors
 
 import unittest
 from http import HTTPStatus
 from urllib.parse import urlencode
 
-from django.contrib.auth.models import User
 from django.urls import reverse
-from django.conf import settings
 from django.forms import ValidationError
+from django.test import RequestFactory
+from django.utils.translation import override
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.testcases.fields import MultipleEmailField
 from tcms.management.models import Priority, Tag
-from tcms.testcases.models import TestCase
-from tcms.testcases.models import BugSystem
-from tcms.testcases.models import TestCaseComponent
-from tcms.testcases.models import TestCasePlan
-from tcms.testruns.models import TestCaseRunStatus
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import CategoryFactory
+from tcms.testcases.models import TestCase, TestCasePlan
+from tcms.testcases.views import get_selected_testcases
+from tcms.testruns.models import TestExecutionStatus
 from tcms.tests.factories import BugFactory
-from tcms.tests.factories import TestCaseComponentFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestPlanFactory
-from tcms.tests import BasePlanCase, BaseCaseRun
-from tcms.tests import remove_perm_from_user
+from tcms.tests import BasePlanCase, BaseCaseRun, remove_perm_from_user
 from tcms.tests import user_should_have_perm
 from tcms.utils.permissions import initiate_user_with_default_setups
+
+
+class TestGetTestCase(BaseCaseRun):
+    def test_test_case_is_shown(self):
+        url = reverse('testcases-get', args=[self.case_1.pk])
+        response = self.client.get(url)
+
+        # will not fail when running under different locale
+        self.assertEqual(HTTPStatus.OK, response.status_code)
 
 
 class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
     """Assert what a default user (non-admin) will see"""
 
-    @classmethod
-    def setUpTestData(cls):
-        super(TestGetCaseRunDetailsAsDefaultUser, cls).setUpTestData()
-
     def test_user_in_default_group_sees_comments(self):
         # test for https://github.com/kiwitcms/Kiwi/issues/74
         initiate_user_with_default_setups(self.tester)
 
-        url = reverse('caserun-detail-pane', args=[self.case_run_1.case_id])
+        url = reverse('caserun-detail-pane', args=[self.execution_1.case_id])
         response = self.client.get(
             url,
             {
-                'case_run_id': self.case_run_1.pk,
-                'case_text_version': self.case_run_1.case.latest_text_version()
+                'case_run_id': self.execution_1.pk,
+                'case_text_version': self.execution_1.case.history.latest().history_id,
             }
         )
 
@@ -57,27 +56,28 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
             'rows="10">\n</textarea>',
             html=True)
 
-        for status in TestCaseRunStatus.objects.all():
-            self.assertContains(
-                response,
-                "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" "
-                "title=\"%s\"" % (status.name.lower(), status.name),
-                html=False
-            )
+        with override('en'):
+            for status in TestExecutionStatus.objects.all():
+                self.assertContains(
+                    response,
+                    "<input type=\"submit\" class=\"btn btn_%s btn_status js-status-button\" "
+                    "title=\"%s\"" % (status.name.lower(), status.name),
+                    html=False
+                )
 
     def test_user_sees_bugs(self):
         bug_1 = BugFactory()
         bug_2 = BugFactory()
 
-        self.case_run_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
-        self.case_run_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)
+        self.execution_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
+        self.execution_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)
 
-        url = reverse('caserun-detail-pane', args=[self.case_run_1.case.pk])
+        url = reverse('caserun-detail-pane', args=[self.execution_1.case.pk])
         response = self.client.get(
             url,
             {
-                'case_run_id': self.case_run_1.pk,
-                'case_text_version': self.case_run_1.case.latest_text_version()
+                'case_run_id': self.execution_1.pk,
+                'case_text_version': self.execution_1.case.history.latest().history_id,
             }
         )
 
@@ -90,9 +90,8 @@ class TestMultipleEmailField(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestMultipleEmailField, cls).setUpClass()
-        cls.default_delimiter = ','
-        cls.field = MultipleEmailField(delimiter=cls.default_delimiter)
+        super().setUpClass()
+        cls.field = MultipleEmailField()
 
     def test_to_python(self):
         value = u'zhangsan@localhost'
@@ -133,329 +132,86 @@ class TestMultipleEmailField(unittest.TestCase):
         self.assertEqual(data, [])
 
 
-class TestOperateComponentView(BasePlanCase):
-    """Tests for operating components on cases"""
+class TestNewCase(BasePlanCase):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestOperateComponentView, cls).setUpTestData()
+        super().setUpTestData()
 
-        cls.comp_application = ComponentFactory(name='Application',
-                                                product=cls.product,
-                                                initial_owner=cls.tester,
-                                                initial_qa_contact=cls.tester)
-        cls.comp_database = ComponentFactory(name='Database',
-                                             product=cls.product,
-                                             initial_owner=cls.tester,
-                                             initial_qa_contact=cls.tester)
-        cls.comp_cli = ComponentFactory(name='CLI',
-                                        product=cls.product,
-                                        initial_owner=cls.tester,
-                                        initial_qa_contact=cls.tester)
-        cls.comp_api = ComponentFactory(name='API',
-                                        product=cls.product,
-                                        initial_owner=cls.tester,
-                                        initial_qa_contact=cls.tester)
+        cls.new_case_url = reverse('testcases-new')
 
-        TestCaseComponentFactory(case=cls.case_1, component=cls.comp_cli)
-        TestCaseComponentFactory(case=cls.case_1, component=cls.comp_api)
-
-        user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
-
-        cls.cases_component_url = reverse('testcases-component')
-
-    def tearDown(self):
-        remove_perm_from_user(self.tester, 'testcases.delete_testcasecomponent')
-
-    def test_show_components_form(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.cases_component_url,
-                                    {'product': self.product.pk})
-
-        self.assertContains(
-            response,
-            '<option value="{}" selected="selected">{}</option>'.format(
-                self.product.pk, self.product.name),
-            html=True)
-
-        for comp in (self.comp_application, self.comp_database, self.comp_cli, self.comp_api):
-            comp_option = '<option value="{}">{}</option>'.format(comp.pk, comp.name)
-            self.assertContains(response, comp_option, html=True)
-
-    def test_add_components(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        post_data = {
-            'product': self.product.pk,
-            'o_component': [self.comp_application.pk, self.comp_database.pk],
-            'case': [self.case_1.pk],
-            'a': 'add',
-            'from_plan': self.plan.pk,
+        cls.summary = 'summary'
+        cls.text = 'some text description'
+        cls.script = 'some script'
+        cls.arguments = 'args1, args2, args3'
+        cls.requirement = 'requirement'
+        cls.link = 'http://somelink.net'
+        cls.notes = 'notes'
+        cls.data = {
+            'summary': cls.summary,
+            'default_tester': cls.tester.pk,
+            'product': cls.case.category.product.pk,
+            'category': cls.case.category.pk,
+            'case_status': cls.case_status_confirmed.pk,
+            'priority': cls.case.priority.pk,
+            'text': cls.text,
+            'script': cls.script,
+            'arguments': cls.arguments,
+            'requirement': cls.requirement,
+            'extra_link': cls.link,
+            'notes': cls.notes
         }
-        response = self.client.post(self.cases_component_url, post_data)
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok', 'errors_list': []})
 
-        for comp in (self.comp_application, self.comp_database):
-            case_components = TestCaseComponent.objects.filter(
-                case=self.case_1, component=comp)
-            self.assertTrue(case_components.exists())
+        user_should_have_perm(cls.tester, 'testcases.add_testcase')
 
-    def test_missing_delete_perm(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
+    def test_create_test_case_successfully(self):
+        response = self.client.post(self.new_case_url, self.data)
 
-        post_data = {
-            'o_component': [self.comp_cli.pk, self.comp_api.pk],
-            'case': [self.case_1.pk],
-            'a': 'remove',
-        }
-        response = self.client.post(self.cases_component_url, post_data)
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 1, 'response': 'Permission denied - delete', 'errors_list': []})
+        test_case = TestCase.objects.get(summary=self.summary)
+        redirect_url = reverse('testcases-get', args=[test_case.pk])
 
-    def test_remove_components(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
+        self.assertRedirects(response, redirect_url)
+        self._assertTestCase(test_case)
 
-        user_should_have_perm(self.tester, 'testcases.delete_testcasecomponent')
+    def test_create_test_case_successfully_from_plan(self):
+        self.data['from_plan'] = self.plan.pk
 
-        post_data = {
-            'o_component': [self.comp_cli.pk, self.comp_api.pk],
-            'case': [self.case_1.pk],
-            'a': 'remove',
-        }
-        response = self.client.post(self.cases_component_url, post_data)
+        response = self.client.post(self.new_case_url, self.data)
 
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok', 'errors_list': []})
+        test_case = TestCase.objects.get(summary=self.summary)
+        redirect_url = "{0}?from_plan={1}".format(
+            reverse('testcases-get', args=[test_case.pk]), self.plan.pk
+        )
 
-        for comp in (self.comp_cli, self.comp_api):
-            case_components = TestCaseComponent.objects.filter(
-                case=self.case_1, component=comp)
-            self.assertFalse(case_components.exists())
+        self.assertRedirects(response, redirect_url)
+        self.assertEqual(test_case.plan.get(), self.plan)
+        self.assertEqual(TestCasePlan.objects.filter(case=test_case, plan=self.plan).count(), 1)
+        self._assertTestCase(test_case)
 
+    def test_create_test_case_without_permissions(self):
+        remove_perm_from_user(self.tester, 'testcases.add_testcase')
 
-class TestOperateCategoryView(BasePlanCase):
-    """Tests for operating category on cases"""
+        response = self.client.post(self.new_case_url, self.data)
+        redirect_url = "{0}?next={1}".format(
+            reverse('tcms-login'), reverse('testcases-new')
+        )
 
-    @classmethod
-    def setUpTestData(cls):
-        super(TestOperateCategoryView, cls).setUpTestData()
+        self.assertRedirects(response, redirect_url)
+        # assert test case has not been created
+        self.assertEqual(TestCase.objects.filter(summary=self.summary).count(), 0)
 
-        cls.case_cat_full_auto = CategoryFactory(name='Full Auto', product=cls.product)
-        cls.case_cat_full_manual = CategoryFactory(name='Full Manual', product=cls.product)
-
-        user_should_have_perm(cls.tester, 'testcases.add_testcasecomponent')
-
-        cls.case_category_url = reverse('testcases-category')
-
-    def test_show_categories_form(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        response = self.client.post(self.case_category_url, {'product': self.product.pk})
-
-        self.assertContains(
-            response,
-            '<option value="{}" selected="selected">{}</option>'.format(
-                self.product.pk, self.product.name),
-            html=True)
-
-        categories = ('<option value="{}">{}</option>'.format(category.pk, category.name)
-                      for category in self.product.category.all())
-        self.assertContains(
-            response,
-            """<select multiple="multiple" id="id_o_category" name="o_category">
-{}
-</select>""".format(''.join(categories)),
-            html=True)
-
-    def test_update_cases_category(self):
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.tester.username,
-            password='password')
-
-        post_data = {
-            'from_plan': self.plan.pk,
-            'product': self.product.pk,
-            'case': [self.case_1.pk, self.case_3.pk],
-            'a': 'update',
-            'o_category': self.case_cat_full_auto.pk,
-        }
-        response = self.client.post(self.case_category_url, post_data)
-
-        self.assertJSONEqual(
-            str(response.content, encoding=settings.DEFAULT_CHARSET),
-            {'rc': 0, 'response': 'ok', 'errors_list': []})
-
-        for pk in (self.case_1.pk, self.case_3.pk):
-            case = TestCase.objects.get(pk=pk)
-            self.assertEqual(self.case_cat_full_auto, case.category)
-
-
-class TestAddIssueToCase(BasePlanCase):
-    """Tests for adding issue to case"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestAddIssueToCase, cls).setUpTestData()
-
-        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='plantester',
-            email='plantester@example.com',
-            password='password')
-        user_should_have_perm(cls.plan_tester, 'testcases.change_bug')
-
-        cls.case_bug_url = reverse('testcases-bug', args=[cls.case_1.pk])
-        cls.issue_tracker = BugSystem.objects.get(name='Bugzilla')
-
-    def test_add_and_remove_a_bug(self):
-        user_should_have_perm(self.plan_tester, 'testcases.add_bug')
-        user_should_have_perm(self.plan_tester, 'testcases.delete_bug')
-
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        request_data = {
-            'handle': 'add',
-            'case': self.case_1.pk,
-            'bug_id': '123456',
-            'bug_system': self.issue_tracker.pk,
-        }
-        self.client.get(self.case_bug_url, request_data)
-        self.assertTrue(self.case_1.case_bug.filter(bug_id='123456').exists())
-
-        request_data = {
-            'handle': 'remove',
-            'case': self.case_1.pk,
-            'bug_id': '123456',
-        }
-        self.client.get(self.case_bug_url, request_data)
-
-        not_have_bug = self.case_1.case_bug.filter(bug_id='123456').exists()
-        self.assertTrue(not_have_bug)
-
-
-class TestOperateCasePlans(BasePlanCase):
-    """Test operation in case' plans tab"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestOperateCasePlans, cls).setUpTestData()
-
-        # Besides the plan and its cases created in parent class, this test case
-        # also needs other cases in order to list multiple plans of a case and
-        # remove a plan from a case.
-
-        cls.plan_test_case_plans = TestPlanFactory(author=cls.tester,
-                                                   owner=cls.tester,
-                                                   product=cls.product,
-                                                   product_version=cls.version)
-        cls.plan_test_add = TestPlanFactory(author=cls.tester,
-                                            owner=cls.tester,
-                                            product=cls.product,
-                                            product_version=cls.version)
-        cls.plan_test_remove = TestPlanFactory(author=cls.tester,
-                                               owner=cls.tester,
-                                               product=cls.product,
-                                               product_version=cls.version)
-
-        cls.case_1.add_to_plan(cls.plan_test_case_plans)
-        cls.case_1.add_to_plan(cls.plan_test_remove)
-
-        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='plantester',
-            email='plantester@example.com',
-            password='password')
-
-        cls.case_plans_url = reverse('testcases-plan', args=[cls.case_1.pk])
-
-    def tearDown(self):
-        remove_perm_from_user(self.plan_tester, 'testcases.add_testcaseplan')
-        remove_perm_from_user(self.plan_tester, 'testcases.change_testcaseplan')
-
-    def assert_list_case_plans(self, response, case):
-        for case_plan_rel in TestCasePlan.objects.filter(case=case):
-            plan = case_plan_rel.plan
-            self.assertContains(
-                response,
-                '<a href="{0}">TP-{1}: {2}</a>'.format(
-                    reverse('test_plan_url_short', args=[plan.pk]),
-                    plan.pk,
-                    plan.name),
-                html=True)
-
-    def test_list_plans(self):
-        response = self.client.get(self.case_plans_url)
-        self.assert_list_case_plans(response, self.case_1)
-
-    def test_missing_permission_to_add(self):
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'add', 'plan_id': self.plan_test_add.pk})
-        self.assertContains(response, 'Permission denied')
-
-    def test_missing_permission_to_remove(self):
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'remove', 'plan_id': self.plan_test_remove.pk})
-        self.assertContains(response, 'Permission denied')
-
-    def test_add_a_plan(self):
-        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'add', 'plan_id': self.plan_test_add.pk})
-
-        self.assert_list_case_plans(response, self.case_1)
-
-        self.assertTrue(TestCasePlan.objects.filter(
-            plan=self.plan_test_add, case=self.case_1).exists())
-
-    def test_remove_a_plan(self):
-        user_should_have_perm(self.plan_tester, 'testcases.change_testcaseplan')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        response = self.client.get(self.case_plans_url,
-                                   {'a': 'remove', 'plan_id': self.plan_test_remove.pk})
-
-        self.assert_list_case_plans(response, self.case_1)
-
-        not_linked_to_plan = not TestCasePlan.objects.filter(
-            case=self.case_1, plan=self.plan_test_remove).exists()
-        self.assertTrue(not_linked_to_plan)
-
-    def test_add_a_few_plans(self):
-        user_should_have_perm(self.plan_tester, 'testcases.add_testcaseplan')
-        self.client.login(  # nosec:B106:hardcoded_password_funcarg
-            username=self.plan_tester.username,
-            password='password')
-        # This time, add a few plans to another case
-        url = reverse('testcases-plan', args=[self.case_2.pk])
-
-        response = self.client.get(url,
-                                   {'a': 'add', 'plan_id': [self.plan_test_add.pk,
-                                                            self.plan_test_remove.pk]})
-
-        self.assert_list_case_plans(response, self.case_2)
-
-        self.assertTrue(TestCasePlan.objects.filter(
-            case=self.case_2, plan=self.plan_test_add).exists())
-        self.assertTrue(TestCasePlan.objects.filter(
-            case=self.case_2, plan=self.plan_test_remove).exists())
+    def _assertTestCase(self, test_case):
+        self.assertEqual(test_case.summary, self.summary)
+        self.assertEqual(test_case.category, self.case.category)
+        self.assertEqual(test_case.default_tester, self.tester)
+        self.assertEqual(test_case.case_status, self.case_status_confirmed)
+        self.assertEqual(test_case.priority, self.case.priority)
+        self.assertEqual(test_case.text, self.text)
+        self.assertEqual(test_case.script, self.script)
+        self.assertEqual(test_case.arguments, self.arguments)
+        self.assertEqual(test_case.requirement, self.requirement)
+        self.assertEqual(test_case.extra_link, self.link)
+        self.assertEqual(test_case.notes, self.notes)
 
 
 class TestEditCase(BasePlanCase):
@@ -493,13 +249,9 @@ class TestEditCase(BasePlanCase):
             'is_automated': '0',
             'requirement': '',
             'script': '',
-            'alias': '',
             'priority': cls.case_1.priority.pk,
             'tag': 'RHEL',
-            'setup': '',
-            'action': '',
-            'breakdown': '',
-            'effect': '',
+            'text': 'Given-When-Then',
             'cc_list': '',
         }
 
@@ -533,139 +285,14 @@ class TestEditCase(BasePlanCase):
         edited_case = TestCase.objects.get(pk=self.case_1.pk)
         self.assertEqual(new_summary, edited_case.summary)
 
-    def test_continue_edit_this_case_after_save(self):
-        edit_data = self.edit_data.copy()
-        edit_data['_continue'] = 'continue edit'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}?from_plan={1}'.format(
-            reverse('testcases-edit', args=[self.case_1.pk]),
-            self.plan.pk,
-        )
-        self.assertRedirects(response, redirect_url)
-
-    def test_continue_edit_next_confirmed_case_after_save(self):
-        edit_data = self.edit_data.copy()
-        edit_data['_continuenext'] = 'continue edit next case'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}?from_plan={1}'.format(
-            reverse('testcases-edit', args=[self.case_2.pk]),
-            self.plan.pk,
-        )
-        self.assertRedirects(response, redirect_url)
-
-    def test_continue_edit_next_non_confirmed_case_after_save(self):
-        edit_data = self.edit_data.copy()
-        edit_data['case_status'] = self.case_status_proposed.pk
-        edit_data['_continuenext'] = 'continue edit next case'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}?from_plan={1}'.format(
-            reverse('testcases-edit', args=[self.proposed_case.pk]),
-            self.plan.pk,
-        )
-        self.assertRedirects(response, redirect_url)
-
-    def test_return_to_plan_confirmed_cases_tab(self):
-        edit_data = self.edit_data.copy()
-        edit_data['_returntoplan'] = 'return to plan'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}#testcases'.format(
-            reverse('test_plan_url_short', args=[self.plan.pk])
-        )
-        self.assertRedirects(response, redirect_url, target_status_code=301)
-
-    def test_return_to_plan_review_cases_tab(self):
-        edit_data = self.edit_data.copy()
-        edit_data['case_status'] = self.case_status_proposed.pk
-        edit_data['_returntoplan'] = 'return to plan'
-
-        response = self.client.post(self.case_edit_url, edit_data)
-
-        redirect_url = '{0}#reviewcases'.format(
-            reverse('test_plan_url_short', args=[self.plan.pk])
-        )
-        self.assertRedirects(response, redirect_url, target_status_code=301)
-
-
-class TestChangeCasesAutomated(BasePlanCase):
-    """Test automated view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestChangeCasesAutomated, cls).setUpTestData()
-
-        cls.change_data = {
-            'case': [cls.case_1.pk, cls.case_2.pk],
-            'a': 'change',
-            # Add necessary automated value here:
-            # o_is_automated
-            # o_is_manual
-            # o_is_automated_proposed
-        }
-
-        user_should_have_perm(cls.tester, 'testcases.change_testcase')
-        cls.change_url = reverse('testcases-automated')
-
-    def test_update_automated(self):
-        change_data = self.change_data.copy()
-        change_data['o_is_automated'] = 'on'
-
-        response = self.client.post(self.change_url, change_data)
-
-        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
-
-        for pk in self.change_data['case']:
-            case = TestCase.objects.get(pk=pk)
-            self.assertEqual(1, case.is_automated)
-
-    def test_update_manual(self):
-        change_data = self.change_data.copy()
-        change_data['o_is_manual'] = 'on'
-
-        response = self.client.post(self.change_url, change_data)
-
-        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
-
-        for pk in self.change_data['case']:
-            case = TestCase.objects.get(pk=pk)
-            self.assertEqual(0, case.is_automated)
-
-    def test_update_automated_proposed(self):
-        change_data = self.change_data.copy()
-        change_data['o_is_automated_proposed'] = 'on'
-
-        response = self.client.post(self.change_url, change_data)
-
-        self.assertJsonResponse(response, {'rc': 0, 'response': 'ok'})
-
-        for pk in self.change_data['case']:
-            case = TestCase.objects.get(pk=pk)
-            self.assertTrue(case.is_automated_proposed)
-
 
 class TestPrintablePage(BasePlanCase):
     """Test printable page view method"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestPrintablePage, cls).setUpTestData()
+        super().setUpTestData()
         cls.printable_url = reverse('testcases-printable')
-
-        cls.case_1.add_text(action='action',
-                            effect='effect',
-                            setup='setup',
-                            breakdown='breakdown')
-        cls.case_2.add_text(action='action',
-                            effect='effect',
-                            setup='setup',
-                            breakdown='breakdown')
 
     def test_printable_page(self):
         # printing only 1 of the cases
@@ -704,7 +331,7 @@ class TestCloneCase(BasePlanCase):
         # Refuse to clone cases if missing selectAll and case arguments
         response = self.client.get(self.clone_url, {}, follow=True)
 
-        self.assertContains(response, 'At least one TestCase is required')
+        self.assertContains(response, _('At least one TestCase is required'))
 
     def test_show_clone_page_with_from_plan(self):
         response = self.client.get(self.clone_url,
@@ -714,9 +341,9 @@ class TestCloneCase(BasePlanCase):
         self.assertContains(
             response,
             """<div>
-    <input type="radio" id="id_use_sameplan" name="selectplan" value="{0}">
-    <label for="id_use_sameplan" class="strong">Use the same Plan -- {0} : {1}</label>
-</div>""".format(self.plan.pk, self.plan.name),
+    <input type="radio" id="id_use_sameplan" name="selectplan" value="%s">
+    <label for="id_use_sameplan" class="strong">%s -- %s : %s</label>
+</div>""" % (self.plan.pk, _('Use the same Plan'), self.plan.pk, self.plan.name),
             html=True)
 
         for loop_counter, case in enumerate([self.case_1, self.case_2]):
@@ -768,7 +395,7 @@ class TestGetCasesFromPlan(BasePlanCase):
 
     def test_casetags_are_shown_in_template(self):
         # pylint: disable=tag-objects-get_or_create
-        tag, _ = Tag.objects.get_or_create(name='Linux')
+        tag, _created = Tag.objects.get_or_create(name='Linux')
         self.case.add_tag(tag)
 
         url = reverse('testcases-all')
@@ -781,7 +408,7 @@ class TestGetCasesFromPlan(BasePlanCase):
                                     content_type='application/x-www-form-urlencoded; charset=UTF-8',
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response, 'Tags:')
+        self.assertContains(response, _('Tags'))
         self.assertContains(response, '<a href="#testcases">Linux</a>')
 
     def test_disabled_priority_now_shown(self):
@@ -799,5 +426,39 @@ class TestGetCasesFromPlan(BasePlanCase):
                                     content_type='application/x-www-form-urlencoded; charset=UTF-8',
                                     HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(HTTPStatus.OK, response.status_code)
-        self.assertContains(response,    'Set P3')
+        self.assertContains(response, 'Set P3')
         self.assertNotContains(response, 'Set P4')
+
+
+class TestGetSelectedTestcases(BasePlanCase):
+    def test_get_selected_testcases_works_with_both_string_and_int_pks(self):
+        """
+        Assures that tcms.testcases.views.get_selected_testcases
+        returns the same results, regardless of whether the
+        passed request contains the case pks as strings or
+        integers, as long as they are the same in both occasions.
+        """
+
+        case_int_pks = [self.case.pk, self.case_1.pk, self.case_2.pk, self.case_3.pk]
+        case_str_pks = []
+
+        for _pk in case_int_pks:
+            case_str_pks.append(str(_pk))
+
+        int_pk_query = get_selected_testcases(
+            RequestFactory().post(
+                reverse('testcases-clone'),
+                {'case': case_int_pks}
+            )
+        )
+
+        str_pk_query = get_selected_testcases(
+            RequestFactory().post(
+                reverse('testcases-clone'),
+                {'case': case_str_pks}
+            )
+        )
+
+        for case in TestCase.objects.filter(pk__in=case_int_pks):
+            self.assertTrue(case in int_pk_query)
+            self.assertTrue(case in str_pk_query)

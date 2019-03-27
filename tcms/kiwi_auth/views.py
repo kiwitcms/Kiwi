@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render
 from django.contrib.auth import views
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
@@ -17,6 +17,9 @@ from django.views.decorators.http import require_http_methods
 from tcms.signals import USER_REGISTERED_SIGNAL
 from tcms.kiwi_auth.forms import RegistrationForm
 from tcms.kiwi_auth.models import UserActivationKey
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 class LoginViewWithCustomTemplate(views.LoginView):
@@ -52,18 +55,28 @@ def register(request):
                     messages.WARNING,
                     _('Your account has been created, but you need an administrator to activate it')
                 )
-                if settings.ADMINS:
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    _('Following is the administrator list')
+                )
+
+                # super-users can approve others
+                for user in User.objects.filter(is_superuser=True):
                     messages.add_message(
                         request,
                         messages.INFO,
-                        _('Following is the administrator list')
+                        '<a href="mailto:{}">{}</a>'.format(user.email,
+                                                            user.get_full_name() or user.username)
                     )
-                    for name, email in settings.ADMINS:
-                        messages.add_message(
-                            request,
-                            messages.INFO,
-                            '<a href="mailto:{}">{}</a>'.format(email, name)
-                        )
+
+                # site admins should be able to do so too
+                for name, email in settings.ADMINS:
+                    messages.add_message(
+                        request,
+                        messages.WARNING,
+                        '<a href="mailto:{}">{}</a>'.format(email, name)
+                    )
 
             return HttpResponseRedirect(reverse('core-views-index'))
     else:

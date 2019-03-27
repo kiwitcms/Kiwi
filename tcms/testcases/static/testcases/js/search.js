@@ -1,3 +1,14 @@
+function pre_process_data(data) {
+    var component_cache = {};
+    var tags_cache = {};
+
+    data.forEach(function(element) {
+        addResourceToData(element, 'component', 'Component.filter', component_cache);
+        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
+    });
+}
+
+
 $(document).ready(function() {
     var table = $("#resultsTable").DataTable({
         ajax: function(data, callback, settings) {
@@ -5,6 +16,14 @@ $(document).ready(function() {
 
             if ($('#id_summary').val()) {
                 params['summary__icontains'] = $('#id_summary').val();
+            }
+
+            if ($('#id_before').val()) {
+                params['create_date__lte'] = $('#id_before').data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+            }
+
+            if ($('#id_after').val()) {
+                params['create_date__gte'] = $('#id_after').data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
             }
 
             if ($('#id_product').val()) {
@@ -31,6 +50,14 @@ $(document).ready(function() {
                 params['author__username__startswith'] = $('#id_author').val();
             };
 
+            if ($('input[name=is_automated]:checked').val() === 'true') {
+                params['is_automated'] = true;
+            };
+
+            if ($('input[name=is_automated]:checked').val() === 'false') {
+                params['is_automated'] = false;
+            };
+
             updateParamsToSearchTags('#id_tag', params);
 
             var bug_list = splitByComma($('#id_bugs').val());
@@ -38,11 +65,7 @@ $(document).ready(function() {
                 params['case_bug__bug_id__in'] = bug_list;
             };
 
-            if ($('#id_autoproposed').is(':checked')) {
-                params['is_automated_proposed'] = $('#id_autoproposed').is(':checked');
-            }
-
-            dataTableJsonRPC('TestCase.filter', params, callback);
+            dataTableJsonRPC('TestCase.filter', params, callback, pre_process_data);
         },
         columns: [
             { data: "case_id" },
@@ -52,16 +75,25 @@ $(document).ready(function() {
                     return '<a href="/case/'+ data.case_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
                 }
             },
-            { data: "author" },
-            { data: "default_tester" },
-            { data: "is_automated" },
-            { data: "case_status"},
-            { data: "category"},
-            { data: "priority" },
             { data: "create_date"},
+            { data: "category"},
+            {
+                data: "component",
+                render: renderFromCache,
+            },
+            { data: "priority" },
+            { data: "case_status"},
+            { data: "is_automated" },
+            { data: "author" },
+            {
+                data: "tag",
+                render: renderFromCache,
+            },
         ],
         dom: "t",
         language: {
+            loadingRecords: '<div class="spinner spinner-lg"></div>',
+            processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: "No records found"
         },
         order: [[ 0, 'asc' ]],
@@ -91,8 +123,6 @@ $(document).ready(function() {
             updateComponent([]);
         }
     });
-
-    $('.bootstrap-switch').bootstrapSwitch();
 
     $('.selectpicker').selectpicker();
 });

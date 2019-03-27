@@ -27,11 +27,10 @@ from tcms.testcases.models import TestCase, TestCasePlan
 from tcms.testcases.views import get_selected_testcases
 from tcms.testcases.views import printable as testcases_printable
 from tcms.testplans.forms import ClonePlanForm
-from tcms.testplans.forms import EditPlanForm
 from tcms.testplans.forms import NewPlanForm
 from tcms.testplans.forms import SearchPlanForm
 from tcms.testplans.models import TestPlan, PlanType
-from tcms.testruns.models import TestRun, TestCaseRun
+from tcms.testruns.models import TestRun
 
 
 def update_plan_email_settings(test_plan, form):
@@ -40,7 +39,6 @@ def update_plan_email_settings(test_plan, form):
         'notify_on_plan_update']
     test_plan.emailing.notify_on_case_update = form.cleaned_data[
         'notify_on_case_update']
-    test_plan.emailing.auto_to_plan_owner = form.cleaned_data['auto_to_plan_owner']
     test_plan.emailing.auto_to_plan_author = form.cleaned_data['auto_to_plan_author']
     test_plan.emailing.auto_to_case_owner = form.cleaned_data['auto_to_case_owner']
     test_plan.emailing.auto_to_case_default_tester = form.cleaned_data[
@@ -51,15 +49,20 @@ def update_plan_email_settings(test_plan, form):
 # _____________________________________________________________________________
 # view functons
 
+@method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
+class NewTestPlanView(View):
+    template_name = 'testplans/mutable.html'
 
-@require_http_methods(['GET', 'POST'])
-@permission_required('testplans.add_testplan')
-def new(request, template_name='plan/new.html'):
-    """New testplan"""
+    def get(self, request):
+        form = NewPlanForm()
 
-    # If the form has been submitted...
-    if request.method == 'POST':
-        # A form bound to the POST data
+        context_data = {
+            'form': form
+        }
+
+        return render(request, self.template_name, context_data)
+
+    def post(self, request):
         form = NewPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
@@ -67,7 +70,6 @@ def new(request, template_name='plan/new.html'):
             test_plan = TestPlan.objects.create(
                 product=form.cleaned_data['product'],
                 author=request.user,
-                owner=request.user,
                 product_version=form.cleaned_data['product_version'],
                 type=form.cleaned_data['type'],
                 name=form.cleaned_data['name'],
@@ -75,26 +77,25 @@ def new(request, template_name='plan/new.html'):
                 extra_link=form.cleaned_data['extra_link'],
                 parent=form.cleaned_data['parent'],
                 text=form.cleaned_data['text'],
+                is_active=form.cleaned_data['is_active'],
             )
 
-            # create emailing settings to avoid Issue #181 on MySQL
-            test_plan.emailing.save()
+            update_plan_email_settings(test_plan, form)
 
             return HttpResponseRedirect(
                 reverse('test_plan_url_short', args=[test_plan.plan_id, ])
             )
-    else:
-        form = NewPlanForm()
 
-    context_data = {
-        'form': form,
-    }
-    return render(request, template_name, context_data)
+        context_data = {
+            'form': form,
+        }
+        return render(request, self.template_name, context_data)
 
 
 @require_GET
 def get_all(request):
     """Display all testplans"""
+    # todo: this function can be replaced with the existing JSON-RPC search
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
     # If it's not a search the page will be blank
@@ -277,73 +278,8 @@ def get(request, plan_id, slug=None, template_name='plan/get.html'):
 
 
 @require_http_methods(['GET', 'POST'])
-@permission_required('testruns.change_testrun')
-def choose_run(request, plan_id):
-    """Choose one run to add cases"""
-
-    if request.method == 'GET':
-        return _write_cases_to_test_plan(request, plan_id)
-    return _add_cases_to_runs(request, plan_id)
-
-
-def _write_cases_to_test_plan(request, plan_id):
-    try:
-        test_plan = TestPlan.objects.get(pk=int(plan_id))
-    except ObjectDoesNotExist:
-        raise Http404
-
-    test_runs = TestRun.objects.filter(plan=plan_id).values('pk',
-                                                            'summary',
-                                                            'build__name',
-                                                            'manager__username')
-
-    # Ready to write cases to test plan
-    test_cases = get_selected_testcases(request).values('pk', 'summary',
-                                                        'author__username',
-                                                        'create_date',
-                                                        'category__name',
-                                                        'priority__value', )
-
-    context_data = {
-        'plan_id': plan_id,
-        'plan': test_plan,
-        'test_runs': test_runs.iterator(),
-        'test_cases': test_cases.iterator(),
-    }
-    return render(request, 'plan/choose_testrun.html', context_data)
-
-
-def _add_cases_to_runs(request, plan_id):
-    chosen_test_run_ids = request.POST.getlist('testrun_ids')
-    to_be_added_cases = TestCase.objects.filter(pk__in=request.POST.getlist('case_ids'))
-
-    # Adding cases to runs by recursion
-    cases_selected = 0
-    for test_run_id in chosen_test_run_ids:
-        test_run = get_object_or_404(TestRun, run_id=test_run_id)
-        cases = TestCaseRun.objects.filter(run=test_run_id)
-        existing_cases = cases.values_list('case', flat=True)
-
-        for test_case in to_be_added_cases:
-            # counter used as a flag that runs or cases were selected
-            # in the form, regardless of whether or not they were actually added
-            # used to produce an error message if user clicked the Update button
-            # without selecting anything on the screen
-            cases_selected += 1
-            if test_case.case_id not in existing_cases:
-                test_run.add_case_run(case=test_case)
-
-    if not cases_selected:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Select at least one TestRun and one TestCase'))
-
-    return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
-
-
-@require_http_methods(['GET', 'POST'])
 @permission_required('testplans.change_testplan')
-def edit(request, plan_id, template_name='plan/edit.html'):
+def edit(request, plan_id):
     """Edit test plan view"""
 
     try:
@@ -353,34 +289,27 @@ def edit(request, plan_id, template_name='plan/edit.html'):
 
     # If the form is submitted
     if request.method == "POST":
-        form = EditPlanForm(request.POST)
+        form = NewPlanForm(request.POST)
         form.populate(product_id=request.POST.get('product'))
 
         # FIXME: Error handle
         if form.is_valid():
-            if request.user.has_perm('testplans.change_testplan'):
-                test_plan.name = form.cleaned_data['name']
-                test_plan.parent = form.cleaned_data['parent']
-                test_plan.product = form.cleaned_data['product']
-                test_plan.product_version = form.cleaned_data['product_version']
-                test_plan.type = form.cleaned_data['type']
-                test_plan.is_active = form.cleaned_data['is_active']
-                test_plan.extra_link = form.cleaned_data['extra_link']
-                test_plan.owner = form.cleaned_data['owner']
-                # IMPORTANT! tp.current_user is an instance attribute,
-                # added so that in post_save, current logged-in user info
-                # can be accessed.
-                # Instance attribute is usually not a desirable solution.
-                test_plan.current_user = request.user
-                test_plan.text = form.cleaned_data['text']
-                test_plan.save()
+            test_plan.name = form.cleaned_data['name']
+            test_plan.parent = form.cleaned_data['parent']
+            test_plan.product = form.cleaned_data['product']
+            test_plan.product_version = form.cleaned_data['product_version']
+            test_plan.type = form.cleaned_data['type']
+            test_plan.is_active = form.cleaned_data['is_active']
+            test_plan.extra_link = form.cleaned_data['extra_link']
+            test_plan.text = form.cleaned_data['text']
+            test_plan.save()
 
             # Update plan email settings
             update_plan_email_settings(test_plan, form)
             return HttpResponseRedirect(
                 reverse('test_plan_url', args=[plan_id, slugify(test_plan.name)]))
     else:
-        form = EditPlanForm(initial={
+        form = NewPlanForm(initial={
             'name': test_plan.name,
             'product': test_plan.product_id,
             'product_version': test_plan.product_version_id,
@@ -389,8 +318,6 @@ def edit(request, plan_id, template_name='plan/edit.html'):
             'parent': test_plan.parent_id,
             'is_active': test_plan.is_active,
             'extra_link': test_plan.extra_link,
-            'owner': test_plan.owner,
-            'auto_to_plan_owner': test_plan.emailing.auto_to_plan_owner,
             'auto_to_plan_author': test_plan.emailing.auto_to_plan_author,
             'auto_to_case_owner': test_plan.emailing.auto_to_case_owner,
             'auto_to_case_default_tester': test_plan.emailing.auto_to_case_default_tester,
@@ -403,7 +330,7 @@ def edit(request, plan_id, template_name='plan/edit.html'):
         'test_plan': test_plan,
         'form': form,
     }
-    return render(request, template_name, context_data)
+    return render(request, 'testplans/mutable.html', context_data)
 
 
 @require_POST

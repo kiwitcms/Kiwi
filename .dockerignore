@@ -2,6 +2,5 @@
 *.ini
 *.pyc
 docs/
-dist/
 *.egg-info/
 setup.*

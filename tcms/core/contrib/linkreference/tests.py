@@ -6,10 +6,11 @@ from http import HTTPStatus
 from django import test
 from django.urls import reverse
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _, ngettext_lazy
 
 from tcms.tests import user_should_have_perm
 from tcms.tests.factories import UserFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 
 
 class TestAddView(test.TestCase):
@@ -19,12 +20,12 @@ class TestAddView(test.TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.url = reverse('linkref-add')
-        cls.testcaserun = TestCaseRunFactory()
+        cls.test_execution = TestExecutionFactory()
 
         cls.tester = UserFactory()
         cls.tester.set_password('password')
         cls.tester.save()
-        user_should_have_perm(cls.tester, 'testruns.change_testcaserun')
+        user_should_have_perm(cls.tester, 'testruns.change_testexecution')
 
         cls.tester_without_perms = UserFactory()
         cls.tester_without_perms.set_password('password')
@@ -37,7 +38,7 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertRedirects(response, reverse('tcms-login')+'?next=/linkref/add/')
 
@@ -46,7 +47,7 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertRedirects(response, reverse('tcms-login')+'?next=/linkref/add/')
 
@@ -57,7 +58,7 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Just a reference to a log file online',
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertEqual(HTTPStatus.OK, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
@@ -74,27 +75,30 @@ class TestAddView(test.TestCase):
         response = self.client.post(self.url, {
             'name': 'Log reference with invalid URL',
             'url': 'example dot com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertEqual(HTTPStatus.BAD_REQUEST, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(result['rc'], 1)
-        self.assertIn('Enter a valid URL', result['response'])
+        self.assertIn(str(_('Enter a valid URL.')), result['response'])
 
     def test_with_name_longer_than_64_chars(self):  # pylint: disable=invalid-name
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.tester.username,
             password='password')
         response = self.client.post(self.url, {
-            'name': "Open source test case management system, with a lot of great features,"
-                    "such as bug tracker integration, fast search, powerful access control"
-                    "and external API.",
+            'name': "abcdefghij-abcdefghij-abcdefghij-"
+                    "abcdefghij-abcdefghij-abcdefghij-",
             'url': 'http://example.com',
-            'target_id': self.testcaserun.pk,
+            'target_id': self.test_execution.pk,
         })
         self.assertEqual(HTTPStatus.BAD_REQUEST, response.status_code)
         result = json.loads(str(response.content, encoding=settings.DEFAULT_CHARSET))
 
         self.assertEqual(result['rc'], 1)
-        self.assertIn('Ensure this value has at most 64 characters', result['response'])
+        message = ngettext_lazy(
+            'Ensure this value has at most %(limit_value)d character (it has %(show_value)d).',
+            'Ensure this value has at most %(limit_value)d characters (it has %(show_value)d).',
+            'limit_value') % {'limit_value': 64, 'show_value': 66}
+        self.assertIn(message, result['response'])

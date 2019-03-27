@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load comments %}
+{% load extra_filters %}
+{% load attachments_tags %}
+
+{% block title %}TC-{{ test_case.pk }}: {{ test_case.summary }}{% endblock %}
+{% block body_class %}cards-pf{% endblock %}
+
+{% block contents %}
+<div class="container-cards-pf">
+    <!-- Important:  if you need to nest additional .row within a .row.row-cards-pf, do *not* use .row-cards-pf on the nested .row  -->
+    <h1 class="col-md-12" style="margin-top: 0">
+        <span id="test_case_pk"
+            data-pk="{{ test_case.pk }}"
+            data-perm-remove-tag="{{ perms.testcases.delete_testcasetag }}"
+            data-perm-remove-component="{{ perms.testcases.delete_testcasecomponent }}"
+            data-perm-remove-plan="{{ perms.testcases.delete_testcaseplan }}"
+            data-perm-remove-bug="{{ perms.testcases.delete_bug }}"
+        >TC-{{ test_case.pk }}:</span> {{ test_case.summary }}
+    </h1>
+
+<div class="row row-cards-pf">
+    <div class="col-xs-12 col-sm-12 col-md-9">
+        <div class="card-pf card-pf-accented">
+            <div class="card-pf-body">
+                <div class="markdown-text">
+                    {{ test_case.text|markdown2html }}
+                </div>
+
+                <p>
+                    <strong>{% trans 'Notes' %}:</strong>
+                    {{ test_case.notes }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status">
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa pficon-user"></span>{% trans 'Author' %}:
+                <a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author.username }}</a>
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-search"></span>{% trans 'Default tester' %}:
+                {% if test_case.default_tester  %}
+                <a href="{% url "tcms-profile" test_case.default_tester.username %}">{{ test_case.default_tester.username }}</a>
+                {% else %}
+                -
+                {% endif %}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span id="product_pk"
+                    data-pk="{{ test_case.category.product.pk }}"
+                    class="fa fa-shopping-cart"></span>{% trans 'Product' %}:
+                {{ test_case.category.product }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-tag"></span>{% trans 'Category' %}:
+                {{ test_case.category }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa
+                    {% if test_case.case_status.is_confirmed %}
+                        fa-check-square
+                    {% else %}
+                        fa-times
+                    {% endif %}"></span>{% trans 'Status' %}:
+                {{ test_case.case_status }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-hourglass"></span>{% trans 'Priority' %}:
+                {{ test_case.priority }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-calendar"></span>{{ test_case.create_date }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa
+                    {% if test_case.is_automated %}
+                        fa-cog
+                    {% else %}
+                        fa-thumbs-up
+                    {% endif %}"></span>{% trans 'Automated' %}:
+                {{ test_case.is_automated }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-terminal"></span>{% trans 'Script' %}:
+                {{ test_case.script|default:'-' }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-terminal"></span>{% trans 'Arguments' %}:
+                {{ test_case.arguments|default:'-' }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-file-text"></span>{% trans 'Requirements' %}:
+                {{ test_case.requirement|default:'-' }}
+            </h2>
+
+            <h2 class="card-pf-title" style="text-align: left">
+                <span class="fa fa-link"></span>{% trans 'Reference link' %}:
+                {% if test_case.extra_link %}
+                    <a href="{{ test_case.extra_link }}">{{ test_case.extra_link }}</a>
+                {% else %}
+                    -
+                {% endif %}
+            </h2>
+
+            <div class="card-pf-body"></div>
+        </div>
+    </div>
+</div>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-forward"></span>
+                    {% trans 'Executions' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <div class="list-group tree-list-view-pf">
+                {% for execution in test_case_runs %}
+                    {% ifchanged execution.run.plan.pk %}
+                        {% if not forloop.first %}
+                        </div> <!-- /plan -->
+                        {% endif %}
+
+                        <div class="list-group-item" id="execution-for-plan-{{ execution.run.plan.pk }}">
+                            <div class="list-group-item-header">
+                                <div class="list-view-pf-main-info">
+                                    <div class="list-view-pf-left">
+                                        <span class="fa fa-angle-right"></span>
+                                    </div>
+
+                                    <div class="list-view-pf-body">
+                                        <div class="list-view-pf-description">
+                                            <div class="list-group-item-text">
+                                                <a href="{% url 'test_plan_url_short' execution.run.plan.pk %}">TP-{{ execution.run.plan.pk }}: {{ execution.run.plan.name }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- /main info -->
+                            </div> <!-- /header -->
+                    {% endifchanged %}
+                            <!-- start caseruns -->
+                            <div class="list-group-item-container container-fluid">
+                            {% get_comment_list for execution as case_run_comments %}
+                            {% with bugs=execution.get_bugs %}
+                                <div class="list-group-item">
+                                    <div class="list-group-item-header">
+                                        <div class="list-view-pf-main-info">
+                                            <div class="list-view-pf-left">
+                                                <span class="fa {% if case_run_comments or bugs %}fa-angle-right{% else %}fa-exclamation{% endif %}"></span>
+                                            </div>
+
+                                            <div class="list-view-pf-body">
+                                                <div class="list-view-pf-description">
+                                                    <div class="list-group-item-heading">
+                                                        CR-{{ execution.pk }}
+                                                    </div>
+                                                    <div class="list-group-item-text">
+                                                        <a href="{% url 'testruns-get' execution.run.pk %}">TR-{{ execution.run.pk }}: {{ execution.run.summary }}</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="list-view-pf-additional-info">
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="{{ execution.status.icon }}"></span>
+                                                        <strong>{{ execution.status.name }}</strong>
+                                                    </div>
+                                                    {% if bugs %}
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-bug"></span>
+                                                        <strong>{{ bugs|length }}</strong>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if case_run_comments %}
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-comments"></span>
+                                                        <strong>{{ case_run_comments|length }}</strong>
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="pficon pficon-user"></span>
+                                                        <a href="#">{{ execution.tested_by }}</a>
+                                                    </div>
+                                                    <div class="list-view-pf-additional-info-item">
+                                                        <span class="fa fa-calendar-o"></span>
+                                                        {{ execution.close_date }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- / caserun header -->
+                                {% for bug in bugs %}
+                                    <div class="list-group-item-container container-fluid">
+                                        <div class="list-group-item">
+                                            <div class="list-group-item-header">
+                                                <div class="list-view-pf-main-info">
+                                                    <div class="list-view-pf-left">
+                                                        <span class="fa fa-bug"></span>
+                                                    </div>
+                                                    <div class="list-view-pf-body">
+                                                        <div class="list-view-pf-description">
+                                                            <div class="list-group-item-heading">
+                                                                <a href="{{ bug.get_full_url }}">{{ bug.bug_id }}</a>
+                                                            </div>
+                                                            <div class="list-group-item-text">
+                                                                <a href="{{ bug.get_full_url }}">{{ bug.get_full_url }}</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="list-view-pf-additional-info">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- /bug -->
+                                {% endfor %}
+
+                                {% for comment in case_run_comments %}
+                                    <!-- comments -->
+                                    <div class="list-group-item-container container-fluid">
+                                        <div class="list-group-item">
+                                            <div class="list-group-item-header">
+                                                <div class="list-view-pf-main-info">
+                                                    <div class="list-view-pf-left">
+                                                        <span class="fa fa-comment"></span>
+                                                    </div>
+
+                                                    <div class="list-view-pf-body">
+                                                        <div class="list-view-pf-description">
+                                                            <div class="list-group-item-heading">
+                                                                #{{ forloop.counter }}
+                                                            </div>
+                                                            <div class="list-group-item-text">
+                                                                {{ comment.comment }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="list-view-pf-additional-info">
+                                                            <div class="list-view-pf-additional-info-item">
+                                                                <span class="fa fa-calendar-o"></span>
+                                                                {{ comment.submit_date }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- /header -->
+                                        </div>
+                                    </div> <!-- /comment -->
+                                {% endfor %}
+                                </div>
+                            {% endwith %}
+                            </div> <!-- /caseruns -->
+                        {% if forloop.last %}
+                        </div> <!-- /plan -->
+                        {% endif %}
+                {% endfor %}
+                    </div>
+                </div> <!-- /card -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-bug"></span>
+                    {% trans 'Bugs' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="bugs">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Bug URL' %}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-9">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa pficon-topology"></span>
+                    {% trans 'Test plans' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="plans">
+                        <thead>
+                            <tr>
+                                <th>{% trans "ID" %}</th>
+                                <th>{% trans 'Name' %}</th>
+                                <th>{% trans 'Author' %}</th>
+                                <th>{% trans 'Type' %}</th>
+                                <th>{% trans 'Product' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row row-cards-pf">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-tags"></span>
+                    {% trans 'Tags' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="tags">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Name' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        {% if perms.testcases.add_testcasetag %}
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <div class="input-group input-group-sm mb-3">
+                                        <input type="text" class="form-control typeahead" id="id_tags">
+                                    </div>
+                                </th>
+                                <th>
+                                    <a href="#tags" id="add-tag" title="{% trans 'Add' %}">
+                                        <span class="fa fa-plus"></span>
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa pficon-build"></span>
+                    {% trans 'Components' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="components">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Name' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        {% if perms.testcases.add_testcasecomponent %}
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    <div class="input-group input-group-sm mb-3">
+                                        <input type="text" class="form-control typeahead" id="id_components">
+                                    </div>
+                                </th>
+                                <th>
+                                    <a href="#components" id="add-component" title="{% trans 'Add' %}">
+                                        <span class="fa fa-plus"></span>
+                                    </a>
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="card-pf card-pf-accented">
+                <h2 class="card-pf-title">
+                    <span class="fa fa-paperclip"></span>
+                    {% trans 'Attachments' %}
+                </h2>
+
+                <div class="card-pf-body">
+                    <table class="table" id="attachments">
+                        <thead>
+                            <tr>
+                                <th>{% trans 'File' %}</th>
+                                <th>{% trans 'Owner' %}</th>
+                                <th>{% trans 'Date' %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% get_attachments_for test_case as attachments_list %}
+                        {% for attachment in attachments_list %}
+                            <tr>
+                                <td><a href="{{ attachment.attachment_file.url }}">{{ attachment.filename }}</a></td>
+                                <td><a href="{% url "tcms-profile" attachment.creator %}">{{ attachment.creator }}</a></td>
+                                <td>{{ attachment.created }}</td>
+                                <td>{% attachment_delete_link attachment %}</td>
+                            </tr>
+                            {% empty %}
+                             <tr><td colspan="4">{% trans 'No records found' %}</td></tr>
+                            {% endfor %}
+                        </tbody>
+                        {% if perms.attachments.add_attachment %}
+                        <tfoot>
+                            <tr>
+                                <th colspan="4">
+                                    {% attachment_form test_case %}
+                                </th>
+                            </tr>
+                        </tfoot>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /row -->
+</div>
+<script src="{% static 'typeahead.js/dist/typeahead.jquery.min.js' %}"></script>
+
+<script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'testcases/js/get.js' %}"></script>
+{% endblock %}

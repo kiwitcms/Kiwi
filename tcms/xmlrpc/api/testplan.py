@@ -7,7 +7,8 @@ from tcms.management.models import Tag
 from tcms.testplans.models import TestPlan
 from tcms.testcases.models import TestCase, TestCasePlan
 
-from tcms.xmlrpc.forms import EditPlanForm, NewPlanForm
+from tcms.xmlrpc import utils
+from tcms.xmlrpc.api.forms.testplan import EditPlanForm, NewPlanForm
 from tcms.xmlrpc.decorators import permissions_required
 
 __all__ = (
@@ -20,6 +21,9 @@ __all__ = (
 
     'add_tag',
     'remove_tag',
+
+    'add_attachment',
+    'list_attachments',
 )
 
 
@@ -92,14 +96,7 @@ def filter(query=None):  # pylint: disable=redefined-builtin
     if query is None:
         query = {}
 
-    test_plans = TestPlan.objects.filter(**query).distinct()
-
-    results = []
-    for plan in test_plans:
-        serialized_plan = plan.serialize()
-        results.append(serialized_plan)
-
-    return results
+    return TestPlan.to_xmlrpc(query)
 
 
 @permissions_required('testplans.add_testplantag')
@@ -198,9 +195,6 @@ def _get_updated_test_plan(values, form, test_plan):
     if form.cleaned_data['product_version']:
         test_plan.product_version = form.cleaned_data['product_version']
 
-    if form.cleaned_data['owner']:
-        test_plan.owner = form.cleaned_data['owner']
-
     if form.cleaned_data['parent']:
         test_plan.parent = form.cleaned_data['parent']
 
@@ -253,3 +247,46 @@ def remove_case(plan_id, case_id):
         :raises: PermissionDenied if missing *testcases.delete_testcaseplan* permission
     """
     TestCasePlan.objects.filter(case=case_id, plan=plan_id).delete()
+
+
+@permissions_required('attachments.view_attachment')
+@rpc_method(name='TestPlan.list_attachments')
+def list_attachments(plan_id, **kwargs):
+    """
+    .. function:: XML-RPC TestPlan.list_attachments(plan_id)
+
+        List attachments for the given TestPlan.
+
+        :param plan_id: PK of TestPlan to inspect
+        :type plan_id: int
+        :return: A list containing information and download URLs for attachements
+        :rtype: list
+        :raises: TestPlan.DoesNotExit if object specified by PK is missing
+    """
+    plan = TestPlan.objects.get(pk=plan_id)
+    request = kwargs.get(REQUEST_KEY)
+    return utils.get_attachments_for(request, plan)
+
+
+@permissions_required('attachments.add_attachment')
+@rpc_method(name='TestPlan.add_attachment')
+def add_attachment(plan_id, filename, b64content, **kwargs):
+    """
+    .. function:: XML-RPC TestPlan.add_attachment(plan_id, filename, b64content)
+
+        Add attachment to the given TestPlan.
+
+        :param plan_id: PK of TestPlan
+        :type plan_id: int
+        :param filename: File name of attachment, e.g. 'logs.txt'
+        :type filename: str
+        :param b64content: Base64 encoded content
+        :type b64content: str
+        :return: None
+    """
+    utils.add_attachment(
+        plan_id,
+        'testplans.TestPlan',
+        kwargs.get(REQUEST_KEY).user,
+        filename,
+        b64content)

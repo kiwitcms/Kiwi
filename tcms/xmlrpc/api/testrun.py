@@ -4,7 +4,7 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.testcases.models import TestCase
-from tcms.testruns.models import TestCaseRun
+from tcms.testruns.models import TestExecution
 from tcms.testruns.models import TestRun
 from tcms.xmlrpc.decorators import permissions_required
 from tcms.testruns.forms import XMLRPCUpdateRunForm, XMLRPCNewRunForm
@@ -24,7 +24,7 @@ __all__ = (
 )
 
 
-@permissions_required('testruns.add_testcaserun')
+@permissions_required('testruns.add_testexecution')
 @rpc_method(name='TestRun.add_case')
 def add_case(run_id, case_id):
     """
@@ -36,9 +36,9 @@ def add_case(run_id, case_id):
         :type run_id: int
         :param case_id: PK of TestCase to be added
         :type case_id: int
-        :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
+        :return: Serialized :class:`tcms.testruns.models.TestExecution` object
         :raises: DoesNotExist if objects specified by the PKs don't exist
-        :raises: PermissionDenied if missing *testruns.add_testcaserun* permission
+        :raises: PermissionDenied if missing *testruns.add_testexecution* permission
     """
     test_case_run = TestRun.objects.get(pk=run_id).add_case_run(
         case=TestCase.objects.get(pk=case_id)
@@ -46,7 +46,7 @@ def add_case(run_id, case_id):
     return test_case_run.serialize()
 
 
-@permissions_required('testruns.delete_testcaserun')
+@permissions_required('testruns.delete_testexecution')
 @rpc_method(name='TestRun.remove_case')
 def remove_case(run_id, case_id):
     """
@@ -59,9 +59,9 @@ def remove_case(run_id, case_id):
         :param case_id: PK of TestCase to be removed
         :type case_id: int
         :return: None
-        :raises: PermissionDenied if missing *testruns.delete_testcaserun* permission
+        :raises: PermissionDenied if missing *testruns.delete_testexecution* permission
     """
-    TestCaseRun.objects.filter(run=run_id, case=case_id).delete()
+    TestExecution.objects.filter(run=run_id, case=case_id).delete()
 
 
 @rpc_method(name='TestRun.get_cases')
@@ -74,19 +74,19 @@ def get_cases(run_id):
         :param run_id: PK of TestRun to inspect
         :type run_id: int
         :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects
-                 augmented with ``case_run_id`` and ``case_run_status`` information.
+                 augmented with ``case_run_id`` and ``status`` information.
         :rtype: list(dict)
     """
     tcs_serializer = TestCase.to_xmlrpc(query={'case_run__run_id': run_id})
 
-    qs = TestCaseRun.objects.filter(run_id=run_id).values(
-        'case', 'pk', 'case_run_status__name')
+    qs = TestExecution.objects.filter(run_id=run_id).values(
+        'case', 'pk', 'status__name')
     extra_info = dict(((row['case'], row) for row in qs.iterator()))
 
     for case in tcs_serializer:
         info = extra_info[case['case_id']]
         case['case_run_id'] = info['pk']
-        case['case_run_status'] = info['case_run_status__name']
+        case['status'] = info['status__name']
 
     return tcs_serializer
 
@@ -215,20 +215,16 @@ def update(run_id, values):
         :raises: PermissionDenied if missing *testruns.change_testrun* permission
         :raises: ValueError if data validations fail
     """
-    if (values.get('product_version') and not values.get('product')):
+    if values.get('product_version') and not values.get('product'):
         raise ValueError('Field "product" is required by product_version')
 
     form = XMLRPCUpdateRunForm(values)
     if values.get('product_version'):
         form.populate(product_id=values['product'])
 
-    if form.is_valid():
-        return _get_updated_test_run(run_id, values, form).serialize()
+    if not form.is_valid():
+        raise ValueError(form_errors_to_list(form))
 
-    raise ValueError(form_errors_to_list(form))
-
-
-def _get_updated_test_run(run_id, values, form):
     test_run = TestRun.objects.get(pk=run_id)
     if form.cleaned_data['plan']:
         test_run.plan = form.cleaned_data['plan']
@@ -256,12 +252,8 @@ def _get_updated_test_run(run_id, values, form):
         if form.cleaned_data['notes']:
             test_run.notes = form.cleaned_data['notes']
 
-    # todo: form doesn't allow stop_date to be updated
-    # test_run.stop_date = None
-
-    # if isinstance(form.cleaned_data['status'], int) and \
-    #   form.cleaned_data['status']:
-    #    test_run.stop_date = datetime.now()
+    if form.cleaned_data['stop_date']:
+        test_run.stop_date = form.cleaned_data['stop_date']
 
     test_run.save()
-    return test_run
+    return test_run.serialize()

@@ -4,6 +4,7 @@
 from datetime import datetime
 
 from django.db.models import signals
+from django.conf import settings
 
 import factory
 from factory.django import DjangoModelFactory
@@ -11,7 +12,7 @@ from factory.django import DjangoModelFactory
 from tcms.management.models import Priority
 from tcms.testcases.models import TestCaseStatus
 from tcms.testcases.models import BugSystem
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 
 
 # ### Factories for app management ###
@@ -20,7 +21,7 @@ from tcms.testruns.models import TestCaseRunStatus
 class UserFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'auth.User'
+        model = settings.AUTH_USER_MODEL
 
     username = factory.Sequence(lambda n: 'User%d' % n)
     email = factory.LazyAttribute(lambda user: '%s@example.com' % user.username)
@@ -32,7 +33,7 @@ class UserFactory(DjangoModelFactory):
             return
         if extracted:
             for group in extracted:
-                self.groups.add(group)
+                self.groups.add(group)  # pylint: disable=no-member
 
 
 class GroupFactory(DjangoModelFactory):
@@ -126,7 +127,6 @@ class TestPlanFactory(DjangoModelFactory):
     text = factory.Sequence(lambda n: 'Plan document %d' % n)
     create_date = factory.LazyFunction(datetime.now)
     product_version = factory.SubFactory(VersionFactory)
-    owner = factory.SubFactory(UserFactory)
     author = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)
     type = factory.SubFactory(PlanTypeFactory)
@@ -183,6 +183,7 @@ class TestCaseFactory(DjangoModelFactory):
     author = factory.SubFactory(UserFactory)
     default_tester = factory.SubFactory(UserFactory)
     reviewer = factory.SubFactory(UserFactory)
+    text = factory.Sequence(lambda n: 'Given-When-Then %d' % n)
 
     @factory.post_generation
     def plan(self, create, extracted, **kwargs):
@@ -237,20 +238,6 @@ class TestCaseTagFactory(DjangoModelFactory):
     tag = factory.SubFactory(TagFactory)
 
 
-class TestCaseTextFactory(DjangoModelFactory):
-
-    class Meta:
-        model = 'testcases.TestCaseText'
-
-    case = factory.SubFactory(TestCaseFactory)
-    case_text_version = 1
-    author = factory.SubFactory(UserFactory)
-    action = 'action'
-    effect = 'effect'
-    setup = 'setup'
-    breakdown = 'breakdown'
-
-
 class TestCaseEmailSettingsFactory(DjangoModelFactory):
 
     class Meta:
@@ -291,21 +278,19 @@ class TestRunFactory(DjangoModelFactory):
                 TestRunCCFactory(run=self, user=user)
 
 
-class TestCaseRunFactory(DjangoModelFactory):
+class TestExecutionFactory(DjangoModelFactory):
 
     class Meta:
-        model = 'testruns.TestCaseRun'
+        model = 'testruns.TestExecution'
 
     assignee = factory.SubFactory(UserFactory)
     tested_by = factory.SubFactory(UserFactory)
-    case_text_version = 1
-    running_date = None
+    case_text_version = factory.LazyAttribute(lambda obj: obj.case.history.latest().history_id)
     close_date = None
-    notes = ''
     sortkey = factory.Sequence(lambda n: n)
     run = factory.SubFactory(TestRunFactory)
     case = factory.SubFactory(TestCaseFactory)
-    case_run_status = factory.LazyFunction(lambda: TestCaseRunStatus.objects.order_by('pk').first())
+    status = factory.LazyFunction(lambda: TestExecutionStatus.objects.order_by('pk').first())
     build = factory.SubFactory(BuildFactory)
 
 
@@ -317,8 +302,10 @@ class BugFactory(DjangoModelFactory):
     bug_id = factory.Sequence(lambda n: n)
     summary = factory.LazyAttribute(lambda obj: 'Summary of bug %s' % obj.bug_id)
     description = ''
-    bug_system = factory.LazyFunction(lambda: BugSystem.objects.first())
-    case_run = factory.SubFactory(TestCaseRunFactory)
+    bug_system = factory.LazyFunction(
+        lambda: BugSystem.objects.first()  # pylint: disable=unnecessary-lambda
+    )
+    case_run = factory.SubFactory(TestExecutionFactory)
     case = factory.SubFactory(TestCaseFactory)
 
 

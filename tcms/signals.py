@@ -52,6 +52,7 @@ def notify_admins(sender, **kwargs):
     """
     from django.urls import reverse
     from django.conf import settings
+    from django.contrib.auth import get_user_model
 
     from tcms.core.utils.mailto import mailto
     from tcms.core.utils import request_host_link
@@ -59,18 +60,21 @@ def notify_admins(sender, **kwargs):
     if kwargs.get('raw', False):
         return
 
+    admin_emails = set()
+    # super-users can approve others
+    for super_user in get_user_model().objects.filter(is_superuser=True):
+        admin_emails.add(super_user.email)
+    # site admins should be able to do so as well
+    for _name, email in settings.ADMINS:
+        admin_emails.add(email)
+
     request = kwargs.get('request')
     user = kwargs.get('user')
-
-    admin_emails = []
-    for _name, email in settings.ADMINS:
-        admin_emails.append(email)
-
     user_url = request_host_link(request) + reverse('admin:auth_user_change', args=[user.pk])
 
     mailto(
         template_name='email/user_registered/notify_admins.txt',
-        recipients=admin_emails,
+        recipients=list(admin_emails),
         subject=str(_('New user awaiting approval')),
         context={
             'username': user.username,

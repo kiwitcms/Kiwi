@@ -5,11 +5,15 @@ from setuptools import setup, find_packages
 import tcms
 
 
-def get_install_requires():
+def get_install_requires(path):
     requires = []
     links = []
-    with open('requirements/base.txt', 'r') as file:
+
+    with open(path, 'r') as file:
         for line in file:
+            if line.startswith('-r '):
+                continue
+
             dep_line = line.strip()
             parts = dep_line.split('#egg=')
             if len(parts) == 2:
@@ -20,7 +24,10 @@ def get_install_requires():
         return requires, links
 
 
-INSTALL_REQUIRES, DEPENDENCY_LINKS = get_install_requires()
+INSTALL_TARBALLS, DEPENDENCY_TARBALLS = get_install_requires('requirements/tarballs.txt')
+INSTALL_BASE, DEPENDENCY_BASE = get_install_requires('requirements/base.txt')
+INSTALL_REQUIRES = INSTALL_TARBALLS + INSTALL_BASE
+DEPENDENCY_LINKS = DEPENDENCY_TARBALLS + DEPENDENCY_BASE
 
 
 def get_long_description():
@@ -33,7 +40,6 @@ setup(
     version=tcms.__version__,
     description='Test Case Management System',
     long_description=get_long_description(),
-    author='various',
     maintainer='Kiwi TCMS',
     maintainer_email='info@kiwitcms.org',
     url='https://github.com/kiwitcms/Kiwi/',
@@ -43,9 +49,10 @@ setup(
     install_requires=INSTALL_REQUIRES,
     dependency_links=DEPENDENCY_LINKS,
 
-    packages=find_packages(),
+    packages=find_packages(exclude=['kiwi_lint*',
+                                    '*.tests',
+                                    'tcms.settings.test']),
     include_package_data=True,
-
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',

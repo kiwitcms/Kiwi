@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Kiwi TCMS documentation
-=========================
+=======================
 
 .. toctree::
    :maxdepth: 1
@@ -15,12 +15,14 @@ Kiwi TCMS documentation
    configuration.rst
    admin.rst
    tutorial.rst
+   plugins.rst
+   telemetry/index.rst
+   import-export/index.rst
    api/index.rst
    contribution.rst
    support.rst
    changelog.rst
    db.rst
-   Kiwi TCMS modules and classes <modules/modules.rst>
 
 Indices and tables
 ------------------

@@ -1,15 +1,18 @@
 function pre_process_data(data) {
-    var plan_cache = {};
+    var product_cache = {};
+    var tags_cache = {};
 
     data.forEach(function(element) {
         // collect info about products
-        if (element.plan_id in plan_cache) {
-            element['product'] = plan_cache[element.plan_id];
+        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
+
+        if (element.plan_id in product_cache) {
+            element['product'] = product_cache[element.plan_id];
         } else {
             jsonRPC('TestPlan.filter', {pk: element.plan_id}, function(data) {
                 element['product'] = data[0].product;
             }, true);
-            plan_cache[element.plan_id] = element.product;
+            product_cache[element.plan_id] = element.product;
         }
     });
 }
@@ -40,7 +43,6 @@ $(document).ready(function() {
                 params['build'] = $('#id_build').val();
             };
 
-
             if ($('#id_manager').val()) {
                 params['manager__username__startswith'] = $('#id_manager').val();
             };
@@ -60,7 +62,11 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/run/'+ data.run_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
+                    result = '<a href="/runs/'+ data.run_id + '/" target="_parent">' + escapeHTML(data.summary) + '</a>';
+                    if (data.stop_date) {
+                        result += '<p class="help-block">' + data.stop_date + '</p>';
+                    }
+                    return result;
                 }
             },
             {
@@ -69,15 +75,21 @@ $(document).ready(function() {
                     return '<a href="/plan/'+ data.plan_id + '/" target="_parent">TP-' + data.plan_id + ': ' + escapeHTML(data.plan) + '</a>';
                 }
             },
-            { data: "manager" },
-            { data: "default_tester" },
             { data: "product" },
             { data: "product_version"},
             { data: "build"},
-            { data: "stop_date"},
+
+            { data: "manager" },
+            { data: "default_tester" },
+            {
+                data: "tag",
+                render: renderFromCache,
+            },
         ],
         dom: "t",
         language: {
+            loadingRecords: '<div class="spinner spinner-lg"></div>',
+            processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: "No records found"
         },
         order: [[ 0, 'asc' ]],
@@ -91,14 +103,8 @@ $(document).ready(function() {
     });
 
     $('#id_product').change(function() {
-        var product_id = $(this).val();
-        if (product_id) {
-            jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
-            jsonRPC('Build.filter', {product: product_id}, updateBuildSelect);
-        } else {
-            updateVersionSelect([]);
-            updateBuildSelect([]);
-        }
+        update_version_select_from_product();
+        update_build_select_from_product(true);
     });
 
     $('.bootstrap-switch').bootstrapSwitch();

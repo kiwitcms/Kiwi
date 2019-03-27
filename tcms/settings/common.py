@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os.path
+import pkg_resources
+from importlib import import_module
+
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.messages import constants as messages
@@ -68,6 +71,12 @@ DEFAULT_GROUPS = ['Tester']
 AUTO_APPROVE_NEW_USERS = True
 
 
+# How often will session cookies expire? We set this to 24hrs by default.
+# You may override based on your security policies
+# https://docs.djangoproject.com/en/2.1/ref/settings/#session-cookie-age
+SESSION_COOKIE_AGE = 86400
+
+
 # Maximum upload file size, default set to 5MB.
 FILE_UPLOAD_MAX_SIZE = 5242880
 
@@ -89,17 +98,26 @@ MENU_ITEMS = [
         (_('Search Test Runs'), reverse_lazy('testruns-search')),
         (_('Search Test Cases'), reverse_lazy('testcases-search')),
     ]),
-    (_('REPORTING'), [
-        (_('Overall report'), reverse_lazy('report-overall')),
-        (_('Custom report'), reverse_lazy('report-custom')),
-        (_('Testing report'), reverse_lazy('testing-report')),
+    (_('TELEMETRY'), [
+        ('Coming soon',
+         'http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/'),
+        ('-', '-'),
     ]),
+]
+
+# last element is always TELEMETRY
+for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+    plugin_menu = import_module('%s.menu' % plugin.module_name)
+    MENU_ITEMS[-1][1].extend(plugin_menu.MENU_ITEMS)
+
+# append the ADMIN menu at the end
+MENU_ITEMS.append(
     (_('ADMIN'), [
         (_('Users and groups'), '/admin/auth/'),
         ('-', '-'),
         (_('Everything else'), '/admin/'),
     ]),
-]
+)
 
 # redefine the help menu in the navigation bar
 HELP_MENU_ITEMS = [
@@ -175,8 +193,8 @@ USE_I18N = True
 USE_L10N = True
 
 # Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en'
+# See https://code.djangoproject.com/ticket/29713
+LANGUAGE_CODE = 'en-us'
 
 LOCALE_PATHS = [
     os.path.join(TCMS_ROOT_PATH, 'locale'),
@@ -280,32 +298,44 @@ INSTALLED_APPS = [
     'tcms.xmlrpc',
 ]
 
+for plugin in pkg_resources.iter_entry_points('kiwitcms.telemetry.plugins'):
+    INSTALLED_APPS.append(plugin.module_name)
+
+
+SERIALIZATION_MODULES = {
+    'json': 'tcms.core.serializer',
+}
+
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Define the custom comment app
 # http://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
 COMMENTS_APP = 'tcms.core.contrib.comments'
 
 MODERNRPC_METHODS_MODULES = [
+    'tcms.xmlrpc.api.attachment',
     'tcms.xmlrpc.api.auth',
     'tcms.xmlrpc.api.bug',
     'tcms.xmlrpc.api.build',
+    'tcms.xmlrpc.api.bugsystem',
     'tcms.xmlrpc.api.category',
+    'tcms.xmlrpc.api.classification',
     'tcms.xmlrpc.api.component',
     'tcms.xmlrpc.api.plantype',
     'tcms.xmlrpc.api.priority',
     'tcms.xmlrpc.api.product',
     'tcms.xmlrpc.api.tag',
     'tcms.xmlrpc.api.testcase',
-    'tcms.xmlrpc.api.testcaserun',
+    'tcms.xmlrpc.api.testexecution',
+    'tcms.xmlrpc.api.testexecutionstatus',
     'tcms.xmlrpc.api.testcasestatus',
     'tcms.xmlrpc.api.testplan',
     'tcms.xmlrpc.api.testrun',
     'tcms.xmlrpc.api.user',
     'tcms.xmlrpc.api.version',
 ]
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Enable the administrator delete permission
 # In another word it's set the admin to super user or not.

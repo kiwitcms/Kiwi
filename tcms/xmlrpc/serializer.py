@@ -9,11 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import ObjectDoesNotExist
 from django.db.models.fields.related import ForeignKey
 
-# TODO: to encode all strings in UTF-8 instead of mixing unicode and byte
-# string.
-# TODO: to claim the sequence of the primary keys of each ManyToManyField is
-# arbitrary.
-
 SECONDS_PER_MIN = 60
 SECONDS_PER_HOUR = 3600
 SECONDS_PER_DAY = 86400
@@ -51,6 +46,7 @@ def timedelta_to_str(value):
 # ## End of functions ###
 
 
+# todo: start removing these classes in favor of tcms.core.serializer
 class XMLRPCSerializer:
     """
     Django XMLRPC Serializer
@@ -196,6 +192,8 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
     # result beside valid fields in database.
     extra_fields = {}
 
+    m2m_fields = ()
+
     def __init__(self, model_class, queryset):
         super().__init__(model_class, queryset)
         if model_class is None:
@@ -265,31 +263,23 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
         :return: names of fields with type ManyToManyField
         :rtype: list
         """
-        if hasattr(self.__class__, 'm2m_fields'):
-            return self.__class__.m2m_fields
+        if self.m2m_fields:
+            return self.m2m_fields
 
         return tuple(field.name for field in
                      self.model_class._meta.many_to_many)
 
-    # TODO: how to deal with the situation that is primary key does not appear
-    # in values fields, although such thing could not happen.
     def _get_primary_key_field(self):
-        """Return the primary key field name
-
-        The primary key field name can be specified by defining `primary_key`
-        in class. Otherwise, QuerySetBasedXMLRPCSerializer will attempt to get
-        the primary key field by inspecting Model's fields.
+        """
+        Return the primary key field name by inspecting Model's fields.
 
         This method can be overrided in subclass to provide custom primary key.
 
         :return: the name of primary key field
         :rtype: str
         :raises ValueError: if model does not have a primary key field during
-        the process of inspecting primary key from model's field.
+                the process of inspecting primary key from model's field.
         """
-        if hasattr(self.__class__, 'primary_key'):
-            return self.__class__.primary_key
-
         for field in self.model_class._meta.fields:
             if field.primary_key:
                 return field.name
@@ -351,7 +341,8 @@ class QuerySetBasedXMLRPCSerializer(XMLRPCSerializer):
 
         - Get data from database using QuerySet.values method
         - Transfer data to the output destiation according to serialization
-          standard, where two things must be done,
+          standard, where two things must be done:
+
           - field name must be replaced with right name rather than the
             internal name used for SQL query
           - some data must be converted in proper type. Currently, data with
@@ -410,8 +401,6 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
         'author': ('author_id', do_nothing),
         'author__username': ('author', to_str),
-        'owner': ('owner_id', do_nothing),
-        'owner__username': ('owner', to_str),
         'parent': ('parent_id', do_nothing),
         'parent__name': ('parent', do_nothing),
         'product': ('product_id', do_nothing),
@@ -429,15 +418,13 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     m2m_fields = ('case', 'tag')
 
 
-class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
+class TestExecutionXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """XMLRPC serializer specific for TestCaseRun"""
 
     values_fields_mapping = {
         'case_run_id': ('case_run_id', do_nothing),
         'case_text_version': ('case_text_version', do_nothing),
         'close_date': ('close_date', datetime_to_str),
-        'notes': ('notes', do_nothing),
-        'running_date': ('running_date', datetime_to_str),
         'sortkey': ('sortkey', do_nothing),
 
         'assignee': ('assignee_id', do_nothing),
@@ -446,8 +433,8 @@ class TestCaseRunXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
         'build__name': ('build', do_nothing),
         'case': ('case_id', do_nothing),
         'case__summary': ('case', do_nothing),
-        'case_run_status': ('case_run_status_id', do_nothing),
-        'case_run_status__name': ('case_run_status', do_nothing),
+        'status': ('status_id', do_nothing),
+        'status__name': ('status', do_nothing),
         'run': ('run_id', do_nothing),
         'run__summary': ('run', do_nothing),
         'tested_by': ('tested_by_id', do_nothing),
@@ -482,14 +469,13 @@ class TestCaseXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
     """Serializer for TestCase"""
 
     values_fields_mapping = {
-        'alias': ('alias', do_nothing),
         'arguments': ('arguments', do_nothing),
         'case_id': ('case_id', do_nothing),
         'create_date': ('create_date', datetime_to_str),
         'extra_link': ('extra_link', do_nothing),
         'is_automated': ('is_automated', do_nothing),
-        'is_automated_proposed': ('is_automated_proposed', do_nothing),
         'notes': ('notes', do_nothing),
+        'text': ('text', do_nothing),
         'requirement': ('requirement', do_nothing),
         'script': ('script', do_nothing),
         'summary': ('summary', do_nothing),
@@ -526,7 +512,6 @@ class BuildXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
     values_fields_mapping = {
         'build_id': ('build_id', do_nothing),
-        'description': ('description', do_nothing),
         'is_active': ('is_active', do_nothing),
         'name': ('name', do_nothing),
         'product': ('product_id', do_nothing),

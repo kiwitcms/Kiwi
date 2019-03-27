@@ -52,7 +52,6 @@ def create(values):
     return Build.objects.create(
         product=pre_check_product(values),
         name=values['name'],
-        description=values.get('description'),
         is_active=parse_bool_value(values.get('is_active', True))
     ).serialize()
 
@@ -85,8 +84,6 @@ def update(build_id, values):
         _update_value(selected_build, 'product', pre_check_product(values))
     if values.get('name'):
         _update_value(selected_build, 'name', values['name'])
-    if values.get('description'):
-        _update_value(selected_build, 'description', values['description'])
     if values.get('is_active') is not None:
         _update_value(selected_build, 'is_active', parse_bool_value(values.get(
             'is_active', True)))

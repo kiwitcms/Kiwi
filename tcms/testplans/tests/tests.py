@@ -7,8 +7,8 @@ from uuslug import slugify
 
 from django import test
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.management.models import Product
 from tcms.management.models import Version
@@ -17,7 +17,7 @@ from tcms.testplans.models import TestPlan
 
 from tcms.tests.factories import ClassificationFactory
 from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import TestCaseFactory, TestCaseTextFactory
+from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import PlanTypeFactory
 from tcms.tests.factories import UserFactory
@@ -27,7 +27,7 @@ from tcms.tests import remove_perm_from_user
 from tcms.tests import user_should_have_perm
 
 
-class PlanTests(test.TestCase):
+class BasePlanTest(test.TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -44,20 +44,17 @@ class PlanTests(test.TestCase):
 
         cls.test_plan = TestPlanFactory(name='another test plan for testing',
                                         product_version=cls.product_version,
-                                        owner=cls.user,
                                         author=cls.user,
                                         product=cls.product,
                                         type=cls.plan_type)
         # add TestCases to plan with status CONFIRMED
         for _i in range(5):
-            case = TestCaseFactory(plan=[cls.test_plan],
-                                   case_status=TestCaseStatus.objects.get(name='CONFIRMED'))
-            TestCaseTextFactory(case=case)
+            TestCaseFactory(plan=[cls.test_plan],
+                            case_status=TestCaseStatus.objects.get(name='CONFIRMED'))
 
         # also add a few PROPOSED TestCases
         for _i in range(3):
-            case = TestCaseFactory(plan=[cls.test_plan])
-            TestCaseTextFactory(case=case)
+            TestCaseFactory(plan=[cls.test_plan])
 
         cls.plan_id = cls.test_plan.pk
         cls.child_plan = TestPlanFactory(parent=cls.test_plan)
@@ -67,14 +64,12 @@ class PlanTests(test.TestCase):
         self.client.login(username=self.user.username,  # nosec:B106:hardcoded_password_funcarg
                           password='admin')
 
+
+class PlanTests(BasePlanTest):
+
     def test_open_plans_search(self):
         location = reverse('plans-search')
         response = self.client.get(location)
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-
-    def test_plan_new_get(self):
-        location = reverse('plans-new')
-        response = self.client.get(location, follow=True)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_plan_details(self):
@@ -93,7 +88,7 @@ class PlanTests(test.TestCase):
     def test_plan_printable_without_selected_plan(self):
         location = reverse('plans-printable')
         response = self.client.post(location, follow=True)
-        self.assertContains(response, 'At least one test plan is required for print')
+        self.assertContains(response, _('At least one test plan is required for print'))
 
     def test_plan_printable(self):
         location = reverse('plans-printable')
@@ -106,11 +101,7 @@ class PlanTests(test.TestCase):
         confirmed = TestCaseStatus.objects.get(name='CONFIRMED')
         for case in self.test_plan.case.filter(case_status=confirmed):
             self.assertContains(response, case.summary)
-            # factory sets all 4
-            self.assertContains(response, case.latest_text().setup)
-            self.assertContains(response, case.latest_text().action)
-            self.assertContains(response, case.latest_text().effect)
-            self.assertContains(response, case.latest_text().breakdown)
+            self.assertContains(response, case.text)
 
     def test_plan_attachment(self):
         location = reverse('plan-attachment',
@@ -144,6 +135,27 @@ class TestPlanModel(test.TestCase):
         self.assertEqual(1, cases_left.count())
         self.assertEqual(self.testcase_2.pk, cases_left[0].case.pk)
 
+    def test_add_cases_sortkey_autoincrement(self):
+        """
+        When you add new cases, each new case should get a sortkey of the
+        highest sortkey in the database + 10.
+
+        The first case should get sortkey 0. The offset between the sortkeys is
+        to leave space to insert cases in between without having to update all
+        cases.
+        """
+
+        plan = TestPlanFactory()
+
+        for sequence_no in range(3):
+            case_plan = plan.add_case(TestCaseFactory())
+            self.assertEqual(sequence_no * 10, case_plan.sortkey)
+
+        # Check if you can still specify a sortkey manually to insert a case in
+        # between the other cases.
+        case_plan = plan.add_case(TestCaseFactory(), sortkey=15)
+        self.assertEqual(15, case_plan.sortkey)
+
 
 class TestDeleteCasesFromPlan(BasePlanCase):
     """Test case for deleting cases from a plan"""
@@ -151,7 +163,7 @@ class TestDeleteCasesFromPlan(BasePlanCase):
     @classmethod
     def setUpTestData(cls):
         super(TestDeleteCasesFromPlan, cls).setUpTestData()
-        cls.plan_tester = User(username='tester')
+        cls.plan_tester = UserFactory(username='tester')
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
@@ -189,7 +201,7 @@ class TestSortCases(BasePlanCase):
     @classmethod
     def setUpTestData(cls):
         super(TestSortCases, cls).setUpTestData()
-        cls.plan_tester = User(username='tester')
+        cls.plan_tester = UserFactory(username='tester')
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
@@ -232,7 +244,6 @@ class TestLinkCases(BasePlanCase):
 
         cls.another_plan = TestPlanFactory(
             author=cls.tester,
-            owner=cls.tester,
             product=cls.product,
             product_version=cls.version)
 
@@ -248,7 +259,7 @@ class TestLinkCases(BasePlanCase):
             reviewer=cls.tester,
             plan=[cls.another_plan])
 
-        cls.plan_tester = User(username='tester')
+        cls.plan_tester = UserFactory(username='tester')
         cls.plan_tester.set_password('password')
         cls.plan_tester.save()
 
@@ -366,7 +377,7 @@ class TestCloneView(BasePlanCase):
 
         cls.another_plan = TestPlanFactory(
             name='Another plan for test',
-            author=cls.tester, owner=cls.tester,
+            author=cls.tester,
             product=cls.product, product_version=cls.version)
         cls.another_case_1 = TestCaseFactory(
             author=cls.tester, default_tester=None,
@@ -377,7 +388,7 @@ class TestCloneView(BasePlanCase):
 
         cls.third_plan = TestPlanFactory(
             name='Third plan for test',
-            author=cls.tester, owner=cls.tester,
+            author=cls.tester,
             product=cls.product, product_version=cls.version)
         cls.third_case_1 = TestCaseFactory(
             author=cls.tester, default_tester=None,
@@ -388,7 +399,7 @@ class TestCloneView(BasePlanCase):
 
         cls.totally_new_plan = TestPlanFactory(
             name='Test clone plan with copying cases',
-            author=cls.tester, owner=cls.tester,
+            author=cls.tester,
             product=cls.product, product_version=cls.version)
         cls.case_maintain_original_author = TestCaseFactory(
             author=cls.tester, default_tester=None,
@@ -397,10 +408,9 @@ class TestCloneView(BasePlanCase):
             author=cls.tester, default_tester=None,
             reviewer=cls.tester, plan=[cls.totally_new_plan])
 
-        cls.plan_tester = User.objects.create_user(  # nosec:B106:hardcoded_password_funcarg
-            username='plan_tester',
-            email='tester@example.com',
-            password='password')
+        cls.plan_tester = UserFactory()
+        cls.plan_tester.set_password('password')
+        cls.plan_tester.save()
         user_should_have_perm(cls.plan_tester, 'testplans.add_testplan')
         cls.plan_clone_url = reverse('plans-clone')
 
@@ -411,7 +421,7 @@ class TestCloneView(BasePlanCase):
 
         data_missing_plan = {}  # No plan is passed
         response = self.client.post(self.plan_clone_url, data_missing_plan, follow=True)
-        self.assertContains(response, 'TestPlan is required')
+        self.assertContains(response, _('TestPlan is required'))
 
     def test_refuse_if_given_nonexisting_plan(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -430,7 +440,7 @@ class TestCloneView(BasePlanCase):
 
         self.assertContains(
             response,
-            '<label class="strong" for="id_name">New Plan Name</label>',
+            '<label class="strong" for="id_name">%s</label>' % _('New Plan Name'),
             html=True)
 
         self.assertContains(

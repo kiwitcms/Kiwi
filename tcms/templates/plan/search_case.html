@@ -1,9 +1,14 @@
 {% extends "tcms_base.html" %}
 {% load static %}
-{% block subtitle %}Add cases from other plans{% endblock %}
+{% load i18n %}
+{% block subtitle %}{% trans "Add cases from other plans" %}{% endblock %}
 
 {% block custom_javascript %}
-<script type="text/javascript" src="{% static 'js/lib/jquery.dataTables.js' %}"></script>
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'datatables.net/js/jquery.dataTables.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testplan_actions.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/testcase_actions.js' %}"></script>
 <script type="text/javascript">
@@ -21,7 +26,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 
 	<div class="Detailform border-1">
 		<div class="Detailform-variety_0">
-			<div class="grey tit">Search cases to add into this test plan.</div>
+                    <div class="grey tit">{% trans "Search cases to add into this test plan." %}</div>
 			<form action="{% url "plan-search-cases-for-link" test_plan.plan_id %}" method="post">
 				<fieldset class="no-border">
 				<input type="hidden" name="a" value="link_cases" />
@@ -32,12 +37,12 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 						<ul>
 							<li {% if search_mode|default:'quick' == 'quick' %}class="profile_tab_active"{%endif%} id="quick_tab">
 								<a href="#" id="quick_search_cases">
-										Quick Search
+                                                                    {% trans "Quick Search" %}
 								</a>
 							</li>
 							<li {% if search_mode|default:'quick' == 'normal'  %}class="profile_tab_active"{%endif%} id="normal_tab">
 								<a href="#" id="normal_search_cases">
-										Normal Search
+                                                                    {% trans "Normal Search" %}
 								</a>
 							</li>
 						</ul>
@@ -72,13 +77,13 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 				<thead>
 					<tr>
 						<th align="left" width="2%" class="nosort"><input id="id_checkbox_all_cases" type="checkbox" /></th>
-						<th align="left" class="widthID" >ID</th>
-						<th align="left" width="20%" >Summary</th>
-						<th align="left" width="10%" >Author</th>
-						<th align="left" width="10%" >Default Tester</th>
-						<th align="left" width="5%" >Priority</th>
-						<th align="left" width="13%" >Created</th>
-						<th align="left" width="10%" >Status</th>
+                                                <th align="left" class="widthID" >{% trans "ID" %}</th>
+                                                <th align="left" width="20%" >{% trans "Summary" %}</th>
+						<th align="left" width="10%" >{% trans "Author" %}</th>
+						<th align="left" width="10%" >{% trans "Default Tester" %}</th>
+						<th align="left" width="5%" >{% trans "Priority" %}</th>
+						<th align="left" width="13%" >{% trans "Created" %}</th>
+						<th align="left" width="10%" >{% trans "Status" %}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -107,7 +112,7 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.SearchCase.on_load);
 				</div>
 				{% else %}
 				<div class="middle-list">
-					<lable class="grey">No test cases found.</label>
+                                    <label class="grey">{% trans "No test cases found." %}</label>
 				</div>
 				{% endif %}
 			</form>

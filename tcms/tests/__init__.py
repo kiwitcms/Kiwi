@@ -7,11 +7,11 @@ from django import test
 from django.conf import settings
 from django.contrib.auth.models import Permission
 
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.models import TestCaseStatus
 from tcms.tests.factories import ProductFactory
 from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import TestPlanFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import UserFactory
@@ -117,7 +117,6 @@ class BasePlanCase(LoggedInTestCase):
 
         cls.plan = TestPlanFactory(
             author=cls.tester,
-            owner=cls.tester,
             product=cls.product,
             product_version=cls.version)
 
@@ -127,24 +126,31 @@ class BasePlanCase(LoggedInTestCase):
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case.save()  # will generate history object
+
         cls.case_1 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_1.save()  # will generate history object
+
         cls.case_2 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_2.save()  # will generate history object
+
         cls.case_3 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_3.save()  # will generate history object
 
         cls.case_4 = TestCaseFactory(
             author=cls.tester,
@@ -152,18 +158,23 @@ class BasePlanCase(LoggedInTestCase):
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_4.save()  # will generate history object
+
         cls.case_5 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_5.save()  # will generate history object
+
         cls.case_6 = TestCaseFactory(
             author=cls.tester,
             default_tester=None,
             reviewer=cls.tester,
             case_status=cls.case_status_confirmed,
             plan=[cls.plan])
+        cls.case_6.save()  # will generate history object
 
 
 class BaseCaseRun(BasePlanCase):
@@ -175,7 +186,7 @@ class BaseCaseRun(BasePlanCase):
 
         # todo: we need a linter to find all places where we get statuses
         # by hard-coded names instead of class based attribute constants!
-        cls.case_run_status_idle = TestCaseRunStatus.objects.get(name='IDLE')
+        cls.status_idle = TestExecutionStatus.objects.get(name='IDLE')
 
         cls.build = BuildFactory(product=cls.product)
 
@@ -185,12 +196,18 @@ class BaseCaseRun(BasePlanCase):
                                       manager=cls.tester,
                                       default_tester=cls.tester)
 
-        cls.case_run_1, cls.case_run_2, cls.case_run_3 = [
-            TestCaseRunFactory(assignee=cls.tester,
-                               run=cls.test_run, build=cls.build,
-                               case_run_status=cls.case_run_status_idle,
-                               case=case, sortkey=i * 10)
-            for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1)]
+        executions = []
+        for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1):
+            executions.append(TestExecutionFactory(assignee=cls.tester,
+                                                   run=cls.test_run,
+                                                   build=cls.build,
+                                                   status=cls.status_idle,
+                                                   case=case, sortkey=i * 10))
+
+        # used in other tests as well
+        cls.execution_1 = executions[0]
+        cls.execution_2 = executions[1]
+        cls.execution_3 = executions[2]
 
         cls.test_run_1 = TestRunFactory(product_version=cls.version,
                                         plan=cls.plan,
@@ -198,9 +215,15 @@ class BaseCaseRun(BasePlanCase):
                                         manager=cls.tester,
                                         default_tester=cls.tester)
 
-        cls.case_run_4, cls.case_run_5, cls.case_run_6 = [
-            TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                               run=cls.test_run_1, build=cls.build,
-                               case_run_status=cls.case_run_status_idle,
-                               case=case, sortkey=i * 10)
-            for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1)]
+        # create a few more TestExecution objects
+        for i, case in enumerate((cls.case_4, cls.case_5, cls.case_6), 1):
+            executions.append(TestExecutionFactory(assignee=cls.tester,
+                                                   tested_by=cls.tester,
+                                                   run=cls.test_run_1,
+                                                   build=cls.build,
+                                                   status=cls.status_idle,
+                                                   case=case, sortkey=i * 10))
+        # used in other tests as well
+        cls.execution_4 = executions[3]
+        cls.execution_5 = executions[4]
+        cls.execution_6 = executions[5]

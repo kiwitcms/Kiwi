@@ -13,7 +13,7 @@
                 <input id="id_name" type="text" class="form-control" placeholder="{% trans 'Test plan name' %}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_after">{% trans "Created&nbsp;after" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_after">{% trans "After" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
                     <input type="text" class="form-control" id="id_after">
@@ -22,22 +22,10 @@
                     </span>
                 </div>
 
-                <script>
-                    $(function () {
-                        $('#id_after').datetimepicker({
-                            locale: '{{ LANGUAGE_CODE }}',
-                            format: 'L',
-                            allowInputToggle: true,
-                            showTodayButton: true,
-                            icons: {
-                                today: 'today-button-pf'
-                            }
-                        });
-                    });
-                </script>
+                {% include "datetimepicker_script.html" with selector="#id_after" %}
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_before">{% trans "Created&nbsp;before" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_before">{% trans "Before" %}</label>
             <div class="col-md-3 col-lg-3">
                 <div class="input-group date-time-picker-pf">
                     <input type="text" class="form-control" id="id_before">
@@ -46,19 +34,7 @@
                     </span>
                 </div>
 
-                <script>
-                    $(function () {
-                        $('#id_before').datetimepicker({
-                            locale: '{{ LANGUAGE_CODE }}',
-                            format: 'L',
-                            allowInputToggle: true,
-                            showTodayButton: true,
-                            icons: {
-                                today: 'today-button-pf'
-                            }
-                        });
-                    });
-                </script>
+                {% include "datetimepicker_script.html" with selector="#id_before" %}
             </div>
         </div>
 
@@ -77,8 +53,8 @@
             <div class="col-md-3 col-lg-3">
                 <select class="form-control selectpicker" id="id_version">
                     <option value="">----------</option>
-                {% for option in form.product_version.field.queryset %}
-                    <option value="{{ option.pk }}" {% if form.product_version.value|add:'0' == option.pk %}selected{% endif %}>{{ option.value }}</option>
+                {% for option in form.version.field.queryset %}
+                    <option value="{{ option.pk }}" {% if form.version.value|add:'0' == option.pk %}selected{% endif %}>{{ option.value }}</option>
                 {% endfor %}
                 </select>
             </div>
@@ -101,12 +77,7 @@
                         value="{{ form.author__username__startswith.value|default:'' }}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_owner">{% trans "Owner" %}</label>
-            <div class="col-md-3 col-lg-3">
-                <input id="id_owner" type="text" class="form-control" placeholder="{% trans 'Username' %}">
-            </div>
-
-            <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default&nbsp;tester" %}</label>
+            <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
             <div class="col-md-3 col-lg-3">
                 <input id="id_default_tester" type="text" class="form-control" placeholder="{% trans 'Username' %}">
             </div>
@@ -136,11 +107,12 @@
                 <tr>
                     <th>{% trans "ID" %}</th>
                     <th>{% trans "Test plan" %}</th>
-                    <th>{% trans "Created" %}</th>
-                    <th>{% trans "Author" %}</th>
-                    <th>{% trans "Owner" %}</th>
+                    <th>{% trans "Created on" %}</th>
                     <th>{% trans "Product" %}</th>
+                    <th>{% trans "Version" %}</th>
                     <th>{% trans "Type" %}</th>
+                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "Tags" %}</th>
                 </tr>
             </thead>
         </table>

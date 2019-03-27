@@ -113,27 +113,88 @@ More information about generating your own self-signed certificates can be found
 https://wiki.centos.org/HowTos/Https.
 
 
+Reverse proxy SSL
+-----------------
+
+Sometimes you may want to serve Kiwi TCMS behind a reverse proxy which will
+also handle SSL termination. For example we serve https://demo.kiwitcms.org,
+https://tcms.kiwitcms.org and a few other instances through Nginx. For all of
+these domains the browser will see a wildcard SSL certificate for
+``*.kiwitcms.org``, while the individual docker containers are still configured
+with the default self-signed certificate! Here's how the configuration looks like::
+
+    http {
+        # default ssl certificates for *.kiwitcms.org
+        ssl_certificate     /etc/nginx/wildcard_kiwitcms_org.crt;
+        ssl_certificate_key /etc/nginx/wildcard_kiwitcms_org.key;
+    
+        # default proxy settings
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    
+        server {
+            listen 8080;
+            server_name demo.kiwitcms.org;
+    
+            location / {
+                return 301 https://$host$request_uri;
+            }
+        }
+    
+        server {
+            server_name demo.kiwitcms.org;
+            listen 8443 ssl;
+    
+            location / {
+                proxy_pass https://demo_kiwitcms_org_web:8443;
+            }
+        }
+    }
+
+Here is an equivalent configuration for `HAProxy <https://www.haproxy.org/>`_::
+
+    frontend front_http
+        bind *:8080
+        reqadd X-Forwarded-Proto:\ http
+        redirect scheme https code 301
+    
+    frontend front_https
+        # default ssl certificates for *.kiwitcms.org
+        bind *:8443 ssl crt /etc/haproxy/ssl/
+        reqadd X-Forwarded-Proto:\ https
+    
+        acl kiwitcms hdr(host) -i demo.kiwitcms.org
+        use_backend back_kiwitcms if kiwitcms
+    
+    backend back_kiwitcms
+        http-request set-header X-Forwarded-Port %[dst_port]
+        http-request add-header X-Forwarded-Proto https
+    
+        # some security tweaks
+        rspadd Strict-Transport-Security:\ max-age=15768000
+        rspadd X-XSS-Protection:\ 1;\ mode=block
+    
+        # do not verify the self-signed cert
+        server kiwi_web demo_kiwitcms_org_web:8443 ssl verify none
+
 Customization
 -------------
 
-You can edit ``docker-compose.yml`` to mount the local file
+``tcms/settings/product.py`` contains the following lines at the end::
+
+    try:
+        from .local_settings import *  # noqa: F401,F403
+    except ImportError:
+        pass
+
+This means you can edit ``docker-compose.yml`` to mount the host file
 ``local_settings.py`` inside the running Docker container::
 
         volumes:
             - uploads:/Kiwi/uploads
             - ./local_settings.py:/venv/lib64/python3.6/site-packages/tcms/settings/local_settings.py
 
-You can override any default settings in this way!
-
-You can also build your own customized version of Kiwi TCMS by adjusting
-the contents of ``Dockerfile`` and then::
-
-    docker build -t my_org/my_kiwi:<version> .
-
-.. note::
-
-    Make sure to modify ``docker-compose.yml`` to use your customized image
-    instead the default ``kiwitcms/kiwi:latest``!
+essentially overriding any stock settings in this way!
 
 .. warning::
 
@@ -150,7 +211,34 @@ the contents of ``Dockerfile`` and then::
                     rootfs "/var/lib/docker/overlay2 ....
 
     In this case you will either have to upgrade your docker version
-    or `COPY` the desired files and rebuild the docker image!
+    or ``COPY`` the desired files and rebuild the docker image!
+
+
+Customized docker image
+-----------------------
+
+You can build your own customized version of Kiwi TCMS by adjusting
+the contents of ``Dockerfile`` and then::
+
+    make docker-image
+
+.. note::
+
+    Make sure to modify ``Makefile`` and ``docker-compose.yml`` to use your
+    customized image name instead the default ``kiwitcms/kiwi:latest``!
+
+.. warning::
+
+    Modifying the default ``Dockerfile`` directly is not recommended because
+    it is kept under version control and will start conflicting the next time
+    you do ``git pull``. It is also not a very good idea to deploy an image built
+    directly from the master branch.
+
+    The proper way to create a downstream docker image is to provide a
+    ``Dockerfile.myorg`` which inherits ``FROM kiwitcms/kiwi:latest``
+    and adds your changes as separate layers! Ideally you will keep this into
+    another git repository together with a ``Makefile`` and possibly your customized
+    ``docker-compose.yml``.
 
 
 Troubleshooting

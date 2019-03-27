@@ -11,7 +11,6 @@ Submodules
 
 .. toctree::
 
-   tcms.core.utils.checksum
    tcms.core.utils.mailto
    tcms.core.utils.validations
 

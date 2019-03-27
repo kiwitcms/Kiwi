@@ -3,13 +3,16 @@ from django import forms
 
 from tcms.core.widgets import SimpleMDE
 from tcms.core.utils import string_to_list
-from tcms.core.forms.fields import UserField, StripURLField
-from tcms.management.models import Product, Version, Tag
+from tcms.core.forms.fields import StripURLField
+from tcms.management.models import Product, Version
 from .models import TestPlan, PlanType
 
 
 class BasePlanForm(forms.Form):
-    name = forms.CharField(label="Plan name")
+    name = forms.CharField(
+        label="Plan name",
+        required=True
+    )
     type = forms.ModelChoiceField(
         label="Type",
         queryset=PlanType.objects.all(),
@@ -37,11 +40,6 @@ class BasePlanForm(forms.Form):
     )
     parent = forms.IntegerField(required=False)
 
-    owner = forms.CharField(
-        label="Plan Document",
-        required=False
-    )
-
     def clean_parent(self):
         try:
             parent_pk = self.cleaned_data['parent']
@@ -60,58 +58,28 @@ class BasePlanForm(forms.Form):
 
 
 class NewPlanForm(BasePlanForm):
-    tag = forms.CharField(
-        label="Tag",
-        required=False
-    )
 
-    # Display radio buttons instead of checkboxes
-    auto_to_plan_owner = forms.BooleanField(
-        label=' plan\'s owner',
-        required=False
-    )
     auto_to_plan_author = forms.BooleanField(
-        label=' plan\'s author',
+        initial=True,
         required=False
     )
     auto_to_case_owner = forms.BooleanField(
-        label=' the author of the case under a plan',
+        initial=True,
         required=False
     )
     auto_to_case_default_tester = forms.BooleanField(
-        label=' the default tester of the case under a plan',
+        initial=True,
         required=False
     )
     notify_on_plan_update = forms.BooleanField(
-        label=' when plan is updated',
+        initial=True,
         required=False
     )
     notify_on_case_update = forms.BooleanField(
-        label=' when cases of a plan are updated',
+        initial=True,
         required=False
     )
-
-    def clean_tag(self):
-        return Tag.objects.filter(
-            name__in=string_to_list(self.cleaned_data['tag'])
-        )
-
-
-class EditPlanForm(NewPlanForm):
-    product_version = forms.ModelChoiceField(
-        label="Product Version",
-        queryset=Version.objects.all(),
-        empty_label=None,
-    )
-    is_active = forms.BooleanField(label="Active", required=False)
-    owner = UserField(
-        label=' plan\'s owner',
-        required=False
-    )
-    author = UserField(
-        label=' plan\'s author',
-        required=False
-    )
+    is_active = forms.BooleanField(required=False, initial=True)
 
 
 # =========== Forms for search/filter ==============
@@ -128,7 +96,7 @@ class SearchPlanForm(forms.Form):
         queryset=Product.objects.all().order_by('name'),
         required=False
     )
-    product_version = forms.ModelChoiceField(
+    version = forms.ModelChoiceField(
         label="Product Version",
         queryset=Version.objects.none(),
         required=False
@@ -140,7 +108,6 @@ class SearchPlanForm(forms.Form):
     )
     author__username__startswith = forms.CharField(required=False)
     author__email__startswith = forms.CharField(required=False)
-    owner__username__startswith = forms.CharField(required=False)
     case__default_tester__username__startswith = forms.CharField(
         required=False)
     tag__name__in = forms.CharField(required=False)
@@ -173,10 +140,10 @@ class SearchPlanForm(forms.Form):
 
     def populate(self, product_id=None):
         if product_id:
-            self.fields['product_version'].queryset = Version.objects.filter(
+            self.fields['version'].queryset = Version.objects.filter(
                 product__id=product_id)
         else:
-            self.fields['product_version'].queryset = Version.objects.none()
+            self.fields['version'].queryset = Version.objects.none()
 
 
 class ClonePlanForm(BasePlanForm):
@@ -214,33 +181,5 @@ class ClonePlanForm(BasePlanForm):
         label='Set source plan as parent',
         help_text='Check it to set the source plan as parent of new cloned '
                   'plan.',
-        required=False
-    )
-
-
-# =========== Forms for XML-RPC functions ==============
-
-
-class XMLRPCNewPlanForm(EditPlanForm):
-    text = forms.CharField()
-
-
-class XMLRPCEditPlanForm(EditPlanForm):
-    name = forms.CharField(
-        label="Plan name", required=False
-    )
-    type = forms.ModelChoiceField(
-        label="Type",
-        queryset=PlanType.objects.all(),
-        required=False
-    )
-    product = forms.ModelChoiceField(
-        label="Product",
-        queryset=Product.objects.all(),
-        required=False,
-    )
-    product_version = forms.ModelChoiceField(
-        label="Product Version",
-        queryset=Version.objects.none(),
         required=False
     )

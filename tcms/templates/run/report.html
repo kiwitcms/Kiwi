@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load comments %}
 {% load report_tags %}
 {% load static %}
@@ -13,78 +14,77 @@
 </head>
 <body>
 	<div class="report_title">
-	Test Execution Report
+            {% trans "Test Execution Report" %}
 	<div class="report_sub_title"><a href='{% url "testruns-get" test_run.run_id %}'>[{{ test_run.run_id }}] {{ test_run.summary }}</a></div></div>
 	<div class="report_content">
 	<div id="content">
 		<div class="listinfo_content" style="float:left; width:95%">
 			<div class="leftlistinfo">
 				<div class="listinfo">
-					<span class="title">Test Plan:</span>{{ test_run.plan.plan_id }}:{{ test_run.plan.name }}
+                                    <span class="title">{% trans "Test Plan" %}:</span>{{ test_run.plan.plan_id }}:{{ test_run.plan.name }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Product Version:</span>{{ test_run.product_version }}
+                                    <span class="title">{% trans "Product Version" %}:</span>{{ test_run.product_version }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Manager:</span>{{ test_run.manager.username }}
+                                    <span class="title">{% trans "Manager" %}:</span>{{ test_run.manager.username }}
 				</div>
 			</div>
 			<div class="rightlistinfo">
 				<div class="listinfo">
-					<span class="title">Product:</span>{{ test_run.build.product }}
+                                    <span class="title">{% trans "Product" %}:</span>{{ test_run.build.product }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Build:</span>{{ test_run.build }}
+                                    <span class="title">{% trans "Build" %}:</span>{{ test_run.build }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Default Tester:</span>{{ test_run.default_tester }}
+                                    <span class="title">{% trans "Default Tester" %}:</span>{{ test_run.default_tester }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Started at:</span>{{ test_run.start_date }}
+                                    <span class="title">{% trans "Started at" %}:</span>{{ test_run.start_date }}
 				</div>
 				<div class="listinfo">
-					<span class="title">Finished at:</span>{{ test_run.stop_date }}
+                                    <span class="title">{% trans "Finished at" %}:</span>{{ test_run.stop_date }}
 				</div>
 			</div>
 			<div class="listinfo">
-				<span class="title">Note:</span>{{ test_run.notes|urlize|linebreaksbr }}
+                            <span class="title">{% trans "Note" %}:</span>{{ test_run.notes|urlize|linebreaksbr }}
 			</div>
 			<div class="clear"></div>
 		</div>
 		<div class="clear"></div>
 		<div class="table_noborder">
-			Manual Cases<span class="red">{{ mode_stats.manual|percentage:test_case_runs_count }}({{ mode_stats.manual }}/{{ test_case_runs_count }})</span>
-			Automated Cases<span class="red">{{ mode_stats.automated|percentage:test_case_runs_count }}({{ mode_stats.automated }}/{{ test_case_runs_count }})</span>
-			Manual/Automated Cases<span class="red">{{ mode_stats.manual_automated|percentage:test_case_runs_count }}({{ mode_stats.manual_automated }}/{{ test_case_runs_count }})</span></td>
+                    {% trans "Manual Cases" %}<span class="red">{{ mode_stats.manual|percentage:test_case_runs_count }}({{ mode_stats.manual }}/{{ test_case_runs_count }})</span>
+                    {% trans "Automated Cases" %}<span class="red">{{ mode_stats.automated|percentage:test_case_runs_count }}({{ mode_stats.automated }}/{{ test_case_runs_count }})</span>
 		</div>
 
 		{% if test_case_runs %}
 		<table class="list border-1" cellpadding="0" cellspacing="0">
 			<tr>
-				<th class="widthID">Case-Run ID</th>
-				<th class="widthID">Case ID</th>
-				<th>Summary</th>
-				<th width="100">Mode</th>
-				<th width="100">Tested by</th>
-				<th width="150">Category</th>
-				<th width="100">Status</th>
-				<th width="160" height="25px">Closed at</th>
+                            <th class="widthID">{% trans "Case-Run ID" %}</th>
+                            <th class="widthID">{% trans "Case ID" %}</th>
+                            <th>{% trans "Summary" %}</th>
+                            <th width="100">{% trans "Automated" %}</th>
+                            <th width="100">{% trans "Tested by" %}</th>
+                            <th width="150">{% trans "Category" %}</th>
+                            <th width="100">{% trans "Status" %}</th>
+                            <th width="160" height="25px">{% trans "Closed at" %}</th>
 			</tr>
 			{% for test_case_run in test_case_runs %}
 			<tr>
 				<td>{{ test_case_run.case_run_id }}</td>
 				<td>{{ test_case_run.case_id }}</td>
 				<td>{{ test_case_run.case.summary }}</td>
-				<td>{{ test_case_run.case.get_is_automated_status }}</td>
+				<td>{{ test_case_run.case.is_automated }}</td>
 				<td>{{ test_case_run.tested_by.username }}</td>
 				<td>{{ test_case_run.case.category.name }}</td>
-				<td><span class="highlight">{{ test_case_run.case_run_status.name|upper }}</span></td>
+				<td><span class="highlight">{{ test_case_run.status.name|upper }}</span></td>
 				<td>{{ test_case_run.close_date }}</td>
 			</tr>
 			<tr>
 				<td align="left" valign="top" colspan="8" class='hide'>
 					{% if test_case_run.bugs %}
-					<span class='notes_title'>Bugs ID:</span>
+                                        <span class='notes_title'>{% trans "Bugs ID" %}:</span>
 					{% for bug in test_case_run.bugs %}
 					<a href="{{ bug.bug_url }}">{{ bug.bug_id }}</a>
 					{% endfor %}
@@ -113,12 +113,12 @@
 
 		{% if test_case_run_bugs %}
 		<hr style="margin:40px auto 20px;"/>
-		<h2><a name="buglist" style="cursor:default; text-decoration:none">Bug List:</a></h2>
+                <h2><a name="buglist" style="cursor:default; text-decoration:none">{% trans "Bug List" %}:</a></h2>
 
 		<table	class="list border-1" cellpadding="0" cellspacing="0">
 			<tr>
-				<th width="150px">Bug ID</th>
-				<th>Bug Url</th>
+                            <th width="150px">{% trans "Bug ID" %}</th>
+                            <th>{% trans "Bug Url" %}</th>
 			</tr>
 			{% for bug, bug_url in test_case_run_bugs %}
 			<tr>
@@ -130,12 +130,12 @@
 		{% endif %}
 
 		{% if report_urls %}
-		<h2>View all in Issue Tracker</h2>
-		<em>Only configured ITs which support multiple bugs are shown</em>
+                <h2>{% trans "View all in Issue Tracker" %}</h2>
+                <em>{% trans "Only configured ITs which support multiple bugs are shown" %}</em>
 		<table class="list border-1" cellpadding="0" cellspacing="0">
 			<tr>
-				<th width="150px">Tracker</th>
-				<th>URL</th>
+                            <th width="150px">{% trans "Tracker" %}</th>
+                            <th>{% trans "URL" %}</th>
 			</tr>
 			{% for name, report_url in report_urls %}
 			<tr>

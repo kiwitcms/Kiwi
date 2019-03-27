@@ -2,6 +2,8 @@
 from http import HTTPStatus
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext_lazy as _
 
 from tcms.tests import LoggedInTestCase
 from tcms.tests.factories import UserFactory
@@ -54,7 +56,7 @@ class TestUserAdmin(LoggedInTestCase):
     def test_non_admin_can_delete_myself(self):
         response = self.client.get('/admin/auth/user/%d/delete/' % self.tester.pk)
 
-        self.assertContains(response, "Are you sure?")
+        self.assertContains(response, _("Yes, I'm sure"))
         expected = "<a href=\"/admin/auth/user/%d/change/\">%s</a>" % (self.tester.pk,
                                                                        self.tester.username)
         # 2 b/c of breadcrumbs links
@@ -77,3 +79,25 @@ class TestUserAdmin(LoggedInTestCase):
 
         self.tester.refresh_from_db()
         self.assertEqual(self.tester.first_name, 'Changed by admin')
+
+    def test_admin_can_open_the_add_users_page(self):
+        # test for https://github.com/kiwitcms/Kiwi/issues/642
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username,
+            password='admin-password')
+        response = self.client.get('/admin/auth/user/add/')
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+
+    def test_admin_can_add_new_users(self):
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.admin.username,
+            password='admin-password')
+        response = self.client.post('/admin/auth/user/add/', {
+            'username': 'added-by-admin',
+            'password1': 'xo-xo-xo',
+            'password2': 'xo-xo-xo',
+        }, follow=True)
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertTrue(get_user_model().objects.filter(username='added-by-admin').exists())

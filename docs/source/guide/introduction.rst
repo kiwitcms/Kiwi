@@ -69,7 +69,7 @@ Based on the information above we propose the following way to organize testing
 activities within your team:
 
 #. Create Test Plan for individual areas you'd like to test, for example
-  *performance testing* or *cross-browser testing*;
+   *performance testing* or *cross-browser testing*;
 #. Add all necessary Test Cases to your Test Plan;
 #. When a new product build is available:
 

@@ -2,7 +2,9 @@
     Custom template tag filters.
 """
 
+import bleach
 import markdown
+from bleach_whitelist import markdown_tags, markdown_attrs, print_tags
 
 from django import template
 from django.utils.safestring import mark_safe
@@ -11,13 +13,29 @@ from django.contrib.messages import constants as messages
 register = template.Library()
 
 
+@register.filter(name='is_list')
+def is_list(variable):
+    return isinstance(variable, list)
+
+
 @register.filter(name='markdown2html')
 def markdown2html(md_str):
     """
         Returns markdown string as HTML.
     """
-    return mark_safe(markdown.markdown(md_str,  # nosec:B308:blacklist
-                                       extensions=['markdown.extensions.fenced_code']))
+    if md_str is None:
+        md_str = ''
+
+    rendered_md = markdown.markdown(md_str,
+                                    extensions=[
+                                        'markdown.extensions.fenced_code',
+                                        'markdown.extensions.nl2br',
+                                        'markdown.extensions.tables',
+                                    ])
+    html = bleach.clean(rendered_md,
+                        markdown_tags + print_tags,
+                        markdown_attrs)
+    return mark_safe(html)  # nosec:B308:blacklist
 
 
 @register.filter(name='message_icon')

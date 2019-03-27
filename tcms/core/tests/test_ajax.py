@@ -8,127 +8,18 @@ from django.conf import settings
 from django.db.models import Count
 from django.http.request import HttpRequest
 
-from tcms.core.ajax import _TagCounter, _TagObjects, _InfoObjects
+from tcms.core.ajax import _TagCounter, _TagObjects
 from tcms.testplans.models import TestPlanTag
 from tcms.testruns.models import TestRunTag
-from tcms.testcases.models import TestCase, TestCaseTag, Category
+from tcms.testcases.models import TestCase, TestCaseTag
 from tcms.tests import BasePlanCase
 
 from tcms.tests.factories import TagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TestCaseFactory
 from tcms.tests.factories import TestPlanFactory
-from tcms.tests.factories import CategoryFactory
-from tcms.tests.factories import ComponentFactory
-from tcms.tests.factories import ProductFactory
-from tcms.tests.factories import UserFactory
-from tcms.tests.factories import VersionFactory
 
 from tcms.utils.permissions import initiate_user_with_default_setups
-
-
-class TestInfo(test.TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.product = ProductFactory()
-
-        cls.default_category = Category.objects.get(name='--default--')
-        cls.category_one = CategoryFactory(product=cls.product)
-        cls.category_two = CategoryFactory(product=cls.product)
-
-        cls.categories = [cls.default_category, cls.category_one, cls.category_two]
-
-    def test_lowercase_string_is_converted_to_bool(self):
-        url = "%s?info_type=versions&product_id=1&is_active=true" % reverse('ajax-info')
-        response = self.client.get(url)
-        self.assertEqual(200, response.status_code)
-
-    def test_empty_string_is_converted_to_bool(self):
-        url = "%s?info_type=versions&product_id=1&is_active=" % reverse('ajax-info')
-        response = self.client.get(url)
-        self.assertEqual(200, response.status_code)
-
-    def test_with_unrecognisable_info_type(self):
-        """ When a request comes with invalid info_type,
-            we expect to receive response containing the 'Unrecognizable info-type' error message
-        """
-
-        url = "%s?info_type=INVALID" % reverse('ajax-info')
-
-        response = self.client.get(url)
-
-        self.assertContains(response, 'Unrecognizable info-type')
-
-    def test_with_json_format(self):
-        """ When a request comes with info_type=categories for given product_id,
-            we expect to receive all categories for that product as array of JSON objects """
-
-        url = "%s?info_type=categories&product_id=%d" % (reverse('ajax-info'), self.product.pk)
-
-        response = self.client.get(url)
-        actual_response = json.loads(response.content, encoding=settings.DEFAULT_CHARSET)
-
-        for category in self.categories:
-            expected = {"model": "testcases.category", "pk": category.pk,
-                        "fields": {"name": category.name}}
-            self.assertIn(expected, actual_response)
-
-
-class Test_InfoObjects(test.TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        cls.product = ProductFactory()
-        cls.request = HttpRequest()
-
-        cls.info_objects = _InfoObjects(cls.request, cls.product.pk)
-
-        cls.category_one = CategoryFactory(product=cls.product)
-        cls.category_two = CategoryFactory(product=cls.product)
-        cls.category_three = CategoryFactory()
-
-        cls.component_one = ComponentFactory(product=cls.product)
-        cls.component_two = ComponentFactory(product=cls.product)
-        cls.component_three = ComponentFactory()
-
-        cls.user_one = UserFactory()
-        cls.user_two = UserFactory()
-
-        cls.version_one = VersionFactory(product=cls.product)
-        cls.version_two = VersionFactory()
-
-    def test_categories(self):
-
-        categories = self.info_objects.categories()
-
-        self.assertIn(self.category_one, categories)
-        self.assertIn(self.category_two, categories)
-        self.assertNotIn(self.category_three, categories)
-
-    def test_components(self):
-
-        components = self.info_objects.components()
-
-        self.assertIn(self.component_one, components)
-        self.assertIn(self.component_two, components)
-        self.assertNotIn(self.component_three, components)
-
-    def test_users(self):
-        self.request.GET = {'username': self.user_one.username}
-
-        info_objects = _InfoObjects(self.request)
-        users = info_objects.users()
-
-        self.assertIn(self.user_one, users)
-        self.assertNotIn(self.user_two, users)
-
-    def test_version(self):
-
-        test_versions = self.info_objects.versions()
-
-        self.assertIn(self.version_one, test_versions)
-        self.assertNotIn(self.version_two, test_versions)
 
 
 class Test_TestCaseUpdates(BasePlanCase):

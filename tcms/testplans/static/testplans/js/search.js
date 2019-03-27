@@ -1,3 +1,12 @@
+function pre_process_data(data) {
+    var tags_cache = {};
+
+    data.forEach(function(element) {
+        addResourceToData(element, 'tag', 'Tag.filter', tags_cache);
+    });
+}
+
+
 $(document).ready(function() {
     var table = $("#resultsTable").DataTable({
         ajax: function(data, callback, settings) {
@@ -31,10 +40,6 @@ $(document).ready(function() {
                 params['author__username__startswith'] = $('#id_author').val();
             };
 
-            if ($('#id_owner').val()) {
-                params['owner__username__startswith'] = $('#id_owner').val();
-            };
-
             if ($('#id_default_tester').val()) {
                 params['case__default_tester__username__startswith'] = $('#id_default_tester').val();
             };
@@ -43,24 +48,34 @@ $(document).ready(function() {
 
             params['is_active'] = $('#id_active').is(':checked');
 
-            dataTableJsonRPC('TestPlan.filter', params, callback);
+            dataTableJsonRPC('TestPlan.filter', params, callback, pre_process_data);
         },
         columns: [
             { data: "plan_id" },
             {
                 data: null,
                 render: function (data, type, full, meta) {
-                    return '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
+                    result = '<a href="/plan/'+ data.plan_id + '/">' + escapeHTML(data.name) + '</a>';
+                    if (! data.is_active) {
+                        result = '<strike>' + result + '</strike>';
+                    }
+                    return result;
                 }
             },
             { data: "create_date" },
-            { data: "author" },
-            { data: "owner" },
             { data: "product" },
-            { data: "type"}
+            { data: "product_version" },
+            { data: "type"},
+            { data: "author" },
+            {
+                data: "tag",
+                render: renderFromCache,
+            },
         ],
         dom: "t",
         language: {
+            loadingRecords: '<div class="spinner spinner-lg"></div>',
+            processing: '<div class="spinner spinner-lg"></div>',
             zeroRecords: "No records found"
         },
         order: [[ 0, 'asc' ]],
@@ -73,14 +88,7 @@ $(document).ready(function() {
         return false; // so we don't actually send the form
     });
 
-    $('#id_product').change(function() {
-        var product_id = $(this).val();
-        if (product_id) {
-            jsonRPC('Version.filter', {product: product_id}, updateVersionSelect);
-        } else {
-            updateVersionSelect([]);
-        }
-    });
+    $('#id_product').change(update_version_select_from_product);
 
     $('.bootstrap-switch').bootstrapSwitch();
 

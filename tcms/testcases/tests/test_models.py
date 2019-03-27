@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, no-member
 
 from mock import patch
 
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from tcms.core.history import history_email_for
 from tcms.testcases.models import BugSystem
@@ -13,9 +12,7 @@ from tcms.tests import BasePlanCase
 from tcms.tests.factories import ComponentFactory
 from tcms.tests.factories import BuildFactory
 from tcms.tests.factories import TestCaseComponentFactory
-from tcms.tests.factories import TestCaseEmailSettingsFactory
-from tcms.tests.factories import TestCaseFactory
-from tcms.tests.factories import TestCaseRunFactory
+from tcms.tests.factories import TestExecutionFactory
 from tcms.tests.factories import TestCaseTagFactory
 from tcms.tests.factories import TestRunFactory
 from tcms.tests.factories import TagFactory
@@ -30,8 +27,8 @@ class TestCaseRemoveBug(BasePlanCase):
         cls.build = BuildFactory(product=cls.product)
         cls.test_run = TestRunFactory(product_version=cls.version, plan=cls.plan,
                                       manager=cls.tester, default_tester=cls.tester)
-        cls.case_run = TestCaseRunFactory(assignee=cls.tester, tested_by=cls.tester,
-                                          case=cls.case, run=cls.test_run, build=cls.build)
+        cls.case_run = TestExecutionFactory(assignee=cls.tester, tested_by=cls.tester,
+                                            case=cls.case, run=cls.test_run, build=cls.build)
         cls.bug_system = BugSystem.objects.get(name='Bugzilla')
 
     def setUp(self):
@@ -123,25 +120,6 @@ class TestCaseRemoveComponent(BasePlanCase):
                 self.component_2.pk))
 
 
-class TestCaseRemovePlan(BasePlanCase):
-    """Test TestCase.remove_plan"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestCaseRemovePlan, cls).setUpTestData()
-
-        cls.new_case = TestCaseFactory(author=cls.tester, default_tester=None, reviewer=cls.tester,
-                                       plan=[cls.plan])
-
-    def test_remove_plan(self):
-        self.new_case.remove_plan(self.plan)
-
-        found = self.plan.case.filter(pk=self.new_case.pk).exists()
-        self.assertFalse(
-            found, 'Case {0} should has no relationship to plan {1} now.'.format(self.new_case.pk,
-                                                                                 self.plan.pk))
-
-
 class TestCaseRemoveTag(BasePlanCase):
     """Test TestCase.remove_tag"""
 
@@ -165,19 +143,11 @@ class TestSendMailOnCaseIsUpdated(BasePlanCase):
     """Test send mail on case post_save signal is triggered"""
     @classmethod
     def setUpTestData(cls):
-        super(TestSendMailOnCaseIsUpdated, cls).setUpTestData()
+        super().setUpTestData()
 
-        cls.case.add_text('action', 'effect', 'setup', 'breakdown')
-
-        cls.email_setting = TestCaseEmailSettingsFactory(
-            case=cls.case,
-            notify_on_case_update=True,
-            auto_to_case_author=True)
-
-        cls.case_editor = User.objects.create_user(username='editor')
-        # This is actually done when update a case. Setting current_user
-        # explicitly here aims to mock that behavior.
-        cls.case.current_user = cls.case_editor
+        cls.case.emailing.notify_on_case_update = True
+        cls.case.emailing.auto_to_case_author = True
+        cls.case.emailing.save()
 
     @patch('tcms.core.utils.mailto.send_mail')
     def test_send_mail_to_case_author(self, send_mail):

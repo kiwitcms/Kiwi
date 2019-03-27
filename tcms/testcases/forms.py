@@ -6,26 +6,11 @@ from django.utils.translation import ugettext_lazy as _
 from tcms.core.widgets import SimpleMDE
 from tcms.core.forms.fields import UserField, StripURLField
 from tcms.core.utils import string_to_list
-from tcms.core.utils.validations import validate_bug_id
 from tcms.testplans.models import TestPlan
-from tcms.testruns.models import TestCaseRun
 from tcms.management.models import Priority, Product, Component
 from tcms.testcases.models import TestCase, Category, TestCaseStatus
-from tcms.testcases.models import Bug, AUTOMATED_CHOICES as FULL_AUTOMATED_CHOICES
 from tcms.testcases.fields import MultipleEmailField
 
-
-AUTOMATED_CHOICES = (
-    (0, 'Manual'),
-    (1, 'Auto'),
-)
-
-AUTOMATED_SERCH_CHOICES = (
-    ('', '----------'),
-    (0, 'Manual'),
-    (1, 'Auto'),
-    (2, 'Both'),
-)
 
 ITEMS_PER_PAGE_CHOICES = (
     ('20', '20'),
@@ -64,16 +49,9 @@ class BaseCaseForm(forms.Form):
     summary = forms.CharField(label="Summary", )
     default_tester = UserField(label="Default tester", required=False)
     requirement = forms.CharField(label="Requirement", required=False)
-    is_automated = forms.MultipleChoiceField(
-        choices=AUTOMATED_CHOICES,
-        widget=forms.CheckboxSelectMultiple(),
-    )
-    is_automated_proposed = forms.BooleanField(
-        label='Autoproposed', required=False
-    )
+    is_automated = forms.BooleanField(initial=False, required=False)
     script = forms.CharField(label="Script", required=False)
     arguments = forms.CharField(label="Arguments", required=False)
-    alias = forms.CharField(label="Alias", required=False)
     extra_link = StripURLField(
         label='Extra link',
         max_length=1024,
@@ -101,68 +79,38 @@ class BaseCaseForm(forms.Form):
         queryset=Category.objects.none(),
         empty_label=None,
     )
-    component = forms.ModelMultipleChoiceField(
-        label="Components",
-        queryset=Component.objects.none(),
-        required=False,
-    )
     notes = forms.CharField(
         label='Notes',
         widget=forms.Textarea,
         required=False
     )
-    setup = forms.CharField(label="Setup", widget=SimpleMDE(), required=False)
-    action = forms.CharField(label="Actions", widget=SimpleMDE(), required=False)
-    effect = forms.CharField(label="Expect results", widget=SimpleMDE(), required=False)
-    breakdown = forms.CharField(label="Breakdown", widget=SimpleMDE(), required=False)
+    text = forms.CharField(
+        widget=SimpleMDE(),
+        required=False,
+        initial=_("""**Scenario**: ... what behavior will be tested ...
+  **Given** ... conditions ...
+  **When** ... actions ...
+  **Then** ... expected results ...
 
-    def __init__(self, *args, **kwargs):
-        if args:
-            self.notes_val = args[0].get('notes', None)
-            self.script_val = args[0].get('script', None)
-        elif kwargs:
-            self.notes_val = kwargs.get('notes', None)
-            self.script_val = kwargs.get('script', None)
-        else:
-            self.notes_val = ''
-            self.script_val = ''
-        super(BaseCaseForm, self).__init__(*args, **kwargs)
+*Actions*:
 
-    def clean_is_automated(self):
-        data = self.cleaned_data['is_automated']
-        if len(data) == 2:
-            return 2
+1. item
+2. item
+3. item
 
-        if data:
-            # FIXME: Should data always be a list?
-            try:
-                return int(data[0])
-            except ValueError:
-                return data[0]
+*Expected results*:
 
-        return data
-
-    def clean_script(self):
-        if self.script_val:
-            return self.cleaned_data['script']
-
-        return ''
-
-    def clean_notes(self):
-        if self.notes_val:
-            return self.cleaned_data['notes']
-
-        return ''
+1. item
+2. item
+3. item
+"""))
 
     def populate(self, product_id=None):
         if product_id:
             self.fields['category'].queryset = Category.objects.filter(
                 product__id=product_id)
-            self.fields['component'].queryset = Component.objects.filter(
-                product__id=product_id)
         else:
             self.fields['category'].queryset = Category.objects.all()
-            self.fields['component'].queryset = Component.objects.all()
 
 
 class NewCaseForm(BaseCaseForm):
@@ -173,18 +121,14 @@ class NewCaseForm(BaseCaseForm):
         return self.cleaned_data['case_status']
 
 
-class EditCaseForm(BaseCaseForm):
-    pass
-
-
 class CaseNotifyForm(forms.Form):
-    author = forms.BooleanField(required=False)
-    default_tester_of_case = forms.BooleanField(required=False)
-    managers_of_runs = forms.BooleanField(required=False)
-    default_testers_of_runs = forms.BooleanField(required=False)
-    assignees_of_case_runs = forms.BooleanField(required=False)
-    notify_on_case_update = forms.BooleanField(required=False)
-    notify_on_case_delete = forms.BooleanField(required=False)
+    author = forms.BooleanField(required=False, initial=True)
+    default_tester_of_case = forms.BooleanField(required=False, initial=True)
+    managers_of_runs = forms.BooleanField(required=False, initial=True)
+    default_testers_of_runs = forms.BooleanField(required=False, initial=True)
+    assignees_of_case_runs = forms.BooleanField(required=False, initial=True)
+    notify_on_case_update = forms.BooleanField(required=False, initial=True)
+    notify_on_case_delete = forms.BooleanField(required=False, initial=True)
 
     cc_list = MultipleEmailField(
         required=False,
@@ -199,11 +143,7 @@ class CaseNotifyForm(forms.Form):
 
 
 class XMLRPCBaseCaseForm(BaseCaseForm):
-    is_automated = forms.ChoiceField(
-        choices=FULL_AUTOMATED_CHOICES,
-        widget=forms.CheckboxSelectMultiple(),
-        required=False,
-    )
+    pass
 
 
 class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
@@ -212,12 +152,6 @@ class XMLRPCNewCaseForm(XMLRPCBaseCaseForm):
             return TestCaseStatus.get_proposed()
 
         return self.cleaned_data['case_status']
-
-    def clean_is_automated(self):
-        if self.cleaned_data['is_automated'] == '':
-            return 0
-
-        return self.cleaned_data['is_automated']
 
 
 class XMLRPCUpdateCaseForm(XMLRPCBaseCaseForm):
@@ -255,8 +189,7 @@ class BaseCaseSearchForm(forms.Form):
     )
     priority = forms.ModelMultipleChoiceField(
         label="Priority",
-        # todo: this needs to filter out inactive priorities
-        queryset=Priority.objects.all(),
+        queryset=Priority.objects.filter(is_active=True),
         widget=forms.CheckboxSelectMultiple(),
         required=False
     )
@@ -272,13 +205,7 @@ class BaseCaseSearchForm(forms.Form):
         required=False
     )
     bug_id = BugField(label="Bug ID", required=False)
-    is_automated = forms.ChoiceField(
-        choices=AUTOMATED_SERCH_CHOICES,
-        required=False,
-    )
-    is_automated_proposed = forms.BooleanField(
-        label='Autoproposed', required=False
-    )
+    is_automated = forms.BooleanField(required=False)
     items_per_page = forms.ChoiceField(label='Items per page',
                                        required=False,
                                        choices=ITEMS_PER_PAGE_CHOICES)
@@ -381,106 +308,3 @@ class CloneCaseForm(forms.Form):
 
     def populate(self, case_ids):
         self.fields['case'].queryset = TestCase.objects.filter(case_id__in=case_ids)
-
-
-class CaseAutomatedForm(forms.Form):
-    a = forms.ChoiceField(
-        choices=(('change', 'Change'),),
-        widget=forms.HiddenInput(),
-    )
-    o_is_automated = forms.BooleanField(
-        label='Automated', required=False,
-        help_text='This is an automated test case.',
-    )
-    o_is_manual = forms.BooleanField(
-        label='Manual', required=False,
-        help_text='This is a manual test case.',
-    )
-    o_is_automated_proposed = forms.BooleanField(
-        label='Autoproposed', required=False,
-        help_text='This test case is planned to be automated.'
-    )
-
-    def clean(self):
-        super(CaseAutomatedForm, self).clean()
-        cdata = self.cleaned_data.copy()  # Cleanen data
-
-        cdata['is_automated'] = None
-        cdata['is_automated_proposed'] = None
-
-        if cdata['o_is_manual'] and cdata['o_is_automated']:
-            cdata['is_automated'] = 2
-        else:
-            if cdata['o_is_manual']:
-                cdata['is_automated'] = 0
-
-            if cdata['o_is_automated']:
-                cdata['is_automated'] = 1
-
-        cdata['is_automated_proposed'] = cdata['o_is_automated_proposed']
-
-        return cdata
-
-    def populate(self):
-
-        self.fields['case'].queryset = TestCase.objects.all()
-
-
-class CaseBugForm(forms.ModelForm):
-    case = forms.ModelChoiceField(queryset=TestCase.objects.all(),
-                                  widget=forms.HiddenInput())
-    case_run = forms.ModelChoiceField(queryset=TestCaseRun.objects.all(),
-                                      widget=forms.HiddenInput(),
-                                      required=False)
-
-    def clean(self):
-        super(CaseBugForm, self).clean()
-        bug_id = self.cleaned_data['bug_id']
-        bug_system_id = self.cleaned_data['bug_system'].pk
-
-        validate_bug_id(bug_id, bug_system_id)
-
-        return self.cleaned_data
-
-    class Meta:
-        model = Bug
-        fields = '__all__'
-
-
-class CaseComponentForm(forms.Form):
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        empty_label=None,
-        required=False,
-    )
-    o_component = forms.ModelMultipleChoiceField(
-        label="Components",
-        queryset=Component.objects.none(),
-        required=False,
-    )
-
-    def populate(self, product_id=None):
-        if product_id:
-            self.fields['o_component'].queryset = Component.objects.filter(
-                product__id=product_id)
-        else:
-            self.fields['o_component'].queryset = Component.objects.all()
-
-
-class CaseCategoryForm(forms.Form):
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        empty_label=None,
-        required=False,
-    )
-    o_category = forms.ModelMultipleChoiceField(
-        label="Categorys",
-        queryset=Category.objects.none(),
-        required=False,
-    )
-
-    def populate(self, product_id=None):
-        if product_id:
-            self.fields['o_category'].queryset = Category.objects.filter(product__id=product_id)
-        else:
-            self.fields['o_category'].queryset = Category.objects.all()

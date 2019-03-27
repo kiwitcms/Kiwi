@@ -8,15 +8,16 @@ from tcms.core.utils import form_errors_to_list
 from tcms.management.models import Tag
 from tcms.management.models import Component
 from tcms.testcases.models import TestCase
+
+from tcms.xmlrpc import utils
 from tcms.xmlrpc.forms import UpdateCaseForm, NewCaseForm
-
 from tcms.xmlrpc.decorators import permissions_required
-
 
 __all__ = (
     'create',
     'update',
     'filter',
+    'remove',
 
     'add_component',
     'get_components',
@@ -28,12 +29,15 @@ __all__ = (
 
     'add_tag',
     'remove_tag',
+
+    'add_attachment',
+    'list_attachments',
 )
 
 
 @permissions_required('testcases.add_testcasecomponent')
 @rpc_method(name='TestCase.add_component')
-def add_component(case_id, component_id):
+def add_component(case_id, component):
     """
     .. function:: XML-RPC TestCase.add_component(case_id, component_id)
 
@@ -41,17 +45,19 @@ def add_component(case_id, component_id):
 
         :param case_id: PK of TestCase to modify
         :type case_id: int
-        :param component_id: PK of Component to add
-        :type component_id: int
-        :return: None
+        :param component: Name of Component to add
+        :type component_id: str
+        :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :raises: PermissionDenied if missing the *testcases.add_testcasecomponent*
                  permission
         :raises: DoesNotExist if missing test case or component that match the
                  specified PKs
     """
-    TestCase.objects.get(pk=case_id).add_component(
-        Component.objects.get(pk=component_id)
+    case = TestCase.objects.get(pk=case_id)
+    case.add_component(
+        Component.objects.get(name=component, product=case.category.product)
     )
+    return case.serialize()
 
 
 @rpc_method(name='TestCase.get_components')
@@ -268,26 +274,17 @@ def create(values, **kwargs):
     if form.is_valid():
         # Create the case
         test_case = TestCase.create(author=request.user, values=form.cleaned_data)
-
-        # Add case text to the case
-        test_case.add_text(
-            action=form.cleaned_data['action'] or '',
-            effect=form.cleaned_data['effect'] or '',
-            setup=form.cleaned_data['setup'] or '',
-            breakdown=form.cleaned_data['breakdown'] or '',
-        )
     else:
         # Print the errors if the form is not passed validation.
         raise ValueError(form_errors_to_list(form))
 
     result = test_case.serialize()
-    result['text'] = test_case.latest_text().serialize()
 
     return result
 
 
 @rpc_method(name='TestCase.filter')
-def filter(query):  # pylint: disable=redefined-builtin
+def filter(query=None):  # pylint: disable=redefined-builtin
     """
     .. function:: XML-RPC TestCase.filter(query)
 
@@ -297,22 +294,17 @@ def filter(query):  # pylint: disable=redefined-builtin
         :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
         :type query: dict
         :return: Serialized list of :class:`tcms.testcases.models.TestCase` objects.
-                 The key ``text`` holds a the latest version of a serialized
-                 :class:`tcms.testcases.models.TestCaseText` object!
         :rtype: list(dict)
     """
-    results = []
-    for case in TestCase.objects.filter(**query).distinct():
-        serialized_case = case.serialize()
-        serialized_case['text'] = case.latest_text().serialize()
-        results.append(serialized_case)
+    if query is None:
+        query = {}
 
-    return results
+    return TestCase.to_xmlrpc(query)
 
 
 @permissions_required('testcases.change_testcase')
 @rpc_method(name='TestCase.update')
-def update(case_id, values, **kwargs):
+def update(case_id, values):
     """
     .. function:: XML-RPC TestCase.update(case_id, values)
 
@@ -321,9 +313,6 @@ def update(case_id, values, **kwargs):
         :param case_id: PK of TestCase to be modified
         :type case_id: int
         :param values: Field values for :class:`tcms.testcases.models.TestCase`.
-                       The special keys ``setup``, ``breakdown``, ``action`` and
-                       ``effect`` are recognized and will cause update of the underlying
-                       :class:`tcms.testcases.models.TestCaseText` object!
         :type values: dict
         :return: Serialized :class:`tcms.testcases.models.TestCase` object
         :rtype: dict
@@ -346,24 +335,72 @@ def update(case_id, values, **kwargs):
             if key not in ['component', 'tag'] and hasattr(test_case, key):
                 setattr(test_case, key, form.cleaned_data[key])
         test_case.save()
-
-        # if we're updating the text if any one of these parameters was
-        # specified
-        if any(x in ['setup', 'action', 'effect', 'breakdown'] for x in values.keys()):
-            action = form.cleaned_data.get('action', '').strip()
-            effect = form.cleaned_data.get('effect', '').strip()
-            setup = form.cleaned_data.get('setup', '').strip()
-            breakdown = form.cleaned_data.get('breakdown', '').strip()
-            author = kwargs.get(REQUEST_KEY).user
-
-            test_case.add_text(
-                author=author,
-                action=action,
-                effect=effect,
-                setup=setup,
-                breakdown=breakdown,
-            )
     else:
         raise ValueError(form_errors_to_list(form))
 
     return test_case.serialize()
+
+
+@permissions_required('testcases.delete_testcase')
+@rpc_method(name='TestCase.remove')
+def remove(query):
+    """
+    .. function:: XML-RPC TestCase.remove(query)
+
+        Remove TestCase object(s).
+
+        :param query: Field lookups for :class:`tcms.testcases.models.TestCase`
+        :type query: dict
+        :return: None
+        :raises: PermissionDenied if missing the *testcases.delete_testcase* permission
+
+        Example - removing bug from TestCase::
+
+            >>> TestCase.remove({
+                'pk__in': [1, 2, 3, 4],
+            })
+    """
+    return TestCase.objects.filter(**query).delete()
+
+
+@permissions_required('attachments.view_attachment')
+@rpc_method(name='TestCase.list_attachments')
+def list_attachments(case_id, **kwargs):
+    """
+    .. function:: XML-RPC TestCase.list_attachments(case_id)
+
+        List attachments for the given TestCase.
+
+        :param case_id: PK of TestCase to inspect
+        :type case_id: int
+        :return: A list containing information and download URLs for attachements
+        :rtype: list
+        :raises: TestCase.DoesNotExit if object specified by PK is missing
+    """
+    case = TestCase.objects.get(pk=case_id)
+    request = kwargs.get(REQUEST_KEY)
+    return utils.get_attachments_for(request, case)
+
+
+@permissions_required('attachments.add_attachment')
+@rpc_method(name='TestCase.add_attachment')
+def add_attachment(case_id, filename, b64content, **kwargs):
+    """
+    .. function:: XML-RPC TestCase.add_attachment(case_id, filename, b64content)
+
+        Add attachment to the given TestCase.
+
+        :param case_id: PK of TestCase
+        :type case_id: int
+        :param filename: File name of attachment, e.g. 'logs.txt'
+        :type filename: str
+        :param b64content: Base64 encoded content
+        :type b64content: str
+        :return: None
+    """
+    utils.add_attachment(
+        case_id,
+        'testcases.TestCase',
+        kwargs.get(REQUEST_KEY).user,
+        filename,
+        b64content)

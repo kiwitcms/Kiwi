@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 
 from modernrpc.core import rpc_method, REQUEST_KEY
@@ -8,6 +9,9 @@ from modernrpc.core import rpc_method, REQUEST_KEY
 from tcms.xmlrpc.serializer import XMLRPCSerializer
 from tcms.xmlrpc.utils import parse_bool_value
 from tcms.xmlrpc.decorators import permissions_required
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 __all__ = (

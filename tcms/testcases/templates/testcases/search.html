@@ -10,24 +10,31 @@
         <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input id="id_summary" type="text" class="form-control" placeholder="{% trans 'Test run summary' %}">
+                <input id="id_summary" type="text" class="form-control" placeholder="{% trans 'Test case summary' %}">
             </div>
 
-            <label class="col-md-1 col-lg-1" for="id_automated">{% trans "Automated" %}</label>
+            <label for="id_after" class="col-md-1 col-lg-1">{% trans "After" %}</label>
             <div class="col-md-3 col-lg-3">
-                <select class="form-control selectpicker" id="id_automated">
-                    <option value="">----------</option>
-                {% for option in form.is_automated.field.queryset %}
-                    <option value="{{ option.pk }}">{{ option.name }}</option>
-                {% endfor %}
-                </select>
+                <div class="input-group date-time-picker-pf">
+                    <input type="text" class="form-control" id="id_after">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
             </div>
+            {% include "datetimepicker_script.html" with selector="#id_after" %}
 
-            <label class="col-md-1 col-lg-1" for="id_autoproposed">{% trans "Proposed for automation" %}</label>
+            <label for="id_before" class="col-md-1 col-lg-1">{% trans "Before" %}</label>
             <div class="col-md-3 col-lg-3">
-                <input class="bootstrap-switch" id="id_autoproposed" type="checkbox">
-                <label>{% trans "Search all when OFF" %}</label>
+                <div class="input-group date-time-picker-pf">
+                    <input type="text" class="form-control" id="id_before">
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
             </div>
+            {% include "datetimepicker_script.html" with selector="#id_before" %}
+
         </div>
 
         <div class="form-group">
@@ -81,6 +88,17 @@
                 </select>
             </div>
 
+            <label class="col-md-1 col-lg-1">{% trans "Automated" %}</label>
+            <div class="col-md-3 col-lg-3">
+                <input type="radio" name="is_automated" value="true">
+                <label>{% trans "Yes" %}</label>
+
+                <input type="radio" name="is_automated" value="false">
+                <label>{% trans "No" %}</label>
+
+                <input type="radio" name="is_automated" checked value="both">
+                <label class="active">{% trans "Both" %}</label>
+            </div>
         </div>
 
 
@@ -90,10 +108,6 @@
                 <input id="id_author" type="text" class="form-control" placeholder="{% trans 'Username' %}">
             </div>
 
-
-        </div>
-
-        <div class="form-group">
             <label class="col-md-1 col-lg-1" for="id_tag">{% trans "Tag" %}</label>
             <div class="col-md-3 col-lg-3">
                 <input id="id_tag" type="text" class="form-control" value="{{ form.tag__name__in.value|default:'' }}">
@@ -105,9 +119,7 @@
                 <input id="id_bugs" type="text" class="form-control" placeholder="{% trans 'Bug ID' %}">
                 <p class="help-block">{% trans "Separate multiple values with comma (,)" %}</p>
             </div>
-
         </div>
-
 
         <button id="btn_search" type="submit" class="btn btn-default btn-lg">{% trans "Search" %}</button>
     </form>
@@ -119,13 +131,14 @@
                 <tr>
                     <th>{% trans "ID" %}</th>
                     <th>{% trans "Summary" %}</th>
-                    <th>{% trans "Author" %}</th>
-                    <th>{% trans "Default tester" %}</th>
-                    <th>{% trans "Automated" %}</th>
-                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Created on" %}</th>
                     <th>{% trans "Category" %}</th>
+                    <th>{% trans "Component" %}</th>
                     <th>{% trans "Priority" %}</th>
-                    <th>{% trans "Created at" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Automated" %}</th>
+                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "Tags" %}</th>
                 </tr>
             </thead>
         </table>
@@ -136,8 +149,9 @@
 </div><!-- /container -->
 
 <!-- JavaScript that is used in this page -->
-<script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
 <script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
 
 <script src="{% static 'js/jsonrpc.js' %}"></script>
 <script src="{% static 'js/utils.js' %}"></script>

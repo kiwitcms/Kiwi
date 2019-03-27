@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+    {{ form.media }}
+{% endblock %}
+{% block title %}
+    {% if test_plan %}
+        {% trans "Edit TestPlan" %}
+    {% else %}
+        {% trans "Create new TestPlan" %}
+    {% endif %}
+{% endblock %}
+
+{% block contents %}
+
+    <div class="container-fluid container-cards-pf">
+        <form class="form-horizontal" action="{% if test_plan %}{% url 'plan-edit' test_plan.plan_id %}{% else %}{% url 'plans-new' %}{% endif %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_name">{% trans "Name" %}</label>
+                <div class="col-md-11 col-lg-11 {% if form.name.errors %}has-error{% endif %}">
+                    <input type="text" id="id_name" name="name" value="{{ form.name.value|default:'' }}" class="form-control" required>
+                {{ form.name.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_product">{% trans "Product" %}</label>
+                    <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
+                    <select id="id_product" name="product" class="form-control selectpicker">
+                        {% for product in form.product.field.queryset %}
+                            <option value="{{ product.pk }}" {% if product.pk|escape == form.product.value|escape %}selected{% endif %}>
+                                {{ product.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.product.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_version">{% trans "Version" %}</label>
+                    <a href="{% url 'admin:management_version_add' %}?_popup&product={{ form.product.pk }}"
+                       id="add_id_version" alt="{% trans 'add new Version' %}" title="{% trans 'add new Version' %}">
+                        +
+                    </a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.product_version.errors %}has-error{% endif %}">
+                    <select id="id_version" name="product_version" class="form-control selectpicker">
+                        {% for product_version in form.product_version.field.queryset %}
+                            <option value="{{ product_version.pk }}" {% if product_version.pk|escape == form.product_version.value|escape %}selected{% endif %}>
+                                {{ product_version.value }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.product_version.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_type">{% trans "Type" %}</label>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.type.errors %}has-error{% endif %}">
+                    <select class="form-control selectpicker" id="id_type" name="type">
+                        {% for type in form.type.field.queryset %}
+                            <option value="{{ type.pk }}" {% if type.pk|escape == form.type.value|escape %}selected{% endif %}>
+                                {{ type }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.type.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_parent">{% trans "Parent ID" %}</label>
+                <div class="col-md-3 col-lg-3 {% if form.parent.errors %}has-error{% endif %}">
+                    <input type="text" id="id_parent" name="parent" value="{{ form.parent.value|default:'' }}" class="form-control">
+                    {{ form.parent.errors }}
+                </div>
+                <label class="col-md-1 col-lg-1" for="id_reference_link">{% trans "Reference link" %}</label>
+                <div class="col-md-7 col-lg-7 {% if form.extra_link.errors %}has-error{% endif %}">
+                    <input type="text" id="id_reference_link" name="extra_link" value="{{ form.extra_link.value|default:'' }}" class="form-control">
+                    {{ form.extra_link.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-12 col-lg-12 {% if form.text.errors %}has-error{% endif %}" for="id_document"> {% trans "Test plan document:" %}</label>
+                <div class="col-lg-12 col-md-12">
+                    <div>{{ form.text }}</div>
+                    {{ form.text.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-12 col-lg-12"> {% trans "Notify:" %} </label>
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Author" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="auto_to_plan_author" type="checkbox" {% if form.auto_to_plan_author.value %} checked {% endif %}>
+                </div>
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "TestCase author" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="auto_to_case_owner" type="checkbox" {% if form.auto_to_case_owner.value %} checked {% endif %}>
+                </div>
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Default tester" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="auto_to_case_default_tester" type="checkbox" {% if form.auto_to_case_default_tester.value %} checked {% endif %}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-12 col-lg-12"> {% trans "Notify when:" %} </label>
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "TestPlan is updated" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="notify_on_plan_update" type="checkbox" {% if form.notify_on_plan_update.value %} checked {% endif %}>
+                </div>
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Test cases are updated" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="notify_on_case_update" type="checkbox" {% if form.notify_on_case_update.value %} checked {% endif %}>
+                </div>
+             </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1"> {% trans "Active" %} </label>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="is_active" type="checkbox" {% if form.is_active.value %} checked {% endif %}>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+
+        </form>
+
+    </div>
+
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
+<script src="{% static "grappelli/jquery/jquery.min.js" %}" type="text/javascript"></script>
+<script src="{% static "grappelli/js/grappelli.min.js" %}" type="text/javascript"></script>
+<script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}" type="text/javascript"></script>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
+<script src="{% static 'testplans/js/mutable.js' %}" type="text/javascript"></script>
+
+{% endblock %}

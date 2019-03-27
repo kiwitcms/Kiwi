@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block head %}
+    {{ form.media }}
+{% endblock %}
+{% block title %}
+    {% trans "New TestCase" %}
+{% endblock %}
+
+{% block contents %}
+
+    <div class="container-fluid container-cards-pf">
+        <form class="form-horizontal" action="{% if test_case %}{% url 'testcases-edit' test_case.pk %}{% else %}{% url 'testcases-new' %}{% endif %}" method="post">
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_summary">{% trans "Summary" %}</label>
+                <div class="col-md-11 col-lg-11 {% if form.summary.errors %}has-error{% endif %}">
+                    <input type="text" id="id_summary" name="summary" value="{{ form.summary.value|default:'' }}" class="form-control" required>
+                    {% if test_plan %}
+                        <p class="help-block"><a href="{% url 'test_plan_url_short' test_plan.pk %}">TP-{{ test_plan.pk }}: {{ test_plan.name }}</a></p>
+                        <input type="hidden" name="from_plan" value="{{ test_plan.pk }}">
+                    {% endif %}
+                    {{ form.summary.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_default_tester">{% trans "Default tester" %}</label>
+                <div class="col-md-3 col-lg-3 {% if form.default_tester.errors %}has-error{% endif %}">
+                    <input type="text" id="id_default_tester" name="default_tester" value="{{ form.default_tester.value|default:'' }}" class="form-control">
+                    {{ form.default_tester.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_product">{% trans "Product" %}</label>
+                    <a href="{% url 'admin:management_product_add' %}?_popup" id="add_id_product" alt="{% trans 'add new Product' %}" title="{% trans 'add new Product' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.product.errors %}has-error{% endif %}">
+                    <select id="id_product" name="product" class="form-control selectpicker">
+                        {% for product in form.product.field.queryset %}
+                            <option value="{{ product.pk }}" {% if product.pk|escape == form.product.value|escape %}selected{% endif %}>
+                                {{ product.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.product.errors }}
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label for="id_category">{% trans "Category" %}</label>
+                    <a href="{% url 'admin:testcases_category_add' %}?_popup&product=" id="add_id_category" alt="{% trans 'add new Category' %}" title="{% trans 'add new Category' %}">+</a>
+                </div>
+                <div class="col-md-3 col-lg-3 {% if form.category.errors %}has-error{% endif %}">
+                    <select id="id_category" name="category" class="form-control selectpicker">
+                        {% for category in form.category.field.queryset %}
+                            <option value="{{ category.pk }}" {% if category.pk|escape == form.category.value|escape %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.category.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_status">{% trans "Status" %}</label>
+                <div class="col-md-3 col-lg-3 {% if form.case_status.errors %}has-error{% endif %}">
+                    <select id="id_status" name="case_status" class="form-control selectpicker">
+                        {% for case_status in form.case_status.field.queryset %}
+                            <option value="{{ case_status.pk }}" {% if case_status.pk|escape == form.case_status.value|escape %}selected{% endif %}>
+                                {{ case_status.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.case_status.errors }}
+                </div>
+
+                <label class="col-md-1 col-lg-1" for="id_priority">{% trans "Priority" %}</label>
+                <div class="col-md-3 col-lg-3 {% if form.priority.errors %}has-error{% endif %}">
+                    <select id="id_priority" name="priority" class="form-control selectpicker">
+                        {% for priority in form.priority.field.queryset %}
+                            <option value="{{ priority.pk }}" {% if priority.pk|escape == form.priority.value|escape %}selected{% endif %}>
+                                {{ priority.value }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {{ form.priority.errors }}
+                </div>
+
+                <label class="col-md-1 col-lg-1">{% trans "Automated" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="is_automated" type="checkbox" {% if form.is_automated.value %}checked{% endif %}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12 col-lg-12">
+                    <label class="{% if form.text.errors %}has-error{% endif %}">{% trans "Text" %}:</label>
+                    <div>{{ form.text }}</div>
+                    {{ form.text.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_script">{% trans "Script" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.script.errors %}has-error{% endif %}">
+                    <input type="text" id="id_script" name="script" value="{{ form.script.value|default:'' }}" class="form-control">
+                    {{ form.script.errors }}
+                </div>
+
+                <label class="col-md-1 col-lg-1" for="id_arguments">{% trans "Arguments" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.arguments.errors %}has-error{% endif %}">
+                    <input type="text" id="id_arguments" name="arguments" value="{{ form.arguments.value|default:'' }}" class="form-control">
+                    {{ form.arguments.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_requirement">{% trans "Requirements" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.requirement.errors %}has-error{% endif %}">
+                    <input type="text" id="id_requirement" name="requirement" value="{{ form.requirement.value|default:'' }}" class="form-control">
+                    {{ form.requirement.errors }}
+                </div>
+                <label class="col-md-1 col-lg-1" for="id_extra_link">{% trans "Reference link" %}</label>
+                <div class="col-md-5 col-lg-5 {% if form.extra_link.errors %}has-error{% endif %}">
+                    <input type="text" id="id_extra_link" name="extra_link" value="{{ form.extra_link.value|default:'' }}" class="form-control">
+                    {{ form.extra_link.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_notes" class="col-md-1 col-lg-1">{% trans "Notes" %}</label>
+                <div class="col-md-12 col-lg-12 {% if form.notes.errors %}has-error{% endif %}">
+                    <textarea id="id_notes" rows="4" name="notes" class="form-control">{{ form.notes.value|default:'' }}</textarea>
+                    {{ form.notes.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12 col-lg-12">
+                    <label> {% trans "Notify" %}: </label>
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Author" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="author" type="checkbox" {% if notify_form.author.value %}checked{% endif %}>
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Manager of runs" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="managers_of_runs" type="checkbox" {% if notify_form.managers_of_runs.value %}checked{% endif %}>
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Asignees" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="assignees_of_case_runs" type="checkbox" {% if notify_form.assignees_of_case_runs.value %}checked{% endif %}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Default tester" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="default_tester_of_case" type="checkbox" {% if notify_form.default_tester_of_case.value %}checked{% endif %}>
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "Default tester of runs" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="default_testers_of_runs" type="checkbox" {% if notify_form.default_testers_of_runs.value %}checked{% endif %}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12 col-lg-12">
+                    <label> {% trans "Notify when" %}: </label>
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "TestCase is updated" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="notify_on_case_update" type="checkbox" {% if notify_form.notify_on_case_update.value %}checked{% endif %}>
+                </div>
+
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "TestCase is deleted" %} </label>
+                </div>
+                <div class="col-md-3 col-lg-3">
+                    <input class="bootstrap-switch" name="notify_on_case_delete" type="checkbox" {% if notify_form.notify_on_case_delete.value %}checked{% endif %}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-1 col-lg-1">
+                    <label> {% trans "CC to" %}: </label>
+                </div>
+                <div class="col-md-12 col-lg-12 {% if notify_form.cc_list.errors %}has-error{% endif %}">
+                    <textarea id="id_cc" rows="1" name="cc_list" class="form-control">{{ notify_form.cc_list.value|default:'' }}</textarea>
+                    {{ notify_form.cc_list.errors }}
+                    <p class="help-block">{% trans "Email addresses separated by comma. A notification email will be sent to each Email address within CC list." %}</p> </div>
+            </div>
+
+            <button type="submit" class="btn btn-default btn-lg">{% trans "Save" %}</button>
+        </form>
+    </div>
+
+<script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
+<script src="{% static "grappelli/jquery/jquery.min.js" %}"></script>
+<script src="{% static "grappelli/js/grappelli.min.js" %}"></script>
+<script src="{% static "admin/js/admin/RelatedObjectLookups.js" %}"></script>
+
+<script src="{% static 'js/jsonrpc.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+
+<script src="{% static 'testcases/js/mutable.js' %}"></script>
+
+{% endblock %}
+

@@ -1,4 +1,4 @@
-dist: trusty
+dist: xenial
 sudo: required
 language: python
 python:
@@ -6,6 +6,7 @@ python:
 cache: pip
 env:
   global:
+    - CC_TEST_REPORTER_ID=95caa6c770dbc4ca15944ed22c5fa840e1cc61627d199d11eedbf08e6a0482ee
     # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
     # via the "travis encrypt" command using the project repo's public key
     - secure: "AFMd4dRA1psBKd1LohQMxwL9vmAUvPrMzvBiU4w6mRX87Sskz69sLXAXivYvl/Eli+vzqIQat0VFOuymC4ScKhON1rbSJ5F/DQElToAPPNT2GXIaMCRA+ILOX28wFvC6/wqpvYuIf4yN19t2rSkNy0AqTH1RhPNkCHyiMcs0V6ztmlxobn1F9TYPCO8i1B+ZFez7rnUeQVaoXW3Cv4X8rjbkBd9iQQF/wfn8k71LeY2KB0fCxmjzFDQwXLnldka4lLWRuTPBcdKf57MveorMSJ5afLr/wd4IXKdoM3oUa6Us73T1+OvC3cOVlG7z49bP5VVz0xMq6qcmnQEOxMhO8wUNtkMssBz89BwC39LKMOxcASFF8F5joTWCfN+s2k2bsV/lNuKCspOEji+KTdSnMFMlo3LxQ8rt1cMNOrHvnmYJjteQ00IXrXhxdFeGGOrko0qQU1iPW4FjRsHOeNqdMMDKKvTO27odgJbNYF7lo3nWgPXVGqteMhpvxnoS2JR9ettGZJQueDrAzSmCe9Akc0hGwvyUTsyjaYLIAdxmaqKZtu1G+Otep11Rjf0gXaNLSZ/Pm02BHrOdLqTsRuTihHuR/W2HHuJrw44u2nF/3oer+bfAAGpdK0e6NqaZgmLSEN340FDcJ9sG6oGMo6cYGQWqzNUf3/gS4K7TvWhw10M="
@@ -26,6 +27,7 @@ addons:
 stages:
   - static_analysis
   - testing
+  - localization_testing
   - non_functional_testing
   - docker
 
@@ -87,6 +89,18 @@ jobs:
       addons:
         postgresql: 9.5
 
+    - stage: localization_testing
+      env:
+        - LANG=fr_FR.UTF-8
+        - TEST_DB=SQLite
+        - CMD=l10n-test
+
+    - stage: localization_testing
+      env:
+        - LANG=sl_SL.UTF-8
+        - TEST_DB=SQLite
+        - CMD=l10n-test
+
     - stage: non_functional_testing
       env:
         - CMD=check-docs-source-in-git
@@ -95,9 +109,18 @@ jobs:
           packages:
             - graphviz
 
+    - stage: non_functional_testing
+      env:
+        - TEST_DB=SQLite
+        - CMD=test_for_missing_migrations
+
+    - stage: non_functional_testing
+      env:
+        - CMD=build-for-pypi
+
     - stage: docker
       env:
-        - CMD=docker-image
+        - CMD=test-docker-image
 
 before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
@@ -135,8 +158,14 @@ install:
 
 script: make $CMD
 after_success:
-  - coveralls
-  - codecov
+  - |
+        if [ "$TRAVIS_BUILD_STAGE_NAME" == "Testing" ] && [ "$TEST_DB" == "MariaDB" ]; then
+            coveralls
+            codecov
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+        fi
 notifications:
   email:
     on_failure: change

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 {% comment %}
 Template for rendering rows of TestCases. Rows are TR tags used in a TABLE
@@ -23,8 +24,8 @@ test_cases should be a queryset of a list of TestCases.
 	<td>
 		<a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.pk }}</a>
 	</td>
-	<td class="subject expandable">
-		<a class="blind_down_link">{{ test_case.summary }}</a>
+	<td>
+		<a href="{% url "testcases-get" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">{{ test_case.summary }}</a>
 	</td>
 	<td class="col_author_content"><a href="{% url "tcms-profile" test_case.author.username %}">{{ test_case.author }}</a></td>
 	<td class="col_author_content">
@@ -34,7 +35,7 @@ test_cases should be a queryset of a list of TestCases.
 			{% if test_case.reviewer_id %}<a href="{% url "tcms-profile" test_case.reviewer.username %}">{% endif %}{{ test_case.reviewer }}{% if test_case.reviewer_id %}</a>{% endif %}</td>
 		{% endif %}
 	</td>
-	<td class="col_tester_content expandable">{{ test_case.get_is_automated_status }}</td>
+	<td class="col_tester_content expandable">{{ test_case.is_automated }}</td>
 
 	<td status='{{ test_case.case_status }}'>
 		{% if perms.testcases.change_testcase %}
@@ -57,7 +58,7 @@ test_cases should be a queryset of a list of TestCases.
 		{% if perms.testcases.change_testcase %}
 		<a class="editlink" href="{% url "testcases-edit" test_case.case_id %}?from_plan={{ test_plan.plan_id }}">Edit</a>
 		{% else %}
-		<span class="editlink grey">Edit</span>
+		<span class="editlink grey">{% trans "Edit" %}</span>
 		{% endif %}
 	</td>
 </tr>
@@ -69,7 +70,7 @@ test_cases should be a queryset of a list of TestCases.
 {% empty %}
 <tr>
 	<td colspan="12">
-		<center class="prompt-message prompt">No test case was found in this plan.</center></span>
+		<center class="prompt-message prompt">{% trans "No test case was found in this plan." %}</center></span>
 	</td>
 </tr>
 {% endfor %}

@@ -6,14 +6,13 @@ from http import HTTPStatus
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.db.models import Count
 from django.db.models import Q
-from django.forms import ValidationError
-from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
+from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -25,17 +24,18 @@ from django.views.generic.base import View
 from django_comments.models import Comment
 
 from tcms.core.utils import clean_request
-from tcms.core.utils.validations import validate_bug_id
 from tcms.management.models import Priority, Tag
-from tcms.testcases.forms import CaseBugForm
 from tcms.testcases.models import TestCasePlan, TestCaseStatus, BugSystem
 from tcms.testcases.views import get_selected_testcases
 from tcms.testplans.models import TestPlan
 from tcms.testruns.data import get_run_bug_ids
-from tcms.testruns.data import TestCaseRunDataMixin
+from tcms.testruns.data import TestExecutionDataMixin
 from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
-from tcms.testruns.models import TestRun, TestCaseRun, TestCaseRunStatus
+from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus
 from tcms.issuetracker.types import IssueTrackerType
+
+
+User = get_user_model()  # pylint: disable=invalid-name
 
 
 @require_POST
@@ -64,18 +64,11 @@ def new(request):
     test_cases = get_selected_testcases(request)
     test_plan = TestPlan.objects.get(plan_id=plan_id)
 
+    # note: ordered by case_id for test_show_create_new_run_page()
     tcs_values = test_cases.select_related('author',
                                            'case_status',
                                            'category',
-                                           'priority')
-    # note: ordered by case_id for test_show_create_new_run_page()
-    tcs_values = tcs_values.only('case_id',
-                                 'summary',
-                                 'author__email',
-                                 'create_date',
-                                 'category__name',
-                                 'priority__value',
-                                 'case_status__name').order_by('case_id')
+                                           'priority').order_by('case_id')
 
     if request.POST.get('POSTING_TO_CREATE'):
         form = NewRunForm(request.POST)
@@ -154,12 +147,11 @@ def open_run_get_case_runs(request, run):
     tcrs = run.case_run.select_related('run', 'case')
     tcrs = tcrs.only('run__run_id',
                      'run__plan',
-                     'case_run_status',
+                     'status',
                      'assignee', 'tested_by',
                      'case_text_version',
                      'sortkey',
                      'case__summary',
-                     'case__is_automated_proposed',
                      'case__is_automated',
                      'case__priority',
                      'case__category__name')
@@ -181,7 +173,7 @@ def open_run_get_case_runs(request, run):
 
 
 def open_run_get_comments_subtotal(case_run_ids):
-    content_type = ContentType.objects.get_for_model(TestCaseRun)
+    content_type = ContentType.objects.get_for_model(TestExecution)
     query_set = Comment.objects.filter(
         content_type=content_type,
         site_id=settings.SITE_ID,
@@ -223,11 +215,11 @@ def get(request, run_id, template_name='run/get.html'):
     # 2. get test run's all case runs
     test_case_runs = open_run_get_case_runs(request, test_run)
 
-    case_run_status = TestCaseRunStatus.objects.only('pk', 'name').order_by('pk')
+    status = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
 
     # Count the status
     # 3. calculate number of case runs of each status
-    status_stats_result = test_run.stats_caseruns_status(case_run_status)
+    status_stats_result = test_run.stats_caseruns_status(status)
 
     # Get the test case run bugs summary
     # 6. get the number of bugs of this run
@@ -251,14 +243,14 @@ def get(request, run_id, template_name='run/get.html'):
         for test_case_run in test_case_runs:
             test_case_run_pks.append(test_case_run.pk)
         comments_subtotal = open_run_get_comments_subtotal(test_case_run_pks)
-        case_run_status = TestCaseRunStatus.get_names()
+        status = TestExecutionStatus.get_names()
 
         for case_run in test_case_runs:
             yield (case_run,
                    testers.get(case_run.tested_by_id, None),
                    assignees.get(case_run.assignee_id, None),
                    priorities.get(case_run.case.priority_id),
-                   case_run_status[case_run.case_run_status_id],
+                   status[case_run.status_id],
                    comments_subtotal.get(case_run.pk, 0))
 
     context_data = {
@@ -268,8 +260,8 @@ def get(request, run_id, template_name='run/get.html'):
         'test_case_runs_count': len(test_case_runs),
         'status_stats': status_stats_result,
         'test_case_run_bugs_count': test_case_run_bugs_count,
-        'test_case_run_status': case_run_status,
-        'priorities': Priority.objects.all(),
+        'test_status': status,
+        'priorities': Priority.objects.filter(is_active=True),
         'case_own_tags': tags,
         'bug_trackers': BugSystem.objects.all(),
     }
@@ -324,21 +316,10 @@ def edit(request, run_id):
     return render(request, 'testruns/mutable.html', context_data)
 
 
-@permission_required('testruns.change_testcaserun')
-def execute(request, run_id, template_name='run/execute.html'):
-    """Execute test run"""
-    return get(request, run_id, template_name)
-
-
-class TestRunReportView(TemplateView, TestCaseRunDataMixin):
+class TestRunReportView(TemplateView, TestExecutionDataMixin):
     """Test Run report"""
 
     template_name = 'run/report.html'
-    run_id = None
-
-    def get(self, request, run_id):
-        self.run_id = run_id
-        return super(TestRunReportView, self).get(request, run_id)
 
     def get_context_data(self, **kwargs):
         """Generate report for specific TestRun
@@ -350,19 +331,17 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         4. Statistics
         5. bugs
         """
-        run = TestRun.objects.select_related('manager', 'plan').get(
-            pk=self.run_id)
+        run = TestRun.objects.select_related('manager', 'plan').get(pk=kwargs['run_id'])
 
-        case_runs = TestCaseRun.objects.filter(
+        case_runs = TestExecution.objects.filter(
             run=run
         ).select_related(
-            'case_run_status', 'case', 'tested_by'
+            'status', 'case', 'tested_by'
         ).only(
             'close_date',
-            'case_run_status__name',
+            'status__name',
             'case__category__name',
             'case__summary', 'case__is_automated',
-            'case__is_automated_proposed',
             'tested_by__username'
         )
         mode_stats = self.stats_mode_case_runs(case_runs)
@@ -370,7 +349,7 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
 
         test_case_run_bugs = []
         bug_system_types = {}
-        for _bug in get_run_bug_ids(self.run_id):
+        for _bug in get_run_bug_ids(run.pk):
             # format the bug URLs based on DB settings
             test_case_run_bugs.append((
                 _bug['bug_id'],
@@ -402,11 +381,10 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         comments = self.get_case_runs_comments(run.pk)
 
         for case_run in case_runs:
-            bugs = case_run_bugs.get(case_run.pk, ())
-            case_run.bugs = bugs
+            case_run.bugs = case_run_bugs.get(case_run.pk, ())
             case_run.user_comments = comments.get(case_run.pk, [])
 
-        context = super(TestRunReportView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'test_run': run,
             'test_case_runs': case_runs,
@@ -418,108 +396,6 @@ class TestRunReportView(TemplateView, TestCaseRunDataMixin):
         })
 
         return context
-
-
-@require_GET
-@permission_required('testruns.change_testrun')
-def bug(request, case_run_id, template_name='run/execute_case_run.html'):
-    """Process the bugs for case runs."""
-
-    class CaseRunBugActions:
-
-        def __init__(self, request, case_run, template_name):
-            self.request = request
-            self.case_run = case_run
-            self.template_name = template_name
-
-        def add(self):
-            if not self.request.user.has_perm('testcases.add_bug'):
-                return JsonResponse({'rc': 1, 'response': 'Permission denied'})
-
-            bug_id = request.GET.get('bug_id')
-            bug_system_id = request.GET.get('bug_system_id')
-
-            try:
-                validate_bug_id(bug_id, bug_system_id)
-            except ValidationError as error:
-                return JsonResponse({'rc': 1,
-                                     'response': str(error)})
-
-            bz_external_track = True if request.GET.get('bz_external_track',
-                                                        False) else False
-
-            try:
-                test_case_run.add_bug(bug_id=bug_id,
-                                      bug_system_id=bug_system_id,
-                                      bz_external_track=bz_external_track)
-            except ValueError as error:
-                msg = str(error) if str(error) else 'Failed to add bug %s' % bug_id
-                return JsonResponse({'rc': 1,
-                                     'response': msg})
-
-            return JsonResponse({'rc': 0,
-                                 'response': 'ok',
-                                 'run_bug_count': self.get_run_bug_count(),
-                                 'caserun_bugs_count': self.case_run.get_bugs_count()})
-
-        def file(self):
-            bug_system_id = request.GET.get('bug_system_id')
-            bug_system = BugSystem.objects.get(pk=bug_system_id)
-
-            if bug_system.base_url:
-                tracker = IssueTrackerType.from_name(bug_system.tracker_type)(bug_system)
-                url = tracker.report_issue_from_testcase(self.case_run)
-                response = {'rc': 0, 'response': url}
-
-            response = {'rc': 1, 'response': 'Enable reporting to this Issue Tracker '
-                                             'by configuring its base_url!'}
-            return JsonResponse(response)
-
-        def remove(self):
-            if not self.request.user.has_perm('testcases.delete_bug'):
-                response = {'rc': 1, 'response': 'Permission denied'}
-                return self.render(response=response)
-
-            try:
-                bug_id = self.request.GET.get('bug_id')
-                run_id = self.request.GET.get('case_run')
-                self.case_run.remove_bug(bug_id, run_id)
-            except ObjectDoesNotExist as error:
-                return JsonResponse({'rc': 1, 'response': str(error)})
-
-            return JsonResponse({'rc': 0,
-                                 'response': 'ok',
-                                 'run_bug_count': self.get_run_bug_count()})
-
-        def render_form(self):
-            form = CaseBugForm(initial={
-                'case_run': self.case_run.case_run_id,
-                'case': self.case_run.case_id,
-            })
-            if self.request.GET.get('type') == 'table':
-                return HttpResponse(form.as_table())
-
-            return HttpResponse(form.as_p())
-
-        def get_run_bug_count(self):
-            run = self.case_run.run
-            return run.get_bug_count()
-
-    try:
-        test_case_run = TestCaseRun.objects.get(case_run_id=case_run_id)
-    except ObjectDoesNotExist:
-        raise Http404
-
-    case_run_bug_actions = CaseRunBugActions(request=request,
-                                             case_run=test_case_run,
-                                             template_name=template_name)
-
-    func = getattr(case_run_bug_actions, request.GET['a'], None)
-    if func is None:
-        return JsonResponse({'rc': 1,
-                             'response': 'Unrecognizable actions'})
-
-    return func()
 
 
 @require_POST
@@ -577,7 +453,7 @@ def change_status(request, run_id):
 
 
 @require_POST
-@permission_required('testruns.delete_testcaserun')
+@permission_required('testruns.delete_testexecution')
 def remove_case_run(request, run_id):
     """Remove specific case run from the run"""
 
@@ -598,9 +474,9 @@ def remove_case_run(request, run_id):
     run = get_object_or_404(TestRun.objects.only('pk'), pk=run_id)
 
     # Restrict to delete those case runs that belongs to run
-    TestCaseRun.objects.filter(run_id=run.pk, pk__in=case_run_ids).delete()
+    TestExecution.objects.filter(run_id=run.pk, pk__in=case_run_ids).delete()
 
-    caseruns_exist = TestCaseRun.objects.filter(run_id=run.pk).exists()
+    caseruns_exist = TestExecution.objects.filter(run_id=run.pk).exists()
     if caseruns_exist:
         redirect_to = 'testruns-get'
     else:
@@ -609,7 +485,7 @@ def remove_case_run(request, run_id):
     return HttpResponseRedirect(reverse(redirect_to, args=[run_id, ]))
 
 
-@method_decorator(permission_required('testruns.add_testcaserun'), name='dispatch')
+@method_decorator(permission_required('testruns.add_testexecution'), name='dispatch')
 class AddCasesToRunView(View):
     """Add cases to a TestRun"""
 
@@ -689,7 +565,7 @@ class AddCasesToRunView(View):
         # also grab a list of all TestCase IDs which are already present in the
         # current TestRun so we can mark them as disabled and not allow them to
         # be selected
-        test_case_runs = TestCaseRun.objects.filter(run=run_id).values_list('case', flat=True)
+        test_case_runs = TestExecution.objects.filter(run=run_id).values_list('case', flat=True)
 
         data = {
             'test_run': test_run,
@@ -733,6 +609,7 @@ def cc(request, run_id):  # pylint: disable=invalid-name
 
 
 @require_POST
+@permission_required('testruns.change_testexecution')
 def update_case_run_text(request, run_id):
     """Update the IDLE cases to newest text"""
 
@@ -743,18 +620,18 @@ def update_case_run_text(request, run_id):
     else:
         test_case_runs = test_run.case_run.all()
 
-    test_case_runs = test_case_runs.filter(case_run_status__name='IDLE')
+    test_case_runs = test_case_runs.filter(status__name='IDLE')
 
     count = 0
     updated_test_case_runs = ''
     for test_case_run in test_case_runs:
-        latest_text = test_case_run.latest_text().case_text_version
-        if test_case_run.case_text_version != latest_text:
+        latest_version = test_case_run.case.history.latest().history_id
+        if test_case_run.case_text_version != latest_version:
             count += 1
             updated_test_case_runs += '<li>%s: %s -> %s</li>' % (
-                test_case_run.case.summary, test_case_run.case_text_version, latest_text
+                test_case_run.case.summary, test_case_run.case_text_version, latest_version
             )
-            test_case_run.case_text_version = latest_text
+            test_case_run.case_text_version = latest_version
             test_case_run.save()
 
     info = "<p>%s</p><ul>%s</ul>" % (_("%d CaseRun(s) updated:") % count, updated_test_case_runs)
@@ -779,7 +656,7 @@ def get_caseruns_of_runs(runs, kwargs=None):
     plan_tag = kwargs.get('plan_tag', None)
     if plan_tag:
         runs = runs.filter(plan__tag__name=plan_tag)
-    caseruns = TestCaseRun.objects.filter(run__in=runs)
+    caseruns = TestExecution.objects.filter(run__in=runs)
     priority = kwargs.get('priority', None)
     if priority:
         caseruns = caseruns.filter(case__priority__pk=priority)
@@ -790,11 +667,11 @@ def get_caseruns_of_runs(runs, kwargs=None):
         caseruns = caseruns.filter(tested_by__pk=tester)
     status = kwargs.get('status', None)
     if status:
-        caseruns = caseruns.filter(case_run_status__name__iexact=status)
+        caseruns = caseruns.filter(status__name__iexact=status)
     return caseruns
 
 
-@method_decorator(permission_required('testruns.change_testcaserun'), name='dispatch')
+@method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
 class UpdateAssigneeView(View):
     """Updates TestCaseRun.assignee. Called from the front-end."""
 
@@ -815,16 +692,16 @@ class UpdateAssigneeView(View):
         object_ids = request.POST.getlist('ids[]')
 
         for caserun_pk in object_ids:
-            test_case_run = get_object_or_404(TestCaseRun, pk=int(caserun_pk))
+            test_case_run = get_object_or_404(TestExecution, pk=int(caserun_pk))
             test_case_run.assignee = user
             test_case_run.save()
 
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
-@method_decorator(permission_required('testruns.change_testcaserun'), name='dispatch')
+@method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
 class UpdateCaseRunStatusView(View):
-    """Updates TestCaseRun.case_run_status_id. Called from the front-end."""
+    """Updates TestCaseRun.status_id. Called from the front-end."""
 
     http_method_names = ['post']
 
@@ -833,8 +710,8 @@ class UpdateCaseRunStatusView(View):
         object_ids = request.POST.getlist('object_pk[]')
 
         for caserun_pk in object_ids:
-            test_case_run = get_object_or_404(TestCaseRun, pk=int(caserun_pk))
-            test_case_run.case_run_status_id = status_id
+            test_case_run = get_object_or_404(TestExecution, pk=int(caserun_pk))
+            test_case_run.status_id = status_id
             test_case_run.tested_by = request.user
             test_case_run.close_date = datetime.now()
             test_case_run.save()

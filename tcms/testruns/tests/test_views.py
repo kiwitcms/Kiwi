@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, too-many-ancestors
 
 from http import HTTPStatus
 
 from django.utils import formats
 from django.urls import reverse
 from django.contrib.auth.models import Permission
+from django.utils.translation import ugettext_lazy as _
 
-from tcms.testcases.models import Bug
-from tcms.testcases.models import BugSystem
-from tcms.testruns.models import TestCaseRunStatus
+from tcms.testruns.models import TestExecutionStatus
 from tcms.testruns.models import TestRun
 from tcms.utils.permissions import initiate_user_with_default_setups
 
@@ -31,7 +30,7 @@ class TestGetRun(BaseCaseRun):
         super().setUpTestData()
         initiate_user_with_default_setups(cls.tester)
 
-        for _ in range(3):
+        for _i in range(3):
             cls.test_run.add_tag(TagFactory())
 
         cls.unauthorized = UserFactory()
@@ -56,7 +55,7 @@ class TestGetRun(BaseCaseRun):
         self.assertContains(response, 'js-remove-tag')
 
         for i, case_run in enumerate(
-                (self.case_run_1, self.case_run_2, self.case_run_3), 1):
+                (self.execution_1, self.execution_2, self.execution_3), 1):
             self.assertContains(
                 response,
                 '<a href="#caserun_{0}">#{0}</a>'.format(case_run.pk),
@@ -106,7 +105,7 @@ class TestCreateNewRun(BasePlanCase):
             username=self.tester.username,
             password='password')
         response = self.client.post(self.url, {'from_plan': self.plan.pk}, follow=True)
-        self.assertContains(response, 'Creating a TestRun requires at least one TestCase')
+        self.assertContains(response, _('Creating a TestRun requires at least one TestCase'))
 
     def test_show_create_new_run_page(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -165,11 +164,10 @@ class TestCreateNewRun(BasePlanCase):
             self.assertEqual(case, case_run.case)
             self.assertEqual(None, case_run.tested_by)
             self.assertEqual(self.tester, case_run.assignee)
-            self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                             case_run.case_run_status)
-            self.assertEqual(0, case_run.case_text_version)
+            self.assertEqual(TestExecutionStatus.objects.get(name='IDLE'),
+                             case_run.status)
+            self.assertEqual(case.history.latest().history_id, case_run.case_text_version)
             self.assertEqual(new_run.build, case_run.build)
-            self.assertEqual(None, case_run.running_date)
             self.assertEqual(None, case_run.close_date)
 
 
@@ -181,10 +179,10 @@ class CloneRunBaseTest(BaseCaseRun):
         self.assertContains(
             response,
             '<input id="id_summary" class="form-control" name="summary" '
-            'type="text" value="Clone of {}" required>'.format(self.test_run.summary),
+            'type="text" value="%s%s" required>' % (_('Clone of '), self.test_run.summary),
             html=True)
 
-        for case_run in (self.case_run_1, self.case_run_2):
+        for case_run in (self.execution_1, self.execution_2):
             case_url = reverse('testcases-get', args=[case_run.case.pk])
 
             self.assertContains(
@@ -211,7 +209,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
         response = self.client.post(url, {}, follow=True)
 
-        self.assertContains(response, 'At least one TestCase is required')
+        self.assertContains(response, _('At least one TestCase is required'))
 
     def test_open_clone_page_by_selecting_case_runs(self):
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -219,7 +217,7 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             password='password')
         url = reverse('testruns-clone', args=[self.test_run.pk])
 
-        response = self.client.post(url, {'case_run': [self.case_run_1.pk, self.case_run_2.pk]})
+        response = self.client.post(url, {'case_run': [self.execution_1.pk, self.execution_2.pk]})
 
         self.assert_one_run_clone_page(response)
 
@@ -244,8 +242,8 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
             'manager': self.test_run.manager.email,
             'default_tester': self.test_run.default_tester.email,
             'notes': '',
-            'case': [self.case_run_1.case.pk, self.case_run_2.case.pk],
-            'case_run_id': [self.case_run_1.pk, self.case_run_2.pk],
+            'case': [self.execution_1.case.pk, self.execution_2.case.pk],
+            'case_run_id': [self.execution_1.pk, self.execution_2.pk],
         }
 
         url = reverse('testruns-new')
@@ -261,10 +259,10 @@ class TestStartCloneRunFromRunPage(CloneRunBaseTest):
 
     def assert_cloned_run(self, cloned_run):
         # Assert clone settings result
-        for origin_case_run, cloned_case_run in zip((self.case_run_1, self.case_run_2),
+        for origin_case_run, cloned_case_run in zip((self.execution_1, self.execution_2),
                                                     cloned_run.case_run.order_by('pk')):
-            self.assertEqual(TestCaseRunStatus.objects.get(name='IDLE'),
-                             cloned_case_run.case_run_status)
+            self.assertEqual(TestExecutionStatus.objects.get(name='IDLE'),
+                             cloned_case_run.status)
             self.assertEqual(origin_case_run.assignee, cloned_case_run.assignee)
 
 
@@ -306,7 +304,7 @@ class TestAddRemoveRunCC(BaseCaseRun):
         self.assert404(response)
 
     def assert_cc(self, response, expected_cc):
-        self.assertEqual(len(expected_cc), self.test_run.cc.count())
+        self.assertEqual(len(expected_cc), self.test_run.cc.count())  # pylint: disable=no-member
 
         for cc in expected_cc:
             href = reverse('tcms-profile', args=[cc.username])
@@ -364,67 +362,6 @@ class TestAddRemoveRunCC(BaseCaseRun):
         self.assert_cc(response, [self.cc_user_2, self.cc_user_3])
 
 
-class TestBugActions(BaseCaseRun):
-    """Test bug view method"""
-
-    @classmethod
-    def setUpTestData(cls):
-        super(TestBugActions, cls).setUpTestData()
-
-        user_should_have_perm(cls.tester, 'testruns.change_testrun')
-        user_should_have_perm(cls.tester, 'testcases.delete_bug')
-
-        cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
-        cls.jira = BugSystem.objects.get(name='JIRA')
-
-        cls.case_run_bug_url = reverse('testruns-bug', args=[cls.case_run_1.pk])
-
-        cls.bug_12345 = '12345'
-        cls.jira_kiwi_100 = 'KIWI-100'
-        cls.case_run_1.add_bug(cls.bug_12345, bug_system_id=cls.bugzilla.pk)
-        cls.case_run_1.add_bug(cls.jira_kiwi_100, bug_system_id=cls.jira.pk)
-
-    def test_404_if_case_run_id_not_exist(self):
-        self.case_run_bug_url = reverse('testruns-bug', args=[999])
-
-        response = self.client.get(self.case_run_bug_url, {})
-        self.assert404(response)
-
-    def test_refuse_if_action_is_unknown(self):
-        post_data = {
-            'a': 'unknown action',
-            'case_run': self.case_run_1.pk,
-            'case': self.case_run_1.case.pk,
-            'bug_system_id': BugSystem.objects.get(name='Bugzilla').pk,
-            'bug_id': '123456',
-        }
-
-        response = self.client.get(self.case_run_bug_url, post_data)
-
-        self.assertJsonResponse(
-            response,
-            {'rc': 1, 'response': 'Unrecognizable actions'})
-
-    def test_remove_bug_from_case_run(self):
-        post_data = {
-            'a': 'remove',
-            'case_run': self.case_run_1.pk,
-            'bug_id': self.bug_12345,
-        }
-
-        response = self.client.get(self.case_run_bug_url, post_data)
-
-        bug_exists = Bug.objects.filter(
-            bug_id=self.bug_12345,
-            case=self.case_run_1.case,
-            case_run=self.case_run_1).exists()
-        self.assertFalse(bug_exists)
-
-        self.assertJsonResponse(
-            response,
-            {'rc': 0, 'response': 'ok', 'run_bug_count': 1})
-
-
 class TestRemoveCaseRuns(BaseCaseRun):
     """Test remove_case_run view method"""
 
@@ -432,7 +369,7 @@ class TestRemoveCaseRuns(BaseCaseRun):
     def setUpTestData(cls):
         super(TestRemoveCaseRuns, cls).setUpTestData()
 
-        user_should_have_perm(cls.tester, 'testruns.delete_testcaserun')
+        user_should_have_perm(cls.tester, 'testruns.delete_testexecution')
 
         cls.remove_case_run_url = reverse('testruns-remove_case_run',
                                           args=[cls.test_run.pk])
@@ -448,9 +385,9 @@ class TestRemoveCaseRuns(BaseCaseRun):
 
         self.client.post(self.remove_case_run_url,
                          {
-                             'case_run': [self.case_run_1.pk,
+                             'case_run': [self.execution_1.pk,
                                           'a1000',
-                                          self.case_run_2.pk],
+                                          self.execution_2.pk],
                          })
 
         self.assertEqual(expected_rest_case_runs_count,
@@ -460,14 +397,14 @@ class TestRemoveCaseRuns(BaseCaseRun):
         expected_rest_case_runs_count = self.test_run.case_run.count() - 1
 
         self.client.post(self.remove_case_run_url,
-                         {'case_run': [self.case_run_1.pk]})
+                         {'case_run': [self.execution_1.pk]})
 
         self.assertEqual(expected_rest_case_runs_count,
                          self.test_run.case_run.count())
 
     def test_redirect_to_run_if_still_case_runs_exist_after_removal(self):
         response = self.client.post(self.remove_case_run_url,
-                                    {'case_run': [self.case_run_1.pk]})
+                                    {'case_run': [self.execution_1.pk]})
 
         self.assertRedirects(response,
                              reverse('testruns-get', args=[self.test_run.pk]))
@@ -495,30 +432,90 @@ class TestUpdateCaseRunText(BaseCaseRun):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestUpdateCaseRunText, cls).setUpTestData()
+        super().setUpTestData()
 
+        cls.testruns_url = reverse('testruns-get', args=[cls.test_run.pk])
         cls.update_url = reverse('testruns-update_case_run_text',
                                  args=[cls.test_run.pk])
 
         # To increase case text version
-        cls.case_run_1.case.add_text(action='action',
-                                     effect='effect',
-                                     setup='setup',
-                                     breakdown='breakdown')
-        cls.case_run_1.case.add_text(action='action_1',
-                                     effect='effect_1',
-                                     setup='setup_1',
-                                     breakdown='breakdown_1')
+        cls.execution_1.case.text = "Scenario Version 1"
+        cls.execution_1.case.save()
 
-    def test_update_selected_case_runs(self):
+        cls.execution_1.case.text = "Scenario Version 2"
+        cls.execution_1.case.save()
+
+    def test_get_update_caserun_text_with_permissions(self):
+        user_should_have_perm(self.tester, 'testruns.change_testexecution')
+        response = self.client.get(self.testruns_url)
+        self.assertContains(response, 'id="update_case_run_text"')
+
+    def test_update_selected_case_runs_with_permissions(self):
+        user_should_have_perm(self.tester, 'testruns.change_testexecution')
+
+        self.assertNotEqual(self.execution_1.case.history.latest().history_id,
+                            self.execution_1.case_text_version)
         response = self.client.post(self.update_url,
-                                    {'case_run': [self.case_run_1.pk]},
+                                    {'case_run': [self.execution_1.pk]},
                                     follow=True)
 
-        self.assertContains(response, '1 CaseRun(s) updated:')
+        self.assertContains(response, _('%d CaseRun(s) updated:') % 1)
 
-        self.assertEqual(self.case_run_1.case.latest_text_version(),
-                         self.case_run_1.latest_text().case_text_version)
+        self.execution_1.refresh_from_db()
+
+        self.assertEqual(
+            self.execution_1.case.get_text_with_version(
+                self.execution_1.case_text_version
+            ),
+            "Scenario Version 2"
+        )
+        self.assertEqual(
+            self.execution_1.case.history.latest().history_id,
+            self.execution_1.case_text_version
+        )
+
+    def test_get_update_caserun_text_without_permissions(self):
+        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
+        response = self.client.get(self.testruns_url)
+        self.assertNotContains(response, 'id="update_case_run_text"')
+
+    def test_update_selected_case_runs_without_permissions(self):
+        self.execution_1.case.text = "Scenario Version 3"
+        self.execution_1.case.save()
+
+        remove_perm_from_user(self.tester, 'testruns.change_testexecution')
+
+        self.client.login(  # nosec:B106:hardcoded_password_funcarg
+            username=self.tester.username,
+            password='password')
+
+        self.assertNotEqual(
+            self.execution_1.case.history.latest().history_id,
+            self.execution_1.case_text_version
+        )
+
+        response = self.client.post(self.update_url,
+                                    {'case_run': [self.execution_1.pk]},
+                                    follow=True)
+
+        self.assertRedirects(
+            response,
+            reverse('tcms-login') + '?next=' + self.update_url
+        )
+
+        self.execution_1.refresh_from_db()
+
+        self.assertNotEqual(
+            self.execution_1.case.get_text_with_version(
+                self.execution_1.case_text_version
+            ),
+            "Scenario Version 3"
+        )
+
+        self.assertNotEqual(
+            self.execution_1.case.history.latest().history_id,
+            self.execution_1.case_text_version
+        )
 
 
 class TestEditRun(BaseCaseRun):
@@ -575,7 +572,7 @@ class TestAddCasesToRun(BaseCaseRun):
             case_status=cls.case_status_proposed,
             plan=[cls.plan])
 
-        user_should_have_perm(cls.tester, 'testruns.add_testcaserun')
+        user_should_have_perm(cls.tester, 'testruns.add_testexecution')
 
     def test_show_add_cases_to_run(self):
         url = reverse('add-cases-to-run', args=[self.test_run.pk])

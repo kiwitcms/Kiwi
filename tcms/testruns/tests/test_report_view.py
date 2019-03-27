@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, too-many-ancestors
 
 from http import HTTPStatus
 from django.urls import reverse
@@ -34,10 +34,10 @@ class Test_TestRunReportUnconfiguredJIRA(BaseCaseRun):
             tracker_type='JIRA'
         )
 
-        cls.case_run_1.add_bug('KIWI-1234', cls.it.pk)
+        cls.execution_1.add_bug('KIWI-1234', cls.it.pk)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.case_run_1.run_id])
+        url = reverse('run-report', args=[self.execution_1.run_id])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -62,10 +62,42 @@ class Test_TestRunReportUnconfiguredBugzilla(BaseCaseRun):
             tracker_type='Bugzilla'
         )
 
-        cls.case_run_1.add_bug('5678', cls.it.pk)
+        cls.execution_1.add_bug('5678', cls.it.pk)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.case_run_1.run_id])
+        url = reverse('run-report', args=[self.execution_1.run_id])
+        response = self.client.get(url)
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+        self.assertContains(response, self.it.url_reg_exp % '5678')
+
+
+class Test_TestRunReportConfiguredBugzilla(BaseCaseRun):
+    """
+        The report should not crash when loaded b/c the internal
+        bugzilla code will not try to establish and RPC connection
+        in the constructor.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.it = BugSystem.objects.create(
+            name='Partially configured Bugzilla',
+            url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
+            validate_reg_exp=r'^\d{1,7}$',
+            tracker_type='Bugzilla',
+            base_url='https://bugzilla.example.com',
+            api_url='https://bugzilla.example.com/xml-rpc/',
+            api_username='admin',
+            api_password='secret',
+        )
+
+        cls.execution_1.add_bug('5678', cls.it.pk)
+
+    def test_reports(self):
+        url = reverse('run-report', args=[self.execution_1.run_id])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -90,10 +122,10 @@ class Test_TestRunReportUnconfiguredGitHub(BaseCaseRun):
             tracker_type='GitHub'
         )
 
-        cls.case_run_1.add_bug('100', cls.it.pk)
+        cls.execution_1.add_bug('100', cls.it.pk)
 
     def test_reports(self):
-        url = reverse('run-report', args=[self.case_run_1.run_id])
+        url = reverse('run-report', args=[self.execution_1.run_id])
         response = self.client.get(url)
 
         self.assertEqual(HTTPStatus.OK, response.status_code)
