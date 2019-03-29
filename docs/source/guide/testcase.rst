@@ -190,7 +190,6 @@ To review a Test Case open the Test Plan view and:
 #. Expand Test Case details.
 #. Read the description and provide comments.
 #. Once satisfied change the status to **CONFIRMED** via the **Status** drop-down.
-#. Change history is available under the comments section.
 
 |Test Case Review Screen|
 
