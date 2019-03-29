@@ -4,8 +4,7 @@ Test Cases
 ==========
 
 This chapter explains how to create, search, edit, clone,
-review, tag and remove Test Cases in Kiwi TCMS. Test Cases can not be
-deleted, instead they have their **Active** status set to False.
+review, tag and remove Test Cases in Kiwi TCMS.
 
 There are three ways to associate Test Cases with a Test Plan:
 
@@ -56,57 +55,30 @@ To create a new Test Case inside a Test Plan document:
 
    -  Enter a **Summary**. This will appear in search results. It must
       be informative and concise.
+   -  In the **Text** field populate the actual test case in `Given-When-Then <https://github.com/cucumber/cucumber/wiki/Given-When-Then>`_
    -  Select the **Product**. The product of the component being tested.
-   -  Select the **Component**. The part of a product being tested.
-      Multiple components for one Test Case are supported.
    -  Select the **Category**. This is the type of test being executed. For
       example, Regression or Bug Verification.
-   -  Select the **Automated** status: manual, auto, or autoproposed.
-   -  Enter the **Requirement** (optional, legacy Testopia field).
+   -  Select the **Automated** status: on / off.
+   -  Enter the **Requirements** (optional, legacy Testopia field).
    -  Enter **Script** (optional, legacy Testopia field).
-   -  Enter **Alias** (optional).
    -  Enter the **Default Tester** (optional). Must be a valid email address registered in Kiwi TCMS.
       This user will be notified by email when a Test Run is created.
-   -  Select the **Estimated Time** (optional) to execute the Test Case. This is
-      used as a guide when allocating resources.
-   -  Select the **Priority**. This is a sliding scale, with P1 being
-      the highest. Priority can be used as a guide when allocating
+   -  Select the **Priority** from dropdown menu. Priority can be used as a guide when allocating
       resources.
    -  Enter **Arguments** (optional). These are arguments to **Script**
       however further integration is not implemented at the moment!
    -  Enter **Reference Link** (optional). This is a user-specified field and can
       be a URL to git, Bugzilla or another reference.
-   -  Enter **Tags** relevant to the test case.
-   -  Enter **Notes**. Additional information about the Test Case.
-   -  In the **Setup** text box, enter the setup instructions. Precise,
-      clear setup instructions help produce repeatable test results.
-   -  In the **Actions** text box, enter the steps to be performed.
-      Write clear atomic actions (for example, browse to
-      `www.github.com <http://www.github.com>`__), rather than vague
-      statements (for example, browse the web).
-   -  In the **Expected Results** text box, enter the measurable
-      results. There should be a 1:1 correlation with the actions.
-   -  In the **Breakdown** text box, enter the post test breakdown
-      instructions. It is important that test environment is returned to the
-      original state following a Test Run.
+   -  Enter **Notes** to include additional information about the Test Case if needed.
 
+   
    |The add new case screen|
 
 #. Perform one of the following:
 
    -  To save and exit, click **Save**.
-   -  To save and create another Test Case, click **Save and add
-      another**.
-   -  To cancel the process and return to the Test Plan screen, click
-      **Back**.
 
-
-.. note:
-
-    Kiwi TCMS allows you to enter free form text for any of the Test Case
-    description fields. We advise that you use
-    `Given-When-Then <https://github.com/cucumber/cucumber/wiki/Given-When-Then>`_
-    combined with a list of steps to reproduce!
 
 Cloning Test Cases
 ------------------
@@ -162,60 +134,12 @@ To edit a Test Case:
 #. Perform one of the following:
 
    -  To save and exit, click **Save**.
-   -  To save and create another Test Case, click **Save and add another**.
-   -  To cancel the process and return to the Test Plan screen, click **Back**.
 
 .. note::
 
    To view the change history, click **Edit History** in the top-right corner
    of the Test Case Edit view.
 
-Bulk edit of components
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Kiwi TCMS supports the bulk edit of components of a Test Case through the
-Test Plan interface.
-
-#. Open the Test Plan containing the Test Cases to be edited.
-#. Select Test Cases to be edited.
-#. Click **Component** sub-menu button.
-
-   |The Component button 1|
-
-#. Select the components, click **Add**.
-
-   |The Component button 2|
-
-#. The Test Plan will update.
-
-Bulk add/remove of tags
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Kiwi TCMS supports the bulk add/remove of tags of Test Cases through the Test
-Plan interface.
-
-#. Open to the Test Plan containing the Test Cases to be edited.
-#. Select the Test cases to be edited.
-#. To add a new tag:
-
-   -  From the **Tag** sub-menu click **Add**.
-
-      |The Test cases tags options Add|
-
-   -  A pop-up will appear, type the tag name and press **Submit**.
-   -  Click **Submit** button.
-
-#. To remove an existing tag:
-
-   -  From the **Tag** sub-menu click **Remove**.
-
-      |The Test cases tags options Remove|
-
-   -  Enter tag name. Kiwi TCMS will display adialog with existing tag names.
-
-      |Tags remove list|
-
-   -  Select which tags to remove and click **Submit** button.
 
 Adding a tag via Test Case view
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -230,7 +154,7 @@ Adding a tag via Test Case view
 Removing a tag via Test Case view
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Open the Test Case to be edited, click the **Tags** tab.
+#. Open the Test Case to be edited, navigate to **Tags** panel and input a tag.
 
    |The Test Case tags tab 2|
 
