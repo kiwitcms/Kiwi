@@ -9,6 +9,10 @@ Kiwi TCMS - Open Source Test Case Management System
     :target: http://kiwitcms.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation
 
+.. image:: https://d322cqt584bo4o.cloudfront.net/kiwitcms/localized.svg
+   :target: https://crowdin.com/project/kiwitcms
+   :alt: Translate
+
 .. image:: https://pyup.io/repos/github/kiwitcms/Kiwi/shield.svg
     :target: https://pyup.io/repos/github/kiwitcms/Kiwi/
     :alt: Python updates
