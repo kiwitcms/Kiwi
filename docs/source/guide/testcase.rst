@@ -55,7 +55,7 @@ To create a new Test Case inside a Test Plan document:
 
    -  Enter a **Summary**. This will appear in search results. It must
       be informative and concise.
-   -  In the **Text** field populate the actual test case in `Given-When-Then <https://github.com/cucumber/cucumber/wiki/Given-When-Then>`_
+   -  In the **Text** field populate the actual test case in `Given-When-Then <https://docs.cucumber.io/gherkin/reference/#steps>`_
    -  Select the **Product**. The product of the component being tested.
    -  Select the **Category**. This is the type of test being executed. For
       example, Regression or Bug Verification.
@@ -154,7 +154,7 @@ Adding a tag via Test Case view
 Removing a tag via Test Case view
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Open the Test Case to be edited, navigate to **Tags** panel and input a tag.
+#. Open the Test Case to be edited, navigate to **Tags** card and input a tag.
 
    |The Test Case tags tab 2|
 
@@ -317,11 +317,6 @@ Removing a Test Plan via the Test Case view
 .. |The Search Case screen| image:: ../_static/Cases_Home.png
 .. |Test Case search results| image:: ../_static/Test_Case_Search_Results.png
 .. |The Edit button| image:: ../_static/Test_Case_Edit_From_Plan.png
-.. |The Component button 1| image:: ../_static/Click_Component.png
-.. |The Component button 2| image:: ../_static/Bulk_Add_Test_Case_Components.png
-.. |The Test cases tags options Add| image:: ../_static/Tags_Add.png
-.. |The Test cases tags options Remove| image:: ../_static/Tags_Remove.png
-.. |Tags remove list| image:: ../_static/Tags_Autocomplete.png
 .. |The Add cases from other plans button| image:: ../_static/TC_Add_To_Plan_TP.png
 .. |Add Selected Cases| image:: ../_static/Click_Add_To_Plan_Name.png
 .. |The Test Plans tab| image:: ../_static/TC_Add_To_Plan.png
