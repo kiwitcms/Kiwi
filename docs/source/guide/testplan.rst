@@ -249,9 +249,12 @@ otherwise you will lose your testing history. To disable a Test Plan:
    |The disable plan button.|
 
    The plan name changes to a strike through font.
-#. To enable a disabled plan, click **Enable plan**.
+#. To enable a disabled plan, click **Edit Plan**.
 
    |The enable plan button.|
+   
+#. Set **Active** status button to **On**
+#. Click on **Save** button to confirm changes.
 
 Printing a Test Plan
 --------------------
@@ -263,33 +266,14 @@ To print a Test Plan:
 
    |The Print Plan button|
 
-#. A printer friednly version displays.
+#. A printer friendly version displays.
 #. From the **File** menu in your Browser, click **Print**.
 
 
 Exporting Test Cases from a Test Plan
 -------------------------------------
 
-Kiwi TCMS can export XML file listing all the Test Cases related to the
-current Test Plan. These files can be used as a form of backup or to
-interface with other systems however we recommend to use the API library
-instead. To export a Test Plan:
-
-#. Open the Test Plan to be exported.
-#. Exporting Test Cases:
-
-   -  All: click **Export all cases** button at the top.
-
-      |The Export all cases button|
-
-   -  Selected: tick the Test Cases to export, click **Case::Export Case**.
-
-      |The Export Case button|
-
-      The Browser will open a file save dialog box.
-
-#. Select **Save File**.
-#. Click **Ok**.
+Kiwi TCMS offers functionality to export test cases via `TCMS API <https://kiwitcms.readthedocs.io/en/latest/import-export/>`_  
 
 
 .. |The Planning menu 1| image:: ../_static/Click_New_Plan.png
@@ -314,5 +298,3 @@ instead. To export a Test Plan:
 .. |The Print Plan button| image:: ../_static/Plan_Actions.png
 .. |The disable plan button.| image:: ../_static/Plan_Actions.png
 .. |The enable plan button.| image:: ../_static/Plan_Actions_Enable.png
-.. |The Export all cases button| image:: ../_static/Plan_Actions.png
-.. |The Export Case button| image:: ../_static/Click_Export_Case.png
