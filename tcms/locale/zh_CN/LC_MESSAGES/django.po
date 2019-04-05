@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-23 23:31+0000\n"
+"POT-Creation-Date: 2019-04-05 21:23+0000\n"
 "PO-Revision-Date: 2019-03-07 10:04\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Simplified\n"
@@ -129,71 +129,71 @@ msgstr "此激活密钥已过期"
 msgid "Your account has been activated successfully"
 msgstr "您的账户已被成功激活"
 
-#: tcms/settings/common.py:87
+#: tcms/settings/common.py:90
 msgid "DASHBOARD"
 msgstr "仪表 板"
 
-#: tcms/settings/common.py:88
+#: tcms/settings/common.py:91
 msgid "TESTING"
 msgstr "测试"
 
-#: tcms/settings/common.py:89
+#: tcms/settings/common.py:92
 msgid "New Test Plan"
 msgstr "新的测试计划"
 
-#: tcms/settings/common.py:91
+#: tcms/settings/common.py:94
 msgid "New Test Case"
 msgstr "新的测试用例"
 
-#: tcms/settings/common.py:93
+#: tcms/settings/common.py:96
 msgid "SEARCH"
 msgstr "搜索"
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:97
 msgid "Search Test Plans"
 msgstr "搜索测试计划"
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:98
 msgid "Search Test Runs"
 msgstr "搜索测试执行"
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:99
 msgid "Search Test Cases"
 msgstr "搜索测试用例"
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:101
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:115
 msgid "ADMIN"
 msgstr "管理员"
 
-#: tcms/settings/common.py:104
+#: tcms/settings/common.py:116
 msgid "Users and groups"
 msgstr "用户和用户组"
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:118
 msgid "Everything else"
 msgstr "管理其他事项"
 
-#: tcms/settings/common.py:112
+#: tcms/settings/common.py:124
 msgid "Report an Issue"
 msgstr "反馈问题"
 
-#: tcms/settings/common.py:113
+#: tcms/settings/common.py:125
 msgid "Ask for help on StackOverflow"
 msgstr "在StackOflow上寻求帮助"
 
-#: tcms/settings/common.py:114
+#: tcms/settings/common.py:126
 msgid "User Guide"
 msgstr "用户指南"
 
-#: tcms/settings/common.py:115
+#: tcms/settings/common.py:127
 msgid "Administration Guide"
 msgstr "管理员指南"
 
-#: tcms/settings/common.py:116
+#: tcms/settings/common.py:128
 msgid "API Help"
 msgstr "API 参考"
 
@@ -590,15 +590,6 @@ msgstr ""
 "\n"
 "点击这个链接激活你的账户：\n"
 "%(confirm_url)s\n"
-
-#: tcms/templates/email/post_case_delete/email.txt:2
-#, python-format
-msgid ""
-"\n"
-"TestCase has been updated by %(username)s!\n"
-msgstr ""
-"\n"
-"测试用例已被 %(username)s 更新！\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -1457,7 +1448,7 @@ msgstr ""
 "3. 第三个\n"
 
 #: tcms/testcases/helpers/email.py:22
-#, python-brace-format
+#, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "已删除: 测试用例 #%(pk)d - %(summary)s"
 
@@ -1800,49 +1791,49 @@ msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr "%s 没有主键。你必须手动指定此类字段。"
 
 #: vinaigrette-deleteme.py:2
-msgid "IDLE"
-msgstr "空闲"
-
-#: vinaigrette-deleteme.py:3
-msgid "RUNNING"
-msgstr "运行中"
-
-#: vinaigrette-deleteme.py:4
-msgid "PAUSED"
-msgstr "已暂停"
-
-#: vinaigrette-deleteme.py:5
-msgid "PASSED"
-msgstr "已通过"
-
-#: vinaigrette-deleteme.py:6
-msgid "FAILED"
-msgstr "失败"
-
-#: vinaigrette-deleteme.py:7
-msgid "BLOCKED"
-msgstr "已屏蔽"
-
-#: vinaigrette-deleteme.py:8
-msgid "ERROR"
-msgstr "错误"
-
-#: vinaigrette-deleteme.py:9
-msgid "WAIVED"
-msgstr "已放弃"
-
-#: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
 msgstr "已建议"
 
-#: vinaigrette-deleteme.py:11
+#: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
 msgstr "已确认"
 
-#: vinaigrette-deleteme.py:12
+#: vinaigrette-deleteme.py:4
 msgid "DISABLED"
 msgstr "已禁用"
 
-#: vinaigrette-deleteme.py:13
+#: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
 msgstr "需要更新"
+
+#: vinaigrette-deleteme.py:6
+msgid "IDLE"
+msgstr "空闲"
+
+#: vinaigrette-deleteme.py:7
+msgid "RUNNING"
+msgstr "运行中"
+
+#: vinaigrette-deleteme.py:8
+msgid "PAUSED"
+msgstr "已暂停"
+
+#: vinaigrette-deleteme.py:9
+msgid "PASSED"
+msgstr "已通过"
+
+#: vinaigrette-deleteme.py:10
+msgid "FAILED"
+msgstr "失败"
+
+#: vinaigrette-deleteme.py:11
+msgid "BLOCKED"
+msgstr "已屏蔽"
+
+#: vinaigrette-deleteme.py:12
+msgid "ERROR"
+msgstr "错误"
+
+#: vinaigrette-deleteme.py:13
+msgid "WAIVED"
+msgstr "已放弃"

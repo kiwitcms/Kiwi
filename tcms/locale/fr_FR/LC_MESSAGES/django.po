@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-23 23:31+0000\n"
+"POT-Creation-Date: 2019-04-05 21:23+0000\n"
 "PO-Revision-Date: 2019-03-13 13:42\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: French\n"
@@ -133,71 +133,71 @@ msgstr "Cette clé d'activation a expiré"
 msgid "Your account has been activated successfully"
 msgstr "Votre compte a été activé avec succès"
 
-#: tcms/settings/common.py:87
+#: tcms/settings/common.py:90
 msgid "DASHBOARD"
 msgstr "TABLEAU DE BORD"
 
-#: tcms/settings/common.py:88
+#: tcms/settings/common.py:91
 msgid "TESTING"
 msgstr "EN_TEST"
 
-#: tcms/settings/common.py:89
+#: tcms/settings/common.py:92
 msgid "New Test Plan"
 msgstr "Nouveau plan de test"
 
-#: tcms/settings/common.py:91
+#: tcms/settings/common.py:94
 msgid "New Test Case"
 msgstr "Nouveau scénario de test"
 
-#: tcms/settings/common.py:93
+#: tcms/settings/common.py:96
 msgid "SEARCH"
 msgstr "RECHERCHER"
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:97
 msgid "Search Test Plans"
 msgstr "Rechercher des plans de test"
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:98
 msgid "Search Test Runs"
 msgstr "Rechercher des essais réalisés"
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:99
 msgid "Search Test Cases"
 msgstr "Rechercher des scénarios de tests"
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:101
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:115
 msgid "ADMIN"
 msgstr "ADMINISTRATEUR"
 
-#: tcms/settings/common.py:104
+#: tcms/settings/common.py:116
 msgid "Users and groups"
 msgstr "Utilisateurs et groupes"
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:118
 msgid "Everything else"
 msgstr "Tout le reste"
 
-#: tcms/settings/common.py:112
+#: tcms/settings/common.py:124
 msgid "Report an Issue"
 msgstr "Signaler un problème"
 
-#: tcms/settings/common.py:113
+#: tcms/settings/common.py:125
 msgid "Ask for help on StackOverflow"
 msgstr "Demander de l’aide sur StackOverflow"
 
-#: tcms/settings/common.py:114
+#: tcms/settings/common.py:126
 msgid "User Guide"
 msgstr "Guide de l'utilisateur"
 
-#: tcms/settings/common.py:115
+#: tcms/settings/common.py:127
 msgid "Administration Guide"
 msgstr "Guide de l'administrateur"
 
-#: tcms/settings/common.py:116
+#: tcms/settings/common.py:128
 msgid "API Help"
 msgstr "Aide sur l’API"
 
@@ -598,15 +598,6 @@ msgstr ""
 "\n"
 "Pour activer votre compte cliquer sur le lien suivant:\n"
 "%(confirm_url)s\n"
-
-#: tcms/templates/email/post_case_delete/email.txt:2
-#, python-format
-msgid ""
-"\n"
-"TestCase has been updated by %(username)s!\n"
-msgstr ""
-"\n"
-"Le scénario de test a été mis à jour par %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -1479,7 +1470,7 @@ msgstr ""
 "3. élement\n"
 
 #: tcms/testcases/helpers/email.py:22
-#, python-brace-format
+#, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr "SUPPRIMÉ: scénario de test #%(pk)d - %(summary)s"
 
@@ -1832,49 +1823,49 @@ msgstr ""
 "manuellement."
 
 #: vinaigrette-deleteme.py:2
-msgid "IDLE"
-msgstr "EN VEILLE"
-
-#: vinaigrette-deleteme.py:3
-msgid "RUNNING"
-msgstr "EN COURS"
-
-#: vinaigrette-deleteme.py:4
-msgid "PAUSED"
-msgstr "MIS EN PAUSE"
-
-#: vinaigrette-deleteme.py:5
-msgid "PASSED"
-msgstr "PASSÉ"
-
-#: vinaigrette-deleteme.py:6
-msgid "FAILED"
-msgstr "EN ÉCHEC"
-
-#: vinaigrette-deleteme.py:7
-msgid "BLOCKED"
-msgstr "BLOQUÉ"
-
-#: vinaigrette-deleteme.py:8
-msgid "ERROR"
-msgstr "ERREUR"
-
-#: vinaigrette-deleteme.py:9
-msgid "WAIVED"
-msgstr "RENONCÉ À"
-
-#: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
 msgstr "PROPOSÉ"
 
-#: vinaigrette-deleteme.py:11
+#: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
 msgstr "CONFIRMÉ"
 
-#: vinaigrette-deleteme.py:12
+#: vinaigrette-deleteme.py:4
 msgid "DISABLED"
 msgstr "DÉSACTIVÉ"
 
-#: vinaigrette-deleteme.py:13
+#: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
 msgstr "DOIT_ÊTRE_MAJ"
+
+#: vinaigrette-deleteme.py:6
+msgid "IDLE"
+msgstr "EN VEILLE"
+
+#: vinaigrette-deleteme.py:7
+msgid "RUNNING"
+msgstr "EN COURS"
+
+#: vinaigrette-deleteme.py:8
+msgid "PAUSED"
+msgstr "MIS EN PAUSE"
+
+#: vinaigrette-deleteme.py:9
+msgid "PASSED"
+msgstr "PASSÉ"
+
+#: vinaigrette-deleteme.py:10
+msgid "FAILED"
+msgstr "EN ÉCHEC"
+
+#: vinaigrette-deleteme.py:11
+msgid "BLOCKED"
+msgstr "BLOQUÉ"
+
+#: vinaigrette-deleteme.py:12
+msgid "ERROR"
+msgstr "ERREUR"
+
+#: vinaigrette-deleteme.py:13
+msgid "WAIVED"
+msgstr "RENONCÉ À"

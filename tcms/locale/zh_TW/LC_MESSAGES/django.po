@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-23 23:31+0000\n"
+"POT-Creation-Date: 2019-04-05 21:23+0000\n"
 "PO-Revision-Date: 2019-03-13 13:42\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -120,71 +120,71 @@ msgstr "此啟用金鑰已過期"
 msgid "Your account has been activated successfully"
 msgstr "您的帳戶已成功啟用"
 
-#: tcms/settings/common.py:87
+#: tcms/settings/common.py:90
 msgid "DASHBOARD"
 msgstr ""
 
-#: tcms/settings/common.py:88
+#: tcms/settings/common.py:91
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:89
+#: tcms/settings/common.py:92
 msgid "New Test Plan"
 msgstr ""
 
-#: tcms/settings/common.py:91
+#: tcms/settings/common.py:94
 msgid "New Test Case"
 msgstr ""
 
-#: tcms/settings/common.py:93
+#: tcms/settings/common.py:96
 msgid "SEARCH"
 msgstr ""
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:97
 msgid "Search Test Plans"
 msgstr ""
 
-#: tcms/settings/common.py:95
+#: tcms/settings/common.py:98
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:99
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:101
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:103
+#: tcms/settings/common.py:115
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:104
+#: tcms/settings/common.py:116
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:106
+#: tcms/settings/common.py:118
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:112
+#: tcms/settings/common.py:124
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:113
+#: tcms/settings/common.py:125
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:114
+#: tcms/settings/common.py:126
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:115
+#: tcms/settings/common.py:127
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:116
+#: tcms/settings/common.py:128
 msgid "API Help"
 msgstr ""
 
@@ -578,7 +578,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"TestCase has been updated by %(username)s!\n"
+"TestCase has been deleted by %(username)s!\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
@@ -1412,7 +1412,7 @@ msgid ""
 msgstr ""
 
 #: tcms/testcases/helpers/email.py:22
-#, python-brace-format
+#, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
 msgstr ""
 
@@ -1751,49 +1751,49 @@ msgid "Model %s has no primary key. You have to specify such field manually."
 msgstr ""
 
 #: vinaigrette-deleteme.py:2
-msgid "IDLE"
-msgstr "閒置"
-
-#: vinaigrette-deleteme.py:3
-msgid "RUNNING"
-msgstr "運行"
-
-#: vinaigrette-deleteme.py:4
-msgid "PAUSED"
-msgstr "暫停"
-
-#: vinaigrette-deleteme.py:5
-msgid "PASSED"
-msgstr "通過"
-
-#: vinaigrette-deleteme.py:6
-msgid "FAILED"
-msgstr "失敗"
-
-#: vinaigrette-deleteme.py:7
-msgid "BLOCKED"
-msgstr "封鎖"
-
-#: vinaigrette-deleteme.py:8
-msgid "ERROR"
-msgstr "錯誤"
-
-#: vinaigrette-deleteme.py:9
-msgid "WAIVED"
-msgstr "放棄"
-
-#: vinaigrette-deleteme.py:10
 msgid "PROPOSED"
 msgstr "提出"
 
-#: vinaigrette-deleteme.py:11
+#: vinaigrette-deleteme.py:3
 msgid "CONFIRMED"
 msgstr "已驗證"
 
-#: vinaigrette-deleteme.py:12
+#: vinaigrette-deleteme.py:4
 msgid "DISABLED"
 msgstr "禁用"
 
-#: vinaigrette-deleteme.py:13
+#: vinaigrette-deleteme.py:5
 msgid "NEED_UPDATE"
 msgstr "需要更新"
+
+#: vinaigrette-deleteme.py:6
+msgid "IDLE"
+msgstr "閒置"
+
+#: vinaigrette-deleteme.py:7
+msgid "RUNNING"
+msgstr "運行"
+
+#: vinaigrette-deleteme.py:8
+msgid "PAUSED"
+msgstr "暫停"
+
+#: vinaigrette-deleteme.py:9
+msgid "PASSED"
+msgstr "通過"
+
+#: vinaigrette-deleteme.py:10
+msgid "FAILED"
+msgstr "失敗"
+
+#: vinaigrette-deleteme.py:11
+msgid "BLOCKED"
+msgstr "封鎖"
+
+#: vinaigrette-deleteme.py:12
+msgid "ERROR"
+msgstr "錯誤"
+
+#: vinaigrette-deleteme.py:13
+msgid "WAIVED"
+msgstr "放棄"
