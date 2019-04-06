@@ -225,13 +225,8 @@ STATICFILES_DIRS = [
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(TCMS_ROOT_PATH, 'static').replace('\\', '/'),
+    os.path.join(TCMS_ROOT_PATH, 'node_modules').replace('\\', '/'),
 ]
-
-# this is the path used inside the Docker image
-if os.path.exists('/Kiwi/node_modules'):
-    STATICFILES_DIRS.append('/Kiwi/node_modules')
-else:
-    STATICFILES_DIRS.append(os.path.join(TCMS_ROOT_PATH, '..', 'node_modules').replace('\\', '/'))
 
 # List of finder classes that know how to find static files in
 # various locations.

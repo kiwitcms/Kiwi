@@ -50,11 +50,6 @@ RUN pip install --no-cache-dir /Kiwi/kiwitcms-*.tar.gz
 COPY ./requirements/ /Kiwi/requirements/
 RUN pip install --no-cache-dir -r /Kiwi/requirements/mariadb.txt
 
-# install npm dependencies
-COPY package.json /Kiwi/
-RUN cd /Kiwi/ && npm install && \
-    find ./node_modules -type d -empty -delete
-
 COPY ./manage.py /Kiwi/
 COPY ./etc/kiwitcms/ssl/ /Kiwi/ssl/
 RUN sed -i "s/tcms.settings.devel/tcms.settings.product/" /Kiwi/manage.py

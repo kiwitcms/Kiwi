@@ -157,7 +157,7 @@ install:
         pip install -r $REQUIREMENTS_TXT
         pip install -r requirements/devel.txt
         pip install coveralls codecov
-        npm install
+        pushd tcms/ && npm install && popd
 
 script: make $CMD
 after_success:

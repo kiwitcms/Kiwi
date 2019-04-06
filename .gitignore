@@ -14,5 +14,5 @@ docs/guide/target
 docs/target/
 .idea/
 .cache/
-node_modules/
+tcms/node_modules/
 package-lock.json

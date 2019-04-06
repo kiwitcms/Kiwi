@@ -58,6 +58,7 @@ Then install dependencies for development::
 
 The user interface needs the `PatternFly <http://www.patternfly.org/>`_ library so::
 
+    cd tcms/
     npm install
 
 inside the project directory.
