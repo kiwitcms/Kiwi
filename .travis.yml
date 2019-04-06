@@ -70,6 +70,17 @@ jobs:
         mariadb: 10.1
 
     - stage: testing
+      env:
+        - TEST_DB=Postgres
+        - CMD=test
+      addons:
+        postgresql: 10
+        apt:
+          packages:
+          - postgresql-10
+          - postgresql-client-10
+
+    - stage: testing
       if: branch = master AND type = push
       env:
         - TEST_DB=SQLite
@@ -80,14 +91,6 @@ jobs:
       env:
         - TEST_DB=MySQL
         - CMD=test
-
-    - stage: testing
-      if: branch = master AND type = push
-      env:
-        - TEST_DB=Postgres
-        - CMD=test
-      addons:
-        postgresql: 9.5
 
     - stage: localization_testing
       env:
