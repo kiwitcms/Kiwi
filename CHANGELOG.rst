@@ -1,6 +1,78 @@
 Change Log
 ==========
 
+Kiwi TCMS 6.7 (06 April 2019)
+-----------------------------
+
+**IMPORTANT:** this is a small improvement and bug-fix update.
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 2.1.7 to 2.2
+- Update markdown from 3.0.1 to 3.1
+- Update psycopg2 from 2.7.7 to 2.8
+- Update pygithub from 1.43.5 to 1.43.6
+- Update bleach-whitelist from 0.0.9 to 0.0.10
+- Update marked(.js) to version 0.6.2
+- Support arbitrary depth for ``MENU_ITEMS`` setting
+- Support auto-discovery of 3rd party Telemetry plugins, see
+  `documentation <https://kiwitcms.readthedocs.io/en/latest/telemetry/index.html>`_
+
+
+Database migrations
+~~~~~~~~~~~~~~~~~~~
+
+- Rename ``TestCaseRun`` to ``TestExecution`` including renaming existing
+  permissions
+- Rename ``TestCaseRunStatus`` to ``TestExecutionStatus``
+
+
+API
+~~~
+
+- Rename ``TestCaseRun.*`` to ``TestExecution.*``
+- Rename ``TestCaseRunStatus.*`` to ``TestExecution.*``
+- This version keeps the old names for backwards compatibility reasons but they
+  will be removed in
+  `Issue #889 <https://github.com/kiwitcms/Kiwi/issues/889>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Prompt user before deleting attachments. Fixes
+  `Issue #867 <https://github.com/kiwitcms/Kiwi/issues/867>`_ (Martin Jordanov)
+- ``email_case_deletion()`` format error fixed so notifications when
+  test cases are deleted are not sent (Rik)
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Remove unused images
+- Install ``node_modules/`` under ``tcms/`` and include it inside PyPI tarball
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
+
 Kiwi TCMS 6.6 (19 Mar 2019)
 ---------------------------
 
