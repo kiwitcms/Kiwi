@@ -1,0 +1,9 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "tcms/package.json"
+      ]
+    }
+  }
+}
