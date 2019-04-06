@@ -2,6 +2,7 @@ include CHANGELOG.rst README.rst LICENSE manage.py
 
 graft requirements
 graft tcms/locale
+graft tcms/node_modules
 graft tcms/static
 graft tcms/templates
 graft tcms/*/static

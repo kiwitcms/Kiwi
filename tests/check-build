@@ -11,7 +11,17 @@ find . -type f -name '*.pyc' -delete
 find . -type d -name __pycache__ -delete
 find . -type d -name '*.egg-info' | xargs rm -rf
 rm -rf build/ .cache/ dist/ .eggs/ .tox/ .venv/
+rm -rf tcms/node_modules/
 
+echo "..... Installing npm dependencies"
+pushd tcms/
+npm install
+find ./node_modules -type d -empty -delete
+# workaround ValueError: ZIP does not support timestamps before 1980
+# for wheel packages because some NPM files have their timestamp
+# as 01-01-1970
+find ./node_modules -type f  -exec touch {} +
+popd
 
 # then build the packages
 echo "..... Building PyPI packages for kiwitcms"
