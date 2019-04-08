@@ -88,7 +88,7 @@ Clone-Edit workflow to create similar Test Cases, within the same Test Plan,
 very quickly! To clone a Test Case:
 
 #. Open the Test Case to be cloned.
-#. Click **Clone** button.
+#. Click **Clone** from the Navigation menu
 
    |The Clone button 1|
 
@@ -139,27 +139,6 @@ To edit a Test Case:
 
    To view the change history, click **Edit History** in the top-right corner
    of the Test Case Edit view.
-
-
-Adding a tag via Test Case view
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. Open the Test Case to be edited, click the **Tags** tab.
-#. Enter tag name.
-#. Click **Add** button.
-
-   |The Test Case tags tab 1|
-
-
-Removing a tag via Test Case view
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. Open the Test Case to be edited, navigate to **Tags** card and input a tag.
-
-   |The Test Case tags tab 2|
-
-#. Click **Remove** action next to the tag to be deleted.
-
 
 
 
@@ -219,7 +198,7 @@ Test Case status can also be updated via the Test Plan view:
 
    |Test Case status options.|
 
-#. Click **Ok** to apply the changes.
+#. Click **OK** to apply the changes.
 #. Test Case status is updated.
 
    |Status changes confirmation.|
@@ -328,8 +307,6 @@ Removing a Test Plan via the Test Case view
 .. |All Test Cases selected| image:: ../_static/Select_All.png
 .. |Test Case status options.| image:: ../_static/Select_Status.png
 .. |Status changes confirmation.| image:: ../_static/Change_Status_Confirm.png
-.. |The Test Case tags tab 1| image:: ../_static/TC_Tag.png
-.. |The Test Case tags tab 2| image:: ../_static/Tab_Tags.png
 .. |The Remove button 1| image:: ../_static/Click_Remove_TC.png
 .. |The Remove button 2| image:: ../_static/Click_Remove_TP.png
 .. |Test Case Review Screen| image:: ../_static/Test_Case_Review.png
