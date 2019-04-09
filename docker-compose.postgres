@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+    db:
+        container_name: kiwi_db
+        image: centos/postgresql-94-centos7
+        volumes:
+            - db_data:/var/lib/pgsql/data
+        restart: always
+        environment:
+            POSTGRESQL_DATABASE: kiwi
+            POSTGRESQL_USER: kiwi
+            POSTGRESQL_PASSWORD: kiwi
+
+    web:
+        container_name: kiwi_web
+        depends_on:
+            - db
+        restart: always
+        image: kiwitcms/kiwi:latest
+        ports:
+            - 80:8080
+            - 443:8443
+        volumes:
+            - uploads:/Kiwi/uploads:Z
+        environment:
+            KIWI_DB_ENGINE: django.db.backends.postgresql_psycopg2
+            KIWI_DB_HOST: db
+            KIWI_DB_PORT: 5432
+            KIWI_DB_NAME: kiwi
+            KIWI_DB_USER: kiwi
+            KIWI_DB_PASSWORD: kiwi
+
+volumes:
+    db_data:
+    uploads:
