@@ -40,14 +40,14 @@ A Test Case describes how to perform a specific scenario.
 This object is used to record scenarios in the database.
 
 For every distinct product build that is being tested you have to create
-a Test Run artifact. The Test Run holds a collection of Test Case Run objects,
+a Test Run artifact. The Test Run holds a collection of Test Execution objects,
 information about the testing environment (via tags),
 who the default tester is, start/finish timestamps, etc.
 
-A Test Case Run object is the container that links together the actual
+A Test Execution object is the container that links together the actual
 testing scenario with its execution status, additional comments and bugs
-found during testing! A Test Case Run object has a 1-to-1 relation to the
-Test Case for which it holds status. Thus a Test Case Run object represents
+found during testing! A Test Execution object has a 1-to-1 relation to the
+Test Case for which it holds status. Thus a Test Execution object represents
 the actual Test Case that will be/was executed against a particular product build
 and environment combination!
 
@@ -84,7 +84,7 @@ activities within your team:
 
 **Question:** How do I show all executions for a given Test Case?
 
-**Answer:** Open the Test Case view, click **Case Runs** tab and expand the widget.
+**Answer:** Open the Test Case view, click **Executions** card and expand the widget.
 All executions from all Test Plans are shown.
 
 **Question:** When did a Test Case started to fail?
@@ -103,7 +103,7 @@ name in the **Plan** field. You can also filter Test Runs by tags if necessary.
 
 **Question:** Is this the first time that Test Case is failing on envrionment X/Y/Z ?
 
-**Answer 1:** Open **Case Runs** tab for that particular Test Case and examine the
+**Answer 1:** Open **Executions** card for that particular Test Case and examine the
 results by hand.
 
 **Answer 2:** Perform the search described above and use the product version
@@ -145,7 +145,7 @@ Personal dashboard
 ~~~~~~~~~~~~~~~~~~~
 
 The home screen contains a list of Test Runs associated with the user
-and a graphical display showing their completion status. To access a 
+and a graphical display showing their completion status. To access a
 Test Run, click on its name.
 
 The home screen also contains a list of Test Plans associated with the user.

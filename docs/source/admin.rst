@@ -48,7 +48,7 @@ and integration type.
     these sections carefully before configuring integration with external bug tracking
     systems!
 
-Users can add or remove bugs to TestCase Runs if they
+Users can add or remove bugs to Test Executions if they
 have the `testcases.add_testcasebug` and/or `testcases.delete_testcasebug`
 permissions!
 
