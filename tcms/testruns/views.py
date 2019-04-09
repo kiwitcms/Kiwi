@@ -219,7 +219,7 @@ def get(request, run_id, template_name='run/get.html'):
 
     # Count the status
     # 3. calculate number of case runs of each status
-    status_stats_result = test_run.stats_caseruns_status(status)
+    status_stats_result = test_run.stats_executions_status(status)
 
     # Get the test case run bugs summary
     # 6. get the number of bugs of this run

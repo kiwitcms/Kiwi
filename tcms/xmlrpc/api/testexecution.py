@@ -30,7 +30,7 @@ def add_comment(case_run_id, comment, **kwargs):
     """
     .. function:: XML-RPC TestCaseRun.add_comment(case_run_id, comment)
 
-        Add comment to selected test case run.
+        Add comment to selected test execution.
 
         :param case_run_id: PK of a TestCaseRun object
         :param case_run_id: int

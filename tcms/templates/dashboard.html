@@ -11,7 +11,7 @@
             {% for test_run in last_15_test_runs %}
                 <tr>
                     <td>
-                        {% include "run/status_progress_patternfly.html" with stats=test_run.stats_caseruns_status %}
+                        {% include "run/status_progress_patternfly.html" with stats=test_run.stats_executions_status %}
                     </td>
                     <td>
                         <a href="{% url "testruns-get" test_run.run_id %}">{{ test_run.summary }}</a>

@@ -26,7 +26,7 @@ class TestGetCaseRunsStatsByStatusFromEmptyTestRun(BasePlanCase):
         cls.statuss = TestExecutionStatus.objects.all().order_by('pk')
 
     def test_get_from_empty_case_runs(self):
-        data = self.empty_test_run.stats_caseruns_status(self.statuss)
+        data = self.empty_test_run.stats_executions_status(self.statuss)
 
         subtotal = dict((status.pk, [0, status])
                         for status in self.statuss)
@@ -62,7 +62,7 @@ class TestGetCaseRunsStatsByStatus(BasePlanCase):
                                  run=cls.test_run, case=case, status=status)
 
     def test_get_stats(self):
-        data = self.test_run.stats_caseruns_status(self.statuss)
+        data = self.test_run.stats_executions_status(self.statuss)
 
         subtotal = dict((status.pk, [0, status])
                         for status in self.statuss)
