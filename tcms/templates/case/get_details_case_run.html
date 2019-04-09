@@ -8,12 +8,11 @@
 	<div class="caserunDetail">
 		<div class="caserunInfo">
 			<div class="container" style="min-height:190px;">
-				{# {% get_comment_list for test_case_run as case_run_comments %} #}
 				<h4 style="padding-bottom:3px;">Comments</h4>
 				{% if perms.django_comments.add_comment %}
 				<form class="update_form" method="POST">
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">
-						{% get_comment_form for test_case_run as comment_form %}
+						{% get_comment_form for execution as comment_form %}
 						<tr>
 							<td>
 								{{ comment_form.comment }}
@@ -27,13 +26,13 @@
 							<td style="padding:5px 9px 10px 9px;">
 								<input type="hidden" name="type" value="html" />
 								<input type="hidden" name="field" value="status" />
-								<input type="hidden" name="case_id" value="{{ test_case_run.case_id }}" />
-								<input type="hidden" name="assignee" value="{{ test_case_run.assignee_id }}" />
-								<input type="hidden" name="tested_by" value="{{ test_case_run.tested_by_id }}" />
+								<input type="hidden" name="case_id" value="{{ execution.case_id }}" />
+								<input type="hidden" name="assignee" value="{{ execution.assignee_id }}" />
+								<input type="hidden" name="tested_by" value="{{ execution.tested_by_id }}" />
 								<input type="hidden" name="value" value="" />
 								{% if perms.testruns.change_testexecution %}
-								{% for status in test_status %}
-								<input type="submit" class="btn btn_{{ status.name.lower }} btn_status js-status-button" title="{{ status.name }}" value="" crs_id="{{ status.pk }}" {% ifequal status.pk test_case_run.status_id %}disabled="True"{% endifequal %} data-formvalue="{{ status.pk }}" />
+								{% for status in execution_status %}
+								<input type="submit" class="btn btn_{{ status.name.lower }} btn_status js-status-button" title="{{ status.name }}" value="" crs_id="{{ status.pk }}" {% ifequal status.pk execution.status_id %}disabled="True"{% endifequal %} data-formvalue="{{ status.pk }}" />
 								{% endfor %}
 								{% endif %}
 								<input type="submit" class="submit-post" value="Submit">
@@ -46,11 +45,11 @@
 				{% ifequal comments_count 0 %}
                                 <span>[ <a id="showText" href="javascript:void(0);">{% trans "Show All" %}</a> ]</span>
 				{% else %}
-                                <span>[ <a id="showText" class="js-show-comments" data-param="comment{{ test_case_run.pk }}" href="javascript:void(0);">{% trans "Show All" %}</a> ]</span>
+                                <span>[ <a id="showText" class="js-show-comments" data-param="comment{{ execution.pk }}" href="javascript:void(0);">{% trans "Show All" %}</a> ]</span>
 				{% endifequal %}
 				</h4>
-				<ul class="comment" id="comment{{ test_case_run.pk }}" style="display:none;">
-					{% for comment in caserun_comments %}
+				<ul class="comment" id="comment{{ execution.pk }}" style="display:none;">
+					{% for comment in execution_comments %}
 					<li>
 						<span>#{{ forloop.counter }}</span>
 						<span>{{ comment.user.username }}</span>
@@ -61,7 +60,7 @@
 						{% if perms.comments.can_moderate and comment.user.pk == request.user.pk %}
 						<form action="{% url "comments-delete" %}" method="post" class="form_comment" style="display:inline;">
 							<input type="hidden" name="comment_id" value="{{ comment.pk }}" />
-							<input type="hidden" name="object_pk" value="{{ test_case_run.case_id }}" />
+							<input type="hidden" name="object_pk" value="{{ execution.case_id }}" />
 							<input class='commentdelete sprites' value='' type='submit' title="Remove Comment" />
 						</form>
 						{% endif %}
@@ -72,15 +71,15 @@
 			</div>
 			<div style="padding: 5px 9px 15px 18px;">
 				<h4>{% trans "Test Execution Information" %}</h4>
-                                <div><span class="detail_title"><span class="detail_title">{% trans "Run Date" %}:</span>{{ test_case_run.close_date }}</div>
-                                <div><span class="detail_title">{% trans "Build" %}:</span>{{ test_case_run.build }} <span class="detail_title marginLeft">{% trans "Text Version" %}:</span>{{ test_case_run.case_text_version }}</div>
+                                <div><span class="detail_title"><span class="detail_title">{% trans "Run Date" %}:</span>{{ execution.close_date }}</div>
+                                <div><span class="detail_title">{% trans "Build" %}:</span>{{ execution.build }} <span class="detail_title marginLeft">{% trans "Text Version" %}:</span>{{ execution.case_text_version }}</div>
 			</div>
 			<div class="container">
                             <h4 class="borderB">{% trans "bug" %}
 					<span>
-                                            <a href="javascript:void(0);" title="File" class="js-file-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>{% trans "Report" %}</a>&nbsp;|&nbsp;
+                                            <a href="javascript:void(0);" title="File" class="js-file-caserun-bug" data-params='[{{ execution.run_id }}, {{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Report" %}</a>&nbsp;|&nbsp;
 						{% if perms.testcases.add_bug %}
-                                                <a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ test_case_run.run_id }}, {{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>{% trans "Add" %}</a>
+                                                <a href="javascript:void(0);" title="Add" class="js-add-caserun-bug" data-params='[{{ execution.run_id }}, {{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Add" %}</a>
 						{% endif %} ]
 					</span>
 				</h4>
@@ -94,8 +93,8 @@
 								{% for bug in bugs %}
 								    {% if bug.case_run_id %}
                                                                     <span class="grey">{% trans "From Run" %}</span><a href="{% url "testruns-get" bug.case_run.run_id %}">{{ bug.case_run.run_id }}</a>
-								        {% if bug.case_run_id == test_case_run.pk and perms.testcases.delete_bug %}
-								        <a id="bug_{{ bug_id }}_{{ bug.case_id }}_{{ bug.case_run_id }}" href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ test_case_run.run.pk }}, "{{ bug.bug_id }}", {{ bug.case_id }}, {{ bug.case_run_id }}]'>
+								        {% if bug.case_run_id == execution.pk and perms.testcases.delete_bug %}
+								        <a id="bug_{{ bug_id }}_{{ bug.case_id }}_{{ bug.case_run_id }}" href="javascript:void(0);" title="Remove This Bug" class="js-remove-caserun-bug" data-params='[{{ execution.run.pk }}, "{{ bug.bug_id }}", {{ bug.case_id }}, {{ bug.case_run_id }}]'>
                                                                             <img width="9" height="9" title="remove this bug" src="{% static 'images/remove_small.png' %}">
                                                                         </a>
 								        {% endif %}
@@ -114,10 +113,10 @@
 				</ul>
 			</div>
 			<div class="container" style="min-height:50px;">
-				{% if caserun_logs %}
-				<h4 class="borderB">Change Log<span>[ <a href="javascript:void(0);" class="js-show-changelog" data-param="changeLog{{ test_case_run.pk }}">Show All</a> ]</span></h4>
-				<ul id="changeLog{{test_case_run.pk}}" style="display:none;">
-					{% for log in caserun_logs %}
+				{% if execution_logs %}
+				<h4 class="borderB">Change Log<span>[ <a href="javascript:void(0);" class="js-show-changelog" data-param="changeLog{{ execution.pk }}">Show All</a> ]</span></h4>
+				<ul id="changeLog{{execution.pk}}" style="display:none;">
+					{% for log in execution_logs %}
 					<li><span>{{ log.history_date }}</span><span>{{ log.history_user }}</span><br />{{ log.history_change_reason }}</li>
 					{% endfor %}
 				</ul>
@@ -146,7 +145,7 @@
 								Attachments
 								{% if perms.attachments.add_attachment %}
 								<span>[
-								<a href="{% url "testcases-attachment" test_case_run.case_id %}?from_plan={{ testrun.plan_id }}" target="_blank">Add</a>
+								<a href="{% url "testcases-attachment" execution.case_id %}?from_plan={{ testrun.plan_id }}" target="_blank">Add</a>
 								]</span>
 								{% endif %}
 							</h4>
@@ -190,10 +189,10 @@
 				<table cellpadding="0" cellspacing="0" border="0" width="98%;" style="margin:0 auto;">
 					<tr>
 						<td>
-                                                    <h4 class="borderB">{% trans "Test Link" %} <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ test_case_run.case_id }}, {{ test_case_run.pk }}]'>{% trans "Add" %}</a>]</span></h4>
+                                                    <h4 class="borderB">{% trans "Test Link" %} <span>[<a href="javascript:void(0);" class="js-add-testlog" data-params='[{{ execution.case_id }}, {{ execution.pk }}]'>{% trans "Add" %}</a>]</span></h4>
 							<div class="content">
 									<ul class="ul-format">
-										{% for link in test_case_run.links %}
+										{% for link in execution.links %}
 										<li>
 											<a href="{{ link.url }}" target="_blank" title="{{ link.url }}">{{ link.name|escape }}</a>
 											<span class="grey">{{ link.created_on|date:"N d, Y" }}</span>

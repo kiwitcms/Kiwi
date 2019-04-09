@@ -526,11 +526,11 @@ class TestCaseExecutionDetailPanelView(TemplateView):
             'test_case': case,
             'test_case_text': test_case_text,
 
-            'test_case_run': execution,
+            'execution': execution,
             'comments_count': len(execution_comments),
-            'caserun_comments': execution_comments,
-            'caserun_logs': execution.history.all(),
-            'test_status': execution_status,
+            'execution_comments': execution_comments,
+            'execution_logs': execution.history.all(),
+            'execution_status': execution_status,
             'grouped_case_bugs': bugs,
         })
 

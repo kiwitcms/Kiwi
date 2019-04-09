@@ -139,37 +139,43 @@ def search(request):
     return render(request, 'testruns/search.html', context_data)
 
 
-def open_run_get_case_runs(request, run):
-    """Prepare for case runs list in a TestRun page
+def _open_run_get_executions(request, run):
+    """Prepare for executions list in a TestRun page
 
     This is an internal method. Do not call this directly.
     """
-    tcrs = run.case_run.select_related('run', 'case')
-    tcrs = tcrs.only('run__run_id',
-                     'run__plan',
-                     'status',
-                     'assignee', 'tested_by',
-                     'case_text_version',
-                     'sortkey',
-                     'case__summary',
-                     'case__is_automated',
-                     'case__priority',
-                     'case__category__name')
-    # Get the bug count for each case run
-    # 5. have to show the number of bugs of each case run
-    tcrs = tcrs.annotate(num_bug=Count('case_run_bug', distinct=True))
+
+    executions = run.case_run.select_related(
+        'run', 'case'
+    ).only('run__run_id',
+           'run__plan',
+           'status',
+           'assignee',
+           'tested_by',
+           'case_text_version',
+           'sortkey',
+           'case__summary',
+           'case__is_automated',
+           'case__priority',
+           'case__category__name'
+           )
+
+    # Get the bug count for each execution
+    # 5. have to show the number of bugs of each execution
+    executions = executions.annotate(num_bug=Count('case_run_bug', distinct=True))
 
     # todo: is this last distinct necessary
-    tcrs = tcrs.distinct()
-    # Continue to search the case runs with conditions
-    # 4. case runs preparing for render case runs table
-    tcrs = tcrs.filter(**clean_request(request))
+    executions = executions.distinct()
+
+    # Continue to search the executionss with conditions
+    # 4. executions preparing for render executions table
+    executions = executions.filter(**clean_request(request))
     order_by = request.GET.get('order_by')
     if order_by:
-        tcrs = tcrs.order_by(order_by)
+        executions = executions.order_by(order_by)
     else:
-        tcrs = tcrs.order_by('sortkey', 'pk')
-    return tcrs
+        executions = executions.order_by('sortkey', 'pk')
+    return executions
 
 
 def open_run_get_comments_subtotal(case_run_ids):
@@ -211,17 +217,17 @@ def get(request, run_id, template_name='run/get.html'):
     except ObjectDoesNotExist:
         raise Http404
 
-    # Get the test case runs belong to the run
-    # 2. get test run's all case runs
-    test_case_runs = open_run_get_case_runs(request, test_run)
+    # Get the test executions that belong to the run
+    # 2. get test run's all executions
+    test_executions = _open_run_get_executions(request, test_run)
 
     status = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
 
     # Count the status
-    # 3. calculate number of case runs of each status
+    # 3. calculate number of executions of each status
     status_stats_result = test_run.stats_executions_status(status)
 
-    # Get the test case run bugs summary
+    # Get the test execution bugs summary
     # 6. get the number of bugs of this run
     test_case_run_bugs_count = test_run.get_bug_count()
 
@@ -229,23 +235,24 @@ def get(request, run_id, template_name='run/get.html'):
     # 7. get tags
     # Get the list of testcases belong to the run
     test_cases = []
-    for test_case_run in test_case_runs:
-        test_cases.append(test_case_run.case_id)
+    for test_execution in test_executions:
+        test_cases.append(test_execution.case_id)
     tags = Tag.objects.filter(case__in=test_cases).values_list('name', flat=True)
     tags = list(set(tags))
     tags.sort()
 
-    def walk_case_runs():
-        """Walking case runs for helping rendering case runs table"""
+    def walk_executions():
+        """Walking executions for helping rendering executions table"""
+
         priorities = dict(Priority.objects.values_list('pk', 'value'))
-        testers, assignees = open_run_get_users(test_case_runs)
+        testers, assignees = open_run_get_users(test_executions)
         test_case_run_pks = []
-        for test_case_run in test_case_runs:
+        for test_case_run in test_executions:
             test_case_run_pks.append(test_case_run.pk)
         comments_subtotal = open_run_get_comments_subtotal(test_case_run_pks)
         status = TestExecutionStatus.get_names()
 
-        for case_run in test_case_runs:
+        for case_run in test_executions:
             yield (case_run,
                    testers.get(case_run.tested_by_id, None),
                    assignees.get(case_run.assignee_id, None),
@@ -256,8 +263,8 @@ def get(request, run_id, template_name='run/get.html'):
     context_data = {
         'test_run': test_run,
         'from_plan': request.GET.get('from_plan', False),
-        'test_case_runs': walk_case_runs(),
-        'test_case_runs_count': len(test_case_runs),
+        'test_case_runs': walk_executions(),
+        'test_case_runs_count': len(test_executions),
         'status_stats': status_stats_result,
         'test_case_run_bugs_count': test_case_run_bugs_count,
         'test_status': status,
@@ -326,8 +333,8 @@ class TestRunReportView(TemplateView, TestExecutionDataMixin):
 
         There are four data source to generate this report.
         1. TestRun
-        2. Test case runs included in the TestRun
-        3. Comments associated with each test case run
+        2. Test executions included in the TestRun
+        3. Comments associated with each test execution
         4. Statistics
         5. bugs
         """
@@ -454,30 +461,30 @@ def change_status(request, run_id):
 
 @require_POST
 @permission_required('testruns.delete_testexecution')
-def remove_case_run(request, run_id):
-    """Remove specific case run from the run"""
+def remove_execution(request, run_id):
+    """Remove specific execution from the run"""
 
-    # Ignore invalid case run ids
-    case_run_ids = []
+    # Ignore invalid execution ids
+    execution_ids = []
     for item in request.POST.getlist('case_run'):
         try:
-            case_run_ids.append(int(item))
+            execution_ids.append(int(item))
         except (ValueError, TypeError):
             pass
 
-    # If no case run to remove, no further operation is required, just return
+    # If no execution to remove, no further operation is required, just return
     # back to run page immediately.
-    if not case_run_ids:
+    if not execution_ids:
         return HttpResponseRedirect(reverse('testruns-get',
                                             args=[run_id, ]))
 
     run = get_object_or_404(TestRun.objects.only('pk'), pk=run_id)
 
-    # Restrict to delete those case runs that belongs to run
-    TestExecution.objects.filter(run_id=run.pk, pk__in=case_run_ids).delete()
+    # Restrict to delete those executions that belongs to run
+    TestExecution.objects.filter(run_id=run.pk, pk__in=execution_ids).delete()
 
-    caseruns_exist = TestExecution.objects.filter(run_id=run.pk).exists()
-    if caseruns_exist:
+    execution_exist = TestExecution.objects.filter(run_id=run.pk).exists()
+    if execution_exist:
         redirect_to = 'testruns-get'
     else:
         redirect_to = 'add-cases-to-run'
