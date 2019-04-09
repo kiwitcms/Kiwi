@@ -31,11 +31,15 @@ DATABASES = {
         'PASSWORD': os.environ.get('KIWI_DB_PASSWORD', 'kiwi'),
         'HOST': os.environ.get('KIWI_DB_HOST', ''),
         'PORT': os.environ.get('KIWI_DB_PORT', ''),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'OPTIONS': {},
     },
 }
+
+# handle MariaDB only options
+if DATABASES['default']['ENGINE'].find('mysql') > -1:
+    DATABASES['default']['OPTIONS'].update({
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        })
 
 
 # Administrators error report email settings
