@@ -3,7 +3,7 @@ FROM centos:centos7
 RUN rpm -Uhv https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm && \
     yum -y --setopt=tsflags=nodocs install centos-release-scl && \
     yum -y --setopt=tsflags=nodocs install rh-python36 gcc mariadb-devel mariadb \
-    libxml2-devel libxslt-devel httpd-devel mod_wsgi mod_ssl npm gettext && \
+    postgresql-devel httpd-devel mod_wsgi mod_ssl gettext && \
     yum -y update --setopt=tsflags=nodocs && \
     yum clean all
 
@@ -49,6 +49,7 @@ RUN pip install --no-cache-dir /Kiwi/kiwitcms-*.tar.gz
 # install DB requirements b/c the rest should already be installed
 COPY ./requirements/ /Kiwi/requirements/
 RUN pip install --no-cache-dir -r /Kiwi/requirements/mariadb.txt
+RUN pip install --no-cache-dir -r /Kiwi/requirements/postgres.txt
 
 COPY ./manage.py /Kiwi/
 COPY ./etc/kiwitcms/ssl/ /Kiwi/ssl/
