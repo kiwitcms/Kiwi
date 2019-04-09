@@ -80,9 +80,9 @@ def create(values):
             }
             >>> TestExecution.create(values)
     """
-    from tcms.testruns.forms import XMLRPCNewCaseRunForm
+    from tcms.testruns.forms import XMLRPCNewExecutionForm
 
-    form = XMLRPCNewCaseRunForm(values)
+    form = XMLRPCNewExecutionForm(values)
 
     if not isinstance(values, dict):
         raise TypeError('Argument values must be in dict type.')
@@ -136,10 +136,10 @@ def update(case_run_id, values, **kwargs):
         :return: Serialized :class:`tcms.testruns.models.TestCaseRun` object
         :raises: PermissionDenied if missing *testruns.change_testexecution* permission
     """
-    from tcms.testruns.forms import XMLRPCUpdateCaseRunForm
+    from tcms.testruns.forms import XMLRPCUpdateExecutionForm
 
     tcr = TestExecution.objects.get(pk=case_run_id)
-    form = XMLRPCUpdateCaseRunForm(values)
+    form = XMLRPCUpdateExecutionForm(values)
 
     if form.is_valid():
         if form.cleaned_data['build']:
