@@ -9,6 +9,31 @@ assert_up_and_running() {
 }
 
 rlJournalStart
+    rlPhaseStartTest "[PostgreSQL] Container up"
+        rlRun -t -c "docker-compose -f docker-compose.postgres up -d"
+        sleep 10
+        rlRun -t -c "docker exec -it kiwi_web /Kiwi/manage.py migrate"
+        assert_up_and_running
+    rlPhaseEnd
+
+    rlPhaseStartTest "[PostgreSQL] Container restart"
+        rlRun -t -c "docker-compose -f docker-compose.postgres restart"
+        assert_up_and_running
+    rlPhaseEnd
+
+    rlPhaseStartCleanup "[PostgreSQL] Cleanup"
+        rlRun -t -c "docker-compose -f docker-compose.postgres down"
+
+        if [ -n "$TRAVIS" ]; then
+            rlRun -t -c "docker volume rm kiwi_db_data"
+        fi
+    rlPhaseEnd
+
+    # wait for tear-down b/c in Travis CI subsequent tests can't find
+    # the db host
+    sleep 5
+
+    # the rest of the scenarios use MariaDB by default
     rlPhaseStartTest "Container up"
         rlRun -t -c "docker-compose up -d"
         sleep 10
