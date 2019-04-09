@@ -28,15 +28,15 @@ def get_run_bug_ids(run_id):
 
 
 class TestExecutionDataMixin:
-    """Data for test case runs"""
+    """Data for test executions"""
 
     @staticmethod
-    def stats_mode_case_runs(case_runs):
+    def stats_mode_executions(executions):
         """
-            Statistics from case runs mode
+            Statistics from executions mode
 
-            :param case_runs: iteratable object to access each case run
-            :type case_runs: iterable, list, tuple
+            :param executions: iteratable object to access each execution
+            :type executions: iterable, list, tuple
             :return: mapping between mode and the count. Example return value is
                      `{ 'manual': I, 'automated': J }`
             :rtype: dict
@@ -44,8 +44,8 @@ class TestExecutionDataMixin:
         manual_count = 0
         automated_count = 0
 
-        for case_run in case_runs:
-            if case_run.case.is_automated:
+        for execution in executions:
+            if execution.case.is_automated:
                 automated_count += 1
             else:
                 manual_count += 1
@@ -56,11 +56,11 @@ class TestExecutionDataMixin:
         }
 
     @staticmethod
-    def get_case_runs_bugs(run_pk):
-        """Get case run bugs for run report
+    def get_execution_bugs(run_pk):
+        """Get execution bugs for run report
 
-        :param int run_pk: run's pk whose case runs' bugs will be retrieved.
-        :return: the mapping between case run id and bug information containing
+        :param int run_pk: run's pk whose executions' bugs will be retrieved.
+        :return: the mapping between execution id and bug information containing
             formatted bug URL.
         :rtype: dict
         """
@@ -85,12 +85,12 @@ class TestExecutionDataMixin:
         return case_run_bugs
 
     @staticmethod
-    def get_case_runs_comments(run_pk):
-        """Get case runs' comments
+    def get_execution_comments(run_pk):
+        """Get executions' comments
 
         :param run_pk: run's pk whose comments will be retrieved.
         :type run_pk: int
-        :return: the mapping between case run id and comments
+        :return: the mapping between execution id and comments
         :rtype: dict
         """
         # note: cast to string b/c object_pk is a Textield and PostgreSQL
@@ -127,30 +127,26 @@ class TestExecutionDataMixin:
         return case_run_comments
 
     @staticmethod
-    def get_summary_stats(case_runs):
-        """Get summary statistics from case runs
+    def get_summary_stats(executions):
+        """Get summary statistics from executions
 
         Statistics targets:
 
-        - the number of pending test case runs, whose status is IDLE
-        - the number of completed test case runs, whose status are PASSED,
+        - the number of pending test executionss, whose status is IDLE
+        - the number of completed test executionss, whose status are PASSED,
           ERROR, FAILED, WAIVED
 
-        :param case_runs: iterable object containing case runs
-        :type case_runs: iterable
+        :param executions: iterable object containing executionss
+        :type executions: iterable
         :return: a mapping between statistics target and its value
         :rtype: dict
         """
         idle_count = 0
         complete_count = 0
-        complete_status_names = TestExecutionStatus.complete_status_names
-        idle_status_names = TestExecutionStatus.idle_status_names
-
-        for case_run in case_runs:
-            status_name = case_run.status.name
-            if status_name in idle_status_names:
+        for case_run in executions:
+            if case_run.status.name in TestExecutionStatus.idle_status_names:
                 idle_count += 1
-            elif status_name in complete_status_names:
+            elif case_run.status.name in TestExecutionStatus.complete_status_names:
                 complete_count += 1
 
         return {'idle': idle_count, 'complete': complete_count}
