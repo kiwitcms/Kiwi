@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-05 21:23+0000\n"
-"PO-Revision-Date: 2019-04-10 08:50\n"
+"PO-Revision-Date: 2019-04-10 09:58\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -171,7 +171,7 @@ msgstr "Prijavi težavo"
 
 #: tcms/settings/common.py:125
 msgid "Ask for help on StackOverflow"
-msgstr "Postavite vprašanje glede uporabe KiwiTCMS na StackOverflow"
+msgstr "Postavite vprašanje glede uporabe Kiwi TCMS na StackOverflow"
 
 #: tcms/settings/common.py:126
 msgid "User Guide"
