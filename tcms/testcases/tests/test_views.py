@@ -39,7 +39,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
         # test for https://github.com/kiwitcms/Kiwi/issues/74
         initiate_user_with_default_setups(self.tester)
 
-        url = reverse('caserun-detail-pane', args=[self.execution_1.case_id])
+        url = reverse('execution-detail-pane', args=[self.execution_1.case_id])
         response = self.client.get(
             url,
             {
@@ -72,7 +72,7 @@ class TestGetCaseRunDetailsAsDefaultUser(BaseCaseRun):
         self.execution_1.add_bug(bug_1.bug_id, bug_1.bug_system.pk)
         self.execution_1.add_bug(bug_2.bug_id, bug_2.bug_system.pk)
 
-        url = reverse('caserun-detail-pane', args=[self.execution_1.case.pk])
+        url = reverse('execution-detail-pane', args=[self.execution_1.case.pk])
         response = self.client.get(
             url,
             {

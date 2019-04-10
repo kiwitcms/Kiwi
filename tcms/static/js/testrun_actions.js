@@ -835,7 +835,7 @@ function get_addlink_dialog() {
 /*
  * Do AJAX request to backend to remove a link
  *
- * - sender: 
+ * - sender:
  * - link_id: the ID of an arbitrary link.
  */
 function removeLink(sender, link_id) {
@@ -966,7 +966,7 @@ function toggleTestCaseRunPane(options) {
   content_container.toggle();
 
   if (content_container.find('.ajax_loading').length) {
-    var url = '/case/' + options.caseId + '/caserun-detail-pane/';
+    var url = '/case/' + options.caseId + '/execution-detail-pane/';
     var data = { case_run_id: options.caserunId, case_text_version: options.caseTextVersion };
 
     jQ.get(url, data, function(data, textStatus) {
