@@ -507,7 +507,7 @@ function delCaseRun(run_id) {
   var caseruns = serializeCaseRunFromInputList('id_table_cases', 'case_run');
   var numCaseRuns = caseruns.case_run.length;
   if (window.confirm('You are about to delete ' + numCaseRuns + ' case run(s). Are you sure?')) {
-    postToURL('removecaserun/', caseruns);
+    postToURL('remove_execution/', caseruns);
   }
 }
 
