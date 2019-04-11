@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Testing Breakdown" %}{% endblock %}
+
+{% block contents %}
+
+    <div class="container-fluid container-cards-pf">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="id_select_product" class="col-md-1 col-lg-1">
+                    {% trans "Product" %}:
+                </label>
+                <div class="col-md-3">
+                    <select name="product" id="id_select_product" class="form-control selectpicker">
+                        <option value="">----------</option>
+                    </select>
+                </div>
+
+                <label for="id_select_test_plan" class="col-md-1 col-lg-1">
+                    {% trans "Test Plan" %}:
+                </label>
+                <div class="col-md-3">
+                    <select name="test_plan" id="id_select_test_plan" class="form-control selectpicker">
+                        <option value="">----------</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <div class="col-md-3" style="text-align: center">
+            <div id="total-count"></div>
+            <label> {% trans "Total" %} </label>
+
+            <div class="progress automated-manual-bar">
+                <div class="progress-bar automated-bar" role="progressbar" data-toggle="tooltip"></div>
+                <div class="progress-bar progress-bar-warning manual-bar" role="progressbar" data-toggle="tooltip"></div>
+            </div>
+
+            <div class="bar-legend">
+                <div class="bar-legend" style="display: flex; justify-content: space-around">
+                    <div style="align-items: center; display: flex;">
+                        <div class="progress-bar" style="width: 20px; height: 20px;"></div>
+                        <div style="padding-left: 5px">{% trans "Automated" %}</div>
+                    </div>
+                    <div style="align-items: center; display: flex;">
+                        <div class="progress-bar-warning" style="width: 20px; height: 20px;"></div>
+                        <div style="padding-left: 5px">{% trans "Manual" %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4" style="text-align: center">
+            <div style="text-align: center; font-weight: bold">{% trans "Priorities" %}</div>
+            <div id="priorities-chart"></div>
+        </div>
+
+        <div class="col-md-4" style="text-align: center">
+            <div style="text-align: center; font-weight: bold">{% trans "Categories" %}</div>
+            <div id="categories-chart"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
+    <script src="{% static 'c3/c3.min.js' %}"></script>
+    <script src="{% static 'd3/d3.min.js' %}"></script>
+
+    <script src="{% static 'js/utils.js' %}"></script>
+    <script src="{% static 'js/jsonrpc.js' %}"></script>
+
+    <script src="{% static 'telemetry/js/testing/breakdown.js' %}"></script>
+
+{% endblock %}

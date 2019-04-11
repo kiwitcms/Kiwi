@@ -103,9 +103,11 @@ MENU_ITEMS = [
         (_('Search Test Cases'), reverse_lazy('testcases-search')),
     ]),
     (_('TELEMETRY'), [
-        ('Coming soon',
+        (_('Testing'), [
+            (_('Breakdown'), reverse_lazy('testing-breakdown'))
+        ]),
+        ('More coming soon',
          'http://kiwitcms.org/blog/kiwi-tcms-team/2019/03/03/legacy-reports-become-telemetry/'),
-        ('-', '-'),
     ]),
 ]
 
@@ -294,6 +296,7 @@ INSTALLED_APPS = [
     'tcms.testcases.apps.AppConfig',
     'tcms.testplans.apps.AppConfig',
     'tcms.testruns.apps.AppConfig',
+    'tcms.telemetry',
     'tcms.xmlrpc',
 ]
 
@@ -334,6 +337,7 @@ MODERNRPC_METHODS_MODULES = [
     'tcms.xmlrpc.api.testrun',
     'tcms.xmlrpc.api.user',
     'tcms.xmlrpc.api.version',
+    'tcms.telemetry.api'
 ]
 
 # Enable the administrator delete permission
