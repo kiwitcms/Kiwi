@@ -12,7 +12,7 @@
 					<img id="id_blind_all_img" src="{% static 'images/t1.gif' %}" border="0" alt="" class="collapse-all">
 				</a>
 			</th>
-                        <th class="widthID">{% trans "Case Run ID" %}</th>
+                        <th class="widthID">{% trans "Execution ID" %}</th>
                         <th class="widthID">{% trans "Case ID" %}</th>
                         <th>{% trans "Summary" %}</th>
                         <th width="80">{% trans "Tester" %}</th>
@@ -42,7 +42,7 @@
 			<td "{{ test_case_run.case_id }}" class="case_title expandable">
 				<a href="{% url "testcases-get" test_case_run.case_id %}?from_plan={{ test_case_run.run.plan_id }}">{{ test_case_run.case_id }}</a>
 			</td>
-			
+
 			<td class="expandable">
 				<a id="link_{{ forloop.counter }}" href="#caserun_{{ test_case_run.pk }}" title="Expand test case">{{ test_case_run.case.summary }}</a>
 			</td>
