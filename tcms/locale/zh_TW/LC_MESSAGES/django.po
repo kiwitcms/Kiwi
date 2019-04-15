@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 21:23+0000\n"
+"POT-Creation-Date: 2019-04-15 17:10+0000\n"
 "PO-Revision-Date: 2019-03-13 13:42\n"
 "Last-Translator: atodorov <atodorov@otb.bg>\n"
 "Language-Team: Chinese Traditional\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:158 tcms/testruns/views.py:689
+#: tcms/core/ajax.py:158 tcms/testruns/views.py:696
 #, python-format
 msgid "User %s not found!"
 msgstr "找不到用戶 %s"
@@ -120,71 +120,71 @@ msgstr "此啟用金鑰已過期"
 msgid "Your account has been activated successfully"
 msgstr "您的帳戶已成功啟用"
 
-#: tcms/settings/common.py:90
+#: tcms/settings/common.py:94
 msgid "DASHBOARD"
 msgstr ""
 
-#: tcms/settings/common.py:91
+#: tcms/settings/common.py:95
 msgid "TESTING"
 msgstr ""
 
-#: tcms/settings/common.py:92
+#: tcms/settings/common.py:96
 msgid "New Test Plan"
 msgstr ""
 
-#: tcms/settings/common.py:94
+#: tcms/settings/common.py:98
 msgid "New Test Case"
 msgstr ""
 
-#: tcms/settings/common.py:96
+#: tcms/settings/common.py:100
 msgid "SEARCH"
 msgstr ""
 
-#: tcms/settings/common.py:97
+#: tcms/settings/common.py:101
 msgid "Search Test Plans"
 msgstr ""
 
-#: tcms/settings/common.py:98
+#: tcms/settings/common.py:102
 msgid "Search Test Runs"
 msgstr ""
 
-#: tcms/settings/common.py:99
+#: tcms/settings/common.py:103
 msgid "Search Test Cases"
 msgstr ""
 
-#: tcms/settings/common.py:101
+#: tcms/settings/common.py:105
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:115
+#: tcms/settings/common.py:119
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:116
+#: tcms/settings/common.py:120
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:118
+#: tcms/settings/common.py:122
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:124
+#: tcms/settings/common.py:128
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:125
+#: tcms/settings/common.py:129
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:126
+#: tcms/settings/common.py:130
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:127
+#: tcms/settings/common.py:131
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:128
+#: tcms/settings/common.py:132
 msgid "API Help"
 msgstr ""
 
@@ -382,12 +382,12 @@ msgid "Attachment"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:160
+#: tcms/templates/case/get_details_case_run.html:159
 msgid "No attachment found"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:166
+#: tcms/templates/case/get_details_case_run.html:165
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:136
@@ -395,28 +395,28 @@ msgid "Component"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:171
+#: tcms/templates/case/get_details_case_run.html:170
 msgid "No component found"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:182
+#: tcms/templates/case/get_details_case_run.html:181
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:40
-#: tcms/templates/case/get_details_case_run.html:79
+#: tcms/templates/case/get_details_case_run.html:78
 msgid "bug"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:46
-#: tcms/templates/case/get_details_case_run.html:96
+#: tcms/templates/case/get_details_case_run.html:95
 msgid "From Run"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:51
-#: tcms/templates/case/get_details_case_run.html:112
+#: tcms/templates/case/get_details_case_run.html:111
 msgid "No bug found"
 msgstr ""
 
@@ -429,20 +429,24 @@ msgstr ""
 
 #: tcms/templates/case/get_details.html:64
 #: tcms/templates/run/get_case_runs.html:191
-#: tcms/templates/run/table_caseruns.html:25
+#: tcms/templates/run/table_executions.html:25
 msgid "Comments"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:47
-#: tcms/templates/case/get_details_case_run.html:49
+#: tcms/templates/case/get_details_case_run.html:46
+#: tcms/templates/case/get_details_case_run.html:48
 msgid "Show All"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:75
+#: tcms/templates/case/get_details_case_run.html:73
+msgid "Test Execution Information"
+msgstr ""
+
+#: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:76
+#: tcms/templates/case/get_details_case_run.html:75
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:128
 #: tcms/templates/run/report.html:38
 #: tcms/testruns/templates/testruns/mutable.html:31
@@ -451,17 +455,17 @@ msgstr ""
 msgid "Build"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:76
+#: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:81
+#: tcms/templates/case/get_details_case_run.html:80
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:83
-#: tcms/templates/case/get_details_case_run.html:193
+#: tcms/templates/case/get_details_case_run.html:82
+#: tcms/templates/case/get_details_case_run.html:192
 #: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:21
 #: tcms/templates/run/get_case_runs.html:45
@@ -471,15 +475,15 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:103
+#: tcms/templates/case/get_details_case_run.html:102
 msgid "From Case"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:126
+#: tcms/templates/case/get_details_case_run.html:125
 msgid "No log recorded"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:193
+#: tcms/templates/case/get_details_case_run.html:192
 msgid "Test Link"
 msgstr ""
 
@@ -713,7 +717,7 @@ msgstr ""
 msgid "Last page"
 msgstr ""
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:575
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
 msgid "Edit"
 msgstr ""
 
@@ -784,8 +788,8 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
 #: tcms/templates/plan/preview.html:36
-#: tcms/templates/run/table_caseruns.html:53
-#: tcms/templates/run/table_caseruns.html:59
+#: tcms/templates/run/table_executions.html:53
+#: tcms/templates/run/table_executions.html:59
 msgid "None"
 msgstr ""
 
@@ -862,7 +866,7 @@ msgid "print view of selected cases"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:579
+#: tcms/testcases/views.py:578
 msgid "Clone"
 msgstr ""
 
@@ -895,7 +899,7 @@ msgstr ""
 #: tcms/templates/plan/search_case.html:86 tcms/templates/run/get.html:144
 #: tcms/templates/run/get_case_runs.html:35
 #: tcms/templates/run/get_case_runs.html:91 tcms/templates/run/report.html:70
-#: tcms/templates/run/table_caseruns.html:24
+#: tcms/templates/run/table_executions.html:24
 #: tcms/testcases/templates/testcases/get.html:74
 #: tcms/testcases/templates/testcases/mutable.html:68
 #: tcms/testcases/templates/testcases/search.html:82
@@ -909,7 +913,7 @@ msgstr ""
 #: tcms/templates/plan/search_case.html:84
 #: tcms/templates/run/assign_case.html:76
 #: tcms/templates/run/get_case_runs.html:100
-#: tcms/templates/run/table_caseruns.html:22
+#: tcms/templates/run/table_executions.html:22
 #: tcms/testcases/templates/testcases/get.html:79
 #: tcms/testcases/templates/testcases/mutable.html:80
 #: tcms/testcases/templates/testcases/search.html:73
@@ -943,14 +947,14 @@ msgid "No tags in cases"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:99
-#: tcms/templates/run/table_caseruns.html:18
+#: tcms/templates/run/table_executions.html:18
 msgid "Tester"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:107
 #: tcms/templates/plan/get_cases.html:187
 #: tcms/templates/run/get_case_runs.html:76 tcms/templates/run/report.html:67
-#: tcms/templates/run/table_caseruns.html:20
+#: tcms/templates/run/table_executions.html:20
 #: tcms/testcases/templates/testcases/get.html:93
 #: tcms/testcases/templates/testcases/mutable.html:92
 #: tcms/testcases/templates/testcases/search.html:91
@@ -961,7 +965,7 @@ msgstr ""
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
 #: tcms/templates/run/assign_case.html:75 tcms/templates/run/report.html:69
-#: tcms/templates/run/table_caseruns.html:21
+#: tcms/templates/run/table_executions.html:21
 #: tcms/testcases/templates/testcases/get.html:64
 #: tcms/testcases/templates/testcases/mutable.html:52
 #: tcms/testcases/templates/testcases/search.html:51
@@ -1039,7 +1043,7 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:81
 #: tcms/templates/run/get_case_runs.html:64 tcms/templates/run/report.html:66
-#: tcms/templates/run/table_caseruns.html:17
+#: tcms/templates/run/table_executions.html:17
 #: tcms/testcases/templates/testcases/mutable.html:18
 #: tcms/testcases/templates/testcases/search.html:11
 #: tcms/testcases/templates/testcases/search.html:133
@@ -1240,13 +1244,13 @@ msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:72
-#: tcms/templates/run/table_caseruns.html:19
+#: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
 msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:43
 #: tcms/templates/run/status_statistics.html:27
-#: tcms/templates/run/table_caseruns.html:23
+#: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:284
 msgid "Bugs"
 msgstr ""
@@ -1325,7 +1329,8 @@ msgstr ""
 msgid "Case-Run ID"
 msgstr ""
 
-#: tcms/templates/run/report.html:65 tcms/templates/run/table_caseruns.html:16
+#: tcms/templates/run/report.html:65
+#: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
 msgstr ""
 
@@ -1369,20 +1374,20 @@ msgstr ""
 msgid "No Bugs"
 msgstr ""
 
-#: tcms/templates/run/table_caseruns.html:8
+#: tcms/templates/run/table_executions.html:8
 msgid "Select all cases/Select none case"
 msgstr ""
 
-#: tcms/templates/run/table_caseruns.html:11
+#: tcms/templates/run/table_executions.html:11
 msgid "Expand all cases"
 msgstr ""
 
-#: tcms/templates/run/table_caseruns.html:15
-msgid "Case Run ID"
+#: tcms/templates/run/table_executions.html:15
+msgid "Execution ID"
 msgstr ""
 
-#: tcms/templates/run/table_caseruns.html:77
-msgid "No case run found"
+#: tcms/templates/run/table_executions.html:77
+msgid "No execution found"
 msgstr ""
 
 #: tcms/testcases/forms.py:21
@@ -1567,20 +1572,20 @@ msgstr ""
 msgid "TestPlan not specified or does not exist"
 msgstr "TestPlan 未指定或不存在"
 
-#: tcms/testcases/views.py:583
+#: tcms/testcases/views.py:582
 msgid "History"
 msgstr ""
 
-#: tcms/testcases/views.py:588
+#: tcms/testcases/views.py:587
 msgid "Delete"
 msgstr ""
 
-#: tcms/testcases/views.py:761 tcms/testruns/views.py:422
-#: tcms/testruns/views.py:500
+#: tcms/testcases/views.py:760 tcms/testruns/views.py:429
+#: tcms/testruns/views.py:507
 msgid "At least one TestCase is required"
 msgstr "至少需要一個 TestCase"
 
-#: tcms/testcases/views.py:898
+#: tcms/testcases/views.py:897
 msgid "TestCase cloning was successful"
 msgstr "TestCase 複製成功"
 
@@ -1722,15 +1727,15 @@ msgstr ""
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "創建 TestRun 至少需要一個 TestCase"
 
-#: tcms/testruns/views.py:426
+#: tcms/testruns/views.py:433
 msgid "Clone of "
 msgstr ""
 
-#: tcms/testruns/views.py:509
+#: tcms/testruns/views.py:516
 msgid "TestCase ID is not a valid integer"
 msgstr "TestCase ID 不是有效的整數"
 
-#: tcms/testruns/views.py:637
+#: tcms/testruns/views.py:644
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d CaseRun 已更新:"
