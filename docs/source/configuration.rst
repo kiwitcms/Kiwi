@@ -55,13 +55,6 @@ Also modify ``Dockerfile`` to include the following lines::
     RUN pip install django_ses
 
 
-Bugzilla authentication
------------------------
-
-See
-`kiwitcms-auth-bugzilla <https://github.com/kiwitcms/kiwitcms-auth-bugzilla>`_.
-
-
 Kerberos authentication
 -----------------------
 
