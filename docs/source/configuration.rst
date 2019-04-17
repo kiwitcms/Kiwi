@@ -67,3 +67,16 @@ Kerberos authentication
 
 See
 `kiwitcms-auth-kerberos <https://github.com/kiwitcms/kiwitcms-auth-kerberos>`_.
+
+
+Public read-only access
+-----------------------
+
+By default Kiwi TCMS requires all users to be logged in. This is achieved via
+``global_login_required.GlobalLoginRequiredMiddleware``. If you wish to allow
+public read-only access to certain pages (Search, TestCase view, TestPlan view,
+etc) simply disable this middleware. Add the following to your ``local_settings.py``::
+
+    from django.conf import settings
+    
+    settings.MIDDLEWARE.remove('global_login_required.GlobalLoginRequiredMiddleware')
