@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-17 19:12\n"
+"PO-Revision-Date: 2019-04-19 09:13\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -437,7 +437,7 @@ msgstr "Afficher tout"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Informations d'exécution du test"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
@@ -1370,11 +1370,11 @@ msgstr "Développer toutes les scénarios"
 
 #: tcms/templates/run/table_executions.html:15
 msgid "Execution ID"
-msgstr ""
+msgstr "ID de l'exécution"
 
 #: tcms/templates/run/table_executions.html:77
 msgid "No execution found"
-msgstr ""
+msgstr "Aucune exécution trouvée"
 
 #: tcms/testcases/forms.py:21
 msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
