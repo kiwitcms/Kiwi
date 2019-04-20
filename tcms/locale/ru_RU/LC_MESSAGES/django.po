@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 04:31\n"
+"PO-Revision-Date: 2019-04-20 04:41\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -962,19 +962,19 @@ msgstr "Тестер по умолчанию"
 
 #: tcms/templates/plan/get_cases.html:205
 msgid "Text version"
-msgstr ""
+msgstr "Версия текста"
 
 #: tcms/templates/plan/get_cases.html:211
 msgid "Actions"
-msgstr ""
+msgstr "Действия"
 
 #: tcms/templates/plan/get_cases.html:220
 msgid "Show more"
-msgstr ""
+msgstr "Показать ещё"
 
 #: tcms/templates/plan/get_cases.html:222
 msgid "cases left"
-msgstr ""
+msgstr "кейсов осталось"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
@@ -1401,48 +1401,48 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:303
 msgid "Test plans"
-msgstr ""
+msgstr "Тест-планы"
 
 #: tcms/testcases/templates/testcases/get.html:367
 msgid "Components"
-msgstr ""
+msgstr "Компоненты"
 
 #: tcms/testcases/templates/testcases/get.html:411
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: tcms/testcases/templates/testcases/get.html:412
 msgid "Owner"
-msgstr ""
+msgstr "Владелец"
 
 #: tcms/testcases/templates/testcases/get.html:413
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: tcms/testcases/templates/testcases/get.html:427
 msgid "No records found"
-msgstr ""
+msgstr "Записи не найдены"
 
 #: tcms/testcases/templates/testcases/mutable.html:9
 msgid "New TestCase"
-msgstr ""
+msgstr "Новый тест-кейс"
 
 #: tcms/testcases/templates/testcases/mutable.html:38
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
-msgstr ""
+msgstr "добавить новый продукт"
 
 #: tcms/testcases/templates/testcases/mutable.html:53
 msgid "add new Category"
-msgstr ""
+msgstr "добавить новую категорию"
 
 #: tcms/testcases/templates/testcases/mutable.html:143
 msgid "Notify"
-msgstr ""
+msgstr "Уведомления"
 
 #: tcms/testcases/templates/testcases/mutable.html:154
 msgid "Manager of runs"
-msgstr ""
+msgstr "Менеджер прогонов"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
@@ -1450,19 +1450,19 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
-msgstr ""
+msgstr "Тестер по умолчанию для прогона"
 
 #: tcms/testcases/templates/testcases/mutable.html:186
 msgid "Notify when"
-msgstr ""
+msgstr "Уведомлять когда"
 
 #: tcms/testcases/templates/testcases/mutable.html:190
 msgid "TestCase is updated"
-msgstr ""
+msgstr "Тест-кейс обновлен"
 
 #: tcms/testcases/templates/testcases/mutable.html:197
 msgid "TestCase is deleted"
-msgstr ""
+msgstr "Тест-кейс удален"
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
@@ -1670,11 +1670,11 @@ msgstr "ID тест-плана"
 
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr ""
+msgstr "Для создание тест-прогона требуется хотя-бы один тест-план"
 
 #: tcms/testruns/views.py:60
 msgid "Creating a TestRun requires at least one TestCase"
-msgstr ""
+msgstr "Создание тест-прогона требует хотя бы одного тест-кейса"
 
 #: tcms/testruns/views.py:433
 msgid "Clone of "
