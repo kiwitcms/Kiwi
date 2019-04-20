@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 01:01\n"
+"PO-Revision-Date: 2019-04-20 01:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -560,13 +560,17 @@ msgid "Welcome %(user)s,\n"
 "thank you for signing up for an %(site_domain)s account!\n\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
-msgstr ""
+msgstr "Добро пожаловать %(user)s,\n"
+"благодарю вас за регистрацию на %(site_domain)s!\n\n"
+"Чтобы активировать свою учётную запись, нажмите на эту ссылку:\n"
+"%(confirm_url)s\n"
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
 msgid "\n"
 "TestCase has been deleted by %(username)s!\n"
-msgstr ""
+msgstr "\n"
+"Тест-кейс был удален %(username)s!\n"
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
@@ -596,17 +600,17 @@ msgstr ""
 
 #: tcms/templates/management/get_tag.html:7
 msgid "Plans"
-msgstr ""
+msgstr "Планы"
 
 #: tcms/templates/management/get_tag.html:8 tcms/templates/plan/get.html:113
 #: tcms/templates/plan/get_cases.html:139
 #: tcms/templates/run/get_case_runs.html:4
 msgid "Cases"
-msgstr ""
+msgstr "Кейсы"
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
-msgstr ""
+msgstr "Прогоны"
 
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
@@ -614,11 +618,11 @@ msgstr ""
 #: tcms/templates/run/get_case_runs.html:24
 #: tcms/templates/run/get_case_runs.html:46
 msgid "Remove"
-msgstr ""
+msgstr "Удалить"
 
 #: tcms/templates/management/get_tag.html:35
 msgid "Add Tag"
-msgstr ""
+msgstr "Добавить Тeг"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
@@ -626,93 +630,93 @@ msgstr ""
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
-msgstr ""
+msgstr "Добро пожаловать, гость"
 
 #: tcms/templates/navbar.html:29
 msgid "My Test Runs"
-msgstr ""
+msgstr "Мой тестовые прогоны"
 
 #: tcms/templates/navbar.html:33
 msgid "My Test Plans"
-msgstr ""
+msgstr "Мои тест-планы"
 
 #: tcms/templates/navbar.html:39
 msgid "My profile"
-msgstr ""
+msgstr "Мой профиль"
 
 #: tcms/templates/navbar.html:43
 #: tcms/templates/registration/password_reset_confirm.html:29
 msgid "Change password"
-msgstr ""
+msgstr "Изменить пароль"
 
 #: tcms/templates/navbar.html:49
 msgid "Logout"
-msgstr ""
+msgstr "Выйти"
 
 #: tcms/templates/navbar.html:53
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: tcms/templates/navbar.html:59
 #: tcms/templates/registration/registration_form.html:47
 msgid "Register"
-msgstr ""
+msgstr "Регистрация"
 
 #: tcms/templates/pagination.html:7
 msgid "First page"
-msgstr ""
+msgstr "Первая страница"
 
 #: tcms/templates/pagination.html:10
 msgid "Previous page"
-msgstr ""
+msgstr "Предыдущая страница"
 
 #: tcms/templates/pagination.html:14
 msgid "Current page"
-msgstr ""
+msgstr "Текущая страница"
 
 #: tcms/templates/pagination.html:22
 msgid "Next page"
-msgstr ""
+msgstr "Следующая страница"
 
 #: tcms/templates/pagination.html:25
 msgid "Last page"
-msgstr ""
+msgstr "Последняя страница"
 
 #: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
 msgid "Edit"
-msgstr ""
+msgstr "Изменить"
 
 #: tcms/templates/plan/cases_rows.html:73
 msgid "No test case was found in this plan."
-msgstr ""
+msgstr "В этом плане не найдено ни одного тест-кейса."
 
 #: tcms/templates/plan/clone.html:4 tcms/templates/plan/get.html:47
 msgid "Clone Plan"
-msgstr ""
+msgstr "Клонировать план"
 
 #: tcms/templates/plan/clone.html:23
 msgid "Clone TestPlan"
-msgstr ""
+msgstr "Клонировать тест-план"
 
 #: tcms/templates/plan/clone.html:29
 msgid "New Plan Name"
-msgstr ""
+msgstr "Новое название плана"
 
 #: tcms/templates/plan/clone.html:33
 msgid "Copy to Product"
-msgstr ""
+msgstr "Копировать продукт"
 
 #: tcms/templates/plan/clone.html:44
 msgid "Copy Settings"
-msgstr ""
+msgstr "Копировать настройки"
 
 #: tcms/templates/plan/clone.html:51
 msgid "Copy"
-msgstr ""
+msgstr "Копировать"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
-msgstr ""
+msgstr "Изменить план"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
