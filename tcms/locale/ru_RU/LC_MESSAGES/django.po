@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 01:31\n"
+"PO-Revision-Date: 2019-04-20 01:41\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1155,7 +1155,7 @@ msgstr "Как присоединить кейс?"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "The table below list all the confirmed test cases of plan"
-msgstr ""
+msgstr "В приведенной таблице содержится список подтвержденных тест-кейсов плана"
 
 #: tcms/templates/run/assign_case.html:59
 msgid "check the checkbox to add cases into test run. Remember to update at last"
@@ -1163,57 +1163,57 @@ msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
 msgid "Created Date"
-msgstr ""
+msgstr "Дата создания"
 
 #: tcms/templates/run/assign_case.html:77
 msgid "Selected"
-msgstr ""
+msgstr "Выбранные"
 
 #: tcms/templates/run/get.html:115 tcms/templates/run/report.html:51
 msgid "Note"
-msgstr ""
+msgstr "Примечание"
 
 #: tcms/templates/run/get.html:147
 msgid "Finished"
-msgstr ""
+msgstr "Завершено"
 
 #: tcms/templates/run/get.html:152
 #: tcms/testruns/templates/testruns/search.html:67
 msgid "Running"
-msgstr ""
+msgstr "Запущено"
 
 #: tcms/templates/run/get.html:160 tcms/templates/run/report.html:47
 msgid "Finished at"
-msgstr ""
+msgstr "Завершено"
 
 #: tcms/templates/run/get.html:166
 msgid "CC"
-msgstr ""
+msgstr "Копия"
 
 #: tcms/templates/run/get_case_runs.html:12
 msgid "Automatically"
-msgstr ""
+msgstr "Автоматически"
 
 #: tcms/templates/run/get_case_runs.html:14
 msgid "Highlight"
-msgstr ""
+msgstr "Выберите"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
-msgstr ""
+msgstr "Обновление"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:72
 #: tcms/templates/run/table_executions.html:19
 msgid "Assignee"
-msgstr ""
+msgstr "Назначено"
 
 #: tcms/templates/run/get_case_runs.html:43
 #: tcms/templates/run/status_statistics.html:27
 #: tcms/templates/run/table_executions.html:23
 #: tcms/testcases/templates/testcases/get.html:284
 msgid "Bugs"
-msgstr ""
+msgstr "Ошибки"
 
 #: tcms/templates/run/get_case_runs.html:68
 #: tcms/testcases/templates/testcases/get.html:48
@@ -1225,27 +1225,27 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Default tester"
-msgstr ""
+msgstr "Тестер по умолчанию"
 
 #: tcms/templates/run/get_case_runs.html:79
 msgid "Manual"
-msgstr ""
+msgstr "Вручную"
 
 #: tcms/templates/run/get_case_runs.html:80
 msgid "Auto"
-msgstr ""
+msgstr "Авто"
 
 #: tcms/templates/run/get_case_runs.html:86
 msgid "Bug"
-msgstr ""
+msgstr "Ошибка"
 
 #: tcms/templates/run/get_case_runs.html:88
 msgid "You can type multiple bugs by comma."
-msgstr ""
+msgstr "Вы можете ввести несколько ошибок через запятую."
 
 #: tcms/templates/run/get_case_runs.html:135
 msgid "All these fields are required."
-msgstr ""
+msgstr "Необходимо заполнить все поля."
 
 #: tcms/templates/run/get_case_runs.html:138
 msgid "64 characters at most"
@@ -1466,7 +1466,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:206
 msgid "CC to"
-msgstr ""
+msgstr "Копия к"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
