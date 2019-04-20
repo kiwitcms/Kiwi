@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 01:11\n"
+"PO-Revision-Date: 2019-04-20 01:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -720,23 +720,23 @@ msgstr "Изменить план"
 
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
-msgstr ""
+msgstr "Изменить тест-план"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
-msgstr ""
+msgstr "Клонировать план в другой продукт"
 
 #: tcms/templates/plan/get.html:48
 msgid "Print Plan"
-msgstr ""
+msgstr "Печать плана"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete Plan"
-msgstr ""
+msgstr "Удалить план"
 
 #: tcms/templates/plan/get.html:49
 msgid "Delete test plan"
-msgstr ""
+msgstr "Удалить тест-план"
 
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -745,34 +745,34 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:34
 #: tcms/testruns/templates/testruns/search.html:94
 msgid "Version"
-msgstr ""
+msgstr "Версия"
 
 #: tcms/templates/plan/get.html:76 tcms/templates/plan/preview.html:31
 msgid "Reference Link"
-msgstr ""
+msgstr "Ссылка"
 
 #: tcms/templates/plan/get.html:81 tcms/templates/plan/get.html:96
 #: tcms/templates/plan/preview.html:36
 #: tcms/templates/run/table_executions.html:53
 #: tcms/templates/run/table_executions.html:59
 msgid "None"
-msgstr ""
+msgstr "Пусто"
 
 #: tcms/templates/plan/get.html:86
 msgid "Create Time"
-msgstr ""
+msgstr "Время создания"
 
 #: tcms/templates/plan/get.html:91 tcms/templates/plan/preview.html:27
 msgid "Parent"
-msgstr ""
+msgstr "Родитель"
 
 #: tcms/templates/plan/get.html:101
 msgid "View Edit History"
-msgstr ""
+msgstr "Просмотреть историю изменений"
 
 #: tcms/templates/plan/get.html:110 tcms/templates/plan/preview.html:41
 msgid "Document"
-msgstr ""
+msgstr "Документ"
 
 #: tcms/templates/plan/get.html:116
 msgid "Reviewing Cases"
@@ -1019,11 +1019,11 @@ msgstr ""
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
-msgstr ""
+msgstr "Создана"
 
 #: tcms/templates/plan/search_case.html:115
 msgid "No test cases found."
-msgstr ""
+msgstr "Тест-кейсы не найдены."
 
 #: tcms/templates/registration/login.html:17
 #: tcms/templates/registration/registration_form.html:15
@@ -1033,45 +1033,45 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:58
 #: tcms/testruns/templates/testruns/search.html:63
 msgid "Username"
-msgstr ""
+msgstr "Имя пользователя"
 
 #: tcms/templates/registration/login.html:24
 #: tcms/templates/registration/password_reset_confirm.html:15
 #: tcms/templates/registration/registration_form.html:23
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: tcms/templates/registration/login.html:31
 msgid "Forgot"
-msgstr ""
+msgstr "Забыли"
 
 #: tcms/templates/registration/login.html:31
 msgid "password"
-msgstr ""
+msgstr "пароль"
 
 #: tcms/templates/registration/login.html:34
 msgid "Log in"
-msgstr ""
+msgstr "Войти"
 
 #: tcms/templates/registration/login.html:45
 msgid "Welcome to Kiwi TCMS"
-msgstr ""
+msgstr "Добро пожаловать в Kiwi TCMS"
 
 #: tcms/templates/registration/login.html:50
 msgid "Please login to get started"
-msgstr ""
+msgstr "Пожалуйста, войдите, чтобы начать"
 
 #: tcms/templates/registration/login.html:51
 msgid "or"
-msgstr ""
+msgstr "или"
 
 #: tcms/templates/registration/login.html:51
 msgid "register an account"
-msgstr ""
+msgstr "зарегистрировать аккаунт"
 
 #: tcms/templates/registration/login.html:52
 msgid "if you don't have one!"
-msgstr ""
+msgstr "если вы не имеете ничего!"
 
 #: tcms/templates/registration/password_reset_complete.html:12
 msgid "Your password has been set. You may go ahead and"
