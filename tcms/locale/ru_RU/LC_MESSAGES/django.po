@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 01:41\n"
+"PO-Revision-Date: 2019-04-20 01:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1470,95 +1470,95 @@ msgstr "Копия к"
 
 #: tcms/testcases/templates/testcases/mutable.html:211
 msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
-msgstr ""
+msgstr "E-mail адреса, разделяются запятыми. Письма с уведомлениями будут отправлены на каждый адрес электронной почты из списка (копия)."
 
 #: tcms/testcases/templates/testcases/mutable.html:214
 #: tcms/testplans/templates/testplans/mutable.html:145
 #: tcms/testruns/templates/testruns/mutable.html:70
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: tcms/testcases/templates/testcases/search.html:5
 msgid "Search test cases"
-msgstr ""
+msgstr "Поиск тест-кейсов"
 
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
-msgstr ""
+msgstr "Итоги по тест-кейсу"
 
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
 msgid "After"
-msgstr ""
+msgstr "После"
 
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
 msgid "Before"
-msgstr ""
+msgstr "Перед"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
-msgstr ""
+msgstr "Оба"
 
 #: tcms/testcases/templates/testcases/search.html:114
 #: tcms/testcases/templates/testcases/search.html:120
 #: tcms/testplans/templates/testplans/search.html:90
 #: tcms/testruns/templates/testruns/search.html:77
 msgid "Separate multiple values with comma (,)"
-msgstr ""
+msgstr "Разделяйте значения через запятые (,)"
 
 #: tcms/testcases/templates/testcases/search.html:124
 #: tcms/testplans/templates/testplans/search.html:100
 #: tcms/testruns/templates/testruns/search.html:82
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #: tcms/testcases/templates/testcases/search.html:134
 #: tcms/testplans/templates/testplans/search.html:110
 #: tcms/testruns/templates/testruns/mutable.html:94
 msgid "Created on"
-msgstr ""
+msgstr "Создано"
 
 #: tcms/testcases/views.py:399
 msgid "TestPlan not specified or does not exist"
-msgstr ""
+msgstr "Тест-план не указан или не существует"
 
 #: tcms/testcases/views.py:582
 msgid "History"
-msgstr ""
+msgstr "История"
 
 #: tcms/testcases/views.py:587
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: tcms/testcases/views.py:760 tcms/testruns/views.py:429
 #: tcms/testruns/views.py:507
 msgid "At least one TestCase is required"
-msgstr ""
+msgstr "Требуется хотя бы один тест-кейс"
 
 #: tcms/testcases/views.py:897
 msgid "TestCase cloning was successful"
-msgstr ""
+msgstr "Клонирование тест-кейса прошло успешно"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
-msgstr ""
+msgstr "Изменить тест-план"
 
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
-msgstr ""
+msgstr "Создать новый тест-план"
 
 #: tcms/testplans/templates/testplans/mutable.html:49
 msgid "add new Version"
-msgstr ""
+msgstr "добавить новую версию"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
-msgstr ""
+msgstr "Родительский ID"
 
 #: tcms/testplans/templates/testplans/mutable.html:93
 msgid "Test plan document:"
-msgstr ""
+msgstr "Документ тест-плана:"
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
