@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 04:41\n"
+"PO-Revision-Date: 2019-04-20 04:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1682,12 +1682,12 @@ msgstr "Клонировать "
 
 #: tcms/testruns/views.py:516
 msgid "TestCase ID is not a valid integer"
-msgstr ""
+msgstr "ID тест-кейса не является допустимым целым числом"
 
 #: tcms/testruns/views.py:644
 #, python-format
 msgid "%d CaseRun(s) updated:"
-msgstr ""
+msgstr "%d тест-прогоны обновлены:"
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
