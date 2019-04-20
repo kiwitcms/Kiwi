@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 00:11\n"
+"PO-Revision-Date: 2019-04-20 00:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -103,63 +103,63 @@ msgstr "Список администраторов"
 
 #: tcms/kiwi_auth/views.py:103
 msgid "This activation key no longer exists in the database"
-msgstr ""
+msgstr "Ключ активации больше не существует в базе данных"
 
 #: tcms/kiwi_auth/views.py:108
 msgid "This activation key has expired"
-msgstr ""
+msgstr "Срок действия ключа активации истек"
 
 #: tcms/kiwi_auth/views.py:120
 msgid "Your account has been activated successfully"
-msgstr ""
+msgstr "Ваша учетная запись успешно активирована"
 
 #: tcms/settings/common.py:94
 msgid "DASHBOARD"
-msgstr ""
+msgstr "ДАШБОРД"
 
 #: tcms/settings/common.py:95
 msgid "TESTING"
-msgstr ""
+msgstr "ТЕСТИРОВАНИЕ"
 
 #: tcms/settings/common.py:96
 msgid "New Test Plan"
-msgstr ""
+msgstr "Новый тест-план"
 
 #: tcms/settings/common.py:98
 msgid "New Test Case"
-msgstr ""
+msgstr "Новый тест-кейс"
 
 #: tcms/settings/common.py:100
 msgid "SEARCH"
-msgstr ""
+msgstr "ПОИСК"
 
 #: tcms/settings/common.py:101
 msgid "Search Test Plans"
-msgstr ""
+msgstr "Поиск тест-планов"
 
 #: tcms/settings/common.py:102
 msgid "Search Test Runs"
-msgstr ""
+msgstr "Поиск тест-прогонов"
 
 #: tcms/settings/common.py:103
 msgid "Search Test Cases"
-msgstr ""
+msgstr "Поиск тест-кейсов"
 
 #: tcms/settings/common.py:105
 msgid "TELEMETRY"
-msgstr ""
+msgstr "ТЕЛЕМЕТРИЯ"
 
 #: tcms/settings/common.py:119
 msgid "ADMIN"
-msgstr ""
+msgstr "АДМИН"
 
 #: tcms/settings/common.py:120
 msgid "Users and groups"
-msgstr ""
+msgstr "Пользователи и группы"
 
 #: tcms/settings/common.py:122
 msgid "Everything else"
-msgstr ""
+msgstr "Прочее"
 
 #: tcms/settings/common.py:128
 msgid "Report an Issue"
