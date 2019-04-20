@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 00:03\n"
+"PO-Revision-Date: 2019-04-20 00:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -82,7 +82,7 @@ msgstr "Права доступа"
 
 #: tcms/kiwi_auth/forms.py:32
 msgid "A user with that email already exists."
-msgstr ""
+msgstr "Пользователь с таким email уже существует."
 
 #: tcms/kiwi_auth/forms.py:60
 #, python-format
@@ -91,15 +91,15 @@ msgstr ""
 
 #: tcms/kiwi_auth/views.py:50
 msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr ""
+msgstr "Ваша учетная запись была создана и ожидает подтверждение через указанный вами e-mail"
 
 #: tcms/kiwi_auth/views.py:56
 msgid "Your account has been created, but you need an administrator to activate it"
-msgstr ""
+msgstr "Ваша учетная запись была создана и ожидает активации администратором"
 
 #: tcms/kiwi_auth/views.py:61
 msgid "Following is the administrator list"
-msgstr ""
+msgstr "Список администраторов"
 
 #: tcms/kiwi_auth/views.py:103
 msgid "This activation key no longer exists in the database"
