@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 00:31\n"
+"PO-Revision-Date: 2019-04-20 00:41\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -215,42 +215,42 @@ msgstr "Примечание: лимит на размер вложения"
 #: tcms/templates/plan/attachment.html:36
 #: tcms/templates/plan/get_attachments.html:13
 msgid "File name"
-msgstr ""
+msgstr "Имя файла"
 
 #: tcms/templates/case/attachment.html:36
 #: tcms/templates/plan/attachment.html:37
 #: tcms/templates/plan/get_attachments.html:14
 msgid "Submitter"
-msgstr ""
+msgstr "Отправитель"
 
 #: tcms/templates/case/attachment.html:37
 #: tcms/templates/plan/attachment.html:38
 #: tcms/templates/plan/get_attachments.html:15
 msgid "Create date"
-msgstr ""
+msgstr "Дата создания"
 
 #: tcms/templates/case/attachment.html:38
 #: tcms/templates/management/get_tag.html:10
 #: tcms/templates/plan/attachment.html:39
 #: tcms/templates/plan/get_attachments.html:16
 msgid "Action"
-msgstr ""
+msgstr "Действие"
 
 #: tcms/templates/case/clone.html:24
 msgid "Clone TestCase(s)"
-msgstr ""
+msgstr "Клонировать тест-кейс(ы)"
 
 #: tcms/templates/case/clone.html:28
 msgid "Select Plan"
-msgstr ""
+msgstr "Выберите план"
 
 #: tcms/templates/case/clone.html:32
 msgid "Use the same Plan"
-msgstr ""
+msgstr "Использовать этот план"
 
 #: tcms/templates/case/clone.html:37
 msgid "Filter another plan"
-msgstr ""
+msgstr "Фильтровать другой план"
 
 #: tcms/templates/case/clone.html:42 tcms/templates/plan/get_cases.html:161
 #: tcms/templates/plan/search_case.html:80
@@ -260,7 +260,7 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:108
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
 #: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
@@ -276,12 +276,12 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:24
 #: tcms/testruns/templates/testruns/search.html:93
 msgid "Product"
-msgstr ""
+msgstr "Продукт"
 
 #: tcms/templates/case/clone.html:50 tcms/templates/plan/clone.html:37
 #: tcms/templates/run/get.html:73 tcms/templates/run/report.html:27
 msgid "Product Version"
-msgstr ""
+msgstr "Версия продукта"
 
 #: tcms/templates/case/clone.html:54
 #: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:70
@@ -523,7 +523,7 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
-msgstr ""
+msgstr "Ваши тест-планы"
 
 #: tcms/templates/dashboard.html:48
 msgid "TestPlan"
