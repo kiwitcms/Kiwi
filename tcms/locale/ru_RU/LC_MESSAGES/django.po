@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 01:51\n"
+"PO-Revision-Date: 2019-04-20 02:01\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1562,87 +1562,87 @@ msgstr "Документ тест-плана:"
 
 #: tcms/testplans/templates/testplans/mutable.html:101
 msgid "Notify:"
-msgstr ""
+msgstr "Уведомления:"
 
 #: tcms/testplans/templates/testplans/mutable.html:109
 msgid "TestCase author"
-msgstr ""
+msgstr "Автор тест-кейса"
 
 #: tcms/testplans/templates/testplans/mutable.html:123
 msgid "Notify when:"
-msgstr ""
+msgstr "Уведомлять когда:"
 
 #: tcms/testplans/templates/testplans/mutable.html:125
 msgid "TestPlan is updated"
-msgstr ""
+msgstr "Тест-план обновлен"
 
 #: tcms/testplans/templates/testplans/mutable.html:131
 msgid "Test cases are updated"
-msgstr ""
+msgstr "Тест-кейсы обновлены"
 
 #: tcms/testplans/templates/testplans/search.html:5
 msgid "Search test plans"
-msgstr ""
+msgstr "Поиск тест-планов"
 
 #: tcms/testplans/templates/testplans/search.html:13
 msgid "Test plan name"
-msgstr ""
+msgstr "Название тест-плана"
 
 #: tcms/testplans/templates/testplans/search.html:109
 #: tcms/testruns/templates/testruns/search.html:92
 msgid "Test plan"
-msgstr ""
+msgstr "Тест-план"
 
 #: tcms/testplans/views.py:344
 msgid "TestPlan is required"
-msgstr ""
+msgstr "Требуется тест-план"
 
 #: tcms/testplans/views.py:565
 msgid "At least one test plan is required for print"
-msgstr ""
+msgstr "Для печати требуется хотя бы один тест-план"
 
 #: tcms/testplans/views.py:573
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
-msgstr ""
+msgstr "Тест-план \"%s\" не существует"
 
 #: tcms/testruns/admin.py:29
 msgid "Permission denied: TestRun does not belong to you"
-msgstr ""
+msgstr "Доступ запрещен: тестовый прогон не принадлежит вам"
 
 #: tcms/testruns/forms.py:83
 msgid "The stop date is invalid. The valid format is YYYY-MM-DD."
-msgstr ""
+msgstr "Недопустимый формат даты. Правильный формат YYYY-MM-DD."
 
 #: tcms/testruns/templates/testruns/mutable.html:7
 msgid "Edit TestRun"
-msgstr ""
+msgstr "Изменить тестовый прогон"
 
 #: tcms/testruns/templates/testruns/mutable.html:9
 msgid "Clone TestRun"
-msgstr ""
+msgstr "Клонировать тестовый прогон"
 
 #: tcms/testruns/templates/testruns/mutable.html:11
 msgid "New TestRun"
-msgstr ""
+msgstr "Новый тестовый прогон"
 
 #: tcms/testruns/templates/testruns/mutable.html:34
 #: tcms/testruns/templates/testruns/mutable.html:35
 msgid "add new Build"
-msgstr ""
+msgstr "добавить новую сборку"
 
 #: tcms/testruns/templates/testruns/mutable.html:44
 msgid "version"
-msgstr ""
+msgstr "версия"
 
 #: tcms/testruns/templates/testruns/mutable.html:51
 #: tcms/testruns/templates/testruns/mutable.html:58
 msgid "Username or email"
-msgstr ""
+msgstr "Имя пользователя или email"
 
 #: tcms/testruns/templates/testruns/mutable.html:79
 msgid "Selected TestCase(s):"
-msgstr ""
+msgstr "Выбранные тест-кейс(ы):"
 
 #: tcms/testruns/templates/testruns/mutable.html:82
 #, python-format
