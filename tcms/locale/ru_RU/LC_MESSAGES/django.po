@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 03:21\n"
+"PO-Revision-Date: 2019-04-20 03:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -455,7 +455,7 @@ msgstr "Версия текста"
 #: tcms/templates/case/get_details_case_run.html:80
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr "Отчет"
+msgstr "Отчёт"
 
 #: tcms/templates/case/get_details_case_run.html:82
 #: tcms/templates/case/get_details_case_run.html:192
@@ -466,44 +466,44 @@ msgstr "Отчет"
 #: tcms/testcases/templates/testcases/get.html:351
 #: tcms/testcases/templates/testcases/get.html:388
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
 #: tcms/templates/case/get_details_case_run.html:102
 msgid "From Case"
-msgstr ""
+msgstr "Из кейса"
 
 #: tcms/templates/case/get_details_case_run.html:125
 msgid "No log recorded"
-msgstr ""
+msgstr "Нет записанных логов"
 
 #: tcms/templates/case/get_details_case_run.html:192
 msgid "Test Link"
-msgstr ""
+msgstr "Ссылка теста"
 
 #: tcms/templates/case/printable.html:31
 msgid "Contents"
-msgstr ""
+msgstr "Содержание"
 
 #: tcms/templates/case/printable.html:41
 msgid "Test Plan Document"
-msgstr ""
+msgstr "Документ тест-плана"
 
 #: tcms/templates/case/printable.html:49
 msgid "Test Cases"
-msgstr ""
+msgstr "Тест-кейс"
 
 #: tcms/templates/dashboard.html:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Панель мониторинга"
 
 #: tcms/templates/dashboard.html:8
 msgid "Test executions"
-msgstr ""
+msgstr "Тестовые запуски"
 
 #: tcms/templates/dashboard.html:18 tcms/templates/run/get.html:85
 #: tcms/templates/run/report.html:44
 msgid "Started at"
-msgstr ""
+msgstr "Дата запуска"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
@@ -515,11 +515,11 @@ msgstr ""
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
 msgid "SEE ALL"
-msgstr ""
+msgstr "СМОТРЕТЬ ВСЕ"
 
 #: tcms/templates/dashboard.html:35
 msgid "There are no TestRun(s) assigned to you"
-msgstr ""
+msgstr "Нет тест-прогонов назначенных вам"
 
 #: tcms/templates/dashboard.html:42
 msgid "Your Test plans"
@@ -982,27 +982,27 @@ msgstr ""
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
-msgstr ""
+msgstr "Добавить дочерний узел в текущий план"
 
 #: tcms/templates/plan/get_treeview.html:6
 msgid "Remove child node from current plan"
-msgstr ""
+msgstr "Удалить дочерний узел из текущего плана"
 
 #: tcms/templates/plan/preview.html:52
 msgid "The plan you specified does not exist in the database."
-msgstr ""
+msgstr "Указанный вами план не существует в базе данных."
 
 #: tcms/templates/plan/search_case.html:29
 msgid "Search cases to add into this test plan."
-msgstr ""
+msgstr "Поиск заявок для добавления в тест-план."
 
 #: tcms/templates/plan/search_case.html:40
 msgid "Quick Search"
-msgstr ""
+msgstr "Быстрый поиск"
 
 #: tcms/templates/plan/search_case.html:45
 msgid "Normal Search"
-msgstr ""
+msgstr "Обычный поиск"
 
 #: tcms/templates/plan/search_case.html:81
 #: tcms/templates/run/get_case_runs.html:64 tcms/templates/run/report.html:66
@@ -1015,7 +1015,7 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:11
 #: tcms/testruns/templates/testruns/search.html:91
 msgid "Summary"
-msgstr ""
+msgstr "Итоги"
 
 #: tcms/templates/plan/search_case.html:85
 msgid "Created"
