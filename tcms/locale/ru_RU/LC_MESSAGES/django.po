@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 02:11\n"
+"PO-Revision-Date: 2019-04-20 03:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -287,11 +287,11 @@ msgstr "Версия продукта"
 #: tcms/templates/case/clone_select_plan.html:9 tcms/templates/plan/get.html:70
 #: tcms/templates/plan/preview.html:23
 msgid "Plan Type"
-msgstr ""
+msgstr "Тип плана"
 
 #: tcms/templates/case/clone.html:58
 msgid "Plan Author"
-msgstr ""
+msgstr "Автор плана"
 
 #: tcms/templates/case/clone.html:62 tcms/templates/case/get_details.html:32
 #: tcms/templates/management/get_tag.html:6
@@ -301,34 +301,34 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:87
 #: tcms/testruns/templates/testruns/search.html:74
 msgid "Tag"
-msgstr ""
+msgstr "Тег"
 
 #: tcms/templates/case/clone.html:66
 #: tcms/templates/case/clone_select_plan.html:8
 msgid "Plan Summary"
-msgstr ""
+msgstr "Итоги по плану"
 
 #: tcms/templates/case/clone.html:70
 #: tcms/testplans/templates/testplans/mutable.html:139
 #: tcms/testplans/templates/testplans/search.html:93
 msgid "Active"
-msgstr ""
+msgstr "Активно"
 
 #: tcms/templates/case/clone.html:93
 msgid "Case(s)"
-msgstr ""
+msgstr "Кейс(ы)"
 
 #: tcms/templates/case/clone.html:97
 msgid "Clone Settings"
-msgstr ""
+msgstr "Клонировать настройки"
 
 #: tcms/templates/case/clone.html:99
 msgid "Case Properties"
-msgstr ""
+msgstr "Свойства кейса"
 
 #: tcms/templates/case/clone_select_plan.html:2
 msgid "Plan"
-msgstr ""
+msgstr "План"
 
 #: tcms/templates/case/clone_select_plan.html:10
 #: tcms/templates/plan/get.html:58 tcms/templates/plan/get_cases.html:95
@@ -345,39 +345,39 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:114
 #: tcms/testruns/templates/testruns/mutable.html:93
 msgid "Author"
-msgstr ""
+msgstr "Автор"
 
 #: tcms/templates/case/clone_select_plan.html:11
 msgid "Is Active"
-msgstr ""
+msgstr "Активно"
 
 #: tcms/templates/case/clone_select_plan.html:19
 #: tcms/testcases/templates/testcases/search.html:94
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: tcms/templates/case/clone_select_plan.html:19
 #: tcms/testcases/templates/testcases/search.html:97
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 #: tcms/templates/case/clone_select_plan.html:22
 msgid "There are no plans"
-msgstr ""
+msgstr "Нет планов"
 
 #: tcms/templates/case/get_details.html:8
 #: tcms/testcases/templates/testcases/mutable.html:100
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: tcms/templates/case/get_details.html:12
 msgid "Attachment"
-msgstr ""
+msgstr "Вложения"
 
 #: tcms/templates/case/get_details.html:21
 #: tcms/templates/case/get_details_case_run.html:159
 msgid "No attachment found"
-msgstr ""
+msgstr "Вложения не найдены"
 
 #: tcms/templates/case/get_details.html:24
 #: tcms/templates/case/get_details_case_run.html:165
@@ -385,59 +385,59 @@ msgstr ""
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:136
 msgid "Component"
-msgstr ""
+msgstr "Компонент"
 
 #: tcms/templates/case/get_details.html:29
 #: tcms/templates/case/get_details_case_run.html:170
 msgid "No component found"
-msgstr ""
+msgstr "Компонент не найден"
 
 #: tcms/templates/case/get_details.html:37
 #: tcms/templates/case/get_details_case_run.html:181
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
-msgstr ""
+msgstr "Тег не найден"
 
 #: tcms/templates/case/get_details.html:40
 #: tcms/templates/case/get_details_case_run.html:78
 msgid "bug"
-msgstr ""
+msgstr "ошибка"
 
 #: tcms/templates/case/get_details.html:46
 #: tcms/templates/case/get_details_case_run.html:95
 msgid "From Run"
-msgstr ""
+msgstr "Из прогона"
 
 #: tcms/templates/case/get_details.html:51
 #: tcms/templates/case/get_details_case_run.html:111
 msgid "No bug found"
-msgstr ""
+msgstr "Ошибка не найдена"
 
 #: tcms/templates/case/get_details.html:58
 #: tcms/testcases/templates/testcases/get.html:33
 #: tcms/testcases/templates/testcases/mutable.html:134
 #: tcms/testruns/templates/testruns/mutable.html:64
 msgid "Notes"
-msgstr ""
+msgstr "Примечания"
 
 #: tcms/templates/case/get_details.html:64
 #: tcms/templates/run/get_case_runs.html:191
 #: tcms/templates/run/table_executions.html:25
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #: tcms/templates/case/get_details_case_run.html:46
 #: tcms/templates/case/get_details_case_run.html:48
 msgid "Show All"
-msgstr ""
+msgstr "Показать все"
 
 #: tcms/templates/case/get_details_case_run.html:73
 msgid "Test Execution Information"
-msgstr ""
+msgstr "Информация о выполнении теста"
 
 #: tcms/templates/case/get_details_case_run.html:74
 msgid "Run Date"
-msgstr ""
+msgstr "Дата прогона"
 
 #: tcms/templates/case/get_details_case_run.html:75
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:128
@@ -446,16 +446,16 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:44
 #: tcms/testruns/templates/testruns/search.html:95
 msgid "Build"
-msgstr ""
+msgstr "Сборка"
 
 #: tcms/templates/case/get_details_case_run.html:75
 msgid "Text Version"
-msgstr ""
+msgstr "Версия текста"
 
 #: tcms/templates/case/get_details_case_run.html:80
 #: tcms/templates/run/status_statistics.html:24
 msgid "Report"
-msgstr ""
+msgstr "Отчет"
 
 #: tcms/templates/case/get_details_case_run.html:82
 #: tcms/templates/case/get_details_case_run.html:192
