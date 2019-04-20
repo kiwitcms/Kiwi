@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 00:21\n"
+"PO-Revision-Date: 2019-04-20 00:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -163,27 +163,27 @@ msgstr "Прочее"
 
 #: tcms/settings/common.py:128
 msgid "Report an Issue"
-msgstr ""
+msgstr "Сообщение о проблеме"
 
 #: tcms/settings/common.py:129
 msgid "Ask for help on StackOverflow"
-msgstr ""
+msgstr "Запросить помощь в StackOverflow"
 
 #: tcms/settings/common.py:130
 msgid "User Guide"
-msgstr ""
+msgstr "Руководство пользователя"
 
 #: tcms/settings/common.py:131
 msgid "Administration Guide"
-msgstr ""
+msgstr "Руководство администратора"
 
 #: tcms/settings/common.py:132
 msgid "API Help"
-msgstr ""
+msgstr "Справка по API"
 
 #: tcms/signals.py:78
 msgid "New user awaiting approval"
-msgstr ""
+msgstr "Новый пользователь в ожидании подтверждения"
 
 #: tcms/signals.py:153
 #, python-format
@@ -192,24 +192,24 @@ msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
-msgstr ""
+msgstr "Cтраница не найдена"
 
 #: tcms/templates/500.html:5 tcms/templates/500.html:16
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Внутренняя ошибка сервера"
 
 #: tcms/templates/attachments/delete_link.html:3
 msgid "Are you sure you want to delete this attachment?"
-msgstr ""
+msgstr "Вы действительно хотите удалить это вложение?"
 
 #: tcms/templates/base.html:10 tcms/templates/registration/login.html:46
 msgid "the leading open source test case management system"
-msgstr ""
+msgstr "лидер в системах управления тест-кейсами с открытым исходным кодом"
 
 #: tcms/templates/case/attachment.html:29
 #: tcms/templates/plan/attachment.html:30
 msgid "Note: Each attachment size limit is"
-msgstr ""
+msgstr "Примечание: лимит на размер вложения"
 
 #: tcms/templates/case/attachment.html:35
 #: tcms/templates/plan/attachment.html:36
