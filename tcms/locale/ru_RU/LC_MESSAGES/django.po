@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-19 07:21\n"
+"PO-Revision-Date: 2019-04-20 00:03\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: tcms/core/ajax.py:158 tcms/testruns/views.py:696
 #, python-format
 msgid "User %s not found!"
-msgstr ""
+msgstr "Пользователь %s не найден!"
 
 #: tcms/core/contrib/comments/apps.py:10
 msgid "Core customized comments"
@@ -33,21 +33,21 @@ msgstr ""
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
-msgstr ""
+msgstr "Наименование"
 
 #: tcms/core/contrib/comments/forms.py:18
 msgid "Email address"
-msgstr ""
+msgstr "E-mail адрес"
 
 #: tcms/core/contrib/comments/forms.py:21
 #: tcms/templates/run/get_case_runs.html:142 tcms/templates/run/report.html:138
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tcms/core/contrib/comments/forms.py:25
 #: tcms/templates/run/get_case_runs.html:50
 msgid "Comment"
-msgstr ""
+msgstr "Комментарий"
 
 #: tcms/core/history.py:41
 #, python-format
@@ -70,15 +70,15 @@ msgstr ""
 
 #: tcms/kiwi_auth/admin.py:28
 msgid "This email address is already in use"
-msgstr ""
+msgstr "Этот адрес электронной почты уже используется"
 
 #: tcms/kiwi_auth/admin.py:84
 msgid "Personal info"
-msgstr ""
+msgstr "Персональная информация"
 
 #: tcms/kiwi_auth/admin.py:85
 msgid "Permissions"
-msgstr ""
+msgstr "Права доступа"
 
 #: tcms/kiwi_auth/forms.py:32
 msgid "A user with that email already exists."
