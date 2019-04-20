@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 03:31\n"
+"PO-Revision-Date: 2019-04-20 04:21\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -790,41 +790,41 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:115
 #: tcms/testruns/templates/testruns/search.html:98
 msgid "Tags"
-msgstr ""
+msgstr "Теги"
 
 #: tcms/templates/plan/get.html:128
 msgid "Tree View"
-msgstr ""
+msgstr "Дерево"
 
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
-msgstr ""
+msgstr "Документ для этого плана еще не был записан."
 
 #: tcms/templates/plan/get_attachments.html:6
 msgid "Add attachment"
-msgstr ""
+msgstr "Добавить вложение"
 
 #: tcms/templates/plan/get_attachments.html:29
 msgid "No attachments"
-msgstr ""
+msgstr "Без вложений"
 
 #: tcms/templates/plan/get_cases.html:13 tcms/templates/plan/get_cases.html:15
 #: tcms/templates/plan/get_cases.html:91
 msgid "Case"
-msgstr ""
+msgstr "Кейс"
 
 #: tcms/templates/plan/get_cases.html:19 tcms/templates/plan/get_cases.html:22
 msgid "Write new case"
-msgstr ""
+msgstr "Создать новый кейс"
 
 #: tcms/templates/plan/get_cases.html:20 tcms/templates/plan/get_cases.html:23
 #: tcms/templates/plan/search_case.html:4
 msgid "Add cases from other plans"
-msgstr ""
+msgstr "Добавить кейсы из других планов"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "Print"
-msgstr ""
+msgstr "Печать"
 
 #: tcms/templates/plan/get_cases.html:25
 msgid "print view of selected cases"
