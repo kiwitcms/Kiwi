@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-22 01:31\n"
+"PO-Revision-Date: 2019-04-22 02:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1263,7 +1263,7 @@ msgstr "ID ошибки"
 
 #: tcms/templates/run/get_case_runs.html:176
 msgid "Check to add Test Case(s) to Issue Tracker"
-msgstr ""
+msgstr "Проверьте добавление тест-кейс(ов) в трекер"
 
 #: tcms/templates/run/get_case_runs.html:195
 msgid "Cancel"
@@ -1654,7 +1654,10 @@ msgid "\n"
 "                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
-msgstr ""
+msgstr "\n"
+"                    %(count)s из выбранных тест-кейсов не ПОДТВЕРЖДЕНО и не будет клонировано!\n"
+"                    Подробности смотрите в тест-плане!\n"
+"                    "
 
 #: tcms/testruns/templates/testruns/search.html:5
 msgid "Search test runs"
@@ -1695,11 +1698,11 @@ msgstr "%d тест-прогоны обновлены:"
 
 #: tcms/xmlrpc/api/bug.py:85
 msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
-msgstr ""
+msgstr "Включить привязку тест-кейсов настроив параметры API для трекера задач!"
 
 #: tcms/xmlrpc/api/bug.py:138
 msgid "Enable reporting to this Issue Tracker by configuring its base_url!"
-msgstr ""
+msgstr "Включить отчетность к трекеру задач, настроив его base_url!"
 
 #: tcms/xmlrpc/serializer.py:288
 #, python-format
