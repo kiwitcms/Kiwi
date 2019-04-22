@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-22 01:21\n"
+"PO-Revision-Date: 2019-04-22 01:31\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -192,7 +192,7 @@ msgstr "Новый пользователь в ожидании подтверж
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "НОВЫЙ: тест-прогон #%(pk)d - %(summary)s"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -1376,7 +1376,7 @@ msgstr ""
 #: tcms/testcases/helpers/email.py:22
 #, python-format
 msgid "DELETED: TestCase #%(pk)d - %(summary)s"
-msgstr ""
+msgstr "УДАЛЕНО: тест-кейс #%(pk)d - %(summary)s"
 
 #: tcms/testcases/templates/testcases/get.html:98
 #: tcms/testcases/templates/testcases/mutable.html:107
