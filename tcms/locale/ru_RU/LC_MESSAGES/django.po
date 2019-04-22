@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-22 01:01\n"
+"PO-Revision-Date: 2019-04-22 01:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -626,7 +626,7 @@ msgstr "Добавить Тeг"
 
 #: tcms/templates/navbar.html:8
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Переключатель навигации"
 
 #: tcms/templates/navbar.html:23
 msgid "Welcome Guest"
@@ -781,7 +781,7 @@ msgstr ""
 #: tcms/templates/plan/get.html:122
 #: tcms/testcases/templates/testcases/get.html:404
 msgid "Attachments"
-msgstr ""
+msgstr "Вложения"
 
 #: tcms/templates/plan/get.html:125 tcms/templates/plan/get_cases.html:76
 #: tcms/templates/run/get.html:91 tcms/templates/run/get_case_runs.html:122
@@ -898,7 +898,7 @@ msgstr "Показать параметры фильтра"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
-msgstr ""
+msgstr "Нажмите на меня, затем перетащите строки в необходимом порядке, и нажмите на 'Завершить сортировку', чтобы сохранить изменения"
 
 #: tcms/templates/plan/get_cases.html:71
 msgid "Re-order cases"
@@ -978,7 +978,7 @@ msgstr "кейсов осталось"
 
 #: tcms/templates/plan/get_cases.html:224
 msgid "All cases have been loaded."
-msgstr ""
+msgstr "Все кейсы были загружены."
 
 #: tcms/templates/plan/get_treeview.html:4
 msgid "Add child node to current plan"
@@ -1249,7 +1249,7 @@ msgstr "Необходимо заполнить все поля."
 
 #: tcms/templates/run/get_case_runs.html:138
 msgid "64 characters at most"
-msgstr ""
+msgstr "Не более 64 символов"
 
 #: tcms/templates/run/get_case_runs.html:169 tcms/templates/run/report.html:120
 #: tcms/testcases/templates/testcases/search.html:117
@@ -1267,40 +1267,40 @@ msgstr "Отменить"
 
 #: tcms/templates/run/get_cc.html:10 tcms/templates/run/get_cc.html:29
 msgid "remove this tag"
-msgstr ""
+msgstr "удалить этот тег"
 
 #: tcms/templates/run/get_cc.html:16
 msgid "Add CC"
-msgstr ""
+msgstr "Добавить копию"
 
 #: tcms/templates/run/report.html:17
 msgid "Test Execution Report"
-msgstr ""
+msgstr "Отчет о выполнении теста"
 
 #: tcms/templates/run/report.html:57
 msgid "Manual Cases"
-msgstr ""
+msgstr "Ручные кейсы"
 
 #: tcms/templates/run/report.html:58
 msgid "Automated Cases"
-msgstr ""
+msgstr "Автоматизированный кейсы"
 
 #: tcms/templates/run/report.html:64
 msgid "Case-Run ID"
-msgstr ""
+msgstr "ID прогона кейса"
 
 #: tcms/templates/run/report.html:65
 #: tcms/templates/run/table_executions.html:16
 msgid "Case ID"
-msgstr ""
+msgstr "ID кейса"
 
 #: tcms/templates/run/report.html:68
 msgid "Tested by"
-msgstr ""
+msgstr "Проверено"
 
 #: tcms/templates/run/report.html:71
 msgid "Closed at"
-msgstr ""
+msgstr "Закрыто"
 
 #: tcms/templates/run/report.html:87
 msgid "Bugs ID"
@@ -1316,7 +1316,7 @@ msgstr "Ссылка на ошибку"
 
 #: tcms/templates/run/report.html:133
 msgid "View all in Issue Tracker"
-msgstr ""
+msgstr "Посмотреть все в трекере задач"
 
 #: tcms/templates/run/report.html:134
 msgid "Only configured ITs which support multiple bugs are shown"
@@ -1446,7 +1446,7 @@ msgstr "Менеджер прогонов"
 
 #: tcms/testcases/templates/testcases/mutable.html:161
 msgid "Asignees"
-msgstr ""
+msgstr "Назаначено"
 
 #: tcms/testcases/templates/testcases/mutable.html:177
 msgid "Default tester of runs"
@@ -1720,7 +1720,7 @@ msgstr "НЕОБХОДИМО_ОБНОВЛЕНИЕ"
 
 #: vinaigrette-deleteme.py:6
 msgid "IDLE"
-msgstr ""
+msgstr "БЕЗДЕЙСТВИЕ"
 
 #: vinaigrette-deleteme.py:7
 msgid "RUNNING"
