@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-15 17:10+0000\n"
-"PO-Revision-Date: 2019-04-20 04:51\n"
+"PO-Revision-Date: 2019-04-22 00:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1397,7 +1397,7 @@ msgstr ""
 
 #: tcms/testcases/templates/testcases/get.html:291
 msgid "Bug URL"
-msgstr ""
+msgstr "Ссылка на ошибку"
 
 #: tcms/testcases/templates/testcases/get.html:303
 msgid "Test plans"
@@ -1748,5 +1748,5 @@ msgstr ""
 
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
-msgstr ""
+msgstr "ОТЛОЖЕНО"
 
