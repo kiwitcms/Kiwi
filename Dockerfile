@@ -37,6 +37,9 @@ RUN virtualenv /venv
 ENV VIRTUAL_ENV /venv
 ENV PATH /venv/bin:$PATH
 
+# because we get some errors from other packages which need newer versions
+RUN pip install --upgrade pip setuptools
+
 # replace standard mod_wsgi with one compiled for Python 3
 RUN pip install --no-cache-dir --upgrade pip mod_wsgi && \
     ln -fs /venv/lib64/python3.6/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so \
