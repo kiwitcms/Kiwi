@@ -162,7 +162,7 @@ Go to %(user_url)s to activate the account!
             _('Your account has been created, please check your mailbox for confirmation')
         )
 
-        site = Site.objects.get_current()
+        site = Site.objects.get(pk=settings.SITE_ID)
         confirm_url = 'http://%s%s' % (site.domain, reverse('tcms-confirm',
                                                             args=[self.fake_activate_key]))
 
