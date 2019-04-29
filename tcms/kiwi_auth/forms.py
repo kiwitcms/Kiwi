@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.urls import reverse
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
@@ -49,7 +50,7 @@ class RegistrationForm(UserCreationForm):
         return UserActivationKey.set_random_key_for_user(user=self.instance)
 
     def send_confirm_mail(self, request, activation_key):
-        current_site = Site.objects.get_current()
+        current_site = Site.objects.get(pk=settings.SITE_ID)
         confirm_url = '%s%s' % (
             request_host_link(request, current_site.domain),
             reverse('tcms-confirm',
