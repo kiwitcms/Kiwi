@@ -1,6 +1,69 @@
 Change Log
 ==========
 
+Kiwi TCMS 6.8 (03 May 2019)
+---------------------------
+
+**IMPORTANT:** this is a small improvement and bug-fix update.
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update Django from 2.2 to 2.2.1
+- Update django-simple-history from 2.7.0 to 2.7.2
+- Update django-grappelli from 2.12.2 to 2.12.3
+- Update psycopg2 from 2.8 to 2.8.2
+- Update pygithub from 1.43.6 to 1.43.7
+- Upgrade pip and setuptools inside Docker image
+- Update documentation with newer screenshots and updated Tutotial. Fixes
+  `Issue #837 <https://github.com/kiwitcms/Kiwi/issues/837/>`_ (@Prome88)
+- Document how to enable public read-only views
+- Remove deprecated documentation section about Bugzilla authentication
+- Install PostgreSQL libraries in Docker image which makes it easier to
+  switch the DB backend without rebuilding the entire image
+- Remove npm, libxml2-devel and libxslt-devel from Docker image
+- Database engine configuration now respects the ``KIWI_DB_ENGINE`` environment
+  variable which defaults to ``django.db.backends.mysql``. This will make it
+  easier for admins to change DB engine by updating their ``docker-compose.yml``
+
+
+Bug fixes
+~~~~~~~~~
+
+- Pin bootstrap-switch to version 3.3.4 in ``package.json``. Fixes
+  `Issue #916 <https://github.com/kiwitcms/Kiwi/issues/916/>`_
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+- Updated `Russian translation <https://crowdin.com/project/kiwitcms/ru#>`_
+- New language `Czech <https://crowdin.com/project/kiwitcms/cz#>`_
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Don't use ``Site.objects.get_current()`` because it has an internal cache
+  and causes email notifications from tenants to use the wrong URL
+- More changes around renaming of TestCaseRun to TestExecution
+
+
+
 Kiwi TCMS 6.7 (06 April 2019)
 -----------------------------
 
