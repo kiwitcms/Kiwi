@@ -1,7 +1,8 @@
 from django.db.models import Count
+from django.utils.translation import ugettext_lazy as _
 from modernrpc.core import rpc_method
 
-from tcms.testcases.models import TestCase
+from tcms.testcases.models import TestCase, TestCaseStatus
 
 
 @rpc_method(name='Testing.breakdown')
@@ -41,5 +42,23 @@ def breakdown(query=None):
 
 
 def _get_field_count_map(test_cases, expression, field):
-    query_set = test_cases.values(field).annotate(count=Count(expression))
-    return [[entry[field], entry['count']] for entry in query_set]
+    confirmed = TestCaseStatus.get_confirmed()
+
+    query_set_confirmed = test_cases.filter(
+        case_status=confirmed
+    ).values(field).annotate(
+        count=Count(expression)
+    )
+    query_set_not_confirmed = test_cases.exclude(
+        case_status=confirmed
+    ).values(field).annotate(
+        count=Count(expression)
+    )
+    return {
+        confirmed.name: _map_query_set(query_set_confirmed, field),
+        str(_('OTHER')): _map_query_set(query_set_not_confirmed, field)
+    }
+
+
+def _map_query_set(query_set, field):
+    return {entry[field]: entry['count'] for entry in query_set}

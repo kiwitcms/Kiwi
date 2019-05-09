@@ -28,6 +28,32 @@
                     </select>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="col-md-1 col-lg-1" for="id_after">{% trans "After" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <div class="input-group date-time-picker-pf">
+                        <input type="text" class="form-control" id="id_after">
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+
+                    {% include "datetimepicker_script.html" with selector="#id_after" %}
+                </div>
+
+                <label class="col-md-1 col-lg-1" for="id_before">{% trans "Before" %}</label>
+                <div class="col-md-3 col-lg-3">
+                    <div class="input-group date-time-picker-pf">
+                        <input type="text" class="form-control" id="id_before">
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+
+                    {% include "datetimepicker_script.html" with selector="#id_before" %}
+                </div>
+            </div>
         </form>
 
         <div class="col-md-3" style="text-align: center">
@@ -35,20 +61,18 @@
             <label> {% trans "Total" %} </label>
 
             <div class="progress automated-manual-bar">
-                <div class="progress-bar automated-bar" role="progressbar" data-toggle="tooltip"></div>
-                <div class="progress-bar progress-bar-warning manual-bar" role="progressbar" data-toggle="tooltip"></div>
+                <div class="progress-bar automated-bar" role="progressbar"></div>
+                <div class="progress-bar progress-bar-warning manual-bar" role="progressbar"></div>
             </div>
 
             <div class="bar-legend">
-                <div class="bar-legend" style="display: flex; justify-content: space-around">
-                    <div style="align-items: center; display: flex;">
-                        <div class="progress-bar" style="width: 20px; height: 20px;"></div>
-                        <div style="padding-left: 5px">{% trans "Automated" %}</div>
-                    </div>
-                    <div style="align-items: center; display: flex;">
-                        <div class="progress-bar-warning" style="width: 20px; height: 20px;"></div>
-                        <div style="padding-left: 5px">{% trans "Manual" %}</div>
-                    </div>
+                <div style="align-items: center; display: flex;">
+                    <div class="progress-bar"></div>
+                    <div class="automated-legend-text">{% trans "Automated" %}</div>
+                </div>
+                <div style="align-items: center; display: flex;">
+                    <div class="progress-bar-warning"></div>
+                    <div class="manual-legend-text">{% trans "Manual" %}</div>
                 </div>
             </div>
         </div>
@@ -64,6 +88,10 @@
         </div>
     </div>
 
+    <link rel="stylesheet" type="text/css" href="{% static 'telemetry/css/testing/breakdown.css' %}" />
+
+    <script src="{% static 'moment/min/moment-with-locales.min.js' %}"></script>
+    <script src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
     <script src="{% static 'bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
     <script src="{% static 'bootstrap-switch/dist/js/bootstrap-switch.min.js' %}"></script>
     <script src="{% static 'c3/c3.min.js' %}"></script>
