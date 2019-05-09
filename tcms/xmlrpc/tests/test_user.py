@@ -153,17 +153,17 @@ class TestUserUpdate(XmlrpcAPIBaseTest):
 
     def test_update_own_password(self):
         user_new_attrs = self.user_new_attrs.copy()
-        new_password = 'new password'
-        user_new_attrs['password'] = new_password
+        new_password = 'new password'  # nosec:B105:hardcoded_password_string
+        user_new_attrs['password'] = new_password  # nosec:B105:hardcoded_password_string
 
         with self.assertRaisesRegex(XmlRPCFault, 'Old password is required'):
             self.rpc_client.exec.User.update(self.api_user.pk, user_new_attrs)
 
-        user_new_attrs['old_password'] = 'invalid old password'
+        user_new_attrs['old_password'] = 'invalid old password'  # nosec:B105
         with self.assertRaisesRegex(XmlRPCFault, "Password is incorrect"):
             self.rpc_client.exec.User.update(self.api_user.pk, user_new_attrs)
 
-        user_new_attrs['old_password'] = 'api-testing'
+        user_new_attrs['old_password'] = 'api-testing'  # nosec:B105:hardcoded_password_string
         data = self.rpc_client.exec.User.update(self.api_user.pk, user_new_attrs)
         self.assertTrue('password' not in data)
         self.assertEqual(data['first_name'], user_new_attrs['first_name'])

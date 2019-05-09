@@ -83,7 +83,7 @@ class Test_TestRunReportConfiguredBugzilla(BaseCaseRun):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.it = BugSystem.objects.create(
+        cls.it = BugSystem.objects.create(  # nosec:B105:hardcoded_password_string
             name='Partially configured Bugzilla',
             url_reg_exp='https://bugzilla.example.com/show_bug.cgi?id=%s',
             validate_reg_exp=r'^\d{1,7}$',
