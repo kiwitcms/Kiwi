@@ -67,7 +67,7 @@ jobs:
         - TEST_DB=MariaDB
         - CMD=test
       addons:
-        mariadb: 10.1
+        mariadb: 10.3
 
     - stage: testing
       env:
@@ -129,7 +129,9 @@ before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
   - |
         if [ "$TEST_DB" == "MariaDB" ]; then
+            sudo apt-get remove --purge -y libmysqlclient-dev
             sudo apt-get -y install libmariadbclient-dev
+            sudo ln -s /usr/bin/mariadb_config /usr/bin/mysql_config
         fi
 
         if [ "$TEST_DB" == "MySQL" ] || [ "$TEST_DB" == "MariaDB" ]; then
