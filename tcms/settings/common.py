@@ -19,7 +19,7 @@ DEBUG = True
 
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv'
+SECRET_KEY = '^8y!)$0t7yq2+65%&_#@i^_o)eb3^q--y_$e7a_=t$%$1i)zuv'  # nosec:B105
 
 
 # Database settings
