@@ -3,8 +3,10 @@ $(document).ready(() => {
 
     loadInitialProduct();
 
-    document.getElementById('id_select_product').onchange = updateTestPlanSelect;
+    $('#id_after').on('dp.change', reloadCharts);
+    $('#id_before').on('dp.change', reloadCharts);
     document.getElementById('id_select_test_plan').onchange = reloadCharts;
+    document.getElementById('id_select_product').onchange = updateTestPlanSelect;
 });
 
 function loadInitialProduct() {
@@ -39,6 +41,17 @@ function reloadCharts() {
     } else if (productId) {
         query['category__product_id'] = productId;
     }
+
+    const dateBefore = $('#id_before');
+    if (dateBefore.val()) {
+        query['create_date__lte'] = dateBefore.data('DateTimePicker').date().format('YYYY-MM-DD 23:59:59');
+    }
+
+    const dateAfter = $('#id_after');
+    if (dateAfter.val()) {
+        query['create_date__gte'] = dateAfter.data('DateTimePicker').date().format('YYYY-MM-DD 00:00:00');
+    }
+
     jsonRPC('Testing.breakdown', query, result => {
         drawAutomatedBar(result.count);
         drawPrioritiesChart(result.priorities);
@@ -56,6 +69,17 @@ function drawAutomatedBar(count) {
         .attr('aria-valuemin', '0')
         .attr('aria-valuemax', '100');
 
+    d3.select('.automated-legend-text > span').remove();
+    d3.select('.manual-legend-text > span').remove();
+
+    d3.select('.automated-legend-text')
+        .append('span')
+        .text(` - ${count.automated}`);
+
+    d3.select('.manual-legend-text')
+        .append('span')
+        .text(` - ${count.manual}`);
+
     const automatedPercent = count.automated / count.all * 100;
 
     d3.select('.automated-bar')
@@ -63,16 +87,12 @@ function drawAutomatedBar(count) {
         .attr('title', `${count.automated} Automated`)
         .style('width', `${automatedPercent}%`);
 
-    $('.automated-bar').tooltip();
-
     const manualPercent = count.manual / count.all * 100;
 
     d3.select('.manual-bar')
         .attr('aria-valuenow', `${manualPercent}`)
         .attr('title', `${count.manual} Manual`)
         .style('width', `${manualPercent}%`);
-
-    $('.manual-bar').tooltip();
 }
 
 function drawPrioritiesChart(priorities) {
@@ -84,18 +104,36 @@ function drawCategoriesChart(categories) {
 }
 
 function drawChart(data, type, selector) {
-    const names = [];
-    const values = [[type]];
-    data.forEach(c => {
-        names.push(c[0]);
-        values[0].push(c[1]);
+    const categories = new Set();
+    let groups = [[]];
+    let chartData = [];
+
+    Object.values(data).forEach(entry => {
+        Object.keys(entry).forEach(key => categories.add(key));
     });
 
-    let chartConfig = $().c3ChartDefaults().getDefaultBarConfig(names);
+    Object.entries(data).forEach(entry => {
+        let group = entry[0];
+        groups[0].push(group);
+
+        let dataEntry = [group];
+
+        categories.forEach(cat => {
+            let count = entry[1][cat];
+            if (!count) {
+                count = 0;
+            }
+            dataEntry.push(count);
+        });
+
+        chartData.push(dataEntry);
+    });
+
+    let chartConfig = $().c3ChartDefaults().getDefaultStackedBarConfig();
     chartConfig.bindto = selector;
     chartConfig.axis = {
         x: {
-            categories: names,
+            categories: Array.from(categories),
             type: 'category',
         },
         y: {
@@ -105,8 +143,16 @@ function drawChart(data, type, selector) {
         }
     };
     chartConfig.data = {
+        columns: chartData,
+        groups: groups,
         type: 'bar',
-        columns: values,
+        order: null
+    };
+    chartConfig.color = {
+        pattern: [
+            $.pfPaletteColors.blue,
+            $.pfPaletteColors.red100,
+        ]
     };
     chartConfig.grid = {
         show: false
