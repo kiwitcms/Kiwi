@@ -24,7 +24,7 @@ installation. This is used to construct links to test plans, test cases, etc.
 The default value is ``127.0.0.1:8000`` which is suitable if you are running
 in devel mode. To update the setting go to
 ``https://<your_domain_or_ip>/admin/sites/site/1/``!
-Update **Domain name** to the fully qualified domain name or IR address,
+Update **Domain name** to the fully qualified domain name or IP address,
 including port if necessary and click the Save button!
 
 
@@ -247,7 +247,7 @@ Explanation of editable entities
 --------------------------------
 
 Some DB entities are editable via the Admin interface. Their meaning is
-exmplained below.
+explained below.
 
 
 Products
