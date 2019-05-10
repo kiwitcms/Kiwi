@@ -6,3 +6,11 @@ tcms.telemetry package
     :undoc-members:
     :show-inheritance:
 
+Submodules
+----------
+
+.. toctree::
+
+   tcms.telemetry.api
+   tcms.telemetry.views
+
