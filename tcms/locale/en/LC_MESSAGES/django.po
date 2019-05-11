@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-15 17:10+0000\n"
+"POT-Creation-Date: 2019-05-11 02:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,11 +86,11 @@ msgstr ""
 msgid "Permissions"
 msgstr ""
 
-#: tcms/kiwi_auth/forms.py:32
+#: tcms/kiwi_auth/forms.py:33
 msgid "A user with that email already exists."
 msgstr ""
 
-#: tcms/kiwi_auth/forms.py:60
+#: tcms/kiwi_auth/forms.py:61
 #, python-format
 msgid "Your new %s account confirmation"
 msgstr ""
@@ -157,35 +157,43 @@ msgstr ""
 msgid "TELEMETRY"
 msgstr ""
 
-#: tcms/settings/common.py:119
+#: tcms/settings/common.py:106
+msgid "Testing"
+msgstr ""
+
+#: tcms/settings/common.py:107
+msgid "Breakdown"
+msgstr ""
+
+#: tcms/settings/common.py:121
 msgid "ADMIN"
 msgstr ""
 
-#: tcms/settings/common.py:120
+#: tcms/settings/common.py:122
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:122
+#: tcms/settings/common.py:124
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:128
+#: tcms/settings/common.py:130
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:129
+#: tcms/settings/common.py:131
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:130
+#: tcms/settings/common.py:132
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:131
+#: tcms/settings/common.py:133
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:132
+#: tcms/settings/common.py:134
 msgid "API Help"
 msgstr ""
 
@@ -196,6 +204,62 @@ msgstr ""
 #: tcms/signals.py:153
 #, python-format
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
+msgid "Testing Breakdown"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
+#: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
+#: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
+#: tcms/templates/run/get.html:122 tcms/templates/run/report.html:35
+#: tcms/testcases/templates/testcases/get.html:59
+#: tcms/testcases/templates/testcases/get.html:314
+#: tcms/testcases/templates/testcases/mutable.html:37
+#: tcms/testcases/templates/testcases/search.html:41
+#: tcms/testplans/templates/testplans/mutable.html:32
+#: tcms/testplans/templates/testplans/search.html:42
+#: tcms/testplans/templates/testplans/search.html:111
+#: tcms/testruns/templates/testruns/mutable.html:44
+#: tcms/testruns/templates/testruns/search.html:24
+#: tcms/testruns/templates/testruns/search.html:93
+msgid "Product"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
+#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:67
+#: tcms/templates/run/report.html:24
+msgid "Test Plan"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
+msgid "Total"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:46
+#: tcms/templates/plan/get_cases.html:107
+#: tcms/templates/plan/get_cases.html:187
+#: tcms/templates/run/get_case_runs.html:76 tcms/templates/run/report.html:67
+#: tcms/templates/run/table_executions.html:20
+#: tcms/testcases/templates/testcases/get.html:93
+#: tcms/testcases/templates/testcases/mutable.html:92
+#: tcms/testcases/templates/testcases/search.html:91
+#: tcms/testcases/templates/testcases/search.html:139
+msgid "Automated"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:50
+#: tcms/templates/run/get_case_runs.html:79
+msgid "Manual"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:57
+msgid "Priorities"
+msgstr ""
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:62
+msgid "Categories"
 msgstr ""
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
@@ -268,22 +332,6 @@ msgstr ""
 #: tcms/testplans/templates/testplans/search.html:108
 #: tcms/testruns/templates/testruns/search.html:90
 msgid "ID"
-msgstr ""
-
-#: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
-#: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
-#: tcms/templates/run/get.html:122 tcms/templates/run/report.html:35
-#: tcms/testcases/templates/testcases/get.html:59
-#: tcms/testcases/templates/testcases/get.html:314
-#: tcms/testcases/templates/testcases/mutable.html:37
-#: tcms/testcases/templates/testcases/search.html:41
-#: tcms/testplans/templates/testplans/mutable.html:32
-#: tcms/testplans/templates/testplans/search.html:42
-#: tcms/testplans/templates/testplans/search.html:111
-#: tcms/testruns/templates/testruns/mutable.html:44
-#: tcms/testruns/templates/testruns/search.html:24
-#: tcms/testruns/templates/testruns/search.html:93
-msgid "Product"
 msgstr ""
 
 #: tcms/templates/case/clone.html:50 tcms/templates/plan/clone.html:37
@@ -935,17 +983,6 @@ msgstr ""
 msgid "Tester"
 msgstr ""
 
-#: tcms/templates/plan/get_cases.html:107
-#: tcms/templates/plan/get_cases.html:187
-#: tcms/templates/run/get_case_runs.html:76 tcms/templates/run/report.html:67
-#: tcms/templates/run/table_executions.html:20
-#: tcms/testcases/templates/testcases/get.html:93
-#: tcms/testcases/templates/testcases/mutable.html:92
-#: tcms/testcases/templates/testcases/search.html:91
-#: tcms/testcases/templates/testcases/search.html:139
-msgid "Automated"
-msgstr ""
-
 #: tcms/templates/plan/get_cases.html:115
 #: tcms/templates/plan/get_cases.html:197
 #: tcms/templates/run/assign_case.html:75 tcms/templates/run/report.html:69
@@ -1151,11 +1188,6 @@ msgstr ""
 msgid "Manager"
 msgstr ""
 
-#: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:67
-#: tcms/templates/run/report.html:24
-msgid "Test Plan"
-msgstr ""
-
 #: tcms/templates/run/assign_case.html:34
 msgid "All Confirmed Cases"
 msgstr ""
@@ -1249,10 +1281,6 @@ msgstr ""
 #: tcms/testruns/templates/testruns/search.html:61
 #: tcms/testruns/templates/testruns/search.html:97
 msgid "Default tester"
-msgstr ""
-
-#: tcms/templates/run/get_case_runs.html:79
-msgid "Manual"
 msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:80
