@@ -639,23 +639,38 @@ class TestCaserunCasesMenu(BaseCaseRun):
         cls.url = reverse('testruns-get', args=[cls.test_run.pk])
 
         cls.add_cases_html = \
-            '<a href="{0}" class="addBlue9">Add</a>' \
-            .format(reverse('add-cases-to-run', args=[cls.test_run.pk]))
+            '<a href="{0}" class="addBlue9">{1}</a>' \
+            .format(
+                reverse('add-cases-to-run', args=[cls.test_run.pk]),
+                _('Add')
+            )
 
         cls.remove_cases_html = \
-            '<a href="#" title="Remove selected cases form this test run" \
-            data-param="{0}" class="removeBlue9 js-del-case">Remove</a>' \
-            .format(cls.test_run.pk)
+            '<a href="#" title="{0}" data-param="{1}" \
+            class="removeBlue9 js-del-case">{2}</a>' \
+            .format(
+                _('Remove selected cases form this test run'),
+                cls.test_run.pk,
+                _('Remove')
+            )
 
         cls.update_case_run_text_html = \
-            '<a href="#" title="Update the IDLE case runs to newest case text" \
-            href="javascript:void(0)" data-param="{0}" \
-            class="updateBlue9 js-update-case" id="update_case_run_text">Update</a>' \
-            .format(reverse('testruns-update_case_run_text', args=[cls.test_run.pk]))
+            '<a href="#" title="{0}" \
+            href="javascript:void(0)" data-param="{1}" \
+            class="updateBlue9 js-update-case" id="update_case_run_text">{2}</a>' \
+            .format(
+                _('Update the IDLE case runs to newest case text'),
+                reverse('testruns-update_case_run_text', args=[cls.test_run.pk]),
+                _('Update')
+            )
 
         cls.change_assignee_html = \
-            '<a href="#" title="Assignee this case(s) to other people" \
-            class="assigneeBlue9 js-change-assignee">Assignee</a>'
+            '<a href="#" title="{0}" \
+            class="assigneeBlue9 js-change-assignee">{1}</a>' \
+            .format(
+                _('Assign this case(s) to other people'),
+                _('Assignee')
+            )
 
     def test_add_cases_to_run_with_permission(self):
         user_should_have_perm(self.tester, 'testruns.add_testexecution')
