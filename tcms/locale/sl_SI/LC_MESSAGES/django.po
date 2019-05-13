@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-11 02:11+0000\n"
-"PO-Revision-Date: 2019-05-11 02:21\n"
+"PO-Revision-Date: 2019-05-13 06:27\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -155,11 +155,11 @@ msgstr "TELEMETRIJA"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "Testiranje"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Razčlenitev"
 
 #: tcms/settings/common.py:121
 msgid "ADMIN"
@@ -204,7 +204,7 @@ msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Razčlenitev testiranja"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
@@ -231,7 +231,7 @@ msgstr "Baza testni scenarijev"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
 msgid "Total"
-msgstr ""
+msgstr "Skupaj"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:46
 #: tcms/templates/plan/get_cases.html:107
@@ -252,11 +252,11 @@ msgstr "Ročno"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:57
 msgid "Priorities"
-msgstr ""
+msgstr "Prioritete"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:62
 msgid "Categories"
-msgstr ""
+msgstr "Kategorije"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
