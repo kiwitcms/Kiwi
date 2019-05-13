@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-11 02:11+0000\n"
+"POT-Creation-Date: 2019-05-13 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1254,8 +1254,20 @@ msgstr ""
 msgid "Highlight"
 msgstr ""
 
+#: tcms/templates/run/get_case_runs.html:24
+msgid "Remove selected cases form this test run"
+msgstr ""
+
+#: tcms/templates/run/get_case_runs.html:27
+msgid "Update the IDLE case runs to newest case text"
+msgstr ""
+
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
+msgstr ""
+
+#: tcms/templates/run/get_case_runs.html:30
+msgid "Assign this case(s) to other people"
 msgstr ""
 
 #: tcms/templates/run/get_case_runs.html:30
