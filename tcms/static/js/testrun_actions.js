@@ -99,7 +99,7 @@ Nitrate.TestRuns.Details.on_load = function() {
       });
     };
 
-    toggleTestCaseRunPane({
+    toggleTestExecutionPane({
       'callback': callback,
       'caseId': case_id,
       'caserunId': case_run_id,
@@ -862,13 +862,13 @@ function removeLink(sender, link_id) {
  * Add link to case run
  *
  * - sender: the Add link button, which is pressed to fire this event.
- * - target_id: to which TestCaseRun the new link will be linked.
+ * - target_id: to which TestExecution the new link will be linked.
  */
 function addLinkToCaseRun(sender, case_id, case_run_id) {
   var dialog_p = get_addlink_dialog();
 
   dialog_p.dialog('option', 'target_id', case_run_id);
-  // These two options are used for reloading TestCaseRun when successfully.
+  // These two options are used for reloading TestExecution when successfully.
   var container = jQ(sender).parents('.case_content.hide')[0];
   dialog_p.dialog('option', 'container', container);
   var title_container = jQ(container).prev()[0];
@@ -879,7 +879,7 @@ function addLinkToCaseRun(sender, case_id, case_run_id) {
 
 /*
  * Initialize dialog for getting information about new link, which is attached
- * to an arbitrary instance of TestCaseRun
+ * to an arbitrary instance of TestExecution
  */
 function initialize_addlink_dialog() {
   var dialog_p = get_addlink_dialog();
@@ -948,7 +948,7 @@ function initialize_addlink_dialog() {
 
 
 /*
- * Toggle TestCaseRun panel to edit a case run in run page.
+ * Toggle TestExecution panel to edit a case run in run page.
  *
  * Arguments:
  * options.casrunContainer:
@@ -958,7 +958,7 @@ function initialize_addlink_dialog() {
  * options.caseTextVersion:
  * options.callback:
  */
-function toggleTestCaseRunPane(options) {
+function toggleTestExecutionPane(options) {
   var container = options.caserunRowContainer;
   var content_container = options.expandPaneContainer;
   var callback = options.callback;

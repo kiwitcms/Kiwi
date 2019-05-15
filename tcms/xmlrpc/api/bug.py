@@ -24,7 +24,7 @@ def filter(query):  # pylint: disable=redefined-builtin
     .. function:: XML-RPC Bug.filter(query)
 
         Get list of bugs that are associated with TestCase or
-        a TestCaseRun.
+        a TestExecution.
 
         :param query: Field lookups for :class:`tcms.testcases.models.Bug`
         :type query: dict
@@ -34,7 +34,7 @@ def filter(query):  # pylint: disable=redefined-builtin
 
             >>> Bug.filter({'case': 123}) or Bug.filter({'case_id': 123})
 
-        Get all bugs for a particular TestCaseRun::
+        Get all bugs for a particular TestExecution::
 
             >>> Bug.filter({'case_run': 1234}) or Bug.filter({'case_run_id': 1234})
     """
@@ -47,7 +47,7 @@ def create(values, auto_report=False):
     """
     .. function:: XML-RPC Bug.create(values, auto_report=False)
 
-        Attach a bug to pre-existing TestCase or TestCaseRun object.
+        Attach a bug to pre-existing TestCase or TestExecution object.
 
         :param values: Field values for :class:`tcms.testcases.models.Bug`
         :type values: dict
@@ -93,7 +93,7 @@ def remove(query):
     """
     .. function:: XML-RPC Bug.remove(query)
 
-        Remove bugs from pre-existing TestCase or TestCaseRun object(s).
+        Remove bugs from pre-existing TestCase or TestExecution object(s).
 
         :param query: Field lookups for :class:`tcms.testcases.models.Bug`
         :type query: dict
@@ -108,7 +108,7 @@ def remove(query):
                 'case_run__isnull': True
             })
 
-        Example - removing bug from TestCaseRun (specify case_run_id)::
+        Example - removing bug from TestExecution (specify case_run_id)::
 
             >>> Bug.remove({
                 'bug_id': 67890,
@@ -124,9 +124,9 @@ def report(test_case_run_id, tracker_id):
     .. function:: XML-RPC Bug.report(test_case_run_id, tracker_id)
 
         Returns a URL which will open the bug tracker with predefined fields
-        indicating the error was detected by the specified TestCaseRun.
+        indicating the error was detected by the specified TestExecution.
 
-        :param test_case_run_id: PK for :class:`tcms.testruns.models.TestCaseRun` object
+        :param test_case_run_id: PK for :class:`tcms.testruns.models.TestExecution` object
         :type test_case_run_id: int
         :param tracker_id: PK for :class:`tcms.testcases.models.BugSystem` object
         :type tracker_id: int

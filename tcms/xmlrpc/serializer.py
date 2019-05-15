@@ -419,7 +419,7 @@ class TestPlanXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
 
 
 class TestExecutionXMLRPCSerializer(QuerySetBasedXMLRPCSerializer):
-    """XMLRPC serializer specific for TestCaseRun"""
+    """XMLRPC serializer specific for TestExecution"""
 
     values_fields_mapping = {
         'case_run_id': ('case_run_id', do_nothing),

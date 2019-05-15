@@ -55,7 +55,7 @@ class IssueTrackerType:
             bug details like steps to reproduce, product, version, etc from the
             test case. Then we open this URL into another browser window!
 
-            :caserun: - TestCaseRun object
+            :caserun: - TestExecution object
             :return: - string - URL
         """
         raise NotImplementedError()

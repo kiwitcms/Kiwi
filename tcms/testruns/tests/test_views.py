@@ -631,7 +631,7 @@ class TestAddCasesToRun(BaseCaseRun):
                 self.assertContains(response, html, html=True)
 
 
-class TestCaserunCasesMenu(BaseCaseRun):
+class TestRunCasesMenu(BaseCaseRun):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
