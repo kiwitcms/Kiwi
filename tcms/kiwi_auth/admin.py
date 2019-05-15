@@ -27,8 +27,8 @@ class MyUserChangeForm(UserChangeForm):
             query_set = query_set.exclude(pk=self.instance.pk)
         if query_set.count():
             raise forms.ValidationError(_('This email address is already in use'))
-        else:
-            return self.cleaned_data['email']
+
+        return self.cleaned_data['email']
 
 
 def _modifying_myself(request, object_id):
