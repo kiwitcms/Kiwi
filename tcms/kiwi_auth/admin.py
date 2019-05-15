@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin, sensitive_post_parameters_m
 
+from tcms.utils.user import delete_user
 
 User = get_user_model()  # pylint: disable=invalid-name
 
@@ -127,6 +128,9 @@ class KiwiUserAdmin(UserAdmin):
             return True
 
         return super().has_delete_permission(request, obj)
+
+    def delete_model(self, request, obj):
+        delete_user(obj)
 
 
 # user admin extended functionality
