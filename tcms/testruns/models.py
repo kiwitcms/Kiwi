@@ -19,7 +19,7 @@ from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
 
 
-TestExecutionStatusSubtotal = namedtuple('TestCaseRunStatusSubtotal', [
+TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [
     'StatusSubtotal',
     'CaseRunsTotalCount',
     'CompletedPercentage',
@@ -182,7 +182,7 @@ class TestRun(TCMSActionModel):
         """
             Get statistics based on executions' status
 
-            :param statuses: iterable object containing TestCaseRunStatus
+            :param statuses: iterable object containing TestExecutionStatus
                              objects representing PASS, FAIL, WAIVED, etc.
             :type statuses: iterable
             :return: the statistics including the number of each status mapping,
@@ -342,7 +342,7 @@ class TestExecution(TCMSActionModel):
         return self.get_bugs().count()
 
     def _get_absolute_url(self):
-        # NOTE: this returns the URL to the TestRun containing this TestCaseRun!
+        # NOTE: this returns the URL to the TestRun containing this TestExecution!
         return reverse('testruns-get', args=[self.run_id])
 
 

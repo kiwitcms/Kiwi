@@ -1,10 +1,10 @@
 /**
- * Remove a Bug from TestCase or TestCaseRun object by hitting
+ * Remove a Bug from TestCase or TestExecution object by hitting
  * the backend API.
  *
  * @param {String} id - Bug ID
  * @param {Number} case_id - TestCase ID
- * @param {Number} case_run_id - TestCaseRun ID or empty/undefined
+ * @param {Number} case_run_id - TestExecution ID or empty/undefined
  */
 function removeCaseBug(id, case_id, case_run_id) {
     if(!window.confirm('Are you sure?')) {

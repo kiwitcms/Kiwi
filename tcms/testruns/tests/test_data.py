@@ -112,12 +112,12 @@ class TestGetRunBugIDs(BaseCaseRun):
         self.assertIn(self.bugzilla.url_reg_exp % '100001', received_bugs)
 
 
-class TestGetCaseRunsBugs(BaseCaseRun):
-    """Test TestCaseRunDataMixin.get_caseruns_bugs"""
+class TestGetExecutionBugs(BaseCaseRun):
+    """Test TestExecutionDataMixin.get_caseruns_bugs"""
 
     @classmethod
     def setUpTestData(cls):
-        super(TestGetCaseRunsBugs, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.bugzilla = BugSystem.objects.get(name='Bugzilla')
         cls.jira = BugSystem.objects.get(name='JIRA')
@@ -175,8 +175,8 @@ class TestGetCaseRunsBugs(BaseCaseRun):
                 self.assertIn(exp_bug, result[exp_key])
 
 
-class TestGetCaseRunsComments(BaseCaseRun):
-    """Test TestCaseRunDataMixin.get_caseruns_comments
+class TestGetExecutionComments(BaseCaseRun):
+    """Test TestExecutionDataMixin.get_caseruns_comments
 
     There are two test runs created already, cls.test_run and cls.test_run_1.
 
@@ -187,7 +187,7 @@ class TestGetCaseRunsComments(BaseCaseRun):
 
     @classmethod
     def setUpTestData(cls):
-        super(TestGetCaseRunsComments, cls).setUpTestData()
+        super().setUpTestData()
 
         cls.submit_date = datetime(2017, 7, 7, 7, 7, 7)
 

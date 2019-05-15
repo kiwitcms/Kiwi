@@ -680,7 +680,7 @@ def get_caseruns_of_runs(runs, kwargs=None):
 
 @method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
 class UpdateAssigneeView(View):
-    """Updates TestCaseRun.assignee. Called from the front-end."""
+    """Updates TestExecution.assignee. Called from the front-end."""
 
     http_method_names = ['post']
 
@@ -708,7 +708,7 @@ class UpdateAssigneeView(View):
 
 @method_decorator(permission_required('testruns.change_testexecution'), name='dispatch')
 class UpdateCaseRunStatusView(View):
-    """Updates TestCaseRun.status_id. Called from the front-end."""
+    """Updates TestExecution.status_id. Called from the front-end."""
 
     http_method_names = ['post']
 
