@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-13 14:32+0000\n"
-"PO-Revision-Date: 2019-05-14 20:40\n"
+"PO-Revision-Date: 2019-05-15 06:48\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -1257,11 +1257,11 @@ msgstr "Poudari"
 
 #: tcms/templates/run/get_case_runs.html:24
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "Odstrani izbrane scenarije iz trenutnega testiranja"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "Posodobi vsebino scenarijev v statusu NESTESTIRANO s spremembami iz baze testnih scenarijev"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
@@ -1269,7 +1269,7 @@ msgstr "Posodobi"
 
 #: tcms/templates/run/get_case_runs.html:30
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Dodeli scenarij(e) drugim testerjem"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:72
