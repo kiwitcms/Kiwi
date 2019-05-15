@@ -9,6 +9,8 @@ def delete_user(user):
     if hasattr(user, 'tenant_set'):
         from django_tenants.utils import schema_context  # pylint: disable=import-error
 
+        user_id = user.pk
+
         # using transactions b/c multiple schemas can refer to the same
         # user ID as FK references!
         with transaction.atomic():
@@ -16,6 +18,8 @@ def delete_user(user):
             for tenant in user.tenant_set.all():
                 with schema_context(tenant.schema_name):
                     user.delete()
+                    # reassign the ID b/c delete() sets it to None
+                    user.pk = user_id
 
             # then delete everything from the public schema
             with schema_context('public'):
