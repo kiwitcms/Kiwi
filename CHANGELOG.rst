@@ -1,6 +1,65 @@
 Change Log
 ==========
 
+
+Kiwi TCMS 6.9 (15 May 2019)
+---------------------------
+
+**IMPORTANT:** this is a small improvement and bug-fix update which introduces
+our first telemetry report: testing breakdown. Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update mysqlclient from 1.4.2 to 1.4.2.post1
+- Ship with prism.js so it can be used for syntax highlighting
+- Add Testing Breakdown telemetry
+- Mark more strings for translations
+- Add ``delete_user()`` function which can delete data across
+  Postgre schemas (if kiwitcms-tenants add-on is installed)
+
+
+API
+~~~
+
+- Remove deprecated ``TestCaseRun.`` API methods. Use the new
+  ``TestExecution.`` methods introduced in v6.7. Fixes
+  `Issue #889 <https://github.com/kiwitcms/Kiwi/issues/889/>`_
+
+
+Bug fixes
+~~~~~~~~~
+
+- Fix typos in documentation (@Prome88)
+- Fix ``TemplateParseError`` in email templates when removing test cases.
+  On-delete email notification is now sent properly
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Add more tests around TestRun/TestExecution menu permissions
+- Minor pylint fixes
+
+
+Translations
+~~~~~~~~~~~~
+
+- Updated `French translation <https://crowdin.com/project/kiwitcms/fr#>`_
+- Updated `Slovenian translation <https://crowdin.com/project/kiwitcms/sl#>`_
+
+
 Kiwi TCMS 6.8 (03 May 2019)
 ---------------------------
 
