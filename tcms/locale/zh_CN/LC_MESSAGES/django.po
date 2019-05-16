@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-13 14:32+0000\n"
-"PO-Revision-Date: 2019-05-14 20:40\n"
+"POT-Creation-Date: 2019-05-16 10:33+0000\n"
+"PO-Revision-Date: 2019-05-16 11:40\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -202,6 +202,10 @@ msgstr "等待审批通过的新用户"
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NEW: 测试执行 #%(pk)d - - %(summary)s"
 
+#: tcms/telemetry/api.py:59
+msgid "OTHER"
+msgstr ""
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr ""
@@ -229,11 +233,23 @@ msgstr "产品"
 msgid "Test Plan"
 msgstr "测试计划"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
+#: tcms/testcases/templates/testcases/search.html:16
+#: tcms/testplans/templates/testplans/search.html:16
+msgid "After"
+msgstr "在之后"
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
+#: tcms/testcases/templates/testcases/search.html:27
+#: tcms/testplans/templates/testplans/search.html:28
+msgid "Before"
+msgstr "在之前"
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:46
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:72
 #: tcms/templates/plan/get_cases.html:107
 #: tcms/templates/plan/get_cases.html:187
 #: tcms/templates/run/get_case_runs.html:76 tcms/templates/run/report.html:67
@@ -245,16 +261,16 @@ msgstr ""
 msgid "Automated"
 msgstr "自动化的"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:50
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:76
 #: tcms/templates/run/get_case_runs.html:79
 msgid "Manual"
 msgstr "手动"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:57
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:83
 msgid "Priorities"
 msgstr ""
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:62
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:88
 msgid "Categories"
 msgstr ""
 
@@ -1558,16 +1574,6 @@ msgstr "搜索测试用例"
 #: tcms/testcases/templates/testcases/search.html:13
 msgid "Test case summary"
 msgstr "测试用例总结"
-
-#: tcms/testcases/templates/testcases/search.html:16
-#: tcms/testplans/templates/testplans/search.html:16
-msgid "After"
-msgstr "在之后"
-
-#: tcms/testcases/templates/testcases/search.html:27
-#: tcms/testplans/templates/testplans/search.html:28
-msgid "Before"
-msgstr "在之前"
 
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
