@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-13 14:32+0000\n"
+"POT-Creation-Date: 2019-05-16 10:33+0000\n"
 "PO-Revision-Date: 2019-05-15 06:48\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
@@ -202,6 +202,10 @@ msgstr "Nov uporabnik - potrebna potrditev uporabniškega računa"
 msgid "NEW: TestRun #%(pk)d - %(summary)s"
 msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 
+#: tcms/telemetry/api.py:59
+msgid "OTHER"
+msgstr ""
+
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
 msgstr "Razčlenitev testiranja"
@@ -229,11 +233,23 @@ msgstr "Izdelek"
 msgid "Test Plan"
 msgstr "Baza testni scenarijev"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
+#: tcms/testcases/templates/testcases/search.html:16
+#: tcms/testplans/templates/testplans/search.html:16
+msgid "After"
+msgstr "Po"
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
+#: tcms/testcases/templates/testcases/search.html:27
+#: tcms/testplans/templates/testplans/search.html:28
+msgid "Before"
+msgstr "Pred"
+
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:61
 msgid "Total"
 msgstr "Skupaj"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:46
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:72
 #: tcms/templates/plan/get_cases.html:107
 #: tcms/templates/plan/get_cases.html:187
 #: tcms/templates/run/get_case_runs.html:76 tcms/templates/run/report.html:67
@@ -245,16 +261,16 @@ msgstr "Skupaj"
 msgid "Automated"
 msgstr "Avtomatizirano"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:50
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:76
 #: tcms/templates/run/get_case_runs.html:79
 msgid "Manual"
 msgstr "Ročno"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:57
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:83
 msgid "Priorities"
 msgstr "Prioritete"
 
-#: tcms/telemetry/templates/telemetry/testing/breakdown.html:62
+#: tcms/telemetry/templates/telemetry/testing/breakdown.html:88
 msgid "Categories"
 msgstr "Kategorije"
 
@@ -1562,16 +1578,6 @@ msgstr "Iskanje testnih scenarijev"
 msgid "Test case summary"
 msgstr "Povzetek testnega scenarija"
 
-#: tcms/testcases/templates/testcases/search.html:16
-#: tcms/testplans/templates/testplans/search.html:16
-msgid "After"
-msgstr "Po"
-
-#: tcms/testcases/templates/testcases/search.html:27
-#: tcms/testplans/templates/testplans/search.html:28
-msgid "Before"
-msgstr "Pred"
-
 #: tcms/testcases/templates/testcases/search.html:100
 msgid "Both"
 msgstr "Oboje"
@@ -1828,4 +1834,3 @@ msgstr "NAPAKA"
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
 msgstr "IZPUŠČEN"
-
