@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-13 14:32+0000\n"
-"PO-Revision-Date: 2019-05-16 08:32\n"
+"PO-Revision-Date: 2019-05-16 11:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -231,7 +231,7 @@ msgstr "Plan de test"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:35
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:46
 #: tcms/templates/plan/get_cases.html:107
@@ -252,11 +252,11 @@ msgstr "Manuelle"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:57
 msgid "Priorities"
-msgstr ""
+msgstr "Priorités"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:62
 msgid "Categories"
-msgstr ""
+msgstr "Catégories"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
@@ -1258,11 +1258,11 @@ msgstr "Mettez en surbrillance"
 
 #: tcms/templates/run/get_case_runs.html:24
 msgid "Remove selected cases form this test run"
-msgstr ""
+msgstr "Supprimer les scénarios sélectionnées de cet essai"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update the IDLE case runs to newest case text"
-msgstr ""
+msgstr "Mettre à jour le cas en attente pour qu'il s'exécute vers la nouvelle zone de texte"
 
 #: tcms/templates/run/get_case_runs.html:27
 msgid "Update"
@@ -1270,7 +1270,7 @@ msgstr "Mise à jour"
 
 #: tcms/templates/run/get_case_runs.html:30
 msgid "Assign this case(s) to other people"
-msgstr ""
+msgstr "Assigner ce(s) cas(s) à d'autres personnes"
 
 #: tcms/templates/run/get_case_runs.html:30
 #: tcms/templates/run/get_case_runs.html:72
