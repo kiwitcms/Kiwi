@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-13 14:32+0000\n"
-"PO-Revision-Date: 2019-05-14 20:40\n"
+"PO-Revision-Date: 2019-05-16 08:32\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -155,11 +155,11 @@ msgstr "TELEMETRIE"
 
 #: tcms/settings/common.py:106
 msgid "Testing"
-msgstr ""
+msgstr "En Test"
 
 #: tcms/settings/common.py:107
 msgid "Breakdown"
-msgstr ""
+msgstr "Panne"
 
 #: tcms/settings/common.py:121
 msgid "ADMIN"
