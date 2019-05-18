@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
 from tcms.signals import USER_REGISTERED_SIGNAL
-from tcms.kiwi_auth.forms import RegistrationForm
+from tcms.kiwi_auth import forms
 from tcms.kiwi_auth.models import UserActivationKey
 
 
@@ -27,11 +27,15 @@ class LoginViewWithCustomTemplate(views.LoginView):
         return ['registration/custom_login.html', 'registration/login.html']
 
 
+class PasswordResetView(views.PasswordResetView):
+    form_class = forms.PasswordResetForm
+
+
 @require_http_methods(['GET', 'POST'])
 def register(request):
     """Register method of account"""
     if request.method == 'POST':
-        form = RegistrationForm(data=request.POST, files=request.FILES)
+        form = forms.RegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             new_user = form.save()
             activation_key = form.set_activation_key()
@@ -80,7 +84,7 @@ def register(request):
 
             return HttpResponseRedirect(reverse('core-views-index'))
     else:
-        form = RegistrationForm()
+        form = forms.RegistrationForm()
 
     context_data = {
         'form': form,

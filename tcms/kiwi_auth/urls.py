@@ -20,7 +20,7 @@ urlpatterns = [
         name='tcms-logout'),
 
 
-    url(r'^passwordreset/$', contrib_auth_views.PasswordResetView.as_view(),
+    url(r'^passwordreset/$', views.PasswordResetView.as_view(),
         name='tcms-password_reset'),
     url(r'^passwordreset/done/$', contrib_auth_views.PasswordResetDoneView.as_view(),
         name='password_reset_done'),

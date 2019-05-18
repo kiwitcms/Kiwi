@@ -5,6 +5,8 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.forms import PasswordResetForm as DjangoPasswordResetForm
 from django.utils.translation import ugettext_lazy as _
 
 from tcms.core.utils import request_host_link
@@ -64,4 +66,31 @@ class RegistrationForm(UserCreationForm):
                 'site_domain': current_site.domain,
                 'confirm_url': confirm_url,
             }
+        )
+
+
+class PasswordResetForm(DjangoPasswordResetForm):
+    """
+        Overrides the default form b/c it uses Site.objects.get_current()
+        which uses an internal cache and produces wrong results when
+        kiwitcms-tenants is installed.
+    """
+    def save(self, domain_override=None,  # pylint: disable=too-many-arguments
+             subject_template_name='registration/password_reset_subject.txt',
+             email_template_name='registration/password_reset_email.html',
+             use_https=False, token_generator=default_token_generator,
+             from_email=None, request=None, html_email_template_name=None,
+             extra_email_context=None):
+        current_site = Site.objects.get(pk=settings.SITE_ID)
+        # call the stock method and just overrides the domain
+        super().save(
+            current_site.domain,
+            subject_template_name,
+            email_template_name,
+            use_https,
+            token_generator,
+            from_email,
+            request,
+            html_email_template_name,
+            extra_email_context,
         )
