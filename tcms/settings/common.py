@@ -170,6 +170,7 @@ PUBLIC_VIEWS = [
     'django.contrib.auth.views.PasswordResetConfirmView',
     'django.contrib.auth.views.PasswordResetCompleteView',
     'tcms.kiwi_auth.views.LoginViewWithCustomTemplate',
+    'tcms.kiwi_auth.views.PasswordResetView',
     'tcms.kiwi_auth.views.register',
     'tcms.kiwi_auth.views.confirm',
     'tcms.core.views.navigation',
