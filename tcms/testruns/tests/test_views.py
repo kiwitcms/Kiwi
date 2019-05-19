@@ -741,3 +741,24 @@ class TestRunStatusMenu(BaseCaseRun):
 
         for tcrs in TestExecutionStatus.objects.all():
             self.assertNotContains(response, self.status_menu_html, html=True)
+
+
+class TestExecutionComments(BaseCaseRun):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('testruns-get', args=[cls.test_run.pk])
+
+        cls.add_comment_html = \
+            '<a href="#" class="addBlue9 js-show-commentdialog">{0}</a>' \
+            .format(_('Add'))
+
+    def test_get_add_comment_with_permission(self):
+        user_should_have_perm(self.tester, 'django_comments.add_comment')
+        response = self.client.get(self.url)
+        self.assertContains(response, self.add_comment_html, html=True)
+
+    def test_get_add_comment_without_permission(self):
+        remove_perm_from_user(self.tester, 'django_comments.add_comment')
+        response = self.client.get(self.url)
+        self.assertNotContains(response, self.add_comment_html, html=True)
