@@ -51,7 +51,9 @@
 		<div class="btnBlueCaserun">
                     <span>{% trans "Comment" %}</span>
 			<ul>
-                            <li><a href="#" class="addBlue9 js-show-commentdialog">{% trans "Add" %}</a></li>
+                            {% if perms.django_comments.add_comment %}
+                                <li><a href="#" class="addBlue9 js-show-commentdialog">{% trans "Add" %}</a></li>
+                            {% endif %}
 			</ul>
 		</div>
 	</div>
