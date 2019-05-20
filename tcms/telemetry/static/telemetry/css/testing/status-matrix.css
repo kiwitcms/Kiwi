@@ -1,0 +1,21 @@
+.table-with-horizontal-scroll {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+table > tbody > tr > .pass {
+    border-left: 5px solid #92d400; /* pf-green-400 */
+}
+
+table > tbody > tr > .fail {
+    border-left: 5px solid #cc0000; /* pf-red-100 */
+}
+
+table > tbody > tr > .idle {
+    border-left: 5px solid #72767b; /* pf-black-600 */
+}
+
+table > tbody > tr > .other {
+    border-left: 5px solid #ec7a08; /* pf-orange-400 */
+}
