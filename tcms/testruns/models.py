@@ -251,6 +251,12 @@ class TestExecutionStatus(TCMSActionModel):
         'WAIVED': 'fa fa-commenting-o',
     }
 
+    _css_classes = {
+        IDLE: 'idle',
+        FAILED: 'fail',
+        PASSED: 'pass',
+    }
+
     complete_status_names = (PASSED, 'ERROR', FAILED, 'WAIVED')
     failure_status_names = ('ERROR', FAILED)
     idle_status_names = (IDLE,)
@@ -273,7 +279,11 @@ class TestExecutionStatus(TCMSActionModel):
 
     def icon(self):
         with override('en'):
-            return self._icons[self.name]
+            return self._icons.get(self.name)
+
+    def color_code(self):
+        with override('en'):
+            return self._css_classes.get(self.name, 'other')
 
 
 # register model for DB translations

@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from modernrpc.core import rpc_method
 
 from tcms.testcases.models import TestCase, TestCaseStatus
+from tcms.testruns.models import TestExecution
 
 
 @rpc_method(name='Testing.breakdown')
@@ -62,3 +63,55 @@ def _get_field_count_map(test_cases, expression, field):
 
 def _map_query_set(query_set, field):
     return {entry[field]: entry['count'] for entry in query_set}
+
+
+@rpc_method(name='Testing.status_matrix')
+def status_matrix(query=None):
+    """
+        .. function:: XML-RPC Testing.status_matrix(query)
+
+            Perform a search and return data_set needed to visualize the status matrix
+            of test plans, test cases and test executions
+
+            :param query: Field lookups for :class:`tcms.testcases.models.TestPlan`
+            :type query: dict
+            :return: List, containing the information about the test executions
+            :rtype: list
+        """
+    if query is None:
+        query = {}
+
+    data_set = []
+    columns = {}
+    row = {'tc_id': 0}
+    for test_execution in TestExecution.objects.filter(**query).only(
+            'case_id', 'run_id', 'case__summary', 'status'
+    ).order_by('case_id', 'run_id'):
+
+        columns[test_execution.run.run_id] = test_execution.run.summary
+        test_execution_response = {
+            'pk': test_execution.pk,
+            'class': test_execution.status.color_code(),
+            'run_id': test_execution.run_id,
+        }
+
+        if test_execution.case_id == row['tc_id']:
+            row['executions'].append(test_execution_response)
+        else:
+            data_set.append(row)
+
+            row = {
+                'tc_id': test_execution.case_id,
+                'tc_summary': test_execution.case.summary,
+                'executions': [test_execution_response],
+            }
+
+    # append the last row
+    data_set.append(row)
+
+    del data_set[0]
+
+    return {
+        'data': data_set,
+        'columns': columns
+    }
