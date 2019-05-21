@@ -15,6 +15,7 @@ from .empty import EmptyModuleChecker
 from .empty import ModuleInDirectoryWithoutInitChecker
 from .nested_definition import NestedDefinitionChecker
 from .missing_permissions import MissingPermissionsChecker
+from .auto_field import AutoFieldChecker
 
 
 def register(linter):
@@ -30,3 +31,4 @@ def register(linter):
     linter.register_checker(ModuleInDirectoryWithoutInitChecker(linter))
     linter.register_checker(NestedDefinitionChecker(linter))
     linter.register_checker(MissingPermissionsChecker(linter))
+    linter.register_checker(AutoFieldChecker(linter))
