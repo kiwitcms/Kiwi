@@ -14,6 +14,7 @@ from .tags import TagsChecker
 from .empty_module import EmptyModuleChecker
 from .nested_definition import NestedDefinitionChecker
 from .missing_permissions import MissingPermissionsChecker
+from .one_to_one_field import OneToOneFieldChecker
 
 
 def register(linter):
@@ -28,3 +29,4 @@ def register(linter):
     linter.register_checker(EmptyModuleChecker(linter))
     linter.register_checker(NestedDefinitionChecker(linter))
     linter.register_checker(MissingPermissionsChecker(linter))
+    linter.register_checker(OneToOneFieldChecker(linter))
