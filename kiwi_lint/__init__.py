@@ -13,6 +13,7 @@ from .objects_update import ObjectsUpdateChecker
 from .tags import TagsChecker
 from .empty import EmptyModuleChecker
 from .empty import ModuleInDirectoryWithoutInitChecker
+from .empty import EmptyClassChecker
 from .nested_definition import NestedDefinitionChecker
 from .missing_permissions import MissingPermissionsChecker
 from .auto_field import AutoFieldChecker
@@ -29,6 +30,7 @@ def register(linter):
     linter.register_checker(TagsChecker(linter))
     linter.register_checker(EmptyModuleChecker(linter))
     linter.register_checker(ModuleInDirectoryWithoutInitChecker(linter))
+    linter.register_checker(EmptyClassChecker(linter))
     linter.register_checker(NestedDefinitionChecker(linter))
     linter.register_checker(MissingPermissionsChecker(linter))
     linter.register_checker(AutoFieldChecker(linter))
