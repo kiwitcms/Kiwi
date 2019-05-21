@@ -4,6 +4,8 @@
 
 import os
 
+import astroid
+
 from pylint import interfaces
 from pylint import checkers
 from pylint.checkers import utils
@@ -73,3 +75,23 @@ class ModuleInDirectoryWithoutInitChecker(checkers.BaseChecker):
         for fname in diff:
             fname = fname.replace(dir_prefix, '')
             self.add_message('module-in-directory-without-init', args=(fname,))
+
+
+class EmptyClassChecker(checkers.BaseChecker):
+    __implements__ = (interfaces.IAstroidChecker,)
+
+    name = 'empty-class-checker'
+
+    msgs = {'E4483': ("Remove empty class from git!",
+                      'remove-empty-class',
+                      "Kiwi TCMS doesn't need to carry around classes which are empty. "
+                      "They must be removed from the source code!")}
+
+    @utils.check_messages('remove-empty-class')
+    def visit_classdef(self, node):
+        if not node.body:
+            self.add_message('remove-empty-class', node=node)
+
+        for child in node.body:
+            if isinstance(child, astroid.Pass):
+                self.add_message('remove-empty-class', node=node)
