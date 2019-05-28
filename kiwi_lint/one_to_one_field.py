@@ -8,7 +8,7 @@ class OneToOneFieldChecker(checkers.BaseChecker):
 
     name = 'one-to-one-field-checker'
 
-    msgs = {'E4493': ("Do not use OneToOneField",
+    msgs = {'R4531': ("Do not use OneToOneField",
                       'one-to-one-field',
                       "Do not use OneToOneField because it does not play well with the"
                       "history framework (this relation does not have enabled history")}
