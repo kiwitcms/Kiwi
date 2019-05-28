@@ -26,7 +26,7 @@ class MissingPermissionsChecker(checkers.BaseChecker):
                       "All views must require permissions!")}
 
     def visit_module(self, node):
-        self.inside_views_module = node.name == 'views'
+        self.inside_views_module = node.name.endswith('.views')
 
     def visit_functiondef(self, node):
         if not self.inside_views_module:
