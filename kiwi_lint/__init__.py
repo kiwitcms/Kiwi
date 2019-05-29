@@ -37,7 +37,6 @@ def register(linter):
     linter.register_checker(NestedDefinitionChecker(linter))
     linter.register_checker(MissingPermissionsChecker(linter))
     linter.register_checker(AutoFieldChecker(linter))
-
     linter.register_checker(
         FunctionBasedViewChecker(
             linter,

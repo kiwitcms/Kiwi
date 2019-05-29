@@ -52,9 +52,9 @@ class DjangoViewsVisiter(checkers.BaseChecker):
     def _get_django_project_apps(self):
         installed_apps = deepcopy(settings.INSTALLED_APPS)  # do not mutate the original
 
-        for _filter in self.installed_apps_function_filters:
+        for filter_func in self.installed_apps_function_filters:
             # allow void filters that just mutate the list
-            res = list(_filter(installed_apps) or [])
+            res = list(filter_func(installed_apps) or [])
             installed_apps = res if res else installed_apps
 
         return installed_apps
@@ -74,18 +74,21 @@ class DjangoViewsVisiter(checkers.BaseChecker):
 
 
     @classmethod
-    def _get_url_view_mapping(cls, urlpatterns, prefix='^', acc=None):
-        if acc is None:
-            acc = {}
+    def _get_url_view_mapping(cls, urlpatterns):
+        def helper(urlpatterns, prefix='^', acc=None):
+            if acc is None:
+                acc = {}
 
-        for url in urlpatterns:
-            if isinstance(url, URLPattern):
-                key = prefix + url.pattern.regex.pattern.strip('^')
-                acc[key] = (url.callback.__module__, url.callback.__name__)
+            for url in urlpatterns:
+                if isinstance(url, URLPattern):
+                    key = prefix + url.pattern.regex.pattern.strip('^')
+                    acc[key] = (url.callback.__module__, url.callback.__name__)
 
-            elif isinstance(url, URLResolver):
-                cls._get_url_view_mapping(url.url_patterns, prefix + url.pattern.regex.pattern.strip('^$'), acc)
-        return acc
+                elif isinstance(url, URLResolver):
+                    helper(url.url_patterns, prefix + url.pattern.regex.pattern.strip('^$'), acc)
+            return acc
+
+        return helper(urlpatterns)
 
     @staticmethod
     def _prune_url_mapping(url_mapping, installed_apps):
@@ -100,15 +103,8 @@ class DjangoViewsVisiter(checkers.BaseChecker):
         if module.name in self.view_files:
             self.visit_views_module(module)
 
-    def leave_module(self, module):
-        if module.name in self.view_files:
-            self.leave_views_module(module)
-
     def visit_views_module(self, module):
         """Called when entering a module with a registered view inside it."""
-
-    def leave_views_module(self, module):
-        """Called when leaving from a module with a registered view inside it."""
 
 
 class FunctionBasedViewChecker(DjangoViewsVisiter):
