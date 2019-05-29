@@ -72,7 +72,6 @@ class DjangoViewsVisiter(checkers.BaseChecker):
 
         return resolved
 
-
     @classmethod
     def _get_url_view_mapping(cls, urlpatterns):
         def helper(urlpatterns, prefix='^', acc=None):
