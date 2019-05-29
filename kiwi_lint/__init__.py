@@ -22,16 +22,6 @@ from .auto_field import AutoFieldChecker
 from .function_based_views import FunctionBasedViewChecker
 
 
-def has_django_installed():
-    """Django must be installed and DJANGO_SETTINGS_MODULE must be present in shell environment."""
-    try:
-        __import__('django')
-    except (ImportError, ModuleNotFoundError):
-        return False
-
-    return 'DJANGO_SETTINGS_MODULE' in os.environ
-
-
 def register(linter):
     linter.register_checker(DunderClassAttributeChecker(linter))
     linter.register_checker(ListComprehensionChecker(linter))
@@ -48,11 +38,12 @@ def register(linter):
     linter.register_checker(MissingPermissionsChecker(linter))
     linter.register_checker(AutoFieldChecker(linter))
 
-    if has_django_installed():
-        tcms_settings = {
-            'main_urls_package': 'tcms.urls',
-            'filters': [lambda app: app.startswith('tcms')],
-        }
-        linter.register_checker(
-            FunctionBasedViewChecker(linter, **tcms_settings)
+    linter.register_checker(
+        FunctionBasedViewChecker(
+            linter,
+            main_urls_package='tcms.urls',
+            filters=[
+                lambda apps: filter(lambda app: app.startswith('tcms'), apps)
+            ]
         )
+    )
