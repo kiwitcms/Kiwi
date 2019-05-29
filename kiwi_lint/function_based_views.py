@@ -22,8 +22,6 @@ class DjangoViewsVisiter(checkers.BaseChecker):
     Derivatives could override `visit_views_module` and/or `leave_views_module` to hook just into
     the walking of view containing astroid modules.
 
-    Class Attributes:
-
     Instance Attributes:
         url_mapping
         Type :: dict[str, 2-tuple(module_name: str, view_name: str)]
