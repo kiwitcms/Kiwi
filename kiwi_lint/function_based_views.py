@@ -60,22 +60,19 @@ class DjangoViewsVisiter(checkers.BaseChecker):
 
         return installed_apps
 
-    @staticmethod
-    def _get_url_view_mapping(urlpatterns):
-        def helper(urlpatterns, prefix='^', acc=None):
-            if acc is None:
-                acc = OrderedDict()
+    @classmethod
+    def _get_url_view_mapping(cls, urlpatterns, prefix='^', acc=None):
+        if acc is None:
+            acc = {}
 
-            for url in urlpatterns:
-                if isinstance(url, URLPattern):
-                    key = prefix + url.pattern.regex.pattern.strip('^')
-                    acc[key] = (url.callback.__module__, url.callback.__name__)
+        for url in urlpatterns:
+            if isinstance(url, URLPattern):
+                key = prefix + url.pattern.regex.pattern.strip('^')
+                acc[key] = (url.callback.__module__, url.callback.__name__)
 
-                elif isinstance(url, URLResolver):
-                    helper(url.url_patterns, prefix + url.pattern.regex.pattern.strip('^$'), acc)
-            return acc
-
-        return helper(urlpatterns)
+            elif isinstance(url, URLResolver):
+                cls._get_url_view_mapping(url.url_patterns, prefix + url.pattern.regex.pattern.strip('^$'), acc)
+        return acc
 
     @staticmethod
     def _prune_url_mapping(url_mapping, installed_apps):
@@ -88,13 +85,11 @@ class DjangoViewsVisiter(checkers.BaseChecker):
 
     def visit_module(self, module):
         if module.name in self.view_files:
-            if hasattr(self, 'visit_views_module'):
-                self.visit_views_module(module)
+            self.visit_views_module(module)
 
     def leave_module(self, module):
         if module.name in self.view_files:
-            if hasattr(self, 'visit_views_module'):
-                self.leave_views_module(module)
+            self.leave_views_module(module)
 
     def visit_views_module(self, module):
         """Called when entering a module with a registered view inside it."""
