@@ -2,13 +2,13 @@
     against using function based views in Django.
 """
 
-from collections import OrderedDict
 from copy import deepcopy
 from importlib import import_module
 
 import astroid
 
 import django
+from django.apps import apps as django_apps
 from django.conf import settings
 from django.urls.resolvers import URLResolver, URLPattern
 
@@ -41,8 +41,7 @@ class DjangoViewsVisiter(checkers.BaseChecker):
         self.installed_apps_function_filters = filters or []
         django.setup()
 
-        self.__installed_apps = self._get_django_project_apps()
-        print(self.__installed_apps)
+        self.__installed_apps = self._resolve_app_configs(self._get_django_project_apps())
 
         project_urls = import_module(main_urls_package)
 
@@ -59,6 +58,20 @@ class DjangoViewsVisiter(checkers.BaseChecker):
             installed_apps = res if res else installed_apps
 
         return installed_apps
+
+    @staticmethod
+    def _resolve_app_configs(installed_apps):
+        import_paths_by_configs = {
+            f'{config.__class__.__module__}.{config.__class__.__name__}': config.name
+            for config in django_apps.get_app_configs()
+        }
+
+        resolved = []
+        for name in installed_apps:
+            resolved.append(import_paths_by_configs.get(name, name))  # get(name, default=name)
+
+        return resolved
+
 
     @classmethod
     def _get_url_view_mapping(cls, urlpatterns, prefix='^', acc=None):
