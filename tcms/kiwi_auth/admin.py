@@ -36,7 +36,8 @@ def _modifying_myself(request, object_id):
 
 
 class KiwiUserAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ('is_superuser', 'date_joined', 'last_login')
+    list_display = UserAdmin.list_display + ('is_active', 'is_superuser',
+                                             'date_joined', 'last_login')
     ordering = ['-pk']  # same as -date_joined
 
     # override standard form and make the email address unique
