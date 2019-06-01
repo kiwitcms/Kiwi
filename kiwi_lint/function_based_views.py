@@ -4,10 +4,7 @@
 
 from importlib import import_module
 
-import astroid
-
 import django
-from django.apps import apps as django_apps
 from django.conf import settings
 from django.urls.resolvers import URLResolver, URLPattern
 
@@ -18,10 +15,13 @@ from pylint import interfaces
 class DjangoViewsVisiter(checkers.BaseChecker):
     """Base class for visiting only astroid modules which contain django views.
 
-    Derived classes could override `visit_views_module` to hook just into
-    the walking of view containing astroid modules.
-
     Instance Attributes:
+        view_module
+        Type :: union[string|None]
+
+            view_module == None,        if the current astroid module does _not_ contain views
+            view_module == module.name, if the current astroid module contains _routed_ views
+
         url_mapping
         Type :: dict[url_pattern: str, 2-tuple(module_name: str, view_name: str)]
 
@@ -34,49 +34,39 @@ class DjangoViewsVisiter(checkers.BaseChecker):
 
         django.setup()
 
-        self.__installed_apps = self._resolve_app_configs(settings.INSTALLED_APPS)
-
         project_urls = import_module(settings.ROOT_URLCONF)
-
         self.url_mapping = self._get_url_view_mapping(project_urls.urlpatterns)
         self.view_files = set(module for module, _ in self.url_mapping.values())
-
-    @staticmethod
-    def _resolve_app_configs(installed_apps):
-        import_paths_by_configs = {
-            f'{config.__class__.__module__}.{config.__class__.__name__}': config.name
-            for config in django_apps.get_app_configs()
-        }
-
-        resolved = []
-        for name in installed_apps:
-            resolved.append(import_paths_by_configs.get(name, name))  # get(name, default=name)
-
-        return resolved
+        self.view_module = None
 
     @classmethod
-    def _get_url_view_mapping(cls, urlpatterns):
-        def helper(urlpatterns, prefix='^', acc=None):
-            if acc is None:
-                acc = {}
+    def _get_url_view_mapping(cls, root_urlpatterns):
+        def go(urlpatterns, prefix='^', result=None):
+            """Flattens the url graph
+
+                Returns a dictionary of the url pattern string as a key
+                and tuple of the module name and the view name
+            """
+
+            if result is None:
+                result = {}
 
             for url in urlpatterns:
                 if isinstance(url, URLPattern):
-                    key = prefix + url.pattern.regex.pattern.strip('^')
-                    acc[key] = (url.callback.__module__, url.callback.__name__)
+                    # path('someurl', view), meaning this is leaf node url
+                    url_pattern = prefix + url.pattern.regex.pattern.strip('^')
+                    result[url_pattern] = (url.callback.__module__, url.callback.__name__)
 
                 elif isinstance(url, URLResolver):
-                    helper(url.url_patterns, prefix + url.pattern.regex.pattern.strip('^$'), acc)
-            return acc
+                    # path('someurl', include(some_url_patterns)), recurse on some_url_patterns
+                    go(url.url_patterns, prefix + url.pattern.regex.pattern.strip('^$'), result)
 
-        return helper(urlpatterns)
+            return result
+
+        return go(root_urlpatterns)
 
     def visit_module(self, module):
-        if module.name in self.view_files:
-            self.visit_views_module(module)
-
-    def visit_views_module(self, module):
-        """Called when entering a module with a registered view inside it."""
+        self.view_module = module.name if module.name in self.view_files else None
 
 
 class FunctionBasedViewChecker(DjangoViewsVisiter):
@@ -100,7 +90,7 @@ class FunctionBasedViewChecker(DjangoViewsVisiter):
 
         return by_module
 
-    def visit_views_module(self, module):
-        for func_def in module.nodes_of_class(astroid.FunctionDef):
-            if func_def.name in self.views_by_module[module.name]:
-                self.add_message('non-function-based-view-required', node=func_def)
+    def visit_functiondef(self, func_def):
+        if self.view_module and func_def.name in self.views_by_module[self.view_module]:
+            self.add_message('non-function-based-view-required', node=func_def)
+            print(f'\tview name: \'{func_def.name}\'')
