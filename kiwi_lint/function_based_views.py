@@ -2,7 +2,6 @@
     against using function based views in Django.
 """
 
-from copy import deepcopy
 from importlib import import_module
 
 import astroid
@@ -19,43 +18,28 @@ from pylint import interfaces
 class DjangoViewsVisiter(checkers.BaseChecker):
     """Base class for visiting only astroid modules which contain django views.
 
-    Derivatives could override `visit_views_module` and/or `leave_views_module` to hook just into
+    Derived classes could override `visit_views_module` to hook just into
     the walking of view containing astroid modules.
 
     Instance Attributes:
         url_mapping
-        Type :: dict[str, 2-tuple(module_name: str, view_name: str)]
+        Type :: dict[url_pattern: str, 2-tuple(module_name: str, view_name: str)]
 
-        installed_apps_function_filters
-        Type :: iterable[callable[all_apps: iterable[str]] -> iterable[str]]
-
-            List of callbacks, which will be called for pruning the installed apps,
-            on whose views the checker should be invoked.
+        view_files
+        Type :: set[view_file_paths: string]
     """
 
-    def __init__(self, *args, main_urls_package=None, filters=None, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, linter):
+        super().__init__(linter)
 
-        self.installed_apps_function_filters = filters or []
         django.setup()
 
-        self.__installed_apps = self._resolve_app_configs(self._get_django_project_apps())
+        self.__installed_apps = self._resolve_app_configs(settings.INSTALLED_APPS)
 
-        project_urls = import_module(main_urls_package)
+        project_urls = import_module(settings.ROOT_URLCONF)
 
         self.url_mapping = self._get_url_view_mapping(project_urls.urlpatterns)
-        self.url_mapping = self._prune_url_mapping(self.url_mapping, self.__installed_apps)
         self.view_files = set(module for module, _ in self.url_mapping.values())
-
-    def _get_django_project_apps(self):
-        installed_apps = deepcopy(settings.INSTALLED_APPS)  # do not mutate the original
-
-        for filter_func in self.installed_apps_function_filters:
-            # allow void filters that just mutate the list
-            res = list(filter_func(installed_apps) or [])
-            installed_apps = res if res else installed_apps
-
-        return installed_apps
 
     @staticmethod
     def _resolve_app_configs(installed_apps):
@@ -87,15 +71,6 @@ class DjangoViewsVisiter(checkers.BaseChecker):
 
         return helper(urlpatterns)
 
-    @staticmethod
-    def _prune_url_mapping(url_mapping, installed_apps):
-        pruned = url_mapping.__class__()
-        for k, (module, name) in url_mapping.items():
-            if any(module.startswith(app) for app in installed_apps):
-                pruned[k] = (module, name)
-
-        return pruned
-
     def visit_module(self, module):
         if module.name in self.view_files:
             self.visit_views_module(module)
@@ -113,8 +88,8 @@ class FunctionBasedViewChecker(DjangoViewsVisiter):
                       'non-function-based-view-required',
                       'Function based views are the path to the Dark side!')}
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, linter):
+        super().__init__(linter)
         self.views_by_module = self.group_views_by_module(self.url_mapping.values())
 
     @staticmethod
