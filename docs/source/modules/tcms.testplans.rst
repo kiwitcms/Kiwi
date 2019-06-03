@@ -2,16 +2,16 @@ tcms.testplans package
 ======================
 
 .. automodule:: tcms.testplans
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    tcms.testplans.helpers
+   tcms.testplans.helpers
 
 Submodules
 ----------
@@ -22,4 +22,3 @@ Submodules
    tcms.testplans.forms
    tcms.testplans.models
    tcms.testplans.views
-

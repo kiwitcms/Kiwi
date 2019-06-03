@@ -2,9 +2,9 @@ tcms.issuetracker package
 =========================
 
 .. automodule:: tcms.issuetracker
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -16,4 +16,3 @@ Submodules
    tcms.issuetracker.gitlab_integration
    tcms.issuetracker.jira_integration
    tcms.issuetracker.types
-

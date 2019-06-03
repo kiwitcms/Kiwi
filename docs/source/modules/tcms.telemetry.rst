@@ -2,9 +2,9 @@ tcms.telemetry package
 ======================
 
 .. automodule:: tcms.telemetry
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -13,4 +13,3 @@ Submodules
 
    tcms.telemetry.api
    tcms.telemetry.views
-

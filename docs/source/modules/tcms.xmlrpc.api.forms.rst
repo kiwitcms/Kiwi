@@ -2,9 +2,9 @@ tcms.xmlrpc.api.forms package
 =============================
 
 .. automodule:: tcms.xmlrpc.api.forms
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -12,4 +12,3 @@ Submodules
 .. toctree::
 
    tcms.xmlrpc.api.forms.testplan
-
