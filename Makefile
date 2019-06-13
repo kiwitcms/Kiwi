@@ -1,5 +1,7 @@
 default: help
 
+PATH_TO_SITE_PACKAGES = $(shell python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')
+
 FLAKE8_EXCLUDE=.git
 
 .PHONY: flake8
@@ -61,8 +63,8 @@ bandit:
 
 .PHONY: bandit_site_packages
 bandit_site_packages:
-	if [ -d "/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/" ]; then \
-	    bandit -a vuln -r /home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/; \
+	if [ -d "$(PATH_TO_SITE_PACKAGES)" ]; then \
+	    bandit -a vuln -r $(PATH_TO_SITE_PACKAGES); \
 	fi
 
 
