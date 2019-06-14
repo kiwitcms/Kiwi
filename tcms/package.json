@@ -2,7 +2,7 @@
   "dependencies": {
     "bootstrap-switch": "3.3.4",
     "marked": "0.6.2",
-    "patternfly": "3.59.1",
+    "patternfly": "3.59.2",
     "prismjs": "1.16.0",
     "simplemde": "1.11.2",
     "typeahead.js": "0.11.1"
