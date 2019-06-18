@@ -1,6 +1,64 @@
 Change Log
 ==========
 
+Kiwi TCMS 6.10 (18 June 2019)
+-----------------------------
+
+
+**IMPORTANT:** this is a small security and improvement update.
+Supported upgrade paths::
+
+    5.3   (or older) -> 5.3.1
+    5.3.1 (or newer) -> 6.0.1
+    6.0.1            -> 6.1
+    6.1              -> 6.1.1
+    6.1.1            -> 6.2 (or newer)
+
+After upgrade don't forget to::
+
+    ./manage.py migrate
+
+
+Security
+~~~~~~~~
+
+- Update Django from 2.2.1 to 2.2.2 for medium severity
+  CVE-2019-12308 (XSS), CVE-2019-11358 (jQuery).
+  `More info <https://docs.djangoproject.com/en/2.2/releases/2.2.2/>`_
+- Add missing permission checks for menus in Test run page UI template.
+  Permission check added for TestExecution status and comment menu.
+  References `Issue #716 <https://github.com/kiwitcms/Kiwi/issues/716>`_
+- Re-enable static analysis with ``bandit`` and ``Coverity Scan`` in
+  Travis CI (Svetlomir Balevski)
+
+
+Improvements
+~~~~~~~~~~~~
+
+- Update psycopg2 from 2.8.2 to 2.8.3
+- Update markdown from 3.1 to 3.1.1
+- Update patternfly to version 3.59.2
+- Override ``PasswordResetForm`` because ``Site.objects.get_current()``
+  didn't produce correct results when working with ``kiwitcms-tenants``
+- Show column ``is_active`` in user admin page
+
+
+Refactoring
+~~~~~~~~~~~
+
+- Add test for ``email_case_deletion()`` (Rik)
+- New linter to warn about usage of ``AutoField``. Fixes
+  `Issue #737 <https://github.com/kiwitcms/Kiwi/issues/737>`_(Ivo Donchev, HackSoft)
+- New linter to discover empty classed. Fixes
+  `Issue #739 <https://github.com/kiwitcms/Kiwi/issues/739>`_ (Daniel Goshev)
+- New linter to warn about usage of ``OneToOneField``. Fixes
+  `Issue #735 <https://github.com/kiwitcms/Kiwi/issues/735>`_ (George Goranov)
+- New linter to warn about usage of function based views. Fixes
+  `Issue #734 <https://github.com/kiwitcms/Kiwi/issues/734>`_ (Yavor Lulchev, Uber)
+- New linter to discover Python files in directories without ``__init__.py``. Fixes
+  `Issue #790 <https://github.com/kiwitcms/Kiwi/issues/790>`_
+
+
 
 Kiwi TCMS 6.9 (15 May 2019)
 ---------------------------
