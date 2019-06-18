@@ -48,7 +48,7 @@ Refactoring
 
 - Add test for ``email_case_deletion()`` (Rik)
 - New linter to warn about usage of ``AutoField``. Fixes
-  `Issue #737 <https://github.com/kiwitcms/Kiwi/issues/737>`_(Ivo Donchev, HackSoft)
+  `Issue #737 <https://github.com/kiwitcms/Kiwi/issues/737>`_ (Ivo Donchev, HackSoft)
 - New linter to discover empty classed. Fixes
   `Issue #739 <https://github.com/kiwitcms/Kiwi/issues/739>`_ (Daniel Goshev)
 - New linter to warn about usage of ``OneToOneField``. Fixes
