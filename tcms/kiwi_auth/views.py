@@ -22,12 +22,12 @@ from tcms.kiwi_auth.models import UserActivationKey
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-class LoginViewWithCustomTemplate(views.LoginView):
+class LoginViewWithCustomTemplate(views.LoginView):  # pylint: disable=missing-permission-required
     def get_template_names(self):
         return ['registration/custom_login.html', 'registration/login.html']
 
 
-class PasswordResetView(views.PasswordResetView):
+class PasswordResetView(views.PasswordResetView):  # pylint: disable=missing-permission-required
     form_class = forms.PasswordResetForm
 
 
