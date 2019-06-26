@@ -208,11 +208,12 @@ LOCALE_PATHS = [
 ]
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = False
+USE_TZ = os.environ.get('KIWI_USE_TZ', 'False').lower() == 'true'
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-TIME_ZONE = 'Etc/UTC'
+TIME_ZONE = os.environ.get('KIWI_TIME_ZONE', 'Etc/UTC')
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 MEDIA_ROOT = '/Kiwi/uploads'
