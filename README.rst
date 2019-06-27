@@ -84,6 +84,8 @@ Brief history
 * Dec 2018 - GitLab integration support - first big code contribution by
   non-team member; more than 5 different external contributors in 2018 alone
 * Feb 2019 - Celebrating 10th anniversary with Kiwi TCMS info booth at FOSDEM Brussels
+* Jun 2019 - `OpenAwards winner <http://kiwitcms.org/blog/atodorov/2019/06/24/kiwi-tcms-is-openawards-2019-best-tech-community-winner/>`_
+  in 'Best Tech Community' category
 
 
 Documentation
