@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-29 10:47+0000\n"
-"PO-Revision-Date: 2019-06-29 10:51\n"
+"PO-Revision-Date: 2019-06-29 19:16\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -163,7 +163,7 @@ msgstr "Razčlenitev"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Matrika statusov"
 
 #: tcms/settings/common.py:122
 msgid "ADMIN"
@@ -208,7 +208,7 @@ msgstr "NOVO: Testiranje #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "DRUGO"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
@@ -284,7 +284,7 @@ msgstr "Kategorije"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Matrika statusov testiranja"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
@@ -308,11 +308,11 @@ msgstr "Build"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
-msgstr ""
+msgstr "Testni scenariji"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
-msgstr ""
+msgstr "Testiranje"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
