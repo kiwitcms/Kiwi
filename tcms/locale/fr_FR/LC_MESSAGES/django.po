@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-29 10:47+0000\n"
-"PO-Revision-Date: 2019-06-29 10:51\n"
+"PO-Revision-Date: 2019-06-30 20:11\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -163,7 +163,7 @@ msgstr "Panne"
 
 #: tcms/settings/common.py:108
 msgid "Status matrix"
-msgstr ""
+msgstr "Matrice d'état"
 
 #: tcms/settings/common.py:122
 msgid "ADMIN"
@@ -208,11 +208,11 @@ msgstr "NOUVEAU: Essai #%(pk)d - %(summary)s"
 
 #: tcms/telemetry/api.py:60
 msgid "OTHER"
-msgstr ""
+msgstr "AUTRE"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:5
 msgid "Testing Breakdown"
-msgstr ""
+msgstr "Palier de test"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
@@ -284,7 +284,7 @@ msgstr "Catégories"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
-msgstr ""
+msgstr "Matrice d'état des tests"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
@@ -308,11 +308,11 @@ msgstr "Construction"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test case"
-msgstr ""
+msgstr "Scénario de test"
 
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:79
 msgid "Test run"
-msgstr ""
+msgstr "Test exécuté"
 
 #: tcms/templates/404.html:5 tcms/templates/404.html:16
 msgid "Page not found"
