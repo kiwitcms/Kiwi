@@ -9,3 +9,8 @@ class TestingBreakdownView(TemplateView):
 class TestingStatusMatrixView(TemplateView):
 
     template_name = 'telemetry/testing/status-matrix.html'
+
+
+class TestingExecutionTrendsView(TemplateView):
+
+    template_name = 'telemetry/testing/execution-trends.html'

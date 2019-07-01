@@ -22,3 +22,7 @@ function loadInitialProduct(callback = () => {}) {
 function loadInitialTestPlans() {
     jsonRPC('TestPlan.filter', {}, data => updateSelect(data, '#id_test_plan', 'plan_id', 'name'));
 }
+
+function showOnlyRoundNumbers(number) {
+    return number % 1 === 0 ? number : '';
+}

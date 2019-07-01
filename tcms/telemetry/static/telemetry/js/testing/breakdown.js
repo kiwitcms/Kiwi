@@ -142,6 +142,7 @@ function drawChart(data, type, selector) {
     c3.generate(chartConfig);
 }
 
+// TODO: remove this in favour of the one in utils.js
 function showOnlyRoundNumbers(number) {
     if (number % 1 === 0) {
         return number;

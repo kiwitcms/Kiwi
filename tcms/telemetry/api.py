@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from modernrpc.core import rpc_method
 
 from tcms.testcases.models import TestCase, TestCaseStatus
-from tcms.testruns.models import TestExecution
+from tcms.testruns.models import TestExecution, TestExecutionStatus
 
 
 @rpc_method(name='Testing.breakdown')
@@ -115,3 +115,64 @@ def status_matrix(query=None):
         'data': data_set,
         'columns': columns
     }
+
+
+@rpc_method(name='Testing.execution_trends')
+def execution_trends(query=None):
+
+    if query is None:
+        query = {}
+
+    data_set = {}
+    all_count = {}
+    categories = []
+    colors = []
+
+    count = {}
+
+    for status in TestExecutionStatus.objects.filter():
+        data_set[status.color_code()] = []
+        all_count[status.color_code()] = 0
+
+        color = status.color()
+        if color not in colors:
+            colors.append(color)
+
+    run_id = 0
+    for test_execution in TestExecution.objects.filter(**query).order_by('run_id'):
+        status = test_execution.status.color_code()
+
+        all_count[status] += 1
+
+        if test_execution.run_id == run_id:
+
+            if status in count:
+                count[status] += 1
+            else:
+                count[status] = 1
+
+        else:
+            _append_status_counts_to_result(count, data_set)
+
+            count = {}
+            run_id = test_execution.run_id
+            categories.append(run_id)
+
+    # append the last result
+    _append_status_counts_to_result(count, data_set)
+
+    for _key, value in data_set.items():
+        del value[0]
+
+    return {
+        'all_count': all_count,
+        'categories': categories,
+        'data_set': data_set,
+        'colors': colors
+    }
+
+
+def _append_status_counts_to_result(count, result):
+    for status in TestExecutionStatus.chart_status_names:
+        status_count = count.get(status, 0)
+        result.get(status).append(status_count)
