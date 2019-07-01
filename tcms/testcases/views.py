@@ -346,7 +346,8 @@ def get_selected_testcases(request):
     return TestCase.objects.filter(pk__in=method.getlist('case'))
 
 
-def load_more_cases(request, template_name='plan/cases_rows.html'):
+def load_more_cases(request,  # pylint: disable=missing-permission-required
+                    template_name='plan/cases_rows.html'):
     """Loading more TestCases"""
     plan = plan_from_request_or_none(request)
     cases = []
@@ -450,7 +451,7 @@ def list_all(request):
 
 
 @require_GET
-def search(request):
+def search(request):  # pylint: disable=missing-permission-required
     """
         Shows the search form which uses JSON RPC to fetch the resuts
     """
@@ -466,7 +467,7 @@ def search(request):
     return render(request, 'testcases/search.html', context_data)
 
 
-class SimpleTestCaseView(TemplateView):
+class SimpleTestCaseView(TemplateView):  # pylint: disable=missing-permission-required
     """Simple read-only TestCase View used in TestPlan page"""
 
     template_name = 'case/get_details.html'
@@ -491,7 +492,7 @@ class SimpleTestCaseView(TemplateView):
         return data
 
 
-class TestCaseExecutionDetailPanelView(TemplateView):
+class TestCaseExecutionDetailPanelView(TemplateView):  # pylint: disable=missing-permission-required
     """Display execution detail in run page"""
 
     template_name = 'case/get_details_case_run.html'

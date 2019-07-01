@@ -13,7 +13,7 @@ from tcms.testruns.models import TestRun
 
 @require_GET
 @login_required
-def dashboard(request):
+def dashboard(request):  # pylint: disable=missing-permission-required
     """List all recent TestPlans and TestRuns"""
     test_plans = TestPlan.objects.filter(
         author=request.user
@@ -45,7 +45,7 @@ def dashboard(request):
     return render(request, 'dashboard.html', context_data)
 
 
-def navigation(request):
+def navigation(request):  # pylint: disable=missing-permission-required
     """
     iframe navigation workaround until we migrate everything to patternfly
     """
@@ -53,7 +53,7 @@ def navigation(request):
 
 
 @requires_csrf_token
-def server_error(request):
+def server_error(request):  # pylint: disable=missing-permission-required
     """
         Render the error page with request object which supports
         static URLs so we can load a nice picture.

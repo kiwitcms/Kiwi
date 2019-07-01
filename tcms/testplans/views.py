@@ -93,8 +93,9 @@ class NewTestPlanView(View):
 
 
 @require_GET
-def get_all(request):
+def get_all(request):  # pylint: disable=missing-permission-required
     """Display all testplans"""
+    # TODO: this function should be deleted
     # todo: this function can be replaced with the existing JSON-RPC search
     # TODO: this function now only performs a forward feature, no queries
     # need here. All of it will be removed in the future.
@@ -158,7 +159,7 @@ def get_all(request):
 
 
 @require_GET
-def search(request):
+def search(request):  # pylint: disable=missing-permission-required
     form = SearchPlanForm(request.GET)
     form.populate(product_id=request.GET.get('product'))
 
@@ -254,7 +255,8 @@ def calculate_stats_for_testplans(plans):
     return plans
 
 
-def get(request, plan_id, slug=None, template_name='plan/get.html'):
+def get(request,  # pylint: disable=missing-permission-required
+        plan_id, slug=None, template_name='plan/get.html'):
     """Display the plan details."""
 
     try:
@@ -463,7 +465,7 @@ class UpdateParentView(View):
         return JsonResponse({'rc': 0, 'response': 'ok'})
 
 
-class LinkCasesView(View):
+class LinkCasesView(View):  # pylint: disable=missing-permission-required
     """Link cases to plan"""
 
     @method_decorator(permission_required('testcases.add_testcaseplan'))
