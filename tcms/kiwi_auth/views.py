@@ -93,7 +93,7 @@ def register(request):
 
 
 @require_GET
-def confirm(request, activation_key):
+def confirm(request, activation_key):  # pylint: disable=missing-permission-required
     """Confirm the user registration"""
 
     # Get the object
@@ -126,7 +126,7 @@ def confirm(request, activation_key):
     return HttpResponseRedirect(request.GET.get('next', reverse('core-views-index')))
 
 
-def profile(request, username):
+def profile(request, username):  # pylint: disable=missing-permission-required
     """Show user profiles"""
     user = get_object_or_404(User, username=username)
     return HttpResponseRedirect(reverse('admin:auth_user_change', args=[user.pk]))

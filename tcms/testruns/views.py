@@ -129,7 +129,7 @@ def new(request):
 
 
 @require_GET
-def search(request):
+def search(request):  # pylint: disable=missing-permission-required
     form = SearchRunForm(request.GET)
     form.populate(product_id=request.GET.get('product'))
 
@@ -207,7 +207,8 @@ def open_run_get_users(case_runs):
 
 
 @require_GET
-def get(request, run_id, template_name='run/get.html'):
+def get(request,  # pylint: disable=missing-permission-required
+        run_id, template_name='run/get.html'):
     """Display testrun's detail"""
 
     # Get the test run
