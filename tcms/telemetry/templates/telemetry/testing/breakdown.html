@@ -10,20 +10,20 @@
 
         <form class="form-horizontal">
             <div class="form-group">
-                <label for="id_select_product" class="col-md-1 col-lg-1">
+                <label for="id_product" class="col-md-1 col-lg-1">
                     {% trans "Product" %}:
                 </label>
                 <div class="col-md-3">
-                    <select name="product" id="id_select_product" class="form-control selectpicker">
+                    <select name="product" id="id_product" class="form-control selectpicker">
                         <option value="">----------</option>
                     </select>
                 </div>
 
-                <label for="id_select_test_plan" class="col-md-1 col-lg-1">
+                <label for="id_test_plan" class="col-md-1 col-lg-1">
                     {% trans "Test Plan" %}:
                 </label>
                 <div class="col-md-3">
-                    <select name="test_plan" id="id_select_test_plan" class="form-control selectpicker">
+                    <select name="test_plan" id="id_test_plan" class="form-control selectpicker">
                         <option value="">----------</option>
                     </select>
                 </div>
@@ -100,6 +100,7 @@
     <script src="{% static 'js/utils.js' %}"></script>
     <script src="{% static 'js/jsonrpc.js' %}"></script>
 
+    <script src="{% static 'telemetry/js/testing/utils.js' %}"></script>
     <script src="{% static 'telemetry/js/testing/breakdown.js' %}"></script>
 
 {% endblock %}

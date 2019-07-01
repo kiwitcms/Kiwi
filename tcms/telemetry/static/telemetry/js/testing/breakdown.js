@@ -1,40 +1,21 @@
 $(document).ready(() => {
     $('.selectpicker').selectpicker();
 
-    loadInitialProduct();
+    loadInitialProduct(reloadCharts);
 
     $('#id_after').on('dp.change', reloadCharts);
     $('#id_before').on('dp.change', reloadCharts);
-    document.getElementById('id_select_test_plan').onchange = reloadCharts;
-    document.getElementById('id_select_product').onchange = updateTestPlanSelect;
+    document.getElementById('id_test_plan').onchange = reloadCharts;
+    document.getElementById('id_product').onchange = () => {
+        updateTestPlanSelectFromProduct(reloadCharts);
+    };
 });
-
-function loadInitialProduct() {
-    jsonRPC('Product.filter', {}, data => {
-        updateSelect(data, '#id_select_product', 'id', 'name');
-        reloadCharts();
-    });
-}
-
-function updateTestPlanSelect() {
-    const productId = $('#id_select_product').val();
-
-    if (!productId) {
-        updateSelect([], '#id_select_test_plan', 'plan_id', 'name');
-        reloadCharts();
-        return;
-    }
-    jsonRPC('TestPlan.filter', {'product_id': productId}, data => {
-        updateSelect(data, '#id_select_test_plan', 'plan_id', 'name');
-        reloadCharts();
-    })
-}
 
 function reloadCharts() {
     const query = {};
 
-    const testPlanId = $('#id_select_test_plan').val();
-    const productId = $('#id_select_product').val();
+    const testPlanId = $('#id_test_plan').val();
+    const productId = $('#id_product').val();
 
     if (testPlanId) {
         query['plan'] = testPlanId;
