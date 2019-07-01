@@ -255,11 +255,20 @@ class TestExecutionStatus(TCMSActionModel):
         IDLE: 'idle',
         FAILED: 'fail',
         PASSED: 'pass',
+        BLOCKED: 'fail',
+        'ERROR': 'fail',
+    }
+
+    _colors = {
+        IDLE: '#72767b',
+        'PASS': '#92d400',
+        'FAIL': '#cc0000'
     }
 
     complete_status_names = (PASSED, 'ERROR', FAILED, 'WAIVED')
     failure_status_names = ('ERROR', FAILED)
     idle_status_names = (IDLE,)
+    chart_status_names = ('pass', 'fail', 'idle', 'other')
 
     id = models.AutoField(db_column='case_run_status_id', primary_key=True)
     name = models.CharField(max_length=60, blank=True, unique=True)
@@ -280,6 +289,10 @@ class TestExecutionStatus(TCMSActionModel):
     def icon(self):
         with override('en'):
             return self._icons.get(self.name)
+
+    def color(self):
+        with override('en'):
+            return self._colors.get(self.color_code().upper(), '#ec7a08')
 
     def color_code(self):
         with override('en'):
