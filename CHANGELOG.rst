@@ -903,8 +903,8 @@ Translations
 
 
 
-Kiwi TCMS 6.2 (02 Nov 2018)
----------------------------
+Kiwi TCMS 6.2 (02 Nov 2018) - PiterPy Edition
+---------------------------------------------
 
 **IMPORTANT:** this is a small release that removes squashed migrations
 from previous releases and includes a few improvements.
