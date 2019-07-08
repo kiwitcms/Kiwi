@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-29 10:47+0000\n"
-"PO-Revision-Date: 2019-06-29 19:16\n"
+"PO-Revision-Date: 2019-07-08 06:02\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -187,11 +187,11 @@ msgstr "Postavite vprašanje glede uporabe Kiwi TCMS na StackOverflow"
 
 #: tcms/settings/common.py:133
 msgid "User Guide"
-msgstr "Uporabniški vodnik"
+msgstr "Uporabniški priročnik"
 
 #: tcms/settings/common.py:134
 msgid "Administration Guide"
-msgstr "Administracijski vodnik"
+msgstr "Priročnik za administratorje"
 
 #: tcms/settings/common.py:135
 msgid "API Help"
