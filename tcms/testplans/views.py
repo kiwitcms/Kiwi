@@ -408,6 +408,7 @@ def clone(request):
     return render(request, 'plan/clone.html', context_data)
 
 
+@permission_required("attachments.add_attachment")
 def attachment(request, plan_id, template_name='plan/attachment.html'):
     """Manage attached files"""
 
