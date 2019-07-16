@@ -52,11 +52,8 @@ function drawChart() {
     }
 
     jsonRPC('Testing.execution_trends', query, data => {
-        const chartData = [];
-
-        Object.entries(data.data_set).forEach(entry => {
-            chartData.push([entry[0], ...entry[1]]);
-        });
+        const chartData = Object.entries(data.data_set).map(entry => [entry[0], ...entry[1]]);
+        const categories = data.categories.map(testRunId => `TR-${testRunId}`);
 
         $('#chart > svg').remove();
 
@@ -64,10 +61,9 @@ function drawChart() {
         const config = c3ChartDefaults.getDefaultAreaConfig();
         config.axis = {
             x: {
-                categories: data.categories,
+                categories: categories,
                 type: 'category',
                 tick: {
-                    format: runId => `TR-${runId}`,
                     fit: false,
                     multiline: false,
                 },
