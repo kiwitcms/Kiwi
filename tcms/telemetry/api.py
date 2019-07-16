@@ -124,15 +124,12 @@ def execution_trends(query=None):
         query = {}
 
     data_set = {}
-    all_count = {}
     categories = []
     colors = []
-
     count = {}
 
-    for status in TestExecutionStatus.objects.filter():
+    for status in TestExecutionStatus.objects.all():
         data_set[status.color_code()] = []
-        all_count[status.color_code()] = 0
 
         color = status.color()
         if color not in colors:
@@ -142,10 +139,7 @@ def execution_trends(query=None):
     for test_execution in TestExecution.objects.filter(**query).order_by('run_id'):
         status = test_execution.status.color_code()
 
-        all_count[status] += 1
-
         if test_execution.run_id == run_id:
-
             if status in count:
                 count[status] += 1
             else:
@@ -165,7 +159,6 @@ def execution_trends(query=None):
         del value[0]
 
     return {
-        'all_count': all_count,
         'categories': categories,
         'data_set': data_set,
         'colors': colors
