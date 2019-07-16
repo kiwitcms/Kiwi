@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-29 10:47+0000\n"
+"POT-Creation-Date: 2019-07-16 18:23+0000\n"
 "PO-Revision-Date: 2019-06-29 10:51\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: German\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Crowdin-Language: de\n"
 "X-Crowdin-File: /master/tcms/locale/en/LC_MESSAGES/django.po\n"
 
-#: tcms/core/ajax.py:158 tcms/testruns/views.py:696
+#: tcms/core/ajax.py:158 tcms/testruns/views.py:697
 #, python-format
 msgid "User %s not found!"
 msgstr "Benutzer %s wurde nicht gefunden!"
@@ -56,16 +56,21 @@ msgstr ""
 
 #: tcms/core/history.py:47
 #, python-format
-msgid "Updated on %(history_date)s\n"
-"Updated by %(username)s\n\n"
-"%(diff)s\n\n"
+msgid ""
+"Updated on %(history_date)s\n"
+"Updated by %(username)s\n"
+"\n"
+"%(diff)s\n"
+"\n"
 "For more information:\n"
 "%(instance_url)s"
 msgstr ""
 
 #: tcms/core/middleware.py:25
 #, python-format
-msgid "Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> and <a href=\"%(admin_url)s\">change it</a>"
+msgid ""
+"Base URL is not configured! See <a href=\"%(doc_url)s\">documentation</a> "
+"and <a href=\"%(admin_url)s\">change it</a>"
 msgstr ""
 
 #: tcms/kiwi_auth/admin.py:29
@@ -90,12 +95,18 @@ msgid "Your new %s account confirmation"
 msgstr ""
 
 #: tcms/kiwi_auth/views.py:54
-msgid "Your account has been created, please check your mailbox for confirmation"
-msgstr "Ihr Konto wurde erstellt, bitte überprüfen Sie Ihre Mailbox für die Bestätigung"
+msgid ""
+"Your account has been created, please check your mailbox for confirmation"
+msgstr ""
+"Ihr Konto wurde erstellt, bitte überprüfen Sie Ihre Mailbox für die "
+"Bestätigung"
 
 #: tcms/kiwi_auth/views.py:60
-msgid "Your account has been created, but you need an administrator to activate it"
-msgstr "Ihr Konto wurde erstellt, wenden Sie sich an einen Administrator um es zu aktivieren"
+msgid ""
+"Your account has been created, but you need an administrator to activate it"
+msgstr ""
+"Ihr Konto wurde erstellt, wenden Sie sich an einen Administrator um es zu "
+"aktivieren"
 
 #: tcms/kiwi_auth/views.py:65
 msgid "Following is the administrator list"
@@ -161,35 +172,35 @@ msgstr ""
 msgid "Status matrix"
 msgstr ""
 
-#: tcms/settings/common.py:122
+#: tcms/settings/common.py:123
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: tcms/settings/common.py:123
+#: tcms/settings/common.py:124
 msgid "Users and groups"
 msgstr "Benutzer und Gruppen"
 
-#: tcms/settings/common.py:125
+#: tcms/settings/common.py:126
 msgid "Everything else"
 msgstr "Alles andere"
 
-#: tcms/settings/common.py:131
+#: tcms/settings/common.py:132
 msgid "Report an Issue"
 msgstr "Einen Fehler melden"
 
-#: tcms/settings/common.py:132
+#: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
 msgstr "Bitten Sie um Hilfe auf StackOverflow"
 
-#: tcms/settings/common.py:133
+#: tcms/settings/common.py:134
 msgid "User Guide"
 msgstr "Benutzerhandbuch"
 
-#: tcms/settings/common.py:134
+#: tcms/settings/common.py:135
 msgid "Administration Guide"
 msgstr "Administratorhandbuch"
 
-#: tcms/settings/common.py:135
+#: tcms/settings/common.py:136
 msgid "API Help"
 msgstr "API-Hilfe"
 
@@ -211,6 +222,7 @@ msgid "Testing Breakdown"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 #: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
 #: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
@@ -229,6 +241,7 @@ msgid "Product"
 msgstr "Produkt"
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:42
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:24
@@ -236,6 +249,7 @@ msgid "Test Plan"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:51
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:50
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
@@ -243,6 +257,7 @@ msgid "After"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:63
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:62
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
@@ -278,10 +293,12 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -292,6 +309,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:32
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 #: tcms/templates/case/get_details_case_run.html:75
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:128
@@ -602,12 +620,16 @@ msgstr "Gestartet am"
 
 #: tcms/templates/dashboard.html:26
 #, python-format
-msgid "\n"
-"                %(total_count)s TestRun(s) or TestCase(s) assigned to you need to be executed.\n"
+msgid ""
+"\n"
+"                %(total_count)s TestRun(s) or TestCase(s) assigned to you "
+"need to be executed.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"%(total_count)s dir zugewiesene Testläufe oder Testfälle sollen durchgeführt werden.\n"
+msgstr ""
+"\n"
+"%(total_count)s dir zugewiesene Testläufe oder Testfälle sollen durchgeführt "
+"werden.\n"
 "Hier sind die letzten %(count)s."
 
 #: tcms/templates/dashboard.html:32 tcms/templates/dashboard.html:78
@@ -641,12 +663,16 @@ msgstr "Ausführungen"
 
 #: tcms/templates/dashboard.html:72
 #, python-format
-msgid "\n"
-"                You manage %(total_count)s TestPlan(s), %(disabled_count)s are disabled.\n"
+msgid ""
+"\n"
+"                You manage %(total_count)s TestPlan(s), %(disabled_count)s "
+"are disabled.\n"
 "                Here are the latest %(count)s.\n"
 "                "
-msgstr "\n"
-"                Sie verwalten, %(total_count)s Testplan/-pläne, %(disabled_count)s ist/sind deaktiviert.\n"
+msgstr ""
+"\n"
+"                Sie verwalten, %(total_count)s Testplan/-pläne, "
+"%(disabled_count)s ist/sind deaktiviert.\n"
 "                Hier sind die neuesten %(count)s.\n"
 "                "
 
@@ -656,41 +682,52 @@ msgstr ""
 
 #: tcms/templates/email/confirm_registration.txt:1
 #, python-format
-msgid "Welcome %(user)s,\n"
-"thank you for signing up for an %(site_domain)s account!\n\n"
+msgid ""
+"Welcome %(user)s,\n"
+"thank you for signing up for an %(site_domain)s account!\n"
+"\n"
 "To activate your account, click this link:\n"
 "%(confirm_url)s\n"
 msgstr ""
 
 #: tcms/templates/email/post_case_delete/email.txt:2
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "TestCase has been deleted by %(username)s!\n"
 msgstr ""
 
 #: tcms/templates/email/post_run_save/email.txt:2
 #, python-format
-msgid "\n"
-"Test run %(pk)s has been created or updated for you.\n\n"
+msgid ""
+"\n"
+"Test run %(pk)s has been created or updated for you.\n"
+"\n"
 "### Links ###\n"
 "Test run: %(run_url)s\n"
-"Test plan: %(plan_url)s\n\n"
+"Test plan: %(plan_url)s\n"
+"\n"
 "### Basic run information ###\n"
-"Summary: %(summary)s\n\n"
+"Summary: %(summary)s\n"
+"\n"
 "Managed: %(manager)s.\n"
-"Default tester: %(default_tester)s.\n\n"
+"Default tester: %(default_tester)s.\n"
+"\n"
 "Product: %(product)s\n"
 "Product version: %(version)s\n"
-"Build: %(build)s\n\n"
+"Build: %(build)s\n"
+"\n"
 "Notes:\n"
 "%(notes)s\n"
 msgstr ""
 
 #: tcms/templates/email/user_registered/notify_admins.txt:2
 #, python-format
-msgid "Dear Administrator,\n"
+msgid ""
+"Dear Administrator,\n"
 "somebody just registered an account with username %(username)s at your\n"
-"Kiwi TCMS instance and is awaiting your approval!\n\n"
+"Kiwi TCMS instance and is awaiting your approval!\n"
+"\n"
 "Go to %(user_url)s to activate the account!\n"
 msgstr ""
 
@@ -778,7 +815,7 @@ msgstr "Nächste Seite"
 msgid "Last page"
 msgstr "Letzte Seite"
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:575
 msgid "Edit"
 msgstr ""
 
@@ -918,7 +955,7 @@ msgid "print view of selected cases"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:578
+#: tcms/testcases/views.py:579
 msgid "Clone"
 msgstr ""
 
@@ -984,7 +1021,9 @@ msgid "Show filter options"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
-msgid "Click me,then Drag and drop the rows to adjust the order,and click 'Done Sorting' link to submit your changes"
+msgid ""
+"Click me,then Drag and drop the rows to adjust the order,and click 'Done "
+"Sorting' link to submit your changes"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:71
@@ -1164,8 +1203,12 @@ msgid "Confirm"
 msgstr "Bestätige"
 
 #: tcms/templates/registration/password_reset_confirm.html:43
-msgid "Please enter your new password twice so we can verify you typed it in correctly"
-msgstr "Bitte geben Sie Ihr neues Kennwort erneut ein, damit wir überprüfen können das Sie es korrekt eingegeben haben"
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly"
+msgstr ""
+"Bitte geben Sie Ihr neues Kennwort erneut ein, damit wir überprüfen können "
+"das Sie es korrekt eingegeben haben"
 
 #: tcms/templates/registration/password_reset_confirm.html:46
 msgid "request a new password reset"
@@ -1229,7 +1272,8 @@ msgid "The table below list all the confirmed test cases of plan"
 msgstr ""
 
 #: tcms/templates/run/assign_case.html:59
-msgid "check the checkbox to add cases into test run. Remember to update at last"
+msgid ""
+"check the checkbox to add cases into test run. Remember to update at last"
 msgstr ""
 
 #: tcms/templates/run/assign_case.html:74
@@ -1430,19 +1474,28 @@ msgid "No execution found"
 msgstr ""
 
 #: tcms/testcases/forms.py:21
-msgid "Please input valid case id(s). use comma to split more than one case id. e.g. \"111, 222\""
-msgstr "Bitte Eingabe gültiger Fall IDs. Verwenden Sie ein Komma um mehrere Fall-Ids zu trennen. z.B. \"111, 222\""
+msgid ""
+"Please input valid case id(s). use comma to split more than one case id. e."
+"g. \"111, 222\""
+msgstr ""
+"Bitte Eingabe gültiger Fall IDs. Verwenden Sie ein Komma um mehrere Fall-Ids "
+"zu trennen. z.B. \"111, 222\""
 
 #: tcms/testcases/forms.py:90
-msgid "**Scenario**: ... what behavior will be tested ...\n"
+msgid ""
+"**Scenario**: ... what behavior will be tested ...\n"
 "  **Given** ... conditions ...\n"
 "  **When** ... actions ...\n"
-"  **Then** ... expected results ...\n\n"
-"*Actions*:\n\n"
+"  **Then** ... expected results ...\n"
+"\n"
+"*Actions*:\n"
+"\n"
 "1. item\n"
 "2. item\n"
-"3. item\n\n"
-"*Expected results*:\n\n"
+"3. item\n"
+"\n"
+"*Expected results*:\n"
+"\n"
 "1. item\n"
 "2. item\n"
 "3. item\n"
@@ -1548,7 +1601,9 @@ msgid "CC to"
 msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:211
-msgid "Email addresses separated by comma. A notification email will be sent to each Email address within CC list."
+msgid ""
+"Email addresses separated by comma. A notification email will be sent to "
+"each Email address within CC list."
 msgstr ""
 
 #: tcms/testcases/templates/testcases/mutable.html:214
@@ -1588,24 +1643,24 @@ msgstr "Suche"
 msgid "Created on"
 msgstr ""
 
-#: tcms/testcases/views.py:399
+#: tcms/testcases/views.py:400
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:582
+#: tcms/testcases/views.py:583
 msgid "History"
 msgstr ""
 
-#: tcms/testcases/views.py:587
+#: tcms/testcases/views.py:588
 msgid "Delete"
 msgstr ""
 
-#: tcms/testcases/views.py:760 tcms/testruns/views.py:429
-#: tcms/testruns/views.py:507
+#: tcms/testcases/views.py:761 tcms/testruns/views.py:430
+#: tcms/testruns/views.py:508
 msgid "At least one TestCase is required"
 msgstr "Mindestens ein Testfall ist erforderlich"
 
-#: tcms/testcases/views.py:897
+#: tcms/testcases/views.py:898
 msgid "TestCase cloning was successful"
 msgstr "Das Konen des Testfalls war erfolgreich"
 
@@ -1662,15 +1717,15 @@ msgstr ""
 msgid "Test plan"
 msgstr ""
 
-#: tcms/testplans/views.py:344
+#: tcms/testplans/views.py:346
 msgid "TestPlan is required"
 msgstr "Testplan ist erforderlich"
 
-#: tcms/testplans/views.py:565
+#: tcms/testplans/views.py:567
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:573
+#: tcms/testplans/views.py:575
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
@@ -1715,8 +1770,10 @@ msgstr "Ausgewählte/r Testfall/-fälle:"
 
 #: tcms/testruns/templates/testruns/mutable.html:82
 #, python-format
-msgid "\n"
-"                    %(count)s of the pre-selected test cases is not CONFIRMED and will not be cloned!\n"
+msgid ""
+"\n"
+"                    %(count)s of the pre-selected test cases is not "
+"CONFIRMED and will not be cloned!\n"
 "                    See test plan for more details!\n"
 "                    "
 msgstr ""
@@ -1739,27 +1796,31 @@ msgstr "Testplan ID"
 
 #: tcms/testruns/views.py:50
 msgid "Creating a TestRun requires a TestPlan, select one"
-msgstr "Das Erstellen eines Testlaufs erfordert einen Testplan, bitte wählen Sie einen aus"
+msgstr ""
+"Das Erstellen eines Testlaufs erfordert einen Testplan, bitte wählen Sie "
+"einen aus"
 
 #: tcms/testruns/views.py:60
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr "Das Erstellen eines Testlaufs erfordert mindestens einen Testfall"
 
-#: tcms/testruns/views.py:433
+#: tcms/testruns/views.py:434
 msgid "Clone of "
 msgstr "Klon von "
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:517
 msgid "TestCase ID is not a valid integer"
 msgstr "Testfall-ID ist keine gültige Ganzzahl"
 
-#: tcms/testruns/views.py:644
+#: tcms/testruns/views.py:645
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr "%d einzelne Tests aktualisiert:"
 
 #: tcms/xmlrpc/api/bug.py:85
-msgid "Enable linking test cases by configuring API parameters for this Issue Tracker!"
+msgid ""
+"Enable linking test cases by configuring API parameters for this Issue "
+"Tracker!"
 msgstr ""
 
 #: tcms/xmlrpc/api/bug.py:138
@@ -1818,4 +1879,3 @@ msgstr "FEHLER"
 #: vinaigrette-deleteme.py:13
 msgid "WAIVED"
 msgstr "ÜBERSPRUNGEN"
-

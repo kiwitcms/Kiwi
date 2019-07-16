@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-29 10:47+0000\n"
+"POT-Creation-Date: 2019-07-16 18:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: tcms/core/ajax.py:158 tcms/testruns/views.py:696
+#: tcms/core/ajax.py:158 tcms/testruns/views.py:697
 #, python-format
 msgid "User %s not found!"
 msgstr ""
@@ -169,35 +169,39 @@ msgstr ""
 msgid "Status matrix"
 msgstr ""
 
-#: tcms/settings/common.py:122
-msgid "ADMIN"
+#: tcms/settings/common.py:109
+msgid "Execution trends"
 msgstr ""
 
 #: tcms/settings/common.py:123
+msgid "ADMIN"
+msgstr ""
+
+#: tcms/settings/common.py:124
 msgid "Users and groups"
 msgstr ""
 
-#: tcms/settings/common.py:125
+#: tcms/settings/common.py:126
 msgid "Everything else"
 msgstr ""
 
-#: tcms/settings/common.py:131
+#: tcms/settings/common.py:132
 msgid "Report an Issue"
 msgstr ""
 
-#: tcms/settings/common.py:132
+#: tcms/settings/common.py:133
 msgid "Ask for help on StackOverflow"
 msgstr ""
 
-#: tcms/settings/common.py:133
+#: tcms/settings/common.py:134
 msgid "User Guide"
 msgstr ""
 
-#: tcms/settings/common.py:134
+#: tcms/settings/common.py:135
 msgid "Administration Guide"
 msgstr ""
 
-#: tcms/settings/common.py:135
+#: tcms/settings/common.py:136
 msgid "API Help"
 msgstr ""
 
@@ -219,6 +223,7 @@ msgid "Testing Breakdown"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:14
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:14
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:13
 #: tcms/templates/case/clone.html:46 tcms/templates/dashboard.html:49
 #: tcms/templates/plan/get.html:62 tcms/templates/plan/preview.html:15
@@ -237,6 +242,7 @@ msgid "Product"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:23
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:43
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:42
 #: tcms/templates/run/assign_case.html:32 tcms/templates/run/get.html:67
 #: tcms/templates/run/report.html:24
@@ -244,6 +250,7 @@ msgid "Test Plan"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:33
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:51
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:50
 #: tcms/testcases/templates/testcases/search.html:16
 #: tcms/testplans/templates/testplans/search.html:16
@@ -251,6 +258,7 @@ msgid "After"
 msgstr ""
 
 #: tcms/telemetry/templates/telemetry/testing/breakdown.html:45
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:63
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:62
 #: tcms/testcases/templates/testcases/search.html:27
 #: tcms/testplans/templates/testplans/search.html:28
@@ -286,10 +294,12 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:5
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:5
 msgid "Testing Status Matrix"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
 #: tcms/testplans/templates/testplans/mutable.html:47
@@ -300,6 +310,7 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
+#: tcms/telemetry/templates/telemetry/testing/execution-trends.html:32
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:31
 #: tcms/templates/case/get_details_case_run.html:75
 #: tcms/templates/run/assign_case.html:24 tcms/templates/run/get.html:128
@@ -796,7 +807,7 @@ msgstr ""
 msgid "Last page"
 msgstr ""
 
-#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:574
+#: tcms/templates/plan/cases_rows.html:61 tcms/testcases/views.py:575
 msgid "Edit"
 msgstr ""
 
@@ -936,7 +947,7 @@ msgid "print view of selected cases"
 msgstr ""
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:578
+#: tcms/testcases/views.py:579
 msgid "Clone"
 msgstr ""
 
@@ -1620,24 +1631,24 @@ msgstr ""
 msgid "Created on"
 msgstr ""
 
-#: tcms/testcases/views.py:399
+#: tcms/testcases/views.py:400
 msgid "TestPlan not specified or does not exist"
 msgstr ""
 
-#: tcms/testcases/views.py:582
+#: tcms/testcases/views.py:583
 msgid "History"
 msgstr ""
 
-#: tcms/testcases/views.py:587
+#: tcms/testcases/views.py:588
 msgid "Delete"
 msgstr ""
 
-#: tcms/testcases/views.py:760 tcms/testruns/views.py:429
-#: tcms/testruns/views.py:507
+#: tcms/testcases/views.py:761 tcms/testruns/views.py:430
+#: tcms/testruns/views.py:508
 msgid "At least one TestCase is required"
 msgstr ""
 
-#: tcms/testcases/views.py:897
+#: tcms/testcases/views.py:898
 msgid "TestCase cloning was successful"
 msgstr ""
 
@@ -1694,15 +1705,15 @@ msgstr ""
 msgid "Test plan"
 msgstr ""
 
-#: tcms/testplans/views.py:344
+#: tcms/testplans/views.py:346
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:565
+#: tcms/testplans/views.py:567
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:573
+#: tcms/testplans/views.py:575
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
@@ -1779,15 +1790,15 @@ msgstr ""
 msgid "Creating a TestRun requires at least one TestCase"
 msgstr ""
 
-#: tcms/testruns/views.py:433
+#: tcms/testruns/views.py:434
 msgid "Clone of "
 msgstr ""
 
-#: tcms/testruns/views.py:516
+#: tcms/testruns/views.py:517
 msgid "TestCase ID is not a valid integer"
 msgstr ""
 
-#: tcms/testruns/views.py:644
+#: tcms/testruns/views.py:645
 #, python-format
 msgid "%d CaseRun(s) updated:"
 msgstr ""
