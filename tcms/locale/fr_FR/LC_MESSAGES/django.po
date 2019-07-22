@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-16 18:23+0000\n"
-"PO-Revision-Date: 2019-07-16 18:43\n"
+"POT-Creation-Date: 2019-07-22 11:13+0000\n"
+"PO-Revision-Date: 2019-07-22 12:14\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -342,32 +342,27 @@ msgid "the leading open source test case management system"
 msgstr "le système de gestion de scénario de test leader en open source"
 
 #: tcms/templates/case/attachment.html:29
-#: tcms/templates/plan/attachment.html:30
 msgid "Note: Each attachment size limit is"
 msgstr "Note: Chaque limite de taille de pièce jointe est"
 
 #: tcms/templates/case/attachment.html:35
-#: tcms/templates/plan/attachment.html:36
-#: tcms/templates/plan/get_attachments.html:13
+#: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
 msgstr "Nom du fichier"
 
 #: tcms/templates/case/attachment.html:36
-#: tcms/templates/plan/attachment.html:37
-#: tcms/templates/plan/get_attachments.html:14
+#: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
 msgstr "Émetteur"
 
 #: tcms/templates/case/attachment.html:37
-#: tcms/templates/plan/attachment.html:38
-#: tcms/templates/plan/get_attachments.html:15
+#: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
 msgstr "Date de création"
 
 #: tcms/templates/case/attachment.html:38
 #: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/attachment.html:39
-#: tcms/templates/plan/get_attachments.html:16
+#: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
 msgstr "Action"
 
@@ -923,11 +918,7 @@ msgstr "Vue arborescente"
 msgid "The document for this plan hasn't been written yet."
 msgstr "Le document pour ce plan n’a pas encore été écrit."
 
-#: tcms/templates/plan/get_attachments.html:6
-msgid "Add attachment"
-msgstr "Ajoute une pièce jointe"
-
-#: tcms/templates/plan/get_attachments.html:29
+#: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
 msgstr "Pas de pièces jointes"
 
@@ -1709,15 +1700,15 @@ msgstr "Nom du plan de test"
 msgid "Test plan"
 msgstr "Plan de test"
 
-#: tcms/testplans/views.py:346
+#: tcms/testplans/views.py:345
 msgid "TestPlan is required"
 msgstr "Le plan de test est requis"
 
-#: tcms/testplans/views.py:567
+#: tcms/testplans/views.py:555
 msgid "At least one test plan is required for print"
 msgstr "Au moins un plan de test est requis pur l'impression"
 
-#: tcms/testplans/views.py:575
+#: tcms/testplans/views.py:563
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Le plan de test \"%s\" n'existe pas"
