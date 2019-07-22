@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-16 18:23+0000\n"
-"PO-Revision-Date: 2019-07-16 18:43\n"
+"POT-Creation-Date: 2019-07-22 11:13+0000\n"
+"PO-Revision-Date: 2019-07-22 12:14\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -342,32 +342,27 @@ msgid "the leading open source test case management system"
 msgstr "лидер в системах управления тест-кейсами с открытым исходным кодом"
 
 #: tcms/templates/case/attachment.html:29
-#: tcms/templates/plan/attachment.html:30
 msgid "Note: Each attachment size limit is"
 msgstr "Примечание: лимит на размер вложения"
 
 #: tcms/templates/case/attachment.html:35
-#: tcms/templates/plan/attachment.html:36
-#: tcms/templates/plan/get_attachments.html:13
+#: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
 msgstr "Имя файла"
 
 #: tcms/templates/case/attachment.html:36
-#: tcms/templates/plan/attachment.html:37
-#: tcms/templates/plan/get_attachments.html:14
+#: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
 msgstr "Отправитель"
 
 #: tcms/templates/case/attachment.html:37
-#: tcms/templates/plan/attachment.html:38
-#: tcms/templates/plan/get_attachments.html:15
+#: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
 msgstr "Дата создания"
 
 #: tcms/templates/case/attachment.html:38
 #: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/attachment.html:39
-#: tcms/templates/plan/get_attachments.html:16
+#: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
 msgstr "Действие"
 
@@ -907,11 +902,7 @@ msgstr "Дерево"
 msgid "The document for this plan hasn't been written yet."
 msgstr "Документ для этого плана еще не был записан."
 
-#: tcms/templates/plan/get_attachments.html:6
-msgid "Add attachment"
-msgstr "Добавить вложение"
-
-#: tcms/templates/plan/get_attachments.html:29
+#: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
 msgstr "Без вложений"
 
@@ -1693,15 +1684,15 @@ msgstr "Название тест-плана"
 msgid "Test plan"
 msgstr "Тест-план"
 
-#: tcms/testplans/views.py:346
+#: tcms/testplans/views.py:345
 msgid "TestPlan is required"
 msgstr "Требуется тест-план"
 
-#: tcms/testplans/views.py:567
+#: tcms/testplans/views.py:555
 msgid "At least one test plan is required for print"
 msgstr "Для печати требуется хотя бы один тест-план"
 
-#: tcms/testplans/views.py:575
+#: tcms/testplans/views.py:563
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Тест-план \"%s\" не существует"
