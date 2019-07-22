@@ -23,7 +23,7 @@ def post(request):
 
 
 @require_POST
-@permission_required("comments.can_moderate")
+@permission_required("django_comments.can_moderate")
 def delete(request):
     """Deletes a comment"""
 
