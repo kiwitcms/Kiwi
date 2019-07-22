@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-22 11:13+0000\n"
+"POT-Creation-Date: 2019-07-22 11:56+0000\n"
 "PO-Revision-Date: 2019-07-16 18:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Czech\n"
@@ -344,31 +344,6 @@ msgstr ""
 msgid "the leading open source test case management system"
 msgstr ""
 
-#: tcms/templates/case/attachment.html:29
-msgid "Note: Each attachment size limit is"
-msgstr ""
-
-#: tcms/templates/case/attachment.html:35
-#: tcms/templates/plan/get_attachments.html:7
-msgid "File name"
-msgstr ""
-
-#: tcms/templates/case/attachment.html:36
-#: tcms/templates/plan/get_attachments.html:8
-msgid "Submitter"
-msgstr ""
-
-#: tcms/templates/case/attachment.html:37
-#: tcms/templates/plan/get_attachments.html:9
-msgid "Create date"
-msgstr ""
-
-#: tcms/templates/case/attachment.html:38
-#: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/get_attachments.html:10
-msgid "Action"
-msgstr ""
-
 #: tcms/templates/case/clone.html:24
 msgid "Clone TestCase(s)"
 msgstr ""
@@ -492,12 +467,12 @@ msgid "Attachment"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:159
+#: tcms/templates/case/get_details_case_run.html:154
 msgid "No attachment found"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:165
+#: tcms/templates/case/get_details_case_run.html:164
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:136
@@ -505,12 +480,12 @@ msgid "Component"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:170
+#: tcms/templates/case/get_details_case_run.html:169
 msgid "No component found"
 msgstr ""
 
 #: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:181
+#: tcms/templates/case/get_details_case_run.html:180
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
 msgstr ""
@@ -566,7 +541,7 @@ msgid "Report"
 msgstr ""
 
 #: tcms/templates/case/get_details_case_run.html:82
-#: tcms/templates/case/get_details_case_run.html:192
+#: tcms/templates/case/get_details_case_run.html:191
 #: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:21
 #: tcms/templates/run/get_case_runs.html:47
@@ -584,7 +559,7 @@ msgstr ""
 msgid "No log recorded"
 msgstr ""
 
-#: tcms/templates/case/get_details_case_run.html:192
+#: tcms/templates/case/get_details_case_run.html:191
 msgid "Test Link"
 msgstr ""
 
@@ -729,6 +704,11 @@ msgstr ""
 
 #: tcms/templates/management/get_tag.html:9 tcms/templates/plan/get.html:119
 msgid "Runs"
+msgstr ""
+
+#: tcms/templates/management/get_tag.html:10
+#: tcms/templates/plan/get_attachments.html:10
+msgid "Action"
 msgstr ""
 
 #: tcms/templates/management/get_tag.html:21
@@ -908,6 +888,18 @@ msgstr ""
 
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
+msgstr ""
+
+#: tcms/templates/plan/get_attachments.html:7
+msgid "File name"
+msgstr ""
+
+#: tcms/templates/plan/get_attachments.html:8
+msgid "Submitter"
+msgstr ""
+
+#: tcms/templates/plan/get_attachments.html:9
+msgid "Create date"
 msgstr ""
 
 #: tcms/templates/plan/get_attachments.html:23

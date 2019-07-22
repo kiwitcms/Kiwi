@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-22 11:13+0000\n"
+"POT-Creation-Date: 2019-07-22 11:56+0000\n"
 "PO-Revision-Date: 2019-07-16 18:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Chinese Simplified\n"
@@ -353,31 +353,6 @@ msgstr ""
 msgid "the leading open source test case management system"
 msgstr "领先的开源测试用例管理系统"
 
-#: tcms/templates/case/attachment.html:29
-msgid "Note: Each attachment size limit is"
-msgstr "注意: 每个附件大小限制为"
-
-#: tcms/templates/case/attachment.html:35
-#: tcms/templates/plan/get_attachments.html:7
-msgid "File name"
-msgstr "文件名称"
-
-#: tcms/templates/case/attachment.html:36
-#: tcms/templates/plan/get_attachments.html:8
-msgid "Submitter"
-msgstr "提交者"
-
-#: tcms/templates/case/attachment.html:37
-#: tcms/templates/plan/get_attachments.html:9
-msgid "Create date"
-msgstr "创建日期"
-
-#: tcms/templates/case/attachment.html:38
-#: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/get_attachments.html:10
-msgid "Action"
-msgstr "操作"
-
 #: tcms/templates/case/clone.html:24
 msgid "Clone TestCase(s)"
 msgstr "克隆测试用例"
@@ -501,12 +476,12 @@ msgid "Attachment"
 msgstr "附件"
 
 #: tcms/templates/case/get_details.html:21
-#: tcms/templates/case/get_details_case_run.html:159
+#: tcms/templates/case/get_details_case_run.html:154
 msgid "No attachment found"
 msgstr "未找到附件"
 
 #: tcms/templates/case/get_details.html:24
-#: tcms/templates/case/get_details_case_run.html:165
+#: tcms/templates/case/get_details_case_run.html:164
 #: tcms/templates/plan/get_cases.html:123
 #: tcms/testcases/templates/testcases/search.html:61
 #: tcms/testcases/templates/testcases/search.html:136
@@ -514,12 +489,12 @@ msgid "Component"
 msgstr "组件"
 
 #: tcms/templates/case/get_details.html:29
-#: tcms/templates/case/get_details_case_run.html:170
+#: tcms/templates/case/get_details_case_run.html:169
 msgid "No component found"
 msgstr "没有找到组件"
 
 #: tcms/templates/case/get_details.html:37
-#: tcms/templates/case/get_details_case_run.html:181
+#: tcms/templates/case/get_details_case_run.html:180
 #: tcms/templates/management/get_tag.html:28
 msgid "No tag found"
 msgstr "没有找到标签"
@@ -575,7 +550,7 @@ msgid "Report"
 msgstr "报告"
 
 #: tcms/templates/case/get_details_case_run.html:82
-#: tcms/templates/case/get_details_case_run.html:192
+#: tcms/templates/case/get_details_case_run.html:191
 #: tcms/templates/management/get_tag.html:37
 #: tcms/templates/run/get_case_runs.html:21
 #: tcms/templates/run/get_case_runs.html:47
@@ -593,7 +568,7 @@ msgstr "来自用例"
 msgid "No log recorded"
 msgstr "未记录日志"
 
-#: tcms/templates/case/get_details_case_run.html:192
+#: tcms/templates/case/get_details_case_run.html:191
 msgid "Test Link"
 msgstr "测试链接"
 
@@ -775,6 +750,11 @@ msgstr "用例"
 msgid "Runs"
 msgstr "执行"
 
+#: tcms/templates/management/get_tag.html:10
+#: tcms/templates/plan/get_attachments.html:10
+msgid "Action"
+msgstr "操作"
+
 #: tcms/templates/management/get_tag.html:21
 #: tcms/templates/management/get_tag.html:23
 #: tcms/templates/plan/get_cases.html:32 tcms/templates/plan/get_cases.html:34
@@ -953,6 +933,18 @@ msgstr "树视图"
 #: tcms/templates/plan/get.html:137
 msgid "The document for this plan hasn't been written yet."
 msgstr "此计划的文档还未撰写。"
+
+#: tcms/templates/plan/get_attachments.html:7
+msgid "File name"
+msgstr "文件名称"
+
+#: tcms/templates/plan/get_attachments.html:8
+msgid "Submitter"
+msgstr "提交者"
+
+#: tcms/templates/plan/get_attachments.html:9
+msgid "Create date"
+msgstr "创建日期"
 
 #: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
