@@ -143,11 +143,6 @@
 						<td>
 							<h4 class="borderB">
 								Attachments
-								{% if perms.attachments.add_attachment %}
-								<span>[
-								<a href="{% url "testcases-attachment" execution.case_id %}?from_plan={{ testrun.plan_id }}" target="_blank">Add</a>
-								]</span>
-								{% endif %}
 							</h4>
 							<ul class="ul-no-format">
                                                                 {% get_attachments_for test_case as attachments_list %}
@@ -159,6 +154,10 @@
                                                                 <li class="grey">{% trans "No attachment found" %}</li>
 								{% endfor %}
 							</ul>
+							{% if perms.attachments.add_attachment %}
+                                                            {% url 'testruns-get' execution.run_id as testrun_url %}
+                                                            {% attachment_form execution.case next=testrun_url %}
+							{% endif %}
 						</td>
 						<td style="width:24px;"></td>
 						<td>
