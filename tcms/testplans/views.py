@@ -3,7 +3,6 @@
 import datetime
 
 from django.utils.decorators import method_decorator
-from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
@@ -406,17 +405,6 @@ def clone(request):
         'clone_form': clone_form,
     }
     return render(request, 'plan/clone.html', context_data)
-
-
-def attachment(request, plan_id, template_name='plan/attachment.html'):
-    """Manage attached files"""
-
-    test_plan = get_object_or_404(TestPlan, plan_id=plan_id)
-    context_data = {
-        'test_plan': test_plan,
-        'limit': settings.FILE_UPLOAD_MAX_SIZE,
-    }
-    return render(request, template_name, context_data)
 
 
 class ReorderCasesView(View):
