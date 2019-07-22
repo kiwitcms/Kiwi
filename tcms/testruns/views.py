@@ -34,109 +34,112 @@ from tcms.testruns.forms import NewRunForm, SearchRunForm, BaseRunForm
 from tcms.testruns.models import TestRun, TestExecution, TestExecutionStatus
 from tcms.issuetracker.types import IssueTrackerType
 
-
 User = get_user_model()  # pylint: disable=invalid-name
 
 
-@require_POST
-@permission_required('testruns.add_testrun')
-def new(request):
-    """Display the create test run page."""
+@method_decorator(permission_required('testruns.add_testrun'), name='dispatch')
+class CreateTestRunView(View):
+    """Create new test run"""
 
-    # If from_plan does not exist will redirect to plans for select a plan
-    if not request.POST.get('from_plan'):
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Creating a TestRun requires a TestPlan, select one'))
-        return HttpResponseRedirect(reverse('plans-search'))
+    def post(self, request):
+        """Display the create test run page."""
 
-    plan_id = request.POST.get('from_plan')
-    # case is required by a test run
-    # NOTE: currently this is handled in JavaScript but in the TestRun creation
-    # form cases can be deleted
-    if not request.POST.get('case'):
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('Creating a TestRun requires at least one TestCase'))
-        return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
+        # If from_plan does not exist will redirect to plans for select a plan
+        if not request.POST.get('from_plan'):
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('Creating a TestRun requires a TestPlan, select one'))
+            return HttpResponseRedirect(reverse('plans-search'))
 
-    # Ready to write cases to test plan
-    test_cases = get_selected_testcases(request)
-    test_plan = TestPlan.objects.get(plan_id=plan_id)
+        plan_id = request.POST.get('from_plan')
+        # case is required by a test run
+        # NOTE: currently this is handled in JavaScript but in the TestRun creation
+        # form cases can be deleted
+        if not request.POST.get('case'):
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('Creating a TestRun requires at least one TestCase'))
+            return HttpResponseRedirect(reverse('test_plan_url_short', args=[plan_id]))
 
-    # note: ordered by case_id for test_show_create_new_run_page()
-    tcs_values = test_cases.select_related('author',
-                                           'case_status',
-                                           'category',
-                                           'priority').order_by('case_id')
+        # Ready to write cases to test plan
+        test_cases = get_selected_testcases(request)
+        test_plan = TestPlan.objects.get(plan_id=plan_id)
 
-    if request.POST.get('POSTING_TO_CREATE'):
-        form = NewRunForm(request.POST)
-        form.populate(product_id=test_plan.product_id)
+        # note: ordered by case_id for test_show_create_new_run_page()
+        tcs_values = test_cases.select_related('author',
+                                               'case_status',
+                                               'category',
+                                               'priority').order_by('case_id')
 
-        if form.is_valid():
-            # Process the data in form.cleaned_data
-            default_tester = form.cleaned_data['default_tester']
+        if request.POST.get('POSTING_TO_CREATE'):
+            form = NewRunForm(request.POST)
+            form.populate(product_id=test_plan.product_id)
 
-            test_run = TestRun.objects.create(
-                product_version=test_plan.product_version,
-                stop_date=None,
-                summary=form.cleaned_data.get('summary'),
-                notes=form.cleaned_data.get('notes'),
-                plan=test_plan,
-                build=form.cleaned_data['build'],
-                manager=form.cleaned_data['manager'],
-                default_tester=default_tester,
-            )
+            if form.is_valid():
+                # Process the data in form.cleaned_data
+                default_tester = form.cleaned_data['default_tester']
 
-            try:
-                assignee_tester = User.objects.get(username=default_tester)
-            except ObjectDoesNotExist:
-                assignee_tester = None
+                test_run = TestRun.objects.create(
+                    product_version=test_plan.product_version,
+                    stop_date=None,
+                    summary=form.cleaned_data.get('summary'),
+                    notes=form.cleaned_data.get('notes'),
+                    plan=test_plan,
+                    build=form.cleaned_data['build'],
+                    manager=form.cleaned_data['manager'],
+                    default_tester=default_tester,
+                )
 
-            loop = 1
-            for case in form.cleaned_data['case']:
                 try:
-                    tcp = TestCasePlan.objects.get(plan=test_plan, case=case)
-                    sortkey = tcp.sortkey
+                    assignee_tester = User.objects.get(username=default_tester)
                 except ObjectDoesNotExist:
-                    sortkey = loop * 10
+                    assignee_tester = None
 
-                test_run.add_case_run(case=case,
-                                      sortkey=sortkey,
-                                      assignee=assignee_tester)
-                loop += 1
+                loop = 1
+                for case in form.cleaned_data['case']:
+                    try:
+                        tcp = TestCasePlan.objects.get(plan=test_plan, case=case)
+                        sortkey = tcp.sortkey
+                    except ObjectDoesNotExist:
+                        sortkey = loop * 10
 
-            return HttpResponseRedirect(
-                reverse('testruns-get', args=[test_run.run_id, ])
-            )
+                    test_run.add_case_run(case=case,
+                                          sortkey=sortkey,
+                                          assignee=assignee_tester)
+                    loop += 1
 
-    else:
-        form = NewRunForm(initial={
-            'summary': 'Test run for %s' % test_plan.name,
-            'manager': test_plan.author.email,
-            'default_tester': request.user.email,
-            'notes': '',
-        })
-        form.populate(product_id=test_plan.product_id)
+                return HttpResponseRedirect(
+                    reverse('testruns-get', args=[test_run.run_id, ])
+                )
 
-    context_data = {
-        'test_plan': test_plan,
-        'test_cases': tcs_values,
-        'form': form,
-    }
-    return render(request, 'testruns/mutable.html', context_data)
+        else:
+            form = NewRunForm(initial={
+                'summary': 'Test run for %s' % test_plan.name,
+                'manager': test_plan.author.email,
+                'default_tester': request.user.email,
+                'notes': '',
+            })
+            form.populate(product_id=test_plan.product_id)
+
+        context_data = {
+            'test_plan': test_plan,
+            'test_cases': tcs_values,
+            'form': form,
+        }
+        return render(request, 'testruns/mutable.html', context_data)
 
 
-@require_GET
-def search(request):  # pylint: disable=missing-permission-required
-    form = SearchRunForm(request.GET)
-    form.populate(product_id=request.GET.get('product'))
+class SearchTestRunView(View):
+    """Base view for search of the test runs"""
 
-    context_data = {
-        'form': form,
-    }
-    return render(request, 'testruns/search.html', context_data)
+    def get(self, request):
+        form = SearchRunForm(request.GET)
+        form.populate(product_id=request.GET.get('product'))
+
+        context_data = {
+            'form': form,
+        }
+        return render(request, 'testruns/search.html', context_data)
 
 
 def _open_run_get_executions(request, run):
@@ -185,7 +188,7 @@ def open_run_get_comments_subtotal(case_run_ids):
         site_id=settings.SITE_ID,
         object_pk__in=case_run_ids,
         is_removed=False).values('object_pk').annotate(comment_count=Count('pk')).order_by(
-            'object_pk')
+        'object_pk')
 
     result = ((int(row['object_pk']), row['comment_count']) for row in query_set)
     return dict(result)
@@ -206,74 +209,73 @@ def open_run_get_users(case_runs):
     return (dict(testers.iterator()), dict(assignees.iterator()))
 
 
-@require_GET
-def get(request,  # pylint: disable=missing-permission-required
-        run_id, template_name='run/get.html'):
+class TestRunsView(View):
     """Display testrun's detail"""
 
-    # Get the test run
-    try:
-        # 1. get test run itself
-        test_run = TestRun.objects.select_related().get(run_id=run_id)
-    except ObjectDoesNotExist:
-        raise Http404
+    def get(self, request, run_id):  # pylint: disable=missing-permission-required
+        # Get the test run
+        try:
+            # 1. get test run itself
+            test_run = TestRun.objects.select_related().get(run_id=run_id)
+        except ObjectDoesNotExist:
+            raise Http404
 
-    # Get the test executions that belong to the run
-    # 2. get test run's all executions
-    test_executions = _open_run_get_executions(request, test_run)
+        # Get the test executions that belong to the run
+        # 2. get test run's all executions
+        test_executions = _open_run_get_executions(request, test_run)
 
-    status = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
+        status = TestExecutionStatus.objects.only('pk', 'name').order_by('pk')
 
-    # Count the status
-    # 3. calculate number of executions of each status
-    status_stats_result = test_run.stats_executions_status(status)
+        # Count the status
+        # 3. calculate number of executions of each status
+        status_stats_result = test_run.stats_executions_status(status)
 
-    # Get the test execution bugs summary
-    # 6. get the number of bugs of this run
-    test_case_run_bugs_count = test_run.get_bug_count()
+        # Get the test execution bugs summary
+        # 6. get the number of bugs of this run
+        test_case_run_bugs_count = test_run.get_bug_count()
 
-    # Get tag list of testcases
-    # 7. get tags
-    # Get the list of testcases belong to the run
-    test_cases = []
-    for test_execution in test_executions:
-        test_cases.append(test_execution.case_id)
-    tags = Tag.objects.filter(case__in=test_cases).values_list('name', flat=True)
-    tags = list(set(tags))
-    tags.sort()
+        # Get tag list of testcases
+        # 7. get tags
+        # Get the list of testcases belong to the run
+        test_cases = []
+        for test_execution in test_executions:
+            test_cases.append(test_execution.case_id)
+        tags = Tag.objects.filter(case__in=test_cases).values_list('name', flat=True)
+        tags = list(set(tags))
+        tags.sort()
 
-    def walk_executions():
-        """Walking executions for helping rendering executions table"""
+        def walk_executions():
+            """Walking executions for helping rendering executions table"""
 
-        priorities = dict(Priority.objects.values_list('pk', 'value'))
-        testers, assignees = open_run_get_users(test_executions)
-        test_case_run_pks = []
-        for test_case_run in test_executions:
-            test_case_run_pks.append(test_case_run.pk)
-        comments_subtotal = open_run_get_comments_subtotal(test_case_run_pks)
-        status = TestExecutionStatus.get_names()
+            priorities = dict(Priority.objects.values_list('pk', 'value'))
+            testers, assignees = open_run_get_users(test_executions)
+            test_case_run_pks = []
+            for test_case_run in test_executions:
+                test_case_run_pks.append(test_case_run.pk)
+            comments_subtotal = open_run_get_comments_subtotal(test_case_run_pks)
+            status = TestExecutionStatus.get_names()
 
-        for case_run in test_executions:
-            yield (case_run,
-                   testers.get(case_run.tested_by_id, None),
-                   assignees.get(case_run.assignee_id, None),
-                   priorities.get(case_run.case.priority_id),
-                   status[case_run.status_id],
-                   comments_subtotal.get(case_run.pk, 0))
+            for case_run in test_executions:
+                yield (case_run,
+                       testers.get(case_run.tested_by_id, None),
+                       assignees.get(case_run.assignee_id, None),
+                       priorities.get(case_run.case.priority_id),
+                       status[case_run.status_id],
+                       comments_subtotal.get(case_run.pk, 0))
 
-    context_data = {
-        'test_run': test_run,
-        'from_plan': request.GET.get('from_plan', False),
-        'test_case_runs': walk_executions(),
-        'test_case_runs_count': len(test_executions),
-        'status_stats': status_stats_result,
-        'test_case_run_bugs_count': test_case_run_bugs_count,
-        'test_status': status,
-        'priorities': Priority.objects.filter(is_active=True),
-        'case_own_tags': tags,
-        'bug_trackers': BugSystem.objects.all(),
-    }
-    return render(request, template_name, context_data)
+        context_data = {
+            'test_run': test_run,
+            'from_plan': request.GET.get('from_plan', False),
+            'test_case_runs': walk_executions(),
+            'test_case_runs_count': len(test_executions),
+            'status_stats': status_stats_result,
+            'test_case_run_bugs_count': test_case_run_bugs_count,
+            'test_status': status,
+            'priorities': Priority.objects.filter(is_active=True),
+            'case_own_tags': tags,
+            'bug_trackers': BugSystem.objects.all(),
+        }
+        return render(request, 'run/get.html', context_data)
 
 
 @permission_required('testruns.change_testrun')
@@ -406,47 +408,47 @@ class TestRunReportView(TemplateView, TestExecutionDataMixin):
         return context
 
 
-@require_POST
-def clone(request, run_id):
+class CloneTestRunView(View):
     """Clone cases from filter caserun"""
 
-    test_run = get_object_or_404(TestRun, run_id=run_id)
-    confirmed_case_status = TestCaseStatus.get_confirmed()
-    disabled_cases = 0
+    def post(self, request, run_id):
+        test_run = get_object_or_404(TestRun, run_id=run_id)
+        confirmed_case_status = TestCaseStatus.get_confirmed()
+        disabled_cases = 0
 
-    if request.POST.get('case_run'):
-        test_cases = []
-        for test_case_run in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
-            if test_case_run.case.case_status == confirmed_case_status:
-                test_cases.append(test_case_run.case)
-            else:
-                disabled_cases += 1
-    else:
-        test_cases = None
+        if request.POST.get('case_run'):
+            test_cases = []
+            for test_case_run in test_run.case_run.filter(pk__in=request.POST.getlist('case_run')):
+                if test_case_run.case.case_status == confirmed_case_status:
+                    test_cases.append(test_case_run.case)
+                else:
+                    disabled_cases += 1
+        else:
+            test_cases = None
 
-    if not test_cases:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('At least one TestCase is required'))
-        return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
+        if not test_cases:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('At least one TestCase is required'))
+            return HttpResponseRedirect(reverse('testruns-get', args=[run_id]))
 
-    form = NewRunForm(initial={
-        'summary': _('Clone of ') + test_run.summary,
-        'notes': test_run.notes,
-        'manager': test_run.manager,
-        'build': test_run.build_id,
-        'default_tester': test_run.default_tester,
-    })
-    form.populate(product_id=test_run.plan.product_id)
+        form = NewRunForm(initial={
+            'summary': _('Clone of ') + test_run.summary,
+            'notes': test_run.notes,
+            'manager': test_run.manager,
+            'build': test_run.build_id,
+            'default_tester': test_run.default_tester,
+        })
+        form.populate(product_id=test_run.plan.product_id)
 
-    context_data = {
-        'is_cloning': True,
-        'disabled_cases': disabled_cases,
-        'test_plan': test_run.plan,
-        'test_cases': test_cases,
-        'form': form,
-    }
-    return render(request, 'testruns/mutable.html', context_data)
+        context_data = {
+            'is_cloning': True,
+            'disabled_cases': disabled_cases,
+            'test_plan': test_run.plan,
+            'test_cases': test_cases,
+            'form': form,
+        }
+        return render(request, 'testruns/mutable.html', context_data)
 
 
 @permission_required('testruns.change_testrun')
@@ -531,7 +533,7 @@ class AddCasesToRunView(View):
         test_plan = test_run.plan
         test_cases = test_run.plan.case.filter(case_status__name='CONFIRMED').select_related(
             'default_tester').only('default_tester__id').filter(
-                case_id__in=test_cases_ids)
+            case_id__in=test_cases_ids)
 
         if request.POST.get('_use_plan_sortkey'):
             test_case_pks = (test_case.pk for test_case in test_cases)
