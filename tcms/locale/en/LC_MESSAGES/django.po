@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-16 18:23+0000\n"
+"POT-Creation-Date: 2019-07-22 11:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -346,32 +346,27 @@ msgid "the leading open source test case management system"
 msgstr ""
 
 #: tcms/templates/case/attachment.html:29
-#: tcms/templates/plan/attachment.html:30
 msgid "Note: Each attachment size limit is"
 msgstr ""
 
 #: tcms/templates/case/attachment.html:35
-#: tcms/templates/plan/attachment.html:36
-#: tcms/templates/plan/get_attachments.html:13
+#: tcms/templates/plan/get_attachments.html:7
 msgid "File name"
 msgstr ""
 
 #: tcms/templates/case/attachment.html:36
-#: tcms/templates/plan/attachment.html:37
-#: tcms/templates/plan/get_attachments.html:14
+#: tcms/templates/plan/get_attachments.html:8
 msgid "Submitter"
 msgstr ""
 
 #: tcms/templates/case/attachment.html:37
-#: tcms/templates/plan/attachment.html:38
-#: tcms/templates/plan/get_attachments.html:15
+#: tcms/templates/plan/get_attachments.html:9
 msgid "Create date"
 msgstr ""
 
 #: tcms/templates/case/attachment.html:38
 #: tcms/templates/management/get_tag.html:10
-#: tcms/templates/plan/attachment.html:39
-#: tcms/templates/plan/get_attachments.html:16
+#: tcms/templates/plan/get_attachments.html:10
 msgid "Action"
 msgstr ""
 
@@ -916,11 +911,7 @@ msgstr ""
 msgid "The document for this plan hasn't been written yet."
 msgstr ""
 
-#: tcms/templates/plan/get_attachments.html:6
-msgid "Add attachment"
-msgstr ""
-
-#: tcms/templates/plan/get_attachments.html:29
+#: tcms/templates/plan/get_attachments.html:23
 msgid "No attachments"
 msgstr ""
 
@@ -1705,15 +1696,15 @@ msgstr ""
 msgid "Test plan"
 msgstr ""
 
-#: tcms/testplans/views.py:346
+#: tcms/testplans/views.py:345
 msgid "TestPlan is required"
 msgstr ""
 
-#: tcms/testplans/views.py:567
+#: tcms/testplans/views.py:555
 msgid "At least one test plan is required for print"
 msgstr ""
 
-#: tcms/testplans/views.py:575
+#: tcms/testplans/views.py:563
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr ""
