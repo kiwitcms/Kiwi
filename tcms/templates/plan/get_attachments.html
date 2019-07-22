@@ -26,7 +26,15 @@
                         <td>{% attachment_delete_link attachment %}</td>
 		</tr>
 		{% empty %}
-                <tr><td colspan="5" align="center"><span class="grey">{% trans "No attachments" %}</span></td></tr>
+                <tr><td colspan="4" align="center"><span class="grey">{% trans "No attachments" %}</span></td></tr>
 		{% endfor %}
+
+                <tr>
+                    <td colspan="4">
+                        {% if perms.attachments.add_attachment %}
+                            {% attachment_form test_plan %}
+                        {% endif %}
+                    </td>
+                </tr>
 	</tbody>
 </table>
