@@ -103,12 +103,6 @@ class PlanTests(BasePlanTest):
             self.assertContains(response, case.summary)
             self.assertContains(response, case.text)
 
-    def test_plan_attachment(self):
-        location = reverse('plan-attachment',
-                           args=[self.plan_id])
-        response = self.client.get(location)
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-
     def test_plan_history(self):
         # note: the history URL is generated on the fly and not accessible via
         # name

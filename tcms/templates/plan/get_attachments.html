@@ -1,12 +1,6 @@
 {% load attachments_tags %}
 {% load i18n %}
 
-<div class="mixbar">
-	{% if perms.attachments.add_attachment %}
-        <span class="tit">{% trans "Add attachment" %}</span>
-	<a href="{% url "plan-attachment" test_plan.plan_id %}" class="addlink">add</a>
-	{% endif %}
-</div>
 <table class="list" cellspacing="0" cellspan="0" width="100%">
 	<thead>
 		<tr>
