@@ -924,18 +924,3 @@ def clone(request, template_name='case/clone.html'):
         'submit_action': submit_action,
     }
     return render(request, template_name, context)
-
-
-@permission_required('testcases.add_testcaseattachment')
-def attachment(request, case_id, template_name='case/attachment.html'):
-    """Manage test case attachments"""
-
-    test_case = get_object_or_404(TestCase, case_id=case_id)
-    test_plan = plan_from_request_or_none(request)
-
-    context = {
-        'testplan': test_plan,
-        'testcase': test_case,
-        'limit': settings.FILE_UPLOAD_MAX_SIZE,
-    }
-    return render(request, template_name, context)
