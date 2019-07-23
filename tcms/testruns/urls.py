@@ -3,7 +3,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^new/$', views.new, name='testruns-new'),
+    url(r'^new/$', views.CreateTestRunView.as_view(), name='testruns-new'),
     url(r'^(?P<run_id>\d+)/$', views.get, name='testruns-get'),
     url(r'^(?P<run_id>\d+)/clone/$', views.clone, name='testruns-clone'),
     url(r'^(?P<run_id>\d+)/edit/$', views.edit, name='testruns-edit'),
