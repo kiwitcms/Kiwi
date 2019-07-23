@@ -169,3 +169,88 @@ def _append_status_counts_to_result(count, result):
     for status in TestExecutionStatus.chart_status_names:
         status_count = count.get(status, 0)
         result.get(status).append(status_count)
+
+
+@rpc_method(name='Testing.test_case_health')
+def test_case_health(query=None):
+
+    if query is None:
+        query = {}
+
+    all_test_executions = TestExecution.objects.filter(**query)
+
+    test_executions = _get_count_for(all_test_executions)
+    passed_test_executions = _get_count_for(all_test_executions.filter(
+        status__name__in=TestExecutionStatus.passed_status_names))
+    failed_test_executions = _get_count_for(all_test_executions.filter(
+        status__name__in=TestExecutionStatus.failure_status_names))
+
+    data = {}
+    for te in test_executions:
+        data[te['case_id']] = {
+            'case_id': te['case_id'],
+            'case_summary': te['case__summary'],
+            'count': {
+                'all': te['count'],
+                'success': 0,
+                'fail': 0
+            }
+        }
+
+    _count_test_executions(data, passed_test_executions, 'success')
+    _count_test_executions(data, failed_test_executions, 'fail')
+
+    # remove all with 100% success rate, because they are not interesting
+    _remove_all_excellent_executions(data)
+
+    data = list(data.values())
+
+    data.sort(key=_sort_by_passing_rate)
+
+    return _build_result_from_data(data)
+
+
+def _remove_all_excellent_executions(data):
+    for key in dict.fromkeys(data):
+        if data[key]['count']['success'] == data[key]['count']['all']:
+            data.pop(key)
+
+
+def _build_result_from_data(data):
+    result = []
+    zero_success_rate_count = 0
+    close_to_zero_rate_count = 0
+    close_to_full_rate_count = 0
+
+    for element in data:
+        if len(result) > 30:
+            break
+
+        success_count = element['count']['success']
+        if success_count == 0 and zero_success_rate_count < 10:
+            result.append(element)
+            zero_success_rate_count += 1
+        elif success_count <= 0.5 and close_to_zero_rate_count < 10:
+            result.append(element)
+            close_to_zero_rate_count += 1
+        elif success_count > 0.5 and close_to_full_rate_count < 10:
+            result.append(element)
+            close_to_full_rate_count += 1
+
+    return result
+
+
+def _count_test_executions(data, test_executions, status):
+
+    for te in test_executions:
+        data[te['case_id']]['count'][status] = te['count']
+
+
+def _sort_by_passing_rate(element):
+    return element['count']['success'] / element['count']['all']
+
+
+def _get_count_for(test_executions):
+    return test_executions.values(
+        'case_id', 'case__summary'
+    ).annotate(count=Count('case_id')).order_by('case_id')
