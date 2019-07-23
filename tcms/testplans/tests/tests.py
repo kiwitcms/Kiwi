@@ -434,13 +434,13 @@ class TestCloneView(BasePlanCase):
 
         self.assertContains(
             response,
-            '<label class="strong" for="id_name">%s</label>' % _('New Plan Name'),
+            '<label class="col-md-1 col-lg-1" for="id_name">%s</label>' % _('Name'),
             html=True)
 
         self.assertContains(
             response,
-            '<input id="id_name" name="name" type="text" value="Copy of {}" required>'.format(
-                self.plan.name),
+            '<input type="text" id="id_name" name="name" value="{}" '
+            'class="form-control" required>'.format(self.plan.make_cloned_name()),
             html=True)
 
     def verify_cloned_plan(self, original_plan, cloned_plan, copy_cases=None):

@@ -337,7 +337,7 @@ def edit(request, plan_id):
 @method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
 class Clone(View):
     http_method_names = ['post']
-    template_name = 'plan/clone.html'
+    template_name = 'testplans/clone.html'
 
     def post(self, request, *args, **kwargs):
         if 'plan' not in request.POST:

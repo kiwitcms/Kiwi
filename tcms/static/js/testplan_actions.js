@@ -1,7 +1,6 @@
 Nitrate.TestPlans = {};
 Nitrate.TestPlans.Details = {};
 Nitrate.TestPlans.SearchCase = {};
-Nitrate.TestPlans.Clone = {};
 
 /*
  * Hold container IDs
@@ -252,13 +251,6 @@ Nitrate.TestPlans.TreeView = {
     previewPlan(parameters, '', callback);
   },
 };
-
-function configure_product_on_load() {
-    $('#id_product').change(function() {
-        $('#id_version').find('option').remove();
-        update_version_select_from_product();
-    });
-}
 
 Nitrate.TestPlans.Details = {
   'tabContentContainerIds': {
@@ -632,15 +624,6 @@ Nitrate.TestPlans.SearchCase.on_load = function() {
   if (jQ("#id_checkbox_all_cases").length) {
     bindSelectAllCheckbox(jQ('#id_checkbox_all_cases')[0], jQ('#id_form_cases')[0], 'case');
   }
-};
-
-Nitrate.TestPlans.Clone.on_load = function() {
-    configure_product_on_load();
-    update_version_select_from_product();
-
-  jQ('.js-cancel-button').bind('click', function() {
-    window.history.back();
-  });
 };
 
 /*
