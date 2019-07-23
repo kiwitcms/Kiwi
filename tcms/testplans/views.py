@@ -372,19 +372,11 @@ def clone(request):
             set_parent=clone_options['set_parent'],
 
             # Link or copy cases
-            link_cases=clone_options['link_testcases'],
             copy_cases=clone_options['copy_testcases'],
             default_component_initial_owner=request.user,
         )
 
         clone_params['new_author'] = request.user
-
-        # pylint: disable=invalid-name
-        assign_me_as_copied_case_default_tester = \
-            clone_options['copy_testcases'] and \
-            not clone_options['keep_case_default_tester']
-        if assign_me_as_copied_case_default_tester:
-            clone_params['new_case_default_tester'] = request.user
 
         cloned_plan = test_plan.clone(**clone_params)
 

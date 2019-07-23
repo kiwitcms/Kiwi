@@ -443,17 +443,15 @@ class TestCloneView(BasePlanCase):
                 self.plan.name),
             html=True)
 
-    def verify_cloned_plan(self, original_plan, cloned_plan,
-                           link_cases=True, copy_cases=None,
-                           keep_case_default_tester=None):
+    def verify_cloned_plan(self, original_plan, cloned_plan, copy_cases=None):
         self.assertEqual('Copy of {}'.format(original_plan.name), cloned_plan.name)
         self.assertEqual(cloned_plan.text, original_plan.text)
         self.assertEqual(Product.objects.get(pk=self.product.pk), cloned_plan.product)
         self.assertEqual(Version.objects.get(pk=self.version.pk), cloned_plan.product_version)
 
-        self._verify_options(original_plan, cloned_plan, copy_cases, link_cases)
+        self._verify_options(original_plan, cloned_plan, copy_cases)
 
-        if link_cases and copy_cases:
+        if copy_cases:
             # Ensure cases of original plan are not linked to cloned plan
             for case in original_plan.case.all():
                 original_case_not_linked_to_cloned_plan = TestCasePlan.objects.filter(
@@ -470,18 +468,14 @@ class TestCloneView(BasePlanCase):
                 else:
                     self.assertEqual(self.plan_tester, copied_case.author)
 
-                if keep_case_default_tester:
-                    self.assertEqual(original_case.default_tester, copied_case.default_tester)
-                else:
-                    me = self.plan_tester
-                    self.assertEqual(me, copied_case.default_tester)
+                self.assertEqual(original_case.default_tester, copied_case.default_tester)
 
-    def _verify_options(self, original_plan, cloned_plan, copy_cases, link_cases):
+    def _verify_options(self, original_plan, cloned_plan, copy_cases):
         # Verify option set_parent
         self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
 
-        # Verify options link_testcases and copy_testcases
-        if link_cases and not copy_cases:
+        # Verify option copy_testcases
+        if not copy_cases:
             for case in original_plan.case.all():
                 is_case_linked = TestCasePlan.objects.filter(plan=cloned_plan, case=case).exists()
                 self.assertTrue(is_case_linked)
@@ -493,8 +487,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'link_testcases': 'on',
-            'keep_case_default_tester': 'on',
             'submit': 'Clone',
         }
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
@@ -518,8 +510,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'link_testcases': 'on',
-            'keep_case_default_tester': 'on',
             'submit': 'Clone',
 
             'copy_testcases': 'on',
@@ -529,9 +519,7 @@ class TestCloneView(BasePlanCase):
             password='password')
         self.client.post(self.plan_clone_url, post_data)
         cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
-        self.verify_cloned_plan(self.totally_new_plan, cloned_plan,
-                                copy_cases=True,
-                                keep_case_default_tester=True)
+        self.verify_cloned_plan(self.totally_new_plan, cloned_plan, copy_cases=True)
 
     def test_clone_a_plan_by_setting_me_to_copied_cases_author_default_tester(self):
         post_data = {
@@ -540,7 +528,6 @@ class TestCloneView(BasePlanCase):
             'product': self.product.pk,
             'product_version': self.version.pk,
             'set_parent': 'on',
-            'link_testcases': 'on',
             'submit': 'Clone',
 
             'copy_testcases': 'on',
