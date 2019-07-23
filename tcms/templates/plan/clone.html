@@ -27,28 +27,28 @@ Nitrate.Utils.after_page_load(Nitrate.TestPlans.Clone.on_load);
 			<table	class="editor" cellspacing="0" cellspan="0"> 
 				<tr>
 					<td width="20%" ><label class="strong" for="id_name">{% trans "New Plan Name" %}</label> </td>
-					<td class="name" >{{ clone_form.name }}</td>
+					<td class="name" >{{ form.name }}</td>
 				</tr>
 				<tr >
 					<td><label class="strong" for="id_product_id">{% trans "Copy to Product" %}</label></td>
-					<td>{{ clone_form.product }}</td>
+					<td>{{ form.product }}</td>
 				</tr>
 				<tr>
 					<td><label class="strong" for="id_version_id">{% trans "Product Version" %}</label></td>
 					<td>
-						{{ clone_form.product_version }}
-						<span class="errors">{{ clone_form.product_version.errors }}</span>
+						{{ form.product_version }}
+						<span class="errors">{{ form.product_version.errors }}</span>
 					</td>
 				</tr>
 				<tr>
 					<td><label class="strong">{% trans "Copy Settings" %}</label> </td>
 					<td>
 						<ul class="ul-no-format">
-							<li>{{ clone_form.set_parent }}{{ clone_form.set_parent.label }} ({{ clone_form.set_parent.help_text }})</li>
+							<li>{{ form.set_parent }}{{ form.set_parent.label }} ({{ form.set_parent.help_text }})</li>
 							<li>
 								<fieldset class="choose">
 									<ul id="id_clone_case_zone" style="display:block ;list-style-type:none;">
-										<li>{{ clone_form.copy_testcases }}{{ clone_form.copy_testcases.label }} ({{ clone_form.copy_testcases.help_text }})</li>
+										<li>{{ form.copy_testcases }}{{ form.copy_testcases.label }} ({{ form.copy_testcases.help_text }})</li>
 									</ul>
 								</fieldset>
 							</li>
