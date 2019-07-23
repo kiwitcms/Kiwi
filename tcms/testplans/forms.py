@@ -162,11 +162,6 @@ class ClonePlanForm(BasePlanForm):
         help_text='Unchecking will create a link to selected plans',
         required=False
     )
-    maintain_case_orignal_author = forms.BooleanField(
-        label='Maintain original authors',
-        help_text='Unchecking will make me the author of the copied cases',
-        required=False
-    )
     keep_case_default_tester = forms.BooleanField(
         label='Keep Default Tester',
         help_text='Unchecking will make me the default tester of copied cases',

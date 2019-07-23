@@ -151,7 +151,6 @@ class TestPlan(TCMSActionModel):
     def clone(self, new_name=None, product=None, version=None,
               new_author=None, set_parent=True,
               link_cases=True, copy_cases=None,
-              new_case_author=None,
               new_case_default_tester=None,
               default_component_initial_owner=None):
         """Clone this plan
@@ -168,7 +167,6 @@ class TestPlan(TCMSActionModel):
         :param bool link_cases: Whether to link cases to cloned plan. Default is True.
         :param bool copy_cases: Whether to copy cases to cloned plan instead of just linking them.
             Default is False.
-        :param new_case_author: The author of copied cases. Used only if copy cases.
         :param new_case_default_tester: The default tester of copied cases. Used only if copy cases.
         :param default_component_initial_owner: Used only if copy cases. If copied case does not
             have original case' component, create it and use this value as the initial_owner.
@@ -203,7 +201,6 @@ class TestPlan(TCMSActionModel):
                 # duplicating the clone operation here
                 for tpcase_src in tpcases_src:
                     tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
-                    author = new_case_author or tpcase_src.author
                     default_tester = new_case_default_tester or tpcase_src.default_tester
 
                     tc_category, _ = Category.objects.get_or_create(
@@ -219,7 +216,7 @@ class TestPlan(TCMSActionModel):
                         case_status=TestCaseStatus.get_proposed(),
                         category=tc_category,
                         priority=tpcase_src.priority,
-                        author=author,
+                        author=new_author,
                         default_tester=default_tester,
                         text=tpcase_src.text)
 

@@ -379,12 +379,6 @@ def clone(request):
 
         clone_params['new_author'] = request.user
 
-        assign_me_as_copied_case_author = \
-            clone_options['copy_testcases'] and \
-            not clone_options['maintain_case_orignal_author']
-        if assign_me_as_copied_case_author:
-            clone_params['new_case_author'] = request.user
-
         # pylint: disable=invalid-name
         assign_me_as_copied_case_default_tester = \
             clone_options['copy_testcases'] and \

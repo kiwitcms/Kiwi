@@ -445,7 +445,6 @@ class TestCloneView(BasePlanCase):
 
     def verify_cloned_plan(self, original_plan, cloned_plan,
                            link_cases=True, copy_cases=None,
-                           maintain_case_orignal_author=None,
                            keep_case_default_tester=None):
         self.assertEqual('Copy of {}'.format(original_plan.name), cloned_plan.name)
         self.assertEqual(cloned_plan.text, original_plan.text)
@@ -466,11 +465,10 @@ class TestCloneView(BasePlanCase):
             # Verify if case' author and default tester are set properly
             for original_case, copied_case in zip(original_plan.case.all(),
                                                   cloned_plan.case.all()):
-                if maintain_case_orignal_author:
+                if not copy_cases:
                     self.assertEqual(original_case.author, copied_case.author)
                 else:
-                    me = self.plan_tester
-                    self.assertEqual(me, copied_case.author)
+                    self.assertEqual(self.plan_tester, copied_case.author)
 
                 if keep_case_default_tester:
                     self.assertEqual(original_case.default_tester, copied_case.default_tester)
@@ -496,7 +494,6 @@ class TestCloneView(BasePlanCase):
             'product_version': self.version.pk,
             'set_parent': 'on',
             'link_testcases': 'on',
-            'maintain_case_orignal_author': 'on',
             'keep_case_default_tester': 'on',
             'submit': 'Clone',
         }
@@ -522,7 +519,6 @@ class TestCloneView(BasePlanCase):
             'product_version': self.version.pk,
             'set_parent': 'on',
             'link_testcases': 'on',
-            'maintain_case_orignal_author': 'on',
             'keep_case_default_tester': 'on',
             'submit': 'Clone',
 
@@ -535,7 +531,6 @@ class TestCloneView(BasePlanCase):
         cloned_plan = TestPlan.objects.get(name=self.totally_new_plan.make_cloned_name())
         self.verify_cloned_plan(self.totally_new_plan, cloned_plan,
                                 copy_cases=True,
-                                maintain_case_orignal_author=True,
                                 keep_case_default_tester=True)
 
     def test_clone_a_plan_by_setting_me_to_copied_cases_author_default_tester(self):
@@ -549,7 +544,6 @@ class TestCloneView(BasePlanCase):
             'submit': 'Clone',
 
             'copy_testcases': 'on',
-            # Do not pass maintain_case_orignal_author and keep_case_default_tester
         }
         self.client.login(  # nosec:B106:hardcoded_password_funcarg
             username=self.plan_tester.username,
