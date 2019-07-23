@@ -150,8 +150,7 @@ class TestPlan(TCMSActionModel):
 
     def clone(self, new_name=None, product=None, version=None,
               new_author=None, set_parent=True,
-              link_cases=True, copy_cases=None,
-              new_case_default_tester=None,
+              copy_cases=None,
               default_component_initial_owner=None):
         """Clone this plan
 
@@ -164,10 +163,8 @@ class TestPlan(TCMSActionModel):
             author is used.
         :param bool set_parent: Whether to set original plan as parent of cloned plan.
             Set by default.
-        :param bool link_cases: Whether to link cases to cloned plan. Default is True.
         :param bool copy_cases: Whether to copy cases to cloned plan instead of just linking them.
             Default is False.
-        :param new_case_default_tester: The default tester of copied cases. Used only if copy cases.
         :param default_component_initial_owner: Used only if copy cases. If copied case does not
             have original case' component, create it and use this value as the initial_owner.
         :rtype: cloned plan
@@ -192,54 +189,48 @@ class TestPlan(TCMSActionModel):
         for tp_tag_src in self.tag.all():
             tp_dest.add_tag(tag=tp_tag_src)
 
-        # Link the cases of the plan
-        if link_cases:
-            tpcases_src = self.case.all()
+        # include TCs inside cloned TP
+        for tpcase_src in self.case.all():
+            tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
 
             if copy_cases:
                 # todo: use the function which clones the test cases instead of
                 # duplicating the clone operation here
-                for tpcase_src in tpcases_src:
-                    tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
-                    default_tester = new_case_default_tester or tpcase_src.default_tester
+                tc_category, _ = Category.objects.get_or_create(
+                    name=tpcase_src.category.name, product=product)
 
-                    tc_category, _ = Category.objects.get_or_create(
-                        name=tpcase_src.category.name, product=product)
+                tpcase_dest = TestCase.objects.create(
+                    create_date=tpcase_src.create_date,
+                    is_automated=tpcase_src.is_automated,
+                    script=tpcase_src.script,
+                    arguments=tpcase_src.arguments,
+                    summary=tpcase_src.summary,
+                    requirement=tpcase_src.requirement,
+                    case_status=TestCaseStatus.get_proposed(),
+                    category=tc_category,
+                    priority=tpcase_src.priority,
+                    author=new_author,
+                    default_tester=tpcase_src.default_tester,
+                    text=tpcase_src.text)
 
-                    tpcase_dest = TestCase.objects.create(
-                        create_date=tpcase_src.create_date,
-                        is_automated=tpcase_src.is_automated,
-                        script=tpcase_src.script,
-                        arguments=tpcase_src.arguments,
-                        summary=tpcase_src.summary,
-                        requirement=tpcase_src.requirement,
-                        case_status=TestCaseStatus.get_proposed(),
-                        category=tc_category,
-                        priority=tpcase_src.priority,
-                        author=new_author,
-                        default_tester=default_tester,
-                        text=tpcase_src.text)
+                # Add case to plan.
+                tp_dest.add_case(tpcase_dest, tcp.sortkey)
 
-                    # Add case to plan.
-                    tp_dest.add_case(tpcase_dest, tcp.sortkey)
+                for tc_tag_src in tpcase_src.tag.all():
+                    tpcase_dest.add_tag(tag=tc_tag_src)
 
-                    for tc_tag_src in tpcase_src.tag.all():
-                        tpcase_dest.add_tag(tag=tc_tag_src)
+                for component in tpcase_src.component.filter(product__id=self.product_id):
+                    try:
+                        new_c = tp_dest.product.component.get(name=component.name)
+                    except ObjectDoesNotExist:
+                        new_c = tp_dest.product.component.create(
+                            name=component.name,
+                            initial_owner=default_component_initial_owner,
+                            description=component.description)
 
-                    for component in tpcase_src.component.filter(product__id=self.product_id):
-                        try:
-                            new_c = tp_dest.product.component.get(name=component.name)
-                        except ObjectDoesNotExist:
-                            new_c = tp_dest.product.component.create(
-                                name=component.name,
-                                initial_owner=default_component_initial_owner,
-                                description=component.description)
-
-                        tpcase_dest.add_component(new_c)
+                    tpcase_dest.add_component(new_c)
             else:
-                for tpcase_src in tpcases_src:
-                    tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
-                    tp_dest.add_case(tpcase_src, tcp.sortkey)
+                tp_dest.add_case(tpcase_src, tcp.sortkey)
 
         return tp_dest
 

@@ -153,18 +153,9 @@ class ClonePlanForm(BasePlanForm):
         queryset=PlanType.objects.all(),
         required=False,
     )
-    link_testcases = forms.BooleanField(
-        label='All Test Cases',
-        required=False
-    )
     copy_testcases = forms.BooleanField(
         label='Create a copy',
         help_text='Unchecking will create a link to selected plans',
-        required=False
-    )
-    keep_case_default_tester = forms.BooleanField(
-        label='Keep Default Tester',
-        help_text='Unchecking will make me the default tester of copied cases',
         required=False
     )
     set_parent = forms.BooleanField(
