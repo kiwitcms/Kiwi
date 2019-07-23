@@ -148,37 +148,29 @@ class TestPlan(TCMSActionModel):
         """Make default name of cloned plan"""
         return 'Copy of {}'.format(self.name)
 
-    def clone(self, new_name=None, product=None, version=None,
-              new_author=None, set_parent=True,
-              copy_cases=None,
-              default_component_initial_owner=None):
+    def clone(self, name=None, product=None, product_version=None,
+              new_author=None, set_parent=False, copy_testcases=False, **kwargs):
         """Clone this plan
 
-        :param str new_name: New name of cloned plan. If not passed, make_cloned_name is called
+        :param str name: New name of cloned plan. If not passed, make_cloned_name is called
             to generate a default one.
         :param product: Product of cloned plan. If not passed, original plan's product is used.
-        :param version: Product version of cloned plan. If not passed, original plan's
+        :param product_version: Product version of cloned plan. If not passed, original plan's
             product_version is used.
         :param new_author: New author of cloned plan. If not passed, original plan's
             author is used.
         :param bool set_parent: Whether to set original plan as parent of cloned plan.
-            Set by default.
-        :param bool copy_cases: Whether to copy cases to cloned plan instead of just linking them.
             Default is False.
-        :param default_component_initial_owner: Used only if copy cases. If copied case does not
-            have original case' component, create it and use this value as the initial_owner.
+        :param bool copy_testcases: Whether to copy cases to cloned plan instead of just
+            linking them. Default is False.
         :rtype: cloned plan
         """
-
-        if not copy_cases and not default_component_initial_owner:
-            raise ValueError('Missing default component initial owner when not copy cases.')
-
         tp_dest = TestPlan.objects.create(
-            name=new_name or self.make_cloned_name(),
+            name=name or self.make_cloned_name(),
             product=product or self.product,
             author=new_author or self.author,
             type=self.type,
-            product_version=version or self.product_version,
+            product_version=product_version or self.product_version,
             create_date=self.create_date,
             is_active=self.is_active,
             extra_link=self.extra_link,
@@ -193,7 +185,7 @@ class TestPlan(TCMSActionModel):
         for tpcase_src in self.case.all():
             tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
 
-            if copy_cases:
+            if copy_testcases:
                 # todo: use the function which clones the test cases instead of
                 # duplicating the clone operation here
                 tc_category, _ = Category.objects.get_or_create(
@@ -225,7 +217,7 @@ class TestPlan(TCMSActionModel):
                     except ObjectDoesNotExist:
                         new_c = tp_dest.product.component.create(
                             name=component.name,
-                            initial_owner=default_component_initial_owner,
+                            initial_owner=new_author,
                             description=component.description)
 
                     tpcase_dest.add_component(new_c)

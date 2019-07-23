@@ -359,26 +359,8 @@ def clone(request):
     # if required values are missing we are still going to show
     # the form below, otherwise clone & redirect
     if clone_form.is_valid():
-        clone_options = clone_form.cleaned_data
-
-        # Create new test plan.
-        new_name = clone_options['name']
-
-        clone_params = dict(
-            # Cloned plan properties
-            new_name=new_name,
-            product=clone_options['product'],
-            version=clone_options['product_version'],
-            set_parent=clone_options['set_parent'],
-
-            # Link or copy cases
-            copy_cases=clone_options['copy_testcases'],
-            default_component_initial_owner=request.user,
-        )
-
-        clone_params['new_author'] = request.user
-
-        cloned_plan = test_plan.clone(**clone_params)
+        clone_form.cleaned_data['new_author'] = request.user
+        cloned_plan = test_plan.clone(**clone_form.cleaned_data)
 
         return HttpResponseRedirect(
             reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
