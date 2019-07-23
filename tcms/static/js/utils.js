@@ -27,9 +27,8 @@ function updateSelect(data, selector, id_attr, value_attr) {
 
 /*
     Used for on-change event handlers
-    @sender - the element trigerring the on-change event
 */
-function update_version_select_from_product(sender, version_selector) {
+function update_version_select_from_product(version_selector) {
     if (version_selector === undefined) {
         version_selector = '#id_version';
     }
