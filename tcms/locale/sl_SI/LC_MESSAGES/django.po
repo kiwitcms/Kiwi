@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-22 11:56+0000\n"
+"POT-Creation-Date: 2019-07-23 21:31+0000\n"
 "PO-Revision-Date: 2019-07-16 18:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Slovenian\n"
@@ -31,6 +31,7 @@ msgstr "Jedrni komentarji - po meri"
 #: tcms/testcases/templates/testcases/get.html:311
 #: tcms/testcases/templates/testcases/get.html:337
 #: tcms/testcases/templates/testcases/get.html:374
+#: tcms/testplans/templates/testplans/clone.html:13
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
@@ -245,6 +246,7 @@ msgstr "Razčlenitev testiranja"
 #: tcms/testcases/templates/testcases/get.html:314
 #: tcms/testcases/templates/testcases/mutable.html:37
 #: tcms/testcases/templates/testcases/search.html:41
+#: tcms/testplans/templates/testplans/clone.html:20
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
 #: tcms/testplans/templates/testplans/search.html:111
@@ -315,6 +317,7 @@ msgstr "Matrika statusov testiranja"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
+#: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:112
@@ -384,8 +387,8 @@ msgstr "Filtriraj drugo bazo testnih scenarijev"
 msgid "ID"
 msgstr "ID"
 
-#: tcms/templates/case/clone.html:50 tcms/templates/plan/clone.html:37
-#: tcms/templates/run/get.html:73 tcms/templates/run/report.html:27
+#: tcms/templates/case/clone.html:50 tcms/templates/run/get.html:73
+#: tcms/templates/run/report.html:27
 msgid "Product Version"
 msgstr "Verzija izdelka"
 
@@ -844,30 +847,6 @@ msgstr "Uredi"
 msgid "No test case was found in this plan."
 msgstr "Baza testnih scenarijev je prazna."
 
-#: tcms/templates/plan/clone.html:4 tcms/templates/plan/get.html:47
-msgid "Clone Plan"
-msgstr "Kloniraj bazo testnih scenarijev"
-
-#: tcms/templates/plan/clone.html:23
-msgid "Clone TestPlan"
-msgstr "Kloniraj bazo testnih scenarijev"
-
-#: tcms/templates/plan/clone.html:29
-msgid "New Plan Name"
-msgstr "Naziv nove baze testnih scenarijev"
-
-#: tcms/templates/plan/clone.html:33
-msgid "Copy to Product"
-msgstr "Kopiraj v produkt"
-
-#: tcms/templates/plan/clone.html:44
-msgid "Copy Settings"
-msgstr "Kopiraj nastavitve"
-
-#: tcms/templates/plan/clone.html:51
-msgid "Copy"
-msgstr "Kopiraj"
-
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
 msgstr "Uredi bazo scenarijev"
@@ -875,6 +854,10 @@ msgstr "Uredi bazo scenarijev"
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
 msgstr "Uredi bazo testnih scenarijev"
+
+#: tcms/templates/plan/get.html:47
+msgid "Clone Plan"
+msgstr "Kloniraj bazo testnih scenarijev"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
@@ -984,7 +967,7 @@ msgid "print view of selected cases"
 msgstr "natisni izbrane testne scenarije"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:579
+#: tcms/testcases/views.py:579 tcms/testplans/templates/testplans/clone.html:68
 msgid "Clone"
 msgstr "Podvoji"
 
@@ -1612,6 +1595,7 @@ msgid "New TestCase"
 msgstr "Nov testni scenarij"
 
 #: tcms/testcases/templates/testcases/mutable.html:38
+#: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "dodaj produkt"
@@ -1718,6 +1702,23 @@ msgstr "Vsaj en testni scenarij je zahtevan"
 msgid "TestCase cloning was successful"
 msgstr "Kloniranje testnega scenarija je uspelo"
 
+#: tcms/testplans/templates/testplans/clone.html:5
+msgid "Clone TestPlan"
+msgstr "Kloniraj bazo testnih scenarijev"
+
+#: tcms/testplans/templates/testplans/clone.html:37
+#: tcms/testplans/templates/testplans/mutable.html:49
+msgid "add new Version"
+msgstr "dodaj verzijo"
+
+#: tcms/testplans/templates/testplans/clone.html:57
+msgid "Clone or link existing TCs into new TP"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:64
+msgid "Set the source TP as parent of new TP"
+msgstr ""
+
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
 msgstr "Uredi testni načrt"
@@ -1725,10 +1726,6 @@ msgstr "Uredi testni načrt"
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
 msgstr "Ustvari nov testni plan"
-
-#: tcms/testplans/templates/testplans/mutable.html:49
-msgid "add new Version"
-msgstr "dodaj verzijo"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1771,15 +1768,15 @@ msgstr "Naziv baze testni scenarijev"
 msgid "Test plan"
 msgstr "Baza testni scenarijev"
 
-#: tcms/testplans/views.py:345
+#: tcms/testplans/views.py:346
 msgid "TestPlan is required"
 msgstr "Baza testnih scenarijev je obvezna"
 
-#: tcms/testplans/views.py:555
+#: tcms/testplans/views.py:523
 msgid "At least one test plan is required for print"
 msgstr "Za tiskanje je potrebno izbrati vsaj eno bazo testnih scenarijev"
 
-#: tcms/testplans/views.py:563
+#: tcms/testplans/views.py:531
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Testiranje \"%s\" ne obstaja"

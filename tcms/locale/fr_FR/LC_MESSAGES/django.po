@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-22 11:56+0000\n"
+"POT-Creation-Date: 2019-07-23 21:31+0000\n"
 "PO-Revision-Date: 2019-07-16 18:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
@@ -30,6 +30,7 @@ msgstr "Commentaires de noyau personnalisé"
 #: tcms/testcases/templates/testcases/get.html:311
 #: tcms/testcases/templates/testcases/get.html:337
 #: tcms/testcases/templates/testcases/get.html:374
+#: tcms/testplans/templates/testplans/clone.html:13
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
@@ -244,6 +245,7 @@ msgstr "Palier de test"
 #: tcms/testcases/templates/testcases/get.html:314
 #: tcms/testcases/templates/testcases/mutable.html:37
 #: tcms/testcases/templates/testcases/search.html:41
+#: tcms/testplans/templates/testplans/clone.html:20
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
 #: tcms/testplans/templates/testplans/search.html:111
@@ -314,6 +316,7 @@ msgstr "Matrice d'état des tests"
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
+#: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:112
@@ -383,8 +386,8 @@ msgstr "Filtrer un autre plan"
 msgid "ID"
 msgstr "ID"
 
-#: tcms/templates/case/clone.html:50 tcms/templates/plan/clone.html:37
-#: tcms/templates/run/get.html:73 tcms/templates/run/report.html:27
+#: tcms/templates/case/clone.html:50 tcms/templates/run/get.html:73
+#: tcms/templates/run/report.html:27
 msgid "Product Version"
 msgstr "Version du produit"
 
@@ -844,30 +847,6 @@ msgstr "Modifier"
 msgid "No test case was found in this plan."
 msgstr "Aucun scénario de test a été trouvé dans ce plan."
 
-#: tcms/templates/plan/clone.html:4 tcms/templates/plan/get.html:47
-msgid "Clone Plan"
-msgstr "Dupliquer un plan"
-
-#: tcms/templates/plan/clone.html:23
-msgid "Clone TestPlan"
-msgstr "Dupliquer un plan de test"
-
-#: tcms/templates/plan/clone.html:29
-msgid "New Plan Name"
-msgstr "Nouveau nom de plan"
-
-#: tcms/templates/plan/clone.html:33
-msgid "Copy to Product"
-msgstr "Copier vers le produit"
-
-#: tcms/templates/plan/clone.html:44
-msgid "Copy Settings"
-msgstr "Copier les paramètres"
-
-#: tcms/templates/plan/clone.html:51
-msgid "Copy"
-msgstr "Copier"
-
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
 msgstr "Modifier le plan"
@@ -875,6 +854,10 @@ msgstr "Modifier le plan"
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
 msgstr "Modifier le plan de test"
+
+#: tcms/templates/plan/get.html:47
+msgid "Clone Plan"
+msgstr "Dupliquer un plan"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
@@ -984,7 +967,7 @@ msgid "print view of selected cases"
 msgstr "afficher la vue des scénarios sélectionnés"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:579
+#: tcms/testcases/views.py:579 tcms/testplans/templates/testplans/clone.html:68
 msgid "Clone"
 msgstr "Dupliquer"
 
@@ -1616,6 +1599,7 @@ msgid "New TestCase"
 msgstr "Nouveau Cas de test"
 
 #: tcms/testcases/templates/testcases/mutable.html:38
+#: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "Ajouter un nouveau produit"
@@ -1722,6 +1706,23 @@ msgstr "Au moins un scénario de test est requis"
 msgid "TestCase cloning was successful"
 msgstr "Le clonage du cas de test a été réalisé avec succès"
 
+#: tcms/testplans/templates/testplans/clone.html:5
+msgid "Clone TestPlan"
+msgstr "Dupliquer un plan de test"
+
+#: tcms/testplans/templates/testplans/clone.html:37
+#: tcms/testplans/templates/testplans/mutable.html:49
+msgid "add new Version"
+msgstr "Ajouter une nouvelle version"
+
+#: tcms/testplans/templates/testplans/clone.html:57
+msgid "Clone or link existing TCs into new TP"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:64
+msgid "Set the source TP as parent of new TP"
+msgstr ""
+
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
 msgstr "Modifier le plan de test"
@@ -1729,10 +1730,6 @@ msgstr "Modifier le plan de test"
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
 msgstr "Créer un nouveau plan de test"
-
-#: tcms/testplans/templates/testplans/mutable.html:49
-msgid "add new Version"
-msgstr "Ajouter une nouvelle version"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1775,15 +1772,15 @@ msgstr "Nom du plan de test"
 msgid "Test plan"
 msgstr "Plan de test"
 
-#: tcms/testplans/views.py:345
+#: tcms/testplans/views.py:346
 msgid "TestPlan is required"
 msgstr "Le plan de test est requis"
 
-#: tcms/testplans/views.py:555
+#: tcms/testplans/views.py:523
 msgid "At least one test plan is required for print"
 msgstr "Au moins un plan de test est requis pur l'impression"
 
-#: tcms/testplans/views.py:563
+#: tcms/testplans/views.py:531
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "Le plan de test \"%s\" n'existe pas"
