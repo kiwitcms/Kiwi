@@ -334,43 +334,45 @@ def edit(request, plan_id):
     return render(request, 'testplans/mutable.html', context_data)
 
 
-@require_POST
-@permission_required('testplans.add_testplan')
-def clone(request):
-    """Clone testplan"""
+@method_decorator(permission_required('testplans.add_testplan'), name='dispatch')
+class Clone(View):
+    http_method_names = ['post']
+    template_name = 'plan/clone.html'
 
-    if 'plan' not in request.POST:
-        messages.add_message(request,
-                             messages.ERROR,
-                             _('TestPlan is required'))
-        # redirect back where we came from
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    def post(self, request, *args, **kwargs):
+        if 'plan' not in request.POST:
+            messages.add_message(request,
+                                 messages.ERROR,
+                                 _('TestPlan is required'))
+            # redirect back where we came from
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    plan_id = request.POST.get('plan')
-    test_plan = get_object_or_404(TestPlan, pk=int(plan_id))
+        plan_id = request.POST.get('plan', 0)
+        test_plan = get_object_or_404(TestPlan, pk=int(plan_id))
 
-    post_data = request.POST.copy()
-    if not request.POST.get('name'):
-        post_data['name'] = test_plan.make_cloned_name()
+        post_data = request.POST.copy()
+        if not request.POST.get('name'):
+            post_data['name'] = test_plan.make_cloned_name()
 
-    clone_form = ClonePlanForm(post_data)
-    clone_form.populate(product_id=request.POST.get('product_id'))
+        form = ClonePlanForm(post_data)
+        form.populate(product_id=request.POST.get('product_id'))
 
-    # if required values are missing we are still going to show
-    # the form below, otherwise clone & redirect
-    if clone_form.is_valid():
-        clone_form.cleaned_data['new_author'] = request.user
-        cloned_plan = test_plan.clone(**clone_form.cleaned_data)
+        # if required values are missing we are still going to show
+        # the form below, otherwise clone & redirect
+        if form.is_valid():
+            form.cleaned_data['new_author'] = request.user
+            cloned_plan = test_plan.clone(**form.cleaned_data)
 
-        return HttpResponseRedirect(
-            reverse('test_plan_url_short', args=[cloned_plan.plan_id]))
+            return HttpResponseRedirect(
+                reverse('test_plan_url_short', args=[cloned_plan.pk]))
 
-    # clone form wasn't valid
-    context_data = {
-        'test_plan': test_plan,
-        'clone_form': clone_form,
-    }
-    return render(request, 'plan/clone.html', context_data)
+        # form wasn't valid
+        context_data = {
+            'test_plan': test_plan,
+            'form': form,
+        }
+
+        return render(request, self.template_name, context_data)
 
 
 class ReorderCasesView(View):
