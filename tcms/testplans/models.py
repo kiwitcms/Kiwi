@@ -185,8 +185,8 @@ class TestPlan(TCMSActionModel):
             tcp = get_object_or_404(TestCasePlan, plan=self, case=tpcase_src)
 
             if copy_testcases:
-                # todo: use the function which clones the test cases instead of
-                # duplicating the clone operation here
+                # todo: create a function/method which clones the test cases instead of
+                # duplicating the clone operation here and inside testcases.views.clone
                 tc_category, _ = Category.objects.get_or_create(
                     name=tpcase_src.category.name, product=product)
 
