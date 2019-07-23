@@ -18,7 +18,6 @@ from tcms.xmlrpc.serializer import TestExecutionXMLRPCSerializer
 from tcms.xmlrpc.serializer import TestRunXMLRPCSerializer
 from tcms.xmlrpc.utils import distinct_filter
 
-
 TestExecutionStatusSubtotal = namedtuple('TestExecutionStatusSubtotal', [
     'StatusSubtotal',
     'CaseRunsTotalCount',
@@ -239,6 +238,7 @@ class TestExecutionStatus(TCMSActionModel):
     BLOCKED = 'BLOCKED'
     PASSED = 'PASSED'
     IDLE = 'IDLE'
+    WAIVED = 'WAIVED'
 
     _icons = {
         'IDLE': 'fa fa-question-circle-o',
@@ -248,7 +248,7 @@ class TestExecutionStatus(TCMSActionModel):
         FAILED: 'fa fa-times-circle-o',
         BLOCKED: 'fa fa-stop-circle-o',
         'ERROR': 'fa fa-minus-circle',
-        'WAIVED': 'fa fa-commenting-o',
+        WAIVED: 'fa fa-commenting-o',
     }
 
     _css_classes = {
@@ -265,8 +265,9 @@ class TestExecutionStatus(TCMSActionModel):
         'FAIL': '#cc0000'
     }
 
-    complete_status_names = (PASSED, 'ERROR', FAILED, 'WAIVED')
-    failure_status_names = ('ERROR', FAILED)
+    complete_status_names = (PASSED, 'ERROR', FAILED, WAIVED)
+    failure_status_names = ('ERROR', FAILED, BLOCKED)
+    passed_status_names = (PASSED, WAIVED)
     idle_status_names = (IDLE,)
     chart_status_names = ('pass', 'fail', 'idle', 'other')
 
