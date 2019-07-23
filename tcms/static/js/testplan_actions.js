@@ -650,10 +650,8 @@ Nitrate.TestPlans.Clone.on_load = function() {
 
   jQ('#id_copy_testcases').bind('change', function(e) {
     if (this.checked) {
-      jQ('#id_maintain_case_orignal_author')[0].disabled = false;
       jQ('#id_keep_case_default_tester')[0].disabled = false;
     } else {
-      jQ('#id_maintain_case_orignal_author')[0].disabled = true;
       jQ('#id_keep_case_default_tester')[0].disabled = true;
     }
   });
