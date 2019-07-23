@@ -355,7 +355,7 @@ class Clone(View):
             post_data['name'] = test_plan.make_cloned_name()
 
         form = ClonePlanForm(post_data)
-        form.populate(product_id=request.POST.get('product_id'))
+        form.populate(product_pk=request.POST.get('product'))
 
         # if required values are missing we are still going to show
         # the form below, otherwise clone & redirect

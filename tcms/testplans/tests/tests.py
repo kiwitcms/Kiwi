@@ -485,7 +485,7 @@ class TestCloneView(BasePlanCase):
             'name': self.third_plan.make_cloned_name(),
             'plan': self.third_plan.pk,
             'product': self.product.pk,
-            'product_version': self.version.pk,
+            'version': self.version.pk,
             'set_parent': 'on',
             'submit': 'Clone',
         }
@@ -508,7 +508,7 @@ class TestCloneView(BasePlanCase):
             'name': self.totally_new_plan.make_cloned_name(),
             'plan': self.totally_new_plan.pk,
             'product': self.product.pk,
-            'product_version': self.version.pk,
+            'version': self.version.pk,
             'set_parent': 'on',
             'submit': 'Clone',
 
@@ -526,7 +526,7 @@ class TestCloneView(BasePlanCase):
             'name': self.totally_new_plan.make_cloned_name(),
             'plan': self.totally_new_plan.pk,
             'product': self.product.pk,
-            'product_version': self.version.pk,
+            'version': self.version.pk,
             'set_parent': 'on',
             'submit': 'Clone',
 
