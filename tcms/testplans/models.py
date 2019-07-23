@@ -210,7 +210,7 @@ class TestPlan(TCMSActionModel):
                 for tc_tag_src in tpcase_src.tag.all():
                     tpcase_dest.add_tag(tag=tc_tag_src)
 
-                for component in tpcase_src.component.filter(product__id=self.product_id):
+                for component in tpcase_src.component.filter(product_id=self.product_id):
                     try:
                         new_c = tp_dest.product.component.get(name=component.name)
                     except ObjectDoesNotExist:
