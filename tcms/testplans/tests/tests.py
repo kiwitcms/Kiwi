@@ -451,34 +451,34 @@ class TestCloneView(BasePlanCase):
 
         self._verify_options(original_plan, cloned_plan, copy_cases)
 
-        if copy_cases:
-            # Ensure cases of original plan are not linked to cloned plan
-            for case in original_plan.case.all():
-                original_case_not_linked_to_cloned_plan = TestCasePlan.objects.filter(
-                    plan=cloned_plan, case=case).exists()
-                self.assertFalse(original_case_not_linked_to_cloned_plan)
-
-            self.assertEqual(cloned_plan.case.count(), original_plan.case.count())
-
-            # Verify if case' author and default tester are set properly
-            for original_case, copied_case in zip(original_plan.case.all(),
-                                                  cloned_plan.case.all()):
-                if not copy_cases:
-                    self.assertEqual(original_case.author, copied_case.author)
-                else:
-                    self.assertEqual(self.plan_tester, copied_case.author)
-
-                self.assertEqual(original_case.default_tester, copied_case.default_tester)
-
     def _verify_options(self, original_plan, cloned_plan, copy_cases):
+        # number of TCs should always be the same
+        self.assertEqual(cloned_plan.case.count(), original_plan.case.count())
+
         # Verify option set_parent
         self.assertEqual(TestPlan.objects.get(pk=original_plan.pk), cloned_plan.parent)
 
         # Verify option copy_testcases
-        if not copy_cases:
-            for case in original_plan.case.all():
-                is_case_linked = TestCasePlan.objects.filter(plan=cloned_plan, case=case).exists()
+        for case in cloned_plan.case.all():
+            is_case_linked = TestCasePlan.objects.filter(plan=original_plan, case=case).exists()
+
+            if copy_cases:
+                # Ensure cases of original plan are not linked to cloned plan
+                self.assertFalse(is_case_linked)
+
+                # verify author was updated
+                self.assertEqual(self.plan_tester, case.author)
+            else:
                 self.assertTrue(is_case_linked)
+
+            for original_case, copied_case in zip(original_plan.case.all(),
+                                                  cloned_plan.case.all()):
+                # default tester is always kept
+                self.assertEqual(original_case.default_tester, copied_case.default_tester)
+
+                if not copy_cases:
+                    # when linking TCs author doesn't change
+                    self.assertEqual(original_case.author, copied_case.author)
 
     def test_clone_a_plan_with_default_options(self):
         post_data = {
