@@ -439,7 +439,7 @@ class TestCloneView(BasePlanCase):
 
         self.assertContains(
             response,
-            '<input id="id_name" name="name" type="text" value="Copy of {}">'.format(
+            '<input id="id_name" name="name" type="text" value="Copy of {}" required>'.format(
                 self.plan.name),
             html=True)
 
