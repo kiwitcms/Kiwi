@@ -147,9 +147,7 @@ class SearchPlanForm(forms.Form):
 
 
 class ClonePlanForm(BasePlanForm):
-    name = forms.CharField(label="Plan name", required=False)
     type = forms.ModelChoiceField(
-        label="Type",
         queryset=PlanType.objects.all(),
         required=False,
     )
