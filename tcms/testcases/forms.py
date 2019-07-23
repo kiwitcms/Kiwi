@@ -108,7 +108,7 @@ class BaseCaseForm(forms.Form):
     def populate(self, product_id=None):
         if product_id:
             self.fields['category'].queryset = Category.objects.filter(
-                product__id=product_id)
+                product_id=product_id)
         else:
             self.fields['category'].queryset = Category.objects.all()
 
@@ -228,9 +228,9 @@ class BaseCaseSearchForm(forms.Form):
         """Limit the query to fit the plan"""
         if product_id:
             self.fields['category'].queryset = Category.objects.filter(
-                product__id=product_id)
+                product_id=product_id)
             self.fields['component'].queryset = Component.objects.filter(
-                product__id=product_id)
+                product_id=product_id)
 
 
 # todo BaseCaseSearchForm is never used stand-alone and nothing else

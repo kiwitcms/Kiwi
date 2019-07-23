@@ -109,7 +109,7 @@ class Version(TCMSActionModel):
     @classmethod
     def string_to_id(cls, product_id, value):
         try:
-            return cls.objects.get(product__id=product_id,
+            return cls.objects.get(product_id=product_id,
                                    value=value).pk
         except cls.DoesNotExist:
             return None

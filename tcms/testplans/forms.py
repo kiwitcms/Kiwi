@@ -52,7 +52,7 @@ class BasePlanForm(forms.Form):
     def populate(self, product_id):
         if product_id:
             self.fields['product_version'].queryset = Version.objects.filter(
-                product__id=product_id)
+                product_id=product_id)
         else:
             self.fields['product_version'].queryset = Version.objects.all()
 
@@ -141,7 +141,7 @@ class SearchPlanForm(forms.Form):
     def populate(self, product_id=None):
         if product_id:
             self.fields['version'].queryset = Version.objects.filter(
-                product__id=product_id)
+                product_id=product_id)
         else:
             self.fields['version'].queryset = Version.objects.none()
 
