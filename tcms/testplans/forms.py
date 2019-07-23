@@ -153,11 +153,6 @@ class ClonePlanForm(BasePlanForm):
         queryset=PlanType.objects.all(),
         required=False,
     )
-    keep_orignal_author = forms.BooleanField(
-        label='Keep orignal author',
-        help_text='Unchecking will make me the author of the copied plan',
-        required=False,
-    )
     link_testcases = forms.BooleanField(
         label='All Test Cases',
         required=False

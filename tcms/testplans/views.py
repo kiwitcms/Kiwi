@@ -377,9 +377,7 @@ def clone(request):
             default_component_initial_owner=request.user,
         )
 
-        assign_me_as_plan_author = not clone_options['keep_orignal_author']
-        if assign_me_as_plan_author:
-            clone_params['new_original_author'] = request.user
+        clone_params['new_author'] = request.user
 
         assign_me_as_copied_case_author = \
             clone_options['copy_testcases'] and \

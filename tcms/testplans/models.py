@@ -149,7 +149,7 @@ class TestPlan(TCMSActionModel):
         return 'Copy of {}'.format(self.name)
 
     def clone(self, new_name=None, product=None, version=None,
-              new_original_author=None, set_parent=True,
+              new_author=None, set_parent=True,
               link_cases=True, copy_cases=None,
               new_case_author=None,
               new_case_default_tester=None,
@@ -161,7 +161,7 @@ class TestPlan(TCMSActionModel):
         :param product: Product of cloned plan. If not passed, original plan's product is used.
         :param version: Product version of cloned plan. If not passed, original plan's
             product_version is used.
-        :param new_original_author: New author of cloned plan. If not passed, original plan's
+        :param new_author: New author of cloned plan. If not passed, original plan's
             author is used.
         :param bool set_parent: Whether to set original plan as parent of cloned plan.
             Set by default.
@@ -181,7 +181,7 @@ class TestPlan(TCMSActionModel):
         tp_dest = TestPlan.objects.create(
             name=new_name or self.make_cloned_name(),
             product=product or self.product,
-            author=new_original_author or self.author,
+            author=new_author or self.author,
             type=self.type,
             product_version=version or self.product_version,
             create_date=self.create_date,
