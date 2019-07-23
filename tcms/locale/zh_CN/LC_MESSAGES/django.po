@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-22 11:56+0000\n"
+"POT-Creation-Date: 2019-07-23 21:31+0000\n"
 "PO-Revision-Date: 2019-07-16 18:43\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: Chinese Simplified\n"
@@ -30,6 +30,7 @@ msgstr "核心定制的意见"
 #: tcms/testcases/templates/testcases/get.html:311
 #: tcms/testcases/templates/testcases/get.html:337
 #: tcms/testcases/templates/testcases/get.html:374
+#: tcms/testplans/templates/testplans/clone.html:13
 #: tcms/testplans/templates/testplans/mutable.html:23
 #: tcms/testplans/templates/testplans/search.html:11
 msgid "Name"
@@ -240,6 +241,7 @@ msgstr ""
 #: tcms/testcases/templates/testcases/get.html:314
 #: tcms/testcases/templates/testcases/mutable.html:37
 #: tcms/testcases/templates/testcases/search.html:41
+#: tcms/testplans/templates/testplans/clone.html:20
 #: tcms/testplans/templates/testplans/mutable.html:32
 #: tcms/testplans/templates/testplans/search.html:42
 #: tcms/testplans/templates/testplans/search.html:111
@@ -310,6 +312,7 @@ msgstr ""
 #: tcms/telemetry/templates/telemetry/testing/execution-trends.html:23
 #: tcms/telemetry/templates/telemetry/testing/status-matrix.html:22
 #: tcms/templates/plan/get.html:66 tcms/templates/plan/preview.html:19
+#: tcms/testplans/templates/testplans/clone.html:35
 #: tcms/testplans/templates/testplans/mutable.html:47
 #: tcms/testplans/templates/testplans/search.html:52
 #: tcms/testplans/templates/testplans/search.html:112
@@ -379,8 +382,8 @@ msgstr "筛选另一个计划"
 msgid "ID"
 msgstr "ID"
 
-#: tcms/templates/case/clone.html:50 tcms/templates/plan/clone.html:37
-#: tcms/templates/run/get.html:73 tcms/templates/run/report.html:27
+#: tcms/templates/case/clone.html:50 tcms/templates/run/get.html:73
+#: tcms/templates/run/report.html:27
 msgid "Product Version"
 msgstr "产品版本"
 
@@ -833,30 +836,6 @@ msgstr "编辑"
 msgid "No test case was found in this plan."
 msgstr "在这个计划中没有发现测试用例。"
 
-#: tcms/templates/plan/clone.html:4 tcms/templates/plan/get.html:47
-msgid "Clone Plan"
-msgstr "克隆计划"
-
-#: tcms/templates/plan/clone.html:23
-msgid "Clone TestPlan"
-msgstr "克隆测试计划"
-
-#: tcms/templates/plan/clone.html:29
-msgid "New Plan Name"
-msgstr "新计划名称"
-
-#: tcms/templates/plan/clone.html:33
-msgid "Copy to Product"
-msgstr "复制到产品"
-
-#: tcms/templates/plan/clone.html:44
-msgid "Copy Settings"
-msgstr "复制设置"
-
-#: tcms/templates/plan/clone.html:51
-msgid "Copy"
-msgstr "复制"
-
 #: tcms/templates/plan/get.html:46
 msgid "Edit Plan"
 msgstr "编辑计划"
@@ -864,6 +843,10 @@ msgstr "编辑计划"
 #: tcms/templates/plan/get.html:46
 msgid "Edit test plan"
 msgstr "编辑测试计划"
+
+#: tcms/templates/plan/get.html:47
+msgid "Clone Plan"
+msgstr "克隆计划"
 
 #: tcms/templates/plan/get.html:47
 msgid "Clone this plan to other product"
@@ -973,7 +956,7 @@ msgid "print view of selected cases"
 msgstr "选定用例的打印视图"
 
 #: tcms/templates/plan/get_cases.html:27 tcms/templates/plan/get_cases.html:29
-#: tcms/testcases/views.py:579
+#: tcms/testcases/views.py:579 tcms/testplans/templates/testplans/clone.html:68
 msgid "Clone"
 msgstr "克隆"
 
@@ -1590,6 +1573,7 @@ msgid "New TestCase"
 msgstr "新的测试用例"
 
 #: tcms/testcases/templates/testcases/mutable.html:38
+#: tcms/testplans/templates/testplans/clone.html:21
 #: tcms/testplans/templates/testplans/mutable.html:33
 msgid "add new Product"
 msgstr "添加新产品"
@@ -1695,6 +1679,23 @@ msgstr "需要至少一个测试实例"
 msgid "TestCase cloning was successful"
 msgstr "测试实例克隆成功"
 
+#: tcms/testplans/templates/testplans/clone.html:5
+msgid "Clone TestPlan"
+msgstr "克隆测试计划"
+
+#: tcms/testplans/templates/testplans/clone.html:37
+#: tcms/testplans/templates/testplans/mutable.html:49
+msgid "add new Version"
+msgstr "添加新版本"
+
+#: tcms/testplans/templates/testplans/clone.html:57
+msgid "Clone or link existing TCs into new TP"
+msgstr ""
+
+#: tcms/testplans/templates/testplans/clone.html:64
+msgid "Set the source TP as parent of new TP"
+msgstr ""
+
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
 msgstr "编辑测试计划"
@@ -1702,10 +1703,6 @@ msgstr "编辑测试计划"
 #: tcms/testplans/templates/testplans/mutable.html:12
 msgid "Create new TestPlan"
 msgstr "创建新的测试计划"
-
-#: tcms/testplans/templates/testplans/mutable.html:49
-msgid "add new Version"
-msgstr "添加新版本"
 
 #: tcms/testplans/templates/testplans/mutable.html:80
 msgid "Parent ID"
@@ -1748,15 +1745,15 @@ msgstr "测试计划名"
 msgid "Test plan"
 msgstr "测试计划"
 
-#: tcms/testplans/views.py:345
+#: tcms/testplans/views.py:346
 msgid "TestPlan is required"
 msgstr "需要测试计划"
 
-#: tcms/testplans/views.py:555
+#: tcms/testplans/views.py:523
 msgid "At least one test plan is required for print"
 msgstr "需要至少一个测试计划进行打印"
 
-#: tcms/testplans/views.py:563
+#: tcms/testplans/views.py:531
 #, python-format
 msgid "Test Plan \"%s\" does not exist"
 msgstr "测试计划 \"%s\" 不存在"
