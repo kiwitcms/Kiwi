@@ -148,15 +148,14 @@ class TestPlan(TCMSActionModel):
         """Make default name of cloned plan"""
         return 'Copy of {}'.format(self.name)
 
-    def clone(self, name=None, product=None, product_version=None,
+    def clone(self, name=None, product=None, version=None,
               new_author=None, set_parent=False, copy_testcases=False, **kwargs):
         """Clone this plan
 
         :param str name: New name of cloned plan. If not passed, make_cloned_name is called
             to generate a default one.
         :param product: Product of cloned plan. If not passed, original plan's product is used.
-        :param product_version: Product version of cloned plan. If not passed, original plan's
-            product_version is used.
+        :param version: Product version of cloned plan. If not passed use from source plan.
         :param new_author: New author of cloned plan. If not passed, original plan's
             author is used.
         :param bool set_parent: Whether to set original plan as parent of cloned plan.
@@ -170,7 +169,7 @@ class TestPlan(TCMSActionModel):
             product=product or self.product,
             author=new_author or self.author,
             type=self.type,
-            product_version=product_version or self.product_version,
+            product_version=version or self.product_version,
             create_date=self.create_date,
             is_active=self.is_active,
             extra_link=self.extra_link,

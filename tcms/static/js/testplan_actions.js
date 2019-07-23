@@ -255,8 +255,8 @@ Nitrate.TestPlans.TreeView = {
 
 function configure_product_on_load() {
     $('#id_product').change(function() {
-        $('#id_product_version').find('option').remove();
-        update_version_select_from_product($(this), '#id_product_version')
+        $('#id_version').find('option').remove();
+        update_version_select_from_product($(this))
     });
 }
 
@@ -636,7 +636,7 @@ Nitrate.TestPlans.SearchCase.on_load = function() {
 
 Nitrate.TestPlans.Clone.on_load = function() {
     configure_product_on_load();
-    update_version_select_from_product($('#id_product'), '#id_product_version')
+    update_version_select_from_product($('#id_product'))
 
   jQ('.js-cancel-button').bind('click', function() {
     window.history.back();

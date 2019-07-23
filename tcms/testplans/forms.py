@@ -146,11 +146,18 @@ class SearchPlanForm(forms.Form):
             self.fields['version'].queryset = Version.objects.none()
 
 
-class ClonePlanForm(BasePlanForm):
-    type = forms.ModelChoiceField(
-        queryset=PlanType.objects.all(),
-        required=False,
+class ClonePlanForm(forms.Form):
+    name = forms.CharField(required=True)
+
+    product = forms.ModelChoiceField(
+        queryset=Product.objects.all(),
+        empty_label=None,
     )
+    version = forms.ModelChoiceField(
+        queryset=Version.objects.none(),
+        empty_label=None,
+    )
+
     copy_testcases = forms.BooleanField(
         label='Create a copy',
         help_text='Unchecking will create a link to selected plans',
@@ -162,3 +169,10 @@ class ClonePlanForm(BasePlanForm):
                   'plan.',
         required=False
     )
+
+    def populate(self, product_pk):
+        if product_pk:
+            self.fields['version'].queryset = Version.objects.filter(
+                product_id=product_pk)
+        else:
+            self.fields['version'].queryset = Version.objects.none()
