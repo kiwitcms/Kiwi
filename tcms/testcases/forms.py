@@ -272,14 +272,11 @@ class QuickSearchCaseForm(forms.Form):
 
 class CloneCaseForm(forms.Form):
     case = forms.ModelMultipleChoiceField(
-        label='Test Case',
         queryset=TestCase.objects.all(),
-        widget=forms.CheckboxSelectMultiple()
     )
     plan = forms.ModelMultipleChoiceField(
-        label='Test Plan',
         queryset=TestPlan.objects.all(),
-        widget=forms.CheckboxSelectMultiple()
+        required=False,
     )
 
     def populate(self, case_ids):
