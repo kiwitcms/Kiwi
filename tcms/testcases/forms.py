@@ -293,12 +293,6 @@ class CloneCaseForm(forms.Form):
                   'default tester of the copied test case)',
         required=False
     )
-    copy_component = forms.BooleanField(
-        label='Copy test case components to the product of selected Test Plan',
-        help_text='Copy test case components to the product of selected Test Plan ('
-                  'Unchecking will remove components from copied test case)',
-        required=False
-    )
 
     def populate(self, case_ids):
         self.fields['case'].queryset = TestCase.objects.filter(case_id__in=case_ids)
