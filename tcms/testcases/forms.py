@@ -281,12 +281,6 @@ class CloneCaseForm(forms.Form):
         queryset=TestPlan.objects.all(),
         widget=forms.CheckboxSelectMultiple()
     )
-    copy_case = forms.BooleanField(
-        label='Create a copy',
-        help_text='Create a copy (Unchecking will create a link to selected '
-                  'case)',
-        required=False
-    )
     maintain_case_orignal_author = forms.BooleanField(
         label='Keep original author',
         help_text='Keep original author (Unchecking will make me as author '
