@@ -777,70 +777,52 @@ def clone(request, template_name='case/clone.html'):
         if clone_form.is_valid():
             tcs_src = clone_form.cleaned_data['case']
             for tc_src in tcs_src:
-                if clone_form.cleaned_data['copy_case']:
-                    tc_dest = TestCase.objects.create(
-                        is_automated=tc_src.is_automated,
-                        script=tc_src.script,
-                        arguments=tc_src.arguments,
-                        extra_link=tc_src.extra_link,
-                        summary=tc_src.summary,
-                        requirement=tc_src.requirement,
-                        case_status=TestCaseStatus.get_proposed(),
-                        category=tc_src.category,
-                        priority=tc_src.priority,
-                        notes=tc_src.notes,
-                        text=tc_src.text,
-                        author=clone_form.cleaned_data[
-                            'maintain_case_orignal_author'] and
-                        tc_src.author or request.user,
-                        default_tester=clone_form.cleaned_data[
-                            'maintain_case_orignal_default_tester'] and
-                        tc_src.author or request.user,
-                    )
+                tc_dest = TestCase.objects.create(
+                    is_automated=tc_src.is_automated,
+                    script=tc_src.script,
+                    arguments=tc_src.arguments,
+                    extra_link=tc_src.extra_link,
+                    summary=tc_src.summary,
+                    requirement=tc_src.requirement,
+                    case_status=TestCaseStatus.get_proposed(),
+                    category=tc_src.category,
+                    priority=tc_src.priority,
+                    notes=tc_src.notes,
+                    text=tc_src.text,
+                    author=clone_form.cleaned_data[
+                        'maintain_case_orignal_author'] and
+                    tc_src.author or request.user,
+                    default_tester=clone_form.cleaned_data[
+                        'maintain_case_orignal_default_tester'] and
+                    tc_src.author or request.user,
+                )
 
-                    for test_plan in clone_form.cleaned_data['plan']:
-                        sortkey = test_plan.get_case_sortkey()
-                        test_plan.add_case(tc_dest, sortkey)
+                # apply tags as well
+                for tag in tc_src.tag.all():
+                    tc_dest.add_tag(tag=tag)
 
-                    for tag in tc_src.tag.all():
-                        tc_dest.add_tag(tag=tag)
-                else:
-                    tc_dest = tc_src
-                    tc_dest.author = request.user
-                    if clone_form.cleaned_data['maintain_case_orignal_author']:
-                        tc_dest.author = tc_src.author
+                for test_plan in clone_form.cleaned_data['plan']:
+                    # add new TC to selected TP
+                    sortkey = test_plan.get_case_sortkey()
+                    test_plan.add_case(tc_dest, sortkey)
 
-                    tc_dest.default_tester = request.user
-                    if clone_form.cleaned_data['maintain_case_orignal_default_tester']:
-                        tc_dest.default_tester = tc_src.default_tester
-
+                    # clone TC category b/c we may be cloning a 'linked'
+                    # TC which has a different Product that doesn't have the
+                    # same categories yet
+                    try:
+                        tc_category = test_plan.product.category.get(
+                            name=tc_src.category.name
+                        )
+                    except ObjectDoesNotExist:
+                        tc_category = test_plan.product.category.create(
+                            name=tc_src.category.name,
+                            description=tc_src.category.description,
+                        )
+                    tc_dest.category = tc_category
                     tc_dest.save()
 
-                    for test_plan in clone_form.cleaned_data['plan']:
-                        sortkey = test_plan.get_case_sortkey()
-                        test_plan.add_case(tc_dest, sortkey)
-
-                # Add the cases to plan
-                for test_plan in clone_form.cleaned_data['plan']:
-                    # Clone the categories to new product
-                    if clone_form.cleaned_data['copy_case']:
-                        try:
-                            tc_category = test_plan.product.category.get(
-                                name=tc_src.category.name
-                            )
-                        except ObjectDoesNotExist:
-                            tc_category = test_plan.product.category.create(
-                                name=tc_src.category.name,
-                                description=tc_src.category.description,
-                            )
-
-                        tc_dest.category = tc_category
-                        tc_dest.save()
-                        del tc_category
-
                     # Clone the components to new product
-                    if clone_form.cleaned_data['copy_component'] and \
-                            clone_form.cleaned_data['copy_case']:
+                    if clone_form.cleaned_data['copy_component']:
                         for component in tc_src.component.all():
                             try:
                                 new_c = test_plan.product.component.get(
@@ -885,7 +867,6 @@ def clone(request, template_name='case/clone.html'):
         # Initial the clone case form
         clone_form = CloneCaseForm(initial={
             'case': selected_cases,
-            'copy_case': False,
             'maintain_case_orignal_author': False,
             'maintain_case_orignal_default_tester': False,
             'copy_component': True,
