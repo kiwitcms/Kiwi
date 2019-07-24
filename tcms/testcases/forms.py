@@ -281,12 +281,6 @@ class CloneCaseForm(forms.Form):
         queryset=TestPlan.objects.all(),
         widget=forms.CheckboxSelectMultiple()
     )
-    maintain_case_orignal_author = forms.BooleanField(
-        label='Keep original author',
-        help_text='Keep original author (Unchecking will make me as author '
-                  'of the copied test case)',
-        required=False
-    )
     maintain_case_orignal_default_tester = forms.BooleanField(
         label='Keep original default tester',
         help_text='Keep original default tester (Unchecking will make me as '
