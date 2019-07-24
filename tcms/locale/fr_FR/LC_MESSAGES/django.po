@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kiwitcms\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-23 21:31+0000\n"
-"PO-Revision-Date: 2019-07-24 06:03\n"
+"PO-Revision-Date: 2019-07-24 07:26\n"
 "Last-Translator: Alexander Todorov (atodorov)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -168,7 +168,7 @@ msgstr "Matrice d'état"
 
 #: tcms/settings/common.py:109
 msgid "Execution trends"
-msgstr ""
+msgstr "Tendances des exécutions"
 
 #: tcms/settings/common.py:123
 msgid "ADMIN"
@@ -1634,19 +1634,19 @@ msgstr "Ajouter une nouvelle version"
 
 #: tcms/testplans/templates/testplans/clone.html:54
 msgid "Clone TCs"
-msgstr ""
+msgstr "Dupliquer les CTs"
 
 #: tcms/testplans/templates/testplans/clone.html:57
 msgid "Clone or link existing TCs into new TP"
-msgstr ""
+msgstr "Dupliquer ou lier les CT existant dans ce nouveau PT"
 
 #: tcms/testplans/templates/testplans/clone.html:61
 msgid "Parent TP"
-msgstr ""
+msgstr "PT parent"
 
 #: tcms/testplans/templates/testplans/clone.html:64
 msgid "Set the source TP as parent of new TP"
-msgstr ""
+msgstr "Mettre ce PT comme parent du nouveau PT"
 
 #: tcms/testplans/templates/testplans/mutable.html:10
 msgid "Edit TestPlan"
