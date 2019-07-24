@@ -118,15 +118,9 @@ def get_all(request):  # pylint: disable=missing-permission-required
         # Set search active plans only by default
         search_form = SearchPlanForm(initial={'is_active': True})
 
-    # fixme: this view is scheduled for deletion
-    # TestCase clone workflow must be redesigned so it uses
-    # the TestPlan search page
-    template_name = ''
-    if request.GET.get('action') == 'clone_case':
-        template_name = 'case/clone_select_plan.html'
-        tps = tps.order_by('name')
+    template_name = 'non-existing.html'
 
-    # used in tree preview & TestCase add plan
+    # used in tree preview only
     # fixme: must be replaced by JSON RPC and the
     # JavaScript dialog that displays the preview
     # should be converted to Patternfly

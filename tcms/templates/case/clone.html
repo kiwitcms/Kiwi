@@ -17,77 +17,14 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
 {% endblock %}
 {% block contents %}
 <div id="content">
-	<div id="hidden">
-		<input id="value_plan_id" type="hidden" name="plan_id" value="{{ test_plan.plan_id }}" />
-	</div>
-
-	<h2>{% trans "Clone TestCase(s)" %}</h2>
+	<h2>{% trans "Clone TestCase(s) into" %} TP-{{ test_plan.pk }}: {{ test_plan.name }}</h2>
 	<div class="Detailform border-1">
 		<div class="editor" cellspacing="0" cellspan="0">
-			<div class="listinfo">
-				<label class="strong title">{% trans "Select Plan" %}</label>
-				{% if test_plan %}
-				<div>
-					<input type="radio" id="id_use_sameplan" name="selectplan" value="{{ test_plan.plan_id }}" checked="checked"/>
-                                        <label for="id_use_sameplan" class="strong">{% trans "Use the same Plan" %} -- {{ test_plan.plan_id }} : {{ test_plan.name }}</label>
-				</div>
-				{% endif %}
-				<div>
-					<input type="radio" id="id_use_filterplan" name="selectplan"/>
-                                        <label for="id_use_filterplan" class="strong">{% trans "Filter another plan" %}</label>
-					<div id="id_filterPlan">
-					<form id="id_form_search_plan" action="{% url "plans-all" %}" method="get">
-						<input type="hidden" name="action" value="clone_case" />
-                                                <div class="cell">
-                                                    <label class="sd" for="id_pk__in">{% trans "ID" %}</label>
-                                                    {{ search_form.pk__in }}
-                                                </div>
-                                                <div class="cell">
-                                                    <label class="sd" for="id_product_id">{% trans "Product" %}</label>
-                                                    {{ search_form.product }}
-                                                </div>
-                                                <div class="cell">
-                                                    <label class="sd" for="id_version_id">{% trans "Product Version" %}</label>
-                                                    {{ search_form.version }}
-                                                </div>
-                                                <div class="cell">
-                                                    <label class="sd" for="id_type_id">{% trans "Plan Type" %}</label>
-                                                    {{ search_form.type }}
-                                                </div>
-                                                <div class="cell">
-                                                    <label class="sd" for="id_author_id">{% trans "Plan Author" %}</label>
-                                                    {{ search_form.author__email__startswith }}
-                                                </div>
-                                                <div class="cell">
-                                                    <label class="sd" for="id_tag_id">{% trans "Tag" %}</label>
-                                                    {{ search_form.tag__name__in }}
-                                                </div>
-                                                <div class="cell">
-                                                    <label class="sd" for="id_name_id">{% trans "Plan Summary" %}</label>
-                                                    {{ search_form.name__icontains }}
-                                                </div>
-                                                <div class="cell">
-                                                    <label class="sd" for="id_is_active_id">{% trans "Active" %}</label>
-                                                    {{ search_form.is_active }}
-                                                </div>
-						<div class="cell" style=" margin-left:0">
-							<input type="submit" value="Filter plan" />
-						</div>
-					</form>
-					</div>
-				{% if submit_action %}
-				{{ clone_form.plan.errors }}
-				{% endif %}
-				</div>
-			</div>
 			<form id="id_clone_form" action="{% url "testcases-clone" %}" method="post">
 				{{ form.case_id }}
 				<div class="listinfo">
 					<label class="strong title"></label>
-					<input id="id_plan_id" type="hidden" name="" value="" />
-					<div id="id_plan_container" style="display: none;">
-						<div class="ajax_loading"></div>
-					</div>
+					<input id="id_plan_id" type="hidden" name="plan" value="{{ test_plan.pk }}" />
 				</div>
 				<div class="listinfo">
                                     <label class="strong title">{% trans "Case(s)" %}</label>
