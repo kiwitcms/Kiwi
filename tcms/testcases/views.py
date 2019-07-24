@@ -27,7 +27,6 @@ from tcms.testruns.models import TestExecution
 from tcms.testruns.models import TestExecutionStatus
 from tcms.testcases.forms import NewCaseForm, \
     SearchCaseForm, CaseNotifyForm, CloneCaseForm
-from tcms.testplans.forms import SearchPlanForm
 from tcms.testcases.fields import MultipleEmailField
 
 
@@ -763,8 +762,12 @@ def clone(request, template_name='case/clone.html'):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     test_plan_src = plan_from_request_or_none(request)
-    test_plan = None
-    search_plan_form = SearchPlanForm()
+    if not test_plan_src:
+        messages.add_message(request,
+                             messages.ERROR,
+                             _('TestPlan is required'))
+        # redirect back where we came from
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     # Do the clone action
     if request.method == 'POST':
@@ -909,18 +912,8 @@ def clone(request, template_name='case/clone.html'):
         })
         clone_form.populate(case_ids=selected_cases)
 
-    # Generate search plan form
-    if request_data.get('from_plan'):
-        test_plan = TestPlan.objects.get(plan_id=request_data['from_plan'])
-        search_plan_form = SearchPlanForm(
-            initial={'product': test_plan.product_id, 'is_active': True})
-        search_plan_form.populate(product_id=test_plan.product_id)
-
-    submit_action = request_data.get('submit', None)
     context = {
-        'test_plan': test_plan,
-        'search_form': search_plan_form,
+        'test_plan': test_plan_src,
         'clone_form': clone_form,
-        'submit_action': submit_action,
     }
     return render(request, template_name, context)

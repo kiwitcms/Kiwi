@@ -338,13 +338,7 @@ class TestCloneCase(BasePlanCase):
                                    {'from_plan': self.plan.pk,
                                     'case': [self.case_1.pk, self.case_2.pk]})
 
-        self.assertContains(
-            response,
-            """<div>
-    <input type="radio" id="id_use_sameplan" name="selectplan" value="%s">
-    <label for="id_use_sameplan" class="strong">%s -- %s : %s</label>
-</div>""" % (self.plan.pk, _('Use the same Plan'), self.plan.pk, self.plan.name),
-            html=True)
+        self.assertContains(response, "TP-%s: %s" % (self.plan.pk, self.plan.name))
 
         for loop_counter, case in enumerate([self.case_1, self.case_2]):
             self.assertContains(
@@ -357,20 +351,7 @@ class TestCloneCase(BasePlanCase):
 
     def test_show_clone_page_without_from_plan(self):
         response = self.client.get(self.clone_url, {'case': self.case_1.pk})
-
-        self.assertNotContains(
-            response,
-            'Use the same Plan -- {0} : {1}'.format(self.plan.pk,
-                                                    self.plan.name),
-        )
-
-        self.assertContains(
-            response,
-            '<label for="id_case_0">'
-            '<input checked="checked" id="id_case_0" name="case" '
-            'type="checkbox" value="{0}"> {1}</label>'.format(
-                self.case_1.pk, self.case_1.summary),
-            html=True)
+        self.assertRedirects(response, '/')
 
 
 class TestSearchCases(BasePlanCase):
