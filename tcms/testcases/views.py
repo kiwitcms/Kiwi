@@ -821,21 +821,19 @@ def clone(request, template_name='case/clone.html'):
                     tc_dest.category = tc_category
                     tc_dest.save()
 
-                    # Clone the components to new product
-                    if clone_form.cleaned_data['copy_component']:
-                        for component in tc_src.component.all():
-                            try:
-                                new_c = test_plan.product.component.get(
-                                    name=component.name
-                                )
-                            except ObjectDoesNotExist:
-                                new_c = test_plan.product.component.create(
-                                    name=component.name,
-                                    initial_owner=request.user,
-                                    description=component.description,
-                                )
-
-                            tc_dest.add_component(new_c)
+                    # clone TC components b/c we may be cloning a 'linked'
+                    # TC which has a different Product that doesn't have the
+                    # same components yet
+                    for component in tc_src.component.all():
+                        try:
+                            new_c = test_plan.product.component.get(name=component.name)
+                        except ObjectDoesNotExist:
+                            new_c = test_plan.product.component.create(
+                                name=component.name,
+                                initial_owner=request.user,
+                                description=component.description,
+                            )
+                        tc_dest.add_component(new_c)
 
             # Detect the number of items and redirect to correct one
             cases_count = len(clone_form.cleaned_data['case'])
@@ -869,7 +867,6 @@ def clone(request, template_name='case/clone.html'):
             'case': selected_cases,
             'maintain_case_orignal_author': False,
             'maintain_case_orignal_default_tester': False,
-            'copy_component': True,
         })
         clone_form.populate(case_ids=selected_cases)
 
