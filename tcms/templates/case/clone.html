@@ -30,20 +30,6 @@ Nitrate.Utils.after_page_load(Nitrate.TestCases.Clone.on_load);
                                     <label class="strong title">{% trans "Case(s)" %}</label>
 					<div class="linotype">{{ clone_form.case }}</div>
 				</div>
-				<div class="listinfo">
-                                    <label class="strong title">{% trans "Clone Settings" %}</label>
-					<fieldset class="choose">
-                                            <legend class="">{% trans "Case Properties" %}</legend>
-						<ul class="ul-no-format">
-							<li>
-								{{ clone_form.maintain_case_orignal_default_tester }}
-								<span>
-									<label for="id_maintain_case_orignal_default_tester">{{ clone_form.maintain_case_orignal_default_tester.help_text }}</label>
-								</span>
-							</li>
-						</ul>
-					</fieldset>
-				</div>
 				<div class="submit-row">
 					<input type="hidden" name="from_plan" value="{{ test_plan.pk }}"/>
 					<input type="submit" name="submit" value="Clone" />

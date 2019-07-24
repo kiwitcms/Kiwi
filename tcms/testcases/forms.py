@@ -281,12 +281,6 @@ class CloneCaseForm(forms.Form):
         queryset=TestPlan.objects.all(),
         widget=forms.CheckboxSelectMultiple()
     )
-    maintain_case_orignal_default_tester = forms.BooleanField(
-        label='Keep original default tester',
-        help_text='Keep original default tester (Unchecking will make me as '
-                  'default tester of the copied test case)',
-        required=False
-    )
 
     def populate(self, case_ids):
         self.fields['case'].queryset = TestCase.objects.filter(case_id__in=case_ids)
