@@ -2,21 +2,37 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}{% trans "Clone TestCase into" %} TP-{{ test_plan.pk }}: {{ test_plan.name }}{% endblock %}
+{% block title %}{% trans "Clone TestCase" %}{% endblock %}
 
 {% block contents %}
 <div class="container-fluid container-cards-pf">
     <form class="form-horizontal" method="post" action="{% url "testcases-clone" %}">
-        {% if test_plan %}
-        <input type="hidden" name="plan" value="{{ test_plan.pk }}">
+        {% if form.plan.field.queryset %}
+        <div class="form-group">
+            <label class="col-md-12 col-lg-12">{% trans 'Add new TC into TP' %}</label>
+        </div>
         {% endif %}
+
+        {% for plan in form.plan.field.queryset %}
+        <div class="form-group">
+            <div class="col-md-2 col-lg-2">
+                <input class="bootstrap-switch" name="plan" type="checkbox" checked value="{{ plan.pk }}">
+            </div>
+            <label class="col-md-10 col-lg-10">TP-{{ plan.pk }}: {{ plan.name }}</label>
+        </div>
+        {% endfor %}
+
+
+        <div class="form-group">
+            <label class="col-md-12 col-lg-12">{% trans 'Selected TC' %}</label>
+        </div>
 
         {% for case in form.case.field.queryset %}
         <div class="form-group">
             <div class="col-md-2 col-lg-2">
                 <input class="bootstrap-switch" name="case" type="checkbox" checked value="{{ case.pk }}">
             </div>
-            <label class="col-md-10 col-lg-10">{{ case.summary }}</label>
+            <label class="col-md-10 col-lg-10">TC-{{ case.pk }}: {{ case.summary }}</label>
         </div>
         {% endfor %}
 

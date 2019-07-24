@@ -761,8 +761,6 @@ def clone(request, template_name='testcases/clone.html'):
         # redirect back where we came from
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-    test_plan_src = plan_from_request_or_none(request)
-
     # Do the clone action
     if request.method == 'POST':
         clone_form = CloneCaseForm(request.POST)
@@ -859,7 +857,6 @@ def clone(request, template_name='testcases/clone.html'):
         clone_form.populate(case_ids=selected_cases)
 
     context = {
-        'test_plan': test_plan_src,
         'form': clone_form,
     }
     return render(request, template_name, context)
